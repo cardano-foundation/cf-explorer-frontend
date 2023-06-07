@@ -1,18 +1,20 @@
 import React, { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import useFetch from "../../commons/hooks/useFetch";
-import { API } from "../../commons/utils/api";
-import NoRecord from "../../components/commons/NoRecord";
-import EpochBlockList from "../../components/EpochDetail/EpochBlockList";
-import EpochOverview from "../../components/EpochDetail/EpochOverview";
+
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import NoRecord from "src/components/commons/NoRecord";
+import EpochBlockList from "src/components/EpochDetail/EpochBlockList";
+import EpochOverview from "src/components/EpochDetail/EpochOverview";
+import { REFRESH_TIMES } from "src/commons/utils/constants";
+
 import { StyledContainer } from "./styles";
-import { REFRESH_TIMES } from "../../commons/utils/constants";
 
 const EpochDetail: React.FC = () => {
   const { epochId } = useParams<{ epochId: string }>();
   const { state } = useLocation<{ data?: IDataEpoch }>();
 
-  const { data, initialized, error, lastUpdated } = useFetch<IDataEpoch>(
+  const { data, loading, initialized, error, lastUpdated } = useFetch<IDataEpoch>(
     `${API.EPOCH.DETAIL}/${epochId}`,
     state?.data,
     false,
@@ -23,12 +25,15 @@ const EpochDetail: React.FC = () => {
     window.history.replaceState({}, document.title);
     document.title = `Epoch ${epochId} | Cardano Explorer`;
   }, [epochId]);
+  if (!initialized) {
+    return null;
+  }
 
   if ((initialized && !data) || error) return <NoRecord />;
 
   return (
     <StyledContainer>
-      <EpochOverview data={data} loading={!initialized} lastUpdated={lastUpdated} />
+      <EpochOverview data={data} loading={loading} lastUpdated={lastUpdated} />
       <EpochBlockList epochId={epochId} />
     </StyledContainer>
   );

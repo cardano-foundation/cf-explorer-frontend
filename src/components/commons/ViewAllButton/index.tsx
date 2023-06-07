@@ -1,7 +1,9 @@
 import React from "react";
 import { Link, LinkProps } from "react-router-dom";
 import { alpha, styled, TooltipProps } from "@mui/material";
-import { SeeMoreIcon } from "../../../commons/resources";
+
+import { SeeMoreIcon } from "src/commons/resources";
+
 import CustomTooltip from "../CustomTooltip";
 
 const StyledLink = styled(Link)`
@@ -11,9 +13,9 @@ const StyledLink = styled(Link)`
   width: 35px;
   height: 35px;
   border-radius: 5px;
-  background: ${props => alpha(props.theme.palette.primary.main, 0.1)};
+  background: ${(props) => alpha(props.theme.palette.primary.main, 0.1)};
   &:hover {
-    background: ${props => alpha(props.theme.palette.primary.main, 0.3)};
+    background: ${(props) => alpha(props.theme.palette.primary.main, 0.3)};
   }
 `;
 

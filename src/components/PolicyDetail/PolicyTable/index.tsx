@@ -1,29 +1,28 @@
 import React from "react";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { TabContext, TabPanel } from "@mui/lab";
 import { Box, Tab, useTheme } from "@mui/material";
 import { stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import useFetchList from "../../../commons/hooks/useFetchList";
-import { details } from "../../../commons/routers";
-import { ReactComponent as TokenIcon } from "../../../commons/resources/icons/tokenIcon.svg";
-import { ReactComponent as AssetHolderIcon } from "../../../commons/resources/icons/assetHolder.svg";
+
+import useFetchList from "src/commons/hooks/useFetchList";
+import { API } from "src/commons/utils/api";
 import {
-  formatADAFull,
   formatDateTimeLocal,
+  formatNumberDivByDecimals,
   getPageInfo,
-  getShortHash,
   getShortWallet,
-  numberWithCommas,
-} from "../../../commons/utils/helper";
-import Table, { Column } from "../../commons/Table";
-import { LinkComponent, TitleTab } from "./styles";
-import CustomTooltip from "../../commons/CustomTooltip";
-import { API } from "../../../commons/utils/api";
-import BigNumber from "bignumber.js";
+  numberWithCommas
+} from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import Table, { Column } from "src/components/commons/Table";
+import { AssetHolderIcon, TokenIcon } from "src/commons/resources";
+import { details } from "src/commons/routers";
+
+import { LinkComponent, StyledBoxContainer, StyledTabList, TitleTab } from "./styles";
 
 enum TABS {
   TOKENS = "tokens",
-  HOLDERS = "holders",
+  HOLDERS = "holders"
 }
 
 const columnsToken: Column<TokenPolicys>[] = [
@@ -31,36 +30,39 @@ const columnsToken: Column<TokenPolicys>[] = [
     title: "Token Name",
     key: "tokenname",
     minWidth: "50px",
-    render: r => <LinkComponent to={details.token(r.fingerprint)}>{r.displayName || r.name}</LinkComponent>,
+    render: (r) => <LinkComponent to={details.token(r.fingerprint)}>{r.displayName || r.name}</LinkComponent>
   },
   {
     title: "Token ID",
     key: "id",
     minWidth: "100px",
-    render: r => (
+    render: (r) => (
       <CustomTooltip title={r.fingerprint}>
-        <LinkComponent to={details.token(r.fingerprint)}>{getShortWallet(r.fingerprint)}</LinkComponent>
+        <LinkComponent to={details.token(r.fingerprint)}>{getShortWallet(r.fingerprint || "")}</LinkComponent>
       </CustomTooltip>
-    ),
+    )
   },
   {
     title: "Created Date",
     key: "date",
     minWidth: "150px",
-    render: r => formatDateTimeLocal(r.createdOn || ""),
+    render: (r) => formatDateTimeLocal(r.createdOn || "")
   },
   {
     title: "Total Supply",
     key: "totalSupply",
     minWidth: "150px",
-    render: r => <Box component={"span"}>{numberWithCommas(r.supply)}</Box>,
+    render: (r) => {
+      const decimalToken = r?.metadata?.decimals || 0;
+      return <Box component={"span"}>{formatNumberDivByDecimals(r?.supply, decimalToken)}</Box>;
+    }
   },
   {
     title: "Total Transactions",
     key: "trxtotal",
     minWidth: "150px",
-    render: r => <>{r?.txCount ?? ""}</>,
-  },
+    render: (r) => <>{r?.txCount ?? ""}</>
+  }
 ];
 
 const columnsAssetHolders: Column<PolicyHolder>[] = [
@@ -68,34 +70,34 @@ const columnsAssetHolders: Column<PolicyHolder>[] = [
     title: "Address",
     key: "address",
     minWidth: "50px",
-    render: r => (
+    render: (r) => (
       <CustomTooltip title={r.address}>
         <LinkComponent to={details.address(r.address)}>{getShortWallet(r.address || "")}</LinkComponent>
       </CustomTooltip>
-    ),
+    )
   },
   {
     title: "Token name",
     key: "id",
     minWidth: "100px",
-    render: r => <LinkComponent to={details.token(r.fingerprint)}>{r.displayName || ""}</LinkComponent>,
+    render: (r) => <LinkComponent to={details.token(r.fingerprint)}>{r.displayName || ""}</LinkComponent>
   },
   {
     title: "Token ID",
     key: "id",
     minWidth: "100px",
-    render: r => (
+    render: (r) => (
       <CustomTooltip title={r.fingerprint}>
         <LinkComponent to={details.token(r.fingerprint)}>{getShortWallet(r.fingerprint || "")}</LinkComponent>
       </CustomTooltip>
-    ),
+    )
   },
   {
     title: "Balance",
     key: "Balance",
     minWidth: "150px",
-    render: r => <Box component={"span"}>{numberWithCommas(r.quantity)}</Box>,
-  },
+    render: (r) => <Box component={"span"}>{numberWithCommas(r.quantity)}</Box>
+  }
 ];
 
 const tabs: {
@@ -108,14 +110,14 @@ const tabs: {
     key: TABS.TOKENS,
     label: "Token",
     icon: TokenIcon,
-    columns: columnsToken,
+    columns: columnsToken
   },
   {
     key: TABS.HOLDERS,
     label: "Policy Asset Holders",
     icon: AssetHolderIcon,
-    columns: columnsAssetHolders,
-  },
+    columns: columnsAssetHolders
+  }
 ];
 const PolicyTable = () => {
   const [activeTab, setActiveTab] = React.useState<TABS>(TABS.TOKENS);
@@ -127,16 +129,19 @@ const PolicyTable = () => {
 
   const handleChange = (event: React.SyntheticEvent, tab: TABS) => {
     setActiveTab(tab);
-    history.push({ search: stringify({ page: 1, size: 10 }) });
+    history.push({ search: stringify({ page: 1, size: 50 }) });
   };
 
   const fetchData = useFetchList<PolicyHolder | TokenPolicys>(`${API.POLICY}/${policyId}/${activeTab}`, pageInfo);
 
   return (
-    <Box mt={4}>
+    <StyledBoxContainer>
       <TabContext value={activeTab}>
         <Box style={{ borderBottom: `1px solid ${theme.palette.border.secondary}` }}>
-          <TabList onChange={handleChange} TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}>
+          <StyledTabList
+            onChange={handleChange}
+            TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
+          >
             {tabs.map(({ icon: Icon, key, label }) => (
               <Tab
                 key={key}
@@ -153,7 +158,7 @@ const PolicyTable = () => {
                 }
               />
             ))}
-          </TabList>
+          </StyledTabList>
         </Box>
         {tabs.map(({ key, columns }) => (
           <TabPanel style={{ padding: 0 }} key={key} value={key}>
@@ -164,14 +169,14 @@ const PolicyTable = () => {
               pagination={{
                 ...pageInfo,
                 total: fetchData.total,
-                onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+                onChange: (page, size) => history.push({ search: stringify({ page, size }) })
               }}
               onClickRow={(_, r: PolicyHolder | TokenPolicys) => history.push(details.token(r.fingerprint))}
             />
           </TabPanel>
         ))}
       </TabContext>
-    </Box>
+    </StyledBoxContainer>
   );
 };
 

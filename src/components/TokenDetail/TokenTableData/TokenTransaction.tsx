@@ -1,19 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
+
+import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
+
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
-import { AIcon } from "../../../commons/resources";
 import {
   formatADAFull,
   formatDateTimeLocal,
   getPageInfo,
   getShortHash,
   getShortWallet,
-  numberWithCommas,
+  numberWithCommas
 } from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
-import { Flex, Label, SmallText, PriceIcon, StyledLink, PriceValue } from "./styles";
+import { Flex, Label, SmallText, StyledLink, PriceValue } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
 import { API } from "../../../commons/utils/api";
 import ADAicon from "../../commons/ADAIcon";
@@ -35,16 +37,14 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       title: "#",
       key: "id",
       minWidth: "40px",
-      render: (data, index) => (
-        <SmallText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</SmallText>
-      ),
+      render: (data, index) => <SmallText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</SmallText>
     },
     {
       title: "Tx Hash",
       key: "trxhash",
       minWidth: "200px",
 
-      render: r => (
+      render: (r) => (
         <>
           <CustomTooltip title={r.hash}>
             <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
@@ -52,25 +52,25 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
           <br />
           <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>
         </>
-      ),
+      )
     },
     {
       title: "Block/ Epoch/ Slot",
       key: "block",
       minWidth: "200px",
-      render: r => (
+      render: (r) => (
         <>
           <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
           <br />
           <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/<SmallText>{r.epochSlotNo} </SmallText>
         </>
-      ),
+      )
     },
     {
       title: "Addresses",
       key: "addresses",
       minWidth: "200px",
-      render(r, index) {
+      render(r) {
         return (
           <>
             <Flex>
@@ -99,13 +99,13 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
             </Flex>
           </>
         );
-      },
+      }
     },
     {
       title: "Fees",
       key: "fee",
       minWidth: "120px",
-      render: r => (
+      render: (r) => (
         <PriceValue>
           <SmallText>{formatADAFull(r.fee)}</SmallText>
           <ADAicon mb={"5px"} ml={"8px"} />
@@ -113,13 +113,13 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
+      }
     },
     {
       title: "Output",
       minWidth: "120px",
       key: "outSum",
-      render: r => (
+      render: (r) => (
         <PriceValue>
           <SmallText>{formatADAFull(r.totalOutput)}</SmallText>
           <ADAicon mb={"5px"} ml={"8px"} />
@@ -127,9 +127,15 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      },
-    },
+      }
+    }
   ];
+
+  const { setTxCountRealtime } = useContext(OverviewMetadataTokenContext);
+
+  useEffect(() => {
+    setTxCountRealtime(fetchData.total);
+  }, [fetchData.total, setTxCountRealtime]);
 
   return (
     <Table
@@ -139,7 +145,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       pagination={{
         ...pageInfo,
         total: fetchData.total,
-        onChange: (page, size) => history.push({ search: stringify({ page, size }) }),
+        onChange: (page, size) => history.push({ search: stringify({ page, size }) })
       }}
       onClickRow={(_, r: Transactions) => history.push(details.transaction(r.hash))}
     />

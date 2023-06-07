@@ -1,24 +1,24 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
-import StyledModal from "../../../StyledModal";
-import { Description, ModalTitle } from "./styles";
-import { StyledDarkLoadingButton } from "../../../../share/styled";
-import { StyledButton } from "./styles";
 import { useLocalStorage } from "react-use";
-import { addListBookmark, getAllBookmarks } from "../../../../../commons/utils/userRequest";
-import { NETWORK, NETWORK_TYPES } from "../../../../../commons/utils/constants";
+
+import { StyledDarkLoadingButton } from "src/components/share/styled";
+import { addListBookmark, getAllBookmarks } from "src/commons/utils/userRequest";
+import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
+import StyledModal from "src/components/commons/StyledModal";
+
+import { Description, ModalTitle, StyledButton } from "./styles";
 
 interface SyncBookmarkModalProps {
   open: boolean;
-  loadingSubmit: boolean;
   handleCloseModal: () => void;
 }
-const SyncBookmarkModal: React.FC<SyncBookmarkModalProps> = ({ open, loadingSubmit, handleCloseModal }) => {
+const SyncBookmarkModal: React.FC<SyncBookmarkModalProps> = ({ open, handleCloseModal }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<{ passNumber: number; failNumber: number }>();
   const [message, setMessage] = useState("");
   const [bookmarks, setBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
-  const bookmark = bookmarks?.filter(r => !r.id).length;
+  const bookmark = bookmarks?.filter((r) => !r.id).length;
   const hanldeSyncBookmark = async () => {
     try {
       setLoading(true);

@@ -1,13 +1,24 @@
 import { Box, Grid, Skeleton } from "@mui/material";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import { BlankBlueIcon, ADAIcon } from "../../../commons/resources";
-import { details, routers } from "../../../commons/routers";
-import { API } from "../../../commons/utils/api";
-import { REFRESH_TIMES } from "../../../commons/utils/constants";
-import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet, handleClicktWithoutAnchor } from "../../../commons/utils/helper";
-import CustomTooltip from "../../commons/CustomTooltip";
-import ViewAllButton from "../../commons/ViewAllButton";
+
+import { BlankBlueIcon, ADAIcon } from "src/commons/resources";
+import { details, routers } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { REFRESH_TIMES, TRANSACTION_STATUS } from "src/commons/utils/constants";
+import {
+  formatADAFull,
+  formatDateTimeLocal,
+  getShortHash,
+  getShortWallet,
+  handleClicktWithoutAnchor
+} from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import ViewAllButton from "src/components/commons/ViewAllButton";
+import useFetch from "src/commons/hooks/useFetch";
+import { useScreen } from "src/commons/hooks/useScreen";
+import FormNowMessage from "src/components/commons/FormNowMessage";
+
 import {
   Hash,
   Header,
@@ -25,11 +36,8 @@ import {
   HeaderStatus,
   Actions,
   TimeDuration,
+  TimeDurationSm
 } from "./style";
-import useFetch from "../../../commons/hooks/useFetch";
-import { TRANSACTION_STATUS } from "../../../commons/utils/constants";
-import { useScreen } from "../../../commons/hooks/useScreen";
-import moment from "moment";
 
 const LatestTransactions: React.FC = () => {
   const { data, initialized, lastUpdated } = useFetch<CurrentTransactions[]>(
@@ -40,16 +48,21 @@ const LatestTransactions: React.FC = () => {
   );
 
   const history = useHistory();
-  const { isMobile } = useScreen();
+  const { isTablet } = useScreen();
   return (
     <TransactionContainer>
       <Header>
         <Title>Latest Transactions</Title>
         <Actions>
-          <TimeDuration>Last updated {moment(lastUpdated).fromNow()}</TimeDuration>
+          <TimeDuration>
+            <FormNowMessage time={lastUpdated} />
+          </TimeDuration>
           <ViewAllButton to={routers.TRANSACTION_LIST} />
         </Actions>
       </Header>
+      <TimeDurationSm>
+        <FormNowMessage time={lastUpdated} />
+      </TimeDurationSm>
       {
         <Grid container spacing={{ sm: 2 }}>
           {!initialized
@@ -70,16 +83,17 @@ const LatestTransactions: React.FC = () => {
                   </Grid>
                 );
               })
-            : data?.map(item => {
+            : data?.map((item) => {
                 const { hash, fromAddress, toAddress, blockNo, amount, status, time, epochNo, epochSlotNo } = item;
 
                 return (
-                  <Grid item xl lg={3} xs={12} key={hash}>
-                    <Item onClick={e => handleClicktWithoutAnchor(e, () => history.push(details.transaction(hash)))}>
+                  // isTable show 2 item per row else show 1 item per row grid
+                  <Grid item xl lg={3} xs={12} sm={6} key={hash}>
+                    <Item onClick={(e) => handleClicktWithoutAnchor(e, () => history.push(details.transaction(hash)))}>
                       <ItemHeader>
                         <PriceImage src={ADAIcon} alt="check green" />
                         <Box display={"flex"} flexDirection={"column"} rowGap={"4px"} alignItems={"end"}>
-                          {!isMobile && <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>}
+                          {!isTablet && <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>}
                           <PriveValue>{formatADAFull(amount)}</PriveValue>
                         </Box>
                       </ItemHeader>
@@ -93,7 +107,7 @@ const LatestTransactions: React.FC = () => {
                               </Link>
                             </CustomTooltip>
                           </RowItem>
-                          {isMobile && <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>}
+                          {isTablet && <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>}
                         </Box>
                         <RowItem>
                           <small>Block: </small>
@@ -111,7 +125,7 @@ const LatestTransactions: React.FC = () => {
                           <small>Slot: </small>
                           <small>{epochSlotNo}</small>
                         </RowItem>
-                        {fromAddress?.slice(0, 1).map(add => {
+                        {fromAddress?.slice(0, 1).map((add) => {
                           return (
                             <RowItem key={add}>
                               <small>From: </small>
@@ -124,7 +138,7 @@ const LatestTransactions: React.FC = () => {
                             </RowItem>
                           );
                         })}
-                        {toAddress?.slice(0, 1).map(add => {
+                        {toAddress?.slice(0, 1).map((add) => {
                           return (
                             <RowItem key={add} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
                               <Box>

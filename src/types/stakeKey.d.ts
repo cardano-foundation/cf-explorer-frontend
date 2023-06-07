@@ -116,4 +116,4 @@ interface WithdrawalHistoryItem {
   txId: number;
 }
 
-interface DeregistrationItem extends RegistrationItem {}
+type DeregistrationItem = RegistrationItem;

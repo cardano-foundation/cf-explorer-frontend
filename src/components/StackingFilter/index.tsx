@@ -1,46 +1,34 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Option } from "../commons/Filter";
+import React, { useEffect, useState } from "react";
+import { Box, Button, ClickAwayListener, IconButton, MenuList } from "@mui/material";
+import moment from "moment";
+
+import {
+  ArrowFromBottomIcon,
+  ArrowFromTopIcon,
+  CalenderIcon,
+  FilterIC,
+  ResetIcon,
+  SearchIcon
+} from "src/commons/resources";
+
 import CustomIcon from "../commons/CustomIcon";
-import { ArrowFromBottomIcon, ArrowFromTopIcon, CalenderIcon, FilterIC, SearchIcon } from "../../commons/resources";
-
-import { ClickAwayListener, IconButton, ListItemIcon, MenuList } from "@mui/material";
-
+import { Option } from "../commons/Filter";
 import {
   FilterButton,
   FilterContainer,
   FilterContent,
   FilterIconContainer,
   FilterListItemText,
-  FilterMenuItem,
+  FilterMenuItem
 } from "../commons/Filter/styles";
 import { StyledInput } from "../share/styled";
 import DateRangeModal, { DATETIME_PARTTEN } from "./DateRangeModal";
 import { AdditionContainer } from "./styles";
 import { StyledListItemIcon } from "../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
-import moment from "moment";
 
 interface StakingOption extends Option {
   addition?: React.FC<any>;
 }
-
-const filterOptions: StakingOption[] = [
-  {
-    label: "Latest - First",
-    icon: <CustomIcon icon={ArrowFromTopIcon} fill="currentColor" width={20} />,
-    value: "latest",
-  },
-  {
-    label: "First - Latest",
-    icon: <CustomIcon icon={ArrowFromBottomIcon} fill="currentColor" width={20} />,
-    value: "first",
-  },
-  { label: "Date range", icon: <CustomIcon icon={CalenderIcon} fill="currentColor" width={20} />, value: "dateRange" },
-  {
-    label: "Search transaction",
-    icon: <CustomIcon icon={SearchIcon} stroke="currentColor" width={22} />,
-    value: "search",
-  },
-];
 
 export interface FilterParams {
   sort?: string;
@@ -53,14 +41,43 @@ export interface StackingFilterProps {
   onFilterValueChange?: (params: FilterParams) => void;
   filterValue?: FilterParams;
   sortKey?: string;
+  fullFilter?: boolean;
 }
 
-const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, filterValue, sortKey = "time" }) => {
+const StackingFilter: React.FC<StackingFilterProps> = ({
+  onFilterValueChange,
+  filterValue,
+  sortKey = "time",
+  fullFilter = true
+}) => {
   const [open, setOpen] = useState(false);
   const [isOpenSelectRange, setIsOpenSelectRange] = useState(false);
   const [openSearchTransaction, setOpenSearchTransaction] = useState(false);
   const [selected, setSelected] = useState("");
   const [textSearch, setTextSearch] = useState("");
+
+  const filterOptions: StakingOption[] = [
+    {
+      label: "Latest - First",
+      icon: <CustomIcon icon={ArrowFromTopIcon} fill="currentColor" width={20} />,
+      value: "latest"
+    },
+    {
+      label: "First - Latest",
+      icon: <CustomIcon icon={ArrowFromBottomIcon} fill="currentColor" width={20} />,
+      value: "first"
+    },
+    {
+      label: "Date range",
+      icon: <CustomIcon icon={CalenderIcon} fill="currentColor" width={20} />,
+      value: "dateRange"
+    },
+    {
+      label: "Search transaction",
+      icon: <CustomIcon icon={SearchIcon} stroke="currentColor" width={22} />,
+      value: "search"
+    }
+  ];
 
   const onClickAway = () => {
     setOpen(false);
@@ -68,10 +85,9 @@ const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, fi
 
   const onDateRangeModalClose = () => {
     setIsOpenSelectRange(false);
-    console.log(isOpenSelectRange);
   };
-  const onFilterButtonClick = () => setOpen(pre => !pre);
-  const onOptionClick = (value: string, option: Option) => {
+  const onFilterButtonClick = () => setOpen((pre) => !pre);
+  const onOptionClick = (value: string) => {
     switch (value) {
       case "latest": {
         onFilterValueChange?.({ sort: `${sortKey},DESC` });
@@ -90,7 +106,7 @@ const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, fi
         break;
       }
       case "search": {
-        setOpenSearchTransaction(true);
+        setOpenSearchTransaction((prev) => !prev);
         break;
       }
     }
@@ -108,7 +124,12 @@ const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, fi
           onClick={onFilterButtonClick}
           startIcon={
             <FilterIconContainer>
-              <CustomIcon icon={FilterIC} width={18} color={theme => theme.palette.primary.main} fill="currentColor" />
+              <CustomIcon
+                icon={FilterIC}
+                width={18}
+                color={(theme) => theme.palette.primary.main}
+                fill="currentColor"
+              />
             </FilterIconContainer>
           }
         >
@@ -117,11 +138,11 @@ const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, fi
         {open && filterOptions && (
           <FilterContent>
             <MenuList>
-              {filterOptions.map(option => (
+              {(fullFilter ? filterOptions : filterOptions.slice(0, 2)).map((option) => (
                 <FilterMenuItem
                   active={+(option.value === selected)}
                   key={option.value}
-                  onClick={() => onOptionClick(option.value, option)}
+                  onClick={() => onOptionClick(option.value)}
                 >
                   <StyledListItemIcon>{option.icon}</StyledListItemIcon>
                   <FilterListItemText>{option.label}</FilterListItemText>
@@ -155,13 +176,29 @@ const StackingFilter: React.FC<StackingFilterProps> = ({ onFilterValueChange, fi
                   setSelected("dateRange");
                   onFilterValueChange?.({
                     fromDate: moment(fromDate, DATETIME_PARTTEN).utc().format(DATETIME_PARTTEN),
-                    toDate: moment(toDate, DATETIME_PARTTEN).utc().format(DATETIME_PARTTEN),
+                    toDate: moment(toDate, DATETIME_PARTTEN).utc().format(DATETIME_PARTTEN)
                   });
                   setOpen(false);
                 }}
                 onClose={onDateRangeModalClose}
               />
             </AdditionContainer>
+            <Box
+              component={Button}
+              width={"100%"}
+              textTransform={"capitalize"}
+              display={"flex"}
+              alignItems={"center"}
+              color={`#108AEF !important`}
+              onClick={() => {
+                onFilterValueChange?.({ fromDate: undefined, sort: undefined, toDate: undefined, txHash: undefined });
+                setOpen(false);
+                setSelected("");
+              }}
+            >
+              <Box mr={1}>Reset</Box>
+              <ResetIcon />
+            </Box>
           </FilterContent>
         )}
       </FilterContainer>

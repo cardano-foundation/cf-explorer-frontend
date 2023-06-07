@@ -1,26 +1,30 @@
 import React, { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import DetailHeader from "../../commons/DetailHeader";
-import { formatADAFull, formatDateTimeLocal, getShortWallet } from "../../../commons/utils/helper";
-import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { Box, IconButton, useTheme } from "@mui/material";
-import { ConfirmStatus, MaxSlot, StyledLink, TitleCard } from "./styles";
-import infoIcon from "../../../commons/resources/images/infoIcon.svg";
-import timeIcon from "../../../commons/resources/icons/time.svg";
-import exchageAltIcon from "../../../commons/resources/icons/exchangeArrow.svg";
-import txConfirm from "../../../commons/resources/icons/txConfirm.svg";
-import totalOutput from "../../../commons/resources/icons/totalOutput.svg";
-import cubeIcon from "../../../commons/resources/icons/blockIcon.svg";
-import slotIcon from "../../../commons/resources/icons/slot.svg";
-import txInputIcon from "../../../commons/resources/icons/txInput.svg";
-import txOutputIcon from "../../../commons/resources/icons/txOutput.svg";
-import CopyButton from "../../commons/CopyButton";
-import { details } from "../../../commons/routers";
-import DropdownDetail from "../../commons/DropdownDetail";
 import { BiShowAlt } from "react-icons/bi";
-import { RootState } from "../../../stores/types";
-import CustomTooltip from "../../commons/CustomTooltip";
-import ADAicon from "../../commons/ADAIcon";
+
+import {
+  timeIconUrl,
+  exchageAltIconUrl,
+  txConfirmUrl,
+  totalOutputUrl,
+  cubeIconUrl,
+  slotIconUrl,
+  txInputIconUrl,
+  txOutputIconUrl
+} from "src/commons/resources";
+import { formatADAFull, formatDateTimeLocal, getShortWallet } from "src/commons/utils/helper";
+import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import { details } from "src/commons/routers";
+import { RootState } from "src/stores/types";
+import { useScreen } from "src/commons/hooks/useScreen";
+import DetailHeader from "src/components/commons/DetailHeader";
+import CopyButton from "src/components/commons/CopyButton";
+import DropdownDetail from "src/components/commons/DropdownDetail";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import ADAicon from "src/components/commons/ADAIcon";
+
+import { ConfirmStatus, MaxSlot, StyledLink, TitleCard } from "./styles";
 
 interface Props {
   data: Transaction | null;
@@ -33,6 +37,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
   const [openListInput, setOpenListInput] = useState(false);
   const [openListOutput, setOpenListOutput] = useState(false);
   const theme = useTheme();
+  const { isMobile } = useScreen();
 
   const renderConfirmationTag = () => {
     if (data && data.tx && data.tx.confirmation) {
@@ -49,6 +54,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
   const inputTransaction = useMemo(() => {
     const result = [];
     if (data?.utxOs && data?.utxOs?.inputs?.length > 0) {
+      // eslint-disable-next-line no-unsafe-optional-chaining
       for (const item of data?.utxOs.inputs) {
         if (item.tokens.length) {
           result.push(...item.tokens);
@@ -61,6 +67,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
   const outputTransaction = useMemo(() => {
     const result = [];
     if (data?.utxOs && data?.utxOs?.outputs?.length > 0) {
+      // eslint-disable-next-line no-unsafe-optional-chaining
       for (const item of data?.utxOs.outputs) {
         if (item.tokens.length) {
           result.push(...item.tokens);
@@ -72,7 +79,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
 
   const listOverview = [
     {
-      icon: txInputIcon,
+      icon: txInputIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1} height={24}>
@@ -101,9 +108,9 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
           <CopyButton text={data?.utxOs?.inputs[0]?.address || ""} />
           {openListInput && (
             <DropdownDetail
-              minWidth={200}
+              minWidth={isMobile ? 160 : 200}
               title="Address list"
-              value={data?.utxOs?.inputs.map(i => i.address) || []}
+              value={data?.utxOs?.inputs.map((i) => i.address) || []}
               close={() => setOpenListInput(false)}
             />
           )}
@@ -112,9 +119,10 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       allowSearch: true,
       isSent: true,
       dataSearch: inputTransaction,
+      key: "input"
     },
     {
-      icon: txOutputIcon,
+      icon: txOutputIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1} height={24}>
@@ -143,9 +151,9 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
           <CopyButton text={data?.utxOs?.outputs[0]?.address || ""} />
           {openListOutput && (
             <DropdownDetail
-              minWidth={200}
+              minWidth={isMobile ? 160 : 200}
               title="Address list"
-              value={data?.utxOs?.outputs.map(i => i.address) || []}
+              value={data?.utxOs?.outputs.map((i) => i.address) || []}
               close={() => setOpenListOutput(false)}
             />
           )}
@@ -153,18 +161,19 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       ),
       allowSearch: true,
       dataSearch: outputTransaction,
+      key: "output"
     },
     {
-      icon: timeIcon,
+      icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Time </TitleCard>
         </Box>
       ),
-      value: formatDateTimeLocal(data?.tx?.time || ""),
+      value: formatDateTimeLocal(data?.tx?.time || "")
     },
     {
-      icon: txConfirm,
+      icon: txConfirmUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Confirmation</TitleCard>
@@ -175,10 +184,10 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
           {data?.tx?.confirmation || 0}
           <ConfirmStatus status={renderConfirmationTag() || "LOW"}>{renderConfirmationTag() || "LOW"}</ConfirmStatus>
         </>
-      ),
+      )
     },
     {
-      icon: totalOutput,
+      icon: totalOutputUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Total Output</TitleCard>
@@ -188,10 +197,10 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
         <Box component={"span"}>
           {formatADAFull(data?.tx?.totalOutput)} <ADAicon />
         </Box>
-      ),
+      )
     },
     {
-      icon: exchageAltIcon,
+      icon: exchageAltIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Transaction Fees </TitleCard>
@@ -201,10 +210,10 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
         <Box component={"span"}>
           {formatADAFull(data?.tx?.fee)} <ADAicon />
         </Box>
-      ),
+      )
     },
     {
-      icon: cubeIcon,
+      icon: cubeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard height={24} mr={1}>
@@ -213,10 +222,10 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
           </TitleCard>
         </Box>
       ),
-      value: <StyledLink to={details.block(data?.tx?.blockNo || 0)}>{data?.tx?.blockNo || 0}</StyledLink>,
+      value: <StyledLink to={details.block(data?.tx?.blockNo || 0)}>{data?.tx?.blockNo || 0}</StyledLink>
     },
     {
-      icon: slotIcon,
+      icon: slotIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard height={24} mr={1}>
@@ -228,8 +237,8 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
         <>
           {data?.tx?.epochSlot || 0}/<MaxSlot>432000</MaxSlot>
         </>
-      ),
-    },
+      )
+    }
   ];
   return (
     <DetailHeader
@@ -241,7 +250,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       epoch={
         data && {
           no: data.tx.epochNo,
-          slot: currentEpoch?.no === data.tx.epochNo ? data.tx.epochSlot : MAX_SLOT_EPOCH,
+          slot: currentEpoch?.no === data.tx.epochNo ? data.tx.epochSlot : MAX_SLOT_EPOCH
         }
       }
       listItem={listOverview}

@@ -1,25 +1,53 @@
 import { alpha, Box, Grid, MenuItem, Select, Skeleton, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "../../../commons/utils/constants";
+
+import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "src/commons/utils/constants";
+import breakpoints from "src/themes/breakpoints";
+
 import CopyButton from "../CopyButton";
 
 export const HeaderDetailContainer = styled(Box)`
   text-align: left;
 `;
 
+export const EpochDetail = styled(Box)`
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+`;
+
 export const BackButton = styled(Box)`
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 10px;
   cursor: pointer;
+  @media screen and (max-width: ${breakpoints.values.md}px) {
+    margin-top: 30px;
+    position: relative;
+    top: 5px;
+  }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    margin-top: 0px;
+  }
 `;
 
 export const BackText = styled("small")`
-  color: ${props => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.text.secondary};
   font-weight: var(--font-weight-bold);
 `;
+
+export const WrapHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    alignItems: "flex-start"
+  }
+}));
 
 export const HeaderContainer = styled(Box)`
   display: flex;
@@ -28,9 +56,12 @@ export const HeaderContainer = styled(Box)`
 `;
 
 export const HeaderTitle = styled("h2")`
-  color: ${props => props.theme.palette.common.black};
+  color: ${(props) => props.theme.palette.common.black};
   font-size: 2.25rem;
   margin: 0.5rem 0;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    font-size: 1.5rem;
+  }
 `;
 
 export const HeaderTitleSkeleton = styled(Skeleton)`
@@ -110,9 +141,8 @@ export const SlotLeader = styled("p")`
 
 export const SlotLeaderValue = styled("span")`
   font-family: var(--font-family-text);
-  color: ${props => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.secondary.main};
   white-space: pre-wrap;
-  display: inline-block;
   word-break: break-word;
   line-height: 1.5;
   font-weight: bold;
@@ -126,12 +156,15 @@ export const SlotLeaderCopy = styled(CopyButton)`
 `;
 
 export const DetailsInfo = styled(Grid)<{ items_length: number }>`
-  padding: 30px ${props => (props.items_length > 6 ? 25 : 15)}px;
+  padding: 30px ${(props) => (props.items_length > 6 ? 25 : 15)}px;
   margin-top: 15px;
-  background: ${props => props.theme.palette.background.paper};
+  background: ${(props) => props.theme.palette.background.paper};
   border-radius: 15px;
-  ${({ theme }) => theme.breakpoints.down(theme.breakpoints.values.lg)} {
+  ${({ theme }) => theme.breakpoints.down("lg")} {
     padding: 30px 25px;
+  }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    padding: 20px 15px;
   }
 `;
 
@@ -139,7 +172,7 @@ export const EpochNumber = styled(Link)<{ is_epoch: number }>(({ theme, is_epoch
   fontWeight: "bold",
   color: `${is_epoch ? theme.palette.common.black : theme.palette.secondary.main} !important`,
   margin: 0,
-  fontSize: "1.5rem",
+  fontSize: "1.5rem"
 }));
 
 export const EpochText = styled("small")`
@@ -172,14 +205,14 @@ export const DetailValueSkeleton = styled(Skeleton)`
 
 export const BlockDefault = styled("span")`
   font-size: var(--font-size-text);
-  color: ${props => props.theme.palette.primary.contrastText};
+  color: ${(props) => props.theme.palette.primary.contrastText};
   font-weight: var(--font-weight-normal);
   opacity: 0.5;
   margin: 0;
   margin-top: 0.25rem;
 `;
 
-export const ConfirmStatus = styled("small")<{ status?: keyof typeof ConfirmationStatus }>`
+export const ConfirmStatus = styled("small")<{ status?: keyof typeof CONFIRMATION_STATUS }>`
   color: ${({ status, theme }) => {
     switch (status) {
       case CONFIRMATION_STATUS.HIGH:
@@ -215,7 +248,7 @@ export const InfoIcon = styled(FiInfo)`
 export const ProgressLiner = styled("div")<{ progress: number }>`
   position: relative;
   width: 100%;
-  background: ${props => alpha(props.theme.palette.common.black, 0.2)};
+  background: ${(props) => alpha(props.theme.palette.common.black, 0.2)};
   height: 12px;
   margin-bottom: 10px;
   border-radius: 12px;
@@ -224,10 +257,10 @@ export const ProgressLiner = styled("div")<{ progress: number }>`
     position: absolute;
     top: 0;
     left: 0;
-    width: ${props => props.progress || 0}%;
+    width: ${(props) => props.progress || 0}%;
     height: 100%;
     border-radius: 12px;
-    background: ${props => props.theme.palette.gradient[4]};
+    background: ${(props) => props.theme.palette.gradient[4]};
   }
 `;
 
@@ -239,122 +272,164 @@ export const ProgressStatus = styled(Box)`
 `;
 
 export const ProgressStatusText = styled("h4")`
-  color: ${props => props.theme.palette.primary.contrastText};
+  color: ${(props) => props.theme.palette.primary.contrastText};
   font-weight: var(--font-weight-normal);
   margin: 0;
 `;
 
 export const ProgressPercent = styled("h4")`
-  color: ${props => props.theme.palette.warning.main};
+  color: ${(props) => props.theme.palette.warning.main};
   font-weight: var(--font-weight-normal);
   margin: 0;
 `;
 
-export const CardItem = styled(Grid)<{ items_length: number }>(({ theme, items_length }) => ({
-  position: "relative",
-  width: "max-content",
-  padding: items_length > 6 ? "20px 25px" : "0px 15px",
-  borderLeft: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
-  borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
-  ":first-of-type": {
-    borderLeft: "none",
-  },
-  ...(items_length > 6
-    ? {
-        borderBottomWidth: 1,
-        [theme.breakpoints.up(theme.breakpoints.values.lg)]: {
-          ":nth-of-type(4n+1)": {
-            borderLeftWidth: 0,
-            paddingLeft: 0,
-          },
-          ":nth-last-of-type(-n + 4)": {
-            ":nth-of-type(4n + 1)": {
-              borderBottomWidth: 0,
-              "&~div": {
-                borderBottomWidth: 0,
-                paddingTop: 20,
-                paddingBottom: 0,
-              },
+export const CardItem = styled(Grid)<{ items_length: number; isDetailToken?: boolean }>(
+  ({ theme, items_length, isDetailToken }) => ({
+    position: "relative",
+    width: "max-content",
+    padding: items_length > 6 ? "20px 25px" : "0px 15px",
+    borderLeft: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+    borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+    ":first-of-type": {
+      borderLeft: "none"
+    },
+    ...(items_length > 6
+      ? {
+          borderBottomWidth: 1,
+          [theme.breakpoints.up("lg")]: {
+            ":nth-of-type(4n+1)": {
+              borderLeftWidth: 0,
+              paddingLeft: 0
             },
-          },
-        },
-      }
-    : {
-        borderBottomWidth: 0,
-        [theme.breakpoints.down(theme.breakpoints.values.lg)]: {
-          padding: "20px 25px",
-        },
-      }),
-  [theme.breakpoints.between(theme.breakpoints.values.md, theme.breakpoints.values.lg)]: {
-    paddingTop: 20,
-    paddingBottom: 20,
-    borderBottomWidth: 1,
-    ":last-of-type::after": {
-      content: `""`,
-      position: "absolute",
-      top: 0,
-      bottom: 0,
-      right: -1,
-      borderRight: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
-    },
-    [`:nth-of-type(${items_length === 4 ? 4 : 3}n)::after`]: {
-      borderRight: 0,
-    },
-    [`:nth-of-type(${items_length === 4 ? 4 : 3}n+1)`]: {
-      borderLeftWidth: 0,
-      paddingLeft: 0,
-    },
-    [`:nth-last-of-type(-n+${items_length === 4 ? 4 : 3})`]: {
+            ":nth-last-of-type(-n + 4)": {
+              ":nth-of-type(4n + 1)": {
+                borderBottomWidth: 0,
+                "&~div": {
+                  borderBottomWidth: 0,
+                  paddingTop: 20,
+                  paddingBottom: 0
+                }
+              }
+            }
+          }
+        }
+      : {
+          borderBottomWidth: 0,
+          [theme.breakpoints.down("lg")]: {
+            padding: "20px 25px"
+          }
+        }),
+    [theme.breakpoints.between(theme.breakpoints.values.md, theme.breakpoints.values.lg)]: {
+      paddingTop: 20,
+      paddingBottom: 20,
+      borderBottomWidth: 1,
+      ":last-of-type::after": {
+        content: `""`,
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        right: -1,
+        borderRight: `1px solid ${alpha(theme.palette.common.black, 0.1)}`
+      },
+      [`:nth-of-type(${items_length === 4 ? 4 : 3}n)::after`]: {
+        borderRight: 0
+      },
       [`:nth-of-type(${items_length === 4 ? 4 : 3}n+1)`]: {
-        borderBottomWidth: 0,
-        "&~div": {
-          borderBottomWidth: 0,
-        },
+        borderLeftWidth: 0,
+        paddingLeft: 0
       },
+      [`:nth-last-of-type(-n+${items_length === 4 ? 4 : 3})`]: {
+        [`:nth-of-type(${items_length === 4 ? 4 : 3}n+1)`]: {
+          borderBottomWidth: 0,
+          "&~div": {
+            borderBottomWidth: 0
+          }
+        }
+      }
     },
-  },
-  [theme.breakpoints.between(theme.breakpoints.values.sm, theme.breakpoints.values.md)]: {
-    paddingTop: 20,
-    paddingBottom: 20,
-    borderBottomWidth: 1,
-    ":nth-of-type(2n+1)": {
-      borderLeftWidth: 0,
-      paddingLeft: 0,
-    },
-    ":last-of-type::after": {
-      content: `""`,
-      position: "absolute",
-      top: 0,
-      bottom: 0,
-      right: -1,
-      borderRight: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
-    },
-    ":nth-of-type(2n)::after": {
-      borderRight: 0,
-    },
-    ":nth-last-of-type(-n+2)": {
+    [theme.breakpoints.down("md")]: {
+      paddingTop: 20,
+      paddingBottom: 20,
+      borderBottomWidth: 1,
+      borderLeft: `${isDetailToken ? `none` : `1px solid ${alpha(theme.palette.common.black, 0.1)}`}`,
       ":nth-of-type(2n+1)": {
-        borderBottomWidth: 0,
-        "&~div": {
-          borderBottomWidth: 0,
-        },
+        borderLeftWidth: 0,
+        paddingLeft: `${isDetailToken ? `none` : `0`}`
       },
+      ":first-of-type": {
+        paddingLeft: `${isDetailToken ? `9px` : `0`}`
+      },
+      ":last-of-type::after": {
+        content: `""`,
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        right: -1,
+        borderRight: `1px solid ${alpha(theme.palette.common.black, 0.1)}`
+      },
+      ":nth-of-type(2n)::after": {
+        borderRight: 0
+      },
+      ":nth-last-of-type(-n+2)": {
+        ":nth-of-type(2n+1)": {
+          borderBottomWidth: `${isDetailToken ? `1px` : `0`}`,
+          "&~div": {
+            borderBottomWidth: 0
+          }
+        }
+      },
+      ":nth-of-type(2n)": {
+        borderRight: `${isDetailToken ? `1px solid ${alpha(theme.palette.common.black, 0.1)}` : `none`}`,
+        paddingRight: `${isDetailToken ? `unset` : `0`}`
+      }
     },
-  },
-  [theme.breakpoints.down(theme.breakpoints.values.sm)]: {
-    padding: "20px 0px",
-    borderBottomWidth: 1,
-    borderLeftWidth: 0,
-    ":last-of-type": {
-      borderBottomWidth: 0,
-    },
-  },
-}));
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: 20,
+      paddingBottom: 20,
+      borderBottomWidth: 1,
+      wordBreak: "break-word",
+      borderLeft: `${isDetailToken ? `none` : `1px solid ${alpha(theme.palette.common.black, 0.1)}`}`,
+      ":nth-of-type(2n+1)": {
+        borderLeftWidth: 0,
+        padding: 15,
+        paddingLeft: `${isDetailToken ? `none` : `0`}`
+      },
+      ":first-of-type": {
+        padding: `${isDetailToken ? `0 0 15px 0` : `none`}`
+      },
+      ":nth-of-type(2n)": {
+        padding: 15,
+        borderRight: `${isDetailToken ? `1px solid ${alpha(theme.palette.common.black, 0.1)}` : `none`}`,
+        paddingLeft: `${isDetailToken ? `0` : `none`}`,
+        paddingRight: `${isDetailToken ? `none` : `0`}`
+      },
+      ":last-of-type::after": {
+        content: `""`,
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        right: -1,
+        borderRight: `1px solid ${alpha(theme.palette.common.black, 0.1)}`
+      },
+      ":nth-of-type(2n)::after": {
+        borderRight: 0
+      },
+      ":nth-last-of-type(-n+2)": {
+        ":nth-of-type(2n+1)": {
+          borderBottomWidth: `${isDetailToken ? `1px` : `0`}`,
+          "&~div": {
+            borderBottomWidth: 0
+          }
+        }
+      }
+    }
+  })
+);
 
 export const ValueCard = styled(Box)(({ theme }) => ({
   color: theme.palette.common.black,
   fontSize: "1rem",
-  fontWeight: "bold",
+  fontWeight: "bold"
 }));
 
 export const AllowSearchButton = styled(Box)(({ theme }) => ({
@@ -369,6 +444,9 @@ export const AllowSearchButton = styled(Box)(({ theme }) => ({
   right: 0,
   borderRadius: 4,
   cursor: "pointer",
+  "& path": {
+    stroke: theme.palette.grey[400]
+  }
 }));
 
 export const StyledSelect = styled(Select)(({ theme }) => ({
@@ -381,22 +459,22 @@ export const StyledSelect = styled(Select)(({ theme }) => ({
   borderRadius: 8,
   height: 35,
   fieldset: {
-    border: "none",
-  },
+    border: "none"
+  }
 }));
 
-export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+export const StyledMenuItem = styled(MenuItem)(() => ({
   height: 40,
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
   "&:hover": {
-    backgroundColor: "rgba(67, 143, 104, 0.1)",
-  },
+    backgroundColor: "rgba(67, 143, 104, 0.1)"
+  }
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
   color: theme.palette.grey[400],
   display: "block",
-  marginBottom: 10,
+  marginBottom: 10
 }));

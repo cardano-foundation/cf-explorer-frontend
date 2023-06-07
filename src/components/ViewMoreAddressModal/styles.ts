@@ -1,11 +1,14 @@
-import { ListItem, Typography } from "@mui/material";
-import { styled } from "@mui/material";
+import { ListItem, Typography, alpha, styled } from "@mui/material";
 
 export const StyledListItem = styled(ListItem)`
   padding: 0px;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  margin: 6px 0px;
+  padding: ${({ theme }) => theme.spacing(2)} 0px;
+  border-bottom: 1px solid ${alpha("#000", 0.05)};
+  &:first-of-type {
+    border-top: 1px solid ${alpha("#000", 0.05)};
+  }
 `;
 
 export const StyledListItemText = styled(Typography)`

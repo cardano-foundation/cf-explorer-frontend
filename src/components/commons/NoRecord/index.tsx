@@ -1,5 +1,6 @@
 import { Container, styled } from "@mui/material";
-import { EmptyIcon } from "../../../commons/resources";
+
+import { EmptyIcon } from "src/commons/resources";
 
 const NoRecordContainer = styled(Container)`
   display: flex;

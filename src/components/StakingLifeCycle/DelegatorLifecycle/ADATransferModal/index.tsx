@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import StyledModal from "../../../commons/StyledModal";
 import { TabContext, TabPanel } from "@mui/lab";
-import WalletActivity from "./WalletActivity";
-import { CustomTab, ModalTitle, StyledTab, StyledTabs } from "./styles";
 import { Box } from "@mui/material";
 
+import StyledModal from "src/components/commons/StyledModal";
+import { BalanceIcon, RewardsIcon } from "src/commons/resources";
+import CustomIcon from "src/components/commons/CustomIcon";
+import { useScreen } from "src/commons/hooks/useScreen";
+
+import WalletActivity from "./WalletActivity";
 import RewardActivity from "./RewardActivity";
-import { BalanceIcon, RewardsIcon } from "../../../../commons/resources";
-import CustomIcon from "../../../commons/CustomIcon";
+import { CustomTab, StyledTab, StyledTabs } from "./styles";
 
 interface IProps {
   open: boolean;
@@ -16,12 +18,12 @@ interface IProps {
 
 enum ActivityType {
   WALLET = "WALLET",
-  REWARDS = "REWARDS",
+  REWARDS = "REWARDS"
 }
 
 const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
   const [activityType, setActivityType] = useState<ActivityType>(ActivityType.WALLET);
-
+  const { isGalaxyFoldSmall } = useScreen();
   useEffect(() => {
     if (!open) setActivityType(ActivityType.WALLET);
   }, [open]);
@@ -34,16 +36,25 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
     }
   };
 
+  const { isMobile } = useScreen();
+
   return (
-    <StyledModal open={open} handleCloseModal={handleCloseModal} width={1200} height={'72vh'}>
+    <StyledModal
+      title={"ADA Transfers"}
+      open={open}
+      handleCloseModal={handleCloseModal}
+      width={1200}
+      height={isMobile ? "83vh" : "72vh"}
+    >
       <TabContext value={activityType}>
-        <ModalTitle>ADA Transfers</ModalTitle>
-        <Box overflow={"auto"} maxHeight={"70vh"}>
+        <Box overflow={!isGalaxyFoldSmall ? "auto" : "hidden"} maxHeight={isMobile ? "80vh" : "70vh"}>
           <StyledTabs
             value={activityType}
             onChange={onChangeTab}
-            sx={{ borderBottom: theme => `1px solid ${theme.palette.border.main}`, color: "red" }}
-            TabIndicatorProps={{ sx: { backgroundColor: theme => theme.palette.primary.main, height: 4 } }}
+            sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.main}`, color: "red" }}
+            TabIndicatorProps={{ sx: { backgroundColor: (theme) => theme.palette.primary.main, height: 4 } }}
+            scrollButtons="auto"
+            variant="scrollable"
           >
             <StyledTab
               value={ActivityType.WALLET}
@@ -52,7 +63,7 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
                   <CustomIcon
                     icon={BalanceIcon}
                     width={23}
-                    color={theme => theme.palette.primary.main}
+                    color={(theme) => theme.palette.primary.main}
                     stroke="currentColor"
                   />
                   <CustomTab>Wallet Activity</CustomTab>
@@ -66,7 +77,7 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
                   <CustomIcon
                     icon={RewardsIcon}
                     width={23}
-                    color={theme => theme.palette.primary.main}
+                    color={(theme) => theme.palette.primary.main}
                     fill="currentColor"
                   />
                   <CustomTab>Rewards Activity</CustomTab>

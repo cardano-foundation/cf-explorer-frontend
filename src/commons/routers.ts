@@ -33,14 +33,15 @@ export const routers = {
   MY_PROFILE: "/account/profile",
   BOOKMARK: "/account/bookmark",
   PRIVATE_NOTES: "/account/notes",
-  PROTOCOL_PARAMETER: "/protocol-parameter",
-  SPO_SEARCH: "/spo-lifecycle",
-  DELEGATOR_SEARCH: "/delegator-lifecycle",
-  DELEGATOR_LIFECYCLE: "/delegator-lifecycle/:stakeId/:tab?",
-  SPO_LIFECYCLE: "/spo-lifecycle/:poolId/:tab?",
+  PROTOCOL_PARAMETER: "/protocol-parameters",
+  DELEGATOR_LIFECYCLE: "/delegator-lifecycle/:stakeId/:mode?/:tab?/:txHash?",
+  SPO_LIFECYCLE: "/spo-lifecycle/:poolId/:mode?/:tab?/:txHash?",
   STAKING_LIFECYCLE: "/stacking-lifecycle",
-  REPORT_GENERATED: "/report-generated",
-  NOT_FOUND: "/*",
+  STAKING_LIFECYCLE_SEARCH: "/timeline",
+  REPORT_GENERATED: "/report-generated/:tab",
+  REPORT_GENERATED_STAKING_DETAIL: "/report-generated/:reportId/staking",
+  REPORT_GENERATED_POOL_DETAIL: "/report-generated/:reportId/pool",
+  NOT_FOUND: "/*"
 } as const;
 
 export const details = {
@@ -59,9 +60,20 @@ export const details = {
   policyDetail: (policyId?: string) => routers.POLICY_DETAIL.replace(":policyId", policyId ?? ""),
   contract: (address?: string, tab = "transaction") =>
     routers.CONTRACT_DETAIL.replace(":address", address ?? "").replace(":tabActive?", tab),
-  staking: (stakeId: string, tab = "registration") =>
-    routers.DELEGATOR_LIFECYCLE.replace(":stakeId", stakeId).replace(":tab?", tab),
-  spo: (poolId: string, tab = "registration") => routers.SPO_LIFECYCLE.replace(":poolId", poolId).replace(":tab?", tab),
+  staking: (stakeId: string, mode: ViewMode = "timeline", tab: DelegationStep = "registration", txHash?: string) =>
+    routers.DELEGATOR_LIFECYCLE.replace(":stakeId", stakeId)
+      .replace(":mode?", mode)
+      .replace(":tab?", tab)
+      .replace(":txHash?", txHash ?? ""),
+  spo: (poolId: string, mode: ViewMode = "timeline", tab: SPOStep = "registration", txHash?: string) =>
+    routers.SPO_LIFECYCLE.replace(":poolId", poolId)
+      .replace(":mode?", mode)
+      .replace(":tab?", tab)
+      .replace(":txHash?", txHash ?? ""),
+  generated_staking_detail: (reportId: string) =>
+    routers.REPORT_GENERATED_STAKING_DETAIL.replace(":reportId", reportId),
+  generated_pool_detail: (reportId: string) => routers.REPORT_GENERATED_POOL_DETAIL.replace(":reportId", reportId),
+  generated_report: (tab: string) => routers.REPORT_GENERATED.replace(":tab", tab)
 };
 
 export const listRouters = [
@@ -75,5 +87,5 @@ export const listRouters = [
   routers.STAKE_LIST.replace("/:poolType?", ""),
   routers.CONTRACT_LIST,
   routers.NFT_LIST,
-  routers.TOP_DELEGATOR,
+  routers.TOP_DELEGATOR
 ];

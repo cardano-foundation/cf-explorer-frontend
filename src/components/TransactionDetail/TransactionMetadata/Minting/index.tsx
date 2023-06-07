@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import { Column } from "../../../commons/Table";
-import ScriptModal from "../../../ScriptModal";
+
+import { Column } from "src/components/commons/Table";
+import ScriptModal from "src/components/ScriptModal";
+import { PolicyScriptIcon } from "src/commons/resources";
+import { Logo } from "src/pages/Token/styles";
+
 import { Amount, AssetName, LogoEmpty, TableMinting } from "./styles";
-import { PolicyScriptIcon } from "../../../../commons/resources";
-import { Logo } from "../../../../pages/Token/styles";
 
 interface MintingProps {
   data: Transaction["mints"] | null;
@@ -20,7 +22,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       isHiddenBorder: true,
       key: "Assetname",
       minWidth: "40px",
-      render: (r, index) => {
+      render: (r) => {
         return (
           <AssetName>
             {r?.metadata?.logo ? (
@@ -31,39 +33,40 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
             {r.assetName}
           </AssetName>
         );
-      },
+      }
     },
     {
       title: "Amount minted",
       isHiddenBorder: true,
       key: "Amount",
       minWidth: "40px",
-      render: (r, index) => {
+      render: (r) => {
         return <Amount>{r.assetQuantity}</Amount>;
-      },
+      }
     },
     {
       title: "Policy script",
       key: "Policy",
       minWidth: "40px",
+      maxWidth: "120px",
       isHiddenBorder: true,
-      render: (r, index) => {
+      render: (r) => {
         return (
-          <div
+          <Box
             onClick={() => {
               setOpen(true);
               setSelectedItem(r.policy || "");
             }}
           >
             <PolicyScriptIcon />
-          </div>
+          </Box>
         );
-      },
-    },
+      }
+    }
   ];
 
   return (
-    <Box bgcolor={"white"} px={2}>
+    <Box>
       <TableMinting columns={columns} data={data || []} />
       <ScriptModal open={open} policy={selectedItem || ""} onClose={() => setOpen(false)} />
     </Box>

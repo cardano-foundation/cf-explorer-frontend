@@ -1,5 +1,4 @@
-import { alpha, TextField } from "@mui/material";
-import { styled, Box } from "@mui/material";
+import { alpha, TextField, styled, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const TitleDetail = styled(Box)`
@@ -23,14 +22,14 @@ export const ItemLeft = styled(Box)`
 
 export const ItemLeftTitle = styled(Box)`
   margin-left: 10px;
-  color: ${props => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.text.secondary};
   font-size: 14px;
 `;
 
 export const AddressGroup = styled(Box)`
   margin-top: 15px;
   margin-bottom: 24px;
-  background: ${props => props.theme.palette.secondary.light};
+  background: ${(props) => props.theme.palette.secondary.light};
   border-radius: 8px;
   padding: 12px 20px;
   display: flex;
@@ -43,7 +42,7 @@ export const AddressLink = styled(Link)`
   word-wrap: break-word;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text);
-  color: ${props => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.secondary.main};
   font-size: 14px;
 `;
 
@@ -57,7 +56,7 @@ export const StyledTextField = styled(TextField)`
   .MuiInputBase-root {
     padding: 0 9px;
     height: 40px;
-    border: 1.5px solid ${props => props.theme.palette.border.main};
+    border: 1.5px solid ${(props) => props.theme.palette.border.main};
     border-radius: 8px;
   }
   .MuiInputBase-input {
@@ -69,7 +68,7 @@ export const StyledTextField = styled(TextField)`
 `;
 
 export const Option = styled("li")<{ active: number }>(({ theme, active }) => ({
-  background: active ? theme.palette.green[600_10] : theme.palette.background.paper,
+  background: active ? theme.palette.green[600_10] : theme.palette.background.paper
 }));
 
 export const Logo = styled("img")`
@@ -80,9 +79,9 @@ export const Logo = styled("img")`
 export const LogoEmpty = styled(Box)`
   width: 25px;
   height: 25px;
-  background: ${props => alpha(props.theme.palette.common.white, 0.6)};
+  background: ${(props) => alpha(props.theme.palette.common.white, 0.6)};
   border-radius: 50%;
-  border: 1px solid ${props => props.theme.palette.border.main};
+  border: 1px solid ${(props) => props.theme.palette.border.main};
 `;
 export const BackButton = styled(Box)`
   display: inline-flex;
@@ -94,6 +93,27 @@ export const BackButton = styled(Box)`
 `;
 
 export const BackText = styled("small")`
-  color: ${props => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.text.secondary};
   font-weight: var(--font-weight-bold);
 `;
+
+export const StyledBoxCard = styled(Box)`
+  border-radius: 12px;
+  height: 100%;
+  overflow: hidden;
+`;
+
+export const TitleText = styled(Box)`
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    font-size: 24px !important;
+  }
+`;
+
+export const WrapHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "flex-start",
+  flexDirection: "column",
+  [theme.breakpoints.between("sm", "md")]: {
+    paddingTop: "56px"
+  }
+}));

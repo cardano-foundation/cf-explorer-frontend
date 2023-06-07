@@ -1,29 +1,31 @@
-import { Box, BoxProps, Grid, Icon } from "@mui/material";
-import { useParams } from "react-router-dom";
-import {
-  WalletGreenIcon,
-  BgGray,
-  PaymentWallet,
-  RewardWithdrawn,
-  DelegationTo,
-  RewardAccount,
-  TransactionIcon,
-} from "../../../commons/resources/index";
-import { CardOverview, CardTitle, CardValue, TransferButton, WrapIcon, WrapWalletIcon } from "./styles";
-import { API } from "../../../commons/utils/api";
-import useFetch from "../../../commons/hooks/useFetch";
-import { formatADAFull } from "../../../commons/utils/helper";
-import ADAicon from "../../commons/ADAIcon";
-import { useState } from "react";
-import ADATransferModal from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal";
+import { Box, Grid, Icon } from "@mui/material";
+import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-export const GreenWalletIcon = (props: BoxProps) => {
-  return (
-    <WrapWalletIcon {...props}>
-      <Icon component={WalletGreenIcon} />
-    </WrapWalletIcon>
-  );
-};
+import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
+
+import {
+  DelegationToIconUrl,
+  PaymentWalletUrl,
+  RewardAccountIconUrl,
+  RewardWithdrawnIconUrl,
+  TransactionIcon
+} from "../../../commons/resources/index";
+import { details } from "../../../commons/routers";
+import { formatADAFull, getShortHash } from "../../../commons/utils/helper";
+import ADATransferModal from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal";
+import {
+  CardContent,
+  CardInfo,
+  CardItem,
+  CardTitle,
+  CardValue,
+  ItemIcon,
+  StyledAdaLogoIcon,
+  TransferButton,
+  NoDelegatedStakePool
+} from "./styles";
 
 type TCardAmount = {
   amount?: number;
@@ -31,13 +33,10 @@ type TCardAmount = {
 
 const CardAmount = ({ amount }: TCardAmount) => {
   return (
-    <Box display="flex" alignItems="center">
-      <GreenWalletIcon mr={2} />
-      <CardValue>
-        {formatADAFull(amount)}
-        <ADAicon pl={"8px"} />
-      </CardValue>
-    </Box>
+    <CardValue>
+      {formatADAFull(amount)}
+      <StyledAdaLogoIcon />
+    </CardValue>
   );
 };
 
@@ -45,67 +44,77 @@ type TGridItem = {
   action?: React.ReactNode;
   title: string;
   value: React.ReactNode;
-  mainIcon: React.ReactNode;
+  iconUrl: string;
 };
 
-const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
+const GridItem = ({ title, action, value, iconUrl }: TGridItem) => {
+  const { sidebar } = useSelector(({ user }: RootState) => user);
+
   return (
-    <Grid item xs={6}>
-      <CardOverview>
-        <Icon component={BgGray} />
-        <Box display="flex" alignItems="center" gap="12px">
-          <WrapIcon>{mainIcon}</WrapIcon>
-          <Box textAlign="start">
-            <CardTitle>{title}</CardTitle>
-            {value}
-          </Box>
-        </Box>
+    <CardItem sidebar={+sidebar}>
+      <ItemIcon src={iconUrl} alt="title" />
+      <CardContent>
+        <CardInfo>
+          <CardTitle>{title}</CardTitle>
+          {value}
+        </CardInfo>
         {action}
-      </CardOverview>
-    </Grid>
+      </CardContent>
+    </CardItem>
   );
 };
 
 const TabularOverview: React.FC = () => {
+  const data = useContext(DelegatorDetailContext);
   const [open, setOpen] = useState(false);
-  const { stakeId } = useParams<{ stakeId: string }>();
-  const { data } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}`, undefined, false);
 
   return (
     <Grid container spacing={2}>
-      <GridItem
-        title="Payment Wallet"
-        mainIcon={<PaymentWallet />}
-        value={<CardAmount amount={data?.totalStake} />}
-        action={
-          <TransferButton
-            onClick={() => setOpen(true)}
-            variant="contained"
-            startIcon={<Icon fill="white" component={TransactionIcon} />}
-          >
-            ADA Transfers
-          </TransferButton>
-        }
-      />
-      <GridItem
-        title="Reward Account"
-        mainIcon={<RewardAccount />}
-        value={<CardAmount amount={data?.rewardAvailable} />}
-      />
-      <GridItem
-        title="Rewards Withdrawn"
-        mainIcon={<RewardWithdrawn />}
-        value={<CardAmount amount={data?.rewardWithdrawn} />}
-      />
-      <GridItem
-        title="Delegating To"
-        mainIcon={<DelegationTo />}
-        value={
-          <Box display="flex" alignItems="center">
-            <CardValue>{data?.pool?.poolName}</CardValue>
-          </Box>
-        }
-      />
+      <Grid item xs={12} sm={6}>
+        <GridItem
+          title="Payment Wallet"
+          iconUrl={PaymentWalletUrl}
+          value={<CardAmount amount={Math.max(data?.totalStake || 0, 0)} />}
+          action={
+            <TransferButton
+              onClick={() => setOpen(true)}
+              variant="contained"
+              startIcon={<Icon fill="white" component={TransactionIcon} />}
+            >
+              ADA Transfers
+            </TransferButton>
+          }
+        />
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <GridItem
+          title="Reward Account"
+          iconUrl={RewardAccountIconUrl}
+          value={<CardAmount amount={Math.max(data?.rewardAvailable || 0, 0)} />}
+        />
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <GridItem
+          title="Rewards Withdrawn"
+          iconUrl={RewardWithdrawnIconUrl}
+          value={<CardAmount amount={data?.rewardWithdrawn} />}
+        />
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <GridItem
+          title="Delegating To"
+          iconUrl={DelegationToIconUrl}
+          value={
+            data?.pool?.poolId ? (
+              <Box component={Link} to={details.delegation(data?.pool?.poolId)} display="flex" alignItems="center">
+                <CardValue>{data?.pool?.poolName || getShortHash(data?.pool?.poolId || "")}</CardValue>
+              </Box>
+            ) : (
+              <NoDelegatedStakePool>Not delegated to any pool</NoDelegatedStakePool>
+            )
+          }
+        />
+      </Grid>
       <ADATransferModal open={open} handleCloseModal={() => setOpen(false)} />
     </Grid>
   );

@@ -1,7 +1,7 @@
 import { Box, Grid, Skeleton } from "@mui/material";
 import React from "react";
 
-import { formatADAFull, formatPercent, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADAFull, formatPercent, numberWithCommas } from "src/commons/utils/helper";
 
 import { Item, StyledContainer, Title, Value } from "./styles";
 
@@ -14,11 +14,11 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
   const overviewData = {
     Reward: `${data?.reward || 0}%`,
     Fee: formatPercent(data?.margin),
-    ROS: formatPercent(data?.ros),
+    ROS: formatPercent(data?.ros ? data?.ros / 100 : 0),
     "Pledge(A)": formatADAFull(data?.pledge),
     "Cost(A)": formatADAFull(data?.cost),
     "Epoch Block": data?.epochBlock || 0,
-    "Lifetime Block": numberWithCommas(data?.lifetimeBlock),
+    "Lifetime Block": numberWithCommas(data?.lifetimeBlock)
   };
 
   if (loading) {
@@ -46,7 +46,7 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
             <Grid item xs={30} sm={20} md={15} xl={12} key={ii}>
               <Item>
                 <Title>{i}</Title>
-                <Value sx={{ color: theme => (i === "Reward" ? theme.palette.primary.main : "initial") }}>
+                <Value sx={{ color: (theme) => (i === "Reward" ? theme.palette.primary.main : "initial") }}>
                   {overviewData[i as keyof typeof overviewData]}
                 </Value>
               </Item>
