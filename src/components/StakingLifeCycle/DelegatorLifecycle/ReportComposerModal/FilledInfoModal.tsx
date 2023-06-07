@@ -269,6 +269,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
           <Box sx={{ marginBottom: "20px" }}>
             <StyledLabel>Select a epoch range</StyledLabel>
             <StyledSlider
+              data-testid="slider"
               getAriaLabel={() => "Minimum distance"}
               value={epochRange}
               onChange={handleChangeEpochRange}
@@ -291,6 +292,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
                       name={key}
                       value={value}
                       onChange={(e: any) => handleChange(e, key)}
+                      data-testid="radio-group-report"
                     >
                       <Stack direction={"row"}>
                         <FormControlLabel
