@@ -27,17 +27,17 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
   const poolName = data?.pool?.poolName || "";
   const ticketName = data?.pool?.tickerName || "";
   const poolId = data?.pool?.poolId || "";
-  const hasNoTicketOrPoolName = !ticketName && !poolName;
+  const hasTicketOrPoolName = ticketName || poolName;
 
   const delegateTooltip = data?.pool
-    ? !hasNoTicketOrPoolName
-      ? `${ticketName} - ${poolName}`
+    ? hasTicketOrPoolName
+      ? `${ticketName}${(ticketName && poolName) ? " - " : ""}${poolName}`
       : poolId
     : "Not delegated to any pool";
 
   const delegateTo = data?.pool
-    ? !hasNoTicketOrPoolName
-      ? `${ticketName} - ${poolName}`
+    ? hasTicketOrPoolName
+      ? `${ticketName}${(ticketName && poolName) ? " - " : ""}${poolName}`
       : getShortWallet(poolId)
     : "Not delegated to any pool";
   const listOverview = [
@@ -51,7 +51,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
       value: (
         <CustomTooltip sx={{ width: "100%" }} title={delegateTooltip}>
           <StyledLinkTo isTo={!!data?.pool} to={data?.pool?.poolId ? details.delegation(data?.pool?.poolId) : "#"}>
-            {hasNoTicketOrPoolName ? <TitleNoPool>{delegateTo}</TitleNoPool> : <TitleValue>{delegateTo}</TitleValue>}
+            {!hasTicketOrPoolName ? <TitleNoPool>{delegateTo}</TitleNoPool> : <TitleValue>{delegateTo}</TitleValue>}
           </StyledLinkTo>
         </CustomTooltip>
       )
