@@ -45,7 +45,6 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
     <script>
-      window.cardano = window.cardano || {};
       var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
       document.addEventListener("gesturestart", function (e) {
         e.preventDefault();
@@ -60,5 +59,11 @@
         { passive: false }
       );
     </script>
+    <script
+      data-jsd-embedded
+      data-key="%REACT_APP_JSD_WIDGET_KEY%"
+      data-base-url="https://jsd-widget.atlassian.com"
+      src="https://jsd-widget.atlassian.com/assets/embed.js"
+    ></script>
   </body>
 </html>
