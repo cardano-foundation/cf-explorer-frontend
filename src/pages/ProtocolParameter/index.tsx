@@ -209,7 +209,7 @@ const ProtocolParameter: React.FC = () => {
 
 export default ProtocolParameter;
 
-const ProtocolParameterHistory = () => {
+export const ProtocolParameterHistory = () => {
   const { PROTOCOL_PARAMETER } = API;
   const TOTAL_PARAMETER = 29;
   const [filterParams, setFilterParams] = useState<string[]>([]);
