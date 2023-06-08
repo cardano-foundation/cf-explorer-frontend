@@ -4,6 +4,7 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 
 import { LogoIcon, SearchIcon } from "src/commons/resources";
 import { setSidebar } from "src/stores/user";
+import { routers } from "src/commons/routers";
 
 import TopSearch from "../Sidebar/TopSearch";
 import HeaderSearch from "./HeaderSearch";
@@ -36,7 +37,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
       <HeaderBox home={home ? 1 : 0}>
         <HeaderMain home={home ? 1 : 0}>
           <Title home={home ? 1 : 0}>Cardano Blockchain Explorer</Title>
-          <HeaderSearch home={home} />
+          {history.location.pathname !== routers.STAKING_LIFECYCLE && <HeaderSearch home={home} />}
         </HeaderMain>
         <HeaderTop collasped={+onDetailView}>
           <HeaderLogoLink to="/">
@@ -47,9 +48,11 @@ const Header: React.FC<RouteComponentProps> = (props) => {
               <SelectNetwork />
             </NetworkContainer>
             <LoginButton />
-            <SearchButton home={+home} onClick={() => setOpenSearch((prev) => !prev)}>
-              <SearchIcon fontSize={24} />
-            </SearchButton>
+            {history.location.pathname !== routers.STAKING_LIFECYCLE && (
+              <SearchButton home={+home} onClick={() => setOpenSearch((prev) => !prev)}>
+                <SearchIcon fontSize={24} />
+              </SearchButton>
+            )}
             <Toggle onClick={handleToggle} />
           </SideBarRight>
         </HeaderTop>
