@@ -322,12 +322,12 @@ export const CardItem = styled(Grid)<{ length: number; wide?: number }>(({ theme
     paddingBottom: 20,
     borderBottomWidth: 1,
     borderLeftWidth: 1,
-    ":nth-of-type(3n + 1)": {
+    [`:nth-of-type(${length === 4 ? 4 : 3}n + 1)`]: {
       borderLeftWidth: 0,
       paddingLeft: 0
     },
-    ":nth-last-of-type(-n + 3)": {
-      ":nth-of-type(3n + 1)": {
+    [`:nth-last-of-type(-n + ${length === 4 ? 4 : 3})`]: {
+      [`:nth-of-type(${length === 4 ? 4 : 3}n + 1)`]: {
         borderBottomWidth: 0,
         "&~div": {
           borderBottomWidth: 0,

@@ -327,7 +327,7 @@ const BufferList = memo(({ numberOfItems, wide, children }: BufferListProps) => 
   // numberOfRow in tablet screen is 2, numberOfBuffer is 1;
   const numberOfBuffer = numberOfRow - ((numberOfItems - bufferWide) % numberOfRow || numberOfRow);
 
-  if (isLaptop || numberOfItems > 6)
+  if ((isLaptop && numberOfItems > 4) || numberOfItems > 6)
     return (
       <>
         {new Array(numberOfBuffer).fill(0).map((_, index) => {
