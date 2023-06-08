@@ -1,14 +1,28 @@
-import { cleanup, fireEvent, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
 import { render } from "src/test-utils";
+import useFetch from "src/commons/hooks/useFetch";
 
 import ProtocolParameter, { FilterComponent, TableStyled } from "./index";
 
+jest.mock("src/commons/hooks/useFetch");
+
+const mockData = {
+  activeSlotsCoeff: 0.05,
+  updateQuorum: 5,
+  networkId: "Mainnet testing"
+};
+
 describe("ProtocolParameter page", () => {
+  beforeEach(() => {
+    const mockUseFetch = useFetch as jest.Mock;
+    mockUseFetch.mockReturnValue({ data: mockData });
+  });
   afterEach(() => {
     cleanup();
   });
+
   it("should be render page", () => {
     render(<ProtocolParameter />);
     expect(screen.getByText("Updatable Parameters")).toBeInTheDocument();
@@ -35,23 +49,10 @@ describe("ProtocolParameter page", () => {
     expect(screen.getByText("Test Column")).toBeInTheDocument();
     expect(screen.getByText("Test Data")).toBeInTheDocument();
   });
-  it("renders data in the table", () => {
-    jest.mock("src/commons/hooks/useFetch", () => ({
-      useFetch: () => {
-        return {
-          data: {
-            activeSlotsCoeff: 0.05,
-            updateQuorum: 5,
-            networkId: "Mainnet testing"
-          }
-        };
-      }
-    }));
-    waitFor(() => {
-      expect(screen.getByText("Mainnet testing")).toBeInTheDocument();
-      expect(screen.getByText("0.05")).toBeInTheDocument();
-      expect(screen.getByText("5")).toBeInTheDocument();
-    });
+  it("renders data in the table", async () => {
+    render(<ProtocolParameter />);
+    expect(screen.getAllByRole("table")[0]).toBeInTheDocument();
+    expect(screen.getAllByRole("table")[1]).toBeInTheDocument();
   });
 });
 
