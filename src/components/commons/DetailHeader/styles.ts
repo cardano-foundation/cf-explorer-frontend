@@ -155,8 +155,8 @@ export const SlotLeaderCopy = styled(CopyButton)`
   margin-bottom: 3px;
 `;
 
-export const DetailsInfo = styled(Grid)<{ items_length: number }>`
-  padding: 30px ${(props) => (props.items_length > 6 ? 25 : 15)}px;
+export const DetailsInfo = styled(Grid)<{ length: number }>`
+  padding: 30px ${(props) => (props.length > 6 ? 25 : 15)}px;
   margin-top: 15px;
   background: ${(props) => props.theme.palette.background.paper};
   border-radius: 15px;
@@ -283,153 +283,88 @@ export const ProgressPercent = styled("h4")`
   margin: 0;
 `;
 
-export const CardItem = styled(Grid)<{ items_length: number; isDetailToken?: boolean }>(
-  ({ theme, items_length, isDetailToken }) => ({
-    position: "relative",
-    width: "max-content",
-    padding: items_length > 6 ? "20px 25px" : "0px 15px",
-    borderLeft: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
-    borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
-    ":first-of-type": {
-      borderLeft: "none"
-    },
-    ...(items_length > 6
-      ? {
-          borderBottomWidth: 1,
-          [theme.breakpoints.up("lg")]: {
-            ":nth-of-type(4n+1)": {
-              borderLeftWidth: 0,
-              paddingLeft: 0
-            },
-            ":nth-last-of-type(-n + 4)": {
-              ":nth-of-type(4n + 1)": {
+export const CardItem = styled(Grid)<{ length: number; wide?: number }>(({ theme, length, wide }) => ({
+  width: "max-content",
+  padding: length > 6 ? "20px 25px" : "0px 15px",
+  borderLeft: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+  borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+  ":first-of-type": {
+    borderLeft: "none"
+  },
+  ...(length > 6
+    ? {
+        borderBottomWidth: 1,
+        [theme.breakpoints.up("lg")]: {
+          ":nth-of-type(4n+1)": {
+            borderLeftWidth: 0,
+            paddingLeft: 0
+          },
+          ":nth-last-of-type(-n + 4)": {
+            ":nth-of-type(4n + 1)": {
+              borderBottomWidth: 0,
+              "&~div": {
                 borderBottomWidth: 0,
-                "&~div": {
-                  borderBottomWidth: 0,
-                  paddingTop: 20,
-                  paddingBottom: 0
-                }
+                paddingTop: 20,
+                paddingBottom: 0
               }
             }
           }
         }
-      : {
-          borderBottomWidth: 0,
-          [theme.breakpoints.down("lg")]: {
-            padding: "20px 25px"
-          }
-        }),
-    [theme.breakpoints.between(theme.breakpoints.values.md, theme.breakpoints.values.lg)]: {
-      paddingTop: 20,
-      paddingBottom: 20,
-      borderBottomWidth: 1,
-      ":last-of-type::after": {
-        content: `""`,
-        position: "absolute",
-        top: 0,
-        bottom: 0,
-        right: -1,
-        borderRight: `1px solid ${alpha(theme.palette.common.black, 0.1)}`
-      },
-      [`:nth-of-type(${items_length === 4 ? 4 : 3}n)::after`]: {
-        borderRight: 0
-      },
-      [`:nth-of-type(${items_length === 4 ? 4 : 3}n+1)`]: {
-        borderLeftWidth: 0,
-        paddingLeft: 0
-      },
-      [`:nth-last-of-type(-n+${items_length === 4 ? 4 : 3})`]: {
-        [`:nth-of-type(${items_length === 4 ? 4 : 3}n+1)`]: {
-          borderBottomWidth: 0,
-          "&~div": {
-            borderBottomWidth: 0
-          }
-        }
       }
-    },
-    [theme.breakpoints.down("md")]: {
-      paddingTop: 20,
-      paddingBottom: 20,
-      borderBottomWidth: 1,
-      borderLeft: `${isDetailToken ? `none` : `1px solid ${alpha(theme.palette.common.black, 0.1)}`}`,
-      ":nth-of-type(2n+1)": {
-        borderLeftWidth: 0,
-        paddingLeft: `${isDetailToken ? `none` : `0`}`
-      },
-      ":first-of-type": {
-        paddingLeft: `${isDetailToken ? `9px` : `0`}`
-      },
-      ":last-of-type::after": {
-        content: `""`,
-        position: "absolute",
-        top: 0,
-        bottom: 0,
-        right: -1,
-        borderRight: `1px solid ${alpha(theme.palette.common.black, 0.1)}`
-      },
-      ":nth-of-type(2n)::after": {
-        borderRight: 0
-      },
-      ":nth-last-of-type(-n+2)": {
-        ":nth-of-type(2n+1)": {
-          borderBottomWidth: `${isDetailToken ? `1px` : `0`}`,
-          "&~div": {
-            borderBottomWidth: 0
-          }
+    : {
+        borderBottomWidth: 0,
+        [theme.breakpoints.down("lg")]: {
+          padding: "20px 25px"
         }
-      },
-      ":nth-of-type(2n)": {
-        borderRight: `${isDetailToken ? `1px solid ${alpha(theme.palette.common.black, 0.1)}` : `none`}`,
-        paddingRight: `${isDetailToken ? `unset` : `0`}`
-      }
+      }),
+  [theme.breakpoints.between("md", "lg")]: {
+    paddingTop: 20,
+    paddingBottom: 20,
+    borderBottomWidth: 1,
+    borderLeftWidth: 1,
+    [`:nth-of-type(${length === 4 ? 4 : 3}n + 1)`]: {
+      borderLeftWidth: 0,
+      paddingLeft: 0
     },
-    [theme.breakpoints.down("sm")]: {
-      paddingTop: 20,
-      paddingBottom: 20,
-      borderBottomWidth: 1,
-      wordBreak: "break-word",
-      borderLeft: `${isDetailToken ? `none` : `1px solid ${alpha(theme.palette.common.black, 0.1)}`}`,
-      ":nth-of-type(2n+1)": {
-        borderLeftWidth: 0,
-        padding: 15,
-        paddingLeft: `${isDetailToken ? `none` : `0`}`
-      },
-      ":first-of-type": {
-        padding: `${isDetailToken ? `0 0 15px 0` : `none`}`
-      },
-      ":nth-of-type(2n)": {
-        padding: 15,
-        borderRight: `${isDetailToken ? `1px solid ${alpha(theme.palette.common.black, 0.1)}` : `none`}`,
-        paddingLeft: `${isDetailToken ? `0` : `none`}`,
-        paddingRight: `${isDetailToken ? `none` : `0`}`
-      },
-      ":last-of-type::after": {
-        content: `""`,
-        position: "absolute",
-        top: 0,
-        bottom: 0,
-        right: -1,
-        borderRight: `1px solid ${alpha(theme.palette.common.black, 0.1)}`
-      },
-      ":nth-of-type(2n)::after": {
-        borderRight: 0
-      },
-      ":nth-last-of-type(-n+2)": {
-        ":nth-of-type(2n+1)": {
-          borderBottomWidth: `${isDetailToken ? `1px` : `0`}`,
-          "&~div": {
-            borderBottomWidth: 0
-          }
+    [`:nth-last-of-type(-n + ${length === 4 ? 4 : 3})`]: {
+      [`:nth-of-type(${length === 4 ? 4 : 3}n + 1)`]: {
+        borderBottomWidth: 0,
+        "&~div": {
+          borderBottomWidth: 0,
+          paddingTop: 20,
+          paddingBottom: 0
         }
       }
     }
-  })
-);
+  },
+  [theme.breakpoints.down("md")]: {
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingRight: 15,
+    borderBottomWidth: 1,
+    borderLeftWidth: 1,
+    [`:nth-of-type(2n + ${wide ? 2 : 1})`]: {
+      borderLeftWidth: 0,
+      paddingLeft: 0
+    },
+    ":nth-last-of-type(-n + 2)": {
+      [`:nth-of-type(2n + ${wide ? 2 : 1})`]: {
+        borderBottomWidth: 0,
+        "&~div": {
+          borderBottomWidth: 0,
+          paddingTop: 20,
+          paddingBottom: 0
+        }
+      }
+    }
+  }
+}));
 
 export const ValueCard = styled(Box)(({ theme }) => ({
   color: theme.palette.common.black,
   fontSize: "1rem",
-  fontWeight: "bold"
+  fontWeight: "bold",
+  wordBreak: "break-word"
 }));
 
 export const AllowSearchButton = styled(Box)(({ theme }) => ({
