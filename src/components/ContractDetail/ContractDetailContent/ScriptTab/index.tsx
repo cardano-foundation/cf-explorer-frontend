@@ -6,8 +6,6 @@ import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import { CONTRACT_ADDRESS_TYPE, VerifyScriptContext } from "src/pages/ContractDetail";
 
-const StyleScript = styled("pre")``;
-
 const Result = styled(Box)`
   padding: 9px 25px;
   background: rgba(152, 162, 179, 0.1);
@@ -21,7 +19,7 @@ const Result = styled(Box)`
   over-flow: scroll;
 `;
 
-const Wapper = styled(Box)`
+const StyledBox = styled(Box)`
   text-align: left;
   margin-top: 20px;
 `;
@@ -48,15 +46,15 @@ const ScriptTab = () => {
   }, [refresh, dispatch]);
 
   return (
-    <Wapper>
+    <StyledBox>
       <Box>Contract</Box>
       {data ? (
         <ScriptType>
           Script Type: <span>Native Script</span>
         </ScriptType>
       ) : null}
-      <Result>{data ? <StyleScript>{JSON.stringify(data, null, " ")}</StyleScript> : "No script found"}</Result>
-    </Wapper>
+      <Result>{data ? <pre>{JSON.stringify(data, null, " ")}</pre> : "No script found"}</Result>
+    </StyledBox>
   );
 };
 
