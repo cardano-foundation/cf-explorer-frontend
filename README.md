@@ -21,11 +21,15 @@ Install the app with npm:
 
 ### `npm install`
 
-Then copy file env.production.example and rename it to .env:
+Then copy file env.example and rename it to .env:
 
-### Update `API_URL` and `AUTH_API_URL`
+### Update Environment
 
-Update API_URL with your Api url and AUTH_API_URL with your auth Api url.
+Update `REACT_APP_MAINNET_API_URL`, `REACT_APP_PREPROD_API_URL`, `REACT_APP_TESTNET_API_URL`, `REACT_APP_PREVIEW_API_URL` with your api url for each network.
+
+Update `REACT_APP_AUTH_API_URL` with your auth api url to support sign in and sign up feature.
+
+Update `REACT_APP_JSD_WIDGET_KEY` with Jira Embedded Key to Add Jira Support Widget to Explorer.
 
 ## Start with localhost
 
@@ -33,9 +37,19 @@ Runs the app in the development mode.
 
 ### `npm start`
 
-The application will run by default on port 3000. If you want to run the application on another port, please change the PORT in the .env file.
+The application will run by default on port 3000. If you want to run the application on another port, please change the `PORT` in the .env file.
 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+### Testing with Jest
+
+This app uses `Jest` for Unit test.
+
+To run your tests, execute the following command:
+
+ - `npm run jest-test` to test all file `*.test.ts`.
+
+ - `npm run jest-test-one [file_relative_path]` to test a file with `[file_relative_path]` being relative path of file. Ex: `npm run jest-test-one src\commons\utils\helper.test.ts`
 
 ## Build into production
 
