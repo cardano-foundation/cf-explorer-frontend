@@ -49,10 +49,14 @@ const UserInfo = ({
             <BalanceIcon />
           </OverviewIcon>
           <TextUserInfo>
-            {" "}
-            {acitve === "reward" ? "Reward" : "Wallet"} Balance: {formatADAFull(reward)}
+            <Box component={"span"} mr={1}>
+              {acitve === "reward" ? "Reward balance" : "Total balance including reward"} :
+            </Box>
+            <Box component={"span"} display={"inline-flex"} alignItems={"center"}>
+              <Box lineHeight={1}>{formatADAFull(reward)}</Box>
+              <CustomIcon icon={AIconGreen} fill="currentColor" height={14} />
+            </Box>
           </TextUserInfo>
-          <CustomIcon icon={AIconGreen} fill="currentColor" height={14} />
         </Box>
       </Box>
       <TextTx sx={{ marginTop: isTablet ? "10px" : "0px" }}>{total} Transactions</TextTx>
