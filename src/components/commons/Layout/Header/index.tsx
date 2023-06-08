@@ -36,7 +36,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
     <HeaderContainer>
       <HeaderBox home={home ? 1 : 0}>
         <HeaderMain home={home ? 1 : 0}>
-          <Title home={home ? 1 : 0}>Cardano Blockchain Explorer</Title>
+          <Title home={home ? 1 : 0} data-testid="home-title">Cardano Blockchain Explorer</Title>
           {history.location.pathname !== routers.STAKING_LIFECYCLE && <HeaderSearch home={home} />}
         </HeaderMain>
         <HeaderTop collasped={+onDetailView}>
