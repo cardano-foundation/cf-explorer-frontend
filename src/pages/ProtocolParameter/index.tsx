@@ -49,9 +49,9 @@ const ProtocolParameter: React.FC = () => {
   const [variableColumnList, { push: pushVariableColumn }] = useList<string>([]);
   const [costModelScript, setCostModelScript] = useState("");
   const [showHistory, setShowHistory] = useState(false);
-
-  const { data: dataFixed, loading: loadingFixed } = useFetch(API.PROTOCOL_PARAMETER.FIXED);
-  const { data: dataLastest, loading: loadingLastest } = useFetch<TProtocolParam>(API.PROTOCOL_PARAMETER.LASTEST);
+  const { PROTOCOL_PARAMETER } = API;
+  const { data: dataFixed, loading: loadingFixed } = useFetch(PROTOCOL_PARAMETER.FIXED);
+  const { data: dataLastest, loading: loadingLastest } = useFetch<TProtocolParam>(PROTOCOL_PARAMETER.LASTEST);
 
   useUpdateEffect(() => {
     dataLastest &&
@@ -210,18 +210,22 @@ const ProtocolParameter: React.FC = () => {
 export default ProtocolParameter;
 
 export const ProtocolParameterHistory = () => {
+  const { PROTOCOL_PARAMETER } = API;
+  const TOTAL_PARAMETER = 29;
+
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
+
   const {
     data: dataHistory,
     loading,
     initialized
   } = useFetch<ProtocolHistory>(
-    `${API.PROTOCOL_PARAMETER.HISTORY}/${
-      filterParams.length === 29 || filterParams.length === 0
+    `${PROTOCOL_PARAMETER.HISTORY}/${
+      filterParams.length === TOTAL_PARAMETER || filterParams.length === 0
         ? "ALL"
         : filterParams.map((f) => PROTOCOL_TYPE[f as keyof typeof PROTOCOL_TYPE]).join(",")
-    } ${
+    }${
       _.isEmpty(dateRangeFilter)
         ? ""
         : `?endTime=${moment(dateRangeFilter.toDate).endOf("D").utc().format("X")}&startTime=${moment(
@@ -234,7 +238,6 @@ export const ProtocolParameterHistory = () => {
     `
   );
 
-  console.log("initialized", initialized);
   const [dataHistoryMapping, { push: pushHistory, clear }] = useList<{
     [key: string]: any;
   }>([]);
@@ -350,7 +353,6 @@ export const ProtocolParameterHistory = () => {
     setDataTable([...dataHistoryMapping].slice(1));
   }, [JSON.stringify(dataHistoryMapping)]);
 
-  // filter
   useUpdateEffect(() => {
     if (resetFilter) {
       setFilterParams([]);
@@ -406,7 +408,7 @@ export const ProtocolParameterHistory = () => {
           </Box>
         }
       >
-        {initialized ? (
+        {initialized && !!dataHistory ? (
           columnsTable?.length === 1 &&
           !loading && (
             <Box textAlign={"center"}>
@@ -424,7 +426,7 @@ export const ProtocolParameterHistory = () => {
                 alignItems={"center"}
                 mt={3}
                 mb={2}
-                color={`#108AEF !important`}
+                color={"#108aef !important"}
               >
                 <Box mr={1}>Reset</Box>
                 <ResetIcon />
@@ -434,7 +436,9 @@ export const ProtocolParameterHistory = () => {
         ) : (
           <></>
         )}
-        {columnsTable?.length > 1 && <TableStyled columns={columnsTable} data={dataTable} loading={loading} />}
+        {columnsTable?.length > 1 && initialized && (
+          <TableStyled columns={columnsTable} data={dataTable} loading={loading} />
+        )}
       </Card>
     </Box>
   );
