@@ -254,4 +254,5 @@ export { ReactComponent as TokenIcon } from "./icons/tokenIcon.svg";
 export { ReactComponent as BookmarkIcon } from "./icons/Bookmark.svg";
 export { ReactComponent as Bookmarked } from "./icons/Bookmarked.svg";
 export { ReactComponent as TransactionDelegationIcon } from "./images/DelegationIcon.svg";
+export { ReactComponent as ScriptIcon } from "./icons/u_book.svg";
 export { ReactComponent as WithdrawalHistoryIcon } from "./icons/withdrawal-history.svg";
