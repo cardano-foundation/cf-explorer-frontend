@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { Backdrop, Box, useTheme } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import moment from "moment";
@@ -121,18 +121,17 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
             <HeaderTitleSkeleton variant="rectangular" />
           </HeaderTitle>
         </HeaderContainer>
-        <DetailsInfo container items_length={numberOfItems}>
-          {new Array(4).fill(0).map((_, index) => {
+        <DetailsInfo container length={numberOfItems}>
+          {new Array(numberOfItems).fill(0).map((_, index) => {
             return (
               <CardItem
                 item
                 xs={isDetailToken && index === 0 ? 12 : 6}
-                sm={isDetailToken && index === 0 ? 12 : 6}
                 md={4}
                 lg={numberOfItems > 6 ? 3 : true}
-                items_length={numberOfItems}
+                length={numberOfItems}
                 key={index}
-                isDetailToken={isDetailToken}
+                wide={+isDetailToken}
               >
                 <IconSkeleton variant="circular" />
                 <DetailValueSkeleton variant="rectangular" />
@@ -142,6 +141,13 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               </CardItem>
             );
           })}
+          <BufferList numberOfItems={numberOfItems} wide={+isDetailToken}>
+            <IconSkeleton variant="circular" />
+            <DetailValueSkeleton variant="rectangular" />
+            <ValueCard>
+              <DetailLabelSkeleton variant="rectangular" />
+            </ValueCard>
+          </BufferList>
         </DetailsInfo>
       </HeaderDetailContainer>
     );
@@ -209,7 +215,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           ""
         )}
       </WrapHeader>
-      <DetailsInfo container items_length={numberOfItems}>
+      <DetailsInfo container length={numberOfItems}>
         {listItem.map((item, index) => {
           const keyItem = item.key || "";
           return (
@@ -217,11 +223,11 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               item
               xs={isDetailToken && index === 0 ? 12 : 6}
               sm={isDetailToken && index === 0 ? 12 : 6}
-              md={listItem.length === 4 ? 3 : 4}
+              md={numberOfItems === 4 ? 3 : 4}
               lg={numberOfItems > 6 ? 3 : true}
-              items_length={numberOfItems}
+              length={numberOfItems}
               key={index}
-              isDetailToken={isDetailToken}
+              wide={+isDetailToken}
             >
               <Box position="relative" display={item.hideHeader ? "none" : ""}>
                 <img src={item.icon} alt="" height={20} />
@@ -239,9 +245,6 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                     renderValue={() => "Token"}
                     displayEmpty
                     value={""}
-                    onChange={() => {
-                      //To do
-                    }}
                     IconComponent={BiChevronDown}
                     MenuProps={{
                       PaperProps: {
@@ -303,6 +306,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
             </CardItem>
           );
         })}
+        <BufferList numberOfItems={numberOfItems} wide={+isDetailToken} />
       </DetailsInfo>
       <Backdrop
         sx={{ zIndex: 100 }}
@@ -312,5 +316,43 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     </HeaderDetailContainer>
   );
 };
+interface BufferListProps {
+  numberOfItems: number;
+  wide: number;
+  children?: React.ReactNode;
+}
+
+const BufferList = memo(({ numberOfItems, wide, children }: BufferListProps) => {
+  const { isTablet, isLaptop } = useScreen();
+  const numberOfRow = isTablet ? 2 : isLaptop ? 3 : 4;
+  // get number of buffer items. Ex: if numberOfItems = 8, first item token detail 2 slot (bufferWide = 1);
+  const bufferWide = isTablet ? wide : 0;
+  // numberOfRow in tablet screen is 2, numberOfBuffer is 1;
+  const numberOfBuffer = numberOfRow - ((numberOfItems - bufferWide) % numberOfRow || numberOfRow);
+
+  if (isLaptop || numberOfItems > 6)
+    return (
+      <>
+        {new Array(numberOfBuffer).fill(0).map((_, index) => {
+          return (
+            <CardItem
+              item
+              xs={6}
+              md={numberOfItems === 4 ? 3 : 4}
+              lg={numberOfItems > 6 ? 3 : true}
+              length={numberOfItems + numberOfBuffer}
+              key={index}
+              wide={wide}
+            >
+              {children}
+            </CardItem>
+          );
+        })}
+      </>
+    );
+  else return null;
+});
+
+BufferList.displayName = "BufferList";
 
 export default DetailHeader;
