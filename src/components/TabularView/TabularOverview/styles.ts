@@ -93,11 +93,8 @@ export const CardValue = styled(Typography)(({ theme }) => ({
     wordBreak: "break-all"
   }
 }));
-export const CardValueDelegating = styled(CardValue)(({ theme }) => ({
-  width: "calc(100% - 79px)",
-  [theme.breakpoints.down("lg")]: {
-    width: "calc(100% - 10px)"
-  }
+export const CardValueDelegating = styled(CardValue)(() => ({
+  width: "100%"
 }));
 export const BoxStyled = styled(CardValue)(({ theme }) => ({
   display: "block",
