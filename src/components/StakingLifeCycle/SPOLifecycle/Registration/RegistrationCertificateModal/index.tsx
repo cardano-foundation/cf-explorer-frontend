@@ -11,7 +11,17 @@ import CopyButton from "src/components/commons/CopyButton";
 import { details } from "src/commons/routers";
 import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
 
-import { VRFKeyText, Item, ItemList, Label, LineData, StyledAdaLogoIcon, StyledLink, StyledModal, Value } from "./styles";
+import {
+  VRFKeyText,
+  Item,
+  ItemList,
+  Label,
+  LineData,
+  StyledAdaLogoIcon,
+  StyledLink,
+  StyledModal,
+  Value
+} from "./styles";
 
 interface CertificateItemType {
   label: React.ReactNode;

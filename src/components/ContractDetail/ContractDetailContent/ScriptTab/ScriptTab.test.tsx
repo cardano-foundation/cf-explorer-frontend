@@ -1,6 +1,8 @@
 import { screen } from "@testing-library/react";
-import ScriptTab from "./index";
+
 import { render } from "src/test-utils";
+
+import ScriptTab from "./index";
 
 jest.mock("src/commons/hooks/useFetch", () => ({
   __esModule: true,
