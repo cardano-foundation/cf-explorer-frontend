@@ -5,7 +5,7 @@ import { TabList } from "@mui/lab";
 export const LinkComponent = styled(Link)(({ theme }) => ({
   color: `${theme.palette.secondary.main} !important`
 }));
-export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => ({
+export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => ({
   fontWeight: "bold",
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
