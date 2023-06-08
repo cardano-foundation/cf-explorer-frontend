@@ -95,13 +95,24 @@ export default function SignIn() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      history.push(routers.HOME);
+      handleClose();
     }
   }, [isLoggedIn]);
 
   function handleClose() {
-    history.push(routers.HOME);
+    if (history.length > 1) {
+      history.goBack();
+    } else {
+      history.push(routers.HOME);
+    }
   }
+
+  const handleKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleSubmit(event);
+    }
+  };
 
   const getError = (name: string, value: string) => {
     let error = "";
@@ -136,6 +147,7 @@ export default function SignIn() {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    if(!enableButton) return;
     const errorUsername = getError("email", formData.email.value);
     const errorPassword = getError("password", formData.password.value);
     if (errorUsername) {
@@ -216,6 +228,7 @@ export default function SignIn() {
                 name="email"
                 value={formData.email.value}
                 onChange={handleChange}
+                onKeyDown={handleKeyDown}
                 fullWidth
                 placeholder="Email Address"
               />
@@ -233,6 +246,7 @@ export default function SignIn() {
                 }
                 fullWidth
                 name="password"
+                onKeyDown={handleKeyDown}
                 value={formData.password.value}
                 endAdornment={
                   <InputAdornment position="end">

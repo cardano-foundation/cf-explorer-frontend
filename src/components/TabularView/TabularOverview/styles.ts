@@ -1,4 +1,5 @@
 import { Box, Button, Card, Typography, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
 import { AdaLogoIcon } from "src/components/commons/ADAIcon";
 
@@ -20,6 +21,7 @@ export const CardItem = styled(Card)<{ sidebar?: number }>(({ theme, sidebar }) 
   borderRadius: 12,
   minWidth: "calc(50% - 10px)",
   overflow: "hidden",
+  width: "100%",
   [theme.breakpoints.down("lg")]: {
     minWidth: sidebar ? "100%" : "calc(50% - 10px)"
   },
@@ -32,7 +34,7 @@ export const CardItem = styled(Card)<{ sidebar?: number }>(({ theme, sidebar }) 
     overflowX: "auto",
     "&::-webkit-scrollbar": {
       height: "0"
-    },
+    }
   }
 }));
 
@@ -52,7 +54,8 @@ export const CardContent = styled(Box)(() => ({
   gap: 10,
   flex: 1,
   boxSizing: "border-box",
-  flexWrap: "wrap"
+  flexWrap: "wrap",
+  width: "calc(100% - 100px)"
 }));
 
 export const CardInfo = styled(Box)(() => ({
@@ -60,7 +63,8 @@ export const CardInfo = styled(Box)(() => ({
   flexDirection: "column",
   alignItems: "flex-start",
   gap: 8,
-  flex: 1
+  flex: 1,
+  width: "100%"
 }));
 
 export const CardTitle = styled(Typography)(({ theme }) => ({
@@ -89,7 +93,30 @@ export const CardValue = styled(Typography)(({ theme }) => ({
     wordBreak: "break-all"
   }
 }));
-
+export const CardValueDelegating = styled(CardValue)(({ theme }) => ({
+  width: "calc(100% - 79px)",
+  [theme.breakpoints.down("lg")]: {
+    width: "calc(100% - 10px)"
+  }
+}));
+export const BoxStyled = styled(CardValue)(({ theme }) => ({
+  display: "block",
+  lineHeight: "28px",
+  textOverflow: "ellipsis",
+  overflow: "hidden",
+  textAlign: "left",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 20,
+    lineHeight: "23px",
+    whiteSpace: "nowrap"
+  }
+}));
+export const StyledBoxDelegating = styled(Link)(() => ({
+  width: "100%",
+  display: "flex",
+  justifyContent: "flex-start",
+  alignItems: "center"
+}));
 export const NoDelegatedStakePool = styled(Box)(({ theme }) => ({
   color: theme.palette.red[700],
   fontWeight: 500,
