@@ -4,7 +4,7 @@ import { List } from "@mui/material";
 import StyledModal from "../commons/StyledModal";
 import CopyButton from "../commons/CopyButton";
 import { ModalTitle, StyledListItem, StyledListItemText } from "./styles";
-import { formatHash } from "../../commons/utils/helper";
+import { getShortHash } from "../../commons/utils/helper";
 
 export interface ViewMoreAddressModalProps {
   title?: string;
@@ -34,7 +34,7 @@ const ViewMoreAddressModal: React.FC<ViewMoreAddressModalProps> = ({
             items.map((text, idx) => (
               <StyledListItem key={idx}>
                 <StyledListItemText onClick={() => onItemClick?.(text)}>
-                  {showFullHash ? text : formatHash(text)}
+                  {showFullHash ? text : getShortHash(text)}
                 </StyledListItemText>
                 <CopyButton text={text} />
               </StyledListItem>
