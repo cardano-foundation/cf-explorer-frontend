@@ -275,7 +275,7 @@ export default function SignIn() {
                 Forgot your password?
               </ForgotPassword>
             </Box>
-            <WrapButton variant="contained" fullWidth onClick={handleSubmit} disabled={!enableButton}>
+            <WrapButton data-testid="login-btn" variant="contained" fullWidth onClick={handleSubmit} disabled={!enableButton}>
               Log in
             </WrapButton>
             <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
