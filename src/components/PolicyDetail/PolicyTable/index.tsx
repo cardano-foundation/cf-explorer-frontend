@@ -7,6 +7,7 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import {
+  formatAmount,
   formatDateTimeLocal,
   formatNumberDivByDecimals,
   getPageInfo,
@@ -61,7 +62,7 @@ const columnsToken: Column<TokenPolicys>[] = [
     title: "Total Transactions",
     key: "trxtotal",
     minWidth: "150px",
-    render: (r) => <>{r?.txCount ?? ""}</>
+    render: (r) => <>{formatAmount(r?.txCount || "")}</>
   }
 ];
 
