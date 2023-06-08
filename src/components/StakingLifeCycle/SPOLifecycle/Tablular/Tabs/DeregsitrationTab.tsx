@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Box, IconButton, useTheme } from "@mui/material";
 import { useParams } from "react-router-dom";
+import BigNumber from "bignumber.js";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { EyeIcon } from "src/commons/resources";
@@ -61,10 +62,10 @@ const DeregsitrationTab = () => {
       render(data) {
         return (
           <Box>
-            <AdaValue limit={5} value={data.totalFee} />
+            <AdaValue value={new BigNumber(data.poolHold).minus(data.fee).toString()} />
             <TableSubTitle>
               <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-                <AdaValue limit={1} color={theme.palette.grey[400]} value={data.poolHold} gap="3px" fontSize="12px" />
+                <AdaValue color={theme.palette.grey[400]} value={data.poolHold} gap="3px" fontSize="12px" />
                 <Box mx="3px">/</Box>
                 <AdaValue color={theme.palette.grey[400]} value={data.fee} gap="3px" fontSize="12px" />
               </Box>

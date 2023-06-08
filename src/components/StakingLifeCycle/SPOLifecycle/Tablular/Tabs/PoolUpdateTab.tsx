@@ -51,7 +51,7 @@ const PoolUpdateTab = () => {
       key: "fee",
       title: "Fees",
       render(data) {
-        return <AdaValue limit={5} value={data.fee} />;
+        return <AdaValue value={data.fee} />;
       }
     },
     {
