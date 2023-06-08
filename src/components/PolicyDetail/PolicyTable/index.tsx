@@ -137,7 +137,7 @@ const PolicyTable = () => {
   return (
     <StyledBoxContainer>
       <TabContext value={activeTab}>
-        <Box style={{ borderBottom: `1px solid ${theme.palette.border.secondary}` }}>
+        <Box data-testid="tab-testid" style={{ borderBottom: `1px solid ${theme.palette.border.secondary}` }}>
           <StyledTabList
             onChange={handleChange}
             TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
@@ -150,7 +150,7 @@ const PolicyTable = () => {
                   <Box>
                     <Box display={"flex"} alignItems="center">
                       <Icon fill={activeTab === key ? theme.palette.primary.main : theme.palette.text.hint} />
-                      <TitleTab pl={1} active={activeTab === key}>
+                      <TitleTab pl={1} active={+(activeTab === key)}>
                         {label}
                       </TitleTab>
                     </Box>

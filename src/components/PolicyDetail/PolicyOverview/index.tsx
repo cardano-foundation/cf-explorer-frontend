@@ -32,7 +32,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
   const { isMobile, isTablet } = useScreen();
 
   return (
-    <Box>
+    <Box data-testid="container">
       <OverViewContainer display={"flex"} justifyContent="space-between" alignItems={"center"}>
         <Box>
           <BackButton onClick={history.goBack}>
@@ -44,7 +44,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
           </HeaderContainer>
           <SlotLeaderContainer>
             {loading ? (
-              <SlotLeaderSkeleton variant="rectangular" />
+              <SlotLeaderSkeleton data-testid="loading-element" variant="rectangular" />
             ) : (
               <Box>
                 <SlotLeader>
@@ -69,6 +69,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
           padding={0}
           onClick={() => setOpenModal(true)}
           style={{ cursor: "pointer" }}
+          data-testid="open-modal-button"
         >
           <Box>
             <img src={policyIcon} alt="" width={"40%"} />
