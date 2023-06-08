@@ -111,3 +111,9 @@ export const Amount = styled(Box)<{ type: "up" | "down" }>(({ type, theme }) => 
   gap: 5,
   marginRight: "5px"
 }));
+
+export const StyledBoxTransaction = styled("div")(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    maxWidth: "195px"
+  }
+}));
