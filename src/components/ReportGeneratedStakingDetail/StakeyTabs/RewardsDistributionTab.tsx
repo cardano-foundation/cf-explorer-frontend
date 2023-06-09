@@ -12,32 +12,13 @@ import { FilterParams } from "src/components/StackingFilter";
 import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import { API } from "src/commons/utils/api";
 
-const columns: Column<RewardDistributionItem>[] = [
-  {
-    title: "Rewards Paid",
-    key: "paid",
-    minWidth: "120px",
-    render: (r) => <AdaValue value={r.amount} />
-  },
-  {
-    title: "Timestamp",
-    key: "time",
-    minWidth: "120px",
-    render: (r) => formatDateTimeLocal(r.time)
-  },
-  {
-    title: "Epoch",
-    key: "epoch",
-    minWidth: "120px",
-    render: (r) => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>
-  }
-];
 
 const RewardsDistributionTab = () => {
   const { reportId } = useParams<{ reportId: string }>();
   const { search } = useLocation();
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
+  const [sort, setSort] = useState<string>("");
   const [params] = useState<FilterParams>({
     fromDate: undefined,
     sort: undefined,
@@ -46,10 +27,33 @@ const RewardsDistributionTab = () => {
   });
   const fetchData = useFetchList<RewardDistributionItem>(reportId ? API.REPORT.SREPORT_DETAIL_REWARDS(reportId) : "", {
     ...pageInfo,
-    ...params
+    ...params,
+    sort: sort || params.sort
   });
   const { total } = fetchData;
-
+  const columns: Column<RewardDistributionItem>[] = [
+    {
+      title: "Rewards Paid",
+      key: "paid",
+      minWidth: "120px",
+      render: (r) => <AdaValue value={r.amount} />
+    },
+    {
+      title: "Timestamp",
+      key: "time",
+      minWidth: "120px",
+      render: (r) => formatDateTimeLocal(r.time),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      }
+    },
+    {
+      title: "Epoch",
+      key: "epoch",
+      minWidth: "120px",
+      render: (r) => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>
+    }
+  ];
   return (
     <>
       <Box display="flex" alignItems="center" justifyContent="space-between" mt={3}>

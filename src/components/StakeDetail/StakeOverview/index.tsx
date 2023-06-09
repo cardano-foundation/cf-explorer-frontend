@@ -13,7 +13,7 @@ import DetailHeader from "src/components/commons/DetailHeader";
 import ADAicon from "src/components/commons/ADAIcon";
 
 import ModalAllAddress from "../ModalAllAddress";
-import { ButtonModal, StyledFlexValue, StyledLinkTo, TitleCard, TitleValue } from "./styles";
+import { ButtonModal, StyledFlexValue, StyledLinkTo, TitleCard, TitleNoPool, TitleValue } from "./styles";
 
 interface Props {
   data: IStakeKeyDetail | null;
@@ -27,16 +27,17 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
   const poolName = data?.pool?.poolName || "";
   const ticketName = data?.pool?.tickerName || "";
   const poolId = data?.pool?.poolId || "";
+  const hasTicketOrPoolName = ticketName || poolName;
 
   const delegateTooltip = data?.pool
-    ? ticketName || poolName
-      ? `${ticketName} - ${poolName}`
+    ? hasTicketOrPoolName
+      ? `${ticketName}${(ticketName && poolName) ? " - " : ""}${poolName}`
       : poolId
     : "Not delegated to any pool";
 
   const delegateTo = data?.pool
-    ? ticketName || poolName
-      ? `${ticketName} - ${poolName}`
+    ? hasTicketOrPoolName
+      ? `${ticketName}${(ticketName && poolName) ? " - " : ""}${poolName}`
       : getShortWallet(poolId)
     : "Not delegated to any pool";
   const listOverview = [
@@ -50,7 +51,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
       value: (
         <CustomTooltip sx={{ width: "100%" }} title={delegateTooltip}>
           <StyledLinkTo isTo={!!data?.pool} to={data?.pool?.poolId ? details.delegation(data?.pool?.poolId) : "#"}>
-            <TitleValue>{delegateTo}</TitleValue>
+            {!hasTicketOrPoolName ? <TitleNoPool>{delegateTo}</TitleNoPool> : <TitleValue>{delegateTo}</TitleValue>}
           </StyledLinkTo>
         </CustomTooltip>
       )
