@@ -138,7 +138,7 @@ const StackingFilter: React.FC<StackingFilterProps> = ({
         {open && filterOptions && (
           <FilterContent>
             <MenuList>
-              {(fullFilter ? filterOptions : filterOptions.slice(0, 2)).map((option) => (
+              {(fullFilter ? filterOptions : filterOptions.slice(0, 3)).map((option) => (
                 <FilterMenuItem
                   active={+(option.value === selected)}
                   key={option.value}

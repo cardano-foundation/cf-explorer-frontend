@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Box } from "@mui/material";
 
@@ -136,6 +136,9 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
     }
   ];
 
+  useEffect(() => {
+    document.getElementById(`step-${currentStep}`)?.scrollIntoView(true);
+  }, [currentStep]);
   if (!tabsRenderConfig) return null;
 
   return (
@@ -144,6 +147,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
         {stepper.map((step, idx) => {
           return (
             <Step
+              id={`step-${idx}`}
               component={"span"}
               key={idx}
               active={+(currentStep === idx)}

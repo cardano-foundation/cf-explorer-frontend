@@ -47,13 +47,13 @@ const LatestStories = () => {
     <LatestStoriesContainer>
       <Header>
         <Title>Latest Stories</Title>
-        <ViewAllButton to={routers.STORY_LIST} />
+        <ViewAllButton data-testid="view-all" to={routers.STORY_LIST} />
       </Header>
       <Grid container spacing={2}>
         {data.map(({ id, image, author, title, createdDate }) => {
           return (
             <Grid key={id} md={3} sm={6} xs={12} item>
-              <Link key={id} to={details.story(id)} title={title} onClick={(e) => drag.current && e.preventDefault()}>
+              <Link key={id} data-test to={details.story(id)} title={title} onClick={(e) => drag.current && e.preventDefault()}>
                 <Item>
                   <Image src={image} alt={title} />
                   <Detail>
@@ -63,7 +63,7 @@ const LatestStories = () => {
                     </Box>
                     <Time>
                       <TimeIcon src={CalenderPaleIcon} alt="calender pale" />
-                      {moment(createdDate).format("MM/DD/YYYY")}
+                      {moment(createdDate, "MM/DD/YYYY").format("MM/DD/YYYY")}
                     </Time>
                   </Detail>
                 </Item>

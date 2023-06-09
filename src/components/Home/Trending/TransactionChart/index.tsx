@@ -10,7 +10,7 @@ import { useScreen } from "src/commons/hooks/useScreen";
 
 import { BoxInfo, ColorChart, InfoItem, Skeleton, Tab, Tabs, Title, TransactionContainer, WrapHeader } from "./styles";
 
-interface TransactionChartIF {
+export interface TransactionChartIF {
   date: string;
   simpleTransactions: number;
   smartContract: number;
@@ -111,6 +111,7 @@ const TransactionChart: React.FC = () => {
                       {item.title}
                     </Box>
                     <Box
+                      data-testid={item.key}
                       textAlign={"left"}
                       color={({ palette }) => palette.green[700]}
                       fontWeight={"bold"}

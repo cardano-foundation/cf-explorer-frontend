@@ -1,4 +1,3 @@
-import React from "react";
 import { useHistory } from "react-router-dom";
 import { Box } from "@mui/system";
 
@@ -97,7 +96,7 @@ const TopDelegationPools = () => {
           <TimeDuration>
             <FormNowMessage time={lastUpdated} />
           </TimeDuration>
-          <ViewAllButton to={routers.DELEGATION_POOLS} />
+          <ViewAllButton data-testid="view-all" to={routers.DELEGATION_POOLS} />
         </Actions>
       </Header>
       <TimeDurationSm>
