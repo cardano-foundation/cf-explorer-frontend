@@ -52,16 +52,16 @@ const ProtocolParameter: React.FC = () => {
   const { PROTOCOL_PARAMETER } = API;
   const { data: dataFixed, loading: loadingFixed } = useFetch(PROTOCOL_PARAMETER.FIXED);
   const { data: dataLastest, loading: loadingLastest } = useFetch<TProtocolParam>(PROTOCOL_PARAMETER.LASTEST);
-
+  const JSON_FIELDS = ["genDelegs", "costModel"];
   useUpdateEffect(() => {
     dataLastest &&
-      [...Object.keys(PROTOCOL_TYPE), "startEpoch", "endEpoch"].map((k) =>
-        dataLastest[k as ProtocolTypeKey] !== null && dataLastest[k as ProtocolTypeKey]?.transactionHash !== null
-          ? pushVariableColumn(k)
+      [...Object.keys(PROTOCOL_TYPE), "startEpoch", "endEpoch"].map((key) =>
+        dataLastest[key as ProtocolTypeKey] !== null && dataLastest[key as ProtocolTypeKey]?.transactionHash !== null
+          ? pushVariableColumn(key)
           : ""
       );
 
-    dataLastest && [...Object.keys(dataFixed || {})].map((k) => pushFixedColumnKeys(k));
+    dataLastest && [...Object.keys(dataFixed || {})].map((key) => pushFixedColumnKeys(key));
   }, [dataFixed, dataLastest]);
 
   useEffect(() => {
@@ -71,15 +71,25 @@ const ProtocolParameter: React.FC = () => {
 
   const theme = useTheme();
 
-  const columnsMap = Object.keys(PROTOCOL_TYPE).map((k) => ({
-    title: k,
-    key: k,
-    render: (r: TProtocolParam) => {
+  const handleClickRow = (key: string, row: any) => {
+    if (key === "costModel") {
+      setCostModelScript(row[key] !== null ? row[key]?.value || 0 : "")
+    }
+    if (key === "genDelegs") {
+      setCostModelScript(row[key] !== null ? JSON.stringify(row[key]) : "")
+    }
+  }
+
+  const columnsMap = Object.keys(PROTOCOL_TYPE).map((key) => ({
+    title: key,
+    key: key,
+    render: (row: TProtocolParam) => {
+      const isJSON = JSON_FIELDS.includes(key);
       return (
         <Box
-          component={k === "costModel" ? Button : Box}
+          component={isJSON ? Button : Box}
           onClick={() =>
-            k === "costModel" && setCostModelScript(r["costModel"] !== null ? r["costModel"]?.value || 0 : "")
+            isJSON && handleClickRow(key, row)
           }
           p={0}
           justifyItems={"flex-start"}
@@ -90,9 +100,9 @@ const ProtocolParameter: React.FC = () => {
             overflow={"hidden"}
             whiteSpace={"nowrap"}
             textOverflow={"ellipsis"}
-            color={({ palette }) => (k === "costModel" ? palette.blue[800] : "unset")}
+            color={({ palette }) => (isJSON ? palette.blue[800] : "unset")}
           >
-            {r[k as ProtocolTypeKey] !== null ? r[k as ProtocolTypeKey]?.value || 0 : ""}
+            {row[key as ProtocolTypeKey] !== null ? row[key as ProtocolTypeKey]?.value || 0 : ""}
           </Box>
         </Box>
       );
@@ -103,34 +113,41 @@ const ProtocolParameter: React.FC = () => {
     {
       title: "Last updated in epoch",
       key: "startEpoch",
-      render: (r: TProtocolParam) => {
-        return r?.epochChange?.startEpoch || 0;
+      render: (row: TProtocolParam) => {
+        return row?.epochChange?.startEpoch || 0;
       }
     },
     {
       title: "Timestamp",
       key: "startEpoch",
-      render: (r: TProtocolParam) => {
-        return r?.timestamp ? formatDateTimeLocal(r.timestamp || "") : "";
+      render: (row: TProtocolParam) => {
+        return row?.timestamp ? formatDateTimeLocal(row.timestamp || "") : "";
       }
     },
     ...columnsMap
   ];
 
-  const fixedColumn = (fixedColumnKeys || []).map((k) => ({
-    title: k,
-    key: k,
-    render: (r: any) => {
-      return (
-        <Box component={Box} justifyItems={"flex-start"} textTransform={"capitalize"}>
-          <Box maxWidth={300} overflow={"hidden"} whiteSpace={"nowrap"} textOverflow={"ellipsis"}>
-            {typeof r[k] === "object" ? JSON.stringify(r[k]) : r[k]}
+  const fixedColumn = (fixedColumnKeys || []).map((key) => {
+    const isJSON = JSON_FIELDS.includes(key);
+    return {
+      title: key,
+      key: key,
+      render: (row: any) => {
+        return (
+          <Box component={isJSON ? Button : Box} justifyItems={"flex-start"} textTransform={"capitalize"} onClick={() => {
+            isJSON && handleClickRow(key, row);
+          }}>
+            <Box maxWidth={300} overflow={"hidden"} whiteSpace={"nowrap"} textOverflow={"ellipsis"}
+              color={({ palette }) => (isJSON ? palette.blue[800] : "unset")}
+            >
+              {typeof row[key] === "object" ? JSON.stringify(row[key]) : row[key]}
+            </Box>
           </Box>
-        </Box>
-      );
+        );
+      }
     }
-  }));
-  const variableColumn = columnsFull.filter((c) => variableColumnList.includes(c.key));
+  });
+  const variableColumn = columnsFull.filter((column) => variableColumnList.includes(column.key));
 
   return (
     <Container>
@@ -215,27 +232,25 @@ export const ProtocolParameterHistory = () => {
 
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
+  let urlFetch = "";
 
+  const filterParamsString = filterParams.length === TOTAL_PARAMETER || filterParams.length === 0
+    ? "ALL"
+    : filterParams.map((filter) => PROTOCOL_TYPE[filter as keyof typeof PROTOCOL_TYPE]).join(",");
+
+  if (_.isEmpty(dateRangeFilter)) {
+    urlFetch = `${PROTOCOL_PARAMETER.HISTORY}/${filterParamsString}`;
+  } else {
+    const startDate = moment(dateRangeFilter.fromDate).startOf("D").utc().format("X");
+    const endDate = moment(dateRangeFilter.toDate).endOf("D").utc().format("X");
+    urlFetch = `${PROTOCOL_PARAMETER.HISTORY}/${filterParamsString}?endTime=${endDate}&startTime=${startDate}`;
+  }
   const {
     data: dataHistory,
     loading,
     initialized
   } = useFetch<ProtocolHistory>(
-    `${PROTOCOL_PARAMETER.HISTORY}/${
-      filterParams.length === TOTAL_PARAMETER || filterParams.length === 0
-        ? "ALL"
-        : filterParams.map((f) => PROTOCOL_TYPE[f as keyof typeof PROTOCOL_TYPE]).join(",")
-    }${
-      _.isEmpty(dateRangeFilter)
-        ? ""
-        : `?endTime=${moment(dateRangeFilter.toDate).endOf("D").utc().format("X")}&startTime=${moment(
-            dateRangeFilter.fromDate
-          )
-            .startOf("D")
-            .utc()
-            .format("X")}`
-    }
-    `
+    urlFetch
   );
 
   const [dataHistoryMapping, { push: pushHistory, clear }] = useList<{
@@ -635,7 +650,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
   );
 };
 
-const CloseButton = styled(IconButton)<{ saving: number }>`
+const CloseButton = styled(IconButton) <{ saving: number }>`
   position: absolute;
   top: 15px;
   right: 20px;
