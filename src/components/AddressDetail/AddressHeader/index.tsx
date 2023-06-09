@@ -68,7 +68,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       title: "POOL NAME",
       value: (
         <Link
-          to={dataStake?.pool?.poolName ? details.delegation(dataStake.pool.poolId) : "#"}
+          to={dataStake?.pool?.poolId ? details.delegation(dataStake.pool.poolId) : "#"}
           style={{ fontFamily: "var(--font-family-text)", color: theme.palette.secondary.main }}
         >
           {dataStake?.pool?.poolName ||
