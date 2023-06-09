@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import Table, { Column } from "src/components/commons/Table";
 import { Amount, Status } from "src/components/StakingLifeCycle/DelegatorLifecycle/ADATransferModal/styles";
 import CustomIcon from "src/components/commons/CustomIcon";
-import {  AIconGreen } from "src/commons/resources";
+import { AIconGreen } from "src/commons/resources";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { StyledLink } from "src/components/share/styled";
 import { details } from "src/commons/routers";

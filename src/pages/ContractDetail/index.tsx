@@ -1,5 +1,6 @@
 import React, { createContext, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { Box } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 
 import useFetch from "src/commons/hooks/useFetch";
@@ -9,6 +10,7 @@ import AddressOverview from "src/components/ContractDetail/AddressOverview";
 import ContractDetailContent from "src/components/ContractDetail/ContractDetailContent";
 
 import { BackButton, BackText, StyledContainer, WrapHeader } from "./styles";
+
 export const VerifyScriptContext = createContext({
   refreshScriptTab: () => null,
   refreshOverviewAddress: () => null
@@ -71,7 +73,9 @@ const ContractDetail: React.FC = () => {
             <BackText>Back</BackText>
           </BackButton>
         </WrapHeader>
-        <AddressOverview data={data} loading={loading} />
+        <Box pt={1} pb={3}>
+          <AddressOverview data={data} loading={loading} />
+        </Box>
         <ContractDetailContent />
       </StyledContainer>
     </VerifyScriptContext.Provider>
