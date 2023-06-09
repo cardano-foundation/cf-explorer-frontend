@@ -119,5 +119,5 @@ export const StyledBox = styled(Box)(() => ({
 export const WrapStatus = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
-  minWidth: 140,
+  minWidth: 140
 }));

@@ -7,10 +7,10 @@ import { EyeIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
-import { AdaValue } from "src/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
+import { AdaValue } from "src/components/commons/ADAValue";
 
 import { PoolUpdateModal } from "../../PoolUpdates/PoolUpdateModal";
 import { ClickAbleLink } from "./styles";

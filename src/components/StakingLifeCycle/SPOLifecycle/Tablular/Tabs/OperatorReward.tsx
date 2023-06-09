@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, formatHash } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortWallet } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
@@ -57,7 +57,7 @@ const OperatorRewardTab = () => {
       render(data) {
         return (
           <CustomTooltip title={data.rewardAccount}>
-            <StyledLink to={details.stake(data.rewardAccount)}>{formatHash(data.rewardAccount)}</StyledLink>
+            <StyledLink to={details.stake(data.rewardAccount)}>{getShortWallet(data.rewardAccount)}</StyledLink>
           </CustomTooltip>
         );
       }

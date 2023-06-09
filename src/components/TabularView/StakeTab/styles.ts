@@ -112,6 +112,7 @@ export const Headline = styled(Typography)<{ collapsed?: number }>`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: min-content;
   display: ${({ collapsed }) => (collapsed ? "none" : "block")};
   ${({ theme }) => theme.breakpoints.down("lg")} {
     display: ${({ collapsed }) => (collapsed ? "block" : "none")};

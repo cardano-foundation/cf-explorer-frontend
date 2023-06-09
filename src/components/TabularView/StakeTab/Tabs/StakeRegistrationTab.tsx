@@ -1,31 +1,19 @@
-import { Box, BoxProps, IconButton, useTheme } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
+import BigNumber from "bignumber.js";
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import BigNumber from "bignumber.js";
+
+import { AdaValue } from "src/components/commons/ADAValue";
 
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { EyeIcon } from "../../../../commons/resources";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
+import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
 import { RegistrationCertificateModal } from "../../../StakingLifeCycle/DelegatorLifecycle/Registration";
-import ADAicon from "../../../commons/ADAIcon";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import Table, { Column } from "../../../commons/Table";
 import { StyledLink, TableSubTitle } from "../styles";
-
-interface IAdaValue extends BoxProps {
-  value: number | string;
-}
-
-export const AdaValue = ({ value, gap = "8px", fontSize, color, ...props }: IAdaValue) => {
-  return (
-    <Box {...props} color={color} display="flex" alignItems="center" gap={gap} fontSize={fontSize}>
-      {formatADAFull(value)}
-      <ADAicon style={{ color }} fontSize={fontSize} />
-    </Box>
-  );
-};
 
 const StakeRegistrationTab = () => {
   const theme = useTheme();

@@ -47,7 +47,7 @@ export const THeader = styled("th")`
   z-index: 2;
 `;
 
-export const TRow = styled("tr") <{ selected?: number }>`
+export const TRow = styled("tr")<{ selected?: number }>`
   width: 100%;
   padding: 10px 0;
   font-size: 14px;
@@ -61,7 +61,7 @@ export const TRow = styled("tr") <{ selected?: number }>`
   }
 `;
 
-export const TCol = styled("td") <{
+export const TCol = styled("td")<{
   width?: number | string;
   minWidth?: number | string;
   maxWidth?: number | string;
@@ -111,7 +111,8 @@ export const TotalNumber = styled("span")`
   font-weight: 500;
 `;
 
-export const WrappModalScrollBar = styled(Box)(({ theme }) => `
+export const WrappModalScrollBar = styled(Box)(
+  ({ theme }) => `
   overflow-y: auto;
   max-height: 70vh;
   padding-right: 5px;

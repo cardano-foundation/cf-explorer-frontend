@@ -1,18 +1,18 @@
-import { useState } from "react";
 import { Box, IconButton, useTheme } from "@mui/material";
-import { useParams } from "react-router-dom";
 import BigNumber from "bignumber.js";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { EyeIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { getShortHash } from "src/commons/utils/helper";
-import { AdaValue } from "src/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
 import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
+import { AdaValue } from "src/components/commons/ADAValue";
 
 import { DeregistrationCertificateModal } from "../../Deregistration";
 
