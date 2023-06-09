@@ -33,14 +33,14 @@ const Header: React.FC<RouteComponentProps> = (props) => {
   const handleToggle = () => setSidebar(!sidebar);
 
   return (
-    <HeaderContainer>
+    <HeaderContainer data-testid="header">
       <HeaderBox home={home ? 1 : 0}>
         <HeaderMain home={home ? 1 : 0}>
           <Title home={home ? 1 : 0} data-testid="home-title">Cardano Blockchain Explorer</Title>
           {history.location.pathname !== routers.STAKING_LIFECYCLE && <HeaderSearch home={home} />}
         </HeaderMain>
-        <HeaderTop collasped={+onDetailView}>
-          <HeaderLogoLink to="/">
+        <HeaderTop collasped={+onDetailView} data-testid="header-top">
+          <HeaderLogoLink to="/" data-testid="header-logo">
             <HeaderLogo src={LogoIcon} alt="logo desktop" />
           </HeaderLogoLink>
           <SideBarRight>

@@ -35,7 +35,11 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
   return (
     <Layout sidebar={+sidebar}>
       <BackDrop isShow={+sidebar} onClick={handleToggle} />
-      <Drawer variant="permanent" open={sidebar} ModalProps={{ keepMounted: true }}>
+      <Drawer
+        variant="permanent"
+        open={sidebar}
+        ModalProps={{ keepMounted: true }}
+        data-testid="sidebar">
         <CustomTooltip placement="right" title={sidebar ? `Collapse` : `Expand`}>
           <ToggleMenu onClick={handleToggle} type="button">
             <ArrowCollapse> {sidebar ? <FaArrowLeft /> : <FaArrowRight />}</ArrowCollapse>

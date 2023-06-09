@@ -43,7 +43,7 @@ const Copyright = styled("small")`
 
 const Footer: React.FC = () => {
   return (
-    <StyledFooter>
+    <StyledFooter data-testid="footer">
       <FooterContainer>
         <FooterMenu bottom={true} />
         <Copyright>

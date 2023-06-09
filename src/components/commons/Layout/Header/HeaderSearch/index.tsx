@@ -177,7 +177,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const { isMobile } = useScreen();
 
   return (
-    <Form onSubmit={handleSearch} home={+home} sidebar={+sidebar}>
+    <Form onSubmit={handleSearch} home={+home} sidebar={+sidebar} data-testid="header-search">
       <Backdrop sx={{ backgroundColor: "unset" }} open={showOption} onClick={() => setShowOption(false)} />
       <StyledSelect
         data-testid="all-filters-dropdown"
