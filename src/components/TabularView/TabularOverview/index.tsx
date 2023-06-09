@@ -1,6 +1,5 @@
-import { Box, Grid, Icon } from "@mui/material";
+import { Grid, Icon } from "@mui/material";
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
@@ -24,7 +23,10 @@ import {
   ItemIcon,
   StyledAdaLogoIcon,
   TransferButton,
-  NoDelegatedStakePool
+  NoDelegatedStakePool,
+  CardValueDelegating,
+  BoxStyled,
+  StyledBoxDelegating
 } from "./styles";
 
 type TCardAmount = {
@@ -106,9 +108,17 @@ const TabularOverview: React.FC = () => {
           iconUrl={DelegationToIconUrl}
           value={
             data?.pool?.poolId ? (
-              <Box component={Link} to={details.delegation(data?.pool?.poolId)} display="flex" alignItems="center">
-                <CardValue>{data?.pool?.poolName || getShortHash(data?.pool?.poolId || "")}</CardValue>
-              </Box>
+              <StyledBoxDelegating to={details.delegation(data?.pool?.poolId)}>
+                <CardValueDelegating>
+                  <BoxStyled>
+                    {data?.pool?.tickerName || data?.pool?.poolName
+                      ? `${data.pool.tickerName && data.pool.tickerName + "-"}  ${
+                          data.pool.poolName && data.pool.poolName
+                        }`
+                      : getShortHash(data?.pool?.poolId || "")}
+                  </BoxStyled>
+                </CardValueDelegating>
+              </StyledBoxDelegating>
             ) : (
               <NoDelegatedStakePool>Not delegated to any pool</NoDelegatedStakePool>
             )
