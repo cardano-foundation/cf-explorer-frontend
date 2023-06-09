@@ -12,6 +12,7 @@ const Header = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 `;
 
 const Title = styled("h2")<{ underline: number; marginTitle?: string }>`

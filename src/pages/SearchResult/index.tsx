@@ -48,8 +48,6 @@ const createNavigator = (filter?: FilterParams) => {
       return details.address;
     case "delegations/pool-detail-header":
       return details.delegation;
-    case "contract":
-      return details.contract;
     default:
       return null;
   }
@@ -92,8 +90,6 @@ const SearchResult = () => {
           urls.map(async (url): Promise<{ url: FilterParams; data: any }> => {
             try {
               const res = await defaultAxios.get(`${url}/${value}`);
-              if (url === "addresses" && (res.data as WalletAddress)?.isContract)
-                return Promise.resolve({ url: "contract", data: res.data });
               if (res.data) return Promise.resolve({ url, data: res.data });
             } catch {
               //To do
