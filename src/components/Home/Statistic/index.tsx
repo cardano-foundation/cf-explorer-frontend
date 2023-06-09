@@ -8,7 +8,7 @@ import { AdaPriceIcon, CurentEpochIcon, LiveStakeIcon, MarketCapIcon } from "src
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
-import { formatADA, formatADAFull, numberWithCommas } from "src/commons/utils/helper";
+import { formatADA, formatADAFull, formatDateTimeLocal, numberWithCommas } from "src/commons/utils/helper";
 import { RootState } from "src/stores/types";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import RateWithIcon from "src/components/commons/RateWithIcon";
@@ -144,6 +144,22 @@ const HomeStatistic = () => {
                 {isMobile ? <br /> : null}
                 <XValue>
                   <b data-testid="curent-epoch-account">{numberWithCommas(currentEpoch?.account)}</b>
+                </XValue>
+                <br />
+                <XSmall>Start time: </XSmall>
+                {isMobile ? <br /> : null}
+                <XValue>
+                  <b style={{
+                    whiteSpace: isGalaxyFoldSmall ? "normal" : "nowrap",
+                  }}>{formatDateTimeLocal(currentEpoch?.startTime)}</b>
+                </XValue>
+                <br />
+                <XSmall>End time: </XSmall>
+                {isMobile ? <br /> : null}
+                <XValue>
+                  <b style={{
+                    whiteSpace: isGalaxyFoldSmall ? "normal" : "nowrap",
+                  }}>{formatDateTimeLocal(currentEpoch?.endTime)}</b>
                 </XValue>
               </Content>
             </Link>
