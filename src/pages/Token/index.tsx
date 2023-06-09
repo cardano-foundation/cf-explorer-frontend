@@ -66,6 +66,16 @@ const Tokens = () => {
         )
     },
     {
+      title: "Policy ID",
+      key: "policy",
+      minWidth: "100px",
+      render: (r) => (
+        <CustomTooltip title={r.policy}>
+          <AssetName to={details.policyDetail(r.policy)}>{getShortWallet(r.policy || "")}</AssetName>
+        </CustomTooltip>
+      )
+    },
+    {
       title: "Total Transactions",
       key: "txCount",
       minWidth: "150px",
