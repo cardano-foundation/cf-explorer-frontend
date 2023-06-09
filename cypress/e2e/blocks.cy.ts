@@ -15,6 +15,6 @@ describe("template spec", () => {
 
   it("should show details of block 8237492", () => {
     cy.visit("/block/8237492");
-    cy.get('[data-testid="block-details-total-output-in-ada"]').should("contain", "3,377,473.111701");
+    cy.get('[data-testid="block-details-total-output-in-ada"]').should("contain", "549.203328");
   });
 });

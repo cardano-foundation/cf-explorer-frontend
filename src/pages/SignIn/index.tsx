@@ -285,11 +285,11 @@ export default function SignIn() {
                   </Box>
                 }
               />
-              <ForgotPassword onClick={() => history.push(routers.FORGOT_PASSWORD)}>
+              <ForgotPassword onClick={() => history.push(routers.FORGOT_PASSWORD)} data-testid="forgot-password-link">
                 Forgot your password?
               </ForgotPassword>
             </Box>
-            <WrapButton variant="contained" fullWidth onClick={handleSubmit} disabled={!enableButton}>
+            <WrapButton data-testid="login-btn" variant="contained" fullWidth onClick={handleSubmit} disabled={!enableButton}>
               Log in
             </WrapButton>
             <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
@@ -300,7 +300,7 @@ export default function SignIn() {
             <ConnectWallet
               onSuccess={handleLoginSuccess}
               customButton={({ handleClick }) => (
-                <WrapButtonConnectWallet variant="outlined" fullWidth onClick={handleClick}>
+                <WrapButtonConnectWallet data-testid="connect-wallet" variant="outlined" fullWidth onClick={handleClick}>
                   Connect Wallet
                 </WrapButtonConnectWallet>
               )}
