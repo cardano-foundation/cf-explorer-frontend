@@ -25,7 +25,6 @@ const DelegationDetail: React.FC = () => {
   const history = useHistory();
   const query = parse(search.split("?")[1]);
   const tab = (query.tab as TabPoolDetail) || "epochs";
-  const mainRef = useRef(document.querySelector("#main"));
   const tableRef = useRef(null);
   const theme = useTheme();
 
@@ -61,7 +60,7 @@ const DelegationDetail: React.FC = () => {
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `Delegation Pool ${poolId} | Cardano Explorer`;
-    mainRef.current?.scrollTo(0, 0);
+    window.scrollTo(0, 0);
   }, [poolId]);
 
   if ((initialized && !data) || error) return <NoRecord />;
