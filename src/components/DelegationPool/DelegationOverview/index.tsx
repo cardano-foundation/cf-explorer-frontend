@@ -46,7 +46,7 @@ const OverViews: React.FC = () => {
   );
   return (
     <Card
-      title="Delegation Pools Explorer"
+      title="Stake Pool"
       extra={
         <TimeDuration>
           <FormNowMessage time={lastUpdated} />
