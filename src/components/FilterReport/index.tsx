@@ -104,7 +104,6 @@ const FilterReport: React.FC<StackingFilterProps> = ({ onFilterValueChange, filt
 
   useEffect(() => {
     setTextSearch(filterValue?.txHash ?? "");
-    console.timeLog(filterValue?.txHash);
   }, [filterValue?.txHash]);
   return (
     <ClickAwayListener onClickAway={onClickAway}>
@@ -184,6 +183,7 @@ const FilterReport: React.FC<StackingFilterProps> = ({ onFilterValueChange, filt
                 onFilterValueChange?.({ fromDate: undefined, sort: undefined, toDate: undefined, txHash: undefined });
                 setOpen(false);
                 setSelected("");
+                setTextSearch("");
               }}
             >
               <Box mr={1}>Reset</Box>

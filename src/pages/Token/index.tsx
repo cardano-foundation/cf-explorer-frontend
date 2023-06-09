@@ -162,7 +162,7 @@ const Tokens = () => {
             total: fetchData.total,
             onChange: (page, size) => {
               mainRef.current?.scrollTo(0, 0);
-              history.push({ search: stringify({ page, size }) });
+              history.replace({ search: stringify({ page, size }) });
             },
             handleCloseDetailView: handleClose
           }}
