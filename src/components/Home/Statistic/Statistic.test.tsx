@@ -37,7 +37,9 @@ const mockCurrentEpoch: EpochCurrentType = {
   no: 416,
   slot: 281663,
   totalSlot: 432000,
-  account: 96433
+  account: 96433,
+  endTime: "2023/06/09 21:44:47",
+  startTime: "2023/06/04 21:46:57"
 };
 
 const mockUSDMarket: CardanoMarket = {
