@@ -62,7 +62,7 @@ const Tabular = ({ renderTabsSPO }: ITabular) => {
   return (
     <Box mt={5}>
       <TabularOverview />
-      <StakeTab tabsRenderConfig={renderTabsSPO} tabs={tabs} initTab={tab} onChangeTab={onChangeTab} />
+      <StakeTab tabsRenderConfig={renderTabsSPO} tabs={tabs} initTab={tab} onChangeTab={onChangeTab} checkshow={true} />
     </Box>
   );
 };
