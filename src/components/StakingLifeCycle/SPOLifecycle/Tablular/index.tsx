@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { useHistory, useParams } from "react-router";
 
@@ -56,23 +55,14 @@ const Tabular = ({ renderTabsSPO }: ITabular) => {
   const { poolId = "", tab = "registration" } = useParams<{ poolId: string; tab: SPOStep }>();
   const history = useHistory();
 
-  const [listTabs, setListTabs] = useState<SPOTabItem[]>(tabs);
-
   const onChangeTab = (tab: any) => {
     history.replace(details.spo(poolId, "tabular", tab));
   };
 
-  useEffect(() => {
-    if (renderTabsSPO) {
-      const filteredList = tabs.filter((tab: SPOTabItem) => renderTabsSPO[tab.keyCheckShow]);
-      setListTabs(filteredList);
-    }
-  }, [renderTabsSPO]);
-
   return (
     <Box mt={5}>
       <TabularOverview />
-      <StakeTab tabs={listTabs} initTab={tab} onChangeTab={onChangeTab} />
+      <StakeTab tabsRenderConfig={renderTabsSPO} tabs={tabs} initTab={tab} onChangeTab={onChangeTab} />
     </Box>
   );
 };
