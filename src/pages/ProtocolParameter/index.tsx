@@ -50,7 +50,6 @@ const ProtocolParameter: React.FC = () => {
   const [fixedColumnKeys, { push: pushFixedColumnKeys }] = useList<string>([]);
   const [variableColumnList, { push: pushVariableColumn }] = useList<string>([]);
   const [costModelScript, setCostModelScript] = useState("");
-  console.log("🚀 ~ file: index.tsx:53 ~ costModelScript:", costModelScript);
   const [showHistory, setShowHistory] = useState(false);
   const { PROTOCOL_PARAMETER } = API;
   const { data: dataFixed, loading: loadingFixed } = useFetch(PROTOCOL_PARAMETER.FIXED);
@@ -159,7 +158,6 @@ const ProtocolParameter: React.FC = () => {
         <Box
           component={k === "genDelegs" ? Button : Box}
           onClick={() => {
-            console.log(k, ":", r[k]);
             return k === "genDelegs" && setCostModelScript(r["genDelegs"] !== null ? r["genDelegs"] || 0 : "");
           }}
           justifyItems={"flex-start"}
