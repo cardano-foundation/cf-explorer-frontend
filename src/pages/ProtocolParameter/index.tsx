@@ -155,8 +155,21 @@ const ProtocolParameter: React.FC = () => {
     key: k,
     render: (r: any) => {
       return (
-        <Box component={Box} justifyItems={"flex-start"} textTransform={"capitalize"}>
-          <Box maxWidth={300} overflow={"hidden"} whiteSpace={"nowrap"} textOverflow={"ellipsis"}>
+        <Box
+          component={k === "genDelegs" ? Button : Box}
+          onClick={() => {
+            return k === "genDelegs" && setCostModelScript(r["genDelegs"] !== null ? r["genDelegs"] || 0 : "");
+          }}
+          justifyItems={"flex-start"}
+          textTransform={"capitalize"}
+        >
+          <Box
+            maxWidth={300}
+            overflow={"hidden"}
+            whiteSpace={"nowrap"}
+            textOverflow={"ellipsis"}
+            color={({ palette }) => (k === "genDelegs" ? palette.blue[800] : "unset")}
+          >
             {typeof r[k] === "object" ? JSON.stringify(r[k]) : r[k]}
           </Box>
         </Box>

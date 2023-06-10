@@ -3,7 +3,7 @@ import { ProtocolHistory } from "src/types/protocol";
 export const explainerTextProtocolHistory: Record<keyof Omit<ProtocolHistory, "epochChanges">, string> = {
   minFeeA: "Additional transaction fee per byte of data (in lovelace).",
   minFeeB: "Base transaction fee (in lovelace).",
-  maxBlockSize: "",
+  maxBlockSize: "Maximum size of a block body. Limits blockchain storage size, and communication costs.",
   maxTxSize:
     "Maximum size of a transaction. Several transactions may be included in a block. Must be strictly less than the max. block body size.",
   maxBhSize: "Maximum size of the block header. Should be significantly less than the maximum block size.",
@@ -11,7 +11,7 @@ export const explainerTextProtocolHistory: Record<keyof Omit<ProtocolHistory, "e
     "Deposit charged for stake keys (in Lovelace). Ensures that unused keys are returned, so freeing resources.",
   poolDeposit: "Pool deposit (in lovelace).",
   maxEpoch: "Maximum number of epochs within which a pool can be announced to retire, starting from the next epoch.",
-  optimalPoolCount: "",
+  optimalPoolCount: `Target number of pools ("k"). Impacts saturation threshold, encouraging growth in number of stake pools.`,
   influence: '"Influence Factor". Governs how much impact the pledge has on rewards.',
   monetaryExpandRate:
     "Monetary expansion rate per epoch. Governs the rewards that are returned from reserves to the ecosystem (treasury, stake pools and delegators).",
