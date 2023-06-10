@@ -154,7 +154,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
                 component={IconButton}
                 active={+(currentStep === idx)}
                 onClick={() => {
-                  if (renderTabsSPO[step.keyCheckShow]) {
+                  if (renderTabsSPO[step.keyCheckShow] && currentStep !== idx) {
                     history.replace(details.spo(poolId, "timeline", step.key));
                     setCurrentStep(idx);
                   }
