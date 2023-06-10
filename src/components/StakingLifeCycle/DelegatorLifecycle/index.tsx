@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Box, IconButton, useTheme } from "@mui/material";
 
@@ -69,6 +69,10 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
   }>();
   const [open, setOpen] = useState(false);
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
+  useEffect(() => {
+    document.getElementById(`step-${currentStep}`)?.scrollIntoView(true);
+  }, [currentStep]);
+
   if (!tabsRenderConfig) return null;
 
   const stepper: StepperProps[] = [
@@ -181,6 +185,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
         {stepper.map((step, idx) => {
           return (
             <Step
+              id={`step-${idx}`}
               key={idx}
               component={tabsRenderConfig[step.keyCheckShow] ? "span" : CustomTooltip}
               active={+(currentStep === idx)}

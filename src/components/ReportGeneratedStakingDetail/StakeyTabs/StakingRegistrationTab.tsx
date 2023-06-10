@@ -34,10 +34,12 @@ const StakingRegistrationTab = () => {
   const [openModal, setOpenModal] = useState(false);
   const { search } = useLocation();
   const history = useHistory();
+  const [sort, setSort] = useState<string>("");
   const [pageInfo, setPageInfo] = useState(getPageInfo(search));
   const { stakeKey } = useContext(StakingDetailContext);
   const fetchData = useFetchList<RegistrationItem>(reportId ? API.REPORT.SREPORT_DETAIL_REGISTRATIONS(reportId) : "", {
-    ...pageInfo
+    ...pageInfo,
+    sort
   });
 
   const columns: Column<RegistrationItem>[] = [
@@ -55,6 +57,9 @@ const StakingRegistrationTab = () => {
       title: "Timestamp",
       key: "time",
       minWidth: "120px",
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      },
       render: (r) => formatDateTimeLocal(r.time)
     },
     {

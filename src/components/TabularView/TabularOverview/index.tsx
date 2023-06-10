@@ -1,9 +1,9 @@
-import { Box, Grid, Icon } from "@mui/material";
+import { Grid, Icon } from "@mui/material";
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import {
   DelegationToIconUrl,
@@ -24,7 +24,10 @@ import {
   ItemIcon,
   StyledAdaLogoIcon,
   TransferButton,
-  NoDelegatedStakePool
+  NoDelegatedStakePool,
+  CardValueDelegating,
+  BoxStyled,
+  StyledBoxDelegating
 } from "./styles";
 
 type TCardAmount = {
@@ -66,6 +69,10 @@ const GridItem = ({ title, action, value, iconUrl }: TGridItem) => {
 
 const TabularOverview: React.FC = () => {
   const data = useContext(DelegatorDetailContext);
+  const { totalStake, rewardAvailable, rewardWithdrawn, pool } = data ?? {};
+  const { tickerName, poolName, poolId } = pool ?? {};
+  const delegatingToValue =
+    tickerName || poolName ? `${tickerName && tickerName + "-"}  ${poolName && poolName}` : getShortHash(poolId || "");
   const [open, setOpen] = useState(false);
 
   return (
@@ -74,7 +81,7 @@ const TabularOverview: React.FC = () => {
         <GridItem
           title="Payment Wallet"
           iconUrl={PaymentWalletUrl}
-          value={<CardAmount amount={Math.max(data?.totalStake || 0, 0)} />}
+          value={<CardAmount amount={Math.max(totalStake || 0, 0)} />}
           action={
             <TransferButton
               onClick={() => setOpen(true)}
@@ -90,14 +97,14 @@ const TabularOverview: React.FC = () => {
         <GridItem
           title="Reward Account"
           iconUrl={RewardAccountIconUrl}
-          value={<CardAmount amount={Math.max(data?.rewardAvailable || 0, 0)} />}
+          value={<CardAmount amount={Math.max(rewardAvailable || 0, 0)} />}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
         <GridItem
           title="Rewards Withdrawn"
           iconUrl={RewardWithdrawnIconUrl}
-          value={<CardAmount amount={data?.rewardWithdrawn} />}
+          value={<CardAmount amount={rewardWithdrawn} />}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
@@ -105,10 +112,14 @@ const TabularOverview: React.FC = () => {
           title="Delegating To"
           iconUrl={DelegationToIconUrl}
           value={
-            data?.pool?.poolId ? (
-              <Box component={Link} to={details.delegation(data?.pool?.poolId)} display="flex" alignItems="center">
-                <CardValue>{data?.pool?.poolName || getShortHash(data?.pool?.poolId || "")}</CardValue>
-              </Box>
+            pool?.poolId ? (
+              <StyledBoxDelegating to={details.delegation(pool?.poolId)}>
+                <CardValueDelegating>
+                  <CustomTooltip title={delegatingToValue}>
+                    <BoxStyled>{delegatingToValue}</BoxStyled>
+                  </CustomTooltip>
+                </CardValueDelegating>
+              </StyledBoxDelegating>
             ) : (
               <NoDelegatedStakePool>Not delegated to any pool</NoDelegatedStakePool>
             )
