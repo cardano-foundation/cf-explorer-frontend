@@ -21,7 +21,7 @@ export const explainerTextProtocolHistory: Record<keyof Omit<ProtocolHistory, "e
     "Level of decentralisation. Starts at 1. Block production is fully decentralised when this reaches 0.",
   entropy:
     "Should additional entropy be included in the initial phases. This provides additional certainty that the blockchain has not been compromised by the seed key holders. Redundant once the system is sufficiently decentralised.",
-  protocolMajor: "Protocol version. Major version 1 = Byron, 2 = Shelley, ",
+  protocolMajor: "Protocol version. Major version 1 = Byron, 2 = Shelley. ",
   protocolMinor: "Protocol version. Minor versions indicate software updates (will generally be 0).",
   minUtxoValue:
     "Minimum allowed value in a UTxO. Security-related parameter used to prevent the creation of many small UTxOs that could use excessive resource to process.",
