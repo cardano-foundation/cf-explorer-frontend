@@ -17,21 +17,27 @@ export interface StakeTabItem {
   keyCheckShow?: string;
 }
 export interface StackTabProps {
+  checkshow?: boolean;
   tabs: StakeTabItem[];
   initTab?: string;
   onChangeTab?: (tab: TabStakeDetail) => void;
   tabsRenderConfig?: ListStakeKeyResponse | ListTabResponseSPO;
 }
 
-const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = "registration", onChangeTab, tabsRenderConfig }) => {
+const StakeTab: React.FC<StackTabProps> = ({
+  tabs,
+  initTab = "registration",
+  onChangeTab,
+  tabsRenderConfig,
+  checkshow
+}) => {
   const [tabActive, setTabActive] = useState<string>(initTab);
   const theme = useTheme();
 
   const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
-    if (tabsRenderConfig && tabsRenderConfig[tabs.find((t) => t.key === tab)?.keyCheckShow || ""]) {
-      setTabActive(tab);
-      onChangeTab?.(tab);
-    }
+    if (checkshow && tabsRenderConfig && !tabsRenderConfig[tabs.find((t) => t.key === tab)?.keyCheckShow || ""]) return;
+    setTabActive(tab);
+    onChangeTab?.(tab);
   };
 
   return (
@@ -53,7 +59,7 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, initTab = "registration", onC
                 label={
                   <CustomTooltip
                     title={
-                      tabsRenderConfig && tabsRenderConfig[keyCheckShow || ""]
+                      !checkshow || (tabsRenderConfig && tabsRenderConfig[keyCheckShow || ""])
                         ? undefined
                         : "There is no record at this time"
                     }
