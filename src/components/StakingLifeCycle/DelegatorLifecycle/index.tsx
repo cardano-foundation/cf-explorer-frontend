@@ -191,7 +191,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
                   component={IconButton}
                   active={+(currentStep === idx)}
                   onClick={() => {
-                    if (tabsRenderConfig[step.keyCheckShow]) {
+                    if (tabsRenderConfig[step.keyCheckShow] && currentStep !== idx) {
                       setCurrentStep(idx);
                       history.replace(details.staking(stakeId, "timeline", step.key));
                     }
