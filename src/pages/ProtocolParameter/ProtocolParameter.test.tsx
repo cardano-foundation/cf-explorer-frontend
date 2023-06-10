@@ -26,7 +26,7 @@ describe("ProtocolParameter page", () => {
   it("should be render page", () => {
     render(<ProtocolParameter />);
     expect(screen.getByText("Updatable Parameters")).toBeInTheDocument();
-    expect(screen.getByText("Non-updatable Parameters")).toBeInTheDocument();
+    expect(screen.getByText("Global Constants")).toBeInTheDocument();
     expect(screen.getByText("View update history")).toBeInTheDocument();
   });
   it("renders the table with given columns and data", () => {
