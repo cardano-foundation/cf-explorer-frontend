@@ -50,6 +50,7 @@ const ProtocolParameter: React.FC = () => {
   const [fixedColumnKeys, { push: pushFixedColumnKeys }] = useList<string>([]);
   const [variableColumnList, { push: pushVariableColumn }] = useList<string>([]);
   const [costModelScript, setCostModelScript] = useState("");
+  console.log("🚀 ~ file: index.tsx:53 ~ costModelScript:", costModelScript);
   const [showHistory, setShowHistory] = useState(false);
   const { PROTOCOL_PARAMETER } = API;
   const { data: dataFixed, loading: loadingFixed } = useFetch(PROTOCOL_PARAMETER.FIXED);
@@ -155,8 +156,22 @@ const ProtocolParameter: React.FC = () => {
     key: k,
     render: (r: any) => {
       return (
-        <Box component={Box} justifyItems={"flex-start"} textTransform={"capitalize"}>
-          <Box maxWidth={300} overflow={"hidden"} whiteSpace={"nowrap"} textOverflow={"ellipsis"}>
+        <Box
+          component={k === "genDelegs" ? Button : Box}
+          onClick={() => {
+            console.log(k, ":", r[k]);
+            return k === "genDelegs" && setCostModelScript(r["genDelegs"] !== null ? r["genDelegs"] || 0 : "");
+          }}
+          justifyItems={"flex-start"}
+          textTransform={"capitalize"}
+        >
+          <Box
+            maxWidth={300}
+            overflow={"hidden"}
+            whiteSpace={"nowrap"}
+            textOverflow={"ellipsis"}
+            color={({ palette }) => (k === "genDelegs" ? palette.blue[800] : "unset")}
+          >
             {typeof r[k] === "object" ? JSON.stringify(r[k]) : r[k]}
           </Box>
         </Box>
