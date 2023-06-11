@@ -152,7 +152,7 @@ const Epoch: React.FC = () => {
             ...pageInfo,
             total: fetchData.total,
             onChange: (page, size) => {
-              history.push({ search: stringify({ page, size }) });
+              history.replace({ search: stringify({ page, size }) });
               mainRef.current?.scrollTo(0, 0);
             },
             handleCloseDetailView: handleClose

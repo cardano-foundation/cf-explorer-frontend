@@ -1,24 +1,30 @@
-import { Box, Grid, Skeleton, alpha, styled } from "@mui/material";
+import { Box, Skeleton, styled } from "@mui/material";
 import { useState } from "react";
-import { Link as LinkDom } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
+import { Link as LinkDom } from "react-router-dom";
 
-import { FilterParams } from "src/components/StackingFilter";
 import useFetch from "src/commons/hooks/useFetch";
 import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { FilterParams } from "src/components/StackingFilter";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import StyledModal from "src/components/commons/StyledModal";
 
 import { StyledCopyButton } from "../../SPOLifecycle/Registration/styles";
+import { StyledLink } from "../Registration/styles";
 import DelegationDraw from "./DelegationDraw";
 import RecentDelegations from "./RecentDelegations";
-import { IconButtonBack, Info, InfoGroup, InfoText, StepInfo } from "./styles";
-import { StyledLink } from "../Registration/styles";
+import { IconButtonBack, Info, InfoGroup, InfoText, Item, ItemList, Label, LineData, StepInfo } from "./styles";
+
+interface CertificateItemType {
+  label: React.ReactNode;
+  content: React.ReactNode;
+  extra?: React.ReactNode | false;
+}
 
 const Delegation = () => {
   const [selected, setSelected] = useState<DelegationItem | null>(null);
@@ -165,59 +171,65 @@ export const DelegationCertificateModal = ({
   txHash: string;
   handleCloseModal: () => void;
 }) => {
-  const { data, loading } = useFetch<DelegationDetail>(
+  const { data } = useFetch<DelegationDetail>(
     (txHash && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stake, txHash)) || ""
   );
 
+  const list: CertificateItemType[] = [
+    {
+      label: "Pool ID",
+      content: (
+        <LineData>
+          <CustomTooltip title={data?.poolId}>
+            <Link to={details.delegation(data?.poolId || "")}>{getShortWallet(data?.poolId || "")}</Link>
+          </CustomTooltip>
+          <CopyButton text={data?.poolId || ""} />
+        </LineData>
+      )
+    },
+    {
+      label: "Pool Name",
+      content: (
+        <LineData>
+          <Link to={details.delegation(data?.poolId || "")}>{data?.poolName || ""}</Link>{" "}
+        </LineData>
+      )
+    },
+    {
+      label: "Stake Key",
+      content: (
+        <LineData>
+          <CustomTooltip title={stake}>
+            <Link to={details.stake(stake)}>{getShortWallet(stake || "")}</Link>
+          </CustomTooltip>
+          <CopyButton text={stake} />
+        </LineData>
+      )
+    },
+  ]
+
   return (
     <StyledModal {...props} title="Delegation certificate">
-      <Grid container spacing={1}>
-        <Grid item xs={6}>
-          <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
-              Pool ID
-            </Box>
-            {loading && <Skeleton variant="rectangular" />}
-            {data && !loading && (
-              <Box>
-                <CustomTooltip title={data?.poolId}>
-                  <Link to={details.delegation(data?.poolId || "")}>{getShortWallet(data?.poolId || "")}</Link>
-                </CustomTooltip>
-                <CopyButton text={data?.poolId || ""} />
-              </Box>
-            )}
-          </Box>
-        </Grid>
-        <Grid item xs={6}>
-          <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
-              Pool Name
-            </Box>
-            {loading && <Skeleton variant="rectangular" />}
-            {data && !loading && (
-              <Box>
-                <Link to={details.delegation(data?.poolId || "")}>{data?.poolName || ""}</Link>{" "}
-              </Box>
-            )}
-          </Box>
-        </Grid>
-        <Grid item xs={6}>
-          <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
-              Stake Key
-            </Box>
-            {loading && <Skeleton variant="rectangular" />}
-            {data && !loading && (
-              <Box>
-                <CustomTooltip title={stake}>
-                  <Link to={details.stake(stake)}>{getShortWallet(stake || "")}</Link>
-                </CustomTooltip>
-                <CopyButton text={stake} />
-              </Box>
-            )}
-          </Box>
-        </Grid>
-      </Grid>
+      <ItemList>
+        {list.map(({ label, content, extra }, index) => {
+          return (
+            <Item key={index} flexDirection={extra ? "row" : "column"}>
+              {extra ? (
+                <Box>
+                  <Label>{label}</Label>
+                  {data ? content : <Skeleton variant="rectangular" />}
+                </Box>
+              ) : (
+                <>
+                  <Label>{label}</Label>
+                  {data ? content : <Skeleton variant="rectangular" />}
+                </>
+              )}
+              {extra}
+            </Item>
+          );
+        })}
+      </ItemList>
     </StyledModal>
   );
 };

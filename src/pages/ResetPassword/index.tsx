@@ -113,7 +113,7 @@ export default function ResetPassword() {
   const handleChange = (event: any) => {
     setFormData({
       name: event.target.name,
-      value: event.target.value,
+      value: event.target.value.trim(),
       touched: true,
       error: getError(event.target.name, event.target.value)
     });

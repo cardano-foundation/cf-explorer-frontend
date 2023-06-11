@@ -1,6 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import { useContext, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import BigNumber from "bignumber.js";
 
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 import { GreenWalletIcon } from "src/components/commons/GreenWalletIcon";
@@ -63,10 +64,10 @@ const WithdrawalHistoryTab = () => {
       minWidth: "120px",
       render: (r) => (
         <Box>
-          <AdaValue limit={5} value={r.value - r.fee} />
+          <AdaValue value={new BigNumber(r.value).minus(new BigNumber(r.fee)).toString()} />
           <TableSubTitle>
             <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-              <AdaValue limit={1} color={theme.palette.grey[400]} value={r.value} gap="3px" fontSize="12px" />
+              <AdaValue color={theme.palette.grey[400]} value={r.value} gap="3px" fontSize="12px" />
               <Box mx="3px">/</Box>
               <AdaValue color={theme.palette.grey[400]} value={r.fee} gap="3px" fontSize="12px" />
             </Box>
