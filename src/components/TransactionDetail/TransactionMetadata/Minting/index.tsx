@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 
 import { Column } from "src/components/commons/Table";
 import ScriptModal from "src/components/ScriptModal";
 import { PolicyScriptIcon } from "src/commons/resources";
 import { Logo } from "src/pages/Token/styles";
+import { details } from "src/commons/routers";
 
 import { Amount, AssetName, LogoEmpty, TableMinting } from "./styles";
 
@@ -25,12 +27,20 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       render: (r) => {
         return (
           <AssetName>
-            {r?.metadata?.logo ? (
-              <Logo src={`data:/image/png;base64,${r?.metadata?.logo}`} alt="icon" />
-            ) : (
-              <LogoEmpty />
-            )}
-            {r.assetName}
+            <>
+              {r?.metadata?.logo ? (
+                <Logo src={`data:/image/png;base64,${r?.metadata?.logo}`} alt="icon" />
+              ) : (
+                <LogoEmpty />
+              )}
+              <Box
+                component={Link}
+                color={({ palette }) => `${palette.blue["800"]} !important`}
+                to={details.token(r.assetId)}
+              >
+                {r.assetName}
+              </Box>
+            </>
           </AssetName>
         );
       }

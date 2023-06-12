@@ -161,6 +161,7 @@ interface Transaction {
   };
   mints?: {
     assetName: string;
+    assetId: string;
     assetQuantity: number;
     policy: string;
     metadata?: {
