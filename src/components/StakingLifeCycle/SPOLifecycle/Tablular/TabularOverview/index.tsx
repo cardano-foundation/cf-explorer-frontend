@@ -93,7 +93,7 @@ const TabularOverview: React.FC = () => {
     return history.push(`/stake/${key}/delegation`);
   };
 
-  const ownerAccountValue = stakeKeys && stakeKeys.length && getShortWallet(stakeKeys[0]);
+  const ownerAccountValue = getShortWallet(stakeKeys?.[0]);
   return (
     <Box>
       <Grid container spacing={2}>
@@ -142,10 +142,8 @@ const TabularOverview: React.FC = () => {
           value={
             <Box display="flex" alignItems="center">
               <CardValue>
-                <CustomTooltip title={ownerAccountValue}>
-                  <ClickAbleLink to={details.stake((stakeKeys && stakeKeys.length && stakeKeys[0]) || "#")}>
-                    {ownerAccountValue}
-                  </ClickAbleLink>
+                <CustomTooltip title={stakeKeys?.[0]}>
+                  <ClickAbleLink to={details.stake(stakeKeys?.[0] || "#")}>{ownerAccountValue}</ClickAbleLink>
                 </CustomTooltip>
               </CardValue>
             </Box>
