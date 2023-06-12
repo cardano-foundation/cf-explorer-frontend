@@ -22,7 +22,6 @@ export const WrapAddress = styled(Box)(({ theme }) => ({
   margin: "0 auto",
   display: "flex",
   alignItems: "center",
-  width: 197,
   wordBreak: "break-all"
 }));
 
