@@ -164,3 +164,8 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
     }
   }
 }));
+
+export const TextCardHighlight = styled("span")`
+  font-size: 20px;
+  border-bottom: ${(props) => `2px solid ${props.theme.palette.green[600]}`};
+`;

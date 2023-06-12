@@ -24,6 +24,7 @@ import { SmallText } from "src/components/share/styled";
 import { TransferIcon } from "src/commons/resources";
 
 import { Img, StyledLink } from "./styles";
+import { TextCardHighlight } from "../AddressDetail/AddressAnalytics/styles";
 
 interface AddressTransactionListProps {
   underline?: boolean;
@@ -163,7 +164,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
   ];
 
   return (
-    <Card title={"Transactions"} underline={underline}>
+    <Card title={<TextCardHighlight>Transactions</TextCardHighlight>} underline={underline}>
       <Table
         {...fetchData}
         columns={columns}

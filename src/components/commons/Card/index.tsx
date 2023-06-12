@@ -13,7 +13,7 @@ const Header = styled(Box)`
   align-items: center;
 `;
 
-const Title = styled("h2")<{ underline: number; marginTitle?: string }>`
+export const Title = styled("h2")<{ underline: number; marginTitle?: string }>`
   text-align: left;
   padding-bottom: 8px;
   position: relative;
