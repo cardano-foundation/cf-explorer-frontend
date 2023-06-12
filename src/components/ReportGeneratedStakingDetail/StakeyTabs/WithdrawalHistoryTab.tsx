@@ -14,52 +14,13 @@ import { WrapFilterDescription } from "src/components/StakingLifeCycle/Delegator
 import { details } from "src/commons/routers";
 import { AdaValue } from "src/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
 
-const columns: Column<WithdrawItem>[] = [
-  {
-    title: "Transaction Hash",
-    key: "hash",
-    minWidth: "120px",
-    render: (r) => (
-      <CustomTooltip title={r.txHash}>
-        <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
-      </CustomTooltip>
-    )
-  },
-  {
-    title: "Timestamp",
-    key: "time",
-    minWidth: "120px",
-    render: (r) => formatDateTimeLocal(r.time)
-  },
-  {
-    title: (
-      <>
-        <Box>Net Amount</Box>
-        <TableSubTitle>Withdrawn/Fees</TableSubTitle>
-      </>
-    ),
-    key: "epoch",
-    minWidth: "120px",
-    render: (r) => (
-      <Box>
-        <AdaValue value={r.value + r.fee} />
-        <TableSubTitle>
-          <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-            <AdaValue value={r.value} gap="3px" fontSize="12px" />
-            <Box mx="3px">/</Box>
-            <AdaValue value={r.fee} gap="3px" fontSize="12px" />
-          </Box>
-        </TableSubTitle>
-      </Box>
-    )
-  }
-];
 
 const WithdrawalHistoryTab = () => {
   const { reportId } = useParams<{ reportId: string }>();
   const { search } = useLocation();
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
+  const [sort, setSort] = useState<string>("");
   const [params] = useState<FilterParams>({
     fromDate: undefined,
     sort: undefined,
@@ -70,10 +31,54 @@ const WithdrawalHistoryTab = () => {
     reportId ? API.REPORT.SREPORT_DETAIL_WITHDRAWALS(reportId) : "",
     {
       ...pageInfo,
-      ...params
+      ...params,
+      sort: sort || params.sort
     }
   );
   const { total } = fetchData;
+  const columns: Column<WithdrawItem>[] = [
+    {
+      title: "Transaction Hash",
+      key: "hash",
+      minWidth: "120px",
+      render: (r) => (
+        <CustomTooltip title={r.txHash}>
+          <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
+        </CustomTooltip>
+      )
+    },
+    {
+      title: "Timestamp",
+      key: "time",
+      minWidth: "120px",
+      render: (r) => formatDateTimeLocal(r.time),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      }
+    },
+    {
+      title: (
+        <>
+          <Box>Net Amount</Box>
+          <TableSubTitle>Withdrawn/Fees</TableSubTitle>
+        </>
+      ),
+      key: "epoch",
+      minWidth: "120px",
+      render: (r) => (
+        <Box>
+          <AdaValue value={r.value + r.fee} />
+          <TableSubTitle>
+            <Box display="flex" mt={1} alignItems="center" lineHeight="1">
+              <AdaValue value={r.value} gap="3px" fontSize="12px" />
+              <Box mx="3px">/</Box>
+              <AdaValue value={r.fee} gap="3px" fontSize="12px" />
+            </Box>
+          </TableSubTitle>
+        </Box>
+      )
+    }
+  ];
 
   return (
     <>

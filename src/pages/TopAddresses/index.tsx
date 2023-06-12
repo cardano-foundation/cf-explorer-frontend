@@ -75,7 +75,7 @@ const TopAddresses = () => {
 
   return (
     <StyledContainer>
-      <Card title={"Top addresses"}>
+      <Card title={"Top Addresses by ADA Balance"}>
         <Actions>
           <TimeDuration>
             <FormNowMessage time={lastUpdated} />
@@ -93,7 +93,7 @@ const TopAddresses = () => {
                 </MenuItem>
               ))}
             </Select>
-            <PerPage>Per page</PerPage>
+            <PerPage>Addresses</PerPage>
           </PageSize>
         </Actions>
         <Table data={data} error={error} loading={loading} initialized={initialized} columns={columns} />

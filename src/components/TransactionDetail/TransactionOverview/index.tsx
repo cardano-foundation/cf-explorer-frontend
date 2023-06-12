@@ -116,7 +116,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
           )}
         </Box>
       ),
-      allowSearch: true,
+      allowSearch: inputTransaction.length === 0 ? false : true,
       isSent: true,
       dataSearch: inputTransaction,
       key: "input"
@@ -159,7 +159,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
           )}
         </Box>
       ),
-      allowSearch: true,
+      allowSearch: outputTransaction.length === 0 ? false : true,
       dataSearch: outputTransaction,
       key: "output"
     },
