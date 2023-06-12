@@ -81,6 +81,7 @@ const StackingFilter: React.FC<StackingFilterProps> = ({
 
   const onClickAway = () => {
     setOpen(false);
+    setTextSearch("");
   };
 
   const onDateRangeModalClose = () => {
