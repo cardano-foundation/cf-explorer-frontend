@@ -4,7 +4,7 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import BigNumber from "bignumber.js";
 
 import { EyeIcon } from "src/commons/resources";
-import { DeregistrationCertificateModal } from "src/components/StakingLifeCycle/DelegatorLifecycle/Deregistration";
+import { DeregistrationCertificateModal } from "src/components/commons/DeregistrationCertificateModal";
 
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { details } from "../../../../commons/routers";
