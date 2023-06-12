@@ -118,7 +118,7 @@ const RegistrationPools = () => {
       }
     },
     {
-      title: "Fees",
+      title: "Fee",
       key: poolType === POOL_TYPE.REGISTRATION ? "margin" : "pu.margin",
       render: (pool) => formatPercent(pool.margin),
       sort: ({ columnKey, sortValue }) => {
