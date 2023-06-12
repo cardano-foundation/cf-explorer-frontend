@@ -24,7 +24,8 @@ import {
   SkeletonUI,
   Title,
   ValueInfo,
-  Wrapper
+  Wrapper,
+  TextCardHighlight
 } from "./styles";
 
 type AnalyticsData = { date: string; value: number };
@@ -54,7 +55,7 @@ const AddressAnalytics: React.FC = () => {
   const maxBalance = Math.max(...(balance || []), 0);
 
   return (
-    <Card title="Analytics">
+    <Card title={<TextCardHighlight>Analytics</TextCardHighlight>}>
       <Wrapper container columns={24} spacing="35px">
         <Grid item xs={24} lg={18}>
           <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
