@@ -21,7 +21,7 @@ const ContractDetailContent: React.FC = () => {
   const theme = useTheme();
 
   const handleChange = (event: React.SyntheticEvent, tab: "transaction" | "transcript") => {
-    history.push({ pathname: details.contract(address, tab) });
+    history.replace({ pathname: details.contract(address, tab) });
   };
 
   const tabs: { label: React.ReactNode; key: string; children: React.ReactNode }[] = [

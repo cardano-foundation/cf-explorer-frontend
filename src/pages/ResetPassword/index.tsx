@@ -113,7 +113,7 @@ export default function ResetPassword() {
   const handleChange = (event: any) => {
     setFormData({
       name: event.target.name,
-      value: event.target.value,
+      value: event.target.value.trim(),
       touched: true,
       error: getError(event.target.name, event.target.value)
     });
@@ -133,6 +133,14 @@ export default function ResetPassword() {
       setLoading(false);
     }
   };
+
+  const handleKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleSubmit(event);
+    }
+  };
+
   const handleSubmit = (event: any) => {
     event.preventDefault();
     const errorPassword = getError("password", formData.password.value);
@@ -171,6 +179,7 @@ export default function ResetPassword() {
                     </Box>
                   }
                   name="password"
+                  onKeyDown={handleKeyDown}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton aria-label="toggle password visibility" onClick={handleTogglePassword}>
@@ -197,6 +206,7 @@ export default function ResetPassword() {
                     </Box>
                   }
                   fullWidth
+                  onKeyDown={handleKeyDown}
                   name="confirmPassword"
                   onChange={handleChange}
                   type={showConfirmPassword ? "text" : "password"}
