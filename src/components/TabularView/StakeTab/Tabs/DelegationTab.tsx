@@ -62,7 +62,7 @@ const DelegationTab = () => {
       title: "Fees",
       key: "block",
       minWidth: "120px",
-      render: (r) => <AdaValue limit={5} value={r.fee} />
+      render: (r) => <AdaValue value={r.fee} />
     },
     {
       title: "Certificate",

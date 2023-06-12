@@ -145,7 +145,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       pagination={{
         ...pageInfo,
         total: fetchData.total,
-        onChange: (page, size) => history.push({ search: stringify({ page, size }) })
+        onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
       }}
       onClickRow={(_, r: Transactions) => history.push(details.transaction(r.hash))}
     />
