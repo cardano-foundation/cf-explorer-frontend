@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { useHistory, useParams } from "react-router";
 
@@ -71,15 +70,7 @@ interface ITabularProps {
 
 const Tabular = ({ tabsRenderConfig }: ITabularProps) => {
   const { stakeId = "", tab = "registration" } = useParams<{ stakeId: string; tab: DelegationStep }>();
-  const [listTabs, setListTabs] = useState<ITabularTab[]>(tabs);
   const history = useHistory();
-
-  useEffect(() => {
-    if (tabsRenderConfig) {
-      const filteredTabs = tabs.filter((tab: ITabularTab) => tabsRenderConfig[tab.keyCheckShow]);
-      setListTabs(filteredTabs);
-    }
-  }, [tabsRenderConfig]);
 
   if (!tabsRenderConfig) return null;
 
@@ -90,7 +81,13 @@ const Tabular = ({ tabsRenderConfig }: ITabularProps) => {
   return (
     <Box mt={5}>
       <TabularOverview />
-      <StakeTab tabs={listTabs} initTab={tab} onChangeTab={onChangeTab} />
+      <StakeTab
+        tabsRenderConfig={tabsRenderConfig}
+        tabs={tabs}
+        initTab={tab}
+        onChangeTab={onChangeTab}
+        checkshow={true}
+      />
     </Box>
   );
 };

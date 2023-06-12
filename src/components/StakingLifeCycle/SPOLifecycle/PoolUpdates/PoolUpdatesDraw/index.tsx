@@ -1,18 +1,18 @@
-import { useRef, useMemo } from "react";
 import { Box } from "@mui/material";
+import { useMemo, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
-import CustomTooltip from "src/components/commons/CustomTooltip";
-import { LineArrowItem } from "src/components/commons/LineArrow";
-import DrawPath from "src/components/commons/DrawPath";
-import CardanoSystem from "src/components/commons/CardanoSystem";
-import FeeBox from "src/components/commons/FeeBox";
-import { details } from "src/commons/routers";
 import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import CardanoSystem from "src/components/commons/CardanoSystem";
+import DrawPath from "src/components/commons/DrawPath";
+import FeeBox from "src/components/commons/FeeBox";
+import { LineArrowItem } from "src/components/commons/LineArrow";
 import SPOHolder from "src/components/commons/SPOHolder";
 
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../../../commons/utils/helper";
+import CustomTooltip from "../../../../commons/CustomTooltip";
 import { StyledCopyButton } from "../../../SPOLifecycle/Registration/styles";
 import { StyledLink } from "../../styles";
 import {
