@@ -1,5 +1,7 @@
 import "@testing-library/jest-dom";
 
+global.ResizeObserver = require("resize-observer-polyfill");
+
 jest.mock("@cardano-foundation/cardano-connect-with-wallet", () => ({
   useCardano: () => ({
     isEnabled: false,
