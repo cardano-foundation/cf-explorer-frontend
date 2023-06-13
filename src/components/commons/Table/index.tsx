@@ -218,7 +218,7 @@ const TableBody = <T extends ColumnType>({
           </td>
         </tr>
       )}
-      {(data) &&
+      {data &&
         data.map((row, index) => (
           <TableRow
             row={row}

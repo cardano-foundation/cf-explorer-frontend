@@ -53,7 +53,7 @@ const LatestStories = () => {
         {data.map(({ id, image, author, title, createdDate }) => {
           return (
             <Grid key={id} md={3} sm={6} xs={12} item>
-              <Link key={id} data-test to={details.story(id)} title={title} onClick={(e) => drag.current && e.preventDefault()}>
+              <Link key={id} to={details.story(id)} title={title} onClick={(e) => drag.current && e.preventDefault()}>
                 <Item>
                   <Image src={image} alt={title} />
                   <Detail>

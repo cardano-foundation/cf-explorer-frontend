@@ -1,18 +1,18 @@
-import { useState } from "react";
 import { Box } from "@mui/material";
+import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 
+import useFetchList from "src/commons/hooks/useFetchList";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
 import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
+import { FilterParams } from "src/components/StackingFilter";
+import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
+import { AdaValue } from "src/components/commons/ADAValue";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
-import useFetchList from "src/commons/hooks/useFetchList";
-import { API } from "src/commons/utils/api";
-import { FilterParams } from "src/components/StackingFilter";
-import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
-import { details } from "src/commons/routers";
-import { AdaValue } from "src/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
 
 
 const WithdrawalHistoryTab = () => {

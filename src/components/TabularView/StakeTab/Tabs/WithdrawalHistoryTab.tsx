@@ -1,10 +1,11 @@
 import { Box, useTheme } from "@mui/material";
+import BigNumber from "bignumber.js";
 import { useContext, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import BigNumber from "bignumber.js";
 
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 import { GreenWalletIcon } from "src/components/commons/GreenWalletIcon";
+import { AdaValue } from "src/components/commons/ADAValue";
 
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { details } from "../../../../commons/routers";
@@ -15,7 +16,6 @@ import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecy
 import CustomTooltip from "../../../commons/CustomTooltip";
 import Table, { Column } from "../../../commons/Table";
 import { StyledLink, TableSubTitle, WrapWalletLabel, WrapperDelegationTab } from "../styles";
-import { AdaValue } from "./StakeRegistrationTab";
 
 const WithdrawalHistoryTab = () => {
   const detailData = useContext(DelegatorDetailContext);

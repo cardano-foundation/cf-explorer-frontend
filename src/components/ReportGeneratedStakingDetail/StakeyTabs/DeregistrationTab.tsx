@@ -25,6 +25,7 @@ const DeregistrationTab = () => {
   const { stakeKey } = useContext(StakingDetailContext);
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
+  const [sort, setSort] = useState<string>("");
 
   const [sort, setSort] = useState<string>("");
 

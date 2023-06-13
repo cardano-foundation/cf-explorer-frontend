@@ -1,16 +1,16 @@
+import { Box } from "@mui/material";
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import { Box } from "@mui/material";
 
-import { details } from "src/commons/routers";
-import { formatDateTimeLocal, getPageInfo } from "src/commons/utils/helper";
-import { AdaValue } from "src/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
-import Table, { Column } from "src/components/commons/Table";
-import { StyledLink } from "src/components/share/styled";
 import useFetchList from "src/commons/hooks/useFetchList";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { formatDateTimeLocal, getPageInfo } from "src/commons/utils/helper";
 import { FilterParams } from "src/components/StackingFilter";
 import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
-import { API } from "src/commons/utils/api";
+import { AdaValue } from "src/components/commons/ADAValue";
+import Table, { Column } from "src/components/commons/Table";
+import { StyledLink } from "src/components/share/styled";
 
 
 const RewardsDistributionTab = () => {
@@ -43,8 +43,8 @@ const RewardsDistributionTab = () => {
       key: "time",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
-      sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      sort: ({  sortValue }) => {
+        sortValue ? setSort(`id,${sortValue}`) : setSort("");
       }
     },
     {

@@ -10,7 +10,7 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.up("sm")]: {
     paddingTop: "10px"
-  },
+  }
 }));
 
 export const StyledLink = styled(Link)`

@@ -3,15 +3,15 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
-import { API } from "src/commons/utils/api";
-import { formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { EyeIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { AdaValue } from "src/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
+import { API } from "src/commons/utils/api";
+import { formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
+import { AdaValue } from "src/components/commons/ADAValue";
 
 import { RegistrationCertificateModal } from "../../Registration/RegistrationCertificateModal";
 
