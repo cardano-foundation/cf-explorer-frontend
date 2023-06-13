@@ -5,7 +5,13 @@ import { useState, useRef } from "react";
 
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
-import { formatADAFull, getPageInfo, getShortHash, numberWithCommas } from "../../commons/utils/helper";
+import {
+  formatADAFull,
+  formatDateTimeLocal,
+  getPageInfo,
+  getShortHash,
+  numberWithCommas
+} from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { StyledLink } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
@@ -60,6 +66,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
           <CustomTooltip title={r.hash}>
             <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
           </CustomTooltip>
+          <Box mt={1}>{formatDateTimeLocal(r.time || "")}</Box>
         </div>
       )
     },
