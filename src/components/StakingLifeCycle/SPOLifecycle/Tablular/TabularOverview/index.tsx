@@ -17,6 +17,7 @@ import {
 import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
 import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
 import { details } from "src/commons/routers";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import PoolDetailContext from "../../PoolDetailContext";
 import {
@@ -85,11 +86,14 @@ const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
 
 const TabularOverview: React.FC = () => {
   const data = useContext(PoolDetailContext);
+  const { stakeKeys, poolSize, epochNo, status, rewardAvailable } = data ?? {};
   const [open, setOpen] = useState(false);
   const history = useHistory();
   const onOwnerItemClick = (key: string) => {
     return history.push(`/stake/${key}/delegation`);
   };
+
+  const ownerAccountValue = getShortWallet(stakeKeys?.[0]);
   return (
     <Box>
       <Grid container spacing={2}>
@@ -99,7 +103,7 @@ const TabularOverview: React.FC = () => {
           mainIcon={<PoolsizeIcon />}
           value={
             <Box display="flex" alignItems="center">
-              <CardValue>{formatADAFull(data?.poolSize)} ₳</CardValue>
+              <CardValue>{formatADAFull(poolSize)} ₳</CardValue>
             </Box>
           }
         />
@@ -113,11 +117,11 @@ const TabularOverview: React.FC = () => {
                 sx={{
                   whiteSpace: "pre"
                 }}
-                color={STATUS[data?.status ?? "ACTIVE"][1]}
+                color={STATUS[status ?? "ACTIVE"][1]}
               >
-                {STATUS[data?.status ?? "ACTIVE"][0] + ": "}
+                {STATUS[status ?? "ACTIVE"][0] + ": "}
               </CardValue>
-              <ClickAbleLink to={details.epoch(data?.epochNo)}>Epoch {data?.epochNo}</ClickAbleLink>
+              <ClickAbleLink to={details.epoch(epochNo)}>Epoch {epochNo}</ClickAbleLink>
             </WrapStatus>
           }
         />
@@ -127,7 +131,7 @@ const TabularOverview: React.FC = () => {
           mainIcon={<ReewardAvalible />}
           value={
             <Box display="flex" alignItems="center">
-              <CardValue>{formatADAFull(data?.rewardAvailable)} ₳</CardValue>
+              <CardValue>{formatADAFull(rewardAvailable)} ₳</CardValue>
             </Box>
           }
         />
@@ -138,17 +142,15 @@ const TabularOverview: React.FC = () => {
           value={
             <Box display="flex" alignItems="center">
               <CardValue>
-                <ClickAbleLink
-                  to={details.stake((data?.stakeKeys && data?.stakeKeys.length && data.stakeKeys[0]) || "#")}
-                >
-                  {data?.stakeKeys && data?.stakeKeys.length && getShortWallet(data.stakeKeys[0])}
-                </ClickAbleLink>
+                <CustomTooltip title={stakeKeys?.[0]}>
+                  <ClickAbleLink to={details.stake(stakeKeys?.[0] || "#")}>{ownerAccountValue}</ClickAbleLink>
+                </CustomTooltip>
               </CardValue>
             </Box>
           }
           action={
-            data?.stakeKeys &&
-            data?.stakeKeys.length > 1 && (
+            stakeKeys &&
+            stakeKeys.length > 1 && (
               <ViewMoreButton onClick={() => setOpen(true)}>
                 <DotsIcon />
               </ViewMoreButton>
@@ -161,7 +163,7 @@ const TabularOverview: React.FC = () => {
         onItemClick={onOwnerItemClick}
         title="Owner Account"
         open={open}
-        items={data?.stakeKeys}
+        items={stakeKeys}
         onClose={() => setOpen(false)}
       />
     </Box>
