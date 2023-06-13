@@ -8,7 +8,7 @@ import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
 
-import { Header, Item, ItemBox, ItemContent, Wrapper } from "./style";
+import { Content, Header, Item, ItemBox, ItemContent, Title, Value, Wrapper } from "./style";
 
 interface InstantaneousRewardsProps {
   data: Transaction["instantaneousRewards"] | null;
@@ -37,50 +37,18 @@ const ItemInstantaneousRewards = ({ data }: { data: Transaction["instantaneousRe
       {data?.map((item) => (
         <Item key={item.stakeAddress}>
           <ItemContent>
-            <Box width={"100%"}>
-              <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
-                <Box display={"flex"} justifyContent="space-between" flex={"1"} alignItems={"center"}>
-                  <Box
-                    display={"flex"}
-                    justifyContent="flex-start"
-                    alignItems={"center"}
-                    flexWrap="nowrap"
-                    width={"auto"}
-                  >
-                    <Link to={details.address(item.stakeAddress)}>
-                      <CustomTooltip title={item.stakeAddress}>
-                        <Box
-                          color={(theme) => theme.palette.secondary.main}
-                          fontWeight="bold"
-                          fontFamily={"var(--font-family-text)"}
-                        >
-                          {isTablet ? getShortWallet(item.stakeAddress) : item.stakeAddress}
-                        </Box>
-                      </CustomTooltip>
-                    </Link>{" "}
-                    <CopyButton text={item.stakeAddress} />
-                  </Box>
-                  <Box
-                    display={"flex"}
-                    justifyContent="flex-start"
-                    alignItems={"center"}
-                    flexWrap="nowrap"
-                    width={"auto"}
-                  >
-                    <Box
-                      component={"span"}
-                      whiteSpace="nowrap"
-                      color={(theme) => theme.palette.primary.main}
-                      fontWeight="bold"
-                      mr={1}
-                    >
-                      {formatADAFull(item.amount)}
-                    </Box>
-                    <ADAicon />
-                  </Box>
-                </Box>
-              </Box>
-            </Box>
+            <Content>
+              <Link to={details.address(item.stakeAddress)}>
+                <CustomTooltip title={item.stakeAddress}>
+                  <Title>{isTablet ? getShortWallet(item.stakeAddress) : item.stakeAddress}</Title>
+                </CustomTooltip>
+              </Link>
+              <CopyButton text={item.stakeAddress} />
+            </Content>
+            <Content>
+              <Value component={"span"}>{formatADAFull(item.amount)}</Value>
+              <ADAicon />
+            </Content>
           </ItemContent>
         </Item>
       ))}

@@ -48,13 +48,10 @@ export const ItemBox = styled(Box)(() => ({
   }
 }));
 
-export const ItemContent = styled(Box)(({ theme }) => ({
+export const ItemContent = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
-  [theme.breakpoints.down("md")]: {
-    flexDirection: "column",
-    alignItems: "flex-start"
-  }
+  justifyContent: "space-between"
 }));
 
 export const WrapToken = styled(Box)(({ theme }) => ({
@@ -70,4 +67,22 @@ export const WrapToken = styled(Box)(({ theme }) => ({
       margin: 0
     }
   }
+}));
+
+export const Content = styled(Box)(() => ({
+  width: "auto",
+  display: "flex",
+  justifyContent: "flex-start",
+  flexWrap: "nowrap",
+  alignItems: "center"
+}));
+export const Title = styled(Box)(({ theme }) => ({
+  color: theme.palette.secondary.main,
+  fontWeight: "bold"
+}));
+export const Value = styled(Box)(({ theme }) => ({
+  whiteSpace: "nowrap",
+  color: theme.palette.primary.main,
+  fontWeight: "bold",
+  marginRight: theme.spacing(1)
 }));
