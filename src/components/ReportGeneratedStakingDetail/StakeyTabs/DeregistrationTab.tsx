@@ -25,8 +25,6 @@ const DeregistrationTab = () => {
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
   const [sort, setSort] = useState<string>("");
 
-  const [sort, setSort] = useState<string>("");
-
   const fetchData = useFetchList<DeregistrationItem>(
     reportId ? API.REPORT.SREPORT_DETAIL_DEGEGISTRATIONS(reportId) : "",
     {
