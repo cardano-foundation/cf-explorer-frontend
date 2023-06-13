@@ -1,12 +1,14 @@
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
-import { formatADAFull } from "../../../../commons/utils/helper";
-import { details } from "../../../../commons/routers";
-import CopyButton from "../../../commons/CopyButton";
-import CustomTooltip from "../../../commons/CustomTooltip";
+import { useScreen } from "src/commons/hooks/useScreen";
+import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import { details } from "src/commons/routers";
+import CopyButton from "src/components/commons/CopyButton";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import ADAicon from "src/components/commons/ADAIcon";
+
 import { Header, Item, ItemBox, ItemContent, Wrapper } from "./style";
-import ADAicon from "../../../commons/ADAIcon";
 
 interface InstantaneousRewardsProps {
   data: Transaction["instantaneousRewards"] | null;
@@ -29,6 +31,7 @@ const InstantaneousRewards: React.FC<InstantaneousRewardsProps> = ({ data }) => 
 export default InstantaneousRewards;
 
 const ItemInstantaneousRewards = ({ data }: { data: Transaction["instantaneousRewards"] }) => {
+  const { isTablet } = useScreen();
   return (
     <Box>
       {data?.map((item) => (
@@ -51,8 +54,7 @@ const ItemInstantaneousRewards = ({ data }: { data: Transaction["instantaneousRe
                           fontWeight="bold"
                           fontFamily={"var(--font-family-text)"}
                         >
-                          {item.stakeAddress}
-                          {/* {getShortWallet(item.stakeAddress)} */}
+                          {isTablet ? getShortWallet(item.stakeAddress) : item.stakeAddress}
                         </Box>
                       </CustomTooltip>
                     </Link>{" "}
