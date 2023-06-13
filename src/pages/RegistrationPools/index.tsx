@@ -95,8 +95,8 @@ const RegistrationPools = () => {
       key: "pool",
       render: (pool) => (
         <StyledLink to={details.delegation(pool.poolView || "")}>
-          <CustomTooltip title={pool.poolName || `Pool[${pool.poolView}]` || ""}>
-            <Box component={"span"}>{pool.poolName || `Pool[${getShortHash(pool.poolView)}]`}</Box>
+          <CustomTooltip title={pool.poolName || pool.poolView || ""}>
+            <Box component={"span"}>{pool.poolName || getShortHash(pool.poolView)}</Box>
           </CustomTooltip>
         </StyledLink>
       )
