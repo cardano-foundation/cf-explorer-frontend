@@ -95,24 +95,26 @@ export default function SignIn() {
     setRememberMe(event.target.checked);
   }
 
-  const handleLoginSuccess = () => {
-    toast.success("Login success");
-    history.push(routers.HOME);
-  };
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      handleClose();
-    }
-  }, [isLoggedIn]);
-
-  function handleClose() {
+  const handleRedirectBack = () => {
     if (history.length > 1 && !AUTHENTICATE_ROUTES.includes(history.location.pathname)) {
       history.goBack();
     } else {
-      history.push(routers.HOME);
+      history.replace(routers.HOME);
     }
   }
+
+  const handleLoginSuccess = () => {
+    toast.success("Login success");
+    handleRedirectBack();
+  };
+
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      handleRedirectBack();
+    }
+  }, [isLoggedIn]);
+
 
   const handleKeyDown = (event: any) => {
     if (event.key === "Enter") {
@@ -215,7 +217,7 @@ export default function SignIn() {
         </WrapHintText>
         <FormGroup>
           <WrapForm>
-            <CloseButton saving={0} onClick={() => handleClose()}>
+            <CloseButton saving={0} onClick={() => handleRedirectBack()}>
               <IoMdClose />
             </CloseButton>
             {invalidInfomation ? (
