@@ -12,7 +12,6 @@ import { AdaValue } from "src/components/commons/ADAValue";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
 
-
 const RewardsDistributionTab = () => {
   const { reportId } = useParams<{ reportId: string }>();
   const { search } = useLocation();
@@ -43,7 +42,7 @@ const RewardsDistributionTab = () => {
       key: "time",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
-      sort: ({  sortValue }) => {
+      sort: ({ sortValue }) => {
         sortValue ? setSort(`id,${sortValue}`) : setSort("");
       }
     },

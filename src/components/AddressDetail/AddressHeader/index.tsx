@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Grid, Box, useTheme } from "@mui/material";
+import { Grid, Box, useTheme, Button } from "@mui/material";
 import { useSelector } from "react-redux";
 import { HiArrowLongLeft } from "react-icons/hi2";
 
@@ -14,8 +14,9 @@ import { API } from "src/commons/utils/api";
 import BookmarkButton from "src/components/commons/BookmarkIcon";
 import TokenAutocomplete from "src/components/TokenAutocomplete";
 import ADAicon from "src/components/commons/ADAIcon";
+import { useScreen } from "src/commons/hooks/useScreen";
 
-import { BackButton, BackText, StyledBoxCard, TitleText, WrapHeader } from "./styles";
+import { BackButton, BackText, RedirectButton, StyledBoxCard, TitleText, WrapHeader } from "./styles";
 
 interface Props {
   data: WalletAddress | null;
@@ -28,7 +29,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   );
   const { adaRate } = useSelector(({ system }: RootState) => system);
   const theme = useTheme();
-
+  const { isMobile } = useScreen();
   const history = useHistory();
   useEffect(() => {
     setStakeKey(data?.stakeAddress || "");
@@ -94,9 +95,27 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           <HiArrowLongLeft fontSize="16px" />
           <BackText>Back</BackText>
         </BackButton>
-        <Box component={"h2"} lineHeight={1} mt={2} display={"flex"} alignItems={"center"}>
-          <TitleText>Address Detail</TitleText>
-          <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
+        <Box
+          width={"100%"}
+          display={"flex"}
+          pb={2}
+          flexWrap={"wrap"}
+          alignItems={"center"}
+          justifyContent={"space-between"}
+        >
+          <Box component={"h2"} lineHeight={1} mt={2} display={"flex"} alignItems={"center"}>
+            <TitleText>Address Detail</TitleText>
+            <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
+          </Box>
+          {data?.isContract && (
+            <RedirectButton
+              width={isMobile ? "100%" : "auto"}
+              component={Button}
+              onClick={() => history.push(details.contract(data?.address))}
+            >
+              View Contract Detail
+            </RedirectButton>
+          )}
         </Box>
       </WrapHeader>
       <Grid container spacing={2}>
