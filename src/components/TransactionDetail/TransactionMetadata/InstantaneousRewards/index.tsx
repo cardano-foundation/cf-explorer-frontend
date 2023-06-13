@@ -38,7 +38,7 @@ const ItemInstantaneousRewards = ({ data }: { data: Transaction["instantaneousRe
         <Item key={item.stakeAddress}>
           <ItemContent>
             <Content>
-              <Link to={details.address(item.stakeAddress)}>
+              <Link to={details.stake(item.stakeAddress)}>
                 <CustomTooltip title={item.stakeAddress}>
                   <Title>{isTablet ? getShortWallet(item.stakeAddress) : item.stakeAddress}</Title>
                 </CustomTooltip>
