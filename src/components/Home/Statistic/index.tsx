@@ -85,8 +85,8 @@ const HomeStatistic = () => {
               <br />
               <RateWithIcon data-testid="ada-24Hr-price-change" value={usdMarket.price_change_percentage_24h} />
               <AdaPrice data-testid="ada-price-in-BTC">{btcMarket[0]?.current_price} BTC</AdaPrice>
-              <TimeDuration marginTop={"8px"}>
-                Last updated {moment(btcMarket[0]?.last_updated).fromNow()}{" "}
+              <TimeDuration marginTop="8px" data-testid="last-update-BTC">
+                Last updated {moment(btcMarket[0]?.last_updated).fromNow()}
               </TimeDuration>
             </Content>
           </Item>
@@ -106,7 +106,9 @@ const HomeStatistic = () => {
             <Content>
               <Name data-testid="market-cap-box-title">Market cap</Name>
               <Title data-testid="market-cap-value">${numberWithCommas(usdMarket.market_cap)}</Title>
-              <TimeDuration>Last updated {moment(usdMarket.last_updated).fromNow()} </TimeDuration>
+              <TimeDuration data-testid="last-update-market-cap">
+                Last updated {moment(usdMarket.last_updated).fromNow()}
+              </TimeDuration>
             </Content>
           </Item>
         ) : (
@@ -141,7 +143,7 @@ const HomeStatistic = () => {
                 <XSmall>Unique accounts: </XSmall>
                 {isMobile ? <br /> : null}
                 <XValue>
-                  <b>{numberWithCommas(currentEpoch?.account)}</b>
+                  <b data-testid="curent-epoch-account">{numberWithCommas(currentEpoch?.account)}</b>
                 </XValue>
               </Content>
             </Link>
@@ -162,14 +164,19 @@ const HomeStatistic = () => {
               />
               <Name data-testid="live-stake-box-title">Live Stake</Name>
               <CustomTooltip title={formatADAFull(liveStake)}>
-                <Title>{formatADA(liveStake)}</Title>
+                <Title data-testid="live-stake-value">{formatADA(liveStake)}</Title>
               </CustomTooltip>
-              <Progress data-testid="live-stake-progress-bar">
+              <Progress>
                 <CustomTooltip title={liveRate.toFixed(5)}>
-                  <ProcessActive rate={liveRate.toNumber()}>{liveRate.toFixed(0, BigNumber.ROUND_DOWN)}%</ProcessActive>
+                  <ProcessActive data-testid="live-stake-progress-active" rate={liveRate.toNumber()}>
+                    {liveRate.toFixed(0, BigNumber.ROUND_DOWN)}%
+                  </ProcessActive>
                 </CustomTooltip>
                 <CustomTooltip title={liveRate.div(-1).plus(100).toFixed(5)}>
-                  <ProgressPending rate={liveRate.div(-1).plus(100).toNumber()}>
+                  <ProgressPending
+                    data-testid="live-stake-progress-pending"
+                    rate={liveRate.div(-1).plus(100).toNumber()}
+                  >
                     {liveRate.div(-1).plus(100).toFixed(0)}%
                   </ProgressPending>
                 </CustomTooltip>

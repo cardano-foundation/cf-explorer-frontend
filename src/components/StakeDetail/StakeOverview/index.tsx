@@ -1,19 +1,19 @@
-import { useState } from "react";
 import { Box } from "@mui/material";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { details } from "src/commons/routers";
 import delegatedIcon from "src/commons/resources/icons/delegated.svg";
-import totalStakeIcon from "src/commons/resources/icons/totalStake.svg";
 import rewardIcon from "src/commons/resources/icons/reward.svg";
 import rewardWithdrawIcon from "src/commons/resources/icons/rewardWithdraw.svg";
+import totalStakeIcon from "src/commons/resources/icons/totalStake.svg";
+import { details } from "src/commons/routers";
 import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DetailHeader from "src/components/commons/DetailHeader";
-import ADAicon from "src/components/commons/ADAIcon";
 
 import ModalAllAddress from "../ModalAllAddress";
-import { ButtonModal, StyledFlexValue, StyledLinkTo, TitleCard, TitleValue } from "./styles";
+import { ButtonModal, StyledFlexValue, StyledLinkTo, TitleCard, TitleNoPool, TitleValue } from "./styles";
 
 interface Props {
   data: IStakeKeyDetail | null;
@@ -25,18 +25,19 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
   const { stakeId } = useParams<{ stakeId: string }>();
 
   const poolName = data?.pool?.poolName || "";
-  const ticketName = data?.pool?.tickerName || "";
+  const tickerName = data?.pool?.tickerName || "";
   const poolId = data?.pool?.poolId || "";
+  const hasTicketOrPoolName = tickerName || poolName;
 
   const delegateTooltip = data?.pool
-    ? ticketName || poolName
-      ? `${ticketName} - ${poolName}`
+    ? hasTicketOrPoolName
+      ? `${tickerName}${tickerName && poolName ? " - " : ""}${poolName}`
       : poolId
     : "Not delegated to any pool";
 
   const delegateTo = data?.pool
-    ? ticketName || poolName
-      ? `${ticketName} - ${poolName}`
+    ? hasTicketOrPoolName
+      ? `${tickerName}${tickerName && poolName ? " - " : ""}${poolName}`
       : getShortWallet(poolId)
     : "Not delegated to any pool";
   const listOverview = [
@@ -50,7 +51,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
       value: (
         <CustomTooltip sx={{ width: "100%" }} title={delegateTooltip}>
           <StyledLinkTo isTo={!!data?.pool} to={data?.pool?.poolId ? details.delegation(data?.pool?.poolId) : "#"}>
-            <TitleValue>{delegateTo}</TitleValue>
+            {!hasTicketOrPoolName ? <TitleNoPool>{delegateTo}</TitleNoPool> : <TitleValue>{delegateTo}</TitleValue>}
           </StyledLinkTo>
         </CustomTooltip>
       )
