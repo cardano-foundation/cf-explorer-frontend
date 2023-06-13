@@ -1,19 +1,19 @@
 import { Grid } from "@mui/material";
 import BigNumber from "bignumber.js";
+import moment from "moment";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import moment from "moment";
 
+import useFetch from "src/commons/hooks/useFetch";
+import { useScreen } from "src/commons/hooks/useScreen";
 import { AdaPriceIcon, CurentEpochIcon, LiveStakeIcon, MarketCapIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
 import { formatADA, formatADAFull, formatDateTimeLocal, numberWithCommas } from "src/commons/utils/helper";
-import { RootState } from "src/stores/types";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import RateWithIcon from "src/components/commons/RateWithIcon";
-import { useScreen } from "src/commons/hooks/useScreen";
-import useFetch from "src/commons/hooks/useFetch";
+import { RootState } from "src/stores/types";
 
 import {
   AdaPrice,
@@ -65,7 +65,9 @@ const HomeStatistic = () => {
   const activeRate = activeStake && new BigNumber(liveStake).div(activeStake).minus(1).multipliedBy(100);
   const circulatingSupply = new BigNumber(supply).multipliedBy(MILION);
   const circulatingRate = circulatingSupply.div(total).div(MILION).multipliedBy(100);
-
+  const progress = moment(formatDateTimeLocal(currentEpoch?.endTime || "")).diff(moment()) >= 0
+    ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
+    : 100;
   const { isMobile, isGalaxyFoldSmall } = useScreen();
 
   return (
@@ -146,14 +148,9 @@ const HomeStatistic = () => {
                   <b data-testid="curent-epoch-account">{numberWithCommas(currentEpoch?.account)}</b>
                 </XValue>
                 <br />
-                <XSmall>Start time: </XSmall>
-                {isMobile ? <br /> : null}
-                <XValue>
-                  <b style={{
-                    whiteSpace: isGalaxyFoldSmall ? "normal" : "nowrap",
-                  }}>{formatDateTimeLocal(currentEpoch?.startTime)}</b>
-                </XValue>
-                <br />
+                <Progress sx={{ marginTop: "10px" }}>
+                  <ProcessActive rate={Number(progress)}>{progress}%</ProcessActive>
+                </Progress>
                 <XSmall>End time: </XSmall>
                 {isMobile ? <br /> : null}
                 <XValue>
