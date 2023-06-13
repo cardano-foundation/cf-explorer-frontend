@@ -74,7 +74,7 @@ export default function ForgotPassword() {
     setFormData({
       name: event.target.name,
       value: event.target.value.trim(),
-      touched: true
+      touched: event.target.value.trim() !== "",
     });
   };
 

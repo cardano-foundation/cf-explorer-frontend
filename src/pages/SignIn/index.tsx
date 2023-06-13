@@ -142,8 +142,8 @@ export default function SignIn() {
     setFormData({
       name: event.target.name,
       value: event.target.value.trim(),
-      touched: true,
-      error: getError(event.target.name, event.target.value)
+      touched: event.target.value.trim() !== "",
+      error: getError(event.target.name, event.target.value.trim())
     });
     setInvalidInfomation(false);
   };
