@@ -32,7 +32,7 @@ const DelegationEpochList = ({
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
   const setQuery = (query: any) => {
-    history.push({ search: stringify(query) });
+    history.replace({ search: stringify(query) });
   };
   const columns: Column<DelegationEpoch>[] = [
     {
@@ -109,7 +109,7 @@ const DelegationStakingDelegatorsList = ({
   const query = parse(search.split("?")[1]);
   const history = useHistory();
   const setQuery = (query: any) => {
-    history.push({ search: stringify(query) });
+    history.replace({ search: stringify(query) });
   };
   const columns: Column<StakingDelegators>[] = [
     {

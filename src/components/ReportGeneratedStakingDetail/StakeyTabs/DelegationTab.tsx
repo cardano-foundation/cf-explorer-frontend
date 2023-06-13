@@ -24,6 +24,7 @@ const DelegationTab = () => {
   const { search } = useLocation();
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
+  const [sort, setSort] = useState<string>("");
   const [params] = useState<FilterParams>({
     fromDate: undefined,
     sort: undefined,
@@ -32,7 +33,8 @@ const DelegationTab = () => {
   });
   const fetchData = useFetchList<DelegationItem>(reportId ? API.REPORT.SREPORT_DETAIL_DELEGATIONS(reportId) : "", {
     ...pageInfo,
-    ...params
+    ...params,
+    sort: sort || params.sort
   });
   const { total } = fetchData;
   const columns: Column<DelegationItem>[] = [
@@ -50,7 +52,10 @@ const DelegationTab = () => {
       title: "Timestamp",
       key: "time",
       minWidth: "120px",
-      render: (r) => formatDateTimeLocal(r.time)
+      render: (r) => formatDateTimeLocal(r.time),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      }
     },
     {
       title: "Fees",

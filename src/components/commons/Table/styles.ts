@@ -137,16 +137,16 @@ export const WrappModalScrollBar = styled(Box)(
 `
 );
 
-export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number }>(
-  ({ maxHeight, height, theme }) => `
+export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number; loading?: number }>(
+  ({ maxHeight, height, theme, loading }) => `
   overflow-x: auto;
-  height: ${height || "800px"};
+  height: ${height || 800}px;
   background: ${theme.palette.common.white};
   padding: ${theme.spacing(1)};
   padding-top: 0;
   border-radius: ${theme.spacing(1.5)};
   border: 1px solid ${alpha(theme.palette.common.black, 0.1)};
-
+  ${loading ? "overflow-y: hidden;" : ""}
   ${maxHeight ? "max-height:" + (typeof maxHeight === "number" ? maxHeight + "px" : maxHeight) : ""};
 
   ${theme.breakpoints.down("sm")} {
@@ -173,17 +173,13 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number
 `
 );
 
-export const TableFullWidth = styled("table")(
-  ({ theme }) => `
+export const TableFullWidth = styled("table")`
   border-collapse: separate;
   border-spacing: 0;
   min-width: 100%;
   width: max-content;
-  ${theme.breakpoints.down("sm")} {
-    position: relative;
-  }
-`
-);
+  position: relative;
+`;
 
 export const InputNumber = styled("input")<{ length: number }>(({ theme, length }) => ({
   width: length + "ch !important",

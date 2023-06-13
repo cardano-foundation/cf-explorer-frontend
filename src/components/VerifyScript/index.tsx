@@ -1,10 +1,10 @@
 import { useCallback, useContext, useState } from "react";
-import { Box } from "@mui/material";
 import { useParams } from "react-router-dom";
+import { Box } from "@mui/material";
 
 import { defaultAxios } from "src/commons/utils/axios";
-import { VerifyScriptContext } from "src/pages/ContractDetail";
 import { API } from "src/commons/utils/api";
+import { VerifyScriptContext } from "src/pages/ContractDetail";
 
 import VerifySCriptModal from "./VerifyScriptModal";
 import { BannerSuccess, StyledVerifyButton, VerifyScriptContainer } from "./styles";

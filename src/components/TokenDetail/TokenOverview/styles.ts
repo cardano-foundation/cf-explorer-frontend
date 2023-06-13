@@ -10,6 +10,7 @@ export const HeaderDetailContainer = styled(Container)`
 `;
 
 export const WrapTitle = styled(Box)(({ theme }) => ({
+  opacity: 0.5,
   [theme.breakpoints.down("md")]: {
     paddingBottom: "4px"
   }

@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { HighchartsReact } from "highcharts-react-official";
 
 import { useScreen } from "src/commons/hooks/useScreen";
+import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
 
 import useFetch from "../../../commons/hooks/useFetch";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
@@ -63,7 +64,7 @@ const AddressAnalytics: React.FC = () => {
 
   return (
     <Box pt={isMobile ? 0 : "20px"}>
-      <Card title="Analytics" py={4}>
+      <Card title={<TextCardHighlight>Analytics</TextCardHighlight>}>
         <Wrapper container columns={24} spacing="35px">
           <Grid item xs={24} lg={18}>
             <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
