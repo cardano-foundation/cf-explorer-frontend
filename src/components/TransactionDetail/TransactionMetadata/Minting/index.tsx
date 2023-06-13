@@ -7,6 +7,8 @@ import ScriptModal from "src/components/ScriptModal";
 import { PolicyScriptIcon } from "src/commons/resources";
 import { Logo } from "src/pages/Token/styles";
 import { details } from "src/commons/routers";
+import { formatAmount } from "src/commons/utils/helper";
+ 
 
 import { Amount, AssetName, LogoEmpty, TableMinting } from "./styles";
 
@@ -51,7 +53,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       key: "Amount",
       minWidth: "40px",
       render: (r) => {
-        return <Amount>{r.assetQuantity}</Amount>;
+        return <Amount>{formatAmount(r.assetQuantity)}</Amount>;
       }
     },
     {

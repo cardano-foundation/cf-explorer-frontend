@@ -50,6 +50,8 @@ const createNavigator = (filter?: FilterParams) => {
       return details.delegation;
     case "contract":
       return details.contract;
+    case "policies":
+      return details.policyDetail;
     default:
       return null;
   }
@@ -57,7 +59,7 @@ const createNavigator = (filter?: FilterParams) => {
 
 const filterURLS = (value: string): FilterParams[] => {
   if (!Number.isNaN(Number(value))) return ["epochs", "blocks"];
-  else return ["blocks", "txs", "tokens", "stakes", "addresses", "delegations/pool-detail-header"];
+  else return ["blocks", "txs", "tokens", "stakes", "addresses", "delegations/pool-detail-header", "policies"];
 };
 
 const SearchResult = () => {
