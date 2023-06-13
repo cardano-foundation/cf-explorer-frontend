@@ -35,6 +35,9 @@ jobs:
       - name: Set extra environment and metadata
         id: metadata
         run: |
+          DOCKER_IMAGE_NAME=$(basename ${GITHUB_REPOSITORY})
+          echo "DOCKER_IMAGE_NAME=${DOCKER_IMAGE_NAME}" >> "$GITHUB_ENV"
+
           if [ ${{github.event_name}} == "pull_request" ]
           then
             PR_NUMBER=$(echo $GITHUB_REF | awk -F/ '{ print $3 }')
