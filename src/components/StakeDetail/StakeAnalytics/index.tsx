@@ -85,7 +85,7 @@ const StakeAnalytics: React.FC = () => {
       )
     : { epoch: 0, value: 0 };
   return (
-    <Card title="Analytics" pt={5}>
+    <Card title="Analytics">
       <Wrapper container columns={24} spacing="35px">
         <Grid item xs={24} lg={18}>
           <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>

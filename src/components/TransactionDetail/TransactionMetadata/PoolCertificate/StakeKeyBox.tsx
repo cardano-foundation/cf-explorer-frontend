@@ -1,11 +1,11 @@
 import { Box, Grid } from "@mui/material";
 
-import CopyButton from "src/components/commons/CopyButton";
-import Link from "src/components/commons/Link";
-import { getShortHash, getShortWallet } from "src/commons/utils/helper";
-import { AdaValue } from "src/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
 import { details } from "src/commons/routers";
+import { getShortHash, getShortWallet } from "src/commons/utils/helper";
+import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import Link from "src/components/commons/Link";
+import { AdaValue } from "src/components/commons/ADAValue";
 
 import { TextLabel, TextRightValue, TextValue } from "./styles";
 

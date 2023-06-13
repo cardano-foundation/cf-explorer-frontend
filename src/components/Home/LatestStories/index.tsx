@@ -47,7 +47,7 @@ const LatestStories = () => {
     <LatestStoriesContainer>
       <Header>
         <Title>Latest Stories</Title>
-        <ViewAllButton to={routers.STORY_LIST} />
+        <ViewAllButton data-testid="view-all" to={routers.STORY_LIST} />
       </Header>
       <Grid container spacing={2}>
         {data.map(({ id, image, author, title, createdDate }) => {
@@ -63,7 +63,7 @@ const LatestStories = () => {
                     </Box>
                     <Time>
                       <TimeIcon src={CalenderPaleIcon} alt="calender pale" />
-                      {moment(createdDate).format("MM/DD/YYYY")}
+                      {moment(createdDate, "MM/DD/YYYY").format("MM/DD/YYYY")}
                     </Time>
                   </Detail>
                 </Item>

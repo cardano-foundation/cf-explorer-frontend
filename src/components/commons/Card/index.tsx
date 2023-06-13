@@ -1,5 +1,4 @@
-import { Box, styled } from "@mui/material";
-import { BoxProps } from "@mui/system";
+import { Box, styled, BoxProps } from "@mui/material";
 import React, { ReactNode } from "react";
 
 const CardContainer = styled(Box)`
@@ -46,9 +45,9 @@ interface CardProps extends Omit<BoxProps, "title"> {
   marginTitle?: string;
 }
 
-const Card: React.FC<CardProps> = ({ title, marginTitle, children, underline = false, extra }) => {
+const Card: React.FC<CardProps> = ({ title, marginTitle, children, underline = false, extra, ...props }) => {
   return (
-    <CardContainer>
+    <CardContainer {...props}>
       <Header>
         {title ? (
           <Title marginTitle={marginTitle} underline={underline ? 1 : 0}>

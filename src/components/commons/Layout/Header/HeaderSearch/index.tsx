@@ -95,6 +95,12 @@ const options: Option[] = [
       routers.DELEGATOR_LIFECYCLE,
       routers.STAKING_LIFECYCLE
     ]
+  },
+  {
+    value: "policies",
+    label: "Policies",
+    paths: [routers.POLICY_DETAIL],
+    detail: details.policyDetail
   }
 ];
 
