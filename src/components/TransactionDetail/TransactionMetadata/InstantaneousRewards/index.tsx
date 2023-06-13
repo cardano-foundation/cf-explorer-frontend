@@ -19,7 +19,7 @@ const InstantaneousRewards: React.FC<InstantaneousRewardsProps> = ({ data }) => 
     <Wrapper>
       <Header>
         <Box>Address Stake Key</Box>
-        <Box>Reward Paid</Box>
+        <Box>Rewards Paid</Box>
       </Header>
       <ItemBox>
         <ItemInstantaneousRewards data={data || []} />
