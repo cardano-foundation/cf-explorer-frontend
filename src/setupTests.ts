@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom";
 
-
 jest.mock("@cardano-foundation/cardano-connect-with-wallet", () => ({
   useCardano: () => ({
     isEnabled: false,
