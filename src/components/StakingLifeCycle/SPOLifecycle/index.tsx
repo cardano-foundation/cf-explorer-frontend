@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { useHistory, useParams } from "react-router";
 
@@ -111,6 +111,10 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
     }
   ];
 
+  useEffect(() => {
+    document.getElementById(`step-${currentStep}`)?.scrollIntoView();
+  }, [currentStep]);
+
   if (!renderTabsSPO) return null;
 
   return (
@@ -118,6 +122,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       <Box display={"flex"} justifyContent={"space-between"}>
         {stepper.map((step, idx) => (
           <Step
+            id={`step-${idx}`}
             component={"span"}
             key={idx}
             active={+(currentStep === idx)}
