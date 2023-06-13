@@ -10,7 +10,7 @@ describe("Home page should display all elements", () => {
     cy.getBySelector('home-title').should("have.text", "Cardano Blockchain Explorer");
   });
 
-  it("should display Sidebar, Header, Footer and main content", () => {
+  it("should display Sidebar, Header, Footer and main section", () => {
     cy.getBySelector('sidebar').should('exist');
     cy.getBySelector('header').should('exist');
     cy.getBySelector('home-container').should('exist');
@@ -26,6 +26,13 @@ describe("Home page should display all elements", () => {
       .should('have.attr', 'placeholder', 'Search transactions, address, blocks, epochs, pools...');
   })
 
+  it("should display main contents", () => {
+    cy.getBySelector('home-statistic').should('exist');
+    cy.getBySelector('home-trending').should('exist');
+    cy.getBySelector('home-latest-transactions').should('exist');
+    cy.getBySelector('home-top-delegation').should('exist');
+    cy.getBySelector('home-latest-stories').should('exist');
+  });
   
 });
 
@@ -40,7 +47,6 @@ describe("Home page function should work", () => {
     })
 
     cy.getBySelector("network-options").each($element => {
-      cy.log($element.text())
       if ($element.text() === 'Preprod') {
         cy.wrap($element).click()
       }
@@ -48,4 +54,21 @@ describe("Home page function should work", () => {
 
     cy.getBySelector("network-name").should('have.text', 'Preprod')
   });
+
+  it("should navigate to SignIn page", () => {
+    cy.getBySelector("header-signin").click();
+    cy.title().should("eq", "Sign In | Cardano Explorer");
+    cy.getBySelector("signin-title").contains(/^(Sign In)$/i);
+  });
+
+  it("should change the search option", () => {
+    cy.getBySelector("header-search").find(">button");
+    cy.getBySelector("all-filters-dropdown").click();
+    cy.getBySelector("filter-options").each($element => {
+      if ($element.text() === 'Epochs') {
+        cy.wrap($element).click()
+      }
+    })
+
+  })
 });

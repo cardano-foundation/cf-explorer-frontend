@@ -50,7 +50,7 @@ const LatestTransactions: React.FC = () => {
   const history = useHistory();
   const { isTablet } = useScreen();
   return (
-    <TransactionContainer>
+    <TransactionContainer data-testid="home-latest-transactions">
       <Header>
         <Title>Latest Transactions</Title>
         <Actions>
