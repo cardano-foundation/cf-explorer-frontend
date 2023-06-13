@@ -45,7 +45,6 @@ jobs:
             echo "ARTIFACT_VERSION=${CURRENT_VERSION}" >> $GITHUB_ENV
 
             BRANCH=${GITHUB_REF##*/}
-            CURRENT_VERSION=$(xq -r .project.version pom.xml)
             if [[ "${BRANCH}" == "develop" ]]
             then
               echo "ARTIFACT_VERSION=${CURRENT_VERSION}-develop" >> $GITHUB_ENV
