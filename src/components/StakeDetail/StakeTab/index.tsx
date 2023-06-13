@@ -75,8 +75,9 @@ const StakeTab = () => {
           <StyledTabList
             onChange={handleChange}
             TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
+            scrollButtons="auto"
             variant="scrollable"
-            scrollButtons={false}
+            visibleScrollbar={true}
           >
             {tabs.map(({ icon: Icon, key, label }) => (
               <Tab
