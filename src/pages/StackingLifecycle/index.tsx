@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Box, CircularProgress, Container, Grid, IconButton } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -33,12 +34,6 @@ const cardList = [
     subtitle: "Reports you can view",
     to: details.generated_report("stake-key")
   },
-  {
-    icon: <WatchlistIC />,
-    title: "Watchlist",
-    subtitle: "Lifecycle events",
-    to: routers.STAKING_LIFECYCLE_SEARCH
-  }
 ];
 
 export const filterOtions = [
@@ -204,7 +199,7 @@ const Dashboard: React.FC = () => {
     <Container>
       <GridContainer container spacing={2} columns={12}>
         {cardList.map((card, idx) => (
-          <Grid item xs={6} md={6} lg={6} xl={6} key={idx}>
+          <Grid item xs={3} md={3} lg={3} xl={3} key={idx}>
             <DashboardCard
               key={card.title}
               leftIcon={card.icon}

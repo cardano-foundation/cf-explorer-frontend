@@ -189,9 +189,16 @@ export default function SignUp() {
     setFormData({
       name: event.target.name,
       value: event.target.value.trim(),
-      touched: true,
+      touched: event.target.value.trim() !== "",
       error: getError(event.target.name, event.target.value)
     });
+  };
+
+  const handleKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleSubmit(event);
+    }
   };
 
   function handleClose() {
@@ -290,6 +297,7 @@ export default function SignUp() {
                     </Box>
                   }
                   fullWidth
+                  onKeyDown={handleKeyDown}
                   value={formData.email.value}
                   name="email"
                   onChange={handleChange}
@@ -308,6 +316,7 @@ export default function SignUp() {
                       <EmailIcon />
                     </Box>
                   }
+                  onKeyDown={handleKeyDown}
                   fullWidth
                   value={formData.confirmEmail.value}
                   name="confirmEmail"
@@ -336,6 +345,7 @@ export default function SignUp() {
                       </IconButton>
                     </InputAdornment>
                   }
+                  onKeyDown={handleKeyDown}
                   name="password"
                   onChange={handleChange}
                   error={Boolean(formData.password.error && formData.password.touched)}
@@ -363,6 +373,7 @@ export default function SignUp() {
                     </InputAdornment>
                   }
                   name="confirmPassword"
+                  onKeyDown={handleKeyDown}
                   onChange={handleChange}
                   error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
                   placeholder="Confirm Password"

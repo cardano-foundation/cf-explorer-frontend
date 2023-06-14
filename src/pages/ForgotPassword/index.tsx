@@ -74,9 +74,17 @@ export default function ForgotPassword() {
     setFormData({
       name: event.target.name,
       value: event.target.value.trim(),
-      touched: true
+      touched: event.target.value.trim() !== "",
     });
   };
+
+  const handleKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleSubmit(event);
+    }
+  };
+
   const handleForgotPassword = async (email: string) => {
     try {
       setLoading(true);
@@ -154,6 +162,7 @@ export default function ForgotPassword() {
                   inputRef={emailInputRef}
                   value={formData.email.value}
                   onChange={handleChange}
+                  onKeyDown={handleKeyDown}
                   onBlur={checkError}
                   fullWidth
                   placeholder="Email"
