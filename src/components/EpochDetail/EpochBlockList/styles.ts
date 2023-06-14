@@ -32,3 +32,9 @@ export const StyledOutput = styled("div")`
   align-items: center;
   gap: 10px;
 `;
+
+export const PriceWrapper = styled(StyledColorBlueDard)`
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+`;
