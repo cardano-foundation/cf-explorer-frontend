@@ -2,43 +2,43 @@ import { screen, cleanup, fireEvent } from "@testing-library/react";
 
 import { render } from "src/test-utils";
 
+import TopAddresses from ".";
+
 import Table from "src/components/commons/Table";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
-import Transactions from ".";
 
 const mockData = {
   data: [
     {
-      address:
-        "addr1z8snz7c4974vzdpxu65ruphl3zjdvtxw8strf2c2tmqnxz2j2c79gy9l76sdg0xwhd7r0c0kna0tycz4y5s6mlenh8pq0xmsha",
-      balance: 60714355376722,
-      txCount: 1349643
+      address: "Ae2tdPwUPEYwFx4dmJheyNPPYXtvHbJLeCaA96o6Y2iiUL18cAt7AizN2zG",
+      balance: "2083824242810424",
+      txCount: "1837"
     }
   ]
 };
 
 jest.mock("src/commons/hooks/useFetchList");
 
-describe("Contracts list view", () => {
+describe("Top addresses view", () => {
   afterEach(() => {
     cleanup();
   });
 
-  it("should render Contracts list page", async () => {
+  it("should render Top addresses page", async () => {
     const mockUseFetch = useFetchList as jest.Mock;
     await mockUseFetch.mockReturnValue({ data: [] });
-    render(<Transactions />);
+    render(<TopAddresses />);
     expect(useFetchList).toBeCalled();
   });
 
   it("should show correct data in table", async () => {
     const mockUseFetchList = useFetchList as jest.Mock;
     mockUseFetchList.mockReturnValue(mockData);
-    render(<Transactions />);
-    expect(screen.getByText("addr1...xmsha")).toBeInTheDocument();
-    expect(screen.getByText("Contracts")).toBeInTheDocument();
+    render(<TopAddresses />);
+    expect(screen.getByText("Ae2td...zN2zG")).toBeInTheDocument();
+    expect(screen.getByText("Top addresses")).toBeInTheDocument();
   });
 
   it("renders the table with given column and data", () => {
@@ -88,14 +88,12 @@ describe("Contracts list view", () => {
 
     render(
       <Router history={history}>
-        <Transactions />
+        <TopAddresses />
       </Router>
     );
 
-    const ContractItem = screen.getByText("addr1...xmsha");
-    fireEvent.click(ContractItem);
-    expect(history.location.pathname).toBe(
-      "/contracts/addr1z8snz7c4974vzdpxu65ruphl3zjdvtxw8strf2c2tmqnxz2j2c79gy9l76sdg0xwhd7r0c0kna0tycz4y5s6mlenh8pq0xmsha/transaction"
-    );
+    const AddressesItem = screen.getByText("Ae2td...zN2zG");
+    fireEvent.click(AddressesItem);
+    expect(history.location.pathname).toBe("/address/Ae2tdPwUPEYwFx4dmJheyNPPYXtvHbJLeCaA96o6Y2iiUL18cAt7AizN2zG");
   });
 });

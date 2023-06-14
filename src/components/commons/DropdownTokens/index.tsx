@@ -31,14 +31,19 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
       sx={{
         minWidth: isMobile ? "100%" : "250px"
       }}
+      open={openDropdown}
       onOpen={() => setOpenDropdown(true)}
       onClose={() => setOpenDropdown(false)}
       value={"default"}
       IconComponent={() =>
         openDropdown ? (
-          <BiChevronUp size={30} style={{ paddingRight: 10, fontSize: "20px" }} />
+          <>
+            <BiChevronUp size={30} style={{ paddingRight: 10, fontSize: "20px", cursor: "pointer" }} onClick={() => setOpenDropdown(false)} />
+          </>
         ) : (
-          <BiChevronDown size={30} style={{ paddingRight: 10, fontSize: "20px" }} />
+          <>
+            <BiChevronDown size={30} style={{ paddingRight: 10, fontSize: "20px", cursor: "pointer" }} onClick={() => setOpenDropdown(true)} />
+          </>
         )
       }
       MenuProps={{
