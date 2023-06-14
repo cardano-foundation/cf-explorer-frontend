@@ -150,6 +150,8 @@ const HomeStatistic = () => {
                 <br />
                 <Progress sx={{ marginTop: "10px" }}>
                   <ProcessActive rate={Number(progress)}>{progress}%</ProcessActive>
+                  <ProgressPending hide rate={100 - Number(progress)}>
+                  </ProgressPending>
                 </Progress>
                 <XSmall>End time: </XSmall>
                 {isMobile ? <br /> : null}
