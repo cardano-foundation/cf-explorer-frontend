@@ -51,7 +51,7 @@ const stackeTabs: ITab[] = [
   },
   {
     icon: RewardsDistributionIcon,
-    label: "Rewards Distribution",
+    label: "Operator Rewards",
     key: "rewards",
     mappingKey: "Rewards",
     component: <RewardsDistributionTab />
@@ -110,7 +110,7 @@ const ReportGeneratedStakingDetailTabs = () => {
       ) : (
         <>
           <CustomTooltip title={`${reportDetail.data?.reportName}`.replaceAll("-", " ")}>
-            <Headline collapsed={1}>{`${reportDetail.data?.reportName}`.replaceAll("-", " ")} </Headline>
+            <Headline collapsed={1}>{`${reportDetail.data?.reportName}`.replaceAll("-", " ")}</Headline>
           </CustomTooltip>
           <CustomTooltip title={`${reportDetail.data?.reportName}`.replaceAll("-", " ")}>
             <Headline>{`${reportDetail.data?.reportName}`.replaceAll("-", " ")} </Headline>

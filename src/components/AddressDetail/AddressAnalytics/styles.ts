@@ -108,7 +108,7 @@ export const Wrapper = styled(Grid)(() => ({
 
 export const ButtonTitle = styled("button")(({ theme }) => ({
   border: "none",
-  borderRadius: 10,
+  borderRadius: 5,
   padding: "8px 30px",
   fontWeight: "bold",
   fontSize: "1rem",
@@ -164,3 +164,8 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
     }
   }
 }));
+
+export const TextCardHighlight = styled("span")`
+  font-size: 20px;
+  border-bottom: ${(props) => `2px solid ${props.theme.palette.green[600]}`};
+`;

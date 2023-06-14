@@ -37,7 +37,13 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                 <Box minWidth={120}>
                   {!isMobile ? <span>From: </span> : null}
                   <CustomTooltip title={item.stakeAddressFrom}>
-                    <AddressLink to={details.address(item.stakeAddressFrom)}>
+                    <AddressLink
+                      to={
+                        item.stakeAddressFrom.startsWith("addr")
+                          ? details.address(item.stakeAddressFrom)
+                          : details.stake(item.stakeAddressFrom)
+                      }
+                    >
                       {getShortWallet(item.stakeAddressFrom || "")}
                     </AddressLink>
                   </CustomTooltip>
@@ -55,7 +61,11 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                     return (
                       <Box minWidth={120} key={idx}>
                         <CustomTooltip title={address}>
-                          <AddressLink to={details.address(address)}>{getShortWallet(address || "")}</AddressLink>
+                          <AddressLink
+                            to={address.startsWith("addr") ? details.address(address) : details.stake(address)}
+                          >
+                            {getShortWallet(address || "")}
+                          </AddressLink>
                         </CustomTooltip>
                         <CopyButton text={address || ""} />
                       </Box>

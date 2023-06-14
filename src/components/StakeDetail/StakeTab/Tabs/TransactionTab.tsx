@@ -118,7 +118,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       )
     },
     {
-      title: "Fee",
+      title: "Fees",
       key: "fee",
       minWidth: 120,
       render: (r) => (
@@ -184,7 +184,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
           pagination={{
             ...pageInfo,
             total: fetchData.total,
-            onChange: (page, size) => history.push({ search: stringify({ page, size }) })
+            onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
           }}
           onClickRow={onClickRow}
           selected={selected}
