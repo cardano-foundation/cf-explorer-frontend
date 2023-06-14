@@ -48,10 +48,14 @@ export const Container = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const EpochNumber = styled(Box)(() => ({
+export const EpochNumber = styled(Box)(({ theme }) => ({
   fontWeight: 600,
   fontSize: 16,
-  marginBottom: 8
+  marginBottom: 8,
+  textAlign: "center",
+  [theme.breakpoints.down("sm")]: {
+    marginTop: "-8px"
+  }
 }));
 
 export const TitleCard = styled(Box)(({ theme }) => ({
