@@ -44,6 +44,9 @@ const OverViews: React.FC = () => {
     data?.countDownEndTime ? data.countDownEndTime + now.utcOffset() * 60 * 1000 : 0,
     "millisecond"
   );
+  const days = duration.days();
+  const hours = duration.hours();
+  const minutes = duration.minutes();
   return (
     <Card
       title="Stake Pool"
@@ -65,7 +68,9 @@ const OverViews: React.FC = () => {
               <Box component="span" sx={{ color: (theme) => theme.palette.grey[400], textAlign: "left" }}>
                 End in:{" "}
                 <StyledCard.Comment>
-                  {duration.days()} day {duration.hours()} hours {duration.minutes()} minutes
+                  {`${days} day${days > 1 ? 's' : ''} `}
+                  {`${hours} hour${hours > 1 ? 's' : ''} `}
+                  {`${minutes} minute${minutes > 1 ? 's' : ''}`}
                 </StyledCard.Comment>
               </Box>
             </StyledCard.Content>

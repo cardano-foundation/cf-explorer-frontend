@@ -6,9 +6,11 @@ import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
 
 import decimalIcon from "../../../commons/resources/icons/decimal.svg";
 import policyIcon from "../../../commons/resources/icons/policyIcon.svg";
+import rewardsIcon from "../../../commons/resources/icons/rewards.svg";
 import slotIcon from "../../../commons/resources/icons/slot.svg";
 import timeIcon from "../../../commons/resources/icons/time.svg";
 import exchageIcon from "../../../commons/resources/icons/Union.svg";
+import usdIcon from "../../../commons/resources/icons/usd.svg";
 import { formatDateTimeLocal, formatNumberDivByDecimals, numberWithCommas } from "../../../commons/utils/helper";
 import DetailHeader from "../../commons/DetailHeader";
 import ScriptModal from "../../ScriptModal";
@@ -118,7 +120,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
           </Box>
         </Box>
       ),
-      icon: exchageIcon,
+      icon: rewardsIcon,
       value: numberWithCommas(data?.numberOfHolders || "")
     },
     {
@@ -129,7 +131,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
           </Box>
         </Box>
       ),
-      icon: exchageIcon,
+      icon: usdIcon,
       value: numberWithCommas(data?.totalVolume || "")
     },
     {
@@ -140,7 +142,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
           </Box>
         </Box>
       ),
-      icon: exchageIcon,
+      icon: usdIcon,
       value: numberWithCommas(data?.volumeIn24h || "")
     },
     {
