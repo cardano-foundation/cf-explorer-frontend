@@ -13,7 +13,6 @@ import { API } from "src/commons/utils/api";
 
 import { AdaValue } from "./StakingRegistrationTab";
 
-
 const DeregistrationTab = () => {
   const { reportId } = useParams<{ reportId: string }>();
   const { search } = useLocation();

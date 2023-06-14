@@ -45,6 +45,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         removeAuthInfo();
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClick = () => {
@@ -59,6 +60,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
       toast.error(error.data?.errorMessage || "Something went wrong!");
       setModalSignMessage(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stakeAddress]);
 
   const handleSignIn = async (signature: string, nonce: NonceObject | null) => {

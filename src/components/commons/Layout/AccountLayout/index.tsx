@@ -52,6 +52,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
     } catch (error) {
       //To do
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toast = useToast();

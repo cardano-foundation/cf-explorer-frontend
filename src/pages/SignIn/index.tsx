@@ -97,6 +97,7 @@ export default function SignIn() {
     if (isLoggedIn) {
       handleClose();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
   function handleClose() {

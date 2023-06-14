@@ -104,6 +104,7 @@ export default function SignUp() {
     if (isLoggedIn) {
       history.push(routers.HOME);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
   useEffect(() => {
