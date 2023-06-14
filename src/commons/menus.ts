@@ -77,7 +77,7 @@ export const footerMenus: Menu[] = [
     children: [
       { href: "https://cardanofoundation.org/en/about-us/", title: "About Us" },
       { href: "https://cardanofoundation.org/en/contact-us/", title: "Contact Us" },
-      { href: "https://docs.cardano.org/en/latest/", title: "Documentation" },
+      { href: "https://docs.cardano.org/en/latest/", title: "Cardano Docs" },
       { href: "https://cardanofoundation.org/en/news", title: "News and Blog" }
     ]
   },
