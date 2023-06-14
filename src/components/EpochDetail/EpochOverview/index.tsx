@@ -3,12 +3,14 @@ import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import moment from "moment";
 
-import { timeIconUrl, outputIconUrl, cubeIconUrl, slotIconUrl } from "src/commons/resources";
+import { timeIconUrl, outputIconUrl, cubeIconUrl, slotIconUrl, exchageIconUrl } from "src/commons/resources";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import DetailHeader from "src/components/commons/DetailHeader";
 import { TitleCard } from "src/components/BlockDetail/BlockOverview/styles";
 import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
+
+import { Output } from "./styles";
 
 interface EpochOverviewProps {
   data: IDataEpoch | null;
@@ -75,6 +77,36 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
             {MAX_SLOT_EPOCH}
           </Box>
         </>
+      )
+    },
+    {
+      icon: exchageIconUrl,
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <TitleCard mr={1}> Transaction Count</TitleCard>
+        </Box>
+      ),
+      value:
+        data?.txCount
+    },
+    {
+      icon: exchageIconUrl,
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <TitleCard mr={1}> Rewards Distributed</TitleCard>
+        </Box>
+      ),
+      value: (
+        <>
+        {data?.rewardsDistributed ? (
+          <Output>
+            {formatADAFull(data?.rewardsDistributed)}
+            <ADAicon />
+          </Output>
+        ) : (
+          "Not available"
+        )}
+      </>
       )
     }
   ];
