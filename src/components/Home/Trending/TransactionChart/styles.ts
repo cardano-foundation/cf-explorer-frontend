@@ -92,6 +92,10 @@ export const BoxInfo = styled(Box)(({ theme }) => ({
   minHeight: "200px",
   borderRadius: "12px",
   padding: theme.spacing(3),
+  [theme.breakpoints.between("lg", "xl")]: {
+    paddingLeft: 0,
+    paddingRight: 0
+  },
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
@@ -134,3 +138,17 @@ export const ColorChart = styled(Box)<{ type: TypeChart }>(({ theme, type }) => 
     marginRight: theme.spacing(3)
   };
 });
+
+export const StyledTransactionTypes = styled(Box)(({ theme }) => ({
+  fontWeight: "bold",
+  fontSize: "1.5rem",
+  textAlign: "left",
+  [theme.breakpoints.between("lg", "xl")]: {
+    textWrap: "nowrap"
+  }
+}));
+
+export const StyledTransactionTypeItem = styled(Box)(({ theme }) => ({
+  color: `${theme.palette.grey[400]}`,
+  fontSize: "0.8125rem"
+}));

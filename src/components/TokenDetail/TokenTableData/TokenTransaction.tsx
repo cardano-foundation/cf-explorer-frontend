@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 
@@ -28,9 +28,8 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const [sort, setSort] = useState<string>("");
 
-  const fetchData = useFetchList<Transactions>(API.TOKEN.TOKEN_TRX.replace(":tokenId", tokenId), { ...pageInfo, sort });
+  const fetchData = useFetchList<Transactions>(API.TOKEN.TOKEN_TRX.replace(":tokenId", tokenId), { ...pageInfo });
 
   const columns: Column<Transactions>[] = [
     {
@@ -110,10 +109,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
           <SmallText>{formatADAFull(r.fee)}</SmallText>
           <ADAicon mb={"5px"} ml={"8px"} />
         </PriceValue>
-      ),
-      sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      }
+      )
     },
     {
       title: "Output",
@@ -124,10 +120,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
           <SmallText>{formatADAFull(r.totalOutput)}</SmallText>
           <ADAicon mb={"5px"} ml={"8px"} />
         </PriceValue>
-      ),
-      sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      }
+      )
     }
   ];
 
