@@ -4,7 +4,7 @@ import { User2RC } from "src/commons/resources";
 
 export const Container = styled(Box)`
   display: flex;
-  background-color: ${({ theme }) => theme.palette.grey[200]};
+  background-color: ${({ theme }) => theme.palette.background.default};
   min-height: 100vh;
   min-width: 100vw;
   justify-content: center;
