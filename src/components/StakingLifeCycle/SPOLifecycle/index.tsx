@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { Box, IconButton, useTheme } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -60,6 +60,9 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
   const history = useHistory();
   const { isMobile } = useScreen();
   const { palette } = useTheme();
+  useEffect(() => {
+    document.getElementById(`step-${currentStep}`)?.scrollIntoView();
+  }, [currentStep]);
 
   if (!renderTabsSPO) return null;
 
@@ -138,6 +141,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       <Box display={"flex"} justifyContent={"space-between"}>
         {stepper.map((step, idx) => (
           <Step
+            id={`step-${idx}`}
             key={idx}
             active={+(currentStep === idx)}
             component={renderTabsSPO[step.keyCheckShow] ? "span" : CustomTooltip}

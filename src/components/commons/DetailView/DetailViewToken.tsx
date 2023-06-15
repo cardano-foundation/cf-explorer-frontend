@@ -202,6 +202,15 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
           </TokenContainer>
           <Group>
             <DetailsInfoItem>
+              <DetailLabel>Policy ID</DetailLabel>
+              <DetailValue>
+                <CustomTooltip title={data.policy}>
+                  <StyledLink to={details.policyDetail(data.policy)}>{getShortWallet(data.policy || "")}</StyledLink>
+                </CustomTooltip>
+                <CopyButton text={data.policy} />
+              </DetailValue>
+            </DetailsInfoItem>
+            <DetailsInfoItem>
               <DetailLabel>Token ID</DetailLabel>
               <DetailValue>
                 <CustomTooltip title={tokenId}>

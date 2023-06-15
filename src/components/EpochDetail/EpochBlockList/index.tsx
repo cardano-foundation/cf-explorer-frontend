@@ -90,7 +90,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
           pagination={{
             ...pageInfo,
             total: fetchData.total,
-            onChange: (page, size) => history.push({ search: stringify({ page, size }) })
+            onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
           }}
           onClickRow={(_, r) => history.push(details.block(r.blockNo || r.hash))}
         />
