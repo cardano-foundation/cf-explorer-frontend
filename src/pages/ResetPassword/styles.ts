@@ -27,7 +27,6 @@ export const Title = styled(Box)`
 `;
 
 export const WrapTitle = styled(Box)`
-  text-transform: uppercase;
   font-size: 36px;
   font-weight: 700;
   color: ${({ theme }) => theme.palette.text.primary};
