@@ -70,7 +70,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
           }
         });
 
-        if (data && data.email && data.avatar) {
+        if (data && data.avatar) {
           await fetchUserInfo();
         }
         toast.success("Your avatar has been changed.");

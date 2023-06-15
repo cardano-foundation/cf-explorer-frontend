@@ -1,3 +1,4 @@
+import { IconButton } from "@mui/material";
 import { Alert, Box, Button, Divider, FormHelperText, Input, styled } from "@mui/material";
 
 import { User2RC } from "src/commons/resources";
@@ -43,6 +44,7 @@ export const WrapForm = styled(Box)(({ theme }) => ({
   borderRadius: "12px",
   display: "flex",
   flexDirection: "column",
+  position: "relative",
   gap: "25px",
   width: "min(80vw,420px)",
   padding: "35px 40px 40px",
@@ -155,5 +157,40 @@ export const AlertCustom = styled(Alert)`
   background: "#FFF7F7";
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 12px;
+  }
+`;
+
+export const BackButton = styled(Box)(({ theme }) => ({
+  display: "inline-flex",
+  textAlign: "left",
+  alignItems: "center",
+  gap: "10px",
+  marginBottom: "10px",
+  cursor: "pointer",
+  position: "absolute",
+  top: "15px",
+  left: "25px",
+  [theme.breakpoints.down("md")]: {
+    top: "10px",
+    left: "12px"
+  }
+}));
+
+export const BackText = styled("small")`
+  color: ${(props) => props.theme.palette.grey[400]};
+  font-weight: var(--font-weight-bold);
+`;
+
+export const CloseButton = styled(IconButton) <{ saving: number }>`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid ${(props) => props.theme.palette.grey["A100"]};
+  cursor: ${(props) => (props.saving ? `wait` : `pointer`)};
+  &:hover {
+    ${(props) => (props.saving ? `background: none;` : ``)}
   }
 `;

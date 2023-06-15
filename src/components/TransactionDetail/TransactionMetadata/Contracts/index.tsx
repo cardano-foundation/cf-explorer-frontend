@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import { useCopyToClipboard } from "react-use";
 
+import { details } from "src/commons/routers";
 import { getShortWallet } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
 
@@ -26,13 +28,21 @@ const Contracts: React.FC<ContractsProps> = ({ data }) => {
       }, 2000);
     }
   }, [textCopy]);
+
+  const redirectTo = (address: string): string => {
+    if (address.startsWith("addr")) return details.contract(address);
+    return details.policyDetail(address);
+  };
+
   if (data && data?.length === 1) {
     return (
       <Wrapper>
         <div>
           <Img src={contractImg} alt="contract icon" />
           <Box display={"flex"} alignItems="center" padding={"15px 0 0"} flexDirection="column">
-            <WrapAddress>{isLargeTablet ? getShortWallet(data[0].contract) : data[0].contract}</WrapAddress>
+            <Link to={redirectTo(data[0].contract)}>
+              <WrapAddress>{isLargeTablet ? getShortWallet(data[0].contract) : data[0].contract}</WrapAddress>
+            </Link>
             <CopyButtonMui
               onClick={() => {
                 copyToClipboard(data[0].contract);
@@ -55,9 +65,11 @@ const Contracts: React.FC<ContractsProps> = ({ data }) => {
             return (
               <Box display={"flex"} alignItems="center" padding={"15px 0 0"} key={ct.contract}>
                 <Box mx={"auto"} display="flex" alignItems={"center"}>
-                  <CustomTooltip title={ct.contract}>
-                    <Title>{isLargeTablet ? getShortWallet(ct.contract) : ct.contract}</Title>
-                  </CustomTooltip>
+                  <Link to={redirectTo(ct.contract)}>
+                    <CustomTooltip title={ct.contract}>
+                      <Title>{isLargeTablet ? getShortWallet(ct.contract) : ct.contract}</Title>
+                    </CustomTooltip>
+                  </Link>
                 </Box>
                 <CopyButton text={ct.contract} />
               </Box>
