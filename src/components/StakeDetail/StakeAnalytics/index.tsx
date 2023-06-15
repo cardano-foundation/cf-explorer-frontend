@@ -13,6 +13,7 @@ import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { useScreen } from "src/commons/hooks/useScreen";
+import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
 
 import {
   BoxInfo,
@@ -28,7 +29,6 @@ import {
   Wrapper,
   CustomButton
 } from "./styles";
-import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
 
 type AnalyticsBalance = { date: string; value: number };
 type AnalyticsReward = {
