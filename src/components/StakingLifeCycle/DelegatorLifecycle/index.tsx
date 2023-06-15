@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
 
 import {
   DelegationIcon,
@@ -16,6 +16,7 @@ import {
 import { ListStakeKeyResponse } from "src/pages/DelegatorLifecycle";
 import { details } from "src/commons/routers";
 import { useScreen } from "src/commons/hooks/useScreen";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import {
   ADATransfersButton,
@@ -56,21 +57,33 @@ interface StepperProps {
 interface Props {
   currentStep: number;
   setCurrentStep: (step: number) => void;
-  tabsRenderConfig?: ListStakeKeyResponse;
+  tabsRenderConfig: ListStakeKeyResponse | null;
 }
 
 const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: Props) => {
   const history = useHistory();
   const { isMobile } = useScreen();
+  const { palette } = useTheme();
   const { stakeId = "" } = useParams<{
     stakeId: string;
   }>();
   const [open, setOpen] = useState(false);
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
+  useEffect(() => {
+    document.getElementById(`step-${currentStep}`)?.scrollIntoView(true);
+  }, [currentStep]);
+
+  if (!tabsRenderConfig) return null;
 
   const stepper: StepperProps[] = [
     {
-      icon: <RegistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 0 ? "#fff" : "#98A2B3"} />,
+      icon: (
+        <RegistrationIcon
+          width={"25px"}
+          height={"25px"}
+          fill={tabsRenderConfig["hasRegistration"] ? "#fff" : "#98A2B3"}
+        />
+      ),
       title: "Registration",
       component: <Registration />,
       description: (
@@ -83,7 +96,9 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       keyCheckShow: "hasRegistration"
     },
     {
-      icon: <DelegationIcon width={"25px"} height={"25px"} fill={currentStep >= 1 ? "#fff" : "#98A2B3"} />,
+      icon: (
+        <DelegationIcon width={"25px"} height={"25px"} fill={tabsRenderConfig["hasDelegation"] ? "#fff" : "#98A2B3"} />
+      ),
       title: "Delegation",
       component: <Delegation />,
       description: (
@@ -96,7 +111,13 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       keyCheckShow: "hasDelegation"
     },
     {
-      icon: <RewardsDistributionIcon width={"25px"} height={"25px"} fill={currentStep >= 2 ? "#fff" : "#98A2B3"} />,
+      icon: (
+        <RewardsDistributionIcon
+          width={"25px"}
+          height={"25px"}
+          fill={tabsRenderConfig["hashRewards"] ? "#fff" : "#98A2B3"}
+        />
+      ),
       title: "Rewards Distribution",
       component: <RewardsDistribution />,
       description: (
@@ -109,7 +130,13 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       keyCheckShow: "hashRewards"
     },
     {
-      icon: <RewardsWithdrawalIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
+      icon: (
+        <RewardsWithdrawalIcon
+          width={"25px"}
+          height={"25px"}
+          fill={tabsRenderConfig["hasWithdrawal"] ? "#fff" : "#98A2B3"}
+        />
+      ),
       title: "Rewards Withdrawal",
       component: <RewardsWithdrawal />,
       description: (
@@ -122,7 +149,13 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       keyCheckShow: "hasWithdrawal"
     },
     {
-      icon: <DeredistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 4 ? "#fff" : "#98A2B3"} />,
+      icon: (
+        <DeredistrationIcon
+          width={"25px"}
+          height={"25px"}
+          fill={tabsRenderConfig["hasDeRegistration"] ? "#fff" : "#98A2B3"}
+        />
+      ),
       title: "Deregistration",
       component: <Deregistration />,
       description: (
@@ -136,10 +169,15 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
     }
   ];
 
-  useEffect(() => {
-    document.getElementById(`step-${currentStep}`)?.scrollIntoView(true);
-  }, [currentStep]);
-  if (!tabsRenderConfig) return null;
+  const renderBackground = (isActive: boolean, hasData: boolean) => {
+    if (isActive) {
+      return `${palette.green[600]} !important`;
+    }
+    if (hasData) {
+      return `${palette.grey[700]} !important`;
+    }
+    return `${palette.grey[200]} !important`;
+  };
 
   return (
     <Box>
@@ -148,23 +186,32 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
           return (
             <Step
               id={`step-${idx}`}
-              component={"span"}
               key={idx}
+              component={tabsRenderConfig[step.keyCheckShow] ? "span" : CustomTooltip}
               active={+(currentStep === idx)}
-              display={tabsRenderConfig[step.keyCheckShow] ? "block" : "none"}
+              title={tabsRenderConfig[step.keyCheckShow] ? undefined : "There is no record at this time"}
             >
-              <StepButton
-                active={+(currentStep === idx)}
-                onClick={() => {
-                  setCurrentStep(idx);
-                  history.replace(details.staking(stakeId, "timeline", step.key));
-                }}
-              >
-                {step.icon}
-              </StepButton>
-              <TitleStep currentstep={currentStep} index={idx} px={2}>
-                {step.title}
-              </TitleStep>
+              <Box>
+                <StepButton
+                  component={IconButton}
+                  active={+(currentStep === idx)}
+                  onClick={() => {
+                    if (tabsRenderConfig[step.keyCheckShow] && currentStep !== idx) {
+                      setCurrentStep(idx);
+                      history.replace(details.staking(stakeId, "timeline", step.key));
+                    }
+                  }}
+                  bgcolor={renderBackground(currentStep === idx, tabsRenderConfig[step.keyCheckShow])}
+                  color={({ palette }) =>
+                    tabsRenderConfig[step.keyCheckShow] ? palette.common.white : palette.grey[300]
+                  }
+                >
+                  {step.icon}
+                </StepButton>
+                <TitleStep active={+tabsRenderConfig[step.keyCheckShow]} px={2}>
+                  {step.title}
+                </TitleStep>
+              </Box>
             </Step>
           );
         })}
