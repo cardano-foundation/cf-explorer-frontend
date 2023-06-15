@@ -1,5 +1,6 @@
 import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment } from "@mui/material";
 import { useEffect, useReducer, useRef, useState } from "react";
+import { HiArrowLongLeft } from "react-icons/hi2";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
 
@@ -9,6 +10,8 @@ import { routers } from "src/commons/routers";
 import { signUp } from "src/commons/utils/userRequest";
 
 import {
+  BackButton,
+  BackText,
   CloseButton,
   Container,
   ForgotPassword,
@@ -188,14 +191,24 @@ export default function SignUp() {
     setFormData({
       name: event.target.name,
       value: event.target.value.trim(),
-      touched: true,
+      touched: event.target.value.trim() !== "",
       error: getError(event.target.name, event.target.value)
     });
   };
 
-  function handleClose() {
-    history.push(routers.HOME);
-  }
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    }
+  }, []);
+
+  const handleKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleSubmit(event);
+    }
+  };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -266,17 +279,30 @@ export default function SignUp() {
       setLoading(false);
     }
   };
+
+  const handleRedirect = (forceGoHome?: boolean) => {
+    if (forceGoHome) {
+      history.replace(routers.HOME);
+    } else {
+      history.replace(routers.SIGN_IN);
+    }
+  };
+
   return (
     <Container>
       {!success ? (
         <WrapContent>
           <WrapTitle>Sign up</WrapTitle>
           <WrapHintText>
-            Already have an account? <WrapSignUp onClick={() => history.push(routers.SIGN_IN)}>Sign In Here</WrapSignUp>
+            Already have an account? <WrapSignUp onClick={() => handleRedirect()}>Sign In Here</WrapSignUp>
           </WrapHintText>
           <FormGroup>
             <WrapForm>
-              <CloseButton saving={0} onClick={() => handleClose()}>
+              <BackButton onClick={() => handleRedirect()}>
+                <HiArrowLongLeft fontSize="16px" />
+                <BackText>Back</BackText>
+              </BackButton>
+              <CloseButton saving={0} onClick={() => handleRedirect(true)}>
                 <IoMdClose />
               </CloseButton>
               <WrapInput>

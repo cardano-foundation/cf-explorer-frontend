@@ -44,7 +44,7 @@ const poolTabs: ITab[] = [
   },
   {
     icon: OperatorRewardIcon,
-    label: "Rewards Distribution",
+    label: "Operator Rewards",
     key: "reward",
     mappingKey: "reward",
     component: <RewardsDistributionTab />
