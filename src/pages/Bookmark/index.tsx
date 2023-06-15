@@ -10,7 +10,7 @@ import { Column } from "src/types/table";
 import { ReactComponent as DeleteBookmark } from "src/commons/resources/icons/deleteBookmark.svg";
 import { ReactComponent as QuestionConfirm } from "src/commons/resources/icons/questionConfirm.svg";
 import { details } from "src/commons/routers";
-import { getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { formatBlockHashById, getShortHash, getShortWallet } from "src/commons/utils/helper";
 import { deleteBookmark } from "src/commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
 import useToast from "src/commons/hooks/useToast";
@@ -110,7 +110,7 @@ const Bookmark = () => {
           to={details.block(data.keyword)}
           color={(theme) => `${theme.palette.secondary.main} !important`}
         >
-          {data.keyword}
+          {formatBlockHashById(data.keyword)}
         </Box>
       )
     },
