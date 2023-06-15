@@ -254,7 +254,7 @@ export default function SignUp() {
         return;
       }
     } catch (error: any) {
-      if (error.response.data.errorCode === "CC_23") {
+      if (error?.response?.data?.errorCode === "CC_23") {
         setFormData({
           name: "email",
           touched: true,
