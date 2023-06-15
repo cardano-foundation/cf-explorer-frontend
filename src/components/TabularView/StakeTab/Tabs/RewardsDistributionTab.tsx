@@ -3,8 +3,9 @@ import { useContext, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
-import { GreenWalletIcon } from "src/components/commons/GreenWalletIcon";
 import ADAicon from "src/components/commons/ADAIcon";
+import { GreenWalletIcon } from "src/components/commons/GreenWalletIcon";
+import { AdaValue } from "src/components/commons/ADAValue";
 
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { details } from "../../../../commons/routers";
@@ -14,7 +15,6 @@ import StackingFilter, { FilterParams } from "../../../StackingFilter";
 import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import Table, { Column } from "../../../commons/Table";
 import { AmountADARow, StyledLink, WrapWalletLabel, WrapperDelegationTab } from "../styles";
-import { AdaValue } from "./StakeRegistrationTab";
 
 const RewardsDistributionTab = () => {
   const detailData = useContext(DelegatorDetailContext);

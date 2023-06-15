@@ -41,7 +41,7 @@ const DelegationLists: React.FC = () => {
         <CustomTooltip title={r.poolName || r.poolId}>
           <PoolName to={details.delegation(r.poolId)}>
             <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
-              {r.poolName || `Pool [${getShortWallet(r.poolId)}]`}
+              {r.poolName || `${getShortWallet(r.poolId)}`}
             </Box>
           </PoolName>
         </CustomTooltip>

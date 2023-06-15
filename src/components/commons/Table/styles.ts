@@ -137,8 +137,8 @@ export const WrappModalScrollBar = styled(Box)(
 `
 );
 
-export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number }>(
-  ({ maxHeight, height, theme }) => `
+export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number; loading?: number }>(
+  ({ maxHeight, height, theme, loading }) => `
   overflow-x: auto;
   height: ${height || 800}px;
   background: ${theme.palette.common.white};
@@ -146,7 +146,7 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number
   padding-top: 0;
   border-radius: ${theme.spacing(1.5)};
   border: 1px solid ${alpha(theme.palette.common.black, 0.1)};
-
+  ${loading ? "overflow-y: hidden;" : ""}
   ${maxHeight ? "max-height:" + (typeof maxHeight === "number" ? maxHeight + "px" : maxHeight) : ""};
 
   ${theme.breakpoints.down("sm")} {
