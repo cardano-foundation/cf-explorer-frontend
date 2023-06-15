@@ -178,3 +178,24 @@ export const FormHelperTextCustom = styled(FormHelperText)`
   font-size: 14px
   line-height: 16px;
 `;
+
+export const BackButton = styled(Box)(({ theme }) => ({
+  display: "inline-flex",
+  textAlign: "left",
+  alignItems: "center",
+  gap: "10px",
+  marginBottom: "10px",
+  cursor: "pointer",
+  position: "absolute",
+  top: "15px",
+  left: "25px",
+  [theme.breakpoints.down("md")]: {
+    top: "10px",
+    left: "12px"
+  }
+}));
+
+export const BackText = styled("small")`
+  color: ${(props) => props.theme.palette.grey[400]};
+  font-weight: var(--font-weight-bold);
+`;
