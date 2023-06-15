@@ -8,7 +8,6 @@ import { setOpenModal, setWallet } from "src/stores/user";
 import { NETWORK, SUPPORTED_WALLETS } from "src/commons/utils/constants";
 import { SupportedWallets, Wallet } from "src/types/user";
 import useToast from "src/commons/hooks/useToast";
-import StorageUtils from "src/commons/utils/storage";
 
 import {
   CloseButton,
@@ -82,7 +81,7 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
   return (
     <WrapContainer>
       <>
-        {SUPPORTED_WALLETS.filter((wallet) => wallet.networks.includes(StorageUtils.getNetwork())).map((wallet) => {
+        {SUPPORTED_WALLETS.filter((wallet) => wallet.networks.includes(NETWORK)).map((wallet) => {
           const active = walletConnecting === wallet.name;
           return (
             <WalletItem
