@@ -94,8 +94,6 @@ const SearchResult = () => {
           urls.map(async (url): Promise<{ url: FilterParams; data: any }> => {
             try {
               const res = await defaultAxios.get(`${url}/${value}`);
-              if (url === "addresses" && (res.data as WalletAddress)?.isContract)
-                return Promise.resolve({ url: "contract", data: res.data });
               if (res.data) return Promise.resolve({ url, data: res.data });
             } catch {
               //To do

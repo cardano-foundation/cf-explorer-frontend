@@ -1,12 +1,14 @@
 import React, { createContext, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { Box } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 
-import useFetch from "../../commons/hooks/useFetch";
-import { API } from "../../commons/utils/api";
-import NoRecord from "../../components/commons/NoRecord";
-import AddressOverview from "../../components/ContractDetail/AddressOverview";
-import ContractDetailContent from "../../components/ContractDetail/ContractDetailContent";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import NoRecord from "src/components/commons/NoRecord";
+import AddressOverview from "src/components/ContractDetail/AddressOverview";
+import ContractDetailContent from "src/components/ContractDetail/ContractDetailContent";
+
 import { BackButton, BackText, StyledContainer, WrapHeader } from "./styles";
 
 export const VerifyScriptContext = createContext({
@@ -66,7 +68,9 @@ const ContractDetail: React.FC = () => {
             <BackText>Back</BackText>
           </BackButton>
         </WrapHeader>
-        <AddressOverview data={data} loading={loading} />
+        <Box pt={1} pb={3}>
+          <AddressOverview data={data} loading={loading} />
+        </Box>
         <ContractDetailContent />
       </StyledContainer>
     </VerifyScriptContext.Provider>

@@ -148,6 +148,7 @@ interface Transaction {
       address: string;
       value: number;
       txHash: string;
+      index: string;
       tokens: Token[];
       stakeAddress?: string;
     }[];
@@ -156,11 +157,13 @@ interface Transaction {
       value: number;
       txHash: string;
       tokens: Token[];
+      index: string;
       stakeAddress?: string;
     }[];
   };
   mints?: {
     assetName: string;
+    assetId: string;
     assetQuantity: number;
     policy: string;
     metadata?: {
