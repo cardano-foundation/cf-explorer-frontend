@@ -8,7 +8,6 @@ import { PolicyScriptIcon } from "src/commons/resources";
 import { Logo } from "src/pages/Token/styles";
 import { details } from "src/commons/routers";
 import { formatAmount } from "src/commons/utils/helper";
- 
 
 import { Amount, AssetName, LogoEmpty, TableMinting } from "./styles";
 
