@@ -70,7 +70,7 @@ const options: Option[] = [
   {
     value: "stakes",
     label: "Stake keys",
-    paths: [routers.STAKE_DETAIL, routers.STAKE_DETAIL],
+    paths: [routers.STAKE_DETAIL],
     detail: details.stake
   },
   {

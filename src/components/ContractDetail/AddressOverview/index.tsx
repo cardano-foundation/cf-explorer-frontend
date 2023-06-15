@@ -14,9 +14,8 @@ import Card from "src/components/commons/Card";
 import TokenAutocomplete from "src/components/TokenAutocomplete";
 import ADAicon from "src/components/commons/ADAIcon";
 import { useScreen } from "src/commons/hooks/useScreen";
-import { BannerSuccess } from "src/components/VerifyScript/styles";
 
-import { GridContainer, GridItem, Pool, RedirectButton, StyledAAmount } from "./styles";
+import { GridContainer, GridItem, Pool, RedirectButton, StyledAAmount, BannerSuccess } from "./styles";
 
 interface Props {
   data: WalletAddress | null;
