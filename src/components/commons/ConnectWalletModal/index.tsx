@@ -82,7 +82,7 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
   return (
     <WrapContainer>
       <>
-        {SUPPORTED_WALLETS.filter((wallet) => wallet.networks.includes(StorageUtils.getNetwork())).map((wallet) => {
+        {SUPPORTED_WALLETS.filter((wallet) => wallet.networks.includes(NETWORK)).map((wallet) => {
           const active = walletConnecting === wallet.name;
           return (
             <WalletItem
