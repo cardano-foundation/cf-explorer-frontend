@@ -7,6 +7,9 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
     "& h2": {
       paddingLeft: "0px"
     }
+  },
+  [theme.breakpoints.up("sm")]: {
+    paddingTop: "10px"
   }
 }));
 

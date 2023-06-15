@@ -50,6 +50,8 @@ const createNavigator = (filter?: FilterParams) => {
       return details.delegation;
     case "contract":
       return details.contract;
+    case "policies":
+      return details.policyDetail;
     default:
       return null;
   }
@@ -57,7 +59,7 @@ const createNavigator = (filter?: FilterParams) => {
 
 const filterURLS = (value: string): FilterParams[] => {
   if (!Number.isNaN(Number(value))) return ["epochs", "blocks"];
-  else return ["blocks", "txs", "tokens", "stakes", "addresses", "delegations/pool-detail-header"];
+  else return ["blocks", "txs", "tokens", "stakes", "addresses", "delegations/pool-detail-header", "policies"];
 };
 
 const SearchResult = () => {
@@ -92,8 +94,6 @@ const SearchResult = () => {
           urls.map(async (url): Promise<{ url: FilterParams; data: any }> => {
             try {
               const res = await defaultAxios.get(`${url}/${value}`);
-              if (url === "addresses" && (res.data as WalletAddress)?.isContract)
-                return Promise.resolve({ url: "contract", data: res.data });
               if (res.data) return Promise.resolve({ url, data: res.data });
             } catch {
               //To do

@@ -25,6 +25,7 @@ const DeregistrationTab = () => {
   const { stakeKey } = useContext(StakingDetailContext);
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
+  const [sort, setSort] = useState<string>("");
   const columns: Column<DeregistrationItem>[] = [
     {
       title: "Transaction Hash",
@@ -40,7 +41,10 @@ const DeregistrationTab = () => {
       title: "Timestamp",
       key: "time",
       minWidth: "120px",
-      render: (r) => formatDateTimeLocal(r.time)
+      render: (r) => formatDateTimeLocal(r.time),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      }
     },
     {
       title: (
@@ -77,10 +81,12 @@ const DeregistrationTab = () => {
       )
     }
   ];
+
   const fetchData = useFetchList<DeregistrationItem>(
     reportId ? API.REPORT.SREPORT_DETAIL_DEGEGISTRATIONS(reportId) : "",
     {
-      ...pageInfo
+      ...pageInfo,
+      sort
     }
   );
 
