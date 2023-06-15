@@ -8,7 +8,6 @@ import { setOpenModal, setWallet } from "src/stores/user";
 import { NETWORK, SUPPORTED_WALLETS } from "src/commons/utils/constants";
 import { SupportedWallets, Wallet } from "src/types/user";
 import useToast from "src/commons/hooks/useToast";
-import StorageUtils from "src/commons/utils/storage";
 
 import {
   CloseButton,
