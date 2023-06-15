@@ -30,6 +30,7 @@ export const SearchContainer = styled("div")(({ theme }) => ({
   borderRadius: 8,
   marginBottom: 15,
   height: 35,
+  border: `1.5px solid ${theme.palette.grey[200]}`,
   [theme.breakpoints.down("sm")]: {
     width: "unset",
     maxWidth: "unset"

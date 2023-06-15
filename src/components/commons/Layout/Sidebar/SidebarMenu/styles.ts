@@ -13,8 +13,7 @@ export const SidebarMenuContainer = styled(Box)(({ theme }) => ({
 
 export const Menu = styled(List)(({ theme }) => ({
   maxHeight: "calc(100vh - 181px)",
-  overflowY: "auto",
-  overflowX: "hidden",
+  overflow: "hidden",
   marginBottom: "5px",
   "&::-webkit-scrollbar": {
     display: "none"
@@ -46,7 +45,7 @@ export const itemStyle = (theme: Theme, sidebar: boolean): SystemStyleObject<The
   }
 });
 
-export const MenuIcon = styled("img")<{ iconOnly?: number; active?: number; text?: number; disable?: number }>`
+export const MenuIcon = styled("img") <{ iconOnly?: number; active?: number; text?: number; disable?: number }>`
   width: 24px;
   height: 24px;
   min-width: 24px;
@@ -57,22 +56,22 @@ export const MenuIcon = styled("img")<{ iconOnly?: number; active?: number; text
   }
 `;
 
-export const SubMenu = styled(List)<{ isActive?: number }>`
+export const SubMenu = styled(List) <{ isActive?: number }>`
   margin-left: 0px;
 `;
 
-export const MenuText = styled(ListItemText)<{ open?: number; active?: number; text?: number; disable?: number }>`
+export const MenuText = styled(ListItemText) <{ open?: number; active?: number; text?: number; disable?: number }>`
   opacity: ${(props) => (props.open ? 1 : 0)};
   width: ${(props) => (props.open ? "unset" : 0)};
   * {
     font-family: var(--font-family-title) !important;
     font-weight: var(--font-weight-bold) !important;
     color: ${({ active, text, disable, theme }) =>
-      active
-        ? text
-          ? theme.palette.text.primary
-          : theme.palette.common.white
-        : disable
+    active
+      ? text
+        ? theme.palette.text.primary
+        : theme.palette.common.white
+      : disable
         ? theme.palette.text.disabled
         : theme.palette.grey[400]};
     white-space: break-spaces;

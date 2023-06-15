@@ -114,7 +114,7 @@ export default function ResetPassword() {
     setFormData({
       name: event.target.name,
       value: event.target.value.trim(),
-      touched: true,
+      touched: event.target.value.trim() !== "",
       error: getError(event.target.name, event.target.value)
     });
   };
@@ -133,6 +133,21 @@ export default function ResetPassword() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    }
+  }, []);
+
+  const handleKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleSubmit(event);
+    }
+  };
+
   const handleSubmit = (event: any) => {
     event.preventDefault();
     const errorPassword = getError("password", formData.password.value);

@@ -21,7 +21,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import DetailViewToken from "src/components/commons/DetailView/DetailViewToken";
 import SelectedIcon from "src/components/commons/SelectedIcon";
 
-import { AssetName, Logo, StyledContainer, TimeDuration } from "./styles";
+import { AssetName, Logo, PolicyLabel, StyledContainer, TimeDuration } from "./styles";
 
 const Tokens = () => {
   const [token, setToken] = useState<IToken | null>(null);
@@ -64,6 +64,16 @@ const Tokens = () => {
             {r.displayName || getShortWallet(r.fingerprint || "")}
           </AssetName>
         )
+    },
+    {
+      title: "Policy ID",
+      key: "policy",
+      minWidth: "100px",
+      render: (r) => (
+        <CustomTooltip title={r.policy}>
+          <PolicyLabel to={details.policyDetail(r.policy)}>{r.policy}</PolicyLabel>
+        </CustomTooltip>
+      )
     },
     {
       title: "Total Transactions",
