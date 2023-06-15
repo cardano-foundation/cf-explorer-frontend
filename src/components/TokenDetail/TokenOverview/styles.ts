@@ -98,6 +98,20 @@ export const Icon = styled("img")`
   height: 24px;
 `;
 
+export const PolicyId = styled(Box)(({ theme }) => ({
+  color: theme.palette.common.black,
+  fontSize: "1rem",
+  fontWeight: "bold",
+  wordBreak: "break-word",
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
+  width: "90%",
+  [theme.breakpoints.down("sm")]: {
+    width: "80%"
+  }
+}));
+
 export const BlockDefault = styled("span")`
   font-size: var(--font-size-text);
   color: ${(props) => props.theme.palette.primary.contrastText};
@@ -112,7 +126,7 @@ export const InfoIcon = styled(FiInfo)`
   margin-left: 2px;
 `;
 
-export const ProgressLiner = styled("div")<{ progress: number }>`
+export const ProgressLiner = styled("div") <{ progress: number }>`
   position: relative;
   width: 100%;
   background: ${(props) => alpha(props.theme.palette.common.black, 0.2)};
@@ -302,3 +316,33 @@ export const LogoEmpty = styled(Box)`
   border-radius: 50%;
   border: 1px solid ${(props) => props.theme.palette.grey[200]};
 `;
+
+export const TokenHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  fontWeight: "bold",
+  marginBottom: theme.spacing(2),
+  color: theme.palette.common.black,
+  overflowWrap: "anywhere"
+}));
+
+export const TokenDescription = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  fontSize: "0.75rem",
+  color: alpha(theme.palette.common.black, 0.5)
+}));
+
+export const PolicyScriptBtn = styled(Button)(({ theme }) => ({
+  color: theme.palette.primary.main,
+  fontFamily: '"Roboto", sans-serif',
+  fontSize: "14px",
+  border: "none",
+  backgroundColor: "transparent",
+  textTransform: "capitalize",
+  padding: 0,
+  marginTop: theme.spacing(1),
+  justifyContent: "flex-start",
+  textAlign: "left",
+  cursor: "pointer"
+}));
