@@ -202,9 +202,9 @@ export default function SignIn() {
   return (
     <Container>
       <WrapContent>
-        <WrapTitle>Sign in</WrapTitle>
+        <WrapTitle>Sign-In</WrapTitle>
         <WrapHintText>
-          Don't have an account? <WrapSignUp onClick={() => history.push(routers.SIGN_UP)}>Sign up</WrapSignUp>
+          Don't have an account? <WrapSignUp onClick={() => history.push(routers.SIGN_UP)}>Sign-Up</WrapSignUp>
         </WrapHintText>
         <FormGroup>
           <WrapForm>
