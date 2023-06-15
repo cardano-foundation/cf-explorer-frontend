@@ -131,7 +131,7 @@ export const ProcessActive = styled("div")<{ rate: number }>`
   background-color: ${(props) => props.theme.palette.primary.main};
 `;
 
-export const ProgressPending = styled(ProcessActive)<{rate: number, hide?: boolean}>`
+export const ProgressPending = styled(ProcessActive)<{rate: number}>`
   width: ${(props) => props.rate}%;
-  background-color: ${(props) => props.hide ? "#d9dfdf" : props.theme.palette.warning.main};
+  background-color: ${(props) => props.theme.palette.warning.main};
 `;
