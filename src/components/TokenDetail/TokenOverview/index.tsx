@@ -1,20 +1,15 @@
-import { alpha, Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import BigNumber from "bignumber.js";
 import React, { useContext, useState } from "react";
 
-import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
+import { exchageIconUrl, fileGuardUrl, slotIconUrl, timeIconUrl, RewardIcon, USDIcon } from "src/commons/resources";
 import CopyButton from "src/components/commons/CopyButton";
+import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
+import { formatDateTimeLocal, formatNumberDivByDecimals, numberWithCommas } from "src/commons/utils/helper";
+import DetailHeader from "src/components/commons/DetailHeader";
 
-import rewardsIcon from "../../../commons/resources/icons/rewards.svg";
-import slotIcon from "../../../commons/resources/icons/slot.svg";
-import timeIcon from "../../../commons/resources/icons/time.svg";
-import exchageIcon from "../../../commons/resources/icons/Union.svg";
-import usdIcon from "../../../commons/resources/icons/usd.svg";
-import fileGuardIIcon from "../../../commons/resources/icons/file-guard.svg";
-import { formatDateTimeLocal, formatNumberDivByDecimals, numberWithCommas } from "../../../commons/utils/helper";
-import DetailHeader from "../../commons/DetailHeader";
 import ScriptModal from "../../ScriptModal";
-import { PolicyId, WrapTitle } from "./styles";
+import { PolicyId, PolicyScriptBtn, TokenDescription, TokenHeader, WrapTitle } from "./styles";
 BigNumber.config({ DECIMAL_PLACES: 40 });
 
 interface ITokenOverview {
@@ -30,16 +25,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
   const listItem = [
     {
       title: (
-        <Box
-          display={"flex"}
-          alignItems="center"
-          fontWeight={"bold"}
-          mb={1}
-          color={({ palette }) => palette.common.black}
-          sx={{
-            overflowWrap: "anywhere"
-          }}
-        >
+        <TokenHeader>
           {data?.displayName || ""}
           {data?.metadata && data?.metadata?.logo ? (
             <Box
@@ -53,26 +39,21 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
           ) : (
             ""
           )}
-        </Box>
+        </TokenHeader>
       ),
       value: (
-        <Box
-          display={"flex"}
-          alignItems="center"
-          fontSize={"0.75rem"}
-          color={(theme) => alpha(theme.palette.common.black, 0.5)}
-        >
+        <TokenDescription>
           {data?.metadata?.description || ""}
-        </Box>
+        </TokenDescription>
       ),
     },
     {
       title: <WrapTitle>Total Supply</WrapTitle>,
       value: <Box component={"span"}>{formatNumberDivByDecimals(data?.supply, decimalToken)}</Box>,
-      icon: slotIcon
+      icon: slotIconUrl
     },
     {
-      title: <WrapTitle>Policy Id</WrapTitle>, icon: fileGuardIIcon, value: (
+      title: <WrapTitle>Policy Id</WrapTitle>, icon: fileGuardUrl, value: (
         <>
           <Box position={"relative"}>
             <PolicyId>
@@ -82,26 +63,14 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
               <CopyButton text={data?.policy}></CopyButton>
             </Box>
           </Box>
-          <Box
-            color={(theme) => theme.palette.primary.main}
-            fontFamily={'"Roboto", sans-serif'}
-            fontSize={"14px"}
-            component={Button}
-            border={"none"}
-            bgcolor="transparent"
-            textTransform={"capitalize"}
-            padding={0}
-            mt={1}
-            justifyContent={"flex-start"}
-            textAlign="left"
+          <PolicyScriptBtn
             onClick={() => {
               setOpenModal(true);
               setPolicyId(data?.policy || "");
             }}
-            style={{ cursor: "pointer" }}
           >
             Policy Script
-          </Box>
+          </PolicyScriptBtn>
         </>
       )
     },
@@ -113,7 +82,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
           </Box>
         </Box>
       ),
-      icon: exchageIcon,
+      icon: exchageIconUrl,
       value: numberWithCommas(txCountRealtime || data?.txCount)
     },
     {
@@ -124,7 +93,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
           </Box>
         </Box>
       ),
-      icon: rewardsIcon,
+      icon: RewardIcon,
       value: numberWithCommas(data?.numberOfHolders || "")
     },
     {
@@ -135,7 +104,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
           </Box>
         </Box>
       ),
-      icon: usdIcon,
+      icon: USDIcon,
       value: numberWithCommas(data?.totalVolume || "")
     },
     {
@@ -146,7 +115,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
           </Box>
         </Box>
       ),
-      icon: usdIcon,
+      icon: USDIcon,
       value: numberWithCommas(data?.volumeIn24h || "")
     },
     {
@@ -157,7 +126,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
           </Box>
         </Box>
       ),
-      icon: timeIcon,
+      icon: timeIconUrl,
       value: formatDateTimeLocal(data?.createdOn || "")
     }
   ];
