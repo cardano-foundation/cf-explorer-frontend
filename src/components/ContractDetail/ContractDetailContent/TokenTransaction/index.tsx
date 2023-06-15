@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
+
 import {
   formatADAFull,
   formatDateTimeLocal,
@@ -8,14 +9,15 @@ import {
   getShortHash,
   getShortWallet,
   numberWithCommas
-} from "~/commons/utils/helper";
-import Table, { Column } from "~/components/commons/Table";
+} from "src/commons/utils/helper";
+import Table, { Column } from "src/components/commons/Table";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import ADAicon from "src/components/commons/ADAIcon";
+
 import { Flex, Label, SmallText, StyledLink, PriceValue } from "./styles";
-import CustomTooltip from "~/components/commons/CustomTooltip";
-import useFetchList from "~/commons/hooks/useFetchList";
-import { details } from "~/commons/routers";
-import { API } from "~/commons/utils/api";
-import ADAicon from "~/components/commons/ADAIcon";
 
 const columns: Column<Transactions>[] = [
   {
@@ -60,7 +62,7 @@ const columns: Column<Transactions>[] = [
     title: "Addresses",
     key: "addresses",
     minWidth: "200px",
-    render(r, index) {
+    render(r) {
       return (
         <>
           <Flex>
@@ -129,7 +131,7 @@ const TokenTransaction: React.FC = () => {
       pagination={{
         ...pageInfo,
         total: fetchData.total,
-        onChange: (page, size) => history.push({ search: stringify({ page, size }) })
+        onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
       }}
     />
   );

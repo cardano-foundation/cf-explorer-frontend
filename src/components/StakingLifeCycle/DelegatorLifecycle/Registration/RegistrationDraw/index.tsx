@@ -1,6 +1,21 @@
 import { Box } from "@mui/material";
 import { useRef, useMemo } from "react";
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { BackIcon, AddressIcon, ADAGreen, TimeIcon } from "src/commons/resources";
+import { LineArrowItem } from "src/components/commons/LineArrow";
+import DrawPath from "src/components/commons/DrawPath";
+import AdaHolder from "src/components/commons/AdaHolder";
+import CardanoSystem from "src/components/commons/CardanoSystem";
+import HoldBox from "src/components/commons/HoldBox";
+import FeeBox from "src/components/commons/FeeBox";
+import { details } from "src/commons/routers";
+import { StyledCopyButton } from "src/components/StakingLifeCycle/SPOLifecycle/Registration/styles";
+
+import { StyledLink } from "../styles";
 import {
   DrawContainer,
   BoxGroup,
@@ -12,21 +27,6 @@ import {
   MiddleGroup,
   StepInfo
 } from "./styles";
-import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../../../commons/utils/helper";
-import moment from "moment";
-import { useHistory } from "react-router-dom";
-import CustomTooltip from "../../../../commons/CustomTooltip";
-import { StyledCopyButton } from "../../../SPOLifecycle/Registration/styles";
-import { BackIcon, AddressIcon, ADAGreen, TimeIcon } from "~/commons/resources";
-import { LineArrowItem } from "~/components/commons/LineArrow";
-import DrawPath from "~/components/commons/DrawPath";
-import { useSelector } from "react-redux";
-import AdaHolder from "~/components/commons/AdaHolder";
-import CardanoSystem from "~/components/commons/CardanoSystem";
-import HoldBox from "~/components/commons/HoldBox";
-import FeeBox from "~/components/commons/FeeBox";
-import { StyledLink } from "../styles";
-import { details } from "~/commons/routers";
 
 interface Props {
   selected: RegistrationItem;
@@ -57,7 +57,7 @@ export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false
         end: holdRef,
         endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
         startOffset: { 0: [-18, -50], sm: [-10, 0], lg: [0] },
-        endOffset: { 0: [8, -10], lg: [0] },
+        endOffset: { 0: [7.2, 1], lg: [0] },
         arrow: { 0: "top", lg: "left" },
         fold: { sm: "horizontal", lg: "none" }
       },
@@ -67,7 +67,7 @@ export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false
         end: cadarnoSystemRef,
         endPosition: { 0: ["right", "top"], sm: ["right", "middle"], lg: ["left", "middle"] },
         startOffset: { 0: [8, -15], lg: [0] },
-        endOffset: { 0: [-18, 45], sm: [-10], lg: [10] },
+        endOffset: { 0: [-18, 51], sm: [-10], lg: [10] },
         fold: { sm: "vertical", lg: "none" },
         arrow: { 0: "top", sm: "right", lg: "left" }
       },
@@ -84,7 +84,7 @@ export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
         end: cadarnoSystemRef,
         endPosition: { 0: ["left", "top"], sm: ["left", "middle"], lg: ["center", "bottom"] },
-        endOffset: { 0: [18, 45], sm: [10], lg: [0, 3] },
+        endOffset: { 0: [18, 51], sm: [10], lg: [0, 3] },
         fold: { sm: "vertical", lg: "horizontal" },
         arrow: { 0: "top", sm: "left", lg: "bottom" }
       }
@@ -103,7 +103,7 @@ export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false
         )}
         <InfoGroup>
           <Info>
-            <AddressIcon fill='#438F68' />
+            <AddressIcon fill="#438F68" />
             <CustomTooltip title={txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(txHash)}>{getShortHash(txHash || "")}</StyledLink>

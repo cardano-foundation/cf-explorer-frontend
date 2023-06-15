@@ -1,10 +1,20 @@
-import { Box, Skeleton } from "@mui/material";
 import { useState } from "react";
+import { Box, Skeleton } from "@mui/material";
+import { TabContext, TabList } from "@mui/lab";
 import { useHistory } from "react-router-dom";
+
+import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
+import ViewMoreThreeDots from "src/components/commons/ViewMoreThreeDots";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import CopyButton from "src/components/commons/CopyButton";
+import { details } from "src/commons/routers";
+import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import { CertUpdate, ChangeIcon, PoolCert } from "src/commons/resources";
+
 import {
   CardBox,
   ChangeBox,
-  FakeLink,
+  VRFKeyText,
   HistoryList,
   Item,
   ItemList,
@@ -13,7 +23,6 @@ import {
   MinimumAdaLogoIcon,
   MinimumText,
   StyledAdaLogoIcon,
-  StyledEmptyIcon,
   StyledLink,
   StyledModal,
   StyledTab,
@@ -26,14 +35,6 @@ import {
   UpdateList,
   Value
 } from "./styles";
-import ViewMoreAddressModal from "~/components/ViewMoreAddressModal";
-import ViewMoreThreeDots from "~/components/commons/ViewMoreThreeDots";
-import CustomTooltip from "~/components/commons/CustomTooltip";
-import CopyButton from "~/components/commons/CopyButton";
-import { details } from "~/commons/routers";
-import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "~/commons/utils/helper";
-import { CertUpdate, ChangeIcon, EmptyIcon, PoolCert } from "~/commons/resources";
-import { TabContext, TabList } from "@mui/lab";
 
 interface CertificateItemType {
   label: React.ReactNode;
@@ -77,14 +78,14 @@ export const PoolUpdateModal = ({ data, ...props }: Props) => {
   const isUpdated = data?.previousMargin !== data?.margin || data?.previousPledge !== data?.pledge;
 
   return (
-    <StyledModal {...props} title='Pool certificate'>
+    <StyledModal {...props} title="Pool certificate">
       {isUpdated ? (
         <TabContext value={tabActive}>
           <TabContainer>
             <TabList
               onChange={handleChange}
-              variant='scrollable'
-              scrollButtons='auto'
+              variant="scrollable"
+              scrollButtons="auto"
               TabIndicatorProps={{
                 sx: {
                   background: (theme) => theme.palette.primary.main,
@@ -158,7 +159,7 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
       content: (
         <LineData>
           <CustomTooltip title={data?.vrfKey}>
-            <FakeLink>{getShortHash(data?.vrfKey || "")}</FakeLink>
+            <VRFKeyText>{getShortHash(data?.vrfKey || "")}</VRFKeyText>
           </CustomTooltip>
           <CopyButton text={data?.vrfKey || ""} />
         </LineData>
@@ -240,12 +241,12 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
             {extra ? (
               <Box>
                 <Label>{label}</Label>
-                {data ? content : <Skeleton variant='rectangular' />}
+                {data ? content : <Skeleton variant="rectangular" />}
               </Box>
             ) : (
               <>
                 <Label>{label}</Label>
-                {data ? content : <Skeleton variant='rectangular' />}
+                {data ? content : <Skeleton variant="rectangular" />}
               </>
             )}
             {extra}
@@ -255,7 +256,7 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
       <ViewMoreAddressModal
         showFullHash={true}
         maxWidth={680}
-        title='Pool Owner'
+        title="Pool Owner"
         open={!!selectedOwner.length}
         onClose={() => setSelectedOwner([])}
         items={selectedOwner}

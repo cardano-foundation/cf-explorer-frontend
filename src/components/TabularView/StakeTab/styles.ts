@@ -96,7 +96,7 @@ export const WrapWalletLabel = styled(Box)(() => ({
 }));
 
 export const TabHead = styled(Box)<{ active?: number }>(
-  ({ active, theme }) => `
+  ({ active }) => `
   color: ${active ? "#438F68" : "#98A2B3"} !important;
 `
 );
@@ -112,6 +112,7 @@ export const Headline = styled(Typography)<{ collapsed?: number }>`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: min-content;
   display: ${({ collapsed }) => (collapsed ? "none" : "block")};
   ${({ theme }) => theme.breakpoints.down("lg")} {
     display: ${({ collapsed }) => (collapsed ? "block" : "none")};

@@ -126,7 +126,7 @@ export const ValueInfo = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const Wrapper = styled(Grid)(({ theme }) => ({
+export const Wrapper = styled(Grid)(() => ({
   borderRadius: 10,
   minHeight: "400px",
   textAlign: "left"
@@ -172,7 +172,7 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   fontWeight: "bold",
   color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
   backgroundColor: active ? theme.palette.primary.main : "none",
-  [theme.breakpoints.down("md")]: {
+  [theme.breakpoints.down("lg")]: {
     "&:hover": {
       backgroundColor: theme.palette.primary.main,
       color: theme.palette.primary.contrastText

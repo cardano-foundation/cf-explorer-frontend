@@ -96,7 +96,7 @@ export const ViewMetaData = styled(Link)`
   color: ${(props) => props.theme.palette.text.primary}!important;
   text-decoration: underline !important;
 `;
-export const LabelStatus = styled(Box)(({ theme }) => ({
+export const LabelStatus = styled(Box)(() => ({
   textTransform: "uppercase",
   fontFamily: '"Roboto", sans-serif',
   fontWeight: "bold",
@@ -137,7 +137,7 @@ export const ValueCard = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(1)
 }));
 
-export const StyledFlexValue = styled(Box)(({ theme }) => ({
+export const StyledFlexValue = styled(Box)(() => ({
   display: "inline-flex",
   fontSize: "var(--font-size-text-large)",
   alignItems: "center",
@@ -158,4 +158,8 @@ export const TitleValue = styled(Box)`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+export const TitleNoPool = styled(Box)`
+  white-space: break-spaces;
 `;

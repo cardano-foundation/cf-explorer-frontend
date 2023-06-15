@@ -1,6 +1,12 @@
 import { Box, IconButton, useTheme } from "@mui/material";
+import BigNumber from "bignumber.js";
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+
+import { EyeIcon } from "src/commons/resources";
+import { DeregistrationCertificateModal } from "src/components/StakingLifeCycle/DelegatorLifecycle/Deregistration";
+import { AdaValue } from "src/components/commons/ADAValue";
+
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";
@@ -8,9 +14,6 @@ import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../comm
 import CustomTooltip from "../../../commons/CustomTooltip";
 import Table, { Column } from "../../../commons/Table";
 import { StyledLink, TableSubTitle } from "../styles";
-import { AdaValue } from "./StakeRegistrationTab";
-import { EyeIcon } from "~/commons/resources";
-import { DeregistrationCertificateModal } from "~/components/StakingLifeCycle/DelegatorLifecycle/Deregistration";
 
 const DeregistrationTab = () => {
   const theme = useTheme();
@@ -57,12 +60,16 @@ const DeregistrationTab = () => {
       minWidth: "120px",
       render: (r) => (
         <Box>
-          <AdaValue limit={5} value={-r.deposit - r.fee} />
           <TableSubTitle>
-            <Box display='flex' mt={1} alignItems='center' lineHeight='1'>
-              <AdaValue limit={1} color={theme.palette.grey[400]} value={-r.deposit} gap='3px' fontSize='12px' />
-              <Box mx='3px'>/</Box>
-              <AdaValue color={theme.palette.grey[400]} value={r.fee} gap='3px' fontSize='12px' />
+            <Box display="flex" mt={1} alignItems="center" lineHeight="1">
+              <AdaValue
+                color={theme.palette.grey[400]}
+                value={new BigNumber(r.deposit).times(-1).toString()}
+                gap="3px"
+                fontSize="12px"
+              />
+              <Box mx="3px">/</Box>
+              <AdaValue color={theme.palette.grey[400]} value={r.fee} gap="3px" fontSize="12px" />
             </Box>
           </TableSubTitle>
         </Box>
@@ -72,7 +79,7 @@ const DeregistrationTab = () => {
       title: "Certificate",
       key: "txHash",
       minWidth: "120px",
-      render: (r) => (
+      render: () => (
         <IconButton onClick={() => setOpenModal(true)}>
           <EyeIcon style={{ transform: "scale(.8)" }} />
         </IconButton>

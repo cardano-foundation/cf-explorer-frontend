@@ -1,10 +1,9 @@
 {
   "name": "cardano-blockchain-explorer",
-  "version": "0.3.0",
+  "version": "0.3.4",
   "private": true,
   "dependencies": {
     "@cardano-foundation/cardano-connect-with-wallet": "^0.1.57",
-    "@craco/craco": "^7.1.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/lab": "^5.0.0-alpha.111",
@@ -56,16 +55,17 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "selenium-test": "concurrently \"npm start\" \"wait-on http://localhost:1102 && cd .. && cd cf-qa-testsuite && gradle clean test && kill-port 1102\"",
-    "eject": "craco eject",
-    "test-all": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watchAll",
-    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watch",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "eject": "react-scripts eject",
+    "jest-test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watchAll",
     "lint": "eslint --ext ts,tsx src/",
     "lint:fix": "eslint --fix --ext ts,tsx src/",
     "prettier": "prettier --check \"src/**/(*.tsx|*.ts|*.css|*.scss)\"",
-    "prettier:fix": "prettier --write \"src/**/(*.tsx|*.ts|*.css|*.scss)\""
+    "prettier:fix": "prettier --write \"src/**/(*.tsx|*.ts|*.css|*.scss)\"",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "test": "start-server-and-test start localhost:3000 cypress:run"
   },
   "eslintConfig": {
     "extends": [
@@ -104,7 +104,9 @@
     "eslint-plugin-react": "^7.32.2",
     "kill-port": "^2.0.1",
     "prettier": "^2.8.8",
-    "wait-on": "^7.0.1"
+    "wait-on": "^7.0.1",
+    "cypress": "^12.11.0",
+    "start-server-and-test": "^2.0.0"
   },
   "proxy": "https://tokens.cardano.org"
 }

@@ -1,8 +1,22 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { Backdrop, Box, useTheme } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
+import moment from "moment";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { BiChevronDown } from "react-icons/bi";
+
+import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import { details } from "src/commons/routers";
+import { RootState } from "src/stores/types";
+import { EmptyIcon, SearchIcon } from "src/commons/resources";
+import { formatDateTimeLocal, getShortHash, numberWithCommas } from "src/commons/utils/helper";
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import ProgressCircle from "../ProgressCircle";
+import Bookmark from "../BookmarkIcon";
+import CustomTooltip from "../CustomTooltip";
+import FormNowMessage from "../FormNowMessage";
 import {
   BackButton,
   BackText,
@@ -31,18 +45,6 @@ import {
   EpochDetail,
   TimeDuration
 } from "./styles";
-import { details } from "../../../commons/routers";
-import Bookmark from "../BookmarkIcon";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../stores/types";
-import { useHistory } from "react-router-dom";
-import { EmptyIcon, SearchIcon } from "../../../commons/resources";
-import { BiChevronDown } from "react-icons/bi";
-import { getShortHash, numberWithCommas } from "../../../commons/utils/helper";
-import { useScreen } from "../../../commons/hooks/useScreen";
-import CustomTooltip from "../CustomTooltip";
-import FormNowMessage from "../FormNowMessage";
-import moment from "moment";
 
 interface DetailHeaderProps {
   type: Bookmark["type"];
@@ -116,30 +118,36 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
         )}
         <HeaderContainer>
           <HeaderTitle>
-            <HeaderTitleSkeleton variant='rectangular' />
+            <HeaderTitleSkeleton variant="rectangular" />
           </HeaderTitle>
         </HeaderContainer>
-        <DetailsInfo container items_length={numberOfItems}>
-          {new Array(4).fill(0).map((_, index) => {
+        <DetailsInfo container length={numberOfItems}>
+          {new Array(numberOfItems).fill(0).map((_, index) => {
             return (
               <CardItem
                 item
                 xs={isDetailToken && index === 0 ? 12 : 6}
-                sm={isDetailToken && index === 0 ? 12 : 6}
                 md={4}
                 lg={numberOfItems > 6 ? 3 : true}
-                items_length={numberOfItems}
+                length={numberOfItems}
                 key={index}
-                isDetailToken={isDetailToken}
+                wide={+isDetailToken}
               >
-                <IconSkeleton variant='circular' />
-                <DetailValueSkeleton variant='rectangular' />
+                <IconSkeleton variant="circular" />
+                <DetailValueSkeleton variant="rectangular" />
                 <ValueCard>
-                  <DetailLabelSkeleton variant='rectangular' />
+                  <DetailLabelSkeleton variant="rectangular" />
                 </ValueCard>
               </CardItem>
             );
           })}
+          <BufferList numberOfItems={numberOfItems} wide={+isDetailToken}>
+            <IconSkeleton variant="circular" />
+            <DetailValueSkeleton variant="rectangular" />
+            <ValueCard>
+              <DetailLabelSkeleton variant="rectangular" />
+            </ValueCard>
+          </BufferList>
         </DetailsInfo>
       </HeaderDetailContainer>
     );
@@ -148,7 +156,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
   return (
     <HeaderDetailContainer>
       <WrapHeader>
-        <Box width='100%'>
+        <Box width="100%">
           {isHideButtonBack === true ? null : (
             <BackButton onClick={history.goBack}>
               <HiArrowLongLeft />
@@ -180,15 +188,21 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           </TimeDuration>
         </Box>
         {epoch ? (
-          <EpochDetail class-name='123'>
+          <EpochDetail class-name="123">
             <ProgressCircle
               size={100}
               pathWidth={8}
               percent={
-                currentEpoch && (epoch?.no || 0) < currentEpoch?.no
-                  ? 100
-                  : ((moment(epoch?.endTime).diff(moment()) > 0 ? epoch?.slot || 0 : MAX_SLOT_EPOCH) / MAX_SLOT_EPOCH) *
-                    100
+                type === "EPOCH"
+                  ? currentEpoch && (epoch?.no || 0) === currentEpoch?.no
+                    ? ((moment(formatDateTimeLocal(epoch?.endTime || "")).diff(moment()) > 0 &&
+                      epoch?.slot < MAX_SLOT_EPOCH
+                        ? epoch?.slot
+                        : MAX_SLOT_EPOCH) /
+                        MAX_SLOT_EPOCH) *
+                      100
+                    : 100
+                  : (epoch?.slot / MAX_SLOT_EPOCH) * 100
               }
             >
               <EpochNumber is_epoch={+(type === "EPOCH")} to={details.epoch(epoch.no || 0)}>
@@ -201,7 +215,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           ""
         )}
       </WrapHeader>
-      <DetailsInfo container items_length={numberOfItems}>
+      <DetailsInfo container length={numberOfItems}>
         {listItem.map((item, index) => {
           const keyItem = item.key || "";
           return (
@@ -209,14 +223,14 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               item
               xs={isDetailToken && index === 0 ? 12 : 6}
               sm={isDetailToken && index === 0 ? 12 : 6}
-              md={listItem.length === 4 ? 3 : 4}
+              md={numberOfItems === 4 ? 3 : 4}
               lg={numberOfItems > 6 ? 3 : true}
-              items_length={numberOfItems}
+              length={numberOfItems}
               key={index}
-              isDetailToken={isDetailToken}
+              wide={+isDetailToken}
             >
-              <Box position='relative' display={item.hideHeader ? "none" : ""}>
-                <img src={item.icon} alt='' height={20} />
+              <Box position="relative" display={item.hideHeader ? "none" : ""}>
+                <img src={item.icon} alt="" height={20} />
                 {item.allowSearch && keyItem && (
                   <AllowSearchButton
                     onClick={() => {
@@ -231,9 +245,6 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                     renderValue={() => "Token"}
                     displayEmpty
                     value={""}
-                    onChange={() => {
-                      //To do
-                    }}
                     IconComponent={BiChevronDown}
                     MenuProps={{
                       PaperProps: {
@@ -295,6 +306,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
             </CardItem>
           );
         })}
+        <BufferList numberOfItems={numberOfItems} wide={+isDetailToken} />
       </DetailsInfo>
       <Backdrop
         sx={{ zIndex: 100 }}
@@ -304,5 +316,43 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     </HeaderDetailContainer>
   );
 };
+interface BufferListProps {
+  numberOfItems: number;
+  wide: number;
+  children?: React.ReactNode;
+}
+
+const BufferList = memo(({ numberOfItems, wide, children }: BufferListProps) => {
+  const { isTablet, isLaptop } = useScreen();
+  const numberOfRow = isTablet ? 2 : isLaptop ? 3 : 4;
+  // get number of buffer items. Ex: if numberOfItems = 8, first item token detail 2 slot (bufferWide = 1);
+  const bufferWide = isTablet ? wide : 0;
+  // numberOfRow in tablet screen is 2, numberOfBuffer is 1;
+  const numberOfBuffer = numberOfRow - ((numberOfItems - bufferWide) % numberOfRow || numberOfRow);
+
+  if ((isLaptop && numberOfItems > 4) || numberOfItems > 6)
+    return (
+      <>
+        {new Array(numberOfBuffer).fill(0).map((_, index) => {
+          return (
+            <CardItem
+              item
+              xs={6}
+              md={numberOfItems === 4 ? 3 : 4}
+              lg={numberOfItems > 6 ? 3 : true}
+              length={numberOfItems + numberOfBuffer}
+              key={index}
+              wide={wide}
+            >
+              {children}
+            </CardItem>
+          );
+        })}
+      </>
+    );
+  else return null;
+});
+
+BufferList.displayName = "BufferList";
 
 export default DetailHeader;

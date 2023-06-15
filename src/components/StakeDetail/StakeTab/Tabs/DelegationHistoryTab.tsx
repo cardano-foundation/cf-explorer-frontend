@@ -1,13 +1,15 @@
 import { Box } from "@mui/material";
-import { StyledLink } from "../styles";
-import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
-import useFetchList from "~/commons/hooks/useFetchList";
-import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "~/commons/utils/helper";
-import Table, { Column } from "~/components/commons/Table";
-import CustomTooltip from "~/components/commons/CustomTooltip";
-import { details } from "~/commons/routers";
-import { API } from "~/commons/utils/api";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+
+import useFetchList from "src/commons/hooks/useFetchList";
+import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import Table, { Column } from "src/components/commons/Table";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+
+import { StyledLink } from "../styles";
 
 const DelegationHistoryTab = ({ isMobile = false }) => {
   const { stakeId } = useParams<{ stakeId: string }>();
@@ -40,7 +42,7 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
       render: (r) => (
         <Box>
           <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
-          <Box marginTop='5px'>
+          <Box marginTop="5px">
             <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
           </Box>
         </Box>
@@ -86,7 +88,7 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
       pagination={{
         ...pageInfo,
         total: fetchData.total,
-        onChange: (page, size) => history.push({ search: stringify({ page, size }) })
+        onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
       }}
       onClickRow={(e, r: DelegationHistory) => history.push(details.delegation(r.poolId))}
     />

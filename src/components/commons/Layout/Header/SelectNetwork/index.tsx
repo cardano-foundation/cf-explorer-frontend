@@ -4,12 +4,13 @@ import React, { useEffect } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { useHistory } from "react-router-dom";
 import { useLocalStorage } from "react-use";
-import { listRouters } from "../../../../../commons/routers";
-import { NETWORK, NETWORKS, NETWORK_NAMES, STORAGE_KEYS } from "../../../../../commons/utils/constants";
-import { removeAuthInfo } from "../../../../../commons/utils/helper";
-import StorageUtils from "../../../../../commons/utils/storage";
-import { signOut } from "../../../../../commons/utils/userRequest";
 import { useSelector } from "react-redux";
+
+import { listRouters } from "src/commons/routers";
+import { NETWORK, NETWORKS, NETWORK_NAMES, STORAGE_KEYS } from "src/commons/utils/constants";
+import { removeAuthInfo } from "src/commons/utils/helper";
+import StorageUtils from "src/commons/utils/storage";
+import { signOut } from "src/commons/utils/userRequest";
 
 const StyledSelect = styled(Select)(({ theme }) => ({
   fontFamily: "var(--font-family-title)",
@@ -77,14 +78,14 @@ const SelectNetwork: React.FC = () => {
 
   return (
     <StyledSelect
-      data-testid='network-selection-dropdown'
+      data-testid="network-selection-dropdown"
       onChange={handleChange}
       value={NETWORK}
       IconComponent={BiChevronDown}
       MenuProps={{ style: { zIndex: 1303 } }}
     >
       {Object.entries(NETWORK_NAMES).map(([value, name]) => (
-        <MenuItem data-testid='network-options' key={value} value={value}>
+        <MenuItem data-testid="network-options" key={value} value={value}>
           {name}
         </MenuItem>
       ))}

@@ -1,6 +1,8 @@
 import React from "react";
+
+import { AdaHolderIconUrl } from "src/commons/resources";
+
 import { DisableAbleLabel, FacingImg, RectBox } from "./styles";
-import { AdaHolderIconUrl } from "~/commons/resources";
 
 const ADAHolderRect = () => {
   return (

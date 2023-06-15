@@ -1,4 +1,5 @@
 import { Typography } from "@mui/material";
+
 import StyledModal from "../commons/StyledModal";
 import { ContentContainer, NormalDescription, WrapContent } from "./styles";
 
@@ -9,7 +10,7 @@ interface Props {
 
 export function DelegationProcessDescription({ open, handleCloseModal }: Props) {
   return (
-    <StyledModal title='Delegation' handleCloseModal={handleCloseModal} open={open} data-testid='close-modal-button'>
+    <StyledModal title="Delegation" handleCloseModal={handleCloseModal} open={open} data-testid="close-modal-button">
       <WrapContent>
         <ContentContainer>
           <NormalDescription>

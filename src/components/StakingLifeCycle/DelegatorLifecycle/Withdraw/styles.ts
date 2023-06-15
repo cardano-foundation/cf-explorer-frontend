@@ -55,17 +55,17 @@ export const FeeBox = styled(Box)(({ theme }) => ({
 export const IconButton = styled(IconButtonMui)(({ theme }) => ({
   background: theme.palette.grey[100]
 }));
-export const IconButtonBack = styled(IconButtonMui)(({ theme }) => ({
+export const IconButtonBack = styled(IconButtonMui)(() => ({
   padding: 0
 }));
-export const RewardWallet = styled(Box)(({ theme }) => ({
+export const RewardWallet = styled(Box)(() => ({
   position: "absolute",
   left: "35%",
   top: "45%",
   display: "flex",
   alignItems: "center"
 }));
-export const RewardAccount = styled(Box)(({ theme }) => ({
+export const RewardAccount = styled(Box)(() => ({
   position: "absolute",
   left: "38%",
   top: "40%",

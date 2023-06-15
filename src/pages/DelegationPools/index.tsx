@@ -1,7 +1,9 @@
-import OverViews from "../../components/DelegationPool/DelegationOverview";
-import { Horizon, StyledContainer } from "./styles";
-import DelegationLists from "../../components/DelegationPool/DelegationList";
 import { useEffect } from "react";
+
+import OverViews from "src/components/DelegationPool/DelegationOverview";
+import DelegationLists from "src/components/DelegationPool/DelegationList";
+
+import { Horizon, StyledContainer } from "./styles";
 
 const Delegations = () => {
   useEffect(() => {

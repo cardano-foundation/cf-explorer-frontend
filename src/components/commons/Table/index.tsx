@@ -1,6 +1,18 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Box, PaginationRenderItemParams, IconButton, MenuItem, styled, CircularProgress, alpha } from "@mui/material";
-import { handleClicktWithoutAnchor, numberWithCommas } from "../../../commons/utils/helper";
+import { useUpdateEffect } from "react-use";
+import { useParams } from "react-router-dom";
+
+import { handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
+import {
+  ColumnType,
+  FooterTableProps,
+  TableHeaderProps,
+  TableProps,
+  TableRowProps,
+  TableTopHeaderProps
+} from "src/types/table";
+import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DownIcon,
   EmptyIcon,
@@ -12,7 +24,8 @@ import {
   SortTableDown,
   SortTableUp,
   SortTableUpDown
-} from "../../../commons/resources";
+} from "src/commons/resources";
+
 import {
   Empty,
   EmtyImage,
@@ -35,25 +48,14 @@ import {
   TableCustomTitle,
   StyledPagination
 } from "./styles";
-import {
-  ColumnType,
-  FooterTableProps,
-  TableHeaderProps,
-  TableProps,
-  TableRowProps,
-  TableTopHeaderProps
-} from "../../../types/table";
-import { useUpdateEffect } from "react-use";
-import { useParams } from "react-router-dom";
 import Filter from "../Filter";
-import { useScreen } from "../../../commons/hooks/useScreen";
 
 type TEmptyRecord = {
   className?: string;
 };
 export const EmptyRecord: React.FC<TEmptyRecord> = ({ className }) => (
   <Empty className={className}>
-    <EmtyImage src={EmptyIcon} alt='no data' />
+    <EmtyImage src={EmptyIcon} alt="no data" />
   </Empty>
 );
 
@@ -154,13 +156,13 @@ const TableRow = <T extends ColumnType>({
     <TRow onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))} {...selectedProps}>
       {selectable && (
         <TCol>
-          <TableCheckBox checked={isSelected?.(row)} onChange={(e) => toggleSelection?.(row)} />
+          <TableCheckBox checked={isSelected?.(row)} onChange={() => toggleSelection?.(row)} />
         </TCol>
       )}
       {columns.map((column, idx) => {
         return (
           <TCol
-            className='tb-col'
+            className="tb-col"
             key={idx}
             ref={colRef}
             minWidth={column.minWidth}
@@ -205,9 +207,9 @@ const TableBody = <T extends ColumnType>({
               width={"100%"}
               height={"100%"}
               zIndex={1000}
-              display='flex'
-              justifyContent='center'
-              alignItems='self-start'
+              display="flex"
+              justifyContent="center"
+              alignItems="self-start"
             >
               <Box pt={"20%"}>
                 <CircularProgress />
@@ -248,7 +250,8 @@ const TableSekeleton = () => {
 };
 
 export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, clearSelection }) => {
-  const [page, setPage] = useState(pagination?.page || 1);
+  const defaultPage = pagination?.page && (pagination?.page === 0 ? 1 : pagination?.page + 1);
+  const [page, setPage] = useState(defaultPage || 1);
   const [size, setSize] = useState(pagination?.size || 50);
   const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
 
@@ -264,11 +267,11 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
 
   return (
     <TFooter>
-      <Box display={"flex"} alignItems='center' margin='15px 0px'>
+      <Box display={"flex"} alignItems="center" margin="15px 0px">
         {pagination?.total && pagination.total > 10 ? (
-          <Box display='flex' alignItems='center'>
+          <Box display="flex" alignItems="center">
             <SelectMui
-              size='small'
+              size="small"
               onChange={(e: any) => {
                 setSize(+e.target.value);
                 setPage(1);
@@ -283,7 +286,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
               <MenuItem value={50}>50</MenuItem>
               <MenuItem value={100}>100</MenuItem>
             </SelectMui>
-            <Box component={"span"} ml={1} fontSize='0.875rem'>
+            <Box component={"span"} ml={1} fontSize="0.875rem">
               Per page
             </Box>
           </Box>
@@ -291,7 +294,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
           ""
         )}
         {total?.count ? (
-          <Box ml={"20px"} fontSize='0.875rem'>
+          <Box ml={"20px"} fontSize="0.875rem">
             <TotalNumber>{numberWithCommas(total.count)}</TotalNumber> {`Result${total.count > 1 ? "s" : ""}`}
           </Box>
         ) : (
@@ -344,6 +347,7 @@ const Table: React.FC<TableProps> = ({
     onSelectionChange
   });
   const tableRef = useRef(null);
+  const wrapperRef = useRef<HTMLElement>(null);
   const heightTable = Math.min((tableRef?.current as any)?.clientHeight || 0, 800);
   const toggleSelectAll = (isChecked: boolean) => {
     if (data && isChecked) {
@@ -354,12 +358,18 @@ const Table: React.FC<TableProps> = ({
   };
 
   useEffect(() => {
+    if (wrapperRef.current) {
+      wrapperRef.current.scrollTop = 0;
+    }
+  }, [loading]);
+
+  useEffect(() => {
     clearSelection();
   }, [data]);
 
   const isSelectAll = useMemo(() => data?.length === selectedItems.length, [data, selectedItems]);
   return (
-    <Box className={className || ""} style={style} data-testid='table-common'>
+    <Box className={className || ""} style={style} data-testid="table-common">
       <TableTopHeader
         onFilterChange={onFilterChange}
         renderAction={(items) => renderAction?.(items, clearSelection)}
@@ -370,9 +380,11 @@ const Table: React.FC<TableProps> = ({
         isSelectAll={isSelectAll}
       />
       <Wrapper
+        ref={wrapperRef}
         maxHeight={maxHeight}
         minHeight={(!data || data.length === 0) && !loading ? 360 : loading ? 400 : 150}
         height={heightTable}
+        loading={loading ? 1 : 0}
       >
         <TableFullWidth ref={tableRef}>
           <TableHeader
@@ -403,7 +415,7 @@ const Table: React.FC<TableProps> = ({
         {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord className={emptyClassName} />}
       </Wrapper>
       {showPagination && (
-        <FooterTable total={total} clearSelection={clearSelection} pagination={pagination} loading={loading || false} />
+        <FooterTable total={total} clearSelection={clearSelection} pagination={pagination} loading={!!loading} />
       )}
     </Box>
   );
@@ -532,7 +544,7 @@ const PaginationCustom = ({
                   setInputPage(+e.target.value);
                 }
               }}
-              onBlur={(e) => {
+              onBlur={() => {
                 setInputPage(page);
               }}
               disabled={loading}
@@ -546,7 +558,7 @@ const PaginationCustom = ({
                 }
               }}
             />
-            <Box component={"span"} color={(theme) => theme.palette.grey[400]} fontSize='0.875rem'>
+            <Box component={"span"} color={(theme) => theme.palette.grey[400]} fontSize="0.875rem">
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}
               {numberWithCommas((page > 0 ? page : 1) * size > total ? total : (page > 0 ? page : 1) * size)} of{" "}
               {numberWithCommas(pagination?.total || 0)}

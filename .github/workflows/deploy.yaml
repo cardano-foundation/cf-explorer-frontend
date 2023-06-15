@@ -1,0 +1,41 @@
+name: Deploy the Explorer Frontend
+
+on:
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: "Select the stage the frontend shall be deployed to."
+        required: true
+        default: "dev"
+        type: choice
+        options:
+          - dev
+      tag:
+        description: "Select the tag which shall be deployed (e.g. 0.3.3, latest, ...)"
+        required: true
+        default: "latest"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🥸 Check user permission
+        id: check
+        uses: scherermichael-oss/action-has-permission@master
+        with:
+          required-permission: admin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: 🐳 Update docker-compose file and trigger deployment
+        if: steps.check.outputs.has-permission
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          script: |
+            sed -i 's/cf-explorer-frontend:[a-z,0-9,.]*/cf-explorer-frontend:${{ env.TAG }}/' /home/ubuntu/explorer-repos/docker-compose-deploy-action.yaml
+            docker-compose -f /home/ubuntu/explorer-repos/docker-compose-deploy-action.yaml --env-file /home/ubuntu/explorer-repos/.env up -d cardano-explorer-fe
+        env:
+          STAGE: ${{ github.event.inputs.stage }}
+          TAG: ${{ github.event.inputs.tag }}

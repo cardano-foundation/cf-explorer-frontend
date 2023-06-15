@@ -1,17 +1,19 @@
-import { Box, styled } from "@mui/material";
 import { useState } from "react";
+import { Box, styled } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { useScreen } from "~/commons/hooks/useScreen";
-import useFetch from "../../../../commons/hooks/useFetch";
-import useFetchList from "../../../../commons/hooks/useFetchList";
-import { AIconGreen } from "../../../../commons/resources";
-import { details } from "../../../../commons/routers";
-import { API } from "../../../../commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../../commons/utils/helper";
-import CustomIcon from "../../../commons/CustomIcon";
-import Table, { Column } from "../../../commons/Table";
+
+import { useScreen } from "src/commons/hooks/useScreen";
+import useFetch from "src/commons/hooks/useFetch";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { AIconGreen } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
+import CustomIcon from "src/components/commons/CustomIcon";
+import Table, { Column } from "src/components/commons/Table";
+
 import UserInfo from "./UserInfo";
-import { Amount, Status, StyledLink } from "./styles";
+import { Amount, Status, StyledBoxTransaction, StyledLink } from "./styles";
 
 const WalletActivity: React.FC = () => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
@@ -42,11 +44,11 @@ const WalletActivity: React.FC = () => {
       key: "outSum",
       minWidth: "100px",
       render: (r) => (
-        <Box display='flex' alignItems='center'>
+        <Box display="flex" alignItems="center">
           <Amount type={r.amount > 0 ? "up" : "down"}>
             {r.amount > 0 ? `+${formatADAFull(r.amount)}` : formatADAFull(r.amount)}
           </Amount>
-          <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
+          <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={(theme) => theme.palette.text.primary} />
         </Box>
       )
     },
@@ -70,7 +72,7 @@ const WalletActivity: React.FC = () => {
       title: "Transaction Type",
       key: "transactionCount",
       minWidth: "100px",
-      render: (r) => <Box>{trxType[r.type]}</Box>
+      render: (r) => <StyledBoxTransaction>{trxType[r.type]}</StyledBoxTransaction>
     },
     {
       title: "Status",
@@ -82,9 +84,10 @@ const WalletActivity: React.FC = () => {
   const maxHeightCalc = `calc(70vh - ${
     isTablet ? "290px" : isMobile ? (isGalaxyFoldSmall ? "270px" : "230px") : "208px"
   })`;
+
   return (
     <Box>
-      <UserInfo acitve='wallet' total={fetchData.total} reward={data?.totalStake || 0} stake={stakeId} />
+      <UserInfo acitve="wallet" total={fetchData.total} reward={data?.totalStake || 0} stake={stakeId} />
       <StyledTable
         {...fetchData}
         maxHeight={maxHeightCalc}

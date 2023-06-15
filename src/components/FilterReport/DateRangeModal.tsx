@@ -4,6 +4,7 @@ import { DesktopDatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import moment from "moment";
 import React, { useEffect, useMemo, useState } from "react";
+
 import StyledModal from "../commons/StyledModal";
 import { DatePickerFooter, DateRangePickerContainer } from "./styles";
 
@@ -27,13 +28,9 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
   useEffect(() => {
     const { value } = rest;
     if (value?.fromDate && value?.toDate) {
-      setValue({ fromDate: toLocal(value?.fromDate), toDate: toLocal(value?.toDate) });
+      setValue({ fromDate: value?.fromDate, toDate: value?.toDate });
     }
   }, [rest.value]);
-
-  const toLocal = (date?: string) => {
-    return date ? moment.utc(date, DATETIME_PARTTEN).local().format(DATETIME_PARTTEN) : undefined;
-  };
 
   const toMoment = (date?: string) => (date ? moment(date, DATETIME_PARTTEN) : null);
 
@@ -57,7 +54,7 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
             disableFuture
             onChange={(mDate) =>
               setValue((pre) => {
-                return { ...pre, fromDate: mDate?.format("YYYY/MM/DD HH:mm:ss") };
+                return { ...pre, fromDate: mDate?.startOf("D").format("YYYY/MM/DD HH:mm:ss") };
               })
             }
           />
@@ -65,14 +62,16 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
           <DesktopDatePicker
             value={toMoment(value?.toDate)}
             disableFuture
-            onChange={(mDate) => setValue((pre) => ({ ...pre, toDate: mDate?.format("YYYY/MM/DD 23:59:59") }))}
+            onChange={(mDate) =>
+              setValue((pre) => ({ ...pre, toDate: mDate?.endOf("D").format("YYYY/MM/DD HH:mm:ss") }))
+            }
           />
         </DateRangePickerContainer>
         <DatePickerFooter>
-          <Button disabled={isValid} variant='contained' onClick={onSubmit}>
+          <Button disabled={isValid} variant="contained" onClick={onSubmit}>
             OK
           </Button>
-          <Button variant='outlined' onClick={() => onClose?.()}>
+          <Button variant="outlined" onClick={() => onClose?.()}>
             Cancel
           </Button>
         </DatePickerFooter>

@@ -1,18 +1,17 @@
-import { Box, styled } from "@mui/material";
 import { useState, useEffect } from "react";
-import Table, { Column } from "../../commons/Table";
-import { TextAmountReward } from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal/styles";
-import CustomIcon from "../../commons/CustomIcon";
-import { AIconGreen } from "../../../commons/resources";
-import { formatADAFull } from "../../../commons/utils/helper";
-import { StyledLink } from "../../share/styled";
-
-import useFetchList from "../../../commons/hooks/useFetchList";
-import { API } from "../../../commons/utils/api";
+import { Box, styled } from "@mui/material";
 import { useParams } from "react-router-dom";
-import useFetch from "~/commons/hooks/useFetch";
-import { useUpdateEffect } from "react-use";
-import { details } from "~/commons/routers";
+
+import Table, { Column } from "src/components/commons/Table";
+import { TextAmountReward } from "src/components/StakingLifeCycle/DelegatorLifecycle/ADATransferModal/styles";
+import CustomIcon from "src/components/commons/CustomIcon";
+import { AIconGreen } from "src/commons/resources";
+import { formatADAFull } from "src/commons/utils/helper";
+import { StyledLink } from "src/components/share/styled";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { API } from "src/commons/utils/api";
+import useFetch from "src/commons/hooks/useFetch";
+import { details } from "src/commons/routers";
 
 const PoolSizeTab = () => {
   const { reportId = "" } = useParams<{ reportId: string }>();
@@ -30,9 +29,9 @@ const PoolSizeTab = () => {
       key: "size",
       minWidth: "100px",
       render: (r) => (
-        <Box display='flex' alignItems='center'>
+        <Box display="flex" alignItems="center">
           <TextAmountReward>{formatADAFull(r.size || 0)}</TextAmountReward>
-          <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
+          <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={(theme) => theme.palette.text.primary} />
         </Box>
       )
     },
@@ -41,9 +40,9 @@ const PoolSizeTab = () => {
       key: "fees",
       minWidth: "140px",
       render: (r) => (
-        <Box display='flex' alignItems='center'>
+        <Box display="flex" alignItems="center">
           <TextAmountReward>{formatADAFull(r.fee)}</TextAmountReward>
-          <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
+          <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={(theme) => theme.palette.text.primary} />
         </Box>
       )
     },

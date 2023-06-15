@@ -1,6 +1,8 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { routers, details } from "./commons/routers";
+
+import { routers } from "./commons/routers";
+import useAuth from "./commons/hooks/useAuth";
 import Home from "./pages/Home";
 import BlockList from "./pages/BlockList";
 import BlockDetail from "./pages/BlockDetail";
@@ -30,8 +32,6 @@ import PrivateNotes from "./pages/PrivateNotes";
 import ProtocolParameter from "./pages/ProtocolParameter";
 import DelegatorLifecycle from "./pages/DelegatorLifecycle";
 import SPOLifecycle from "./pages/SPOLifecycle";
-import SPOSearch from "./pages/SPOSearch";
-import DelegatorSearch from "./pages/DelegatorSearch";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -39,7 +39,6 @@ import ResetPassword from "./pages/ResetPassword";
 import StackingLifecycle from "./pages/StackingLifecycle";
 import ReportGenerated from "./pages/ReportGenerated";
 import VerifyEmail from "./pages/VerifyEmail";
-
 import ReportGeneratedStakingDetail from "./pages/ReportGeneratedStakingDetail";
 import ReportGeneratedPoolDetail from "./pages/ReportGeneratedPoolDetail";
 import StakingLifeCycleSearch from "./pages/StakingLifeCycleSearch";
@@ -74,28 +73,51 @@ const Routes: React.FC = () => {
       <Route path={routers.TOP_DELEGATOR} exact component={TopDelegators} />
       <Route path={routers.STAKING_LIFECYCLE} exact component={StackingLifecycle} />
       <Route path={routers.REPORT_GENERATED} exact component={ReportGenerated} />
-      <Route path={routers.REPORT_GENERATED_STAKING_DETAIL} exact component={ReportGeneratedStakingDetail} />
-      <Route path={routers.REPORT_GENERATED_POOL_DETAIL} exact component={ReportGeneratedPoolDetail} />
+      <PrivateRoute path={routers.REPORT_GENERATED_STAKING_DETAIL} exact component={ReportGeneratedStakingDetail} />
+      <PrivateRoute path={routers.REPORT_GENERATED_POOL_DETAIL} exact component={ReportGeneratedPoolDetail} />
       <Route path={routers.PROTOCOL_PARAMETER} exact component={ProtocolParameter} />
       <Route path={routers.SEARCH} exact component={SearchResult} />
       <Route path={routers.DELEGATOR_LIFECYCLE} exact component={DelegatorLifecycle} />
       <Route path={routers.SPO_LIFECYCLE} exact component={SPOLifecycle} />
-      <Route path={routers.SPO_SEARCH} exact component={SPOSearch} />
-      <Route path={routers.DELEGATOR_SEARCH} exact component={DelegatorSearch} />
       <Route path={routers.STAKING_LIFECYCLE_SEARCH} exact component={StakingLifeCycleSearch} />
-      <Route path={routers.ACCOUNT}>
-        <AccountLayout>
-          <Switch>
-            <Route path={routers.ACCOUNT} exact component={() => <Redirect to={routers.MY_PROFILE} />} />
-            <Route path={routers.MY_PROFILE} exact component={MyProfile} />
-            <Route path={routers.BOOKMARK} exact component={Bookmark} />
-            <Route path={routers.PRIVATE_NOTES} exact component={PrivateNotes} />
-            <Route path={routers.NOT_FOUND} component={NotFound} />
-          </Switch>
-        </AccountLayout>
-      </Route>
+      <AccountLayout>
+        <Switch>
+          <PrivateRoute path={routers.ACCOUNT} exact component={() => <Redirect to={routers.MY_PROFILE} />} />
+          <PrivateRoute path={routers.MY_PROFILE} exact component={MyProfile} />
+          <PrivateRoute path={routers.BOOKMARK} exact component={Bookmark} />
+          <PrivateRoute path={routers.PRIVATE_NOTES} exact component={PrivateNotes} />
+          <PrivateRoute path={routers.NOT_FOUND} component={NotFound} />
+        </Switch>
+      </AccountLayout>
       <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
+  );
+};
+
+interface PrivateRouteProps {
+  component: React.ComponentType<any>;
+  path: string;
+  exact?: boolean;
+}
+
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...rest }) => {
+  const { isLoggedIn } = useAuth();
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        isLoggedIn ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/",
+              state: { from: props.location }
+            }}
+          />
+        )
+      }
+    />
   );
 };
 

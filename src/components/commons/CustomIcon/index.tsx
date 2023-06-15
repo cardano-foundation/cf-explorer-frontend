@@ -40,7 +40,7 @@ interface DefaultProps extends BoxProps {
 type Props = DefaultProps & Required<{ width: number } | { height: number }>;
 
 const CustomIcon: React.FC<Props> = React.forwardRef((props: Props, boxRef) => {
-  const { id, icon, width, height, originWidth, originHeight, fill, stroke, ...otherProps } = props;
+  const { icon, width, height, originWidth, originHeight, fill, stroke, ...otherProps } = props;
   const ref = useRef<SVGSVGElement | null>(null);
   const [svgWidth, setSvgWidth] = useState<number | undefined>(originWidth);
   const [svgHeight, setSvgWheight] = useState<number | undefined>(originHeight);

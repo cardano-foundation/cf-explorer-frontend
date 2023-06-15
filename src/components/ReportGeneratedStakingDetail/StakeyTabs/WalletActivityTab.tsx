@@ -1,31 +1,16 @@
-import { Box, styled } from "@mui/material";
 import { useState } from "react";
-import Table, { Column } from "../../commons/Table";
-import { Amount, Status, TextAmountReward } from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal/styles";
-import CustomIcon from "../../commons/CustomIcon";
-import { ADAsigntIC, AIconGreen } from "../../../commons/resources";
-import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../commons/utils/helper";
-import { StyledLink } from "../../share/styled";
-import { details } from "../../../commons/routers";
-
-import useFetchList from "../../../commons/hooks/useFetchList";
-import { API } from "../../../commons/utils/api";
+import { Box, styled } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { ADAValueLabel } from "../../StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
 
-const trxType = {
-  SENT: "ADA sent from wallet",
-  RECEIVED: "ADA received",
-  FEE_PAID: "Transaction fee paid",
-  CERTIFICATE_FEE_PAID: "Certificate fee paid",
-  CERTIFICATE_DEPOSIT_PAID: "Certificate deposit paid",
-  CERTIFICATE_HOLD_PAID: "Certificate hold paid",
-  CERTIFICATE_HOLD_DEPOSIT_REFUNDED: "Certificate hold deposit refunded",
-  REWARD_WITHDRAWN: "Reward withdrawn",
-  REWARD_WITHDRAWN_AND_CERTIFICATE_HOLD_PAID: "Reward withdrawn and certificate hold paid",
-  REWARD_WITHDRAWN_AND_CERTIFICATE_HOLD_DEPOSIT_REFUNDED: "Reward withrawn and cetificate hod deposit refunded",
-  UNKNOWN: "Unknown"
-};
+import Table, { Column } from "src/components/commons/Table";
+import { Amount, Status } from "src/components/StakingLifeCycle/DelegatorLifecycle/ADATransferModal/styles";
+import CustomIcon from "src/components/commons/CustomIcon";
+import { AIconGreen } from "src/commons/resources";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
+import { StyledLink } from "src/components/share/styled";
+import { details } from "src/commons/routers";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { API } from "src/commons/utils/api";
 
 const WalletActitityTab = () => {
   const [sort, setSort] = useState<string>("");
@@ -41,12 +26,12 @@ const WalletActitityTab = () => {
       key: "outSum",
       minWidth: "100px",
       render: (r) => (
-        <Box display='flex' alignItems='center'>
+        <Box display="flex" alignItems="center">
           <Amount type={r.amount > 0 ? "up" : "down"}>
             {r.amount > 0 ? "+" : ""}
             {formatADAFull(r.amount)}
           </Amount>
-          <CustomIcon icon={AIconGreen} height={15} fill='currentColor' color={(theme) => theme.palette.text.primary} />
+          <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={(theme) => theme.palette.text.primary} />
         </Box>
       )
     },
@@ -60,28 +45,10 @@ const WalletActitityTab = () => {
       }
     },
     {
-      title: "Fees Paid",
-      key: "fees",
-      render(r) {
-        return (
-          <ADAValueLabel>
-            {formatADAFull(r.fee)} <CustomIcon icon={ADAsigntIC} width={12} />
-          </ADAValueLabel>
-        );
-      }
-    },
-    {
       title: "Transaction Hash",
       key: "transactionHash",
       minWidth: "100px",
       render: (r) => <StyledLink to={details.transaction(r.txHash || "")}>{getShortHash(r.txHash)}</StyledLink>
-    },
-
-    {
-      title: "Transaction Type",
-      key: "transactionCount",
-      minWidth: "100px",
-      render: (r) => <Box>{trxType[r.type]}</Box>
     },
     {
       title: "Status",
@@ -94,7 +61,7 @@ const WalletActitityTab = () => {
     <Box mt={2}>
       <StyledTable
         {...fetchData}
-        tableTitle=''
+        tableTitle=""
         columns={columns}
         total={{ title: "Total Epochs", count: fetchData.total }}
         pagination={{

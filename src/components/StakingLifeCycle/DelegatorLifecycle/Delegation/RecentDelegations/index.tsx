@@ -1,17 +1,18 @@
 import { Box, Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import useFetchList from "../../../../../commons/hooks/useFetchList";
-import { API } from "../../../../../commons/utils/api";
-import StackingFilter, { FilterParams } from "../../../../StackingFilter";
-import OverviewStaking from "../../../../commons/OverviewStaking";
-import { GridBox, StyledContainer, StyledList, WrapFilterDescription } from "./styles";
-
-import { EmptyRecord, FooterTable } from "../../../../commons/Table";
-import { DescriptionText } from "../../styles";
-import { details } from "../../../../../commons/routers";
 import { useUpdateEffect } from "react-use";
 import { useSelector } from "react-redux";
+
+import useFetchList from "src/commons/hooks/useFetchList";
+import { API } from "src/commons/utils/api";
+import StackingFilter, { FilterParams } from "src/components/StackingFilter";
+import OverviewStaking from "src/components/commons/OverviewStaking";
+import { EmptyRecord, FooterTable } from "src/components/commons/Table";
+import { details } from "src/commons/routers";
+
+import { DescriptionText } from "../../styles";
+import { GridBox, StyledContainer, StyledList, WrapFilterDescription } from "./styles";
 
 interface Props {
   onSelect: (delegation: DelegationItem | null) => void;
@@ -92,7 +93,7 @@ const RecentDelegations: React.FC<Props> = ({ onSelect, params, setParams, setSh
       <GridBox sidebar={+sidebar}>
         {loading &&
           [...new Array(12)].map((i, ii) => (
-            <Skeleton key={ii} style={{ borderRadius: 12 }} variant='rectangular' width={300} height={185} />
+            <Skeleton key={ii} style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
           ))}
         {!loading &&
           data.map((item) => {
@@ -120,7 +121,7 @@ const RecentDelegations: React.FC<Props> = ({ onSelect, params, setParams, setSh
             ...pageInfo,
             onChange: (page, size) => setPageInfo((pre) => ({ ...pre, page: page - 1, size }))
           }}
-          loading={loading || false}
+          loading={loading}
         />
       )}
     </StyledContainer>

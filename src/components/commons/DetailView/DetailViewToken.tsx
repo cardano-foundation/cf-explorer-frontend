@@ -3,9 +3,16 @@ import { Box } from "@mui/material";
 import React, { useEffect } from "react";
 import { BiChevronRight } from "react-icons/bi";
 import { CgClose } from "react-icons/cg";
-import { PeopleIcon, PolicyWhiteIcon, TransactionIcon, UnionTokenIcon } from "~/commons/resources";
-import { details } from "~/commons/routers";
-import { formatDateTimeLocal, formatNumberDivByDecimals, getShortWallet, numberWithCommas } from "~/commons/utils/helper";
+
+import { PeopleIcon, PolicyWhiteIcon, TransactionIcon, UnionTokenIcon } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import {
+  formatDateTimeLocal,
+  formatNumberDivByDecimals,
+  getShortWallet,
+  numberWithCommas
+} from "src/commons/utils/helper";
+
 import CopyButton from "../CopyButton";
 import CustomTooltip from "../CustomTooltip";
 import ViewAllButton from "../ViewAllButton";
@@ -68,10 +75,10 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
 
   if (!data)
     return (
-      <ViewDetailDrawer anchor='right' open={!!tokenId} hideBackdrop variant='permanent'>
+      <ViewDetailDrawer anchor="right" open={!!tokenId} hideBackdrop variant="permanent">
         <ViewDetailHeader>
-          <ViewAllButton tooltipTitle='View Detail' to={details.token(tokenId)} />
-          <CustomTooltip title='Close'>
+          <ViewAllButton tooltipTitle="View Detail" to={details.token(tokenId)} />
+          <CustomTooltip title="Close">
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
@@ -81,24 +88,24 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
           <ViewDetailScroll>
             <TokenContainer>
               <TokenHeaderContainer>
-                <IconSkeleton variant='circular' />
-                <DetailValueSkeleton variant='rectangular' />
+                <IconSkeleton variant="circular" />
+                <DetailValueSkeleton variant="rectangular" />
               </TokenHeaderContainer>
               <TokenMetaData>
                 <TokenInfo>
-                  <DetailValueSkeleton variant='rectangular' />
-                  <IconSkeleton variant='circular' />
+                  <DetailValueSkeleton variant="rectangular" />
+                  <IconSkeleton variant="circular" />
                 </TokenInfo>
                 <MetaData />
               </TokenMetaData>
               <TokenHeaderInfo>
                 <TokenTotalSupply>
-                  <DetailValueSkeleton variant='rectangular' />
-                  <DetailValueSkeleton variant='rectangular' />
+                  <DetailValueSkeleton variant="rectangular" />
+                  <DetailValueSkeleton variant="rectangular" />
                 </TokenTotalSupply>
                 <TokenDecimal>
-                  <DetailValueSkeleton variant='rectangular' />
-                  <DetailValueSkeleton variant='rectangular' />
+                  <DetailValueSkeleton variant="rectangular" />
+                  <DetailValueSkeleton variant="rectangular" />
                 </TokenDecimal>
               </TokenHeaderInfo>
             </TokenContainer>
@@ -107,10 +114,10 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                 return (
                   <DetailsInfoItem key={index}>
                     <DetailLabel>
-                      <DetailValueSkeleton variant='rectangular' />
+                      <DetailValueSkeleton variant="rectangular" />
                     </DetailLabel>
                     <DetailValue>
-                      <DetailLabelSkeleton variant='rectangular' />
+                      <DetailLabelSkeleton variant="rectangular" />
                     </DetailValue>
                   </DetailsInfoItem>
                 );
@@ -121,10 +128,10 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                 <Group key={index}>
                   <DetailsInfoItem>
                     <DetailLabel>
-                      <DetailValueSkeleton variant='rectangular' />
+                      <DetailValueSkeleton variant="rectangular" />
                     </DetailLabel>
                     <DetailValue>
-                      <DetailLabelSkeleton variant='rectangular' />
+                      <DetailLabelSkeleton variant="rectangular" />
                     </DetailValue>
                   </DetailsInfoItem>
                 </Group>
@@ -137,10 +144,10 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
     );
 
   return (
-    <ViewDetailDrawer anchor='right' open={!!tokenId} hideBackdrop variant='permanent'>
+    <ViewDetailDrawer anchor="right" open={!!tokenId} hideBackdrop variant="permanent">
       <ViewDetailHeader>
-        <ViewAllButton tooltipTitle='View Detail' to={details.token(tokenId)} />
-        <CustomTooltip title='Close'>
+        <ViewAllButton tooltipTitle="View Detail" to={details.token(tokenId)} />
+        <CustomTooltip title="Close">
           <CloseButton onClick={handleClose}>
             <CgClose />
           </CloseButton>
@@ -151,7 +158,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
           <TokenContainer>
             <TokenHeaderContainer>
               <TokenHeader>
-                <TokenTitleIcon src={PolicyWhiteIcon} alt='policy' />
+                <TokenTitleIcon src={PolicyWhiteIcon} alt="policy" />
                 <TokenTitle>Policy Script</TokenTitle>
               </TokenHeader>
             </TokenHeaderContainer>
@@ -168,7 +175,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                     )}
                   </TokenName>
                   {data?.metadata?.logo ? (
-                    <TokenIcon src={`data:/image/png;base64,${data.metadata?.logo}`} alt='token logo' />
+                    <TokenIcon src={`data:/image/png;base64,${data.metadata?.logo}`} alt="token logo" />
                   ) : (
                     ""
                   )}
@@ -183,7 +190,9 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
             <TokenHeaderInfo>
               <TokenTotalSupply>
                 <TokenInfoLabel>Total Supply</TokenInfoLabel>
-                <TokenInfoValue>{formatNumberDivByDecimals(data?.supply, data?.metadata?.decimals)}</TokenInfoValue>
+                <TokenInfoValue>
+                  {formatNumberDivByDecimals(data?.supply, data?.decimals || data?.metadata?.decimals || 0)}
+                </TokenInfoValue>
               </TokenTotalSupply>
               <TokenDecimal>
                 <TokenInfoLabel>Decimal</TokenInfoLabel>
@@ -192,6 +201,15 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
             </TokenHeaderInfo>
           </TokenContainer>
           <Group>
+            <DetailsInfoItem>
+              <DetailLabel>Policy ID</DetailLabel>
+              <DetailValue>
+                <CustomTooltip title={data.policy}>
+                  <StyledLink to={details.policyDetail(data.policy)}>{getShortWallet(data.policy || "")}</StyledLink>
+                </CustomTooltip>
+                <CopyButton text={data.policy} />
+              </DetailValue>
+            </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Token ID</DetailLabel>
               <DetailValue>
@@ -215,7 +233,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                     )}
                   </TokenDetailName>
                   {data.metadata?.logo ? (
-                    <TokenDetailIcon src={`data:/image/png;base64,${data.metadata?.logo}`} alt='token logo' />
+                    <TokenDetailIcon src={`data:/image/png;base64,${data.metadata?.logo}`} alt="token logo" />
                   ) : (
                     ""
                   )}

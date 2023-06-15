@@ -34,8 +34,6 @@ export const routers = {
   BOOKMARK: "/account/bookmark",
   PRIVATE_NOTES: "/account/notes",
   PROTOCOL_PARAMETER: "/protocol-parameters",
-  SPO_SEARCH: "/spo-lifecycle",
-  DELEGATOR_SEARCH: "/delegator-lifecycle",
   DELEGATOR_LIFECYCLE: "/delegator-lifecycle/:stakeId/:mode?/:tab?/:txHash?",
   SPO_LIFECYCLE: "/spo-lifecycle/:poolId/:mode?/:tab?/:txHash?",
   STAKING_LIFECYCLE: "/stacking-lifecycle",

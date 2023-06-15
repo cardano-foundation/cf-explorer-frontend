@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import React from "react";
-import { Option } from "~/components/commons/Filter";
+
+import { Option } from "src/components/commons/Filter";
 
 export interface ColumnType {
   [key: string | number | symbol]: any;

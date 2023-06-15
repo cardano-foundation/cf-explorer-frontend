@@ -1,5 +1,6 @@
 import { Box, Typography, styled } from "@mui/material";
-import { AdaLogoIcon } from "~/components/commons/ADAIcon";
+
+import { AdaLogoIcon } from "src/components/commons/ADAIcon";
 
 export const DrawContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
   display: "flex",

@@ -1,6 +1,8 @@
 import { Box, BoxProps, Grid, Icon } from "@mui/material";
 import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import {
   BgBlue,
   BgCardWhite,
@@ -11,8 +13,13 @@ import {
   ReewardAvalible,
   StatusIC,
   WalletGreenIcon
-} from "../../../../../commons/resources";
-import { formatADAFull, getShortWallet } from "../../../../../commons/utils/helper";
+} from "src/commons/resources";
+import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
+import { details } from "src/commons/routers";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+
+import PoolDetailContext from "../../PoolDetailContext";
 import {
   CardOverview,
   CardTitle,
@@ -22,12 +29,9 @@ import {
   StyledBox,
   ViewMoreButton,
   WrapIcon,
+  WrapStatus,
   WrapWalletIcon
 } from "./styles";
-import ViewMoreAddressModal from "../../../../ViewMoreAddressModal";
-import { details } from "../../../../../commons/routers";
-import PoolDetailContext from "../../PoolDetailContext";
-import { useSelector } from "react-redux";
 
 export const GreenWalletIcon = (props: BoxProps) => {
   return (
@@ -44,7 +48,7 @@ export interface OverviewCardProps {
 const STATUS = {
   ACTIVE: ["Active", "rgb(0,128,0)"],
   INACTIVE: ["Inactive", "rgb(255,0,0)"],
-  RETIRING: ["Retiring ", "rgb(255,153,0)"]
+  RETIRING: ["Retiring", "rgb(255,153,0)"]
 };
 
 type TGridItem = {
@@ -69,7 +73,7 @@ const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
         <Icon component={bg} />
         <StyledBox>
           <WrapIcon>{mainIcon}</WrapIcon>
-          <Box textAlign='start'>
+          <Box textAlign="start">
             <CardTitle>{title}</CardTitle>
             {value}
           </Box>
@@ -82,63 +86,71 @@ const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
 
 const TabularOverview: React.FC = () => {
   const data = useContext(PoolDetailContext);
+  const { stakeKeys, poolSize, epochNo, status, rewardAvailable } = data ?? {};
   const [open, setOpen] = useState(false);
   const history = useHistory();
   const onOwnerItemClick = (key: string) => {
     return history.push(`/stake/${key}/delegation`);
   };
+
+  const ownerAccountValue = getShortWallet(stakeKeys?.[0]);
   return (
     <Box>
       <Grid container spacing={2}>
         <GridItem
-          title='Pool Size'
-          bgType='white'
+          title="Pool Size"
+          bgType="white"
           mainIcon={<PoolsizeIcon />}
           value={
-            <Box display='flex' alignItems='center'>
-              <CardValue>{formatADAFull(data?.poolSize)} ₳</CardValue>
+            <Box display="flex" alignItems="center">
+              <CardValue>{formatADAFull(poolSize)} ₳</CardValue>
             </Box>
           }
         />
         <GridItem
-          title='Status'
-          bgType='white'
+          title="Status"
+          bgType="white"
           mainIcon={<StatusIC />}
           value={
-            <Box display='flex' alignItems='center' flexWrap={"wrap"}>
-              <CardValue color={STATUS[data?.status ?? "ACTIVE"][1]}>{STATUS[data?.status ?? "ACTIVE"][0]} :</CardValue>
-              <ClickAbleLink to={details.epoch(data?.epochNo)}>&nbsp; Epoch {data?.epochNo}</ClickAbleLink>
-            </Box>
+            <WrapStatus>
+              <CardValue
+                sx={{
+                  whiteSpace: "pre"
+                }}
+                color={STATUS[status ?? "ACTIVE"][1]}
+              >
+                {STATUS[status ?? "ACTIVE"][0] + ": "}
+              </CardValue>
+              <ClickAbleLink to={details.epoch(epochNo)}>Epoch {epochNo}</ClickAbleLink>
+            </WrapStatus>
           }
         />
         <GridItem
-          title='Rewards Available'
-          bgType='white'
+          title="Rewards Available"
+          bgType="white"
           mainIcon={<ReewardAvalible />}
           value={
-            <Box display='flex' alignItems='center'>
-              <CardValue>{formatADAFull(data?.rewardAvailable)} ₳</CardValue>
+            <Box display="flex" alignItems="center">
+              <CardValue>{formatADAFull(rewardAvailable)} ₳</CardValue>
             </Box>
           }
         />
         <GridItem
-          title='Owner Account'
-          bgType='white'
+          title="Owner Account"
+          bgType="white"
           mainIcon={<OwnerAccIC />}
           value={
-            <Box display='flex' alignItems='center'>
+            <Box display="flex" alignItems="center">
               <CardValue>
-                <ClickAbleLink
-                  to={details.stake((data?.stakeKeys && data?.stakeKeys.length && data.stakeKeys[0]) || "#")}
-                >
-                  {data?.stakeKeys && data?.stakeKeys.length && getShortWallet(data.stakeKeys[0])}
-                </ClickAbleLink>
+                <CustomTooltip title={stakeKeys?.[0]}>
+                  <ClickAbleLink to={details.stake(stakeKeys?.[0] || "#")}>{ownerAccountValue}</ClickAbleLink>
+                </CustomTooltip>
               </CardValue>
             </Box>
           }
           action={
-            data?.stakeKeys &&
-            data?.stakeKeys.length > 1 && (
+            stakeKeys &&
+            stakeKeys.length > 1 && (
               <ViewMoreButton onClick={() => setOpen(true)}>
                 <DotsIcon />
               </ViewMoreButton>
@@ -149,9 +161,9 @@ const TabularOverview: React.FC = () => {
       <ViewMoreAddressModal
         showFullHash={true}
         onItemClick={onOwnerItemClick}
-        title='Owner Account'
+        title="Owner Account"
         open={open}
-        items={data?.stakeKeys}
+        items={stakeKeys}
         onClose={() => setOpen(false)}
       />
     </Box>

@@ -1,7 +1,9 @@
-import { render, screen } from "@testing-library/react";
-import PoollUpdatesList from ".";
-
+import { screen } from "@testing-library/react";
 import Router from "react-router";
+
+import { render } from "src/test-utils";
+
+import PoollUpdatesList from ".";
 
 describe("Pool Updates", () => {
   it("should render SPO PoollUpdatesList coponents", async () => {
@@ -22,8 +24,7 @@ describe("Pool Updates", () => {
     }));
     render(<PoollUpdatesList onSelect={jest.fn()} />);
     expect(screen.getByText("Recent Updates")).toBeInTheDocument();
-
     const elm = screen.getByTestId("showing");
-    expect(elm).toHaveTextContent("Showing 0 results");
+    expect(elm).toHaveTextContent("Showing 0 result");
   });
 });

@@ -1,6 +1,31 @@
-import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
+import { Box } from "@mui/material";
+import { useHistory, useParams } from "react-router";
 
+import { useScreen } from "src/commons/hooks/useScreen";
+import { ListTabResponseSPO } from "src/pages/SPOLifecycle";
+import {
+  DeredistrationIcon,
+  InfoIcon,
+  NextIcon,
+  OperatorRewardIcon,
+  PoolUpdateIcon,
+  PreviousIcon,
+  RegistrationIcon
+} from "src/commons/resources";
+import { details } from "src/commons/routers";
+
+import {
+  DeregistrationSPOProcessDescription,
+  RegistrationSPOProcessDescription,
+  SPOInvolvementInDelegationDescription,
+  OperatorRewards
+} from "../../ModalDescription";
+import { ButtonText } from "../DelegatorLifecycle/styles";
+import Deregistration from "./Deregistration";
+import OperatorReward from "./OperatorRewards";
+import Registration from "./Registration";
+import PoollUpdates from "./PoolUpdates";
 import {
   NextButton,
   PreviousButton,
@@ -13,30 +38,6 @@ import {
   WrapTitle
 } from "./styles";
 
-import { useHistory, useParams } from "react-router";
-import { useScreen } from "../../../commons/hooks/useScreen";
-import {
-  DeredistrationIcon,
-  InfoIcon,
-  NextIcon,
-  OperatorRewardIcon,
-  PoolUpdateIcon,
-  PreviousIcon,
-  RegistrationIcon
-} from "../../../commons/resources";
-import { details } from "../../../commons/routers";
-import {
-  DeregistrationSPOProcessDescription,
-  RegistrationSPOProcessDescription,
-  SPOInvolvementInDelegationDescription,
-  OperatorRewards
-} from "../../ModalDescription";
-import { ButtonText } from "../DelegatorLifecycle/styles";
-import Deregistration from "./Deregistration";
-import OperatorReward from "./OperatorRewards";
-import Registration from "./Registration";
-import PoollUpdates from "./PoolUpdates";
-import { ListTabResponseSPO } from "~/pages/SPOLifecycle";
 interface StepperProps {
   icon: React.ReactNode;
   title: string;
@@ -110,6 +111,10 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
     }
   ];
 
+  useEffect(() => {
+    document.getElementById(`step-${currentStep}`)?.scrollIntoView();
+  }, [currentStep]);
+
   if (!renderTabsSPO) return null;
 
   return (
@@ -117,6 +122,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       <Box display={"flex"} justifyContent={"space-between"}>
         {stepper.map((step, idx) => (
           <Step
+            id={`step-${idx}`}
             component={"span"}
             key={idx}
             active={+(currentStep === idx)}
@@ -125,7 +131,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
             <StepButton
               active={+(currentStep === idx)}
               onClick={() => {
-                history.push(details.spo(poolId, "timeline", step.key));
+                history.replace(details.spo(poolId, "timeline", step.key));
                 setCurrentStep(idx);
               }}
             >
@@ -151,7 +157,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
         {currentStep > 0 && (
           <PreviousButton
             onClick={() => {
-              history.push(details.spo(poolId, "timeline", stepper[currentStep - 1]?.key));
+              history.replace(details.spo(poolId, "timeline", stepper[currentStep - 1]?.key));
               setCurrentStep(currentStep - 1);
             }}
           >
@@ -166,11 +172,11 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
             if (currentStep === stepper.length - 1) {
               history.push(details.spo(poolId, "tabular"));
             } else {
-              history.push(details.spo(poolId, "timeline", stepper[currentStep + 1]?.key));
+              history.replace(details.spo(poolId, "timeline", stepper[currentStep + 1]?.key));
               setCurrentStep(currentStep + 1);
             }
           }}
-          variant='contained'
+          variant="contained"
         >
           <ButtonText>
             Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}

@@ -1,15 +1,16 @@
 import { useMemo, useRef } from "react";
 import { useSelector } from "react-redux";
-import { ADADisnableIcon, ADAOrangeIcon } from "~/commons/resources";
-import CardanoSystem from "~/components/commons/CardanoSystem";
-import DrawPath from "~/components/commons/DrawPath";
-import { LineArrowItem } from "~/components/commons/LineArrow";
+
+import { ADADisnableIcon, ADAOrangeIcon } from "src/commons/resources";
+import CardanoSystem from "src/components/commons/CardanoSystem";
+import DrawPath from "src/components/commons/DrawPath";
+import { LineArrowItem } from "src/components/commons/LineArrow";
+import CustomIcon from "src/components/commons/CustomIcon";
+
+import { AdaAmountWrapper, AdaBox, DrawContainer, HolderWrapper } from "./styles";
 import ADAHolderRect from "./ADAHolderRect";
 import ADAOperatorRewardRect from "./ADAOperatorRewardRect";
 import RewardAccountBox from "./RewardAccountBox";
-import { AdaAmountWrapper, AdaBox, DrawContainer, HolderWrapper } from "./styles";
-import CustomIcon from "~/components/commons/CustomIcon";
-
 export interface IRewarsDistributionDrawProps {
   data?: IStakeKeyDetail | null;
   toggleRewardModal: () => void;
@@ -31,7 +32,7 @@ const RewarsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({ data, 
         startPosition: { 0: ["right", "bottom"], sm: ["center", "middle"] },
         end: adaAmountFirstRef,
         endPosition: { 0: ["center", "middle"] },
-        startOffset: { 0: [0, -45], sm: [0, 0] },
+        startOffset: { 0: [0, -50], sm: [0, 0] },
         autoAlign: { 0: "end-vertical", lg: "end-horizontal" }
       },
       {
@@ -39,7 +40,7 @@ const RewarsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({ data, 
         startPosition: { 0: ["left", "bottom"], sm: ["right", "middle"] },
         end: adaAmountSecondRef,
         endPosition: { 0: ["center", "middle"] },
-        startOffset: { 0: [0, -45], sm: [0, -15], lg: [-15, 0] },
+        startOffset: { 0: [0, -50], sm: [0, -15], lg: [-15, 0] },
         autoAlign: { 0: "end-vertical", lg: "end-horizontal" },
         dashed: !isRewardPool
       },
@@ -48,7 +49,7 @@ const RewarsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({ data, 
         end: holderRef,
         startPosition: { 0: ["center", "middle"] },
         endPosition: { 0: ["right", "top"], lg: ["left", "middle"] },
-        endOffset: { sm: [0, 20], lg: [35, 0] },
+        endOffset: { sm: [0, 0], lg: [35, 0] },
         arrow: { 0: "top", lg: "left" },
         autoAlign: { 0: "start-vertical", lg: "start-horizontal" }
       },
@@ -58,7 +59,7 @@ const RewarsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({ data, 
         startPosition: { 0: ["center", "middle"] },
         endPosition: { 0: ["left", "top"], lg: ["left", "middle"] },
         startOffset: { 0: [0, 20], sm: [0, 40], lg: [20, 0] },
-        endOffset: { sm: [0, 20], lg: [35, 0] },
+        endOffset: { sm: [0, 0], lg: [35, 0] },
         arrow: { 0: "top", lg: "left" },
         autoAlign: { 0: "start-vertical", lg: "start-horizontal" },
         dashed: !isRewardPool

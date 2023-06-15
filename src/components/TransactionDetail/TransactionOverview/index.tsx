@@ -1,27 +1,30 @@
 import React, { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import DetailHeader from "../../commons/DetailHeader";
-import { formatADAFull, formatDateTimeLocal, getShortWallet } from "../../../commons/utils/helper";
-import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "../../../commons/utils/constants";
 import { Box, IconButton, useTheme } from "@mui/material";
-import { ConfirmStatus, MaxSlot, StyledLink, TitleCard } from "./styles";
-import infoIcon from "../../../commons/resources/images/infoIcon.svg";
-import timeIcon from "../../../commons/resources/icons/time.svg";
-import exchageAltIcon from "../../../commons/resources/icons/exchangeArrow.svg";
-import txConfirm from "../../../commons/resources/icons/txConfirm.svg";
-import totalOutput from "../../../commons/resources/icons/totalOutput.svg";
-import cubeIcon from "../../../commons/resources/icons/blockIcon.svg";
-import slotIcon from "../../../commons/resources/icons/slot.svg";
-import txInputIcon from "../../../commons/resources/icons/txInput.svg";
-import txOutputIcon from "../../../commons/resources/icons/txOutput.svg";
-import CopyButton from "../../commons/CopyButton";
-import { details } from "../../../commons/routers";
-import DropdownDetail from "../../commons/DropdownDetail";
 import { BiShowAlt } from "react-icons/bi";
-import { RootState } from "../../../stores/types";
-import CustomTooltip from "../../commons/CustomTooltip";
-import ADAicon from "../../commons/ADAIcon";
-import { useScreen } from "../../../commons/hooks/useScreen";
+
+import {
+  timeIconUrl,
+  exchageAltIconUrl,
+  txConfirmUrl,
+  totalOutputUrl,
+  cubeIconUrl,
+  slotIconUrl,
+  txInputIconUrl,
+  txOutputIconUrl
+} from "src/commons/resources";
+import { formatADAFull, formatDateTimeLocal, getShortWallet } from "src/commons/utils/helper";
+import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import { details } from "src/commons/routers";
+import { RootState } from "src/stores/types";
+import { useScreen } from "src/commons/hooks/useScreen";
+import DetailHeader from "src/components/commons/DetailHeader";
+import CopyButton from "src/components/commons/CopyButton";
+import DropdownDetail from "src/components/commons/DropdownDetail";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import ADAicon from "src/components/commons/ADAIcon";
+
+import { ConfirmStatus, MaxSlot, StyledLink, TitleCard } from "./styles";
 
 interface Props {
   data: Transaction | null;
@@ -76,9 +79,9 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
 
   const listOverview = [
     {
-      icon: txInputIcon,
+      icon: txInputIconUrl,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1} height={24}>
             Input{" "}
             {data?.utxOs && data?.utxOs?.inputs?.length > 1 && (
@@ -106,7 +109,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
           {openListInput && (
             <DropdownDetail
               minWidth={isMobile ? 160 : 200}
-              title='Address list'
+              title="Address list"
               value={data?.utxOs?.inputs.map((i) => i.address) || []}
               close={() => setOpenListInput(false)}
             />
@@ -119,9 +122,9 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       key: "input"
     },
     {
-      icon: txOutputIcon,
+      icon: txOutputIconUrl,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1} height={24}>
             Output{" "}
             {data?.utxOs && data?.utxOs?.outputs?.length > 1 && (
@@ -149,7 +152,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
           {openListOutput && (
             <DropdownDetail
               minWidth={isMobile ? 160 : 200}
-              title='Address list'
+              title="Address list"
               value={data?.utxOs?.outputs.map((i) => i.address) || []}
               close={() => setOpenListOutput(false)}
             />
@@ -161,18 +164,18 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       key: "output"
     },
     {
-      icon: timeIcon,
+      icon: timeIconUrl,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Time </TitleCard>
         </Box>
       ),
       value: formatDateTimeLocal(data?.tx?.time || "")
     },
     {
-      icon: txConfirm,
+      icon: txConfirmUrl,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Confirmation</TitleCard>
         </Box>
       ),
@@ -184,9 +187,9 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       )
     },
     {
-      icon: totalOutput,
+      icon: totalOutputUrl,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Total Output</TitleCard>
         </Box>
       ),
@@ -197,9 +200,9 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       )
     },
     {
-      icon: exchageAltIcon,
+      icon: exchageAltIconUrl,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Transaction Fees </TitleCard>
         </Box>
       ),
@@ -210,9 +213,9 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       )
     },
     {
-      icon: cubeIcon,
+      icon: cubeIconUrl,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard height={24} mr={1}>
             {" "}
             Block
@@ -222,9 +225,9 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       value: <StyledLink to={details.block(data?.tx?.blockNo || 0)}>{data?.tx?.blockNo || 0}</StyledLink>
     },
     {
-      icon: slotIcon,
+      icon: slotIconUrl,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard height={24} mr={1}>
             Slot
           </TitleCard>
@@ -239,7 +242,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
   ];
   return (
     <DetailHeader
-      type='TRANSACTION'
+      type="TRANSACTION"
       bookmarkData={data?.tx.hash || ""}
       title={"Transaction detail"}
       hash={data?.tx.hash}

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction, Store } from "@reduxjs/toolkit";
+
 import breakpoints from "../themes/breakpoints";
 import { SupportedWallets, ThemeType, UserDataType, UserStoreType } from "../types/user";
 

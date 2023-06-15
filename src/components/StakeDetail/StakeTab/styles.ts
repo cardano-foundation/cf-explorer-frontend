@@ -1,7 +1,6 @@
 import { TabList } from "@mui/lab";
 import { Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
-import breakpoints from "~/themes/breakpoints";
 
 export const TitleTab = styled(Box)<{ active?: boolean }>(({ active, theme }) => ({
   fontWeight: "bold",
@@ -27,11 +26,40 @@ export const StyledLink = styled(Link)`
   color: ${(props) => props.theme.palette.secondary.main}!important;
 `;
 
-export const StyledTabList = styled(TabList)`
-  & > div > div {
-    justify-content: space-between;
+export const StyledTabList = styled(TabList)(({ theme }) => ({
+  "& > div:nth-child(3)": {
+    "&::-webkit-scrollbar": {
+      height: "3px"
+    },
+    "&::-webkit-scrollbar-track": {
+      background: "transparent"
+    },
+    "&::-webkit-scrollbar-thumb": {
+      background: "transparent"
+    },
+    "&:hover": {
+      "&::-webkit-scrollbar-thumb": {
+        background: theme.palette.grey[300]
+      },
+      "&::-webkit-scrollbar-track": {
+        background: theme.palette.grey[100]
+      }
+    }
+  },
+  [theme.breakpoints.down("md")]: {
+    "& > div:nth-child(3)": {
+      "&::-webkit-scrollbar": {
+        height: "0px"
+      }
+    }
+  },
+  "& > div > div": {
+    justifyContent: "flex-start"
+  },
+  ".MuiTabScrollButton-root": {
+    display: "none"
   }
-`;
+}));
 
 export const WrapperTabList = styled(Box)(({ theme }) => ({
   borderBottom: `1px solid ${theme.palette.border.secondary}`

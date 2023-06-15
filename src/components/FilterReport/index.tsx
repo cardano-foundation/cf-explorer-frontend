@@ -1,6 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Option } from "../commons/Filter";
-import CustomIcon from "../commons/CustomIcon";
+import React, { useEffect, useState } from "react";
+import { ClickAwayListener, IconButton, MenuList, Button, Box } from "@mui/material";
+import moment from "moment";
+
 import {
   ArrowFromBottomIcon,
   ArrowFromTopIcon,
@@ -8,10 +9,10 @@ import {
   FilterIC,
   ResetIcon,
   SearchIcon
-} from "../../commons/resources";
+} from "src/commons/resources";
 
-import { ClickAwayListener, IconButton, ListItemIcon, MenuList } from "@mui/material";
-
+import { Option } from "../commons/Filter";
+import CustomIcon from "../commons/CustomIcon";
 import {
   FilterButton,
   FilterContainer,
@@ -24,9 +25,6 @@ import { StyledInput } from "../share/styled";
 import DateRangeModal, { DATETIME_PARTTEN } from "./DateRangeModal";
 import { AdditionContainer } from "./styles";
 import { StyledListItemIcon } from "../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
-import moment from "moment";
-import { Box } from "@mui/material";
-import { Button } from "@mui/material";
 
 interface StakingOption extends Option {
   addition?: React.FC<any>;
@@ -35,18 +33,18 @@ interface StakingOption extends Option {
 const filterOptions: StakingOption[] = [
   {
     label: "Latest - First",
-    icon: <CustomIcon icon={ArrowFromTopIcon} fill='currentColor' width={20} />,
+    icon: <CustomIcon icon={ArrowFromTopIcon} fill="currentColor" width={20} />,
     value: "latest"
   },
   {
     label: "First - Latest",
-    icon: <CustomIcon icon={ArrowFromBottomIcon} fill='currentColor' width={20} />,
+    icon: <CustomIcon icon={ArrowFromBottomIcon} fill="currentColor" width={20} />,
     value: "first"
   },
-  { label: "Date range", icon: <CustomIcon icon={CalenderIcon} fill='currentColor' width={20} />, value: "dateRange" },
+  { label: "Date range", icon: <CustomIcon icon={CalenderIcon} fill="currentColor" width={20} />, value: "dateRange" },
   {
     label: "Search report name",
-    icon: <CustomIcon icon={SearchIcon} stroke='currentColor' width={22} />,
+    icon: <CustomIcon icon={SearchIcon} stroke="currentColor" width={22} />,
     value: "search"
   }
 ];
@@ -79,7 +77,7 @@ const FilterReport: React.FC<StackingFilterProps> = ({ onFilterValueChange, filt
     setIsOpenSelectRange(false);
   };
   const onFilterButtonClick = () => setOpen((pre) => !pre);
-  const onOptionClick = (value: string, option: Option) => {
+  const onOptionClick = (value: string) => {
     switch (value) {
       case "latest": {
         onFilterValueChange?.({ sort: `${sortKey},DESC` });
@@ -106,7 +104,6 @@ const FilterReport: React.FC<StackingFilterProps> = ({ onFilterValueChange, filt
 
   useEffect(() => {
     setTextSearch(filterValue?.txHash ?? "");
-    console.timeLog(filterValue?.txHash);
   }, [filterValue?.txHash]);
   return (
     <ClickAwayListener onClickAway={onClickAway}>
@@ -119,7 +116,7 @@ const FilterReport: React.FC<StackingFilterProps> = ({ onFilterValueChange, filt
                 icon={FilterIC}
                 width={18}
                 color={(theme) => theme.palette.primary.main}
-                fill='currentColor'
+                fill="currentColor"
               />
             </FilterIconContainer>
           }
@@ -133,7 +130,7 @@ const FilterReport: React.FC<StackingFilterProps> = ({ onFilterValueChange, filt
                 <FilterMenuItem
                   active={+(option.value === selected)}
                   key={option.value}
-                  onClick={() => onOptionClick(option.value, option)}
+                  onClick={() => onOptionClick(option.value)}
                 >
                   <StyledListItemIcon>{option.icon}</StyledListItemIcon>
                   <FilterListItemText>{option.label}</FilterListItemText>
@@ -186,6 +183,7 @@ const FilterReport: React.FC<StackingFilterProps> = ({ onFilterValueChange, filt
                 onFilterValueChange?.({ fromDate: undefined, sort: undefined, toDate: undefined, txHash: undefined });
                 setOpen(false);
                 setSelected("");
+                setTextSearch("");
               }}
             >
               <Box mr={1}>Reset</Box>

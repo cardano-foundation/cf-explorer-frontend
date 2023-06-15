@@ -1,8 +1,15 @@
 import React, { useState } from "react";
-import { setOpenModal, setWallet } from "../../../stores/user";
-import { NETWORK, SUPPORTED_WALLETS } from "../../../commons/utils/constants";
 import { CircularProgress } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
+import { isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet";
+import { MdOutlineFileDownload } from "react-icons/md";
+
+import { setOpenModal, setWallet } from "src/stores/user";
+import { NETWORK, SUPPORTED_WALLETS } from "src/commons/utils/constants";
+import { SupportedWallets, Wallet } from "src/types/user";
+import useToast from "src/commons/hooks/useToast";
+import StorageUtils from "src/commons/utils/storage";
+
 import {
   CloseButton,
   ConnectOption,
@@ -14,13 +21,7 @@ import {
   WalletName,
   WrapContent
 } from "./style";
-import { SupportedWallets, Wallet } from "../../../types/user";
-import { isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet";
-import { MdOutlineFileDownload } from "react-icons/md";
-import useToast from "../../../commons/hooks/useToast";
 import StyledModal from "../StyledModal";
-import StorageUtils from "~/commons/utils/storage";
-import { boolean } from "yargs";
 
 interface IProps {
   connect: (name: string, onSuccess: () => void, onError: (error: Error) => void) => Promise<any>;
@@ -47,7 +48,7 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
         }, please switch to  ${NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()}!`
       );
     } else if (error.name === "WalletExtensionNotFoundError") {
-      //To Do
+      console.log(error);
     } else {
       toast.error("Something went wrong!");
     }
@@ -60,17 +61,7 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
   };
   const WrapContainer: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return isModal ? (
-      <StyledModal
-        open
-        title='Connect to a wallet'
-        handleCloseModal={
-          walletConnecting
-            ? () => {
-                //To Do
-              }
-            : handleClose
-        }
-      >
+      <StyledModal open title="Connect to a wallet" handleCloseModal={walletConnecting ? () => null : handleClose}>
         <WrapContent>{children}</WrapContent>
       </StyledModal>
     ) : (

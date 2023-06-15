@@ -1,17 +1,19 @@
 import { Box } from "@mui/material";
 import { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
-import { details } from "../../../commons/routers";
+
+import { details } from "src/commons/routers";
 import {
   formatADAFull,
   formatDateTimeLocal,
   formatPercent,
   getShortWallet,
   numberWithCommas
-} from "../../../commons/utils/helper";
-import CopyButton from "../../commons/CopyButton";
-import CustomTooltip from "../../commons/CustomTooltip";
-import Table, { Column } from "../../commons/Table";
+} from "src/commons/utils/helper";
+import CopyButton from "src/components/commons/CopyButton";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import Table, { Column } from "src/components/commons/Table";
+
 import { StyledLink } from "./styles";
 
 const DelegationEpochList = ({
@@ -30,7 +32,7 @@ const DelegationEpochList = ({
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
   const setQuery = (query: any) => {
-    history.push({ search: stringify(query) });
+    history.replace({ search: stringify(query) });
   };
   const columns: Column<DelegationEpoch>[] = [
     {
@@ -95,8 +97,7 @@ const DelegationStakingDelegatorsList = ({
   data,
   initialized,
   loading,
-  total,
-  scrollEffect
+  total
 }: {
   data: StakingDelegators[] | null;
   loading: boolean;
@@ -108,7 +109,7 @@ const DelegationStakingDelegatorsList = ({
   const query = parse(search.split("?")[1]);
   const history = useHistory();
   const setQuery = (query: any) => {
-    history.push({ search: stringify(query) });
+    history.replace({ search: stringify(query) });
   };
   const columns: Column<StakingDelegators>[] = [
     {

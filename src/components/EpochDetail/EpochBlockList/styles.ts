@@ -5,6 +5,9 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     padding: "0px 16px"
   },
+  [theme.breakpoints.up("sm")]: {
+    paddingTop: "10px"
+  },
   "& h2": {
     paddingLeft: "0px"
   }
@@ -14,7 +17,7 @@ export const StyledColorBlueDard = styled("span")`
   color: ${(props) => props.theme.palette.text.primary};
 `;
 
-export const FakedLink = styled("span")`
+export const EpochNo = styled("span")`
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.secondary.main};
 `;

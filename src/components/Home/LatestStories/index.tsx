@@ -1,12 +1,14 @@
 import moment from "moment";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { CalenderPaleIcon } from "~/commons/resources";
-import { details, routers } from "~/commons/routers";
-import Temp from "~/commons/resources/temp/Rectangle 31.png";
-import { Author, Detail, Header, Image, Item, ItemTitle, LatestStoriesContainer, Time, TimeIcon, Title } from "./style";
-import ViewAllButton from "~/components/commons/ViewAllButton";
 import { Box, Grid } from "@mui/material";
+
+import { CalenderPaleIcon } from "src/commons/resources";
+import { details, routers } from "src/commons/routers";
+import Temp from "src/commons/resources/temp/Rectangle 31.png";
+import ViewAllButton from "src/components/commons/ViewAllButton";
+
+import { Author, Detail, Header, Image, Item, ItemTitle, LatestStoriesContainer, Time, TimeIcon, Title } from "./style";
 
 const data: Story[] = [
   {
@@ -45,7 +47,7 @@ const LatestStories = () => {
     <LatestStoriesContainer>
       <Header>
         <Title>Latest Stories</Title>
-        <ViewAllButton to={routers.STORY_LIST} />
+        <ViewAllButton data-testid="view-all" to={routers.STORY_LIST} />
       </Header>
       <Grid container spacing={2}>
         {data.map(({ id, image, author, title, createdDate }) => {
@@ -60,8 +62,8 @@ const LatestStories = () => {
                       <ItemTitle>{title}</ItemTitle>
                     </Box>
                     <Time>
-                      <TimeIcon src={CalenderPaleIcon} alt='calender pale' />
-                      {moment(createdDate).format("MM/DD/YYYY")}
+                      <TimeIcon src={CalenderPaleIcon} alt="calender pale" />
+                      {moment(createdDate, "MM/DD/YYYY").format("MM/DD/YYYY")}
                     </Time>
                   </Detail>
                 </Item>
