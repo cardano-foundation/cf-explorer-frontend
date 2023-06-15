@@ -1,9 +1,11 @@
-import { Box, FormGroup } from "@mui/material";
 import { useEffect, useReducer, useRef, useState } from "react";
+import { Box, FormGroup } from "@mui/material";
 import { useHistory } from "react-router-dom";
-import { EmailIcon } from "../../commons/resources";
-import { routers } from "../../commons/routers";
-import { forgotPassword } from "../../commons/utils/userRequest";
+
+import { EmailIcon } from "src/commons/resources";
+import { routers } from "src/commons/routers";
+import { forgotPassword } from "src/commons/utils/userRequest";
+
 import {
   AlertCustom,
   Container,
@@ -71,7 +73,7 @@ export default function ForgotPassword() {
     if (error) setError(false);
     setFormData({
       name: event.target.name,
-      value: event.target.value,
+      value: event.target.value.trim(),
       touched: true
     });
   };
@@ -135,7 +137,11 @@ export default function ForgotPassword() {
         <FormGroup>
           {!success ? (
             <WrapForm>
-              {error ? <Box pt={"24px"}><AlertCustom severity='error'>Invalid email information.</AlertCustom></Box> : null}
+              {error ? (
+                <Box pt={"24px"}>
+                  <AlertCustom severity="error">Invalid email information.</AlertCustom>
+                </Box>
+              ) : null}
               <WrapInput>
                 <Label>Email</Label>
                 <InputCustom
@@ -144,13 +150,13 @@ export default function ForgotPassword() {
                       <EmailIcon />
                     </Box>
                   }
-                  name='email'
+                  name="email"
                   inputRef={emailInputRef}
                   value={formData.email.value}
                   onChange={handleChange}
                   onBlur={checkError}
                   fullWidth
-                  placeholder='Email'
+                  placeholder="Email"
                   error={Boolean(formData.email.error && formData.email.touched)}
                 />
                 {formData.email.error && formData.email.touched ? (
@@ -158,7 +164,7 @@ export default function ForgotPassword() {
                 ) : null}
               </WrapInput>
               <WrapButton
-                variant='contained'
+                variant="contained"
                 fullWidth
                 onClick={handleSubmit}
                 disabled={loading || !!formData.email.error}

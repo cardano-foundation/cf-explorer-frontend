@@ -1,30 +1,19 @@
-import { Box, BoxProps, IconButton, useTheme } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
+import BigNumber from "bignumber.js";
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+
+import { AdaValue } from "src/components/commons/ADAValue";
+
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { EyeIcon } from "../../../../commons/resources";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
+import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
 import { RegistrationCertificateModal } from "../../../StakingLifeCycle/DelegatorLifecycle/Registration";
-import ADAicon from "../../../commons/ADAIcon";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import Table, { Column } from "../../../commons/Table";
 import { StyledLink, TableSubTitle } from "../styles";
-
-interface IAdaValue extends BoxProps {
-  value: number | string;
-  limit?: number;
-}
-
-export const AdaValue = ({ value, gap = "8px", fontSize, color, limit, ...props }: IAdaValue) => {
-  return (
-    <Box {...props} color={color} display='flex' alignItems='center' gap={gap} fontSize={fontSize}>
-      {formatADAFull(value, limit)}
-      <ADAicon style={{ color }} fontSize={fontSize} />
-    </Box>
-  );
-};
 
 const StakeRegistrationTab = () => {
   const theme = useTheme();
@@ -70,12 +59,12 @@ const StakeRegistrationTab = () => {
       minWidth: "120px",
       render: (r) => (
         <Box>
-          <AdaValue limit={5} value={r.deposit + r.fee} />
+          <AdaValue value={new BigNumber(r.deposit).plus(new BigNumber(r.fee)).toString()} />
           <TableSubTitle>
-            <Box display='flex' mt={1} alignItems='center' lineHeight='1'>
-              <AdaValue limit={1} value={r.deposit} color={theme.palette.grey[400]} gap='3px' fontSize='12px' />
+            <Box display="flex" mt={1} alignItems="center" lineHeight="1">
+              <AdaValue value={r.deposit} color={theme.palette.grey[400]} gap="3px" fontSize="12px" />
               <Box mx={1}>/</Box>
-              <AdaValue value={r.fee} color={theme.palette.grey[400]} gap='3px' fontSize='12px' />
+              <AdaValue value={r.fee} color={theme.palette.grey[400]} gap="3px" fontSize="12px" />
             </Box>
           </TableSubTitle>
         </Box>
@@ -85,7 +74,7 @@ const StakeRegistrationTab = () => {
       title: "Certificate",
       key: "stakeId",
       minWidth: "120px",
-      render: (r) => (
+      render: () => (
         <IconButton onClick={() => setOpenModal(true)}>
           <EyeIcon style={{ transform: "scale(.8)" }} />
         </IconButton>

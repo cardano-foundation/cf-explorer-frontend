@@ -1,7 +1,7 @@
 import { styled, Box, Container, alpha, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export const Wrapper = styled(Container)(({ theme }) => ({}));
+export const Wrapper = styled(Container)(() => ({}));
 export const ContentBox = styled(Box)(({ theme }) => ({
   display: "flex",
   background: theme.palette.background.paper,
@@ -55,7 +55,7 @@ export const WrapItemMobile = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const NavItemMobile = styled(Link)<{ active: boolean; }>(({ theme, active }) => ({
+export const NavItemMobile = styled(Link)<{ active: boolean }>(({ theme, active }) => ({
   [theme.breakpoints.down("md")]: {
     display: "block"
   },
@@ -73,11 +73,9 @@ export const NavItemMobile = styled(Link)<{ active: boolean; }>(({ theme, active
   [theme.breakpoints.down("sm")]: {
     width: "100%",
     fontSize: "13px",
-    padding: "10px 0px",
-  },
+    padding: "10px 0px"
+  }
 }));
-
-
 
 export const StyledUsername = styled(Box)`
   max-width: 200px;
@@ -114,8 +112,8 @@ export const StyledButtonClose = styled(Button)(({ theme }) => ({
 }));
 
 export const ModalTitle = styled("h3")`
-font - family: var(--font - family - title);
-margin - top: 0px;
+  font-family: var(--font-family-title);
+  margin-top: 0px;
 `;
 
 export const MissingItemWrapper = styled(Box)(({ theme }) => ({

@@ -1,4 +1,4 @@
-import { Popover, Button, styled, Box } from "@mui/material";
+import { styled, Box } from "@mui/material";
 
 export const GridBox = styled("div")<{ sidebar?: number }>(({ theme, sidebar }) => ({
   display: "grid",
@@ -51,6 +51,6 @@ export const StyledList = styled(Box)(({ theme }) => ({
   alignItems: "center",
   marginBottom: 20,
   [theme.breakpoints.down("sm")]: {
-    alignItems: "center",
+    alignItems: "center"
   }
 }));

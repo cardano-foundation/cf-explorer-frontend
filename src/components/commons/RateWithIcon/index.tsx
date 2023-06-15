@@ -1,7 +1,9 @@
 import { Box, styled } from "@mui/material";
-import { DownRedIcon, UpGreenIcon } from "../../../commons/resources";
-import CustomTooltip from "../CustomTooltip";
 import { BigNumber } from "bignumber.js";
+
+import { DownRedIcon, UpGreenIcon } from "src/commons/resources";
+
+import CustomTooltip from "../CustomTooltip";
 
 const PriceRate = styled(Box)<{ size?: string | number }>`
   display: inline-flex;
@@ -46,7 +48,7 @@ const RateWithIcon = ({ value, size, multiple = 1 }: Props) => {
   return (
     <CustomTooltip title={`${sign > 0 ? "+" : ""}${multiplied.toNumber()}`}>
       <PriceRate size={size}>
-        <ImageRate sign={sign} src={sign > 0 ? UpGreenIcon : DownRedIcon} alt='rate' />
+        <ImageRate sign={sign} src={sign > 0 ? UpGreenIcon : DownRedIcon} alt="rate" />
         <PriceValue sign={sign}>
           {sign > 0 ? "+" : ""}
           {multiplied.toFixed(2, BigNumber.ROUND_DOWN).toString().replace(".", ",")} %

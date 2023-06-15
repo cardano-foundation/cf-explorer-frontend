@@ -30,7 +30,7 @@ export default function BasicPopover({ button, content }: PopoverProps) {
           onClick: handleClick
         })
       ) : (
-        <Button aria-describedby={id} variant='contained' onClick={handleClick}>
+        <Button aria-describedby={id} variant="contained" onClick={handleClick}>
           Open Popover
         </Button>
       )}

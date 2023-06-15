@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
-import StyledModal from "../../../StyledModal";
-import { Description, ModalTitle, StyledButton } from "./styles";
-import { StyledDarkLoadingButton } from "../../../../share/styled";
-
 import { useLocalStorage } from "react-use";
-import { addListBookmark, getAllBookmarks } from "../../../../../commons/utils/userRequest";
-import { NETWORK, NETWORK_TYPES } from "../../../../../commons/utils/constants";
+
+import { StyledDarkLoadingButton } from "src/components/share/styled";
+import { addListBookmark, getAllBookmarks } from "src/commons/utils/userRequest";
+import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
+import StyledModal from "src/components/commons/StyledModal";
+
+import { Description, ModalTitle, StyledButton } from "./styles";
 
 interface SyncBookmarkModalProps {
   open: boolean;
@@ -37,7 +38,7 @@ const SyncBookmarkModal: React.FC<SyncBookmarkModalProps> = ({ open, handleClose
 
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal}>
-      <Box textAlign='center'>
+      <Box textAlign="center">
         <ModalTitle>Notify</ModalTitle>
         <Description>
           {!data && !message && (
@@ -53,10 +54,10 @@ const SyncBookmarkModal: React.FC<SyncBookmarkModalProps> = ({ open, handleClose
             <></>
           )}
         </Description>
-        <Box display={"flex"} justifyContent='center' gap={2}>
+        <Box display={"flex"} justifyContent="center" gap={2}>
           <StyledButton onClick={handleCloseModal}>Close</StyledButton>
           {!message && (
-            <StyledDarkLoadingButton loading={loading} loadingPosition='end' onClick={hanldeSyncBookmark}>
+            <StyledDarkLoadingButton loading={loading} loadingPosition="end" onClick={hanldeSyncBookmark}>
               Sync
             </StyledDarkLoadingButton>
           )}

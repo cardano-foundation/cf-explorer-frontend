@@ -1,6 +1,8 @@
 import React from "react";
 import { styled, Container } from "@mui/material";
-import { APP_VERSION } from "../../../../commons/utils/constants";
+
+import { APP_VERSION } from "src/commons/utils/constants";
+
 import FooterMenu from "../Sidebar/FooterMenu";
 
 const StyledFooter = styled("footer")`
@@ -45,7 +47,7 @@ const Footer: React.FC = () => {
       <FooterContainer>
         <FooterMenu bottom={true} />
         <Copyright>
-          &copy; {new Date().getFullYear()} Cardano Blockchain Explorer. All rights reserved. Version: {APP_VERSION}
+          &copy; {new Date().getFullYear()} Cardano Foundation. All rights reserved. Version: {APP_VERSION}
         </Copyright>
       </FooterContainer>
     </StyledFooter>

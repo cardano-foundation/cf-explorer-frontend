@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { authAxios } from "../../../../../commons/utils/axios";
-import { NETWORK, NETWORKS, NETWORK_TYPES } from "../../../../../commons/utils/constants";
-import { alphaNumeric, removeAuthInfo } from "../../../../../commons/utils/helper";
-import { RootState } from "../../../../../stores/types";
-import { setModalRegister } from "../../../../../stores/user";
-import StyledModal from "../../../StyledModal";
-import { Label, StyledTitle, TextError, TextNote, WrapButton } from "./styles";
-import { StyledInput, StyledDarkLoadingButton } from "../../../../share/styled";
 import { FormHelperText } from "@mui/material";
 import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
-import { existUserName } from "../../../../../commons/utils/userRequest";
-import useToast from "../../../../../commons/hooks/useToast";
+
+import { authAxios } from "src/commons/utils/axios";
+import { NETWORK, NETWORKS, NETWORK_TYPES } from "src/commons/utils/constants";
+import { alphaNumeric, removeAuthInfo } from "src/commons/utils/helper";
+import { existUserName } from "src/commons/utils/userRequest";
+import useToast from "src/commons/hooks/useToast";
+import { RootState } from "src/stores/types";
+import { setModalRegister } from "src/stores/user";
+import { StyledInput, StyledDarkLoadingButton } from "src/components/share/styled";
+import StyledModal from "src/components/commons/StyledModal";
+
+import { Label, StyledTitle, TextError, TextNote, WrapButton } from "./styles";
 interface IProps {
   nonce: NonceObject | null;
   signature: string;
@@ -82,7 +84,7 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setIs
         <Label required={true}>Username</Label>
         <br />
         <StyledInput
-          placeholder='Username'
+          placeholder="Username"
           value={value}
           style={{ width: "100%" }}
           onChange={(e) => {

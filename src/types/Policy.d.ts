@@ -34,3 +34,7 @@ interface PolicyHolder {
   displayName: string;
   quantity: number;
 }
+interface PolicyScript {
+  type: string;
+  scripts: Array<{ type: string; slot?: number; keyHash: string }>;
+}

@@ -1,15 +1,17 @@
 import { useState } from "react";
-import Table, { Column } from "../commons/Table";
-import useFetchList from "../../commons/hooks/useFetchList";
-import { API } from "../../commons/utils/api";
-import { Box, IconButton, styled } from "@mui/material";
 import moment from "moment";
-import { defaultAxiosDownload } from "../../commons/utils/axios";
 import { useHistory } from "react-router-dom";
-import { details } from "../../commons/routers";
+import { Box, IconButton, styled } from "@mui/material";
+
+import useFetchList from "src/commons/hooks/useFetchList";
+import { API } from "src/commons/utils/api";
+import { defaultAxiosDownload } from "src/commons/utils/axios";
+import { details } from "src/commons/routers";
+import { DownloadGreenIcon } from "src/commons/resources";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
+
+import Table, { Column } from "../commons/Table";
 import CustomIcon from "../commons/CustomIcon";
-import { DownloadGreenIcon } from "~/commons/resources";
-import { formatDateTimeLocal } from "~/commons/utils/helper";
 import CustomTooltip from "../commons/CustomTooltip";
 import { StyledBox } from "./styles";
 
@@ -48,7 +50,7 @@ const StakekeySummary = () => {
     size: 50,
     sort: "id,desc"
   });
-  const [sort, setSort] = useState<string>("id,desc");
+  const [sort] = useState<string>("id,desc");
 
   const downloadFn = async (reportId: number, fileName: string, typeExport: "CSV" | "EXCEL" = "CSV") => {
     defaultAxiosDownload
@@ -62,7 +64,6 @@ const StakekeySummary = () => {
         link.click();
       })
       .catch((e) => {
-        //To Do
         console.log(e);
       });
   };
@@ -81,9 +82,11 @@ const StakekeySummary = () => {
       maxWidth: "300px",
       render(data) {
         return (
-          <CustomTooltip title={`${data.reportName}`.replaceAll("-", " ")}>
-            <StyledBox>{`${data.reportName}`.replaceAll("-", " ")}</StyledBox>
-          </CustomTooltip>
+          <StyledBox>
+            <CustomTooltip title={`${data.reportName}`.replaceAll("-", " ")}>
+              <span>{`${data.reportName}`.replaceAll("-", " ")} </span>
+            </CustomTooltip>
+          </StyledBox>
         );
       }
     },
@@ -124,12 +127,12 @@ const StakekeySummary = () => {
       minWidth: "50px",
       render(data) {
         return data.status === "GENERATED" ? (
-          <Box width='100%' textAlign='center'>
+          <Box width="100%" textAlign="center">
             <Box
               component={IconButton}
               display={"block"}
               disabled={data.status !== "GENERATED"}
-              margin='auto'
+              margin="auto"
               textTransform={"capitalize"}
               onClick={() => downloadFn(data.id, data.reportName, "EXCEL")}
             >

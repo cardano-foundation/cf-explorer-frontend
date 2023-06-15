@@ -4,7 +4,7 @@ export const StyledContainer = styled(Box)`
   text-align: left;
 `;
 
-export const GridWrapper =  styled(Grid)(({ theme }) => ({
+export const GridWrapper = styled(Grid)(() => ({
   borderRadius: 10,
   minHeight: "400px",
   textAlign: "left"
@@ -28,8 +28,7 @@ export const Button = styled("button")<{ active: number }>`
   line-height: 24px;
 `;
 
-export const BoxInfo = styled(Box)<{ space: number }>(({ theme, space }) => ({
-  // height: `calc(100% - ${space}px)`,
+export const BoxInfo = styled(Box)<{ space: number }>(({ theme }) => ({
   background: theme.palette.secondary.dark,
   borderRadius: "10px",
   color: theme.palette.primary.contrastText,
@@ -148,6 +147,8 @@ export const Item = styled(Grid)(({ theme }) => ({
 export const AnalyticsTitle = styled("h2")(({ theme }) => ({
   margin: "40px 0 15px",
   width: "max-content",
+  fontSize: "20px",
+  borderBottom: `2px solid ${theme.palette.green[600]}`,
   [theme.breakpoints.down("sm")]: {
     margin: "30px 0 15px"
   }

@@ -1,7 +1,10 @@
-import { Box, Grid, Icon } from "@mui/material";
+import { Grid, Icon } from "@mui/material";
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
-import DelegatorDetailContext from "~/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
+import { useSelector } from "react-redux";
+
+import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+
 import {
   DelegationToIconUrl,
   PaymentWalletUrl,
@@ -15,16 +18,17 @@ import ADATransferModal from "../../StakingLifeCycle/DelegatorLifecycle/ADATrans
 import {
   CardContent,
   CardInfo,
-  CardList,
   CardItem,
   CardTitle,
   CardValue,
   ItemIcon,
   StyledAdaLogoIcon,
   TransferButton,
-  NoDelegatedStakePool
+  NoDelegatedStakePool,
+  CardValueDelegating,
+  BoxStyled,
+  StyledBoxDelegating
 } from "./styles";
-import { useSelector } from "react-redux";
 
 type TCardAmount = {
   amount?: number;
@@ -51,7 +55,7 @@ const GridItem = ({ title, action, value, iconUrl }: TGridItem) => {
 
   return (
     <CardItem sidebar={+sidebar}>
-      <ItemIcon src={iconUrl} alt='title' />
+      <ItemIcon src={iconUrl} alt="title" />
       <CardContent>
         <CardInfo>
           <CardTitle>{title}</CardTitle>
@@ -65,20 +69,24 @@ const GridItem = ({ title, action, value, iconUrl }: TGridItem) => {
 
 const TabularOverview: React.FC = () => {
   const data = useContext(DelegatorDetailContext);
+  const { totalStake, rewardAvailable, rewardWithdrawn, pool } = data ?? {};
+  const { tickerName, poolName, poolId } = pool ?? {};
+  const delegatingToValue =
+    tickerName || poolName ? `${tickerName && tickerName + "-"}  ${poolName && poolName}` : getShortHash(poolId || "");
   const [open, setOpen] = useState(false);
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} sm={6}>
         <GridItem
-          title='Payment Wallet'
+          title="Payment Wallet"
           iconUrl={PaymentWalletUrl}
-          value={<CardAmount amount={Math.max(data?.totalStake || 0, 0)} />}
+          value={<CardAmount amount={Math.max(totalStake || 0, 0)} />}
           action={
             <TransferButton
               onClick={() => setOpen(true)}
-              variant='contained'
-              startIcon={<Icon fill='white' component={TransactionIcon} />}
+              variant="contained"
+              startIcon={<Icon fill="white" component={TransactionIcon} />}
             >
               ADA Transfers
             </TransferButton>
@@ -87,28 +95,34 @@ const TabularOverview: React.FC = () => {
       </Grid>
       <Grid item xs={12} sm={6}>
         <GridItem
-          title='Reward Account'
+          title="Reward Account"
           iconUrl={RewardAccountIconUrl}
-          value={<CardAmount amount={Math.max(data?.rewardAvailable || 0, 0)} />}
+          value={<CardAmount amount={Math.max(rewardAvailable || 0, 0)} />}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
         <GridItem
-          title='Rewards Withdrawn'
+          title="Rewards Withdrawn"
           iconUrl={RewardWithdrawnIconUrl}
-          value={<CardAmount amount={data?.rewardWithdrawn} />}
+          value={<CardAmount amount={rewardWithdrawn} />}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
         <GridItem
-          title='Delegating To'
+          title="Delegating To"
           iconUrl={DelegationToIconUrl}
-          value={data?.pool?.poolId ? (
-            <Box component={Link} to={details.delegation(data?.pool?.poolId)} display='flex' alignItems='center'>
-              <CardValue>{data?.pool?.poolName || getShortHash(data?.pool?.poolId || "")}</CardValue>
-            </Box>) : (
-            <NoDelegatedStakePool>Not delegated to any pool</NoDelegatedStakePool>
-          )
+          value={
+            pool?.poolId ? (
+              <StyledBoxDelegating to={details.delegation(pool?.poolId)}>
+                <CardValueDelegating>
+                  <CustomTooltip title={delegatingToValue}>
+                    <BoxStyled>{delegatingToValue}</BoxStyled>
+                  </CustomTooltip>
+                </CardValueDelegating>
+              </StyledBoxDelegating>
+            ) : (
+              <NoDelegatedStakePool>Not delegated to any pool</NoDelegatedStakePool>
+            )
           }
         />
       </Grid>

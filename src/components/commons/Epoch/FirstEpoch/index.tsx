@@ -1,16 +1,15 @@
 import { Box, useTheme } from "@mui/material";
-import { ExchangeIcon } from "~/commons/resources";
-import cubeIcon from "~/commons/resources/icons/blockIcon.svg";
-import slotIcon from "~/commons/resources/icons/slot.svg";
-import timeIcon from "~/commons/resources/icons/time.svg";
-import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "~/commons/utils/constants";
-import { formatDateTimeLocal } from "~/commons/utils/helper";
-import { Status } from "~/pages/Epoch/styles";
-import DetailHeader from "../../DetailHeader";
-import ProgressCircle from "../../ProgressCircle";
-import { Container, EpochNumber, EpochProgress, TitleCard } from "./styles";
 import { useSelector } from "react-redux";
 import moment from "moment";
+
+import { ExchangeIcon, cubeIconUrl, slotIconUrl, timeIconUrl } from "src/commons/resources";
+import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
+import { Status } from "src/pages/Epoch/styles";
+
+import { Container, EpochNumber, EpochProgress, TitleCard } from "./styles";
+import ProgressCircle from "../../ProgressCircle";
+import DetailHeader from "../../DetailHeader";
 
 interface IProps {
   data: IDataEpoch;
@@ -22,7 +21,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   if (!currentEpochData) return null;
   const progress =
-    moment(currentEpochData.endTime).diff(moment()) >= 0
+    moment(formatDateTimeLocal(currentEpochData.endTime)).diff(moment()) >= 0
       ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
       : 100;
   const listOverview = [
@@ -35,10 +34,10 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
         </EpochNumber>
       ),
       value: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <ProgressCircle
             size={100}
-            pathLineCap='butt'
+            pathLineCap="butt"
             pathWidth={6}
             trailWidth={6}
             percent={Number(progress)}
@@ -51,40 +50,43 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       )
     },
     {
-      icon: cubeIcon,
+      icon: cubeIconUrl,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>Block </TitleCard>
         </Box>
       ),
       value: <Box component={"span"}>{currentEpochData?.blkCount}</Box>
     },
     {
-      icon: slotIcon,
+      icon: slotIconUrl,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Slot</TitleCard>
         </Box>
       ),
       value: (
         <Box component={"span"}>
-          {moment(currentEpochData.endTime).diff(moment()) >= 0 ? currentEpoch?.slot : MAX_SLOT_EPOCH}/{MAX_SLOT_EPOCH}
+          {moment(formatDateTimeLocal(currentEpochData.endTime)).diff(moment()) >= 0
+            ? currentEpoch?.slot
+            : MAX_SLOT_EPOCH}
+          /{MAX_SLOT_EPOCH}
         </Box>
       )
     },
     {
-      icon: timeIcon,
+      icon: timeIconUrl,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Start Time</TitleCard>
         </Box>
       ),
       value: <Box component={"span"}>{formatDateTimeLocal(currentEpochData?.startTime || "")}</Box>
     },
     {
-      icon: timeIcon,
+      icon: timeIconUrl,
       title: (
-        <Box display={"flex"} alignItems='center'>
+        <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> End Time</TitleCard>
         </Box>
       ),
@@ -93,7 +95,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
   ];
   return (
     <Container onClick={() => onClick(currentEpochData, currentEpochData, 0)}>
-      <DetailHeader isHideButtonBack={true} loading={false} listItem={listOverview} type='EPOCH' title={" "} />
+      <DetailHeader isHideButtonBack={true} loading={false} listItem={listOverview} type="EPOCH" title={" "} />
     </Container>
   );
 }

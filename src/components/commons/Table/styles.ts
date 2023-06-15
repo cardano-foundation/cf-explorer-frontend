@@ -1,4 +1,5 @@
 import { Box, Checkbox, alpha, Typography, styled, Pagination } from "@mui/material";
+
 import CustomSelect from "../CustomSelect";
 
 export const Empty = styled(Box)`
@@ -77,7 +78,8 @@ export const TCol = styled("td")<{
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.text.primary};
   padding: 24px 20px;
-  background: ${(props) => props.selected ? props.theme.palette.background.neutral : props.theme.palette.common.white};
+  background: ${(props) =>
+    props.selected ? props.theme.palette.background.neutral : props.theme.palette.common.white};
 `;
 
 export const TBody = styled("tbody")`
@@ -109,10 +111,12 @@ export const TotalNumber = styled("span")`
   font-weight: 500;
 `;
 
-export const WrappModalScrollBar = styled(Box)(({theme}) => `
-overflow-y: scroll;
-max-height: 75vh;
-&::-webkit-scrollbar {
+export const WrappModalScrollBar = styled(Box)(
+  ({ theme }) => `
+  overflow-y: auto;
+  max-height: 70vh;
+  padding-right: 5px;
+  &::-webkit-scrollbar {
     width: 5px;
     height: 5px;
   }
@@ -130,18 +134,19 @@ max-height: 75vh;
       background: ${theme.palette.grey[100]};
     }
   }
-`);
+`
+);
 
-export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number }>(
-  ({ maxHeight, height, theme }) => `
+export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number; loading?: number }>(
+  ({ maxHeight, height, theme, loading }) => `
   overflow-x: auto;
-  height: ${height || "800px"};
+  height: ${height || 800}px;
   background: ${theme.palette.common.white};
   padding: ${theme.spacing(1)};
   padding-top: 0;
   border-radius: ${theme.spacing(1.5)};
   border: 1px solid ${alpha(theme.palette.common.black, 0.1)};
-
+  ${loading ? "overflow-y: hidden;" : ""}
   ${maxHeight ? "max-height:" + (typeof maxHeight === "number" ? maxHeight + "px" : maxHeight) : ""};
 
   ${theme.breakpoints.down("sm")} {
@@ -168,17 +173,13 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number
 `
 );
 
-export const TableFullWidth = styled("table")(
-  ({ theme }) => `
+export const TableFullWidth = styled("table")`
   border-collapse: separate;
   border-spacing: 0;
   min-width: 100%;
   width: max-content;
-  ${theme.breakpoints.down("sm")} {
-    position: relative;
-  }
-`
-);
+  position: relative;
+`;
 
 export const InputNumber = styled("input")<{ length: number }>(({ theme, length }) => ({
   width: length + "ch !important",
@@ -195,7 +196,7 @@ export const InputNumber = styled("input")<{ length: number }>(({ theme, length 
   background: "transparent"
 }));
 
-export const SelectMui = styled(CustomSelect)(({ theme }) => ({
+export const SelectMui = styled(CustomSelect)(() => ({
   borderRadius: "4px",
   fontSize: 14,
   minWidth: 50,
@@ -245,7 +246,7 @@ export const TableCustomTitle = styled(Box)`
   text-align: left;
 `;
 
-export const StyledPagination = styled(Pagination)(({ theme }) => ({
+export const StyledPagination = styled(Pagination)(() => ({
   "ul li > button": {
     width: 24,
     height: 24,

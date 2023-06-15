@@ -104,6 +104,10 @@ export const API = {
     PREPORT_REWARD_DISTRIBUTIONS: (reportId: number | string) => `pool-report/detail/${reportId}/rewards-distribution`,
     PREPORT_DEREGSITRATION: (reportId: number | string) => `pool-report/detail/${reportId}/deregistration`,
     PREPORT_EPOCH_SIZE: (reportId: number | string) => `pool-report/detail/${reportId}/epoch-size`
+  },
+  CONTRACTS: {
+    VERIFY_SCRIPT: "contracts/verify/native",
+    SCRIPT: (address: string) => `contracts/${address}/script`
   }
 };
 

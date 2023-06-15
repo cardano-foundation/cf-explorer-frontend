@@ -1,5 +1,4 @@
-import { Box, styled } from "@mui/material";
-import { BoxProps } from "@mui/system";
+import { Box, styled, BoxProps } from "@mui/material";
 import React, { ReactNode } from "react";
 
 const CardContainer = styled(Box)`
@@ -12,12 +11,14 @@ const Header = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 `;
 
-const Title = styled("h2")<{ underline: number; marginTitle?: string }>`
+export const Title = styled("h2")<{ underline: number; marginTitle?: string }>`
   text-align: left;
   padding-bottom: 8px;
   position: relative;
+  width: max-content;
   ${(props) => (props.underline ? `font-size: 1.25rem;` : "")};
   margin: ${({ marginTitle }) => (marginTitle ? marginTitle : "unset")};
   &::after {
@@ -46,8 +47,7 @@ interface CardProps extends Omit<BoxProps, "title"> {
 
 const Card: React.FC<CardProps> = ({ title, marginTitle, children, underline = false, extra, ...props }) => {
   return (
-    // <CardContainer {...props}>
-    <CardContainer>
+    <CardContainer {...props}>
       <Header>
         {title ? (
           <Title marginTitle={marginTitle} underline={underline ? 1 : 0}>

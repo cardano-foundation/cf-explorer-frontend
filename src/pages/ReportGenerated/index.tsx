@@ -1,8 +1,9 @@
-import { Container } from "@mui/material";
-import ReportGeneratedTabs, { TabsItem } from "../../components/ReportGeneratedTabs";
-import StakekeySummary from "../../components/StakekeySummary";
-import PoolLifecycle from "../../components/PoolLifecycle";
 import { useEffect } from "react";
+import { Container } from "@mui/material";
+
+import ReportGeneratedTabs, { TabsItem } from "src/components/ReportGeneratedTabs";
+import StakekeySummary from "src/components/StakekeySummary";
+import PoolLifecycle from "src/components/PoolLifecycle";
 
 export const defaultReportTab = "stake";
 

@@ -1,5 +1,4 @@
 import { alpha, TextField, styled, Box } from "@mui/material";
-
 import { Link } from "react-router-dom";
 
 export const TitleDetail = styled(Box)`
@@ -116,5 +115,14 @@ export const WrapHeader = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   [theme.breakpoints.between("sm", "md")]: {
     paddingTop: "56px"
+  }
+}));
+export const RedirectButton = styled(Box)(({ theme }) => ({
+  textTransform: "capitalize",
+  backgroundColor: theme.palette.common.black,
+  color: theme.palette.common.white,
+  padding: `${theme.spacing(1)} ${theme.spacing(2)} `,
+  ":hover": {
+    backgroundColor: alpha(theme.palette.common.black, 0.8)
   }
 }));

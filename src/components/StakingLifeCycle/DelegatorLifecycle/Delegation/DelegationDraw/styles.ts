@@ -1,7 +1,8 @@
 import { Box, styled } from "@mui/material";
-import AdaHolder from "~/components/commons/AdaHolder";
-import CertificateShape from "~/components/commons/CertificateShape";
-import HoldBox from "~/components/commons/HoldBox";
+
+import AdaHolder from "src/components/commons/AdaHolder";
+import CertificateShape from "src/components/commons/CertificateShape";
+import HoldBox from "src/components/commons/HoldBox";
 
 export const DrawContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
   display: "flex",
@@ -12,11 +13,11 @@ export const DrawContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar
   position: "relative",
   margin: "0px -15px",
   marginTop: 35,
-  [theme.breakpoints.down("lg")]: {
+  [theme.breakpoints.down("xl")]: {
     margin: "auto",
     width: "100%"
   },
-  [theme.breakpoints.down(sidebar ? "lg" : "md")]: {
+  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
     flexDirection: "column",
     alignItems: "center",
     margin: "auto",
@@ -39,7 +40,7 @@ export const MiddleGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }
   [theme.breakpoints.down("md")]: {
     gap: 10
   },
-  [theme.breakpoints.down(sidebar ? "lg" : "md")]: {
+  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
     flexDirection: "row-reverse",
     maxWidth: 536,
     gap: 96,

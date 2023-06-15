@@ -51,6 +51,8 @@ export const BackDrop = styled("div", { shouldForwardProp: (prop) => prop !== "i
     left: 0,
     right: 0,
     bottom: 0,
+    height: "120vh",
+    width: "100vw",
     display: "none",
     [theme.breakpoints.down("md")]: {
       background: alpha(theme.palette.common.black, 0.4),

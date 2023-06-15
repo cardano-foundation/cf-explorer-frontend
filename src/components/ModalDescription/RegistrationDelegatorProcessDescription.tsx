@@ -1,13 +1,15 @@
 import { Typography } from "@mui/material";
+
 import StyledModal from "../commons/StyledModal";
 import { ContentContainer, NormalDescription, WrapContent } from "./styles";
+
 interface Props {
   open: boolean;
   handleCloseModal: () => void;
 }
 export function RegistrationDelegatorProcessDescription({ open, handleCloseModal }: Props) {
   return (
-    <StyledModal title='Registration' handleCloseModal={handleCloseModal} open={open}>
+    <StyledModal title="Registration" handleCloseModal={handleCloseModal} open={open}>
       <WrapContent>
         <ContentContainer>
           <NormalDescription>

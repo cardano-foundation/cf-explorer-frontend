@@ -1,6 +1,8 @@
-import { Box } from "@mui/material";
 import React, { useEffect } from "react";
-import OverviewTab from "../../components/Account/OverviewTab";
+import { Box } from "@mui/material";
+
+import OverviewTab from "src/components/Account/OverviewTab";
+
 import { Header, Title } from "../PrivateNotes/styles";
 
 const MyProfile: React.FC = () => {

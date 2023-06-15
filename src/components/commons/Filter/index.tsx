@@ -1,4 +1,9 @@
 import React, { useState } from "react";
+import { ClickAwayListener, ListItemIcon, MenuList } from "@mui/material";
+
+import { FilterIC } from "src/commons/resources";
+
+import CustomIcon from "../CustomIcon";
 import {
   FilterButton,
   FilterContainer,
@@ -7,9 +12,6 @@ import {
   FilterListItemText,
   FilterMenuItem
 } from "./styles";
-import { FilterIC } from "../../../commons/resources";
-import { ClickAwayListener, ListItemIcon, MenuList } from "@mui/material";
-import CustomIcon from "../CustomIcon";
 
 export interface FilterProps {
   options?: Option[];
@@ -45,7 +47,7 @@ const Filter: React.FC<FilterProps> = ({ options, onOptionChange }) => {
                 icon={FilterIC}
                 width={18}
                 color={(theme) => theme.palette.primary.main}
-                fill='currentColor'
+                fill="currentColor"
               />
             </FilterIconContainer>
           }

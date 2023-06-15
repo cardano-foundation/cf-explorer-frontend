@@ -1,12 +1,14 @@
-import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
-import useToast from "../../../commons/hooks/useToast";
-import { ACCOUNT_ERROR, NETWORK, NETWORK_TYPES } from "../../../commons/utils/constants";
-import { addPrivateNote, checkTrxHash, editPrivateNote } from "../../../commons/utils/userRequest";
-import StyledModal from "../../commons/StyledModal";
-import { StyledDarkLoadingButton, StyledHelperText, StyledInput, StyledLabelInput } from "../../share/styled";
+import { Box } from "@mui/system";
+
+import useToast from "src/commons/hooks/useToast";
+import { ACCOUNT_ERROR, NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
+import { addPrivateNote, checkTrxHash, editPrivateNote } from "src/commons/utils/userRequest";
+import StyledModal from "src/components/commons/StyledModal";
+import { StyledDarkLoadingButton, StyledHelperText, StyledInput, StyledLabelInput } from "src/components/share/styled";
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import { Title, WrapFormInput } from "./styles";
-import { useScreen } from "../../../commons/hooks/useScreen";
 
 interface IProps {
   open: boolean;
@@ -133,7 +135,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
         <StyledDarkLoadingButton
           loading={loading}
           disabled={!privateNote?.value || !txHash?.value || !!txHash?.error}
-          loadingPosition='end'
+          loadingPosition="end"
           onClick={handleSubmitData}
           fullWidth={isTablet}
         >

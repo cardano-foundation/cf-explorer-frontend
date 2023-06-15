@@ -1,19 +1,24 @@
 import { Box, Grid, Skeleton } from "@mui/material";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import { BlankBlueIcon, ADAIcon } from "../../../commons/resources";
-import { details, routers } from "../../../commons/routers";
-import { API } from "../../../commons/utils/api";
-import { REFRESH_TIMES, TRANSACTION_STATUS } from "../../../commons/utils/constants";
+
+import { BlankBlueIcon, ADAIcon } from "src/commons/resources";
+import { details, routers } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { REFRESH_TIMES, TRANSACTION_STATUS } from "src/commons/utils/constants";
 import {
   formatADAFull,
   formatDateTimeLocal,
   getShortHash,
   getShortWallet,
   handleClicktWithoutAnchor
-} from "../../../commons/utils/helper";
-import CustomTooltip from "../../commons/CustomTooltip";
-import ViewAllButton from "../../commons/ViewAllButton";
+} from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import ViewAllButton from "src/components/commons/ViewAllButton";
+import useFetch from "src/commons/hooks/useFetch";
+import { useScreen } from "src/commons/hooks/useScreen";
+import FormNowMessage from "src/components/commons/FormNowMessage";
+
 import {
   Hash,
   Header,
@@ -30,12 +35,9 @@ import {
   RowItem,
   HeaderStatus,
   Actions,
-  TimeDuration
+  TimeDuration,
+  TimeDurationSm
 } from "./style";
-import useFetch from "../../../commons/hooks/useFetch";
-
-import { useScreen } from "../../../commons/hooks/useScreen";
-import FormNowMessage from "~/components/commons/FormNowMessage";
 
 const LatestTransactions: React.FC = () => {
   const { data, initialized, lastUpdated } = useFetch<CurrentTransactions[]>(
@@ -55,9 +57,12 @@ const LatestTransactions: React.FC = () => {
           <TimeDuration>
             <FormNowMessage time={lastUpdated} />
           </TimeDuration>
-          <ViewAllButton to={routers.TRANSACTION_LIST} />
+          <ViewAllButton data-testid="view-all" to={routers.TRANSACTION_LIST} />
         </Actions>
       </Header>
+      <TimeDurationSm>
+        <FormNowMessage time={lastUpdated} />
+      </TimeDurationSm>
       {
         <Grid container spacing={{ sm: 2 }}>
           {!initialized
@@ -66,14 +71,14 @@ const LatestTransactions: React.FC = () => {
                   <Grid item xl lg={3} xs={6} key={index}>
                     <Item>
                       <ItemHeader>
-                        <Skeleton variant='circular' width={50} height={40} />
-                        <Skeleton variant='text' width={"100%"} />
+                        <Skeleton variant="circular" width={50} height={40} />
+                        <Skeleton variant="text" width={"100%"} />
                       </ItemHeader>
                       <Skeleton />
-                      <Skeleton variant='text' height={30} width={"100%"} />
-                      <Skeleton variant='text' height={30} width={"100%"} />
-                      <Skeleton variant='text' height={30} width={"100%"} />
-                      <Skeleton variant='text' height={30} width={"100%"} />
+                      <Skeleton variant="text" height={30} width={"100%"} />
+                      <Skeleton variant="text" height={30} width={"100%"} />
+                      <Skeleton variant="text" height={30} width={"100%"} />
+                      <Skeleton variant="text" height={30} width={"100%"} />
                     </Item>
                   </Grid>
                 );
@@ -86,14 +91,14 @@ const LatestTransactions: React.FC = () => {
                   <Grid item xl lg={3} xs={12} sm={6} key={hash}>
                     <Item onClick={(e) => handleClicktWithoutAnchor(e, () => history.push(details.transaction(hash)))}>
                       <ItemHeader>
-                        <PriceImage src={ADAIcon} alt='check green' />
+                        <PriceImage src={ADAIcon} alt="check green" />
                         <Box display={"flex"} flexDirection={"column"} rowGap={"4px"} alignItems={"end"}>
                           {!isTablet && <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>}
                           <PriveValue>{formatADAFull(amount)}</PriveValue>
                         </Box>
                       </ItemHeader>
                       <ItemDetail>
-                        <Box display='flex' alignItems='center'>
+                        <Box display="flex" alignItems="center">
                           <RowItem>
                             <small>Transaction hash: </small>
                             <CustomTooltip title={hash}>
@@ -127,7 +132,7 @@ const LatestTransactions: React.FC = () => {
                               <CustomTooltip title={add}>
                                 <Link to={details.address(add)}>
                                   <WalletAddress>{getShortWallet(add)}</WalletAddress>
-                                  <BlankImage src={BlankBlueIcon} alt='blank blue' />
+                                  <BlankImage src={BlankBlueIcon} alt="blank blue" />
                                 </Link>
                               </CustomTooltip>
                             </RowItem>
@@ -141,7 +146,7 @@ const LatestTransactions: React.FC = () => {
                                 <CustomTooltip title={add}>
                                   <Link to={details.address(add)}>
                                     <WalletAddress>{getShortWallet(add)}</WalletAddress>
-                                    <BlankImage src={BlankBlueIcon} alt='blank blue' />
+                                    <BlankImage src={BlankBlueIcon} alt="blank blue" />
                                   </Link>
                                 </CustomTooltip>
                               </Box>

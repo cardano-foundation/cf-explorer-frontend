@@ -1,10 +1,17 @@
-import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import useFetch from "../../../commons/hooks/useFetch";
-import { details, routers } from "../../../commons/routers";
-import { formatADAFull, formatPercent } from "../../../commons/utils/helper";
-import ViewAllButton from "../../commons/ViewAllButton";
-import { Column } from "../../commons/Table";
+import { Box } from "@mui/system";
+
+import useFetch from "src/commons/hooks/useFetch";
+import { details, routers } from "src/commons/routers";
+import { formatADAFull, formatPercent } from "src/commons/utils/helper";
+import ViewAllButton from "src/components/commons/ViewAllButton";
+import { Column } from "src/components/commons/Table";
+import RateWithIcon from "src/components/commons/RateWithIcon";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { API } from "src/commons/utils/api";
+import { REFRESH_TIMES } from "src/commons/utils/constants";
+import FormNowMessage from "src/components/commons/FormNowMessage";
+
 import {
   Actions,
   DelegateTable,
@@ -14,19 +21,14 @@ import {
   ProgressTitle,
   StyledLinearProgress,
   TimeDuration,
+  TimeDurationSm,
   Title,
   TopDelegateContainer
 } from "./style";
-import RateWithIcon from "../../commons/RateWithIcon";
-import CustomTooltip from "../../commons/CustomTooltip";
-import { Box } from "@mui/system";
-import { API } from "../../../commons/utils/api";
-import { REFRESH_TIMES } from "../../../commons/utils/constants";
-import FormNowMessage from "~/components/commons/FormNowMessage";
 
 const TopDelegationPools = () => {
   const { data, loading, initialized, lastUpdated } = useFetch<DelegationPool[]>(
-    `${API.DELEGATION.TOP}?page=1&size=4`,
+    `${API.DELEGATION.TOP}?page=0&size=10`,
     undefined,
     false,
     REFRESH_TIMES.TOP_DELEGATION_POOLS
@@ -54,7 +56,7 @@ const TopDelegationPools = () => {
       key: "fee",
       render: (r) => (
         <CustomTooltip title={`${r.feePercent * 100 || 0}% (${formatADAFull(r.feeAmount)} A)`}>
-          <Box display='inline-block'>
+          <Box display="inline-block">
             {formatPercent(r.feePercent || 0)} ({formatADAFull(r.feeAmount)} A)
           </Box>
         </CustomTooltip>
@@ -63,7 +65,7 @@ const TopDelegationPools = () => {
     {
       title: "Declared Pledge (A)",
       key: "declaredPledge",
-      render: (r) => <Box display='inline-block'>{formatADAFull(r.pledge)}</Box>
+      render: (r) => <Box display="inline-block">{formatADAFull(r.pledge)}</Box>
     },
     {
       title: "Saturation",
@@ -76,7 +78,7 @@ const TopDelegationPools = () => {
             </CustomTooltip>
             <CustomTooltip title={`${r.saturation}%`}>
               <StyledLinearProgress
-                variant='determinate'
+                variant="determinate"
                 value={r.saturation > 100 ? 100 : r.saturation}
                 style={{ width: 150 }}
               />
@@ -94,14 +96,17 @@ const TopDelegationPools = () => {
           <TimeDuration>
             <FormNowMessage time={lastUpdated} />
           </TimeDuration>
-          <ViewAllButton to={routers.DELEGATION_POOLS} />
+          <ViewAllButton data-testid="view-all" to={routers.DELEGATION_POOLS} />
         </Actions>
       </Header>
+      <TimeDurationSm>
+        <FormNowMessage time={lastUpdated} />
+      </TimeDurationSm>
       <DelegateTable
         loading={loading}
         initialized={initialized}
         columns={columns}
-        data={data?.slice(0, 3) || []}
+        data={data || []}
         onClickRow={(_, r: DelegationPool) => history.push(details.delegation(r.poolId))}
       />
     </TopDelegateContainer>

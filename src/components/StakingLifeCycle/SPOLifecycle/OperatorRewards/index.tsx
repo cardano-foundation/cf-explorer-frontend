@@ -1,23 +1,24 @@
-import { Box, styled } from "@mui/material";
 import { useMemo, useRef, useState } from "react";
-import { ADAOrangeBorderIcon } from "../../../../commons/resources";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import { details } from "../../../../commons/routers";
-import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
-import useFetch from "../../../../commons/hooks/useFetch";
+import { Box, styled } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { API } from "../../../../commons/utils/api";
-import StyledModal from "../../../commons/StyledModal";
-import Table, { Column } from "../../../commons/Table";
-import useFetchList from "../../../../commons/hooks/useFetchList";
 import moment from "moment";
-import ADAicon from "../../../commons/ADAIcon";
+
+import { ADAOrangeBorderIcon } from "src/commons/resources";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { details } from "src/commons/routers";
+import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import CustomModal from "src/components/commons/CustomModal";
+import Table, { Column } from "src/components/commons/Table";
+import useFetchList from "src/commons/hooks/useFetchList";
+import ADAicon from "src/components/commons/ADAIcon";
+import CardanoSystem from "src/components/commons/CardanoSystem";
+import SPOHolder from "src/components/commons/SPOHolder";
+import DrawPath from "src/components/commons/DrawPath";
+import { LineArrowItem } from "src/components/commons/LineArrow";
+
 import { StyledLink, DrawContainer, ADAOperator, ADATitle, ADAAmount, StyledEpoch } from "./styles";
-import CardanoSystem from "~/components/commons/CardanoSystem";
-import SPOHolder from "~/components/commons/SPOHolder";
-import DrawPath from "~/components/commons/DrawPath";
-import { LineArrowItem } from "~/components/commons/LineArrow";
-import { WrappModalScrollBar } from "~/components/commons/Table/styles";
 
 const OperatorReward = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -64,13 +65,13 @@ const OperatorReward = () => {
         <DrawPath paths={paths} />
       </DrawContainer>
 
-      <OperatorRewardModal open={openModal} handleCloseModal={() => setOpenModal(false)} />
+      <OperatorRewardModal open={openModal} onClose={() => setOpenModal(false)} />
     </Box>
   );
 };
 export default OperatorReward;
 
-const OperatorRewardModal = ({ ...props }: { open: boolean; handleCloseModal: () => void }) => {
+const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void }) => {
   const { poolId = "" } = useParams<{ poolId: string }>();
   const [sort, setSort] = useState<string>("");
   const [{ page, size }, setPagination] = useState<{ page: number; size: number }>({ page: 0, size: 50 });
@@ -114,23 +115,20 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; handleCloseModal: ()
     }
   ];
   return (
-    <StyledModal width={600} {...props} title='Operator rewards received'>
-      <Box>
-        <WrappModalScrollBar>
-          <StyledTable
-            {...fetchData}
-            columns={columns}
-            total={{ title: "Total Epochs", count: fetchData.total }}
-            pagination={{
-              page,
-              size,
-              total: fetchData.total,
-              onChange: (page, size) => setPagination({ page: page - 1, size })
-            }}
-          />
-        </WrappModalScrollBar>
-      </Box>
-    </StyledModal>
+    <CustomModal {...props} title="Operator rewards received">
+      <StyledTable
+        {...fetchData}
+        columns={columns}
+        total={{ title: "Total Epochs", count: fetchData.total }}
+        maxHeight={"60vh"}
+        pagination={{
+          page,
+          size,
+          total: fetchData.total,
+          onChange: (page, size) => setPagination({ page: page - 1, size })
+        }}
+      />
+    </CustomModal>
   );
 };
 

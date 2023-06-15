@@ -1,17 +1,17 @@
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { Box, Tab, useTheme } from "@mui/material";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import TokenTransaction from "./TokenTransaction";
-
 import { TitleTab } from "./styles";
 import TokenTopHolder from "./TokenTopHolder";
 import TokenMinting from "./TokenMinting";
-import { Box, Tab, useTheme } from "@mui/material";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { details } from "../../../commons/routers";
 import { UnionTokenIcon, PeopleIcon, TransactionIcon } from "../../../commons/resources";
 import CustomIcon from "../../commons/CustomIcon";
-import { useScreen } from "~/commons/hooks/useScreen";
 
 interface ITokenTableData {
   totalSupply?: number;
@@ -50,13 +50,13 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata }) =>
   ];
 
   const handleChange = (event: React.SyntheticEvent, tab: keyof Transaction) => {
-    history.push(details.token(tokenId, tab));
+    history.replace(details.token(tokenId, tab));
   };
   return (
     <TabContext value={tabActive}>
       <TabList
         onChange={handleChange}
-        variant='scrollable'
+        variant="scrollable"
         TabIndicatorProps={{
           sx: {
             background: (theme) => theme.palette.primary.main,
@@ -72,9 +72,9 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata }) =>
             value={key}
             style={{ padding: "12px 0px", marginRight: 40 }}
             icon={icon}
-            iconPosition='start'
+            iconPosition="start"
             label={
-              <Box display={"flex"} alignItems='center'>
+              <Box display={"flex"} alignItems="center">
                 <TitleTab pl={1} active={key === tabActive}>
                   {label}
                 </TitleTab>

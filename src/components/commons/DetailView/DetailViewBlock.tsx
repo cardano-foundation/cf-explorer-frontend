@@ -1,7 +1,16 @@
 import React, { useEffect } from "react";
 import { CgArrowsExchange, CgClose } from "react-icons/cg";
-import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH, REFRESH_TIMES } from "../../../commons/utils/constants";
-import { CubeIcon, RocketIcon } from "../../../commons/resources";
+import { useSelector } from "react-redux";
+import { BiChevronRight } from "react-icons/bi";
+
+import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { CubeIcon, RocketIcon } from "src/commons/resources";
+import useFetch from "src/commons/hooks/useFetch";
+import { details } from "src/commons/routers";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
+import { RootState } from "src/stores/types";
+import { API } from "src/commons/utils/api";
+
 import ProgressCircle from "../ProgressCircle";
 import {
   CloseButton,
@@ -34,16 +43,9 @@ import {
   ViewDetailScroll,
   TimeDuration
 } from "./styles";
-import useFetch from "../../../commons/hooks/useFetch";
-import { BiChevronRight } from "react-icons/bi";
-import { details } from "../../../commons/routers";
-import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../commons/utils/helper";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
 import CopyButton from "../CopyButton";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../stores/types";
-import { API } from "../../../commons/utils/api";
 import ViewAllButton from "../ViewAllButton";
 import ADAicon from "../ADAIcon";
 import FormNowMessage from "../FormNowMessage";
@@ -86,10 +88,10 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
 
   if (!data)
     return (
-      <ViewDetailDrawer anchor='right' open hideBackdrop variant='permanent'>
+      <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
         <ViewDetailHeader>
-          <ViewAllButton tooltipTitle='View Detail' to={details.block(blockNo)} />
-          <CustomTooltip title='Close'>
+          <ViewAllButton tooltipTitle="View Detail" to={details.block(blockNo)} />
+          <CustomTooltip title="Close">
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
@@ -98,25 +100,25 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
         <ViewDetailContainer>
           <ViewDetailScroll>
             <HeaderContainer>
-              <ProgressSkeleton variant='circular' />
+              <ProgressSkeleton variant="circular" />
             </HeaderContainer>
             <ListItem>
               <Item>
-                <IconSkeleton variant='circular' />
+                <IconSkeleton variant="circular" />
                 <ItemName>
-                  <DetailValueSkeleton variant='rectangular' />
+                  <DetailValueSkeleton variant="rectangular" />
                 </ItemName>
                 <ItemValue>
-                  <DetailLabelSkeleton variant='rectangular' />
+                  <DetailLabelSkeleton variant="rectangular" />
                 </ItemValue>
               </Item>
               <Item>
-                <IconSkeleton variant='circular' />
+                <IconSkeleton variant="circular" />
                 <ItemName>
-                  <DetailValueSkeleton variant='rectangular' />
+                  <DetailValueSkeleton variant="rectangular" />
                 </ItemName>
                 <ItemValue>
-                  <DetailLabelSkeleton variant='rectangular' />
+                  <DetailLabelSkeleton variant="rectangular" />
                 </ItemValue>
               </Item>
             </ListItem>
@@ -125,10 +127,10 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
                 return (
                   <DetailsInfoItem key={index}>
                     <DetailLabel>
-                      <DetailValueSkeleton variant='rectangular' />
+                      <DetailValueSkeleton variant="rectangular" />
                     </DetailLabel>
                     <DetailValue>
-                      <DetailLabelSkeleton variant='rectangular' />
+                      <DetailLabelSkeleton variant="rectangular" />
                     </DetailValue>
                   </DetailsInfoItem>
                 );
@@ -139,10 +141,10 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
                 <Group key={index}>
                   <DetailsInfoItem>
                     <DetailLabel>
-                      <DetailValueSkeleton variant='rectangular' />
+                      <DetailValueSkeleton variant="rectangular" />
                     </DetailLabel>
                     <DetailValue>
-                      <DetailLabelSkeleton variant='rectangular' />
+                      <DetailLabelSkeleton variant="rectangular" />
                     </DetailValue>
                   </DetailsInfoItem>
                 </Group>
@@ -155,13 +157,13 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
     );
 
   return (
-    <ViewDetailDrawer anchor='right' open hideBackdrop variant='permanent'>
+    <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
       <ViewDetailHeader>
-        <ViewAllButton tooltipTitle='View Detail' to={details.block(blockNo)} />
+        <ViewAllButton tooltipTitle="View Detail" to={details.block(blockNo)} />
         <TimeDuration>
           <FormNowMessage time={lastUpdated} />
         </TimeDuration>
-        <CustomTooltip title='Close'>
+        <CustomTooltip title="Close">
           <CloseButton onClick={handleClose}>
             <CgClose />
           </CloseButton>
@@ -172,7 +174,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
           <HeaderContainer>
             <ProgressCircle
               size={150}
-              pathLineCap='butt'
+              pathLineCap="butt"
               pathWidth={4}
               trailWidth={2}
               percent={data.epochNo === currentEpoch?.no ? ((data.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100 : 100}
@@ -184,12 +186,12 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
           </HeaderContainer>
           <ListItem>
             <Item>
-              <Icon src={CubeIcon} alt='socket' />
+              <Icon src={CubeIcon} alt="socket" />
               <ItemName>Block</ItemName>
               <ItemValue>{data.blockNo !== null ? data.blockNo : "_"}</ItemValue>
             </Item>
             <Item>
-              <Icon src={RocketIcon} alt='socket' />
+              <Icon src={RocketIcon} alt="socket" />
               <ItemName>slot</ItemName>
               <ItemValue>
                 {data.epochSlotNo || 0}

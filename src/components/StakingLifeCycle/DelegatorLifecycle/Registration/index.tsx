@@ -1,15 +1,17 @@
-import { Box, Skeleton } from "@mui/material";
 import { useState } from "react";
-import { StakeLink, StyledContainerModal } from "./styles";
-import RecentRegistrations from "./RecentRegistrations";
-import StyledModal from "../../../commons/StyledModal";
+import { Box, Skeleton } from "@mui/material";
 import { useParams } from "react-router-dom";
-import useFetch from "../../../../commons/hooks/useFetch";
-import { API } from "../../../../commons/utils/api";
-import { details } from "../../../../commons/routers";
-import CopyButton from "../../../commons/CopyButton";
+
+import StyledModal from "src/components/commons/StyledModal";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import { details } from "src/commons/routers";
+import CopyButton from "src/components/commons/CopyButton";
+import { FilterParams } from "src/components/StackingFilter";
+
+import RecentRegistrations from "./RecentRegistrations";
 import { RegistrationDraw } from "./RegistrationDraw";
-import { FilterParams } from "~/components/StackingFilter";
+import { StakeLink, StyledContainerModal } from "./styles";
 
 const Registration = () => {
   const [selected, setSelected] = useState<RegistrationItem | null>(null);
@@ -57,9 +59,9 @@ export const RegistrationCertificateModal = ({
   const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`, undefined, false);
 
   return (
-    <StyledModal width={550} {...props} title='Registration certificate'>
+    <StyledModal width={550} {...props} title="Registration certificate">
       <StyledContainerModal>
-        {loading && <Skeleton variant='rectangular' width={500} height={90} />}
+        {loading && <Skeleton variant="rectangular" width={500} height={90} />}
         {!loading && (
           <Box>
             <Box fontWeight={"bold"} mb={1} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>

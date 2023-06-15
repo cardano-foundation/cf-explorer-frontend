@@ -1,9 +1,11 @@
 import { useMemo, useRef } from "react";
 import { useSelector } from "react-redux";
-import AdaHolder from "~/components/commons/AdaHolder";
-import CardanoSystem from "~/components/commons/CardanoSystem";
-import DrawPath from "~/components/commons/DrawPath";
-import { LineArrowItem } from "~/components/commons/LineArrow";
+
+import AdaHolder from "src/components/commons/AdaHolder";
+import CardanoSystem from "src/components/commons/CardanoSystem";
+import DrawPath from "src/components/commons/DrawPath";
+import { LineArrowItem } from "src/components/commons/LineArrow";
+
 import {
   BoxGroup,
   DrawContainer,
@@ -33,7 +35,7 @@ const DeregistrationDraw: React.FC<IDeregistrationDrawProps> = ({ data, toggleCe
         startPosition: { 0: ["left", "bottom"], sm: ["left", "middle"], lg: ["center", "bottom"] },
         end: certificateRef,
         endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
-        startOffset: { 0: [22, -40], sm: [10, 0], lg: [0] },
+        startOffset: { 0: [22, -52], sm: [10, 0], lg: [0] },
         fold: { sm: "horizontal", lg: "vertical" },
         autoAlign: { 0: "start-vertical", sm: "none" }
       },
@@ -42,7 +44,7 @@ const DeregistrationDraw: React.FC<IDeregistrationDrawProps> = ({ data, toggleCe
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
         end: cadarnoSystemRef,
         endPosition: { 0: ["left", "top"], sm: ["left", "middle"], lg: ["center", "bottom"] },
-        endOffset: { 0: [22, 40], sm: [10, 0], lg: [0] },
+        endOffset: { 0: [22, 49], sm: [10, 0], lg: [0] },
         arrow: { 0: "top", sm: "left", lg: "bottom" },
         fold: { sm: "vertical", lg: "horizontal" },
         autoAlign: { 0: "end-vertical", sm: "none" }
@@ -71,7 +73,7 @@ const DeregistrationDraw: React.FC<IDeregistrationDrawProps> = ({ data, toggleCe
         startPosition: { 0: ["right", "middle"], lg: ["left", "top"] },
         end: holdRef,
         endPosition: { 0: ["right", "bottom"], sm: ["center", "bottom"], lg: ["right", "middle"] },
-        startOffset: { 0: [-6, 0], sm: [-10, 0], lg: [10, 54] },
+        startOffset: { 0: [-10, 0], sm: [-10, 0], lg: [10, 54] },
         endOffset: { 0: [-16, 0], sm: [0, 0] },
         fold: { 0: "horizontal", lg: "none" }
       },

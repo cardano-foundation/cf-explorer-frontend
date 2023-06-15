@@ -1,6 +1,7 @@
 import { Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
-import { NETWORKS } from "../../../../commons/utils/constants";
+
+import { NETWORKS } from "src/commons/utils/constants";
 
 export const NavbarContainer = styled("nav")<{ vh: number }>(({ theme, vh }) => ({
   position: "relative",

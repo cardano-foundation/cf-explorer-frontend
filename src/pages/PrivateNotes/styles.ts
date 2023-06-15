@@ -1,7 +1,8 @@
 import { alpha, Box, Button, styled } from "@mui/material";
-import Table from "../../components/commons/Table";
 import { Link } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
+
+import Table from "src/components/commons/Table";
 
 export const Container = styled(Box)``;
 

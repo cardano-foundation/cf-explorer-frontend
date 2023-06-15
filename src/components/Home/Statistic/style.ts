@@ -98,7 +98,7 @@ export const TimeDuration = styled("small")<{ marginTop?: string }>`
   }
 `;
 export const XSmall = styled("span")`
-  font-size: var(--font-size-text-x-small);
+  font-size: var(--font-size-text-small);
   color: ${(props) => props.theme.palette.grey[400]};
   white-space: nowrap;
 `;

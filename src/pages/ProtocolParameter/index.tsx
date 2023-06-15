@@ -1,13 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  AccordionContainer,
-  AccordionSummary,
-  ApplyFilterButton,
-  BackButton,
-  BackText,
-  ButtonFilter,
-  FilterContainer
-} from "./styles";
+import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import _ from "lodash";
 import {
@@ -25,33 +17,44 @@ import { useList, useUpdateEffect } from "react-use";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import moment from "moment";
-
-import Card from "~/components/commons/Card";
-import Table from "~/components/commons/Table";
-import { Column } from "~/types/table";
-import { PROTOCOL_TYPE } from "~/commons/utils/constants";
-import useFetch from "~/commons/hooks/useFetch";
-import { API } from "~/commons/utils/api";
-import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "~/types/protocol";
-import ParseScriptModal from "~/components/ParseScriptModal";
-import { DateRangeIcon, EmptyIcon, FilterIcon, ProtocolParam, ResetIcon } from "~/commons/resources";
-import DateRangeModal from "~/components/FilterReport/DateRangeModal";
-import { formatDateTimeLocal } from "~/commons/utils/helper";
 import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
 import { ImArrowDown2, ImArrowUp2 } from "react-icons/im";
-import { Link } from "react-router-dom";
-import { details } from "~/commons/routers";
-import CustomTooltip from "~/components/commons/CustomTooltip";
+
+import Card from "src/components/commons/Card";
+import Table from "src/components/commons/Table";
+import { Column } from "src/types/table";
+import { PROTOCOL_TYPE } from "src/commons/utils/constants";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "src/types/protocol";
+import ParseScriptModal from "src/components/ParseScriptModal";
+import { DateRangeIcon, EmptyIcon, FilterIcon, InfoIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
+import DateRangeModal from "src/components/FilterReport/DateRangeModal";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
+import { details } from "src/commons/routers";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+
+import {
+  AccordionContainer,
+  AccordionSummary,
+  ApplyFilterButton,
+  BackButton,
+  BackText,
+  ButtonFilter,
+  FilterContainer
+} from "./styles";
+import { explainerTextGlobalConstants, explainerTextProtocolHistory } from "./explainerText";
+import { ExplainerTextModal } from "./ExplainerTextModal";
 
 const ProtocolParameter: React.FC = () => {
   const [fixedColumnKeys, { push: pushFixedColumnKeys }] = useList<string>([]);
   const [variableColumnList, { push: pushVariableColumn }] = useList<string>([]);
   const [costModelScript, setCostModelScript] = useState("");
   const [showHistory, setShowHistory] = useState(false);
-
-  const { data: dataFixed, loading: loadingFixed } = useFetch(API.PROTOCOL_PARAMETER.FIXED);
-  const { data: dataLastest, loading: loadingLastest } = useFetch<TProtocolParam>(API.PROTOCOL_PARAMETER.LASTEST);
-
+  const { PROTOCOL_PARAMETER } = API;
+  const { data: dataFixed, loading: loadingFixed } = useFetch(PROTOCOL_PARAMETER.FIXED);
+  const { data: dataLastest, loading: loadingLastest } = useFetch<TProtocolParam>(PROTOCOL_PARAMETER.LASTEST);
+  const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
   useUpdateEffect(() => {
     dataLastest &&
       [...Object.keys(PROTOCOL_TYPE), "startEpoch", "endEpoch"].map((k) =>
@@ -70,8 +73,26 @@ const ProtocolParameter: React.FC = () => {
 
   const theme = useTheme();
 
-  const columnsMap = Object.keys(PROTOCOL_TYPE).map((k, idx) => ({
-    title: k,
+  const columnsMap = Object.keys(PROTOCOL_TYPE).map((k) => ({
+    title: (
+      <Box>
+        {k}{" "}
+        {explainerTextProtocolHistory[k as keyof Omit<ProtocolHistory, "epochChanges">] && (
+          <Box
+            component={IconButton}
+            padding={"2px"}
+            onClick={() =>
+              setExplainerText({
+                content: explainerTextProtocolHistory[k as keyof Omit<ProtocolHistory, "epochChanges">],
+                title: k
+              })
+            }
+          >
+            <InfoIcon style={{ cursor: "pointer" }} />
+          </Box>
+        )}
+      </Box>
+    ),
     key: k,
     render: (r: TProtocolParam) => {
       return (
@@ -117,12 +138,38 @@ const ProtocolParameter: React.FC = () => {
   ];
 
   const fixedColumn = (fixedColumnKeys || []).map((k) => ({
-    title: k,
+    title: (
+      <Box>
+        {k}
+        {explainerTextGlobalConstants[k] && (
+          <Box
+            component={IconButton}
+            padding={"2px"}
+            onClick={() => setExplainerText({ content: explainerTextGlobalConstants[k], title: k })}
+          >
+            <InfoIcon style={{ cursor: "pointer" }} />
+          </Box>
+        )}
+      </Box>
+    ),
     key: k,
     render: (r: any) => {
       return (
-        <Box component={Box} justifyItems={"flex-start"} textTransform={"capitalize"}>
-          <Box maxWidth={300} overflow={"hidden"} whiteSpace={"nowrap"} textOverflow={"ellipsis"}>
+        <Box
+          component={k === "genDelegs" ? Button : Box}
+          onClick={() => {
+            return k === "genDelegs" && setCostModelScript(r["genDelegs"] !== null ? r["genDelegs"] || 0 : "");
+          }}
+          justifyItems={"flex-start"}
+          textTransform={"capitalize"}
+        >
+          <Box
+            maxWidth={300}
+            overflow={"hidden"}
+            whiteSpace={"nowrap"}
+            textOverflow={"ellipsis"}
+            color={({ palette }) => (k === "genDelegs" ? palette.blue[800] : "unset")}
+          >
             {typeof r[k] === "object" ? JSON.stringify(r[k]) : r[k]}
           </Box>
         </Box>
@@ -143,7 +190,7 @@ const ProtocolParameter: React.FC = () => {
       )}
       {showHistory && <ProtocolParameterHistory />}
       {!showHistory && (
-        <Card marginTitle='0px' title={"Protocol parameters"} textAlign={"left"}>
+        <Card marginTitle="0px" title={"Protocol parameters"}>
           <Box pt={2}>
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
@@ -153,7 +200,7 @@ const ProtocolParameter: React.FC = () => {
                   </Box>
                   <Box
                     component={Button}
-                    variant='contained'
+                    variant="contained"
                     textTransform={"capitalize"}
                     fontWeight={"bold"}
                     fontSize={"0.875rem"}
@@ -167,7 +214,7 @@ const ProtocolParameter: React.FC = () => {
                     component={Skeleton}
                     mt={2}
                     borderRadius={({ spacing }) => spacing(2)}
-                    variant='rectangular'
+                    variant="rectangular"
                     height={280}
                   />
                 )}
@@ -176,14 +223,14 @@ const ProtocolParameter: React.FC = () => {
               <Box pt={"30px"}>
                 <Box>
                   <Box textAlign={"left"} fontWeight={"bold"} fontSize={"1.25rem"}>
-                    Non-updatable Parameters
+                    Global Constants
                   </Box>
                   {loadingFixed && (
                     <Box
                       component={Skeleton}
                       mt={2}
                       borderRadius={({ spacing }) => spacing(2)}
-                      variant='rectangular'
+                      variant="rectangular"
                       height={280}
                     />
                   )}
@@ -200,7 +247,12 @@ const ProtocolParameter: React.FC = () => {
         open={!!costModelScript}
         onClose={() => setCostModelScript("")}
         script={costModelScript}
-        title='CostModel'
+        title="CostModel"
+      />
+      <ExplainerTextModal
+        open={!!explainerText}
+        handleCloseModal={() => setExplainerText(null)}
+        explainerText={explainerText || { content: "", title: "" }}
       />
     </Container>
   );
@@ -208,22 +260,36 @@ const ProtocolParameter: React.FC = () => {
 
 export default ProtocolParameter;
 
-const ProtocolParameterHistory = () => {
+export const ProtocolParameterHistory = () => {
+  const { PROTOCOL_PARAMETER } = API;
+  const TOTAL_PARAMETER = 29;
+
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
-  const { data: dataHistory, loading } = useFetch<ProtocolHistory>(
-    `${API.PROTOCOL_PARAMETER.HISTORY}/${
-      filterParams.length === 29 || filterParams.length === 0
+  const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
+
+  const {
+    data: dataHistory,
+    loading,
+    initialized
+  } = useFetch<ProtocolHistory>(
+    `${PROTOCOL_PARAMETER.HISTORY}/${
+      filterParams.length === TOTAL_PARAMETER || filterParams.length === 0
         ? "ALL"
         : filterParams.map((f) => PROTOCOL_TYPE[f as keyof typeof PROTOCOL_TYPE]).join(",")
-    } ${
+    }${
       _.isEmpty(dateRangeFilter)
         ? ""
-        : `?endTime=${moment(dateRangeFilter.toDate).format("X")}&startTime=${moment(dateRangeFilter.fromDate).format(
-            "X"
-          )}`
-    }`
+        : `?endTime=${moment(dateRangeFilter.toDate).endOf("D").utc().format("X")}&startTime=${moment(
+            dateRangeFilter.fromDate
+          )
+            .startOf("D")
+            .utc()
+            .format("X")}`
+    }
+    `
   );
+
   const [dataHistoryMapping, { push: pushHistory, clear }] = useList<{
     [key: string]: any;
   }>([]);
@@ -289,8 +355,8 @@ const ProtocolParameterHistory = () => {
               : "#"
           }
         >
-          {r[t]?.status === "ADDED" ? (
-            <CustomTooltip title='No transaction'>
+          {r[t]?.status === "ADDED" || (r[t]?.status === "UPDATED" && !r[t]?.transactionHash) ? (
+            <CustomTooltip title="No transaction">
               <Box>{r[t] ? (r[t]?.value ? r[t]?.value : r[t]?.value === 0 ? 0 : "") : ""}</Box>
             </CustomTooltip>
           ) : r[t] ? (
@@ -315,7 +381,25 @@ const ProtocolParameterHistory = () => {
       key: "ParameterName",
       fixed: true,
       render: (r: TProtocolParam & { params: string }) => {
-        return <Box p={"24px 20px"}>{r?.params}</Box>;
+        return (
+          <Box p={"24px 20px"}>
+            {r?.params}
+            {explainerTextProtocolHistory[r?.params as keyof Omit<ProtocolHistory, "epochChanges">] && (
+              <Box
+                component={IconButton}
+                padding={"2px"}
+                onClick={() =>
+                  setExplainerText({
+                    content: explainerTextProtocolHistory[r?.params as keyof Omit<ProtocolHistory, "epochChanges">],
+                    title: r?.params
+                  })
+                }
+              >
+                <InfoIcon style={{ cursor: "pointer" }} />
+              </Box>
+            )}
+          </Box>
+        );
       }
     },
     ...columnsMap
@@ -339,7 +423,6 @@ const ProtocolParameterHistory = () => {
     setDataTable([...dataHistoryMapping].slice(1));
   }, [JSON.stringify(dataHistoryMapping)]);
 
-  // filter
   useUpdateEffect(() => {
     if (resetFilter) {
       setFilterParams([]);
@@ -355,21 +438,21 @@ const ProtocolParameterHistory = () => {
 
   if (loading) {
     return (
-      <Box component={Skeleton} mt={2} borderRadius={({ spacing }) => spacing(2)} variant='rectangular' height={400} />
+      <Box component={Skeleton} mt={2} borderRadius={({ spacing }) => spacing(2)} variant="rectangular" height={400} />
     );
   }
 
   return (
     <Box>
       <Card
-        marginTitle='0px'
+        marginTitle="0px"
         title={"Protocol parameters update history"}
         textAlign={"left"}
         extra={
           <Box position={"relative"}>
             <Box
               component={Button}
-              variant='text'
+              variant="text"
               textTransform={"capitalize"}
               bgcolor={({ palette }) => alpha(palette.green[600], 0.1)}
               px={2}
@@ -395,36 +478,48 @@ const ProtocolParameterHistory = () => {
           </Box>
         }
       >
-        {columnsTable?.length === 1 && !loading && (
-          <Box textAlign={"center"}>
-            <Box component={"img"} src={EmptyIcon} mt={3} />
-            <Box
-              component={Button}
-              width={"200px"}
-              textTransform={"capitalize"}
-              onClick={() => {
-                setResetFilter(true);
-                setShowFiter(false);
-              }}
-              mx={"auto"}
-              display={"flex"}
-              alignItems={"center"}
-              mt={3}
-              mb={2}
-              color={`#108AEF !important`}
-            >
-              <Box mr={1}>Reset</Box>
-              <ResetIcon />
+        {initialized && !!dataHistory ? (
+          columnsTable?.length === 1 &&
+          !loading && (
+            <Box textAlign={"center"}>
+              <Box component={"img"} src={EmptyIcon} mt={3} />
+              <Box
+                component={Button}
+                width={"200px"}
+                textTransform={"capitalize"}
+                onClick={() => {
+                  setResetFilter(true);
+                  setShowFiter(false);
+                }}
+                mx={"auto"}
+                display={"flex"}
+                alignItems={"center"}
+                mt={3}
+                mb={2}
+                color={"#108aef !important"}
+              >
+                <Box mr={1}>Reset</Box>
+                <ResetIcon />
+              </Box>
             </Box>
-          </Box>
+          )
+        ) : (
+          <></>
         )}
-        {columnsTable?.length > 1 && <TableStyled columns={columnsTable} data={dataTable} loading={loading} />}
+        {columnsTable?.length > 1 && initialized && (
+          <TableStyled columns={columnsTable} data={dataTable} loading={loading} />
+        )}
       </Card>
+      <ExplainerTextModal
+        open={!!explainerText}
+        handleCloseModal={() => setExplainerText(null)}
+        explainerText={explainerText || { content: "", title: "" }}
+      />
     </Box>
   );
 };
 
-const TableStyled = styled(Table)(() => ({
+export const TableStyled = styled(Table)(() => ({
   td: {
     padding: 0
   }
@@ -449,7 +544,7 @@ interface FilterComponentProps {
   >;
 }
 
-const FilterComponent: React.FC<FilterComponentProps> = ({
+export const FilterComponent: React.FC<FilterComponentProps> = ({
   setFilterParams,
   setResetFilter,
   setSortTimeFilter,
@@ -481,7 +576,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
   };
   return (
     <FilterContainer padding={2} pt={5}>
-      <CloseButton saving={0} onClick={() => setShowFiter(false)} data-testid='close-modal-button'>
+      <CloseButton saving={0} onClick={() => setShowFiter(false)} data-testid="close-modal-button">
         <IoMdClose />
       </CloseButton>
       <Box display={"flex"} flexDirection={"column"}>
@@ -581,6 +676,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 
         <Box>
           <ApplyFilterButton
+            data-testid="apply-filters"
             onClick={handleApplyFilter}
             disabled={filterOption.length === 0 && !sort && _.isEmpty(dateRange)}
           >
