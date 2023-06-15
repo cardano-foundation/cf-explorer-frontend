@@ -134,6 +134,13 @@ export default function ResetPassword() {
     }
   };
 
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    }
+  }, []);
+
   const handleKeyDown = (event: any) => {
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -179,7 +186,6 @@ export default function ResetPassword() {
                     </Box>
                   }
                   name="password"
-                  onKeyDown={handleKeyDown}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton aria-label="toggle password visibility" onClick={handleTogglePassword}>
@@ -206,7 +212,6 @@ export default function ResetPassword() {
                     </Box>
                   }
                   fullWidth
-                  onKeyDown={handleKeyDown}
                   name="confirmPassword"
                   onChange={handleChange}
                   type={showConfirmPassword ? "text" : "password"}

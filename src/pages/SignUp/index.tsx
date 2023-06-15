@@ -1,5 +1,6 @@
 import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment } from "@mui/material";
 import { useEffect, useReducer, useRef, useState } from "react";
+import { HiArrowLongLeft } from "react-icons/hi2";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
 
@@ -9,6 +10,8 @@ import { routers } from "src/commons/routers";
 import { signUp } from "src/commons/utils/userRequest";
 
 import {
+  BackButton,
+  BackText,
   CloseButton,
   Container,
   ForgotPassword,
@@ -193,16 +196,19 @@ export default function SignUp() {
     });
   };
 
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    }
+  }, []);
+
   const handleKeyDown = (event: any) => {
     if (event.key === 'Enter') {
       event.preventDefault();
       handleSubmit(event);
     }
   };
-
-  function handleClose() {
-    history.push(routers.HOME);
-  }
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -273,17 +279,30 @@ export default function SignUp() {
       setLoading(false);
     }
   };
+
+  const handleRedirect = (forceGoHome?: boolean) => {
+    if (forceGoHome) {
+      history.replace(routers.HOME);
+    } else {
+      history.replace(routers.SIGN_IN);
+    }
+  };
+
   return (
     <Container>
       {!success ? (
         <WrapContent>
           <WrapTitle>Sign up</WrapTitle>
           <WrapHintText>
-            Already have an account? <WrapSignUp onClick={() => history.push(routers.SIGN_IN)}>Sign In Here</WrapSignUp>
+            Already have an account? <WrapSignUp onClick={() => handleRedirect()}>Sign In Here</WrapSignUp>
           </WrapHintText>
           <FormGroup>
             <WrapForm>
-              <CloseButton saving={0} onClick={() => handleClose()}>
+              <BackButton onClick={() => handleRedirect()}>
+                <HiArrowLongLeft fontSize="16px" />
+                <BackText>Back</BackText>
+              </BackButton>
+              <CloseButton saving={0} onClick={() => handleRedirect(true)}>
                 <IoMdClose />
               </CloseButton>
               <WrapInput>
@@ -296,7 +315,6 @@ export default function SignUp() {
                     </Box>
                   }
                   fullWidth
-                  onKeyDown={handleKeyDown}
                   value={formData.email.value}
                   name="email"
                   onChange={handleChange}
@@ -315,7 +333,6 @@ export default function SignUp() {
                       <EmailIcon />
                     </Box>
                   }
-                  onKeyDown={handleKeyDown}
                   fullWidth
                   value={formData.confirmEmail.value}
                   name="confirmEmail"
@@ -344,7 +361,6 @@ export default function SignUp() {
                       </IconButton>
                     </InputAdornment>
                   }
-                  onKeyDown={handleKeyDown}
                   name="password"
                   onChange={handleChange}
                   error={Boolean(formData.password.error && formData.password.touched)}
@@ -372,7 +388,6 @@ export default function SignUp() {
                     </InputAdornment>
                   }
                   name="confirmPassword"
-                  onKeyDown={handleKeyDown}
                   onChange={handleChange}
                   error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
                   placeholder="Confirm Password"

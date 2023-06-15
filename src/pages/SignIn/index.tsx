@@ -123,6 +123,13 @@ export default function SignIn() {
     }
   };
 
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    }
+  }, []);
+
   const getError = (name: string, value: string) => {
     let error = "";
     switch (name) {
@@ -237,7 +244,6 @@ export default function SignIn() {
                 name="email"
                 value={formData.email.value}
                 onChange={handleChange}
-                onKeyDown={handleKeyDown}
                 fullWidth
                 placeholder="Email Address"
               />
@@ -255,7 +261,6 @@ export default function SignIn() {
                 }
                 fullWidth
                 name="password"
-                onKeyDown={handleKeyDown}
                 value={formData.password.value}
                 endAdornment={
                   <InputAdornment position="end">
