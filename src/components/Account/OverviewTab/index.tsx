@@ -45,7 +45,7 @@ import {
   WrapInfoItemMobile
 } from "./styles";
 
-type TRowItem = {
+export type TRowItem = {
   label: string;
   value?: string | ReactElement;
   action?: ReactElement;
@@ -56,7 +56,7 @@ type TRowItem = {
   setvalueInput?: (v: string) => void;
 };
 
-const RowItem: React.FC<TRowItem> = ({
+export const RowItem: React.FC<TRowItem> = ({
   label,
   value,
   action,
@@ -68,7 +68,7 @@ const RowItem: React.FC<TRowItem> = ({
 }) => {
   return isTablet ? (
     <StyledRowItem justifyContent={"space-between"}>
-      <WrapInfoItemMobile>
+      <WrapInfoItemMobile data-testid="mobile-wraper">
         <Label>{label}</Label>
         {isInput ? <Box component={Input} width={"100%"} placeholder={placeholder || ""} /> : <Value>{value}</Value>}
       </WrapInfoItemMobile>
@@ -210,7 +210,7 @@ interface ConnectWalletModal {
   setOpen: (open: boolean) => void;
 }
 
-const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen }) => {
+export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen }) => {
   const { stakeAddress, connect, disconnect } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
   });

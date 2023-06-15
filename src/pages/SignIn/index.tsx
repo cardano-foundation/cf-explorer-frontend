@@ -59,6 +59,13 @@ const formReducer = (state: IForm, event: any) => {
 export default function SignIn() {
   const history = useHistory();
   const toast = useToast();
+  const AUTHENTICATE_ROUTES = [
+    routers.SIGN_IN as string,
+    routers.SIGN_UP as string,
+    routers.FORGOT_PASSWORD as string,
+    routers.RESET_PASSWORD as string,
+    routers.VERIFY_EMAIL as string
+  ];
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
@@ -88,31 +95,40 @@ export default function SignIn() {
     setRememberMe(event.target.checked);
   }
 
-  const handleLoginSuccess = () => {
-    toast.success("Login success");
-    history.push(routers.HOME);
-  };
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      handleClose();
-    }
-  }, [isLoggedIn]);
-
-  function handleClose() {
-    if (history.length > 1) {
+  const handleRedirectBack = () => {
+    if (history.length > 1 && !AUTHENTICATE_ROUTES.includes(history.location.pathname)) {
       history.goBack();
     } else {
-      history.push(routers.HOME);
+      history.replace(routers.HOME);
     }
   }
 
+  const handleLoginSuccess = () => {
+    toast.success("Login success");
+    handleRedirectBack();
+  };
+
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      handleRedirectBack();
+    }
+  }, [isLoggedIn]);
+
+
   const handleKeyDown = (event: any) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       event.preventDefault();
       handleSubmit(event);
     }
   };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    }
+  }, []);
 
   const getError = (name: string, value: string) => {
     let error = "";
@@ -134,9 +150,9 @@ export default function SignIn() {
   const handleChange = (event: any) => {
     setFormData({
       name: event.target.name,
-      value: event.target.value,
-      touched: true,
-      error: getError(event.target.name, event.target.value)
+      value: event.target.value.trim(),
+      touched: event.target.value.trim() !== "",
+      error: getError(event.target.name, event.target.value.trim())
     });
     setInvalidInfomation(false);
   };
@@ -147,7 +163,7 @@ export default function SignIn() {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    if(!enableButton) return;
+    if (!enableButton) return;
     const errorUsername = getError("email", formData.email.value);
     const errorPassword = getError("password", formData.password.value);
     if (errorUsername) {
@@ -208,7 +224,7 @@ export default function SignIn() {
         </WrapHintText>
         <FormGroup>
           <WrapForm>
-            <CloseButton saving={0} onClick={() => handleClose()}>
+            <CloseButton saving={0} onClick={() => handleRedirectBack()}>
               <IoMdClose />
             </CloseButton>
             {invalidInfomation ? (
@@ -228,7 +244,6 @@ export default function SignIn() {
                 name="email"
                 value={formData.email.value}
                 onChange={handleChange}
-                onKeyDown={handleKeyDown}
                 fullWidth
                 placeholder="Email Address"
               />
@@ -246,7 +261,6 @@ export default function SignIn() {
                 }
                 fullWidth
                 name="password"
-                onKeyDown={handleKeyDown}
                 value={formData.password.value}
                 endAdornment={
                   <InputAdornment position="end">
@@ -289,7 +303,13 @@ export default function SignIn() {
                 Forgot your password?
               </ForgotPassword>
             </Box>
-            <WrapButton data-testid="login-btn" variant="contained" fullWidth onClick={handleSubmit} disabled={!enableButton}>
+            <WrapButton
+              data-testid="login-btn"
+              variant="contained"
+              fullWidth
+              onClick={handleSubmit}
+              disabled={!enableButton}
+            >
               Log in
             </WrapButton>
             <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
@@ -300,7 +320,12 @@ export default function SignIn() {
             <ConnectWallet
               onSuccess={handleLoginSuccess}
               customButton={({ handleClick }) => (
-                <WrapButtonConnectWallet data-testid="connect-wallet" variant="outlined" fullWidth onClick={handleClick}>
+                <WrapButtonConnectWallet
+                  data-testid="connect-wallet"
+                  variant="outlined"
+                  fullWidth
+                  onClick={handleClick}
+                >
                   Connect Wallet
                 </WrapButtonConnectWallet>
               )}

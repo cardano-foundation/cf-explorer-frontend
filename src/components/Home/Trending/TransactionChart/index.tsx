@@ -8,9 +8,21 @@ import { API } from "src/commons/utils/api";
 import { numberWithCommas } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
 
-import { BoxInfo, ColorChart, InfoItem, Skeleton, Tab, Tabs, Title, TransactionContainer, WrapHeader } from "./styles";
+import {
+  BoxInfo,
+  ColorChart,
+  InfoItem,
+  Skeleton,
+  StyledTransactionTypeItem,
+  StyledTransactionTypes,
+  Tab,
+  Tabs,
+  Title,
+  TransactionContainer,
+  WrapHeader
+} from "./styles";
 
-interface TransactionChartIF {
+export interface TransactionChartIF {
   date: string;
   simpleTransactions: number;
   smartContract: number;
@@ -77,7 +89,7 @@ const TransactionChart: React.FC = () => {
   return (
     <TransactionContainer>
       <WrapHeader>
-        <Title>Transaction {optionsTime[rangeTime].displayName}</Title>
+        <Title>Transactions {optionsTime[rangeTime].displayName}</Title>
         <Tabs width={isMobile ? "100%" : "auto"}>
           {Object.keys(optionsTime).map((option) => {
             return (
@@ -100,17 +112,14 @@ const TransactionChart: React.FC = () => {
           </Grid>
           <Grid item xs={12} lg={3}>
             <BoxInfo>
-              <Box fontWeight={"bold"} fontSize={"1.5rem"}>
-                Transaction Types
-              </Box>
+              <StyledTransactionTypes>Transaction Types</StyledTransactionTypes>
               {dataOverview.map((item) => (
                 <InfoItem key={item.key}>
                   <ColorChart type={item.key as TypeChart} />
                   <Box>
-                    <Box color={({ palette }) => palette.grey[400]} fontSize={"0.8125rem"}>
-                      {item.title}
-                    </Box>
+                    <StyledTransactionTypeItem>{item.title}</StyledTransactionTypeItem>
                     <Box
+                      data-testid={item.key}
                       textAlign={"left"}
                       color={({ palette }) => palette.green[700]}
                       fontWeight={"bold"}

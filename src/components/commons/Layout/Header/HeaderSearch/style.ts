@@ -16,6 +16,7 @@ export const Form = styled("form")<{ home: number; sidebar?: number }>(({ theme,
   padding: `0px 0px 0px ${home ? 15 : 0}px`,
   boxSizing: "border-box",
   marginTop: home ? 30 : 0,
+  border: `1.5px solid ${theme.palette.grey[200]}`,
   [theme.breakpoints.down("lg")]: {
     minWidth: sidebar ? "unset" : home ? 785 : 400
   },

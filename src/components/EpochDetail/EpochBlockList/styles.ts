@@ -5,6 +5,9 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     padding: "0px 16px"
   },
+  [theme.breakpoints.up("sm")]: {
+    paddingTop: "10px"
+  },
   "& h2": {
     paddingLeft: "0px"
   }
@@ -25,6 +28,12 @@ export const StyledLink = styled(Link)`
 `;
 
 export const StyledOutput = styled("div")`
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+export const PriceWrapper = styled(StyledColorBlueDard)`
   display: inline-flex;
   align-items: center;
   gap: 10px;

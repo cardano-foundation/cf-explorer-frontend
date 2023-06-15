@@ -1,6 +1,6 @@
+import { Box, IconButton, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Box, IconButton, useTheme } from "@mui/material";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { EyeIcon } from "src/commons/resources";
@@ -8,8 +8,8 @@ import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { getShortHash } from "src/commons/utils/helper";
 import { DeregistrationCertificateModal } from "src/components/StakingLifeCycle/SPOLifecycle/Deregistration";
-import { AdaValue } from "src/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
 import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
+import { AdaValue } from "src/components/commons/ADAValue";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";

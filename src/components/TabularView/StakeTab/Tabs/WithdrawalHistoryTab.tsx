@@ -1,9 +1,11 @@
 import { Box, useTheme } from "@mui/material";
+import BigNumber from "bignumber.js";
 import { useContext, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 import { GreenWalletIcon } from "src/components/commons/GreenWalletIcon";
+import { AdaValue } from "src/components/commons/ADAValue";
 
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { details } from "../../../../commons/routers";
@@ -14,7 +16,6 @@ import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecy
 import CustomTooltip from "../../../commons/CustomTooltip";
 import Table, { Column } from "../../../commons/Table";
 import { StyledLink, TableSubTitle, WrapWalletLabel, WrapperDelegationTab } from "../styles";
-import { AdaValue } from "./StakeRegistrationTab";
 
 const WithdrawalHistoryTab = () => {
   const detailData = useContext(DelegatorDetailContext);
@@ -63,10 +64,10 @@ const WithdrawalHistoryTab = () => {
       minWidth: "120px",
       render: (r) => (
         <Box>
-          <AdaValue limit={5} value={r.value - r.fee} />
+          <AdaValue value={new BigNumber(r.value).minus(new BigNumber(r.fee)).toString()} />
           <TableSubTitle>
             <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-              <AdaValue limit={1} color={theme.palette.grey[400]} value={r.value} gap="3px" fontSize="12px" />
+              <AdaValue color={theme.palette.grey[400]} value={r.value} gap="3px" fontSize="12px" />
               <Box mx="3px">/</Box>
               <AdaValue color={theme.palette.grey[400]} value={r.fee} gap="3px" fontSize="12px" />
             </Box>
