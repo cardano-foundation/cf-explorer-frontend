@@ -98,6 +98,20 @@ export const Icon = styled("img")`
   height: 24px;
 `;
 
+export const PolicyId = styled(Box)(({ theme }) => ({
+  color: theme.palette.common.black,
+  fontSize: "1rem",
+  fontWeight: "bold",
+  wordBreak: "break-word",
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
+  width: "90%",
+  [theme.breakpoints.down("sm")]: {
+    width: "80%"
+  }
+}));
+
 export const BlockDefault = styled("span")`
   font-size: var(--font-size-text);
   color: ${(props) => props.theme.palette.primary.contrastText};
