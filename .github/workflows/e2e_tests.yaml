@@ -1,4 +1,4 @@
-name: Run Jest Tests
+name: Run Explorer e2e Tests
 on:
   push:
     branches-ignore:
@@ -15,6 +15,12 @@ jobs:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
 
+      - name: 🦾 Create .env file
+        run: |
+          echo "PORT=3000" > .env
+          echo "REACT_APP_VERSION=$npm_package_version" >> .env
+          echo "REACT_APP_MAINNET_API_URL=${EXPLORER_API_MAINNET_URL}" >> .env
+
       - name: 🫡 Setup node
         uses: actions/setup-node@v1
         with:
@@ -24,4 +30,6 @@ jobs:
         run: npm ci
 
       - name: 🎳 Run tests
-        run: npm run test:jest:ci
+        run: npm test
+    env:
+      EXPLORER_API_MAINNET_URL: ${{ secrets.EXPLORER_API_MAINNET_URL }}
