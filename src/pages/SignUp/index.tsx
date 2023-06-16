@@ -197,6 +197,13 @@ export default function SignUp() {
     history.push(routers.HOME);
   }
 
+  const handleKeyDown = (event: any) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleSubmit(event);
+    }
+  };
+
   const handleSubmit = (event: any) => {
     event.preventDefault();
     let hasError = false;
@@ -294,6 +301,7 @@ export default function SignUp() {
                   onChange={handleChange}
                   error={Boolean(formData.email.error && formData.email.touched)}
                   placeholder="A confirmation code will be sent to this address"
+                  onKeyDown={handleKeyDown}
                 />
                 {formData.email.error && formData.email.touched ? (
                   <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom>
@@ -313,6 +321,7 @@ export default function SignUp() {
                   onChange={handleChange}
                   error={Boolean(formData.confirmEmail.error && formData.confirmEmail.touched)}
                   placeholder="Re-enter Your email address"
+                  onKeyDown={handleKeyDown}
                 />
                 {formData.confirmEmail.error && formData.confirmEmail.touched ? (
                   <FormHelperTextCustom error>{formData.confirmEmail.error}</FormHelperTextCustom>
@@ -339,6 +348,8 @@ export default function SignUp() {
                   onChange={handleChange}
                   error={Boolean(formData.password.error && formData.password.touched)}
                   placeholder="Password"
+                  onKeyDown={handleKeyDown}
+
                 />
                 {formData.password.error && formData.password.touched ? (
                   <FormHelperTextCustom error>{formData.password.error}</FormHelperTextCustom>
@@ -365,6 +376,7 @@ export default function SignUp() {
                   onChange={handleChange}
                   error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
                   placeholder="Confirm Password"
+                  onKeyDown={handleKeyDown}
                 />
                 {formData.confirmPassword.error && formData.confirmPassword.touched ? (
                   <FormHelperTextCustom error>{formData.confirmPassword.error}</FormHelperTextCustom>
