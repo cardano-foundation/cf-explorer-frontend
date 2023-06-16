@@ -1,9 +1,9 @@
 import { screen, cleanup, fireEvent } from "@testing-library/react";
 import { render } from "src/test-utils";
-import Table from "src/components/commons/Table";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router";
+import { details } from "src/commons/routers";
 import Stake from ".";
 
 const mockData = {
@@ -33,27 +33,7 @@ describe("Stake key view", () => {
     expect(screen.getByText("Deregistration")).toBeInTheDocument();
   });
 
-  it("renders the table with given column and data", () => {
-    const columns = [
-      {
-        title: "Test Column",
-        key: "test",
-        render: (r: any) => <div>{r.test}</div>
-      }
-    ];
-
-    const data = [
-      {
-        test: "Test Data"
-      }
-    ];
-    render(<Table columns={columns} data={data} />);
-
-    expect(screen.getByText("Test Column")).toBeInTheDocument();
-    expect(screen.getByText("Test Data")).toBeInTheDocument();
-  });
-
-  it("should navigate to the correct route when button is clicked", async () => {
+  it("should navigate to the correct route when txHash item is clicked", async () => {
     const mockUseFetchList = useFetchList as jest.Mock;
     mockUseFetchList.mockReturnValue(mockData);
     const history = createMemoryHistory();
@@ -66,20 +46,36 @@ describe("Stake key view", () => {
 
     const TxHashStakeItem = screen.getByText("10efa612b6...72c9feb");
     fireEvent.click(TxHashStakeItem);
-    expect(history.location.pathname).toBe(
-      "/transaction/10efa612b61bd83e0502c76cfa56c4987bcf0a8a1544b8b57068daf9272c9feb/summary"
+    expect(history.location.pathname).toBe(details.transaction(mockData.data[0].txHash));
+  });
+  it("should navigate to the correct route when block item is clicked", async () => {
+    const mockUseFetchList = useFetchList as jest.Mock;
+    mockUseFetchList.mockReturnValue(mockData);
+    const history = createMemoryHistory();
+
+    render(
+      <Router history={history}>
+        <Stake />
+      </Router>
     );
 
     const BlockItem = screen.getByText(8897915);
     fireEvent.click(BlockItem);
-    expect(history.location.pathname).toBe(
-      "/block/8897915"
+    expect(history.location.pathname).toBe(details.block(mockData.data[0].block.toString()));
+  });
+  it("should navigate to the correct route when stake key item is clicked", async () => {
+    const mockUseFetchList = useFetchList as jest.Mock;
+    mockUseFetchList.mockReturnValue(mockData);
+    const history = createMemoryHistory();
+
+    render(
+      <Router history={history}>
+        <Stake />
+      </Router>
     );
 
-    const StakeKeyItem = screen.getByText("stake...dayvd")
+    const StakeKeyItem = screen.getByText("stake...dayvd");
     fireEvent.click(StakeKeyItem);
-    expect(history.location.pathname).toBe(
-      "/stake/stake1uy56htr6qegvdj639sjgvmht8gymq8yx96mvgz9qslzucwqtdayvd/delegation"
-    );
+    expect(history.location.pathname).toBe(details.stake(mockData.data[0].stakeKey));
   });
 });
