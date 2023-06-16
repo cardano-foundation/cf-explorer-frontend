@@ -1,6 +1,8 @@
-import { useEffect, useReducer, useRef, useState } from "react";
 import { Box, FormGroup } from "@mui/material";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { HiArrowLongLeft } from "react-icons/hi2";
+import { IoMdClose } from "react-icons/io";
 
 import { EmailIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
@@ -8,6 +10,9 @@ import { forgotPassword } from "src/commons/utils/userRequest";
 
 import {
   AlertCustom,
+  BackButton,
+  BackText,
+  CloseButton,
   Container,
   FormHelperTextCustom,
   InputCustom,
@@ -77,6 +82,21 @@ export default function ForgotPassword() {
       touched: event.target.value.trim() !== "",
     });
   };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    }
+  }, []);
+
+  const handleKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleSubmit(event);
+    }
+  };
+
   const handleForgotPassword = async (email: string) => {
     try {
       setLoading(true);
@@ -127,6 +147,14 @@ export default function ForgotPassword() {
     return;
   };
 
+  const handleRedirect = (forceGoHome?: boolean) => {
+    if (forceGoHome) {
+      history.replace(routers.HOME);
+    } else {
+      history.replace(routers.SIGN_IN);
+    }
+  };
+
   return (
     <Container>
       <WrapContent>
@@ -142,6 +170,13 @@ export default function ForgotPassword() {
                   <AlertCustom severity="error">Invalid email information.</AlertCustom>
                 </Box>
               ) : null}
+              <BackButton onClick={() => handleRedirect()}>
+                <HiArrowLongLeft fontSize="16px" />
+                <BackText>Back</BackText>
+              </BackButton>
+              <CloseButton saving={0} onClick={() => handleRedirect(true)}>
+                <IoMdClose />
+              </CloseButton>
               <WrapInput>
                 <Label>Email</Label>
                 <InputCustom

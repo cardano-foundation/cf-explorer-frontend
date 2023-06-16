@@ -59,6 +59,13 @@ const formReducer = (state: IForm, event: any) => {
 export default function SignIn() {
   const history = useHistory();
   const toast = useToast();
+  const AUTHENTICATE_ROUTES = [
+    routers.SIGN_IN as string,
+    routers.SIGN_UP as string,
+    routers.FORGOT_PASSWORD as string,
+    routers.RESET_PASSWORD as string,
+    routers.VERIFY_EMAIL as string
+  ];
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
@@ -88,24 +95,25 @@ export default function SignIn() {
     setRememberMe(event.target.checked);
   }
 
+  const handleRedirectBack = () => {
+    if (history.length > 1 && !AUTHENTICATE_ROUTES.includes(history.location.pathname)) {
+      history.goBack();
+    } else {
+      history.replace(routers.HOME);
+    }
+  }
+
   const handleLoginSuccess = () => {
     toast.success("Login success");
-    history.push(routers.HOME);
   };
+
 
   useEffect(() => {
     if (isLoggedIn) {
-      handleClose();
+      handleRedirectBack();
     }
   }, [isLoggedIn]);
 
-  function handleClose() {
-    if (history.length > 1) {
-      history.goBack();
-    } else {
-      history.push(routers.HOME);
-    }
-  }
 
   const handleKeyDown = (event: any) => {
     if (event.key === "Enter") {
@@ -113,6 +121,13 @@ export default function SignIn() {
       handleSubmit(event);
     }
   };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    }
+  }, []);
 
   const getError = (name: string, value: string) => {
     let error = "";
@@ -208,7 +223,7 @@ export default function SignIn() {
         </WrapHintText>
         <FormGroup>
           <WrapForm>
-            <CloseButton saving={0} onClick={() => handleClose()}>
+            <CloseButton saving={0} onClick={() => handleRedirectBack()}>
               <IoMdClose />
             </CloseButton>
             {invalidInfomation ? (
@@ -228,7 +243,6 @@ export default function SignIn() {
                 name="email"
                 value={formData.email.value}
                 onChange={handleChange}
-                onKeyDown={handleKeyDown}
                 fullWidth
                 placeholder="Email Address"
               />
@@ -246,7 +260,6 @@ export default function SignIn() {
                 }
                 fullWidth
                 name="password"
-                onKeyDown={handleKeyDown}
                 value={formData.password.value}
                 endAdornment={
                   <InputAdornment position="end">
