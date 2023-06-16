@@ -120,7 +120,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, params, setParams, set
       {initialized && data?.length > 0 && !error && (
         <FooterTable
           total={{
-            count: total,
+            count: 0,
             title: ""
           }}
           pagination={{

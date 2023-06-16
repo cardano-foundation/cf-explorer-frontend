@@ -91,7 +91,7 @@ const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null
       {initialized && data?.length > 0 && !error && (
         <FooterTable
           total={{
-            count: total,
+            count: 0,
             title: ""
           }}
           pagination={{
