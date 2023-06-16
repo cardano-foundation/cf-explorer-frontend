@@ -100,7 +100,7 @@ export const FooterMenuContainer = styled(Box)(({ theme }) => ({
 export const IconMenu = styled(Box)(() => ({
   position: "absolute",
   zIndex: 10,
-  top: "50%",
+  top: "55%",
   left: "210px",
   transform: "translate(0, -50%)"
 }));
