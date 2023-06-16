@@ -112,6 +112,7 @@ export default function SignIn() {
     if (isLoggedIn) {
       handleRedirectBack();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
 

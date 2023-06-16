@@ -30,6 +30,7 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
     if (value?.fromDate && value?.toDate) {
       setValue({ fromDate: toLocal(value?.fromDate), toDate: toLocal(value?.toDate) });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rest.value]);
 
   const toLocal = (date?: string) => {
