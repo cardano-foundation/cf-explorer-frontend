@@ -12,7 +12,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
-import { EpochNo, StyledOutput, StyledColorBlueDard, StyledContainer, StyledLink, PriceWrapper } from "./styles";
+import { EpochNo, StyledOutput, BlueText, StyledContainer, StyledLink, PriceWrapper } from "./styles";
 
 interface IEpochBlockList {
   epochId: string;
@@ -37,7 +37,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       minWidth: "50px",
       render: (_, index) => {
         return (
-          <StyledColorBlueDard>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</StyledColorBlueDard>
+          <BlueText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</BlueText>
         );
       }
     },
@@ -76,7 +76,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       title: "Transactions",
       key: "blkCount",
       minWidth: "100px",
-      render: (r) => <StyledColorBlueDard>{r.txCount || 0}</StyledColorBlueDard>
+      render: (r) => <BlueText>{r.txCount || 0}</BlueText>
     },
     {
       title: "Fees",
@@ -94,7 +94,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       minWidth: "100px",
       render: (r) => (
         <StyledOutput>
-          <StyledColorBlueDard>{formatADAFull(r.totalOutput)}</StyledColorBlueDard>
+          <BlueText>{formatADAFull(r.totalOutput)}</BlueText>
           <ADAicon />
         </StyledOutput>
       )
