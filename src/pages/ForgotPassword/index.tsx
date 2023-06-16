@@ -59,13 +59,6 @@ export default function ForgotPassword() {
     document.title = "Forgot Password";
   }, []);
 
-  const handleKeyDown = (event: any) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      handleSubmit(event);
-    }
-  };
-
   const getError = (name: string, value: string) => {
     let error = "";
     switch (name) {
@@ -86,7 +79,7 @@ export default function ForgotPassword() {
     setFormData({
       name: event.target.name,
       value: event.target.value.trim(),
-      touched: event.target.value.trim() !== "",
+      touched: event.target.value.trim() !== ""
     });
   };
 
@@ -94,11 +87,11 @@ export default function ForgotPassword() {
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-    }
+    };
   }, []);
 
   const handleKeyDown = (event: any) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       event.preventDefault();
       handleSubmit(event);
     }
