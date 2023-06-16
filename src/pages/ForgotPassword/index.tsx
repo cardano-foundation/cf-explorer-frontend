@@ -59,6 +59,13 @@ export default function ForgotPassword() {
     document.title = "Forgot Password";
   }, []);
 
+  const handleKeyDown = (event: any) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleSubmit(event);
+    }
+  };
+
   const getError = (name: string, value: string) => {
     let error = "";
     switch (name) {
@@ -193,6 +200,7 @@ export default function ForgotPassword() {
                   fullWidth
                   placeholder="Email"
                   error={Boolean(formData.email.error && formData.email.touched)}
+                  onKeyDown={handleKeyDown}
                 />
                 {formData.email.error && formData.email.touched ? (
                   <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom>
