@@ -11,7 +11,10 @@ const Header = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    flex-direction: column;
+    align-items: baseline;
+  }
 `;
 
 export const Title = styled("h2")<{ underline: number; marginTitle?: string }>`

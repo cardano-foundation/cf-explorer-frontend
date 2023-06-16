@@ -1,33 +1,31 @@
-import { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
+import { useContext, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 
+import useFetchList from "src/commons/hooks/useFetchList";
+import { EyeIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
 import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
+import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
-import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
-import useFetchList from "src/commons/hooks/useFetchList";
-import { API } from "src/commons/utils/api";
+import { DeregistrationCertificateModal } from "src/components/commons/DeregistrationCertificateModal";
 
 import { AdaValue } from "./StakingRegistrationTab";
+import { StakingDetailContext } from "..";
+
 
 
 const DeregistrationTab = () => {
   const { reportId } = useParams<{ reportId: string }>();
   const { search } = useLocation();
+  const [openModal, setOpenModal] = useState(false);
+  const { stakeKey } = useContext(StakingDetailContext);
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
   const [sort, setSort] = useState<string>("");
-
-  const fetchData = useFetchList<DeregistrationItem>(
-    reportId ? API.REPORT.SREPORT_DETAIL_DEGEGISTRATIONS(reportId) : "",
-    {
-      ...pageInfo,
-      sort
-    }
-  );
   const columns: Column<DeregistrationItem>[] = [
     {
       title: "Transaction Hash",
@@ -69,21 +67,44 @@ const DeregistrationTab = () => {
           </TableSubTitle>
         </Box>
       )
+    },
+    {
+      title: "Certificate",
+      key: "stakeId",
+      minWidth: "120px",
+      render: () => (
+        <IconButton onClick={() => {
+          setOpenModal(true)
+        }}>
+          <EyeIcon style={{ transform: "scale(.8)" }} />
+        </IconButton>
+      )
     }
   ];
 
+  const fetchData = useFetchList<DeregistrationItem>(
+    reportId ? API.REPORT.SREPORT_DETAIL_DEGEGISTRATIONS(reportId) : "",
+    {
+      ...pageInfo,
+      sort
+    }
+  );
+
   return (
-    <Table
-      {...fetchData}
-      columns={columns}
-      total={{ title: "Total", count: fetchData.total }}
-      pagination={{
-        ...pageInfo,
-        total: fetchData.total,
-        onChange: (page, size) => setPageInfo({ ...pageInfo, page: page - 1, size })
-      }}
-      onClickRow={(e, r: DeregistrationItem) => history.push(details.transaction(r.txHash))}
-    />
+    <>
+      <Table
+        {...fetchData}
+        columns={columns}
+        total={{ title: "Total", count: fetchData.total }}
+        pagination={{
+          ...pageInfo,
+          total: fetchData.total,
+          onChange: (page, size) => setPageInfo({ ...pageInfo, page: page - 1, size })
+        }}
+        onClickRow={(e, r: DeregistrationItem) => history.push(details.transaction(r.txHash))}
+      />
+      <DeregistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeKey} />
+    </>
   );
 };
 
