@@ -1,6 +1,6 @@
 import { Box, MenuItem, Select } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -20,7 +20,7 @@ import { Column } from "src/types/table";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 
-import { Actions, PageSize, PerPage, StyledContainer, StyledLink, TimeDuration } from "./styles";
+import { Actions, PageSize, PerPage, PoolName, StyledContainer, StyledLink, TimeDuration } from "./styles";
 
 const perPages = [10, 20, 50, 100];
 
@@ -86,13 +86,24 @@ const StakeDelegations = () => {
       title: "Pool",
       key: "pool",
       render: (r) => {
-        const pool = r.pools[0];
+        const pool = r.pools[0] || {};
         return (
-          <StyledLink to={details.delegation(pool)}>
-            <CustomTooltip title={pool}>
-              <Box component={"span"}>{getShortHash(pool)}</Box>
+          <>
+            <CustomTooltip title={pool.poolName || pool.poolId}>
+              <PoolName to={details.delegation(pool.poolId)}>
+                <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
+                  {pool.poolName || `${getShortWallet(pool.poolId)}`}
+                </Box>
+              </PoolName>
             </CustomTooltip>
-          </StyledLink>
+            <>
+              {(r.pools || []).length > 1 && (
+                <Box display={"block"} component={Link} to={details.transaction(r.txHash)}>
+                  ...
+                </Box>
+              )}
+            </>
+          </>
         );
       }
     }
