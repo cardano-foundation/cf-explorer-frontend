@@ -200,15 +200,8 @@ export default function SignUp() {
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-    }
+    };
   }, []);
-
-  const handleKeyDown = (event: any) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      handleSubmit(event);
-    }
-  };
 
   const handleKeyDown = (event: any) => {
     if (event.key === "Enter") {
@@ -375,7 +368,6 @@ export default function SignUp() {
                   error={Boolean(formData.password.error && formData.password.touched)}
                   placeholder="Password"
                   onKeyDown={handleKeyDown}
-
                 />
                 {formData.password.error && formData.password.touched ? (
                   <FormHelperTextCustom error>{formData.password.error}</FormHelperTextCustom>
