@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import BigNumber from "bignumber.js";
 import moment from "moment";
 import { useSelector } from "react-redux";
@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
-import { AdaPriceIcon, CurentEpochIcon, LiveStakeIcon, MarketCapIcon } from "src/commons/resources";
+import { AdaPriceIcon, LiveStakeIcon, MarketCapIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
@@ -14,6 +14,8 @@ import { formatADA, formatADAFull, formatDateTimeLocal, numberWithCommas } from 
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import RateWithIcon from "src/components/commons/RateWithIcon";
 import { RootState } from "src/stores/types";
+import ProgressCircle from "src/components/commons/ProgressCircle";
+import { EpochProgress } from "src/components/commons/Epoch/FirstEpoch/styles";
 
 import {
   AdaPrice,
@@ -57,7 +59,6 @@ const HomeStatistic = () => {
     false,
     REFRESH_TIMES.CURRENT_PRICE_BTC
   );
-
   const { circulating_supply, total_supply: total = 1 } = usdMarket || {};
   const { liveStake = 0, activeStake = 1 } = data || {};
   const supply = Number(circulating_supply);
@@ -65,7 +66,7 @@ const HomeStatistic = () => {
   const activeRate = activeStake && new BigNumber(liveStake).div(activeStake).minus(1).multipliedBy(100);
   const circulatingSupply = new BigNumber(supply).multipliedBy(MILION);
   const circulatingRate = circulatingSupply.div(total).div(MILION).multipliedBy(100);
-  const progress = moment(formatDateTimeLocal(currentEpoch?.endTime || "")).diff(moment()) >= 0
+  const progress = moment(currentEpoch?.endTime).isAfter(moment())
     ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
     : 100;
   const { isMobile, isGalaxyFoldSmall } = useScreen();
@@ -122,12 +123,18 @@ const HomeStatistic = () => {
           <Item data-testid="current-epoch-box">
             <Link to={details.epoch(currentEpoch?.no)}>
               <Content>
-                <ItemIcon
-                  style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
-                  data-testid="current-epoch-icon"
-                  src={CurentEpochIcon}
-                  alt="Curent Epoch"
-                />
+                <Box display={"flex"} alignItems="center" position={"absolute"} right={10} top={15}>
+                  <ProgressCircle
+                    size={50}
+                    pathLineCap="butt"
+                    pathWidth={6}
+                    trailWidth={6}
+                    percent={Number(progress)}
+                    trailOpacity={1}
+                  >
+                    <EpochProgress sx={{ fontSize: "15px" }}>{`${progress}%`}</EpochProgress>
+                  </ProgressCircle>
+                </Box>
                 <Name data-testid="current-epoch-box-title">Current Epoch</Name>
                 <XSmall data-testid="epoch-label">Epoch: </XSmall>
                 {isMobile ? <br /> : null}
@@ -148,11 +155,6 @@ const HomeStatistic = () => {
                   <b data-testid="curent-epoch-account">{numberWithCommas(currentEpoch?.account)}</b>
                 </XValue>
                 <br />
-                <Progress sx={{ marginTop: "10px" }}>
-                  <ProcessActive rate={Number(progress)}>{progress}%</ProcessActive>
-                  <ProgressPending hide rate={100 - Number(progress)}>
-                  </ProgressPending>
-                </Progress>
                 <XSmall>End time: </XSmall>
                 {isMobile ? <br /> : null}
                 <XValue>

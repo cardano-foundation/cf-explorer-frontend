@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import moment from "moment";
 
-import { timeIconUrl, outputIconUrl, cubeIconUrl, slotIconUrl, exchageIconUrl } from "src/commons/resources";
+import { timeIconUrl, outputIconUrl, cubeIconUrl, slotIconUrl, exchageIconUrl, RewardIcon } from "src/commons/resources";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import DetailHeader from "src/components/commons/DetailHeader";
 import { TitleCard } from "src/components/BlockDetail/BlockOverview/styles";
@@ -90,7 +90,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
         data?.txCount
     },
     {
-      icon: exchageIconUrl,
+      icon: RewardIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> Rewards Distributed</TitleCard>
