@@ -21,6 +21,8 @@ export const routers = {
   TOKEN_LIST: "/tokens",
   TOKEN_DETAIL: "/token/:tokenId/:tabActive?",
   STAKE_LIST: "/stakes/:poolType?",
+  STAKE_DELEGATIONS: "/stake-delegations",
+  INSTANTANEOUS_REWARDS: "/instantaneous-rewards",
   STAKE_DETAIL: "/stake/:stakeId/:tabActive?",
   CONTRACT_LIST: "/contracts",
   CONTRACT_DETAIL: "/contracts/:address/:tabActive?",
