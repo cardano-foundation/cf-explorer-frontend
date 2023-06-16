@@ -175,7 +175,7 @@ const Bookmark = () => {
       minWidth: 120,
       render: (data) => (
         <Box display="flex" justifyContent={"flex-end"}>
-          <IconButton onClick={() => setSelected(data.keyword || "")}>
+          <IconButton data-testid="action-button" onClick={() => setSelected(data.keyword || "")}>
             <DeleteBookmark fontSize={10} />
           </IconButton>
         </Box>
@@ -352,7 +352,7 @@ const Bookmark = () => {
                 label={
                   <Box>
                     <Box display={"flex"} alignItems="center">
-                      <TitleTab pl={1} active={key === activeTab}>
+                      <TitleTab pl={1} active={+(key === activeTab)}>
                         {label}
                       </TitleTab>
                     </Box>

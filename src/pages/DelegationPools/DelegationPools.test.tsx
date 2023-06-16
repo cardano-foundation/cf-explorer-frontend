@@ -28,6 +28,10 @@ describe("Delegation pools view", () => {
     await mockUseFetch.mockReturnValue({ data: [] });
     render(<DelegationLists />);
     expect(useFetchList).toBeCalled();
+    const inputField: any = screen.getByPlaceholderText("Search Pools");
+    expect(inputField).toBeInTheDocument();
+    fireEvent.change(inputField, { target: { value: "test" } });
+    expect(inputField.value).toBe("test");
   });
 
   it("renders the table with given column and data", () => {
