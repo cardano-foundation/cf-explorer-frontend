@@ -223,6 +223,7 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
     if (stakeKey === null && selectedWallet) {
       handleClick(selectedWallet as SupportedWallets, true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stakeKey]);
 
   const handleSubmitWallet = async () => {

@@ -79,6 +79,7 @@ const DelegatorLifecycle = () => {
 
   useEffect(() => {
     setCurrentStep(tabList[validTab]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [validTab]);
 
   useEffect(() => {
