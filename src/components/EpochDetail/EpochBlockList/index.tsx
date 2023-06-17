@@ -4,14 +4,15 @@ import { stringify } from "qs";
 
 import Card from "src/components/commons/Card";
 import Table, { Column } from "src/components/commons/Table";
-import { formatADAFull, getPageInfo, getShortHash, numberWithCommas } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash, numberWithCommas } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
-import { EpochNo, StyledOutput, StyledColorBlueDard, StyledContainer, StyledLink } from "./styles";
+import { EpochNo, StyledOutput, BlueText, StyledContainer, StyledLink, PriceWrapper } from "./styles";
 
 interface IEpochBlockList {
   epochId: string;
@@ -36,16 +37,26 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       minWidth: "50px",
       render: (_, index) => {
         return (
-          <StyledColorBlueDard>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</StyledColorBlueDard>
+          <BlueText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</BlueText>
         );
       }
     },
     {
-      title: "Block",
+      title: "Block No",
       key: "block",
       minWidth: "100px",
       render: (r) => (
         <StyledLink to={details.block(r.blockNo || r.hash)}>{r.blockNo || getShortHash(r.hash || "")}</StyledLink>
+      )
+    },
+    {
+      title: "Block ID",
+      key: "blockId",
+      minWidth: "150px",
+      render: (r) => (
+        <CustomTooltip title={r.hash}>
+          <StyledLink to={details.block(r.blockNo || r.hash)}>{getShortHash(`${r.hash}`)}</StyledLink>
+        </CustomTooltip>
       )
     },
     {
@@ -65,7 +76,17 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       title: "Transactions",
       key: "blkCount",
       minWidth: "100px",
-      render: (r) => <StyledColorBlueDard>{r.txCount || 0}</StyledColorBlueDard>
+      render: (r) => <BlueText>{r.txCount || 0}</BlueText>
+    },
+    {
+      title: "Fees",
+      key: "fees",
+      render: (r) => (
+        <PriceWrapper>
+          {formatADAFull(r.totalFees)}
+          <ADAicon />
+        </PriceWrapper>
+      )
     },
     {
       title: "Output",
@@ -73,10 +94,16 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       minWidth: "100px",
       render: (r) => (
         <StyledOutput>
-          <StyledColorBlueDard>{formatADAFull(r.totalOutput)}</StyledColorBlueDard>
+          <BlueText>{formatADAFull(r.totalOutput)}</BlueText>
           <ADAicon />
         </StyledOutput>
       )
+    },
+    {
+      title: "Created At",
+      key: "time",
+      minWidth: "100px",
+      render: (r) => <PriceWrapper>{formatDateTimeLocal(r.time)}</PriceWrapper>,
     }
   ];
 
