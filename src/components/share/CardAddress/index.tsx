@@ -9,7 +9,6 @@ import CustomIcon from "src/components/commons/CustomIcon";
 import {
   AddressGroup,
   AddressLink,
-  CardItem,
   CardItemStyled,
   ItemDetail,
   LabelItem,
@@ -30,9 +29,9 @@ interface DetailCardProps {
 const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, loading, addressDestination }) => {
   if (loading) {
     return (
-      <CardItem padding={0}>
-        <Skeleton variant="rectangular" height={"100%"} width="100%" />
-      </CardItem>
+      <CardItemStyled padding={0}>
+        <Skeleton variant="rectangular" height={"80%"} width="100%" />
+      </CardItemStyled>
     );
   }
   if (type === "right" && !address) {

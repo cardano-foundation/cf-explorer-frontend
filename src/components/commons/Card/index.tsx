@@ -11,9 +11,13 @@ const Header = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    flex-direction: column;
+    align-items: baseline;
+  }
 `;
 
-const Title = styled("h2")<{ underline: number; marginTitle?: string }>`
+export const Title = styled("h2")<{ underline: number; marginTitle?: string }>`
   text-align: left;
   padding-bottom: 8px;
   position: relative;

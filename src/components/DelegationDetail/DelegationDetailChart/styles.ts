@@ -147,6 +147,8 @@ export const Item = styled(Grid)(({ theme }) => ({
 export const AnalyticsTitle = styled("h2")(({ theme }) => ({
   margin: "40px 0 15px",
   width: "max-content",
+  fontSize: "20px",
+  borderBottom: `2px solid ${theme.palette.green[600]}`,
   [theme.breakpoints.down("sm")]: {
     margin: "30px 0 15px"
   }

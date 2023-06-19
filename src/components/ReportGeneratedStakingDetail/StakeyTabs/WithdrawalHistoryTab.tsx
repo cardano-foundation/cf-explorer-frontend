@@ -14,7 +14,6 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
 
-
 const WithdrawalHistoryTab = () => {
   const { reportId } = useParams<{ reportId: string }>();
   const { search } = useLocation();
