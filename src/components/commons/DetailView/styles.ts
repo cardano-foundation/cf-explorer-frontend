@@ -13,8 +13,8 @@ export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
     height: "calc(100vh - 61px)",
     [theme.breakpoints.down("md")]: {
       display: "flex",
-      height: "calc(100% - 80px)",
-      top: "80px"
+      height: "calc(100% - 75px)",
+      top: "75px"
     },
     [theme.breakpoints.down("sm")]: {
       right: "auto",

@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import { useWindowSize } from "react-use";
+import { Collapse, Divider, ListItem, useTheme } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { BiChevronDown, BiChevronRight } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
-import { Collapse, Divider, ListItem, useTheme } from "@mui/material";
+import { useWindowSize } from "react-use";
 
 import { footerMenus, menus } from "src/commons/menus";
 import { isExtenalLink } from "src/commons/utils/helper";
-import { setSidebar } from "src/stores/user";
-import { RootState } from "src/stores/types";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import { RootState } from "src/stores/types";
+import { setSidebar } from "src/stores/user";
 
 import FooterMenu from "../FooterMenu";
 import {
+  FooterMenuContainer,
+  IconMenu,
   Menu,
   MenuIcon,
   MenuText,
+  SidebarMenuContainer,
   SubMenu,
   SubMenuText,
-  itemStyle,
-  IconMenu,
-  SidebarMenuContainer,
-  FooterMenuContainer
+  itemStyle
 } from "./styles";
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
@@ -148,7 +148,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     {sidebar &&
                       (children?.length ? (
                         <IconMenu component={"span"}>
-                          {`menu-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
+                          {`menu-${index}` === active ? <BiChevronRight size={18} /> : <BiChevronDown size={18} />}
                         </IconMenu>
                       ) : null)}
                   </ListItem>
@@ -188,9 +188,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
                               ...(pathname === href ||
-                                (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1])) ||
-                                (href === "/timeline" &&
-                                  (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
+                              pathname.includes(href) ||
+                              (href === "/timeline" &&
+                                (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
                                 ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
                                 : {}),
                               paddingLeft: "70px",
@@ -211,10 +211,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                               primary={title}
                               open={sidebar ? 1 : 0}
                               active={
-                                pathname === href ||
-                                  (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1])) ||
-                                  (href === "/timeline" &&
-                                    (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
+                                pathname.includes(href) ||
+                                (href === "/timeline" &&
+                                  (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
                                   ? 1
                                   : 0
                               }
@@ -306,7 +305,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     {sidebar &&
                       (children?.length ? (
                         <IconMenu component={"span"}>
-                          {`footer-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
+                          {`footer-${index}` === active ? <BiChevronRight size={18} /> : <BiChevronDown size={18} />}
                         </IconMenu>
                       ) : null)}
                   </ListItem>

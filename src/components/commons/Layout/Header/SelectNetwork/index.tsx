@@ -2,14 +2,11 @@ import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-wit
 import { MenuItem, Select, SelectChangeEvent, styled } from "@mui/material";
 import React, { useEffect } from "react";
 import { BiChevronDown } from "react-icons/bi";
-import { useHistory } from "react-router-dom";
 import { useLocalStorage } from "react-use";
 import { useSelector } from "react-redux";
 
-import { listRouters } from "src/commons/routers";
-import { NETWORK, NETWORKS, NETWORK_NAMES, STORAGE_KEYS } from "src/commons/utils/constants";
+import { FRONT_END_NETWORK, NETWORK, NETWORKS, NETWORK_NAMES, STORAGE_KEYS } from "src/commons/utils/constants";
 import { removeAuthInfo } from "src/commons/utils/helper";
-import StorageUtils from "src/commons/utils/storage";
 import { signOut } from "src/commons/utils/userRequest";
 
 const StyledSelect = styled(Select)(({ theme }) => ({
@@ -37,18 +34,11 @@ const StyledSelect = styled(Select)(({ theme }) => ({
 }));
 
 const SelectNetwork: React.FC = () => {
-  const { location } = useHistory();
   const { userData } = useSelector(({ user }: RootState) => user);
   const { disconnect } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
   });
   const [, , clearBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
-
-  const refreshPage = () => {
-    const currentPath = "/" + location.pathname?.split("/")[1];
-    if (listRouters.includes(currentPath)) window.location.href = location.pathname;
-    else window.location.href = "/";
-  };
 
   const handleChange = async (e?: SelectChangeEvent<unknown>) => {
     try {
@@ -64,8 +54,11 @@ const SelectNetwork: React.FC = () => {
     } catch (error) {
       //To do
     }
-    if (e) StorageUtils.setNetwork(e.target.value as NETWORKS);
-    refreshPage();
+    if (e) {
+      if (FRONT_END_NETWORK[e.target.value as NETWORKS]) {
+        window.open(FRONT_END_NETWORK[e.target.value as NETWORKS], "_blank", "noopener,noreferrer");
+      }
+    }
   };
 
   useEffect(() => {

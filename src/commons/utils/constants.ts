@@ -1,6 +1,5 @@
 import { Wallet } from "../../types/user";
 import { EternlIcon, FlintIcon, NamiIcon, TyphonIcon, YoroiIcon } from "../resources";
-import StorageUtils from "./storage";
 
 export const STORAGE_KEYS = {
   THEME: "dark",
@@ -76,8 +75,14 @@ export enum NETWORK_TYPES {
   preview = "PREVIEW",
   testnet = "TEST_NET"
 }
+export const FRONT_END_NETWORK = {
+  mainnet: process.env.REACT_APP_MAINNET_FE_URL,
+  preprod: process.env.REACT_APP_PREPROD_FE_URL,
+  preview: process.env.REACT_APP_PREVIEW_FE_URL,
+  testnet: process.env.REACT_APP_TESTNET_FE_URL
+};
 
-export const NETWORK: NETWORKS = StorageUtils.getNetwork();
+export const NETWORK: NETWORKS = process.env.REACT_APP_NETWORK as NETWORKS;
 
 export enum TRANSACTION_STATUS {
   FAIL = "FAIL",
@@ -161,7 +166,9 @@ export enum REFRESH_TIMES {
   POOLS = 20,
   STAKE_REGISTRATION = 20,
   POOL_REGISTRATIONS = 20,
-  TOP_DELEGATORS = 20
+  TOP_DELEGATORS = 20,
+  STAKE_DELEGATIONS = 20,
+  INSTANT_REWARDS = 20
 }
 
 export const PROTOCOL_TYPE = {

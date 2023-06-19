@@ -85,16 +85,3 @@ export const ErrorMessage = styled(Box)`
   height: 132px;
   margin: 20px 0px;
 `;
-
-export const BannerSuccess = styled(Box)`
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 21px;
-  text-align: center;
-  color: #ffffff;
-  background: #5a9c56;
-  border-radius: 10px;
-  width: 100%;
-  padding: 12px 0px;
-  margin: 20px 0px;
-`;

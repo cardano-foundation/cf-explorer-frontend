@@ -22,10 +22,7 @@ export const TitleStep = styled(Box)<{ active: number }>(({ theme, active }) => 
   color: active ? theme.palette.grey[700] : theme.palette.grey[300],
   fontWeight: "bold",
   fontSize: "0.875rem",
-  marginTop: theme.spacing(1),
-  [theme.breakpoints.down("md")]: {
-    whiteSpace: "nowrap"
-  }
+  marginTop: theme.spacing(1)
 }));
 
 export const NextButton = styled(Button)(({ theme }) => ({

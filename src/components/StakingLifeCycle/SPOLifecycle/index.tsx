@@ -1,5 +1,5 @@
-import { Box, IconButton, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
+import { Box, IconButton, useTheme } from "@mui/material";
 import { useHistory, useParams } from "react-router";
 
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -143,13 +143,15 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
     return `${palette.grey[200]} !important`;
   };
 
+  if (!renderTabsSPO) return null;
+
   return (
     <StyledComponent>
       <Box display={"flex"} justifyContent={"space-between"}>
         {stepper.map((step, idx) => (
           <Step
-            id={`step-${idx}`}
             key={idx}
+            id={`step-${idx}`}
             active={+(currentStep === idx)}
             component={renderTabsSPO[step.keyCheckShow] ? "span" : CustomTooltip}
             title={renderTabsSPO[step.keyCheckShow] ? undefined : "There is no record at this time"}
@@ -181,9 +183,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
         </WrapTitle>
       </StepHeader>
       <Box>{stepper[currentStep]?.description}</Box>
-      <Box minHeight={400} pb={10}>
-        {stepper[currentStep]?.component}
-      </Box>
+      <Box pb={10}>{stepper[currentStep]?.component}</Box>
       <StyledGroupButton display={"flex"} isShowPrev={currentStep > 0}>
         {currentStep > 0 && (
           <PreviousButton

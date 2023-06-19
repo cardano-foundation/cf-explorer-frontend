@@ -110,7 +110,7 @@ const RecentWithdraws: React.FC<Props> = ({ onSelect, params, setParams, setShow
       {initialized && data?.length > 0 && !error && (
         <FooterTable
           total={{
-            count: total,
+            count: 0,
             title: ""
           }}
           pagination={{
