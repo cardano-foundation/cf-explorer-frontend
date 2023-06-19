@@ -71,9 +71,11 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
 
   useEffect(() => {
-    document.getElementById(`step-${currentStep}`)?.scrollIntoView(true);
+    const element = document.getElementById(`step-${currentStep}`);
+    if (element && typeof element.scrollIntoView === "function") {
+      element.scrollIntoView(true);
+    }
   }, [currentStep]);
-
   if (!tabsRenderConfig) return null;
 
   const stepper: StepperProps[] = [

@@ -79,6 +79,7 @@ const SPOLifecycle = () => {
 
   useEffect(() => {
     setCurrentStep(tabList[validTab]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [validTab]);
 
   const [open, setOpen] = useState(false);

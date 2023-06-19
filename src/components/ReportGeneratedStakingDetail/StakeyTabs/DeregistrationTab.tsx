@@ -17,7 +17,6 @@ import { AdaValue } from "./StakingRegistrationTab";
 import { StakingDetailContext } from "..";
 
 
-
 const DeregistrationTab = () => {
   const { reportId } = useParams<{ reportId: string }>();
   const { search } = useLocation();
