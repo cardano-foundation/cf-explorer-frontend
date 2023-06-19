@@ -365,6 +365,7 @@ const Table: React.FC<TableProps> = ({
 
   useEffect(() => {
     clearSelection();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const isSelectAll = useMemo(() => data?.length === selectedItems.length, [data, selectedItems]);

@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Typography, alpha, styled } from "@mui/material";
+import { Box, Button, Typography, alpha, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
@@ -10,23 +10,18 @@ export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
   }
 }));
 
-export const StepButton = styled(IconButton)<{ active: number }>(({ theme, active }) => ({
+export const StepButton = styled(Box)<{ active: number }>(({ theme, active }) => ({
   background: active ? theme.palette.green[600] : theme.palette.grey[200],
   ":hover": {
     background: active ? theme.palette.green[600] : theme.palette.grey[200]
   }
 }));
-export const TitleStep = styled(Box)<{ currentStep: number; index: number }>(({ theme, currentStep, index }) => ({
-  color:
-    currentStep === index
-      ? theme.palette.grey[700]
-      : currentStep > index
-      ? theme.palette.grey[400]
-      : theme.palette.grey[300],
+export const TitleStep = styled(Box)<{ active: number }>(({ theme, active }) => ({
+  color: active ? theme.palette.grey[700] : theme.palette.grey[300],
   fontWeight: "bold",
   fontSize: "0.875rem",
   marginTop: theme.spacing(1),
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("md")]: {
     whiteSpace: "nowrap"
   }
 }));

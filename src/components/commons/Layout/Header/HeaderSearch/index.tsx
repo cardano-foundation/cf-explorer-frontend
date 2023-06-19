@@ -129,6 +129,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     if ("/" + currentPath !== routers.SEARCH) setValues({ ...intitalValue, filter });
     setError("");
     setShowErrorMobile && setShowErrorMobile(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [history.location.pathname]);
 
   const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
