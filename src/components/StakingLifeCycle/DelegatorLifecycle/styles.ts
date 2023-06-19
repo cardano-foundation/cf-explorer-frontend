@@ -22,10 +22,7 @@ export const TitleStep = styled(Box)<{ active: number }>(({ theme, active }) => 
   color: active ? theme.palette.grey[700] : theme.palette.grey[300],
   fontWeight: "bold",
   fontSize: "0.875rem",
-  marginTop: theme.spacing(1),
-  [theme.breakpoints.down("md")]: {
-    whiteSpace: "nowrap"
-  }
+  marginTop: theme.spacing(1)
 }));
 
 export const NextButton = styled(Button)(({ theme }) => ({
@@ -35,9 +32,6 @@ export const NextButton = styled(Button)(({ theme }) => ({
   fontWeight: "bold",
   padding: "10px 20px",
   borderRadius: "8px",
-  position: "unset",
-  right: 20,
-  bottom: 30,
   ":hover": {
     background: alpha(theme.palette.grey[700], 0.8)
   }
@@ -48,10 +42,8 @@ export const PreviousButton = styled(Button)(({ theme }) => ({
   textTransform: "capitalize",
   fontWeight: "bold",
   borderRadius: "8px",
-  position: "unset",
   padding: "10px 20px",
-  left: 20,
-  bottom: 30,
+  left: 0,
   border: `2px solid ${theme.palette.border.hint}`,
   ":hover": {
     background: alpha(theme.palette.grey[700], 0.1)
