@@ -60,9 +60,16 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
   const history = useHistory();
   const { isMobile } = useScreen();
   const { palette } = useTheme();
+  const [tabsValid, setTabValid] = useState(["isRegistration", "isUpdate", "isReward", "isDeRegistration"]);
   useEffect(() => {
     document.getElementById(`step-${currentStep}`)?.scrollIntoView();
   }, [currentStep]);
+
+  useEffect(() => {
+    if (renderTabsSPO) {
+      setTabValid((prev) => prev.filter((tab) => renderTabsSPO[tab]));
+    }
+  }, [JSON.stringify(renderTabsSPO)]);
 
   if (!renderTabsSPO) return null;
 
@@ -181,29 +188,75 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
         {currentStep > 0 && (
           <PreviousButton
             onClick={() => {
-              history.replace(details.spo(poolId, "timeline", stepper[currentStep - 1]?.key));
-              setCurrentStep(currentStep - 1);
+              history.replace(
+                details.spo(
+                  poolId,
+                  "timeline",
+                  stepper.filter(
+                    (s) =>
+                      s.keyCheckShow ===
+                      tabsValid[tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) - 1]
+                  )[0]?.key
+                )
+              );
+              setCurrentStep(
+                stepper.findIndex(
+                  (s) =>
+                    s.keyCheckShow ===
+                    tabsValid[tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) - 1]
+                )
+              );
             }}
           >
             <PreviousIcon />
             <Box fontSize={isMobile ? 14 : 16} component={"span"}>
-              Previous: {stepper[currentStep - 1]?.title}
+              Previous:{" "}
+              {
+                stepper.filter(
+                  (s) =>
+                    s.keyCheckShow ===
+                    tabsValid[tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) - 1]
+                )[0]?.title
+              }
             </Box>
           </PreviousButton>
         )}
         <NextButton
           onClick={() => {
-            if (currentStep === stepper.length - 1) {
+            if (tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) === tabsValid.length - 1) {
               history.push(details.spo(poolId, "tabular"));
             } else {
-              history.replace(details.spo(poolId, "timeline", stepper[currentStep + 1]?.key));
-              setCurrentStep(currentStep + 1);
+              history.replace(
+                details.spo(
+                  poolId,
+                  "timeline",
+                  stepper.filter(
+                    (s) =>
+                      s.keyCheckShow ===
+                      tabsValid[tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) + 1]
+                  )[0]?.key
+                )
+              );
+              setCurrentStep(
+                stepper.findIndex(
+                  (s) =>
+                    s.keyCheckShow ===
+                    tabsValid[tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) + 1]
+                )
+              );
             }
           }}
           variant="contained"
         >
           <ButtonText>
-            Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
+            Next:{" "}
+            {tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) === tabsValid.length - 1
+              ? "View in tabular"
+              : stepper.filter(
+                  (s) =>
+                    s.keyCheckShow ===
+                    tabsValid[tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) + 1]
+                )[0]?.title}
           </ButtonText>
           <NextIcon />
         </NextButton>

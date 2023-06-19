@@ -35,9 +35,6 @@ export const NextButton = styled(Button)(({ theme }) => ({
   fontWeight: "bold",
   padding: "10px 20px",
   borderRadius: "8px",
-  position: "unset",
-  right: 20,
-  bottom: 30,
   ":hover": {
     background: alpha(theme.palette.grey[700], 0.8)
   }
@@ -48,10 +45,7 @@ export const PreviousButton = styled(Button)(({ theme }) => ({
   textTransform: "capitalize",
   fontWeight: "bold",
   borderRadius: "8px",
-  position: "unset",
   padding: "10px 20px",
-  left: 20,
-  bottom: 30,
   border: `2px solid ${theme.palette.border.hint}`,
   ":hover": {
     background: alpha(theme.palette.grey[700], 0.1)

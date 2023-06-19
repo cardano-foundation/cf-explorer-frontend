@@ -69,6 +69,13 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
   }>();
   const [open, setOpen] = useState(false);
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
+  const [tabsValid, setTabValid] = useState([
+    "hasRegistration",
+    "hasDelegation",
+    "hashRewards",
+    "hasWithdrawal",
+    "hasDeRegistration"
+  ]);
 
   useEffect(() => {
     const element = document.getElementById(`step-${currentStep}`);
@@ -76,6 +83,13 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       element.scrollIntoView(true);
     }
   }, [currentStep]);
+
+  useEffect(() => {
+    if (tabsRenderConfig) {
+      setTabValid((prev) => prev.filter((tab) => tabsRenderConfig[tab]));
+    }
+  }, [JSON.stringify(tabsRenderConfig)]);
+
   if (!tabsRenderConfig) return null;
 
   const stepper: StepperProps[] = [
@@ -242,29 +256,77 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
           <PreviousButton
             sx={{ mb: `${isMobile ? "16px" : "0px"}` }}
             onClick={() => {
-              history.push(details.staking(stakeId, "timeline", stepper[currentStep - 1]?.key));
-              setCurrentStep(currentStep - 1);
+              history.push(
+                details.staking(
+                  stakeId,
+                  "timeline",
+                  stepper.filter(
+                    (s) =>
+                      s.keyCheckShow ===
+                      tabsValid[tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) - 1]
+                  )[0]?.key
+                )
+              );
+              setCurrentStep(
+                stepper.findIndex(
+                  (s) =>
+                    s.keyCheckShow ===
+                    tabsValid[tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) - 1]
+                )
+              );
             }}
           >
             <PreviousIcon />
-            <ButtonText>Previous: {stepper[currentStep - 1]?.title}</ButtonText>
+            <ButtonText>
+              Previous:{" "}
+              {
+                stepper.filter(
+                  (s) =>
+                    s.keyCheckShow ===
+                    tabsValid[tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) - 1]
+                )[0]?.title
+              }
+            </ButtonText>
           </PreviousButton>
         ) : (
           <Box />
         )}
         <NextButton
           onClick={() => {
-            if (currentStep === stepper.length - 1) {
+            if (tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) === tabsValid.length - 1) {
               history.push(details.staking(stakeId, "tabular"));
             } else {
-              history.push(details.staking(stakeId, "timeline", stepper[currentStep + 1]?.key));
-              setCurrentStep(currentStep + 1);
+              history.push(
+                details.staking(
+                  stakeId,
+                  "timeline",
+                  stepper.filter(
+                    (s) =>
+                      s.keyCheckShow ===
+                      tabsValid[tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) + 1]
+                  )[0]?.key
+                )
+              );
+              setCurrentStep(
+                stepper.findIndex(
+                  (s) =>
+                    s.keyCheckShow ===
+                    tabsValid[tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) + 1]
+                )
+              );
             }
           }}
           variant="contained"
         >
           <ButtonText fontSize={isMobile ? 14 : 16}>
-            Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
+            Next:{" "}
+            {tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) === tabsValid.length - 1
+              ? "View in tabular"
+              : stepper.filter(
+                  (s) =>
+                    s.keyCheckShow ===
+                    tabsValid[tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) + 1]
+                )[0]?.title}
           </ButtonText>
           <NextIcon />
         </NextButton>
