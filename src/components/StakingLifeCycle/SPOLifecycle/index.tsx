@@ -1,5 +1,5 @@
+import { useEffect, useMemo, useState } from "react";
 import { Box, IconButton, useTheme } from "@mui/material";
-import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -133,6 +133,11 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
     }
   ];
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const indexTabsValid = useMemo(() => {
+    return tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow);
+  }, [currentStep, tabsValid]);
+
   const renderBackground = (isActive: boolean, hasData: boolean) => {
     if (isActive) {
       return `${palette.green[600]} !important`;
@@ -192,71 +197,40 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
                 details.spo(
                   poolId,
                   "timeline",
-                  stepper.filter(
-                    (s) =>
-                      s.keyCheckShow ===
-                      tabsValid[tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) - 1]
-                  )[0]?.key
+                  stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1])?.key
                 )
               );
-              setCurrentStep(
-                stepper.findIndex(
-                  (s) =>
-                    s.keyCheckShow ===
-                    tabsValid[tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) - 1]
-                )
-              );
+              setCurrentStep(stepper.findIndex((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1]));
             }}
           >
             <PreviousIcon />
             <Box fontSize={isMobile ? 14 : 16} component={"span"}>
-              Previous:{" "}
-              {
-                stepper.filter(
-                  (s) =>
-                    s.keyCheckShow ===
-                    tabsValid[tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) - 1]
-                )[0]?.title
-              }
+              Previous: {stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1])?.title}
             </Box>
           </PreviousButton>
         )}
         <NextButton
           onClick={() => {
-            if (tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) === tabsValid.length - 1) {
+            if (+indexTabsValid === tabsValid.length - 1) {
               history.push(details.spo(poolId, "tabular"));
             } else {
               history.replace(
                 details.spo(
                   poolId,
                   "timeline",
-                  stepper.filter(
-                    (s) =>
-                      s.keyCheckShow ===
-                      tabsValid[tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) + 1]
-                  )[0]?.key
+                  stepper.find((s) => s.keyCheckShow === tabsValid[+indexTabsValid + 1])?.key
                 )
               );
-              setCurrentStep(
-                stepper.findIndex(
-                  (s) =>
-                    s.keyCheckShow ===
-                    tabsValid[tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) + 1]
-                )
-              );
+              setCurrentStep(stepper.findIndex((step) => step.keyCheckShow === tabsValid[+indexTabsValid + 1]));
             }
           }}
           variant="contained"
         >
           <ButtonText>
             Next:{" "}
-            {tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) === tabsValid.length - 1
+            {+indexTabsValid === tabsValid.length - 1
               ? "View in tabular"
-              : stepper.filter(
-                  (s) =>
-                    s.keyCheckShow ===
-                    tabsValid[tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow) + 1]
-                )[0]?.title}
+              : stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid + 1])?.title}
           </ButtonText>
           <NextIcon />
         </NextButton>
