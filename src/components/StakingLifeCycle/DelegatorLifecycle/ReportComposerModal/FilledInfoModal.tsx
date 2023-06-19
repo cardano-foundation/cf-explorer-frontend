@@ -217,7 +217,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
     } else {
       return defaultDisabledCondition || poolSize === RatioGroupValue.unTicked;
     }
-  }, [address, dateRange, reportType, errorReportField, adaTransfers, poolSize, reportType, eventsKey]);
+  }, [address, dateRange, reportType, errorReportField, adaTransfers, poolSize, eventsKey]);
 
   const handleSubmit = async () => {
     saveParams?.({
