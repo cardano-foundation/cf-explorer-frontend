@@ -7,7 +7,7 @@ const CustomTextArea = styled(TextareaAutosize)`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-  min-width: 500px;
+  width: 100%;
   min-height: 160px;
   max-height: 160px;
   resize: none;

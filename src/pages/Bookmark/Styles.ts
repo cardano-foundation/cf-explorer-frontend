@@ -3,7 +3,7 @@ import { LoadingButton } from "@mui/lab";
 
 import Table from "src/components/commons/Table";
 
-export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => ({
+export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => ({
   fontWeight: "bold",
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',

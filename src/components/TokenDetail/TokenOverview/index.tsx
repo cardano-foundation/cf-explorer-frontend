@@ -2,11 +2,11 @@ import { Box } from "@mui/material";
 import BigNumber from "bignumber.js";
 import React, { useContext, useState } from "react";
 
-import { exchageIconUrl, fileGuardUrl, slotIconUrl, timeIconUrl } from "src/commons/resources";
-import CopyButton from "src/components/commons/CopyButton";
-import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
+import { RewardIcon, USDIcon, exchageIconUrl, fileGuardUrl, slotIconUrl, timeIconUrl } from "src/commons/resources";
 import { formatDateTimeLocal, formatNumberDivByDecimals, numberWithCommas } from "src/commons/utils/helper";
+import CopyButton from "src/components/commons/CopyButton";
 import DetailHeader from "src/components/commons/DetailHeader";
+import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
 
 import ScriptModal from "../../ScriptModal";
 import { PolicyId, PolicyScriptBtn, TokenDescription, TokenHeader, WrapTitle } from "./styles";
@@ -93,7 +93,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
           </Box>
         </Box>
       ),
-      icon: exchageIconUrl,
+      icon: RewardIcon,
       value: numberWithCommas(data?.numberOfHolders || "")
     },
     {
@@ -115,7 +115,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
           </Box>
         </Box>
       ),
-      icon: exchageIconUrl,
+      icon: USDIcon,
       value: numberWithCommas(data?.volumeIn24h || "")
     },
     {

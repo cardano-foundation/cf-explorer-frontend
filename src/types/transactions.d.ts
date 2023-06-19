@@ -187,6 +187,10 @@ interface Transaction {
   }[];
   poolCertificates?: TPoolCertificated[];
   stakeCertificates?: TStakeCertificated[];
+  instantaneousRewards?: {
+    amount: string;
+    stakeAddress: string;
+  }[];
 }
 
 interface CollateralResponses {

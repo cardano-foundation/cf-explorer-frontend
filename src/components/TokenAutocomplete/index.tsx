@@ -192,9 +192,22 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
     }
   ];
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal
+      open={open}
+      onClose={() => {
+        onClose();
+        setValue("");
+        setSearch("");
+      }}
+    >
       <ModalContainer>
-        <ButtonClose onClick={onClose}>
+        <ButtonClose
+          onClick={() => {
+            onClose();
+            setValue("");
+            setSearch("");
+          }}
+        >
           <img src={CloseIcon} alt="icon close" />
         </ButtonClose>
         <Box textAlign={"left"} fontSize="1.5rem" fontWeight="bold" fontFamily={'"Roboto", sans-serif '}>
