@@ -293,7 +293,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
         ) : (
           ""
         )}
-        {total?.count ? (
+        {total && total.count ? (
           <Box ml={"20px"} fontSize="0.875rem">
             <TotalNumber>{numberWithCommas(total.count)}</TotalNumber> {`Result${total.count > 1 ? "s" : ""}`}
           </Box>
