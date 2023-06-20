@@ -103,8 +103,7 @@ const text = {
   secondary: GREY[500],
   disabled: alpha(GREY[400], 0.4),
   hint: GREY[300],
-  dark: COMMON.black,
-  dark_500: alpha(COMMON.black, 0.5)
+  dark: COMMON.black
 };
 
 const border = {
