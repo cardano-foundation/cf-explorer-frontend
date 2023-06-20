@@ -99,7 +99,7 @@ export const ForgotPassword = styled(Box)`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-  color: ${({ theme }) => theme.palette.blue[800]};
+  color: ${({ theme }) => theme.palette.blue[900]};
   text-decoration: underline;
   cursor: pointer;
 `;
@@ -150,5 +150,5 @@ export const WrapSignUp = styled(Box)`
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  color: ${({ theme }) => theme.palette.secondary.main};
+  color: ${({ theme }) => theme.palette.blue[900]};
 `;

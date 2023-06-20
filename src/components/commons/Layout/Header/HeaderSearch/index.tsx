@@ -68,6 +68,12 @@ const options: Option[] = [
     detail: details.token
   },
   {
+    value: "stake-keys",
+    label: "Stake keys",
+    paths: [routers.STAKE_DETAIL],
+    detail: details.stake
+  },
+  {
     value: "addresses",
     label: "Addresses",
     paths: [
