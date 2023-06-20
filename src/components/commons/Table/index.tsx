@@ -293,7 +293,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
         ) : (
           ""
         )}
-        {total?.count ? (
+        {total && total.count ? (
           <Box ml={"20px"} fontSize="0.875rem">
             <TotalNumber>{numberWithCommas(total.count)}</TotalNumber> {`Result${total.count > 1 ? "s" : ""}`}
           </Box>
@@ -358,13 +358,14 @@ const Table: React.FC<TableProps> = ({
   };
 
   useEffect(() => {
-    if (wrapperRef.current) {
+    if (wrapperRef.current && !loading) {
       wrapperRef.current.scrollTop = 0;
     }
   }, [loading]);
 
   useEffect(() => {
     clearSelection();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const isSelectAll = useMemo(() => data?.length === selectedItems.length, [data, selectedItems]);
@@ -460,7 +461,6 @@ const PaginationCustom = ({
 }) => {
   const [inputPage, setInputPage] = useState(page);
   const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
-
   useUpdateEffect(() => {
     setInputPage(1);
   }, [poolType, size]);
@@ -534,7 +534,7 @@ const PaginationCustom = ({
     if (item.type === "page") {
       if (item.page === 1) {
         return (
-          <Box width={isGalaxyFoldSmall ? "100vw" : "auto"} textAlign={isGalaxyFoldSmall ? "left" : "center"}>
+          <Box textAlign={isGalaxyFoldSmall ? "left" : "center"}>
             <InputNumber
               type={"string"}
               value={inputPage}

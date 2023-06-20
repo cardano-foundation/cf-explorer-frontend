@@ -43,7 +43,7 @@ const columns: Column<Instantaneous>[] = [
     )
   },
   {
-    title: "Reward Paid",
+    title: "Rewards Paid",
     key: "rewardPaid",
     minWidth: "120px",
     render: (r) => (

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Box } from "@mui/material";
+import { useEffect, useMemo, useState } from "react";
+import { Box, IconButton, useTheme } from "@mui/material";
 import { useHistory, useParams } from "react-router";
 
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -14,6 +14,7 @@ import {
   RegistrationIcon
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import {
   DeregistrationSPOProcessDescription,
@@ -58,10 +59,25 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
   const history = useHistory();
   const { isMobile } = useScreen();
+  const { palette } = useTheme();
+  const [tabsValid, setTabValid] = useState(["isRegistration", "isUpdate", "isReward", "isDeRegistration"]);
+  useEffect(() => {
+    document.getElementById(`step-${currentStep}`)?.scrollIntoView();
+  }, [currentStep]);
+
+  useEffect(() => {
+    if (renderTabsSPO) {
+      setTabValid((prev) => prev.filter((tab) => renderTabsSPO[tab]));
+    }
+  }, [JSON.stringify(renderTabsSPO)]);
+
+  if (!renderTabsSPO) return null;
 
   const stepper: StepperProps[] = [
     {
-      icon: <RegistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 0 ? "#fff" : "#98A2B3"} />,
+      icon: (
+        <RegistrationIcon width={"25px"} height={"25px"} fill={renderTabsSPO["isRegistration"] ? "#fff" : "#98A2B3"} />
+      ),
       title: "Registration",
       component: <Registration />,
       description: (
@@ -74,7 +90,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       keyCheckShow: "isRegistration"
     },
     {
-      icon: <PoolUpdateIcon width={"25px"} height={"25px"} fill={currentStep >= 1 ? "#fff" : "#98A2B3"} />,
+      icon: <PoolUpdateIcon width={"25px"} height={"25px"} fill={renderTabsSPO["isUpdate"] ? "#fff" : "#98A2B3"} />,
       title: "Pool Updates",
       component: <PoollUpdates />,
       description: (
@@ -87,7 +103,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       keyCheckShow: "isUpdate"
     },
     {
-      icon: <OperatorRewardIcon width={"25px"} height={"25px"} fill={currentStep >= 2 ? "#fff" : "#98A2B3"} />,
+      icon: <OperatorRewardIcon width={"25px"} height={"25px"} fill={renderTabsSPO["isReward"] ? "#fff" : "#98A2B3"} />,
       title: "Operator Rewards",
       component: <OperatorReward />,
       description: (
@@ -97,7 +113,13 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       keyCheckShow: "isReward"
     },
     {
-      icon: <DeredistrationIcon width={"25px"} height={"25px"} fill={currentStep >= 3 ? "#fff" : "#98A2B3"} />,
+      icon: (
+        <DeredistrationIcon
+          width={"25px"}
+          height={"25px"}
+          fill={renderTabsSPO["isDeRegistration"] ? "#fff" : "#98A2B3"}
+        />
+      ),
       title: "Deregistration",
       component: <Deregistration />,
       description: (
@@ -111,9 +133,20 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
     }
   ];
 
-  useEffect(() => {
-    document.getElementById(`step-${currentStep}`)?.scrollIntoView();
-  }, [currentStep]);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const indexTabsValid = useMemo(() => {
+    return tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow);
+  }, [currentStep, tabsValid]);
+
+  const renderBackground = (isActive: boolean, hasData: boolean) => {
+    if (isActive) {
+      return `${palette.green[600]} !important`;
+    }
+    if (hasData) {
+      return `${palette.grey[700]} !important`;
+    }
+    return `${palette.grey[200]} !important`;
+  };
 
   if (!renderTabsSPO) return null;
 
@@ -122,24 +155,29 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       <Box display={"flex"} justifyContent={"space-between"}>
         {stepper.map((step, idx) => (
           <Step
-            id={`step-${idx}`}
-            component={"span"}
             key={idx}
+            id={`step-${idx}`}
             active={+(currentStep === idx)}
-            display={renderTabsSPO[step.keyCheckShow] ? "block" : "none"}
+            component={renderTabsSPO[step.keyCheckShow] ? "span" : CustomTooltip}
+            title={renderTabsSPO[step.keyCheckShow] ? undefined : "There is no record at this time"}
           >
-            <StepButton
-              active={+(currentStep === idx)}
-              onClick={() => {
-                history.replace(details.spo(poolId, "timeline", step.key));
-                setCurrentStep(idx);
-              }}
-            >
-              {step.icon}
-            </StepButton>
-            <TitleStep currentStep={currentStep} index={idx}>
-              {step.title}
-            </TitleStep>
+            <Box>
+              <StepButton
+                component={IconButton}
+                active={+(currentStep === idx)}
+                onClick={() => {
+                  if (renderTabsSPO[step.keyCheckShow] && currentStep !== idx) {
+                    history.replace(details.spo(poolId, "timeline", step.key));
+                    setCurrentStep(idx);
+                  }
+                }}
+                bgcolor={renderBackground(currentStep === idx, renderTabsSPO[step.keyCheckShow])}
+                color={({ palette }) => (renderTabsSPO[step.keyCheckShow] ? palette.common.white : palette.grey[300])}
+              >
+                {step.icon}
+              </StepButton>
+              <TitleStep active={+renderTabsSPO[step.keyCheckShow]}>{step.title}</TitleStep>
+            </Box>
           </Step>
         ))}
       </Box>
@@ -150,36 +188,49 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
         </WrapTitle>
       </StepHeader>
       <Box>{stepper[currentStep]?.description}</Box>
-      <Box minHeight={400} pb={10}>
-        {stepper[currentStep]?.component}
-      </Box>
+      <Box pb={10}>{stepper[currentStep]?.component}</Box>
       <StyledGroupButton display={"flex"} isShowPrev={currentStep > 0}>
         {currentStep > 0 && (
           <PreviousButton
             onClick={() => {
-              history.replace(details.spo(poolId, "timeline", stepper[currentStep - 1]?.key));
-              setCurrentStep(currentStep - 1);
+              history.replace(
+                details.spo(
+                  poolId,
+                  "timeline",
+                  stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1])?.key
+                )
+              );
+              setCurrentStep(stepper.findIndex((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1]));
             }}
           >
             <PreviousIcon />
             <Box fontSize={isMobile ? 14 : 16} component={"span"}>
-              Previous: {stepper[currentStep - 1]?.title}
+              Previous: {stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1])?.title}
             </Box>
           </PreviousButton>
         )}
         <NextButton
           onClick={() => {
-            if (currentStep === stepper.length - 1) {
+            if (+indexTabsValid === tabsValid.length - 1) {
               history.push(details.spo(poolId, "tabular"));
             } else {
-              history.replace(details.spo(poolId, "timeline", stepper[currentStep + 1]?.key));
-              setCurrentStep(currentStep + 1);
+              history.replace(
+                details.spo(
+                  poolId,
+                  "timeline",
+                  stepper.find((s) => s.keyCheckShow === tabsValid[+indexTabsValid + 1])?.key
+                )
+              );
+              setCurrentStep(stepper.findIndex((step) => step.keyCheckShow === tabsValid[+indexTabsValid + 1]));
             }
           }}
           variant="contained"
         >
           <ButtonText>
-            Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
+            Next:{" "}
+            {+indexTabsValid === tabsValid.length - 1
+              ? "View in tabular"
+              : stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid + 1])?.title}
           </ButtonText>
           <NextIcon />
         </NextButton>

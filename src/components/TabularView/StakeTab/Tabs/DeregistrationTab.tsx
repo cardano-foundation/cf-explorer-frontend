@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 
 import { EyeIcon } from "src/commons/resources";
-import { DeregistrationCertificateModal } from "src/components/StakingLifeCycle/DelegatorLifecycle/Deregistration";
+import { DeregistrationCertificateModal } from "src/components/commons/DeregistrationCertificateModal";
 import { AdaValue } from "src/components/commons/ADAValue";
 
 import useFetchList from "../../../../commons/hooks/useFetchList";

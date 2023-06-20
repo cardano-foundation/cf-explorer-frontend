@@ -1,4 +1,4 @@
-import { useTheme } from "@mui/material";
+import { CircularProgress, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
@@ -50,16 +50,9 @@ export interface ListStakeKeyResponse {
 
 const MODES: ViewMode[] = ["timeline", "tabular"];
 
-const dataTabsConfig = {
-  hasDeRegistration: true,
-  hasDelegation: true,
-  hasRegistration: true,
-  hasWithdrawal: true,
-  hashRewards: true
-};
-
 const DelegatorLifecycle = () => {
   const { stakeId = "", mode = "timeline", tab = "registration" } = useParams<Params>();
+
   const tabList: { [key in DelegationStep]: number } & { tablular: null } = {
     registration: 0,
     delegation: 1,
@@ -69,7 +62,14 @@ const DelegatorLifecycle = () => {
     tablular: null
   };
 
-  const validTab: DelegationStep = tabList[tab] >= 0 ? tab : "registration";
+  const tabsValid = {
+    registration: "hasRegistration",
+    delegation: "hasDelegation",
+    rewards: "hashRewards",
+    "withdrawal-history": "hasWithdrawal",
+    deregistration: "hasDeRegistration"
+  };
+  let validTab: DelegationStep = tabList[tab] >= 0 ? tab : "registration";
   const validMode: ViewMode = MODES.find((item) => item === mode) || "timeline";
 
   const [currentStep, setCurrentStep] = useState(tabList[validTab]);
@@ -80,10 +80,20 @@ const DelegatorLifecycle = () => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { isLoggedIn } = useAuth();
   const { data, error, initialized } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}`, undefined, false);
+  const { data: listTabs, loading: loadingListTabs } = useFetch<ListStakeKeyResponse>(
+    API.STAKE_LIFECYCLE.TABS(stakeId)
+  );
 
   useEffect(() => {
-    setCurrentStep(tabList[validTab]);
-  }, [validTab]);
+    if (listTabs && listTabs[tabsValid[tab]]) {
+      setCurrentStep(tabList[validTab]);
+      return;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    validTab = "registration";
+    setCurrentStep(tabList["registration"]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listTabs]);
 
   useEffect(() => {
     document.title = `Staking Delegation Lifecycle ${stakeId} | Cardano Explorer`;
@@ -129,16 +139,18 @@ const DelegatorLifecycle = () => {
             )}
           </BoxItemStyled>
         </BoxContainerStyled>
-        {dataTabsConfig && (
+        {loadingListTabs && <CircularProgress color="success" />}
+
+        {!loadingListTabs && listTabs && (
           <>
             {validMode === "timeline" ? (
               <DelegatorLifecycleComponent
                 currentStep={currentStep}
                 setCurrentStep={setCurrentStep}
-                tabsRenderConfig={dataTabsConfig}
+                tabsRenderConfig={listTabs}
               />
             ) : (
-              <Tabular tabsRenderConfig={dataTabsConfig} />
+              <Tabular tabsRenderConfig={listTabs} />
             )}
           </>
         )}

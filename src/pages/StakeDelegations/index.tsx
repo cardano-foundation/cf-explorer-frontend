@@ -1,6 +1,6 @@
 import { Box, MenuItem, Select } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -20,7 +20,7 @@ import { Column } from "src/types/table";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 
-import { Actions, PageSize, PerPage, StyledContainer, StyledLink, TimeDuration } from "./styles";
+import { Actions, PageSize, PerPage, PoolName, StyledContainer, StyledLink, TimeDuration } from "./styles";
 
 const perPages = [10, 20, 50, 100];
 

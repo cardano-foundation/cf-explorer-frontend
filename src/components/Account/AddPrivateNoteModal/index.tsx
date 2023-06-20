@@ -22,15 +22,15 @@ type TInput = {
   error?: string;
 };
 const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseModal, refresh }) => {
-  const [txHash, setTxHash] = useState<TInput | undefined>();
-  const [privateNote, setPrivateNote] = useState<TInput | undefined>();
+  const [txHash, setTxHash] = useState<TInput>({ value: "" });
+  const [privateNote, setPrivateNote] = useState<TInput>({ value: "" });
   const [loading, setLoading] = useState(false);
   const { isTablet } = useScreen();
   const toast = useToast();
 
   useEffect(() => {
-    setTxHash((prev) => ({ ...prev, value: currentNote?.hash }));
-    setPrivateNote((prev) => ({ ...prev, value: currentNote?.note }));
+    setTxHash((prev) => ({ ...prev, value: currentNote?.hash || "" }));
+    setPrivateNote((prev) => ({ ...prev, value: currentNote?.note || "" }));
   }, [currentNote]);
 
   const handleSubmitData = async () => {
@@ -62,8 +62,8 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
               toast.error("Something went wrong!");
             }
           }
-          setTxHash(undefined);
-          setPrivateNote(undefined);
+          setTxHash({ value: "" });
+          setPrivateNote({ value: "" });
           setLoading(false);
           handleCloseModal();
           refresh();
@@ -136,6 +136,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
           loading={loading}
           disabled={!privateNote?.value || !txHash?.value || !!txHash?.error}
           loadingPosition="end"
+          endIcon={<></>}
           onClick={handleSubmitData}
           fullWidth={isTablet}
         >

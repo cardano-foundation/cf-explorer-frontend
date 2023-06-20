@@ -1,7 +1,9 @@
+/* eslint-disable no-debugger */
 import { useHistory, useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useTheme } from "@emotion/react";
+import { CircularProgress } from "@mui/material";
 
 import { getShortWallet } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
@@ -47,13 +49,6 @@ export interface ListTabResponseSPO {
   isDeRegistration: boolean;
 }
 
-const renderTabsSPO: ListTabResponseSPO = {
-  isRegistration: true,
-  isUpdate: true,
-  isReward: true,
-  isDeRegistration: true
-};
-
 const MODES: ViewMode[] = ["timeline", "tabular"];
 
 const SPOLifecycle = () => {
@@ -71,9 +66,18 @@ const SPOLifecycle = () => {
     tablular: null
   };
 
-  const { data, error, initialized } = useFetch<PoolInfo>(poolId ? API.SPO_LIFECYCLE.POOL_INFO(poolId) : "");
+  const tabsValid = {
+    registration: "isRegistration",
+    "pool-updates": "isUpdate",
+    "operator-rewards": "isReward",
+    deregistration: "isDeRegistration"
+  };
 
-  const validTab: SPOStep = tabList[tab] >= 0 ? tab : "registration";
+  const { data, error, initialized } = useFetch<PoolInfo>(poolId ? API.SPO_LIFECYCLE.POOL_INFO(poolId) : "");
+  const { data: renderTabsSPO, loading: loadingListTabs } = useFetch<ListTabResponseSPO>(
+    API.SPO_LIFECYCLE.TABS(poolId)
+  );
+  let validTab: SPOStep = tabList[tab] >= 0 ? tab : "registration";
   const validMode: ViewMode = MODES.find((item) => item === mode) || "timeline";
 
   const [currentStep, setCurrentStep] = useState(tabList[validTab]);
@@ -81,8 +85,15 @@ const SPOLifecycle = () => {
   const { isLoggedIn } = useAuth();
 
   useEffect(() => {
-    setCurrentStep(tabList[validTab]);
-  }, [validTab]);
+    if (renderTabsSPO && renderTabsSPO[tabsValid[tab]]) {
+      setCurrentStep(tabList[validTab]);
+      return;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    validTab = "registration";
+    setCurrentStep(tabList["registration"]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [renderTabsSPO]);
 
   const [open, setOpen] = useState(false);
   const containerRef = useRef(null);
@@ -130,7 +141,8 @@ const SPOLifecycle = () => {
             )}
           </BoxItemStyled>
         </BoxContainerStyled>
-        {renderTabsSPO && (
+        {loadingListTabs && <CircularProgress color="success" />}
+        {renderTabsSPO && !loadingListTabs && (
           <>
             {validMode === "timeline" ? (
               <SPOLifecycleComponent
