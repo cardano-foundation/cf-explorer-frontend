@@ -1,6 +1,6 @@
 import { Box, MenuItem, Select } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -20,7 +20,7 @@ import { Column } from "src/types/table";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 
-import { Actions, PageSize, PerPage, PoolName, StyledContainer, StyledLink, TimeDuration } from "./styles";
+import { Actions, PageSize, PerPage, StyledContainer, StyledLink, TimeDuration } from "./styles";
 
 const perPages = [10, 20, 50, 100];
 
@@ -68,7 +68,14 @@ const StakeDelegations = () => {
     {
       title: "Block",
       key: "blockNo",
-      render: (r) => <Box component={"span"}>{r.blockNo}</Box>
+      render: (r) => (
+        <>
+          <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
+          <Box mt={1}>
+            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
+          </Box>
+        </>
+      )
     },
     {
       title: "Stake Key",
@@ -85,27 +92,22 @@ const StakeDelegations = () => {
     {
       title: "Pool",
       key: "pool",
-      render: (r) => {
-        const pool = r.pools[0] || {};
-        return (
-          <>
-            <CustomTooltip title={pool.poolName || pool.poolId}>
-              <PoolName to={details.delegation(pool.poolId)}>
-                <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
-                  {pool.poolName || `${getShortWallet(pool.poolId)}`}
-                </Box>
-              </PoolName>
-            </CustomTooltip>
-            <>
-              {(r.pools || []).length > 1 && (
-                <Box display={"block"} component={Link} to={details.transaction(r.txHash)}>
-                  ...
-                </Box>
-              )}
-            </>
-          </>
-        );
-      }
+      render: (r) => (
+        <>
+          {r.pools.slice(0, 2).map((pool: any) => (
+            <Box key={pool.poolId}>
+              <CustomTooltip title={pool.poolName || pool.poolId}>
+                <StyledLink to={details.delegation(pool.poolId)}>
+                  <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
+                    {pool.poolName || getShortWallet(pool.poolId)}
+                  </Box>
+                </StyledLink>
+              </CustomTooltip>
+            </Box>
+          ))}
+          {r.pools?.length > 2 ? <StyledLink to={details.transaction(r.txHash)}>...</StyledLink> : ""}
+        </>
+      )
     }
   ];
 

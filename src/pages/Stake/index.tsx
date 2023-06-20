@@ -44,6 +44,10 @@ const Stake = () => {
   );
 
   useEffect(() => {
+    handleClose();
+  }, [history.location.pathname]);
+
+  useEffect(() => {
     const title = poolType === POOL_TYPE.REGISTRATION ? "Registrations" : "Deregistrations";
     document.title = `${title} Stake Keys | Cardano Explorer`;
   }, [poolType]);
