@@ -36,6 +36,7 @@ export default function VerifyEmail() {
     } else {
       history.push(routers.HOME);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path.search]);
   return (
     <Container>

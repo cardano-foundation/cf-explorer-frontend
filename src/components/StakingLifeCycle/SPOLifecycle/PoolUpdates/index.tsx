@@ -78,11 +78,13 @@ export const PoollUpdatesList = ({
     if (initialized) {
       setShowBackButton?.(data.length > 1);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialized]);
 
   useEffect(() => {
     const currentItem = data.find((item) => item.txHash === txHash);
     onSelect(currentItem || null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txHash, data]);
 
   const handleSelect = (poolUpdated: PoolUpdateItem) => {

@@ -145,7 +145,7 @@ export {
   txInputIconUrl,
   txOutputIconUrl,
   totalOutputUrl,
-  CopyIconSquareUrl
+  CopyIconSquareUrl,
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
