@@ -16,12 +16,9 @@ export const Menu = styled(List)(({ theme }) => ({
   overflow: "auto",
   marginBottom: "5px",
   "&::-webkit-scrollbar": {
-    display: "none"
+    width: "0px",
+    height: "0px"
   },
-  "&:hover::-webkit-scrollbar": {
-    display: "block"
-  },
-
   [theme.breakpoints.down("md")]: {
     maxHeight: "unset"
   },
