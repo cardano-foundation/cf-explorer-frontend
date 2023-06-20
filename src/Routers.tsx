@@ -45,7 +45,7 @@ import ReportGeneratedPoolDetail from "./pages/ReportGeneratedPoolDetail";
 import StakingLifeCycleSearch from "./pages/StakingLifeCycleSearch";
 import { getAllBookmarks } from "./commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "./commons/utils/constants";
-import { openSyncModal } from "./stores/syncModal";
+import { setOpenSyncBookmarkModal } from "./stores/user";
 
 const Routes: React.FC = () => {
   const { isLoggedIn } = useAuth();
@@ -57,7 +57,7 @@ const Routes: React.FC = () => {
         (((JSON.parse(localStorage.getItem("bookmark") || "") as Bookmark[]) || [])?.filter((r) => !r.id) || [])
           .length > 0
       ) {
-        openSyncModal(true);
+        setOpenSyncBookmarkModal(true);
       } else {
         const { data } = await getAllBookmarks(NETWORK_TYPES[NETWORK]);
         if (data) {

@@ -7,7 +7,7 @@ import { StyledDarkLoadingButton } from "src/components/share/styled";
 import { addListBookmark, getAllBookmarks } from "src/commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
 import StyledModal from "src/components/commons/StyledModal";
-import { openSyncModal } from "src/stores/syncModal";
+import { setOpenSyncBookmarkModal } from "src/stores/user";
 
 import { Description, ModalTitle, StyledButton } from "./styles";
 
@@ -18,7 +18,7 @@ const SyncBookmarkModal = () => {
   const [, setBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
   const bookmarks = ((JSON.parse(localStorage.getItem("bookmark") || "") as Bookmark[]) || [])?.filter((r) => !r.id);
   const bookmarkLength = bookmarks.length;
-  const { openModal } = useSelector(({ syncModal }: RootState) => syncModal);
+  const { openSyncBookmarkModal = false } = useSelector(({ user }: RootState) => user);
 
   const hanldeSyncBookmark = async () => {
     try {
@@ -38,7 +38,7 @@ const SyncBookmarkModal = () => {
   };
 
   return (
-    <StyledModal open={openModal} handleCloseModal={() => openSyncModal(false)}>
+    <StyledModal open={openSyncBookmarkModal} handleCloseModal={() => setOpenSyncBookmarkModal(false)}>
       <Box textAlign="center">
         <ModalTitle>Notify</ModalTitle>
         <Description>
@@ -56,7 +56,7 @@ const SyncBookmarkModal = () => {
           )}
         </Description>
         <Box display={"flex"} justifyContent="center" gap={2}>
-          <StyledButton onClick={() => openSyncModal(false)}>Close</StyledButton>
+          <StyledButton onClick={() => setOpenSyncBookmarkModal(false)}>Close</StyledButton>
           {!message && (
             <StyledDarkLoadingButton loading={loading} loadingPosition="end" onClick={hanldeSyncBookmark}>
               Sync
