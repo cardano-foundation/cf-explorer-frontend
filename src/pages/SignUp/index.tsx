@@ -107,6 +107,7 @@ export default function SignUp() {
     if (isLoggedIn) {
       history.push(routers.HOME);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
   useEffect(() => {
@@ -267,7 +268,7 @@ export default function SignUp() {
         return;
       }
     } catch (error: any) {
-      if (error.response.data.errorCode === "CC_23") {
+      if (error?.response?.data?.errorCode === "CC_23") {
         setFormData({
           name: "email",
           touched: true,

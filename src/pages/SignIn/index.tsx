@@ -105,7 +105,6 @@ export default function SignIn() {
 
   const handleLoginSuccess = () => {
     toast.success("Login success");
-    handleRedirectBack();
   };
 
 
@@ -113,6 +112,7 @@ export default function SignIn() {
     if (isLoggedIn) {
       handleRedirectBack();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
 

@@ -63,7 +63,7 @@ export const VerifyScript = ({ verified, setShowBanner }: IVerifyScript) => {
     <>
       <VerifyScriptContainer>
         <Box>Contract Detail</Box>
-        <StyledVerifyButton onClick={handleClickVerifyButton} verified={verified}>
+        <StyledVerifyButton onClick={handleClickVerifyButton} verified={+verified}>
           {verified ? "VERIFIED SCRIPT " : "VERIFY SCRIPT"}
         </StyledVerifyButton>
       </VerifyScriptContainer>

@@ -66,7 +66,8 @@
     "prettier:fix": "prettier --write \"src/**/(*.tsx|*.ts|*.css|*.scss)\"",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test": "start-server-and-test start localhost:3000 cypress:run"
+    "test": "start-server-and-test start localhost:3000 cypress:run",
+    "test:jest:ci": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watchAll=false --ci --coverage"
   },
   "eslintConfig": {
     "extends": [

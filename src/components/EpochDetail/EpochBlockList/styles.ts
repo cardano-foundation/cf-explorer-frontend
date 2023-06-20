@@ -13,7 +13,7 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const StyledColorBlueDard = styled("span")`
+export const BlueText = styled("span")`
   color: ${(props) => props.theme.palette.text.primary};
 `;
 
@@ -33,7 +33,7 @@ export const StyledOutput = styled("div")`
   gap: 10px;
 `;
 
-export const PriceWrapper = styled(StyledColorBlueDard)`
+export const PriceWrapper = styled(BlueText)`
   display: inline-flex;
   align-items: center;
   gap: 10px;
