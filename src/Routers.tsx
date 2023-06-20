@@ -1,4 +1,5 @@
 import React from "react";
+import { useAsync, useLocalStorage } from "react-use";
 import { Redirect, Route, Switch } from "react-router-dom";
 
 import { routers } from "./commons/routers";
@@ -42,8 +43,30 @@ import VerifyEmail from "./pages/VerifyEmail";
 import ReportGeneratedStakingDetail from "./pages/ReportGeneratedStakingDetail";
 import ReportGeneratedPoolDetail from "./pages/ReportGeneratedPoolDetail";
 import StakingLifeCycleSearch from "./pages/StakingLifeCycleSearch";
+import { getAllBookmarks } from "./commons/utils/userRequest";
+import { NETWORK, NETWORK_TYPES } from "./commons/utils/constants";
+import { setOpenSyncBookmarkModal } from "./stores/user";
 
 const Routes: React.FC = () => {
+  const { isLoggedIn } = useAuth();
+  const [, setBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
+
+  useAsync(async () => {
+    if (isLoggedIn) {
+      if (
+        (((JSON.parse(localStorage.getItem("bookmark") || "") as Bookmark[]) || [])?.filter((r) => !r.id) || [])
+          .length > 0
+      ) {
+        setOpenSyncBookmarkModal(true);
+      } else {
+        const { data } = await getAllBookmarks(NETWORK_TYPES[NETWORK]);
+        if (data) {
+          setBookmark(data);
+        }
+      }
+    }
+  }, []);
+
   return (
     <Switch>
       <Route path={routers.SIGN_IN} exact component={SignIn} />
