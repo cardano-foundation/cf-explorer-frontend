@@ -174,9 +174,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
         </WrapTitle>
       </StepHeader>
       <Box>{stepper[currentStep]?.description}</Box>
-      <Box minHeight={400} pb={10}>
-        {stepper[currentStep]?.component}
-      </Box>
+      <Box pb={10}>{stepper[currentStep]?.component}</Box>
       <StyledGroupButton display={"flex"} isShowPrev={currentStep > 0}>
         {currentStep > 0 && (
           <PreviousButton

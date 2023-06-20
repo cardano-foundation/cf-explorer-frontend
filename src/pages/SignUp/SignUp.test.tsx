@@ -5,6 +5,7 @@ import { render } from "src/test-utils";
 import { signUp } from "src/commons/utils/userRequest";
 
 import SignUp from ".";
+import exp from "constants";
 
 const mockData = {
   email: "abcxyzabc@gmail.com",
@@ -22,7 +23,7 @@ jest.mock("src/commons/utils/userRequest", () => ({
 
 describe("SignUp page", () => {
   it("should render sign up page", () => {
-    expect(screen.getByText("Sign up")).toBeInTheDocument();
+    expect(screen.getByText("Sign-Up")).toBeInTheDocument();
     expect(screen.getByText("Email Address")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("A confirmation code will be sent to this address")).toBeInTheDocument();
     expect(screen.getByText("Confirm Email Address")).toBeInTheDocument();

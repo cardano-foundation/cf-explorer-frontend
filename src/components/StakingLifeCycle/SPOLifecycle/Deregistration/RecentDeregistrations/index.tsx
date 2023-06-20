@@ -116,10 +116,6 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect, setShowBackButton })
       {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord />}
       {initialized && data?.length > 0 && !error && (
         <FooterTable
-          total={{
-            count: 0,
-            title: ""
-          }}
           pagination={{
             total,
             ...pageInfo,

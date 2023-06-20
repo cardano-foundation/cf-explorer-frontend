@@ -35,6 +35,12 @@ For example:
 `REACT_APP_TESTNET_API_URL=http://localhost:3003`
 `REACT_APP_PREVIEW_API_URL=http://localhost:3004`
 
+> Update Application URL reference
+
+> Update Application network reference
+
+`REACT_APP_NETWORK = mainnet`
+
 > Update API URL for authentication service
 
 `REACT_APP_AUTH_API_URL=http://localhost:3005`
