@@ -1,5 +1,5 @@
-import { Box, MenuItem, Select } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { Box } from "@mui/material";
+import { useEffect, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 
@@ -20,14 +20,11 @@ import { Column } from "src/types/table";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 
-import { Actions, PageSize, PerPage, StyledContainer, StyledLink, TimeDuration } from "./styles";
-
-const perPages = [10, 20, 50, 100];
+import { Actions, StyledContainer, StyledLink, TimeDuration } from "./styles";
 
 const StakeDelegations = () => {
   const { search } = useLocation();
   const history = useHistory();
-  const [pageSize, setPageSize] = useState("50");
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<Contracts>(
     API.STAKE.STAKE_DELEGATIONS,
@@ -118,21 +115,6 @@ const StakeDelegations = () => {
           <TimeDuration>
             <FormNowMessage time={fetchData.lastUpdated} />
           </TimeDuration>
-          <PageSize>
-            <Select
-              value={pageSize}
-              onChange={(event) => setPageSize(event.target.value)}
-              displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
-            >
-              {perPages.map((item) => (
-                <MenuItem key={item} value={item}>
-                  {item}
-                </MenuItem>
-              ))}
-            </Select>
-            <PerPage>Per page</PerPage>
-          </PageSize>
         </Actions>
         <Table
           {...fetchData}
