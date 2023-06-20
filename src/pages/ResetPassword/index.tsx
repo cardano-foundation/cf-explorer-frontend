@@ -104,6 +104,7 @@ export default function ResetPassword() {
     } else {
       history.push(routers.SIGN_IN);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path.search]);
 
   useEffect(() => {

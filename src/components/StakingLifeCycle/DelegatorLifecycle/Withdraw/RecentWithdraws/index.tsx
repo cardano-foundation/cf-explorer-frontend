@@ -35,11 +35,13 @@ const RecentWithdraws: React.FC<Props> = ({ onSelect, params, setParams, setShow
     if (initialized) {
       setShowBackButton?.(data.length > 1);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialized]);
 
   useEffect(() => {
     const currentItem = data.find((item) => item.txHash === txHash);
     onSelect(currentItem || null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txHash, data]);
 
   const handleSelect = (withdraw: WithdrawItem) => {
@@ -107,10 +109,6 @@ const RecentWithdraws: React.FC<Props> = ({ onSelect, params, setParams, setShow
       {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord />}
       {initialized && data?.length > 0 && !error && (
         <FooterTable
-          total={{
-            count: 0,
-            title: ""
-          }}
           pagination={{
             total,
             ...pageInfo,
