@@ -68,7 +68,16 @@ const StakeDelegations = () => {
     {
       title: "Block",
       key: "blockNo",
-      render: (r) => <Box component={"span"}>{r.blockNo}</Box>
+      render: (r) => (
+        <Box>
+          <Box>
+            <StyledLink to={details.block(r.blockNo || r.blockNo)}>{r.blockNo}</StyledLink>
+          </Box>
+          <Box mt={1}>
+            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
+          </Box>
+        </Box>
+      )
     },
     {
       title: "Stake Key",
@@ -85,16 +94,18 @@ const StakeDelegations = () => {
     {
       title: "Pool",
       key: "pool",
-      render: (r) => {
-        const pool = r.pools[0];
-        return (
-          <StyledLink to={details.delegation(pool)}>
-            <CustomTooltip title={pool}>
-              <Box component={"span"}>{getShortHash(pool)}</Box>
-            </CustomTooltip>
-          </StyledLink>
-        );
-      }
+      render: (r) => (
+        <>
+          {r.pools.slice(0, 2).map((pool: any) => (
+            <Box key={pool.poolId}>
+              <CustomTooltip title={pool.poolId}>
+                <StyledLink to={details.stake(pool.poolId)}>{getShortWallet(pool.poolId)}</StyledLink>
+              </CustomTooltip>
+            </Box>
+          ))}
+          {r.pools?.length > 2 ? <StyledLink to={details.delegation(r.txHash)}>...</StyledLink> : ""}
+        </>
+      )
     }
   ];
 
