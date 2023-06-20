@@ -68,15 +68,16 @@ const options: Option[] = [
     detail: details.token
   },
   {
-    value: "stakes",
-    label: "Stake keys",
-    paths: [routers.STAKE_LIST, routers.TOP_DELEGATOR, routers.STAKE_DETAIL],
-    detail: details.stake
-  },
-  {
     value: "addresses",
     label: "Addresses",
-    paths: [routers.ADDRESS_LIST, routers.CONTRACT_LIST, routers.ADDRESS_DETAIL],
+    paths: [
+      routers.ADDRESS_LIST,
+      routers.CONTRACT_LIST,
+      routers.ADDRESS_DETAIL,
+      routers.STAKE_LIST,
+      routers.TOP_DELEGATOR,
+      routers.STAKE_DETAIL
+    ],
     detail: details.address
   },
   {
@@ -94,6 +95,12 @@ const options: Option[] = [
       routers.DELEGATOR_LIFECYCLE,
       routers.STAKING_LIFECYCLE
     ]
+  },
+  {
+    value: "policies",
+    label: "Policies",
+    paths: [routers.POLICY_DETAIL],
+    detail: details.policyDetail
   }
 ];
 
@@ -122,6 +129,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     if ("/" + currentPath !== routers.SEARCH) setValues({ ...intitalValue, filter });
     setError("");
     setShowErrorMobile && setShowErrorMobile(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [history.location.pathname]);
 
   const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
@@ -142,6 +150,16 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       }
       return;
     }
+
+    if (option?.value === "addresses") {
+      if (search.startsWith("stake")) {
+        history.push(details.stake(search));
+        callback?.();
+        return;
+      }
+      history.push(details.address(search));
+    }
+
     callback?.();
     if (option?.detail) return history.push(option?.detail(search));
     if (search) {

@@ -174,6 +174,7 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
         fold: { 0: "none", sm: "vertical", lg: "horizontal" }
       }
     ];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
   return (

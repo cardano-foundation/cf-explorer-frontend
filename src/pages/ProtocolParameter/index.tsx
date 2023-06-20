@@ -28,7 +28,7 @@ import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "src/types/protocol";
 import ParseScriptModal from "src/components/ParseScriptModal";
-import { DateRangeIcon, EmptyIcon, FilterIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
+import { DateRangeIcon, EmptyIcon, FilterIcon, InfoIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
 import DateRangeModal from "src/components/FilterReport/DateRangeModal";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
@@ -43,6 +43,8 @@ import {
   ButtonFilter,
   FilterContainer
 } from "./styles";
+import { explainerTextGlobalConstants, explainerTextProtocolHistory } from "./explainerText";
+import { ExplainerTextModal } from "./ExplainerTextModal";
 
 const ProtocolParameter: React.FC = () => {
   const [fixedColumnKeys, { push: pushFixedColumnKeys }] = useList<string>([]);
@@ -52,7 +54,7 @@ const ProtocolParameter: React.FC = () => {
   const { PROTOCOL_PARAMETER } = API;
   const { data: dataFixed, loading: loadingFixed } = useFetch(PROTOCOL_PARAMETER.FIXED);
   const { data: dataLastest, loading: loadingLastest } = useFetch<TProtocolParam>(PROTOCOL_PARAMETER.LASTEST);
-
+  const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
   useUpdateEffect(() => {
     dataLastest &&
       [...Object.keys(PROTOCOL_TYPE), "startEpoch", "endEpoch"].map((k) =>
@@ -72,7 +74,25 @@ const ProtocolParameter: React.FC = () => {
   const theme = useTheme();
 
   const columnsMap = Object.keys(PROTOCOL_TYPE).map((k) => ({
-    title: k,
+    title: (
+      <Box>
+        {k}{" "}
+        {explainerTextProtocolHistory[k as keyof Omit<ProtocolHistory, "epochChanges">] && (
+          <Box
+            component={IconButton}
+            padding={"2px"}
+            onClick={() =>
+              setExplainerText({
+                content: explainerTextProtocolHistory[k as keyof Omit<ProtocolHistory, "epochChanges">],
+                title: k
+              })
+            }
+          >
+            <InfoIcon style={{ cursor: "pointer" }} />
+          </Box>
+        )}
+      </Box>
+    ),
     key: k,
     render: (r: TProtocolParam) => {
       return (
@@ -118,12 +138,38 @@ const ProtocolParameter: React.FC = () => {
   ];
 
   const fixedColumn = (fixedColumnKeys || []).map((k) => ({
-    title: k,
+    title: (
+      <Box>
+        {k}
+        {explainerTextGlobalConstants[k] && (
+          <Box
+            component={IconButton}
+            padding={"2px"}
+            onClick={() => setExplainerText({ content: explainerTextGlobalConstants[k], title: k })}
+          >
+            <InfoIcon style={{ cursor: "pointer" }} />
+          </Box>
+        )}
+      </Box>
+    ),
     key: k,
     render: (r: any) => {
       return (
-        <Box component={Box} justifyItems={"flex-start"} textTransform={"capitalize"}>
-          <Box maxWidth={300} overflow={"hidden"} whiteSpace={"nowrap"} textOverflow={"ellipsis"}>
+        <Box
+          component={k === "genDelegs" ? Button : Box}
+          onClick={() => {
+            return k === "genDelegs" && setCostModelScript(r["genDelegs"] !== null ? r["genDelegs"] || 0 : "");
+          }}
+          justifyItems={"flex-start"}
+          textTransform={"capitalize"}
+        >
+          <Box
+            maxWidth={300}
+            overflow={"hidden"}
+            whiteSpace={"nowrap"}
+            textOverflow={"ellipsis"}
+            color={({ palette }) => (k === "genDelegs" ? palette.blue[800] : "unset")}
+          >
             {typeof r[k] === "object" ? JSON.stringify(r[k]) : r[k]}
           </Box>
         </Box>
@@ -203,6 +249,11 @@ const ProtocolParameter: React.FC = () => {
         script={costModelScript}
         title="CostModel"
       />
+      <ExplainerTextModal
+        open={!!explainerText}
+        handleCloseModal={() => setExplainerText(null)}
+        explainerText={explainerText || { content: "", title: "" }}
+      />
     </Container>
   );
 };
@@ -215,6 +266,7 @@ export const ProtocolParameterHistory = () => {
 
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
+  const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
 
   const {
     data: dataHistory,
@@ -329,7 +381,25 @@ export const ProtocolParameterHistory = () => {
       key: "ParameterName",
       fixed: true,
       render: (r: TProtocolParam & { params: string }) => {
-        return <Box p={"24px 20px"}>{r?.params}</Box>;
+        return (
+          <Box p={"24px 20px"}>
+            {r?.params}
+            {explainerTextProtocolHistory[r?.params as keyof Omit<ProtocolHistory, "epochChanges">] && (
+              <Box
+                component={IconButton}
+                padding={"2px"}
+                onClick={() =>
+                  setExplainerText({
+                    content: explainerTextProtocolHistory[r?.params as keyof Omit<ProtocolHistory, "epochChanges">],
+                    title: r?.params
+                  })
+                }
+              >
+                <InfoIcon style={{ cursor: "pointer" }} />
+              </Box>
+            )}
+          </Box>
+        );
       }
     },
     ...columnsMap
@@ -440,6 +510,11 @@ export const ProtocolParameterHistory = () => {
           <TableStyled columns={columnsTable} data={dataTable} loading={loading} />
         )}
       </Card>
+      <ExplainerTextModal
+        open={!!explainerText}
+        handleCloseModal={() => setExplainerText(null)}
+        explainerText={explainerText || { content: "", title: "" }}
+      />
     </Box>
   );
 };

@@ -20,7 +20,7 @@ const OperatorRewardTab = () => {
     size: 50
   });
 
-  const [sort, setSort] = useState<string>("");
+  const [sort, setSort] = useState<string>("time,DESC");
 
   const columns: Column<SPO_REWARD>[] = [
     {
@@ -73,6 +73,7 @@ const OperatorRewardTab = () => {
     <Box>
       <Table
         {...fetchData}
+        defaultSort="time,DESC"
         columns={columns}
         total={{
           title: "Pool Registration",
