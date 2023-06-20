@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import { alpha, Paper, TextField, styled, Box, Grid } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const StyledAAmount = styled(Box)`
   display: flex;
@@ -54,3 +54,26 @@ export const LogoEmpty = styled(Box)`
 
 export const GridContainer = styled(Grid)``;
 export const GridItem = styled(Grid)``;
+
+export const RedirectButton = styled(Box)(({ theme }) => ({
+  textTransform: "capitalize",
+  backgroundColor: theme.palette.common.black,
+  color: theme.palette.common.white,
+  padding: `${theme.spacing(1)} ${theme.spacing(2)} `,
+  ":hover": {
+    backgroundColor: alpha(theme.palette.common.black, 0.8)
+  }
+}));
+
+export const BannerSuccess = styled(Box)`
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: center;
+  color: #ffffff;
+  background: #5a9c56;
+  border-radius: 10px;
+  width: 100%;
+  padding: 12px 0px;
+  margin: 20px 0px;
+`;

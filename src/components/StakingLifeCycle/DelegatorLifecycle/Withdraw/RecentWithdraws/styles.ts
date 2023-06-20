@@ -32,7 +32,7 @@ export const OutlineButton = styled(Button)`
 export const GridBox = styled("div")<{ sidebar?: number }>(({ theme, sidebar }) => ({
   display: "grid",
   gridTemplateColumns: "repeat(4, 1fr)",
-  gridTemplateRows: "repeat(2, 1fr)",
+  gridTemplateRows: "repeat(1, 1fr)",
   gridGap: "20px 10px",
   [theme.breakpoints.down("xl")]: {
     gridTemplateColumns: `repeat(${sidebar ? 3 : 4}, 1fr)`,

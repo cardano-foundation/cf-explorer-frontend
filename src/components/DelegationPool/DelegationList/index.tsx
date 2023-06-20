@@ -41,7 +41,7 @@ const DelegationLists: React.FC = () => {
         <CustomTooltip title={r.poolName || r.poolId}>
           <PoolName to={details.delegation(r.poolId)}>
             <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
-              {r.poolName || `Pool [${getShortWallet(r.poolId)}]`}
+              {r.poolName || `${getShortWallet(r.poolId)}`}
             </Box>
           </PoolName>
         </CustomTooltip>
@@ -51,10 +51,7 @@ const DelegationLists: React.FC = () => {
       title: "Pool size (A)",
       key: "poolSize",
       minWidth: "120px",
-      render: (r) => <Box component={"span"}>{formatADAFull(r.poolSize)}</Box>,
-      sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      }
+      render: (r) => <Box component={"span"}>{formatADAFull(r.poolSize)}</Box>
     },
     {
       title: "Reward",
@@ -85,12 +82,10 @@ const DelegationLists: React.FC = () => {
       minWidth: "200px",
       key: "Saturation",
       render: (r) => (
-        <CustomTooltip title={r.saturation ? r.saturation : 0}>
-          <Box display="flex" alignItems="center" justifyContent={"space-between"}>
-            <Box component={"span"}>{formatPercent(r.saturation / 100) || `0%`}</Box>
-            <StyledLinearProgress variant="determinate" value={r.saturation > 100 ? 100 : r.saturation} />
-          </Box>
-        </CustomTooltip>
+        <Box display="flex" alignItems="center" justifyContent={"space-between"}>
+          <Box component={"span"}>{formatPercent(r.saturation / 100) || `0%`}</Box>
+          <StyledLinearProgress variant="determinate" value={r.saturation > 100 ? 100 : r.saturation} />
+        </Box>
       )
     }
   ];

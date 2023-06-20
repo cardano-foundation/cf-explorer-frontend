@@ -55,11 +55,11 @@ export const DrawContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar
   position: "relative",
   margin: "0px -15px",
   marginTop: 35,
-  [theme.breakpoints.down("lg")]: {
+  [theme.breakpoints.down("xl")]: {
     margin: "auto",
     width: "100%"
   },
-  [theme.breakpoints.down(sidebar ? "lg" : "md")]: {
+  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
     flexDirection: "column",
     alignItems: "center",
     margin: "auto",
@@ -82,7 +82,7 @@ export const MiddleGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }
   [theme.breakpoints.down("md")]: {
     gap: 10
   },
-  [theme.breakpoints.down(sidebar ? "lg" : "md")]: {
+  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
     flexDirection: "row-reverse",
     maxWidth: 536,
     gap: 96,

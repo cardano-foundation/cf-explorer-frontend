@@ -1,6 +1,6 @@
 {
   "name": "cardano-blockchain-explorer",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "private": true,
   "dependencies": {
     "@cardano-foundation/cardano-connect-with-wallet": "^0.1.57",
@@ -66,7 +66,8 @@
     "prettier:fix": "prettier --write \"src/**/(*.tsx|*.ts|*.css|*.scss)\"",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test": "start-server-and-test start localhost:3000 cypress:run"
+    "test": "start-server-and-test start localhost:3000 cypress:run",
+    "test:jest:ci": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watchAll=false --ci --coverage"
   },
   "eslintConfig": {
     "extends": [

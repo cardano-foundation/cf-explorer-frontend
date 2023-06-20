@@ -71,6 +71,7 @@ import txInputIconUrl from "./icons/txInput.svg";
 import txOutputIconUrl from "./icons/txOutput.svg";
 import totalOutputUrl from "./icons/totalOutput.svg";
 import CopyIconSquareUrl from "./images/copy.svg";
+import fileGuardUrl from "./icons/file-guard.svg";
 
 export {
   LogoFullIcon,
@@ -145,7 +146,8 @@ export {
   txInputIconUrl,
   txOutputIconUrl,
   totalOutputUrl,
-  CopyIconSquareUrl
+  CopyIconSquareUrl,
+  fileGuardUrl
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
@@ -254,3 +256,5 @@ export { ReactComponent as TokenIcon } from "./icons/tokenIcon.svg";
 export { ReactComponent as BookmarkIcon } from "./icons/Bookmark.svg";
 export { ReactComponent as Bookmarked } from "./icons/Bookmarked.svg";
 export { ReactComponent as TransactionDelegationIcon } from "./images/DelegationIcon.svg";
+export { ReactComponent as ScriptIcon } from "./icons/u_book.svg";
+export { ReactComponent as WithdrawalHistoryIcon } from "./icons/withdrawal-history.svg";

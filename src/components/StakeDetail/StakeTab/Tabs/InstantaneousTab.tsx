@@ -43,7 +43,7 @@ const columns: Column<Instantaneous>[] = [
     )
   },
   {
-    title: "Reward Paid",
+    title: "Rewards Paid",
     key: "rewardPaid",
     minWidth: "120px",
     render: (r) => (
@@ -71,7 +71,7 @@ const InstantaneousTab = () => {
       pagination={{
         ...pageInfo,
         total: fetchData.total,
-        onChange: (page, size) => history.push({ search: stringify({ page, size }) })
+        onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
       }}
     />
   );

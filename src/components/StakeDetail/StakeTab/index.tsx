@@ -6,7 +6,7 @@ import { useHistory, useParams } from "react-router-dom";
 import {
   DelegationHistoryIcon,
   StakeKeyHistoryIcon,
-  WithdrawHistoryIcon,
+  WithdrawalHistoryIcon,
   InstantaneousHistoryIcon,
   TransactionIcon
 } from "src/commons/resources";
@@ -49,7 +49,7 @@ const StakeTab = () => {
       component: <StakeHistoryTab isMobile={isMobile} />
     },
     {
-      icon: WithdrawHistoryIcon,
+      icon: WithdrawalHistoryIcon,
       label: "Withdrawal History",
       key: "withdrawal",
       component: <WithdrawalHistoryTab />
@@ -75,7 +75,9 @@ const StakeTab = () => {
           <StyledTabList
             onChange={handleChange}
             TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
+            scrollButtons="auto"
             variant="scrollable"
+            visibleScrollbar={true}
           >
             {tabs.map(({ icon: Icon, key, label }) => (
               <Tab

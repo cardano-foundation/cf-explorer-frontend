@@ -1,4 +1,4 @@
-import { FaDiscord, FaLinkedinIn, FaTelegramPlane, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaLinkedinIn, FaTelegramPlane, FaTwitter, FaYoutube } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
 
 import {
@@ -65,7 +65,6 @@ export const menus: Menu[] = [
 
 export const socials: Social[] = [
   { href: "https://www.linkedin.com/company/cardano-foundation/", title: "LinkedIn", icon: FaLinkedinIn },
-  { href: "#", title: "Discord", icon: FaDiscord },
   { href: "https://t.me/CardanoAnnouncements", title: "Telegram", icon: FaTelegramPlane },
   { href: "https://twitter.com/Cardano_CF", title: "Twitter", icon: FaTwitter },
   { href: "https://www.youtube.com/c/cardanofoundation", title: "Youtube", icon: FaYoutube }
@@ -78,7 +77,7 @@ export const footerMenus: Menu[] = [
     children: [
       { href: "https://cardanofoundation.org/en/about-us/", title: "About Us" },
       { href: "https://cardanofoundation.org/en/contact-us/", title: "Contact Us" },
-      { href: "https://docs.cardano.org/en/latest/", title: "Documentation" },
+      { href: "https://docs.cardano.org/en/latest/", title: "Cardano Docs" },
       { href: "https://cardanofoundation.org/en/news", title: "News and Blog" }
     ]
   },

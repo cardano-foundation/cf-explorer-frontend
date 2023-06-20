@@ -17,7 +17,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import ProgressCircle from "src/components/commons/ProgressCircle";
 import FirstEpoch from "src/components/commons/Epoch/FirstEpoch";
 
-import { Blocks, StyledContainer, Output, StyledColorBlueDard, Status } from "./styles";
+import { Blocks, StyledContainer, Output, BlueText, Status } from "./styles";
 
 const Epoch: React.FC = () => {
   const [epoch, setEpoch] = useState<number | null>(null);
@@ -105,17 +105,17 @@ const Epoch: React.FC = () => {
       title: "Start Timestamp",
       key: "startTime",
       minWidth: "100px",
-      render: (r) => <StyledColorBlueDard>{formatDateTimeLocal(r.startTime || "")}</StyledColorBlueDard>
+      render: (r) => <BlueText>{formatDateTimeLocal(r.startTime || "")}</BlueText>
     },
     {
       title: "End Timestamp",
       key: "endTime",
       minWidth: "100px",
       render: (r) => (
-        <StyledColorBlueDard>
+        <BlueText>
           {formatDateTimeLocal(r.endTime || "")}
           {epoch === r.no && <SelectedIcon />}
-        </StyledColorBlueDard>
+        </BlueText>
       )
     }
   ];
@@ -152,7 +152,7 @@ const Epoch: React.FC = () => {
             ...pageInfo,
             total: fetchData.total,
             onChange: (page, size) => {
-              history.push({ search: stringify({ page, size }) });
+              history.replace({ search: stringify({ page, size }) });
               mainRef.current?.scrollTo(0, 0);
             },
             handleCloseDetailView: handleClose
