@@ -27,10 +27,7 @@ const DeregistrationTab = () => {
 
   const fetchData = useFetchList<DeregistrationItem>(
     reportId ? API.REPORT.SREPORT_DETAIL_DEGEGISTRATIONS(reportId) : "",
-    {
-      ...pageInfo,
-      sort
-    }
+    { ...pageInfo, sort }
   );
   const columns: Column<DeregistrationItem>[] = [
     {
@@ -79,11 +76,7 @@ const DeregistrationTab = () => {
       key: "stakeId",
       minWidth: "120px",
       render: () => (
-        <IconButton
-          onClick={() => {
-            setOpenModal(true);
-          }}
-        >
+        <IconButton onClick={() => setOpenModal(true)}>
           <EyeIcon style={{ transform: "scale(.8)" }} />
         </IconButton>
       )

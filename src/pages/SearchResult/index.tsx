@@ -25,7 +25,7 @@ const Title = styled("h3")`
 const getUrl = (filter?: FilterParams | "all", value?: string): FilterParams | null => {
   if (filter && filter !== "all") return filter;
   if (value) {
-    if (value.search("stake") === 0) return "stakes";
+    if (value.search("stake-key") === 0) return "stake-keys";
     if (value.search("pool") === 0) return "delegations/pool-detail-header";
     if (value.search("asset") === 0) return "tokens";
   }
@@ -42,7 +42,7 @@ const createNavigator = (filter?: FilterParams) => {
       return details.transaction;
     case "tokens":
       return details.token;
-    case "stakes":
+    case "stake-keys":
       return details.stake;
     case "addresses":
       return details.address;
@@ -59,7 +59,7 @@ const createNavigator = (filter?: FilterParams) => {
 
 const filterURLS = (value: string): FilterParams[] => {
   if (!Number.isNaN(Number(value))) return ["epochs", "blocks"];
-  else return ["blocks", "txs", "tokens", "stakes", "addresses", "delegations/pool-detail-header", "policies"];
+  else return ["blocks", "txs", "tokens", "stake-keys", "addresses", "delegations/pool-detail-header", "policies"];
 };
 
 const SearchResult = () => {
@@ -91,12 +91,13 @@ const SearchResult = () => {
       try {
         const urls = filterURLS(value);
         const result = await Promise.any(
+          /* eslint-disable  @typescript-eslint/no-explicit-any */
           urls.map(async (url): Promise<{ url: FilterParams; data: any }> => {
             try {
               const res = await defaultAxios.get(`${url}/${value}`);
               if (res.data) return Promise.resolve({ url, data: res.data });
             } catch {
-              //To do
+              return Promise.reject();
             }
             return Promise.reject();
           })
@@ -105,8 +106,8 @@ const SearchResult = () => {
         const navigate = createNavigator(url);
 
         if (navigate) return history.replace(navigate(value), { data });
-      } catch {
-        //To do
+      } catch (error) {
+        console.log(error);
       }
 
       setLoading(false);
