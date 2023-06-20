@@ -79,7 +79,7 @@ export default function ForgotPassword() {
     setFormData({
       name: event.target.name,
       value: event.target.value.trim(),
-      touched: event.target.value.trim() !== "",
+      touched: event.target.value.trim() !== ""
     });
   };
 
@@ -87,11 +87,11 @@ export default function ForgotPassword() {
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-    }
+    };
   }, []);
 
   const handleKeyDown = (event: any) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       event.preventDefault();
       handleSubmit(event);
     }
@@ -160,7 +160,7 @@ export default function ForgotPassword() {
       <WrapContent>
         <WrapTitle>Forgot Password</WrapTitle>
         <WrapHintText>
-          <WrapSignUp onClick={() => history.push(routers.SIGN_IN)}>Sign in</WrapSignUp>
+          <WrapSignUp onClick={() => history.push(routers.SIGN_IN)}>Sign-In</WrapSignUp>
         </WrapHintText>
         <FormGroup>
           {!success ? (
@@ -193,6 +193,7 @@ export default function ForgotPassword() {
                   fullWidth
                   placeholder="Email"
                   error={Boolean(formData.email.error && formData.email.touched)}
+                  onKeyDown={handleKeyDown}
                 />
                 {formData.email.error && formData.email.touched ? (
                   <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom>
