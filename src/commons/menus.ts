@@ -33,7 +33,7 @@ export const menus: Menu[] = [
       { title: "Blocks", href: routers.BLOCK_LIST },
       { title: "Transactions", href: routers.TRANSACTION_LIST },
       { title: "Native Tokens", href: "/tokens" },
-      { title: "Top Addresses", href: "/addresses" },
+      { title: "Top ADA Holders", href: "/addresses" },
       { title: "Smart Contracts", href: routers.CONTRACT_LIST },
       { title: "Pools", href: routers.DELEGATION_POOLS }
     ]
@@ -46,7 +46,7 @@ export const menus: Menu[] = [
       { title: "Stake Key De-registration", href: routers.STAKE_LIST.replace(":poolType?", "de-registration") },
       { title: "Stake Delegation(s)", href: routers.STAKE_DELEGATIONS },
       { title: "Pool Certificate", href: routers.REGISTRATION_POOLS.replace(":poolType?", "registration") },
-      { title: "Pool De-Registartion", href: routers.REGISTRATION_POOLS.replace(":poolType?", "de-registration") },
+      { title: "Pool De-Registration", href: routers.REGISTRATION_POOLS.replace(":poolType?", "de-registration") },
       { title: "Instantaneous Rewards ", href: routers.INSTANTANEOUS_REWARDS },
       { title: "Top Delegators", href: routers.TOP_DELEGATOR }
     ]
