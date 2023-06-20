@@ -1,29 +1,29 @@
-import { useState } from "react";
-import { Autocomplete, Box, Button, Modal } from "@mui/material";
-import { BiChevronDown } from "react-icons/bi";
+import { Autocomplete, Box, Button } from "@mui/material";
 import { debounce } from "lodash";
+import { useState } from "react";
+import { BiChevronDown } from "react-icons/bi";
 
-import { CloseIcon, EmptyIcon, HeaderSearchIcon } from "../../commons/resources";
-import { getShortWallet, numberWithCommas } from "../../commons/utils/helper";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { EmptyIcon, HeaderSearchIcon } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { formatNumberDivByDecimals, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+
 import CustomTooltip from "../commons/CustomTooltip";
+import StyledModal from "../commons/StyledModal";
+import Table, { Column } from "../commons/Table";
+import { WrappModalScrollBar } from "../commons/Table/styles";
 import {
-  ButtonClose,
+  AssetName,
   Image,
   Logo,
   LogoEmpty,
-  ModalContainer,
   Option,
   SearchContainer,
   StyledInput,
   StyledTextField,
   SubmitButton
 } from "./styles";
-import useFetchList from "../../commons/hooks/useFetchList";
-import { API } from "../../commons/utils/api";
-import Table, { Column } from "../commons/Table";
-import { AssetName } from "../../pages/Token/styles";
-import { details } from "../../commons/routers";
-import { WrappModalScrollBar } from "../commons/Table/styles";
 
 const TokenAutocomplete = ({ address }: { address: string }) => {
   const [openModalToken, setOpenModalToken] = useState(false);
@@ -188,31 +188,19 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
       title: "Balance",
       key: "balance",
       minWidth: "50px",
-      render: (r) => numberWithCommas(r.quantity || 0)
+      render: (r) => formatNumberDivByDecimals(r.quantity || 0, r.metadata?.decimals || 0)
     }
   ];
+
+  const handleClose = () => {
+    onClose();
+    setValue("");
+    setSearch("");
+  };
+
   return (
-    <Modal
-      open={open}
-      onClose={() => {
-        onClose();
-        setValue("");
-        setSearch("");
-      }}
-    >
-      <ModalContainer>
-        <ButtonClose
-          onClick={() => {
-            onClose();
-            setValue("");
-            setSearch("");
-          }}
-        >
-          <img src={CloseIcon} alt="icon close" />
-        </ButtonClose>
-        <Box textAlign={"left"} fontSize="1.5rem" fontWeight="bold" fontFamily={'"Roboto", sans-serif '}>
-          Token List
-        </Box>
+    <StyledModal title="Token List" open={open} handleCloseModal={handleClose} width={"min(80vw, 600px)"}>
+      <>
         <SearchContainer mt={2} mb={1}>
           <StyledInput
             placeholder="Search tokens"
@@ -244,7 +232,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             }}
           />
         </WrappModalScrollBar>
-      </ModalContainer>
-    </Modal>
+      </>
+    </StyledModal>
   );
 };

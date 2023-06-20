@@ -13,6 +13,7 @@ import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { useScreen } from "src/commons/hooks/useScreen";
+import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
 
 import {
   BoxInfo,
@@ -85,7 +86,7 @@ const StakeAnalytics: React.FC = () => {
       )
     : { epoch: 0, value: 0 };
   return (
-    <Card title="Analytics">
+    <Card title={<TextCardHighlight>Analytics</TextCardHighlight>}>
       <Wrapper container columns={24} spacing="35px">
         <Grid item xs={24} lg={18}>
           <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>

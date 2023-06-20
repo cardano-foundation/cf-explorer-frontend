@@ -13,8 +13,7 @@ export const SidebarMenuContainer = styled(Box)(({ theme }) => ({
 
 export const Menu = styled(List)(({ theme }) => ({
   maxHeight: "calc(100vh - 181px)",
-  overflowY: "auto",
-  overflowX: "hidden",
+  overflow: "auto",
   marginBottom: "5px",
   "&::-webkit-scrollbar": {
     width: "0px",
@@ -98,7 +97,7 @@ export const FooterMenuContainer = styled(Box)(({ theme }) => ({
 export const IconMenu = styled(Box)(() => ({
   position: "absolute",
   zIndex: 10,
-  top: "50%",
+  top: "55%",
   left: "210px",
   transform: "translate(0, -50%)"
 }));

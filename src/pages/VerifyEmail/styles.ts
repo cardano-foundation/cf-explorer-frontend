@@ -4,7 +4,7 @@ import { User2RC } from "src/commons/resources";
 
 export const Container = styled(Box)`
   display: flex;
-  background-color: ${({ theme }) => theme.palette.grey[200]};
+  background-color: ${({ theme }) => theme.palette.background.default};
   min-height: 100vh;
   min-width: 100vw;
   justify-content: center;
@@ -99,7 +99,7 @@ export const ForgotPassword = styled(Box)`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-  color: ${({ theme }) => theme.palette.blue[800]};
+  color: ${({ theme }) => theme.palette.blue[900]};
   text-decoration: underline;
   cursor: pointer;
 `;
@@ -150,5 +150,5 @@ export const WrapSignUp = styled(Box)`
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  color: ${({ theme }) => theme.palette.secondary.main};
+  color: ${({ theme }) => theme.palette.blue[900]};
 `;

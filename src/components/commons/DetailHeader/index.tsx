@@ -57,7 +57,7 @@ interface DetailHeaderProps {
   stakeKeyStatus?: StakeStatus;
   epoch?: DetailHeaderBlock | null;
   listItem: {
-    icon: string;
+    icon?: string;
     title: React.ReactNode;
     value?: React.ReactNode;
     allowSearch?: boolean;
@@ -197,10 +197,10 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                   ? currentEpoch && (epoch?.no || 0) === currentEpoch?.no
                     ? ((moment(formatDateTimeLocal(epoch?.endTime || "")).diff(moment()) > 0 &&
                       epoch?.slot < MAX_SLOT_EPOCH
-                        ? epoch?.slot
-                        : MAX_SLOT_EPOCH) /
-                        MAX_SLOT_EPOCH) *
-                      100
+                      ? epoch?.slot
+                      : MAX_SLOT_EPOCH) /
+                      MAX_SLOT_EPOCH) *
+                    100
                     : 100
                   : (epoch?.slot / MAX_SLOT_EPOCH) * 100
               }
@@ -230,7 +230,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               wide={+isDetailToken}
             >
               <Box position="relative" display={item.hideHeader ? "none" : ""}>
-                <img src={item.icon} alt="" height={20} />
+                {item.icon ? <img src={item.icon} alt="" height={20} /> : null}
                 {item.allowSearch && keyItem && (
                   <AllowSearchButton
                     onClick={() => {

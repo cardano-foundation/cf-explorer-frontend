@@ -150,7 +150,13 @@ export const SubmitButton = styled(Button)`
   width: 35px;
   height: 35px;
 `;
+
 export const Image = styled("img")`
   width: 20px;
   height: 20px;
+`;
+
+export const AssetName = styled(Link)`
+  color: ${(props) => props.theme.palette.secondary.main} !important;
+  font-family: var(--font-family-text) !important;
 `;
