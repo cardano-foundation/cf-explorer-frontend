@@ -30,18 +30,12 @@ export const StyledColorBlueDard = styled("span")`
 
 export const Index = styled(StyledColorBlueDard)``;
 
-export const Status = styled("span")<{ status: string }>(({ status, theme }) => ({
+export const Status = styled("span")<{ status: string }>(({ theme }) => ({
   fontFamily: "var(--font-family-title)",
   fontWeight: "var(--font-weight-bold)",
   borderRadius: "2px",
   textTransform: "uppercase",
   fontSize: "10px",
-  color:
-    status === "finished"
-      ? theme.palette.info.main
-      : status === "rewarding"
-      ? theme.palette.success.main
-      : theme.palette.warning.main,
   [theme.breakpoints.down("md")]: {
     fontSize: "7px"
   }

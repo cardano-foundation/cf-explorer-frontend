@@ -6,7 +6,6 @@ import { ExchangeIcon, cubeIconUrl, slotIconUrl, timeIconUrl } from "src/commons
 import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
 import { Status } from "src/pages/Epoch/styles";
-import { StyledThreeDot } from "src/components/Threedot";
 
 import { Container, EpochNumber, EpochProgress, TitleCard } from "./styles";
 import ProgressCircle from "../../ProgressCircle";
@@ -28,7 +27,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
     {
       icon: ExchangeIcon,
       hideHeader: true,
-      title: <EpochNumber>Epoch Number {currentEpochData?.no}</EpochNumber>,
+      title: <EpochNumber>{currentEpochData?.no}</EpochNumber>,
       value: (
         <Box display={"flex"} alignItems="center" justifyContent={"center"}>
           <ProgressCircle
@@ -41,11 +40,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
           >
             <EpochProgress>{`${progress}%`}</EpochProgress>
             <Status status={currentEpochData?.status?.toLowerCase()}>
-              {EPOCH_STATUS[currentEpochData?.status] === EPOCH_STATUS.IN_PROGRESS ? (
-                <StyledThreeDot />
-              ) : (
-                EPOCH_STATUS[currentEpochData?.status]
-              )}
+              {EPOCH_STATUS[currentEpochData?.status]}
             </Status>
           </ProgressCircle>
         </Box>
