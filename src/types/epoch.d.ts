@@ -34,4 +34,6 @@ interface EpochCurrentType {
   slot: number;
   totalSlot: number;
   account: number;
+  endTime: string;
+  startTime: string;
 }
