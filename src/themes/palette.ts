@@ -75,6 +75,7 @@ const BLUE = {
   600: "#256289",
   700: "#154666",
   800: "#108AEF",
+  900: "#0052CC",
   800_7: alpha("#108AEF", 0.07),
   800_20: alpha("#108AEF", 0.2)
 };
@@ -103,8 +104,7 @@ const text = {
   secondary: GREY[500],
   disabled: alpha(GREY[400], 0.4),
   hint: GREY[300],
-  dark: COMMON.black,
-  dark_500: alpha(COMMON.black, 0.5)
+  dark: COMMON.black
 };
 
 const border = {

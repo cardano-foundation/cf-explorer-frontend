@@ -228,7 +228,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Total Out in ADA</DetailLabel>
+              <DetailLabel>Total Output in ADA</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.totalOutput)}
                 <ADAicon />

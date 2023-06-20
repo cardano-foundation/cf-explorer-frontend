@@ -1,4 +1,4 @@
-import { Box, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import moment from "moment";
 
@@ -6,6 +6,7 @@ import { ExchangeIcon, cubeIconUrl, slotIconUrl, timeIconUrl } from "src/commons
 import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
 import { Status } from "src/pages/Epoch/styles";
+import { StyledThreeDot } from "src/components/Threedot";
 
 import { Container, Content, EpochNumber, EpochProgress, SubContent, TitleCard } from "./styles";
 import ProgressCircle from "../../ProgressCircle";
@@ -17,7 +18,6 @@ interface IProps {
 }
 
 export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) {
-  const theme = useTheme();
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   if (!currentEpochData) return null;
   const progress =
@@ -28,13 +28,9 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
     {
       icon: ExchangeIcon,
       hideHeader: true,
-      title: (
-        <EpochNumber sx={{ [theme.breakpoints.down("sm")]: { marginTop: "-8px" } }}>
-          Epoch Number {currentEpochData?.no}
-        </EpochNumber>
-      ),
+      title: <EpochNumber>Epoch Number {currentEpochData?.no}</EpochNumber>,
       value: (
-        <Box display={"flex"} alignItems="center">
+        <Box display={"flex"} alignItems="center" justifyContent={"center"}>
           <ProgressCircle
             size={100}
             pathLineCap="butt"
@@ -44,7 +40,13 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
             trailOpacity={1}
           >
             <EpochProgress>{`${progress}%`}</EpochProgress>
-            <Status status={currentEpochData?.status?.toLowerCase()}>{EPOCH_STATUS[currentEpochData?.status]}</Status>
+            <Status status={currentEpochData?.status?.toLowerCase()}>
+              {EPOCH_STATUS[currentEpochData?.status] === EPOCH_STATUS.IN_PROGRESS ? (
+                <StyledThreeDot />
+              ) : (
+                EPOCH_STATUS[currentEpochData?.status]
+              )}
+            </Status>
           </ProgressCircle>
         </Box>
       )
