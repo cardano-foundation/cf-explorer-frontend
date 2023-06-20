@@ -54,3 +54,13 @@ export const LogoEmpty = styled(Box)`
 
 export const GridContainer = styled(Grid)``;
 export const GridItem = styled(Grid)``;
+
+export const RedirectButton = styled(Box)(({ theme }) => ({
+  textTransform: "capitalize",
+  backgroundColor: theme.palette.common.black,
+  color: theme.palette.common.white,
+  padding: `${theme.spacing(1)} ${theme.spacing(2)} `,
+  ":hover": {
+    backgroundColor: alpha(theme.palette.common.black, 0.8)
+  }
+}));

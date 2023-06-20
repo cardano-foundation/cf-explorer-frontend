@@ -74,6 +74,7 @@ const SelectNetwork: React.FC = () => {
     };
     window.addEventListener("storage", listener);
     return () => window.removeEventListener("storage", listener);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

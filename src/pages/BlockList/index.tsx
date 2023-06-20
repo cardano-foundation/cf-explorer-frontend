@@ -16,7 +16,7 @@ import Link from "src/components/commons/Link";
 import ADAicon from "src/components/commons/ADAIcon";
 import useFetchList from "src/commons/hooks/useFetchList";
 
-import { PriceWrapper, StyledColorBlueDard, StyledContainer, StyledLink } from "./styles";
+import { PriceWrapper, BlueText, StyledContainer, StyledLink } from "./styles";
 
 const BlockList = () => {
   const { search } = useLocation();
@@ -63,7 +63,7 @@ const BlockList = () => {
       title: "Transactions",
       key: "txCount",
       minWidth: "50px",
-      render: (r) => <StyledColorBlueDard>{r.txCount}</StyledColorBlueDard>,
+      render: (r) => <BlueText>{r.txCount}</BlueText>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }

@@ -2,6 +2,8 @@ import { Box, useTheme } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { TransferIcon } from "src/commons/resources";
+
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import { details } from "../../../../commons/routers";
@@ -20,6 +22,10 @@ const SummaryItems = ({
   item: Transaction["summary"]["stakeAddress"][number];
   type?: "up" | "down";
 }) => {
+  const isTransferType = item?.tokens.some((t) => {
+    return (t.assetQuantity < 0 && item?.value >= 0) || (t.assetQuantity >= 0 && item?.value < 0);
+  });
+
   const theme = useTheme();
   const { isMobile } = useScreen();
   return (
@@ -38,9 +44,15 @@ const SummaryItems = ({
       }}
     >
       <Box display={"flex"} justifyContent={"space-between"} sx={{ overflowX: "auto", overflowY: "hidden" }}>
-        <Box width={50}>
-          <Icon src={type === "down" ? receiveImg : sendImg} alt="send icon" />
-        </Box>
+        {isTransferType ? (
+          <Box width={40} ml={"2px"} mt={"3px"} mr={"8px"}>
+            <TransferIcon style={{ scale: "1.15" }} />
+          </Box>
+        ) : (
+          <Box width={50}>
+            <Icon src={type !== "up" ? receiveImg : sendImg} alt="send icon" />
+          </Box>
+        )}
         <Box flex={1} pt="4px">
           <Box display={"flex"} alignItems="center" justifyContent={"flex-start"}>
             <Box width={"100%"} display="flex" alignItems={"center"} justifyContent="center" flexWrap={"wrap"}>
@@ -97,7 +109,7 @@ const SummaryItems = ({
       </Box>
       {item.tokens && item.tokens.length > 0 ? (
         <Box display={"flex"} alignItems={"center"} ml={isMobile ? "50px" : 0}>
-          <DropdownTokens tokens={item.tokens} type={type} />
+          <DropdownTokens tokens={item.tokens} type={type} hideInputLabel />
         </Box>
       ) : (
         <Box />

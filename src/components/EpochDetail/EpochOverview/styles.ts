@@ -45,3 +45,9 @@ export const ProgressStatus = styled("h4")`
 export const ProgressPercent = styled("h4")`
   color: ${(props) => props.theme.palette.primary.main};
 `;
+
+export const Output = styled('span')`
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+`;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Dialog, DialogActions, IconButton, DialogContentText } from "@mui/material";
+import { Box, Dialog, DialogActions, DialogContentText } from "@mui/material";
 import { useLocation } from "react-router-dom";
 
 import { ReactComponent as QuestionConfirm } from "src/commons/resources/icons/questionConfirm.svg";
@@ -51,15 +51,14 @@ const ViewButton: React.FC<TAction> = ({ onClick }) => {
       title="View private note"
     >
       <ActionButton
+        data-testid="btn-view-note"
         onClick={() => {
           if (isOpen && isTablet) return;
           onClick();
         }}
         typeButton="View"
       >
-        <IconButton>
-          <Expand />
-        </IconButton>
+        <Expand />
       </ActionButton>
     </CustomTooltip>
   );
@@ -84,11 +83,10 @@ const RemoveButton: React.FC<TAction> = ({ onClick }) => {
           if (isOpen && isTablet) return;
           onClick();
         }}
+        data-testid="btn-remove-note"
         typeButton="Remove"
       >
-        <IconButton>
-          <Warning />
-        </IconButton>
+        <Warning />
       </ActionButton>
     </CustomTooltip>
   );

@@ -2,7 +2,7 @@ import { alpha, Avatar, Box, CircularProgress, IconButton, useTheme } from "@mui
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { MdChevronRight } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { Redirect, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import { getShortWallet } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -52,6 +52,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
     } catch (error) {
       //To do
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toast = useToast();
@@ -70,7 +71,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
           }
         });
 
-        if (data && data.email && data.avatar) {
+        if (data && data.avatar) {
           await fetchUserInfo();
         }
         toast.success("Your avatar has been changed.");
@@ -88,9 +89,6 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
     }
   }, [fetchUserInfo]);
 
-  if (!userData) {
-    return <Redirect to={routers.HOME} />;
-  }
   const MissingData = () => (
     <MissingItemWrapper px={3} pb={4} fontSize="0.75rem">
       Missing any data? click{" "}
