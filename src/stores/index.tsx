@@ -9,6 +9,7 @@ import userReducer, { setStoreUser } from "./user";
 import userReducer2, { setStoreUser2 } from "./user2";
 import systemReducer, { setStoreSystem } from "./system";
 import toastReducer, { setStoreToast } from "./toast";
+import syncModalReducer, { setStoreSyncModal } from "./syncModal";
 
 let customStore: Store | undefined;
 
@@ -39,7 +40,8 @@ const appReducer = combineReducers({
   user: persistReducer(userPersistConfig, userReducer),
   user2: userReducer2,
   system: systemReducer,
-  toast: toastReducer
+  toast: toastReducer,
+  syncModal: syncModalReducer
 });
 
 const rootReducer = (state: any, action: any) => appReducer(state, action);
@@ -59,5 +61,6 @@ setStoreUser(store);
 setStoreSystem(store);
 setStoreToast(store);
 setStoreUser2(store);
+setStoreSyncModal(store);
 
 export default store;

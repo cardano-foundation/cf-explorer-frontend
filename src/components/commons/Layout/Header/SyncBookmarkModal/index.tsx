@@ -1,24 +1,25 @@
-import { useState } from "react";
+import {  useState } from "react";
 import { Box } from "@mui/material";
 import { useLocalStorage } from "react-use";
+import { useSelector } from "react-redux";
 
 import { StyledDarkLoadingButton } from "src/components/share/styled";
 import { addListBookmark, getAllBookmarks } from "src/commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
 import StyledModal from "src/components/commons/StyledModal";
+import { openSyncModal } from "src/stores/syncModal";
 
 import { Description, ModalTitle, StyledButton } from "./styles";
 
-interface SyncBookmarkModalProps {
-  open: boolean;
-  handleCloseModal: () => void;
-}
-const SyncBookmarkModal: React.FC<SyncBookmarkModalProps> = ({ open, handleCloseModal }) => {
+const SyncBookmarkModal = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<{ passNumber: number; failNumber: number }>();
   const [message, setMessage] = useState("");
-  const [bookmarks, setBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
-  const bookmark = bookmarks?.filter((r) => !r.id).length;
+  const [, setBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
+  const bookmarks = ((JSON.parse(localStorage.getItem("bookmark") || "") as Bookmark[]) || [])?.filter((r) => !r.id);
+  const bookmarkLength = bookmarks.length;
+  const { openModal } = useSelector(({ syncModal }: RootState) => syncModal);
+
   const hanldeSyncBookmark = async () => {
     try {
       setLoading(true);
@@ -37,12 +38,12 @@ const SyncBookmarkModal: React.FC<SyncBookmarkModalProps> = ({ open, handleClose
   };
 
   return (
-    <StyledModal open={open} handleCloseModal={handleCloseModal}>
+    <StyledModal open={openModal} handleCloseModal={() => openSyncModal(false)}>
       <Box textAlign="center">
         <ModalTitle>Notify</ModalTitle>
         <Description>
           {!data && !message && (
-            <>{bookmark} bookmarks detected in local storage, would you like to sync log with your account?</>
+            <>{bookmarkLength} bookmarks detected in local storage, would you like to sync log with your account?</>
           )}
           {data?.passNumber && message && <>{data?.passNumber} bookmarks successfully synced</>}
           {data?.failNumber && data?.failNumber > 0 && message ? (
@@ -55,7 +56,7 @@ const SyncBookmarkModal: React.FC<SyncBookmarkModalProps> = ({ open, handleClose
           )}
         </Description>
         <Box display={"flex"} justifyContent="center" gap={2}>
-          <StyledButton onClick={handleCloseModal}>Close</StyledButton>
+          <StyledButton onClick={() => openSyncModal(false)}>Close</StyledButton>
           {!message && (
             <StyledDarkLoadingButton loading={loading} loadingPosition="end" onClick={hanldeSyncBookmark}>
               Sync
