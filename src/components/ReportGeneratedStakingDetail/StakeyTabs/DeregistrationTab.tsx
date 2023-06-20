@@ -16,7 +16,6 @@ import { DeregistrationCertificateModal } from "src/components/commons/Deregistr
 import { AdaValue } from "./StakingRegistrationTab";
 import { StakingDetailContext } from "..";
 
-
 const DeregistrationTab = () => {
   const { reportId } = useParams<{ reportId: string }>();
   const { search } = useLocation();
@@ -25,6 +24,14 @@ const DeregistrationTab = () => {
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
   const [sort, setSort] = useState<string>("");
+
+  const fetchData = useFetchList<DeregistrationItem>(
+    reportId ? API.REPORT.SREPORT_DETAIL_DEGEGISTRATIONS(reportId) : "",
+    {
+      ...pageInfo,
+      sort
+    }
+  );
   const columns: Column<DeregistrationItem>[] = [
     {
       title: "Transaction Hash",
@@ -72,22 +79,16 @@ const DeregistrationTab = () => {
       key: "stakeId",
       minWidth: "120px",
       render: () => (
-        <IconButton onClick={() => {
-          setOpenModal(true)
-        }}>
+        <IconButton
+          onClick={() => {
+            setOpenModal(true);
+          }}
+        >
           <EyeIcon style={{ transform: "scale(.8)" }} />
         </IconButton>
       )
     }
   ];
-
-  const fetchData = useFetchList<DeregistrationItem>(
-    reportId ? API.REPORT.SREPORT_DETAIL_DEGEGISTRATIONS(reportId) : "",
-    {
-      ...pageInfo,
-      sort
-    }
-  );
 
   return (
     <>

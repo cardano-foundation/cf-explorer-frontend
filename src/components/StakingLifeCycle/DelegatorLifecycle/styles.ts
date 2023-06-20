@@ -43,7 +43,6 @@ export const PreviousButton = styled(Button)(({ theme }) => ({
   fontWeight: "bold",
   borderRadius: "8px",
   padding: "10px 20px",
-  left: 0,
   border: `2px solid ${theme.palette.border.hint}`,
   ":hover": {
     background: alpha(theme.palette.grey[700], 0.1)
