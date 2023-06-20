@@ -93,5 +93,4 @@ describe("SignUp page", () => {
     const errorMessage = screen.getByText("Confirm Password does not match");
     expect(errorMessage).toBeInTheDocument();
   });
-
 });
