@@ -35,14 +35,9 @@ For example:
 `REACT_APP_TESTNET_API_URL=http://localhost:3003`
 `REACT_APP_PREVIEW_API_URL=http://localhost:3004`
 
-> Update value to **your** Domain frontend
-For example: 
-`REACT_APP_MAINNET_FE_URL=explorer.cardano.com`
-`REACT_APP_PREPROD_FE_URL=preprod.explorer.cardano.com`
-`REACT_APP_TESTNET_FE_URL=testnet.explorer.cardano.com`
-`REACT_APP_PREVIEW_FE_URL=preview.explorer.cardano.com`
+> Update Application URL reference
 
-> Update value to **your** network current
+> Update Application network reference
 
 `REACT_APP_NETWORK = mainnet`
 
