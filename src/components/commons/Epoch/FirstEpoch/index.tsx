@@ -7,7 +7,7 @@ import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
 import { Status } from "src/pages/Epoch/styles";
 
-import { Container, EpochNumber, EpochProgress, TitleCard } from "./styles";
+import { Container, Content, EpochNumber, EpochProgress, SubContent, TitleCard } from "./styles";
 import ProgressCircle from "../../ProgressCircle";
 import DetailHeader from "../../DetailHeader";
 
@@ -53,7 +53,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
           <TitleCard mr={1}>Block </TitleCard>
         </Box>
       ),
-      value: <Box component={"span"}>{currentEpochData?.blkCount}</Box>
+      value: <Content>{currentEpochData?.blkCount}</Content>
     },
     {
       icon: slotIconUrl,
@@ -63,12 +63,12 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
         </Box>
       ),
       value: (
-        <Box component={"span"}>
+        <Content>
           {moment(formatDateTimeLocal(currentEpochData.endTime)).diff(moment()) >= 0
             ? currentEpoch?.slot
             : MAX_SLOT_EPOCH}
-          /{MAX_SLOT_EPOCH}
-        </Box>
+          <SubContent>/{MAX_SLOT_EPOCH}</SubContent>
+        </Content>
       )
     },
     {
@@ -78,7 +78,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
           <TitleCard mr={1}> Start Time</TitleCard>
         </Box>
       ),
-      value: <Box component={"span"}>{formatDateTimeLocal(currentEpochData?.startTime || "")}</Box>
+      value: <Content>{formatDateTimeLocal(currentEpochData?.startTime || "")}</Content>
     },
     {
       icon: timeIconUrl,
@@ -87,11 +87,11 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
           <TitleCard mr={1}> End Time</TitleCard>
         </Box>
       ),
-      value: <Box component={"span"}>{formatDateTimeLocal(currentEpochData?.endTime || "")}</Box>
+      value: <Content>{formatDateTimeLocal(currentEpochData?.endTime || "")}</Content>
     }
   ];
   return (
-    <Container onClick={() => onClick(currentEpochData, currentEpochData, 0)}>
+    <Container onClick={() => onClick(currentEpochData, currentEpochData, -1)}>
       <DetailHeader isHideButtonBack={true} loading={false} listItem={listOverview} type="EPOCH" title={" "} />
     </Container>
   );

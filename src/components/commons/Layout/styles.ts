@@ -151,6 +151,17 @@ export const ToggleMenu = styled("button")`
   }
 `;
 
+export const WrapIcon = styled(Box)`
+  top: -9px;
+  left: -8px;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const MainContainer = styled(Box)`
   width: 100%;
 `;

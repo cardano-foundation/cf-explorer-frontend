@@ -1,5 +1,6 @@
 import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment } from "@mui/material";
 import { useEffect, useReducer, useRef, useState } from "react";
+import { HiArrowLongLeft } from "react-icons/hi2";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
 
@@ -9,6 +10,8 @@ import { routers } from "src/commons/routers";
 import { signUp } from "src/commons/utils/userRequest";
 
 import {
+  BackButton,
+  BackText,
   CloseButton,
   Container,
   ForgotPassword,
@@ -104,6 +107,7 @@ export default function SignUp() {
     if (isLoggedIn) {
       history.push(routers.HOME);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
   useEffect(() => {
@@ -188,14 +192,24 @@ export default function SignUp() {
     setFormData({
       name: event.target.name,
       value: event.target.value.trim(),
-      touched: true,
+      touched: event.target.value.trim() !== "",
       error: getError(event.target.name, event.target.value)
     });
   };
 
-  function handleClose() {
-    history.push(routers.HOME);
-  }
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  const handleKeyDown = (event: any) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleSubmit(event);
+    }
+  };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -254,7 +268,7 @@ export default function SignUp() {
         return;
       }
     } catch (error: any) {
-      if (error.response.data.errorCode === "CC_23") {
+      if (error?.response?.data?.errorCode === "CC_23") {
         setFormData({
           name: "email",
           touched: true,
@@ -266,17 +280,30 @@ export default function SignUp() {
       setLoading(false);
     }
   };
+
+  const handleRedirect = (forceGoHome?: boolean) => {
+    if (forceGoHome) {
+      history.replace(routers.HOME);
+    } else {
+      history.replace(routers.SIGN_IN);
+    }
+  };
+
   return (
     <Container>
       {!success ? (
         <WrapContent>
-          <WrapTitle>Sign up</WrapTitle>
+          <WrapTitle>Sign-Up</WrapTitle>
           <WrapHintText>
-            Already have an account? <WrapSignUp onClick={() => history.push(routers.SIGN_IN)}>Sign In Here</WrapSignUp>
+            Already have an account? <WrapSignUp onClick={() => handleRedirect()}>Sign-In Here</WrapSignUp>
           </WrapHintText>
           <FormGroup>
             <WrapForm>
-              <CloseButton saving={0} onClick={() => handleClose()}>
+              <BackButton onClick={() => handleRedirect()}>
+                <HiArrowLongLeft fontSize="16px" />
+                <BackText>Back</BackText>
+              </BackButton>
+              <CloseButton saving={0} onClick={() => handleRedirect(true)}>
                 <IoMdClose />
               </CloseButton>
               <WrapInput>
@@ -294,6 +321,7 @@ export default function SignUp() {
                   onChange={handleChange}
                   error={Boolean(formData.email.error && formData.email.touched)}
                   placeholder="A confirmation code will be sent to this address"
+                  onKeyDown={handleKeyDown}
                 />
                 {formData.email.error && formData.email.touched ? (
                   <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom>
@@ -313,6 +341,7 @@ export default function SignUp() {
                   onChange={handleChange}
                   error={Boolean(formData.confirmEmail.error && formData.confirmEmail.touched)}
                   placeholder="Re-enter Your email address"
+                  onKeyDown={handleKeyDown}
                 />
                 {formData.confirmEmail.error && formData.confirmEmail.touched ? (
                   <FormHelperTextCustom error>{formData.confirmEmail.error}</FormHelperTextCustom>
@@ -339,6 +368,7 @@ export default function SignUp() {
                   onChange={handleChange}
                   error={Boolean(formData.password.error && formData.password.touched)}
                   placeholder="Password"
+                  onKeyDown={handleKeyDown}
                 />
                 {formData.password.error && formData.password.touched ? (
                   <FormHelperTextCustom error>{formData.password.error}</FormHelperTextCustom>
@@ -365,6 +395,7 @@ export default function SignUp() {
                   onChange={handleChange}
                   error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
                   placeholder="Confirm Password"
+                  onKeyDown={handleKeyDown}
                 />
                 {formData.confirmPassword.error && formData.confirmPassword.touched ? (
                   <FormHelperTextCustom error>{formData.confirmPassword.error}</FormHelperTextCustom>

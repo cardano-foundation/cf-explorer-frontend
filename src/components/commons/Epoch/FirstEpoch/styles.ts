@@ -113,3 +113,12 @@ export const Time = styled("div")`
   font-size: 1.25rem;
   color: ${(props) => props.theme.palette.grey[400]};
 `;
+
+export const Content = styled("span")`
+  font-size: 18px;
+`;
+
+export const SubContent = styled("span")`
+  font-size: 16px;
+  opacity: 0.5;
+`;

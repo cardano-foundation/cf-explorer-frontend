@@ -24,11 +24,9 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
   }
 }));
 
-export const StyledColorBlueDard = styled("span")`
+export const BlueText = styled("span")`
   color: ${(props) => props.theme.palette.text.primary};
 `;
-
-export const Index = styled(StyledColorBlueDard)``;
 
 export const Status = styled("span")<{ status: string }>(({ theme }) => ({
   fontFamily: "var(--font-family-title)",
@@ -41,7 +39,7 @@ export const Status = styled("span")<{ status: string }>(({ theme }) => ({
   }
 }));
 
-export const Blocks = styled(StyledColorBlueDard)``;
+export const Blocks = styled(BlueText)``;
 
 export const Output = styled(Blocks)`
   display: inline-flex;

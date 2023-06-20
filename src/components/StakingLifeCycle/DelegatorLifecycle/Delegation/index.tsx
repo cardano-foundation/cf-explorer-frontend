@@ -171,9 +171,7 @@ export const DelegationCertificateModal = ({
   txHash: string;
   handleCloseModal: () => void;
 }) => {
-  const { data } = useFetch<DelegationDetail>(
-    (txHash && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stake, txHash)) || ""
-  );
+  const { data } = useFetch<DelegationDetail>((txHash && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stake, txHash)) || "");
 
   const list: CertificateItemType[] = [
     {
@@ -205,8 +203,8 @@ export const DelegationCertificateModal = ({
           <CopyButton text={stake} />
         </LineData>
       )
-    },
-  ]
+    }
+  ];
 
   return (
     <StyledModal {...props} title="Delegation certificate">

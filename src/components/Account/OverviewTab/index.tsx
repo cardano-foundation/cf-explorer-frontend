@@ -11,7 +11,6 @@ import { MdOutlineFileDownload } from "react-icons/md";
 import { getShortWallet, regexEmail } from "src/commons/utils/helper";
 import { editInfo, getInfo } from "src/commons/utils/userRequest";
 import { NETWORK, NETWORKS, NETWORK_TYPES, SUPPORTED_WALLETS } from "src/commons/utils/constants";
-import StorageUtils from "src/commons/utils/storage";
 import { setUserData } from "src/stores/user";
 import {
   GroupFlex,
@@ -224,6 +223,7 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
     if (stakeKey === null && selectedWallet) {
       handleClick(selectedWallet as SupportedWallets, true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stakeKey]);
 
   const handleSubmitWallet = async () => {
@@ -315,36 +315,34 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
               You can only link wallet once per account
             </Box>
             <>
-              {SUPPORTED_WALLETS.filter((wallet) => wallet.networks.includes(StorageUtils.getNetwork())).map(
-                (wallet) => {
-                  return (
-                    <WalletItem
-                      key={wallet.name}
-                      active={0}
-                      connecting={0}
-                      onClick={() => {
-                        setSelectedWallet(wallet.name);
-                        handleClick(wallet.name);
-                      }}
-                    >
-                      <GroupFlex>
-                        <WalletName>{wallet.name}</WalletName>
-                        {wallet.name === selectedWallet && loadingStake ? <CircularProgress size={30} /> : ""}
-                      </GroupFlex>
-                      <GroupFlex>
-                        {!isWalletInstalled(wallet.name.toLocaleLowerCase()) ? (
-                          <InstallButton onClick={() => handleOpenLink(wallet)}>
-                            Not Installed <MdOutlineFileDownload size={18} />
-                          </InstallButton>
-                        ) : (
-                          <i />
-                        )}
-                        <WalletIcon src={wallet.icon} alt={wallet.name} />
-                      </GroupFlex>
-                    </WalletItem>
-                  );
-                }
-              )}
+              {SUPPORTED_WALLETS.filter((wallet) => wallet.networks.includes(NETWORK)).map((wallet) => {
+                return (
+                  <WalletItem
+                    key={wallet.name}
+                    active={0}
+                    connecting={0}
+                    onClick={() => {
+                      setSelectedWallet(wallet.name);
+                      handleClick(wallet.name);
+                    }}
+                  >
+                    <GroupFlex>
+                      <WalletName>{wallet.name}</WalletName>
+                      {wallet.name === selectedWallet && loadingStake ? <CircularProgress size={30} /> : ""}
+                    </GroupFlex>
+                    <GroupFlex>
+                      {!isWalletInstalled(wallet.name.toLocaleLowerCase()) ? (
+                        <InstallButton onClick={() => handleOpenLink(wallet)}>
+                          Not Installed <MdOutlineFileDownload size={18} />
+                        </InstallButton>
+                      ) : (
+                        <i />
+                      )}
+                      <WalletIcon src={wallet.icon} alt={wallet.name} />
+                    </GroupFlex>
+                  </WalletItem>
+                );
+              })}
             </>
           </>
         )}
