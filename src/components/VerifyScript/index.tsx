@@ -1,24 +1,24 @@
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext, useState, SetStateAction, Dispatch } from "react";
 import { Box } from "@mui/material";
 import { useParams } from "react-router-dom";
 
 import { defaultAxios } from "src/commons/utils/axios";
-import { VerifyScriptContext } from "src/pages/ContractDetail";
 import { API } from "src/commons/utils/api";
+import { VerifyScriptContext } from "src/pages/ContractDetail";
 
 import VerifySCriptModal from "./VerifyScriptModal";
-import { BannerSuccess, StyledVerifyButton, VerifyScriptContainer } from "./styles";
+import { StyledVerifyButton, VerifyScriptContainer } from "./styles";
 
 export interface IVerifyScript {
   verified: boolean;
+  setShowBanner?: Dispatch<SetStateAction<boolean>>;
 }
 
-export const VerifyScript = ({ verified }: IVerifyScript) => {
+export const VerifyScript = ({ verified, setShowBanner }: IVerifyScript) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const { address } = useParams<{ address: string }>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [showBanner, setShowBanner] = useState<boolean>(false);
 
   const { refreshOverviewAddress, refreshScriptTab } = useContext(VerifyScriptContext);
 
@@ -45,8 +45,8 @@ export const VerifyScript = ({ verified }: IVerifyScript) => {
       if (res?.data as boolean) {
         refreshOverviewAddress();
         refreshScriptTab?.();
-        setShowBanner(true);
-        setTimeout(() => setShowBanner(false), 3000);
+        setShowBanner?.(true);
+        setTimeout(() => setShowBanner?.(false), 3000);
         handleCloseModal();
       } else {
         throw Error("");
@@ -63,11 +63,10 @@ export const VerifyScript = ({ verified }: IVerifyScript) => {
     <>
       <VerifyScriptContainer>
         <Box>Contract Detail</Box>
-        <StyledVerifyButton onClick={handleClickVerifyButton} verified={verified}>
+        <StyledVerifyButton onClick={handleClickVerifyButton} verified={+verified}>
           {verified ? "VERIFIED SCRIPT " : "VERIFY SCRIPT"}
         </StyledVerifyButton>
       </VerifyScriptContainer>
-      {showBanner && <BannerSuccess>Success! Contract has been verified successfully.</BannerSuccess>}
       {openModal && (
         <VerifySCriptModal
           open={openModal}

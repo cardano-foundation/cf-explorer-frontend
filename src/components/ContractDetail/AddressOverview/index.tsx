@@ -1,5 +1,5 @@
 import { Box, Button } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -15,7 +15,7 @@ import TokenAutocomplete from "src/components/TokenAutocomplete";
 import ADAicon from "src/components/commons/ADAIcon";
 import { useScreen } from "src/commons/hooks/useScreen";
 
-import { GridContainer, GridItem, Pool, RedirectButton, StyledAAmount } from "./styles";
+import { GridContainer, GridItem, Pool, RedirectButton, StyledAAmount, BannerSuccess } from "./styles";
 
 interface Props {
   data: WalletAddress | null;
@@ -29,6 +29,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
   const history = useHistory();
   const { adaRate } = useSelector(({ system }: RootState) => system);
   const { isMobile } = useScreen();
+  const [showBanner, setShowBanner] = useState<boolean>(false);
 
   const itemLeft = [
     { title: "Transaction", value: data?.txCount },
@@ -86,7 +87,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
 
   return (
     <Card
-      title={<VerifyScript verified={!!data?.verifiedContract} />}
+      title={<VerifyScript verified={!!data?.verifiedContract} setShowBanner={setShowBanner} />}
       extra={
         <RedirectButton
           width={isMobile ? "100%" : "auto"}
@@ -97,6 +98,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
         </RedirectButton>
       }
     >
+      {showBanner && <BannerSuccess>Success! Contract has been verified successfully.</BannerSuccess>}
       <GridContainer container spacing={2} mt={2}>
         <GridItem item xs={12} md={6}>
           <Box overflow="hidden" borderRadius={3} height={"100%"}>
