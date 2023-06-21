@@ -9,7 +9,8 @@ type FilterParams =
   | "contract"
   | "delegations/pool-detail-header"
   | "lifecycle"
-  | "policies";
+  | "policies"
+  | "delegations/pool-list?search=";
 
 interface SearchParams {
   filter?: FilterParams;
