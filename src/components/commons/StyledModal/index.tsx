@@ -13,6 +13,7 @@ interface IProps extends ModalProps {
   paddingX?: number | string;
   paddingY?: number | string;
   contentStyle?: SxProps;
+  modalStyle?: SxProps;
 }
 const StyledModal: React.FC<IProps> = ({
   open,
@@ -23,7 +24,8 @@ const StyledModal: React.FC<IProps> = ({
   height,
   paddingX,
   paddingY,
-  contentStyle = {}
+  contentStyle = {},
+  modalStyle = {}
 }) => {
   const { isMobile } = useScreen();
 
@@ -35,6 +37,7 @@ const StyledModal: React.FC<IProps> = ({
         paddingX={paddingX || (isMobile ? "10px" : "40px")}
         paddingY={paddingY || (isMobile ? "20px" : "50px")}
         viewwidth={isMobile ? 92 : 70}
+        sx={modalStyle}
       >
         <CloseButton saving={0} onClick={() => handleCloseModal()} data-testid="close-modal-button">
           <IoMdClose />

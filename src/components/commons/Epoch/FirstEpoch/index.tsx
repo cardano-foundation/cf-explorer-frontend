@@ -6,6 +6,7 @@ import { ExchangeIcon, cubeIconUrl, slotIconUrl, timeIconUrl } from "src/commons
 import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
 import { Status } from "src/pages/Epoch/styles";
+import { StyledThreeDot } from "src/components/Threedot";
 
 import { Container, Content, EpochNumber, EpochProgress, SubContent, TitleCard } from "./styles";
 import ProgressCircle from "../../ProgressCircle";
