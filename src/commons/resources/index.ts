@@ -71,11 +71,13 @@ import txInputIconUrl from "./icons/txInput.svg";
 import txOutputIconUrl from "./icons/txOutput.svg";
 import totalOutputUrl from "./icons/totalOutput.svg";
 import CopyIconSquareUrl from "./images/copy.svg";
+import ADALogoUrl from "./icons/ada-logo.svg";
 
 export {
   LogoFullIcon,
   LogoIcon,
   WalletIcon,
+  ADALogoUrl,
   FlintIcon,
   NamiIcon,
   EternlIcon,
