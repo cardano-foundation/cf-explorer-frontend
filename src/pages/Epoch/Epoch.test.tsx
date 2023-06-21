@@ -2,6 +2,7 @@ import { render, screen } from "src/test-utils";
 import useFetchList from "src/commons/hooks/useFetchList";
 
 import Epoch from "./index";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
 
 jest.mock("src/commons/hooks/useFetchList");
 const mockData = [
@@ -54,7 +55,7 @@ describe("Epoch component", () => {
 
   it("should latest epoch component render on PC", () => {
     render(<Epoch />);
-    expect(screen.getByText("06/15/2023 04:44:54")).toBeInTheDocument();
+    expect(screen.getByText(formatDateTimeLocal(mockDataLatestEpoch[0].startTime))).toBeInTheDocument();
     expect(screen.getByText(mockDataLatestEpoch[0].blkCount)).toBeInTheDocument();
   });
 

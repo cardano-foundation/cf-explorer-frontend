@@ -62,7 +62,10 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
   const { palette } = useTheme();
   const [tabsValid, setTabValid] = useState(["isRegistration", "isUpdate", "isReward", "isDeRegistration"]);
   useEffect(() => {
-    document.getElementById(`step-${currentStep}`)?.scrollIntoView();
+    const element = document.getElementById(`step-${currentStep}`);
+    if (element && typeof element.scrollIntoView === "function") {
+      element.scrollIntoView(true);
+    }
   }, [currentStep]);
 
   useEffect(() => {
