@@ -35,19 +35,19 @@ const ProgressCircle: React.FC<Props> = (props) => {
       <svg style={{ height: 0, width: 0 }}>
         <defs>
           <linearGradient id={"progress"} gradientTransform={gradientTransform}>
-            <stop offset="0%" stopColor={strokeColor || theme.palette.green[800]} />
-            <stop offset="100%" stopColor={strokeColor || theme.palette.green[450]} />
+            <stop offset="0%" stopColor={strokeColor || theme.palette.green[600]} />
+            <stop offset="100%" stopColor={strokeColor || theme.palette.green[600]} />
           </linearGradient>
         </defs>
       </svg>
 
       <CircularProgressbarWithChildren
         styles={{
-          path: { stroke: `url(#progress)`, strokeWidth: pathWidth, strokeLinecap: pathLineCap },
+          path: { stroke: `url(#progress)`, strokeWidth: pathWidth, strokeLinecap: pathLineCap, transformOrigin: 'center center' },
           trail: {
             strokeWidth: trailWidth,
             fill: theme.palette.background.paper,
-            stroke: theme.palette.gradient[8],
+            stroke: theme.palette.green[600_30],
             opacity: trailOpacity
           }
         }}
