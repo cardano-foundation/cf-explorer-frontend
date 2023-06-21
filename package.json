@@ -58,7 +58,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "jest-test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watchAll",
+    "jest-test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watchAll --maxWorkers=1",
     "jest-test-one": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watch",
     "lint": "eslint --ext ts,tsx src/",
     "lint:fix": "eslint --fix --ext ts,tsx src/",
