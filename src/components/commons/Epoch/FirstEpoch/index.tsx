@@ -28,7 +28,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
     {
       icon: ExchangeIcon,
       hideHeader: true,
-      title: <EpochNumber>Epoch Number {currentEpochData?.no}</EpochNumber>,
+      title: <EpochNumber>{currentEpochData?.no}</EpochNumber>,
       value: (
         <Box display={"flex"} alignItems="center" justifyContent={"center"}>
           <ProgressCircle
@@ -41,11 +41,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
           >
             <EpochProgress>{`${progress}%`}</EpochProgress>
             <Status status={currentEpochData?.status?.toLowerCase()}>
-              {EPOCH_STATUS[currentEpochData?.status] === EPOCH_STATUS.IN_PROGRESS ? (
-                <StyledThreeDot />
-              ) : (
-                EPOCH_STATUS[currentEpochData?.status]
-              )}
+              {EPOCH_STATUS[currentEpochData?.status]}
             </Status>
           </ProgressCircle>
         </Box>
