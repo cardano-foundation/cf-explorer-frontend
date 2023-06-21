@@ -148,8 +148,6 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
     return `${palette.grey[200]} !important`;
   };
 
-  if (!renderTabsSPO) return null;
-
   return (
     <StyledComponent>
       <Box display={"flex"} justifyContent={"space-between"}>

@@ -27,10 +27,7 @@ const DeregistrationTab = () => {
 
   const fetchData = useFetchList<DeregistrationItem>(
     reportId ? API.REPORT.SREPORT_DETAIL_DEGEGISTRATIONS(reportId) : "",
-    {
-      ...pageInfo,
-      sort
-    }
+    { ...pageInfo, sort }
   );
   const columns: Column<DeregistrationItem>[] = [
     {
