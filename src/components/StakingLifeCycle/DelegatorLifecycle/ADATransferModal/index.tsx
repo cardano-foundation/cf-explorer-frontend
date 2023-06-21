@@ -45,6 +45,7 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
       handleCloseModal={handleCloseModal}
       width={1200}
       height={isMobile ? "73vh" : isTablet ? "67vh" : "72vh"}
+      modalStyle={{ overflow: "hidden" }}
     >
       <TabContext value={activityType}>
         <Box overflow={!isGalaxyFoldSmall ? "auto" : "hidden"} maxHeight={isMobile ? "80vh" : "70vh"}>

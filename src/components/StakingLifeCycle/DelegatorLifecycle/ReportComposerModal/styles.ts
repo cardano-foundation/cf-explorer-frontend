@@ -222,7 +222,7 @@ export const TextOverFlow = styled(Box)`
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  width: 300px;
+  width: 250px;
   text-align: right;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     text-align: left;
