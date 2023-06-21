@@ -229,7 +229,7 @@ export default function SignIn() {
             </CloseButton>
             {invalidInfomation ? (
               <Box pt={"24px"}>
-                <AlertCustom severity="error">Incorrect Emaill Address or Password</AlertCustom>
+                <AlertCustom severity="error">Incorrect email address or password</AlertCustom>
               </Box>
             ) : null}
             <WrapInput>
