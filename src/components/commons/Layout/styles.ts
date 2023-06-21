@@ -164,16 +164,17 @@ export const WrapIcon = styled(Box)`
 
 export const MainContainer = styled(Box)`
   width: 100%;
+  overflow-y: scroll;
 `;
 
 export const Main = styled(Box)<{ open: number; sidebar: number }>(({ theme, sidebar, open }) => ({
   flexGrow: 1,
   overflowX: "hidden",
   overflowY: "auto",
-  width: `calc(100vw - ${(open ? 461 : 0) + (sidebar ? 260 : 85)}px)`,
-  height: "calc(100vh - 61px)",
+  width: `calc(100vw - ${(open ? 461 : 0) + (sidebar ? 280 : 105)}px)`,
+  minHeight: "calc(100vh - 61px)",
   [theme.breakpoints.down("lg")]: {
-    width: `calc(100vw - ${sidebar ? 260 : 85}px)`
+    width: `calc(100vw - ${sidebar ? 280 : 105}px)`
   },
   [theme.breakpoints.down("md")]: {
     paddingTop: 80,
