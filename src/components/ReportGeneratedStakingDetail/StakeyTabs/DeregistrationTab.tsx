@@ -16,7 +16,6 @@ import { DeregistrationCertificateModal } from "src/components/commons/Deregistr
 import { AdaValue } from "./StakingRegistrationTab";
 import { StakingDetailContext } from "..";
 
-
 const DeregistrationTab = () => {
   const { reportId } = useParams<{ reportId: string }>();
   const { search } = useLocation();
@@ -72,11 +71,7 @@ const DeregistrationTab = () => {
       key: "stakeId",
       minWidth: "120px",
       render: () => (
-        <IconButton
-          onClick={() => {
-            setOpenModal(true);
-          }}
-        >
+        <IconButton onClick={() => setOpenModal(true)}>
           <EyeIcon style={{ transform: "scale(.8)" }} />
         </IconButton>
       )
