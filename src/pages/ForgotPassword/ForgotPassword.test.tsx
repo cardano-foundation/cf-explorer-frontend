@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom/extend-expect";
-import { fireEvent, screen } from "@testing-library/react";
+import { act, fireEvent, screen, waitFor } from "@testing-library/react";
 
 import { render } from "src/test-utils";
 import { forgotPassword } from "src/commons/utils/userRequest";
@@ -22,7 +22,7 @@ jest.mock("src/commons/utils/userRequest", () => ({
 describe("Forgot password page", () => {
   it("should render the page and availble to use", () => {
     expect(screen.getByText("Forgot Password")).toBeInTheDocument();
-    expect(screen.getByText("Sign in")).toBeInTheDocument();
+    expect(screen.getByText("Sign-In")).toBeInTheDocument();
     expect(screen.getByText("Email")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Email")).toBeInTheDocument();
   });
@@ -36,8 +36,12 @@ describe("Forgot password page", () => {
     const emailInput = screen.getByPlaceholderText("Email");
     fireEvent.change(emailInput, { target: { value: mockData.email } });
     const submitButton = screen.getByText("Submit");
-    fireEvent.click(submitButton);
-    expect(forgotPassword).toHaveBeenCalled();
+    act(() => {
+      fireEvent.click(submitButton);
+    });
+    await waitFor(() => {
+      expect(forgotPassword).toHaveBeenCalled();
+    });
   });
 
   it("should be able to return error message for invalid email", async () => {
