@@ -1,4 +1,4 @@
-import { alpha, LinearProgress, Skeleton, styled } from "@mui/material";
+import { alpha, Box, LinearProgress, Skeleton, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledSkeleton = styled(Skeleton)`
@@ -37,6 +37,7 @@ export const StyledCard = {
     display: flex;
   `,
   Content: styled("div")`
+    width: 100%;
     padding: 30px;
     display: flex;
     flex-direction: column;
@@ -74,4 +75,13 @@ export const TimeDuration = styled("small")<{ mobile?: number }>(({ theme, mobil
     paddingTop: 0,
     marginBottom: 20
   }
+}));
+export const PoolTitle = styled(Box)(({ theme }) => ({
+  fontSize: "12px",
+  color: alpha(theme.palette.common.black, 0.5)
+}));
+export const PoolValue = styled(Box)(({ theme }) => ({
+  fontSize: "14px",
+  color: theme.palette.common.black,
+  fontWeight: "bold"
 }));
