@@ -32,8 +32,8 @@ export const menus: Menu[] = [
       { title: "Epochs", href: routers.EPOCH_LIST },
       { title: "Blocks", href: routers.BLOCK_LIST },
       { title: "Transactions", href: routers.TRANSACTION_LIST },
-      { title: "Native Tokens", href: "/tokens" },
-      { title: "Top ADA Holders", href: "/addresses" },
+      { title: "Native Tokens", href: routers.TOKEN_LIST },
+      { title: "Top ADA Holders", href: routers.ADDRESS_LIST },
       { title: "Smart Contracts", href: routers.CONTRACT_LIST },
       { title: "Pools", href: routers.DELEGATION_POOLS }
     ]
