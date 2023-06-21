@@ -167,7 +167,11 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     }
 
     callback?.();
-    if (option?.detail) return history.push(option?.detail(search));
+    const isPoolTicketName =
+      option?.value === "delegations/pool-detail-header" && !search?.toLowerCase().startsWith("pool");
+
+    if (option?.detail && !isPoolTicketName) return history.push(option?.detail(search));
+
     if (search) {
       const params = { search, filter: filterParams || (filter !== "all" ? filter : undefined) };
       history.push(`${routers.SEARCH}?${stringify(params)}`);
