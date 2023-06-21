@@ -202,7 +202,7 @@ export default function SignUp() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     }
-  }, [enableButton]);
+  }, [enableButton, formData]);
 
   const handleKeyDown = (event: any) => {
     if (event.key === "Enter") {
