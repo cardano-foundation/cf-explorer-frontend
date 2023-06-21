@@ -36,7 +36,7 @@ export const routers = {
   PROTOCOL_PARAMETER: "/protocol-parameters",
   DELEGATOR_LIFECYCLE: "/delegator-lifecycle/:stakeId/:mode?/:tab?/:txHash?",
   SPO_LIFECYCLE: "/spo-lifecycle/:poolId/:mode?/:tab?/:txHash?",
-  STAKING_LIFECYCLE: "/stacking-lifecycle",
+  STAKING_LIFECYCLE: "/staking-lifecycle",
   STAKING_LIFECYCLE_SEARCH: "/timeline",
   REPORT_GENERATED: "/report-generated/:tab",
   REPORT_GENERATED_STAKING_DETAIL: "/report-generated/:reportId/staking",
