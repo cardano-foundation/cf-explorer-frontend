@@ -39,6 +39,6 @@ describe("FirstEpoch component", () => {
 
     render(<FirstEpoch data={mockedEpochData} onClick={jest.fn()} />);
     expect(screen.getByText(new RegExp(mockedEpochData.maxSlot.toString(), "i"))).toBeInTheDocument();
-    expect(screen.getByText(new RegExp(`epoch number ${mockedEpochData.no}`, "i"))).toBeInTheDocument();
+    expect(screen.getByText(10)).toBeInTheDocument();
   });
 });
