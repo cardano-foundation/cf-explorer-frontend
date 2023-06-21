@@ -32,18 +32,22 @@ export const menus: Menu[] = [
       { title: "Epochs", href: routers.EPOCH_LIST },
       { title: "Blocks", href: routers.BLOCK_LIST },
       { title: "Transactions", href: routers.TRANSACTION_LIST },
-      { title: "Native Tokens", href: "/tokens" },
-      { title: "Top Addresses", href: "/addresses" },
-      { title: "Smart Contracts", href: routers.CONTRACT_LIST }
+      { title: "Native Tokens", href: routers.TOKEN_LIST },
+      { title: "Top ADA Holders", href: routers.ADDRESS_LIST },
+      { title: "Smart Contracts", href: routers.CONTRACT_LIST },
+      { title: "Pools", href: routers.DELEGATION_POOLS }
     ]
   },
   {
-    title: "Staking",
+    title: "Operational Certificates",
     icon: DelegatePoolMenuIcon,
     children: [
-      { title: "Pools", href: routers.DELEGATION_POOLS },
-      { title: "Stake key registration", href: routers.STAKE_LIST.replace(":poolType?", "registration") },
-      { title: "Pool Registration", href: "/registration-pools" },
+      { title: "Stake Key Registration", href: routers.STAKE_LIST.replace(":poolType?", "registration") },
+      { title: "Stake Key De-registration", href: routers.STAKE_LIST.replace(":poolType?", "de-registration") },
+      { title: "Stake Delegation(s)", href: routers.STAKE_DELEGATIONS },
+      { title: "Pool Certificate", href: routers.REGISTRATION_POOLS.replace(":poolType?", "registration") },
+      { title: "Pool De-Registration", href: routers.REGISTRATION_POOLS.replace(":poolType?", "de-registration") },
+      { title: "Instantaneous Rewards ", href: routers.INSTANTANEOUS_REWARDS },
       { title: "Top Delegators", href: routers.TOP_DELEGATOR }
     ]
   },
