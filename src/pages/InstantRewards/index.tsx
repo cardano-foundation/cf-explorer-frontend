@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 
+import ADAicon from "src/components/commons/ADAIcon";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
@@ -82,7 +83,11 @@ const InstantReards = () => {
     {
       title: "Rewards Paid",
       key: "reward",
-      render: (r) => <Box component={"span"}>{formatADAFull(r.rewards)}</Box>
+      render: (r) => (
+        <Box component={"span"}>
+          {formatADAFull(r.rewards)} <ADAicon />
+        </Box>
+      )
     }
   ];
 
