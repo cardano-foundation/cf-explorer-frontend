@@ -79,11 +79,7 @@ const DeregistrationTab = () => {
       key: "stakeId",
       minWidth: "120px",
       render: () => (
-        <IconButton
-          onClick={() => {
-            setOpenModal(true);
-          }}
-        >
+        <IconButton onClick={() => setOpenModal(true)}>
           <EyeIcon style={{ transform: "scale(.8)" }} />
         </IconButton>
       )

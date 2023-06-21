@@ -76,10 +76,10 @@ export enum NETWORK_TYPES {
   testnet = "TEST_NET"
 }
 export const FRONT_END_NETWORK = {
-  mainnet: process.env.REACT_APP_MAINNET_FE_URL,
-  preprod: process.env.REACT_APP_PREPROD_FE_URL,
-  preview: process.env.REACT_APP_PREVIEW_FE_URL,
-  testnet: process.env.REACT_APP_TESTNET_FE_URL
+  mainnet: process.env.REACT_APP_MAINNET_APP_URL,
+  preprod: process.env.REACT_APP_PREPROD_APP_URL,
+  preview: process.env.REACT_APP_PREVIEW_APP_URL,
+  testnet: process.env.REACT_APP_TESTNET_APP_URL
 };
 
 export const NETWORK: NETWORKS = process.env.REACT_APP_NETWORK as NETWORKS;
