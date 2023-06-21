@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 
 import { RootState } from "src/stores/types";
 import { setOnDetailView, setSidebar } from "src/stores/user";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import CustomTooltip from "../CustomTooltip";
 import Footer from "./Footer";
@@ -19,6 +20,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
   const { sidebar, onDetailView } = useSelector(({ user }: RootState) => user);
   const history = useHistory();
   const lastPath = React.useRef<string>(history.location.pathname);
+  const { isTablet } = useScreen();
 
   React.useEffect(() => {
     const unlisten = history.listen(() => {
@@ -35,7 +37,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
   return (
     <Layout sidebar={+sidebar}>
       <BackDrop isShow={+sidebar} onClick={handleToggle} />
-      <Drawer variant="permanent" open={sidebar} ModalProps={{ keepMounted: true }}>
+      <Drawer variant="permanent" open={sidebar} ModalProps={{ keepMounted: true }} anchor={isTablet ? "right" : "left"}>
         <CustomTooltip placement="right" title={sidebar ? `Collapse` : `Expand`}>
           <ToggleMenu type="button">
             <WrapIcon onClick={handleToggle}>
