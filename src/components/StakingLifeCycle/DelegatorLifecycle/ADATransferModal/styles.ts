@@ -111,3 +111,24 @@ export const Amount = styled(Box)<{ type: "up" | "down" }>(({ type, theme }) => 
   gap: 5,
   marginRight: "5px"
 }));
+
+export const StyledBoxTransaction = styled("div")(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    maxWidth: "195px"
+  }
+}));
+export const StyledBox = styled(Box)(({ theme }) => ({
+  maxHeight: "70vh",
+  "&::-webkit-scrollbar": {
+    background: "transparent"
+  },
+  "&::-webkit-scrollbar-track": {
+    background: "transparent"
+  },
+  "&::-webkit-scrollbar-thumb": {
+    background: "transparent"
+  },
+  [theme.breakpoints.down("sm")]: {
+    maxHeight: "80vh"
+  }
+}));
