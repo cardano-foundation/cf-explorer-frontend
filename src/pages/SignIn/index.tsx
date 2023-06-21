@@ -128,7 +128,7 @@ export default function SignIn() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     }
-  }, [enableButton]);
+  }, [enableButton, formData]);
 
   const getError = (name: string, value: string) => {
     let error = "";
