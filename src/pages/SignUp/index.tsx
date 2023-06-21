@@ -201,8 +201,8 @@ export default function SignUp() {
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
+    }
+  }, [enableButton, formData]);
 
   const handleKeyDown = (event: any) => {
     if (event.key === "Enter") {
@@ -213,6 +213,7 @@ export default function SignUp() {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    if (!enableButton) return;
     let hasError = false;
     const errorPassword = getError("password", formData.password.value);
     const errorEmail = getError("email", formData.email.value);

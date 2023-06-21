@@ -22,6 +22,9 @@ export const FilterContainer = styled(Box)(({ theme }) => ({
   right: 0,
   borderRadius: theme.spacing(1),
   boxShadow: "rgba(189, 197, 209, 0.2) 0px 0.5rem 1.2rem",
+  [theme.breakpoints.down("md")]: {
+    left: "0",
+  },
   ":after": {
     content: "''",
     display: "block",
@@ -33,7 +36,11 @@ export const FilterContainer = styled(Box)(({ theme }) => ({
     width: "14px",
     height: "16px",
     transform: "rotate(45deg)",
-    boxShadow: "rgba(189, 197, 209, 0.2) 0px 0.5rem 1.2rem"
+    boxShadow: "rgba(189, 197, 209, 0.2) 0px 0.5rem 1.2rem",
+    [theme.breakpoints.down("md")]: {
+      right: "0",
+      left: "32px",
+    }
   }
 }));
 
