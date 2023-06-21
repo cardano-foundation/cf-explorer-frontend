@@ -1,11 +1,10 @@
 import "@testing-library/jest-dom/extend-expect";
-import { fireEvent, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, screen, waitFor } from "@testing-library/react";
 
 import { render } from "src/test-utils";
 import { forgotPassword } from "src/commons/utils/userRequest";
 
 import ForgotPassword from ".";
-import { act } from "react-dom/test-utils";
 
 const mockData = {
   email: "abcxyz@gmail.com",

@@ -82,7 +82,7 @@ export const FRONT_END_NETWORK = {
   testnet: process.env.REACT_APP_TESTNET_APP_URL
 };
 
-export const NETWORK: NETWORKS = process.env.REACT_APP_NETWORK as NETWORKS;
+export const NETWORK: NETWORKS = (process.env.REACT_APP_NETWORK as NETWORKS) || NETWORKS.mainnet;
 
 export enum TRANSACTION_STATUS {
   FAIL = "FAIL",

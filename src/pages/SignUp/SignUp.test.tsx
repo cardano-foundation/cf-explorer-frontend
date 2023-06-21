@@ -67,7 +67,6 @@ describe("SignUp page", () => {
     expect(errorMessage).toBeInTheDocument();
   });
 
-
   it("should be able to return error message for invalid confirm email", async () => {
     const emailInput = screen.getByPlaceholderText("A confirmation code will be sent to this address");
     const confirmEmailInput = screen.getByPlaceholderText("Re-enter Your email address");
@@ -94,5 +93,4 @@ describe("SignUp page", () => {
     const errorMessage = screen.getByText("Confirm Password does not match");
     expect(errorMessage).toBeInTheDocument();
   });
-
 });
