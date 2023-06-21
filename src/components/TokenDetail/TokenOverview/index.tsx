@@ -103,7 +103,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
           </Box>
         </Box>
       ),
-      icon: USDIcon,
+      icon: exchageIconUrl,
       value: numberWithCommas(data?.totalVolume || "")
     },
     {
