@@ -1,5 +1,5 @@
 import React from "react";
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useTheme } from "@mui/material";
 
@@ -54,10 +54,11 @@ describe("PolicyTable", () => {
       name: /token/i
     });
 
-    userEvent.click(secoundTabElement);
-
-    expect(secoundTabElement.getAttribute("aria-selected")).toBe("true");
-    expect(firstElement.getAttribute("aria-selected")).toBe("false");
+    await userEvent.click(secoundTabElement);
+    await waitFor(() => {
+      expect(secoundTabElement.getAttribute("aria-selected")).toBe("true");
+      expect(firstElement.getAttribute("aria-selected")).toBe("false");
+    });
   });
 
   it("data was display on table", () => {
