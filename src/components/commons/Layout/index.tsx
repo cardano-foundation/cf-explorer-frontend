@@ -39,9 +39,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
         <CustomTooltip placement="right" title={sidebar ? `Collapse` : `Expand`}>
           <ToggleMenu type="button">
             <WrapIcon onClick={handleToggle}>
-              <ArrowCollapse>
-                {sidebar ? <FaArrowLeft /> : <FaArrowRight />}
-              </ArrowCollapse>
+              <ArrowCollapse>{sidebar ? <FaArrowLeft /> : <FaArrowRight />}</ArrowCollapse>
             </WrapIcon>
           </ToggleMenu>
         </CustomTooltip>
