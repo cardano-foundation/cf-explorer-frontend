@@ -61,6 +61,9 @@ const DeregistrationTab = () => {
       render: (r) => (
         <Box>
           <TableSubTitle>
+            <Box>
+              <AdaValue color={theme.palette.grey[400]} value={-r.deposit - r.fee} gap="3px" fontSize="12px" />
+            </Box>
             <Box display="flex" mt={1} alignItems="center" lineHeight="1">
               <AdaValue
                 color={theme.palette.grey[400]}
