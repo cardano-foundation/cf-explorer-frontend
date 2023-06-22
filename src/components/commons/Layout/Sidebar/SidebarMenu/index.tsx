@@ -122,9 +122,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`menu-${index}` === active
                         ? {
-                          backgroundColor: (theme) => `${theme.palette.success.light} !important`,
-                          color: (theme) => theme.palette.success.dark
-                        }
+                            backgroundColor: (theme) => `${theme.palette.success.light} !important`,
+                            color: (theme) => theme.palette.success.dark
+                          }
                         : { color: (theme) => theme.palette.grey[400] })
                     })}
                   >
@@ -188,9 +188,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
                               ...(pathname === href ||
-                                (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1])) ||
-                                (href === "/timeline" &&
-                                  (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
+                              pathname.includes(href) ||
+                              (href === "/timeline" &&
+                                (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
                                 ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
                                 : {}),
                               paddingLeft: "70px",
@@ -211,10 +211,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                               primary={title}
                               open={sidebar ? 1 : 0}
                               active={
-                                pathname === href ||
-                                  (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1])) ||
-                                  (href === "/timeline" &&
-                                    (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
+                                pathname.includes(href) ||
+                                (href === "/timeline" &&
+                                  (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
                                   ? 1
                                   : 0
                               }
@@ -269,7 +268,12 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       })}
                     >
                       {icon ? (
-                        <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} active={pathname === href ? 1 : 0} />
+                        <MenuIcon
+                          src={icon}
+                          alt={title}
+                          iconOnly={!sidebar ? 1 : 0}
+                          active={pathname === href ? 1 : 0}
+                        />
                       ) : null}
                       <MenuText primary={title} open={sidebar ? 1 : 0} active={pathname === href ? 1 : 0} />
                     </ListItem>
@@ -282,9 +286,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`footer-${index}` === active
                         ? {
-                          backgroundColor: `${theme.palette.success.light} !important`,
-                          color: theme.palette.success.dark
-                        }
+                            backgroundColor: `${theme.palette.success.light} !important`,
+                            color: theme.palette.success.dark
+                          }
                         : { color: theme.palette.grey[400] })
                     })}
                   >
