@@ -84,13 +84,13 @@ export const HeaderLogo = styled("img")(({ theme }) => ({
   }
 }));
 
-export const SearchButton = styled(Button)<{ home: number }>(({ theme, home }) => ({
+export const SearchButton = styled(Button)(({ theme }) => ({
   padding: 0,
   minWidth: 24,
   height: 24,
   display: "none",
   [theme.breakpoints.down("md")]: {
-    display: home ? "none" : "block"
+    display:  "block"
   }
 }));
 
