@@ -3,7 +3,7 @@ import { Box, Grid } from "@mui/material";
 import moment from "moment";
 import { useSelector } from "react-redux";
 
-import { CurentEpochIcon, LiveStakeIcon, RocketBackground, totalPoolUrl } from "src/commons/resources";
+import { CurentEpochIcon, LiveStakeIcon, RocketBackground, TotalPoolIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
@@ -17,6 +17,7 @@ import {
   PoolTitle,
   PoolValue,
   StyledCard,
+  StyledCustomIcon,
   StyledImg,
   StyledLinearProgress,
   StyledSkeleton,
@@ -158,7 +159,7 @@ const OverViews: React.FC = () => {
                 </Box>
               </Box>
             </StyledCard.Content>
-            <StyledImg src={totalPoolUrl} alt="Clock" />
+            <StyledCustomIcon icon={TotalPoolIcon} originWidth={35} originHeight={35} width={35} />
           </StyledCard.Container>
         </Grid>
       </Grid>

@@ -1,6 +1,8 @@
 import { alpha, Box, LinearProgress, Skeleton, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
+import CustomIcon from "src/components/commons/CustomIcon";
+
 export const StyledSkeleton = styled(Skeleton)`
   border-radius: var(--border-radius);
   min-height: 150px;
@@ -20,6 +22,14 @@ export const StyledLinearProgress = styled(LinearProgress)`
 `;
 
 export const StyledImg = styled("img")`
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+`;
+
+export const StyledCustomIcon = styled(CustomIcon)`
   width: 35px;
   height: 35px;
   position: absolute;

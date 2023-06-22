@@ -72,7 +72,6 @@ import txOutputIconUrl from "./icons/txOutput.svg";
 import totalOutputUrl from "./icons/totalOutput.svg";
 import CopyIconSquareUrl from "./images/copy.svg";
 import fileGuardUrl from "./icons/file-guard.svg";
-import totalPoolUrl from "./icons/totalPool.svg";
 
 export {
   LogoFullIcon,
@@ -148,8 +147,7 @@ export {
   txOutputIconUrl,
   totalOutputUrl,
   CopyIconSquareUrl,
-  fileGuardUrl,
-  totalPoolUrl
+  fileGuardUrl
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
@@ -260,3 +258,4 @@ export { ReactComponent as Bookmarked } from "./icons/Bookmarked.svg";
 export { ReactComponent as TransactionDelegationIcon } from "./images/DelegationIcon.svg";
 export { ReactComponent as ScriptIcon } from "./icons/u_book.svg";
 export { ReactComponent as WithdrawalHistoryIcon } from "./icons/withdrawal-history.svg";
+export { ReactComponent as TotalPoolIcon } from "./icons/totalPool.svg";
