@@ -42,6 +42,8 @@ import VerifyEmail from "./pages/VerifyEmail";
 import ReportGeneratedStakingDetail from "./pages/ReportGeneratedStakingDetail";
 import ReportGeneratedPoolDetail from "./pages/ReportGeneratedPoolDetail";
 import StakingLifeCycleSearch from "./pages/StakingLifeCycleSearch";
+import StakeDelegations from "./pages/StakeDelegations";
+import InstantRewards from "./pages/InstantRewards";
 
 const Routes: React.FC = () => {
   return (
@@ -80,15 +82,19 @@ const Routes: React.FC = () => {
       <Route path={routers.DELEGATOR_LIFECYCLE} exact component={DelegatorLifecycle} />
       <Route path={routers.SPO_LIFECYCLE} exact component={SPOLifecycle} />
       <Route path={routers.STAKING_LIFECYCLE_SEARCH} exact component={StakingLifeCycleSearch} />
-      <AccountLayout>
-        <Switch>
-          <PrivateRoute path={routers.ACCOUNT} exact component={() => <Redirect to={routers.MY_PROFILE} />} />
-          <PrivateRoute path={routers.MY_PROFILE} exact component={MyProfile} />
-          <PrivateRoute path={routers.BOOKMARK} exact component={Bookmark} />
-          <PrivateRoute path={routers.PRIVATE_NOTES} exact component={PrivateNotes} />
-          <PrivateRoute path={routers.NOT_FOUND} component={NotFound} />
-        </Switch>
-      </AccountLayout>
+      <Route path={routers.STAKE_DELEGATIONS} exact component={StakeDelegations} />
+      <Route path={routers.INSTANTANEOUS_REWARDS} exact component={InstantRewards} />
+      <Route path={routers.ACCOUNT}>
+        <AccountLayout>
+          <Switch>
+            <Route path={routers.ACCOUNT} exact component={() => <Redirect to={routers.MY_PROFILE} />} />
+            <Route path={routers.MY_PROFILE} exact component={MyProfile} />
+            <Route path={routers.BOOKMARK} exact component={Bookmark} />
+            <Route path={routers.PRIVATE_NOTES} exact component={PrivateNotes} />
+            <Route path={routers.NOT_FOUND} component={NotFound} />
+          </Switch>
+        </AccountLayout>
+      </Route>
       <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
   );

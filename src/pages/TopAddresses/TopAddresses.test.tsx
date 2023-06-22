@@ -38,7 +38,7 @@ describe("Top addresses view", () => {
     mockUseFetchList.mockReturnValue(mockData);
     render(<TopAddresses />);
     expect(screen.getByText("Ae2td...zN2zG")).toBeInTheDocument();
-    expect(screen.getByText("Top addresses")).toBeInTheDocument();
+    expect(screen.getByText(/Top addresses/i)).toBeInTheDocument();
   });
 
   it("renders the table with given column and data", () => {

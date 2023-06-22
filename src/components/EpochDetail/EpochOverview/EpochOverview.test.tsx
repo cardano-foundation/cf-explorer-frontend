@@ -1,6 +1,7 @@
 import { render, screen } from "src/test-utils";
 
 import EpochOverview from "./index";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
 
 const mockedData: IDataEpoch = {
   blkCount: 20947,
@@ -18,15 +19,15 @@ const mockedData: IDataEpoch = {
 describe("EpochOverview", () => {
   it("should render on PC", () => {
     render(<EpochOverview data={mockedData} lastUpdated={1} loading={false} />);
-    expect(screen.getByText("06/15/2023 04:44:28")).toBeInTheDocument();
-    expect(screen.getByText("06/10/2023 04:47:26")).toBeInTheDocument();
+    expect(screen.getByText(formatDateTimeLocal(mockedData.startTime))).toBeInTheDocument();
+    expect(screen.getByText(formatDateTimeLocal(mockedData.endTime))).toBeInTheDocument();
     expect(screen.getByText("417")).toBeInTheDocument();
   });
 
   it("should show loading state", () => {
     const { container } = render(<EpochOverview data={mockedData} lastUpdated={1} loading={true} />);
-    expect(screen.queryByText("06/15/2023 04:44:28")).not.toBeInTheDocument();
-    expect(screen.queryByText("06/10/2023 04:47:26")).not.toBeInTheDocument();
+    expect(screen.queryByText(formatDateTimeLocal(mockedData.startTime))).not.toBeInTheDocument();
+    expect(screen.queryByText(formatDateTimeLocal(mockedData.endTime))).not.toBeInTheDocument();
     expect(screen.queryByText("417")).not.toBeInTheDocument();
     expect(container.getElementsByClassName("MuiSkeleton-root").length).toBeGreaterThan(0);
   });

@@ -61,7 +61,10 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
   const { isMobile } = useScreen();
   const { palette } = useTheme();
   useEffect(() => {
-    document.getElementById(`step-${currentStep}`)?.scrollIntoView();
+    const element = document.getElementById(`step-${currentStep}`);
+    if (element && typeof element.scrollIntoView === "function") {
+      element.scrollIntoView(true);
+    }
   }, [currentStep]);
 
   if (!renderTabsSPO) return null;
