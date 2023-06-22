@@ -23,7 +23,7 @@ import FormNowMessage from "src/components/commons/FormNowMessage";
 
 import { RegistrationContainer, StakeKey, StyledLink, TimeDuration } from "./styles";
 
-enum POOL_TYPE {
+export enum POOL_TYPE {
   REGISTRATION = "registration",
   DEREREGISTRATION = "de-registration"
 }
