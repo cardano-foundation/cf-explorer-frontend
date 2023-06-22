@@ -42,7 +42,9 @@ export const API = {
     DE_REGISTRATION: "stakes/de-registration",
     TOP_DELEGATOR: "stakes/top-delegators",
     REGISTRATION: "stakes/registration",
-    MIN_MAX_BALANCE: "stakes/min-max-balance"
+    MIN_MAX_BALANCE: "stakes/min-max-balance",
+    STAKE_DELEGATIONS: "delegations",
+    INSTANT_REWARDS: "instantaneous-rewards"
   },
   STAKE_LIFECYCLE: {
     REGISTRATION: (stakeKey: string) => `stake-lifecycle/${stakeKey}/registrations`,
@@ -108,7 +110,8 @@ export const API = {
   CONTRACTS: {
     VERIFY_SCRIPT: "contracts/verify/native",
     SCRIPT: (address: string) => `contracts/${address}/script`
-  }
+  },
+  STORIES: "news"
 };
 
 export const USER_API = {

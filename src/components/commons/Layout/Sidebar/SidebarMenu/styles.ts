@@ -13,16 +13,12 @@ export const SidebarMenuContainer = styled(Box)(({ theme }) => ({
 
 export const Menu = styled(List)(({ theme }) => ({
   maxHeight: "calc(100vh - 181px)",
-  overflowY: "auto",
-  overflowX: "hidden",
+  overflow: "auto",
   marginBottom: "5px",
   "&::-webkit-scrollbar": {
-    display: "none"
+    width: "0px",
+    height: "0px"
   },
-  "&:hover::-webkit-scrollbar": {
-    display: "block"
-  },
-
   [theme.breakpoints.down("md")]: {
     maxHeight: "unset"
   },
@@ -38,7 +34,6 @@ export const itemStyle = (theme: Theme, sidebar: boolean): SystemStyleObject<The
   padding: `8px ${sidebar ? 20 : 8}px 8px 30px`,
   cursor: "pointer",
   position: "relative",
-  marginBottom: "5px",
   justifyContent: sidebar ? "initial" : "center",
   [theme.breakpoints.down("md")]: {
     padding: "8px 20px",

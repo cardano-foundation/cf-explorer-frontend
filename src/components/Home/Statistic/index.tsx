@@ -139,7 +139,7 @@ const HomeStatistic = () => {
                     <EpochProgress sx={{ fontSize: "15px" }}>{`${progress}%`}</EpochProgress>
                   </ProgressCircle>
                 </Box>
-                <Name data-testid="current-epoch-box-title">Current Epoch</Name>
+                <Name data-testid="current-epoch-box-title" style={isGalaxyFoldSmall ? { maxWidth: "30px" } : {}}>Current Epoch</Name>
                 <XSmall data-testid="epoch-label">Epoch: </XSmall>
                 {isMobile ? <br /> : null}
                 <XValue data-testid="current-epoch-number">

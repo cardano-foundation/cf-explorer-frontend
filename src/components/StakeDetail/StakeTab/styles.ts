@@ -27,7 +27,7 @@ export const StyledLink = styled(Link)`
 `;
 
 export const StyledTabList = styled(TabList)(({ theme }) => ({
-  "& > div:nth-child(3)": {
+  "& > div:nth-of-type(3)": {
     "&::-webkit-scrollbar": {
       height: "3px"
     },
@@ -47,7 +47,7 @@ export const StyledTabList = styled(TabList)(({ theme }) => ({
     }
   },
   [theme.breakpoints.down("md")]: {
-    "& > div:nth-child(3)": {
+    "& > div:nth-of-type(3)": {
       "&::-webkit-scrollbar": {
         height: "0px"
       }
