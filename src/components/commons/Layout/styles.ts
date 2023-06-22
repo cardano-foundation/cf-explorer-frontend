@@ -6,7 +6,7 @@ const drawerWidth = 260;
 const drawerWidthMobile = 240;
 const drawerCollaspWidth = 85;
 
-export const Layout = styled(Box) <{ sidebar: number }>`
+export const Layout = styled(Box)<{ sidebar: number }>`
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -149,6 +149,17 @@ export const ToggleMenu = styled("button")`
   ${({ theme }) => theme.breakpoints.down("md")} {
     display: none;
   }
+`;
+
+export const WrapIcon = styled(Box)`
+  top: -9px;
+  left: -8px;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const MainContainer = styled(Box)`

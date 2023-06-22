@@ -188,7 +188,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
                               ...(pathname === href ||
-                              (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1])) ||
+                              pathname.includes(href) ||
                               (href === "/timeline" &&
                                 (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
                                 ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
@@ -211,8 +211,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                               primary={title}
                               open={sidebar ? 1 : 0}
                               active={
-                                pathname === href ||
-                                (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1])) ||
+                                pathname.includes(href) ||
                                 (href === "/timeline" &&
                                   (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
                                   ? 1
@@ -240,75 +239,83 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
           }}
         />
         {footerMenus.map((item, index) => {
-          const { href, title, children, icon } = item;
+          const { href, title, children, icon, tooltip } = item;
+          const tooltipTitle = `${!sidebar ? `${title}${title && tooltip ? `: ` : ``}` : ``}${tooltip || ``}`;
           return (
             <React.Fragment key={index}>
-              {href ? (
-                isExtenalLink(href) ? (
-                  <ListItem
-                    button
-                    onClick={() => window.open(href, "_blank")}
-                    sx={(theme) => itemStyle(theme, sidebar)}
-                  >
-                    {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} /> : null}
-                    <MenuText primary={title} open={sidebar ? 1 : 0} />
-                  </ListItem>
+              <CustomTooltip key={index} title={tooltipTitle} placement="right">
+                {href ? (
+                  isExtenalLink(href) ? (
+                    <ListItem
+                      button
+                      onClick={() => window.open(href, "_blank")}
+                      sx={(theme) => itemStyle(theme, sidebar)}
+                    >
+                      {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} /> : null}
+                      <MenuText primary={title} open={sidebar ? 1 : 0} />
+                    </ListItem>
+                  ) : (
+                    <ListItem
+                      button
+                      component={Link}
+                      to={href}
+                      selected={pathname === href}
+                      sx={(theme) => ({
+                        ...itemStyle(theme, sidebar),
+                        ...(pathname === href
+                          ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
+                          : {})
+                      })}
+                    >
+                      {icon ? (
+                        <MenuIcon
+                          src={icon}
+                          alt={title}
+                          iconOnly={!sidebar ? 1 : 0}
+                          active={pathname === href ? 1 : 0}
+                        />
+                      ) : null}
+                      <MenuText primary={title} open={sidebar ? 1 : 0} active={pathname === href ? 1 : 0} />
+                    </ListItem>
+                  )
                 ) : (
                   <ListItem
                     button
-                    component={Link}
-                    to={href}
-                    selected={pathname === href}
+                    onClick={() => handleOpen(`footer-${index}`)}
                     sx={(theme) => ({
                       ...itemStyle(theme, sidebar),
-                      ...(pathname === href
-                        ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
-                        : {})
+                      ...(`footer-${index}` === active
+                        ? {
+                            backgroundColor: `${theme.palette.success.light} !important`,
+                            color: theme.palette.success.dark
+                          }
+                        : { color: theme.palette.grey[400] })
                     })}
                   >
                     {icon ? (
-                      <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} active={pathname === href ? 1 : 0} />
+                      <MenuIcon
+                        src={icon}
+                        alt={title}
+                        iconOnly={!sidebar ? 1 : 0}
+                        text={children?.length ? 1 : 0}
+                        active={`footer-${index}` === active ? 1 : 0}
+                      />
                     ) : null}
-                    <MenuText primary={title} open={sidebar ? 1 : 0} active={pathname === href ? 1 : 0} />
-                  </ListItem>
-                )
-              ) : (
-                <ListItem
-                  button
-                  onClick={() => handleOpen(`footer-${index}`)}
-                  sx={(theme) => ({
-                    ...itemStyle(theme, sidebar),
-                    ...(`footer-${index}` === active
-                      ? {
-                          backgroundColor: `${theme.palette.success.light} !important`,
-                          color: theme.palette.success.dark
-                        }
-                      : { color: theme.palette.grey[400] })
-                  })}
-                >
-                  {icon ? (
-                    <MenuIcon
-                      src={icon}
-                      alt={title}
-                      iconOnly={!sidebar ? 1 : 0}
-                      text={children?.length ? 1 : 0}
+                    <MenuText
+                      primary={title}
+                      open={sidebar ? 1 : 0}
                       active={`footer-${index}` === active ? 1 : 0}
+                      text={1}
                     />
-                  ) : null}
-                  <MenuText
-                    primary={title}
-                    open={sidebar ? 1 : 0}
-                    active={`footer-${index}` === active ? 1 : 0}
-                    text={1}
-                  />
-                  {sidebar &&
-                    (children?.length ? (
-                      <IconMenu component={"span"}>
-                        {`footer-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
-                      </IconMenu>
-                    ) : null)}
-                </ListItem>
-              )}
+                    {sidebar &&
+                      (children?.length ? (
+                        <IconMenu component={"span"}>
+                          {`footer-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
+                        </IconMenu>
+                      ) : null)}
+                  </ListItem>
+                )}
+              </CustomTooltip>
               {children?.length ? (
                 <Collapse in={`footer-${index}` === active} timeout="auto" unmountOnExit>
                   <SubMenu disablePadding>

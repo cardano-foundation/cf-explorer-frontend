@@ -36,6 +36,7 @@ export default function VerifyEmail() {
     } else {
       history.push(routers.HOME);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path.search]);
   return (
     <Container>
@@ -56,7 +57,7 @@ export default function VerifyEmail() {
               <SuccessIcon />
               <Title mb={3}>You has successfully verified the account</Title>
               <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.SIGN_IN)}>
-                Sign In
+                Sign-In
               </WrapButton>
             </WrapForm>
           ) : (

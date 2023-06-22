@@ -3,8 +3,9 @@ import { stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { Box } from "@mui/material";
 
+import Card from "src/components/commons/Card";
 import useFetchList from "src/commons/hooks/useFetchList";
-import { details, routers } from "src/commons/routers";
+import { details } from "src/commons/routers";
 import {
   formatADAFull,
   formatDateTimeLocal,
@@ -20,9 +21,9 @@ import NoRecord from "src/components/commons/NoRecord";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 
-import { RegistrationContainer, StakeKey, StyledLink, StyledTab, StyledTabs, TabLabel, TimeDuration, WrapHeader } from "./styles";
+import { RegistrationContainer, StakeKey, StyledLink, TimeDuration } from "./styles";
 
-enum POOL_TYPE {
+export enum POOL_TYPE {
   REGISTRATION = "registration",
   DEREREGISTRATION = "de-registration"
 }
@@ -46,11 +47,6 @@ const RegistrationPools = () => {
     const title = poolType === POOL_TYPE.REGISTRATION ? "Registration" : "Deregistration";
     document.title = `${title} Pools | Cardano Explorer`;
   }, [poolType]);
-
-  const onChangeTab = (e: React.SyntheticEvent, poolType: POOL_TYPE) => {
-    setSort("");
-    history.push(routers.REGISTRATION_POOLS.replace(":poolType", poolType));
-  };
 
   const columns: Column<Registration>[] = [
     {
@@ -86,8 +82,8 @@ const RegistrationPools = () => {
       key: "pool",
       render: (pool) => (
         <StyledLink to={details.delegation(pool.poolView || "")}>
-          <CustomTooltip title={pool.poolName || `Pool[${pool.poolView}]` || ""}>
-            <Box component={"span"}>{pool.poolName || `Pool[${getShortHash(pool.poolView)}]`}</Box>
+          <CustomTooltip title={pool.poolName || pool.poolView || ""}>
+            <Box component={"span"}>{pool.poolName || getShortHash(pool.poolView)}</Box>
           </CustomTooltip>
         </StyledLink>
       )
@@ -137,19 +133,11 @@ const RegistrationPools = () => {
 
   return (
     <RegistrationContainer>
-      <WrapHeader>
-        <StyledTabs
-          value={poolType}
-          onChange={onChangeTab}
-          TabIndicatorProps={{ sx: { backgroundColor: (theme) => theme.palette.primary.main, height: 4 } }}
-        >
-          <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />
-          <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />
-        </StyledTabs>
+      <Card title={poolType === POOL_TYPE.REGISTRATION ? "Pool Certificate" : "Pool De-Registration"}>
         <TimeDuration>
           <FormNowMessage time={fetchData.lastUpdated} />
         </TimeDuration>
-      </WrapHeader>
+      </Card>
       <Box>
         <Table
           {...fetchData}
@@ -158,7 +146,7 @@ const RegistrationPools = () => {
           pagination={{
             ...pageInfo,
             onChange: (page, size) => {
-              history.push({ search: stringify({ page, size }) });
+              history.replace({ search: stringify({ page, size }) });
               mainRef.current?.scrollTo(0, 0);
             },
             total: fetchData.total

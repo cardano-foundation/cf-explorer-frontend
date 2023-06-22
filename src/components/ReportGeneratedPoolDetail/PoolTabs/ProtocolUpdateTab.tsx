@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import Table, { Column } from "src/components/commons/Table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { StyledLink } from "src/components/share/styled";
-import { formatADAFull, formatDateTimeLocal, formatHash } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { ADAValueLabel, ClickAbleLink } from "src/components/StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
 import CustomIcon from "src/components/commons/CustomIcon";
 import { ADAsigntIC, EyeIcon } from "src/commons/resources";
@@ -31,7 +31,7 @@ const ProtocolUpdateTab = () => {
       render(data) {
         return (
           <CustomTooltip title={data.txHash}>
-            <StyledLink to={details.transaction(data.txHash)}>{formatHash(data.txHash)}</StyledLink>
+            <StyledLink to={details.transaction(data.txHash)}>{getShortHash(data.txHash)}</StyledLink>
           </CustomTooltip>
         );
       }

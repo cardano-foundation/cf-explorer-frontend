@@ -1,6 +1,6 @@
 import { styled, Stack, Box, Button, TextField, Slider, FormLabel } from "@mui/material";
 
-import { SelectMui } from "../../../commons/Table/styles";
+import CustomSelect from "src/components/commons/CustomSelect";
 
 export const Container = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
@@ -21,10 +21,24 @@ export const StyledLabel = styled("div")`
   margin: 6px 0px;
 `;
 
-export const StyledSelect = styled(SelectMui)(() => ({
+export const StyledSelect = styled(CustomSelect)(() => ({
+  borderRadius: "4px",
+  fontSize: 14,
+  minWidth: 50,
+  border: "1px solid #E3E5E9",
   width: 200,
   textAlign: "left",
   paddingLeft: 14,
+  "& > div": {
+    padding: "2.45px 14px"
+  },
+  "& > fieldset": {
+    top: 2
+  },
+  background: "transparent",
+  "& >svg": {
+    top: "calc(50% - 9px)"
+  },
   ".MuiOutlinedInput-notchedOutline": {
     border: 0,
     borderRadius: 0,
@@ -208,7 +222,7 @@ export const TextOverFlow = styled(Box)`
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  width: 300px;
+  width: 250px;
   text-align: right;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     text-align: left;
@@ -247,5 +261,22 @@ export const StyledSlider = styled(Slider)`
 export const StyledFormLabel = styled(FormLabel)`
   &.Mui-focused {
     color: ${(props) => props.theme.palette.grey[500]};
+  }
+`;
+
+export const StyledTextField = styled(TextField)`
+  .MuiInputBase-root {
+    padding: 0 9px;
+    height: 40px;
+    border: 1.5px solid ${(props) => props.theme.palette.border.main};
+    border-radius: 8px;
+  }
+  .MuiFormControl-root {
+  }
+  .MuiInputBase-input {
+    font-size: 14px;
+  }
+  .MuiOutlinedInput-notchedOutline {
+    border: none;
   }
 `;

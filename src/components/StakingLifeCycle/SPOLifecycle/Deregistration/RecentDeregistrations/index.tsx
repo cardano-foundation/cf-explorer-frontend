@@ -42,11 +42,13 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect, setShowBackButton })
     if (initialized) {
       setShowBackButton?.(data.length > 1);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialized]);
 
   useEffect(() => {
     const currentItem = data.find((item) => item.txHash === txHash);
     onSelect(currentItem || null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txHash, data]);
 
   const handleSelect = (deregistration: SPODeregistration) => {
@@ -114,10 +116,6 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect, setShowBackButton })
       {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord />}
       {initialized && data?.length > 0 && !error && (
         <FooterTable
-          total={{
-            count: total,
-            title: ""
-          }}
           pagination={{
             total,
             ...pageInfo,

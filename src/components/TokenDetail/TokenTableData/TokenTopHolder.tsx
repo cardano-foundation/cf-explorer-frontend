@@ -70,7 +70,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply }) => 
       pagination={{
         ...pageInfo,
         total: fetchData.total,
-        onChange: (page, size) => history.push({ search: stringify({ page, size }) })
+        onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
       }}
       onClickRow={(_, r: ITokenTopHolderTable) => history.push(details.address(r.address))}
     />

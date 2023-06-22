@@ -7,6 +7,7 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import {
+  formatAmount,
   formatDateTimeLocal,
   formatNumberDivByDecimals,
   getPageInfo,
@@ -61,7 +62,7 @@ const columnsToken: Column<TokenPolicys>[] = [
     title: "Total Transactions",
     key: "trxtotal",
     minWidth: "150px",
-    render: (r) => <>{r?.txCount ?? ""}</>
+    render: (r) => <>{formatAmount(r?.txCount || "")}</>
   }
 ];
 
@@ -129,7 +130,7 @@ const PolicyTable = () => {
 
   const handleChange = (event: React.SyntheticEvent, tab: TABS) => {
     setActiveTab(tab);
-    history.push({ search: stringify({ page: 1, size: 50 }) });
+    history.replace({ search: stringify({ page: 1, size: 50 }) });
   };
 
   const fetchData = useFetchList<PolicyHolder | TokenPolicys>(`${API.POLICY}/${policyId}/${activeTab}`, pageInfo);
@@ -137,7 +138,7 @@ const PolicyTable = () => {
   return (
     <StyledBoxContainer>
       <TabContext value={activeTab}>
-        <Box style={{ borderBottom: `1px solid ${theme.palette.border.secondary}` }}>
+        <Box data-testid="tab-testid" style={{ borderBottom: `1px solid ${theme.palette.border.secondary}` }}>
           <StyledTabList
             onChange={handleChange}
             TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
@@ -150,7 +151,7 @@ const PolicyTable = () => {
                   <Box>
                     <Box display={"flex"} alignItems="center">
                       <Icon fill={activeTab === key ? theme.palette.primary.main : theme.palette.text.hint} />
-                      <TitleTab pl={1} active={activeTab === key}>
+                      <TitleTab pl={1} active={+(activeTab === key)}>
                         {label}
                       </TitleTab>
                     </Box>
@@ -169,7 +170,7 @@ const PolicyTable = () => {
               pagination={{
                 ...pageInfo,
                 total: fetchData.total,
-                onChange: (page, size) => history.push({ search: stringify({ page, size }) })
+                onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
               }}
               onClickRow={(_, r: PolicyHolder | TokenPolicys) => history.push(details.token(r.fingerprint))}
             />

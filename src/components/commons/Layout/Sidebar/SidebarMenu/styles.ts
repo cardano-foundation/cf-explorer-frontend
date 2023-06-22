@@ -17,12 +17,9 @@ export const Menu = styled(List)(({ theme }) => ({
   overflowX: "hidden",
   marginBottom: "5px",
   "&::-webkit-scrollbar": {
-    display: "none"
+    width: "0px",
+    height: "0px"
   },
-  "&:hover::-webkit-scrollbar": {
-    display: "block"
-  },
-
   [theme.breakpoints.down("md")]: {
     maxHeight: "unset"
   },
@@ -101,7 +98,7 @@ export const FooterMenuContainer = styled(Box)(({ theme }) => ({
 export const IconMenu = styled(Box)(() => ({
   position: "absolute",
   zIndex: 10,
-  top: "50%",
+  top: "55%",
   left: "210px",
   transform: "translate(0, -50%)"
 }));

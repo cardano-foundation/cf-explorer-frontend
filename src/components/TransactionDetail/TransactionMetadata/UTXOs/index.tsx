@@ -85,6 +85,7 @@ const Card = ({
                               </Box>
                             </CustomTooltip>
                           </Link>
+                          <Box fontWeight={"bold"}>#{item?.index}</Box>
                           <CopyButton text={item.txHash} />
                         </Box>
                       </Box>
@@ -93,7 +94,13 @@ const Card = ({
                     <Box />
                   )}
                   <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
-                    <Box display={"flex"} alignItems="center" justifyContent={"flex-start"} pr={1}>
+                    <Box
+                      display={"flex"}
+                      alignItems="center"
+                      justifyContent={"flex-start"}
+                      pr={1}
+                      pl={type === "down" ? 2 : 0}
+                    >
                       {type === "down" ? "From" : "To"}:
                     </Box>
                     <Box display={"flex"} justifyContent="space-between" flex={"1"} alignItems={"center"}>
@@ -128,7 +135,7 @@ const Card = ({
                       flexDirection={isMobile ? "column" : "row"}
                       paddingTop="5px"
                     >
-                      <Box mr={3} minWidth={180}>
+                      <Box mr={3} minWidth={180} pl={type === "down" ? 2 : 0}>
                         <Box
                           display={"flex"}
                           flexDirection={isMobile ? "column" : "row"}

@@ -59,6 +59,7 @@ const PoolSizeTab = () => {
     if (dataReportDetail && dataReportDetail.isFeesPaid === false) {
       setColumnsTable((columns) => columns.filter((c) => c.key !== "fees"));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(dataReportDetail)]);
 
   return (

@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Typography, alpha, styled } from "@mui/material";
+import { Box, Button, Typography, alpha, styled } from "@mui/material";
 
 export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
   width: "100%",
@@ -12,25 +12,17 @@ export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
   }
 }));
 
-export const StepButton = styled(IconButton)<{ active: number }>(({ theme, active }) => ({
+export const StepButton = styled(Box)<{ active: number }>(({ theme, active }) => ({
   background: active ? theme.palette.green[600] : theme.palette.grey[200],
   ":hover": {
     background: active ? theme.palette.green[600] : theme.palette.grey[200]
   }
 }));
-export const TitleStep = styled(Box)<{ currentstep: number; index: number }>(({ theme, currentstep, index }) => ({
-  color:
-    currentstep === index
-      ? theme.palette.grey[700]
-      : currentstep > index
-      ? theme.palette.grey[400]
-      : theme.palette.grey[300],
+export const TitleStep = styled(Box)<{ active: number }>(({ theme, active }) => ({
+  color: active ? theme.palette.grey[700] : theme.palette.grey[300],
   fontWeight: "bold",
   fontSize: "0.875rem",
-  marginTop: theme.spacing(1),
-  [theme.breakpoints.down("md")]: {
-    whiteSpace: "nowrap"
-  }
+  marginTop: theme.spacing(1)
 }));
 
 export const NextButton = styled(Button)(({ theme }) => ({
@@ -40,9 +32,6 @@ export const NextButton = styled(Button)(({ theme }) => ({
   fontWeight: "bold",
   padding: "10px 20px",
   borderRadius: "8px",
-  position: "unset",
-  right: 20,
-  bottom: 30,
   ":hover": {
     background: alpha(theme.palette.grey[700], 0.8)
   }
@@ -53,10 +42,8 @@ export const PreviousButton = styled(Button)(({ theme }) => ({
   textTransform: "capitalize",
   fontWeight: "bold",
   borderRadius: "8px",
-  position: "unset",
   padding: "10px 20px",
-  left: 20,
-  bottom: 30,
+  left: 0,
   border: `2px solid ${theme.palette.border.hint}`,
   ":hover": {
     background: alpha(theme.palette.grey[700], 0.1)
@@ -69,6 +56,7 @@ export const ADATransfersButton = styled(Button)(({ theme }) => ({
   borderRadius: "8px",
   textTransform: "capitalize",
   fontWeight: "bold",
+  minWidth: 115,
   ":hover": {
     background: alpha(theme.palette.green[600], 0.8)
   },
@@ -104,6 +92,11 @@ export const StyledBox = styled(Box)`
     & > p:nth-of-type(1) {
       white-space: nowrap;
       width: min-content;
+    }
+  }
+  ${({ theme }) => theme.breakpoints.down(365)} {
+    & > p:nth-of-type(1) {
+      white-space: break-spaces;
     }
   }
 `;

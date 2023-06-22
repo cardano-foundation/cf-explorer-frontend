@@ -4,11 +4,12 @@ type FilterParams =
   | "blocks"
   | "txs"
   | "tokens"
-  | "stakes"
+  | "stake-keys"
   | "addresses"
   | "contract"
   | "delegations/pool-detail-header"
-  | "lifecycle";
+  | "lifecycle"
+  | "policies";
 
 interface SearchParams {
   filter?: FilterParams;
