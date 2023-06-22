@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook, waitFor } from "@testing-library/react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 
@@ -48,34 +48,38 @@ describe("useFetchList", () => {
     };
     mockAxios.onGet(`${mockApi}?page=1`).reply(200, response);
 
-    const { result, waitForNextUpdate } = renderHook(() => useFetchList(mockApi, { page: 1 }));
+    const { result } = renderHook(() => useFetchList(mockApi, { page: 1 }));
 
-    expect(result.current.loading).toBe(true);
-    expect(result.current.data).toEqual([]);
+    await waitFor(() => {
+      expect(result.current.loading).toBe(true);
+      expect(result.current.data).toEqual([]);
+    });
 
-    await waitForNextUpdate();
-
-    expect(result.current.loading).toBe(false);
-    expect(result.current.data).toEqual(data);
-    expect(result.current.currentPage).toBe(1);
-    expect(result.current.totalPage).toBe(1);
-    expect(result.current.total).toBe(2);
+    await waitFor(() => {
+      expect(result.current.loading).toBe(false);
+      expect(result.current.data).toEqual(data);
+      expect(result.current.currentPage).toBe(1);
+      expect(result.current.totalPage).toBe(1);
+      expect(result.current.total).toBe(2);
+    });
   });
 
   it("should handle errors", async () => {
     const error = { message: "Something went wrong" };
     mockAxios.onGet(`${mockApi}?page=1`).reply(400, error);
 
-    const { result, waitForNextUpdate } = renderHook(() => useFetchList(mockApi, { page: 1 }));
+    const { result } = renderHook(() => useFetchList(mockApi, { page: 1 }));
 
-    expect(result.current.loading).toBe(true);
-    expect(result.current.data).toEqual([]);
+    await waitFor(() => {
+      expect(result.current.loading).toBe(true);
+      expect(result.current.data).toEqual([]);
+    });
 
-    await waitForNextUpdate();
-
-    expect(result.current.loading).toBe(false);
-    expect(result.current.data).toEqual([]);
-    expect(result.current.error).toEqual(error.message);
+    await waitFor(() => {
+      expect(result.current.loading).toBe(false);
+      expect(result.current.data).toEqual([]);
+      expect(result.current.error).toEqual(error.message);
+    });
   });
 
   it("should handle refresh", async () => {
@@ -93,28 +97,32 @@ describe("useFetchList", () => {
 
     mockAxios.onGet(`${mockApi}?page=1`).reply(200, response);
 
-    const { result, waitForNextUpdate } = renderHook(() => useFetchList(mockApi, { page: 1 }));
+    const { result } = renderHook(() => useFetchList(mockApi, { page: 1 }));
 
-    expect(result.current.loading).toBe(true);
-    expect(result.current.data).toEqual([]);
+    await waitFor(() => {
+      expect(result.current.loading).toBe(true);
+      expect(result.current.data).toEqual([]);
+    });
 
-    await waitForNextUpdate();
-
-    expect(result.current.loading).toBe(false);
-    expect(result.current.data).toEqual(data);
-    expect(result.current.currentPage).toBe(1);
-    expect(result.current.totalPage).toBe(1);
-    expect(result.current.total).toBe(2);
+    await waitFor(() => {
+      expect(result.current.loading).toBe(false);
+      expect(result.current.data).toEqual(data);
+      expect(result.current.currentPage).toBe(1);
+      expect(result.current.totalPage).toBe(1);
+      expect(result.current.total).toBe(2);
+    });
 
     result.current.refresh();
 
-    expect(result.current.loading).toBe(false);
-    expect(result.current.data).toEqual(data);
+    await waitFor(() => {
+      expect(result.current.loading).toBe(false);
+      expect(result.current.data).toEqual(data);
+    });
 
-    await waitForNextUpdate();
-
-    expect(result.current.loading).toBe(false);
-    expect(result.current.totalPage).toBe(1);
-    expect(result.current.total).toBe(2);
+    await waitFor(() => {
+      expect(result.current.loading).toBe(false);
+      expect(result.current.totalPage).toBe(1);
+      expect(result.current.total).toBe(2);
+    });
   });
 });

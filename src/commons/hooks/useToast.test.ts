@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from "@testing-library/react";
 
 import { addToast, removeToast } from "../../stores/toast";
 import useToast from "./useToast";
