@@ -9,7 +9,7 @@ import { useScreen } from "src/commons/hooks/useScreen";
 
 import WalletActivity from "./WalletActivity";
 import RewardActivity from "./RewardActivity";
-import { CustomTab, StyledTab, StyledTabs } from "./styles";
+import { CustomTab, StyledBox, StyledTab, StyledTabs } from "./styles";
 
 interface IProps {
   open: boolean;
@@ -48,7 +48,7 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
       modalStyle={{ overflow: "hidden" }}
     >
       <TabContext value={activityType}>
-        <Box overflow={!isGalaxyFoldSmall ? "auto" : "hidden"} maxHeight={isMobile ? "80vh" : "70vh"}>
+        <StyledBox overflow={!isGalaxyFoldSmall ? "auto" : "hidden"}>
           <StyledTabs
             value={activityType}
             onChange={onChangeTab}
@@ -92,7 +92,7 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
           <TabPanel value={ActivityType.REWARDS} style={{ padding: 0, paddingTop: 12 }}>
             <RewardActivity />
           </TabPanel>
-        </Box>
+        </StyledBox>
       </TabContext>
     </StyledModal>
   );

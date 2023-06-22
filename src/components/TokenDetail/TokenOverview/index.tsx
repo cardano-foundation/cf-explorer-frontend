@@ -11,6 +11,7 @@ import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
 
 import ScriptModal from "../../ScriptModal";
 import { PolicyId, PolicyScriptBtn, TokenDescription, TokenHeader, WrapTitle } from "./styles";
+
 BigNumber.config({ DECIMAL_PLACES: 40 });
 
 interface ITokenOverview {

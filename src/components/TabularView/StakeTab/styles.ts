@@ -27,7 +27,7 @@ export const StyledLink = styled(Link)`
 `;
 
 export const StyledTabList = styled(TabList)(({ theme }) => ({
-  "& > div:nth-child(3)": {
+  "& > div:nth-of-type(3)": {
     "&::-webkit-scrollbar": {
       height: "3px"
     },
@@ -47,7 +47,7 @@ export const StyledTabList = styled(TabList)(({ theme }) => ({
     }
   },
   [theme.breakpoints.down("md")]: {
-    "& > div:nth-child(3)": {
+    "& > div:nth-of-type(3)": {
       "&::-webkit-scrollbar": {
         height: "0px"
       }
@@ -122,7 +122,7 @@ export const Headline = styled(Typography)<{ collapsed?: number }>`
 export const WrapperDelegationTab = styled(Box)`
   display: flex;
   justify-content: space-between;
-  align-items: center,
+  align-items: center;
   margin-top: 12px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     flex-direction: column;

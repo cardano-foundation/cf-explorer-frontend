@@ -5,6 +5,7 @@ import { render } from "src/test-utils";
 import { signUp } from "src/commons/utils/userRequest";
 
 import SignUp from ".";
+import exp from "constants";
 
 const mockData = {
   email: "abcxyzabc@gmail.com",
