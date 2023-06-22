@@ -55,7 +55,7 @@ type DeregistrationProps = {
   showBackButton?: boolean;
 };
 
-const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: DeregistrationProps) => {
+export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: DeregistrationProps) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const history = useHistory();
   const handleBack = () => {
@@ -66,7 +66,7 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
     <Box>
       <StepInfo>
         {showBackButton ? (
-          <IconButtonBack onClick={handleBack}>
+          <IconButtonBack data-testid="back-button" onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
         ) : (

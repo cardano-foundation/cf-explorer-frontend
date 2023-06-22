@@ -89,7 +89,7 @@ const WalletActivity: React.FC = () => {
 
 export default WalletActivity;
 const StyledTable = styled(Table)(() => ({
-  "> :nth-child(2)": {
+  "> :nth-of-type(2)": {
     boxShadow: "none !important"
   }
 }));
