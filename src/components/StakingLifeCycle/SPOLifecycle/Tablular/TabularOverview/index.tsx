@@ -90,7 +90,7 @@ const TabularOverview: React.FC = () => {
   const [open, setOpen] = useState(false);
   const history = useHistory();
   const onOwnerItemClick = (key: string) => {
-    return history.push(`/stake/${key}/delegation`);
+    return history.push(details.stake(key));
   };
 
   const ownerAccountValue = getShortWallet(stakeKeys?.[0]);
