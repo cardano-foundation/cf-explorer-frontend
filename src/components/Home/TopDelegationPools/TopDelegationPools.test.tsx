@@ -68,9 +68,8 @@ describe("TopDelegationPools", () => {
     expect(screen.getByText(mockItem.poolName)).toBeInTheDocument();
     expect(screen.getByText(formatADAFull(mockItem.poolSize))).toBeInTheDocument();
     expect(screen.getByText("+3,49 %")).toBeInTheDocument();
-    expect(
-      screen.getByText(`${formatPercent(mockItem.feePercent)} (${formatADAFull(mockItem.feeAmount)} A)`)
-    ).toBeInTheDocument();
+    expect(screen.getByText(formatPercent(mockItem.feePercent))).toBeInTheDocument();
+    expect(screen.getByText(`${formatADAFull(mockItem.feeAmount)} A`)).toBeInTheDocument();
     expect(screen.getByText(formatADAFull(mockItem.pledge))).toBeInTheDocument();
     expect(screen.getByText(formatPercent(mockItem.saturation / 100))).toBeInTheDocument();
   });

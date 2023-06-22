@@ -67,15 +67,15 @@ export const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
   minWidth: drawerCollaspWidth,
   overflowY: "unset",
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen
+  }),
   [theme.breakpoints.down("md")]: {
     zIndex: 1302,
     minWidth: 0,
     height: "100vh",
-    maxHeight: "fill-available",
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+    maxHeight: "fill-available"
   },
   [theme.breakpoints.down("sm")]: {
     width: drawerWidthMobile
@@ -85,15 +85,15 @@ export const openedMixin = (theme: Theme): CSSObject => ({
 export const closedMixin = (theme: Theme): CSSObject => ({
   overflowY: "unset",
   width: drawerCollaspWidth,
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen
+  }),
   [theme.breakpoints.down("md")]: {
     zIndex: 1302,
     width: 0,
     height: "100vh",
-    maxHeight: "fill-available",
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
+    maxHeight: "fill-available"
   }
 });
 
@@ -141,17 +141,26 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
 
 export const MainContainer = styled(Box)`
   width: 100%;
+  overflow-y: scroll;
 `;
 
-export const Main = styled(Box)<{ open: number; sidebar: number }>(({ theme, sidebar, open }) => ({
+export const Main = styled(Box)<{ open: number }>(({ theme, open }) => ({
   flexGrow: 1,
   overflowX: "hidden",
   overflowY: "auto",
-  width: `calc(100vw - ${(open ? 461 : 0) + (sidebar ? 260 : 85)}px)`,
+  width: `calc(100vw - ${drawerCollaspWidth}px)`,
   height: "calc(100vh - 61px)",
-  [theme.breakpoints.down("lg")]: {
-    width: `calc(100vw - ${sidebar ? 260 : 85}px)`
-  },
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen
+  }),
+  ...(open && {
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    }),
+    width: `calc(100vw - ${drawerWidth}px)`
+  }),
   [theme.breakpoints.down("md")]: {
     paddingTop: 80,
     width: "100vw",

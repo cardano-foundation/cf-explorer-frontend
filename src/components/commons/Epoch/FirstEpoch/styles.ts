@@ -50,7 +50,7 @@ export const Container = styled(Box)(({ theme }) => ({
 
 export const EpochNumber = styled(Box)(({ theme }) => ({
   fontWeight: 600,
-  fontSize: 16,
+  fontSize: 20,
   marginBottom: 8,
   textAlign: "center",
   [theme.breakpoints.down("sm")]: {
@@ -69,7 +69,7 @@ export const EpochText = styled("span")`
 `;
 
 export const EpochProgress = styled("h3")(({ theme }) => ({
-  color: theme.palette.primary.main,
+  color: theme.palette.common.black,
   margin: 0,
   [theme.breakpoints.down("lg")]: {
     fontSize: 14
