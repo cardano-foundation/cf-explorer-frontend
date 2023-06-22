@@ -3,11 +3,11 @@ import BigNumber from "bignumber.js";
 import React, { useContext, useState } from "react";
 
 import { RewardIcon, USDIcon, exchageIconUrl, fileGuardUrl, slotIconUrl, timeIconUrl } from "src/commons/resources";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import { formatDateTimeLocal, formatNumberDivByDecimals, numberWithCommas } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import DetailHeader from "src/components/commons/DetailHeader";
 import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import ScriptModal from "../../ScriptModal";
 import { PolicyId, PolicyScriptBtn, TokenDescription, TokenHeader, WrapTitle } from "./styles";
