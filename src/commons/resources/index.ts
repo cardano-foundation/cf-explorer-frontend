@@ -72,11 +72,13 @@ import txOutputIconUrl from "./icons/txOutput.svg";
 import totalOutputUrl from "./icons/totalOutput.svg";
 import CopyIconSquareUrl from "./images/copy.svg";
 import fileGuardUrl from "./icons/file-guard.svg";
+import ADALogoUrl from "./icons/ada-logo.svg";
 
 export {
   LogoFullIcon,
   LogoIcon,
   WalletIcon,
+  ADALogoUrl,
   FlintIcon,
   NamiIcon,
   EternlIcon,

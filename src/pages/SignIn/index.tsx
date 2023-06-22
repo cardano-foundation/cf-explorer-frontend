@@ -1,5 +1,5 @@
-import { useEffect, useReducer, useState } from "react";
 import { Box, Checkbox, FormControlLabel, FormGroup, FormHelperText, IconButton, InputAdornment } from "@mui/material";
+import { useEffect, useReducer, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
 
@@ -128,7 +128,7 @@ export default function SignIn() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     }
-  }, []);
+  }, [enableButton, formData]);
 
   const getError = (name: string, value: string) => {
     let error = "";

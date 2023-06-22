@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
-import { details, routers } from "src/commons/routers";
+import { details } from "src/commons/routers";
 import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -18,9 +18,9 @@ import { REFRESH_TIMES } from "src/commons/utils/constants";
 import { useScreen } from "src/commons/hooks/useScreen";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 
-import { StyledContainer, StyledLink, StyledTab, StyledTabs, TabLabel, TimeDuration } from "./styles";
+import { StyledContainer, StyledLink, TimeDuration } from "./styles";
 
-enum POOL_TYPE {
+export enum POOL_TYPE {
   REGISTRATION = "registration",
   DEREREGISTRATION = "de-registration"
 }
@@ -44,14 +44,13 @@ const Stake = () => {
   );
 
   useEffect(() => {
+    handleClose();
+  }, [history.location.pathname]);
+
+  useEffect(() => {
     const title = poolType === POOL_TYPE.REGISTRATION ? "Registrations" : "Deregistrations";
     document.title = `${title} Stake Keys | Cardano Explorer`;
   }, [poolType]);
-
-  const onChangeTab = (e: React.SyntheticEvent, poolType: POOL_TYPE) => {
-    history.push(routers.STAKE_LIST.replace(":poolType", poolType));
-    handleClose();
-  };
 
   const openDetail = (_: any, r: IStakeKey, index: number) => {
     setOnDetailView(true);
@@ -113,16 +112,7 @@ const Stake = () => {
   return (
     <StyledContainer>
       <Box className="stake-list">
-        <Card>
-          <StyledTabs
-            value={poolType}
-            onChange={onChangeTab}
-            sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.main}` }}
-            TabIndicatorProps={{ sx: { backgroundColor: (theme) => theme.palette.primary.main, height: 4 } }}
-          >
-            <StyledTab value={POOL_TYPE.REGISTRATION} label={<TabLabel>Registration</TabLabel>} />
-            <StyledTab value={POOL_TYPE.DEREREGISTRATION} label={<TabLabel>Deregistration</TabLabel>} />
-          </StyledTabs>
+        <Card title={poolType === POOL_TYPE.REGISTRATION ? "Stake Key Registration" : "Stake Key Deregistration"}>
           <TimeDuration>
             <FormNowMessage time={fetchData.lastUpdated} />
           </TimeDuration>

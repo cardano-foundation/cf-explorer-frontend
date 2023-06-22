@@ -75,7 +75,7 @@ const WalletActitityTab = () => {
 };
 
 const StyledTable = styled(Table)(() => ({
-  "> :nth-child(2)": {
+  "> :nth-of-type(2)": {
     boxShadow: "none !important"
   }
 }));
