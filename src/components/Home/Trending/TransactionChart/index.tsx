@@ -61,7 +61,7 @@ const TransactionChart: React.FC = () => {
   const sumSmartContract = (data || []).reduce((prev, item) => prev + item.smartContract, 0);
 
   const dataOverview = [
-    { key: "trx", title: "Simple  transactions", value: sumSimple || 0 },
+    { key: "trx", title: "Simple transactions", value: sumSimple || 0 },
     { key: "simple", title: "Smart contracts", value: sumSmartContract || 0 },
     {
       key: "complex",
