@@ -71,8 +71,9 @@ export const Author = styled("h6")`
   line-height: 1.15;
   max-height: 1em;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 1;
   overflow: hidden;
+  text-overflow: ellipsis;
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.primary.main};
   background-color: ${(props) => props.theme.palette.success.light};
