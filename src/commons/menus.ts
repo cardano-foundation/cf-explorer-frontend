@@ -44,10 +44,10 @@ export const menus: Menu[] = [
     icon: DelegatePoolMenuIcon,
     children: [
       { title: "Stake Key Registration", href: routers.STAKE_LIST.replace(":poolType?", "registration") },
-      { title: "Stake Key De-registration", href: routers.STAKE_LIST.replace(":poolType?", "de-registration") },
+      { title: "Stake Key Deregistration", href: routers.STAKE_LIST.replace(":poolType?", "de-registration") },
       { title: "Stake Delegation(s)", href: routers.STAKE_DELEGATIONS },
       { title: "Pool Certificate", href: routers.REGISTRATION_POOLS.replace(":poolType?", "registration") },
-      { title: "Pool De-Registration", href: routers.REGISTRATION_POOLS.replace(":poolType?", "de-registration") },
+      { title: "Pool Deregistration", href: routers.REGISTRATION_POOLS.replace(":poolType?", "de-registration") },
       { title: "Instantaneous Rewards ", href: routers.INSTANTANEOUS_REWARDS },
       { title: "Top Delegators", href: routers.TOP_DELEGATOR }
     ]
