@@ -34,7 +34,7 @@ const HIDDEN_HEADER_SEARCH_PATHS: string[] = [
 const Header: React.FC<RouteComponentProps> = (props) => {
   const { history } = props;
   const home = history.location.pathname === "/";
-  const { sidebar, onDetailView } = useSelector(({ user }: RootState) => user);
+  const { sidebar } = useSelector(({ user }: RootState) => user);
   const [openSearch, setOpenSearch] = React.useState(false);
   const handleToggle = () => setSidebar(!sidebar);
 
@@ -49,7 +49,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
           <Title home={home ? 1 : 0}>Cardano Blockchain Explorer</Title>
           {!pathMatched && <HeaderSearch home={home} />}
         </HeaderMain>
-        <HeaderTop collasped={+onDetailView}>
+        <HeaderTop>
           <HeaderLogoLink to="/">
             <HeaderLogo src={LogoIcon} alt="logo desktop" />
           </HeaderLogoLink>
