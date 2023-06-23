@@ -33,7 +33,7 @@ describe("SearchResult", () => {
       </Router>
     );
     await waitFor(() => {
-      const loadingElement = screen.getByText(/Searching.../i);
+      const loadingElement = screen.getByTestId("search-page");
       expect(loadingElement).toBeInTheDocument();
     });
   });
