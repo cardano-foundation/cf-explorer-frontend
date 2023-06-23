@@ -160,7 +160,7 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
       case TRANSACTION_STATUS.PENDDING:
         return theme.palette.warning.main;
       case TRANSACTION_STATUS.SUCCESS:
-        return theme.palette.success.main;
+        return theme.palette.green[700];
       case "IN_PROGRESS":
         return theme.palette.warning.main;
       case "FINISHED":
@@ -176,7 +176,7 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
       case TRANSACTION_STATUS.PENDDING:
         return theme.palette.warning.light;
       case TRANSACTION_STATUS.SUCCESS:
-        return theme.palette.success.light;
+        return theme.palette.green[700_10];
       case "IN_PROGRESS":
         return theme.palette.warning.light;
       case "FINISHED":
