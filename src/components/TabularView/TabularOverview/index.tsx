@@ -72,7 +72,7 @@ const TabularOverview: React.FC = () => {
   const { totalStake, rewardAvailable, rewardWithdrawn, pool } = data ?? {};
   const { tickerName, poolName, poolId } = pool ?? {};
   const delegatingToValue =
-    tickerName || poolName ? `${tickerName && tickerName + "-"}  ${poolName && poolName}` : getShortHash(poolId || "");
+    tickerName || poolName ? `${tickerName && tickerName + " -"}  ${poolName && poolName}` : getShortHash(poolId || "");
   const [open, setOpen] = useState(false);
 
   return (
