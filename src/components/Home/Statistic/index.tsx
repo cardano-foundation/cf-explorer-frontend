@@ -28,6 +28,7 @@ import {
   Progress,
   ProgressPending,
   Small,
+  SmallValue,
   StatisticContainer,
   TimeDuration,
   Title,
@@ -209,27 +210,31 @@ const HomeStatistic = () => {
                 </Progress>
                 <Small data-testid="active-stake-label">Active Stake: </Small>
                 {isMobile ? <br /> : null}
-                <CustomTooltip title={formatADAFull(activeStake)}>
-                  <Value data-testid="active-stake-value">
-                    <b>{formatADA(activeStake)} </b>
-                  </Value>
-                </CustomTooltip>
-                <CustomTooltip title={`${activeRate.toFixed(5)}%`}>
-                  <Small data-testid="active-stake-percentage">({activeRate.toFixed(1)}%)</Small>
-                </CustomTooltip>
+                <SmallValue>
+                  <CustomTooltip title={formatADAFull(activeStake)}>
+                    <Value data-testid="active-stake-value">
+                      <b>{formatADA(activeStake)} </b>
+                    </Value>
+                  </CustomTooltip>
+                  <CustomTooltip title={`${activeRate.toFixed(5)}%`}>
+                    <Small data-testid="active-stake-percentage">({activeRate.toFixed(1)}%)</Small>
+                  </CustomTooltip>
+                </SmallValue>
                 <br />
                 <Small data-testid="circulating-supply-label">Circulating supply: </Small>
                 {isMobile ? <br /> : null}
-                <Value data-testid="circulating-supply-value">
-                  <CustomTooltip title={numberWithCommas(supply)}>
-                    <b>{formatADA(circulatingSupply.toString())} </b>
+                <SmallValue>
+                  <Value data-testid="circulating-supply-value">
+                    <CustomTooltip title={numberWithCommas(supply)}>
+                      <b>{formatADA(circulatingSupply.toString())} </b>
+                    </CustomTooltip>
+                  </Value>
+                  <CustomTooltip title={`${circulatingRate.toFixed(5)}%`}>
+                    <Small data-testid="circulating-supply-percentage">
+                      ({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)
+                    </Small>
                   </CustomTooltip>
-                </Value>
-                <CustomTooltip title={`${circulatingRate.toFixed(5)}%`}>
-                  <Small data-testid="circulating-supply-percentage">
-                    ({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)
-                  </Small>
-                </CustomTooltip>
+                </SmallValue>
               </Content>
             </Link>
           </Item>
