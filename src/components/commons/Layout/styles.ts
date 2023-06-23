@@ -142,6 +142,7 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
 export const MainContainer = styled(Box)`
   width: 100%;
   overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 export const Main = styled(Box)<{ open: number }>(({ theme, open }) => ({
