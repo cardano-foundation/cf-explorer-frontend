@@ -152,9 +152,8 @@ const SearchResult = () => {
 
   if (loading)
     return (
-      <SearchResultContainer>
+      <SearchResultContainer data-testid="search-page">
         <CircularProgress size={50} />
-        <Title>Searching....</Title>
       </SearchResultContainer>
     );
 
