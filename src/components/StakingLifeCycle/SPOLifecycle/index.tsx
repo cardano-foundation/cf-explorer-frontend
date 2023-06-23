@@ -62,7 +62,10 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
   const { palette } = useTheme();
   const [tabsValid, setTabValid] = useState(["isRegistration", "isUpdate", "isReward", "isDeRegistration"]);
   useEffect(() => {
-    document.getElementById(`step-${currentStep}`)?.scrollIntoView();
+    const element = document.getElementById(`step-${currentStep}`);
+    if (element && typeof element.scrollIntoView === "function") {
+      element.scrollIntoView(true);
+    }
   }, [currentStep]);
 
   useEffect(() => {
@@ -186,9 +189,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
         </WrapTitle>
       </StepHeader>
       <Box>{stepper[currentStep]?.description}</Box>
-      <Box minHeight={400} pb={10}>
-        {stepper[currentStep]?.component}
-      </Box>
+      <Box pb={10}>{stepper[currentStep]?.component}</Box>
       <StyledGroupButton display={"flex"} isShowPrev={currentStep > 0}>
         {currentStep > 0 && (
           <PreviousButton

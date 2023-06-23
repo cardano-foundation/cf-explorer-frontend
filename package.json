@@ -1,6 +1,6 @@
 {
   "name": "cardano-blockchain-explorer",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "private": true,
   "dependencies": {
     "@cardano-foundation/cardano-connect-with-wallet": "^0.1.57",
@@ -58,7 +58,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "jest-test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watchAll",
+    "jest-test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watchAll --maxWorkers=1",
     "lint": "eslint --ext ts,tsx src/",
     "lint:fix": "eslint --fix --ext ts,tsx src/",
     "prettier": "prettier --check \"src/**/(*.tsx|*.ts|*.css|*.scss)\"",

@@ -46,13 +46,6 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, params, setParams, set
   }, [initialized]);
 
   useEffect(() => {
-    const isNoFilter = !params?.fromDate && !params?.toDate && !params?.txHash && !params?.sort;
-    if (initialized && data.length === 1 && isNoFilter) {
-      history.push(details.staking(stakeId, "timeline", "registration", data?.[0]?.txHash));
-    }
-  }, [params, txHash]);
-
-  useEffect(() => {
     const currentItem = data.find((item) => item.txHash === txHash);
     onSelect(currentItem || null);
   }, [txHash, data]);
@@ -119,10 +112,6 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, params, setParams, set
       {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord />}
       {initialized && data?.length > 0 && !error && (
         <FooterTable
-          total={{
-            count: total,
-            title: ""
-          }}
           pagination={{
             total,
             ...pageInfo,

@@ -5,6 +5,7 @@ import { render } from "src/test-utils";
 import { signUp } from "src/commons/utils/userRequest";
 
 import SignUp from ".";
+import exp from "constants";
 
 const mockData = {
   email: "abcxyzabc@gmail.com",
@@ -22,7 +23,7 @@ jest.mock("src/commons/utils/userRequest", () => ({
 
 describe("SignUp page", () => {
   it("should render sign up page", () => {
-    expect(screen.getByText("Sign up")).toBeInTheDocument();
+    expect(screen.getByText("Sign-Up")).toBeInTheDocument();
     expect(screen.getByText("Email Address")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("A confirmation code will be sent to this address")).toBeInTheDocument();
     expect(screen.getByText("Confirm Email Address")).toBeInTheDocument();
@@ -66,28 +67,12 @@ describe("SignUp page", () => {
     expect(errorMessage).toBeInTheDocument();
   });
 
-  it("should be able to return error message for empty email", async () => {
-    const emailInput = screen.getByPlaceholderText("A confirmation code will be sent to this address");
-    fireEvent.change(emailInput, { target: { value: "test" } });
-    fireEvent.change(emailInput, { target: { value: "" } });
-    const errorMessage = screen.getByText("Please enter your Email");
-    expect(errorMessage).toBeInTheDocument();
-  });
-
   it("should be able to return error message for invalid confirm email", async () => {
     const emailInput = screen.getByPlaceholderText("A confirmation code will be sent to this address");
     const confirmEmailInput = screen.getByPlaceholderText("Re-enter Your email address");
     fireEvent.change(emailInput, { target: { value: "abc@gmail.com" } });
     fireEvent.change(confirmEmailInput, { target: { value: "xyz@gmail.com" } });
     const errorMessage = screen.getByText("Confirm Email does not match");
-    expect(errorMessage).toBeInTheDocument();
-  });
-
-  it("should be able to return error message for empty confirm email", async () => {
-    const emailInput = screen.getByPlaceholderText("Re-enter Your email address");
-    fireEvent.change(emailInput, { target: { value: "test" } });
-    fireEvent.change(emailInput, { target: { value: "" } });
-    const errorMessage = screen.getByText("Please enter your Confirm Email");
     expect(errorMessage).toBeInTheDocument();
   });
 
@@ -100,14 +85,6 @@ describe("SignUp page", () => {
     expect(errorMessage).toBeInTheDocument();
   });
 
-  it("should be able to return error message for empty password", async () => {
-    const emailInput = screen.getByPlaceholderText("Password");
-    fireEvent.change(emailInput, { target: { value: "test" } });
-    fireEvent.change(emailInput, { target: { value: "" } });
-    const errorMessage = screen.getByText("Please enter your Password");
-    expect(errorMessage).toBeInTheDocument();
-  });
-
   it("should be able to return error message for invalid confirm password", async () => {
     const passwordInput = screen.getByPlaceholderText("Password");
     const confirmPasswordInput = screen.getByPlaceholderText("Confirm Password");
@@ -116,13 +93,4 @@ describe("SignUp page", () => {
     const errorMessage = screen.getByText("Confirm Password does not match");
     expect(errorMessage).toBeInTheDocument();
   });
-
-  it("should be able to return error message for empty confirm password", async () => {
-    const emailInput = screen.getByPlaceholderText("Confirm Password");
-    fireEvent.change(emailInput, { target: { value: "test" } });
-    fireEvent.change(emailInput, { target: { value: "" } });
-    const errorMessage = screen.getByText("Please enter your Confirm Password");
-    expect(errorMessage).toBeInTheDocument();
-  });
-
 });

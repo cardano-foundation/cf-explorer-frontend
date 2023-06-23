@@ -248,9 +248,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
         </ADATransfersButton>
       </StepHeader>
       <Box>{stepper[currentStep].description}</Box>
-      <Box pb={5} minHeight={400}>
-        {stepper[currentStep].component}
-      </Box>
+      <Box pb={5}>{stepper[currentStep].component}</Box>
 
       <StyledGroupButton
         display="flex"

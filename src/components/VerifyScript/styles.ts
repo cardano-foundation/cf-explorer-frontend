@@ -13,7 +13,7 @@ export const VerifyScriptContainer = styled(Box)`
   margin-bottom: 10px;
 `;
 
-export const StyledVerifyButton = styled(Box)<{ verified: boolean }>(({ verified }) => ({
+export const StyledVerifyButton = styled(Box)<{ verified: number }>(({ verified }) => ({
   color: verified ? "#438F68" : "#FFFFFF",
   background: verified ? "rgba(67, 143, 104, 0.2)" : "#344054",
   cursor: "pointer",
@@ -83,18 +83,5 @@ export const VerifyButton = styled(Box)<{ disabled: boolean }>`
 export const ErrorMessage = styled(Box)`
   color: red;
   height: 132px;
-  margin: 20px 0px;
-`;
-
-export const BannerSuccess = styled(Box)`
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 21px;
-  text-align: center;
-  color: #ffffff;
-  background: #5a9c56;
-  border-radius: 10px;
-  width: 100%;
-  padding: 12px 0px;
   margin: 20px 0px;
 `;

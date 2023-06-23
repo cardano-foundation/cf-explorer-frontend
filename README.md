@@ -23,6 +23,16 @@ Install the app with npm (it's work well with `yarn` but we using npm in here):
 **Step 1**: install packages
 Open terminal and run commad: `npm install`
 
+Then copy file env.example and rename it to .env:
+
+### Update Environment
+
+Update `REACT_APP_MAINNET_API_URL`, `REACT_APP_PREPROD_API_URL`, `REACT_APP_TESTNET_API_URL`, `REACT_APP_PREVIEW_API_URL` with your api url for each network.
+
+Update `REACT_APP_AUTH_API_URL` with your auth api url to support sign in and sign up feature.
+
+Update `REACT_APP_JSD_WIDGET_KEY` with Jira Embedded Key to Add Jira Support Widget to Explorer.
+
 **Step 2**: create .env file
 In the terminal run command: `cp .env.example .env`
 
@@ -34,6 +44,12 @@ For example:
 `REACT_APP_PREPROD_API_URL=http://localhost:3002`
 `REACT_APP_TESTNET_API_URL=http://localhost:3003`
 `REACT_APP_PREVIEW_API_URL=http://localhost:3004`
+
+> Update Application URL reference
+
+> Update Application network reference
+
+`REACT_APP_NETWORK = mainnet`
 
 > Update API URL for authentication service
 
@@ -72,8 +88,6 @@ On opening Cypress, your testing journey begins with the Launchpad. Its job is t
 
 To run e2e test with all specs, try this command:
 `npm run cypress:run`
-
-
 
 ## Build into production
 
