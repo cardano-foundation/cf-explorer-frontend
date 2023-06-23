@@ -165,6 +165,7 @@ export const WrapIcon = styled(Box)`
 export const MainContainer = styled(Box)`
   width: 100%;
   overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 export const Main = styled(Box)<{ open: number; sidebar: number }>(({ theme, sidebar, open }) => ({
