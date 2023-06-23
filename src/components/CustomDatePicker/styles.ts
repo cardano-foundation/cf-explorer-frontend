@@ -111,7 +111,7 @@ export const WrapContainerPickerStart = styled(Box)`
     left: -10%;
   }
   @media (max-width: 750px) {
-    top: -350px;
+    top: -280px;
     left: 0;
     right: 0;
     bottom: 0;
@@ -125,7 +125,7 @@ export const WrapContainerPickerEnd = styled(Box)`
     right: 49%;
   }
   @media (max-width: 750px) {
-    top: 300px;
+    top: 370px;
     left: 0;
     right: 0;
     bottom: 0;
