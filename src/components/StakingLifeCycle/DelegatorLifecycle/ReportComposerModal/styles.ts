@@ -145,7 +145,7 @@ export const TextRequired = styled("div")`
   line-height: 22px;
 `;
 
-export const ButtonEvent = styled(Button)<{ active: boolean }>(({ theme, active }) => ({
+export const ButtonEvent = styled(Button)<{ active: number }>(({ theme, active }) => ({
   background: active ? "#667085" : "#f2f2f2",
   color: active ? "#fff" : "#667085",
   borderRadius: "6px",
@@ -222,7 +222,7 @@ export const TextOverFlow = styled(Box)`
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  width: 300px;
+  width: 250px;
   text-align: right;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     text-align: left;
