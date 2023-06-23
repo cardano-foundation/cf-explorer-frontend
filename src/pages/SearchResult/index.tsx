@@ -16,12 +16,6 @@ const SearchResultContainer = styled(Container)`
   padding: 120px 0px;
 `;
 
-const Title = styled("h3")`
-  color: ${(props) => props.theme.palette.grey[400]};
-  margin-bottom: 2rem;
-  font-weight: var(--font-weight-normal);
-`;
-
 const getUrl = (filter?: FilterParams | "all", value?: string): FilterParams | null => {
   const isPoolTicketName = filter === "delegations/pool-detail-header" && !value?.toLowerCase().startsWith("pool");
 
