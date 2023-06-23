@@ -32,7 +32,7 @@ const LatestStories = () => {
       <Grid container spacing={2}>
         {(data || []).map(({ resource_href, main_image, main_image_alt, title, published_on, entity }) => {
           return (
-            <Grid key={published_on} md={3} sm={6} xs={12} item>
+            <Grid key={published_on} lg={3} md={6} sm={6} xs={12} item>
               <Box onClick={() => window.open(resource_href, "_blank")}>
                 <Item>
                   <Image src={main_image} alt={main_image_alt} />
