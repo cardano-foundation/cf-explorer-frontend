@@ -91,7 +91,7 @@ describe("TransactionChart", () => {
         <TransactionChart />
       </Router>
     );
-    expect(screen.getByText("Transactions today")).toBeInTheDocument();
+    expect(screen.getByText(/Transactions today/i)).toBeInTheDocument();
     const oneDay = screen.getByText("1d");
     const oneWeek = screen.getByText("1w");
     const twoWeek = screen.getByText("2w");
