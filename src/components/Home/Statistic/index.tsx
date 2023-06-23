@@ -135,7 +135,9 @@ const HomeStatistic = () => {
                     <EpochProgress sx={{ fontSize: "15px" }}>{`${progress}%`}</EpochProgress>
                   </ProgressCircle>
                 </Box>
-                <Name data-testid="current-epoch-box-title" style={isGalaxyFoldSmall ? { maxWidth: "30px" } : {}}>Current Epoch</Name>
+                <Name data-testid="current-epoch-box-title" style={isGalaxyFoldSmall ? { maxWidth: "30px" } : {}}>
+                  Current Epoch
+                </Name>
                 <XSmall data-testid="epoch-label">Epoch: </XSmall>
                 {isMobile ? <br /> : null}
                 <XValue data-testid="current-epoch-number">
@@ -158,9 +160,13 @@ const HomeStatistic = () => {
                 <XSmall>End time: </XSmall>
                 {isMobile ? <br /> : null}
                 <XValue>
-                  <b style={{
-                    whiteSpace: isGalaxyFoldSmall ? "normal" : "nowrap",
-                  }}>{formatDateTimeLocal(currentEpoch?.endTime)}</b>
+                  <b
+                    style={{
+                      whiteSpace: isGalaxyFoldSmall ? "normal" : "nowrap"
+                    }}
+                  >
+                    {formatDateTimeLocal(currentEpoch?.endTime)}
+                  </b>
                 </XValue>
               </Content>
             </Link>
