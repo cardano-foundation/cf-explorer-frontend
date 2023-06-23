@@ -1,10 +1,18 @@
 import { screen, cleanup, fireEvent } from "@testing-library/react";
-import { render } from "src/test-utils";
-import useFetchList from "src/commons/hooks/useFetchList";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router";
+import { useParams } from "react-router-dom";
+
+import { render } from "src/test-utils";
 import { details } from "src/commons/routers";
-import Stake from ".";
+import useFetchList from "src/commons/hooks/useFetchList";
+
+import Stake, { POOL_TYPE } from ".";
+
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useParams: jest.fn()
+}));
 
 const mockData = {
   data: [
@@ -24,16 +32,29 @@ describe("Stake key view", () => {
     cleanup();
   });
 
-  it("should render stake key page", async () => {
+  it("should render stake key registration page", () => {
+    const mockUseParams = useParams as jest.Mock;
+    mockUseParams.mockReturnValue({ poolType: POOL_TYPE.REGISTRATION });
     const mockUseFetch = useFetchList as jest.Mock;
-    await mockUseFetch.mockReturnValue({ data: [] });
+    mockUseFetch.mockReturnValue({ data: [] });
     render(<Stake />);
     expect(useFetchList).toBeCalled();
-    expect(screen.getByText("Registration")).toBeInTheDocument();
-    expect(screen.getByText("Deregistration")).toBeInTheDocument();
+    expect(screen.getByText("Stake Key Registration")).toBeInTheDocument();
   });
 
-  it("should navigate to the correct route when txHash item is clicked", async () => {
+  it("should render stake key de-registration page", () => {
+    const mockUseParams = useParams as jest.Mock;
+    mockUseParams.mockReturnValue({ poolType: POOL_TYPE.DEREREGISTRATION });
+    const mockUseFetch = useFetchList as jest.Mock;
+    mockUseFetch.mockReturnValue({ data: [] });
+    render(<Stake />);
+    expect(useFetchList).toBeCalled();
+    expect(screen.getByText("Stake Key Deregistration")).toBeInTheDocument();
+  });
+
+  it("should navigate to the correct route when txHash item is clicked", () => {
+    const mockUseParams = useParams as jest.Mock;
+    mockUseParams.mockReturnValue({ poolType: POOL_TYPE.REGISTRATION });
     const mockUseFetchList = useFetchList as jest.Mock;
     mockUseFetchList.mockReturnValue(mockData);
     const history = createMemoryHistory();
@@ -48,7 +69,9 @@ describe("Stake key view", () => {
     fireEvent.click(TxHashStakeItem);
     expect(history.location.pathname).toBe(details.transaction(mockData.data[0].txHash));
   });
-  it("should navigate to the correct route when block item is clicked", async () => {
+  it("should navigate to the correct route when block item is clicked", () => {
+    const mockUseParams = useParams as jest.Mock;
+    mockUseParams.mockReturnValue({ poolType: POOL_TYPE.REGISTRATION });
     const mockUseFetchList = useFetchList as jest.Mock;
     mockUseFetchList.mockReturnValue(mockData);
     const history = createMemoryHistory();
@@ -63,7 +86,9 @@ describe("Stake key view", () => {
     fireEvent.click(BlockItem);
     expect(history.location.pathname).toBe(details.block(mockData.data[0].block.toString()));
   });
-  it("should navigate to the correct route when stake key item is clicked", async () => {
+  it("should navigate to the correct route when stake key item is clicked", () => {
+    const mockUseParams = useParams as jest.Mock;
+    mockUseParams.mockReturnValue({ poolType: POOL_TYPE.REGISTRATION });
     const mockUseFetchList = useFetchList as jest.Mock;
     mockUseFetchList.mockReturnValue(mockData);
     const history = createMemoryHistory();

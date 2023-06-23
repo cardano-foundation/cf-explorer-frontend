@@ -27,7 +27,8 @@ describe("EpochBlockList component", () => {
     });
     render(<EpochBlockList epochId="417" />);
     expect(screen.getByText("Transactions")).toBeInTheDocument();
-    expect(screen.getByText("Block")).toBeInTheDocument();
+    expect(screen.getByText("Block No")).toBeInTheDocument();
+    expect(screen.getByText("Block ID")).toBeInTheDocument();
     expect(screen.getByText("Slot")).toBeInTheDocument();
     expect(screen.getByText("Output")).toBeInTheDocument();
   });
