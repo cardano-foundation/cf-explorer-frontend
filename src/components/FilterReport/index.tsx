@@ -68,7 +68,12 @@ const FilterReport: React.FC<StackingFilterProps> = ({ onFilterValueChange, filt
   const [openSearchTransaction, setOpenSearchTransaction] = useState(false);
   const [selected, setSelected] = useState("");
   const [textSearch, setTextSearch] = useState("");
-
+  useEffect(() => {
+    if (!filterValue || Object.entries(filterValue).every((value) => !value)) {
+      setTextSearch("");
+      setSelected("");
+    }
+  }, [filterValue]);
   const onClickAway = () => {
     setOpen(false);
   };

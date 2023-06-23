@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Box, styled, Button } from "@mui/material";
+import { Box, styled, Button, Typography } from "@mui/material";
+import { useKey } from "react-use";
 
 import { HeaderSearchIcon } from "src/commons/resources";
-import { ReactComponent as Search } from "src/commons/resources/icons/Staking/Search.svg";
 import { details } from "src/commons/routers";
+import InfoGraphicModal from "src/components/InfoGraphicModal";
 
 const StakingLifeCycleSearch = () => {
   const history = useHistory();
-
+  const [openInfoModal, setOpenInfoModal] = useState(false);
   const [value, setValue] = useState<string>("");
   const [error, setError] = useState<string>("");
+
   const hanldeSearch = () => {
     if (!value) {
       setError("No results found");
@@ -21,6 +23,7 @@ const StakingLifeCycleSearch = () => {
       history.push(details.spo(value, "timeline"));
     } else setError("No results found");
   };
+  useKey("enter", hanldeSearch);
 
   useEffect(() => {
     document.title = "Welcome to Staking Lifecycle | Cardano Explorer";
@@ -28,14 +31,14 @@ const StakingLifeCycleSearch = () => {
 
   return (
     <StyledContainer>
-      <h2>Welcome to Staking Lifecycle </h2>
-      <Box>
-        <Search />
-      </Box>
+      <SearchTitle>
+        Search to explore the staking lifecycle events of a delegator or pool.
+        <InfoLink onClick={() => setOpenInfoModal((pre) => !pre)}>What is staking on Cardano?</InfoLink>
+      </SearchTitle>
       <Box>
         <SearchContainer mx={"auto"}>
           <StyledInput
-            placeholder="Search Stake key, Pools"
+            placeholder="Please enter a stake address or pool ID"
             onChange={(e) => {
               setValue(e.target.value);
               setError("");
@@ -53,6 +56,7 @@ const StakingLifeCycleSearch = () => {
         </SearchContainer>
         <Box color={({ palette }) => palette.red[700]}>{error}</Box>
       </Box>
+      <InfoGraphicModal open={openInfoModal} onClose={() => setOpenInfoModal(false)} />
     </StyledContainer>
   );
 };
@@ -72,7 +76,6 @@ export const WrapButton = styled(Button)`
 `;
 
 export const StyledContainer = styled(Box)(({ theme }) => ({
-  height: "calc(100vh - 200px)",
   [theme.breakpoints.down("md")]: {
     paddingBottom: "50px"
   },
@@ -87,12 +90,12 @@ const SearchContainer = styled(Box)(({ theme }) => ({
   justifyContent: "start",
   alignItems: "center",
   width: "100%",
-  maxWidth: "min(600px,80vw)",
+  maxWidth: "min(800px,80vw)",
   background: theme.palette.background.paper,
-  padding: "0 12px",
-  borderRadius: 8,
+  padding: "0 20px 0 30px",
+  borderRadius: 100,
   marginBottom: 15,
-  height: 50,
+  height: 70,
   border: `1.5px solid ${theme.palette.grey[200]}`,
   [theme.breakpoints.down("sm")]: {
     width: "unset",
@@ -121,4 +124,17 @@ const SubmitButton = styled(Button)`
 const Image = styled("img")`
   width: 20px;
   height: 20px;
+`;
+
+const SearchTitle = styled(Typography)`
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 36px;
+`;
+
+const InfoLink = styled("span")`
+  color: #006cff;
+  text-decoration: underline;
+  margin-left: 6px;
+  cursor: pointer;
 `;
