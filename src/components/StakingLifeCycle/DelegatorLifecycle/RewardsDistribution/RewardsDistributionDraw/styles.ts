@@ -62,7 +62,8 @@ export const RewardAccountCcontainer = styled(RectBox)(() => ({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  gap: 12
+  gap: 12,
+  cursor: "pointer"
 }));
 
 export const HolderWrapper = styled(Box)(() => ({

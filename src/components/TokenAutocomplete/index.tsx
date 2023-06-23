@@ -199,7 +199,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
   };
 
   return (
-    <StyledModal title="Token List" open={open} handleCloseModal={handleClose} width={"min(80vw, 600px)"}>
+    <StyledModal title="Token List" open={open} handleCloseModal={handleClose} width={"min(80vw, 600px)"} height={"80vh"}>
       <>
         <SearchContainer mt={2} mb={1}>
           <StyledInput

@@ -1,10 +1,10 @@
 import { useHistory, useParams } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
+import { waitFor } from "@testing-library/react";
 
 import { render, screen } from "src/test-utils";
 
 import Tabular from "./index";
-
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -34,7 +34,7 @@ describe("Tabular", () => {
     expect(screen.getByText(/rewards withdrawn/i)).toBeInTheDocument();
   });
 
-  it("component change tabs", () => {
+  it("component change tabs", async () => {
     const replace = jest.fn();
     (useHistory as jest.Mock).mockReturnValue({ replace });
     render(<Tabular tabsRenderConfig={mockTabsRenderConfig} />);
@@ -52,7 +52,9 @@ describe("Tabular", () => {
     expect(screen.getByText(/reward account/i)).toBeInTheDocument();
     expect(screen.getByText(/rewards withdrawn/i)).toBeInTheDocument();
 
-    userEvent.click(tab2);
-    expect(screen.getByText(/withdrawn\/fees/i)).toBeInTheDocument();
+    await userEvent.click(tab2);
+    await waitFor(() => {
+      expect(screen.getByText(/withdrawn\/fees/i)).toBeInTheDocument();
+    });
   });
 });
