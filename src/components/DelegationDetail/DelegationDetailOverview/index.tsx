@@ -13,10 +13,10 @@ interface IDelegationDetailOverview {
 const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, loading }) => {
   const overviewData = {
     Reward: `${data?.reward || 0}%`,
-    Fee: formatPercent(data?.margin),
+    Margin: formatPercent(data?.margin),
     ROS: formatPercent(data?.ros ? data?.ros / 100 : 0),
     "Pledge(A)": formatADAFull(data?.pledge),
-    "Cost(A)": formatADAFull(data?.cost),
+    "Fee(A)": formatADAFull(data?.cost),
     "Epoch Block": data?.epochBlock || 0,
     "Lifetime Block": numberWithCommas(data?.lifetimeBlock)
   };
