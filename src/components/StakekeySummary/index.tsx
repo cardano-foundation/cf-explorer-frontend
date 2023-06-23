@@ -1,9 +1,9 @@
 import { useState } from "react";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
-import { Box, IconButton, styled } from "@mui/material";
+import { Box, CircularProgress, IconButton, styled } from "@mui/material";
 
-import useFetchList from "src/commons/hooks/useFetchList";
+import { FetchReturnType } from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import { defaultAxiosDownload } from "src/commons/utils/axios";
 import { details } from "src/commons/routers";
@@ -43,16 +43,23 @@ export function getEventType(data: any) {
   return events;
 }
 
-const StakekeySummary = () => {
+interface IStakekeySummaryProps {
+  fetchData: FetchReturnType<IStakeKeySummary>;
+  onSort?: (sort?: string) => void;
+}
+
+const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort }) => {
   const history = useHistory();
   const [{ page, size }, setPagi] = useState<{ page: number; size: number; sort?: string }>({
     page: 0,
     size: 50,
     sort: "id,desc"
   });
-  const [sort] = useState<string>("id,desc");
+  const [downloadingReport, setDownloadingReport] = useState<number>();
 
-  const downloadFn = async (reportId: number, fileName: string, typeExport: "CSV" | "EXCEL" = "CSV") => {
+  const downloadFn = async (reportId: number, fileName: string, typeExport: "CSV" | "EXCEL" = "EXCEL") => {
+    console.log("<CustomIcon icon={DownloadGreenIcon} width={24} />");
+    setDownloadingReport(reportId);
     defaultAxiosDownload
       .get(`${API.REPORT.DOWNLOAD_STAKE_KEY_SUMMARY(reportId)}?exportType=${typeExport}`)
       .then((response) => {
@@ -65,13 +72,17 @@ const StakekeySummary = () => {
       })
       .catch((e) => {
         console.log(e);
-      });
+      })
+      .finally(() => setDownloadingReport(undefined));
   };
 
   const columns: Column<IReportStaking>[] = [
     {
       title: "Timestamp",
       key: "createdAt",
+      sort({ sortValue }) {
+        onSort?.(`id,${sortValue}`);
+      },
       render(data) {
         return formatDateTimeLocal(data.createdAt);
       }
@@ -82,11 +93,9 @@ const StakekeySummary = () => {
       maxWidth: "300px",
       render(data) {
         return (
-          <StyledBox>
-            <CustomTooltip title={`${data.reportName}`.replaceAll("-", " ")}>
-              <span>{`${data.reportName}`.replaceAll("-", " ")} </span>
-            </CustomTooltip>
-          </StyledBox>
+          <CustomTooltip title={`${data.reportName}`.replaceAll("-", " ")}>
+            <StyledBox>{`${data.reportName}`.replaceAll("-", " ")}</StyledBox>
+          </CustomTooltip>
         );
       }
     },
@@ -99,7 +108,7 @@ const StakekeySummary = () => {
     },
     {
       key: "transfer",
-      title: "ADA Transfer",
+      title: "ADA Transfers",
       render(data) {
         return data.isADATransfer ? "Yes" : "No";
       }
@@ -126,31 +135,28 @@ const StakekeySummary = () => {
       maxWidth: "50px",
       minWidth: "50px",
       render(data) {
-        return data.status === "GENERATED" ? (
-          <Box width="100%" textAlign="center">
-            <Box
-              component={IconButton}
-              display={"block"}
-              disabled={data.status !== "GENERATED"}
-              margin="auto"
-              textTransform={"capitalize"}
-              onClick={() => downloadFn(data.id, data.reportName, "EXCEL")}
-            >
-              <CustomIcon icon={DownloadGreenIcon} width={24} />
-            </Box>
+        return (
+          <Box width="100%" textAlign="right">
+            {downloadingReport === data.id ? (
+              <CircularProgress size={22} color="primary" />
+            ) : data.status === "GENERATED" ? (
+              <Box
+                component={IconButton}
+                textTransform={"capitalize"}
+                onClick={() => downloadFn(data.id, data.reportName)}
+              >
+                <Box>
+                  <CustomIcon icon={DownloadGreenIcon} width={24} />
+                </Box>
+              </Box>
+            ) : (
+              <></>
+            )}
           </Box>
-        ) : (
-          <></>
         );
       }
     }
   ];
-
-  const fetchData = useFetchList<IStakeKeySummary>(API.REPORT.STAKE_KEY_SUMMARY, {
-    page,
-    size,
-    sort
-  });
 
   return (
     <Box>

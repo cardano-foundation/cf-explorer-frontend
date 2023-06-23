@@ -95,12 +95,7 @@ const options: Option[] = [
   {
     value: "lifecycle",
     label: "Lifecycle",
-    paths: [
-      routers.STAKING_LIFECYCLE_SEARCH,
-      routers.SPO_LIFECYCLE,
-      routers.DELEGATOR_LIFECYCLE,
-      routers.STAKING_LIFECYCLE
-    ]
+    paths: [routers.SPO_LIFECYCLE, routers.DELEGATOR_LIFECYCLE, routers.STAKING_LIFECYCLE]
   },
   {
     value: "policies",

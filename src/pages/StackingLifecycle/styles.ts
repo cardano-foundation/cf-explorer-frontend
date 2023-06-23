@@ -1,5 +1,6 @@
 import { Box, Button, Container, Grid, styled } from "@mui/material";
 
+import { TabLabel } from "src/components/ReportGeneratedTabs/styles";
 import Table from "src/components/commons/Table";
 
 export const DashboardCardList = styled(Box)`
@@ -69,8 +70,7 @@ export const Status = styled("span")<{ status: string }>`
 
 export const TextHeadline = styled("span")`
   font-weight: 700;
-  font-size: 32px;
-  line-height: 38px;
+  font-size: 48px;
   color: #000000;
   margin-bottom: 14px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -113,4 +113,7 @@ export const WrapReportName = styled(Box)`
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 20ch;
+`;
+export const StyledTabLabel = styled(TabLabel)`
+  font-size: 18px;
 `;
