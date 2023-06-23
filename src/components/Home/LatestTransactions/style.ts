@@ -87,7 +87,7 @@ export const Item = styled(BoxRaised)`
 export const ItemHeader = styled(Box)`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   gap: 8px;
   margin-bottom: 10px;
   ${({ theme }) => theme.breakpoints.down("md")} {
@@ -196,4 +196,10 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
     padding: 3px 3px;
     font-size: 0.75rem;
   }
+`;
+
+export const LatestTransactionItemHeader = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;

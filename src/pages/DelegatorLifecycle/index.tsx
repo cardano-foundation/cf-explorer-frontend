@@ -62,7 +62,14 @@ const DelegatorLifecycle = () => {
     tablular: null
   };
 
-  const validTab: DelegationStep = tabList[tab] >= 0 ? tab : "registration";
+  const tabsValid = {
+    registration: "hasRegistration",
+    delegation: "hasDelegation",
+    rewards: "hashRewards",
+    "withdrawal-history": "hasWithdrawal",
+    deregistration: "hasDeRegistration"
+  };
+  let validTab: DelegationStep = tabList[tab] >= 0 ? tab : "registration";
   const validMode: ViewMode = MODES.find((item) => item === mode) || "timeline";
 
   const [currentStep, setCurrentStep] = useState(tabList[validTab]);
@@ -78,9 +85,15 @@ const DelegatorLifecycle = () => {
   );
 
   useEffect(() => {
-    setCurrentStep(tabList[validTab]);
+    if (listTabs && listTabs[tabsValid[tab]]) {
+      setCurrentStep(tabList[validTab]);
+      return;
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [validTab]);
+    validTab = "registration";
+    setCurrentStep(tabList["registration"]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listTabs]);
 
   useEffect(() => {
     document.title = `Staking Delegation Lifecycle ${stakeId} | Cardano Explorer`;

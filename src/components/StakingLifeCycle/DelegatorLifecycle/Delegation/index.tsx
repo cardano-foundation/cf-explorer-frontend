@@ -71,7 +71,7 @@ interface Props {
   showBackButton?: boolean;
 }
 
-const DelegationTimeline = ({ selected, showBackButton = false }: Props) => {
+export const DelegationTimeline = ({ selected, showBackButton = false }: Props) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [openModal, setOpenModal] = useState(false);
   const history = useHistory();
@@ -207,7 +207,7 @@ export const DelegationCertificateModal = ({
   ];
 
   return (
-    <StyledModal {...props} title="Delegation certificate">
+    <StyledModal data-testid="certificate-modal" {...props} title="Delegation certificate">
       <ItemList>
         {list.map(({ label, content, extra }, index) => {
           return (
