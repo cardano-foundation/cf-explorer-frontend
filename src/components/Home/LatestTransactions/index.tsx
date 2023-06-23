@@ -36,7 +36,8 @@ import {
   HeaderStatus,
   Actions,
   TimeDuration,
-  TimeDurationSm
+  TimeDurationSm,
+  LatestTransactionItemHeader
 } from "./style";
 
 const LatestTransactions: React.FC = () => {
@@ -67,102 +68,101 @@ const LatestTransactions: React.FC = () => {
         <Grid container spacing={{ sm: 2 }}>
           {!initialized
             ? new Array(4).fill(0).map((_, index) => {
-                return (
-                  <Grid item xl lg={3} xs={6} key={index}>
-                    <Item>
-                      <ItemHeader>
-                        <Skeleton variant="circular" width={50} height={40} />
-                        <Skeleton variant="text" width={"100%"} />
-                      </ItemHeader>
-                      <Skeleton />
-                      <Skeleton variant="text" height={30} width={"100%"} />
-                      <Skeleton variant="text" height={30} width={"100%"} />
-                      <Skeleton variant="text" height={30} width={"100%"} />
-                      <Skeleton variant="text" height={30} width={"100%"} />
-                    </Item>
-                  </Grid>
-                );
-              })
+              return (
+                <Grid item xl lg={3} xs={6} key={index}>
+                  <Item>
+                    <ItemHeader>
+                      <Skeleton variant="circular" width={50} height={40} />
+                      <Skeleton variant="text" width={"100%"} />
+                    </ItemHeader>
+                    <Skeleton />
+                    <Skeleton variant="text" height={30} width={"100%"} />
+                    <Skeleton variant="text" height={30} width={"100%"} />
+                    <Skeleton variant="text" height={30} width={"100%"} />
+                    <Skeleton variant="text" height={30} width={"100%"} />
+                  </Item>
+                </Grid>
+              );
+            })
             : data?.map((item) => {
-                const { hash, fromAddress, toAddress, blockNo, amount, status, time, epochNo, epochSlotNo } = item;
+              const { hash, fromAddress, toAddress, blockNo, amount, status, time, epochNo, epochSlotNo } = item;
 
-                return (
-                  // isTable show 2 item per row else show 1 item per row grid
-                  <Grid item xl lg={3} xs={12} sm={6} key={hash}>
-                    <Item onClick={(e) => handleClicktWithoutAnchor(e, () => history.push(details.transaction(hash)))}>
-                      <ItemHeader>
+              return (
+                // isTable show 2 item per row else show 1 item per row grid
+                <Grid item xl lg={3} xs={12} sm={6} key={hash}>
+                  <Item onClick={(e) => handleClicktWithoutAnchor(e, () => history.push(details.transaction(hash)))}>
+                    <ItemHeader>
+                      <LatestTransactionItemHeader>
                         <PriceImage src={ADAIcon} alt="check green" />
-                        <Box display={"flex"} flexDirection={"column"} rowGap={"4px"} alignItems={"end"}>
-                          {!isTablet && <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>}
-                          <PriveValue>{formatADAFull(amount)}</PriveValue>
-                        </Box>
-                      </ItemHeader>
-                      <ItemDetail>
-                        <Box display="flex" alignItems="center">
-                          <RowItem>
-                            <small>Transaction hash: </small>
-                            <CustomTooltip title={hash}>
-                              <Link to={details.transaction(hash)}>
-                                <Hash>{getShortHash(hash)}</Hash>
+                        {!isTablet && <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>}
+                      </LatestTransactionItemHeader>
+                      <PriveValue>{formatADAFull(amount)}</PriveValue>
+                    </ItemHeader>
+                    <ItemDetail>
+                      <Box display="flex" alignItems="center">
+                        <RowItem>
+                          <small>Transaction hash: </small>
+                          <CustomTooltip title={hash}>
+                            <Link to={details.transaction(hash)}>
+                              <Hash>{getShortHash(hash)}</Hash>
+                            </Link>
+                          </CustomTooltip>
+                        </RowItem>
+                        {isTablet && <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>}
+                      </Box>
+                      <RowItem>
+                        <small>Block: </small>
+                        <Link to={details.block(blockNo)}>
+                          <BlockNo>{blockNo}</BlockNo>
+                        </Link>
+                      </RowItem>
+                      <RowItem>
+                        <small>Epoch: </small>
+                        <Link to={details.epoch(epochNo)}>
+                          <BlockNo>{epochNo}</BlockNo>
+                        </Link>
+                      </RowItem>
+                      <RowItem>
+                        <small>Slot: </small>
+                        <small>{epochSlotNo}</small>
+                      </RowItem>
+                      {fromAddress?.slice(0, 1).map((add) => {
+                        return (
+                          <RowItem key={add}>
+                            <small>From: </small>
+                            <CustomTooltip title={add}>
+                              <Link to={details.address(add)}>
+                                <WalletAddress>{getShortWallet(add)}</WalletAddress>
+                                <BlankImage src={BlankBlueIcon} alt="blank blue" />
                               </Link>
                             </CustomTooltip>
                           </RowItem>
-                          {isTablet && <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>}
-                        </Box>
-                        <RowItem>
-                          <small>Block: </small>
-                          <Link to={details.block(blockNo)}>
-                            <BlockNo>{blockNo}</BlockNo>
-                          </Link>
-                        </RowItem>
-                        <RowItem>
-                          <small>Epoch: </small>
-                          <Link to={details.epoch(epochNo)}>
-                            <BlockNo>{epochNo}</BlockNo>
-                          </Link>
-                        </RowItem>
-                        <RowItem>
-                          <small>Slot: </small>
-                          <small>{epochSlotNo}</small>
-                        </RowItem>
-                        {fromAddress?.slice(0, 1).map((add) => {
-                          return (
-                            <RowItem key={add}>
-                              <small>From: </small>
+                        );
+                      })}
+                      {toAddress?.slice(0, 1).map((add) => {
+                        return (
+                          <RowItem key={add} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+                            <Box>
+                              <small>To: </small>
                               <CustomTooltip title={add}>
                                 <Link to={details.address(add)}>
                                   <WalletAddress>{getShortWallet(add)}</WalletAddress>
                                   <BlankImage src={BlankBlueIcon} alt="blank blue" />
                                 </Link>
                               </CustomTooltip>
-                            </RowItem>
-                          );
-                        })}
-                        {toAddress?.slice(0, 1).map((add) => {
-                          return (
-                            <RowItem key={add} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
-                              <Box>
-                                <small>To: </small>
-                                <CustomTooltip title={add}>
-                                  <Link to={details.address(add)}>
-                                    <WalletAddress>{getShortWallet(add)}</WalletAddress>
-                                    <BlankImage src={BlankBlueIcon} alt="blank blue" />
-                                  </Link>
-                                </CustomTooltip>
-                              </Box>
-                            </RowItem>
-                          );
-                        })}
-
-                        <RowItem>
-                          <small>Timestamp: </small>
-                          <small>{formatDateTimeLocal(time)}</small>
-                        </RowItem>
-                      </ItemDetail>
-                    </Item>
-                  </Grid>
-                );
-              })}
+                            </Box>
+                          </RowItem>
+                        );
+                      })}
+                      <RowItem>
+                        <small>Timestamp: </small>
+                        <small>{formatDateTimeLocal(time)}</small>
+                      </RowItem>
+                    </ItemDetail>
+                  </Item>
+                </Grid>
+              );
+            })}
         </Grid>
       }
     </TransactionContainer>

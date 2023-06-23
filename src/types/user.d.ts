@@ -32,6 +32,7 @@ export declare interface UserStoreType {
   openModal: boolean;
   sidebar: boolean;
   onDetailView: boolean;
+  openSyncBookmarkModal?: boolean;
   modalRegister: boolean;
   modalSignMessage: boolean;
   nonce: NonceObject | null;
