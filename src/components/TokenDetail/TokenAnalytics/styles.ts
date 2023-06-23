@@ -92,7 +92,7 @@ export const ButtonTitle = styled("button")(({ theme }) => ({
   fontSize: "1rem",
   marginRight: 5,
   color: theme.palette.primary.contrastText,
-  backgroundColor: theme.palette.primary.main,
+  backgroundColor: theme.palette.green[700],
   fontFamily: "var(--font-family-title)",
   [theme.breakpoints.down("sm")]: {
     width: "80px !important",
@@ -138,10 +138,13 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   marginRight: theme.spacing(1),
   color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
   fontWeight: "bold",
-  backgroundColor: active ? theme.palette.primary.main : "none",
+  backgroundColor: active ? theme.palette.green[700] : "none",
+  "&:hover": {
+    color: active ? `${theme.palette.text.dark} !important` : theme.palette.grey[400]
+  },
   [theme.breakpoints.down("lg")]: {
     color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
-    backgroundColor: active ? `${theme.palette.primary.main} !important` : "none"
+    backgroundColor: active ? `${theme.palette.green[700]} !important` : "none"
   },
   [theme.breakpoints.down("md")]: {
     "&:hover": {
