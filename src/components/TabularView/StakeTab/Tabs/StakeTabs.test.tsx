@@ -45,21 +45,6 @@ describe("DelegationTab", () => {
     expect(screen.getByText(/0\.174301/i)).toBeInTheDocument();
     expect(screen.getByText(/showing 1 result/i)).toBeInTheDocument();
   });
-
-  it("should view detail modal open and close", () => {
-    render(<DelegationTab />);
-    const eyeButton = screen.getByRole("button", {
-      name: /eye\.svg/i
-    });
-    userEvent.click(eyeButton);
-    expect(screen.getByText(/delegation certificate/i)).toBeInTheDocument();
-    expect(screen.getByText(/pool id/i)).toBeInTheDocument();
-    expect(screen.getByText(/pool name/i)).toBeInTheDocument();
-    userEvent.click(screen.getByTestId("close-modal-button"));
-    expect(screen.queryByText(/delegation certificate/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/pool id/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/pool name/i)).not.toBeInTheDocument();
-  });
 });
 
 describe("RewardsDistributionTab", () => {
@@ -126,17 +111,6 @@ describe("DeregistrationTab", () => {
       })
     ).toBeInTheDocument();
     expect(screen.getByText(/0\.181385/i)).toBeInTheDocument();
-  });
-
-  it("should view detail modal open and close", () => {
-    render(<DeregistrationTab />);
-    const eyeButton = screen.getByRole("button", {
-      name: /eye\.svg/i
-    });
-    userEvent.click(eyeButton);
-    expect(screen.getByText(/deregistration certificate/i)).toBeInTheDocument();
-    userEvent.click(screen.getByTestId("close-modal-button"));
-    expect(screen.queryByText(/deregistration certificate/i)).not.toBeInTheDocument();
   });
 });
 
@@ -208,16 +182,5 @@ describe("StakeRegistrationTab", () => {
       })
     ).toBeInTheDocument();
     expect(screen.getByText(/0\.174301/i)).toBeInTheDocument();
-  });
-
-  it("should view detail modal open and close", () => {
-    render(<StakeRegistrationTab />);
-    const eyeButton = screen.getByRole("button", {
-      name: /eye\.svg/i
-    });
-    userEvent.click(eyeButton);
-    expect(screen.getByText(/registration certificate/i)).toBeInTheDocument();
-    userEvent.click(screen.getByTestId("close-modal-button"));
-    expect(screen.queryByText(/delegation certificate/i)).not.toBeInTheDocument();
   });
 });

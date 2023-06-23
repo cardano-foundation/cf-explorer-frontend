@@ -1,4 +1,5 @@
 import userEvent from "@testing-library/user-event";
+import { waitFor } from "@testing-library/react";
 
 import { render, screen } from "src/test-utils";
 import { RegistrationIcon, RewardsWithdrawalIcon } from "src/commons/resources";
@@ -39,7 +40,7 @@ describe("StakeTab", () => {
     expect(tab2).toBeInTheDocument();
   });
 
-  it("should component change tab", () => {
+  it("should component change tab", async () => {
     render(<StakeTab tabs={tabs} />);
     const tab1 = screen.getByRole("tab", {
       name: /registrationicon\.svg registration/i
@@ -56,7 +57,9 @@ describe("StakeTab", () => {
         name: /certificate/i
       })
     ).toBeInTheDocument();
-    userEvent.click(tab2);
-    expect(screen.getByText(/withdrawn\/fees/i)).toBeInTheDocument();
+    await userEvent.click(tab2);
+    await waitFor(() => {
+      expect(screen.getByText(/withdrawn\/fees/i)).toBeInTheDocument();
+    });
   });
 });
