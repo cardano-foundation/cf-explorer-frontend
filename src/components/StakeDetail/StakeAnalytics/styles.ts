@@ -39,7 +39,7 @@ export const CustomButton = styled("button")<{ active: number }>(({ theme, activ
     width: "60px",
     padding: "6px 10px",
     marginRight: "6px !important",
-    fontSize: "12px",
+    fontSize: "12px"
   }
 }));
 
