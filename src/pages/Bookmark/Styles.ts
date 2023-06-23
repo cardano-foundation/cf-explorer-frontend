@@ -15,6 +15,9 @@ export const StyledTable = styled(Table)(({ theme }) => ({
   "& .empty-content-table": {
     top: "unset"
   },
+  "& .table-wrapper": {
+    minHeight: "75px"
+  },
   "thead tr th": {
     padding: "10px 25px",
     fontSize: "var(--font-size-text-x-small)"
