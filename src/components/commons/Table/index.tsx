@@ -49,6 +49,7 @@ import {
   StyledPagination
 } from "./styles";
 import Filter from "../Filter";
+import CustomIcon from "../CustomIcon";
 
 type TEmptyRecord = {
   className?: string;
@@ -64,7 +65,6 @@ const TableHeader = <T extends ColumnType>({
   loading,
   defaultSort,
   showTabView,
-  selected = null,
   selectable,
   toggleSelectAll,
   isSelectAll
@@ -130,7 +130,7 @@ const TableHeader = <T extends ColumnType>({
             )}
           </THeader>
         ))}
-        {showTabView && selected === null && <THeader />}
+        {showTabView && <THeader />}
       </tr>
     </THead>
   );
@@ -175,9 +175,11 @@ const TableRow = <T extends ColumnType>({
           </TCol>
         );
       })}
-      {showTabView && selected === null && (
-        <TCol minWidth={50} maxWidth={90}>
-          <EyeIcon style={{ transform: "scale(.6)" }} />
+      {showTabView && (
+        <TCol minWidth={50} maxWidth={90} selected={isClickRow}>
+          <Box display="flex" alignItems="center" height="1rem">
+            {selected !== index && <CustomIcon icon={EyeIcon} originWidth={31} originHeight={23} width={24} />}
+          </Box>
         </TCol>
       )}
     </TRow>
@@ -358,7 +360,7 @@ const Table: React.FC<TableProps> = ({
   };
 
   useEffect(() => {
-    if (wrapperRef.current) {
+    if (wrapperRef.current && !loading) {
       wrapperRef.current.scrollTop = 0;
     }
   }, [loading]);
