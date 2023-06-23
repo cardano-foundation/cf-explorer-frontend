@@ -150,7 +150,7 @@ export const Main = styled(Box)<{ open: number }>(({ theme, open }) => ({
   overflowX: "hidden",
   overflowY: "auto",
   width: `calc(100vw - ${drawerCollaspWidth}px)`,
-  height: "calc(100vh - 61px)",
+  minHeight: "calc(100vh - 61px)",
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen
