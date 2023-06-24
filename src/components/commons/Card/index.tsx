@@ -17,11 +17,11 @@ const Header = styled(Box)`
   }
 `;
 
-export const Title = styled("h2")<{ underline: number; marginTitle?: string }>`
+export const Title = styled("h2")<{ underline: number; marginTitle?: string; wrapTitle: number }>`
   text-align: left;
   padding-bottom: 8px;
   position: relative;
-  width: max-content;
+  ${({ wrapTitle }) => (!wrapTitle ? `width: max-content;` : "")};
   ${(props) => (props.underline ? `font-size: 1.25rem;` : "")};
   margin: ${({ marginTitle }) => (marginTitle ? marginTitle : "unset")};
   &::after {
@@ -46,14 +46,15 @@ interface CardProps extends Omit<BoxProps, "title"> {
   underline?: boolean;
   extra?: React.ReactNode;
   marginTitle?: string;
+  wrapTitle?: boolean;
 }
 
-const Card: React.FC<CardProps> = ({ title, marginTitle, children, underline = false, extra, ...props }) => {
+const Card: React.FC<CardProps> = ({ title, marginTitle, children, wrapTitle = false, underline = false, extra, ...props }) => {
   return (
     <CardContainer {...props}>
       <Header>
         {title ? (
-          <Title marginTitle={marginTitle} underline={underline ? 1 : 0}>
+          <Title marginTitle={marginTitle} underline={underline ? 1 : 0} wrapTitle={wrapTitle ? 1 : 0}>
             {title}
           </Title>
         ) : null}

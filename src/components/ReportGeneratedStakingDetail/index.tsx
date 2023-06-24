@@ -90,7 +90,7 @@ const ReportGeneratedStakingDetailTabs = () => {
         ...tabs,
         {
           icon: TranferIcon,
-          label: "ADA Transfer",
+          label: "ADA Transfers",
           key: "walletActivity",
           mappingKey: "",
           component: <WalletActitityTab />
