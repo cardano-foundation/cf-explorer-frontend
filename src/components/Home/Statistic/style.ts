@@ -73,10 +73,13 @@ export const Title = styled("h3")`
 
 export const Small = styled("small")`
   color: ${(props) => props.theme.palette.grey[400]};
-  white-space: nowrap;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 11px;
   }
+`;
+
+export const SmallValue = styled("small")`
+  white-space: nowrap;
 `;
 
 export const AdaPrice = styled("small")`
@@ -99,7 +102,6 @@ export const TimeDuration = styled("small")<{ marginTop?: string }>`
 export const XSmall = styled("span")`
   font-size: var(--font-size-text-small);
   color: ${(props) => props.theme.palette.grey[400]};
-  white-space: nowrap;
 `;
 
 export const Value = styled(Small)<{ down?: number }>`
@@ -130,7 +132,7 @@ export const ProcessActive = styled("div")<{ rate: number }>`
   background-color: ${(props) => props.theme.palette.primary.main};
 `;
 
-export const ProgressPending = styled(ProcessActive)<{rate: number}>`
+export const ProgressPending = styled(ProcessActive)<{ rate: number }>`
   width: ${(props) => props.rate}%;
   background-color: ${(props) => props.theme.palette.warning.main};
 `;
