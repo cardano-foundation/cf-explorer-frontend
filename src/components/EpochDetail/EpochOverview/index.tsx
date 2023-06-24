@@ -3,7 +3,14 @@ import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import moment from "moment";
 
-import { timeIconUrl, outputIconUrl, cubeIconUrl, slotIconUrl, exchageIconUrl, RewardIcon } from "src/commons/resources";
+import {
+  timeIconUrl,
+  outputIconUrl,
+  cubeIconUrl,
+  slotIconUrl,
+  exchageIconUrl,
+  RewardIcon
+} from "src/commons/resources";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import DetailHeader from "src/components/commons/DetailHeader";
 import { TitleCard } from "src/components/BlockDetail/BlockOverview/styles";
@@ -86,8 +93,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
           <TitleCard mr={1}> Transaction Count</TitleCard>
         </Box>
       ),
-      value:
-        data?.txCount
+      value: data?.txCount
     },
     {
       icon: RewardIcon,
@@ -98,15 +104,15 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       ),
       value: (
         <>
-        {data?.rewardsDistributed ? (
-          <Output>
-            {formatADAFull(data?.rewardsDistributed)}
-            <ADAicon />
-          </Output>
-        ) : (
-          "Not available"
-        )}
-      </>
+          {data?.rewardsDistributed ? (
+            <Output>
+              {formatADAFull(data?.rewardsDistributed)}
+              <ADAicon />
+            </Output>
+          ) : (
+            "Not available"
+          )}
+        </>
       )
     }
   ];

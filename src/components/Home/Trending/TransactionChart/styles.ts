@@ -25,7 +25,7 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   marginRight: theme.spacing(1),
   color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
   fontWeight: "bold",
-  backgroundColor: active ? theme.palette.primary.main : "none",
+  backgroundColor: active ? theme.palette.green[700] : "none",
   ":hover": {
     color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
     backgroundColor: active ? theme.palette.primary.main : "none"
