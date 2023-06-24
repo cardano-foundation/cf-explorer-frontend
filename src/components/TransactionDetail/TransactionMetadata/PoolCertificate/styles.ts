@@ -5,7 +5,7 @@ export const TextLabel = styled("div")(({ theme }) => ({
   fontWeight: 400,
   fontSize: 14,
   lineHeight: "16px",
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[500],
   width: 130,
   flexShrink: 0,
   [theme.breakpoints.down("sm")]: {
