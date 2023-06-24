@@ -23,6 +23,14 @@ export const Item = styled(Card)`
   }
 `;
 
+export const EpochProgress = styled("h3")(({ theme }) => ({
+  color: theme.palette.common.black,
+  margin: 0,
+  [theme.breakpoints.down("lg")]: {
+    fontSize: 14
+  }
+}));
+
 export const ItemSkeleton = styled(Skeleton)`
   width: 100%;
   margin-top: 0.5rem;

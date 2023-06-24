@@ -316,12 +316,6 @@ export const CardItem = styled(Grid)<{ length: number; wide?: number }>(({ theme
         [theme.breakpoints.down("lg")]: {
           padding: "20px 25px"
         },
-        [theme.breakpoints.down("sm")]: {
-          padding: "20px 15px",
-          ":nth-of-type(even)": {
-            paddingRight: "0 !important"
-          }
-        }
       }),
   [theme.breakpoints.between("md", "lg")]: {
     paddingTop: 20,
@@ -362,6 +356,16 @@ export const CardItem = styled(Grid)<{ length: number; wide?: number }>(({ theme
           paddingBottom: 0
         }
       }
+    }
+  },
+  [theme.breakpoints.down("sm")]: {
+    ":nth-of-type(even)": {
+      paddingRight: wide ? 15 : "0 !important",
+      paddingLeft: 15
+    },
+    ":nth-of-type(odd)": {
+      paddingLeft: wide ? 15 : "0 !important",
+      paddingRight: 10
     }
   }
 }));
