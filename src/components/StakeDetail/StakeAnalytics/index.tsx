@@ -176,9 +176,9 @@ const StakeAnalytics: React.FC = () => {
                         name: "",
                         pointPlacement: "on",
                         type: "areaspline",
-                        marker: { enabled: false },
+                        marker: { enabled: true },
                         lineWidth: 4,
-                        color: theme.palette.primary.main,
+                        color: theme.palette.green[700],
                         fillColor: {
                           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
                           stops: [
