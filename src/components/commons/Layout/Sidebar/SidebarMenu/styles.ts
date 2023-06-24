@@ -71,7 +71,7 @@ export const MenuText = styled(ListItemText)<{ open?: number; active?: number; t
           : theme.palette.common.white
         : disable
         ? theme.palette.text.disabled
-        : theme.palette.grey[400]};
+        : theme.palette.grey[500]};
     white-space: break-spaces;
     width: 165px;
   }
@@ -84,7 +84,7 @@ export const MenuText = styled(ListItemText)<{ open?: number; active?: number; t
 export const SubMenuText = styled(MenuText)`
   * {
     font-weight: var(--font-weight-normal) !important;
-    color: ${({ active, theme }) => (active ? theme.palette.primary.contrastText : theme.palette.grey[400])};
+    color: ${({ active, theme }) => (active ? theme.palette.primary.contrastText : theme.palette.grey[500])};
   }
 `;
 
