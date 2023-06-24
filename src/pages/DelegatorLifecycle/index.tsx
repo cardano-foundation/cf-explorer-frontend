@@ -111,11 +111,11 @@ const DelegatorLifecycle = () => {
             <BoxSwitchContainer sidebar={+sidebar}>
               <LabelSwitch>Switch to {validMode === "timeline" ? "tabular" : "timeline"} view</LabelSwitch>
               <SwitchGroup>
-                <ButtonSwitch active={+(validMode === "tabular")} onClick={() => changeMode("tabular")}>
-                  <ChartMode fill={validMode === "tabular" ? theme.palette.common.white : theme.palette.grey[500]} />
-                </ButtonSwitch>
                 <ButtonSwitch active={+(validMode === "timeline")} onClick={() => changeMode("timeline")}>
                   <TableMode fill={validMode === "timeline" ? theme.palette.common.white : theme.palette.grey[500]} />
+                </ButtonSwitch>
+                <ButtonSwitch active={+(validMode === "tabular")} onClick={() => changeMode("tabular")}>
+                  <ChartMode fill={validMode === "tabular" ? theme.palette.common.white : theme.palette.grey[500]} />
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>
