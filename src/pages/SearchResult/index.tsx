@@ -91,12 +91,13 @@ const SearchResult = () => {
       try {
         const urls = filterURLS(value);
         const result = await Promise.any(
+          /* eslint-disable  @typescript-eslint/no-explicit-any */
           urls.map(async (url): Promise<{ url: FilterParams; data: any }> => {
             try {
               const res = await defaultAxios.get(`${url}/${value}`);
               if (res.data) return Promise.resolve({ url, data: res.data });
             } catch {
-              //To do
+              return Promise.reject();
             }
             return Promise.reject();
           })
@@ -105,8 +106,8 @@ const SearchResult = () => {
         const navigate = createNavigator(url);
 
         if (navigate) return history.replace(navigate(value), { data });
-      } catch {
-        //To do
+      } catch (error) {
+        console.log(error);
       }
 
       setLoading(false);

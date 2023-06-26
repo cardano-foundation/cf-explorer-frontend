@@ -47,11 +47,12 @@ export const ConfirmStatus = styled("small")<{ status?: keyof typeof CONFIRMATIO
         return theme.palette.error.light;
     }
   }};
-  margin-left: 10px;
+  margin-left: 6px;
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
   padding: 5px 10px;
   border-radius: 2px;
+  text-wrap: nowrap;
 `;
 
 export const WrapConfirmation = styled(Box)(({ theme }) => ({
