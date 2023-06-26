@@ -122,8 +122,9 @@ const SearchResult = () => {
               const res = await defaultAxios.get(pathName);
               if (url === "delegations/pool-list?search=") {
                 handleFilterByPool(res.data);
+              } else if (res.data) {
+                return Promise.resolve({ url, data: res.data });
               }
-              if (res.data) return Promise.resolve({ url, data: res.data });
             } catch {
               return Promise.reject();
             }
