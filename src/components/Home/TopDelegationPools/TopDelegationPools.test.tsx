@@ -41,14 +41,14 @@ describe("TopDelegationPools", () => {
     cleanup();
   });
 
-  it("renders Top Delegation Pools", async () => {
+  it("renders Pools", async () => {
     const history = createMemoryHistory();
     render(
       <Router history={history}>
         <TopDelegationPools />
       </Router>
     );
-    expect(screen.getByText("Top Delegation Pools")).toBeInTheDocument();
+    expect(screen.getByText("Pools")).toBeInTheDocument();
     const seeAllButton = screen.getByTestId("view-all");
     expect(seeAllButton).toBeInTheDocument();
     await userEvent.click(seeAllButton);
@@ -57,7 +57,7 @@ describe("TopDelegationPools", () => {
     });
   });
 
-  it("renders data in the table Top Delegation Pools", async () => {
+  it("renders data in the table Pools", async () => {
     const history = createMemoryHistory();
     render(
       <Router history={history}>
@@ -74,7 +74,7 @@ describe("TopDelegationPools", () => {
     expect(screen.getByText(formatPercent(mockItem.saturation / 100))).toBeInTheDocument();
   });
 
-  it("navigate pool detail Top Delegation Pools", async () => {
+  it("navigate pool detail Pools", async () => {
     const history = createMemoryHistory();
     render(
       <Router history={history}>

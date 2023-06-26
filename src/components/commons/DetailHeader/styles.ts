@@ -53,6 +53,9 @@ export const HeaderContainer = styled(Box)`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    justify-content: space-between;
+  }
 `;
 
 export const HeaderTitle = styled("h2")`

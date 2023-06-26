@@ -60,3 +60,8 @@ export const WrapConfirmation = styled(Box)(({ theme }) => ({
     paddingTop: "5px"
   }
 }));
+
+export const Subtext = styled("span")`
+  opacity: 0.5;
+  font-weight: 400;
+`;

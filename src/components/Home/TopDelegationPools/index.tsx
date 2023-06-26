@@ -20,6 +20,7 @@ import {
   ProgressContainer,
   ProgressTitle,
   StyledLinearProgress,
+  SubHeader,
   TimeDuration,
   TimeDurationSm,
   Title,
@@ -102,7 +103,10 @@ const TopDelegationPools = () => {
   return (
     <TopDelegateContainer>
       <Header>
-        <Title>Top Delegation Pools</Title>
+        <Title>
+          Pools
+          <SubHeader>Sorted by blocks produced in the current epoch</SubHeader>
+        </Title>
         <Actions>
           <TimeDuration>
             <FormNowMessage time={lastUpdated} />

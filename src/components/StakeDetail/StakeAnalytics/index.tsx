@@ -176,7 +176,7 @@ const StakeAnalytics: React.FC = () => {
                         name: "",
                         pointPlacement: "on",
                         type: "areaspline",
-                        marker: { enabled: true },
+                        marker: { enabled: tab === "BALANCE" },
                         lineWidth: 4,
                         color: theme.palette.green[700],
                         fillColor: {
