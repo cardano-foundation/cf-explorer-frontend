@@ -1,4 +1,4 @@
-import { Box, styled, BoxProps } from "@mui/material";
+import { Box, styled, BoxProps, SxProps } from "@mui/material";
 import React, { ReactNode } from "react";
 
 const CardContainer = styled(Box)`
@@ -43,21 +43,17 @@ interface CardProps extends Omit<BoxProps, "title"> {
   children?: ReactNode;
   underline?: boolean;
   extra?: React.ReactNode;
-  marginTitle?: string;
-  wrapTitle?: boolean;
+  titleSx?: SxProps;
 }
 
-const Card: React.FC<CardProps> = ({ title, marginTitle, children, wrapTitle = false, underline = false, extra, ...props }) => {
+const Card: React.FC<CardProps> = ({ title, children, underline = false, extra, titleSx, ...props }) => {
   return (
     <CardContainer {...props}>
       <Header>
         {title ? (
           <Title
             underline={underline ? 1 : 0}
-            sx={{
-              margin: marginTitle ? marginTitle : "unset",
-              width: wrapTitle ? "max-content" : "unset",
-            }}
+            sx={titleSx}
           >
             {title}
           </Title>
