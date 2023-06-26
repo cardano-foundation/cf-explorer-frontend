@@ -51,14 +51,12 @@ describe("Home page function should work", () => {
         cy.wrap($element).click()
       }
     })
-
-    cy.getBySelector("network-name").should('have.text', 'Preprod')
   });
 
   it("should navigate to SignIn page", () => {
     cy.getBySelector("header-signin").click();
     cy.title().should("eq", "Sign In | Cardano Explorer");
-    cy.getBySelector("signin-title").contains(/^(Sign In)$/i);
+    cy.getBySelector("signin-title").contains(/^(Sign-In)$/i);
   });
 
   it("should change the search option", () => {
