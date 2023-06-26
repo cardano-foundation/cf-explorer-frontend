@@ -12,7 +12,6 @@ import { API } from "src/commons/utils/api";
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
 import { formatADA, formatADAFull, formatDateTimeLocal, numberWithCommas } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import { EpochProgress } from "src/components/commons/Epoch/FirstEpoch/styles";
 import ProgressCircle from "src/components/commons/ProgressCircle";
 import RateWithIcon from "src/components/commons/RateWithIcon";
 import { RootState } from "src/stores/types";
@@ -20,6 +19,7 @@ import { RootState } from "src/stores/types";
 import {
   AdaPrice,
   Content,
+  EpochProgress,
   Item,
   ItemIcon,
   ItemSkeleton,
