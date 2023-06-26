@@ -129,7 +129,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
                   </CustomTooltip>
                 </Box>
                 <Box fontWeight={"bold"} flex={1} textAlign="right">
-                  {formatNumberDivByDecimals(option.quantity)}
+                  {formatNumberDivByDecimals(option.quantity || 0, option.metadata?.decimals || 0)}
                 </Box>
               </Box>
             </Option>
