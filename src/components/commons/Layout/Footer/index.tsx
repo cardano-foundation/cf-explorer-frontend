@@ -47,7 +47,7 @@ const Footer: React.FC = () => {
       <FooterContainer>
         <FooterMenu bottom={true} />
         <Copyright>
-          &copy; {new Date().getFullYear()} Cardano Blockchain Explorer. All rights reserved. Version: {APP_VERSION}
+          &copy; {new Date().getFullYear()} Cardano Foundation. All rights reserved. Version: {APP_VERSION}
         </Copyright>
       </FooterContainer>
     </StyledFooter>

@@ -217,7 +217,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
     } else {
       return defaultDisabledCondition || poolSize === RatioGroupValue.unTicked;
     }
-  }, [address, dateRange, reportType, errorReportField, adaTransfers, poolSize, reportType, eventsKey]);
+  }, [address, dateRange, reportType, errorReportField, adaTransfers, poolSize, eventsKey]);
 
   const handleSubmit = async () => {
     saveParams?.({
@@ -321,7 +321,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
               return (
                 <ButtonEvent
                   key={`${label}_${value}`}
-                  active={Boolean((value === SELECT_ALL && isAll) || eventsKey.includes(value))}
+                  active={+Boolean((value === SELECT_ALL && isAll) || +eventsKey.includes(value))}
                   onClick={() => handleSelectEvent(value)}
                 >
                   {label}

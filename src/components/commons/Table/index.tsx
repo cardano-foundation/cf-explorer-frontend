@@ -293,7 +293,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
         ) : (
           ""
         )}
-        {total?.count ? (
+        {total && total.count ? (
           <Box ml={"20px"} fontSize="0.875rem">
             <TotalNumber>{numberWithCommas(total.count)}</TotalNumber> {`Result${total.count > 1 ? "s" : ""}`}
           </Box>
@@ -347,6 +347,7 @@ const Table: React.FC<TableProps> = ({
     onSelectionChange
   });
   const tableRef = useRef(null);
+  const wrapperRef = useRef<HTMLElement>(null);
   const heightTable = Math.min((tableRef?.current as any)?.clientHeight || 0, 800);
   const toggleSelectAll = (isChecked: boolean) => {
     if (data && isChecked) {
@@ -357,7 +358,14 @@ const Table: React.FC<TableProps> = ({
   };
 
   useEffect(() => {
+    if (wrapperRef.current) {
+      wrapperRef.current.scrollTop = 0;
+    }
+  }, [loading]);
+
+  useEffect(() => {
     clearSelection();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const isSelectAll = useMemo(() => data?.length === selectedItems.length, [data, selectedItems]);
@@ -373,9 +381,11 @@ const Table: React.FC<TableProps> = ({
         isSelectAll={isSelectAll}
       />
       <Wrapper
+        ref={wrapperRef}
         maxHeight={maxHeight}
         minHeight={(!data || data.length === 0) && !loading ? 360 : loading ? 400 : 150}
         height={heightTable}
+        loading={loading ? 1 : 0}
       >
         <TableFullWidth ref={tableRef}>
           <TableHeader
@@ -451,7 +461,6 @@ const PaginationCustom = ({
 }) => {
   const [inputPage, setInputPage] = useState(page);
   const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
-
   useUpdateEffect(() => {
     setInputPage(1);
   }, [poolType, size]);
@@ -525,7 +534,7 @@ const PaginationCustom = ({
     if (item.type === "page") {
       if (item.page === 1) {
         return (
-          <Box width={isGalaxyFoldSmall ? "100vw" : "auto"} textAlign={isGalaxyFoldSmall ? "left" : "center"}>
+          <Box textAlign={isGalaxyFoldSmall ? "left" : "center"}>
             <InputNumber
               type={"string"}
               value={inputPage}

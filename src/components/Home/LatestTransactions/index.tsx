@@ -57,7 +57,7 @@ const LatestTransactions: React.FC = () => {
           <TimeDuration>
             <FormNowMessage time={lastUpdated} />
           </TimeDuration>
-          <ViewAllButton to={routers.TRANSACTION_LIST} />
+          <ViewAllButton data-testid="view-all" to={routers.TRANSACTION_LIST} />
         </Actions>
       </Header>
       <TimeDurationSm>

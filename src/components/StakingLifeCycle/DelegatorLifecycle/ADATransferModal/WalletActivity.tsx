@@ -11,6 +11,7 @@ import { API } from "src/commons/utils/api";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import CustomIcon from "src/components/commons/CustomIcon";
 import Table, { Column } from "src/components/commons/Table";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import UserInfo from "./UserInfo";
 import { Amount, Status, StyledBoxTransaction, StyledLink } from "./styles";
@@ -65,7 +66,11 @@ const WalletActivity: React.FC = () => {
       title: "Transaction Hash",
       key: "transactionHash",
       minWidth: "100px",
-      render: (r) => <StyledLink to={details.transaction(r.txHash || "")}>{getShortHash(r.txHash)}</StyledLink>
+      render: (r) => (
+        <CustomTooltip title={r.txHash}>
+          <StyledLink to={details.transaction(r.txHash || "")}>{getShortHash(r.txHash)}</StyledLink>
+        </CustomTooltip>
+      )
     },
 
     {
@@ -105,7 +110,7 @@ const WalletActivity: React.FC = () => {
 
 export default WalletActivity;
 const StyledTable = styled(Table)(() => ({
-  "> :nth-child(2)": {
+  "> :nth-of-type(2)": {
     boxShadow: "none !important"
   }
 }));

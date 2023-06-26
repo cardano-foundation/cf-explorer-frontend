@@ -1,4 +1,4 @@
-import { Box, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import moment from "moment";
 
@@ -7,7 +7,7 @@ import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
 import { Status } from "src/pages/Epoch/styles";
 
-import { Container, EpochNumber, EpochProgress, TitleCard } from "./styles";
+import { Container, Content, EpochNumber, EpochProgress, SubContent, TitleCard } from "./styles";
 import ProgressCircle from "../../ProgressCircle";
 import DetailHeader from "../../DetailHeader";
 
@@ -17,7 +17,6 @@ interface IProps {
 }
 
 export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) {
-  const theme = useTheme();
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   if (!currentEpochData) return null;
   const progress =
@@ -28,13 +27,9 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
     {
       icon: ExchangeIcon,
       hideHeader: true,
-      title: (
-        <EpochNumber sx={{ [theme.breakpoints.down("sm")]: { marginTop: "-8px" } }}>
-          Epoch Number {currentEpochData?.no}
-        </EpochNumber>
-      ),
+      title: <EpochNumber>{currentEpochData?.no}</EpochNumber>,
       value: (
-        <Box display={"flex"} alignItems="center">
+        <Box display={"flex"} alignItems="center" justifyContent={"center"}>
           <ProgressCircle
             size={100}
             pathLineCap="butt"
@@ -44,7 +39,9 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
             trailOpacity={1}
           >
             <EpochProgress>{`${progress}%`}</EpochProgress>
-            <Status status={currentEpochData?.status?.toLowerCase()}>{EPOCH_STATUS[currentEpochData?.status]}</Status>
+            <Status status={currentEpochData?.status?.toLowerCase()}>
+              {EPOCH_STATUS[currentEpochData?.status]}
+            </Status>
           </ProgressCircle>
         </Box>
       )
@@ -56,7 +53,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
           <TitleCard mr={1}>Block </TitleCard>
         </Box>
       ),
-      value: <Box component={"span"}>{currentEpochData?.blkCount}</Box>
+      value: <Content>{currentEpochData?.blkCount}</Content>
     },
     {
       icon: slotIconUrl,
@@ -66,12 +63,12 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
         </Box>
       ),
       value: (
-        <Box component={"span"}>
+        <Content>
           {moment(formatDateTimeLocal(currentEpochData.endTime)).diff(moment()) >= 0
             ? currentEpoch?.slot
             : MAX_SLOT_EPOCH}
-          /{MAX_SLOT_EPOCH}
-        </Box>
+          <SubContent>/{MAX_SLOT_EPOCH}</SubContent>
+        </Content>
       )
     },
     {
@@ -81,7 +78,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
           <TitleCard mr={1}> Start Time</TitleCard>
         </Box>
       ),
-      value: <Box component={"span"}>{formatDateTimeLocal(currentEpochData?.startTime || "")}</Box>
+      value: <Content>{formatDateTimeLocal(currentEpochData?.startTime || "")}</Content>
     },
     {
       icon: timeIconUrl,
@@ -90,11 +87,11 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
           <TitleCard mr={1}> End Time</TitleCard>
         </Box>
       ),
-      value: <Box component={"span"}>{formatDateTimeLocal(currentEpochData?.endTime || "")}</Box>
+      value: <Content>{formatDateTimeLocal(currentEpochData?.endTime || "")}</Content>
     }
   ];
   return (
-    <Container onClick={() => onClick(currentEpochData, currentEpochData, 0)}>
+    <Container onClick={() => onClick(currentEpochData, currentEpochData, -1)}>
       <DetailHeader isHideButtonBack={true} loading={false} listItem={listOverview} type="EPOCH" title={" "} />
     </Container>
   );

@@ -1,19 +1,21 @@
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import BigNumber from "bignumber.js";
+import moment from "moment";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import moment from "moment";
 
-import { AdaPriceIcon, CurentEpochIcon, LiveStakeIcon, MarketCapIcon } from "src/commons/resources";
+import useFetch from "src/commons/hooks/useFetch";
+import { useScreen } from "src/commons/hooks/useScreen";
+import { AdaPriceIcon, LiveStakeIcon, MarketCapIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
-import { formatADA, formatADAFull, numberWithCommas } from "src/commons/utils/helper";
-import { RootState } from "src/stores/types";
+import { formatADA, formatADAFull, formatDateTimeLocal, numberWithCommas } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import RateWithIcon from "src/components/commons/RateWithIcon";
-import { useScreen } from "src/commons/hooks/useScreen";
-import useFetch from "src/commons/hooks/useFetch";
+import { RootState } from "src/stores/types";
+import ProgressCircle from "src/components/commons/ProgressCircle";
+import { EpochProgress } from "src/components/commons/Epoch/FirstEpoch/styles";
 
 import {
   AdaPrice,
@@ -57,7 +59,6 @@ const HomeStatistic = () => {
     false,
     REFRESH_TIMES.CURRENT_PRICE_BTC
   );
-
   const { circulating_supply, total_supply: total = 1 } = usdMarket || {};
   const { liveStake = 0, activeStake = 1 } = data || {};
   const supply = Number(circulating_supply);
@@ -65,7 +66,9 @@ const HomeStatistic = () => {
   const activeRate = activeStake && new BigNumber(liveStake).div(activeStake).minus(1).multipliedBy(100);
   const circulatingSupply = new BigNumber(supply).multipliedBy(MILION);
   const circulatingRate = circulatingSupply.div(total).div(MILION).multipliedBy(100);
-
+  const progress = moment(currentEpoch?.endTime).isAfter(moment())
+    ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
+    : 100;
   const { isMobile, isGalaxyFoldSmall } = useScreen();
 
   return (
@@ -85,8 +88,8 @@ const HomeStatistic = () => {
               <br />
               <RateWithIcon data-testid="ada-24Hr-price-change" value={usdMarket.price_change_percentage_24h} />
               <AdaPrice data-testid="ada-price-in-BTC">{btcMarket[0]?.current_price} BTC</AdaPrice>
-              <TimeDuration marginTop={"8px"}>
-                Last updated {moment(btcMarket[0]?.last_updated).fromNow()}{" "}
+              <TimeDuration marginTop="8px" data-testid="last-update-BTC">
+                Last updated {moment(btcMarket[0]?.last_updated).fromNow()}
               </TimeDuration>
             </Content>
           </Item>
@@ -106,7 +109,9 @@ const HomeStatistic = () => {
             <Content>
               <Name data-testid="market-cap-box-title">Market cap</Name>
               <Title data-testid="market-cap-value">${numberWithCommas(usdMarket.market_cap)}</Title>
-              <TimeDuration>Last updated {moment(usdMarket.last_updated).fromNow()} </TimeDuration>
+              <TimeDuration data-testid="last-update-market-cap">
+                Last updated {moment(usdMarket.last_updated).fromNow()}
+              </TimeDuration>
             </Content>
           </Item>
         ) : (
@@ -118,13 +123,19 @@ const HomeStatistic = () => {
           <Item data-testid="current-epoch-box">
             <Link to={details.epoch(currentEpoch?.no)}>
               <Content>
-                <ItemIcon
-                  style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
-                  data-testid="current-epoch-icon"
-                  src={CurentEpochIcon}
-                  alt="Curent Epoch"
-                />
-                <Name data-testid="current-epoch-box-title">Current Epoch</Name>
+                <Box display={"flex"} alignItems="center" position={"absolute"} right={10} top={15}>
+                  <ProgressCircle
+                    size={50}
+                    pathLineCap="butt"
+                    pathWidth={6}
+                    trailWidth={6}
+                    percent={Number(progress)}
+                    trailOpacity={1}
+                  >
+                    <EpochProgress sx={{ fontSize: "15px" }}>{`${progress}%`}</EpochProgress>
+                  </ProgressCircle>
+                </Box>
+                <Name data-testid="current-epoch-box-title" style={isGalaxyFoldSmall ? { maxWidth: "30px" } : {}}>Current Epoch</Name>
                 <XSmall data-testid="epoch-label">Epoch: </XSmall>
                 {isMobile ? <br /> : null}
                 <XValue data-testid="current-epoch-number">
@@ -141,7 +152,15 @@ const HomeStatistic = () => {
                 <XSmall>Unique accounts: </XSmall>
                 {isMobile ? <br /> : null}
                 <XValue>
-                  <b>{numberWithCommas(currentEpoch?.account)}</b>
+                  <b data-testid="curent-epoch-account">{numberWithCommas(currentEpoch?.account)}</b>
+                </XValue>
+                <br />
+                <XSmall>End time: </XSmall>
+                {isMobile ? <br /> : null}
+                <XValue>
+                  <b style={{
+                    whiteSpace: isGalaxyFoldSmall ? "normal" : "nowrap",
+                  }}>{formatDateTimeLocal(currentEpoch?.endTime)}</b>
                 </XValue>
               </Content>
             </Link>
@@ -162,14 +181,19 @@ const HomeStatistic = () => {
               />
               <Name data-testid="live-stake-box-title">Live Stake</Name>
               <CustomTooltip title={formatADAFull(liveStake)}>
-                <Title>{formatADA(liveStake)}</Title>
+                <Title data-testid="live-stake-value">{formatADA(liveStake)}</Title>
               </CustomTooltip>
-              <Progress data-testid="live-stake-progress-bar">
+              <Progress>
                 <CustomTooltip title={liveRate.toFixed(5)}>
-                  <ProcessActive rate={liveRate.toNumber()}>{liveRate.toFixed(0, BigNumber.ROUND_DOWN)}%</ProcessActive>
+                  <ProcessActive data-testid="live-stake-progress-active" rate={liveRate.toNumber()}>
+                    {liveRate.toFixed(0, BigNumber.ROUND_DOWN)}%
+                  </ProcessActive>
                 </CustomTooltip>
                 <CustomTooltip title={liveRate.div(-1).plus(100).toFixed(5)}>
-                  <ProgressPending rate={liveRate.div(-1).plus(100).toNumber()}>
+                  <ProgressPending
+                    data-testid="live-stake-progress-pending"
+                    rate={liveRate.div(-1).plus(100).toNumber()}
+                  >
                     {liveRate.div(-1).plus(100).toFixed(0)}%
                   </ProgressPending>
                 </CustomTooltip>

@@ -15,7 +15,6 @@ const RewardsDistribution = () => {
   const { data } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}` || "");
 
   const toggleModal = () => setOpenReceivedRewardsModal((pre) => !pre);
-
   return (
     <Box>
       <Box mt={3}>

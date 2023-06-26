@@ -13,8 +13,8 @@ export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
     height: "calc(100vh - 61px)",
     [theme.breakpoints.down("md")]: {
       display: "flex",
-      height: "calc(100% - 80px)",
-      top: "80px"
+      height: "calc(100% - 75px)",
+      top: "75px"
     },
     [theme.breakpoints.down("sm")]: {
       right: "auto",
@@ -510,8 +510,8 @@ export const LogoEmpty = styled(Box)`
   background: ${(props) => alpha(props.theme.palette.common.white, 0.5)};
   border-radius: 50%;
   border: 1px solid ${(props) => props.theme.palette.border.main};
-  display:inline-block;
-  padding:3px: 10px;
+  display: inline-block;
+  padding: 3px 10px;
 `;
 export const ButtonModal = styled(Button)(() => ({
   textTransform: "capitalize",

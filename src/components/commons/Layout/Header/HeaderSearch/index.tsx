@@ -1,4 +1,4 @@
-import React, { FormEvent, useState, useEffect } from "react";
+import React, { FormEvent, useState, useEffect, useCallback } from "react";
 import { Backdrop, Box, SelectChangeEvent } from "@mui/material";
 import { stringify } from "qs";
 import { BiChevronDown } from "react-icons/bi";
@@ -68,15 +68,22 @@ const options: Option[] = [
     detail: details.token
   },
   {
-    value: "stakes",
+    value: "stake-keys",
     label: "Stake keys",
-    paths: [routers.STAKE_LIST, routers.TOP_DELEGATOR, routers.STAKE_DETAIL],
+    paths: [routers.STAKE_DETAIL],
     detail: details.stake
   },
   {
     value: "addresses",
     label: "Addresses",
-    paths: [routers.ADDRESS_LIST, routers.CONTRACT_LIST, routers.ADDRESS_DETAIL],
+    paths: [
+      routers.ADDRESS_LIST,
+      routers.CONTRACT_LIST,
+      routers.ADDRESS_DETAIL,
+      routers.STAKE_LIST,
+      routers.TOP_DELEGATOR,
+      routers.STAKE_DETAIL
+    ],
     detail: details.address
   },
   {
@@ -94,6 +101,12 @@ const options: Option[] = [
       routers.DELEGATOR_LIFECYCLE,
       routers.STAKING_LIFECYCLE
     ]
+  },
+  {
+    value: "policies",
+    label: "Policies",
+    paths: [routers.POLICY_DETAIL],
+    detail: details.policyDetail
   }
 ];
 
@@ -115,14 +128,18 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   }, [search, filter]);
 
   const currentPath = history.location.pathname.split("/")[1];
-  const checkIncludesPath = (paths: Option["paths"]) => paths?.find((path) => path?.split("/")[1] === currentPath);
+
+  const checkIncludesPath = useCallback(
+    (paths: Option["paths"]) => paths?.find((path) => path?.split("/")[1] === currentPath),
+    [currentPath]
+  );
 
   useEffect(() => {
     const filter: FilterParams = options.find((item) => checkIncludesPath(item.paths))?.value || "all";
     if ("/" + currentPath !== routers.SEARCH) setValues({ ...intitalValue, filter });
     setError("");
-    setShowErrorMobile && setShowErrorMobile(false);
-  }, [history.location.pathname]);
+    setShowErrorMobile?.(false);
+  }, [currentPath, checkIncludesPath, setError, setShowErrorMobile, setValues]);
 
   const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
@@ -137,31 +154,41 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
         callback?.();
       } else {
         setError("No results found");
-        setShowErrorMobile && setShowErrorMobile(true);
+        setShowErrorMobile?.(true);
         setShowOption(true);
       }
       return;
     }
+
+    if (option?.value === "addresses") {
+      if (search.startsWith("stake")) {
+        history.push(details.stake(search));
+        callback?.();
+        return;
+      }
+      history.push(details.address(search));
+    }
+
     callback?.();
     if (option?.detail) return history.push(option?.detail(search));
     if (search) {
       const params = { search, filter: filterParams || (filter !== "all" ? filter : undefined) };
       history.push(`${routers.SEARCH}?${stringify(params)}`);
       setError("");
-      setShowErrorMobile && setShowErrorMobile(false);
+      setShowErrorMobile?.(false);
     }
   };
 
   const handleChangeFilter = (e: SelectChangeEvent<unknown>) => {
     setValues({ search, filter: e.target.value as Option["value"] });
     setError("");
-    setShowErrorMobile && setShowErrorMobile(false);
+    setShowErrorMobile?.(false);
   };
 
   const handleChangeSearch = (e?: React.ChangeEvent) => {
     setValues({ filter, search: (e?.target as HTMLInputElement)?.value });
     setError("");
-    setShowErrorMobile && setShowErrorMobile(false);
+    setShowErrorMobile?.(false);
     onFocus((e?.target as HTMLInputElement)?.value);
   };
   const onFocus = (newValue?: string) => {

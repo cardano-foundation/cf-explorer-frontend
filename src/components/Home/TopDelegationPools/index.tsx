@@ -1,4 +1,3 @@
-import React from "react";
 import { useHistory } from "react-router-dom";
 import { Box } from "@mui/system";
 
@@ -29,7 +28,7 @@ import {
 
 const TopDelegationPools = () => {
   const { data, loading, initialized, lastUpdated } = useFetch<DelegationPool[]>(
-    `${API.DELEGATION.TOP}?page=1&size=4`,
+    `${API.DELEGATION.TOP}?page=0&size=10`,
     undefined,
     false,
     REFRESH_TIMES.TOP_DELEGATION_POOLS
@@ -97,7 +96,7 @@ const TopDelegationPools = () => {
           <TimeDuration>
             <FormNowMessage time={lastUpdated} />
           </TimeDuration>
-          <ViewAllButton to={routers.DELEGATION_POOLS} />
+          <ViewAllButton data-testid="view-all" to={routers.DELEGATION_POOLS} />
         </Actions>
       </Header>
       <TimeDurationSm>
@@ -107,7 +106,7 @@ const TopDelegationPools = () => {
         loading={loading}
         initialized={initialized}
         columns={columns}
-        data={data?.slice(0, 3) || []}
+        data={data || []}
         onClickRow={(_, r: DelegationPool) => history.push(details.delegation(r.poolId))}
       />
     </TopDelegateContainer>

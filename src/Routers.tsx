@@ -2,6 +2,7 @@ import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
 import { routers } from "./commons/routers";
+import useAuth from "./commons/hooks/useAuth";
 import Home from "./pages/Home";
 import BlockList from "./pages/BlockList";
 import BlockDetail from "./pages/BlockDetail";
@@ -41,6 +42,8 @@ import VerifyEmail from "./pages/VerifyEmail";
 import ReportGeneratedStakingDetail from "./pages/ReportGeneratedStakingDetail";
 import ReportGeneratedPoolDetail from "./pages/ReportGeneratedPoolDetail";
 import StakingLifeCycleSearch from "./pages/StakingLifeCycleSearch";
+import StakeDelegations from "./pages/StakeDelegations";
+import InstantRewards from "./pages/InstantRewards";
 
 const Routes: React.FC = () => {
   return (
@@ -72,13 +75,15 @@ const Routes: React.FC = () => {
       <Route path={routers.TOP_DELEGATOR} exact component={TopDelegators} />
       <Route path={routers.STAKING_LIFECYCLE} exact component={StackingLifecycle} />
       <Route path={routers.REPORT_GENERATED} exact component={ReportGenerated} />
-      <Route path={routers.REPORT_GENERATED_STAKING_DETAIL} exact component={ReportGeneratedStakingDetail} />
-      <Route path={routers.REPORT_GENERATED_POOL_DETAIL} exact component={ReportGeneratedPoolDetail} />
+      <PrivateRoute path={routers.REPORT_GENERATED_STAKING_DETAIL} exact component={ReportGeneratedStakingDetail} />
+      <PrivateRoute path={routers.REPORT_GENERATED_POOL_DETAIL} exact component={ReportGeneratedPoolDetail} />
       <Route path={routers.PROTOCOL_PARAMETER} exact component={ProtocolParameter} />
       <Route path={routers.SEARCH} exact component={SearchResult} />
       <Route path={routers.DELEGATOR_LIFECYCLE} exact component={DelegatorLifecycle} />
       <Route path={routers.SPO_LIFECYCLE} exact component={SPOLifecycle} />
       <Route path={routers.STAKING_LIFECYCLE_SEARCH} exact component={StakingLifeCycleSearch} />
+      <Route path={routers.STAKE_DELEGATIONS} exact component={StakeDelegations} />
+      <Route path={routers.INSTANTANEOUS_REWARDS} exact component={InstantRewards} />
       <Route path={routers.ACCOUNT}>
         <AccountLayout>
           <Switch>
@@ -92,6 +97,33 @@ const Routes: React.FC = () => {
       </Route>
       <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
+  );
+};
+
+interface PrivateRouteProps {
+  component: React.ComponentType<any>;
+  path: string;
+  exact?: boolean;
+}
+
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...rest }) => {
+  const { isLoggedIn } = useAuth();
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        isLoggedIn ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/",
+              state: { from: props.location }
+            }}
+          />
+        )
+      }
+    />
   );
 };
 

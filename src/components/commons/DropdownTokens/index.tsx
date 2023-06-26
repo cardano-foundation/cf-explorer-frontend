@@ -3,12 +3,12 @@ import { useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { useHistory } from "react-router-dom";
 
-import { details } from "src/commons/routers";
-import { getShortHash, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
+import { details } from "src/commons/routers";
+import { getShortWallet, numberWithCommas } from "src/commons/utils/helper";
 
-import { CustomSelect, OptionSelect } from "./styles";
 import CustomTooltip from "../CustomTooltip";
+import { CustomSelect, OptionSelect } from "./styles";
 
 interface IDropdownTokens {
   tokens: Token[];
@@ -31,14 +31,19 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
       sx={{
         minWidth: isMobile ? "100%" : "250px"
       }}
+      open={openDropdown}
       onOpen={() => setOpenDropdown(true)}
       onClose={() => setOpenDropdown(false)}
       value={"default"}
       IconComponent={() =>
         openDropdown ? (
-          <BiChevronUp size={30} style={{ paddingRight: 10, fontSize: "20px" }} />
+          <>
+            <BiChevronUp size={30} style={{ paddingRight: 10, fontSize: "20px", cursor: "pointer" }} onClick={() => setOpenDropdown(false)} />
+          </>
         ) : (
-          <BiChevronDown size={30} style={{ paddingRight: 10, fontSize: "20px" }} />
+          <>
+            <BiChevronDown size={30} style={{ paddingRight: 10, fontSize: "20px", cursor: "pointer" }} onClick={() => setOpenDropdown(true)} />
+          </>
         )
       }
       MenuProps={{
@@ -74,7 +79,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
       {tokens.map((token, idx) => {
         const isNegative = token.assetQuantity <= 0;
         const tokenName = token.assetName || token.assetId;
-        const shortTokenName = token.assetName ? getShortHash(tokenName) : getShortWallet(tokenName);
+        const shortTokenName = getShortWallet(tokenName);
         const isTokenNameLong = tokenName.length > 20;
         return (
           <OptionSelect key={idx} onClick={() => handleClickItem(details.token(token?.assetId))}>

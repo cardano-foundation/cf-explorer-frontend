@@ -175,3 +175,8 @@ export const formatAmount = (amount: number | string, decimal = 0) => {
   if (!amount) return "0";
   return new BigNumber(amount).div(10 ** decimal).toFormat();
 };
+
+export const formatBlockHashById = (hash: string): string => {
+  if (hash?.length <= 20) return hash;
+  return `${hash.slice(0, 20)}...`;
+};
