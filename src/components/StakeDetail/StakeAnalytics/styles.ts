@@ -22,25 +22,26 @@ export const BoxInfo = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const CustomButton = styled("button")<{ active: number }>`
-  width: 115px;
-  border: none;
-  border-radius: 5px;
-  padding: 6px 0;
-  font-weight: var(--font-weight-bold);
-  color: ${({ theme, active }) => (active ? theme.palette.primary.contrastText : theme.palette.grey[400])};
-  background-color: ${({ theme, active }) => (active ? theme.palette.primary.main : theme.palette.background.neutral)};
-  cursor: pointer;
-  font-family: var(--font-family-title);
-  font-size: 16px;
-  line-height: 24px;
+export const CustomButton = styled("button")<{ active: number }>(({ theme, active }) => ({
+  width: "115px",
+  border: "none",
+  borderRadius: "5px",
+  padding: "6px 0",
+  fontWeight: "var(--font-weight-bold)",
+  color: active ? theme.palette.primary.contrastText : theme.palette.grey[400],
+  backgroundColor: active ? theme.palette.green[700] : theme.palette.background.neutral,
+  cursor: "pointer",
+  fontFamily: "var(--font-family-title)",
+  fontSize: "16px",
+  lineHeight: "24px",
 
-  @media screen and (max-width: ${(props) => props.theme.breakpoints.down("sm")}px) {
-    width: 78px;
-    padding: 6px 10px;
-    margin-right: 8px !important;
+  [theme.breakpoints.down("sm")]: {
+    width: "60px",
+    padding: "6px 10px",
+    marginRight: "6px !important",
+    fontSize: "12px"
   }
-`;
+}));
 
 export const BoxInfoItem = styled(Box)(({ theme }) => ({
   height: "100%",
@@ -138,7 +139,7 @@ export const ButtonTitle = styled("button")<{ active: boolean }>(({ theme, activ
   fontWeight: "bold",
   fontSize: "1rem",
   color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
-  backgroundColor: active ? theme.palette.primary.main : "none",
+  backgroundColor: active ? theme.palette.green[700] : "none",
   fontFamily: "var(--font-family-title)",
   border: `2px solid ${theme.palette.green[800_20]}`,
   cursor: "pointer",
@@ -159,10 +160,13 @@ export const SkeletonUI = styled(Skeleton)(({ theme }) => ({
   borderRadius: 10
 }));
 
-export const Tabs = styled(Box)(() => ({
+export const Tabs = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "flex-end",
-  gap: "5px"
+  gap: "5px",
+  [theme.breakpoints.down("sm")]: {
+    gap: "2px"
+  }
 }));
 
 export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
@@ -171,7 +175,10 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   border: `2px solid ${theme.palette.green[800_20]}`,
   fontWeight: "bold",
   color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
-  backgroundColor: active ? theme.palette.primary.main : "none",
+  backgroundColor: active ? theme.palette.green[700] : "none",
+  "&:hover": {
+    color: active ? `${theme.palette.text.dark} !important` : theme.palette.grey[400]
+  },
   [theme.breakpoints.down("lg")]: {
     "&:hover": {
       backgroundColor: theme.palette.primary.main,

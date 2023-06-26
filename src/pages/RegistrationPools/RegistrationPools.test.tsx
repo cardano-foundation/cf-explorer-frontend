@@ -1,10 +1,16 @@
+import { useParams } from "react-router-dom";
+
 import { render, screen } from "src/test-utils";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { getShortHash, getShortWallet } from "src/commons/utils/helper";
 
-import RegistrationPools from "./index";
+import RegistrationPools, { POOL_TYPE } from "./index";
 
 jest.mock("src/commons/hooks/useFetchList");
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useParams: jest.fn()
+}));
 
 const mockedData = [
   {
@@ -35,17 +41,27 @@ describe("RegistrationPools component", () => {
       total: 1,
       totalPage: 1,
       currentPage: 1,
-      lastUpdated: "07/30/2020 04:58:11"
+      lastUpdated: new Date().toString()
     });
   });
-  it("redering compoment on PC", () => {
+  it("redering compoment on PC registration", () => {
+    const mockUseParams = useParams as jest.Mock;
+    mockUseParams.mockReturnValue({ poolType: POOL_TYPE.REGISTRATION });
     render(<RegistrationPools />);
-    const deregistratonTab = screen.getByRole("tab", { name: /deregistration/i });
+    expect(screen.getByText(/Pool Certificate/i)).toBeInTheDocument();
     expect(screen.getByText(/last updated/i)).toBeInTheDocument();
-    expect(deregistratonTab).toBeInTheDocument();
+  });
+
+  it("redering compoment on PC de-registration", () => {
+    const mockUseParams = useParams as jest.Mock;
+    mockUseParams.mockReturnValue({ poolType: POOL_TYPE.DEREREGISTRATION });
+    render(<RegistrationPools />);
+    expect(screen.getByText(/Pool Deregistration/i)).toBeInTheDocument();
   });
 
   it("rendering table on PC with data", () => {
+    const mockUseParams = useParams as jest.Mock;
+    mockUseParams.mockReturnValue({ poolType: POOL_TYPE.REGISTRATION });
     render(<RegistrationPools />);
     const data = mockedData[0];
     expect(screen.getByText(getShortHash(data.txHash))).toBeInTheDocument();
@@ -55,7 +71,9 @@ describe("RegistrationPools component", () => {
     });
   });
 
-  it("rendering withot any data", () => {
+  it("rendering without any data", () => {
+    const mockUseParams = useParams as jest.Mock;
+    mockUseParams.mockReturnValue({ poolType: POOL_TYPE.REGISTRATION });
     const mockedUseFetchList = useFetchList as jest.Mock;
     mockedUseFetchList.mockReturnValue({
       data: [],

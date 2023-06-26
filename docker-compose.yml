@@ -3,10 +3,10 @@ version: '3.9'
 services:
   cardano-explorer-fe:
     stdin_open: true
-    container_name: cardano-explorer-fe
-    image: cardano-explorer-fe
+    image: cardano-explorer-fe-${REACT_APP_NETWORK}
     build:
       context: .
+    restart: always
     environment:
       - PORT=${PORT:-1102}
       - REACT_APP_TESTNET_API_URL=${REACT_APP_TESTNET_API_URL}
@@ -14,5 +14,12 @@ services:
       - REACT_APP_PREPROD_API_URL=${REACT_APP_PREPROD_API_URL}
       - REACT_APP_MAINNET_API_URL=${REACT_APP_MAINNET_API_URL}
       - REACT_APP_AUTH_API_URL=${REACT_APP_AUTH_API_URL}
+
+      - REACT_APP_JSD_WIDGET_KEY=${REACT_APP_JSD_WIDGET_KEY}
+      - REACT_APP_TESTNET_FE_URL=${REACT_APP_TESTNET_FE_URL}
+      - REACT_APP_PREVIEW_FE_URL=${REACT_APP_PREVIEW_FE_URL}
+      - REACT_APP_PREPROD_FE_URL=${REACT_APP_PREPROD_FE_URL}
+      - REACT_APP_MAINNET_FE_URL=${REACT_APP_MAINNET_FE_URL}
+      - REACT_APP_NETWORK=${REACT_APP_NETWORK}
     ports:
-      - "7276:${PORT:-1102}"
+      - "${PORT}:80"

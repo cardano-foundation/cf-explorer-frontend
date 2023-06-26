@@ -66,9 +66,13 @@ const Contracts: React.FC<ContractsProps> = ({ data }) => {
               <Box display={"flex"} alignItems="center" padding={"15px 0 0"} key={ct.contract}>
                 <Box mx={"auto"} display="flex" alignItems={"center"}>
                   <Link to={redirectTo(ct.contract)}>
-                    <CustomTooltip title={ct.contract}>
-                      <Title>{isLargeTablet ? getShortWallet(ct.contract) : ct.contract}</Title>
-                    </CustomTooltip>
+                    {isLargeTablet ? (
+                      <CustomTooltip title={ct.contract}>
+                        <Title>{getShortWallet(ct.contract)}</Title>
+                      </CustomTooltip>
+                    ) : (
+                      <Title>{ct.contract}</Title>
+                    )}
                   </Link>
                 </Box>
                 <CopyButton text={ct.contract} />
