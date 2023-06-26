@@ -2,6 +2,7 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Tab, alpha } from "@mui/material";
 import React, { useEffect } from "react";
 
+import Card from "src/components/commons/Card";
 import TopAddressesByADABalance from "src/components/TopAddresses/ByADABalance";
 import TopAddressesByAmountStaked from "src/components/TopAddresses/ByAmountStaked";
 
@@ -47,33 +48,35 @@ const TopAddresses = () => {
   return (
     <TabContext value={tabActive}>
       <StyledContainer>
-        <Box>
-          <TabList
-            onChange={handleChange}
-            TabIndicatorProps={{ sx: { background: (theme) => theme.palette.primary.main, height: 3 } }}
-          >
-            {tabs?.map((item) => (
-              <Tab
-                key={item.key}
-                label={item.label}
-                value={item.key}
-                sx={{
-                  padding: "12px 0px",
-                  marginRight: "24px"
-                }}
-              />
-            ))}
-          </TabList>
-        </Box>
-        {tabs.map((item) => (
-          <TabPanel
-            sx={{ padding: 0, borderTop: (theme) => `1px solid ${alpha(theme.palette.green[800], 0.1)}` }}
-            key={item.key}
-            value={item.key}
-          >
-            {item.children}
-          </TabPanel>
-        ))}
+        <Card title={"Top ADA Holder"}>
+          <Box>
+            <TabList
+              onChange={handleChange}
+              TabIndicatorProps={{ sx: { background: (theme) => theme.palette.primary.main, height: 3 } }}
+            >
+              {tabs?.map((item) => (
+                <Tab
+                  key={item.key}
+                  label={item.label}
+                  value={item.key}
+                  sx={{
+                    padding: "12px 0px",
+                    marginRight: "24px"
+                  }}
+                />
+              ))}
+            </TabList>
+          </Box>
+          {tabs.map((item) => (
+            <TabPanel
+              sx={{ padding: 0, borderTop: (theme) => `1px solid ${alpha(theme.palette.green[800], 0.1)}` }}
+              key={item.key}
+              value={item.key}
+            >
+              {item.children}
+            </TabPanel>
+          ))}
+        </Card>
       </StyledContainer>
     </TabContext>
   );
