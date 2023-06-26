@@ -148,3 +148,10 @@ export const StyledLinearProgress = styled(LinearProgress)`
     background: ${(props) => props.theme.palette.gradient[0]};
   }
 `;
+
+export const SubHeader = styled(Box)`
+  font-weight: 400;
+  font-size: 14px;
+  color: ${(props) => props.theme.palette.grey[400]};
+  margin-bottom: 6px;
+`;
