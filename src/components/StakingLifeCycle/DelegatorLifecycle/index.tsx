@@ -182,6 +182,12 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
     return `${palette.grey[200]} !important`;
   };
 
+  const handleChangeTab = (step: StepperProps, idx: number) => {
+    if (tabsRenderConfig[step.keyCheckShow] && currentStep !== idx) {
+      setCurrentStep(idx);
+      history.replace(details.staking(stakeId, "timeline", step.key));
+    }
+  };
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} sx={{ overflowX: "auto" }}>
@@ -193,17 +199,12 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
               component={tabsRenderConfig[step.keyCheckShow] ? "span" : CustomTooltip}
               active={+(currentStep === idx)}
               title={tabsRenderConfig[step.keyCheckShow] ? undefined : "There is no record at this time"}
+              onClick={() => handleChangeTab(step, idx)}
             >
               <Box>
                 <StepButton
                   component={IconButton}
                   active={+(currentStep === idx)}
-                  onClick={() => {
-                    if (tabsRenderConfig[step.keyCheckShow] && currentStep !== idx) {
-                      setCurrentStep(idx);
-                      history.replace(details.staking(stakeId, "timeline", step.key));
-                    }
-                  }}
                   bgcolor={renderBackground(currentStep === idx, tabsRenderConfig[step.keyCheckShow])}
                   color={({ palette }) =>
                     tabsRenderConfig[step.keyCheckShow] ? palette.common.white : palette.grey[300]
