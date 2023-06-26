@@ -1,39 +1,41 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
-import _ from "lodash";
 import {
   AccordionDetails,
   Box,
   Button,
   Checkbox,
   Container,
+  IconButton,
   Skeleton,
   alpha,
-  useTheme,
-  IconButton
+  useTheme
 } from "@mui/material";
-import { useList, useUpdateEffect } from "react-use";
+import _ from "lodash";
+import moment from "moment";
+import { useEffect, useState } from "react";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import moment from "moment";
-import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
 import { ImArrowDown2, ImArrowUp2 } from "react-icons/im";
+import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
+import { Link } from "react-router-dom";
+import { useList, useUpdateEffect } from "react-use";
 
-import Card from "src/components/commons/Card";
-import Table from "src/components/commons/Table";
-import { Column } from "src/types/table";
-import { PROTOCOL_TYPE } from "src/commons/utils/constants";
 import useFetch from "src/commons/hooks/useFetch";
-import { API } from "src/commons/utils/api";
-import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "src/types/protocol";
-import ParseScriptModal from "src/components/ParseScriptModal";
 import { DateRangeIcon, EmptyIcon, FilterIcon, InfoIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
-import DateRangeModal from "src/components/FilterReport/DateRangeModal";
-import { formatDateTimeLocal } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { PROTOCOL_TYPE } from "src/commons/utils/constants";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
+import DateRangeModal from "src/components/FilterReport/DateRangeModal";
+import ParseScriptModal from "src/components/ParseScriptModal";
+import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import Table from "src/components/commons/Table";
+import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "src/types/protocol";
+import { Column } from "src/types/table";
 
+import { ExplainerTextModal } from "./ExplainerTextModal";
+import { explainerTextGlobalConstants, explainerTextProtocolHistory } from "./explainerText";
 import {
   AccordionContainer,
   AccordionSummary,
@@ -43,8 +45,6 @@ import {
   ButtonFilter,
   FilterContainer
 } from "./styles";
-import { explainerTextGlobalConstants, explainerTextProtocolHistory } from "./explainerText";
-import { ExplainerTextModal } from "./ExplainerTextModal";
 
 const ProtocolParameter: React.FC = () => {
   const [fixedColumnKeys, { push: pushFixedColumnKeys }] = useList<string>([]);
@@ -190,7 +190,9 @@ const ProtocolParameter: React.FC = () => {
       )}
       {showHistory && <ProtocolParameterHistory />}
       {!showHistory && (
-        <Card marginTitle="0px" title={"Protocol parameters"}>
+        <Card titleSx={{
+          margin: 0,
+        }} title={"Protocol parameters"}>
           <Box pt={2}>
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
@@ -273,19 +275,17 @@ export const ProtocolParameterHistory = () => {
     loading,
     initialized
   } = useFetch<ProtocolHistory>(
-    `${PROTOCOL_PARAMETER.HISTORY}/${
-      filterParams.length === TOTAL_PARAMETER || filterParams.length === 0
-        ? "ALL"
-        : filterParams.map((f) => PROTOCOL_TYPE[f as keyof typeof PROTOCOL_TYPE]).join(",")
-    }${
-      _.isEmpty(dateRangeFilter)
-        ? ""
-        : `?endTime=${moment(dateRangeFilter.toDate).endOf("D").utc().format("X")}&startTime=${moment(
-            dateRangeFilter.fromDate
-          )
-            .startOf("D")
-            .utc()
-            .format("X")}`
+    `${PROTOCOL_PARAMETER.HISTORY}/${filterParams.length === TOTAL_PARAMETER || filterParams.length === 0
+      ? "ALL"
+      : filterParams.map((f) => PROTOCOL_TYPE[f as keyof typeof PROTOCOL_TYPE]).join(",")
+    }${_.isEmpty(dateRangeFilter)
+      ? ""
+      : `?endTime=${moment(dateRangeFilter.toDate).endOf("D").utc().format("X")}&startTime=${moment(
+        dateRangeFilter.fromDate
+      )
+        .startOf("D")
+        .utc()
+        .format("X")}`
     }
     `
   );
@@ -445,7 +445,10 @@ export const ProtocolParameterHistory = () => {
   return (
     <Box>
       <Card
-        marginTitle="0px"
+        titleSx={{
+          margin: 0,
+          width: "max-content",
+        }}
         title={"Protocol parameters update history"}
         textAlign={"left"}
         extra={
@@ -710,7 +713,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
   );
 };
 
-const CloseButton = styled(IconButton)<{ saving: number }>`
+const CloseButton = styled(IconButton) <{ saving: number }>`
   position: absolute;
   top: 15px;
   right: 20px;

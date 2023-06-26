@@ -24,6 +24,7 @@ import {
   Status,
   TextHeadline,
   TitleHead,
+  WrapGridItem,
   WrapReportName
 } from "./styles";
 
@@ -200,13 +201,15 @@ const Dashboard: React.FC = () => {
       <GridContainer container spacing={2} columns={12}>
         {cardList.map((card, idx) => (
           <Grid item xs={3} md={3} lg={3} xl={3} key={idx}>
-            <DashboardCard
-              key={card.title}
-              leftIcon={card.icon}
-              title={card.title}
-              subtitle={card.subtitle}
-              to={card.to}
-            />
+            <WrapGridItem>
+              <DashboardCard
+                key={card.title}
+                leftIcon={card.icon}
+                title={card.title}
+                subtitle={card.subtitle}
+                to={card.to}
+              />
+            </WrapGridItem>
           </Grid>
         ))}
       </GridContainer>
