@@ -92,7 +92,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
               <StakeKeyItemList>
                 {rewardAccounts.map((item) => (
                   <StakeKeyItem key={item}>
-                    <SPOKey fill="#108AEF" />
+                    <SPOKey fill="#0052CC" />
                     <PoolNamePopup to={details.stake(item)}>{getShortWallet(item)}</PoolNamePopup>
                     <CopyButton text={item} />
                   </StakeKeyItem>

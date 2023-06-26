@@ -66,7 +66,7 @@ const SummaryItems = ({
                   >
                     <CustomTooltip title={item.address}>
                       <Box
-                        color={(theme) => theme.palette.blue[800]}
+                        color={(theme) => theme.palette.blue[900]}
                         fontWeight="bold"
                         fontFamily={"var(--font-family-text)"}
                       >
@@ -95,7 +95,7 @@ const SummaryItems = ({
                 <Box
                   component={"span"}
                   whiteSpace="nowrap"
-                  color={(theme) => (type === "up" ? theme.palette.success.main : theme.palette.error.main)}
+                  color={(theme) => (type === "up" ? theme.palette.green[700] : theme.palette.red[800])}
                   fontWeight="bold"
                   mr={1}
                 >

@@ -3,14 +3,21 @@ import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import moment from "moment";
 
-import { timeIconUrl, outputIconUrl, cubeIconUrl, slotIconUrl, exchageIconUrl, RewardIcon } from "src/commons/resources";
+import {
+  timeIconUrl,
+  outputIconUrl,
+  cubeIconUrl,
+  slotIconUrl,
+  exchageIconUrl,
+  RewardIcon
+} from "src/commons/resources";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import DetailHeader from "src/components/commons/DetailHeader";
 import { TitleCard } from "src/components/BlockDetail/BlockOverview/styles";
 import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 
-import { Output } from "./styles";
+import { Output, Subtext } from "./styles";
 
 interface EpochOverviewProps {
   data: IDataEpoch | null;
@@ -72,10 +79,8 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       ),
       value: (
         <>
-          {moment(formatDateTimeLocal(data?.endTime || "")).diff(moment()) > 0 ? slot : MAX_SLOT_EPOCH}/
-          <Box component={"span"} fontWeight="400">
-            {MAX_SLOT_EPOCH}
-          </Box>
+          {moment(formatDateTimeLocal(data?.endTime || "")).diff(moment()) > 0 ? slot : MAX_SLOT_EPOCH}
+          <Subtext>/{MAX_SLOT_EPOCH}</Subtext>
         </>
       )
     },
@@ -86,8 +91,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
           <TitleCard mr={1}> Transaction Count</TitleCard>
         </Box>
       ),
-      value:
-        data?.txCount
+      value: data?.txCount
     },
     {
       icon: RewardIcon,
@@ -98,15 +102,15 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       ),
       value: (
         <>
-        {data?.rewardsDistributed ? (
-          <Output>
-            {formatADAFull(data?.rewardsDistributed)}
-            <ADAicon />
-          </Output>
-        ) : (
-          "Not available"
-        )}
-      </>
+          {data?.rewardsDistributed ? (
+            <Output>
+              {formatADAFull(data?.rewardsDistributed)}
+              <ADAicon />
+            </Output>
+          ) : (
+            "Not available"
+          )}
+        </>
       )
     }
   ];

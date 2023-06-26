@@ -30,7 +30,7 @@ const StyledModal: React.FC<IProps> = ({
   const { isMobile } = useScreen();
 
   return (
-    <Modal open={open}>
+    <Modal open={open} onClose={handleCloseModal}>
       <ModalContainer
         width={width}
         height={height}
@@ -39,7 +39,7 @@ const StyledModal: React.FC<IProps> = ({
         viewwidth={isMobile ? 92 : 70}
         sx={modalStyle}
       >
-        <CloseButton saving={0} onClick={() => handleCloseModal()} data-testid="close-modal-button">
+        <CloseButton saving={0} onClick={handleCloseModal} data-testid="close-modal-button">
           <IoMdClose />
         </CloseButton>
         {title && (

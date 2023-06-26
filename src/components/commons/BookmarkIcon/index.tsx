@@ -64,7 +64,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
 
   return (
     <Box>
-      <Box mx={1} component={IconButton} style={{ width: 45, height: 45 }} onClick={updateBookmark}>
+      <IconButton style={{ width: 45, height: 45 }} onClick={updateBookmark}>
         {loading ? (
           <CircularProgress size={"30px"} />
         ) : bookmark ? (
@@ -72,7 +72,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
         ) : (
           <BookmarkIcon fill={theme.palette.text.hint} />
         )}
-      </Box>
+      </IconButton>
     </Box>
   );
 };
