@@ -23,6 +23,8 @@ interface IStakeKeyDetail {
     tickerName: string;
     poolName: string;
     poolId: string;
+    iconUrl?: string;
+    logoUrl?: string;
   };
 }
 
