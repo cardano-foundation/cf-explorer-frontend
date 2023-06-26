@@ -18,7 +18,7 @@ export const CustomModal: React.FC<Props> = forwardRef((props, ref) => {
   const { open, onClose, closeButton, closeButtonProps, title, titleProps, modalProps, children, ...contentProps } =
     props;
   return (
-    <Modal open={open} {...modalProps}>
+    <Modal open={open} {...modalProps} onClose={onClose}>
       <ModalContainer>
         {closeButton || (
           <CloseButton {...closeButtonProps} onClick={onClose} data-testid="close-modal-button">
