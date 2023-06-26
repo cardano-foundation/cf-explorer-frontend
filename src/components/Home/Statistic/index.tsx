@@ -12,14 +12,14 @@ import { API } from "src/commons/utils/api";
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
 import { formatADA, formatADAFull, formatDateTimeLocal, numberWithCommas } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import ProgressCircle from "src/components/commons/ProgressCircle";
 import RateWithIcon from "src/components/commons/RateWithIcon";
 import { RootState } from "src/stores/types";
-import ProgressCircle from "src/components/commons/ProgressCircle";
-import { EpochProgress } from "src/components/commons/Epoch/FirstEpoch/styles";
 
 import {
   AdaPrice,
   Content,
+  EpochProgress,
   Item,
   ItemIcon,
   ItemSkeleton,
@@ -32,7 +32,6 @@ import {
   StatisticContainer,
   TimeDuration,
   Title,
-  Value,
   XSmall,
   XValue
 } from "./style";
@@ -210,27 +209,27 @@ const HomeStatistic = () => {
                     </ProgressPending>
                   </CustomTooltip>
                 </Progress>
-                <Small data-testid="active-stake-label">Active Stake: </Small>
+                <XSmall data-testid="active-stake-label">Active Stake: </XSmall>
                 {isMobile ? <br /> : null}
                 <SmallValue>
                   <CustomTooltip title={formatADAFull(activeStake)}>
-                    <Value data-testid="active-stake-value">
+                    <XValue data-testid="active-stake-value">
                       <b>{formatADA(activeStake)} </b>
-                    </Value>
+                    </XValue>
                   </CustomTooltip>
                   <CustomTooltip title={`${activeRate.toFixed(5)}%`}>
                     <Small data-testid="active-stake-percentage">({activeRate.toFixed(1)}%)</Small>
                   </CustomTooltip>
                 </SmallValue>
                 <br />
-                <Small data-testid="circulating-supply-label">Circulating supply: </Small>
+                <XSmall data-testid="circulating-supply-label">Circulating supply: </XSmall>
                 {isMobile ? <br /> : null}
                 <SmallValue>
-                  <Value data-testid="circulating-supply-value">
+                  <XValue data-testid="circulating-supply-value">
                     <CustomTooltip title={numberWithCommas(supply)}>
                       <b>{formatADA(circulatingSupply.toString())} </b>
                     </CustomTooltip>
-                  </Value>
+                  </XValue>
                   <CustomTooltip title={`${circulatingRate.toFixed(5)}%`}>
                     <Small data-testid="circulating-supply-percentage">
                       ({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)

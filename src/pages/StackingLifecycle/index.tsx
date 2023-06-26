@@ -18,6 +18,7 @@ import { StyledTab, StyledTabs } from "../RegistrationPools/styles";
 import StakingLifeCycleSearch from "../StakingLifeCycleSearch";
 import { FilterHead, StyledTabLabel, TextHeadline, TitleHead } from "./styles";
 
+
 export interface SavedReport {
   timestamp: Date | string;
   entity: string;
