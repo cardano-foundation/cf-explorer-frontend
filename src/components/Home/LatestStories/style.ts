@@ -56,7 +56,7 @@ export const Image = styled("img")`
   height: 80px;
   min-width: 80px;
   border-radius: 5px;
-  object-fit: cover;
+  object-fit: contain;
   background-color: ${(props) => props.theme.palette.background.default};
 `;
 export const Detail = styled(Box)`
@@ -77,8 +77,8 @@ export const Author = styled("h6")`
   overflow: hidden;
   text-overflow: ellipsis;
   font-family: var(--font-family-text);
-  color: ${(props) => props.theme.palette.primary.main};
-  background-color: ${(props) => props.theme.palette.success.light};
+  color: ${(props) => props.theme.palette.green[700]};
+  background-color: ${(props) => props.theme.palette.green[700_10]};
   padding: 3px 4.5px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -92,6 +92,7 @@ export const ItemTitle = styled("h5")`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
+  text-overflow: ellipsis;
   font-size: var(--font-size-text-x-small);
   line-height: 1.15;
   margin-top: 0;

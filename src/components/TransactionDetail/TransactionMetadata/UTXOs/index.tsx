@@ -51,7 +51,7 @@ const Card = ({
         <Box color={(theme) => theme.palette.text.dark} fontSize={"1rem"} lineHeight="19px" mb="2px">
           {type === "down" ? "Input" : "Output"}
         </Box>
-        <Box color={(theme) => theme.palette.text.hint} display="flex" justifyContent="space-between">
+        <Box color={(theme) => theme.palette.grey[500]} display="flex" justifyContent="space-between">
           <Box>Wallet Addresses</Box>
           <Box>Amount</Box>
         </Box>
@@ -78,7 +78,7 @@ const Card = ({
                                 component={"span"}
                                 fontWeight="bold"
                                 fontFamily={"var(--font-family-text)"}
-                                color={(theme) => theme.palette.secondary.main}
+                                color={(theme) => theme.palette.blue[900]}
                                 mr={1}
                               >
                                 {getShortHash(item.txHash)}
@@ -113,7 +113,7 @@ const Card = ({
                         <Link to={details.address(item.address)}>
                           <CustomTooltip title={item.address}>
                             <Box
-                              color={(theme) => theme.palette.secondary.main}
+                              color={(theme) => theme.palette.blue[900]}
                               fontWeight="bold"
                               fontFamily={"var(--font-family-text)"}
                               mr={1}
@@ -149,7 +149,7 @@ const Card = ({
                                   component={"span"}
                                   fontWeight="bold"
                                   fontFamily={"var(--font-family-text)"}
-                                  color={(theme) => theme.palette.secondary.main}
+                                  color={(theme) => theme.palette.blue[900]}
                                   mr={1}
                                 >
                                   {getShortWallet(item?.stakeAddress)}
@@ -174,7 +174,7 @@ const Card = ({
                     <Box
                       component={"span"}
                       whiteSpace="nowrap"
-                      color={(theme) => (type === "up" ? theme.palette.primary.main : theme.palette.error.main)}
+                      color={(theme) => (type === "up" ? theme.palette.green[700] : theme.palette.red[800])}
                       fontWeight="bold"
                       mr={1}
                     >
