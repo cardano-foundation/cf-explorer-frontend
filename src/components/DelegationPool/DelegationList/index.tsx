@@ -120,6 +120,7 @@ const DelegationLists: React.FC = () => {
           onChange: (page, size) => {
             setPage(page);
             setSize(size);
+            /* eslint-disable  @typescript-eslint/no-explicit-any */
             (tableRef.current as any)?.scrollIntoView();
           }
         }}
