@@ -17,7 +17,7 @@ import { TitleCard } from "src/components/BlockDetail/BlockOverview/styles";
 import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 
-import { Output } from "./styles";
+import { Output, Subtext } from "./styles";
 
 interface EpochOverviewProps {
   data: IDataEpoch | null;
@@ -79,10 +79,8 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       ),
       value: (
         <>
-          {moment(formatDateTimeLocal(data?.endTime || "")).diff(moment()) > 0 ? slot : MAX_SLOT_EPOCH}/
-          <Box component={"span"} fontWeight="400">
-            {MAX_SLOT_EPOCH}
-          </Box>
+          {moment(formatDateTimeLocal(data?.endTime || "")).diff(moment()) > 0 ? slot : MAX_SLOT_EPOCH}
+          <Subtext>/{MAX_SLOT_EPOCH}</Subtext>
         </>
       )
     },
