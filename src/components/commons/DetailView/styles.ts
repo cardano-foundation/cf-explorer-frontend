@@ -172,12 +172,12 @@ export const TokenInfoValue = styled("span")`
 `;
 
 export const EpochNumber = styled("h1")`
-  color: ${(props) => props.theme.palette.primary.main};
+  color: ${(props) => props.theme.palette.green[700]};
   margin: 0;
 `;
 
 export const EpochText = styled("span")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[500]};
   text-transform: uppercase;
 `;
 
@@ -248,7 +248,7 @@ export const DetailLabel = styled("small")`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  color: ${(props) => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.grey[700]};
   line-height: 26px;
 `;
 export const InfoIcon = styled(FiInfo)`
@@ -258,7 +258,7 @@ export const InfoIcon = styled(FiInfo)`
 `;
 
 export const DetailValue = styled("small")`
-  color: ${(props) => props.theme.palette.common.black};
+  color: ${(props) => props.theme.palette.grey[700]};
   font-weight: var(--font-weight-bold);
   display: flex;
   justify-content: flex-end;
@@ -524,7 +524,7 @@ export const ButtonModal = styled(Button)(() => ({
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[500],
   display: "block",
   textAlign: "left",
   flex: 1,

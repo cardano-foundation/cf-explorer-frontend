@@ -39,3 +39,7 @@ export const TimeDuration = styled("small")(({ theme }) => ({
   display: "block",
   margin: "12px 0px"
 }));
+export const PoolName = styled(Link)`
+  font-family: var(--font-family-text) !important;
+  color: ${({ theme }) => theme.palette.secondary.main} !important;
+`;
