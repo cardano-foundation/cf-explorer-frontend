@@ -27,7 +27,7 @@ Then copy file env.example and rename it to .env:
 
 ### Update Environment
 
-Update `REACT_APP_API_URL` with your api url for each network.
+Update `REACT_APP_API_URL` with your api url.
 
 Update `REACT_APP_AUTH_API_URL` with your auth api url to support sign in and sign up feature.
 
