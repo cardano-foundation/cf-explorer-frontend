@@ -134,11 +134,9 @@ const SPOLifecycle = () => {
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>
-            {validMode === "tabular" && (
-              <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
-                Compose report
-              </ButtonReport>
-            )}
+            <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
+              Compose report
+            </ButtonReport>
           </BoxItemStyled>
         </BoxContainerStyled>
         {loadingListTabs && <CircularProgress color="success" />}
