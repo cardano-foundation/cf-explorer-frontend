@@ -74,8 +74,8 @@ export const Author = styled("h6")`
   -webkit-line-clamp: 3;
   overflow: hidden;
   font-family: var(--font-family-text);
-  color: ${(props) => props.theme.palette.primary.main};
-  background-color: ${(props) => props.theme.palette.success.light};
+  color: ${(props) => props.theme.palette.green[700]};
+  background-color: ${(props) => props.theme.palette.green[700_10]};
   padding: 3px 4.5px;
   letter-spacing: 0.12em;
   text-transform: uppercase;

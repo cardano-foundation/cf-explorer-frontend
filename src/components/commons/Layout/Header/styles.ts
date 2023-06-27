@@ -24,16 +24,13 @@ export const HeaderBox = styled(Container)<{ home: number }>`
   }
 `;
 
-export const HeaderTop = styled("div")<{ collasped: number }>(({ theme, collasped }) => ({
+export const HeaderTop = styled("div")(({ theme }) => ({
   zIndex: 1300,
   display: "flex",
   justifyContent: "flex-end",
   alignItems: "center",
   gap: 20,
   padding: "30px 0",
-  [theme.breakpoints.down("xl")]: {
-    display: collasped ? "none" : "flex"
-  },
   [theme.breakpoints.down("md")]: {
     display: "flex",
     position: "fixed",
@@ -87,13 +84,13 @@ export const HeaderLogo = styled("img")(({ theme }) => ({
   }
 }));
 
-export const SearchButton = styled(Button)<{ home: number }>(({ theme, home }) => ({
+export const SearchButton = styled(Button)(({ theme }) => ({
   padding: 0,
   minWidth: 24,
   height: 24,
   display: "none",
   [theme.breakpoints.down("md")]: {
-    display: home ? "none" : "block"
+    display:  "block"
   }
 }));
 
