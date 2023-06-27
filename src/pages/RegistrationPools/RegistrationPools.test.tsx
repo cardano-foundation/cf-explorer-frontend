@@ -56,7 +56,7 @@ describe("RegistrationPools component", () => {
     const mockUseParams = useParams as jest.Mock;
     mockUseParams.mockReturnValue({ poolType: POOL_TYPE.DEREREGISTRATION });
     render(<RegistrationPools />);
-    expect(screen.getByText(/Pool De-Registration/i)).toBeInTheDocument();
+    expect(screen.getByText(/Pool Deregistration/i)).toBeInTheDocument();
   });
 
   it("rendering table on PC with data", () => {
