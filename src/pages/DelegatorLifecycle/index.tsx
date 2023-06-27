@@ -134,7 +134,7 @@ const DelegatorLifecycle = () => {
             </BoxSwitchContainer>
             {validMode === "tabular" && (
               <CustomTooltip title={!isLoggedIn ? "Please log in to use this feature" : ""}>
-                <Box>
+                <Box sx={{ [theme.breakpoints.down("sm")]: { width: "100%" } }}>
                   <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
                     Compose report
                   </ButtonReport>

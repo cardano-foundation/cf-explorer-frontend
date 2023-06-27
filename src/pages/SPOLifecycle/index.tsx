@@ -2,8 +2,7 @@
 import { useHistory, useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { useTheme } from "@emotion/react";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, useTheme } from "@mui/material";
 
 import { getShortWallet } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
@@ -135,7 +134,7 @@ const SPOLifecycle = () => {
             </BoxSwitchContainer>
             {validMode === "tabular" && (
               <CustomTooltip title={!isLoggedIn ? "Please log in to use this feature" : ""}>
-                <Box>
+                <Box sx={{ [theme.breakpoints.down("sm")]: { width: "100%" } }}>
                   <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
                     Compose report
                   </ButtonReport>
