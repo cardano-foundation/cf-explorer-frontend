@@ -1,4 +1,4 @@
-import { Box, CircularProgress, useTheme } from "@mui/material";
+import { CircularProgress, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
@@ -30,7 +30,8 @@ import {
   StakeId,
   AddressLine,
   StyledContainer,
-  Label
+  Label,
+  ReportButtonContainer
 } from "./styles";
 
 interface Params {
@@ -134,11 +135,11 @@ const DelegatorLifecycle = () => {
             </BoxSwitchContainer>
             {validMode === "tabular" && (
               <CustomTooltip title={!isLoggedIn ? "Please log in to use this feature" : ""}>
-                <Box>
+                <ReportButtonContainer>
                   <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
                     Compose report
                   </ButtonReport>
-                </Box>
+                </ReportButtonContainer>
               </CustomTooltip>
             )}
           </BoxItemStyled>
