@@ -6,7 +6,7 @@ import { RiArrowRightSLine } from "react-icons/ri";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { details } from "src/commons/routers";
-import { formatNumberDivByDecimals, getShortWallet } from "src/commons/utils/helper";
+import { formatNumberDivByDecimals, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
 
 import CustomTooltip from "../CustomTooltip";
 import { CustomSelect, OptionSelect, TokenButton } from "./styles";
