@@ -1,6 +1,4 @@
-import { styled, Theme, CSSObject, alpha } from "@mui/material/styles";
-import MuiDrawer from "@mui/material/Drawer";
-import { Box } from "@mui/material";
+import { Box, styled, Theme, CSSObject, alpha, Drawer as MuiDrawer } from "@mui/material";
 
 const drawerWidth = 260;
 const drawerWidthMobile = 240;
@@ -138,48 +136,20 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
   }
 }));
 
-export const ToggleMenu = styled("button")`
-  position: absolute;
-  top: 50px;
-  right: 0px;
-  transform: translateX(50%) translateY(-50%);
-  width: 22px;
-  height: 22px;
-  padding: 0;
-  border-radius: 50%;
-  background-image: ${(props) => props.theme.palette.gradient[0]};
-  border: none;
-  color: ${(props) => props.theme.palette.primary.contrastText};
-  cursor: pointer;
-  z-index: 1;
-  ${({ theme }) => theme.breakpoints.down("md")} {
-    display: none;
-  }
-`;
-
-export const WrapIcon = styled(Box)`
-  top: -9px;
-  left: -8px;
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const MainContainer = styled(Box)`
   width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 export const Main = styled(Box)<{ open: number; sidebar: number }>(({ theme, sidebar, open }) => ({
   flexGrow: 1,
   overflowX: "hidden",
   overflowY: "auto",
-  width: `calc(100vw - ${(open ? 461 : 0) + (sidebar ? 260 : 85)}px)`,
-  height: "calc(100vh - 61px)",
+  width: `calc(100vw - ${(open ? 461 : 0) + (sidebar ? 280 : 105)}px)`,
+  minHeight: "calc(100vh - 61px)",
   [theme.breakpoints.down("lg")]: {
-    width: `calc(100vw - ${sidebar ? 260 : 85}px)`
+    width: `calc(100vw - ${sidebar ? 280 : 105}px)`
   },
   [theme.breakpoints.down("md")]: {
     paddingTop: 80,
@@ -187,14 +157,3 @@ export const Main = styled(Box)<{ open: number; sidebar: number }>(({ theme, sid
     height: "auto"
   }
 }));
-
-export const ArrowCollapse = styled("span")`
-  z-index: 100;
-  width: 22px;
-  height: 22px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
-  line-height: 14px;
-`;

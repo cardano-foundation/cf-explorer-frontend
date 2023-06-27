@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { Box } from "@mui/material";
 
@@ -15,9 +15,11 @@ import { REFRESH_TIMES } from "src/commons/utils/constants";
 import { Image, PoolName, SearchContainer, StyledInput, StyledLinearProgress, SubmitButton } from "./styles";
 
 const DelegationLists: React.FC = () => {
-  const history = useHistory();
-  const [value, setValue] = useState("");
-  const [search, setSearch] = useState("");
+  const history = useHistory<{ tickerNameSearch: string | undefined }>();
+  const { tickerNameSearch = "" } = history.location.state || {};
+
+  const [value, setValue] = useState(tickerNameSearch);
+  const [search, setSearch] = useState(tickerNameSearch);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(50);
   const [sort, setSort] = useState<string>("");
@@ -30,6 +32,12 @@ const DelegationLists: React.FC = () => {
   );
   const { search: locationSearch } = useLocation();
   const pageInfo = getPageInfo(locationSearch);
+
+  useEffect(() => {
+    if (fetchData.initialized) {
+      history.replace({ state: undefined });
+    }
+  }, [fetchData.initialized, history]);
 
   const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     {
@@ -120,6 +128,7 @@ const DelegationLists: React.FC = () => {
           onChange: (page, size) => {
             setPage(page);
             setSize(size);
+            /* eslint-disable  @typescript-eslint/no-explicit-any */
             (tableRef.current as any)?.scrollIntoView();
           }
         }}
