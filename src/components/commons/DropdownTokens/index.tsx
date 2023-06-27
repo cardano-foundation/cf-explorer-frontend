@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { details } from "src/commons/routers";
-import { getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import { formatNumberDivByDecimals, getShortWallet } from "src/commons/utils/helper";
 
 import CustomTooltip from "../CustomTooltip";
 import { CustomSelect, OptionSelect } from "./styles";
@@ -38,11 +38,19 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
       IconComponent={() =>
         openDropdown ? (
           <>
-            <BiChevronUp size={30} style={{ paddingRight: 10, fontSize: "20px", cursor: "pointer" }} onClick={() => setOpenDropdown(false)} />
+            <BiChevronUp
+              size={30}
+              style={{ paddingRight: 10, fontSize: "20px", cursor: "pointer" }}
+              onClick={() => setOpenDropdown(false)}
+            />
           </>
         ) : (
           <>
-            <BiChevronDown size={30} style={{ paddingRight: 10, fontSize: "20px", cursor: "pointer" }} onClick={() => setOpenDropdown(true)} />
+            <BiChevronDown
+              size={30}
+              style={{ paddingRight: 10, fontSize: "20px", cursor: "pointer" }}
+              onClick={() => setOpenDropdown(true)}
+            />
           </>
         )
       }
@@ -94,7 +102,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
             </Box>
             <Box fontWeight={"bold"} fontSize={"14px"}>
               {isNegative || hideMathChar ? "" : "+"}
-              {`${numberWithCommas(token.assetQuantity) || ""}`}
+              {formatNumberDivByDecimals(token?.assetQuantity || 0, token?.metadata?.decimals || 0)}
             </Box>
           </OptionSelect>
         );
