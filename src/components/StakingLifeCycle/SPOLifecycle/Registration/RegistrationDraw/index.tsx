@@ -1,6 +1,5 @@
 import { useRef, useMemo } from "react";
 import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
@@ -8,7 +7,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import { BackIcon, AddressIcon, ADAGreen, TimeIcon } from "src/commons/resources";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import DrawPath from "src/components/commons/DrawPath";
-import CardanoSystem from "src/components/commons/CardanoSystem";
+import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import { details } from "src/commons/routers";
 import SPOHolder from "src/components/commons/SPOHolder";
 
@@ -49,9 +48,8 @@ export const RegistrationDraw = ({ selected, toggleModal, data, showBackButton }
   const poolHoldRef = useRef(null);
   const feeRef = useRef(null);
   const certificateRef = useRef(null);
-  const cadarnoSystemRef = useRef(null);
+  const cadarnoBlockChainRef = useRef(null);
   const history = useHistory();
-  const { sidebar } = useSelector(({ user }: RootState) => user);
 
   const handleBack = () => {
     history.goBack();
@@ -73,7 +71,7 @@ export const RegistrationDraw = ({ selected, toggleModal, data, showBackButton }
       {
         start: poolHoldRef,
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        end: cadarnoSystemRef,
+        end: cadarnoBlockChainRef,
         endPosition: { 0: ["right", "top"], sm: ["right", "middle"], lg: ["left", "middle"] },
         endOffset: { 0: [-20, 49], sm: [-10], lg: [10] },
         fold: { sm: "vertical", lg: "none" },
@@ -92,7 +90,7 @@ export const RegistrationDraw = ({ selected, toggleModal, data, showBackButton }
       {
         start: certificateRef,
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        end: cadarnoSystemRef,
+        end: cadarnoBlockChainRef,
         endPosition: { 0: ["left", "top"], sm: ["left", "middle"], lg: ["center", "bottom"] },
         endOffset: { 0: [20, 49], sm: [10], lg: [0, 3] },
         fold: { sm: "vertical", lg: "horizontal" },
@@ -133,10 +131,10 @@ export const RegistrationDraw = ({ selected, toggleModal, data, showBackButton }
           </Info>
         </InfoGroup>
       </StepInfo>
-      <DrawContainer sidebar={+sidebar}>
+      <DrawContainer>
         <SPOHolder ref={SPOPoolRef} data={{ poolName, poolView, stakeKeys }} />
-        <MiddleGroup sidebar={+sidebar}>
-          <BoxGroup sidebar={+sidebar}>
+        <MiddleGroup>
+          <BoxGroup>
             <StyledHoldBox ref={poolHoldRef} value={poolHold} txHash={txHash} />
             <StyledFeeBox ref={feeRef} value={fee} txHash={txHash} />
           </BoxGroup>
@@ -145,7 +143,7 @@ export const RegistrationDraw = ({ selected, toggleModal, data, showBackButton }
           </StyledCertificateShape>
         </MiddleGroup>
         <Box mt={2}>
-          <CardanoSystem ref={cadarnoSystemRef} />
+          <CardanoBlockchain ref={cadarnoBlockChainRef} />
         </Box>
         <DrawPath paths={paths} />
       </DrawContainer>

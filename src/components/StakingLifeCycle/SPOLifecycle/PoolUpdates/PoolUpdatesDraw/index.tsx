@@ -1,13 +1,12 @@
 import { useRef, useMemo } from "react";
 import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import DrawPath from "src/components/commons/DrawPath";
-import CardanoSystem from "src/components/commons/CardanoSystem";
+import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import FeeBox from "src/components/commons/FeeBox";
 import { details } from "src/commons/routers";
 import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "src/commons/resources";
@@ -47,9 +46,8 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
   const SPOPoolRef = useRef(null);
   const feeRef = useRef(null);
   const registrationRef = useRef(null);
-  const cadarnoSystemRef = useRef(null);
+  const cadarnoBlockChainRef = useRef(null);
   const history = useHistory();
-  const { sidebar } = useSelector(({ user }: RootState) => user);
 
   const handleBack = () => {
     history.goBack();
@@ -70,7 +68,7 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
       {
         start: feeRef,
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        end: cadarnoSystemRef,
+        end: cadarnoBlockChainRef,
         endPosition: { 0: ["right", "top"], sm: ["right", "middle"], lg: ["left", "middle"] },
         startOffset: { 0: [8, -15], lg: [0] },
         endOffset: { 0: [-18, 49], sm: [-10], lg: [10] },
@@ -88,7 +86,7 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
       {
         start: registrationRef,
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        end: cadarnoSystemRef,
+        end: cadarnoBlockChainRef,
         endPosition: { 0: ["left", "top"], sm: ["left", "middle"], lg: ["center", "bottom"] },
         endOffset: { 0: [18, 49], sm: [10], lg: [0, 3] },
         fold: { sm: "vertical", lg: "horizontal" },
@@ -127,10 +125,10 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
           </Info>
         </InfoGroup>
       </StepInfo>
-      <DrawContainer sidebar={+sidebar}>
+      <DrawContainer>
         <SPOHolder ref={SPOPoolRef} data={{ poolName, poolView, stakeKeys }} />
-        <MiddleGroup sidebar={+sidebar}>
-          <BoxGroup sidebar={+sidebar}>
+        <MiddleGroup>
+          <BoxGroup>
             <FeeBox ref={feeRef} value={fee} txHash={txHash} />
           </BoxGroup>
           <StyledCertificateShape onClick={toggleModal} ref={registrationRef}>
@@ -138,7 +136,7 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
           </StyledCertificateShape>
         </MiddleGroup>
         <Box mt={2}>
-          <CardanoSystem ref={cadarnoSystemRef} />
+          <CardanoBlockchain ref={cadarnoBlockChainRef} />
         </Box>
         <DrawPath paths={paths} />
       </DrawContainer>

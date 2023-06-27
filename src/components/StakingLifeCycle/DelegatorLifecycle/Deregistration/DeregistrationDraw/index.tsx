@@ -1,8 +1,7 @@
 import { useMemo, useRef } from "react";
-import { useSelector } from "react-redux";
 
 import AdaHolder from "src/components/commons/AdaHolder";
-import CardanoSystem from "src/components/commons/CardanoSystem";
+import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 
@@ -25,8 +24,7 @@ const DeregistrationDraw: React.FC<IDeregistrationDrawProps> = ({ data, toggleCe
   const holdRef = useRef(null);
   const feeRef = useRef(null);
   const certificateRef = useRef(null);
-  const cadarnoSystemRef = useRef(null);
-  const { sidebar } = useSelector(({ user }: RootState) => user);
+  const cadarnoBlockChainRef = useRef(null);
 
   const paths = useMemo((): LineArrowItem[] => {
     return [
@@ -42,7 +40,7 @@ const DeregistrationDraw: React.FC<IDeregistrationDrawProps> = ({ data, toggleCe
       {
         start: certificateRef,
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        end: cadarnoSystemRef,
+        end: cadarnoBlockChainRef,
         endPosition: { 0: ["left", "top"], sm: ["left", "middle"], lg: ["center", "bottom"] },
         endOffset: { 0: [22, 49], sm: [10, 0], lg: [0] },
         arrow: { 0: "top", sm: "left", lg: "bottom" },
@@ -61,7 +59,7 @@ const DeregistrationDraw: React.FC<IDeregistrationDrawProps> = ({ data, toggleCe
       {
         start: feeRef,
         startPosition: { 0: ["left", "top"], sm: ["left", "bottom"], lg: ["right", "middle"] },
-        end: cadarnoSystemRef,
+        end: cadarnoBlockChainRef,
         endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
         startOffset: { sm: [46, 0], lg: [0] },
         endOffset: { lg: [8, 0] },
@@ -69,7 +67,7 @@ const DeregistrationDraw: React.FC<IDeregistrationDrawProps> = ({ data, toggleCe
         autoAlign: { 0: "end-vertical", md: "none" }
       },
       {
-        start: cadarnoSystemRef,
+        start: cadarnoBlockChainRef,
         startPosition: { 0: ["right", "middle"], lg: ["left", "top"] },
         end: holdRef,
         endPosition: { 0: ["right", "bottom"], sm: ["center", "bottom"], lg: ["right", "middle"] },
@@ -90,24 +88,23 @@ const DeregistrationDraw: React.FC<IDeregistrationDrawProps> = ({ data, toggleCe
     ];
   }, []);
   return (
-    <DrawContainer data-testid="deregistration-draw" sidebar={+sidebar}>
+    <DrawContainer data-testid="deregistration-draw">
       <AdaHolder ref={adaHolderRef} />
-      <MiddleGroup sidebar={+sidebar}>
-        <BoxGroup sidebar={+sidebar}>
+      <MiddleGroup>
+        <BoxGroup>
           <StyledWithHoldBox
             roundingNumber={1}
-            sidebar={+sidebar}
             ref={holdRef}
             value={Math.abs(data?.deposit || 0)}
             txHash={data?.txHash || ""}
           />
-          <StyledFreeBox sidebar={+sidebar} ref={feeRef} value={data?.fee} txHash={data?.txHash || ""} />
+          <StyledFreeBox ref={feeRef} value={data?.fee} txHash={data?.txHash || ""} />
         </BoxGroup>
-        <StyledCertificateShape onClick={toggleCertificateModal} sidebar={+sidebar} ref={certificateRef}>
+        <StyledCertificateShape onClick={toggleCertificateModal} ref={certificateRef}>
           Deregistration Certificate
         </StyledCertificateShape>
       </MiddleGroup>
-      <CardanoSystem ref={cadarnoSystemRef} />
+      <CardanoBlockchain ref={cadarnoBlockChainRef} />
       <DrawPath paths={paths} />
     </DrawContainer>
   );
