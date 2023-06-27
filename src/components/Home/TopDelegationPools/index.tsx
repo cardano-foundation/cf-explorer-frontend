@@ -100,7 +100,7 @@ const TopDelegationPools = () => {
     }
   ];
   return (
-    <TopDelegateContainer>
+    <TopDelegateContainer data-testid="home-top-delegation">
       <Header>
         <Title>Top Delegation Pools</Title>
         <Actions>
