@@ -11,7 +11,7 @@ export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
     zIndex: 1302,
     background: `${theme.palette.background.neutral}`,
     border: "none",
-    height: "calc(100vh - 61px)",
+    height: "100vh",
     [theme.breakpoints.down("md")]: {
       display: "flex",
       height: "calc(100% - 75px)",

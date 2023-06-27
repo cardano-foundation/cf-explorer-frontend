@@ -463,7 +463,6 @@ const PaginationCustom = ({
 }) => {
   const [inputPage, setInputPage] = useState(page);
   const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
-
   useUpdateEffect(() => {
     setInputPage(1);
   }, [poolType, size]);
@@ -537,7 +536,7 @@ const PaginationCustom = ({
     if (item.type === "page") {
       if (item.page === 1) {
         return (
-          <Box width={isGalaxyFoldSmall ? "100vw" : "auto"} textAlign={isGalaxyFoldSmall ? "left" : "center"}>
+          <Box textAlign={isGalaxyFoldSmall ? "left" : "center"}>
             <InputNumber
               type={"string"}
               value={inputPage}

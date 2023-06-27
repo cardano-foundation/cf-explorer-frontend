@@ -90,7 +90,7 @@ const DeregistrationDraw: React.FC<IDeregistrationDrawProps> = ({ data, toggleCe
     ];
   }, []);
   return (
-    <DrawContainer sidebar={+sidebar}>
+    <DrawContainer data-testid="deregistration-draw" sidebar={+sidebar}>
       <AdaHolder ref={adaHolderRef} />
       <MiddleGroup sidebar={+sidebar}>
         <BoxGroup sidebar={+sidebar}>

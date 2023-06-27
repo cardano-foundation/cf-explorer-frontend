@@ -1,16 +1,15 @@
 import * as React from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { RootState } from "src/stores/types";
 import { setOnDetailView, setSidebar } from "src/stores/user";
 
-import CustomTooltip from "../CustomTooltip";
 import Footer from "./Footer";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import { ArrowCollapse, BackDrop, Drawer, Layout, Main, MainContainer, ToggleMenu, WrapIcon } from "./styles";
+import { Drawer, Layout, Main, BackDrop, MainContainer } from "./styles";
+import ToggleSidebar from "./ToggleSidebar";
 
 interface Props {
   children: React.ReactNode;
@@ -36,13 +35,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
     <Layout sidebar={+sidebar}>
       <BackDrop isShow={+sidebar} onClick={handleToggle} />
       <Drawer variant="permanent" open={sidebar} ModalProps={{ keepMounted: true }}>
-        <CustomTooltip placement="right" title={sidebar ? `Collapse` : `Expand`}>
-          <ToggleMenu type="button">
-            <WrapIcon onClick={handleToggle}>
-              <ArrowCollapse>{sidebar ? <FaArrowLeft /> : <FaArrowRight />}</ArrowCollapse>
-            </WrapIcon>
-          </ToggleMenu>
-        </CustomTooltip>
+        <ToggleSidebar handleToggle={handleToggle} />
         <Sidebar />
       </Drawer>
       <MainContainer>
