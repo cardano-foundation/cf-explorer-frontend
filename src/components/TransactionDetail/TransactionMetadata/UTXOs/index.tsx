@@ -10,7 +10,7 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import CopyButton from "src/components/commons/CopyButton";
-import DropdownTokens from "src/components/commons/DropdownTokens";
+import DropdownTokens, { TokenLink } from "src/components/commons/DropdownTokens";
 
 import { Header, Img, Item, ItemContent, ItemFooter, WrapInfo, WrapUTXOs } from "./styles";
 
@@ -183,7 +183,12 @@ const Card = ({
                     <ADAicon />
                   </Box>
                   <Box display={"flex"} alignItems={"center"}>
-                    {item.tokens && item.tokens.length > 0 && (
+                    {item.tokens && item.tokens.length === 1 && (
+                      <Box mt={2}>
+                        <TokenLink token={item.tokens[0]} />
+                      </Box>
+                    )}
+                    {item.tokens && item.tokens.length > 1 && (
                       <Box mt={2}>
                         <DropdownTokens tokens={item.tokens} type={type} hideInputLabel hideMathChar />
                       </Box>
