@@ -51,7 +51,7 @@ const stackeTabs: ITab[] = [
   },
   {
     icon: RewardsDistributionIcon,
-    label: "Operator Rewards",
+    label: "Rewards Distribution",
     key: "rewards",
     mappingKey: "Rewards",
     component: <RewardsDistributionTab />

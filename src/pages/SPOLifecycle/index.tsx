@@ -66,11 +66,18 @@ const SPOLifecycle = () => {
     tablular: null
   };
 
+  const tabsValid = {
+    registration: "isRegistration",
+    "pool-updates": "isUpdate",
+    "operator-rewards": "isReward",
+    deregistration: "isDeRegistration"
+  };
+
   const { data, error, initialized } = useFetch<PoolInfo>(poolId ? API.SPO_LIFECYCLE.POOL_INFO(poolId) : "");
   const { data: renderTabsSPO, loading: loadingListTabs } = useFetch<ListTabResponseSPO>(
     API.SPO_LIFECYCLE.TABS(poolId)
   );
-  const validTab: SPOStep = tabList[tab] >= 0 ? tab : "registration";
+  let validTab: SPOStep = tabList[tab] >= 0 ? tab : "registration";
   const validMode: ViewMode = MODES.find((item) => item === mode) || "timeline";
 
   const [currentStep, setCurrentStep] = useState(tabList[validTab]);
@@ -78,9 +85,15 @@ const SPOLifecycle = () => {
   const { isLoggedIn } = useAuth();
 
   useEffect(() => {
-    setCurrentStep(tabList[validTab]);
+    if (renderTabsSPO && renderTabsSPO[tabsValid[tab]]) {
+      setCurrentStep(tabList[validTab]);
+      return;
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [validTab]);
+    validTab = "registration";
+    setCurrentStep(tabList["registration"]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [renderTabsSPO]);
 
   const [open, setOpen] = useState(false);
   const containerRef = useRef(null);
@@ -113,11 +126,11 @@ const SPOLifecycle = () => {
             <BoxSwitchContainer sidebar={+sidebar}>
               <LabelSwitch>Switch to {validMode === "timeline" ? "tabular" : "timeline"} view</LabelSwitch>
               <SwitchGroup>
-                <ButtonSwitch active={+(validMode === "tabular")} onClick={() => changeMode("tabular")}>
-                  <ChartMode fill={validMode === "tabular" ? theme.palette.common.white : theme.palette.grey[500]} />
-                </ButtonSwitch>
                 <ButtonSwitch active={+(validMode === "timeline")} onClick={() => changeMode("timeline")}>
                   <TableMode fill={validMode === "timeline" ? theme.palette.common.white : theme.palette.grey[500]} />
+                </ButtonSwitch>
+                <ButtonSwitch active={+(validMode === "tabular")} onClick={() => changeMode("tabular")}>
+                  <ChartMode fill={validMode === "tabular" ? theme.palette.common.white : theme.palette.grey[500]} />
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>

@@ -197,10 +197,10 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                   ? currentEpoch && (epoch?.no || 0) === currentEpoch?.no
                     ? ((moment(formatDateTimeLocal(epoch?.endTime || "")).diff(moment()) > 0 &&
                       epoch?.slot < MAX_SLOT_EPOCH
-                      ? epoch?.slot
-                      : MAX_SLOT_EPOCH) /
-                      MAX_SLOT_EPOCH) *
-                    100
+                        ? epoch?.slot
+                        : MAX_SLOT_EPOCH) /
+                        MAX_SLOT_EPOCH) *
+                      100
                     : 100
                   : (epoch?.slot / MAX_SLOT_EPOCH) * 100
               }
@@ -283,9 +283,11 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                           }}
                           key={index}
                         >
-                          <Box mr={2} sx={{ maxWidth: "120px", textOverflow: "ellipsis", overflow: "hidden" }}>
-                            {item.assetName}
-                          </Box>
+                          <CustomTooltip title={item.assetName}>
+                            <Box mr={2} sx={{ maxWidth: "120px", textOverflow: "ellipsis", overflow: "hidden" }}>
+                              {item.assetName}
+                            </Box>
+                          </CustomTooltip>
                           <Box fontWeight={500}>{numberWithCommas(item.assetQuantity)}</Box>
                         </StyledMenuItem>
                       ))}
