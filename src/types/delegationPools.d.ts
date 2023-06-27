@@ -4,6 +4,8 @@ interface OverViewDelegation {
   epochNo: number;
   epochSlotNo: number;
   liveStake: number;
+  activePools: number;
+  retiredPools: number;
 }
 
 interface Delegators {
