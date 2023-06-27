@@ -1,5 +1,21 @@
-import { styled, Container, Box } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Container } from "@mui/material";
+import { Box, styled } from "@mui/material";
+
+export const TabTitle = styled(Box)`
+  margin-bottom: 0px;
+  color: ${({ theme }) => theme.palette.text.hint};
+  text-align: left;
+  text-transform: capitalize !important;
+  font-size: 18px;
+  line-height: 21px;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    font-size: 14px;
+    line-height: 16px;
+  }
+  &.active {
+    color: ${({ theme }) => theme.palette.common.black};
+  }
+`;
 
 export const StyledContainer = styled(Container)`
   margin-top: 18px;
@@ -13,34 +29,4 @@ export const StyledContainer = styled(Container)`
     padding-top: 10px;
     margin-top: 0px !important;
   }
-`;
-
-export const Actions = styled(Box)(() => ({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  flexWrap: "wrap",
-  marginTop: -10
-}));
-
-export const PageSize = styled(Box)(() => ({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  marginBottom: 3
-}));
-
-export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
-  display: "block",
-  margin: "12px 0px"
-}));
-
-export const StyledLink = styled(Link)`
-  font-family: var(--font-family-text) !important;
-  color: ${(props) => props.theme.palette.secondary.main} !important;
-`;
-
-export const PerPage = styled("div")`
-  margin-left: 8px;
 `;

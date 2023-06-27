@@ -36,7 +36,12 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
   return (
     <Layout sidebar={+sidebar}>
       <BackDrop isShow={+sidebar} onClick={handleToggle} />
-      <Drawer variant="permanent" open={sidebar} ModalProps={{ keepMounted: true }} anchor={isTablet ? "right" : "left"}>
+      <Drawer
+        variant="permanent"
+        open={sidebar}
+        ModalProps={{ keepMounted: true }}
+        anchor={isTablet ? "right" : "left"}
+      >
         <ToggleSidebar handleToggle={handleToggle} />
         <Sidebar />
       </Drawer>

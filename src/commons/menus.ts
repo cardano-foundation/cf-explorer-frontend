@@ -2,7 +2,6 @@ import { FaLinkedinIn, FaTelegramPlane, FaTwitter, FaYoutube } from "react-icons
 import { IconType } from "react-icons/lib";
 
 import {
-  ADALogoUrl,
   BlockChainMenuIcon,
   BrowseIcon,
   DelegatePoolMenuIcon,
@@ -35,10 +34,10 @@ export const menus: Menu[] = [
       { title: "Transactions", href: routers.TRANSACTION_LIST },
       { title: "Native Tokens", href: routers.TOKEN_LIST },
       { title: "Smart Contracts", href: routers.CONTRACT_LIST },
-      { title: "Pools", href: routers.DELEGATION_POOLS }
+      { title: "Pools", href: routers.DELEGATION_POOLS },
+      { title: "Top ADA Holders", href: routers.ADDRESS_LIST},
     ]
   },
-  { title: "Top ADA Holders", href: routers.ADDRESS_LIST, children: [], icon: ADALogoUrl },
   {
     title: "Operational Certificates",
     icon: DelegatePoolMenuIcon,
@@ -49,16 +48,12 @@ export const menus: Menu[] = [
       { title: "Pool Certificate", href: routers.REGISTRATION_POOLS.replace(":poolType?", "registration") },
       { title: "Pool Deregistration", href: routers.REGISTRATION_POOLS.replace(":poolType?", "de-registration") },
       { title: "Instantaneous Rewards ", href: routers.INSTANTANEOUS_REWARDS },
-      { title: "Top Delegators", href: routers.TOP_DELEGATOR }
     ]
   },
   {
     title: "Staking Lifecycle",
     icon: StakingLifecycleIcon,
-    children: [
-      { title: "Dashboard", href: routers.STAKING_LIFECYCLE },
-      { title: "Timeline", href: routers.STAKING_LIFECYCLE_SEARCH }
-    ]
+    href: routers.STAKING_LIFECYCLE.replace(":tab", "stake-key")
   },
   {
     title: "Protocol Parameters",
