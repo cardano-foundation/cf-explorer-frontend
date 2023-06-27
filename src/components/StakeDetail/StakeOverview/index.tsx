@@ -80,7 +80,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
       icon: rewardIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Reward available </TitleCard>
+          <TitleCard mr={1}>Rewards available </TitleCard>
         </Box>
       ),
       value: (
@@ -94,7 +94,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
       icon: rewardWithdrawIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> Reward withdrawn </TitleCard>
+          <TitleCard mr={1}> Rewards withdrawn </TitleCard>
         </Box>
       ),
       value: (
