@@ -70,7 +70,7 @@ export const Status = styled("span")<{ status: string }>`
 
 export const TextHeadline = styled("span")`
   font-weight: 700;
-  font-size: 48px;
+  font-size: 36px;
   color: #000000;
   margin-bottom: 14px;
   ${({ theme }) => theme.breakpoints.down("sm")} {

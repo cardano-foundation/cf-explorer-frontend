@@ -38,7 +38,7 @@ const StakingLifeCycleSearch = () => {
       <Box>
         <SearchContainer mx={"auto"}>
           <StyledInput
-            placeholder="Please enter a stake address or pool ID"
+            placeholder="Type a stake address or pool id"
             onChange={(e) => {
               setValue(e.target.value);
               setError("");

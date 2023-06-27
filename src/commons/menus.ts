@@ -55,7 +55,7 @@ export const menus: Menu[] = [
   {
     title: "Staking Lifecycle",
     icon: StakingLifecycleIcon,
-    children: [{ title: "Dashboard", href: routers.STAKING_LIFECYCLE.replace(":tab", "stake-key") }]
+    href: routers.STAKING_LIFECYCLE.replace(":tab", "stake-key")
   },
   {
     title: "Protocol Parameters",
