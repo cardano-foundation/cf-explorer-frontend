@@ -62,7 +62,7 @@ const DeregsitrationTab = () => {
       render(data) {
         return (
           <Box>
-            <AdaValue value={new BigNumber(data.poolHold).minus(data.fee).toString()} />
+            <AdaValue value={data.poolHold ? new BigNumber(data.poolHold).minus(data.fee).toString() : 0} />
             <TableSubTitle>
               <Box display="flex" mt={1} alignItems="center" lineHeight="1">
                 <AdaValue color={theme.palette.grey[400]} value={data.poolHold} gap="3px" fontSize="12px" />

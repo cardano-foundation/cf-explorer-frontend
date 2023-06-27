@@ -16,6 +16,7 @@ import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
 import useToast from "src/commons/hooks/useToast";
 import { ButtonClose } from "src/components/ScriptModal/styles";
 import { CloseIcon } from "src/commons/resources";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import { CancelButton, DeleteButton, StyledTable, TitleTab, WrapTab } from "./Styles";
 
@@ -82,7 +83,9 @@ const Bookmark = () => {
           to={details.address(data.keyword)}
           color={(theme) => `${theme.palette.secondary.main} !important`}
         >
-          {getShortWallet(data.keyword)}
+          <CustomTooltip title={data.keyword}>
+            <Box>{getShortWallet(data.keyword)}</Box>
+          </CustomTooltip>
         </Box>
       )
     },
@@ -96,7 +99,9 @@ const Bookmark = () => {
           to={details.transaction(data.keyword)}
           color={(theme) => `${theme.palette.secondary.main} !important`}
         >
-          {getShortHash(data.keyword)}
+          <CustomTooltip title={data.keyword}>
+            <Box>{getShortHash(data.keyword)}</Box>
+          </CustomTooltip>
         </Box>
       )
     },
@@ -138,7 +143,9 @@ const Bookmark = () => {
           to={details.delegation(data.keyword)}
           color={(theme) => `${theme.palette.secondary.main} !important`}
         >
-          {getShortWallet(data.keyword)}
+          <CustomTooltip title={data.keyword}>
+            <Box>{getShortWallet(data.keyword)}</Box>
+          </CustomTooltip>
         </Box>
       )
     },
@@ -152,7 +159,9 @@ const Bookmark = () => {
           to={details.stake(data.keyword)}
           color={(theme) => `${theme.palette.secondary.main} !important`}
         >
-          {getShortWallet(data.keyword)}
+          <CustomTooltip title={data.keyword}>
+            <Box>{getShortWallet(data.keyword)}</Box>
+          </CustomTooltip>
         </Box>
       )
     }
