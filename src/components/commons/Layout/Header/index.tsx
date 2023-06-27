@@ -25,8 +25,8 @@ import {
 } from "./styles";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [
-  routers.STAKING_LIFECYCLE,
-  routers.STAKING_LIFECYCLE_SEARCH,
+  routers.STAKING_LIFECYCLE.replace(":tab", "stake-key"),
+  routers.STAKING_LIFECYCLE.replace(":tab", "pools"),
   `/${routers.STAKE_DETAIL.split("/")[1]}/`,
   `/${routers.SPO_LIFECYCLE.split("/")[1]}/`
 ];
@@ -34,7 +34,7 @@ const HIDDEN_HEADER_SEARCH_PATHS: string[] = [
 const Header: React.FC<RouteComponentProps> = (props) => {
   const { history } = props;
   const home = history.location.pathname === "/";
-  const { sidebar, onDetailView } = useSelector(({ user }: RootState) => user);
+  const { sidebar } = useSelector(({ user }: RootState) => user);
   const [openSearch, setOpenSearch] = React.useState(false);
   const handleToggle = () => setSidebar(!sidebar);
 
@@ -49,7 +49,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
           <Title home={home ? 1 : 0}>Cardano Blockchain Explorer</Title>
           {!pathMatched && <HeaderSearch home={home} />}
         </HeaderMain>
-        <HeaderTop collasped={+onDetailView}>
+        <HeaderTop>
           <HeaderLogoLink to="/">
             <HeaderLogo src={LogoIcon} alt="logo desktop" />
           </HeaderLogoLink>
@@ -59,7 +59,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
             </NetworkContainer>
             <LoginButton />
             {history.location.pathname !== routers.STAKING_LIFECYCLE && (
-              <SearchButton home={+home} onClick={() => setOpenSearch((prev) => !prev)}>
+              <SearchButton onClick={() => setOpenSearch((prev) => !prev)}>
                 <SearchIcon fontSize={24} />
               </SearchButton>
             )}

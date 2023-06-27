@@ -1,11 +1,11 @@
 import { stringify } from "qs";
 import { useEffect, useState, useRef } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import { Box, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 
 import useFetchList from "src/commons/hooks/useFetchList";
-import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
-import { formatADAFull, formatDateTimeLocal, getEpochSlotNo, getPageInfo } from "src/commons/utils/helper";
+import { EPOCH_STATUS } from "src/commons/utils/constants";
+import { formatADAFull, formatDateTimeLocal, getPageInfo } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import Card from "src/components/commons/Card";
 import Table, { Column } from "src/components/commons/Table";
@@ -14,7 +14,6 @@ import DetailViewEpoch from "src/components/commons/DetailView/DetailViewEpoch";
 import { API } from "src/commons/utils/api";
 import SelectedIcon from "src/components/commons/SelectedIcon";
 import ADAicon from "src/components/commons/ADAIcon";
-import ProgressCircle from "src/components/commons/ProgressCircle";
 import FirstEpoch from "src/components/commons/Epoch/FirstEpoch";
 
 import { Blocks, StyledContainer, Output, BlueText, Status } from "./styles";
@@ -24,7 +23,6 @@ const Epoch: React.FC = () => {
   const [selected, setSelected] = useState<number | null>(null);
   const { search } = useLocation();
   const history = useHistory();
-  const theme = useTheme();
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
   const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, { ...pageInfo, sort });
@@ -40,15 +38,7 @@ const Epoch: React.FC = () => {
         <Link to={details.epoch(r.no || 0)}>
           <Box textAlign="center">
             <Box width={41} margin="auto">
-              <ProgressCircle
-                size={41}
-                pathWidth={5}
-                trailWidth={5}
-                strokeColor={theme.palette.green[600]}
-                percent={(getEpochSlotNo(r) / MAX_SLOT_EPOCH) * 100}
-              >
-                <div>{r.no || 0}</div>
-              </ProgressCircle>
+              {r.no || 0}
             </Box>
             <Status status={r.status.toLowerCase()}>{EPOCH_STATUS[r.status]}</Status>
           </Box>

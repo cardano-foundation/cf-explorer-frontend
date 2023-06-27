@@ -35,7 +35,8 @@ export const ConfirmStatus = styled("small")<{ status?: keyof typeof CONFIRMATIO
         return theme.palette.error.light;
     }
   }};
-  margin-left: 10px;
+  margin-left: 5px;
+  text-wrap: nowrap;
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
   padding: 5px 10px;
