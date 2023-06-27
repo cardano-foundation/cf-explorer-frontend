@@ -27,7 +27,7 @@ import {
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [
   routers.STAKING_LIFECYCLE,
   routers.STAKING_LIFECYCLE_SEARCH,
-  `/${routers.STAKE_DETAIL.split("/")[1]}/`,
+  `/${routers.DELEGATOR_LIFECYCLE.split("/")[1]}/`,
   `/${routers.SPO_LIFECYCLE.split("/")[1]}/`
 ];
 
