@@ -15,7 +15,7 @@ interface Props {
   children: React.ReactNode;
 }
 const CustomLayout: React.FC<Props> = ({ children }) => {
-  const { sidebar, onDetailView } = useSelector(({ user }: RootState) => user);
+  const { sidebar } = useSelector(({ user }: RootState) => user);
   const history = useHistory();
   const lastPath = React.useRef<string>(history.location.pathname);
 
@@ -39,7 +39,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
         <Sidebar />
       </Drawer>
       <MainContainer>
-        <Main id="main" component="main" open={onDetailView ? 1 : 0} sidebar={sidebar ? 1 : 0}>
+        <Main id="main" component="main" open={sidebar ? 1 : 0}>
           <Header />
           {children}
         </Main>
