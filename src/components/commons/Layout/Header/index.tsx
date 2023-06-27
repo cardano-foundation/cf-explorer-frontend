@@ -46,11 +46,11 @@ const Header: React.FC<RouteComponentProps> = (props) => {
     <HeaderContainer data-testid="header">
       <HeaderBox home={home ? 1 : 0}>
         <HeaderMain home={home ? 1 : 0}>
-          <Title home={home ? 1 : 0}>Cardano Blockchain Explorer</Title>
+          <Title home={home ? 1 : 0} data-testid="home-title">Cardano Blockchain Explorer</Title>
           {!pathMatched && <HeaderSearch home={home} />}
         </HeaderMain>
-        <HeaderTop>
-          <HeaderLogoLink to="/">
+        <HeaderTop data-testid="header-top">
+          <HeaderLogoLink to="/" data-testid="header-logo">
             <HeaderLogo src={LogoIcon} alt="logo desktop" />
           </HeaderLogoLink>
           <SideBarRight>
