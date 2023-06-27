@@ -1,4 +1,4 @@
-import React, { FormEvent, useState, useEffect } from "react";
+import React, { FormEvent, useState, useEffect, useCallback } from "react";
 import { Backdrop, Box, SelectChangeEvent } from "@mui/material";
 import { stringify } from "qs";
 import { BiChevronDown } from "react-icons/bi";
@@ -68,12 +68,6 @@ const options: Option[] = [
     detail: details.token
   },
   {
-    value: "stake-keys",
-    label: "Stake keys",
-    paths: [routers.STAKE_DETAIL],
-    detail: details.stake
-  },
-  {
     value: "addresses",
     label: "Addresses",
     paths: [
@@ -91,16 +85,6 @@ const options: Option[] = [
     label: "Pools",
     paths: [routers.DELEGATION_POOLS, routers.DELEGATION_POOL_DETAIL],
     detail: details.delegation
-  },
-  {
-    value: "lifecycle",
-    label: "Lifecycle",
-    paths: [
-      routers.STAKING_LIFECYCLE_SEARCH,
-      routers.SPO_LIFECYCLE,
-      routers.DELEGATOR_LIFECYCLE,
-      routers.STAKING_LIFECYCLE
-    ]
   },
   {
     value: "policies",
@@ -128,15 +112,18 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   }, [search, filter]);
 
   const currentPath = history.location.pathname.split("/")[1];
-  const checkIncludesPath = (paths: Option["paths"]) => paths?.find((path) => path?.split("/")[1] === currentPath);
+
+  const checkIncludesPath = useCallback(
+    (paths: Option["paths"]) => paths?.find((path) => path?.split("/")[1] === currentPath),
+    [currentPath]
+  );
 
   useEffect(() => {
     const filter: FilterParams = options.find((item) => checkIncludesPath(item.paths))?.value || "all";
     if ("/" + currentPath !== routers.SEARCH) setValues({ ...intitalValue, filter });
     setError("");
-    setShowErrorMobile && setShowErrorMobile(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [history.location.pathname]);
+    setShowErrorMobile?.(false);
+  }, [currentPath, checkIncludesPath, setError, setShowErrorMobile, setValues]);
 
   const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
@@ -151,7 +138,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
         callback?.();
       } else {
         setError("No results found");
-        setShowErrorMobile && setShowErrorMobile(true);
+        setShowErrorMobile?.(true);
         setShowOption(true);
       }
       return;
@@ -167,25 +154,29 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     }
 
     callback?.();
-    if (option?.detail) return history.push(option?.detail(search));
+    const isPoolTicketName =
+      option?.value === "delegations/pool-detail-header" && !search?.toLowerCase().startsWith("pool");
+
+    if (option?.detail && !isPoolTicketName) return history.push(option?.detail(search));
+
     if (search) {
       const params = { search, filter: filterParams || (filter !== "all" ? filter : undefined) };
       history.push(`${routers.SEARCH}?${stringify(params)}`);
       setError("");
-      setShowErrorMobile && setShowErrorMobile(false);
+      setShowErrorMobile?.(false);
     }
   };
 
   const handleChangeFilter = (e: SelectChangeEvent<unknown>) => {
     setValues({ search, filter: e.target.value as Option["value"] });
     setError("");
-    setShowErrorMobile && setShowErrorMobile(false);
+    setShowErrorMobile?.(false);
   };
 
   const handleChangeSearch = (e?: React.ChangeEvent) => {
     setValues({ filter, search: (e?.target as HTMLInputElement)?.value });
     setError("");
-    setShowErrorMobile && setShowErrorMobile(false);
+    setShowErrorMobile?.(false);
     onFocus((e?.target as HTMLInputElement)?.value);
   };
   const onFocus = (newValue?: string) => {

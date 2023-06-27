@@ -82,7 +82,7 @@ export const FRONT_END_NETWORK = {
   testnet: process.env.REACT_APP_TESTNET_APP_URL
 };
 
-export const NETWORK: NETWORKS = process.env.REACT_APP_NETWORK as NETWORKS;
+export const NETWORK: NETWORKS = (process.env.REACT_APP_NETWORK as NETWORKS) || NETWORKS.mainnet;
 
 export enum TRANSACTION_STATUS {
   FAIL = "FAIL",
@@ -166,7 +166,9 @@ export enum REFRESH_TIMES {
   POOLS = 20,
   STAKE_REGISTRATION = 20,
   POOL_REGISTRATIONS = 20,
-  TOP_DELEGATORS = 20
+  TOP_DELEGATORS = 20,
+  STAKE_DELEGATIONS = 20,
+  INSTANT_REWARDS = 20
 }
 
 export const PROTOCOL_TYPE = {

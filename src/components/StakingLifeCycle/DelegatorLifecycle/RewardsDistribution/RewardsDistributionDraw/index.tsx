@@ -16,7 +16,7 @@ export interface IRewarsDistributionDrawProps {
   toggleRewardModal: () => void;
 }
 
-const RewarsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({ data, toggleRewardModal }) => {
+const RewardsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({ data, toggleRewardModal }) => {
   const cadarnoSystemRef = useRef(null);
   const adaAmountFirstRef = useRef(null);
   const adaAmountSecondRef = useRef(null);
@@ -96,4 +96,4 @@ const RewarsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({ data, 
   );
 };
 
-export default RewarsDistributionDraw;
+export default RewardsDistributionDraw;

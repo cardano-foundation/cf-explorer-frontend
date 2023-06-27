@@ -57,7 +57,6 @@ export const RegistrationCertificateModal = ({
   handleCloseModal: () => void;
 }) => {
   const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`, undefined, false);
-
   return (
     <StyledModal width={550} {...props} title="Registration certificate">
       <StyledContainerModal>
