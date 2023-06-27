@@ -68,12 +68,6 @@ const options: Option[] = [
     detail: details.token
   },
   {
-    value: "stake-keys",
-    label: "Stake keys",
-    paths: [routers.STAKE_DETAIL],
-    detail: details.stake
-  },
-  {
     value: "addresses",
     label: "Addresses",
     paths: [
@@ -91,16 +85,6 @@ const options: Option[] = [
     label: "Pools",
     paths: [routers.DELEGATION_POOLS, routers.DELEGATION_POOL_DETAIL],
     detail: details.delegation
-  },
-  {
-    value: "lifecycle",
-    label: "Lifecycle",
-    paths: [
-      routers.STAKING_LIFECYCLE_SEARCH,
-      routers.SPO_LIFECYCLE,
-      routers.DELEGATOR_LIFECYCLE,
-      routers.STAKING_LIFECYCLE
-    ]
   },
   {
     value: "policies",
