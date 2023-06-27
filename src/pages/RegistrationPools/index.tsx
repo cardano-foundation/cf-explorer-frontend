@@ -133,7 +133,7 @@ const RegistrationPools = () => {
 
   return (
     <RegistrationContainer>
-      <Card title={poolType === POOL_TYPE.REGISTRATION ? "Pool Certificate" : "Pool De-Registration"}>
+      <Card title={poolType === POOL_TYPE.REGISTRATION ? "Pool Certificate" : "Pool Deregistration"}>
         <TimeDuration>
           <FormNowMessage time={fetchData.lastUpdated} />
         </TimeDuration>
