@@ -68,12 +68,6 @@ const options: Option[] = [
     detail: details.token
   },
   {
-    value: "stake-keys",
-    label: "Stake keys",
-    paths: [routers.STAKE_DETAIL],
-    detail: details.stake
-  },
-  {
     value: "addresses",
     label: "Addresses",
     paths: [
@@ -91,11 +85,6 @@ const options: Option[] = [
     label: "Pools",
     paths: [routers.DELEGATION_POOLS, routers.DELEGATION_POOL_DETAIL],
     detail: details.delegation
-  },
-  {
-    value: "lifecycle",
-    label: "Lifecycle",
-    paths: [routers.SPO_LIFECYCLE, routers.DELEGATOR_LIFECYCLE, routers.STAKING_LIFECYCLE]
   },
   {
     value: "policies",
@@ -165,7 +154,11 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     }
 
     callback?.();
-    if (option?.detail) return history.push(option?.detail(search));
+    const isPoolTicketName =
+      option?.value === "delegations/pool-detail-header" && !search?.toLowerCase().startsWith("pool");
+
+    if (option?.detail && !isPoolTicketName) return history.push(option?.detail(search));
+
     if (search) {
       const params = { search, filter: filterParams || (filter !== "all" ? filter : undefined) };
       history.push(`${routers.SEARCH}?${stringify(params)}`);
