@@ -73,7 +73,7 @@ const HomeStatistic = () => {
   const COIN_PATH = "https://www.coingecko.com/en/coins/cardano";
 
   return (
-    <StatisticContainer container spacing={2} justifyContent="space-between" alignItems="stretch">
+    <StatisticContainer container spacing={2} justifyContent="space-between" alignItems="stretch" data-testid="home-statistic">
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
         {usdMarket && btcMarket?.[0] ? (
           <Item data-testid="ada-price-box">
