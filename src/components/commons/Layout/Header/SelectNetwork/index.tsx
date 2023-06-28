@@ -72,7 +72,7 @@ const SelectNetwork: React.FC = () => {
 
   return (
     <StyledSelect
-      data-testid="network-selection-dropdown"
+      data-testid="header-network"
       onChange={handleChange}
       value={NETWORK}
       IconComponent={BiChevronDown}

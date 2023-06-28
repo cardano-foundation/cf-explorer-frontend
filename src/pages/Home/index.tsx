@@ -18,7 +18,7 @@ const Home = () => {
   }, []);
 
   return (
-    <HomeContainer>
+    <HomeContainer data-testid="home-container">
       <HomeStatistic />
       <HomeTrending />
       <LatestTransactions />
