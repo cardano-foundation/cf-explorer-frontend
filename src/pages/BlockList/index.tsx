@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
@@ -21,10 +22,12 @@ import { PriceWrapper, BlueText, StyledContainer, StyledLink } from "./styles";
 const BlockList = () => {
   const { search } = useLocation();
   const history = useHistory();
+  const { onDetailView } = useSelector(({ user }: RootState) => user);
   const [block, setBlock] = useState<number | string | null>(null);
   const [sort, setSort] = useState<string>("");
   const [selected, setSelected] = useState<number | null>(null);
   const pageInfo = getPageInfo(search);
+
   const fetchData = useFetchList<Block>(API.BLOCK.LIST, { ...pageInfo, sort });
   const mainRef = useRef(document.querySelector("#main"));
 
@@ -134,7 +137,7 @@ const BlockList = () => {
           showTabView
         />
       </Card>
-      {block && <DetailViewBlock blockNo={block} handleClose={handleClose} />}
+      {block && onDetailView && <DetailViewBlock blockNo={block} handleClose={handleClose} />}
     </StyledContainer>
   );
 };
