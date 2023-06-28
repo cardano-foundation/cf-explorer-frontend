@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Box, Popper, styled } from "@mui/material";
 
 import { CloseLineIcon } from "src/commons/resources";
@@ -36,6 +36,20 @@ type Props = {
 const PopperStyled = (props: Props) => {
   const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLElement) | null>(null);
   const { render, content, showCloseButton = true } = props;
+  const refElement = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (refElement.current && !(event.target instanceof Node && refElement.current.contains(event.target))) {
+      setAnchorEl(null);
+    }
+  };
 
   const handleClick = (element: HTMLElement) => {
     setAnchorEl(element);
@@ -50,7 +64,7 @@ const PopperStyled = (props: Props) => {
   return (
     <>
       {render({ handleClick: anchorEl ? handleClose : handleClick })}
-      <StyledPopper open={open} anchorEl={anchorEl} placement={"top-start"}>
+      <StyledPopper open={open} anchorEl={anchorEl} placement={"top-start"} ref={refElement}>
         {showCloseButton && (
           <Box
             onClick={handleClose}

@@ -26,7 +26,7 @@ const RewardAccountBox: React.FC<IRewardAccountBoxProps> = forwardRef(({ value, 
         Reward Account
       </Typography>
       <RewardValueLabel>
-        <ClickAbleButton onClick={toggleRewardModal}>
+        <ClickAbleButton data-testid="toggle-reward-modal" onClick={toggleRewardModal}>
           <WalletIconRewardGreen />
         </ClickAbleButton>
         <RewardValue>
