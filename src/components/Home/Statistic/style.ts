@@ -53,7 +53,6 @@ export const Name = styled("h4")`
   font-family: var(--font-family-text);
   font-size: 14px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    font-size: 12px;
     margin-top: 0.5rem;
     width: max-content;
   }

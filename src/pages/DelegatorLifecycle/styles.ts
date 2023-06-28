@@ -73,7 +73,7 @@ export const BoxItemStyled = styled(Box)<{ sidebar?: number }>(({ theme, sidebar
 export const BoxSwitchContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
   display: "flex",
   alignItems: "center",
-  justifyContent: "space-between",
+  justifyContent: "flex-end",
   gap: 15,
   [theme.breakpoints.down("lg")]: {
     width: sidebar ? "100%" : "auto"

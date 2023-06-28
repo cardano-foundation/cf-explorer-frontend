@@ -8,7 +8,7 @@ describe("template spec", () => {
     cy.get('[data-testid="transactions-card"]').contains("Transactions");
   });
 
-  it("should visit the blocks page", () => {
+  it("should visit the transactions page", () => {
     cy.visit("/transactions");
     cy.get('[data-testid="transactions-card"]').contains("Transactions");
   });

@@ -162,7 +162,7 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
     borderRadius: "8px",
     borderWidth: "1px",
     borderStyle: "solid",
-    borderColor: error ? "#DD4343" : theme.palette.grey[300],
+    borderColor: error ? theme.palette.error.main : theme.palette.grey[300],
     "&::before": {
       display: "none"
     },
@@ -170,7 +170,10 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
       display: "none"
     },
     padding: "5px 10px",
-    backgroundColor: error ? "rgba(247, 94, 94, 0.05)" : ""
+    backgroundColor: error ? "rgba(247, 94, 94, 0.05)" : "",
+    '&.MuiInputBase-root.Mui-focused': {
+      borderColor: error ? "" : theme.palette.primary.main,
+    },
   })
 );
 

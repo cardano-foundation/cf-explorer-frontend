@@ -55,7 +55,7 @@ const TopDelegators = () => {
       render: (r) => (
         <CustomTooltip title={r.poolName || r.poolId}>
           <StyledLink to={details.delegation(r.poolId)}>
-            {r.poolName || `Pool [${getShortWallet(r.poolId)}]`}
+            {r.poolName || getShortWallet(r.poolId)}
           </StyledLink>
         </CustomTooltip>
       )

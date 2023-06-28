@@ -44,7 +44,7 @@ const data: Story[] = [
 const LatestStories = () => {
   const drag = useRef<boolean>(false);
   return (
-    <LatestStoriesContainer>
+    <LatestStoriesContainer data-testid="home-latest-stories">
       <Header>
         <Title>Latest Stories</Title>
         <ViewAllButton data-testid="view-all" to={routers.STORY_LIST} />
