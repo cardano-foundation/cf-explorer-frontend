@@ -151,6 +151,13 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
     return `${palette.grey[200]} !important`;
   };
 
+  const handleChangeTab = (step: StepperProps, idx: number) => {
+    if (renderTabsSPO[step.keyCheckShow] && currentStep !== idx) {
+      history.replace(details.spo(poolId, "timeline", step.key));
+      setCurrentStep(idx);
+    }
+  };
+
   return (
     <StyledComponent>
       <Box display={"flex"} justifyContent={"space-between"}>
@@ -161,17 +168,12 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
             active={+(currentStep === idx)}
             component={renderTabsSPO[step.keyCheckShow] ? "span" : CustomTooltip}
             title={renderTabsSPO[step.keyCheckShow] ? undefined : "There is no record at this time"}
+            onClick={() => handleChangeTab(step, idx)}
           >
             <Box>
               <StepButton
                 component={IconButton}
                 active={+(currentStep === idx)}
-                onClick={() => {
-                  if (renderTabsSPO[step.keyCheckShow] && currentStep !== idx) {
-                    history.replace(details.spo(poolId, "timeline", step.key));
-                    setCurrentStep(idx);
-                  }
-                }}
                 bgcolor={renderBackground(currentStep === idx, renderTabsSPO[step.keyCheckShow])}
                 color={({ palette }) => (renderTabsSPO[step.keyCheckShow] ? palette.common.white : palette.grey[300])}
               >

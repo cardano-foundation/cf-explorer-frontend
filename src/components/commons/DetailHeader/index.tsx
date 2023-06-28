@@ -10,7 +10,7 @@ import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { details } from "src/commons/routers";
 import { RootState } from "src/stores/types";
 import { EmptyIcon, SearchIcon } from "src/commons/resources";
-import { formatDateTimeLocal, getShortHash, numberWithCommas } from "src/commons/utils/helper";
+import { formatDateTimeLocal, formatNumberDivByDecimals, getShortHash } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
 
 import ProgressCircle from "../ProgressCircle";
@@ -288,7 +288,9 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                               {item.assetName}
                             </Box>
                           </CustomTooltip>
-                          <Box fontWeight={500}>{numberWithCommas(item.assetQuantity)}</Box>
+                          <Box fontWeight={500}>
+                            {formatNumberDivByDecimals(item?.assetQuantity || 0, item?.metadata?.decimals || 0)}
+                          </Box>
                         </StyledMenuItem>
                       ))}
                   </StyledSelect>

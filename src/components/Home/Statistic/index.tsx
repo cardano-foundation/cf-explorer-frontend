@@ -70,13 +70,14 @@ const HomeStatistic = () => {
     ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
     : 100;
   const { isMobile, isGalaxyFoldSmall } = useScreen();
+  const COIN_PATH = "https://www.coingecko.com/en/coins/cardano";
 
   return (
-    <StatisticContainer container spacing={2} justifyContent="space-between" alignItems="stretch">
+    <StatisticContainer container spacing={2} justifyContent="space-between" alignItems="stretch" data-testid="home-statistic">
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
         {usdMarket && btcMarket?.[0] ? (
           <Item data-testid="ada-price-box">
-            <Link to={{ pathname: "https://www.coingecko.com/en/coins/cardano" }} target="_blank">
+            <Link to={{ pathname: COIN_PATH }} target="_blank">
               <ItemIcon
                 style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
                 data-testid="ada-price-icon"
@@ -87,9 +88,12 @@ const HomeStatistic = () => {
                 <Name data-testid="ada-price-box-title">Ada Price</Name>
                 <Title data-testid="ada-current-price">${usdMarket.current_price}</Title>
                 <br />
-                <RateWithIcon data-testid="ada-24Hr-price-change" value={usdMarket.price_change_percentage_24h} />
-                <AdaPrice data-testid="ada-price-in-BTC">{btcMarket[0]?.current_price} BTC</AdaPrice>
-                <TimeDuration marginTop="8px" data-testid="last-update-BTC">
+                <RateWithIcon
+                  data-testid="ada-twenty-four-hr-price-change"
+                  value={usdMarket.price_change_percentage_24h}
+                />
+                <AdaPrice data-testid="ada-price-in-btc">{btcMarket[0]?.current_price} BTC</AdaPrice>
+                <TimeDuration marginTop="8px" data-testid="last-update-btc">
                   Last updated {moment(btcMarket[0]?.last_updated).fromNow()}
                 </TimeDuration>
               </Content>
@@ -102,7 +106,7 @@ const HomeStatistic = () => {
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
         {usdMarket ? (
           <Item data-testid="market-cap-box">
-            <Link to={{ pathname: "https://www.coingecko.com/en/coins/cardano" }} target="_blank">
+            <Link to={{ pathname: COIN_PATH }} target="_blank">
               <ItemIcon
                 style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
                 data-testid="market-cap-icon"

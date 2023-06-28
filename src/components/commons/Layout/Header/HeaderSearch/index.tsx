@@ -159,6 +159,12 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
 
     if (option?.detail && !isPoolTicketName) return history.push(option?.detail(search));
 
+    if (option?.value === "all" && search.startsWith("stake")) {
+      history.push(details.stake(search));
+      callback?.();
+      return;
+    }
+
     if (search) {
       const params = { search, filter: filterParams || (filter !== "all" ? filter : undefined) };
       history.push(`${routers.SEARCH}?${stringify(params)}`);
@@ -192,7 +198,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const { isMobile } = useScreen();
 
   return (
-    <Form onSubmit={handleSearch} home={+home} sidebar={+sidebar}>
+    <Form onSubmit={handleSearch} home={+home} sidebar={+sidebar} data-testid="header-search">
       <Backdrop sx={{ backgroundColor: "unset" }} open={showOption} onClick={() => setShowOption(false)} />
       <StyledSelect
         data-testid="all-filters-dropdown"

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
-import { Box, IconButton, styled } from "@mui/material";
+import { Box, CircularProgress, IconButton, styled } from "@mui/material";
 
-import useFetchList from "src/commons/hooks/useFetchList";
+import { FetchReturnType } from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import { defaultAxiosDownload } from "src/commons/utils/axios";
 import { details } from "src/commons/routers";
@@ -43,16 +43,20 @@ export function getEventType(data: any) {
   return events;
 }
 
-const StakekeySummary = () => {
-  const history = useHistory();
-  const [{ page, size }, setPagi] = useState<{ page: number; size: number; sort?: string }>({
-    page: 0,
-    size: 50,
-    sort: "id,desc"
-  });
-  const [sort] = useState<string>("id,desc");
+interface IStakekeySummaryProps {
+  fetchData: FetchReturnType<IStakeKeySummary>;
+  pagination: { page: number; size: number };
+  onSort?: (sort?: string) => void;
+  onPagination?: ({ page, size }: { page: number; size: number }) => void;
+}
 
-  const downloadFn = async (reportId: number, fileName: string, typeExport: "CSV" | "EXCEL" = "CSV") => {
+const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort, pagination, onPagination }) => {
+  const history = useHistory();
+
+  const [downloadingReport, setDownloadingReport] = useState<number>();
+
+  const downloadFn = async (reportId: number, fileName: string, typeExport: "CSV" | "EXCEL" = "EXCEL") => {
+    setDownloadingReport(reportId);
     defaultAxiosDownload
       .get(`${API.REPORT.DOWNLOAD_STAKE_KEY_SUMMARY(reportId)}?exportType=${typeExport}`)
       .then((response) => {
@@ -65,13 +69,17 @@ const StakekeySummary = () => {
       })
       .catch((e) => {
         console.log(e);
-      });
+      })
+      .finally(() => setDownloadingReport(undefined));
   };
 
   const columns: Column<IReportStaking>[] = [
     {
       title: "Timestamp",
       key: "createdAt",
+      sort({ sortValue }) {
+        onSort?.(`id,${sortValue}`);
+      },
       render(data) {
         return formatDateTimeLocal(data.createdAt);
       }
@@ -82,11 +90,9 @@ const StakekeySummary = () => {
       maxWidth: "300px",
       render(data) {
         return (
-          <StyledBox>
-            <CustomTooltip title={`${data.reportName}`.replaceAll("-", " ")}>
-              <span>{`${data.reportName}`.replaceAll("-", " ")} </span>
-            </CustomTooltip>
-          </StyledBox>
+          <CustomTooltip title={`${data.reportName}`.replaceAll("-", " ")}>
+            <StyledBox>{`${data.reportName}`.replaceAll("-", " ")}</StyledBox>
+          </CustomTooltip>
         );
       }
     },
@@ -99,7 +105,7 @@ const StakekeySummary = () => {
     },
     {
       key: "transfer",
-      title: "ADA Transfer",
+      title: "ADA Transfers",
       render(data) {
         return data.isADATransfer ? "Yes" : "No";
       }
@@ -126,32 +132,29 @@ const StakekeySummary = () => {
       maxWidth: "50px",
       minWidth: "50px",
       render(data) {
-        return data.status === "GENERATED" ? (
-          <Box width="100%" textAlign="center">
-            <Box
-              component={IconButton}
-              display={"block"}
-              disabled={data.status !== "GENERATED"}
-              margin="auto"
-              textTransform={"capitalize"}
-              onClick={() => downloadFn(data.id, data.reportName, "EXCEL")}
-            >
-              <CustomIcon icon={DownloadGreenIcon} width={24} />
-            </Box>
+        return (
+          <Box width="100%" textAlign="right">
+            {downloadingReport === data.id ? (
+              <CircularProgress size={22} color="primary" />
+            ) : data.status === "GENERATED" ? (
+              <Box
+                component={IconButton}
+                textTransform={"capitalize"}
+                onClick={() => downloadFn(data.id, data.reportName)}
+              >
+                <Box>
+                  <CustomIcon icon={DownloadGreenIcon} width={24} />
+                </Box>
+              </Box>
+            ) : (
+              <></>
+            )}
           </Box>
-        ) : (
-          <></>
         );
       }
     }
   ];
-
-  const fetchData = useFetchList<IStakeKeySummary>(API.REPORT.STAKE_KEY_SUMMARY, {
-    page,
-    size,
-    sort
-  });
-
+  const { page, size } = pagination;
   return (
     <Box>
       <Table
@@ -163,7 +166,7 @@ const StakekeySummary = () => {
           page,
           size,
           total: fetchData.total,
-          onChange: (page, size) => setPagi({ page: page - 1, size })
+          onChange: (page, size) => onPagination?.({ page: page - 1, size })
         }}
       />
     </Box>

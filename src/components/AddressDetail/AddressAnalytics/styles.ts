@@ -158,15 +158,13 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
 
   [theme.breakpoints.down("lg")]: {
     backgroundColor: active ? `${theme.palette.primary.main} !important` : "none",
-    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400]
-  },
-
-  [theme.breakpoints.down("md")]: {
+    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
     "&:hover": {
       backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText
+      color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400]
     }
-  }
+  },
+
 }));
 
 export const TextCardHighlight = styled("span")`

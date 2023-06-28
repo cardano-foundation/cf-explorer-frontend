@@ -120,13 +120,13 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
   },
   "&>div": {
     "& > button": {
-      visibility: "hidden",
+      visibility: "hidden"
     },
     "&:hover": {
       "& > button": {
         transitionDelay: "0s",
-        visibility: "visible",
-      },
+        visibility: "visible"
+      }
     },
     "&:not(:hover)": {
       "& > button": {
