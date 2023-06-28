@@ -29,7 +29,7 @@ export const CustomButton = styled("button")<{ active: number }>(({ theme, activ
   padding: "6px 0",
   fontWeight: "var(--font-weight-bold)",
   color: active ? theme.palette.primary.contrastText : theme.palette.grey[400],
-  backgroundColor: active ? theme.palette.primary.main : theme.palette.background.neutral,
+  backgroundColor: active ? theme.palette.green[700] : theme.palette.background.neutral,
   cursor: "pointer",
   fontFamily: "var(--font-family-title)",
   fontSize: "16px",
@@ -139,7 +139,7 @@ export const ButtonTitle = styled("button")<{ active: boolean }>(({ theme, activ
   fontWeight: "bold",
   fontSize: "1rem",
   color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
-  backgroundColor: active ? theme.palette.primary.main : "none",
+  backgroundColor: active ? theme.palette.green[700] : "none",
   fontFamily: "var(--font-family-title)",
   border: `2px solid ${theme.palette.green[800_20]}`,
   cursor: "pointer",
@@ -175,7 +175,10 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   border: `2px solid ${theme.palette.green[800_20]}`,
   fontWeight: "bold",
   color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
-  backgroundColor: active ? theme.palette.primary.main : "none",
+  backgroundColor: active ? theme.palette.green[700] : "none",
+  "&:hover": {
+    color: active ? `${theme.palette.text.dark} !important` : theme.palette.grey[400]
+  },
   [theme.breakpoints.down("lg")]: {
     "&:hover": {
       backgroundColor: theme.palette.primary.main,

@@ -117,7 +117,7 @@ const AddressAnalytics: React.FC = () => {
                         angle: 0,
                         labels: {
                           style: {
-                            fontSize: 12
+                            fontSize: rangeTime === "THREE_MONTH" ? 10 : 12
                           },
                           rotation: isMobile || rangeTime === "THREE_MONTH" ? -45 : null
                         }
@@ -130,9 +130,9 @@ const AddressAnalytics: React.FC = () => {
                           name: "",
                           pointPlacement: "on",
                           type: "areaspline",
-                          marker: { enabled: false },
+                          marker: { enabled: true },
                           lineWidth: 4,
-                          color: theme.palette.primary.main,
+                          color: theme.palette.green[700],
                           fillColor: {
                             linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
                             stops: [

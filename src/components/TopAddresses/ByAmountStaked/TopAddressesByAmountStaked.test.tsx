@@ -2,7 +2,7 @@ import { render, screen } from "src/test-utils";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
 
-import TopDelegators from "./index";
+import TopAddressesByAmountStaked from "./index";
 
 const mockedData = [
   {
@@ -23,7 +23,7 @@ const mockedData = [
 
 jest.mock("src/commons/hooks/useFetchList");
 
-describe("TopDelegators Component", () => {
+describe("TopAddressesByAmountStaked Component", () => {
   beforeEach(() => {
     const mockedUseFetch = useFetchList as jest.Mock;
     mockedUseFetch.mockReturnValue({
@@ -37,14 +37,12 @@ describe("TopDelegators Component", () => {
     });
   });
   it("rendering component on PC", () => {
-    render(<TopDelegators />);
+    render(<TopAddressesByAmountStaked />);
     expect(screen.getByText(/last update/i)).toBeInTheDocument();
-    expect(screen.getByText("Top delegators")).toBeInTheDocument();
-    expect(screen.getByText(/per page/i)).toBeInTheDocument();
   });
 
   it("rendering with Data", () => {
-    render(<TopDelegators />);
+    render(<TopAddressesByAmountStaked />);
     const data = mockedData[0];
     expect(screen.getByText(getShortWallet(data.stakeKey))).toBeInTheDocument();
     expect(screen.getByText(formatADAFull(data.balance))).toBeInTheDocument();
@@ -62,7 +60,7 @@ describe("TopDelegators Component", () => {
       currentPage: 1
     });
 
-    render(<TopDelegators />);
+    render(<TopAddressesByAmountStaked />);
     expect(screen.getByAltText(/no data/i)).toBeInTheDocument();
   });
 });

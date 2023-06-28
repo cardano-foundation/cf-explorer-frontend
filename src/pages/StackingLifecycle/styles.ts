@@ -1,5 +1,6 @@
 import { Box, Button, Container, Grid, styled } from "@mui/material";
 
+import { TabLabel } from "src/components/ReportGeneratedTabs/styles";
 import Table from "src/components/commons/Table";
 
 export const DashboardCardList = styled(Box)`
@@ -33,7 +34,15 @@ export const GridContainer = styled(Grid)`
   }
 `;
 
-export const Status = styled("span")<{ status: string }>`
+export const WrapGridItem = styled(Box)`
+  min-width: 270px;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    min-width: 160px;
+  }
+
+`;
+
+export const Status = styled("span") <{ status: string }>`
   font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
   padding: 7.5px 11.5px;
@@ -69,8 +78,7 @@ export const Status = styled("span")<{ status: string }>`
 
 export const TextHeadline = styled("span")`
   font-weight: 700;
-  font-size: 32px;
-  line-height: 38px;
+  font-size: 36px;
   color: #000000;
   margin-bottom: 14px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -113,4 +121,7 @@ export const WrapReportName = styled(Box)`
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 20ch;
+`;
+export const StyledTabLabel = styled(TabLabel)`
+  font-size: 18px;
 `;
