@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { useWindowSize } from "react-use";
 import { useSelector } from "react-redux";
@@ -69,6 +69,16 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     setActive(item !== active ? item : null);
     if (!sidebar) setSidebar(true);
   };
+
+  const isActiveSubMenu = useCallback((href: string, pathName: string, categoryName?: string): boolean => {
+    if (categoryName === "Operational Certificates") return pathName === href;
+
+    return (
+      pathName === href ||
+      (pathName.split("/").length > 2 && href.includes(pathName.split("/")[1])) ||
+      (href === "/timeline" && (pathName.includes("delegator-lifecycle") || pathName.includes("spo-lifecycle")))
+    );
+  }, []);
 
   return (
     <SidebarMenuContainer>
@@ -187,10 +197,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             selected={pathname === href}
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
-                              ...(pathname === href ||
-                              pathname.includes(href) ||
-                              (href === "/timeline" &&
-                                (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
+                              ...(isActiveSubMenu(href, pathname, item.title)
                                 ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
                                 : {}),
                               paddingLeft: "70px",
@@ -210,13 +217,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             <SubMenuText
                               primary={title}
                               open={sidebar ? 1 : 0}
-                              active={
-                                pathname.includes(href) ||
-                                (href === "/timeline" &&
-                                  (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
-                                  ? 1
-                                  : 0
-                              }
+                              active={isActiveSubMenu(href, pathname, item.title) ? 1 : 0}
                             />
                           </ListItem>
                         )
