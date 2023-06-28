@@ -68,10 +68,16 @@ const DelegationLists: React.FC = () => {
       render: (r) => <RateWithIcon value={r.reward} multiple={1} />
     },
     {
+      title: "Margin ",
+      key: "margin",
+      minWidth: "120px",
+      render: (r) => `${formatPercent(r.feePercent)}`,
+    },
+    {
       title: "Fee (A) ",
       key: "pu.fixedCost",
       minWidth: "120px",
-      render: (r) => `${formatPercent(r.feePercent)} (${formatADAFull(r.feeAmount)} A)`,
+      render: (r) => `${formatADAFull(r.feeAmount)} A`,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }

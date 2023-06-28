@@ -218,7 +218,7 @@ export default function SignIn() {
   return (
     <Container>
       <WrapContent>
-        <WrapTitle>Sign-In</WrapTitle>
+        <WrapTitle data-testid="signin-title">Sign-In</WrapTitle>
         <WrapHintText>
           Don't have an account? <WrapSignUp onClick={() => history.push(routers.SIGN_UP)}>Sign-Up</WrapSignUp>
         </WrapHintText>
