@@ -165,7 +165,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
   const poolName = data.pool?.poolName
     ? `${data.pool.tickerName || ""} - ${data.pool.poolName}`
     : data.pool?.poolId
-    ? `Pool [${getShortWallet(data.pool.poolId)}]`
+    ? getShortWallet(data.pool.poolId)
     : "-";
 
   return (

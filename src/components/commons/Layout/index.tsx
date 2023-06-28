@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import { RootState } from "src/stores/types";
 import { setOnDetailView, setSidebar } from "src/stores/user";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import Footer from "./Footer";
 import Header from "./Header";
@@ -15,9 +16,10 @@ interface Props {
   children: React.ReactNode;
 }
 const CustomLayout: React.FC<Props> = ({ children }) => {
-  const { sidebar, onDetailView } = useSelector(({ user }: RootState) => user);
+  const { sidebar } = useSelector(({ user }: RootState) => user);
   const history = useHistory();
   const lastPath = React.useRef<string>(history.location.pathname);
+  const { isTablet } = useScreen();
 
   React.useEffect(() => {
     const unlisten = history.listen(() => {
@@ -34,12 +36,18 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
   return (
     <Layout sidebar={+sidebar}>
       <BackDrop isShow={+sidebar} onClick={handleToggle} />
-      <Drawer variant="permanent" open={sidebar} ModalProps={{ keepMounted: true }}>
+      <Drawer
+        variant="permanent"
+        data-testid="sidebar"
+        open={sidebar}
+        ModalProps={{ keepMounted: true }}
+        anchor={isTablet ? "right" : "left"}
+      >
         <ToggleSidebar handleToggle={handleToggle} />
         <Sidebar />
       </Drawer>
       <MainContainer>
-        <Main id="main" component="main" open={onDetailView ? 1 : 0} sidebar={sidebar ? 1 : 0}>
+        <Main id="main" component="main" open={sidebar ? 1 : 0}>
           <Header />
           {children}
         </Main>
