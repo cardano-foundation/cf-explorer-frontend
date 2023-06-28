@@ -62,27 +62,6 @@ const DelegationLists: React.FC = () => {
       render: (r) => <Box component={"span"}>{formatADAFull(r.poolSize)}</Box>
     },
     {
-      title: "Reward",
-      key: "Reward",
-      minWidth: "120px",
-      render: (r) => <RateWithIcon value={r.reward} multiple={1} />
-    },
-    {
-      title: "Margin ",
-      key: "margin",
-      minWidth: "120px",
-      render: (r) => `${formatPercent(r.feePercent)}`,
-    },
-    {
-      title: "Fee (A) ",
-      key: "pu.fixedCost",
-      minWidth: "120px",
-      render: (r) => `${formatADAFull(r.feeAmount)} A`,
-      sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      }
-    },
-    {
       title: "Declared Pledge (A)",
       key: "pu.pledge",
       minWidth: "120px",
@@ -90,6 +69,39 @@ const DelegationLists: React.FC = () => {
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
+    },
+    {
+      title: "Blocks in Epoch",
+      key: "epochBlock",
+      minWidth: "120px",
+      render: (r) => <Box component={"span"}>{r.epochBlock || 0}</Box>
+    },
+    {
+      title: "Reward",
+      key: "Reward",
+      minWidth: "120px",
+      render: (r) => <RateWithIcon value={r.reward} multiple={1} />
+    },
+    {
+      title: "Fixed Cost (A)",
+      key: "fixedCost",
+      minWidth: "120px",
+      render: (r) => `${formatADAFull(r.feeAmount)} A`,
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      }
+    },
+    {
+      title: "Margin ",
+      key: "margin",
+      minWidth: "120px",
+      render: (r) => `${formatPercent(r.feePercent)}`
+    },
+    {
+      title: "Number of Delegators",
+      minWidth: "200px",
+      key: "numberDelegators",
+      render: (r) => <Box component={"span"}>{r.numberDelegators || 0}</Box>
     },
     {
       title: "Saturation",
@@ -101,6 +113,18 @@ const DelegationLists: React.FC = () => {
           <StyledLinearProgress variant="determinate" value={r.saturation > 100 ? 100 : r.saturation} />
         </Box>
       )
+    },
+    {
+      title: "Blocks lifetime",
+      minWidth: "100px",
+      key: "lifetimeBlock",
+      render: (r) => <Box component={"span"}>{r.lifetimeBlock || 0}</Box>
+    },
+    {
+      title: "Lifetime ROS",
+      minWidth: "100px",
+      key: "lifetimeRos",
+      render: (r) => <Box component={"span"}>{r.lifetimeRos || 0}%</Box>
     }
   ];
 
