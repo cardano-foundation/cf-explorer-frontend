@@ -159,6 +159,12 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
 
     if (option?.detail && !isPoolTicketName) return history.push(option?.detail(search));
 
+    if (option?.value === "all" && search.startsWith("stake")) {
+      history.push(details.stake(search));
+      callback?.();
+      return;
+    }
+
     if (search) {
       const params = { search, filter: filterParams || (filter !== "all" ? filter : undefined) };
       history.push(`${routers.SEARCH}?${stringify(params)}`);
