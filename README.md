@@ -27,7 +27,7 @@ Then copy file env.example and rename it to .env:
 
 ### Update Environment
 
-Update `REACT_APP_MAINNET_API_URL`, `REACT_APP_PREPROD_API_URL`, `REACT_APP_TESTNET_API_URL`, `REACT_APP_PREVIEW_API_URL` with your api url for each network.
+Update `REACT_APP_API_URL` with your api url.
 
 Update `REACT_APP_AUTH_API_URL` with your auth api url to support sign in and sign up feature.
 
@@ -40,10 +40,7 @@ In the terminal run command: `cp .env.example .env`
 > Update value to **your** API
 
 For example: 
-`REACT_APP_MAINNET_API_URL=http://localhost:3001`
-`REACT_APP_PREPROD_API_URL=http://localhost:3002`
-`REACT_APP_TESTNET_API_URL=http://localhost:3003`
-`REACT_APP_PREVIEW_API_URL=http://localhost:3004`
+`REACT_APP_API_URL=http://localhost:3001`
 
 > Update Application URL reference
 
@@ -88,6 +85,8 @@ On opening Cypress, your testing journey begins with the Launchpad. Its job is t
 
 To run e2e test with all specs, try this command:
 `npm run cypress:run`
+
+
 
 ## Build into production
 

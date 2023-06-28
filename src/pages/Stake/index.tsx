@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { stringify } from "qs";
+import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 
@@ -28,6 +29,7 @@ export enum POOL_TYPE {
 const Stake = () => {
   const mainRef = useRef(document.querySelector("#main"));
   const [stake, setStake] = useState<string | null>(null);
+  const { onDetailView } = useSelector(({ user }: RootState) => user);
   const [selected, setSelected] = useState<number | null>(null);
   const { poolType = POOL_TYPE.REGISTRATION } = useParams<{ poolType: POOL_TYPE }>();
   const { search } = useLocation();
@@ -135,7 +137,7 @@ const Stake = () => {
           />
         </Card>
       </Box>
-      {stake && <DetailViewStakeKey stakeId={stake} handleClose={handleClose} />}
+      {stake && onDetailView && <DetailViewStakeKey stakeId={stake} handleClose={handleClose} />}
     </StyledContainer>
   );
 };

@@ -54,22 +54,14 @@ export const InfoGroup = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const DrawContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const DrawContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  width: "calc(100% + 30px)",
   height: "max-content",
   position: "relative",
-  margin: "0px -15px",
   marginTop: 35,
-  [theme.breakpoints.down("lg")]: {
-    minWidth: 1120,
-    margin: "auto",
-    marginTop: 35,
-    width: "100%"
-  },
-  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
+  [theme.breakpoints.down("xl")]: {
     flexDirection: "column",
     alignItems: "center",
     margin: "auto",
@@ -83,7 +75,7 @@ export const DrawContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar
   }
 }));
 
-export const AccountContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const AccountContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -95,10 +87,7 @@ export const AccountContainer = styled(Box)<{ sidebar?: number }>(({ theme, side
   border: "1.5px dashed #D2D2D2",
   background: alpha(theme.palette.grey[300], 0.1),
   borderRadius: 25,
-  [theme.breakpoints.down("lg")]: {
-    marginTop: 50
-  },
-  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
+  [theme.breakpoints.down("xl")]: {
     marginTop: 33
   }
 }));
@@ -151,18 +140,13 @@ export const PaymentWalleValue = styled(Box)(({ theme }) => ({
   color: theme.palette.common.black
 }));
 
-export const AmountGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const AmountGroup = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   width: "max-content",
   flexDirection: "row",
   gap: 8,
-  [theme.breakpoints.down("lg")]: {
-    flexDirection: "column",
-    gap: 49,
-    marginTop: 72
-  },
-  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
+  [theme.breakpoints.down("xl")]: {
     flexDirection: "column",
     gap: 49,
     marginTop: 72,
@@ -180,7 +164,7 @@ export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
   marginBottom: ".125em"
 }));
 
-export const BoxGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const BoxGroup = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
@@ -189,12 +173,7 @@ export const BoxGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) =
   width: 200,
   height: "100%",
   margin: "auto",
-  [theme.breakpoints.down("lg")]: {
-    flexDirection: "row-reverse",
-    gap: 15,
-    width: "100%"
-  },
-  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
+  [theme.breakpoints.down("xl")]: {
     flexDirection: "row-reverse",
     gap: 15,
     width: "100%"
@@ -204,7 +183,7 @@ export const BoxGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) =
   }
 }));
 
-export const NetAmountBox = styled(HoldBox)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const NetAmountBox = styled(HoldBox)(({ theme }) => ({
   boxSizing: "border-box",
   minHeight: 70,
   height: "max-content",
@@ -216,7 +195,7 @@ export const NetAmountBox = styled(HoldBox)<{ sidebar?: number }>(({ theme, side
     content: '"NET AMOUNT"',
     background: theme.palette.green[600]
   },
-  [theme.breakpoints.down(sidebar ? "lg" : "xl")]: {
+  [theme.breakpoints.down("xl")]: {
     width: 180,
     maxWidth: 180,
     minWidth: 180,
@@ -238,7 +217,7 @@ export const WithdrawnBox = styled(NetAmountBox)(() => ({
 
 export const StyledFeeBox = styled(FeeBox)(({ theme }) => ({
   width: 144,
-  [theme.breakpoints.down("lg")]: {
+  [theme.breakpoints.down("xl")]: {
     width: 156,
     padding: "16px 10px"
   },
@@ -248,10 +227,10 @@ export const StyledFeeBox = styled(FeeBox)(({ theme }) => ({
   }
 }));
 
-export const BufferBox = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const BufferBox = styled(Box)(({ theme }) => ({
   display: "none",
 
-  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
+  [theme.breakpoints.down("xl")]: {
     display: "block"
   }
 }));
