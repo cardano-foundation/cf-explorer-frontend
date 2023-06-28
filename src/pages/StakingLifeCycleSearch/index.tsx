@@ -81,7 +81,7 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.down("sm")]: {
     padding: "37px 58px",
-    marginBottom: "111px"
+    marginBottom: "50px"
   }
 }));
 
@@ -89,7 +89,6 @@ const SearchContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "start",
   alignItems: "center",
-  width: "100%",
   maxWidth: "min(800px,80vw)",
   background: theme.palette.background.paper,
   padding: "0 20px 0 30px",
