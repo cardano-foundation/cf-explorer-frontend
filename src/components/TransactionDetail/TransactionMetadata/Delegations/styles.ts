@@ -10,7 +10,7 @@ export const Header = styled(Box)`
   justify-content: space-between;
   font-size: var(--font-size-text-small);
   font-weight: var(--font-weight-bold);
-  color: ${(props) => props.theme.palette.text.hint};
+  color: ${(props) => props.theme.palette.grey[500]};
   border-bottom: 1px solid ${(props) => alpha(props.theme.palette.common.black, 0.1)};
   padding-bottom: 8px;
 `;
@@ -44,6 +44,6 @@ export const StatusIcon = styled("img")`
 export const AddressLink = styled(Link)`
   font-weight: var(--font-weight-bold);
   font-family: var(--font-size-text);
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.blue[900]} !important;
   margin-right: 8px;
 `;

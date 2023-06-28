@@ -1,5 +1,5 @@
-import { Box, Container, styled } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Container } from "@mui/material";
+import { styled } from "@mui/material";
 
 export const StyledContainer = styled(Container)`
   margin-top: 18px;
@@ -8,34 +8,9 @@ export const StyledContainer = styled(Container)`
     padding-top: 10px;
     padding-bottom: 10px;
   }
+
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
+    padding-top: 10px;
+    margin-top: 0px !important;
+  }
 `;
-
-export const StyledLink = styled(Link)`
-  font-family: var(--font-family-text) !important;
-  color: ${(props) => props.theme.palette.secondary.main} !important;
-`;
-
-export const PerPage = styled("div")`
-  margin-left: 8px;
-`;
-
-export const Actions = styled(Box)(() => ({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  flexWrap: "wrap",
-  marginTop: -10
-}));
-
-export const PageSize = styled(Box)(() => ({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  marginBottom: 3
-}));
-
-export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
-  display: "block",
-  margin: "12px 0px"
-}));
