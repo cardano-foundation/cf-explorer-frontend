@@ -18,7 +18,7 @@ const Sidebar: React.FC = () => {
       <HeaderTop>
         <LogoLink to="/" open={sidebar ? 1 : 0}>
           <NavBarLogo src={sidebar ? LogoFullIcon : LogoIcon} sidebar={+sidebar} alt="logo cardano" />
-          <NetworkName sidebar={+sidebar} network={NETWORK}>
+          <NetworkName sidebar={+sidebar} network={NETWORK} data-testid="network-name">
             {NETWORK_NAMES[NETWORK]}
           </NetworkName>
         </LogoLink>

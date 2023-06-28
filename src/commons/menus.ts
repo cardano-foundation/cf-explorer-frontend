@@ -2,7 +2,6 @@ import { FaLinkedinIn, FaTelegramPlane, FaTwitter, FaYoutube } from "react-icons
 import { IconType } from "react-icons/lib";
 
 import {
-  ADALogoUrl,
   BlockChainMenuIcon,
   BrowseIcon,
   DelegatePoolMenuIcon,
@@ -35,10 +34,10 @@ export const menus: Menu[] = [
       { title: "Transactions", href: routers.TRANSACTION_LIST },
       { title: "Native Tokens", href: routers.TOKEN_LIST },
       { title: "Smart Contracts", href: routers.CONTRACT_LIST },
-      { title: "Pools", href: routers.DELEGATION_POOLS }
+      { title: "Pools", href: routers.DELEGATION_POOLS },
+      { title: "Top ADA Holders", href: routers.ADDRESS_LIST }
     ]
   },
-  { title: "Top ADA Holders", href: routers.ADDRESS_LIST, children: [], icon: ADALogoUrl },
   {
     title: "Operational Certificates",
     icon: DelegatePoolMenuIcon,
