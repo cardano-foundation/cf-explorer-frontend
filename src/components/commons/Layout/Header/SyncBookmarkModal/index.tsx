@@ -29,10 +29,10 @@ const SyncBookmarkModal = () => {
     try {
       setLoading(true);
       const { data } = await addListBookmark(bookmarks || []);
+      const { data: dataBookmarks } = await getAllBookmarks(NETWORK_TYPES[NETWORK]);
       setMessage("Successfully!");
       setData(data);
-      const { data: dataBookmarks } = await getAllBookmarks(NETWORK_TYPES[NETWORK]);
-      if (data) {
+      if (dataBookmarks) {
         setBookmark(dataBookmarks);
       }
     } catch (error) {
@@ -43,7 +43,6 @@ const SyncBookmarkModal = () => {
   };
   const renderMessage = () => {
     if (data?.passNumber !== undefined && data?.failNumber === 0 && message) {
-      console.log("bookmarkLengthRef.current", bookmarkLengthRef.current);
       return (
         <>
           {data?.passNumber} {`bookmark${(data?.passNumber || 0) > 1 ? "s" : ""}`} successfully synced{" "}
