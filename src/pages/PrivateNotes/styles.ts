@@ -68,6 +68,9 @@ export const StyledTable = styled(Table)(({ theme }) => ({
   "& .empty-content-table": {
     top: "unset"
   },
+  "& .table-wrapper": {
+    minHeight: "75px"
+  },
   "& thead tr th": {
     fontSize: "var(--font-size-text-x-small)",
     padding: "10px 20px"
@@ -77,7 +80,10 @@ export const StyledTable = styled(Table)(({ theme }) => ({
     height: "60px"
   },
   "& tbody tr td": {
-    padding: "0 20px"
+    padding: "0 20px",
+    "&:first-child": {
+      paddingRight: 0
+    }
   },
   [theme.breakpoints.down("sm")]: {
     "& > div": {
@@ -117,6 +123,8 @@ export const SmallText = styled("small")`
   white-space: nowrap;
   color: ${(props) => props.theme.palette.grey[500]};
   margin-top: 4px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
 export const CancelButton = styled(Button)(({ theme }) => ({
   textTransform: "capitalize",

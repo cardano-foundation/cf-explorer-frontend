@@ -1,4 +1,4 @@
-import { Box, Button, Skeleton as SkeletonMUI, styled } from "@mui/material";
+import { Box, Skeleton as SkeletonMUI, styled } from "@mui/material";
 
 import { BoxRaised } from "src/components/commons/BoxRaised";
 
@@ -18,14 +18,17 @@ export const Tabs = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
+export const Tab = styled("button")<{ active: number }>(({ theme, active }) => ({
+  boxSizing: "border-box",
+  width: "50px",
+  height: "28px",
+  cursor: "pointer",
   textTransform: "lowercase",
-  borderRadius: 10,
+  borderRadius: 5,
   border: `2px solid ${theme.palette.green[800_20]}`,
-  marginRight: theme.spacing(1),
   color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
   fontWeight: "bold",
-  backgroundColor: active ? theme.palette.primary.main : "none",
+  backgroundColor: active ? theme.palette.primary.main : theme.palette.common.white,
   ":hover": {
     color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
     backgroundColor: active ? theme.palette.primary.main : "none"
@@ -33,7 +36,8 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   [theme.breakpoints.down("sm")]: {
     border: `1.5px solid ${theme.palette.green[800_20]}`,
     borderRadius: 5,
-    height: 28
+    height: 28,
+    width: 70
   }
 }));
 export const TransactionContainer = styled(BoxRaised)`
@@ -92,7 +96,7 @@ export const BoxInfo = styled(Box)(({ theme }) => ({
   minHeight: "200px",
   borderRadius: "12px",
   padding: theme.spacing(3),
-  [theme.breakpoints.between("lg", "xl")]: {
+  [theme.breakpoints.up("lg")]: {
     paddingLeft: 0,
     paddingRight: 0
   },

@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 
 import { EyeIcon } from "src/commons/resources";
-import { DeregistrationCertificateModal } from "src/components/commons/DeregistrationCertificateModal";
 import { AdaValue } from "src/components/commons/ADAValue";
+import { DeregistrationCertificateModal } from "src/components/commons/DeregistrationCertificateModal";
 
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { details } from "../../../../commons/routers";
@@ -61,6 +61,7 @@ const DeregistrationTab = () => {
       render: (r) => (
         <Box>
           <TableSubTitle>
+            <AdaValue color={theme.palette.grey[700]} value={-r.deposit - r.fee} fontSize="14px" />
             <Box display="flex" mt={1} alignItems="center" lineHeight="1">
               <AdaValue
                 color={theme.palette.grey[400]}
