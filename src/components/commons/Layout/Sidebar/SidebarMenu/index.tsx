@@ -1,5 +1,5 @@
 import { Collapse, Divider, ListItem, useTheme } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { BiChevronDown, BiChevronRight } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
@@ -70,6 +70,16 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     if (!sidebar) setSidebar(true);
   };
 
+  const isActiveSubMenu = useCallback((href: string, pathName: string, categoryName?: string): boolean => {
+    if (categoryName === "Operational Certificates") return pathName === href;
+
+    return (
+      pathName === href ||
+      (pathName.split("/").length > 2 && href.includes(pathName.split("/")[1])) ||
+      (href === "/timeline" && (pathName.includes("delegator-lifecycle") || pathName.includes("spo-lifecycle")))
+    );
+  }, []);
+
   return (
     <SidebarMenuContainer>
       <Menu>
@@ -122,9 +132,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`menu-${index}` === active
                         ? {
-                          backgroundColor: (theme) => `${theme.palette.green[700_10]} !important`,
-                          color: (theme) => theme.palette.grey[500]
-                        }
+                            backgroundColor: (theme) => `${theme.palette.green[700_10]} !important`,
+                            color: (theme) => theme.palette.grey[500]
+                          }
                         : { color: (theme) => theme.palette.grey[500] })
                     })}
                   >
@@ -187,10 +197,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             selected={pathname === href}
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
-                              ...(pathname === href ||
-                                pathname.includes(href) ||
-                                (href === "/timeline" &&
-                                  (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
+                              ...(isActiveSubMenu(href, pathname, item.title)
                                 ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
                                 : {}),
                               paddingLeft: "70px",
@@ -210,13 +217,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             <SubMenuText
                               primary={title}
                               open={sidebar ? 1 : 0}
-                              active={
-                                pathname.includes(href) ||
-                                  (href === "/timeline" &&
-                                    (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
-                                  ? 1
-                                  : 0
-                              }
+                              active={isActiveSubMenu(href, pathname, item.title) ? 1 : 0}
                             />
                           </ListItem>
                         )
@@ -286,9 +287,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`footer-${index}` === active
                         ? {
-                          backgroundColor: (theme) => `${theme.palette.green[700_10]} !important`,
-                          color: (theme) => theme.palette.grey[500]
-                        }
+                            backgroundColor: (theme) => `${theme.palette.green[700_10]} !important`,
+                            color: (theme) => theme.palette.grey[500]
+                          }
                         : { color: (theme) => theme.palette.grey[500] })
                     })}
                   >
