@@ -46,6 +46,9 @@ import { NETWORK, NETWORK_TYPES } from "./commons/utils/constants";
 import { setOpenSyncBookmarkModal } from "./stores/user";
 import StakeDelegations from "./pages/StakeDelegations";
 import InstantRewards from "./pages/InstantRewards";
+import { getAllBookmarks } from "./commons/utils/userRequest";
+import { NETWORK, NETWORK_TYPES } from "./commons/utils/constants";
+import { setOpenSyncBookmarkModal } from "./stores/user";
 
 const Routes: React.FC = () => {
   const { isLoggedIn } = useAuth();
