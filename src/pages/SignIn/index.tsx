@@ -1,5 +1,5 @@
-import { useEffect, useReducer, useState } from "react";
 import { Box, Checkbox, FormControlLabel, FormGroup, FormHelperText, IconButton, InputAdornment } from "@mui/material";
+import { useEffect, useReducer, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
 
@@ -128,7 +128,7 @@ export default function SignIn() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     }
-  }, []);
+  }, [enableButton, formData]);
 
   const getError = (name: string, value: string) => {
     let error = "";
@@ -218,7 +218,7 @@ export default function SignIn() {
   return (
     <Container>
       <WrapContent>
-        <WrapTitle>Sign-In</WrapTitle>
+        <WrapTitle data-testid="signin-title">Sign-In</WrapTitle>
         <WrapHintText>
           Don't have an account? <WrapSignUp onClick={() => history.push(routers.SIGN_UP)}>Sign-Up</WrapSignUp>
         </WrapHintText>
@@ -229,7 +229,7 @@ export default function SignIn() {
             </CloseButton>
             {invalidInfomation ? (
               <Box pt={"24px"}>
-                <AlertCustom severity="error">Incorrect Emaill Address or Password</AlertCustom>
+                <AlertCustom severity="error">Incorrect email address or password</AlertCustom>
               </Box>
             ) : null}
             <WrapInput>

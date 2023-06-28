@@ -5,7 +5,7 @@ import TransactionChart from "./TransactionChart";
 
 const HomeTrending = () => {
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} data-testid="home-trending">
       <Grid item xs={12}>
         <TransactionChart />
       </Grid>
