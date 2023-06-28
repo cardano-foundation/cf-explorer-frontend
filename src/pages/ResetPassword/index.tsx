@@ -140,7 +140,7 @@ export default function ResetPassword() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     }
-  }, []);
+  }, [loading, formData]);
 
   const handleKeyDown = (event: any) => {
     if (event.key === 'Enter') {
