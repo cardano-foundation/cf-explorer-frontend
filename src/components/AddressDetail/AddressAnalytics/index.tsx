@@ -46,7 +46,7 @@ const AddressAnalytics: React.FC = () => {
   const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.ADDRESS.MIN_MAX_BALANCE}/${address}`);
   const dataChart = data?.map((i) => {
     const value = BigNumber(i.value).div(10 ** 6);
-    return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
+    return Number(value.toString().match(/^-?\d+(?:\.\d{0,6})?/)?.[0]);
   });
 
   const categories =
