@@ -134,3 +134,7 @@ export const ButtonReport = styled(Button)<{ sidebar?: number }>(({ theme }) => 
     width: "100%"
   }
 }));
+
+export const ReportButtonContainer = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: { width: "100%" }
+}));
