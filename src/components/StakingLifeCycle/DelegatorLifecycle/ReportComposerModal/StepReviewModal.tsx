@@ -71,7 +71,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
       toast.success("Generate report success");
       handleCloseModal();
       setTimeout(() => {
-        history.push(details.generated_report(isPoolReport ? "pools" : "stake-key"));
+        history.push(details.dashboard(isPoolReport ? "pools" : "stake-key"));
       }, 2000);
     } catch (err: any) {
       console.error(err);
