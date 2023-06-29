@@ -1,5 +1,5 @@
+import { useEffect, useMemo, useState } from "react";
 import { Box, IconButton, useTheme } from "@mui/material";
-import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -60,9 +60,20 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
   const history = useHistory();
   const { isMobile } = useScreen();
   const { palette } = useTheme();
+  const [tabsValid, setTabValid] = useState(["isRegistration", "isUpdate", "isReward", "isDeRegistration"]);
   useEffect(() => {
-    document.getElementById(`step-${currentStep}`)?.scrollIntoView();
+    const element = document.getElementById(`step-${currentStep}`);
+    if (element && typeof element.scrollIntoView === "function") {
+      element.scrollIntoView(true);
+    }
   }, [currentStep]);
+
+  useEffect(() => {
+    if (renderTabsSPO) {
+      setTabValid((prev) => prev.filter((tab) => renderTabsSPO[tab]));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(renderTabsSPO)]);
 
   if (!renderTabsSPO) return null;
 
@@ -126,6 +137,12 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
     }
   ];
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const indexTabsValid = useMemo(() => {
+    return tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentStep, tabsValid]);
+
   const renderBackground = (isActive: boolean, hasData: boolean) => {
     if (isActive) {
       return `${palette.green[600]} !important`;
@@ -179,29 +196,44 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
         {currentStep > 0 && (
           <PreviousButton
             onClick={() => {
-              history.replace(details.spo(poolId, "timeline", stepper[currentStep - 1]?.key));
-              setCurrentStep(currentStep - 1);
+              history.replace(
+                details.spo(
+                  poolId,
+                  "timeline",
+                  stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1])?.key
+                )
+              );
+              setCurrentStep(stepper.findIndex((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1]));
             }}
           >
             <PreviousIcon />
             <Box fontSize={isMobile ? 14 : 16} component={"span"}>
-              Previous: {stepper[currentStep - 1]?.title}
+              Previous: {stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1])?.title}
             </Box>
           </PreviousButton>
         )}
         <NextButton
           onClick={() => {
-            if (currentStep === stepper.length - 1) {
+            if (+indexTabsValid === tabsValid.length - 1) {
               history.push(details.spo(poolId, "tabular"));
             } else {
-              history.replace(details.spo(poolId, "timeline", stepper[currentStep + 1]?.key));
-              setCurrentStep(currentStep + 1);
+              history.replace(
+                details.spo(
+                  poolId,
+                  "timeline",
+                  stepper.find((s) => s.keyCheckShow === tabsValid[+indexTabsValid + 1])?.key
+                )
+              );
+              setCurrentStep(stepper.findIndex((step) => step.keyCheckShow === tabsValid[+indexTabsValid + 1]));
             }
           }}
           variant="contained"
         >
           <ButtonText>
-            Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
+            Next:{" "}
+            {+indexTabsValid === tabsValid.length - 1
+              ? "View in tabular"
+              : stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid + 1])?.title}
           </ButtonText>
           <NextIcon />
         </NextButton>

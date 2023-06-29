@@ -24,7 +24,7 @@ const LatestStories = () => {
   }
 
   return (
-    <LatestStoriesContainer>
+    <LatestStoriesContainer data-testid="home-latest-stories">
       <Header>
         <Title>Latest Stories</Title>
       </Header>

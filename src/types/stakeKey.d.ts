@@ -23,6 +23,8 @@ interface IStakeKeyDetail {
     tickerName: string;
     poolName: string;
     poolId: string;
+    iconUrl?: string;
+    logoUrl?: string;
   };
 }
 
@@ -117,3 +119,23 @@ interface WithdrawalHistoryItem {
 }
 
 type DeregistrationItem = RegistrationItem;
+
+interface StakeDelegations {
+  blockNo: number;
+  epochNo: number;
+  epochSlotNo: number;
+  pools: string[];
+  stakeKeys: string[];
+  time: string;
+  txHash: string;
+}
+
+interface InstantRewards {
+  blockNo: number;
+  epochNo: number;
+  epochSlotNo: number;
+  numberOfStakes: number;
+  time: string;
+  txHash: string;
+  rewards: number;
+}

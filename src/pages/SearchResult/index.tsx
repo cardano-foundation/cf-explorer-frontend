@@ -4,7 +4,7 @@ import { parse } from "qs";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useHistory, useLocation } from "react-router-dom";
 
-import { details } from "src/commons/routers";
+import { details, routers } from "src/commons/routers";
 import defaultAxios from "src/commons/utils/axios";
 import NoRecord from "src/components/commons/NoRecord";
 
@@ -16,14 +16,15 @@ const SearchResultContainer = styled(Container)`
   padding: 120px 0px;
 `;
 
-const Title = styled("h3")`
-  color: ${(props) => props.theme.palette.grey[400]};
-  margin-bottom: 2rem;
-  font-weight: var(--font-weight-normal);
-`;
-
 const getUrl = (filter?: FilterParams | "all", value?: string): FilterParams | null => {
+  const isPoolTicketName = filter === "delegations/pool-detail-header" && !value?.toLowerCase().startsWith("pool");
+
+  if (isPoolTicketName) {
+    return "delegations/pool-list?search=";
+  }
+
   if (filter && filter !== "all") return filter;
+
   if (value) {
     if (value.search("stake-key") === 0) return "stake-keys";
     if (value.search("pool") === 0) return "delegations/pool-detail-header";
@@ -59,7 +60,17 @@ const createNavigator = (filter?: FilterParams) => {
 
 const filterURLS = (value: string): FilterParams[] => {
   if (!Number.isNaN(Number(value))) return ["epochs", "blocks"];
-  else return ["blocks", "txs", "tokens", "stake-keys", "addresses", "delegations/pool-detail-header", "policies"];
+  else
+    return [
+      "blocks",
+      "txs",
+      "tokens",
+      "stake-keys",
+      "addresses",
+      "delegations/pool-detail-header",
+      "policies",
+      "delegations/pool-list?search="
+    ];
 };
 
 const SearchResult = () => {
@@ -72,17 +83,30 @@ const SearchResult = () => {
     document.title = loading ? `Search For ${value}...` : `No Record Found: ${value} | Cardano Explorer`;
   }, [loading, value]);
 
+  const handleFilterByPool = (data: any) => {
+    if (data?.totalItems === 0) {
+      setLoading(false);
+    } else if (data?.totalItems === 1) {
+      history.replace(details.delegation(data?.data?.[0]?.poolId));
+    } else {
+      history.replace(routers.DELEGATION_POOLS, { tickerNameSearch: value });
+    }
+  };
+
   useEffect(() => {
     const checkFilter = async () => {
       if (!value) return;
 
       const urlDetect = getUrl(filter, value);
-
       if (urlDetect) {
         try {
-          const res = await defaultAxios.get(`${urlDetect}/${value}`);
+          const pathName = urlDetect?.includes("?search=") ? `${urlDetect}${value}` : `${urlDetect}/${value}`;
+          const res = (await defaultAxios.get(pathName)) || {};
+          if (urlDetect === "delegations/pool-list?search=") {
+            return handleFilterByPool(res.data);
+          }
           const navigate = createNavigator(urlDetect);
-          if (navigate) return history.replace(navigate(value), { data: res.data });
+          if (navigate) history.replace(navigate(value), { data: res.data });
         } catch {
           return setLoading(false);
         }
@@ -91,12 +115,18 @@ const SearchResult = () => {
       try {
         const urls = filterURLS(value);
         const result = await Promise.any(
+          /* eslint-disable  @typescript-eslint/no-explicit-any */
           urls.map(async (url): Promise<{ url: FilterParams; data: any }> => {
             try {
-              const res = await defaultAxios.get(`${url}/${value}`);
-              if (res.data) return Promise.resolve({ url, data: res.data });
+              const pathName = url?.includes("?search=") ? `${url}${value}` : `${url}/${value}`;
+              const res = await defaultAxios.get(pathName);
+              if (url === "delegations/pool-list?search=") {
+                handleFilterByPool(res.data);
+              } else if (res.data) {
+                return Promise.resolve({ url, data: res.data });
+              }
             } catch {
-              //To do
+              return Promise.reject();
             }
             return Promise.reject();
           })
@@ -105,21 +135,21 @@ const SearchResult = () => {
         const navigate = createNavigator(url);
 
         if (navigate) return history.replace(navigate(value), { data });
-      } catch {
-        //To do
+      } catch (error) {
+        console.log(error);
       }
 
       setLoading(false);
     };
 
     checkFilter();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [history, filter, value]);
 
   if (loading)
     return (
-      <SearchResultContainer>
+      <SearchResultContainer data-testid="search-page">
         <CircularProgress size={50} />
-        <Title>Searching....</Title>
       </SearchResultContainer>
     );
 

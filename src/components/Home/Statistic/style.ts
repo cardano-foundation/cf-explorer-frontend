@@ -53,7 +53,6 @@ export const Name = styled("h4")`
   font-family: var(--font-family-text);
   font-size: 14px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    font-size: 12px;
     margin-top: 0.5rem;
     width: max-content;
   }
@@ -131,7 +130,7 @@ export const ProcessActive = styled("div")<{ rate: number }>`
   background-color: ${(props) => props.theme.palette.primary.main};
 `;
 
-export const ProgressPending = styled(ProcessActive)<{rate: number}>`
+export const ProgressPending = styled(ProcessActive)<{ rate: number }>`
   width: ${(props) => props.rate}%;
   background-color: ${(props) => props.theme.palette.warning.main};
 `;

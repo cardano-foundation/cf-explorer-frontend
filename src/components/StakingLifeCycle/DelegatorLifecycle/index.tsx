@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Box, IconButton, useTheme } from "@mui/material";
 
@@ -69,6 +69,13 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
   }>();
   const [open, setOpen] = useState(false);
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
+  const [tabsValid, setTabValid] = useState([
+    "hasRegistration",
+    "hasDelegation",
+    "hashRewards",
+    "hasWithdrawal",
+    "hasDeRegistration"
+  ]);
 
   useEffect(() => {
     const element = document.getElementById(`step-${currentStep}`);
@@ -76,6 +83,14 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       element.scrollIntoView(true);
     }
   }, [currentStep]);
+
+  useEffect(() => {
+    if (tabsRenderConfig) {
+      setTabValid((prev) => prev.filter((tab) => tabsRenderConfig[tab]));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(tabsRenderConfig)]);
+
   if (!tabsRenderConfig) return null;
 
   const stepper: StepperProps[] = [
@@ -172,6 +187,12 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
     }
   ];
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const indexTabsValid = useMemo(() => {
+    return tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentStep, tabsValid]);
+
   const renderBackground = (isActive: boolean, hasData: boolean) => {
     if (isActive) {
       return `${palette.green[600]} !important`;
@@ -240,29 +261,46 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
           <PreviousButton
             sx={{ mb: `${isMobile ? "16px" : "0px"}` }}
             onClick={() => {
-              history.push(details.staking(stakeId, "timeline", stepper[currentStep - 1]?.key));
-              setCurrentStep(currentStep - 1);
+              history.push(
+                details.staking(
+                  stakeId,
+                  "timeline",
+                  stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1])?.key
+                )
+              );
+              setCurrentStep(stepper.findIndex((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1]));
             }}
           >
             <PreviousIcon />
-            <ButtonText>Previous: {stepper[currentStep - 1]?.title}</ButtonText>
+            <ButtonText>
+              Previous: {stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1])?.title}
+            </ButtonText>
           </PreviousButton>
         ) : (
           <Box />
         )}
         <NextButton
           onClick={() => {
-            if (currentStep === stepper.length - 1) {
+            if (+indexTabsValid === tabsValid.length - 1) {
               history.push(details.staking(stakeId, "tabular"));
             } else {
-              history.push(details.staking(stakeId, "timeline", stepper[currentStep + 1]?.key));
-              setCurrentStep(currentStep + 1);
+              history.push(
+                details.staking(
+                  stakeId,
+                  "timeline",
+                  stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid + 1])?.key
+                )
+              );
+              setCurrentStep(stepper.findIndex((step) => step.keyCheckShow === tabsValid[+indexTabsValid + 1]));
             }
           }}
           variant="contained"
         >
           <ButtonText fontSize={isMobile ? 14 : 16}>
-            Next: {currentStep === stepper.length - 1 ? "View in tabular" : stepper[currentStep + 1]?.title}
+            Next:{" "}
+            {+indexTabsValid === tabsValid.length - 1
+              ? "View in tabular"
+              : stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid + 1])?.title}
           </ButtonText>
           <NextIcon />
         </NextButton>

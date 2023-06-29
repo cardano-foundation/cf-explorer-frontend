@@ -1,12 +1,12 @@
 import { cleanup, screen, waitFor } from "@testing-library/react";
 import { useSelector } from "react-redux";
+import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom/extend-expect";
 
 import { render } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
-import { Router } from "react-router-dom";
 import { numberWithCommas } from "src/commons/utils/helper";
 
 import TransactionChart, { TransactionChartIF } from ".";
@@ -57,7 +57,6 @@ const mockItemMonth: TransactionChartIF = {
 };
 
 const getData = (url: string) => {
-  console.log(url.split("/")[2]);
   switch (url.split("/")[2]) {
     case "ONE_DAY":
       return mockItemDay;
@@ -91,7 +90,7 @@ describe("TransactionChart", () => {
         <TransactionChart />
       </Router>
     );
-    expect(screen.getByText("Transaction today")).toBeInTheDocument();
+    expect(screen.getByText(/Transactions today/i)).toBeInTheDocument();
     const oneDay = screen.getByText("1d");
     const oneWeek = screen.getByText("1w");
     const twoWeek = screen.getByText("2w");
@@ -108,7 +107,7 @@ describe("TransactionChart", () => {
 
     await userEvent.click(twoWeek);
     await waitFor(async () => {
-      expect(screen.getByText("Transaction in two week")).toBeInTheDocument();
+      expect(screen.getByText("Transactions in two weeks")).toBeInTheDocument();
       expect(screen.getByTestId("trx")).toHaveTextContent(numberWithCommas(mockItem2Week.simpleTransactions));
       expect(screen.getByTestId("simple")).toHaveTextContent(numberWithCommas(mockItem2Week.smartContract));
       expect(screen.getByTestId("complex")).toHaveTextContent(numberWithCommas(mockItem2Week.metadata));

@@ -72,7 +72,13 @@ const HomeStatistic = () => {
   const { isMobile, isGalaxyFoldSmall } = useScreen();
 
   return (
-    <StatisticContainer container spacing={2} justifyContent="space-between" alignItems="stretch">
+    <StatisticContainer
+      container
+      spacing={2}
+      justifyContent="space-between"
+      alignItems="stretch"
+      data-testid="home-statistic"
+    >
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
         {usdMarket && btcMarket?.[0] ? (
           <Item data-testid="ada-price-box">
@@ -135,7 +141,9 @@ const HomeStatistic = () => {
                     <EpochProgress sx={{ fontSize: "15px" }}>{`${progress}%`}</EpochProgress>
                   </ProgressCircle>
                 </Box>
-                <Name data-testid="current-epoch-box-title">Current Epoch</Name>
+                <Name data-testid="current-epoch-box-title" style={isGalaxyFoldSmall ? { maxWidth: "30px" } : {}}>
+                  Current Epoch
+                </Name>
                 <XSmall data-testid="epoch-label">Epoch: </XSmall>
                 {isMobile ? <br /> : null}
                 <XValue data-testid="current-epoch-number">
@@ -158,9 +166,13 @@ const HomeStatistic = () => {
                 <XSmall>End time: </XSmall>
                 {isMobile ? <br /> : null}
                 <XValue>
-                  <b style={{
-                    whiteSpace: isGalaxyFoldSmall ? "normal" : "nowrap",
-                  }}>{formatDateTimeLocal(currentEpoch?.endTime)}</b>
+                  <b
+                    style={{
+                      whiteSpace: isGalaxyFoldSmall ? "normal" : "nowrap"
+                    }}
+                  >
+                    {formatDateTimeLocal(currentEpoch?.endTime)}
+                  </b>
                 </XValue>
               </Content>
             </Link>
