@@ -10,6 +10,7 @@ import { isExtenalLink } from "src/commons/utils/helper";
 import { setSidebar } from "src/stores/user";
 import { RootState } from "src/stores/types";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import { routers } from "src/commons/routers";
 
 import FooterMenu from "../FooterMenu";
 import {
@@ -23,6 +24,9 @@ import {
   SidebarMenuContainer,
   FooterMenuContainer
 } from "./styles";
+
+const regexMatchPoolDetail = new RegExp(`^${routers.DELEGATION_POOL_DETAIL.replace(":poolId", "")}\\w*$`);
+const regexMatchStakeKeyDetail = new RegExp(`^${routers.STAKE_DETAIL.replace(":stakeId/:tabActive?", "")}\\w*$`);
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const pathname = history.location.pathname;
@@ -51,7 +55,15 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   }, [sidebar]);
 
   useEffect(() => {
-    if (pathname === "/") setActive(null);
+    if (pathname === "/") {
+      setActive(null);
+    } else if (
+      regexMatchPoolDetail.test(pathname) ||
+      regexMatchStakeKeyDetail.test(pathname) ||
+      pathname.startsWith("/stake/")
+    ) {
+      setActive("menu-0");
+    }
   }, [pathname]);
 
   useEffect(() => {
@@ -70,15 +82,18 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     if (!sidebar) setSidebar(true);
   };
 
-  const isActiveSubMenu = useCallback((href: string, pathName: string, categoryName?: string): boolean => {
-    if (categoryName === "Operational Certificates") return pathName === href;
+  const isActiveSubMenu = (href: string, categoryName?: string): boolean => {
+    if (categoryName === "Operational Certificates") return pathname === href;
+    if (pathname.startsWith("/stake/") && href === routers.ADDRESS_LIST) {
+      return true;
+    }
 
     return (
-      pathName === href ||
-      (pathName.split("/").length > 2 && href.includes(pathName.split("/")[1])) ||
-      (href === "/timeline" && (pathName.includes("delegator-lifecycle") || pathName.includes("spo-lifecycle")))
+      pathname === href ||
+      (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1])) ||
+      (href === "/timeline" && (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
     );
-  }, []);
+  }
 
   return (
     <SidebarMenuContainer>
@@ -197,7 +212,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             selected={pathname === href}
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
-                              ...(isActiveSubMenu(href, pathname, item.title)
+                              ...(isActiveSubMenu(href, item.title)
                                 ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
                                 : {}),
                               paddingLeft: "70px",
@@ -217,7 +232,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             <SubMenuText
                               primary={title}
                               open={sidebar ? 1 : 0}
-                              active={isActiveSubMenu(href, pathname, item.title) ? 1 : 0}
+                              active={+isActiveSubMenu(href, item.title)}
                             />
                           </ListItem>
                         )
