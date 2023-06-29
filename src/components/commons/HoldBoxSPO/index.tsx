@@ -2,13 +2,13 @@ import { styled } from "@mui/material";
 
 import HoldBox from "../HoldBox";
 
-export const HoldBoxSPO = styled(HoldBox)<{ sidebar: boolean }>(({ theme, sidebar }) => ({
+export const HoldBoxSPO = styled(HoldBox)(({ theme }) => ({
   "::after": {
     content: '"POOL HOLD"',
     background: theme.palette.green[600]
   },
   border: `2px solid ${theme.palette.green[600]}`,
-  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
+  [theme.breakpoints.down("lg")]: {
     width: 151
   },
   [theme.breakpoints.down("sm")]: {

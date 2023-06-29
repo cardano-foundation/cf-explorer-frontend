@@ -48,8 +48,8 @@ export default function ResetPassword() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [code, setCode] = useState("");
   const [success, setSuccess] = useState(false);
+  const [hasErrorForm, setHasErrorForm] = useState(false);
   const [error, setError] = useState(false);
-  const [hasErrorField, setHasErrorField] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useReducer(formReducer, {
     confirmPassword: {
@@ -70,6 +70,15 @@ export default function ResetPassword() {
   const handleToggleConfirmPassword = () => {
     setShowConfirmPassword((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    setHasErrorForm(
+      Boolean(
+        formData.password.error || formData.confirmPassword.error
+      )
+    );
+  }, [formData]);
+
   const getError = (name: string, value: string) => {
     let error = "";
     switch (name) {
@@ -107,14 +116,10 @@ export default function ResetPassword() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path.search]);
 
-  useEffect(() => {
-    setHasErrorField(Boolean(formData.confirmPassword.error || formData.password.error));
-  }, [formData]);
-
   const handleChange = (event: any) => {
     setFormData({
       name: event.target.name,
-      value: event.target.value.trim(),
+      value: event.target.value,
       touched: event.target.value.trim() !== "",
       error: getError(event.target.name, event.target.value)
     });
@@ -135,15 +140,18 @@ export default function ResetPassword() {
     }
   };
 
+  const enableButton = Object.values(formData).every((value) => value.touched) && !hasErrorForm && !loading;
+
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enableButton, formData]);
 
   const handleKeyDown = (event: any) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       event.preventDefault();
       handleSubmit(event);
     }
@@ -151,9 +159,12 @@ export default function ResetPassword() {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    if (!enableButton) return;
+    let hasErrorField = false;
     const errorPassword = getError("password", formData.password.value);
     const errorConfirmPassword = getError("confirmPassword", formData.confirmPassword.value);
     if (errorConfirmPassword) {
+      hasErrorField = true;
       setFormData({
         name: "confirmPassword",
         touched: true,
@@ -161,6 +172,7 @@ export default function ResetPassword() {
       });
     }
     if (errorPassword) {
+      hasErrorField = true;
       setFormData({
         name: "password",
         touched: true,
@@ -230,7 +242,7 @@ export default function ResetPassword() {
                   <FormHelperText error>{formData.confirmPassword.error}</FormHelperText>
                 ) : null}
               </WrapInput>
-              <WrapButton variant="contained" fullWidth onClick={handleSubmit} disabled={loading}>
+              <WrapButton variant="contained" fullWidth onClick={handleSubmit} disabled={!enableButton}>
                 Submit
               </WrapButton>
             </WrapForm>

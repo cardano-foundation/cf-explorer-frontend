@@ -2,8 +2,7 @@
 import { useHistory, useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { useTheme } from "@emotion/react";
-import { Box, CircularProgress } from "@mui/material";
+import { CircularProgress, useTheme } from "@mui/material";
 
 import { getShortWallet } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
@@ -32,7 +31,8 @@ import {
   StakeId,
   AddressLine,
   StyledContainer,
-  Label
+  Label,
+  ReportButtonContainer
 } from "./styles";
 
 interface Params {
@@ -133,15 +133,13 @@ const SPOLifecycle = () => {
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>
-            {validMode === "tabular" && (
-              <CustomTooltip title={!isLoggedIn ? "Please log in to use this feature" : ""}>
-                <Box>
-                  <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
-                    Compose report
-                  </ButtonReport>
-                </Box>
-              </CustomTooltip>
-            )}
+            <CustomTooltip title={!isLoggedIn ? "Please log in to use this feature" : ""}>
+              <ReportButtonContainer>
+                <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
+                  Compose report
+                </ButtonReport>
+              </ReportButtonContainer>
+            </CustomTooltip>
           </BoxItemStyled>
         </BoxContainerStyled>
         {loadingListTabs && <CircularProgress color="success" />}

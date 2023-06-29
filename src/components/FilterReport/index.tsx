@@ -68,7 +68,12 @@ const FilterReport: React.FC<StackingFilterProps> = ({ onFilterValueChange, filt
   const [openSearchTransaction, setOpenSearchTransaction] = useState(false);
   const [selected, setSelected] = useState("");
   const [textSearch, setTextSearch] = useState("");
-
+  useEffect(() => {
+    if (!filterValue || Object.entries(filterValue).every((value) => !value)) {
+      setTextSearch("");
+      setSelected("");
+    }
+  }, [filterValue]);
   const onClickAway = () => {
     setOpen(false);
   };
@@ -178,7 +183,7 @@ const FilterReport: React.FC<StackingFilterProps> = ({ onFilterValueChange, filt
               textTransform={"capitalize"}
               display={"flex"}
               alignItems={"center"}
-              color={`#108AEF !important`}
+              color={`#0052CC !important`}
               onClick={() => {
                 onFilterValueChange?.({ fromDate: undefined, sort: undefined, toDate: undefined, txHash: undefined });
                 setOpen(false);

@@ -1,28 +1,30 @@
-import { stringify } from "qs";
-import { useEffect, useState, useRef } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
 import { Box } from "@mui/material";
+import { stringify } from "qs";
+import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
 import { EPOCH_STATUS } from "src/commons/utils/constants";
 import { formatADAFull, formatDateTimeLocal, getPageInfo } from "src/commons/utils/helper";
-import { details } from "src/commons/routers";
+import ADAicon from "src/components/commons/ADAIcon";
 import Card from "src/components/commons/Card";
+import DetailViewEpoch from "src/components/commons/DetailView/DetailViewEpoch";
+import FirstEpoch from "src/components/commons/Epoch/FirstEpoch";
+import SelectedIcon from "src/components/commons/SelectedIcon";
 import Table, { Column } from "src/components/commons/Table";
 import { setOnDetailView } from "src/stores/user";
-import DetailViewEpoch from "src/components/commons/DetailView/DetailViewEpoch";
-import { API } from "src/commons/utils/api";
-import SelectedIcon from "src/components/commons/SelectedIcon";
-import ADAicon from "src/components/commons/ADAIcon";
-import FirstEpoch from "src/components/commons/Epoch/FirstEpoch";
 
-import { Blocks, StyledContainer, Output, BlueText, Status } from "./styles";
+import { Blocks, BlueText, Output, Status, StyledContainer } from "./styles";
 
 const Epoch: React.FC = () => {
   const [epoch, setEpoch] = useState<number | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
   const { search } = useLocation();
   const history = useHistory();
+  const { onDetailView } = useSelector(({ user }: RootState) => user);
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
   const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, { ...pageInfo, sort });
@@ -152,7 +154,7 @@ const Epoch: React.FC = () => {
           showTabView
         />
       </Card>
-      {epoch !== null && (
+      {epoch !== null && onDetailView && (
         <DetailViewEpoch
           epochNo={epoch}
           handleClose={handleClose}

@@ -14,7 +14,7 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
   borderRadius: 10,
-  textAlign: "left",
+  textAlign: "left"
 }));
 
 export const ButtonClose = styled(Button)(({ theme }) => ({

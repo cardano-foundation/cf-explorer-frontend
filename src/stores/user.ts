@@ -21,7 +21,8 @@ const initialState: UserStoreType = {
   onDetailView: false,
   modalRegister: false,
   modalSignMessage: false,
-  nonce: null
+  nonce: null,
+  openSyncBookmarkModal: false
 };
 
 const storeWallet = createSlice({
@@ -75,6 +76,10 @@ const storeWallet = createSlice({
     setNonce: (state, action: PayloadAction<NonceObject | null>) => ({
       ...state,
       nonce: action.payload
+    }),
+    setOpenSyncBookmarkModal: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      openSyncBookmarkModal: action.payload
     })
   }
 });
@@ -105,6 +110,10 @@ export const setProvider = (provider: any) => {
 
 export const setOpenModal = (openModal: boolean) => {
   userStore?.dispatch(storeWallet.actions.setOpenModal(openModal));
+};
+
+export const setOpenSyncBookmarkModal = (openSyncBookmarkModal: boolean) => {
+  userStore?.dispatch(storeWallet.actions.setOpenSyncBookmarkModal(openSyncBookmarkModal));
 };
 
 export const setSidebar = (sidebar: boolean) => {
