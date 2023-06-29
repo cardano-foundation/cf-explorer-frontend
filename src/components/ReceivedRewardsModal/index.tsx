@@ -8,6 +8,7 @@ import { ReceidvedRewardsIC } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
+import { RECEIVED_REWARDS } from "src/commons/utils/constants";
 
 import ADAicon from "../commons/ADAIcon";
 import StyledModal from "../commons/StyledModal";
@@ -45,11 +46,12 @@ export enum ReceivedRewardsType {
 }
 
 export interface ReceivedRewardsModalProps {
+  open?: boolean;
   onClose?: () => void;
   reward: number;
-  type?: ReceivedRewardsType;
+  type?: RECEIVED_REWARDS;
 }
-const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ onClose, reward = 0, type }) => {
+const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = false, onClose, reward = 0, type }) => {
   const [params, setParams] = useState({ page: 0, size: 50 });
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [sort, setSort] = useState<string>("");
@@ -91,10 +93,10 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ onClose, re
     }
   ];
   return (
-    <StyledModal open handleCloseModal={() => onClose?.()} width={600}>
+    <StyledModal open={open} handleCloseModal={() => onClose?.()} width={600}>
       <ModalContainer>
         <ModalTitle>{
-          type === ReceivedRewardsType.LEADER ? "Operator Reward" : type === ReceivedRewardsType.MEMBER ? "Delegator Reward" : "Received Rewards"
+          type === RECEIVED_REWARDS.LEADER ? "Operator Reward" : type === RECEIVED_REWARDS.MEMBER ? "Delegator Reward" : "Received Rewards"
         }</ModalTitle>
         <ModalContent>
           <RewardBalanceHeader>
