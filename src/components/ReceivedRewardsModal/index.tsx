@@ -1,17 +1,18 @@
-import React, { useState } from "react";
 import { Box } from "@mui/material";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { ReceidvedRewardsIC } from "src/commons/resources";
 import useFetchList from "src/commons/hooks/useFetchList";
+import { useScreen } from "src/commons/hooks/useScreen";
+import { ReceidvedRewardsIC } from "src/commons/resources";
+import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
-import { details } from "src/commons/routers";
-import { useScreen } from "src/commons/hooks/useScreen";
+import { RECEIVED_REWARDS } from "src/commons/utils/constants";
 
-import Table, { Column } from "../commons/Table";
-import StyledModal from "../commons/StyledModal";
 import ADAicon from "../commons/ADAIcon";
+import StyledModal from "../commons/StyledModal";
+import Table, { Column } from "../commons/Table";
 import {
   AmountADARow,
   EpochRow,
@@ -42,14 +43,14 @@ export interface ReceivedRewardsModalProps {
   open?: boolean;
   onClose?: () => void;
   reward: number;
+  type?: RECEIVED_REWARDS;
 }
-const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = false, onClose, reward = 0 }) => {
+const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = false, onClose, reward = 0, type }) => {
   const [params, setParams] = useState({ page: 0, size: 50 });
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [sort, setSort] = useState<string>("");
   const { isMobile, isGalaxyFoldSmall } = useScreen();
-
-  const fetchData = useFetchList<RewardDistributionItem>(stakeId ? API.STAKE_LIFECYCLE.RECEIVED_REWARD(stakeId) : "", {
+  const fetchData = useFetchList<RewardDistributionItem>(stakeId ? API.STAKE_LIFECYCLE.RECEIVED_REWARD(stakeId) + (type ? `?type=${type}` : "") : "", {
     ...params,
     sort
   });
@@ -87,7 +88,9 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
   return (
     <StyledModal open={open} handleCloseModal={() => onClose?.()} width={600}>
       <ModalContainer>
-        <ModalTitle>Received Rewards</ModalTitle>
+        <ModalTitle>{
+          type === RECEIVED_REWARDS.LEADER ? "Operator Reward" : type === RECEIVED_REWARDS.MEMBER ? "Delegator Reward" : "Received Rewards"
+        }</ModalTitle>
         <ModalContent>
           <RewardBalanceHeader>
             <RewardBalance>
