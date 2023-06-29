@@ -9,7 +9,7 @@ import DetailHeader from "src/components/commons/DetailHeader";
 import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
 
 import ScriptModal from "../../ScriptModal";
-import { PolicyId, PolicyScriptBtn, TokenDescription, TokenHeader, WrapTitle } from "./styles";
+import { PolicyId, PolicyScriptBtn, TokenDescription, TokenHeader, TokenUrl, WrapTitle } from "./styles";
 BigNumber.config({ DECIMAL_PLACES: 40 });
 
 interface ITokenOverview {
@@ -44,6 +44,12 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       value: (
         <TokenDescription>
           {data?.metadata?.description || ""}
+          {data?.metadata?.url ?
+            <TokenUrl onClick={() => window.open(data?.metadata?.url, "_blank")}>
+              {data?.metadata?.url}
+            </TokenUrl>
+            : null
+          }
         </TokenDescription>
       ),
     },
