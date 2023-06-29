@@ -147,6 +147,7 @@ export default function ResetPassword() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enableButton, formData]);
 
   const handleKeyDown = (event: any) => {

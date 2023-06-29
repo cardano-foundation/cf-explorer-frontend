@@ -17,6 +17,7 @@ import StakekeySummary from "src/components/StakekeySummary";
 import { StyledTab, StyledTabs } from "../RegistrationPools/styles";
 import StakingLifeCycleSearch from "../StakingLifeCycleSearch";
 import { FilterHead, StyledTabLabel, TextHeadline, TitleHead } from "./styles";
+import { useSelector } from "react-redux";
 
 export interface SavedReport {
   timestamp: Date | string;
@@ -33,6 +34,7 @@ const DEFAULT_PARAMS = {
 const DEFAULT_PAGINING = { page: 0, size: 50 };
 const Dashboard: React.FC = () => {
   const history = useHistory();
+  const { userData } = useSelector(({ user }: RootState) => user);
   const [onDownload, setOnDownload] = useState<number | false>(false);
   const [sort, setSort] = useState<string>("");
   const [{ page, size }, setPagi] = useState<{ page: number; size: number; sort?: string }>(DEFAULT_PAGINING);
@@ -80,9 +82,14 @@ const Dashboard: React.FC = () => {
   const fetchDataPool = useFetchList<IPoolReportList>(tab === "pools" ? API.REPORT.POOL_REPORT_SUMMARY : "", query);
   const fetchDataStake = useFetchList<IStakeKeySummary>(tab === "stake-key" ? API.REPORT.STAKE_KEY_SUMMARY : "", query);
   const { isMobile } = useScreen();
-
   const totalResult = tab === "pools" ? fetchDataPool.total : fetchDataStake.total;
-
+  if (!userData)
+    return (
+      <Container>
+        <StakingLifeCycleSearch />
+      </Container>
+    );
+    
   return (
     <Container>
       <StakingLifeCycleSearch />
