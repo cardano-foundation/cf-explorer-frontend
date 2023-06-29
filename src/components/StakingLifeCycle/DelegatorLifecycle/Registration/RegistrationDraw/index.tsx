@@ -138,4 +138,4 @@ export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false
     </Box>
   );
 };
-export default RegistrationDraw; 
+export default RegistrationDraw;
