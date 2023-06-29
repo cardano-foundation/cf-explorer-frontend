@@ -4,13 +4,13 @@ import { useParams } from "react-router-dom";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
-import ReceivedRewardsModal from "src/components/ReceivedRewardsModal";
+import ReceivedRewardsModal, { ReceivedRewardsType } from "src/components/ReceivedRewardsModal";
 
 import RewarsDistributionDraw from "./RewardsDistributionDraw";
 
 const RewardsDistribution = () => {
   const [openReceivedRewardsModal, setOpenReceivedRewardsModal] = useState(false);
-
+  const [type, setType] = useState<ReceivedRewardsType>(ReceivedRewardsType.ALL);
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const { data } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}` || "");
 
@@ -18,12 +18,12 @@ const RewardsDistribution = () => {
   return (
     <Box>
       <Box mt={3}>
-        <ReceivedRewardsModal
+        {openReceivedRewardsModal && <ReceivedRewardsModal
           reward={data?.rewardAvailable || 0}
-          open={openReceivedRewardsModal}
+          type={type}
           onClose={() => setOpenReceivedRewardsModal(false)}
-        />
-        <RewarsDistributionDraw data={data} toggleRewardModal={toggleModal} />
+        />}
+        <RewarsDistributionDraw data={data} toggleRewardModal={toggleModal} setTypeRewardModal={setType} />
       </Box>
     </Box>
   );

@@ -6,6 +6,7 @@ import CardanoSystem from "src/components/commons/CardanoSystem";
 import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import CustomIcon from "src/components/commons/CustomIcon";
+import { ReceivedRewardsType } from "src/components/ReceivedRewardsModal";
 
 import { AdaAmountWrapper, AdaBox, DrawContainer, HolderWrapper } from "./styles";
 import ADAHolderRect from "./ADAHolderRect";
@@ -14,9 +15,10 @@ import RewardAccountBox from "./RewardAccountBox";
 export interface IRewarsDistributionDrawProps {
   data?: IStakeKeyDetail | null;
   toggleRewardModal: () => void;
+  setTypeRewardModal: (type: ReceivedRewardsType) => void;
 }
 
-const RewardsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({ data, toggleRewardModal }) => {
+const RewardsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({ data, toggleRewardModal, setTypeRewardModal }) => {
   const cadarnoSystemRef = useRef(null);
   const adaAmountFirstRef = useRef(null);
   const adaAmountSecondRef = useRef(null);
@@ -73,16 +75,19 @@ const RewardsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({ data,
       }
     ];
   }, [isRewardPool]);
-
+  const handleToggleRewardModal = (type: ReceivedRewardsType) => {
+    toggleRewardModal();
+    setTypeRewardModal(type);
+  }
   const { sidebar } = useSelector(({ user }: RootState) => user);
   return (
     <DrawContainer sidebar={+sidebar}>
       <CardanoSystem ref={cadarnoSystemRef} />
       <AdaAmountWrapper sidebar={+sidebar}>
-        <AdaBox ref={adaAmountFirstRef}>
+        <AdaBox ref={adaAmountFirstRef} onClick={() => handleToggleRewardModal(ReceivedRewardsType.MEMBER)}>
           <CustomIcon icon={ADAOrangeIcon} height={70} />
         </AdaBox>
-        <AdaBox ref={adaAmountSecondRef}>
+        <AdaBox ref={adaAmountSecondRef} onClick={() => isRewardPool && handleToggleRewardModal(ReceivedRewardsType.LEADER)}>
           <CustomIcon icon={isRewardPool ? ADAOrangeIcon : ADADisnableIcon} height={70} />
         </AdaBox>
       </AdaAmountWrapper>
@@ -90,7 +95,7 @@ const RewardsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({ data,
         <ADAHolderRect />
         <ADAOperatorRewardRect disabled={!isRewardPool} />
       </HolderWrapper>
-      <RewardAccountBox toggleRewardModal={toggleRewardModal} value={data?.rewardAvailable} ref={rewardAccountRef} />
+      <RewardAccountBox toggleRewardModal={() => handleToggleRewardModal(ReceivedRewardsType.ALL)} value={data?.rewardAvailable} ref={rewardAccountRef} />
       <DrawPath paths={paths} />
     </DrawContainer>
   );

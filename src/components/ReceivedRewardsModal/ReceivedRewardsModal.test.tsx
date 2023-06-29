@@ -4,7 +4,7 @@ import { createMemoryHistory } from "history";
 
 import { render } from "src/test-utils";
 
-import ReceivedRewardsModal from ".";
+import ReceivedRewardsModal, { ReceivedRewardsType } from ".";
 
 describe("test received reward modal", () => {
   test("Render ReceivedRewardsModal modal", async () => {
@@ -12,7 +12,7 @@ describe("test received reward modal", () => {
     const history = createMemoryHistory();
     render(
       <Router history={history}>
-        <ReceivedRewardsModal open={true} onClose={onClose} reward={1} />
+        <ReceivedRewardsModal onClose={onClose} reward={1} type={ReceivedRewardsType.ALL}/>
       </Router>
     );
     const elm = await screen.findByText("Received Rewards");
