@@ -7,7 +7,8 @@ export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
   borderBottom: `3px solid ${active ? theme.palette.green[600] : theme.palette.grey[200]}`,
   [theme.breakpoints.down("sm")]: {
     padding: "16px 30px"
-  }
+  },
+  cursor: "pointer"
 }));
 
 export const StepButton = styled(Box)<{ active: number }>(({ theme, active }) => ({

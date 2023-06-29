@@ -105,6 +105,7 @@ export default function SignIn() {
 
   const handleLoginSuccess = () => {
     toast.success("Login success");
+    handleRedirectBack();
   };
 
   useEffect(() => {

@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Box, PaginationRenderItemParams, IconButton, MenuItem, styled, CircularProgress, alpha } from "@mui/material";
 import { useUpdateEffect } from "react-use";
 import { useParams } from "react-router-dom";
+import { useScrollTrigger } from "@mui/material";
 
 import { handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
 import {
@@ -255,6 +256,8 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
   const defaultPage = pagination?.page && (pagination?.page === 0 ? 1 : pagination?.page + 1);
   const [page, setPage] = useState(defaultPage || 1);
   const [size, setSize] = useState(pagination?.size || 50);
+  const [open, setOpen] = useState(false);
+  const trigger = useScrollTrigger();
   const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
 
   useUpdateEffect(() => {
@@ -267,12 +270,20 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
     clearSelection?.();
   };
 
+  useEffect(() => {
+    console.log(trigger);
+    trigger && setOpen(false);
+  }, [trigger, setOpen]);
+
   return (
     <TFooter>
       <Box display={"flex"} alignItems="center" margin="15px 0px">
         {pagination?.total && pagination.total > 10 ? (
           <Box display="flex" alignItems="center">
             <SelectMui
+              open={open}
+              onOpen={() => setOpen(true)}
+              onClose={() => setOpen(false)}
               size="small"
               onChange={(e: any) => {
                 setSize(+e.target.value);
@@ -360,7 +371,7 @@ const Table: React.FC<TableProps> = ({
   };
 
   useEffect(() => {
-    if (wrapperRef.current) {
+    if (wrapperRef.current && !loading) {
       wrapperRef.current.scrollTop = 0;
     }
   }, [loading]);
