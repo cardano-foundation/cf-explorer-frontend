@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { TabContext, TabPanel } from "@mui/lab";
 import { Box } from "@mui/material";
 
-import StyledModal from "src/components/commons/StyledModal";
 import { BalanceIcon, RewardsIcon } from "src/commons/resources";
 import CustomIcon from "src/components/commons/CustomIcon";
 import { useScreen } from "src/commons/hooks/useScreen";
+import CustomModal from "src/components/commons/CustomModal";
 
 import WalletActivity from "./WalletActivity";
 import RewardActivity from "./RewardActivity";
@@ -36,18 +36,8 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
     }
   };
 
-  const { isMobile, isTablet } = useScreen();
-
   return (
-    <StyledModal
-      title={"ADA Transfers"}
-      open={open}
-      handleCloseModal={handleCloseModal}
-      width={1200}
-      height={isMobile ? "73vh" : isTablet ? "67vh" : "72vh"}
-      modalStyle={{ overflow: "hidden" }}
-      contentStyle={{ overflow: "hidden" }}
-    >
+    <CustomModal title={"ADA Transfers"} open={open} onClose={handleCloseModal} width={1200}>
       <TabContext value={activityType}>
         <StyledBox overflow={!isGalaxyFoldSmall ? "auto" : "hidden"}>
           <StyledTabs
@@ -95,7 +85,7 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
           </TabPanel>
         </StyledBox>
       </TabContext>
-    </StyledModal>
+    </CustomModal>
   );
 };
 

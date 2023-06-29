@@ -57,7 +57,7 @@ const StakeAnalytics: React.FC = () => {
   const balance = balanceRaw?.length ? balanceRaw : [0, 0];
   const dataBalanceChart = data?.map((i) => {
     const value = BigNumber(i.value).div(10 ** 6);
-    return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
+    return Number(value.toString().match(/^-?\d+(?:\.\d{0,6})?/)?.[0]);
   });
   const categoriesBalance =
     data?.map((i) => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
@@ -65,7 +65,7 @@ const StakeAnalytics: React.FC = () => {
   const maxBalance = Math.max(...(balance || []), 0);
   const dataRewardChart = dataReward?.map((i) => {
     const value = BigNumber(i.value).div(10 ** 6);
-    return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
+    return Number(value.toString().match(/^-?\d+(?:\.\d{0,6})?/)?.[0]);
   });
   const categoriesReward = dataReward?.map((i) => i.epoch) || [];
 
@@ -163,7 +163,7 @@ const StakeAnalytics: React.FC = () => {
                       angle: 0,
                       labels: {
                         style: {
-                          fontSize: rangeTime === "THREE_MONTH" ? 8 : 12
+                          fontSize: rangeTime === "THREE_MONTH" ? 10 : 12
                         },
                         rotation: isMobile || rangeTime === "THREE_MONTH" ? -45 : null
                       }

@@ -1,20 +1,18 @@
-import { Box } from "@mui/material";
 import { useMemo, useRef } from "react";
-import { useSelector } from "react-redux";
+import { Box } from "@mui/material";
 import { useHistory } from "react-router-dom";
 
-import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "src/commons/resources";
-import { details } from "src/commons/routers";
-import CardanoSystem from "src/components/commons/CardanoSystem";
-import DrawPath from "src/components/commons/DrawPath";
-import FeeBox from "src/components/commons/FeeBox";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 import { LineArrowItem } from "src/components/commons/LineArrow";
+import DrawPath from "src/components/commons/DrawPath";
+import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
+import FeeBox from "src/components/commons/FeeBox";
+import { details } from "src/commons/routers";
+import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "src/commons/resources";
 import SPOHolder from "src/components/commons/SPOHolder";
+import CopyButton from "src/components/commons/CopyButton";
 
-import { formatADAFull, formatDateTimeLocal, getShortHash } from "../../../../../commons/utils/helper";
-import CustomTooltip from "../../../../commons/CustomTooltip";
-import { StyledCopyButton } from "../../../SPOLifecycle/Registration/styles";
-import { StyledLink } from "../../styles";
 import {
   BoxGroup,
   DrawContainer,
@@ -24,7 +22,8 @@ import {
   InfoText,
   MiddleGroup,
   StepInfo,
-  StyledCertificateShape
+  StyledCertificateShape,
+  StyledLink
 } from "./styles";
 
 interface ISPOPropsData {
@@ -47,9 +46,8 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
   const SPOPoolRef = useRef(null);
   const feeRef = useRef(null);
   const registrationRef = useRef(null);
-  const cadarnoSystemRef = useRef(null);
+  const cardanoBlockchainRef = useRef(null);
   const history = useHistory();
-  const { sidebar } = useSelector(({ user }: RootState) => user);
 
   const handleBack = () => {
     history.goBack();
@@ -70,7 +68,7 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
       {
         start: feeRef,
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        end: cadarnoSystemRef,
+        end: cardanoBlockchainRef,
         endPosition: { 0: ["right", "top"], sm: ["right", "middle"], lg: ["left", "middle"] },
         startOffset: { 0: [8, -15], lg: [0] },
         endOffset: { 0: [-18, 49], sm: [-10], lg: [10] },
@@ -88,7 +86,7 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
       {
         start: registrationRef,
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        end: cadarnoSystemRef,
+        end: cardanoBlockchainRef,
         endPosition: { 0: ["left", "top"], sm: ["left", "middle"], lg: ["center", "bottom"] },
         endOffset: { 0: [18, 49], sm: [10], lg: [0, 3] },
         fold: { sm: "vertical", lg: "horizontal" },
@@ -115,7 +113,7 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
                 <StyledLink to={details.transaction(data?.txHash)}>{getShortHash(txHash || "")}</StyledLink>
               </InfoText>
             </CustomTooltip>
-            <StyledCopyButton text={txHash} />
+            <CopyButton text={txHash} sx={{ marginLeft: "5px" }} />
           </Info>
           <Info>
             <ADAGreen />
@@ -127,10 +125,10 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
           </Info>
         </InfoGroup>
       </StepInfo>
-      <DrawContainer sidebar={+sidebar}>
+      <DrawContainer>
         <SPOHolder ref={SPOPoolRef} data={{ poolName, poolView, stakeKeys }} />
-        <MiddleGroup sidebar={+sidebar}>
-          <BoxGroup sidebar={+sidebar}>
+        <MiddleGroup>
+          <BoxGroup>
             <FeeBox ref={feeRef} value={fee} txHash={txHash} />
           </BoxGroup>
           <StyledCertificateShape onClick={toggleModal} ref={registrationRef}>
@@ -138,7 +136,7 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
           </StyledCertificateShape>
         </MiddleGroup>
         <Box mt={2}>
-          <CardanoSystem ref={cadarnoSystemRef} />
+          <CardanoBlockchain ref={cardanoBlockchainRef} />
         </Box>
         <DrawPath paths={paths} />
       </DrawContainer>

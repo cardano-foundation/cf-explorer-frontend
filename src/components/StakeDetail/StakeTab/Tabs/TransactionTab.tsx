@@ -17,7 +17,7 @@ import {
 import ADAicon from "src/components/commons/ADAIcon";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import DropdownTokens from "src/components/commons/DropdownTokens";
+import DropdownTokens, { TokenLink } from "src/components/commons/DropdownTokens";
 import Table, { Column } from "src/components/commons/Table";
 import { SmallText } from "src/components/share/styled";
 import { TransferIcon } from "src/commons/resources";
@@ -52,7 +52,11 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
 
   const onClickRow = (e: any, r: Transactions, index: number) => {
     let parent: Element | null = e.target as Element;
-    while (parent !== null && (typeof parent?.className.includes === 'function' && !parent?.className.includes("MuiPopover-root"))) {
+    while (
+      parent !== null &&
+      typeof parent?.className.includes === "function" &&
+      !parent?.className.includes("MuiPopover-root")
+    ) {
       parent = parent?.parentElement;
     }
     if (parent) {
@@ -165,7 +169,8 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
         }
         return (
           <Box display={"flex"} alignItems={"center"}>
-            {transaction.tokens && transaction.tokens.length > 0 && (
+            {transaction.tokens && transaction.tokens.length === 1 && <TokenLink token={tokens[0]} />}
+            {transaction.tokens && transaction.tokens.length > 1 && (
               <DropdownTokens tokens={tokens} type={type} hideInputLabel />
             )}
           </Box>

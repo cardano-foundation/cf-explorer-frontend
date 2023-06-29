@@ -1,19 +1,18 @@
 import { Box, useTheme } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import { RiArrowRightSLine } from "react-icons/ri";
 
 import { TransferIcon } from "src/commons/resources";
 
 import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
 import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import { details } from "../../../../commons/routers";
-import { formatADAFull, getShortWallet, numberWithCommas } from "../../../../commons/utils/helper";
+import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
 import ADAicon from "../../../commons/ADAIcon";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import DropdownTokens from "../../../commons/DropdownTokens";
-import { Icon, TokenButton } from "./styles";
+import DropdownTokens, { TokenLink } from "../../../commons/DropdownTokens";
+import { Icon } from "./styles";
 import { useScreen } from "../../../../commons/hooks/useScreen";
 
 const SummaryItems = ({
@@ -29,47 +28,6 @@ const SummaryItems = ({
 
   const theme = useTheme();
   const { isMobile } = useScreen();
-
-  const renderToken = (token: Token) => {
-    const isNegative = token.assetQuantity <= 0;
-    const tokenName = token.assetName || token.assetId;
-    const shortTokenName = getShortWallet(tokenName);
-    const isTokenNameLong = tokenName.length > 20;
-
-    return (
-      <TokenButton>
-        <Box
-          component={Link}
-          to={details.token(token.assetId)}
-          display={"flex"}
-          alignItems={"center"}
-          justifyContent={"space-between"}
-          pl={2}
-          width={"100%"}
-          height={38}
-        >
-          <Box mr={2}>
-            {isTokenNameLong ? (
-              <CustomTooltip title={tokenName} placement="top">
-                <Box>{shortTokenName}</Box>
-              </CustomTooltip>
-            ) : (
-              tokenName
-            )}
-          </Box>
-          <Box display={"flex"} alignItems={"center"}>
-            <Box fontWeight={"bold"} fontSize={"14px"}>
-              {isNegative ? "" : "+"}
-              {`${numberWithCommas(token.assetQuantity) || ""}`}
-            </Box>
-            <Box pr={1}>
-              <RiArrowRightSLine />
-            </Box>
-          </Box>
-        </Box>
-      </TokenButton>
-    );
-  };
 
   return (
     <Box
@@ -152,7 +110,7 @@ const SummaryItems = ({
       </Box>
       {item.tokens && item.tokens.length === 1 && (
         <Box display={"flex"} alignItems={"center"} ml={isMobile ? "50px" : 0}>
-          {renderToken(item.tokens[0])}
+          <TokenLink token={item.tokens[0]} />
         </Box>
       )}
       {item.tokens && item.tokens.length > 1 && (

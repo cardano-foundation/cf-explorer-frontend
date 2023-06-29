@@ -84,7 +84,7 @@ const Bookmark = () => {
           color={(theme) => `${theme.palette.secondary.main} !important`}
         >
           <CustomTooltip title={data.keyword}>
-            <Box>{getShortWallet(data.keyword)}</Box>
+            <Box component={"span"}>{getShortWallet(data.keyword)}</Box>
           </CustomTooltip>
         </Box>
       )
@@ -100,7 +100,7 @@ const Bookmark = () => {
           color={(theme) => `${theme.palette.secondary.main} !important`}
         >
           <CustomTooltip title={data.keyword}>
-            <Box>{getShortHash(data.keyword)}</Box>
+            <Box component={"span"}>{getShortHash(data.keyword)}</Box>
           </CustomTooltip>
         </Box>
       )
@@ -144,7 +144,7 @@ const Bookmark = () => {
           color={(theme) => `${theme.palette.secondary.main} !important`}
         >
           <CustomTooltip title={data.keyword}>
-            <Box>{getShortWallet(data.keyword)}</Box>
+            <Box component={"span"}>{getShortWallet(data.keyword)}</Box>
           </CustomTooltip>
         </Box>
       )
@@ -160,7 +160,7 @@ const Bookmark = () => {
           color={(theme) => `${theme.palette.secondary.main} !important`}
         >
           <CustomTooltip title={data.keyword}>
-            <Box>{getShortWallet(data.keyword)}</Box>
+            <Box component={"span"}>{getShortWallet(data.keyword)}</Box>
           </CustomTooltip>
         </Box>
       )
