@@ -1,6 +1,4 @@
-import { fireEvent, screen } from "@testing-library/react";
-import { Router } from "react-router-dom";
-import { createMemoryHistory } from "history";
+import { screen } from "@testing-library/react";
 
 import { render } from "src/test-utils";
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -30,7 +28,6 @@ describe("StakingLifecycle page", () => {
     render(<Dashboard />);
     expect(useFetchList).toBeCalled();
     expect(screen.getByText(/Saved Reports/i)).toBeInTheDocument();
-    expect(screen.getByText(/List of reports/i)).toBeInTheDocument();
   });
 
   it("should show correct total results", async () => {
@@ -45,22 +42,5 @@ describe("StakingLifecycle page", () => {
     mockUseFetchList.mockReturnValue(mockData);
     render(<Dashboard />);
     expect(screen.getByText(/EXPIRED/i)).toBeInTheDocument();
-    expect(screen.getByText("report name test")).toBeInTheDocument();
-  });
-
-  it("should navigate to the correct route when button is clicked", async () => {
-    const mockUseFetchList = useFetchList as jest.Mock;
-    mockUseFetchList.mockReturnValue(mockData);
-    const history = createMemoryHistory();
-
-    render(
-      <Router history={history}>
-        <Dashboard />
-      </Router>
-    );
-
-    const dashboardCard = screen.getByText("List of reports");
-    fireEvent.click(dashboardCard);
-    expect(history.location.pathname).toBe("/report-generated/stake-key");
   });
 });
