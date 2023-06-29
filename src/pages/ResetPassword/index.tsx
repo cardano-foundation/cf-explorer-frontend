@@ -150,7 +150,7 @@ export default function ResetPassword() {
   }, [enableButton, formData]);
 
   const handleKeyDown = (event: any) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       event.preventDefault();
       handleSubmit(event);
     }

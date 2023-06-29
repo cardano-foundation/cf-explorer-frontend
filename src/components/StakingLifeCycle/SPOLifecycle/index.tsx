@@ -72,6 +72,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
     if (renderTabsSPO) {
       setTabValid((prev) => prev.filter((tab) => renderTabsSPO[tab]));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(renderTabsSPO)]);
 
   if (!renderTabsSPO) return null;
@@ -139,6 +140,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const indexTabsValid = useMemo(() => {
     return tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentStep, tabsValid]);
 
   const renderBackground = (isActive: boolean, hasData: boolean) => {
