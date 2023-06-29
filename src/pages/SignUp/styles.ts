@@ -86,7 +86,7 @@ export const ForgotPassword = styled("span")`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-  color: ${({ theme }) => theme.palette.blue[900]};
+  color: ${({ theme }) => theme.palette.blue[800]};
   text-decoration: underline;
   cursor: pointer;
 `;
@@ -140,7 +140,7 @@ export const WrapOr = styled(Box)`
 export const WrapEmail = styled("span")`
   font-weight: 400;
   font-size: 16px;
-  color: ${({ theme }) => theme.palette.blue[900]};
+  color: ${({ theme }) => theme.palette.blue[800]};
 `;
 
 export const LabelInfo = styled(Box)`
@@ -154,7 +154,7 @@ export const WrapSignUp = styled(Box)`
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  color: ${({ theme }) => theme.palette.blue[900]};
+  color: ${({ theme }) => theme.palette.blue[800]};
 `;
 
 export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !== "error" })<{ error?: boolean }>(
