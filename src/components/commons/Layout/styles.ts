@@ -16,21 +16,21 @@ export const Layout = styled(Box)<{ sidebar: number }>`
   }
   * {
     &::-webkit-scrollbar {
-      width: 16px;
+      width: 5px;
+      height: 5px;
     }
-
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
     &::-webkit-scrollbar-thumb {
-      background: ${(props) => props.theme.palette.grey["A400"]};
-      border-radius: 8px;
-      border: 4px solid transparent;
-      background-clip: padding-box;
-      &:hover {
-        background: ${(props) => props.theme.palette.grey[300]};
-        background-clip: padding-box;
+      background: transparent;
+    }
+    &:hover {
+      &::-webkit-scrollbar-thumb {
+        background: ${({ theme }) => theme.palette.grey[300]};
       }
-      &:active {
-        background: ${(props) => props.theme.palette.grey[400]};
-        background-clip: padding-box;
+      &::-webkit-scrollbar-track {
+        background: ${({ theme }) => theme.palette.grey[100]};
       }
     }
     ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -119,23 +119,20 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
     width: drawerWidthMobile
   },
   "&>div": {
-    "&>button": {
-      opacity: 0,
-      transition: theme.transitions.create("opacity", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-        delay: 1000
-      })
+    "& > button": {
+      visibility: "hidden"
     },
     "&:hover": {
-      "&>button": {
-        opacity: 1,
-        transition: theme.transitions.create("opacity", {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen
-        })
+      "& > button": {
+        transitionDelay: "0s",
+        visibility: "visible"
       }
-    }
+    },
+    "&:not(:hover)": {
+      "& > button": {
+        transitionDelay: "1s",
+      },
+    },
   }
 }));
 

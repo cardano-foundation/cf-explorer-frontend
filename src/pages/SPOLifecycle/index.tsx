@@ -132,15 +132,13 @@ const SPOLifecycle = () => {
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>
-            {validMode === "tabular" && (
-              <CustomTooltip title={!isLoggedIn ? "Please log in to use this feature" : ""}>
-                <Box sx={{ [theme.breakpoints.down("sm")]: { width: "100%" } }}>
-                  <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
-                    Compose report
-                  </ButtonReport>
-                </Box>
-              </CustomTooltip>
-            )}
+            <CustomTooltip title={!isLoggedIn ? "Please log in to use this feature" : ""}>
+              <Box sx={{ [theme.breakpoints.down("sm")]: { width: "100%" } }}>
+                <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
+                  Compose report
+                </ButtonReport>
+              </Box>
+            </CustomTooltip>
           </BoxItemStyled>
         </BoxContainerStyled>
         {loadingListTabs && <CircularProgress color="success" />}

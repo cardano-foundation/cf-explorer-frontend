@@ -71,7 +71,7 @@ const DelegationLists: React.FC = () => {
       title: "Margin ",
       key: "margin",
       minWidth: "120px",
-      render: (r) => `${formatPercent(r.feePercent)}`,
+      render: (r) => `${formatPercent(r.feePercent)}`
     },
     {
       title: "Fee (A) ",
@@ -92,6 +92,12 @@ const DelegationLists: React.FC = () => {
       }
     },
     {
+      title: "Number of Delegators",
+      minWidth: "200px",
+      key: "numberDelegators",
+      render: (r) => <Box component={"span"}>{r.numberDelegators || 0}</Box>
+    },
+    {
       title: "Saturation",
       minWidth: "200px",
       key: "Saturation",
@@ -101,6 +107,18 @@ const DelegationLists: React.FC = () => {
           <StyledLinearProgress variant="determinate" value={r.saturation > 100 ? 100 : r.saturation} />
         </Box>
       )
+    },
+    {
+      title: "Blocks lifetime",
+      minWidth: "100px",
+      key: "lifetimeBlock",
+      render: (r) => <Box component={"span"}>{r.lifetimeBlock || 0}</Box>
+    },
+    {
+      title: "Lifetime ROS",
+      minWidth: "100px",
+      key: "lifetimeRos",
+      render: (r) => <Box component={"span"}>{r.lifetimeRos || 0}%</Box>
     }
   ];
 

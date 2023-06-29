@@ -9,7 +9,7 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import { AdaPriceIcon, LiveStakeIcon, MarketCapIcon } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { EXT_ADA_PRICE_URL, MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
 import { formatADA, formatADAFull, formatDateTimeLocal, numberWithCommas } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ProgressCircle from "src/components/commons/ProgressCircle";
@@ -70,14 +70,19 @@ const HomeStatistic = () => {
     ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
     : 100;
   const { isMobile, isGalaxyFoldSmall } = useScreen();
-  const COIN_PATH = "https://www.coingecko.com/en/coins/cardano";
 
   return (
-    <StatisticContainer container spacing={2} justifyContent="space-between" alignItems="stretch" data-testid="home-statistic">
+    <StatisticContainer
+      container
+      spacing={2}
+      justifyContent="space-between"
+      alignItems="stretch"
+      data-testid="home-statistic"
+    >
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
         {usdMarket && btcMarket?.[0] ? (
           <Item data-testid="ada-price-box">
-            <Link to={{ pathname: COIN_PATH }} target="_blank">
+            <Link to={{ pathname: EXT_ADA_PRICE_URL }} target="_blank">
               <ItemIcon
                 style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
                 data-testid="ada-price-icon"
@@ -106,7 +111,7 @@ const HomeStatistic = () => {
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
         {usdMarket ? (
           <Item data-testid="market-cap-box">
-            <Link to={{ pathname: COIN_PATH }} target="_blank">
+            <Link to={{ pathname: EXT_ADA_PRICE_URL }} target="_blank">
               <ItemIcon
                 style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
                 data-testid="market-cap-icon"
