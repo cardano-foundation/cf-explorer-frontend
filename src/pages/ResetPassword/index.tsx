@@ -249,7 +249,7 @@ export default function ResetPassword() {
           ) : !error ? (
             <WrapForm>
               <Label>Your password has been reset successfully</Label>
-              <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.SIGN_IN)}>
+              <WrapButton variant="contained" fullWidth onClick={() => history.replace(routers.SIGN_IN)}>
                 Sign In
               </WrapButton>
             </WrapForm>
@@ -261,7 +261,7 @@ export default function ResetPassword() {
                 <Label mb={1}>There's been an error in the verify process</Label>
                 <Label>This URL is either incorrect or has expired.</Label>
               </Box>
-              <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.HOME)}>
+              <WrapButton variant="contained" fullWidth onClick={() => history.replace(routers.HOME)}>
                 Go to Dashboard
               </WrapButton>
             </WrapForm>
