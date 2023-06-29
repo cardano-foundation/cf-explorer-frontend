@@ -38,11 +38,19 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
       IconComponent={() =>
         openDropdown ? (
           <>
-            <BiChevronUp size={30} style={{ paddingRight: 10, fontSize: "20px", cursor: "pointer" }} onClick={() => setOpenDropdown(false)} />
+            <BiChevronUp
+              size={30}
+              style={{ paddingRight: 10, fontSize: "20px", cursor: "pointer" }}
+              onClick={() => setOpenDropdown(false)}
+            />
           </>
         ) : (
           <>
-            <BiChevronDown size={30} style={{ paddingRight: 10, fontSize: "20px", cursor: "pointer" }} onClick={() => setOpenDropdown(true)} />
+            <BiChevronDown
+              size={30}
+              style={{ paddingRight: 10, fontSize: "20px", cursor: "pointer" }}
+              onClick={() => setOpenDropdown(true)}
+            />
           </>
         )
       }

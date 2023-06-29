@@ -34,7 +34,7 @@ const HIDDEN_HEADER_SEARCH_PATHS: string[] = [
 const Header: React.FC<RouteComponentProps> = (props) => {
   const { history } = props;
   const home = history.location.pathname === "/";
-  const { sidebar, onDetailView } = useSelector(({ user }: RootState) => user);
+  const { sidebar } = useSelector(({ user }: RootState) => user);
   const [openSearch, setOpenSearch] = React.useState(false);
   const handleToggle = () => setSidebar(!sidebar);
 
@@ -43,14 +43,14 @@ const Header: React.FC<RouteComponentProps> = (props) => {
   );
 
   return (
-    <HeaderContainer>
+    <HeaderContainer data-testid="header">
       <HeaderBox home={home ? 1 : 0}>
         <HeaderMain home={home ? 1 : 0}>
-          <Title home={home ? 1 : 0}>Cardano Blockchain Explorer</Title>
+          <Title home={home ? 1 : 0} data-testid="home-title">Cardano Blockchain Explorer</Title>
           {!pathMatched && <HeaderSearch home={home} />}
         </HeaderMain>
-        <HeaderTop collasped={+onDetailView}>
-          <HeaderLogoLink to="/">
+        <HeaderTop data-testid="header-top">
+          <HeaderLogoLink to="/" data-testid="header-logo">
             <HeaderLogo src={LogoIcon} alt="logo desktop" />
           </HeaderLogoLink>
           <SideBarRight>
@@ -59,7 +59,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
             </NetworkContainer>
             <LoginButton />
             {history.location.pathname !== routers.STAKING_LIFECYCLE && (
-              <SearchButton home={+home} onClick={() => setOpenSearch((prev) => !prev)}>
+              <SearchButton onClick={() => setOpenSearch((prev) => !prev)}>
                 <SearchIcon fontSize={24} />
               </SearchButton>
             )}

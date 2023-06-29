@@ -31,5 +31,19 @@ jobs:
 
       - name: 🎳 Run tests
         run: npm test
+        
+      - name: 📹 Archive test videos
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: videos
+          path: ./cypress/videos
+          
+      - name: 🖼️ Archive test screenshots
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: screenshots
+          path: ./cypress/screenshots
     env:
       EXPLORER_API_MAINNET_URL: ${{ secrets.EXPLORER_API_MAINNET_URL }}

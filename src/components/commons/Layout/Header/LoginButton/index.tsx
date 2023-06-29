@@ -39,7 +39,7 @@ const LoginButton = () => {
   }
 
   return (
-    <Box position="relative">
+    <Box position="relative" data-testid="header-signin">
       <StyledButton type="button" onClick={handleClick}>
         <Image src={WalletIcon} alt="wallet" />
         <Span>Sign In</Span>
