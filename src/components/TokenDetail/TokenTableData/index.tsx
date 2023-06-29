@@ -29,25 +29,25 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata }) =>
     children: React.ReactNode;
     icon: React.ReactElement;
   }[] = [
-      {
-        key: "transactions",
-        label: "Transactions",
-        children: <TokenTransaction tokenId={tokenId} />,
-        icon: <CustomIcon icon={TransactionIcon} width={20} fill={theme.palette.grey[300]} />
-      },
-      {
-        key: "topHolders",
-        label: "Top Holders",
-        children: <TokenTopHolder tokenId={tokenId} totalSupply={totalSupply} />,
-        icon: <PeopleIcon />
-      },
-      {
-        key: "tokenMint",
-        label: "Minting",
-        children: <TokenMinting tokenId={tokenId} metadata={metadata} />,
-        icon: <UnionTokenIcon />
-      }
-    ];
+    {
+      key: "transactions",
+      label: "Transactions",
+      children: <TokenTransaction tokenId={tokenId} />,
+      icon: <CustomIcon icon={TransactionIcon} width={20} fill={theme.palette.grey[300]} />
+    },
+    {
+      key: "topHolders",
+      label: "Top Holders",
+      children: <TokenTopHolder tokenId={tokenId} totalSupply={totalSupply} />,
+      icon: <PeopleIcon />
+    },
+    {
+      key: "tokenMint",
+      label: "Minting",
+      children: <TokenMinting tokenId={tokenId} metadata={metadata} />,
+      icon: <UnionTokenIcon />
+    }
+  ];
 
   const handleChange = (event: React.SyntheticEvent, tab: keyof Transaction) => {
     history.replace(details.token(tokenId, tab));

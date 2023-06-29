@@ -46,7 +46,9 @@ const Header: React.FC<RouteComponentProps> = (props) => {
     <HeaderContainer data-testid="header">
       <HeaderBox home={home ? 1 : 0}>
         <HeaderMain home={home ? 1 : 0}>
-          <Title home={home ? 1 : 0} data-testid="home-title">Cardano Blockchain Explorer</Title>
+          <Title home={home ? 1 : 0} data-testid="home-title">
+            Cardano Blockchain Explorer
+          </Title>
           {!pathMatched && <HeaderSearch home={home} />}
         </HeaderMain>
         <HeaderTop data-testid="header-top">
