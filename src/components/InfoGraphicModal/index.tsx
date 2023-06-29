@@ -1,3 +1,5 @@
+import { useTheme } from "@mui/material";
+
 import InfoGraphicImage from "src/commons/resources/images/infographic.png";
 
 import { Image } from "./styles";
@@ -8,8 +10,15 @@ interface IInfoGraphicModalProps {
   onClose: () => void;
 }
 const InfoGraphicModal: React.FC<IInfoGraphicModalProps> = (props) => {
+  const theme = useTheme();
   return (
-    <CustomModal width={450} {...props}>
+    <CustomModal
+      {...props}
+      closeButtonProps={{
+        sx: { background: theme.palette.grey[200], border: "none", "&:hover": { background: theme.palette.grey[200] } }
+      }}
+      modalProps={{ sx: { "& > div.MuiBox-root": { padding: "25px" } } }}
+    >
       <Image src={InfoGraphicImage} alt="info grapphic" />
     </CustomModal>
   );
