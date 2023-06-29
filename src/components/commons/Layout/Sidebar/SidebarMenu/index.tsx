@@ -10,6 +10,7 @@ import { isExtenalLink } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { RootState } from "src/stores/types";
 import { setSidebar } from "src/stores/user";
+import { routers } from "src/commons/routers";
 
 import FooterMenu from "../FooterMenu";
 import {
@@ -23,6 +24,9 @@ import {
   SubMenuText,
   itemStyle
 } from "./styles";
+
+const regexMatchPoolDetail = new RegExp(`^${routers.DELEGATION_POOL_DETAIL.replace(":poolId", "")}\\w*$`);
+const regexMatchStakeKeyDetail = new RegExp(`^${routers.STAKE_DETAIL.replace(":stakeId/:tabActive?", "")}\\w*$`);
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const pathname = history.location.pathname;
@@ -51,7 +55,15 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   }, [sidebar]);
 
   useEffect(() => {
-    if (pathname === "/") setActive(null);
+    if (pathname === "/") {
+      setActive(null);
+    } else if (
+      regexMatchPoolDetail.test(pathname) ||
+      regexMatchStakeKeyDetail.test(pathname) ||
+      pathname.startsWith("/stake/")
+    ) {
+      setActive("menu-0");
+    }
   }, [pathname]);
 
   useEffect(() => {
@@ -72,6 +84,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
 
   const isActiveSubMenu = useCallback((href: string, pathName: string, categoryName?: string): boolean => {
     if (categoryName === "Operational Certificates") return pathName === href;
+    if (pathName.startsWith("/stake/") && href === routers.ADDRESS_LIST) {
+      return true;
+    }
 
     return (
       pathName === href ||
