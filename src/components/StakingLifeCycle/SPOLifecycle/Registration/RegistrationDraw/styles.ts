@@ -47,20 +47,14 @@ export const InfoGroup = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const DrawContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const DrawContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "flex-start",
-  width: "calc(100% + 30px)",
   height: "max-content",
   position: "relative",
-  margin: "0px -15px",
   marginTop: 35,
-  [theme.breakpoints.down("xl")]: {
-    margin: "auto",
-    width: "100%"
-  },
-  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
+  [theme.breakpoints.down("lg")]: {
     flexDirection: "column",
     alignItems: "center",
     margin: "auto",
@@ -73,17 +67,14 @@ export const DrawContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar
   }
 }));
 
-export const MiddleGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const MiddleGroup = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-around",
   width: "max-content",
   flexDirection: "column",
   gap: 25,
   paddingTop: 89,
-  [theme.breakpoints.down("md")]: {
-    gap: 10
-  },
-  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
+  [theme.breakpoints.down("lg")]: {
     flexDirection: "row-reverse",
     maxWidth: 536,
     gap: 96,
@@ -97,7 +88,7 @@ export const MiddleGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }
   }
 }));
 
-export const BoxGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const BoxGroup = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-between",
@@ -107,9 +98,9 @@ export const BoxGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) =
   margin: "auto",
 
   [theme.breakpoints.down("xl")]: {
-    gap: 30
+    gap: 15
   },
-  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
+  [theme.breakpoints.down("lg")]: {
     flexDirection: "column",
     gap: 60
   },

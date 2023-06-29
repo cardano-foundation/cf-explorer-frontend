@@ -40,6 +40,7 @@ export const Item = styled(BoxRaised)`
   display: flex;
   gap: 15px;
   text-align: left;
+  cursor: pointer;
   overflow: hidden;
   &:hover {
     box-shadow: ${(props) => props.theme.shadow.card};
@@ -55,6 +56,7 @@ export const Image = styled("img")`
   height: 80px;
   min-width: 80px;
   border-radius: 5px;
+  object-fit: contain;
   background-color: ${(props) => props.theme.palette.background.default};
 `;
 export const Detail = styled(Box)`
@@ -67,12 +69,13 @@ export const Detail = styled(Box)`
 export const Author = styled("h6")`
   display: -webkit-box;
   width: max-content;
-  max-width: 100%;
+  width: 100%;
   line-height: 1.15;
   max-height: 1em;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 1;
   overflow: hidden;
+  text-overflow: ellipsis;
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.green[700]};
   background-color: ${(props) => props.theme.palette.green[700_10]};
@@ -89,6 +92,7 @@ export const ItemTitle = styled("h5")`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
+  text-overflow: ellipsis;
   font-size: var(--font-size-text-x-small);
   line-height: 1.15;
   margin-top: 0;

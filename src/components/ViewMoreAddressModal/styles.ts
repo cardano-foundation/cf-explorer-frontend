@@ -12,10 +12,9 @@ export const StyledListItem = styled(ListItem)`
 `;
 
 export const StyledListItemText = styled(Typography)`
-  font-size: #108aef;
   font-size: 18px;
   font-weight: 700;
-  color: #108aef;
+  color: ${({ theme }) => theme.palette.blue[800]};
   cursor: pointer;
   overflow-wrap: anywhere;
 `;
