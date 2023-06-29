@@ -1,46 +1,45 @@
-import { screen, waitFor } from "@testing-library/react";
-import { Router } from "react-router-dom";
-import moment from "moment";
-import { createMemoryHistory } from "history";
-import userEvent from "@testing-library/user-event";
+import { cleanup, screen } from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect";
 
 import { render } from "src/test-utils";
-import { details, routers } from "src/commons/routers";
+import useFetch from "src/commons/hooks/useFetch";
+import { formatDateTime } from "src/commons/utils/helper";
 
 import LatestStories from ".";
 
+jest.mock("src/commons/hooks/useFetch");
+
+const mockItem: Story = {
+  blurb: "The Cardano Foundation launched its inaugural Annual Report. The report",
+  entity: "Cardano Foundation",
+  featured: true,
+  main_image: "https://ucarecdn.com/4e580ddd-e051-472e-8e9d-f70ba3265d92/",
+  main_image_alt: "Cardano Foundation Annual Report 2022",
+  published_on: "2023-04-18T11:35:58-07:00",
+  resource_href: "https://cardanofoundation.org/en/news/cardano-foundation-launches-inaugural-annual-report/",
+  title: "Cardano Foundation Launches Inaugural Annual Report"
+};
+
 describe("LatestStories", () => {
-  it("should render LatestStories and navigate see all", async () => {
-    const history = createMemoryHistory();
-    render(
-      <Router history={history}>
-        <LatestStories />
-      </Router>
-    );
-    expect(screen.getByText("Latest Stories")).toBeInTheDocument();
-    const seeAllButton = screen.getByTestId("view-all");
-    expect(seeAllButton).toBeInTheDocument();
-    await userEvent.click(seeAllButton);
-    await waitFor(async () => {
-      expect(history.location.pathname).toBe(routers.STORY_LIST);
-    });
+  beforeEach(() => {
+    const mockUseFetch = useFetch as jest.Mock;
+    mockUseFetch.mockReturnValue({ data: [mockItem], initialized: true });
   });
 
-  it("test render item and navigate detail LatestStories", async () => {
-    const history = createMemoryHistory();
-    render(
-      <Router history={history}>
-        <LatestStories />
-      </Router>
-    );
-    expect(screen.getAllByText("Cardano Academy").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("Cardano Foundation Partners").length).toBeGreaterThan(0);
-    expect(screen.getAllByText(moment("10/10/2022", "MM/DD/YYYY").format("MM/DD/YYYY")).length).toBeGreaterThan(0);
+  afterEach(() => {
+    cleanup();
+  });
 
-    const item = screen.getAllByText("Cardano Foundation Partners with Georgian National Wine Agency")[0];
-    await userEvent.click(item);
-    await waitFor(async () => {
-      expect(history.location.pathname).toBe(details.story("1"));
-    });
+  it("renders LatestStories", async () => {
+    render(<LatestStories />);
+    expect(screen.getByText("Latest Stories")).toBeInTheDocument();
+  });
+
+  it("renders data in the list LatestStories", async () => {
+    render(<LatestStories />);
+    expect(screen.getByText(mockItem.entity)).toBeInTheDocument();
+    expect(screen.getByText(mockItem.title)).toBeInTheDocument();
+    expect(screen.getByAltText(mockItem.main_image_alt)).toBeInTheDocument();
+    expect(screen.getByText(formatDateTime(mockItem.published_on))).toBeInTheDocument();
   });
 });

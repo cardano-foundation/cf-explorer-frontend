@@ -1,6 +1,4 @@
-import { styled, Theme, CSSObject, alpha } from "@mui/material/styles";
-import MuiDrawer from "@mui/material/Drawer";
-import { Box } from "@mui/material";
+import { Box, styled, Theme, CSSObject, alpha, Drawer as MuiDrawer } from "@mui/material";
 
 const drawerWidth = 260;
 const drawerWidthMobile = 240;
@@ -18,21 +16,21 @@ export const Layout = styled(Box)<{ sidebar: number }>`
   }
   * {
     &::-webkit-scrollbar {
-      width: 16px;
+      width: 5px;
+      height: 5px;
     }
-
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
     &::-webkit-scrollbar-thumb {
-      background: ${(props) => props.theme.palette.grey["A400"]};
-      border-radius: 8px;
-      border: 4px solid transparent;
-      background-clip: padding-box;
-      &:hover {
-        background: ${(props) => props.theme.palette.grey[300]};
-        background-clip: padding-box;
+      background: transparent;
+    }
+    &:hover {
+      &::-webkit-scrollbar-thumb {
+        background: ${({ theme }) => theme.palette.grey[300]};
       }
-      &:active {
-        background: ${(props) => props.theme.palette.grey[400]};
-        background-clip: padding-box;
+      &::-webkit-scrollbar-track {
+        background: ${({ theme }) => theme.palette.grey[100]};
       }
     }
     ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -69,15 +67,15 @@ export const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
   minWidth: drawerCollaspWidth,
   overflowY: "unset",
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen
+  }),
   [theme.breakpoints.down("md")]: {
     zIndex: 1302,
     minWidth: 0,
     height: "100vh",
-    maxHeight: "fill-available",
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+    maxHeight: "fill-available"
   },
   [theme.breakpoints.down("sm")]: {
     width: drawerWidthMobile
@@ -87,15 +85,15 @@ export const openedMixin = (theme: Theme): CSSObject => ({
 export const closedMixin = (theme: Theme): CSSObject => ({
   overflowY: "unset",
   width: drawerCollaspWidth,
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen
+  }),
   [theme.breakpoints.down("md")]: {
     zIndex: 1302,
     width: 0,
     height: "100vh",
-    maxHeight: "fill-available",
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
+    maxHeight: "fill-available"
   }
 });
 
@@ -121,74 +119,49 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
     width: drawerWidthMobile
   },
   "&>div": {
-    "&>button": {
+    "& > button": {
       visibility: "hidden"
     },
     "&:hover": {
-      "&>button": {
+      "& > button": {
+        transitionDelay: "0s",
         visibility: "visible"
       }
-    }
+    },
+    "&:not(:hover)": {
+      "& > button": {
+        transitionDelay: "1s",
+      },
+    },
   }
 }));
 
-export const ToggleMenu = styled("button")`
-  position: absolute;
-  top: 50px;
-  right: 0px;
-  transform: translateX(50%) translateY(-50%);
-  width: 22px;
-  height: 22px;
-  padding: 0;
-  border-radius: 50%;
-  background-image: ${(props) => props.theme.palette.gradient[0]};
-  border: none;
-  color: ${(props) => props.theme.palette.primary.contrastText};
-  cursor: pointer;
-  z-index: 1;
-  ${({ theme }) => theme.breakpoints.down("md")} {
-    display: none;
-  }
-`;
-
-export const WrapIcon = styled(Box)`
-  top: -9px;
-  left: -8px;
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const MainContainer = styled(Box)`
   width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
-export const Main = styled(Box)<{ open: number; sidebar: number }>(({ theme, sidebar, open }) => ({
+export const Main = styled(Box)<{ open: number }>(({ theme, open }) => ({
   flexGrow: 1,
   overflowX: "hidden",
   overflowY: "auto",
-  width: `calc(100vw - ${(open ? 461 : 0) + (sidebar ? 260 : 85)}px)`,
-  height: "calc(100vh - 61px)",
-  [theme.breakpoints.down("lg")]: {
-    width: `calc(100vw - ${sidebar ? 260 : 85}px)`
-  },
+  width: `calc(100vw - ${drawerCollaspWidth}px)`,
+  minHeight: "calc(100vh - 61px)",
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen
+  }),
+  ...(open && {
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    }),
+    width: `calc(100vw - ${drawerWidth}px)`
+  }),
   [theme.breakpoints.down("md")]: {
     paddingTop: 80,
     width: "100vw",
     height: "auto"
   }
 }));
-
-export const ArrowCollapse = styled("span")`
-  z-index: 100;
-  width: 22px;
-  height: 22px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
-  line-height: 14px;
-`;

@@ -1,5 +1,4 @@
 import { Box, Grid } from "@mui/material";
-import { useSelector } from "react-redux";
 import { useRef, useState, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -12,7 +11,7 @@ import StyledModal from "src/components/commons/StyledModal";
 import SPOHolder from "src/components/commons/SPOHolder";
 import HoldBoxSPO from "src/components/commons/HoldBoxSPO";
 import FeeBoxSPO from "src/components/commons/FeeBoxSPO";
-import CardanoSystem from "src/components/commons/CardanoSystem";
+import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import DrawPath from "src/components/commons/DrawPath";
 
@@ -70,14 +69,13 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
   const SPOHolderRef = useRef(null);
   const holdRef = useRef(null);
   const feeRef = useRef(null);
-  const cadarnoSystemRef = useRef(null);
+  const cardanoBlockchainRef = useRef(null);
   const deregistrationRef = useRef(null);
 
   const handleBack = () => {
     history.goBack();
   };
 
-  const { sidebar } = useSelector(({ user }: RootState) => user);
   const isPoolHold = !!selected?.poolHold;
   const paths = useMemo((): LineArrowItem[] => {
     if (isPoolHold)
@@ -85,7 +83,7 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
         {
           start: SPOHolderRef,
           startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-          end: cadarnoSystemRef,
+          end: cardanoBlockchainRef,
           endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
           startOffset: { 0: [0], lg: [-10, -15] },
           endOffset: { 0: [0, 0], lg: [0] },
@@ -105,7 +103,7 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
         {
           start: deregistrationRef,
           startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-          end: cadarnoSystemRef,
+          end: cardanoBlockchainRef,
           endPosition: { 0: ["center", "top"], sm: ["left", "middle"], lg: ["center", "bottom"] },
           startOffset: { 0: [0], lg: [0, 0] },
           endOffset: { 0: [-94, 50], sm: [10, 0], lg: [0] },
@@ -113,7 +111,7 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
           fold: { 0: "none", sm: "vertical", lg: "horizontal" }
         },
         {
-          start: cadarnoSystemRef,
+          start: cardanoBlockchainRef,
           startPosition: { 0: ["right", "middle"], lg: ["left", "middle"] },
           end: holdRef,
           endPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
@@ -146,7 +144,7 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
       {
         start: feeRef,
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        end: cadarnoSystemRef,
+        end: cardanoBlockchainRef,
         endPosition: { 0: ["right", "top"], sm: ["right", "middle"], lg: ["left", "middle"] },
         startOffset: { 0: [0] },
         endOffset: { 0: [-22, 45], sm: [-10, 0], lg: [10, 0] },
@@ -166,7 +164,7 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
       {
         start: deregistrationRef,
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        end: cadarnoSystemRef,
+        end: cardanoBlockchainRef,
         endPosition: { 0: ["center", "top"], sm: ["left", "middle"], lg: ["center", "bottom"] },
         startOffset: { 0: [0], lg: [0, 0] },
         endOffset: { 0: [-94, 45], sm: [10, 0], lg: [0] },
@@ -211,32 +209,27 @@ const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: Dereg
           </Info>
         </InfoGroup>
       </StepInfo>
-      <DrawContainer sidebar={+sidebar}>
+      <DrawContainer>
         <SPOHolder
           ref={SPOHolderRef}
           data={{ poolName: selected?.poolName, poolView: selected?.poolView, stakeKeys: selected?.stakeKeys }}
         />
-        <MiddleGroup sidebar={+sidebar} hold={+isPoolHold}>
-          <BoxGroup sidebar={+sidebar}>
+        <MiddleGroup hold={+isPoolHold}>
+          <BoxGroup>
             {isPoolHold && (
               <Box>
-                <HoldBoxSPO
-                  sidebar={sidebar}
-                  ref={holdRef}
-                  value={selected?.poolHold || ""}
-                  txHash={selected?.txHash || ""}
-                />
+                <HoldBoxSPO ref={holdRef} value={selected?.poolHold || ""} txHash={selected?.txHash || ""} />
               </Box>
             )}
             <Box display="flex" justifyContent={isPoolHold ? "unset" : "center"}>
-              <FeeBoxSPO sidebar={sidebar} ref={feeRef} value={selected?.fee || ""} txHash={selected?.txHash || ""} />
+              <FeeBoxSPO ref={feeRef} value={selected?.fee || ""} txHash={selected?.txHash || ""} />
             </Box>
           </BoxGroup>
           <StyledCertificateShape onClick={toggleModal} ref={deregistrationRef}>
             Deregistration Certificate
           </StyledCertificateShape>
         </MiddleGroup>
-        <CardanoSystem ref={cadarnoSystemRef} />
+        <CardanoBlockchain ref={cardanoBlockchainRef} />
         <DrawPath paths={paths} />
       </DrawContainer>
       {!isPoolHold && (

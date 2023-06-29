@@ -41,14 +41,14 @@ describe("TopDelegationPools", () => {
     cleanup();
   });
 
-  it("renders Top Delegation Pools", async () => {
+  it("renders Pools", async () => {
     const history = createMemoryHistory();
     render(
       <Router history={history}>
         <TopDelegationPools />
       </Router>
     );
-    expect(screen.getByText("Top Delegation Pools")).toBeInTheDocument();
+    expect(screen.getByText("Pools")).toBeInTheDocument();
     const seeAllButton = screen.getByTestId("view-all");
     expect(seeAllButton).toBeInTheDocument();
     await userEvent.click(seeAllButton);
@@ -57,7 +57,7 @@ describe("TopDelegationPools", () => {
     });
   });
 
-  it("renders data in the table Top Delegation Pools", async () => {
+  it("renders data in the table Pools", async () => {
     const history = createMemoryHistory();
     render(
       <Router history={history}>
@@ -68,14 +68,13 @@ describe("TopDelegationPools", () => {
     expect(screen.getByText(mockItem.poolName)).toBeInTheDocument();
     expect(screen.getByText(formatADAFull(mockItem.poolSize))).toBeInTheDocument();
     expect(screen.getByText("+3,49 %")).toBeInTheDocument();
-    expect(
-      screen.getByText(`${formatPercent(mockItem.feePercent)} (${formatADAFull(mockItem.feeAmount)} A)`)
-    ).toBeInTheDocument();
+    expect(screen.getByText(formatPercent(mockItem.feePercent))).toBeInTheDocument();
+    expect(screen.getByText(`${formatADAFull(mockItem.feeAmount)} A`)).toBeInTheDocument();
     expect(screen.getByText(formatADAFull(mockItem.pledge))).toBeInTheDocument();
     expect(screen.getByText(formatPercent(mockItem.saturation / 100))).toBeInTheDocument();
   });
 
-  it("navigate pool detail Top Delegation Pools", async () => {
+  it("navigate pool detail Pools", async () => {
     const history = createMemoryHistory();
     render(
       <Router history={history}>

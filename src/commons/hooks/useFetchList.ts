@@ -10,7 +10,7 @@ interface Params {
   [key: string]: string | number | Date | string[] | undefined;
 }
 
-interface FetchReturnType<T> {
+export interface FetchReturnType<T> {
   data: T[];
   loading: boolean;
   error: string | null;
