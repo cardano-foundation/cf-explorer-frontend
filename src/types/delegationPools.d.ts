@@ -4,6 +4,8 @@ interface OverViewDelegation {
   epochNo: number;
   epochSlotNo: number;
   liveStake: number;
+  activePools: number;
+  retiredPools: number;
 }
 
 interface Delegators {
@@ -16,6 +18,10 @@ interface Delegators {
   pledge: number;
   saturation: number;
   stakeLimit;
+  numberDelegators?: number;
+  lifetimeBlock?: number;
+  lifetimeRos?: number;
+  epochBlock?: number;
 }
 
 interface DelegationOverview {

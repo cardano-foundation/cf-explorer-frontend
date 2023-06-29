@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Box, PaginationRenderItemParams, IconButton, MenuItem, styled, CircularProgress, alpha } from "@mui/material";
 import { useUpdateEffect } from "react-use";
 import { useParams } from "react-router-dom";
+import { useScrollTrigger } from "@mui/material";
 
 import { handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
 import {
@@ -49,6 +50,7 @@ import {
   StyledPagination
 } from "./styles";
 import Filter from "../Filter";
+import CustomIcon from "../CustomIcon";
 
 type TEmptyRecord = {
   className?: string;
@@ -64,7 +66,6 @@ const TableHeader = <T extends ColumnType>({
   loading,
   defaultSort,
   showTabView,
-  selected = null,
   selectable,
   toggleSelectAll,
   isSelectAll
@@ -130,7 +131,7 @@ const TableHeader = <T extends ColumnType>({
             )}
           </THeader>
         ))}
-        {showTabView && selected === null && <THeader />}
+        {showTabView && <THeader />}
       </tr>
     </THead>
   );
@@ -175,9 +176,11 @@ const TableRow = <T extends ColumnType>({
           </TCol>
         );
       })}
-      {showTabView && selected === null && (
-        <TCol minWidth={50} maxWidth={90}>
-          <EyeIcon style={{ transform: "scale(.6)" }} />
+      {showTabView && (
+        <TCol minWidth={50} maxWidth={90} selected={isClickRow}>
+          <Box display="flex" alignItems="center" height="1rem">
+            {selected !== index && <CustomIcon icon={EyeIcon} originWidth={31} originHeight={23} width={24} />}
+          </Box>
         </TCol>
       )}
     </TRow>
@@ -253,6 +256,8 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
   const defaultPage = pagination?.page && (pagination?.page === 0 ? 1 : pagination?.page + 1);
   const [page, setPage] = useState(defaultPage || 1);
   const [size, setSize] = useState(pagination?.size || 50);
+  const [open, setOpen] = useState(false);
+  const trigger = useScrollTrigger();
   const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
 
   useUpdateEffect(() => {
@@ -265,12 +270,20 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
     clearSelection?.();
   };
 
+  useEffect(() => {
+    console.log(trigger);
+    trigger && setOpen(false);
+  }, [trigger, setOpen]);
+
   return (
     <TFooter>
       <Box display={"flex"} alignItems="center" margin="15px 0px">
         {pagination?.total && pagination.total > 10 ? (
           <Box display="flex" alignItems="center">
             <SelectMui
+              open={open}
+              onOpen={() => setOpen(true)}
+              onClose={() => setOpen(false)}
               size="small"
               onChange={(e: any) => {
                 setSize(+e.target.value);
@@ -358,7 +371,7 @@ const Table: React.FC<TableProps> = ({
   };
 
   useEffect(() => {
-    if (wrapperRef.current) {
+    if (wrapperRef.current && !loading) {
       wrapperRef.current.scrollTop = 0;
     }
   }, [loading]);
@@ -385,6 +398,7 @@ const Table: React.FC<TableProps> = ({
         maxHeight={maxHeight}
         minHeight={(!data || data.length === 0) && !loading ? 360 : loading ? 400 : 150}
         height={heightTable}
+        className={data && data.length !== 0 ? "table-wrapper" : ""}
         loading={loading ? 1 : 0}
       >
         <TableFullWidth ref={tableRef}>

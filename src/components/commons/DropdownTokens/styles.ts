@@ -1,4 +1,4 @@
-import { MenuItem, Select, styled } from "@mui/material";
+import { Box, MenuItem, Select, alpha, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const CustomSelect = styled(Select)`
@@ -52,4 +52,12 @@ export const CustomLink = styled(Link)(({ theme }) => ({
   "&:hover": {
     background: theme.palette.green[60010]
   }
+}));
+export const TokenButton = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  minWidth: 250,
+  height: 38,
+  borderRadius: theme.spacing(1),
+  border: `1px solid ${alpha(theme.palette.grey[300], 0.5)}`
 }));

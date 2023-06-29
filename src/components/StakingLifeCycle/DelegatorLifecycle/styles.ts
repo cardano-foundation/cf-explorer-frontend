@@ -9,7 +9,8 @@ export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
   },
   [theme.breakpoints.down("sm")]: {
     padding: "16px 30px"
-  }
+  },
+  cursor: "pointer"
 }));
 
 export const StepButton = styled(Box)<{ active: number }>(({ theme, active }) => ({
@@ -43,7 +44,6 @@ export const PreviousButton = styled(Button)(({ theme }) => ({
   fontWeight: "bold",
   borderRadius: "8px",
   padding: "10px 20px",
-  left: 0,
   border: `2px solid ${theme.palette.border.hint}`,
   ":hover": {
     background: alpha(theme.palette.grey[700], 0.1)

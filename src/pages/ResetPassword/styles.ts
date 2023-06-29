@@ -71,7 +71,7 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
     borderRadius: "8px",
     borderWidth: "1px",
     borderStyle: "solid",
-    borderColor: error ? "#DD4343" : theme.palette.grey[300],
+    borderColor: error ? theme.palette.error.main : theme.palette.grey[300],
     "&::before": {
       display: "none"
     },
@@ -79,7 +79,10 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
       display: "none"
     },
     padding: "5px 10px",
-    backgroundColor: error ? "rgba(247, 94, 94, 0.05)" : ""
+    backgroundColor: error ? "rgba(247, 94, 94, 0.05)" : "",
+    '&.MuiInputBase-root.Mui-focused': {
+      borderColor: error ? "" : theme.palette.primary.main,
+    },
   })
 );
 
@@ -98,7 +101,7 @@ export const ForgotPassword = styled(Box)`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-  color: ${({ theme }) => theme.palette.blue[900]};
+  color: ${({ theme }) => theme.palette.blue[800]};
   text-decoration: underline;
   cursor: pointer;
 `;
@@ -148,5 +151,5 @@ export const WrapSignUp = styled(Box)`
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  color: ${({ theme }) => theme.palette.blue[900]};
+  color: ${({ theme }) => theme.palette.blue[800]};
 `;

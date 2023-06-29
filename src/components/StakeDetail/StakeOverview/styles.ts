@@ -158,6 +158,7 @@ export const TitleValue = styled(Box)`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-wrap: balance;
 `;
 
 export const TitleNoPool = styled(Box)`

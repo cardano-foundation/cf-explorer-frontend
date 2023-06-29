@@ -10,7 +10,7 @@ import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { details } from "src/commons/routers";
 import { RootState } from "src/stores/types";
 import { EmptyIcon, SearchIcon } from "src/commons/resources";
-import { formatDateTimeLocal, getShortHash, numberWithCommas } from "src/commons/utils/helper";
+import { formatDateTimeLocal, formatNumberDivByDecimals, getShortHash } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
 
 import ProgressCircle from "../ProgressCircle";
@@ -197,10 +197,10 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                   ? currentEpoch && (epoch?.no || 0) === currentEpoch?.no
                     ? ((moment(formatDateTimeLocal(epoch?.endTime || "")).diff(moment()) > 0 &&
                       epoch?.slot < MAX_SLOT_EPOCH
-                      ? epoch?.slot
-                      : MAX_SLOT_EPOCH) /
-                      MAX_SLOT_EPOCH) *
-                    100
+                        ? epoch?.slot
+                        : MAX_SLOT_EPOCH) /
+                        MAX_SLOT_EPOCH) *
+                      100
                     : 100
                   : (epoch?.slot / MAX_SLOT_EPOCH) * 100
               }
@@ -283,10 +283,14 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                           }}
                           key={index}
                         >
-                          <Box mr={2} sx={{ maxWidth: "120px", textOverflow: "ellipsis", overflow: "hidden" }}>
-                            {item.assetName}
+                          <CustomTooltip title={item.assetName}>
+                            <Box mr={2} sx={{ maxWidth: "120px", textOverflow: "ellipsis", overflow: "hidden" }}>
+                              {item.assetName}
+                            </Box>
+                          </CustomTooltip>
+                          <Box fontWeight={500}>
+                            {formatNumberDivByDecimals(item?.assetQuantity || 0, item?.metadata?.decimals || 0)}
                           </Box>
-                          <Box fontWeight={500}>{numberWithCommas(item.assetQuantity)}</Box>
                         </StyledMenuItem>
                       ))}
                   </StyledSelect>
