@@ -171,9 +171,9 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
     },
     padding: "5px 10px",
     backgroundColor: error ? "rgba(247, 94, 94, 0.05)" : "",
-    '&.MuiInputBase-root.Mui-focused': {
-      borderColor: error ? "" : theme.palette.primary.main,
-    },
+    "&.MuiInputBase-root.Mui-focused": {
+      borderColor: error ? "" : theme.palette.primary.main
+    }
   })
 );
 

@@ -88,6 +88,7 @@ export default function ForgotPassword() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
 
   const handleKeyDown = (event: any) => {

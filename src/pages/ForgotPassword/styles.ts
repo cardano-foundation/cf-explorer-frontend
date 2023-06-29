@@ -1,5 +1,4 @@
-import { IconButton } from "@mui/material";
-import { Alert, Box, Button, Divider, FormHelperText, Input, styled } from "@mui/material";
+import { Alert, Box, Button, Divider, FormHelperText, Input, IconButton, styled } from "@mui/material";
 
 import { User2RC } from "src/commons/resources";
 
@@ -76,9 +75,9 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
     },
     padding: "5px 10px",
     backgroundColor: error ? "rgba(247, 94, 94, 0.05)" : "",
-    '&.MuiInputBase-root.Mui-focused': {
-      borderColor: error ? "" : theme.palette.primary.main,
-    },
+    "&.MuiInputBase-root.Mui-focused": {
+      borderColor: error ? "" : theme.palette.primary.main
+    }
   })
 );
 
@@ -183,7 +182,7 @@ export const BackText = styled("small")`
   font-weight: var(--font-weight-bold);
 `;
 
-export const CloseButton = styled(IconButton) <{ saving: number }>`
+export const CloseButton = styled(IconButton)<{ saving: number }>`
   position: absolute;
   top: 10px;
   right: 10px;

@@ -130,9 +130,9 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
     },
     "&:not(:hover)": {
       "& > button": {
-        transitionDelay: "1s",
-      },
-    },
+        transitionDelay: "1s"
+      }
+    }
   }
 }));
 
