@@ -88,6 +88,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
     if (tabsRenderConfig) {
       setTabValid((prev) => prev.filter((tab) => tabsRenderConfig[tab]));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(tabsRenderConfig)]);
 
   if (!tabsRenderConfig) return null;
@@ -189,6 +190,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const indexTabsValid = useMemo(() => {
     return tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentStep, tabsValid]);
 
   const renderBackground = (isActive: boolean, hasData: boolean) => {

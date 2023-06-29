@@ -387,7 +387,7 @@ const Table: React.FC<TableProps> = ({
         maxHeight={maxHeight}
         minHeight={(!data || data.length === 0) && !loading ? 360 : loading ? 400 : 150}
         height={heightTable}
-        className={(data && data.length !== 0) ? "table-wrapper" : ""}
+        className={data && data.length !== 0 ? "table-wrapper" : ""}
         loading={loading ? 1 : 0}
       >
         <TableFullWidth ref={tableRef}>
