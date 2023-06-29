@@ -43,7 +43,12 @@ const ProgressCircle: React.FC<Props> = (props) => {
 
       <CircularProgressbarWithChildren
         styles={{
-          path: { stroke: `url(#progress)`, strokeWidth: pathWidth, strokeLinecap: pathLineCap, transformOrigin: 'center center' },
+          path: {
+            stroke: `url(#progress)`,
+            strokeWidth: pathWidth,
+            strokeLinecap: pathLineCap,
+            transformOrigin: "center center"
+          },
           trail: {
             strokeWidth: trailWidth,
             fill: theme.palette.background.paper,
