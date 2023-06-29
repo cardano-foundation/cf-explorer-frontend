@@ -11,7 +11,7 @@ import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper"
 import ADAicon from "../../../commons/ADAIcon";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
-import DropdownTokens from "../../../commons/DropdownTokens";
+import DropdownTokens, { TokenLink } from "../../../commons/DropdownTokens";
 import { Icon } from "./styles";
 import { useScreen } from "../../../../commons/hooks/useScreen";
 
@@ -28,6 +28,7 @@ const SummaryItems = ({
 
   const theme = useTheme();
   const { isMobile } = useScreen();
+
   return (
     <Box
       display={"flex"}
@@ -107,12 +108,15 @@ const SummaryItems = ({
           </Box>
         </Box>
       </Box>
-      {item.tokens && item.tokens.length > 0 ? (
+      {item.tokens && item.tokens.length === 1 && (
+        <Box display={"flex"} alignItems={"center"} ml={isMobile ? "50px" : 0}>
+          <TokenLink token={item.tokens[0]} />
+        </Box>
+      )}
+      {item.tokens && item.tokens.length > 1 && (
         <Box display={"flex"} alignItems={"center"} ml={isMobile ? "50px" : 0}>
           <DropdownTokens tokens={item.tokens} type={type} hideInputLabel />
         </Box>
-      ) : (
-        <Box />
       )}
     </Box>
   );
