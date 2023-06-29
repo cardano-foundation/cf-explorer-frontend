@@ -59,12 +59,12 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       icon: slotIconUrl
     },
     {
-      title: <WrapTitle>Policy Id</WrapTitle>, icon: fileGuardUrl, value: (
+      title: <WrapTitle>Policy Id</WrapTitle>,
+      icon: fileGuardUrl,
+      value: (
         <>
           <Box position={"relative"}>
-            <PolicyId>
-              {data?.policy || ""}
-            </PolicyId>
+            <PolicyId>{data?.policy || ""}</PolicyId>
             <Box position={"absolute"} top={"-5px"} right={0}>
               <CopyButton text={data?.policy}></CopyButton>
             </Box>
