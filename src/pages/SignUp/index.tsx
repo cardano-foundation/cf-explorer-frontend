@@ -201,7 +201,7 @@ export default function SignUp() {
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-    }
+    };
   }, [enableButton, formData]);
 
   const handleKeyDown = (event: any) => {

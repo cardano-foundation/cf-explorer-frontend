@@ -126,7 +126,7 @@ export const InfoIcon = styled(FiInfo)`
   margin-left: 2px;
 `;
 
-export const ProgressLiner = styled("div") <{ progress: number }>`
+export const ProgressLiner = styled("div")<{ progress: number }>`
   position: relative;
   width: 100%;
   background: ${(props) => alpha(props.theme.palette.common.black, 0.2)};
@@ -300,15 +300,18 @@ export const ViewJson = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const ButtonLink = styled(Link)(({ theme }) => ({
+export const ButtonLink = styled("a")(({ theme }) => ({
   fontWeight: "bold",
   color: `${theme.palette.secondary.main} !important`,
   fontFamily: "Roboto, sans-serif !important",
   textAlign: "left",
   wordBreak: "break-all",
-  marginTop: theme.spacing(2),
-  display: "inline-block"
+  marginTop: theme.spacing(1),
+  fontSize: "14px",
+  display: "inline-block",
+  textDecoration: "underline !important"
 }));
+
 export const LogoEmpty = styled(Box)`
   width: 20px;
   height: 20px;

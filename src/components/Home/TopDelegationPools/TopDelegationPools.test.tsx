@@ -3,11 +3,12 @@ import { useSelector } from "react-redux";
 import { createMemoryHistory } from "history";
 import "@testing-library/jest-dom/extend-expect";
 
+import { Router } from "react-router-dom";
+import userEvent from "@testing-library/user-event";
+
 import { render } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
 import { formatADAFull, formatPercent } from "src/commons/utils/helper";
-import { Router } from "react-router-dom";
-import userEvent from "@testing-library/user-event";
 import { details, routers } from "src/commons/routers";
 
 import TopDelegationPools from ".";

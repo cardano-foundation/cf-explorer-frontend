@@ -3,13 +3,18 @@ import BigNumber from "bignumber.js";
 import React, { useContext, useState } from "react";
 
 import { RewardIcon, USDIcon, exchageIconUrl, fileGuardUrl, slotIconUrl, timeIconUrl } from "src/commons/resources";
-import { formatDateTimeLocal, formatNumberDivByDecimals, numberWithCommas } from "src/commons/utils/helper";
+import {
+  formatDateTimeLocal,
+  formatNumberDivByDecimals,
+  numberWithCommas,
+  tokenRegistry
+} from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import DetailHeader from "src/components/commons/DetailHeader";
 import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
 
 import ScriptModal from "../../ScriptModal";
-import { PolicyId, PolicyScriptBtn, TokenDescription, TokenHeader, WrapTitle } from "./styles";
+import { ButtonLink, PolicyId, PolicyScriptBtn, TokenDescription, TokenHeader, WrapTitle } from "./styles";
 BigNumber.config({ DECIMAL_PLACES: 40 });
 
 interface ITokenOverview {
@@ -41,11 +46,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
           )}
         </TokenHeader>
       ),
-      value: (
-        <TokenDescription>
-          {data?.metadata?.description || ""}
-        </TokenDescription>
-      ),
+      value: <TokenDescription>{data?.metadata?.description || ""}</TokenDescription>
     },
     {
       title: <WrapTitle>Total Supply</WrapTitle>,
@@ -53,12 +54,12 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       icon: slotIconUrl
     },
     {
-      title: <WrapTitle>Policy Id</WrapTitle>, icon: fileGuardUrl, value: (
+      title: <WrapTitle>Policy Id</WrapTitle>,
+      icon: fileGuardUrl,
+      value: (
         <>
           <Box position={"relative"}>
-            <PolicyId>
-              {data?.policy || ""}
-            </PolicyId>
+            <PolicyId>{data?.policy || ""}</PolicyId>
             <Box position={"absolute"} top={"-5px"} right={0}>
               <CopyButton text={data?.policy}></CopyButton>
             </Box>
@@ -84,6 +85,18 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       ),
       icon: exchageIconUrl,
       value: numberWithCommas(txCountRealtime || data?.txCount)
+    },
+    {
+      title: <WrapTitle>Token Type</WrapTitle>,
+      icon: USDIcon,
+      value: (
+        <>
+          <Box>{data?.tokenType}</Box>
+          <ButtonLink target="_blank" href={tokenRegistry(data?.policy, data?.name)}>
+            Token Registry
+          </ButtonLink>
+        </>
+      )
     },
     {
       title: (
@@ -128,6 +141,17 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       ),
       icon: timeIconUrl,
       value: formatDateTimeLocal(data?.createdOn || "")
+    },
+    {
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <Box component={"span"} mr={1}>
+            <WrapTitle>Token Last Activity</WrapTitle>
+          </Box>
+        </Box>
+      ),
+      icon: timeIconUrl,
+      value: formatDateTimeLocal(data?.tokenLastActivity || "")
     }
   ];
 

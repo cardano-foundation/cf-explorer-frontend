@@ -56,9 +56,7 @@ const TopDelegationPools = () => {
       key: "feePercent",
       render: (r) => (
         <CustomTooltip title={`${r.feePercent * 100 || 0}%`}>
-          <Box display="inline-block">
-            {formatPercent(r.feePercent || 0)}
-          </Box>
+          <Box display="inline-block">{formatPercent(r.feePercent || 0)}</Box>
         </CustomTooltip>
       )
     },
@@ -67,9 +65,7 @@ const TopDelegationPools = () => {
       key: "feeAmount",
       render: (r) => (
         <CustomTooltip title={`${formatADAFull(r.feeAmount)} A`}>
-          <Box display="inline-block">
-            {formatADAFull(r.feeAmount)} A
-          </Box>
+          <Box display="inline-block">{formatADAFull(r.feeAmount)} A</Box>
         </CustomTooltip>
       )
     },

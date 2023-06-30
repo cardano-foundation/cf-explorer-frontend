@@ -101,12 +101,11 @@ export default function SignIn() {
     } else {
       history.replace(routers.HOME);
     }
-  }
+  };
 
   const handleLoginSuccess = () => {
     toast.success("Login success");
   };
-
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -114,7 +113,6 @@ export default function SignIn() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
-
 
   const handleKeyDown = (event: any) => {
     if (event.key === "Enter") {
@@ -127,7 +125,7 @@ export default function SignIn() {
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-    }
+    };
   }, [enableButton, formData]);
 
   const getError = (name: string, value: string) => {

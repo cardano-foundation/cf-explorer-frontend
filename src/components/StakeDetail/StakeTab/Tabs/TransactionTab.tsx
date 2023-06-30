@@ -52,7 +52,11 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
 
   const onClickRow = (e: any, r: Transactions, index: number) => {
     let parent: Element | null = e.target as Element;
-    while (parent !== null && (typeof parent?.className.includes === 'function' && !parent?.className.includes("MuiPopover-root"))) {
+    while (
+      parent !== null &&
+      typeof parent?.className.includes === "function" &&
+      !parent?.className.includes("MuiPopover-root")
+    ) {
       parent = parent?.parentElement;
     }
     if (parent) {

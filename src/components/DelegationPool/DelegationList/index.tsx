@@ -71,7 +71,7 @@ const DelegationLists: React.FC = () => {
       title: "Margin ",
       key: "margin",
       minWidth: "120px",
-      render: (r) => `${formatPercent(r.feePercent)}`,
+      render: (r) => `${formatPercent(r.feePercent)}`
     },
     {
       title: "Fee (A) ",
