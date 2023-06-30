@@ -71,6 +71,7 @@ export const RewardAccountCcontainer = styled(RectBox)(({ theme }) => ({
   flexDirection: "column",
   justifyContent: "center",
   gap: 12,
+  cursor: "pointer",
   [theme.breakpoints.between("lg", "xl")]: {
     maxWidth: 200
   }
