@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import { useRef, useMemo } from "react";
-import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
@@ -16,7 +15,7 @@ import {
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import DrawPath from "src/components/commons/DrawPath";
 import AdaHolder from "src/components/commons/AdaHolder";
-import CardanoSystem from "src/components/commons/CardanoSystem";
+import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import { details } from "src/commons/routers";
@@ -74,9 +73,8 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
   const withDrawnRef = useRef(null);
   const netAmountRef = useRef(null);
   const feeRef = useRef(null);
-  const cadarnoSystemRef = useRef(null);
+  const cardanoBlockchainRef = useRef(null);
   const history = useHistory();
-  const { sidebar } = useSelector(({ user }: RootState) => user);
 
   const handleBack = () => {
     history.goBack();
@@ -86,55 +84,55 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
     return [
       {
         start: adaHolderRef,
-        startPosition: { 0: ["center", "bottom"], lg: ["center", "middle"] },
+        startPosition: { 0: ["center", "bottom"], xl: ["center", "middle"] },
         end: paymentRef,
-        endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
-        arrow: { 0: "top", lg: "left" }
+        endPosition: { 0: ["center", "top"], xl: ["left", "middle"] },
+        arrow: { 0: "top", xl: "left" }
       },
       {
         start: netAmountRef,
-        startPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
+        startPosition: { 0: ["center", "top"], xl: ["left", "middle"] },
         end: paymentRef,
-        endPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        startOffset: { 0: [0, -15], lg: [0] },
-        arrow: { 0: "bottom", lg: "right" },
-        autoAlign: { 0: "start-vertical", lg: "start-horizontal" }
+        endPosition: { 0: ["center", "bottom"], xl: ["right", "middle"] },
+        startOffset: { 0: [0, -15], xl: [0] },
+        arrow: { 0: "bottom", xl: "right" },
+        autoAlign: { 0: "start-vertical", xl: "start-horizontal" }
       },
       {
         start: paymentRef,
-        startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
+        startPosition: { 0: ["center", "bottom"], xl: ["right", "middle"] },
         end: withDrawnRef,
-        endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
-        endOffset: { 0: [0, -15], lg: [0] },
-        arrow: { 0: "top", lg: "left" },
-        autoAlign: { 0: "end-vertical", lg: "end-horizontal" }
+        endPosition: { 0: ["center", "top"], xl: ["left", "middle"] },
+        endOffset: { 0: [0, -15], xl: [0] },
+        arrow: { 0: "top", xl: "left" },
+        autoAlign: { 0: "end-vertical", xl: "end-horizontal" }
       },
       {
         start: feeRef,
-        startPosition: { 0: ["center", "top"], lg: ["center", "top"] },
+        startPosition: { 0: ["center", "top"], xl: ["center", "top"] },
         end: netAmountRef,
-        endPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        startOffset: { 0: [0, 15], lg: [0] },
-        arrow: { 0: "bottom", lg: "right" },
-        fold: { 0: "none", lg: "vertical" }
+        endPosition: { 0: ["center", "bottom"], xl: ["right", "middle"] },
+        startOffset: { 0: [0, 15], xl: [0] },
+        arrow: { 0: "bottom", xl: "right" },
+        fold: { 0: "none", xl: "vertical" }
       },
       {
-        start: cadarnoSystemRef,
-        startPosition: { 0: ["right", "top"], lg: ["left", "middle"] },
+        start: cardanoBlockchainRef,
+        startPosition: { 0: ["right", "top"], xl: ["left", "middle"] },
         end: feeRef,
-        endPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        startOffset: { 0: [0, 45], lg: [15, 0] },
-        arrow: { 0: "bottom", lg: "right" },
-        autoAlign: { 0: "end-vertical", lg: "none" }
+        endPosition: { 0: ["center", "bottom"], xl: ["right", "middle"] },
+        startOffset: { 0: [0, 45], xl: [15, 0] },
+        arrow: { 0: "bottom", xl: "right" },
+        autoAlign: { 0: "end-vertical", xl: "none" }
       },
       {
         start: withDrawnRef,
-        startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        end: cadarnoSystemRef,
-        endPosition: { 0: ["left", "top"], lg: ["left", "middle"] },
-        endOffset: { 0: [0, 45], sm: [0, 45], lg: [15] },
-        arrow: { 0: "top", lg: "left" },
-        autoAlign: { 0: "start-vertical", lg: "start-horizontal" }
+        startPosition: { 0: ["center", "bottom"], xl: ["right", "middle"] },
+        end: cardanoBlockchainRef,
+        endPosition: { 0: ["left", "top"], xl: ["left", "middle"] },
+        endOffset: { 0: [0, 45], sm: [0, 45], xl: [15] },
+        arrow: { 0: "top", xl: "left" },
+        autoAlign: { 0: "start-vertical", xl: "start-horizontal" }
       }
     ];
   }, []);
@@ -170,9 +168,9 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
           </Info>
         </InfoGroup>
       </StepInfo>
-      <DrawContainer sidebar={+sidebar}>
+      <DrawContainer>
         <AdaHolder ref={adaHolderRef} />
-        <AccountContainer ref={paymentRef} sidebar={+sidebar}>
+        <AccountContainer ref={paymentRef}>
           <PaymentWalletContainer>
             <PaymentWalletIcon src={PaymentWalletUrl} alt="PaymentWallet" />
             <PaymentWalletInfo>
@@ -200,17 +198,17 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
             </PaymentWalletInfo>
           </PaymentWalletContainer>
         </AccountContainer>
-        <AmountGroup sidebar={+sidebar}>
-          <BoxGroup sidebar={+sidebar}>
+        <AmountGroup>
+          <BoxGroup>
             <NetAmountBox ref={netAmountRef} value={amount && fee ? amount - fee : 0} txHash={txHash || ""} />
             <WithdrawnBox ref={withDrawnRef} value={amount || 0} txHash={txHash || ""} />
           </BoxGroup>
-          <BoxGroup sidebar={+sidebar}>
+          <BoxGroup>
             <StyledFeeBox ref={feeRef} value={fee || 0} txHash={txHash || ""} />
-            <BufferBox sidebar={+sidebar} />
+            <BufferBox />
           </BoxGroup>
         </AmountGroup>
-        <CardanoSystem ref={cadarnoSystemRef} />
+        <CardanoBlockchain ref={cardanoBlockchainRef} />
         <DrawPath paths={paths} />
       </DrawContainer>
     </Box>

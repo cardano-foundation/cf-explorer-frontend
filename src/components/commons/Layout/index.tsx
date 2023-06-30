@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -18,10 +18,10 @@ interface Props {
 const CustomLayout: React.FC<Props> = ({ children }) => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const history = useHistory();
-  const lastPath = React.useRef<string>(history.location.pathname);
+  const lastPath = useRef<string>(history.location.pathname);
   const { isTablet } = useScreen();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const unlisten = history.listen(() => {
       lastPath.current = history.location.pathname;
       setOnDetailView(false);
@@ -31,12 +31,25 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
     };
   }, [history]);
 
-  const handleToggle = () => setSidebar(!sidebar);
+  useEffect(() => {
+    if(sidebar) {
+      setOnDetailView(false);
+    }
+  }, [sidebar]);
 
+  const handleToggle = () => {
+    setSidebar(!sidebar);
+  };
   return (
     <Layout sidebar={+sidebar}>
       <BackDrop isShow={+sidebar} onClick={handleToggle} />
-      <Drawer variant="permanent" open={sidebar} ModalProps={{ keepMounted: true }} anchor={isTablet ? "right" : "left"}>
+      <Drawer
+        variant="permanent"
+        data-testid="sidebar"
+        open={sidebar}
+        ModalProps={{ keepMounted: true }}
+        anchor={isTablet ? "right" : "left"}
+      >
         <ToggleSidebar handleToggle={handleToggle} />
         <Sidebar />
       </Drawer>

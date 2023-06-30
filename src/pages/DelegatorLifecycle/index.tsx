@@ -1,4 +1,4 @@
-import { CircularProgress, useTheme } from "@mui/material";
+import { Box, CircularProgress, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
@@ -124,19 +124,21 @@ const DelegatorLifecycle = () => {
             <BoxSwitchContainer sidebar={+sidebar}>
               <LabelSwitch>Switch to {validMode === "timeline" ? "tabular" : "timeline"} view</LabelSwitch>
               <SwitchGroup>
-                <ButtonSwitch active={+(validMode === "tabular")} onClick={() => changeMode("tabular")}>
-                  <ChartMode fill={validMode === "tabular" ? theme.palette.common.white : theme.palette.grey[500]} />
-                </ButtonSwitch>
                 <ButtonSwitch active={+(validMode === "timeline")} onClick={() => changeMode("timeline")}>
                   <TableMode fill={validMode === "timeline" ? theme.palette.common.white : theme.palette.grey[500]} />
                 </ButtonSwitch>
+                <ButtonSwitch active={+(validMode === "tabular")} onClick={() => changeMode("tabular")}>
+                  <ChartMode fill={validMode === "tabular" ? theme.palette.common.white : theme.palette.grey[500]} />
+                </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>
-            {validMode === "tabular" && (
-              <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
-                Compose report
-              </ButtonReport>
-            )}
+            <CustomTooltip title={!isLoggedIn ? "Please log in to use this feature" : ""}>
+              <Box>
+                <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
+                  Compose report
+                </ButtonReport>
+              </Box>
+            </CustomTooltip>
           </BoxItemStyled>
         </BoxContainerStyled>
         {loadingListTabs && <CircularProgress color="success" />}

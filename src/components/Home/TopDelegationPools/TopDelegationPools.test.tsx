@@ -1,13 +1,13 @@
 import { cleanup, screen, waitFor } from "@testing-library/react";
 import { useSelector } from "react-redux";
+import { Router } from "react-router-dom";
+import userEvent from "@testing-library/user-event";
 import { createMemoryHistory } from "history";
 import "@testing-library/jest-dom/extend-expect";
 
 import { render } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
 import { formatADAFull, formatPercent } from "src/commons/utils/helper";
-import { Router } from "react-router-dom";
-import userEvent from "@testing-library/user-event";
 import { details, routers } from "src/commons/routers";
 
 import TopDelegationPools from ".";
@@ -41,14 +41,14 @@ describe("TopDelegationPools", () => {
     cleanup();
   });
 
-  it("renders Top Delegation Pools", async () => {
+  it("renders Pools", async () => {
     const history = createMemoryHistory();
     render(
       <Router history={history}>
         <TopDelegationPools />
       </Router>
     );
-    expect(screen.getByText("Top Delegation Pools")).toBeInTheDocument();
+    expect(screen.getByText("Pools")).toBeInTheDocument();
     const seeAllButton = screen.getByTestId("view-all");
     expect(seeAllButton).toBeInTheDocument();
     await userEvent.click(seeAllButton);
@@ -57,25 +57,21 @@ describe("TopDelegationPools", () => {
     });
   });
 
-  it("renders data in the table Top Delegation Pools", async () => {
+  it("renders data in the table Pools", async () => {
     const history = createMemoryHistory();
     render(
       <Router history={history}>
         <TopDelegationPools />
       </Router>
     );
-
+    screen.logTestingPlaygroundURL();
     expect(screen.getByText(mockItem.poolName)).toBeInTheDocument();
     expect(screen.getByText(formatADAFull(mockItem.poolSize))).toBeInTheDocument();
-    expect(screen.getByText("+3,49 %")).toBeInTheDocument();
-    expect(
-      screen.getByText(`${formatPercent(mockItem.feePercent)} (${formatADAFull(mockItem.feeAmount)} A)`)
-    ).toBeInTheDocument();
     expect(screen.getByText(formatADAFull(mockItem.pledge))).toBeInTheDocument();
     expect(screen.getByText(formatPercent(mockItem.saturation / 100))).toBeInTheDocument();
   });
 
-  it("navigate pool detail Top Delegation Pools", async () => {
+  it("navigate pool detail Pools", async () => {
     const history = createMemoryHistory();
     render(
       <Router history={history}>

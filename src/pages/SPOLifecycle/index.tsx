@@ -3,7 +3,7 @@ import { useHistory, useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useTheme } from "@emotion/react";
-import { CircularProgress } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 
 import { getShortWallet } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
@@ -107,7 +107,6 @@ const SPOLifecycle = () => {
 
   if (!initialized && !error) return null;
   if (error || !data || !data.poolId) return <NoRecord />;
-
   return (
     <PoolDetailContext.Provider value={data}>
       <StyledContainer ref={containerRef}>
@@ -126,19 +125,21 @@ const SPOLifecycle = () => {
             <BoxSwitchContainer sidebar={+sidebar}>
               <LabelSwitch>Switch to {validMode === "timeline" ? "tabular" : "timeline"} view</LabelSwitch>
               <SwitchGroup>
-                <ButtonSwitch active={+(validMode === "tabular")} onClick={() => changeMode("tabular")}>
-                  <ChartMode fill={validMode === "tabular" ? theme.palette.common.white : theme.palette.grey[500]} />
-                </ButtonSwitch>
                 <ButtonSwitch active={+(validMode === "timeline")} onClick={() => changeMode("timeline")}>
                   <TableMode fill={validMode === "timeline" ? theme.palette.common.white : theme.palette.grey[500]} />
                 </ButtonSwitch>
+                <ButtonSwitch active={+(validMode === "tabular")} onClick={() => changeMode("tabular")}>
+                  <ChartMode fill={validMode === "tabular" ? theme.palette.common.white : theme.palette.grey[500]} />
+                </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>
-            {validMode === "tabular" && (
-              <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
-                Compose report
-              </ButtonReport>
-            )}
+            <CustomTooltip title={!isLoggedIn ? "Please log in to use this feature" : ""}>
+                <Box>
+                  <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
+                    Compose report
+                  </ButtonReport>
+                </Box>
+              </CustomTooltip>
           </BoxItemStyled>
         </BoxContainerStyled>
         {loadingListTabs && <CircularProgress color="success" />}

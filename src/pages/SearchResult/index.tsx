@@ -143,6 +143,7 @@ const SearchResult = () => {
     };
 
     checkFilter();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [history, filter, value]);
 
   if (loading)

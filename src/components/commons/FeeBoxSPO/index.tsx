@@ -2,11 +2,11 @@ import { styled } from "@mui/material";
 
 import HoldBox from "../HoldBox";
 
-export const FeeBoxSPO = styled(HoldBox)<{ sidebar: boolean }>(({ theme, sidebar }) => ({
+export const FeeBoxSPO = styled(HoldBox)(({ theme }) => ({
   "::after": {
     content: '"FEES"'
   },
-  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
+  [theme.breakpoints.down("lg")]: {
     width: 151
   },
   [theme.breakpoints.down("sm")]: {

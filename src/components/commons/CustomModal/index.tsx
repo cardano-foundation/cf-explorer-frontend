@@ -7,7 +7,7 @@ import { CloseButton, ContentContainer, ModalContainer, WrapTitle } from "./styl
 interface Props extends Omit<BoxProps, "title"> {
   open: boolean;
   onClose: () => void;
-  modalProps?: ModalProps;
+  modalProps?: Partial<ModalProps>;
   closeButtonProps?: IconButtonProps;
   closeButton?: React.ReactNode;
   title?: React.ReactNode;
@@ -18,7 +18,7 @@ export const CustomModal: React.FC<Props> = forwardRef((props, ref) => {
   const { open, onClose, closeButton, closeButtonProps, title, titleProps, modalProps, children, ...contentProps } =
     props;
   return (
-    <Modal open={open} {...modalProps}>
+    <Modal open={open} onClose={onClose} {...modalProps}>
       <ModalContainer>
         {closeButton || (
           <CloseButton {...closeButtonProps} onClick={onClose} data-testid="close-modal-button">

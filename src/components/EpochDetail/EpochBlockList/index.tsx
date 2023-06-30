@@ -4,7 +4,13 @@ import { stringify } from "qs";
 
 import Card from "src/components/commons/Card";
 import Table, { Column } from "src/components/commons/Table";
-import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash, numberWithCommas } from "src/commons/utils/helper";
+import {
+  formatADAFull,
+  formatDateTimeLocal,
+  getPageInfo,
+  getShortHash,
+  numberWithCommas
+} from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
@@ -36,9 +42,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       key: "#",
       minWidth: "50px",
       render: (_, index) => {
-        return (
-          <BlueText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</BlueText>
-        );
+        return <BlueText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</BlueText>;
       }
     },
     {
@@ -103,7 +107,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       title: "Created At",
       key: "time",
       minWidth: "100px",
-      render: (r) => <PriceWrapper>{formatDateTimeLocal(r.time)}</PriceWrapper>,
+      render: (r) => <PriceWrapper>{formatDateTimeLocal(r.time)}</PriceWrapper>
     }
   ];
 
