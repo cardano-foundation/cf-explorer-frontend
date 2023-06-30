@@ -88,6 +88,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
     if (tabsRenderConfig) {
       setTabValid((prev) => prev.filter((tab) => tabsRenderConfig[tab]));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(tabsRenderConfig)]);
 
   if (!tabsRenderConfig) return null;
@@ -189,6 +190,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const indexTabsValid = useMemo(() => {
     return tabsValid.findIndex((t) => t === stepper[currentStep].keyCheckShow);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentStep, tabsValid]);
 
   const renderBackground = (isActive: boolean, hasData: boolean) => {
@@ -201,6 +203,12 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
     return `${palette.grey[200]} !important`;
   };
 
+  const handleChangeTab = (step: StepperProps, idx: number) => {
+    if (tabsRenderConfig[step.keyCheckShow] && currentStep !== idx) {
+      setCurrentStep(idx);
+      history.replace(details.staking(stakeId, "timeline", step.key));
+    }
+  };
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} sx={{ overflowX: "auto" }}>
@@ -212,17 +220,12 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
               component={tabsRenderConfig[step.keyCheckShow] ? "span" : CustomTooltip}
               active={+(currentStep === idx)}
               title={tabsRenderConfig[step.keyCheckShow] ? undefined : "There is no record at this time"}
+              onClick={() => handleChangeTab(step, idx)}
             >
               <Box>
                 <StepButton
                   component={IconButton}
                   active={+(currentStep === idx)}
-                  onClick={() => {
-                    if (tabsRenderConfig[step.keyCheckShow] && currentStep !== idx) {
-                      setCurrentStep(idx);
-                      history.replace(details.staking(stakeId, "timeline", step.key));
-                    }
-                  }}
                   bgcolor={renderBackground(currentStep === idx, tabsRenderConfig[step.keyCheckShow])}
                   color={({ palette }) =>
                     tabsRenderConfig[step.keyCheckShow] ? palette.common.white : palette.grey[300]

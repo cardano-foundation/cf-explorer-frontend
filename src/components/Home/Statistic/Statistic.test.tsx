@@ -72,8 +72,8 @@ describe("HomeStatistic", () => {
     expect(screen.getByTestId("ada-price-box-title")).toBeInTheDocument();
     expect(screen.getByTestId("ada-current-price")).toHaveTextContent(`$${mockUSDMarket.current_price}`);
     expect(screen.getByText("-1,59 %")).toBeInTheDocument();
-    expect(screen.getByTestId("ada-price-in-BTC")).toHaveTextContent(`${mockBTCMarketItem.current_price} BTC`);
-    expect(screen.getByTestId("last-update-BTC")).toHaveTextContent(
+    expect(screen.getByTestId("ada-price-in-btc")).toHaveTextContent(`${mockBTCMarketItem.current_price} BTC`);
+    expect(screen.getByTestId("last-update-btc")).toHaveTextContent(
       `Last updated ${moment(mockBTCMarketItem.last_updated).fromNow()}`
     );
   });

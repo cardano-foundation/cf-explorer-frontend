@@ -18,7 +18,7 @@ import {
 import ADAicon from "src/components/commons/ADAIcon";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import DropdownTokens from "src/components/commons/DropdownTokens";
+import DropdownTokens, { TokenLink } from "src/components/commons/DropdownTokens";
 import Table, { Column } from "src/components/commons/Table";
 import { SmallText } from "src/components/share/styled";
 import { TransferIcon } from "src/commons/resources";
@@ -154,7 +154,8 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
         }
         return (
           <Box display={"flex"} alignItems={"center"}>
-            {transaction.tokens && transaction.tokens.length > 0 && (
+            {transaction.tokens && transaction.tokens.length === 1 && <TokenLink token={tokens[0]} />}
+            {transaction.tokens && transaction.tokens.length > 1 && (
               <DropdownTokens tokens={tokens} type={type} hideInputLabel />
             )}
           </Box>
