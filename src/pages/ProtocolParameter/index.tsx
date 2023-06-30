@@ -190,12 +190,7 @@ const ProtocolParameter: React.FC = () => {
       )}
       {showHistory && <ProtocolParameterHistory />}
       {!showHistory && (
-        <Card
-          titleSx={{
-            margin: 0
-          }}
-          title={"Protocol parameters"}
-        >
+        <Card titleSx={{ margin: 0 }} title={"Protocol parameters"}>
           <Box pt={2}>
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
