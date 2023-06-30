@@ -105,6 +105,7 @@ export default function SignIn() {
 
   const handleLoginSuccess = () => {
     toast.success("Login success");
+    handleRedirectBack();
   };
 
   useEffect(() => {
@@ -126,6 +127,7 @@ export default function SignIn() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enableButton, formData]);
 
   const getError = (name: string, value: string) => {

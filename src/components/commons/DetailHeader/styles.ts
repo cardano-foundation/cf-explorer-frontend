@@ -369,7 +369,14 @@ export const CardItem = styled(Grid)<{ length: number; wide?: number; itemOnRow:
       }
     },
     [theme.breakpoints.down("sm")]: {
-      padding: "15px 10px"
+      ":nth-of-type(even)": {
+        paddingRight: wide ? 15 : "0 !important",
+        paddingLeft: 15
+      },
+      ":nth-of-type(odd)": {
+        paddingLeft: wide ? 15 : "0 !important",
+        paddingRight: 10
+      }
     }
   })
 );
