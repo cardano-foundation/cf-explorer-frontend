@@ -4,20 +4,14 @@ import CertificateShape from "src/components/commons/CertificateShape";
 import FeeBox from "src/components/commons/FeeBox";
 import HoldBox from "src/components/commons/HoldBox";
 
-export const DrawContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const DrawContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "flex-start",
-  width: "calc(100% + 30px)",
   height: "max-content",
   position: "relative",
-  margin: "0px -15px",
   marginTop: 35,
   [theme.breakpoints.down("lg")]: {
-    margin: "auto",
-    width: "100%"
-  },
-  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
     flexDirection: "column",
     alignItems: "center",
     margin: "auto",
@@ -30,7 +24,7 @@ export const DrawContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar
   }
 }));
 
-export const MiddleGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const MiddleGroup = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-around",
   width: "max-content",
@@ -38,10 +32,6 @@ export const MiddleGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }
   gap: 25,
   marginTop: 18,
   [theme.breakpoints.down("lg")]: {
-    gap: 10,
-    paddingTop: 14
-  },
-  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
     flexDirection: "row-reverse",
     maxWidth: 536,
     paddingTop: 46,
@@ -55,22 +45,22 @@ export const MiddleGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }
   }
 }));
 
-export const StyledCertificateShape = styled(CertificateShape)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const StyledCertificateShape = styled(CertificateShape)(({ theme }) => ({
   width: 220,
   height: 220,
   margin: "auto",
   border: `2px solid ${theme.palette.border.block}`,
+  [theme.breakpoints.down("lg")]: {
+    height: 199,
+    width: 180
+  },
   [theme.breakpoints.down("sm")]: {
     width: 140,
     height: 199
-  },
-  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
-    height: 199,
-    width: 180
   }
 }));
 
-export const BoxGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const BoxGroup = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-between",
@@ -79,10 +69,7 @@ export const BoxGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) =
   margin: "auto",
   height: 128,
   alignItems: "space-between",
-  [theme.breakpoints.down("xl")]: {
-    gap: 30
-  },
-  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
+  [theme.breakpoints.down("lg")]: {
     flexDirection: "column",
     gap: 30,
     margin: 0,
@@ -95,17 +82,17 @@ export const BoxGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) =
   }
 }));
 
-export const StyledFreeBox = styled(FeeBox)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const StyledFreeBox = styled(FeeBox)(({ theme }) => ({
   alignSelf: "flex-end",
   width: 180,
   height: 70,
   boxSizing: "border-box",
-  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
+  [theme.breakpoints.down("lg")]: {
     alignSelf: "flex-start"
   }
 }));
 
-export const StyledWithHoldBox = styled(HoldBox)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const StyledWithHoldBox = styled(HoldBox)(({ theme }) => ({
   border: "2px solid #438F68",
   boxSizing: "border-box",
   height: 70,
@@ -113,7 +100,7 @@ export const StyledWithHoldBox = styled(HoldBox)<{ sidebar?: number }>(({ theme,
   "&:after": {
     backgroundColor: "#438F68"
   },
-  [theme.breakpoints.down(sidebar ? "xl" : "lg")]: {
+  [theme.breakpoints.down("lg")]: {
     alignSelf: "flex-end"
   }
 }));

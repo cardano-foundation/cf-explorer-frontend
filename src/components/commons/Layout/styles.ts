@@ -120,19 +120,19 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
   },
   "&>div": {
     "& > button": {
-      visibility: "hidden",
+      visibility: "hidden"
     },
     "&:hover": {
       "& > button": {
         transitionDelay: "0s",
-        visibility: "visible",
-      },
+        visibility: "visible"
+      }
     },
     "&:not(:hover)": {
       "& > button": {
-        transitionDelay: "1s",
-      },
-    },
+        transitionDelay: "1s"
+      }
+    }
   }
 }));
 
@@ -147,7 +147,7 @@ export const Main = styled(Box)<{ open: number }>(({ theme, open }) => ({
   overflowX: "hidden",
   overflowY: "auto",
   width: `calc(100vw - ${drawerCollaspWidth}px)`,
-  height: "calc(100vh - 61px)",
+  minHeight: "calc(100vh - 61px)",
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen
