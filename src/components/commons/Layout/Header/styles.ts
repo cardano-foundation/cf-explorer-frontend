@@ -90,7 +90,7 @@ export const SearchButton = styled(Button)(({ theme }) => ({
   height: 24,
   display: "none",
   [theme.breakpoints.down("md")]: {
-    display:  "block"
+    display: "block"
   }
 }));
 

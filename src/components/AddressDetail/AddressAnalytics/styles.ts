@@ -114,7 +114,7 @@ export const ButtonTitle = styled("button")(({ theme }) => ({
   fontSize: "1rem",
   marginRight: 5,
   color: theme.palette.primary.contrastText,
-  backgroundColor: theme.palette.primary.main,
+  backgroundColor: theme.palette.green[700],
   fontFamily: "var(--font-family-title)",
 
   [theme.breakpoints.down("sm")]: {
@@ -145,7 +145,11 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   border: `2px solid ${theme.palette.green[800_20]}`,
   color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
   fontWeight: "bold",
-  backgroundColor: active ? theme.palette.primary.main : "none",
+  backgroundColor: active ? theme.palette.green[700] : "none",
+
+  "&:hover": {
+    color: active ? `${theme.palette.text.dark} !important` : theme.palette.grey[400]
+  },
 
   [theme.breakpoints.down("sm")]: {
     minWidth: `40px !important`,
@@ -154,18 +158,16 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
 
   [theme.breakpoints.down("lg")]: {
     backgroundColor: active ? `${theme.palette.primary.main} !important` : "none",
-    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400]
-  },
-
-  [theme.breakpoints.down("md")]: {
+    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
     "&:hover": {
       backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText
+      color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400]
     }
-  }
+  },
+
 }));
 
 export const TextCardHighlight = styled("span")`
   font-size: 20px;
-  border-bottom: ${(props) => `2px solid ${props.theme.palette.green[600]}`};
+  border-bottom: ${(props) => `2px solid ${props.theme.palette.green[700]}`};
 `;

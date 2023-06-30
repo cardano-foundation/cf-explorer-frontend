@@ -11,6 +11,7 @@ import { StyledLink } from "src/components/share/styled";
 import { details } from "src/commons/routers";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 const WalletActitityTab = () => {
   const [sort, setSort] = useState<string>("");
@@ -48,7 +49,13 @@ const WalletActitityTab = () => {
       title: "Transaction Hash",
       key: "transactionHash",
       minWidth: "100px",
-      render: (r) => <StyledLink to={details.transaction(r.txHash || "")}>{getShortHash(r.txHash)}</StyledLink>
+      render: (r) => (
+        <StyledLink to={details.transaction(r.txHash || "")}>
+          <CustomTooltip title={r.txHash}>
+            <Box component={"span"}>{getShortHash(r.txHash)}</Box>
+          </CustomTooltip>
+        </StyledLink>
+      )
     },
     {
       title: "Status",

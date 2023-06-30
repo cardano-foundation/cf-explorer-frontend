@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Container } from "@mui/material";
 import styled from "@emotion/styled";
+import { Container } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-import TransactionList from "src/components/TransactionLists";
-import { setOnDetailView } from "src/stores/user";
-import DetailViewTransaction from "src/components/commons/DetailView/DetailViewTransaction";
 import { API } from "src/commons/utils/api";
+import TransactionList from "src/components/TransactionLists";
+import DetailViewTransaction from "src/components/commons/DetailView/DetailViewTransaction";
+import { setOnDetailView } from "src/stores/user";
 
 const StyledContainer = styled(Container)`
   padding: 20px 16px 40px;
@@ -18,6 +19,7 @@ const StyledContainer = styled(Container)`
 const Transactions = () => {
   const [hash, setHash] = useState<string | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
+  const { onDetailView } = useSelector(({ user }: RootState) => user);
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
@@ -47,7 +49,7 @@ const Transactions = () => {
           handleClose={handleClose}
         />
       </StyledContainer>
-      {hash && <DetailViewTransaction hash={hash} handleClose={handleClose} />}
+      {hash && onDetailView && <DetailViewTransaction hash={hash} handleClose={handleClose} />}
     </>
   );
 };
