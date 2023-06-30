@@ -17,7 +17,12 @@ const InfoGraphicModal: React.FC<IInfoGraphicModalProps> = (props) => {
       closeButtonProps={{
         sx: { background: theme.palette.grey[200], border: "none", "&:hover": { background: theme.palette.grey[200] } }
       }}
-      modalProps={{ sx: { "& > div.MuiBox-root": { padding: "25px" } } }}
+      modalProps={{
+        sx: {
+          "& > div.MuiBox-root": { padding: "25px" },
+          "& > div.MuiBox-root > div.MuiBox-root": { maxHeight: "90vh" }
+        }
+      }}
     >
       <Image src={InfoGraphicImage} alt="info grapphic" />
     </CustomModal>

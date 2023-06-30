@@ -45,14 +45,11 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       value: (
         <TokenDescription>
           {data?.metadata?.description || ""}
-          {data?.metadata?.url ?
-            <TokenUrl onClick={() => window.open(data?.metadata?.url, "_blank")}>
-              {data?.metadata?.url}
-            </TokenUrl>
-            : null
-          }
+          {data?.metadata?.url ? (
+            <TokenUrl onClick={() => window.open(data?.metadata?.url, "_blank")}>{data?.metadata?.url}</TokenUrl>
+          ) : null}
         </TokenDescription>
-      ),
+      )
     },
     {
       title: <WrapTitle>Total Supply</WrapTitle>,
