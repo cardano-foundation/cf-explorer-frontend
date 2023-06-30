@@ -7,6 +7,7 @@ import { formatDateTimeLocal, formatNumberDivByDecimals, numberWithCommas } from
 import CopyButton from "src/components/commons/CopyButton";
 import DetailHeader from "src/components/commons/DetailHeader";
 import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import ScriptModal from "../../ScriptModal";
 import { PolicyId, PolicyScriptBtn, TokenDescription, TokenHeader, TokenUrl, WrapTitle } from "./styles";
@@ -64,7 +65,9 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       value: (
         <>
           <Box position={"relative"}>
-            <PolicyId>{data?.policy || ""}</PolicyId>
+            <CustomTooltip title={data?.policy}>
+              <PolicyId>{data?.policy || ""}</PolicyId>
+            </CustomTooltip>
             <Box position={"absolute"} top={"-5px"} right={0}>
               <CopyButton text={data?.policy}></CopyButton>
             </Box>

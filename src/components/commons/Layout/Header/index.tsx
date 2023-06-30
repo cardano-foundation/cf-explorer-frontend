@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import { Box } from "@mui/material";
 
 import { LogoIcon, SearchIcon } from "src/commons/resources";
 import { setSidebar } from "src/stores/user";
@@ -25,8 +26,8 @@ import {
 } from "./styles";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [
-  routers.STAKING_LIFECYCLE,
-  routers.STAKING_LIFECYCLE_SEARCH,
+  routers.STAKING_LIFECYCLE.replace(":tab", "stake-key"),
+  routers.STAKING_LIFECYCLE.replace(":tab", "pools"),
   `/${routers.DELEGATOR_LIFECYCLE.split("/")[1]}/`,
   `/${routers.SPO_LIFECYCLE.split("/")[1]}/`
 ];
@@ -41,6 +42,16 @@ const Header: React.FC<RouteComponentProps> = (props) => {
   const pathMatched = HIDDEN_HEADER_SEARCH_PATHS.find((subPath: string) =>
     `${history.location.pathname}/`.includes(subPath)
   );
+
+  const refElement = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = () => {
+      setOpenSearch(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <HeaderContainer data-testid="header">
@@ -69,7 +80,9 @@ const Header: React.FC<RouteComponentProps> = (props) => {
           </SideBarRight>
         </HeaderTop>
       </HeaderBox>
-      <TopSearch open={openSearch} onClose={setOpenSearch} />
+      <Box ref={refElement}>
+        <TopSearch open={openSearch} onClose={setOpenSearch} />
+      </Box>
     </HeaderContainer>
   );
 };

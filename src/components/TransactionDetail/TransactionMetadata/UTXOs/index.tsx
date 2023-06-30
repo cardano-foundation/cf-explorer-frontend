@@ -78,7 +78,7 @@ const Card = ({
                                 component={"span"}
                                 fontWeight="bold"
                                 fontFamily={"var(--font-family-text)"}
-                                color={(theme) => theme.palette.blue[900]}
+                                color={(theme) => theme.palette.blue[800]}
                                 mr={1}
                               >
                                 {getShortHash(item.txHash)}
@@ -99,7 +99,6 @@ const Card = ({
                       alignItems="center"
                       justifyContent={"flex-start"}
                       pr={1}
-                      pl={type === "down" ? 2 : 0}
                     >
                       {type === "down" ? "From" : "To"}:
                     </Box>
@@ -114,7 +113,7 @@ const Card = ({
                         <Link to={details.address(item.address)}>
                           <CustomTooltip title={item.address}>
                             <Box
-                              color={(theme) => theme.palette.blue[900]}
+                              color={(theme) => theme.palette.blue[800]}
                               fontWeight="bold"
                               fontFamily={"var(--font-family-text)"}
                               mr={1}
@@ -135,7 +134,7 @@ const Card = ({
                       flexDirection={isMobile ? "column" : "row"}
                       paddingTop="5px"
                     >
-                      <Box mr={3} minWidth={180} pl={type === "down" ? 2 : 0}>
+                      <Box mr={3} minWidth={180} >
                         <Box
                           display={"flex"}
                           flexDirection={isMobile ? "column" : "row"}
@@ -150,7 +149,7 @@ const Card = ({
                                   component={"span"}
                                   fontWeight="bold"
                                   fontFamily={"var(--font-family-text)"}
-                                  color={(theme) => theme.palette.blue[900]}
+                                  color={(theme) => theme.palette.blue[800]}
                                   mr={1}
                                 >
                                   {getShortWallet(item?.stakeAddress)}
