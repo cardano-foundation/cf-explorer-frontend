@@ -34,7 +34,6 @@ const StyledModal: React.FC<IProps> = ({
       open={open}
       onClose={handleCloseModal}
       sx={{
-        // lower than toast and tooltip
         zIndex: 1305
       }}
     >
