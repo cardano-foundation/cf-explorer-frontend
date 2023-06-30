@@ -271,7 +271,6 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
   };
 
   useEffect(() => {
-    console.log(trigger);
     trigger && setOpen(false);
   }, [trigger, setOpen]);
 
