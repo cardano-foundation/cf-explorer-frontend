@@ -26,7 +26,9 @@ const mockItem: DelegationPool = {
   feePercent: 1,
   feeAmount: 340000000,
   pledge: 50000000000000,
-  saturation: 123.46
+  saturation: 123.46,
+  epochBlock: 100,
+  lifetimeBlock: 100
 };
 
 describe("TopDelegationPools", () => {
