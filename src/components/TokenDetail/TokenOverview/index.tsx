@@ -9,7 +9,7 @@ import DetailHeader from "src/components/commons/DetailHeader";
 import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
 
 import ScriptModal from "../../ScriptModal";
-import { PolicyId, PolicyScriptBtn, TokenDescription, TokenHeader, WrapTitle } from "./styles";
+import { PolicyId, PolicyScriptBtn, TokenDescription, TokenHeader, TokenUrl, WrapTitle } from "./styles";
 BigNumber.config({ DECIMAL_PLACES: 40 });
 
 interface ITokenOverview {
@@ -44,8 +44,11 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       value: (
         <TokenDescription>
           {data?.metadata?.description || ""}
+          {data?.metadata?.url ? (
+            <TokenUrl onClick={() => window.open(data?.metadata?.url, "_blank")}>{data?.metadata?.url}</TokenUrl>
+          ) : null}
         </TokenDescription>
-      ),
+      )
     },
     {
       title: <WrapTitle>Total Supply</WrapTitle>,
@@ -53,12 +56,12 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       icon: slotIconUrl
     },
     {
-      title: <WrapTitle>Policy Id</WrapTitle>, icon: fileGuardUrl, value: (
+      title: <WrapTitle>Policy Id</WrapTitle>,
+      icon: fileGuardUrl,
+      value: (
         <>
           <Box position={"relative"}>
-            <PolicyId>
-              {data?.policy || ""}
-            </PolicyId>
+            <PolicyId>{data?.policy || ""}</PolicyId>
             <Box position={"absolute"} top={"-5px"} right={0}>
               <CopyButton text={data?.policy}></CopyButton>
             </Box>

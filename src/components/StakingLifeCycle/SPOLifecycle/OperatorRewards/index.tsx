@@ -13,7 +13,7 @@ import CustomModal from "src/components/commons/CustomModal";
 import Table, { Column } from "src/components/commons/Table";
 import useFetchList from "src/commons/hooks/useFetchList";
 import ADAicon from "src/components/commons/ADAIcon";
-import CardanoSystem from "src/components/commons/CardanoSystem";
+import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import SPOHolder from "src/components/commons/SPOHolder";
 import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
@@ -26,12 +26,12 @@ const OperatorReward = () => {
   const { data } = useFetch<PoolInfo>(API.SPO_LIFECYCLE.SPO_POOL_INFO(poolId));
   const SPOHolderRef = useRef(null);
   const operatorRef = useRef(null);
-  const cadarnoSystemRef = useRef(null);
+  const cardanoBlockchainRef = useRef(null);
 
   const paths = useMemo((): LineArrowItem[] => {
     return [
       {
-        start: cadarnoSystemRef,
+        start: cardanoBlockchainRef,
         startPosition: { 0: ["center", "bottom"], sm: ["right", "middle"] },
         end: operatorRef,
         endPosition: { 0: ["center", "top"], sm: ["left", "middle"] },
@@ -53,7 +53,7 @@ const OperatorReward = () => {
   return (
     <Box>
       <DrawContainer>
-        <CardanoSystem ref={cadarnoSystemRef} />
+        <CardanoBlockchain ref={cardanoBlockchainRef} />
         <ADAOperator ref={operatorRef} onClick={() => setOpenModal(true)}>
           <ADAOrangeBorderIcon />
           <ADATitle>Operator Rewards</ADATitle>

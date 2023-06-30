@@ -98,7 +98,7 @@ const OverViews: React.FC = () => {
                 <StyledCard.Content>
                   <StyledCard.Title>Slot</StyledCard.Title>
                   <StyledCard.Value>
-                    {currentEpoch?.slot}
+                    {(currentEpoch?.slot || 0) % MAX_SLOT_EPOCH}
                     <Box component="span" sx={{ color: (theme) => theme.palette.text.hint, fontWeight: "400" }}>
                       / {MAX_SLOT_EPOCH}
                     </Box>
@@ -109,7 +109,7 @@ const OverViews: React.FC = () => {
               <Box position={"relative"} top={-60} px={4}>
                 <StyledLinearProgress
                   variant="determinate"
-                  value={((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100}
+                  value={(((currentEpoch?.slot || 0) % MAX_SLOT_EPOCH) / MAX_SLOT_EPOCH) * 100}
                 />
               </Box>
             </Box>
