@@ -107,6 +107,8 @@ const StyledInput = styled("input")`
   width: 100%;
   font-size: var(--font-size-text-small);
   border-radius: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const SubmitButton = styled(Button)`
