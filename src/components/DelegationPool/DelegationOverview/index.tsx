@@ -58,7 +58,7 @@ const OverViews: React.FC = () => {
   const minutes = duration.minutes();
   return (
     <Card
-      title="Stake Pool"
+      title="Stake Pools"
       extra={
         <TimeDuration>
           <FormNowMessage time={lastUpdated} />

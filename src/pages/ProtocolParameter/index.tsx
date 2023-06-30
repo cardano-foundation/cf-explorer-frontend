@@ -190,9 +190,12 @@ const ProtocolParameter: React.FC = () => {
       )}
       {showHistory && <ProtocolParameterHistory />}
       {!showHistory && (
-        <Card titleSx={{
-          margin: 0,
-        }} title={"Protocol parameters"}>
+        <Card
+          titleSx={{
+            margin: 0
+          }}
+          title={"Protocol parameters"}
+        >
           <Box pt={2}>
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
@@ -275,17 +278,19 @@ export const ProtocolParameterHistory = () => {
     loading,
     initialized
   } = useFetch<ProtocolHistory>(
-    `${PROTOCOL_PARAMETER.HISTORY}/${filterParams.length === TOTAL_PARAMETER || filterParams.length === 0
-      ? "ALL"
-      : filterParams.map((f) => PROTOCOL_TYPE[f as keyof typeof PROTOCOL_TYPE]).join(",")
-    }${_.isEmpty(dateRangeFilter)
-      ? ""
-      : `?endTime=${moment(dateRangeFilter.toDate).endOf("D").utc().format("X")}&startTime=${moment(
-        dateRangeFilter.fromDate
-      )
-        .startOf("D")
-        .utc()
-        .format("X")}`
+    `${PROTOCOL_PARAMETER.HISTORY}/${
+      filterParams.length === TOTAL_PARAMETER || filterParams.length === 0
+        ? "ALL"
+        : filterParams.map((f) => PROTOCOL_TYPE[f as keyof typeof PROTOCOL_TYPE]).join(",")
+    }${
+      _.isEmpty(dateRangeFilter)
+        ? ""
+        : `?endTime=${moment(dateRangeFilter.toDate).endOf("D").utc().format("X")}&startTime=${moment(
+            dateRangeFilter.fromDate
+          )
+            .startOf("D")
+            .utc()
+            .format("X")}`
     }
     `
   );
@@ -447,7 +452,7 @@ export const ProtocolParameterHistory = () => {
       <Card
         titleSx={{
           margin: 0,
-          width: "max-content",
+          width: "max-content"
         }}
         title={"Protocol parameters update history"}
         textAlign={"left"}
@@ -713,7 +718,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
   );
 };
 
-const CloseButton = styled(IconButton) <{ saving: number }>`
+const CloseButton = styled(IconButton)<{ saving: number }>`
   position: absolute;
   top: 15px;
   right: 20px;

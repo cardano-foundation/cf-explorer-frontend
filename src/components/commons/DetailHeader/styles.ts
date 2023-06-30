@@ -318,7 +318,7 @@ export const CardItem = styled(Grid)<{ length: number; wide?: number }>(({ theme
         borderBottomWidth: 0,
         [theme.breakpoints.down("lg")]: {
           padding: "20px 25px"
-        },
+        }
       }),
   [theme.breakpoints.between("md", "lg")]: {
     paddingTop: 20,
