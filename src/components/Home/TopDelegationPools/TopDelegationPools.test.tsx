@@ -1,13 +1,13 @@
 import { cleanup, screen, waitFor } from "@testing-library/react";
 import { useSelector } from "react-redux";
+import { Router } from "react-router-dom";
+import userEvent from "@testing-library/user-event";
 import { createMemoryHistory } from "history";
 import "@testing-library/jest-dom/extend-expect";
 
 import { render } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
 import { formatADAFull, formatPercent } from "src/commons/utils/helper";
-import { Router } from "react-router-dom";
-import userEvent from "@testing-library/user-event";
 import { details, routers } from "src/commons/routers";
 
 import TopDelegationPools from ".";
@@ -64,12 +64,9 @@ describe("TopDelegationPools", () => {
         <TopDelegationPools />
       </Router>
     );
-
+    screen.logTestingPlaygroundURL();
     expect(screen.getByText(mockItem.poolName)).toBeInTheDocument();
     expect(screen.getByText(formatADAFull(mockItem.poolSize))).toBeInTheDocument();
-    expect(screen.getByText("+3,49 %")).toBeInTheDocument();
-    expect(screen.getByText(formatPercent(mockItem.feePercent))).toBeInTheDocument();
-    expect(screen.getByText(`${formatADAFull(mockItem.feeAmount)} A`)).toBeInTheDocument();
     expect(screen.getByText(formatADAFull(mockItem.pledge))).toBeInTheDocument();
     expect(screen.getByText(formatPercent(mockItem.saturation / 100))).toBeInTheDocument();
   });

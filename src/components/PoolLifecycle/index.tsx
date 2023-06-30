@@ -1,10 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Box, CircularProgress, IconButton, styled } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { lowerCase, startCase } from "lodash";
 
 import Table, { Column } from "src/components/commons/Table";
-import useFetchList from "src/commons/hooks/useFetchList";
+import { FetchReturnType } from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import { DownloadGreenIcon } from "src/commons/resources";
 import { defaultAxiosDownload } from "src/commons/utils/axios";
@@ -40,13 +40,17 @@ export function getPoolEventType(data: any) {
   }
   return events;
 }
-
-const PoolLifecycle = () => {
+interface IPoolLifecycleProps {
+  fetchData: FetchReturnType<IPoolReportList>;
+  pagination: { page: number; size: number };
+  onSort?: (sort?: string) => void;
+  onPagination?: ({ page, size }: { page: number; size: number }) => void;
+}
+const PoolLifecycle: React.FC<IPoolLifecycleProps> = ({ onSort, fetchData, pagination, onPagination }) => {
   const history = useHistory();
-  const [{ page, size }, setPagi] = useState<{ page: number; size: number }>({ page: 0, size: 50 });
   const [onDownload, setOnDownload] = useState<number | false>(false);
 
-  const downloadFn = async (reportId: number, fileName: string, typeExport: "CSV" | "EXCEL" = "CSV") => {
+  const downloadFn = async (reportId: number, fileName: string, typeExport: "CSV" | "EXCEL" = "EXCEL") => {
     setOnDownload(reportId);
     defaultAxiosDownload
       .get(`${API.REPORT.DOWNLOAD_POOL_SUMMARY(reportId)}?exportType=${typeExport}`)
@@ -72,6 +76,9 @@ const PoolLifecycle = () => {
       key: "createdAt",
       render(data) {
         return formatDateTimeLocal(data.createdAt);
+      },
+      sort({ sortValue }) {
+        onSort?.(`id,${sortValue}`);
       }
     },
     {
@@ -80,11 +87,9 @@ const PoolLifecycle = () => {
       maxWidth: "300px",
       render(data) {
         return (
-          <StyledBox>
-            <CustomTooltip title={`${data.reportName}`.replaceAll("-", " ")}>
-              <span>{`${data.reportName}`.replaceAll("-", " ")}</span>
-            </CustomTooltip>
-          </StyledBox>
+          <CustomTooltip title={`${data.reportName}`.replaceAll("-", " ")}>
+            <StyledBox>{`${data.reportName}`.replaceAll("-", " ")}</StyledBox>
+          </CustomTooltip>
         );
       }
     },
@@ -149,12 +154,7 @@ const PoolLifecycle = () => {
       }
     }
   ];
-
-  const fetchData = useFetchList<IPoolReportList>(API.REPORT.POOL_REPORT_SUMMARY, {
-    page,
-    size
-  });
-
+  const { page, size } = pagination;
   return (
     <Box>
       <Table
@@ -166,7 +166,7 @@ const PoolLifecycle = () => {
           page,
           size,
           total: fetchData.total,
-          onChange: (page, size) => setPagi({ page: page - 1, size })
+          onChange: (page, size) => onPagination?.({ page: page - 1, size })
         }}
       />
     </Box>
