@@ -33,7 +33,15 @@ export const GridContainer = styled(Grid)`
   }
 `;
 
-export const Status = styled("span")<{ status: string }>`
+export const WrapGridItem = styled(Box)`
+  min-width: 270px;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    min-width: 160px;
+  }
+
+`;
+
+export const Status = styled("span") <{ status: string }>`
   font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
   padding: 7.5px 11.5px;

@@ -16,21 +16,21 @@ export const Layout = styled(Box)<{ sidebar: number }>`
   }
   * {
     &::-webkit-scrollbar {
-      width: 16px;
+      width: 5px;
+      height: 5px;
     }
-
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
     &::-webkit-scrollbar-thumb {
-      background: ${(props) => props.theme.palette.grey["A400"]};
-      border-radius: 8px;
-      border: 4px solid transparent;
-      background-clip: padding-box;
-      &:hover {
-        background: ${(props) => props.theme.palette.grey[300]};
-        background-clip: padding-box;
+      background: transparent;
+    }
+    &:hover {
+      &::-webkit-scrollbar-thumb {
+        background: ${({ theme }) => theme.palette.grey[300]};
       }
-      &:active {
-        background: ${(props) => props.theme.palette.grey[400]};
-        background-clip: padding-box;
+      &::-webkit-scrollbar-track {
+        background: ${({ theme }) => theme.palette.grey[100]};
       }
     }
     ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -147,7 +147,7 @@ export const Main = styled(Box)<{ open: number }>(({ theme, open }) => ({
   overflowX: "hidden",
   overflowY: "auto",
   width: `calc(100vw - ${drawerCollaspWidth}px)`,
-  height: "calc(100vh - 61px)",
+  minHeight: "calc(100vh - 61px)",
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen

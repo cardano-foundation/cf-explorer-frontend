@@ -35,7 +35,7 @@ export const menus: Menu[] = [
       { title: "Native Tokens", href: routers.TOKEN_LIST },
       { title: "Smart Contracts", href: routers.CONTRACT_LIST },
       { title: "Pools", href: routers.DELEGATION_POOLS },
-      { title: "Top ADA Holders", href: routers.ADDRESS_LIST }
+      { title: "Top ADA Holders", href: routers.ADDRESS_LIST},
     ]
   },
   {
@@ -48,7 +48,6 @@ export const menus: Menu[] = [
       { title: "Pool Certificate", href: routers.REGISTRATION_POOLS.replace(":poolType?", "registration") },
       { title: "Pool Deregistration", href: routers.REGISTRATION_POOLS.replace(":poolType?", "de-registration") },
       { title: "Instantaneous Rewards ", href: routers.INSTANTANEOUS_REWARDS },
-      { title: "Top Delegators", href: routers.TOP_DELEGATOR }
     ]
   },
   {
