@@ -14,7 +14,7 @@ interface FetchReturnType {
 const useToast = (): FetchReturnType => {
   const createToast =
     (severity: AlertProps["severity"]): ToastFn =>
-    (message: React.ReactNode, duration = 20000) => {
+    (message: React.ReactNode, duration = 3000) => {
       const id = performance.now();
       addToast({ id, severity, message, duration });
       setTimeout(() => removeToast(id), duration);
