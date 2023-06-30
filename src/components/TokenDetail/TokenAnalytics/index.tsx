@@ -46,7 +46,7 @@ const AddressAnalytics: React.FC = () => {
   const { data, loading } = useFetch<AnalyticsData[]>(`${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`);
   const dataChart = data?.map((i) => {
     const value = BigNumber(i.value);
-    return Number(value.toString().match(/^-?\d+(?:\.\d{0,5})?/)?.[0]);
+    return Number(value.toString().match(/^-?\d+(?:\.\d{0,6})?/)?.[0]);
   });
 
   const categories =
@@ -117,7 +117,7 @@ const AddressAnalytics: React.FC = () => {
                         angle: 0,
                         labels: {
                           style: {
-                            fontSize: 12
+                            fontSize: rangeTime === "THREE_MONTH" ? 10 : 12
                           },
                           rotation: isMobile || rangeTime === "THREE_MONTH" ? -45 : null
                         }
