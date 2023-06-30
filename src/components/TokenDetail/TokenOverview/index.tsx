@@ -102,9 +102,13 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       value: (
         <>
           <Box>{data?.tokenType}</Box>
-          <ButtonLink target="_blank" href={tokenRegistry(data?.policy, data?.name)}>
-            Token Registry
-          </ButtonLink>
+          {!data?.metadata ? (
+            ""
+          ) : (
+            <ButtonLink target="_blank" href={tokenRegistry(data?.policy, data?.name)}>
+              Token Registry
+            </ButtonLink>
+          )}
         </>
       )
     },
