@@ -44,7 +44,7 @@ const data: Story[] = [
 const LatestStories = () => {
   const drag = useRef<boolean>(false);
   return (
-    <LatestStoriesContainer>
+    <LatestStoriesContainer data-testid="home-latest-stories">
       <Header>
         <Title>Latest Stories</Title>
         <ViewAllButton data-testid="view-all" to={routers.STORY_LIST} />
@@ -52,7 +52,7 @@ const LatestStories = () => {
       <Grid container spacing={2}>
         {data.map(({ id, image, author, title, createdDate }) => {
           return (
-            <Grid key={id} md={3} sm={6} xs={12} item>
+            <Grid key={id} lg={3} md={6} sm={6} xs={12} item>
               <Link key={id} to={details.story(id)} title={title} onClick={(e) => drag.current && e.preventDefault()}>
                 <Item>
                   <Image src={image} alt={title} />

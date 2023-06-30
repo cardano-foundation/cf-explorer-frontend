@@ -202,7 +202,8 @@ export default function SignUp() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enableButton, formData]);
 
   const handleKeyDown = (event: any) => {
     if (event.key === "Enter") {
@@ -213,6 +214,7 @@ export default function SignUp() {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    if (!enableButton) return;
     let hasError = false;
     const errorPassword = getError("password", formData.password.value);
     const errorEmail = getError("email", formData.email.value);
@@ -341,7 +343,6 @@ export default function SignUp() {
                   onChange={handleChange}
                   error={Boolean(formData.confirmEmail.error && formData.confirmEmail.touched)}
                   placeholder="Re-enter Your email address"
-                  onKeyDown={handleKeyDown}
                 />
                 {formData.confirmEmail.error && formData.confirmEmail.touched ? (
                   <FormHelperTextCustom error>{formData.confirmEmail.error}</FormHelperTextCustom>
@@ -368,7 +369,6 @@ export default function SignUp() {
                   onChange={handleChange}
                   error={Boolean(formData.password.error && formData.password.touched)}
                   placeholder="Password"
-                  onKeyDown={handleKeyDown}
                 />
                 {formData.password.error && formData.password.touched ? (
                   <FormHelperTextCustom error>{formData.password.error}</FormHelperTextCustom>
@@ -395,7 +395,6 @@ export default function SignUp() {
                   onChange={handleChange}
                   error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
                   placeholder="Confirm Password"
-                  onKeyDown={handleKeyDown}
                 />
                 {formData.confirmPassword.error && formData.confirmPassword.touched ? (
                   <FormHelperTextCustom error>{formData.confirmPassword.error}</FormHelperTextCustom>

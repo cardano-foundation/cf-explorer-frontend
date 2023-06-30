@@ -46,8 +46,13 @@ export const ProgressPercent = styled("h4")`
   color: ${(props) => props.theme.palette.primary.main};
 `;
 
-export const Output = styled('span')`
+export const Output = styled("span")`
   display: inline-flex;
   align-items: center;
   gap: 10px;
+`;
+
+export const Subtext = styled("span")`
+  opacity: 0.5;
+  font-weight: 400;
 `;

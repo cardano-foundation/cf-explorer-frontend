@@ -15,7 +15,7 @@ import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants
 import ADAicon from "src/components/commons/ADAIcon";
 import DetailHeader from "src/components/commons/DetailHeader";
 
-import { ConfirmStatus, TitleCard, WrapConfirmation } from "./styles";
+import { ConfirmStatus, Subtext, TitleCard, WrapConfirmation } from "./styles";
 
 interface BlockOverviewProps {
   data: BlockDetail | null;
@@ -116,9 +116,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       value: (
         <>
           {data?.epochSlotNo || 0}
-          <Box component={"span"} fontWeight="400">
-            /{MAX_SLOT_EPOCH}
-          </Box>
+          <Subtext>/{MAX_SLOT_EPOCH}</Subtext>
         </>
       )
     }
