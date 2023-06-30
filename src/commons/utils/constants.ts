@@ -100,6 +100,7 @@ export enum STAKE_KEY_STATUS {
   DEACTIVATED = "DEACTIVATED"
 }
 export const APP_VERSION = process.env.REACT_APP_VERSION;
+export const EXT_ADA_PRICE_URL = process.env.REACT_APP_EXT_ADA_PRICE_URL;
 export const AUTH_API_URL = process.env.REACT_APP_AUTH_API_URL;
 export const API_URL = process.env.REACT_APP_API_URL;
 

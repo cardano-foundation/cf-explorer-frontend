@@ -1,14 +1,15 @@
 import { Box, useTheme } from "@mui/material";
 import { useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { RiArrowRightSLine } from "react-icons/ri";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { details } from "src/commons/routers";
 import { getShortWallet, numberWithCommas } from "src/commons/utils/helper";
 
 import CustomTooltip from "../CustomTooltip";
-import { CustomSelect, OptionSelect } from "./styles";
+import { CustomSelect, OptionSelect, TokenButton } from "./styles";
 
 interface IDropdownTokens {
   tokens: Token[];
@@ -38,11 +39,19 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
       IconComponent={() =>
         openDropdown ? (
           <>
-            <BiChevronUp size={30} style={{ paddingRight: 10, fontSize: "20px", cursor: "pointer" }} onClick={() => setOpenDropdown(false)} />
+            <BiChevronUp
+              size={30}
+              style={{ paddingRight: 10, fontSize: "20px", cursor: "pointer" }}
+              onClick={() => setOpenDropdown(false)}
+            />
           </>
         ) : (
           <>
-            <BiChevronDown size={30} style={{ paddingRight: 10, fontSize: "20px", cursor: "pointer" }} onClick={() => setOpenDropdown(true)} />
+            <BiChevronDown
+              size={30}
+              style={{ paddingRight: 10, fontSize: "20px", cursor: "pointer" }}
+              onClick={() => setOpenDropdown(true)}
+            />
           </>
         )
       }
@@ -104,3 +113,44 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
 };
 
 export default DropdownTokens;
+
+export const TokenLink: React.FC<{ token: Token }> = ({ token }) => {
+  const isNegative = token.assetQuantity <= 0;
+  const tokenName = token.assetName || token.assetId;
+  const shortTokenName = getShortWallet(tokenName);
+  const isTokenNameLong = tokenName.length > 20;
+
+  return (
+    <TokenButton>
+      <Box
+        component={Link}
+        to={details.token(token.assetId)}
+        display={"flex"}
+        alignItems={"center"}
+        justifyContent={"space-between"}
+        pl={2}
+        width={"100%"}
+        height={38}
+      >
+        <Box mr={2}>
+          {isTokenNameLong ? (
+            <CustomTooltip title={tokenName} placement="top">
+              <Box>{shortTokenName}</Box>
+            </CustomTooltip>
+          ) : (
+            tokenName
+          )}
+        </Box>
+        <Box display={"flex"} alignItems={"center"}>
+          <Box fontWeight={"bold"} fontSize={"14px"}>
+            {isNegative ? "" : "+"}
+            {`${numberWithCommas(token.assetQuantity) || ""}`}
+          </Box>
+          <Box mr={1} mt={"2px"}>
+            <RiArrowRightSLine />
+          </Box>
+        </Box>
+      </Box>
+    </TokenButton>
+  );
+};

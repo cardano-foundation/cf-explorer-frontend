@@ -2,7 +2,7 @@ import { Box, styled, Button, alpha } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const ModalContainer = styled(Box)(({ theme }) => ({
-  maxheight: "80vh",
+  maxHeight: "80vh",
   overflow: "hidden",
   position: "relative",
   top: "50%",
@@ -11,7 +11,6 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   transform: "translate(-50%, -50%)",
   width: "min(80vw, 800px)",
-  maxHeight: "90vh",
   backgroundColor: theme.palette.background.paper,
   padding: theme.spacing(4),
   borderRadius: 10,

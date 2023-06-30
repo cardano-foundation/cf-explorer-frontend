@@ -13,8 +13,8 @@ describe("template spec", () => {
     cy.get('[data-testid="blocks-card"]').contains("Blocks");
   });
 
-  it("should show details of block 8237492", () => {
-    cy.visit("/block/8237492");
-    cy.get('[data-testid="block-details-total-output-in-ada"]').should("contain", "549.203328");
+  it("should show details of block 7588518", () => {
+    cy.visit("/block/7588518");
+    cy.get('[data-testid="block-details-total-output-in-ada"]').should("contain", "18,246,431.529342");
   });
 });

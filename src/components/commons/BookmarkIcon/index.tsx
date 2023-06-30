@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocalStorage } from "react-use";
 import { Box, CircularProgress, IconButton, useTheme } from "@mui/material";
+import { useSelector } from "react-redux";
 
 import { addBookmark, deleteBookmark } from "src/commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
@@ -15,11 +16,20 @@ interface BookmarkButtonProps {
 
 const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
   const { isLoggedIn } = useAuth();
+  const { openSyncBookmarkModal = false } = useSelector(({ user }: RootState) => user);
+
   const [bookmarks, setBookmarks] = useLocalStorage<Bookmark[]>("bookmark", []);
+  const [bookmark, setBookmark] = useState((bookmarks || []).find((r) => r.keyword === `${keyword}`));
   const theme = useTheme();
   const toast = useToast();
   const [loading, setLoading] = useState(false);
-  const bookmark = (bookmarks || []).find((r) => r.keyword === `${keyword}`);
+
+  useEffect(() => {
+    setBookmark(
+      (JSON.parse(localStorage.getItem("bookmark") || "") || []).find((r: Bookmark) => r.keyword === `${keyword}`)
+    );
+  }, [openSyncBookmarkModal, JSON.stringify(bookmarks)]);
+
   const updateBookmark = async () => {
     if (!isLoggedIn) {
       if (!bookmark) {
@@ -64,7 +74,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
 
   return (
     <Box>
-      <Box mx={1} component={IconButton} style={{ width: 45, height: 45 }} onClick={updateBookmark}>
+      <IconButton style={{ width: 45, height: 45 }} onClick={updateBookmark}>
         {loading ? (
           <CircularProgress size={"30px"} />
         ) : bookmark ? (
@@ -72,7 +82,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
         ) : (
           <BookmarkIcon fill={theme.palette.text.hint} />
         )}
-      </Box>
+      </IconButton>
     </Box>
   );
 };

@@ -70,9 +70,9 @@ const GridItem = ({ title, action, value, iconUrl }: TGridItem) => {
 const TabularOverview: React.FC = () => {
   const data = useContext(DelegatorDetailContext);
   const { totalStake, rewardAvailable, rewardWithdrawn, pool } = data ?? {};
-  const { tickerName, poolName, poolId } = pool ?? {};
+  const { tickerName, poolName, poolId, iconUrl } = pool ?? {};
   const delegatingToValue =
-    tickerName || poolName ? `${tickerName && tickerName + "-"}  ${poolName && poolName}` : getShortHash(poolId || "");
+    tickerName || poolName ? `${tickerName && tickerName + " -"}  ${poolName && poolName}` : getShortHash(poolId || "");
   const [open, setOpen] = useState(false);
 
   return (
@@ -110,7 +110,7 @@ const TabularOverview: React.FC = () => {
       <Grid item xs={12} sm={6}>
         <GridItem
           title="Delegating To"
-          iconUrl={DelegationToIconUrl}
+          iconUrl={iconUrl || DelegationToIconUrl}
           value={
             pool?.poolId ? (
               <StyledBoxDelegating to={details.delegation(pool?.poolId)}>

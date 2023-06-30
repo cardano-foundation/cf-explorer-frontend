@@ -63,7 +63,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                     <Link to={details.address(item.address)}>
                       <CustomTooltip title={item.address}>
                         <Box
-                          color={(theme) => theme.palette.secondary.main}
+                          color={(theme) => theme.palette.blue[900]}
                           fontWeight="bold"
                           fontFamily={"var(--font-family-text)"}
                         >
@@ -103,7 +103,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                             component={"span"}
                             fontWeight="bold"
                             fontFamily={"var(--font-family-text)"}
-                            color={(theme) => theme.palette.secondary.main}
+                            color={(theme) => theme.palette.blue[900]}
                             mr={1}
                           >
                             {getShortHash(item.txHash)}

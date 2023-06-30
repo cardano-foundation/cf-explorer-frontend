@@ -36,7 +36,8 @@ import {
   HeaderStatus,
   Actions,
   TimeDuration,
-  TimeDurationSm
+  TimeDurationSm,
+  LatestTransactionItemHeader
 } from "./style";
 
 const LatestTransactions: React.FC = () => {
@@ -50,7 +51,7 @@ const LatestTransactions: React.FC = () => {
   const history = useHistory();
   const { isTablet } = useScreen();
   return (
-    <TransactionContainer>
+    <TransactionContainer data-testid="home-latest-transactions">
       <Header>
         <Title>Latest Transactions</Title>
         <Actions>
@@ -91,11 +92,11 @@ const LatestTransactions: React.FC = () => {
                   <Grid item xl lg={3} xs={12} sm={6} key={hash}>
                     <Item onClick={(e) => handleClicktWithoutAnchor(e, () => history.push(details.transaction(hash)))}>
                       <ItemHeader>
-                        <PriceImage src={ADAIcon} alt="check green" />
-                        <Box display={"flex"} flexDirection={"column"} rowGap={"4px"} alignItems={"end"}>
+                        <LatestTransactionItemHeader>
+                          <PriceImage src={ADAIcon} alt="check green" />
                           {!isTablet && <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>}
-                          <PriveValue>{formatADAFull(amount)}</PriveValue>
-                        </Box>
+                        </LatestTransactionItemHeader>
+                        <PriveValue>{formatADAFull(amount)}</PriveValue>
                       </ItemHeader>
                       <ItemDetail>
                         <Box display="flex" alignItems="center">
@@ -153,7 +154,6 @@ const LatestTransactions: React.FC = () => {
                             </RowItem>
                           );
                         })}
-
                         <RowItem>
                           <small>Timestamp: </small>
                           <small>{formatDateTimeLocal(time)}</small>

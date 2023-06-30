@@ -20,6 +20,7 @@ import {
   ProgressContainer,
   ProgressTitle,
   StyledLinearProgress,
+  SubHeader,
   TimeDuration,
   TimeDurationSm,
   Title,
@@ -52,13 +53,20 @@ const TopDelegationPools = () => {
       render: (r) => <RateWithIcon value={r.reward} multiple={1} />
     },
     {
-      title: "Fee (A)",
-      key: "fee",
+      title: "Margin",
+      key: "feePercent",
       render: (r) => (
-        <CustomTooltip title={`${r.feePercent * 100 || 0}% (${formatADAFull(r.feeAmount)} A)`}>
-          <Box display="inline-block">
-            {formatPercent(r.feePercent || 0)} ({formatADAFull(r.feeAmount)} A)
-          </Box>
+        <CustomTooltip title={`${r.feePercent * 100 || 0}%`}>
+          <Box display="inline-block">{formatPercent(r.feePercent || 0)}</Box>
+        </CustomTooltip>
+      )
+    },
+    {
+      title: "Fee (A)",
+      key: "feeAmount",
+      render: (r) => (
+        <CustomTooltip title={`${formatADAFull(r.feeAmount)} A`}>
+          <Box display="inline-block">{formatADAFull(r.feeAmount)} A</Box>
         </CustomTooltip>
       )
     },
@@ -89,9 +97,12 @@ const TopDelegationPools = () => {
     }
   ];
   return (
-    <TopDelegateContainer>
+    <TopDelegateContainer data-testid="home-top-delegation">
       <Header>
-        <Title>Top Delegation Pools</Title>
+        <Title>
+          Pools
+          <SubHeader>Sorted by blocks produced in the current epoch</SubHeader>
+        </Title>
         <Actions>
           <TimeDuration>
             <FormNowMessage time={lastUpdated} />
