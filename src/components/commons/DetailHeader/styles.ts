@@ -59,7 +59,7 @@ export const HeaderContainer = styled(Box)`
   align-items: center;
   flex-wrap: wrap;
   ${(props) => props.theme.breakpoints.down("sm")} {
-    justify-content: space-between;
+    justify-content: flex-start;
   }
 `;
 
