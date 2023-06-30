@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import { Box } from "@mui/material";
 
 import { LogoIcon, SearchIcon } from "src/commons/resources";
 import { setSidebar } from "src/stores/user";
@@ -42,6 +43,16 @@ const Header: React.FC<RouteComponentProps> = (props) => {
     `${history.location.pathname}/`.includes(subPath)
   );
 
+  const refElement = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = () => {
+      setOpenSearch(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <HeaderContainer data-testid="header">
       <HeaderBox home={home ? 1 : 0}>
@@ -69,7 +80,9 @@ const Header: React.FC<RouteComponentProps> = (props) => {
           </SideBarRight>
         </HeaderTop>
       </HeaderBox>
-      <TopSearch open={openSearch} onClose={setOpenSearch} />
+      <Box ref={refElement}>
+        <TopSearch open={openSearch} onClose={setOpenSearch} />
+      </Box>
     </HeaderContainer>
   );
 };
