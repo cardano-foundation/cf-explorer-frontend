@@ -1,22 +1,22 @@
 import { Box, BoxProps, Grid, Icon } from "@mui/material";
 import { useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import {
   BgBlue,
   BgCardWhite,
   BgGreen,
   BgPink,
-  OwnerAccIC,
-  PoolsizeIcon,
-  ReewardAvalible,
-  StatusIC,
+  OwnerAccountIcon,
+  PoolSizeIcon,
+  RewardsAvailableIcon,
+  StatusIcon,
   WalletGreenIcon
 } from "src/commons/resources";
+import { details } from "src/commons/routers";
 import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
 import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
-import { details } from "src/commons/routers";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import PoolDetailContext from "../../PoolDetailContext";
@@ -100,7 +100,7 @@ const TabularOverview: React.FC = () => {
         <GridItem
           title="Pool Size"
           bgType="white"
-          mainIcon={<PoolsizeIcon />}
+          mainIcon={<PoolSizeIcon />}
           value={
             <Box display="flex" alignItems="center">
               <CardValue>{formatADAFull(poolSize)} ₳</CardValue>
@@ -110,7 +110,7 @@ const TabularOverview: React.FC = () => {
         <GridItem
           title="Status"
           bgType="white"
-          mainIcon={<StatusIC />}
+          mainIcon={<StatusIcon />}
           value={
             <WrapStatus>
               <CardValue
@@ -128,7 +128,7 @@ const TabularOverview: React.FC = () => {
         <GridItem
           title="Rewards Available"
           bgType="white"
-          mainIcon={<ReewardAvalible />}
+          mainIcon={<RewardsAvailableIcon />}
           value={
             <Box display="flex" alignItems="center">
               <CardValue>{formatADAFull(rewardAvailable)} ₳</CardValue>
@@ -138,7 +138,7 @@ const TabularOverview: React.FC = () => {
         <GridItem
           title="Owner Account"
           bgType="white"
-          mainIcon={<OwnerAccIC />}
+          mainIcon={<OwnerAccountIcon />}
           value={
             <Box display="flex" alignItems="center">
               <CardValue>
