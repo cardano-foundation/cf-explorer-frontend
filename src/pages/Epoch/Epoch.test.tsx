@@ -1,8 +1,8 @@
 import { render, screen } from "src/test-utils";
 import useFetchList from "src/commons/hooks/useFetchList";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
 
 import Epoch from "./index";
-import { formatDateTimeLocal } from "src/commons/utils/helper";
 
 jest.mock("src/commons/hooks/useFetchList");
 const mockData = [
