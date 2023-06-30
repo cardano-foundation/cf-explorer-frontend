@@ -267,28 +267,22 @@ export const ProtocolParameterHistory = () => {
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
   const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
-
-  const {
-    data: dataHistory,
-    loading,
-    initialized
-  } = useFetch<ProtocolHistory>(
-    `${PROTOCOL_PARAMETER.HISTORY}/${
-      filterParams.length === TOTAL_PARAMETER || filterParams.length === 0
-        ? "ALL"
-        : filterParams.map((f) => PROTOCOL_TYPE[f as keyof typeof PROTOCOL_TYPE]).join(",")
-    }${
-      _.isEmpty(dateRangeFilter)
-        ? ""
-        : `?endTime=${moment(dateRangeFilter.toDate).endOf("D").utc().format("X")}&startTime=${moment(
-            dateRangeFilter.fromDate
-          )
-            .startOf("D")
-            .utc()
-            .format("X")}`
-    }
-    `
-  );
+  const url = `${PROTOCOL_PARAMETER.HISTORY}/${
+    filterParams.length === TOTAL_PARAMETER || filterParams.length === 0
+      ? "ALL"
+      : filterParams.map((f) => PROTOCOL_TYPE[f as keyof typeof PROTOCOL_TYPE]).join(",")
+  }${
+    _.isEmpty(dateRangeFilter)
+      ? ""
+      : `?endTime=${moment(dateRangeFilter.toDate).endOf("D").utc().format("X")}&startTime=${moment(
+          dateRangeFilter.fromDate
+        )
+          .startOf("D")
+          .utc()
+          .format("X")}`
+  }
+  `;
+  const { data: dataHistory, loading, initialized } = useFetch<ProtocolHistory>(url);
 
   const [dataHistoryMapping, { push: pushHistory, clear }] = useList<{
     [key: string]: any;
