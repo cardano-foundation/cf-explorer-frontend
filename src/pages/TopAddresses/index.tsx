@@ -1,104 +1,84 @@
-import React, { useEffect, useState } from "react";
-import { Box, MenuItem, Select } from "@mui/material";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { Box, Tab, alpha } from "@mui/material";
+import React, { useEffect } from "react";
 
-import useFetchList from "src/commons/hooks/useFetchList";
-import { formatADAFull, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
-import { details } from "src/commons/routers";
-import Table, { Column } from "src/components/commons/Table";
 import Card from "src/components/commons/Card";
-import CustomTooltip from "src/components/commons/CustomTooltip";
-import { API } from "src/commons/utils/api";
-import ADAicon from "src/components/commons/ADAIcon";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
-import FormNowMessage from "src/components/commons/FormNowMessage";
+import TopAddressesByADABalance from "src/components/TopAddresses/ByADABalance";
+import TopAddressesByAmountStaked from "src/components/TopAddresses/ByAmountStaked";
 
-import { Actions, PageSize, PerPage, StyledContainer, StyledLink, TimeDuration } from "./styles";
-
-const perPages = [10, 20, 50, 100];
+import { StyledContainer, TabTitle } from "./styles";
 
 const TopAddresses = () => {
-  const [pageSize, setPageSize] = useState("50");
-
-  const { error, data, initialized, loading, lastUpdated } = useFetchList<Contracts>(
-    API.ADDRESS.TOP_ADDRESS,
-    { page: 0, size: +pageSize },
-    false,
-    REFRESH_TIMES.TOP_ADDRESS
-  );
+  const [tabActive, setTabActive] = React.useState<"ada-balance" | "amount-staked">("ada-balance");
 
   useEffect(() => {
     document.title = `Top Addresses | Cardano Explorer`;
   }, []);
 
-  const columns: Column<Address>[] = [
-    {
-      title: "#",
-      key: "id",
-      minWidth: 30,
-      render: (_, index) => numberWithCommas(index + 1)
-    },
-    {
-      title: "Addresses",
-      key: "address",
-      minWidth: 120,
+  const handleChange = (event: React.SyntheticEvent, tab: "ada-balance" | "amount-staked") => {
+    setTabActive(tab);
+  };
 
-      render: (r) => (
-        <div>
-          <CustomTooltip title={r.address}>
-            <StyledLink to={details.address(r.address)}>{getShortWallet(r.address)}</StyledLink>
-          </CustomTooltip>
-        </div>
-      )
+  const tabs: { label: React.ReactNode; key: string; children: React.ReactNode }[] = [
+    {
+      label: (
+        <TabTitle className={tabActive === "ada-balance" ? "active" : ""}>
+          <Box display={"flex"} alignItems="center">
+            <Box>By Address ADA Balance</Box>
+          </Box>
+        </TabTitle>
+      ),
+      key: "ada-balance",
+      children: <TopAddressesByADABalance />
     },
     {
-      title: "Balance",
-      key: "balance",
-      minWidth: 60,
-      render: (r) => (
-        <Box display="inline-flex" alignItems="center">
-          <Box mr={1}>{formatADAFull(r.balance)}</Box>
-          <ADAicon />
-        </Box>
-      )
-    },
-    {
-      title: "Transaction Count",
-      minWidth: 120,
-      key: "transaction_count",
-      render: (r) => (
-        <Box display="flex" alignItems="center">
-          {numberWithCommas(r.txCount) || 0}
-        </Box>
-      )
+      label: (
+        <TabTitle className={tabActive === "amount-staked" ? "active" : ""}>
+          <Box display={"flex"} alignItems="center">
+            <Box>By Amount Staked</Box>
+          </Box>
+        </TabTitle>
+      ),
+      key: "amount-staked",
+      children: <TopAddressesByAmountStaked />
     }
   ];
 
+
   return (
-    <StyledContainer>
-      <Card title={"Top Addresses by ADA Balance"}>
-        <Actions>
-          <TimeDuration>
-            <FormNowMessage time={lastUpdated} />
-          </TimeDuration>
-          <PageSize>
-            <Select
-              value={pageSize}
-              onChange={(event) => setPageSize(event.target.value)}
-              displayEmpty
-              inputProps={{ "aria-label": "Without label" }}
+    <TabContext value={tabActive}>
+      <StyledContainer>
+        <Card title={"Top ADA Holder"}>
+          <Box>
+            <TabList
+              onChange={handleChange}
+              TabIndicatorProps={{ sx: { background: (theme) => theme.palette.primary.main, height: 3 } }}
             >
-              {perPages.map((item) => (
-                <MenuItem key={item} value={item}>
-                  {item}
-                </MenuItem>
+              {tabs?.map((item) => (
+                <Tab
+                  key={item.key}
+                  label={item.label}
+                  value={item.key}
+                  sx={{
+                    padding: "12px 0px",
+                    marginRight: "24px"
+                  }}
+                />
               ))}
-            </Select>
-            <PerPage>Addresses</PerPage>
-          </PageSize>
-        </Actions>
-        <Table data={data} error={error} loading={loading} initialized={initialized} columns={columns} />
-      </Card>
-    </StyledContainer>
+            </TabList>
+          </Box>
+          {tabs.map((item) => (
+            <TabPanel
+              sx={{ padding: 0, borderTop: (theme) => `1px solid ${alpha(theme.palette.green[800], 0.1)}` }}
+              key={item.key}
+              value={item.key}
+            >
+              {item.children}
+            </TabPanel>
+          ))}
+        </Card>
+      </StyledContainer>
+    </TabContext>
   );
 };
 
