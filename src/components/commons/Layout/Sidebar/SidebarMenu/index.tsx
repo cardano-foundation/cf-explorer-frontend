@@ -1,5 +1,5 @@
 import { Collapse, Divider, ListItem, useTheme } from "@mui/material";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { BiChevronDown, BiChevronRight } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
@@ -24,9 +24,6 @@ import {
   SubMenuText,
   itemStyle
 } from "./styles";
-
-const regexMatchPoolDetail = new RegExp(`^${routers.DELEGATION_POOL_DETAIL.replace(":poolId", "")}\\w*$`);
-const regexMatchStakeKeyDetail = new RegExp(`^${routers.STAKE_DETAIL.replace(":stakeId/:tabActive?", "")}\\w*$`);
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const pathname = history.location.pathname;
@@ -58,9 +55,15 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     if (pathname === "/") {
       setActive(null);
     } else if (
-      regexMatchPoolDetail.test(pathname) ||
-      regexMatchStakeKeyDetail.test(pathname) ||
-      pathname.startsWith("/stake/")
+      pathname.startsWith("/stake/") ||
+      pathname.startsWith("/transaction/") ||
+      pathname.startsWith("/stake-key/") ||
+      pathname.startsWith("/block/") ||
+      pathname.startsWith("/epoch/") ||
+      pathname.startsWith("/token/") ||
+      pathname.startsWith("/contracts/") ||
+      pathname.startsWith("/delegation-pool/") ||
+      pathname.startsWith("/policy/")
     ) {
       setActive("menu-0");
     }
@@ -84,16 +87,17 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
 
   const isActiveSubMenu = (href: string, categoryName?: string): boolean => {
     if (categoryName === "Operational Certificates") return pathname === href;
-    if (pathname.startsWith("/stake/") && href === routers.ADDRESS_LIST) {
-      return true;
-    }
+
+    if (pathname.startsWith("/stake/") && href === routers.ADDRESS_LIST) return true;
+    if (pathname.startsWith("/stake-key/") && href === routers.ADDRESS_LIST) return true;
+    if (pathname.startsWith("/policy/") && href === routers.TOKEN_LIST) return true;
 
     return (
       pathname === href ||
       (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1])) ||
       (href === "/timeline" && (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
     );
-  };
+  }
 
   return (
     <SidebarMenuContainer>
