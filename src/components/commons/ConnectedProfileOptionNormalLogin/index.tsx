@@ -46,6 +46,8 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
       setUser({ ...user, userData: {} });
       if (window.location.pathname.includes("report-generated")) {
         history.push(routers.STAKING_LIFECYCLE);
+      } else if (window.location.pathname.includes(routers.MY_PROFILE)) {
+        history.push(routers.HOME);
       } else {
         window.location.reload();
       }
