@@ -84,11 +84,9 @@ const SearchResult = () => {
   }, [loading, value]);
 
   const handleFilterByPool = (data: any) => {
-    if (data?.totalItems === 0) {
-      setLoading(false);
-    } else if (data?.totalItems === 1) {
+    if (data?.totalItems === 1) {
       history.replace(details.delegation(data?.data?.[0]?.poolId));
-    } else {
+    } else if (data?.totalItems > 1) {
       history.replace(routers.DELEGATION_POOLS, { tickerNameSearch: value });
     }
   };
