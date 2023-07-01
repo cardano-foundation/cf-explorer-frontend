@@ -6,7 +6,6 @@ import TopAddressesByAmountStaked from "src/components/TopAddresses/ByAmountStak
 import { StyledContainer } from "./styles";
 
 const TopDelegators = () => {
-
   useEffect(() => {
     document.title = `Top Delegators | Cardano Explorer`;
   }, []);

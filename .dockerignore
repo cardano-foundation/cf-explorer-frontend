@@ -5,3 +5,4 @@
 .githooks
 .github
 cypress/
+.env

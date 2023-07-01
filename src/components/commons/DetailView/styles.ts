@@ -11,7 +11,7 @@ export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
     zIndex: 1302,
     background: `${theme.palette.background.neutral}`,
     border: "none",
-    height: "100vh",
+    height: "100%",
     [theme.breakpoints.down("md")]: {
       display: "flex",
       height: "calc(100% - 75px)",
@@ -172,12 +172,12 @@ export const TokenInfoValue = styled("span")`
 `;
 
 export const EpochNumber = styled("h1")`
-  color: ${(props) => props.theme.palette.primary.main};
+  color: ${(props) => props.theme.palette.green[700]};
   margin: 0;
 `;
 
 export const EpochText = styled("span")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[500]};
   text-transform: uppercase;
 `;
 
@@ -524,7 +524,7 @@ export const ButtonModal = styled(Button)(() => ({
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[500],
   display: "block",
   textAlign: "left",
   flex: 1,

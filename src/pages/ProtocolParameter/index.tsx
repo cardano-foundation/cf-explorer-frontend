@@ -509,7 +509,7 @@ export const ProtocolParameterHistory = () => {
                 alignItems={"center"}
                 mt={3}
                 mb={2}
-                color={"#108aef !important"}
+                color={"#0052CC !important"}
               >
                 <Box mr={1}>Reset</Box>
                 <ResetIcon />
@@ -601,7 +601,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                 Latest - First
               </Box>
             </Box>
-            {sort === "LastFirst" && <BsFillCheckCircleFill size={16} style={{ color: "#108AEF !important" }} />}
+            {sort === "LastFirst" && <BsFillCheckCircleFill size={16} style={{ color: "#0052CC !important" }} />}
           </Box>
         </ButtonFilter>
         <ButtonFilter onClick={() => setSort("FirstLast")}>
@@ -612,7 +612,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                 First - Latest
               </Box>
             </Box>
-            {sort === "FirstLast" && <BsFillCheckCircleFill size={16} style={{ color: "#108AEF !important" }} />}
+            {sort === "FirstLast" && <BsFillCheckCircleFill size={16} style={{ color: "#0052CC !important" }} />}
           </Box>
         </ButtonFilter>
         <ButtonFilter onClick={() => setShowDaterange(true)}>
@@ -624,7 +624,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                 Date range
               </Box>
             </Box>
-            {!_.isEmpty(dateRange) && <BsFillCheckCircleFill size={16} style={{ color: "#108AEF !important" }} />}
+            {!_.isEmpty(dateRange) && <BsFillCheckCircleFill size={16} style={{ color: "#0052CC !important" }} />}
           </Box>
         </ButtonFilter>
 
@@ -654,7 +654,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                 sx={{
                   color: ({ palette }) => alpha(palette.common.black, 0.15),
                   "&.Mui-checked": {
-                    color: `#108AEF !important`
+                    color: `#0052CC !important`
                   }
                 }}
                 onChange={(e) => {
@@ -683,7 +683,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                     sx={{
                       color: ({ palette }) => alpha(palette.common.black, 0.15),
                       "&.Mui-checked": {
-                        color: `#108AEF !important`
+                        color: `#0052CC !important`
                       }
                     }}
                   />

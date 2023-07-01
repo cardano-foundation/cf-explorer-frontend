@@ -1,11 +1,11 @@
 import { screen, cleanup, fireEvent } from "@testing-library/react";
-
-import { render } from "src/test-utils";
-
-import Table from "src/components/commons/Table";
-import useFetchList from "src/commons/hooks/useFetchList";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
+
+import { render } from "src/test-utils";
+import Table from "src/components/commons/Table";
+import useFetchList from "src/commons/hooks/useFetchList";
+
 import Transactions from ".";
 
 const mockData = {
@@ -39,6 +39,26 @@ describe("Contracts list view", () => {
     render(<Transactions />);
     expect(screen.getByText("addr1...xmsha")).toBeInTheDocument();
     expect(screen.getByText("Contracts")).toBeInTheDocument();
+  });
+
+  it("renders the table with given column and data", () => {
+    const columns = [
+      {
+        title: "Test Column",
+        key: "test",
+        render: (r: any) => <div>{r.test}</div>
+      }
+    ];
+
+    const data = [
+      {
+        test: "Test Data"
+      }
+    ];
+    render(<Table columns={columns} data={data} />);
+
+    expect(screen.getByText("Test Column")).toBeInTheDocument();
+    expect(screen.getByText("Test Data")).toBeInTheDocument();
   });
 
   it("renders the table with given column and data", () => {

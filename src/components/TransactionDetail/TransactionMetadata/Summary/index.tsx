@@ -65,7 +65,7 @@ const SummaryItems = ({
                   >
                     <CustomTooltip title={item.address}>
                       <Box
-                        color={(theme) => theme.palette.blue[900]}
+                        color={(theme) => theme.palette.blue[800]}
                         fontWeight="bold"
                         fontFamily={"var(--font-family-text)"}
                       >
