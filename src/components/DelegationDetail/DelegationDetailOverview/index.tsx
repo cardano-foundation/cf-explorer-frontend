@@ -16,7 +16,7 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
     Margin: formatPercent(data?.margin),
     ROS: formatPercent(data?.ros ? data?.ros / 100 : 0),
     "Pledge(A)": formatADAFull(data?.pledge),
-    "Fee(A)": formatADAFull(data?.cost),
+    "Fixed Cost(A)": formatADAFull(data?.cost),
     "Epoch Block": data?.epochBlock || 0,
     "Lifetime Block": numberWithCommas(data?.lifetimeBlock)
   };
@@ -46,7 +46,7 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
             <Grid item xs={30} sm={20} md={15} xl={12} key={ii}>
               <Item>
                 <Title>{i}</Title>
-                <Value sx={{ color: (theme) => (i === "Reward" ? theme.palette.primary.main : "initial") }}>
+                <Value sx={{ color: (theme) => (i === "Reward" ? theme.palette.green[700] : "initial") }}>
                   {overviewData[i as keyof typeof overviewData]}
                 </Value>
               </Item>

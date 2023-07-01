@@ -1,11 +1,11 @@
 import { Box, styled } from "@mui/material";
 
 export const StyledBox = styled(Box)(() => ({
-  textOverflow: "unset",
-  whiteSpace: "break-spaces",
-  display: "-webkit-box",
-  WebkitLineClamp: 2,
-  WebkitBoxOrient: "vertical",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
+  display: "box",
   lineHeight: 1.5,
-  overflow: "hidden"
+  overflow: "hidden",
+  width: "max-content",
+  maxWidth: "100%"
 }));
