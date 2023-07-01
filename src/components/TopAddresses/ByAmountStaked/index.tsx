@@ -85,7 +85,7 @@ const TopAddressesByAmountStaked = () => {
               </MenuItem>
             ))}
           </Select>
-          <PerPage>Addresses</PerPage>
+          <PerPage>Delegators</PerPage>
         </PageSize>
       </Actions>
       <Table

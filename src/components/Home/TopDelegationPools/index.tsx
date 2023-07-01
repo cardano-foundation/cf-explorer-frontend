@@ -53,13 +53,14 @@ const TopDelegationPools = () => {
       render: (r) => <RateWithIcon value={r.reward} multiple={1} />
     },
     {
-      title: "Margin",
-      key: "feePercent",
-      render: (r) => (
-        <CustomTooltip title={`${r.feePercent * 100 || 0}%`}>
-          <Box display="inline-block">{formatPercent(r.feePercent || 0)}</Box>
-        </CustomTooltip>
-      )
+      title: "Blocks",
+      key: "epochBlock",
+      render: (r) => r.epochBlock || 0
+    },
+    {
+      title: "Lifetime Blocks",
+      key: "lifetimeBlock",
+      render: (r) => r.lifetimeBlock || 0
     },
     {
       title: "Fee (A)",

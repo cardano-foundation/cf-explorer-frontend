@@ -31,7 +31,7 @@ const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, timeout?: numbe
       else setRefreshLoading(true);
       try {
         const res = await service.get(url);
-        setData(res.data as T);
+        setData(res?.data as T);
         setError(null);
         setInitialized(true);
       } catch (error) {
