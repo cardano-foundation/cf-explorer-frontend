@@ -195,7 +195,7 @@ export const Item = styled(Box)`
   justify-content: center;
   align-items: center;
   flex: 1;
-  background: ${(props) => props.theme.palette.gradient[1]};
+  background: ${(props) => props.theme.palette.green[600]};
   color: ${(props) => props.theme.palette.primary.contrastText};
   border-radius: 20px;
   padding: 15px;
@@ -248,7 +248,7 @@ export const DetailLabel = styled("small")`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  color: ${(props) => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.grey[700]};
   line-height: 26px;
 `;
 export const InfoIcon = styled(FiInfo)`
@@ -258,7 +258,7 @@ export const InfoIcon = styled(FiInfo)`
 `;
 
 export const DetailValue = styled("small")`
-  color: ${(props) => props.theme.palette.common.black};
+  color: ${(props) => props.theme.palette.grey[700]};
   font-weight: var(--font-weight-bold);
   display: flex;
   justify-content: flex-end;

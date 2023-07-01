@@ -190,14 +190,17 @@ const ProtocolParameter: React.FC = () => {
       )}
       {showHistory && <ProtocolParameterHistory />}
       {!showHistory && (
-        <Card titleSx={{
-          margin: 0,
-        }} title={"Protocol parameters"}>
+        <Card
+          titleSx={{
+            margin: 0
+          }}
+          title={"Protocol parameters"}
+        >
           <Box pt={2}>
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
                 <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                  <Box fontWeight={"bold"} fontSize={"1.25rem"}>
+                  <Box fontWeight={"bold"} color={({ palette }) => palette.grey[700]} fontSize={"1.25rem"}>
                     Updatable Parameters
                   </Box>
                   <Box
@@ -224,7 +227,12 @@ const ProtocolParameter: React.FC = () => {
               </Box>
               <Box pt={"30px"}>
                 <Box>
-                  <Box textAlign={"left"} fontWeight={"bold"} fontSize={"1.25rem"}>
+                  <Box
+                    textAlign={"left"}
+                    color={({ palette }) => palette.grey[700]}
+                    fontWeight={"bold"}
+                    fontSize={"1.25rem"}
+                  >
                     Global Constants
                   </Box>
                   {loadingFixed && (
@@ -275,17 +283,19 @@ export const ProtocolParameterHistory = () => {
     loading,
     initialized
   } = useFetch<ProtocolHistory>(
-    `${PROTOCOL_PARAMETER.HISTORY}/${filterParams.length === TOTAL_PARAMETER || filterParams.length === 0
-      ? "ALL"
-      : filterParams.map((f) => PROTOCOL_TYPE[f as keyof typeof PROTOCOL_TYPE]).join(",")
-    }${_.isEmpty(dateRangeFilter)
-      ? ""
-      : `?endTime=${moment(dateRangeFilter.toDate).endOf("D").utc().format("X")}&startTime=${moment(
-        dateRangeFilter.fromDate
-      )
-        .startOf("D")
-        .utc()
-        .format("X")}`
+    `${PROTOCOL_PARAMETER.HISTORY}/${
+      filterParams.length === TOTAL_PARAMETER || filterParams.length === 0
+        ? "ALL"
+        : filterParams.map((f) => PROTOCOL_TYPE[f as keyof typeof PROTOCOL_TYPE]).join(",")
+    }${
+      _.isEmpty(dateRangeFilter)
+        ? ""
+        : `?endTime=${moment(dateRangeFilter.toDate).endOf("D").utc().format("X")}&startTime=${moment(
+            dateRangeFilter.fromDate
+          )
+            .startOf("D")
+            .utc()
+            .format("X")}`
     }
     `
   );
@@ -447,7 +457,7 @@ export const ProtocolParameterHistory = () => {
       <Card
         titleSx={{
           margin: 0,
-          width: "max-content",
+          width: "max-content"
         }}
         title={"Protocol parameters update history"}
         textAlign={"left"}
@@ -587,7 +597,9 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
               <ImArrowDown2 />
-              <Box ml={1}>Latest - First</Box>
+              <Box ml={1} color={({ palette }) => palette.grey[700]}>
+                Latest - First
+              </Box>
             </Box>
             {sort === "LastFirst" && <BsFillCheckCircleFill size={16} style={{ color: "#108AEF !important" }} />}
           </Box>
@@ -596,7 +608,9 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
               <ImArrowUp2 />
-              <Box ml={1}>First - Latest</Box>
+              <Box ml={1} color={({ palette }) => palette.grey[700]}>
+                First - Latest
+              </Box>
             </Box>
             {sort === "FirstLast" && <BsFillCheckCircleFill size={16} style={{ color: "#108AEF !important" }} />}
           </Box>
@@ -605,7 +619,10 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
               <DateRangeIcon />
-              <Box ml={1}> Date range</Box>
+              <Box ml={1} color={({ palette }) => palette.grey[700]}>
+                {" "}
+                Date range
+              </Box>
             </Box>
             {!_.isEmpty(dateRange) && <BsFillCheckCircleFill size={16} style={{ color: "#108AEF !important" }} />}
           </Box>
@@ -622,7 +639,9 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
             >
               <Box display={"flex"} alignItems={"center"}>
                 <ProtocolParam />
-                <Box ml={1}>Parameter changes {filterOption.length > 0 ? `(${filterOption.length})` : ""}</Box>
+                <Box ml={1} color={({ palette }) => palette.grey[700]}>
+                  Parameter changes {filterOption.length > 0 ? `(${filterOption.length})` : ""}
+                </Box>
               </Box>
               <Box>{expanded === "params" ? <IoIosArrowDown /> : <IoIosArrowUp />}</Box>
             </Box>
@@ -697,7 +716,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           display={"flex"}
           alignItems={"center"}
           mt={2}
-          color={`#108AEF !important`}
+          color={({ palette }) => `${palette.blue[800]} !important`}
         >
           <Box mr={1}>Reset</Box>
           <ResetIcon />
@@ -713,7 +732,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
   );
 };
 
-const CloseButton = styled(IconButton) <{ saving: number }>`
+const CloseButton = styled(IconButton)<{ saving: number }>`
   position: absolute;
   top: 15px;
   right: 20px;

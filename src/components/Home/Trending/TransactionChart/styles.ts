@@ -79,7 +79,7 @@ export const Title = styled("h3")`
   margin-top: 0px;
   margin-bottom: 1.5rem;
   font-size: 1.25rem;
-
+  color: ${(props) => props.theme.palette.grey[700]};
   &::after {
     position: absolute;
     top: 100%;

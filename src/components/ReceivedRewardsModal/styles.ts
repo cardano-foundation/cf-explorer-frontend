@@ -6,7 +6,7 @@ export const Container = styled(Box);
 export const ModalTitle = styled(Typography)`
   font-size: 24px;
   font-weight: 700;
-  color: rgba(19, 21, 47, 1);
+  color: ${(props) => props.theme.palette.grey[700]};
 `;
 
 export const ModalContainer = styled(Box)`

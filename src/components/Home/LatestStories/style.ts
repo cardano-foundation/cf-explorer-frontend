@@ -91,6 +91,7 @@ export const ItemTitle = styled("h5")`
   max-height: 3.6em;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+  color: ${(props) => props.theme.palette.grey[700]};
   overflow: hidden;
   font-size: var(--font-size-text-x-small);
   line-height: 1.15;
