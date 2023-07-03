@@ -1,5 +1,5 @@
 import { Collapse, Divider, ListItem, useTheme } from "@mui/material";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { BiChevronDown, BiChevronRight } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
@@ -10,6 +10,7 @@ import { isExtenalLink } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { RootState } from "src/stores/types";
 import { setSidebar } from "src/stores/user";
+import { routers } from "src/commons/routers";
 
 import FooterMenu from "../FooterMenu";
 import {
@@ -51,7 +52,21 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   }, [sidebar]);
 
   useEffect(() => {
-    if (pathname === "/") setActive(null);
+    if (pathname === "/") {
+      setActive(null);
+    } else if (
+      pathname.startsWith("/stake/") ||
+      pathname.startsWith("/transaction/") ||
+      pathname.startsWith("/stake-key/") ||
+      pathname.startsWith("/block/") ||
+      pathname.startsWith("/epoch/") ||
+      pathname.startsWith("/token/") ||
+      pathname.startsWith("/contracts/") ||
+      pathname.startsWith("/delegation-pool/") ||
+      pathname.startsWith("/policy/")
+    ) {
+      setActive("menu-0");
+    }
   }, [pathname]);
 
   useEffect(() => {
@@ -70,15 +85,19 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     if (!sidebar) setSidebar(true);
   };
 
-  const isActiveSubMenu = useCallback((href: string, pathName: string, categoryName?: string): boolean => {
-    if (categoryName === "Operational Certificates") return pathName === href;
+  const isActiveSubMenu = (href: string, categoryName?: string): boolean => {
+    if (categoryName === "Operational Certificates") return pathname === href;
+
+    if (pathname.startsWith("/stake/") && href === routers.ADDRESS_LIST) return true;
+    if (pathname.startsWith("/stake-key/") && href === routers.ADDRESS_LIST) return true;
+    if (pathname.startsWith("/policy/") && href === routers.TOKEN_LIST) return true;
 
     return (
-      pathName === href ||
-      (pathName.split("/").length > 2 && href.includes(pathName.split("/")[1])) ||
-      (href === "/timeline" && (pathName.includes("delegator-lifecycle") || pathName.includes("spo-lifecycle")))
+      pathname === href ||
+      (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1])) ||
+      (href === "/timeline" && (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
     );
-  }, []);
+  }
 
   return (
     <SidebarMenuContainer>
@@ -197,7 +216,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             selected={pathname === href}
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
-                              ...(isActiveSubMenu(href, pathname, item.title)
+                              ...(isActiveSubMenu(href, item.title)
                                 ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
                                 : {}),
                               paddingLeft: "70px",
@@ -217,7 +236,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             <SubMenuText
                               primary={title}
                               open={sidebar ? 1 : 0}
-                              active={isActiveSubMenu(href, pathname, item.title) ? 1 : 0}
+                              active={+isActiveSubMenu(href, item.title)}
                             />
                           </ListItem>
                         )

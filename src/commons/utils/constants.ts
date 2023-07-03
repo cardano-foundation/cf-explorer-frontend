@@ -1,6 +1,7 @@
+import { get } from "lodash";
+
 import { Wallet } from "../../types/user";
 import { EternlIcon, FlintIcon, NamiIcon, TyphonIcon, YoroiIcon } from "../resources";
-
 export const STORAGE_KEYS = {
   THEME: "dark",
   USER_INFO: "user_info",
@@ -76,13 +77,14 @@ export enum NETWORK_TYPES {
   testnet = "TEST_NET"
 }
 export const FRONT_END_NETWORK = {
-  mainnet: process.env.REACT_APP_MAINNET_APP_URL,
-  preprod: process.env.REACT_APP_PREPROD_APP_URL,
-  preview: process.env.REACT_APP_PREVIEW_APP_URL,
-  testnet: process.env.REACT_APP_TESTNET_APP_URL
+  mainnet: process.env.REACT_APP_MAINNET_APP_URL || get(window, "env.REACT_APP_MAINNET_APP_URL"),
+  preprod: process.env.REACT_APP_PREPROD_APP_URL || get(window, "env.REACT_APP_PREPROD_APP_URL"),
+  preview: process.env.REACT_APP_PREVIEW_APP_URL || get(window, "env.REACT_APP_PREVIEW_APP_URL"),
+  testnet: process.env.REACT_APP_TESTNET_APP_URL || get(window, "env.REACT_APP_TESTNET_APP_URL")
 };
 
-export const NETWORK: NETWORKS = (process.env.REACT_APP_NETWORK as NETWORKS) || NETWORKS.mainnet;
+export const NETWORK: NETWORKS =
+  (process.env.REACT_APP_NETWORK as NETWORKS) || get(window, "env.REACT_APP_NETWORK") || NETWORKS.mainnet;
 
 export enum TRANSACTION_STATUS {
   FAIL = "FAIL",
@@ -105,17 +107,16 @@ export enum RECEIVED_REWARDS {
   MEMBER = "MEMBER",
   ALL = ""
 }
+export const APP_VERSION = process.env.REACT_APP_VERSION || get(window, "env.REACT_APP_VERSION") || "1.0.0";
+export const EXT_ADA_PRICE_URL =
+  process.env.REACT_APP_EXT_ADA_PRICE_URL || get(window, "env.REACT_APP_EXT_ADA_PRICE_URL");
+export const TESTNET_API_URL = process.env.REACT_APP_TESTNET_API_URL || get(window, "env.REACT_APP_TESTNET_API_URL");
+export const PREVIEW_API_URL = process.env.REACT_APP_PREVIEW_API_URL || get(window, "env.REACT_APP_PREVIEW_API_URL");
+export const PREPROD_API_URL = process.env.REACT_APP_PREPROD_API_URL || get(window, "env.REACT_APP_PREPROD_API_URL");
+export const MAINNET_API_URL = process.env.REACT_APP_MAINNET_API_URL || get(window, "env.REACT_APP_MAINNET_API_URL");
 
-
-export const APP_VERSION = process.env.REACT_APP_VERSION;
-export const TESTNET_API_URL = process.env.REACT_APP_TESTNET_API_URL;
-export const PREVIEW_API_URL = process.env.REACT_APP_PREVIEW_API_URL;
-export const PREPROD_API_URL = process.env.REACT_APP_PREPROD_API_URL;
-export const MAINNET_API_URL = process.env.REACT_APP_MAINNET_API_URL;
-export const EXT_ADA_PRICE_URL = process.env.REACT_APP_EXT_ADA_PRICE_URL;
-
-export const AUTH_API_URL = process.env.REACT_APP_AUTH_API_URL;
-export const API_URL = process.env.REACT_APP_API_URL;
+export const AUTH_API_URL = process.env.REACT_APP_AUTH_API_URL || get(window, "env.REACT_APP_AUTH_API_URL");
+export const API_URL = process.env.REACT_APP_API_URL || get(window, "env.REACT_APP_API_URL");
 
 export enum ACCOUNT_ERROR {
   UNKNOWN_ERROR = "CC_1",

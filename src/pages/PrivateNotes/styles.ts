@@ -107,7 +107,7 @@ export const ActionButton = styled("button")<{ typeButton: string }>`
 `;
 
 export const StyledLink = styled(Link)`
-  display: block;
+  display: inline;
   text-decoration: none;
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.secondary.main} !important;

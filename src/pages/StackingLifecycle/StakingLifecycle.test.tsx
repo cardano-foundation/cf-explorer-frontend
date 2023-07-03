@@ -1,4 +1,5 @@
 import { screen } from "@testing-library/react";
+import { useSelector } from "react-redux";
 
 import { render } from "src/test-utils";
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -20,20 +21,29 @@ const mockData = {
 };
 
 jest.mock("src/commons/hooks/useFetchList");
-
+jest.mock("react-redux", () => ({
+  ...jest.requireActual("react-redux"),
+  useSelector: jest.fn()
+}));
 describe("StakingLifecycle page", () => {
+  beforeEach(() => {
+    (useSelector as jest.Mock).mockReturnValue({
+      userData: {}
+    });
+  });
   it("should render dashboard page", async () => {
     const mockUseFetch = useFetchList as jest.Mock;
     await mockUseFetch.mockReturnValue({ data: [] });
     render(<Dashboard />);
+    screen.getByText(/saved reports/i);
     expect(useFetchList).toBeCalled();
-    expect(screen.getByText(/Saved Reports/i)).toBeInTheDocument();
   });
 
-  it("should show correct total results", async () => {
+  it("should component render after logining", async () => {
     const mockUseFetchList = useFetchList as jest.Mock;
     mockUseFetchList.mockReturnValue(mockData);
     render(<Dashboard />);
+    screen.logTestingPlaygroundURL();
     expect(screen.getByText(/Showing 100 results/i)).toBeInTheDocument();
   });
 

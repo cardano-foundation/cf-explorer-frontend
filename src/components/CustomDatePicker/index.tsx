@@ -220,7 +220,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
               calendarClassName="end-date-picker"
               key={"datePickerEnd"}
               onChange={(update: any) => {
-                if(!startDate) return;
+                if (!startDate) return;
                 setDateRange([startDate, update]);
                 if (startDate && update) {
                   setOpen(false);

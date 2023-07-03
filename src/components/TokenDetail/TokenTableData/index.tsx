@@ -9,16 +9,18 @@ import TokenTransaction from "./TokenTransaction";
 import { TitleTab } from "./styles";
 import TokenTopHolder from "./TokenTopHolder";
 import TokenMinting from "./TokenMinting";
+import TokenMetaData from "./TokenMetadata";
 import { details } from "../../../commons/routers";
-import { UnionTokenIcon, PeopleIcon, TransactionIcon } from "../../../commons/resources";
+import { UnionTokenIcon, PeopleIcon, TransactionIcon, MetadataIcon } from "../../../commons/resources";
 import CustomIcon from "../../commons/CustomIcon";
 
 interface ITokenTableData {
   totalSupply?: number;
   metadata?: ITokenMetadata;
+  metadataJson?: string;
 }
 
-const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata }) => {
+const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, metadataJson }) => {
   const history = useHistory();
   const { tabActive = "transactions", tokenId } = useParams<{ tabActive: keyof Transaction; tokenId: string }>();
   const theme = useTheme();
@@ -29,25 +31,31 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata }) =>
     children: React.ReactNode;
     icon: React.ReactElement;
   }[] = [
-      {
-        key: "transactions",
-        label: "Transactions",
-        children: <TokenTransaction tokenId={tokenId} />,
-        icon: <CustomIcon icon={TransactionIcon} width={20} fill={theme.palette.grey[300]} />
-      },
-      {
-        key: "topHolders",
-        label: "Top Holders",
-        children: <TokenTopHolder tokenId={tokenId} totalSupply={totalSupply} />,
-        icon: <PeopleIcon />
-      },
-      {
-        key: "tokenMint",
-        label: "Minting",
-        children: <TokenMinting tokenId={tokenId} metadata={metadata} />,
-        icon: <UnionTokenIcon />
-      }
-    ];
+    {
+      key: "transactions",
+      label: "Transactions",
+      children: <TokenTransaction tokenId={tokenId} />,
+      icon: <CustomIcon icon={TransactionIcon} width={20} fill={theme.palette.grey[300]} />
+    },
+    {
+      key: "topHolders",
+      label: "Top Holders",
+      children: <TokenTopHolder tokenId={tokenId} totalSupply={totalSupply} />,
+      icon: <PeopleIcon />
+    },
+    {
+      key: "tokenMint",
+      label: "Minting",
+      children: <TokenMinting tokenId={tokenId} metadata={metadata} />,
+      icon: <UnionTokenIcon />
+    },
+    {
+      key: "metadata",
+      label: "Metadata",
+      children: <TokenMetaData metadataJson={metadataJson} />,
+      icon: <MetadataIcon />
+    }
+  ];
 
   const handleChange = (event: React.SyntheticEvent, tab: keyof Transaction) => {
     history.replace(details.token(tokenId, tab));
