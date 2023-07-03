@@ -4,7 +4,7 @@ import { stringify } from "qs";
 
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
-import { getPageInfo, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
+import { formatADAFull, getPageInfo, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
 import { PriceValue, SmallText, StyledLink } from "./styles";
@@ -13,9 +13,10 @@ import { API } from "../../../commons/utils/api";
 interface ITokenTopHolder {
   tokenId: string;
   totalSupply?: number;
+  decimal?: number;
 }
 
-const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply }) => {
+const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decimal }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -48,7 +49,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply }) => 
       minWidth: "200px",
       render: (r) => (
         <PriceValue>
-          <SmallText>{numberWithCommas(r?.quantity)}</SmallText>
+          <SmallText>{formatADAFull(r?.quantity, decimal || 0)}</SmallText>
         </PriceValue>
       )
     },
