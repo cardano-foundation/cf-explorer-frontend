@@ -46,8 +46,7 @@ const SelectNetwork: React.FC = () => {
         const loginType = localStorage.getItem("loginType");
         await signOut({
           refreshJwt: localStorage.getItem("refreshToken") || "",
-          accountId:
-            (loginType === "connectWallet" ? localStorage.getItem("walletId") : localStorage.getItem("username")) || ""
+          accountId: localStorage.getItem(loginType === "connectWallet" ? "walletId" : "username") || ""
         });
         clearBookmark();
         disconnect();
