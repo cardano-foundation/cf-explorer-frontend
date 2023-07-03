@@ -8,9 +8,9 @@ import { EmptyIcon, HeaderSearchIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatNumberDivByDecimals, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import CustomTooltip from "../commons/CustomTooltip";
-import StyledModal from "../commons/StyledModal";
 import Table, { Column } from "../commons/Table";
 import { WrappModalScrollBar } from "../commons/Table/styles";
 import {
@@ -24,6 +24,7 @@ import {
   StyledTextField,
   SubmitButton
 } from "./styles";
+import CustomModal from "../commons/CustomModal";
 
 const TokenAutocomplete = ({ address }: { address: string }) => {
   const [openModalToken, setOpenModalToken] = useState(false);
@@ -129,7 +130,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
                   </CustomTooltip>
                 </Box>
                 <Box fontWeight={"bold"} flex={1} textAlign="right">
-                  {numberWithCommas(option.quantity)}
+                  {formatNumberDivByDecimals(option.quantity || 0, option.metadata?.decimals || 0)}
                 </Box>
               </Box>
             </Option>
@@ -154,6 +155,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
     page,
     size
   });
+  const { isTablet } = useScreen();
 
   const columns: Column<WalletAddress["tokens"][number]>[] = [
     {
@@ -199,7 +201,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
   };
 
   return (
-    <StyledModal title="Token List" open={open} handleCloseModal={handleClose} width={"min(80vw, 600px)"}>
+    <CustomModal title="Token List" open={open} onClose={handleClose} width={"min(80vw, 600px)"}>
       <>
         <SearchContainer mt={2} mb={1}>
           <StyledInput
@@ -223,7 +225,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             data={data || []}
             columns={columns}
             total={{ title: "Total", count: fetchData.total }}
-            maxHeight={"55vh"}
+            maxHeight={isTablet ? "50vh" : "55vh"}
             pagination={{
               page,
               size,
@@ -233,6 +235,6 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
           />
         </WrappModalScrollBar>
       </>
-    </StyledModal>
+    </CustomModal>
   );
 };

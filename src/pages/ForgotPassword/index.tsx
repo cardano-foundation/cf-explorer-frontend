@@ -88,7 +88,8 @@ export default function ForgotPassword() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData]);
 
   const handleKeyDown = (event: any) => {
     if (event.key === "Enter") {
@@ -193,7 +194,6 @@ export default function ForgotPassword() {
                   fullWidth
                   placeholder="Email"
                   error={Boolean(formData.email.error && formData.email.touched)}
-                  onKeyDown={handleKeyDown}
                 />
                 {formData.email.error && formData.email.touched ? (
                   <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom>

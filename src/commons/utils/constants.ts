@@ -108,27 +108,9 @@ export enum RECEIVED_REWARDS {
 
 
 export const APP_VERSION = process.env.REACT_APP_VERSION;
-export const TESTNET_API_URL = process.env.REACT_APP_TESTNET_API_URL;
-export const PREVIEW_API_URL = process.env.REACT_APP_PREVIEW_API_URL;
-export const PREPROD_API_URL = process.env.REACT_APP_PREPROD_API_URL;
-export const MAINNET_API_URL = process.env.REACT_APP_MAINNET_API_URL;
-
+export const EXT_ADA_PRICE_URL = process.env.REACT_APP_EXT_ADA_PRICE_URL;
 export const AUTH_API_URL = process.env.REACT_APP_AUTH_API_URL;
-
-export const getApiUrl = () => {
-  switch (NETWORK) {
-    case NETWORKS.mainnet:
-      return MAINNET_API_URL;
-    case NETWORKS.preprod:
-      return PREPROD_API_URL;
-    case NETWORKS.preview:
-      return PREVIEW_API_URL;
-    default:
-      return TESTNET_API_URL;
-  }
-};
-
-export const API_URL = getApiUrl();
+export const API_URL = process.env.REACT_APP_API_URL;
 
 export enum ACCOUNT_ERROR {
   UNKNOWN_ERROR = "CC_1",

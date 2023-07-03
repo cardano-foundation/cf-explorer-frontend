@@ -51,7 +51,7 @@ const stackeTabs: ITab[] = [
   },
   {
     icon: RewardsDistributionIcon,
-    label: "Operator Rewards",
+    label: "Rewards Distribution",
     key: "rewards",
     mappingKey: "Rewards",
     component: <RewardsDistributionTab />
@@ -90,7 +90,7 @@ const ReportGeneratedStakingDetailTabs = () => {
         ...tabs,
         {
           icon: TranferIcon,
-          label: "ADA Transfer",
+          label: "ADA Transfers",
           key: "walletActivity",
           mappingKey: "",
           component: <WalletActitityTab />

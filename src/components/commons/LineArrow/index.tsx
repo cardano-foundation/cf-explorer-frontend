@@ -100,19 +100,8 @@ export const LineArrow: React.FC<LineArrowProps> = (props) => {
 
   const getKey = (obj: Partial<{ [key in Breakpoint | number]: any }>): Breakpoint | number => {
     const listKeys: (Breakpoint | number)[] = Object.keys(obj) as (Breakpoint | number)[];
-    const listPoints = listKeys.map((item) =>
-      typeof item === "number" ? item : theme.breakpoints.values[item as Breakpoint] || 0
-    );
-
-    const prevPoint = Math.max(...Object.values(theme.breakpoints.values).filter((item) => item <= width), 0);
-    const nextPoint = Math.min(
-      ...Object.values(theme.breakpoints.values).filter((item) => item >= width),
-      theme.breakpoints.values.xl
-    );
-    const sidebarWidth = width >= theme.breakpoints.values.md && sidebar ? nextPoint - prevPoint : 0;
-    const listMatch = listPoints.filter((item) => {
-      return item <= width - sidebarWidth;
-    });
+    const listPoints = listKeys.map((item) => (typeof item === "number" ? item : theme.breakpoints.values[item] || 0));
+    const listMatch = listPoints.filter((item) => item <= width);
     const key = Math.max(...listMatch);
     const index = listPoints.indexOf(key);
     return listKeys[index];

@@ -18,8 +18,7 @@ import {
   Tab,
   Tabs,
   Title,
-  TransactionContainer,
-  WrapHeader
+  TransactionContainer
 } from "./styles";
 
 export interface TransactionChartIF {
@@ -42,15 +41,15 @@ const TransactionChart: React.FC = () => {
     },
     ONE_WEEK: {
       label: "1w",
-      displayName: "in week"
+      displayName: "in a week"
     },
     TWO_WEEK: {
       label: "2w",
-      displayName: "in two week"
+      displayName: "in two weeks"
     },
     ONE_MONTH: {
       label: "1m",
-      displayName: "in month"
+      displayName: "in a month"
     }
   };
 
@@ -77,10 +76,10 @@ const TransactionChart: React.FC = () => {
   const renderLoading = () => {
     return (
       <Grid container spacing={2}>
-        <Grid item xs={12} lg={9}>
+        <Grid item xs={12} sm={3} md={3} lg={9}>
           <Skeleton variant="rectangular" height={"300px"} style={{ borderRadius: 10 }} />
         </Grid>
-        <Grid item xs={12} lg={3}>
+        <Grid item xs={12} sm={3} md={3}>
           <Skeleton variant="rectangular" height={"300px"} />
         </Grid>
       </Grid>
@@ -88,22 +87,26 @@ const TransactionChart: React.FC = () => {
   };
   return (
     <TransactionContainer>
-      <WrapHeader>
-        <Title>Transactions {optionsTime[rangeTime].displayName}</Title>
-        <Tabs width={isMobile ? "100%" : "auto"}>
-          {Object.keys(optionsTime).map((option) => {
-            return (
-              <Tab
-                key={optionsTime[option as Time].label}
-                active={rangeTime === option ? 1 : 0}
-                onClick={() => setRangeTime(option as Time)}
-              >
-                {optionsTime[option as Time].label}
-              </Tab>
-            );
-          })}
-        </Tabs>
-      </WrapHeader>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={8} md={8} lg={9}>
+          <Title>Transactions {optionsTime[rangeTime].displayName}</Title>
+        </Grid>
+        <Grid item xs={12} sm={4} md={4} lg={3}>
+          <Tabs display="flex" justifyContent="space-between" width={isMobile ? "100%" : "auto"}>
+            {Object.keys(optionsTime).map((option) => {
+              return (
+                <Tab
+                  key={optionsTime[option as Time].label}
+                  active={+(rangeTime === option)}
+                  onClick={() => setRangeTime(option as Time)}
+                >
+                  {optionsTime[option as Time].label}
+                </Tab>
+              );
+            })}
+          </Tabs>
+        </Grid>
+      </Grid>
       {loading && renderLoading()}
       {!loading && (
         <Grid container spacing={2}>

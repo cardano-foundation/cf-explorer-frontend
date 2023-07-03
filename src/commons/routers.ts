@@ -38,8 +38,7 @@ export const routers = {
   PROTOCOL_PARAMETER: "/protocol-parameters",
   DELEGATOR_LIFECYCLE: "/delegator-lifecycle/:stakeId/:mode?/:tab?/:txHash?",
   SPO_LIFECYCLE: "/spo-lifecycle/:poolId/:mode?/:tab?/:txHash?",
-  STAKING_LIFECYCLE: "/stacking-lifecycle",
-  STAKING_LIFECYCLE_SEARCH: "/timeline",
+  STAKING_LIFECYCLE: "/stacking-lifecycle/:tab",
   REPORT_GENERATED: "/report-generated/:tab",
   REPORT_GENERATED_STAKING_DETAIL: "/report-generated/:reportId/staking",
   REPORT_GENERATED_POOL_DETAIL: "/report-generated/:reportId/pool",
@@ -75,7 +74,8 @@ export const details = {
   generated_staking_detail: (reportId: string) =>
     routers.REPORT_GENERATED_STAKING_DETAIL.replace(":reportId", reportId),
   generated_pool_detail: (reportId: string) => routers.REPORT_GENERATED_POOL_DETAIL.replace(":reportId", reportId),
-  generated_report: (tab: string) => routers.REPORT_GENERATED.replace(":tab", tab)
+  generated_report: (tab: string) => routers.REPORT_GENERATED.replace(":tab", tab),
+  dashboard: (tab: string) => routers.STAKING_LIFECYCLE.replace(":tab", tab)
 };
 
 export const listRouters = [
