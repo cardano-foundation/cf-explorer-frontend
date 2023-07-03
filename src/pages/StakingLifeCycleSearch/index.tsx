@@ -107,6 +107,8 @@ const StyledInput = styled("input")`
   width: 100%;
   font-size: var(--font-size-text-small);
   border-radius: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const SubmitButton = styled(Button)`
@@ -129,10 +131,11 @@ const SearchTitle = styled(Typography)`
   font-size: 18px;
   font-weight: 700;
   margin-bottom: 36px;
+  color: ${(props) => props.theme.palette.grey[700]};
 `;
 
 const InfoLink = styled("span")`
-  color: #006cff;
+  color: ${(props) => props.theme.palette.blue[800]};
   text-decoration: underline;
   margin-left: 6px;
   cursor: pointer;

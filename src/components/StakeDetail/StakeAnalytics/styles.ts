@@ -8,7 +8,7 @@ export const StyledGrid = styled(Grid)(({ theme }) => ({
 }));
 
 export const BoxInfo = styled(Box)(({ theme }) => ({
-  background: theme.palette.secondary.dark,
+  background: theme.palette.common.white,
   borderRadius: "10px",
   color: theme.palette.primary.contrastText,
   display: "flex",
@@ -110,13 +110,15 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
 
 export const Title = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
-  padding: `${theme.spacing(2)} 0`
+  padding: `${theme.spacing(2)} 0`,
+  color: theme.palette.grey[300]
 }));
 
 export const ValueInfo = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "2rem",
   margin: "0 auto",
+  color: theme.palette.grey[700],
   overflowWrap: "anywhere",
   [theme.breakpoints.down("md")]: {
     padding: "0 10px"
