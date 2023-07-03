@@ -27,27 +27,30 @@ const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { data, total, loading, initialized, error } = useFetchList<PoolUpdateItem>(
     API.SPO_LIFECYCLE.POOL_UPDATE(poolId),
-    {
-      ...pageInfo,
-      ...params
-    }
+    { ...pageInfo, ...params }
   );
   useEffect(() => {
     const currentItem = data.find((item) => item.txHash === txHash);
     onSelect(currentItem || null);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txHash, data]);
 
   const handleSelect = (poolUpdated: PoolUpdateItem) => {
     history.push(details.spo(poolId, "timeline", "pool-updates", poolUpdated.txHash));
   };
 
-  useUpdateEffect(() => {
-    if (data && data.length && data.length === 1) {
-      handleSelect(data[0]);
-    }
-  }, [JSON.stringify(data)]);
+  const { txHash: txHashParms, fromDate, toDate } = params || {};
+  const isNoFilter = txHashParms === undefined && fromDate === undefined && toDate === undefined;
+  const isOneItemOnly = data.length === 1 && isNoFilter;
 
-  if (txHash) return null;
+  useUpdateEffect(() => {
+    if (isOneItemOnly) history.replace(details.spo(poolId, "timeline", "pool-updates", data[0].txHash));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
+  if (txHash || isOneItemOnly) return null;
 
   return (
     <StyledContainer>

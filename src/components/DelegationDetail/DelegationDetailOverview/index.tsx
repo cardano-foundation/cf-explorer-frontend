@@ -2,6 +2,7 @@ import { Box, Grid, Skeleton } from "@mui/material";
 import React from "react";
 
 import { formatADAFull, formatPercent, numberWithCommas } from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import { Item, StyledContainer, Title, Value } from "./styles";
 
@@ -11,21 +12,49 @@ interface IDelegationDetailOverview {
 }
 
 const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, loading }) => {
-  const overviewData = {
-    Reward: `${data?.reward || 0}%`,
-    Margin: formatPercent(data?.margin),
-    ROS: formatPercent(data?.ros ? data?.ros / 100 : 0),
-    "Pledge(A)": formatADAFull(data?.pledge),
-    "Fixed Cost(A)": formatADAFull(data?.cost),
-    "Epoch Block": data?.epochBlock || 0,
-    "Lifetime Block": numberWithCommas(data?.lifetimeBlock)
-  };
+  const overviewData = [
+    {
+      title: "Reward",
+      value: data?.reward || 0,
+      tooltip: "Last calculated gross return, as of the second last epoch"
+    },
+    {
+      title: "Margin",
+      value: formatPercent(data?.margin),
+      tooltip: ""
+    },
+    {
+      title: "ROS",
+      value: formatPercent(data?.ros ? data?.ros / 100 : 0),
+      tooltip: "Gross average return during pool’s lifetime"
+    },
+    {
+      title: "Pledge(A)",
+      value: formatADAFull(data?.pledge),
+      tooltip: ""
+    },
+    {
+      title: "Fixed Cost(A)",
+      value: formatADAFull(data?.cost),
+      tooltip: ""
+    },
+    {
+      title: "Epoch Block",
+      value: data?.epochBlock || 0,
+      tooltip: ""
+    },
+    {
+      title: "Lifetime Block",
+      value: numberWithCommas(data?.lifetimeBlock),
+      tooltip: ""
+    }
+  ];
 
   if (loading) {
     return (
       <StyledContainer>
         <Grid container columns={24} spacing={2}>
-          {Object.keys(overviewData).map((i, ii) => {
+          {overviewData.map((i, ii) => {
             return (
               <Grid item xs={24} sm={12} md={8} key={ii} xl={6}>
                 <Box borderRadius={10} overflow="hidden">
@@ -41,13 +70,19 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
   return (
     <StyledContainer>
       <Grid container columns={60} spacing={2}>
-        {Object.keys(overviewData).map((i, ii) => {
+        {overviewData.map((item, ii) => {
           return (
             <Grid item xs={30} sm={20} md={15} xl={12} key={ii}>
               <Item>
-                <Title>{i}</Title>
-                <Value sx={{ color: (theme) => (i === "Reward" ? theme.palette.green[700] : "initial") }}>
-                  {overviewData[i as keyof typeof overviewData]}
+                <CustomTooltip title={item.tooltip}>
+                  <Title>{item.title}</Title>
+                </CustomTooltip>
+                <Value
+                  sx={{
+                    color: (theme) => (item.title === "Reward" ? theme.palette.primary.main : theme.palette.grey[700])
+                  }}
+                >
+                  {item.value}
                 </Value>
               </Item>
             </Grid>

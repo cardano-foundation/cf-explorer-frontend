@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.4.2](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.1...v0.4.2) (2023-06-30)
+
+
+### Features
+
+* MET-1262 Change page 2: Add Token Url ([f60451a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f60451aad2c7af14c1b0eae8a83e2e98f2b6ae41))
+* MET-1353 [Finding01] Update icons of the "Delegator View" ([0f98024](https://github.com/cardano-foundation/cf-explorer-frontend/commit/0f98024a6b3d6961c4f66037d5040b74c7e51aa6))
+* MET-745 add latest stories fix conflict merge develop ([c5f928b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/c5f928b70ede6c49654d8610b1913825f310677a))
+* update new changes ([5e0a489](https://github.com/cardano-foundation/cf-explorer-frontend/commit/5e0a4895ebb989dabfafdce6ce45fab9212da9e8))
+
+
+### Bug Fixes
+
+* MET-1289 footer position missing code when fix conflict ([c96af67](https://github.com/cardano-foundation/cf-explorer-frontend/commit/c96af67ff67768c5b91a6b4170e3e6b61e15f342))
+* page size select wrong after unfocus page input ([0468a42](https://github.com/cardano-foundation/cf-explorer-frontend/commit/0468a420cd8040105c9cfc33af34eeaca9c2f594))
+* prettier warning on console ([0d3331a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/0d3331a322dd4ccaf2b70c37a388eb0e8089da3e))
+* refactor env confict develop ([94f85b7](https://github.com/cardano-foundation/cf-explorer-frontend/commit/94f85b78e22a0be9d444cf54138bd7ae7b25d2cd))
+* remove console log ([2e63826](https://github.com/cardano-foundation/cf-explorer-frontend/commit/2e6382601c08ed1aad56fa0e73814bafcad828c3))
+* resolve comment ([3bb15e3](https://github.com/cardano-foundation/cf-explorer-frontend/commit/3bb15e3521d1a62de2782c2033190abdd163ee8c))
+* the close button not in the right place when zooming in ([6ca192a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6ca192a8ce52527d1edf94b84e72e1e7398dd691))
+* update flow save bookmark ([2411945](https://github.com/cardano-foundation/cf-explorer-frontend/commit/2411945e90ed229aa2243e7fc9a0c70f7e11ddf2))
+
 ## [0.4.1](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.0...v0.4.1) (2023-06-28)
 
 

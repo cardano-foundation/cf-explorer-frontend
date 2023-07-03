@@ -1,4 +1,4 @@
-import { Box, Typography, styled } from "@mui/material";
+import { Box, Typography, alpha, styled } from "@mui/material";
 
 import { AdaLogoIcon } from "src/components/commons/ADAIcon";
 import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
@@ -54,7 +54,7 @@ export const RectBox = styled(Box)<{ disabled?: number }>(({ disabled, theme }) 
 export const DisableAbleLabel = styled(Typography)<{ disabled?: number }>(({ theme, disabled }) => ({
   fontSize: "1ren",
   fontWeight: 700,
-  color: disabled ? "#98A2B3" : theme.palette.common.black,
+  color: disabled ? alpha(theme.palette.grey[700], 0.3) : theme.palette.grey[700],
   textAlign: "left",
   flex: 1,
   [theme.breakpoints.down("lg")]: {
@@ -71,6 +71,7 @@ export const RewardAccountCcontainer = styled(RectBox)(({ theme }) => ({
   flexDirection: "column",
   justifyContent: "center",
   gap: 12,
+  cursor: "pointer",
   [theme.breakpoints.between("lg", "xl")]: {
     maxWidth: 200
   }
@@ -134,10 +135,11 @@ export const RewardBoxImg = styled("img")(() => ({
   height: 100
 }));
 
-export const RewardValue = styled(Box)(() => ({
+export const RewardValue = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  gap: 5
+  gap: 5,
+  color: theme.palette.grey[700]
 }));
 
 export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
@@ -151,5 +153,6 @@ export const AdaBox = styled(Box)(() => ({
   height: 70,
   display: "flex",
   justifyItems: "center",
-  alignItems: "center"
+  alignItems: "center",
+  cursor: "pointer",
 }));
