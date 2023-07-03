@@ -7,6 +7,7 @@ export const TitleDetail = styled(Box)`
   font-size: var(--font-size-title);
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-title);
+  color: ${(props) => props.theme.palette.grey[700]};
 `;
 
 export const TokenAddress = styled("small")`
@@ -55,6 +56,7 @@ export const ValueItem = styled(Box)`
   color: black;
   font-weight: var(--font-weight-bold);
   font-size: 14px;
+  color: ${(props) => props.theme.palette.grey[700]};
 `;
 
 export const RowItem = styled(Box)`

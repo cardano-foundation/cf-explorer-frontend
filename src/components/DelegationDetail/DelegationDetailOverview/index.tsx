@@ -46,7 +46,9 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
             <Grid item xs={30} sm={20} md={15} xl={12} key={ii}>
               <Item>
                 <Title>{i}</Title>
-                <Value sx={{ color: (theme) => (i === "Reward" ? theme.palette.green[700] : "initial") }}>
+                <Value
+                  sx={{ color: (theme) => (i === "Reward" ? theme.palette.primary.main : theme.palette.grey[700]) }}
+                >
                   {overviewData[i as keyof typeof overviewData]}
                 </Value>
               </Item>
