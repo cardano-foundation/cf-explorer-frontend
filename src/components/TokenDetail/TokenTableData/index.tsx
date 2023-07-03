@@ -9,16 +9,18 @@ import TokenTransaction from "./TokenTransaction";
 import { TitleTab } from "./styles";
 import TokenTopHolder from "./TokenTopHolder";
 import TokenMinting from "./TokenMinting";
+import TokenMetaData from "./TokenMetadata";
 import { details } from "../../../commons/routers";
-import { UnionTokenIcon, PeopleIcon, TransactionIcon } from "../../../commons/resources";
+import { UnionTokenIcon, PeopleIcon, TransactionIcon, MetadataIcon } from "../../../commons/resources";
 import CustomIcon from "../../commons/CustomIcon";
 
 interface ITokenTableData {
   totalSupply?: number;
   metadata?: ITokenMetadata;
+  metadataJson?: string;
 }
 
-const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata }) => {
+const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, metadataJson }) => {
   const history = useHistory();
   const { tabActive = "transactions", tokenId } = useParams<{ tabActive: keyof Transaction; tokenId: string }>();
   const theme = useTheme();
@@ -46,6 +48,12 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata }) =>
       label: "Minting",
       children: <TokenMinting tokenId={tokenId} metadata={metadata} />,
       icon: <UnionTokenIcon />
+    },
+    {
+      key: "metadata",
+      label: "Metadata",
+      children: <TokenMetaData metadataJson={metadataJson} />,
+      icon: <MetadataIcon />
     }
   ];
 
@@ -64,7 +72,11 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata }) =>
             height: 3
           }
         }}
-        sx={isTablet ? { borderBottom: "1px solid #E0E0E0", width: isMobile ? "calc(100% - 30px)" : "auto" } : {}}
+        sx={({ palette }) =>
+          isTablet
+            ? { borderBottom: `1px solid ${palette.green[700]}`, width: isMobile ? "calc(100% - 30px)" : "auto" }
+            : {}
+        }
       >
         {tabs?.map(({ key, label, icon }) => (
           <Tab

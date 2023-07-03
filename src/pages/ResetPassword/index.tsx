@@ -72,11 +72,7 @@ export default function ResetPassword() {
   };
 
   useEffect(() => {
-    setHasErrorForm(
-      Boolean(
-        formData.password.error || formData.confirmPassword.error
-      )
-    );
+    setHasErrorForm(Boolean(formData.password.error || formData.confirmPassword.error));
   }, [formData]);
 
   const getError = (name: string, value: string) => {
@@ -146,11 +142,12 @@ export default function ResetPassword() {
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-    }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enableButton, formData, success, error]);
 
   const handleKeyDown = (event: any) => {
-    if (event.key === "Enter" && !success && !error ) {
+    if (event.key === "Enter" && !success && !error) {
       event.preventDefault();
       handleSubmit(event);
     }
