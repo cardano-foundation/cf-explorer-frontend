@@ -29,9 +29,8 @@ export const Button = styled("button")<{ active: number }>`
 `;
 
 export const BoxInfo = styled(Box)<{ space: number }>(({ theme }) => ({
-  background: theme.palette.secondary.dark,
+  background: theme.palette.common.white,
   borderRadius: "10px",
-  color: theme.palette.primary.contrastText,
   display: "flex",
   flexDirection: "column",
   textAlign: "center",
@@ -148,6 +147,7 @@ export const AnalyticsTitle = styled("h2")(({ theme }) => ({
   margin: "40px 0 15px",
   width: "max-content",
   fontSize: "20px",
+  color: theme.palette.grey[700],
   borderBottom: `2px solid ${theme.palette.green[600]}`,
   [theme.breakpoints.down("sm")]: {
     margin: "30px 0 15px"
@@ -155,7 +155,7 @@ export const AnalyticsTitle = styled("h2")(({ theme }) => ({
 }));
 export const Title = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
-  color: theme.palette.primary.contrastText,
+  color: theme.palette.grey[300],
   padding: `${theme.spacing(2)} 0`
 }));
 
@@ -163,7 +163,7 @@ export const Value = styled("div")(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "2rem",
   overflowWrap: "anywhere",
-  color: theme.palette.primary.contrastText,
+  color: theme.palette.grey[700],
   [theme.breakpoints.down("md")]: {
     padding: "0 10px"
   },

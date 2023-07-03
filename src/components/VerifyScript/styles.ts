@@ -49,7 +49,7 @@ export const StyledLabel = styled("div")`
 export const ModalTitle = styled(Typography)`
   font-size: 24px;
   font-weight: 700;
-  color: rgba(19, 21, 47, 1);
+  color: ${(props) => props.theme.palette.grey[700]};
   margin-bottom: 48px;
   ${({ theme }) => theme.breakpoints.down("md")} {
     font-size: 20px;
@@ -62,7 +62,7 @@ export const VerifyButton = styled(Box)<{ disabled: boolean }>`
   line-height: 24px;
   text-align: center;
   color: #ffffff;
-  background: #13152f;
+  background: ${(props) => props.theme.palette.grey[700]};
   border-radius: 8px;
   padding: 10px 20px;
   position: absolute;

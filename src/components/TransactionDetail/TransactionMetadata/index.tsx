@@ -16,7 +16,8 @@ import {
   SummaryIcon,
   UtxoIcon,
   WithdrawalIcon,
-  InstantaneousHistoryIcon
+  InstantaneousHistoryIcon,
+  MetadataIcon
 } from "src/commons/resources";
 
 import "./index.css";
@@ -32,6 +33,7 @@ import PoolCertificate from "./PoolCertificate";
 import ProtocolUpdate from "./ProtocolUpdate";
 import StakeCertificate from "./StakeCertificate";
 import InstantaneousRewards from "./InstantaneousRewards";
+import Metadata from "./Metadata";
 
 interface TransactionMetadataProps {
   data: Transaction | null;
@@ -147,6 +149,12 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
       icon: InstantaneousHistoryIcon,
       label: `Instantaneous Rewards (${data?.instantaneousRewards?.length || 0})`,
       children: <InstantaneousRewards data={data?.instantaneousRewards} />
+    },
+    {
+      key: "metadata",
+      icon: MetadataIcon,
+      label: `Metadata`,
+      children: <Metadata data={data?.metadata} hash={data?.metadataHash} />
     }
   ];
 
