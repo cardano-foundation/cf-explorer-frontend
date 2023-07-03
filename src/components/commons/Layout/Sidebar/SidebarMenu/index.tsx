@@ -97,7 +97,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
       (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1])) ||
       (href === "/timeline" && (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
     );
-  }
+  };
 
   return (
     <SidebarMenuContainer>

@@ -261,6 +261,7 @@ export { ReactComponent as TransactionDelegationIcon } from "./images/Delegation
 export { ReactComponent as ScriptIcon } from "./icons/u_book.svg";
 export { ReactComponent as WithdrawalHistoryIcon } from "./icons/withdrawal-history.svg";
 export { ReactComponent as TotalPoolIcon } from "./icons/totalPool.svg";
+export { ReactComponent as EyeOutlineIcon } from "./icons/eye-outline.svg";
 export { ReactComponent as MetadataIcon } from "./icons/metadata.svg";
 export { ReactComponent as OwnerAccountIcon } from "./icons/owner-account-ic.svg";
 export { ReactComponent as PoolSizeIcon } from "./icons/pool-size-ic.svg";
