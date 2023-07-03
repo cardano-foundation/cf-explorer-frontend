@@ -40,7 +40,7 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
     try {
       await signOut({
         refreshJwt: localStorage.getItem("refreshToken") || "",
-        username: localStorage.getItem("username") || ""
+        accountId: localStorage.getItem("walletId") || ""
       });
     } catch (error) {
       console.log(error);
