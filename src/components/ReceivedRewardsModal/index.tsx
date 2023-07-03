@@ -56,10 +56,13 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [sort, setSort] = useState<string>("");
   const { isMobile, isGalaxyFoldSmall } = useScreen();
-  const fetchData = useFetchList<RewardDistributionItem>(stakeId ? API.STAKE_LIFECYCLE.RECEIVED_REWARD(stakeId) + (type ? `?type=${type}` : "") : "", {
-    ...params,
-    sort
-  });
+  const fetchData = useFetchList<RewardDistributionItem>(
+    stakeId ? API.STAKE_LIFECYCLE.RECEIVED_REWARD(stakeId) + (type ? `?type=${type}` : "") : "",
+    {
+      ...params,
+      sort
+    }
+  );
 
 
   const columns: Column<ReceivedReward>[] = [
@@ -95,17 +98,23 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
   return (
     <StyledModal open={open} handleCloseModal={() => onClose?.()} width={600}>
       <ModalContainer>
-        <ModalTitle>{
-          type === RECEIVED_REWARDS.LEADER ? "Operator Reward" : type === RECEIVED_REWARDS.MEMBER ? "Delegator Reward" : "Received Rewards"
-        }</ModalTitle>
+        <ModalTitle>
+          {type === RECEIVED_REWARDS.LEADER
+            ? "Operator Reward"
+            : type === RECEIVED_REWARDS.MEMBER
+            ? "Delegator Reward"
+            : "Received Rewards"}
+        </ModalTitle>
         <ModalContent>
-          <RewardBalanceHeader>
-            <RewardBalance>
-              <ReceidvedRewardsIC />
-              <RewardBalanceTitle>Reward Balance: {formatADAFull(reward)}</RewardBalanceTitle>
-              <ADAicon />
-            </RewardBalance>
-          </RewardBalanceHeader>
+          {type == RECEIVED_REWARDS.ALL ? (
+            <RewardBalanceHeader>
+              <RewardBalance>
+                <ReceidvedRewardsIC />
+                <RewardBalanceTitle>Reward Balance: {formatADAFull(reward)}</RewardBalanceTitle>
+                <ADAicon />
+              </RewardBalance>
+            </RewardBalanceHeader>
+          ) : null}
           <TableContainer>
             <Table
               {...fetchData}
