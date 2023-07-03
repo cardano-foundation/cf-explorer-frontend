@@ -10,7 +10,7 @@ import CopyButton from "../CopyButton";
 const PopupStaking = ({ hash }: { hash: string }) => {
   return (
     <Box display={"flex"} alignItems={"center"}>
-      <AddressIcon fill="#108AEF" />
+      <AddressIcon fill="#0052CC" />
       <Hash to={details.transaction(hash)}>{getShortHash(hash)}</Hash>
       <CopyButton text={hash} />
     </Box>

@@ -8,10 +8,9 @@ import { BigNumber } from "bignumber.js";
 
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
-import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/helper";
+import { formatADAFull, formatPrice } from "src/commons/utils/helper";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
 
@@ -202,17 +201,15 @@ const StakeAnalytics: React.FC = () => {
                 <Box>
                   <img src={HighestIcon} alt="heighest icon" />
                   <Title>{tab === "BALANCE" ? "Highest Balance" : "Highest Reward"}</Title>
-                  <CustomTooltip title={numberWithCommas(maxBalance || 0)}>
-                    <ValueInfo>
-                      {balanceLoading ? (
-                        <SkeletonUI variant="rectangular" />
-                      ) : tab === "BALANCE" ? (
-                        formatADAFull(maxBalance)
-                      ) : (
-                        formatADAFull(maxReward.value)
-                      )}
-                    </ValueInfo>
-                  </CustomTooltip>
+                  <ValueInfo>
+                    {balanceLoading ? (
+                      <SkeletonUI variant="rectangular" />
+                    ) : tab === "BALANCE" ? (
+                      formatADAFull(maxBalance)
+                    ) : (
+                      formatADAFull(maxReward.value)
+                    )}
+                  </ValueInfo>
                 </Box>
               </BoxInfoItemRight>
             </Box>
@@ -221,17 +218,15 @@ const StakeAnalytics: React.FC = () => {
                 <Box>
                   <img src={LowestIcon} alt="lowest icon" />
                   <Title>{tab === "BALANCE" ? "Lowest Balance" : "Lowest Reward"}</Title>
-                  <CustomTooltip title={numberWithCommas(minBalance || 0)}>
-                    <ValueInfo>
-                      {balanceLoading ? (
-                        <SkeletonUI variant="rectangular" />
-                      ) : tab === "BALANCE" ? (
-                        formatADAFull(minBalance)
-                      ) : (
-                        formatADAFull(minReward.value)
-                      )}
-                    </ValueInfo>
-                  </CustomTooltip>
+                  <ValueInfo>
+                    {balanceLoading ? (
+                      <SkeletonUI variant="rectangular" />
+                    ) : tab === "BALANCE" ? (
+                      formatADAFull(minBalance)
+                    ) : (
+                      formatADAFull(minReward.value)
+                    )}
+                  </ValueInfo>
                 </Box>
               </BoxInfoItem>
             </Box>

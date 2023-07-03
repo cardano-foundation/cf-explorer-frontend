@@ -32,7 +32,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
   }, [history]);
 
   useEffect(() => {
-    if(sidebar) {
+    if (sidebar) {
       setOnDetailView(false);
     }
   }, [sidebar]);
