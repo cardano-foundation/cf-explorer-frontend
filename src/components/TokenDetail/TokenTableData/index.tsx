@@ -38,7 +38,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata }) =>
     {
       key: "topHolders",
       label: "Top Holders",
-      children: <TokenTopHolder tokenId={tokenId} totalSupply={totalSupply} />,
+      children: <TokenTopHolder tokenId={tokenId} totalSupply={totalSupply} decimal={metadata?.decimals} />,
       icon: <PeopleIcon />
     },
     {
