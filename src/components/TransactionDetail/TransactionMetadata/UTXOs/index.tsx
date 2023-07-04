@@ -71,7 +71,7 @@ const Card = ({
                     <WrapUTXOs>
                       <Box mr={3} minWidth={200}>
                         <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
-                          <Box color={(theme) => theme.palette.grey[700]} pr={1}>
+                          <Box color={(theme) => theme.palette.grey[300]} pr={1}>
                             UTXO:
                           </Box>
                           <Link to={details.transaction(item.txHash)}>
@@ -102,7 +102,7 @@ const Card = ({
                       justifyContent={"flex-start"}
                       pr={1}
                       pl={type === "down" ? 2 : 0}
-                      color={(theme) => theme.palette.grey[700]}
+                      color={(theme) => theme.palette.grey[300]}
                     >
                       {type === "down" ? "From" : "To"}:
                     </Box>
@@ -145,7 +145,9 @@ const Card = ({
                           justifyContent="flex-start"
                           alignItems={isMobile ? "flex-start" : "center"}
                         >
-                          <Box pr={1}>Stake Address: </Box>
+                          <Box pr={1} color={({ palette }) => palette.grey[300]}>
+                            Stake Address:{" "}
+                          </Box>
                           <Box>
                             <Link to={details.stake(item?.stakeAddress)}>
                               <CustomTooltip title={item?.stakeAddress}>

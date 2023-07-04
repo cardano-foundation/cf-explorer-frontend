@@ -138,7 +138,7 @@ export const StyledTitle = styled("span")`
   display: flex;
   align-items: center;
   gap: 7px;
-  color: ${(props) => props.theme.palette.grey[700]};
+  color: ${(props) => props.theme.palette.grey[300]};
 `;
 
 export const InfoValue = styled(Box)(({ theme }) => ({

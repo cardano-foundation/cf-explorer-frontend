@@ -44,7 +44,6 @@ const TopAddresses = () => {
     }
   ];
 
-
   return (
     <TabContext value={tabActive}>
       <StyledContainer>
