@@ -118,6 +118,21 @@ type TStakeCertificated = {
   type: "STAKE_REGISTRATION" | "STAKE_DEREGISTRATION";
 };
 
+interface IContractItemTx {
+  contract: string;
+  address: string;
+  datumBytesIn: string;
+  datumBytesOut: string;
+  datumHashIn: string;
+  datumHashOut: string;
+  purpose: string;
+  redeemerBytes: string;
+  redeemerMem: number;
+  redeemerSteps: number;
+  scriptBytes: string;
+  scriptHash: string;
+}
+
 interface Transaction {
   tx: {
     hash: string;
@@ -139,9 +154,7 @@ interface Transaction {
       tokens: Token[];
     }[];
   };
-  contracts?: {
-    contract: string;
-  }[];
+  contracts?: IContractItemTx[];
   collaterals?: {
     collateralInputResponses: CollateralResponses[];
 
