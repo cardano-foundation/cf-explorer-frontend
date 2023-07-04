@@ -90,7 +90,7 @@ export const TimeDuration = styled("small")<{ mobile?: number }>(({ theme, mobil
 }));
 export const PoolTitle = styled(Box)(({ theme }) => ({
   fontSize: "12px",
-  color: alpha(theme.palette.common.black, 0.5)
+  color: theme.palette.grey[300]
 }));
 export const PoolValue = styled(Box)(({ theme }) => ({
   fontSize: "14px",

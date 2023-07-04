@@ -38,19 +38,19 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   paddingTop: theme.spacing(2),
   width: "80%",
   margin: "0 auto",
-  borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+  borderBottom: `1px solid ${alpha(theme.palette.grey[700], 0.1)}`,
   overflow: "hidden",
   alignItems: "center",
   [theme.breakpoints.down("lg")]: {
     alignItems: "flex-start",
-    borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    borderRight: `1px solid ${alpha(theme.palette.grey[700], 0.1)}`,
     height: "100%",
     borderBottom: "none",
     width: "100%",
     minHeight: "160px"
   },
   [theme.breakpoints.down("sm")]: {
-    borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    borderRight: `1px solid ${alpha(theme.palette.grey[700], 0.1)}`,
     minHeight: "150px"
   }
 }));
@@ -151,5 +151,5 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
       backgroundColor: theme.palette.primary.main,
       color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400]
     }
-  },
+  }
 }));

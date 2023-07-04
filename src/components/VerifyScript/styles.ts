@@ -1,4 +1,4 @@
-import { Box, Typography, styled } from "@mui/material";
+import { Box, Typography, alpha, styled } from "@mui/material";
 
 export const Wrapper = styled(Box)`
   & h2 {
@@ -13,9 +13,9 @@ export const VerifyScriptContainer = styled(Box)`
   margin-bottom: 10px;
 `;
 
-export const StyledVerifyButton = styled(Box)<{ verified: number }>(({ verified }) => ({
-  color: verified ? "#438F68" : "#FFFFFF",
-  background: verified ? "rgba(67, 143, 104, 0.2)" : "#344054",
+export const StyledVerifyButton = styled(Box)<{ verified: number }>(({ verified, theme }) => ({
+  color: verified ? theme.palette.green[700] : theme.palette.common.white,
+  background: verified ? alpha(theme.palette.green[700], 0.2) : theme.palette.grey[300],
   cursor: "pointer",
   borderRadius: 2,
   padding: "4px 14px",
