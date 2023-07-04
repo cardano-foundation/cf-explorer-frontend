@@ -1,9 +1,11 @@
 import { screen, cleanup, fireEvent, waitFor } from "@testing-library/react";
-import { render } from "src/test-utils";
-import useFetchList from "src/commons/hooks/useFetchList";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router";
+
+import { render } from "src/test-utils";
+import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
+
 import Transactions from ".";
 
 const mockItem = {

@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
 import { LogoIcon, SearchIcon } from "src/commons/resources";
-import { setSidebar } from "src/stores/user";
+import { setOnDetailView, setSidebar } from "src/stores/user";
 import { routers } from "src/commons/routers";
 
 import TopSearch from "../Sidebar/TopSearch";
@@ -42,6 +42,23 @@ const Header: React.FC<RouteComponentProps> = (props) => {
     `${history.location.pathname}/`.includes(subPath)
   );
 
+  const refElement = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (refElement.current && event.target instanceof Node && refElement.current.contains(event.target)) {
+        setOpenSearch(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleOpenSearch = () => {
+    setOpenSearch((prev) => !prev);
+    setOnDetailView(false);
+  };
+
   return (
     <HeaderContainer data-testid="header">
       <HeaderBox home={home ? 1 : 0}>
@@ -51,7 +68,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
           </Title>
           {!pathMatched && <HeaderSearch home={home} />}
         </HeaderMain>
-        <HeaderTop data-testid="header-top">
+        <HeaderTop data-testid="header-top" ref={refElement}>
           <HeaderLogoLink to="/" data-testid="header-logo">
             <HeaderLogo src={LogoIcon} alt="logo desktop" />
           </HeaderLogoLink>
@@ -61,7 +78,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
             </NetworkContainer>
             <LoginButton />
             {history.location.pathname !== routers.STAKING_LIFECYCLE && (
-              <SearchButton onClick={() => setOpenSearch((prev) => !prev)}>
+              <SearchButton onClick={handleOpenSearch}>
                 <SearchIcon fontSize={24} />
               </SearchButton>
             )}

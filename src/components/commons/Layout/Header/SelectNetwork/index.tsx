@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { FRONT_END_NETWORK, NETWORK, NETWORKS, NETWORK_NAMES, STORAGE_KEYS } from "src/commons/utils/constants";
 import { removeAuthInfo } from "src/commons/utils/helper";
 import { signOut } from "src/commons/utils/userRequest";
+import { setOnDetailView } from "src/stores/user";
 
 const StyledSelect = styled(Select)(({ theme }) => ({
   fontFamily: "var(--font-family-title)",
@@ -69,6 +70,9 @@ const SelectNetwork: React.FC = () => {
     return () => window.removeEventListener("storage", listener);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const handleOpen = () => {
+    setOnDetailView(false);
+  };
 
   return (
     <StyledSelect
@@ -77,6 +81,7 @@ const SelectNetwork: React.FC = () => {
       value={NETWORK}
       IconComponent={BiChevronDown}
       MenuProps={{ style: { zIndex: 1303 } }}
+      onOpen={handleOpen}
     >
       {Object.entries(NETWORK_NAMES).map(([value, name]) => (
         <MenuItem data-testid="network-options" key={value} value={value}>
