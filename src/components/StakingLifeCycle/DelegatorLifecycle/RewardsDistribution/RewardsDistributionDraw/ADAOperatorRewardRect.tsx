@@ -1,5 +1,5 @@
-import React, { forwardRef } from "react";
 import { BoxProps } from "@mui/material";
+import React, { forwardRef } from "react";
 
 import { SPOHolderIconUrl } from "src/commons/resources";
 

@@ -153,5 +153,6 @@ export const AdaBox = styled(Box)(() => ({
   height: 70,
   display: "flex",
   justifyItems: "center",
-  alignItems: "center"
+  alignItems: "center",
+  cursor: "pointer"
 }));

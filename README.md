@@ -33,6 +33,8 @@ Update `REACT_APP_AUTH_API_URL` with your auth api url to support sign in and si
 
 Update `REACT_APP_JSD_WIDGET_KEY` with Jira Embedded Key to Add Jira Support Widget to Explorer.
 
+Update `REACT_APP_EXT_ADA_PRICE_URL` link to the cardano price.
+
 **Step 2**: create .env file
 In the terminal run command: `cp .env.example .env`
 
