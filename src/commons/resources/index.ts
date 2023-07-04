@@ -248,7 +248,7 @@ export { ReactComponent as ChartMode } from "./icons/Staking/ChartMode.svg";
 export { ReactComponent as TableMode } from "./icons/Staking/TableMode.svg";
 export { ReactComponent as SummaryIcon } from "./images/summaryIcon.svg";
 export { ReactComponent as UtxoIcon } from "./images/utxoIcon.svg";
-export { ReactComponent as MetadataIcon } from "./icons/metadataIcon.svg";
+export { ReactComponent as MetadataIconTx } from "./icons/metadataIcon.svg";
 export { ReactComponent as ContractIcon } from "./images/contractIcon.svg";
 export { ReactComponent as CollateralIcon } from "./images/collateralIcon.svg";
 export { ReactComponent as NoteIcon } from "./images/noteIcon.svg";

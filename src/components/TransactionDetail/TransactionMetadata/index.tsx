@@ -17,7 +17,7 @@ import {
   UtxoIcon,
   WithdrawalIcon,
   InstantaneousHistoryIcon,
-  MetadataIcon
+  MetadataIconTx
 } from "src/commons/resources";
 
 import "./index.css";
@@ -152,7 +152,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
     },
     {
       key: "metadata",
-      icon: MetadataIcon,
+      icon: MetadataIconTx,
       label: `Metadata`,
       children: <Metadata data={data?.metadata} hash={data?.metadataHash} />
     }
