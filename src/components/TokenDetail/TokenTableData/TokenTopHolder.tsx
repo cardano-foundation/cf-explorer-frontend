@@ -4,7 +4,12 @@ import { stringify } from "qs";
 
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
-import { formatADAFull, getPageInfo, getShortWallet, numberWithCommas } from "../../../commons/utils/helper";
+import {
+  formatNumberDivByDecimals,
+  getPageInfo,
+  getShortWallet,
+  numberWithCommas
+} from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
 import { PriceValue, SmallText, StyledLink } from "./styles";
@@ -49,7 +54,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decim
       minWidth: "200px",
       render: (r) => (
         <PriceValue>
-          <SmallText>{formatADAFull(r?.quantity, decimal || 0)}</SmallText>
+          <SmallText>{formatNumberDivByDecimals(r?.quantity, decimal || 0)}</SmallText>
         </PriceValue>
       )
     },
