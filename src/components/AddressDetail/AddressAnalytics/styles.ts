@@ -1,7 +1,7 @@
 import { Grid, Skeleton, Button, styled, Box, alpha } from "@mui/material";
 
 export const BoxInfo = styled(Box)<{ space: number }>(({ theme }) => ({
-  background: theme.palette.secondary.dark,
+  background: theme.palette.common.white,
   borderRadius: "10px",
   color: theme.palette.primary.contrastText,
   display: "flex",
@@ -82,7 +82,8 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
 
 export const Title = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
-  padding: `${theme.spacing(2)} 0`
+  padding: `${theme.spacing(2)} 0`,
+  color: theme.palette.grey[300]
 }));
 
 export const ValueInfo = styled(Box)(({ theme }) => ({
@@ -91,6 +92,7 @@ export const ValueInfo = styled(Box)(({ theme }) => ({
   margin: "0 auto",
   overflowWrap: "anywhere",
   padding: "0 18px",
+  color: theme.palette.grey[700],
   [theme.breakpoints.down("md")]: {
     padding: "0 10px"
   },
@@ -163,8 +165,7 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
       backgroundColor: theme.palette.primary.main,
       color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400]
     }
-  },
-
+  }
 }));
 
 export const TextCardHighlight = styled("span")`

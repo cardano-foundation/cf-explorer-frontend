@@ -38,9 +38,10 @@ export const ADAOperator = styled(Box)(({ theme }) => ({
     padding: "0px 0px 20px"
   }
 }));
-export const ADATitle = styled(Box)(() => ({
+export const ADATitle = styled(Box)(({ theme }) => ({
   background: "#F6F6F6",
   height: "30px",
+  color: theme.palette.grey[700],
   display: "flex",
   alignItems: "flex-end",
   fontWeight: 700
