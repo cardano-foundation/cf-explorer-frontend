@@ -1,4 +1,4 @@
-import { Box, Select, styled } from "@mui/material";
+import { Box, Select, alpha, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledSelect = styled(Select)`
@@ -99,4 +99,35 @@ export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => 
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
   color: active ? theme.palette.common.black : theme.palette.text.hint
+}));
+
+export const ViewJson = styled(Box)(({ theme }) => ({
+  overflowY: "auto",
+  textAlign: "left",
+  backgroundColor: `${alpha(theme.palette.grey[300], 0.1)}`,
+  borderRadius: 10,
+  padding: theme.spacing(2),
+  maxHeight: "50vh",
+  [theme.breakpoints.up("md")]: {
+    "& .MuiSvgIcon-root": {
+      display: "none !important"
+    },
+    "&::-webkit-scrollbar": {
+      width: "5px"
+    },
+    "&::-webkit-scrollbar-track": {
+      background: "transparent"
+    },
+    "&::-webkit-scrollbar-thumb": {
+      background: "transparent"
+    },
+    "&:hover": {
+      "&::-webkit-scrollbar-thumb": {
+        background: theme.palette.grey[300]
+      },
+      "&::-webkit-scrollbar-track": {
+        background: theme.palette.grey[100]
+      }
+    }
+  }
 }));
