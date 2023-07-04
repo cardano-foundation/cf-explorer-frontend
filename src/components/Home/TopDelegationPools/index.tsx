@@ -48,7 +48,11 @@ const TopDelegationPools = () => {
       render: (r) => formatADAFull(r.poolSize || 0)
     },
     {
-      title: "Reward",
+      title: (
+        <CustomTooltip title="Last calculated gross return, as of the second last epoch">
+          <span>Reward</span>
+        </CustomTooltip>
+      ),
       key: "reward",
       render: (r) => <RateWithIcon value={r.reward} multiple={1} />
     },

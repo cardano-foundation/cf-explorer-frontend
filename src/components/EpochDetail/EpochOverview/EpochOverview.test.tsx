@@ -1,7 +1,7 @@
 import { render, screen } from "src/test-utils";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
 
 import EpochOverview from "./index";
-import { formatDateTimeLocal } from "src/commons/utils/helper";
 
 const mockedData: IDataEpoch = {
   blkCount: 20947,
