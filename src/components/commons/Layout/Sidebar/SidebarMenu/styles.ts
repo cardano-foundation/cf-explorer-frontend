@@ -13,7 +13,8 @@ export const SidebarMenuContainer = styled(Box)(({ theme }) => ({
 
 export const Menu = styled(List)(({ theme }) => ({
   maxHeight: "calc(100vh - 181px)",
-  overflow: "auto",
+  overflowY: "auto",
+  overflowX: "hidden",
   marginBottom: "5px",
   "&::-webkit-scrollbar": {
     width: "0px",

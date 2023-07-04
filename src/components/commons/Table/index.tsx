@@ -1,9 +1,30 @@
+import {
+  Box,
+  CircularProgress,
+  IconButton,
+  MenuItem,
+  PaginationRenderItemParams,
+  alpha,
+  styled,
+  useScrollTrigger
+} from "@mui/material";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Box, PaginationRenderItemParams, IconButton, MenuItem, styled, CircularProgress, alpha } from "@mui/material";
-import { useUpdateEffect } from "react-use";
 import { useParams } from "react-router-dom";
-import { useScrollTrigger } from "@mui/material";
+import { useUpdateEffect } from "react-use";
 
+import { useScreen } from "src/commons/hooks/useScreen";
+import {
+  DownIcon,
+  EmptyIcon,
+  EndPage,
+  EyeIcon,
+  NextPage,
+  PrevPage,
+  SortTableDown,
+  SortTableUp,
+  SortTableUpDown,
+  StartPage
+} from "src/commons/resources";
 import { handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
 import {
   ColumnType,
@@ -13,44 +34,31 @@ import {
   TableRowProps,
   TableTopHeaderProps
 } from "src/types/table";
-import { useScreen } from "src/commons/hooks/useScreen";
-import {
-  DownIcon,
-  EmptyIcon,
-  EndPage,
-  EyeIcon,
-  NextPage,
-  PrevPage,
-  StartPage,
-  SortTableDown,
-  SortTableUp,
-  SortTableUpDown
-} from "src/commons/resources";
 
+import CustomIcon from "../CustomIcon";
+import Filter from "../Filter";
 import {
   Empty,
   EmtyImage,
+  InputNumber,
+  LoadingWrapper,
+  SelectMui,
+  ShowedResults,
+  StyledPagination,
   TBody,
   TCol,
   TFooter,
   THead,
   THeader,
   TRow,
-  TotalNumber,
-  Wrapper,
-  TableFullWidth,
-  InputNumber,
-  SelectMui,
-  LoadingWrapper,
   TableCheckBox,
+  TableCustomTitle,
+  TableFullWidth,
   TableHeaderContainer,
   TableTitle,
-  ShowedResults,
-  TableCustomTitle,
-  StyledPagination
+  TotalNumber,
+  Wrapper
 } from "./styles";
-import Filter from "../Filter";
-import CustomIcon from "../CustomIcon";
 
 type TEmptyRecord = {
   className?: string;
@@ -571,7 +579,7 @@ const PaginationCustom = ({
                 }
               }}
             />
-            <Box component={"span"} color={(theme) => theme.palette.grey[400]} fontSize="0.875rem">
+            <Box component={"span"} color={(theme) => theme.palette.grey[700]} fontSize="0.875rem">
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}
               {numberWithCommas((page > 0 ? page : 1) * size > total ? total : (page > 0 ? page : 1) * size)} of{" "}
               {numberWithCommas(pagination?.total || 0)}

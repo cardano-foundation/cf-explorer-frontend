@@ -6,3 +6,6 @@
 .github
 cypress/
 .env
+env.global.js
+.dockerignore
+Dockerfile

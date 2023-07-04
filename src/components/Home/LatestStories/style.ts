@@ -66,9 +66,9 @@ export const Detail = styled(Box)`
   justify-content: space-between;
 `;
 
-export const Author = styled("h6")`
-  display: -webkit-box;
+export const Author = styled(Box)`
   width: max-content;
+  white-space: nowrap;
   width: 100%;
   line-height: 1.15;
   max-height: 1em;
@@ -83,6 +83,8 @@ export const Author = styled("h6")`
   letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-top: 0;
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
   margin-bottom: 5px;
 `;
 export const ItemTitle = styled("h5")`
@@ -91,6 +93,7 @@ export const ItemTitle = styled("h5")`
   max-height: 3.6em;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+  color: ${(props) => props.theme.palette.grey[700]};
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: var(--font-size-text-x-small);

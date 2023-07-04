@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { Box } from "@mui/material";
 
 import { LogoIcon, SearchIcon } from "src/commons/resources";
 import { setSidebar } from "src/stores/user";
@@ -82,9 +81,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
           </SideBarRight>
         </HeaderTop>
       </HeaderBox>
-      <Box ref={refElement}>
-        <TopSearch open={openSearch} onClose={setOpenSearch} />
-      </Box>
+      <TopSearch open={openSearch} onClose={setOpenSearch} />
     </HeaderContainer>
   );
 };
