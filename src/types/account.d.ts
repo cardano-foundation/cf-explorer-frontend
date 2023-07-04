@@ -69,7 +69,7 @@ type TSignIn = {
 
 type TSignOut = {
   refreshJwt: string;
-  username: string;
+  accountId: string;
 };
 
 type TSignUp = {

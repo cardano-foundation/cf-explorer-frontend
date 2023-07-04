@@ -39,6 +39,13 @@ interface Token {
     totalToken: number;
     policyScript: string;
   };
+  metadata?: {
+    decimals: number;
+    description: string;
+    logo: string;
+    ticker: string;
+    url: string;
+  };
 }
 interface CurrentTransactions {
   blockNo: number;
@@ -190,6 +197,11 @@ interface Transaction {
   instantaneousRewards?: {
     amount: string;
     stakeAddress: string;
+  }[];
+  metadataHash: string;
+  metadata: {
+    label: number;
+    value: string;
   }[];
 }
 

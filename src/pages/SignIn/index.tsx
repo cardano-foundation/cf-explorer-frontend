@@ -294,7 +294,7 @@ export default function SignIn() {
                   />
                 }
                 label={
-                  <Box fontSize={"14px"} fontWeight={400} textAlign={"left"}>
+                  <Box fontSize={"14px"} fontWeight={400} textAlign={"left"} color={({ palette }) => palette.grey[700]}>
                     Remember & Auto Login
                   </Box>
                 }

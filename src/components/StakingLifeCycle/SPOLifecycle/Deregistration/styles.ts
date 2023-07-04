@@ -18,7 +18,8 @@ export const InfoText = styled(Box)(({ theme }) => ({
   marginLeft: theme.spacing(1),
   fontWeight: 600,
   fontSize: "14px",
-  cursor: "pointer"
+  cursor: "pointer",
+  color: theme.palette.grey[700]
 }));
 
 export const CustomLink = styled(Link)(({ theme }) => ({
@@ -30,9 +31,10 @@ export const CustomLink = styled(Link)(({ theme }) => ({
   }
 }));
 
-export const DetailRetirement = styled(Box)(() => ({
+export const DetailRetirement = styled(Box)(({ theme }) => ({
   fontSize: "0.875rem",
-  fontWeight: 600
+  fontWeight: 600,
+  color: theme.palette.grey[700]
 }));
 
 export const StepInfo = styled(Box)(({ theme }) => ({
@@ -149,6 +151,7 @@ export const StyledCertificateShape = styled(CertificateShape)(({ theme }) => ({
   height: 220,
   margin: "auto",
   border: `2px solid ${theme.palette.border.block}`,
+  color: theme.palette.grey[700],
   [theme.breakpoints.down("sm")]: {
     width: 140
   }

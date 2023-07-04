@@ -10,7 +10,7 @@ export const HeaderDetailContainer = styled(Container)`
 `;
 
 export const WrapTitle = styled(Box)(({ theme }) => ({
-  opacity: 0.5,
+  color: theme.palette.grey[300],
   [theme.breakpoints.down("md")]: {
     paddingBottom: "4px"
   }
@@ -300,15 +300,18 @@ export const ViewJson = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const ButtonLink = styled(Link)(({ theme }) => ({
+export const ButtonLink = styled("a")(({ theme }) => ({
   fontWeight: "bold",
   color: `${theme.palette.secondary.main} !important`,
   fontFamily: "Roboto, sans-serif !important",
   textAlign: "left",
   wordBreak: "break-all",
-  marginTop: theme.spacing(2),
-  display: "inline-block"
+  marginTop: theme.spacing(1),
+  fontSize: "14px",
+  display: "inline-block",
+  textDecoration: "underline !important"
 }));
+
 export const LogoEmpty = styled(Box)`
   width: 20px;
   height: 20px;
@@ -322,7 +325,7 @@ export const TokenHeader = styled(Box)(({ theme }) => ({
   alignItems: "center",
   fontWeight: "bold",
   marginBottom: theme.spacing(2),
-  color: theme.palette.common.black,
+  color: theme.palette.grey[700],
   overflowWrap: "anywhere"
 }));
 
@@ -331,12 +334,13 @@ export const TokenDescription = styled(Box)(({ theme }) => ({
   alignItems: "left",
   fontSize: "0.75rem",
   color: alpha(theme.palette.common.black, 0.5),
-  flexDirection: "column",
+  flexDirection: "column"
 }));
 
 export const TokenUrl = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(1),
   cursor: "pointer",
+  color: theme.palette.grey[300]
 }));
 
 export const PolicyScriptBtn = styled(Button)(({ theme }) => ({
