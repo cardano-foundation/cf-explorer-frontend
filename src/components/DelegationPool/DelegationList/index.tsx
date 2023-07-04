@@ -77,7 +77,11 @@ const DelegationLists: React.FC = () => {
       render: (r) => <Box component={"span"}>{r.epochBlock || 0}</Box>
     },
     {
-      title: "Reward",
+      title: (
+        <CustomTooltip title="Last calculated gross return, as of the second last epoch">
+          <span>Reward</span>
+        </CustomTooltip>
+      ),
       key: "Reward",
       minWidth: "120px",
       render: (r) => <RateWithIcon value={r.reward} multiple={1} />
@@ -121,7 +125,11 @@ const DelegationLists: React.FC = () => {
       render: (r) => <Box component={"span"}>{r.lifetimeBlock || 0}</Box>
     },
     {
-      title: "Lifetime ROS",
+      title: (
+        <CustomTooltip title="Gross average return during pool’s lifetime">
+          <span>Lifetime ROS</span>
+        </CustomTooltip>
+      ),
       minWidth: "100px",
       key: "lifetimeRos",
       render: (r) => <Box component={"span"}>{r.lifetimeRos || 0}%</Box>
