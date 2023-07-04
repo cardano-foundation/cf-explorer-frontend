@@ -19,7 +19,7 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson }) => {
       ) : (
         <JsonViewer
           data-testid="JsonViewer"
-          value={JSON.parse(metadataJson ?? "")}
+          value={metadataJson ? JSON.parse(metadataJson) : {}}
           displayObjectSize={false}
           displayDataTypes={false}
           enableClipboard={false}

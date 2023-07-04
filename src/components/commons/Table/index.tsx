@@ -1,9 +1,30 @@
+import {
+  Box,
+  CircularProgress,
+  IconButton,
+  MenuItem,
+  PaginationRenderItemParams,
+  alpha,
+  styled,
+  useScrollTrigger
+} from "@mui/material";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Box, PaginationRenderItemParams, IconButton, MenuItem, styled, CircularProgress, alpha } from "@mui/material";
-import { useUpdateEffect } from "react-use";
 import { useParams } from "react-router-dom";
-import { useScrollTrigger } from "@mui/material";
+import { useUpdateEffect } from "react-use";
 
+import { useScreen } from "src/commons/hooks/useScreen";
+import {
+  DownIcon,
+  EmptyIcon,
+  EndPage,
+  EyeOutlineIcon,
+  NextPage,
+  PrevPage,
+  SortTableDown,
+  SortTableUp,
+  SortTableUpDown,
+  StartPage
+} from "src/commons/resources";
 import { handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
 import {
   ColumnType,
@@ -13,44 +34,31 @@ import {
   TableRowProps,
   TableTopHeaderProps
 } from "src/types/table";
-import { useScreen } from "src/commons/hooks/useScreen";
-import {
-  DownIcon,
-  EmptyIcon,
-  EndPage,
-  EyeIcon,
-  NextPage,
-  PrevPage,
-  StartPage,
-  SortTableDown,
-  SortTableUp,
-  SortTableUpDown
-} from "src/commons/resources";
 
+import CustomIcon from "../CustomIcon";
+import Filter from "../Filter";
 import {
   Empty,
   EmtyImage,
+  InputNumber,
+  LoadingWrapper,
+  SelectMui,
+  ShowedResults,
+  StyledPagination,
   TBody,
   TCol,
   TFooter,
   THead,
   THeader,
   TRow,
-  TotalNumber,
-  Wrapper,
-  TableFullWidth,
-  InputNumber,
-  SelectMui,
-  LoadingWrapper,
   TableCheckBox,
+  TableCustomTitle,
+  TableFullWidth,
   TableHeaderContainer,
   TableTitle,
-  ShowedResults,
-  TableCustomTitle,
-  StyledPagination
+  TotalNumber,
+  Wrapper
 } from "./styles";
-import Filter from "../Filter";
-import CustomIcon from "../CustomIcon";
 
 type TEmptyRecord = {
   className?: string;
@@ -179,7 +187,7 @@ const TableRow = <T extends ColumnType>({
       {showTabView && (
         <TCol minWidth={50} maxWidth={90} selected={isClickRow}>
           <Box display="flex" alignItems="center" height="1rem">
-            {selected !== index && <CustomIcon icon={EyeIcon} originWidth={31} originHeight={23} width={24} />}
+            {selected !== index && <CustomIcon icon={EyeOutlineIcon} originWidth={31} originHeight={23} width={24} />}
           </Box>
         </TCol>
       )}
@@ -370,7 +378,7 @@ const Table: React.FC<TableProps> = ({
   };
 
   useEffect(() => {
-    if (wrapperRef.current) {
+    if (wrapperRef.current && !loading) {
       wrapperRef.current.scrollTop = 0;
     }
   }, [loading]);
