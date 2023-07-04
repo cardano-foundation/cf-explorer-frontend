@@ -94,12 +94,12 @@ export const StyledFreeBox = styled(FeeBox)(({ theme }) => ({
 }));
 
 export const StyledWithHoldBox = styled(HoldBox)(({ theme }) => ({
-  border: "2px solid #438F68",
+  border: `2px solid ${theme.palette.green[700]} `,
   boxSizing: "border-box",
   height: 70,
   width: 180,
   "&:after": {
-    backgroundColor: "#438F68"
+    backgroundColor: theme.palette.green[700]
   },
   [theme.breakpoints.down("lg")]: {
     alignSelf: "flex-end"

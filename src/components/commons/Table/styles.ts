@@ -189,6 +189,7 @@ export const InputNumber = styled("input")<{ length: number }>(({ theme, length 
   textAlign: "center",
   fontWeight: "bold",
   border: `1px solid ${theme.palette.border.main}`,
+  color: theme.palette.grey[700],
   "::-webkit-inner-spin-button": {
     appearance: "none",
     margin: 0
@@ -196,11 +197,12 @@ export const InputNumber = styled("input")<{ length: number }>(({ theme, length 
   background: "transparent"
 }));
 
-export const SelectMui = styled(CustomSelect)(() => ({
+export const SelectMui = styled(CustomSelect)(({ theme }) => ({
   borderRadius: "4px",
   fontSize: 14,
   minWidth: 50,
   border: "1px solid #E3E5E9",
+  color: theme.palette.grey[700],
   "& > div": {
     padding: "2.45px 14px"
   },

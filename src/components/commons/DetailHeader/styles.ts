@@ -157,6 +157,7 @@ export const SlotLeaderValue = styled("span")`
 `;
 export const SlotLeaderTitle = styled("small")`
   font-family: var(--font-family-text);
+  color: ${({ theme }) => theme.palette.grey[300]};
 `;
 
 export const SlotLeaderCopy = styled(CopyButton)`
