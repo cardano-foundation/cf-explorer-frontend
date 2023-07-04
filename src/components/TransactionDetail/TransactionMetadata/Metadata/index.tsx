@@ -51,8 +51,6 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
           display={"block"}
           pt={2}
           color={({ palette }) => `${palette.blue[800]}  !important`}
-          component={Link}
-          to={details.transaction(hash || "#")}
         >
           {isTablet ? getShortHash(hash || "") : hash}
           <CopyButton text={hash || ""} />
