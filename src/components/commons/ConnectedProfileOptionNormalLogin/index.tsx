@@ -83,7 +83,7 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
           </Profile>
           <Disconnect onClick={handleDisconnect}>
             <Icon src={LinkOff} />
-            <Name>Disconnect</Name>
+            <Name>Sign Out</Name>
           </Disconnect>
         </Content>
       </WrapContent>
