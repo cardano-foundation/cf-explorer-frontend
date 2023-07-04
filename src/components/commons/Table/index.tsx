@@ -17,7 +17,7 @@ import {
   DownIcon,
   EmptyIcon,
   EndPage,
-  EyeOutlineIcon,
+  EyeIcon,
   NextPage,
   PrevPage,
   SortTableDown,
@@ -187,7 +187,7 @@ const TableRow = <T extends ColumnType>({
       {showTabView && (
         <TCol minWidth={50} maxWidth={90} selected={isClickRow}>
           <Box display="flex" alignItems="center" height="1rem">
-            {selected !== index && <CustomIcon icon={EyeOutlineIcon} originWidth={31} originHeight={23} width={24} />}
+            {selected !== index && <CustomIcon icon={EyeIcon} originWidth={31} originHeight={23} width={24} />}
           </Box>
         </TCol>
       )}
