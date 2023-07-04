@@ -6,7 +6,7 @@ import { RiArrowRightSLine } from "react-icons/ri";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { details } from "src/commons/routers";
-import { formatNumberDivByDecimals, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import { formatNumberDivByDecimals, getShortWallet } from "src/commons/utils/helper";
 
 import CustomTooltip from "../CustomTooltip";
 import { CustomSelect, OptionSelect, TokenButton } from "./styles";
@@ -132,7 +132,7 @@ export const TokenLink: React.FC<{ token: Token }> = ({ token }) => {
         width={"100%"}
         height={38}
       >
-        <Box mr={2}>
+        <Box mr={2} color={({ palette }) => palette.grey[300]}>
           {isTokenNameLong ? (
             <CustomTooltip title={tokenName} placement="top">
               <Box>{shortTokenName}</Box>
@@ -142,7 +142,7 @@ export const TokenLink: React.FC<{ token: Token }> = ({ token }) => {
           )}
         </Box>
         <Box display={"flex"} alignItems={"center"}>
-          <Box fontWeight={"bold"} fontSize={"14px"}>
+          <Box fontWeight={"bold"} fontSize={"14px"} color={({ palette }) => palette.grey[700]}>
             {isNegative ? "" : "+"}
             {formatNumberDivByDecimals(token?.assetQuantity || 0, token?.metadata?.decimals || 0)}
           </Box>
