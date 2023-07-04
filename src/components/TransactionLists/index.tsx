@@ -127,7 +127,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       key: "addressesInput",
       minWidth: 120,
       render: (r) => (
-        <>
+        <Box key={r.hash + "input"}>
           {r?.addressesInput?.slice(0, 2).map((address) => (
             <Box key={address}>
               <CustomTooltip title={address}>
@@ -136,7 +136,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
             </Box>
           ))}
           {r?.addressesInput?.length > 2 ? <StyledLink to={details.transaction(r.hash)}>...</StyledLink> : ""}
-        </>
+        </Box>
       )
     },
     {
@@ -144,7 +144,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       key: "addressesOutput",
       minWidth: 120,
       render: (r) => (
-        <>
+        <Box key={r.hash + "output"}>
           {r?.addressesOutput?.slice(0, 2).map((address) => (
             <Box key={address}>
               <CustomTooltip title={address}>
@@ -153,7 +153,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
             </Box>
           ))}
           {r?.addressesOutput?.length > 2 ? <StyledLink to={details.transaction(r.hash)}>...</StyledLink> : ""}
-        </>
+        </Box>
       )
     }
   ];
