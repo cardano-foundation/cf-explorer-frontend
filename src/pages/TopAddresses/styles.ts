@@ -1,5 +1,4 @@
-import { Container } from "@mui/material";
-import { Box, styled } from "@mui/material";
+import { Container, Box, styled } from "@mui/material";
 
 export const TabTitle = styled(Box)`
   margin-bottom: 0px;
@@ -13,7 +12,7 @@ export const TabTitle = styled(Box)`
     line-height: 16px;
   }
   &.active {
-    color: ${({ theme }) => theme.palette.common.black};
+    color: ${({ theme }) => theme.palette.grey[700]};
   }
 `;
 

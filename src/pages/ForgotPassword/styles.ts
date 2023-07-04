@@ -90,6 +90,7 @@ export const Label = styled(Box)`
   font-size: 14px;
   line-height: 16px;
   opacity: 0.8;
+  color: ${({ theme }) => theme.palette.grey[700]};
 `;
 
 export const ForgotPassword = styled(Box)`
