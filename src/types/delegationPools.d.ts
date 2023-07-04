@@ -18,6 +18,10 @@ interface Delegators {
   pledge: number;
   saturation: number;
   stakeLimit;
+  numberDelegators?: number;
+  lifetimeBlock?: number;
+  lifetimeRos?: number;
+  epochBlock?: number;
 }
 
 interface DelegationOverview {
