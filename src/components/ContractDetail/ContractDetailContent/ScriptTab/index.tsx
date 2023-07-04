@@ -27,7 +27,7 @@ const StyledBox = styled(Box)`
 const ScriptType = styled(Box)`
   margin: 12px 0px;
   span {
-    color: #108aef;
+    color: ${({ theme }) => theme.palette.blue[800]};
   }
 `;
 
