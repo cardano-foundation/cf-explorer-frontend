@@ -8,7 +8,7 @@ import { BoxRaised } from "../BoxRaised";
 
 export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
   "& > div": {
-    zIndex: 1302,
+    zIndex: 9,
     background: `${theme.palette.background.neutral}`,
     border: "none",
     height: "100%",
@@ -195,7 +195,7 @@ export const Item = styled(Box)`
   justify-content: center;
   align-items: center;
   flex: 1;
-  background: ${(props) => props.theme.palette.gradient[1]};
+  background: ${(props) => props.theme.palette.green[600]};
   color: ${(props) => props.theme.palette.primary.contrastText};
   border-radius: 20px;
   padding: 15px;

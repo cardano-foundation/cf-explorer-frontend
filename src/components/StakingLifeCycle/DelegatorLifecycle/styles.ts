@@ -66,7 +66,7 @@ export const ADATransfersButton = styled(Button)(({ theme }) => ({
 export const TabTitle = styled(Typography)(({ theme }) => ({
   fontSize: "20px",
   fontWeight: 700,
-  color: theme.palette.common.black,
+  color: theme.palette.grey[700],
   textAlign: "left"
 }));
 
@@ -102,7 +102,7 @@ export const StyledBox = styled(Box)`
 `;
 
 export const DescriptionText = styled(Typography)(({ theme }) => ({
-  color: theme.palette.common.black,
+  color: theme.palette.grey[700],
   fontSize: "18px",
   lineHeight: "21px",
   [theme.breakpoints.down("sm")]: {

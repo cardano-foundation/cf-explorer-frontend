@@ -48,7 +48,7 @@ const Card = ({
   return (
     <Box textAlign={"left"} mb={1} sx={{ background: (theme) => theme.palette.background.paper }}>
       <Header fontWeight="bold">
-        <Box color={(theme) => theme.palette.text.dark} fontSize={"1rem"} lineHeight="19px" mb="2px">
+        <Box color={(theme) => theme.palette.grey[700]} fontSize={"1rem"} lineHeight="19px" mb="2px">
           {type === "down" ? "Input" : "Output"}
         </Box>
         <Box color={(theme) => theme.palette.grey[500]} display="flex" justifyContent="space-between">
@@ -71,7 +71,9 @@ const Card = ({
                     <WrapUTXOs>
                       <Box mr={3} minWidth={200}>
                         <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
-                          <Box pr={1}>UTXO:</Box>
+                          <Box color={(theme) => theme.palette.grey[700]} pr={1}>
+                            UTXO:
+                          </Box>
                           <Link to={details.transaction(item.txHash)}>
                             <CustomTooltip title={item.txHash}>
                               <Box
@@ -100,6 +102,7 @@ const Card = ({
                       justifyContent={"flex-start"}
                       pr={1}
                       pl={type === "down" ? 2 : 0}
+                      color={(theme) => theme.palette.grey[700]}
                     >
                       {type === "down" ? "From" : "To"}:
                     </Box>
@@ -135,7 +138,7 @@ const Card = ({
                       flexDirection={isMobile ? "column" : "row"}
                       paddingTop="5px"
                     >
-                      <Box mr={3} minWidth={180} pl={type === "down" ? 2 : 0}>
+                      <Box mr={3} minWidth={180}>
                         <Box
                           display={"flex"}
                           flexDirection={isMobile ? "column" : "row"}
@@ -202,9 +205,11 @@ const Card = ({
         ))}
       </Box>
       <ItemFooter>
-        <Box fontWeight={"bold"}>Total {type === "down" ? "Input" : "Output"}</Box>
+        <Box fontWeight={"bold"} color={({ palette }) => palette.grey[700]}>
+          Total {type === "down" ? "Input" : "Output"}
+        </Box>
         <div>
-          <Box fontWeight={"bold"} component="span" pr={1}>
+          <Box fontWeight={"bold"} component="span" pr={1} color={({ palette }) => palette.grey[700]}>
             {type === "down" ? `-${formatADAFull(totalADA)}` : `${formatADAFull(totalADA)}`}
           </Box>
           <ADAicon />
