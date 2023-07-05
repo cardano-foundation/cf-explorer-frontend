@@ -531,3 +531,15 @@ export const TimeDuration = styled("small")(({ theme }) => ({
   flex: 1,
   padding: 10
 }));
+
+export const ViewDetailDrawerContractHash = styled(ViewDetailDrawer)`
+  width: 100%;
+`;
+
+export const ViewDetailContainerContractHash = styled(ViewDetailContainer)`
+  margin-left: 0;
+`;
+export const ViewDetailScrollContractHash = styled(ViewDetailScroll)`
+  padding-top: 0;
+  margin-right: 0;
+`;
