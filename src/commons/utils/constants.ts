@@ -106,6 +106,7 @@ export enum RECEIVED_REWARDS {
   MEMBER = "MEMBER",
   ALL = ""
 }
+
 export const APP_VERSION = process.env.REACT_APP_VERSION || get(window, "env.REACT_APP_VERSION") || "1.0.0";
 export const EXT_ADA_PRICE_URL =
   process.env.REACT_APP_EXT_ADA_PRICE_URL || get(window, "env.REACT_APP_EXT_ADA_PRICE_URL");
