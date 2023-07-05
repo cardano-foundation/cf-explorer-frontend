@@ -248,7 +248,7 @@ export const DetailLabel = styled("small")`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.grey[700]};
   line-height: 26px;
 `;
 export const InfoIcon = styled(FiInfo)`
@@ -351,9 +351,10 @@ export const DetailLinkImage = styled("img")`
 export const DetailLinkName = styled("h4")`
   margin: 0;
   font-size: var(--font-size-text-large);
+  color: ${(props) => props.theme.palette.grey[700]};
 `;
 export const DetailLinkRight = styled("span")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[700]};
 `;
 
 export const TxStatus = styled("small")<{ status?: keyof typeof TransactionStatus }>`

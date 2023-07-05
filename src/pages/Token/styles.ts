@@ -53,7 +53,8 @@ export const StyledSelect = styled(Select)`
 export const TimeDuration = styled("small")(({ theme }) => ({
   color: theme.palette.grey[400],
   display: "block",
-  marginTop: "0.5rem"
+  marginTop: "0.5rem",
+  textAlign: "left"
 }));
 
 export const PolicyLabel = styled(AssetName)`
