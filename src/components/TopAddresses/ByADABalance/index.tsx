@@ -25,7 +25,6 @@ const TopAddressesByADABalance = () => {
     REFRESH_TIMES.TOP_ADDRESS
   );
 
-
   const columns: Column<Address>[] = [
     {
       title: "#",

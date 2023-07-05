@@ -145,7 +145,7 @@ export const StyledLinearProgress = styled(LinearProgress)`
   margin-left: 8px;
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 8px;
-    background: ${(props) => props.theme.palette.gradient[0]};
+    background: ${(props) => props.theme.palette.green[700]};
   }
 `;
 

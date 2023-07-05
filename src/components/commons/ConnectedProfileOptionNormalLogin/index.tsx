@@ -37,7 +37,7 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
     try {
       await signOut({
         refreshJwt: localStorage.getItem("refreshToken") || "",
-        username: localStorage.getItem("username") || ""
+        accountId: localStorage.getItem("username") || ""
       });
     } catch (error) {
       console.log(error);
@@ -48,6 +48,8 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
       setUser({ ...user, userData: {} });
       if (window.location.pathname.includes("report-generated")) {
         history.push(routers.STAKING_LIFECYCLE);
+      } else if (window.location.pathname.includes(routers.MY_PROFILE)) {
+        history.push(routers.HOME);
       } else {
         window.location.reload();
       }
@@ -85,7 +87,7 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
           </Profile>
           <Disconnect onClick={handleDisconnect}>
             <Icon src={LinkOff} />
-            <Name>Disconnect</Name>
+            <Name>Sign Out</Name>
           </Disconnect>
         </Content>
       </WrapContent>

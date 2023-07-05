@@ -64,7 +64,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       )
     },
     {
-      title: "Slot",
+      title: "Epoch / Slot",
       key: "slot",
       minWidth: "100px",
       render: (r) => (

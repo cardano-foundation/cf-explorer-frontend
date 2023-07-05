@@ -42,7 +42,7 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
     try {
       await signOut({
         refreshJwt: localStorage.getItem("refreshToken") || "",
-        username: localStorage.getItem("username") || ""
+        accountId: localStorage.getItem("walletId") || ""
       });
     } catch (error) {
       console.log(error);
@@ -55,6 +55,8 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
       // setUser({ ...user, userData: {} });
       if (window.location.pathname.includes("report-generated")) {
         history.push(routers.STAKING_LIFECYCLE);
+      } else if (window.location.pathname.includes(routers.MY_PROFILE)) {
+        history.push(routers.HOME);
       } else {
         window.location.reload();
       }

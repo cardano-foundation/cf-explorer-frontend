@@ -17,10 +17,12 @@ const Header = styled(Box)`
   }
 `;
 
-export const Title = styled("h2") <{ underline: number; }>`
+export const Title = styled("h2")<{ underline: number }>`
   text-align: left;
   padding-bottom: 8px;
   position: relative;
+  width: max-content;
+  color: ${(props) => props.theme.palette.grey[700]};
   ${(props) => (props.underline ? `font-size: 1.25rem;` : "")};
   &::after {
     content: "";
@@ -51,10 +53,7 @@ const Card: React.FC<CardProps> = ({ title, children, underline = false, extra, 
     <CardContainer {...props}>
       <Header>
         {title ? (
-          <Title
-            underline={underline ? 1 : 0}
-            sx={titleSx}
-          >
+          <Title underline={underline ? 1 : 0} sx={titleSx}>
             {title}
           </Title>
         ) : null}
