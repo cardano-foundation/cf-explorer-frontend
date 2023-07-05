@@ -35,7 +35,7 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
     try {
       await signOut({
         refreshJwt: localStorage.getItem("refreshToken") || "",
-        username: localStorage.getItem("username") || ""
+        accountId: localStorage.getItem("username") || ""
       });
     } catch (error) {
       console.log(error);
