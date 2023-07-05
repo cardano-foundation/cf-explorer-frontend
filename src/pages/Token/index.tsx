@@ -164,7 +164,9 @@ const Tokens = () => {
           showTabView
         />
       </Card>
-      {token && onDetailView && <DetailViewToken tokenId={token.fingerprint || ""} token={token} handleClose={handleClose} />}
+      {token && onDetailView && (
+        <DetailViewToken tokenId={token.fingerprint || ""} token={token} handleClose={handleClose} />
+      )}
     </StyledContainer>
   );
 };
