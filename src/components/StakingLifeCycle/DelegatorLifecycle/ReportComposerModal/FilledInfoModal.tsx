@@ -249,11 +249,13 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
       handleCloseModal={handleCloseModal}
       paddingX={isMobile ? "10px" : "40px"}
       paddingY={isMobile ? "20px" : "30px"}
-      contentStyle={{ overflowY: "unset" }}
+      contentStyle={{ overflowY: "unset", overflowX: "auto" }}
     >
       <Box>
         <ModalTitle>
-          <Box sx={{ fontSize: `${isMobile ? "20px" : "24px"}` }}>Report composer</Box>
+          <Box sx={{ fontSize: `${isMobile ? "20px" : "24px"}` }} color={({ palette }) => palette.grey[700]}>
+            Report composer
+          </Box>
         </ModalTitle>
         <StyledStack>
           <StyledLabel>Report name</StyledLabel>
@@ -299,11 +301,13 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
                           value={RatioGroupValue.yes}
                           control={<Radio onClick={() => handleClickRadio(key)} />}
                           label="Yes"
+                          sx={{ color: (props) => props.palette.grey[700] }}
                         />
                         <FormControlLabel
                           value={RatioGroupValue.no}
                           control={<Radio onClick={() => handleClickRadio(key)} />}
                           label="No"
+                          sx={{ color: (props) => props.palette.grey[700] }}
                         />
                       </Stack>
                     </RadioGroup>

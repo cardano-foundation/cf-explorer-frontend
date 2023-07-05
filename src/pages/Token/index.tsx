@@ -69,6 +69,16 @@ const Tokens = () => {
         )
     },
     {
+      title: "Policy ID",
+      key: "policy",
+      minWidth: "100px",
+      render: (r) => (
+        <CustomTooltip title={r.policy}>
+          <AssetName to={details.policyDetail(r.policy)}>{getShortWallet(r.policy)}</AssetName>
+        </CustomTooltip>
+      )
+    },
+    {
       title: "Total Transactions",
       key: "txCount",
       minWidth: "150px",
@@ -136,14 +146,10 @@ const Tokens = () => {
 
   return (
     <StyledContainer>
-      <Card
-        title="Token List"
-        extra={
-          <TimeDuration>
-            <FormNowMessage time={lastUpdated} />
-          </TimeDuration>
-        }
-      >
+      <Card title="Token List">
+        <TimeDuration>
+          <FormNowMessage time={lastUpdated} />
+        </TimeDuration>
         <Table
           {...fetchData}
           data={data}
@@ -164,7 +170,9 @@ const Tokens = () => {
           showTabView
         />
       </Card>
-      {token && onDetailView && <DetailViewToken tokenId={token.fingerprint || ""} token={token} handleClose={handleClose} />}
+      {token && onDetailView && (
+        <DetailViewToken tokenId={token.fingerprint || ""} token={token} handleClose={handleClose} />
+      )}
     </StyledContainer>
   );
 };

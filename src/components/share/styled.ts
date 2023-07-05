@@ -15,6 +15,7 @@ export const StyledLink = styled(Link)`
 
 export const SmallText = styled("small")`
   white-space: nowrap;
+  color: ${({ theme }) => theme.palette.grey[300]};
 `;
 
 export const StyledInput = styled(InputBase)`

@@ -67,7 +67,9 @@ const TransactionList: React.FC<TransactionListProps> = ({
           <CustomTooltip title={r.hash}>
             <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
           </CustomTooltip>
-          <Box mt={1}>{formatDateTimeLocal(r.time || "")}</Box>
+          <Box mt={1} color={({ palette }) => palette.grey[300]}>
+            {formatDateTimeLocal(r.time || "")}
+          </Box>
         </div>
       )
     },
@@ -83,7 +85,10 @@ const TransactionList: React.FC<TransactionListProps> = ({
             </StyledLink>
           </Box>
           <Box mt={1}>
-            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
+            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
+            <Box color={({ palette }) => palette.grey[300]} component={"span"}>
+              {r.epochSlotNo}
+            </Box>
           </Box>
         </Box>
       )
@@ -122,7 +127,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       key: "addressesInput",
       minWidth: 120,
       render: (r) => (
-        <>
+        <Box key={r.hash + "input"}>
           {r?.addressesInput?.slice(0, 2).map((address) => (
             <Box key={address}>
               <CustomTooltip title={address}>
@@ -131,7 +136,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
             </Box>
           ))}
           {r?.addressesInput?.length > 2 ? <StyledLink to={details.transaction(r.hash)}>...</StyledLink> : ""}
-        </>
+        </Box>
       )
     },
     {
@@ -139,7 +144,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       key: "addressesOutput",
       minWidth: 120,
       render: (r) => (
-        <>
+        <Box key={r.hash + "output"}>
           {r?.addressesOutput?.slice(0, 2).map((address) => (
             <Box key={address}>
               <CustomTooltip title={address}>
@@ -148,7 +153,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
             </Box>
           ))}
           {r?.addressesOutput?.length > 2 ? <StyledLink to={details.transaction(r.hash)}>...</StyledLink> : ""}
-        </>
+        </Box>
       )
     }
   ];
