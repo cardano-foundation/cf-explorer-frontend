@@ -114,6 +114,7 @@ export const ForgotPassword = styled(Box)`
   color: ${({ theme }) => theme.palette.blue[800]};
   text-decoration: underline;
   cursor: pointer;
+  text-align: left;
 `;
 
 export const UserCustomIcon = styled(User2RC)`

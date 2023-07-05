@@ -34,7 +34,7 @@ const ScriptType = styled(Box)`
 
 const ScriptTab = () => {
   const { address } = useParams<{ address: string }>();
-  const { data, refresh } = useFetch(API.CONTRACTS.SCRIPT(address));
+  const { data, refresh } = useFetch<any>(API.CONTRACTS.SCRIPT(address));
   const { dispatch }: any = useContext(VerifyScriptContext);
 
   useEffect(() => {
@@ -49,12 +49,14 @@ const ScriptTab = () => {
   return (
     <StyledBox>
       <Box color={({ palette }) => palette.grey[700]}>Contract</Box>
-      {data ? (
+      {data?.isVerified ? (
         <ScriptType>
           Script Type: <span>Native Script</span>
         </ScriptType>
       ) : null}
-      <Result>{data ? <pre>{JSON.stringify(data, null, " ")}</pre> : "No script found"}</Result>
+      <Result>
+        {data?.isVerified ? <pre>{JSON.stringify(JSON.parse(data?.data), null, " ")}</pre> : "No script found"}
+      </Result>
     </StyledBox>
   );
 };
