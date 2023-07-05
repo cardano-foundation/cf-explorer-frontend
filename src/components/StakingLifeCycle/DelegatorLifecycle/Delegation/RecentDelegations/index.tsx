@@ -29,22 +29,18 @@ const RecentDelegations: React.FC<Props> = ({ onSelect, params, setParams, setSh
 
   const { data, total, loading, initialized, error } = useFetchList<DelegationItem>(
     stakeId ? API.STAKE_LIFECYCLE.DELEGATION(stakeId) : "",
-    {
-      ...pageInfo,
-      ...params
-    }
+    { ...pageInfo, ...params }
   );
 
   useEffect(() => {
-    if (initialized) {
-      setShowBackButton?.(data.length > 1);
-    }
+    if (initialized) setShowBackButton?.(data.length > 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialized]);
 
   useEffect(() => {
     const currentItem = data.find((item) => item.txHash === txHash);
     onSelect(currentItem || null);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txHash, data]);
 
@@ -52,20 +48,17 @@ const RecentDelegations: React.FC<Props> = ({ onSelect, params, setParams, setSh
     history.push(details.staking(stakeId, "timeline", "delegation", delegation.txHash));
   };
 
-  useUpdateEffect(() => {
-    if (
-      data &&
-      data.length &&
-      data.length === 1 &&
-      params?.txHash === undefined &&
-      params?.fromDate === undefined &&
-      params?.toDate === undefined
-    ) {
-      handleSelect(data[0]);
-    }
-  }, [JSON.stringify(data)]);
+  const { txHash: txHashParms, fromDate, toDate } = params || {};
+  const isNoFilter = txHashParms === undefined && fromDate === undefined && toDate === undefined;
+  const isOneItemOnly = data.length === 1 && isNoFilter;
 
-  if (txHash) return null;
+  useUpdateEffect(() => {
+    if (isOneItemOnly) history.replace(details.staking(stakeId, "timeline", "delegation", data[0].txHash));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
+  if (txHash || isOneItemOnly) return null;
 
   return (
     <StyledContainer>

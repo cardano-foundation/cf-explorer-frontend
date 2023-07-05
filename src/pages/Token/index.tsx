@@ -136,14 +136,10 @@ const Tokens = () => {
 
   return (
     <StyledContainer>
-      <Card
-        title="Token List"
-        extra={
-          <TimeDuration>
-            <FormNowMessage time={lastUpdated} />
-          </TimeDuration>
-        }
-      >
+      <Card title="Token List">
+        <TimeDuration>
+          <FormNowMessage time={lastUpdated} />
+        </TimeDuration>
         <Table
           {...fetchData}
           data={data}
@@ -164,7 +160,9 @@ const Tokens = () => {
           showTabView
         />
       </Card>
-      {token && onDetailView && <DetailViewToken tokenId={token.fingerprint || ""} token={token} handleClose={handleClose} />}
+      {token && onDetailView && (
+        <DetailViewToken tokenId={token.fingerprint || ""} token={token} handleClose={handleClose} />
+      )}
     </StyledContainer>
   );
 };

@@ -11,7 +11,7 @@ export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
     zIndex: 1302,
     background: `${theme.palette.background.neutral}`,
     border: "none",
-    height: "100vh",
+    height: "100%",
     [theme.breakpoints.down("md")]: {
       display: "flex",
       height: "calc(100% - 75px)",
@@ -172,12 +172,12 @@ export const TokenInfoValue = styled("span")`
 `;
 
 export const EpochNumber = styled("h1")`
-  color: ${(props) => props.theme.palette.primary.main};
+  color: ${(props) => props.theme.palette.green[700]};
   margin: 0;
 `;
 
 export const EpochText = styled("span")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[500]};
   text-transform: uppercase;
 `;
 
@@ -248,7 +248,7 @@ export const DetailLabel = styled("small")`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.grey[700]};
   line-height: 26px;
 `;
 export const InfoIcon = styled(FiInfo)`
@@ -351,9 +351,10 @@ export const DetailLinkImage = styled("img")`
 export const DetailLinkName = styled("h4")`
   margin: 0;
   font-size: var(--font-size-text-large);
+  color: ${(props) => props.theme.palette.grey[700]};
 `;
 export const DetailLinkRight = styled("span")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[700]};
 `;
 
 export const TxStatus = styled("small")<{ status?: keyof typeof TransactionStatus }>`
@@ -524,7 +525,7 @@ export const ButtonModal = styled(Button)(() => ({
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[500],
   display: "block",
   textAlign: "left",
   flex: 1,

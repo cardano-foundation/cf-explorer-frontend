@@ -140,7 +140,7 @@ export const WrapOr = styled(Box)`
 export const WrapEmail = styled("span")`
   font-weight: 400;
   font-size: 16px;
-  color: ${({ theme }) => theme.palette.blue[900]};
+  color: ${({ theme }) => theme.palette.blue[800]};
 `;
 
 export const LabelInfo = styled(Box)`

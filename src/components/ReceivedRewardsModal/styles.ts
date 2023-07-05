@@ -51,7 +51,7 @@ export const AmountADARow = styled(Typography)`
 
 export const EpochRow = styled(Link)`
   font-size: 14px !important;
-  color: #108aef !important;
+  color: ${({ theme }) => theme.palette.blue[800]} !important;
 `;
 
 export const TableContainer = styled(Box)`

@@ -28,7 +28,7 @@ const ScriptType = styled(Box)`
   margin: 12px 0px;
   color: ${(props) => props.theme.palette.grey[700]};
   span {
-    color: #108aef;
+    color: ${({ theme }) => theme.palette.blue[800]};
   }
 `;
 

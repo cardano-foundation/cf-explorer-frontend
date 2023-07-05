@@ -1,9 +1,7 @@
-/* eslint-disable no-debugger */
 import { useHistory, useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { useTheme } from "@emotion/react";
-import { Box, CircularProgress } from "@mui/material";
+import { CircularProgress, useTheme } from "@mui/material";
 
 import { getShortWallet } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
@@ -32,7 +30,8 @@ import {
   StakeId,
   AddressLine,
   StyledContainer,
-  Label
+  Label,
+  ReportButtonContainer
 } from "./styles";
 
 interface Params {
@@ -134,11 +133,11 @@ const SPOLifecycle = () => {
               </SwitchGroup>
             </BoxSwitchContainer>
             <CustomTooltip title={!isLoggedIn ? "Please log in to use this feature" : ""}>
-              <Box>
+              <ReportButtonContainer>
                 <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
                   Compose report
                 </ButtonReport>
-              </Box>
+              </ReportButtonContainer>
             </CustomTooltip>
           </BoxItemStyled>
         </BoxContainerStyled>

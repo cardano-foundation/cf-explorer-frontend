@@ -97,7 +97,7 @@ export const ForgotPassword = styled(Box)`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-  color: ${({ theme }) => theme.palette.blue[900]};
+  color: ${({ theme }) => theme.palette.blue[800]};
   text-decoration: underline;
   cursor: pointer;
 `;
