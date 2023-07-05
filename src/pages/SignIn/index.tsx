@@ -268,8 +268,10 @@ export default function SignIn() {
                 <FormHelperText error>{formData.password.error}</FormHelperText>
               ) : null}
             </WrapInput>
-            <ForgotPassword onClick={() => history.push(routers.FORGOT_PASSWORD)} data-testid="forgot-password-link">
-              Forgot your password?
+            <ForgotPassword data-testid="forgot-password-link">
+              <Box component={"span"} onClick={() => history.push(routers.FORGOT_PASSWORD)}>
+                Forgot your password?
+              </Box>
             </ForgotPassword>
             <WrapButton
               data-testid="login-btn"
