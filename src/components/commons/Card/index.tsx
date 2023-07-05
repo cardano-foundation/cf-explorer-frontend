@@ -21,6 +21,8 @@ export const Title = styled("h2")<{ underline: number }>`
   text-align: left;
   padding-bottom: 8px;
   position: relative;
+  width: max-content;
+  color: ${(props) => props.theme.palette.grey[700]};
   ${(props) => (props.underline ? `font-size: 1.25rem;` : "")};
   &::after {
     content: "";

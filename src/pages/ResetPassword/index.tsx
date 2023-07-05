@@ -194,6 +194,7 @@ export default function ResetPassword() {
                       <LockIcon />
                     </Box>
                   }
+                  value={formData.password.value}
                   name="password"
                   endAdornment={
                     <InputAdornment position="end">
@@ -202,7 +203,15 @@ export default function ResetPassword() {
                       </IconButton>
                     </InputAdornment>
                   }
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setFormData({
+                      name: "confirmPassword",
+                      value: "",
+                      touched: false,
+                      error: ""
+                    });
+                  }}
                   fullWidth
                   type={showPassword ? "text" : "password"}
                   placeholder="New Password"
@@ -221,6 +230,7 @@ export default function ResetPassword() {
                     </Box>
                   }
                   fullWidth
+                  value={formData.confirmPassword.value}
                   name="confirmPassword"
                   onChange={handleChange}
                   type={showConfirmPassword ? "text" : "password"}

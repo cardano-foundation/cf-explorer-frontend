@@ -47,7 +47,7 @@ const TopAddresses = () => {
   return (
     <TabContext value={tabActive}>
       <StyledContainer>
-        <Card title={"Top ADA Holder"}>
+        <Card title={"Top ADA Holders"}>
           <Box>
             <TabList
               onChange={handleChange}

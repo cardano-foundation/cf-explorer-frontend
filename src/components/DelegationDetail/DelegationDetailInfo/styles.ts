@@ -27,7 +27,7 @@ export const HeaderContainer = styled(Box)`
 `;
 
 export const HeaderTitle = styled("h2")`
-  color: ${(props) => props.theme.palette.common.black};
+  color: ${(props) => props.theme.palette.grey[700]};
   font-size: 2.25rem;
   margin: 0.5rem 0;
   max-width: 75%;
@@ -138,7 +138,7 @@ export const StyledTitle = styled("span")`
   display: flex;
   align-items: center;
   gap: 7px;
-  opacity: 0.5;
+  color: ${(props) => props.theme.palette.grey[300]};
 `;
 
 export const InfoValue = styled(Box)(({ theme }) => ({
@@ -146,7 +146,8 @@ export const InfoValue = styled(Box)(({ theme }) => ({
   fontSize: 18,
   [theme.breakpoints.down("sm")]: {
     fontSize: 16
-  }
+  },
+  color: theme.palette.grey[700]
 }));
 
 export const StyledLinearProgress = styled(LinearProgress)`
@@ -158,7 +159,7 @@ export const StyledLinearProgress = styled(LinearProgress)`
 
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
-    background: ${(props) => props.theme.palette.gradient[0]};
+    background: ${(props) => props.theme.palette.green[700]};
   }
 `;
 

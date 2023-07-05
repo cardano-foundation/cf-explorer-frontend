@@ -190,17 +190,12 @@ const ProtocolParameter: React.FC = () => {
       )}
       {showHistory && <ProtocolParameterHistory />}
       {!showHistory && (
-        <Card
-          titleSx={{
-            margin: 0
-          }}
-          title={"Protocol parameters"}
-        >
+        <Card titleSx={{ margin: 0 }} title={"Protocol parameters"}>
           <Box pt={2}>
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
                 <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                  <Box fontWeight={"bold"} fontSize={"1.25rem"}>
+                  <Box fontWeight={"bold"} color={({ palette }) => palette.grey[700]} fontSize={"1.25rem"}>
                     Updatable Parameters
                   </Box>
                   <Box
@@ -227,7 +222,12 @@ const ProtocolParameter: React.FC = () => {
               </Box>
               <Box pt={"30px"}>
                 <Box>
-                  <Box textAlign={"left"} fontWeight={"bold"} fontSize={"1.25rem"}>
+                  <Box
+                    textAlign={"left"}
+                    color={({ palette }) => palette.grey[700]}
+                    fontWeight={"bold"}
+                    fontSize={"1.25rem"}
+                  >
                     Global Constants
                   </Box>
                   {loadingFixed && (
@@ -272,28 +272,25 @@ export const ProtocolParameterHistory = () => {
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
   const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
+  const historyUrlBase = PROTOCOL_PARAMETER.HISTORY;
+  let historyUrlParams = "";
 
-  const {
-    data: dataHistory,
-    loading,
-    initialized
-  } = useFetch<ProtocolHistory>(
-    `${PROTOCOL_PARAMETER.HISTORY}/${
-      filterParams.length === TOTAL_PARAMETER || filterParams.length === 0
-        ? "ALL"
-        : filterParams.map((f) => PROTOCOL_TYPE[f as keyof typeof PROTOCOL_TYPE]).join(",")
-    }${
-      _.isEmpty(dateRangeFilter)
-        ? ""
-        : `?endTime=${moment(dateRangeFilter.toDate).endOf("D").utc().format("X")}&startTime=${moment(
-            dateRangeFilter.fromDate
-          )
-            .startOf("D")
-            .utc()
-            .format("X")}`
-    }
-    `
-  );
+  if (filterParams.length === 0 || filterParams.length === TOTAL_PARAMETER) {
+    historyUrlParams = "ALL";
+  } else {
+    const filterParamValues = filterParams.map((f) => PROTOCOL_TYPE[f as keyof typeof PROTOCOL_TYPE]);
+    historyUrlParams = filterParamValues.join(",");
+  }
+
+  let dateRangeQueryParams = "";
+  if (!_.isEmpty(dateRangeFilter)) {
+    const endDate = moment(dateRangeFilter.toDate).endOf("D").utc().format("X");
+    const startDate = moment(dateRangeFilter.fromDate).startOf("D").utc().format("X");
+    dateRangeQueryParams = `?endTime=${endDate}&startTime=${startDate}`;
+  }
+
+  const url = `${historyUrlBase}/${historyUrlParams}${dateRangeQueryParams}`;
+  const { data: dataHistory, loading, initialized } = useFetch<ProtocolHistory>(url);
 
   const [dataHistoryMapping, { push: pushHistory, clear }] = useList<{
     [key: string]: any;
@@ -592,7 +589,9 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
               <ImArrowDown2 />
-              <Box ml={1}>Latest - First</Box>
+              <Box ml={1} color={({ palette }) => palette.grey[700]}>
+                Latest - First
+              </Box>
             </Box>
             {sort === "LastFirst" && <BsFillCheckCircleFill size={16} style={{ color: "#0052CC !important" }} />}
           </Box>
@@ -601,7 +600,9 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
               <ImArrowUp2 />
-              <Box ml={1}>First - Latest</Box>
+              <Box ml={1} color={({ palette }) => palette.grey[700]}>
+                First - Latest
+              </Box>
             </Box>
             {sort === "FirstLast" && <BsFillCheckCircleFill size={16} style={{ color: "#0052CC !important" }} />}
           </Box>
@@ -610,7 +611,10 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
               <DateRangeIcon />
-              <Box ml={1}> Date range</Box>
+              <Box ml={1} color={({ palette }) => palette.grey[700]}>
+                {" "}
+                Date range
+              </Box>
             </Box>
             {!_.isEmpty(dateRange) && <BsFillCheckCircleFill size={16} style={{ color: "#0052CC !important" }} />}
           </Box>
@@ -627,7 +631,9 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
             >
               <Box display={"flex"} alignItems={"center"}>
                 <ProtocolParam />
-                <Box ml={1}>Parameter changes {filterOption.length > 0 ? `(${filterOption.length})` : ""}</Box>
+                <Box ml={1} color={({ palette }) => palette.grey[700]}>
+                  Parameter changes {filterOption.length > 0 ? `(${filterOption.length})` : ""}
+                </Box>
               </Box>
               <Box>{expanded === "params" ? <IoIosArrowDown /> : <IoIosArrowUp />}</Box>
             </Box>
@@ -702,7 +708,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           display={"flex"}
           alignItems={"center"}
           mt={2}
-          color={`#0052CC !important`}
+          color={({ palette }) => `${palette.blue[800]} !important`}
         >
           <Box mr={1}>Reset</Box>
           <ResetIcon />

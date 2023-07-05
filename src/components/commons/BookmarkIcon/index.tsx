@@ -26,7 +26,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
 
   useEffect(() => {
     setBookmark(
-      (JSON.parse(localStorage.getItem("bookmark") || "") || []).find((r: Bookmark) => r.keyword === `${keyword}`)
+      (JSON.parse(localStorage.getItem("bookmark") || "[]") || []).find((r: Bookmark) => r.keyword === `${keyword}`)
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openSyncBookmarkModal, JSON.stringify(bookmarks)]);

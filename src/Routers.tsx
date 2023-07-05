@@ -41,11 +41,11 @@ import StackingLifecycle from "./pages/StackingLifecycle";
 import VerifyEmail from "./pages/VerifyEmail";
 import ReportGeneratedStakingDetail from "./pages/ReportGeneratedStakingDetail";
 import ReportGeneratedPoolDetail from "./pages/ReportGeneratedPoolDetail";
-import StakeDelegations from "./pages/StakeDelegations";
-import InstantRewards from "./pages/InstantRewards";
 import { getAllBookmarks } from "./commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "./commons/utils/constants";
 import { setOpenSyncBookmarkModal } from "./stores/user";
+import StakeDelegations from "./pages/StakeDelegations";
+import InstantRewards from "./pages/InstantRewards";
 
 const Routes: React.FC = () => {
   const { isLoggedIn } = useAuth();
@@ -54,7 +54,7 @@ const Routes: React.FC = () => {
   useAsync(async () => {
     if (isLoggedIn) {
       if (
-        (((JSON.parse(localStorage.getItem("bookmark") || "") as Bookmark[]) || [])?.filter((r) => !r.id) || [])
+        (((JSON.parse(localStorage.getItem("bookmark") || "[]") as Bookmark[]) || [])?.filter((r) => !r.id) || [])
           .length > 0
       ) {
         setOpenSyncBookmarkModal(true);
