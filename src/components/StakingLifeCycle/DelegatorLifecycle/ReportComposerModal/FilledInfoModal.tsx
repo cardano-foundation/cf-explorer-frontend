@@ -249,7 +249,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
       handleCloseModal={handleCloseModal}
       paddingX={isMobile ? "10px" : "40px"}
       paddingY={isMobile ? "20px" : "30px"}
-      contentStyle={{ overflowY: "unset" }}
+      contentStyle={{ overflowY: "unset", overflowX: "auto" }}
     >
       <Box>
         <ModalTitle>

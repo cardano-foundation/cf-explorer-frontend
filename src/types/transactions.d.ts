@@ -198,6 +198,11 @@ interface Transaction {
     amount: string;
     stakeAddress: string;
   }[];
+  metadataHash: string;
+  metadata: {
+    label: number;
+    value: string;
+  }[];
 }
 
 interface CollateralResponses {

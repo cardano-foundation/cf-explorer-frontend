@@ -1,5 +1,4 @@
-import { Container } from "@mui/material";
-import { Box, styled } from "@mui/material";
+import { Container, Box, styled } from "@mui/material";
 
 export const TabTitle = styled(Box)`
   margin-bottom: 0px;
