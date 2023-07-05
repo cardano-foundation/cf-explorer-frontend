@@ -20,6 +20,7 @@ import {
   ProgressContainer,
   ProgressTitle,
   StyledLinearProgress,
+  SubHeader,
   TimeDuration,
   TimeDurationSm,
   Title,
@@ -47,7 +48,11 @@ const TopDelegationPools = () => {
       render: (r) => formatADAFull(r.poolSize || 0)
     },
     {
-      title: "Reward",
+      title: (
+        <CustomTooltip title="Last calculated gross return, as of the second last epoch">
+          <span>Reward</span>
+        </CustomTooltip>
+      ),
       key: "reward",
       render: (r) => <RateWithIcon value={r.reward} multiple={1} />
     },
@@ -56,9 +61,7 @@ const TopDelegationPools = () => {
       key: "feePercent",
       render: (r) => (
         <CustomTooltip title={`${r.feePercent * 100 || 0}%`}>
-          <Box display="inline-block">
-            {formatPercent(r.feePercent || 0)}
-          </Box>
+          <Box display="inline-block">{formatPercent(r.feePercent || 0)}</Box>
         </CustomTooltip>
       )
     },
@@ -67,9 +70,7 @@ const TopDelegationPools = () => {
       key: "feeAmount",
       render: (r) => (
         <CustomTooltip title={`${formatADAFull(r.feeAmount)} A`}>
-          <Box display="inline-block">
-            {formatADAFull(r.feeAmount)} A
-          </Box>
+          <Box display="inline-block">{formatADAFull(r.feeAmount)} A</Box>
         </CustomTooltip>
       )
     },
@@ -102,7 +103,10 @@ const TopDelegationPools = () => {
   return (
     <TopDelegateContainer data-testid="home-top-delegation">
       <Header>
-        <Title>Top Delegation Pools</Title>
+        <Title>
+          Pools
+          <SubHeader>Sorted by blocks produced in the current epoch</SubHeader>
+        </Title>
         <Actions>
           <TimeDuration>
             <FormNowMessage time={lastUpdated} />

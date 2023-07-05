@@ -41,15 +41,15 @@ const TransactionChart: React.FC = () => {
     },
     ONE_WEEK: {
       label: "1w",
-      displayName: "in week"
+      displayName: "in a week"
     },
     TWO_WEEK: {
       label: "2w",
-      displayName: "in two week"
+      displayName: "in two weeks"
     },
     ONE_MONTH: {
       label: "1m",
-      displayName: "in month"
+      displayName: "in a month"
     }
   };
 

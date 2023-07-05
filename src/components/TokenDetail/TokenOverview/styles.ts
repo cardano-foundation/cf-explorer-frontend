@@ -126,7 +126,7 @@ export const InfoIcon = styled(FiInfo)`
   margin-left: 2px;
 `;
 
-export const ProgressLiner = styled("div") <{ progress: number }>`
+export const ProgressLiner = styled("div")<{ progress: number }>`
   position: relative;
   width: 100%;
   background: ${(props) => alpha(props.theme.palette.common.black, 0.2)};
@@ -300,15 +300,18 @@ export const ViewJson = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const ButtonLink = styled(Link)(({ theme }) => ({
+export const ButtonLink = styled("a")(({ theme }) => ({
   fontWeight: "bold",
   color: `${theme.palette.secondary.main} !important`,
   fontFamily: "Roboto, sans-serif !important",
   textAlign: "left",
   wordBreak: "break-all",
-  marginTop: theme.spacing(2),
-  display: "inline-block"
+  marginTop: theme.spacing(1),
+  fontSize: "14px",
+  display: "inline-block",
+  textDecoration: "underline !important"
 }));
+
 export const LogoEmpty = styled(Box)`
   width: 20px;
   height: 20px;
@@ -328,9 +331,15 @@ export const TokenHeader = styled(Box)(({ theme }) => ({
 
 export const TokenDescription = styled(Box)(({ theme }) => ({
   display: "flex",
-  alignItems: "center",
+  alignItems: "left",
   fontSize: "0.75rem",
-  color: alpha(theme.palette.common.black, 0.5)
+  color: alpha(theme.palette.common.black, 0.5),
+  flexDirection: "column",
+}));
+
+export const TokenUrl = styled(Box)(({ theme }) => ({
+  marginTop: theme.spacing(1),
+  cursor: "pointer",
 }));
 
 export const PolicyScriptBtn = styled(Button)(({ theme }) => ({

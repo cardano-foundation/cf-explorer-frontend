@@ -6,6 +6,11 @@ import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "src/commons/utils/const
 import breakpoints from "src/themes/breakpoints";
 
 import CopyButton from "../CopyButton";
+interface CardItemProps {
+  length: number;
+  wide?: number;
+  itemOnRow: number;
+}
 
 export const HeaderDetailContainer = styled(Box)`
   text-align: left;
@@ -54,7 +59,7 @@ export const HeaderContainer = styled(Box)`
   align-items: center;
   flex-wrap: wrap;
   ${(props) => props.theme.breakpoints.down("sm")} {
-    justify-content: space-between;
+    justify-content: flex-start;
   }
 `;
 
@@ -286,7 +291,7 @@ export const ProgressPercent = styled("h4")`
   margin: 0;
 `;
 
-export const CardItem = styled(Grid)<{ length: number; wide?: number }>(({ theme, length, wide }) => ({
+export const CardItem = styled(Grid)<CardItemProps>(({ theme, length, wide, itemOnRow }) => ({
   width: "max-content",
   padding: length > 6 ? "20px 25px" : "0px 15px",
   borderLeft: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
@@ -298,13 +303,13 @@ export const CardItem = styled(Grid)<{ length: number; wide?: number }>(({ theme
     ? {
         borderBottomWidth: 1,
         [theme.breakpoints.up("lg")]: {
-          ":nth-of-type(4n+1)": {
+          [`:nth-of-type(${itemOnRow}n+1)`]: {
             borderLeftWidth: 0,
             paddingLeft: 0
           },
-          ":nth-last-of-type(-n + 4)": {
-            ":nth-of-type(4n + 1)": {
-              borderBottomWidth: 0,
+          [`:nth-last-of-type(-n + ${itemOnRow})`]: {
+            borderBottom: "none !important",
+            [`:nth-of-type(${itemOnRow}n + 1)`]: {
               "&~div": {
                 borderBottomWidth: 0,
                 paddingTop: 20,
@@ -368,7 +373,14 @@ export const CardItem = styled(Grid)<{ length: number; wide?: number }>(({ theme
     }
   },
   [theme.breakpoints.down("sm")]: {
-    padding: "15px 10px"
+    ":nth-of-type(even)": {
+      paddingRight: wide ? 15 : "0 !important",
+      paddingLeft: 15
+    },
+    ":nth-of-type(odd)": {
+      paddingLeft: wide ? 15 : "0 !important",
+      paddingRight: 10
+    }
   }
 }));
 

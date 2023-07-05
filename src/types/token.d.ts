@@ -10,6 +10,9 @@ interface ITokenOverview {
   volumeIn24h: number;
   totalVolume: string;
   numberOfHolders: number;
+  tokenType?: string;
+  tokenLastActivity?: string;
+  metadataJson?: string;
 }
 
 interface ITokenMetadata {

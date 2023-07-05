@@ -1,13 +1,12 @@
 import { screen, cleanup, fireEvent } from "@testing-library/react";
-
-import { render } from "src/test-utils";
-
-import TopAddresses from ".";
-
-import Table from "src/components/commons/Table";
-import useFetchList from "src/commons/hooks/useFetchList";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
+
+import { render } from "src/test-utils";
+import Table from "src/components/commons/Table";
+import useFetchList from "src/commons/hooks/useFetchList";
+
+import TopAddressesByADABalance from "./index";
 
 const mockData = {
   data: [
@@ -21,7 +20,7 @@ const mockData = {
 
 jest.mock("src/commons/hooks/useFetchList");
 
-describe("Top addresses view", () => {
+describe("Top addresses by ADA balance view", () => {
   afterEach(() => {
     cleanup();
   });
@@ -29,16 +28,15 @@ describe("Top addresses view", () => {
   it("should render Top addresses page", async () => {
     const mockUseFetch = useFetchList as jest.Mock;
     await mockUseFetch.mockReturnValue({ data: [] });
-    render(<TopAddresses />);
+    render(<TopAddressesByADABalance />);
     expect(useFetchList).toBeCalled();
   });
 
   it("should show correct data in table", async () => {
     const mockUseFetchList = useFetchList as jest.Mock;
     mockUseFetchList.mockReturnValue(mockData);
-    render(<TopAddresses />);
+    render(<TopAddressesByADABalance />);
     expect(screen.getByText("Ae2td...zN2zG")).toBeInTheDocument();
-    expect(screen.getByText(/Top addresses/i)).toBeInTheDocument();
   });
 
   it("renders the table with given column and data", () => {
@@ -88,7 +86,7 @@ describe("Top addresses view", () => {
 
     render(
       <Router history={history}>
-        <TopAddresses />
+        <TopAddressesByADABalance />
       </Router>
     );
 

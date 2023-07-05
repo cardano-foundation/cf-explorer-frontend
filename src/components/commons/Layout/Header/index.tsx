@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
@@ -42,14 +42,28 @@ const Header: React.FC<RouteComponentProps> = (props) => {
     `${history.location.pathname}/`.includes(subPath)
   );
 
+  const refElement = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (refElement.current && event.target instanceof Node && refElement.current.contains(event.target)) {
+        setOpenSearch(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <HeaderContainer data-testid="header">
       <HeaderBox home={home ? 1 : 0}>
         <HeaderMain home={home ? 1 : 0}>
-          <Title home={home ? 1 : 0} data-testid="home-title">Cardano Blockchain Explorer</Title>
+          <Title home={home ? 1 : 0} data-testid="home-title">
+            Cardano Blockchain Explorer
+          </Title>
           {!pathMatched && <HeaderSearch home={home} />}
         </HeaderMain>
-        <HeaderTop data-testid="header-top">
+        <HeaderTop data-testid="header-top" ref={refElement}>
           <HeaderLogoLink to="/" data-testid="header-logo">
             <HeaderLogo src={LogoIcon} alt="logo desktop" />
           </HeaderLogoLink>

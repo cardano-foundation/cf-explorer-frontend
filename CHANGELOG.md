@@ -1,5 +1,64 @@
 # Changelog
 
+## [0.4.3](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.2...v0.4.3) (2023-07-04)
+
+
+### Bug Fixes
+
+* Do-not-auto-close-search-section-when-user-click-outside ([fce5428](https://github.com/cardano-foundation/cf-explorer-frontend/commit/fce5428c803a36b665c178179a289c5e69a09015))
+
+## [0.4.2](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.1...v0.4.2) (2023-06-30)
+
+
+### Features
+
+* MET-1262 Change page 2: Add Token Url ([f60451a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f60451aad2c7af14c1b0eae8a83e2e98f2b6ae41))
+* MET-1353 [Finding01] Update icons of the "Delegator View" ([0f98024](https://github.com/cardano-foundation/cf-explorer-frontend/commit/0f98024a6b3d6961c4f66037d5040b74c7e51aa6))
+* MET-745 add latest stories fix conflict merge develop ([c5f928b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/c5f928b70ede6c49654d8610b1913825f310677a))
+* update new changes ([5e0a489](https://github.com/cardano-foundation/cf-explorer-frontend/commit/5e0a4895ebb989dabfafdce6ce45fab9212da9e8))
+
+
+### Bug Fixes
+
+* MET-1289 footer position missing code when fix conflict ([c96af67](https://github.com/cardano-foundation/cf-explorer-frontend/commit/c96af67ff67768c5b91a6b4170e3e6b61e15f342))
+* page size select wrong after unfocus page input ([0468a42](https://github.com/cardano-foundation/cf-explorer-frontend/commit/0468a420cd8040105c9cfc33af34eeaca9c2f594))
+* prettier warning on console ([0d3331a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/0d3331a322dd4ccaf2b70c37a388eb0e8089da3e))
+* refactor env confict develop ([94f85b7](https://github.com/cardano-foundation/cf-explorer-frontend/commit/94f85b78e22a0be9d444cf54138bd7ae7b25d2cd))
+* remove console log ([2e63826](https://github.com/cardano-foundation/cf-explorer-frontend/commit/2e6382601c08ed1aad56fa0e73814bafcad828c3))
+* resolve comment ([3bb15e3](https://github.com/cardano-foundation/cf-explorer-frontend/commit/3bb15e3521d1a62de2782c2033190abdd163ee8c))
+* the close button not in the right place when zooming in ([6ca192a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6ca192a8ce52527d1edf94b84e72e1e7398dd691))
+* update flow save bookmark ([2411945](https://github.com/cardano-foundation/cf-explorer-frontend/commit/2411945e90ed229aa2243e7fc9a0c70f7e11ddf2))
+
+## [0.4.1](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.0...v0.4.1) (2023-06-28)
+
+
+### Features
+
+* add code of conduct and contributing information (MET-1380) ([c8cd340](https://github.com/cardano-foundation/cf-explorer-frontend/commit/c8cd3407483543390366234de0822912b3471abe))
+
+
+### Bug Fixes
+
+* contract display full when hover still dis play tooltip ([61b1d02](https://github.com/cardano-foundation/cf-explorer-frontend/commit/61b1d023562d268e743844d3575bfce757c0d283))
+* MET-1287 finding 3 support sidebar width animation and remove detail view placeholder fix conflict ([72f9498](https://github.com/cardano-foundation/cf-explorer-frontend/commit/72f949812c44219cccd9be4a986aae3f5071d0f0))
+* MET-1289 fix conflict ([1b9023d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1b9023d380c684aead0c1d86ee25a1fa35b36768))
+* MET-1289 remove fixed of footer fix drawer height ([faae971](https://github.com/cardano-foundation/cf-explorer-frontend/commit/faae971c060f3d2e2fecb13cc88ab444b738b9dd))
+* MET-1342-change-places-icon-timeline-view-and-tabular-view ([b612965](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b6129651e1ff2b11dc20c0b60a6c6d41b9fc994a))
+* MET-1342-finding-4-close-box-more-infor-when-user-click-outside-box ([2d3a9c0](https://github.com/cardano-foundation/cf-explorer-frontend/commit/2d3a9c0c45c3cb37c0a51c5463aaace056870df5))
+* MET-1342-finding-5-close-modal-when-user-click-outside ([5457a45](https://github.com/cardano-foundation/cf-explorer-frontend/commit/5457a45495d05c4f22d0c3fc8fa5944e6337e1a7))
+* MET-1344 finding 1 text-shifted to the left in small screen ([6139a70](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6139a708f7642a0aff854c0a5b6300f21cb4ae2e))
+* MET-1345-finding-1: add-tooltip-for-button-Compose-report-when-user-logged-n ([df52a63](https://github.com/cardano-foundation/cf-explorer-frontend/commit/df52a6385d780788b04766fcc616fe8107532448))
+* MET-1351 finding 1 button next/prev skip no record tab ([143c086](https://github.com/cardano-foundation/cf-explorer-frontend/commit/143c086daa084b42fa19760e88f48d7f6a7a00aa))
+* MET-615 Fix ui Bug and Responsive ([09d0e6a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/09d0e6a2ab8b1ec7040460081a3ccde5e4e824fd))
+* MET-615-reward missing s ([b3cdc86](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b3cdc86c3c25ae0674fe1c4f427706a6516dabbf))
+* No display dicimal ([eb3d3b6](https://github.com/cardano-foundation/cf-explorer-frontend/commit/eb3d3b6020821ec85c3e4e2fbe8288a0fb54a003))
+* No display dicimal ([279b6a1](https://github.com/cardano-foundation/cf-explorer-frontend/commit/279b6a1e12bd3ba77dfc1946999c9ae9f7143e7e))
+* not navigate to epoch detail when click epoch number inprogess ([560e13c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/560e13c9e28ed6eeb3c137ceed2b4646eedc124a))
+* remove variable unuse ([03f8ca0](https://github.com/cardano-foundation/cf-explorer-frontend/commit/03f8ca03cf37ffc3eaebf5fa7a19c9f557eb736b))
+* show missing amount of ADA ([bfe5cf5](https://github.com/cardano-foundation/cf-explorer-frontend/commit/bfe5cf52c056f0ccdc38d43e74d504347e55fa6f))
+* use previous color ([b4e1ac4](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b4e1ac40c4d6689639409b6140711c97ad7a325b))
+* wrong syntax word ([b971831](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b9718314e8c29846db0710420ac98cbc6f5c16d4))
+
 ## 0.4.0 (2023-06-22)
 
 
