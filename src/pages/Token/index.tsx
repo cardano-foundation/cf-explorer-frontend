@@ -74,7 +74,7 @@ const Tokens = () => {
       minWidth: "100px",
       render: (r) => (
         <CustomTooltip title={r.policy}>
-          <PolicyLabel to={details.policyDetail(r.policy)}>{r.policy}</PolicyLabel>
+          <AssetName to={details.policyDetail(r.policy)}>{getShortWallet(r.policy)}</AssetName>
         </CustomTooltip>
       )
     },
