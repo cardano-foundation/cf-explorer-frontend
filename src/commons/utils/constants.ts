@@ -106,7 +106,6 @@ export enum RECEIVED_REWARDS {
 export const APP_VERSION = process.env.REACT_APP_VERSION || get(window, "env.REACT_APP_VERSION") || "1.0.0";
 export const EXT_ADA_PRICE_URL =
   process.env.REACT_APP_EXT_ADA_PRICE_URL || get(window, "env.REACT_APP_EXT_ADA_PRICE_URL");
-export const TESTNET_API_URL = process.env.REACT_APP_TESTNET_API_URL || get(window, "env.REACT_APP_TESTNET_API_URL");
 export const PREVIEW_API_URL = process.env.REACT_APP_PREVIEW_API_URL || get(window, "env.REACT_APP_PREVIEW_API_URL");
 export const PREPROD_API_URL = process.env.REACT_APP_PREPROD_API_URL || get(window, "env.REACT_APP_PREPROD_API_URL");
 export const MAINNET_API_URL = process.env.REACT_APP_MAINNET_API_URL || get(window, "env.REACT_APP_MAINNET_API_URL");
