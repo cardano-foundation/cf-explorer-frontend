@@ -17,7 +17,7 @@ export const ContractText = styled(Typography)`
 `;
 
 export const ContractAddress = styled(Box)`
-  color: ${(props) => props.theme.palette.blue[450]};
+  color: ${(props) => props.theme.palette.blue[400]};
   font-size: 14px;
   font-weight: 400;
   padding-top: 10px;
@@ -60,7 +60,7 @@ export const TabItem = styled(Box)`
 
 export const TitleText = styled(Typography)`
   display: inline;
-  color: ${(props) => props.theme.palette.grey[250]};
+  color: ${(props) => props.theme.palette.grey[300]};
   margin-right: 10px;
   min-width: 50px;
 `;

@@ -36,7 +36,7 @@ type DetailViewEpochProps = {
 
 const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handleClose, address }) => {
   const { data, loading } = useFetch<IContractItemTx[]>(
-    `${API.TRANSACTION.HASH_CONTRACT(txHash, address)}`,
+    API.TRANSACTION.HASH_CONTRACT(txHash, address),
     undefined,
     false
   );
