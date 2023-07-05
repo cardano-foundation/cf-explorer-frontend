@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { CgClose } from "react-icons/cg";
+import { Box } from "@mui/material";
 
+import { EmptyIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import ContractDiagrams from "src/components/ContractDiagrams";
@@ -33,7 +35,11 @@ type DetailViewEpochProps = {
 };
 
 const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handleClose, address }) => {
-  const { data } = useFetch<IContractItemTx[]>(`${API.TRANSACTION.HASH_CONTRACT(txHash, address)}`, undefined, false);
+  const { data, loading } = useFetch<IContractItemTx[]>(
+    `${API.TRANSACTION.HASH_CONTRACT(txHash, address)}`,
+    undefined,
+    false
+  );
 
   const { ref, isComponentVisible } = useComponentVisible(true);
 
@@ -51,9 +57,9 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
     };
   }, []);
 
-  if (!data?.length) {
+  if (loading) {
     return (
-      <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
+      <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent" data-testid="view-detail-drawer-loading">
         <ViewDetailHeader>
           <CustomTooltip title="Close">
             <CloseButton onClick={handleClose}>
@@ -101,10 +107,21 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
   }
 
   return (
-    <ViewDetailDrawerContractHash ref={ref} anchor="right" open hideBackdrop variant="permanent">
+    <ViewDetailDrawerContractHash
+      ref={ref}
+      anchor="right"
+      open
+      hideBackdrop
+      variant="permanent"
+      data-testid="view-detail-drawer-contract-hash"
+    >
       <ViewDetailContainerContractHash>
         <ViewDetailScrollContractHash>
-          <ContractDiagrams item={data[0]} txHash={txHash} />
+          {data?.[0] ? (
+            <ContractDiagrams item={data[0]} txHash={txHash} />
+          ) : (
+            <Box sx={{ paddingTop: 10 }} height={"200px"} component={"img"} src={EmptyIcon} />
+          )}
         </ViewDetailScrollContractHash>
       </ViewDetailContainerContractHash>
     </ViewDetailDrawerContractHash>
