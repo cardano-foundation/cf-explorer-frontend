@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.3](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.2...v0.4.3) (2023-07-04)
+
+
+### Bug Fixes
+
+* Do-not-auto-close-search-section-when-user-click-outside ([fce5428](https://github.com/cardano-foundation/cf-explorer-frontend/commit/fce5428c803a36b665c178179a289c5e69a09015))
+
 ## [0.4.2](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.1...v0.4.2) (2023-06-30)
 
 
