@@ -26,7 +26,7 @@ import {
 
 const TopDelegationPools = () => {
   const { data, loading, initialized, lastUpdated } = useFetch<DelegationPool[]>(
-    `${API.DELEGATION.TOP}?page=0&size=10`,
+    `${API.DELEGATION.TOP}?page=0&size=5`,
     undefined,
     false,
     REFRESH_TIMES.TOP_DELEGATION_POOLS
