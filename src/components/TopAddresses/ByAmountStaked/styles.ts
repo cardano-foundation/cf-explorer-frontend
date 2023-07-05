@@ -8,6 +8,7 @@ export const StyledLink = styled(Link)`
 
 export const PerPage = styled("div")`
   margin-left: 8px;
+  color: ${({ theme }) => theme.palette.grey[300]};
 `;
 
 export const Actions = styled(Box)(() => ({

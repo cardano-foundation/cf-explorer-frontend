@@ -79,7 +79,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       title: "Delegated To",
       value: (
         <Pool to={details.delegation(dataStake?.pool ? dataStake?.pool?.poolId : "")}>
-          {dataStake?.pool?.poolName || `Pool [${getShortWallet(dataStake?.pool?.poolId || "")}]`}
+          {dataStake?.pool?.poolName || getShortWallet(dataStake?.pool?.poolId || "")}
         </Pool>
       )
     }

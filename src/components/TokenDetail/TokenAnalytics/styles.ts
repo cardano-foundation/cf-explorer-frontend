@@ -1,7 +1,7 @@
 import { Grid, Skeleton, Button, styled, Box, alpha } from "@mui/material";
 
 export const BoxInfo = styled(Box)<{ space: number }>(({ theme }) => ({
-  background: theme.palette.secondary.dark,
+  background: theme.palette.common.white,
   borderRadius: "10px",
   color: theme.palette.primary.contrastText,
   display: "flex",
@@ -38,24 +38,25 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   paddingTop: theme.spacing(2),
   width: "80%",
   margin: "0 auto",
-  borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+  borderBottom: `1px solid ${alpha(theme.palette.grey[700], 0.1)}`,
   overflow: "hidden",
   alignItems: "center",
   [theme.breakpoints.down("lg")]: {
     alignItems: "flex-start",
-    borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    borderRight: `1px solid ${alpha(theme.palette.grey[700], 0.1)}`,
     height: "100%",
     borderBottom: "none",
     width: "100%",
     minHeight: "160px"
   },
   [theme.breakpoints.down("sm")]: {
-    borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    borderRight: `1px solid ${alpha(theme.palette.grey[700], 0.1)}`,
     minHeight: "150px"
   }
 }));
 
 export const Title = styled(Box)(({ theme }) => ({
+  color: theme.palette.grey[300],
   fontWeight: "bold",
   padding: `${theme.spacing(2)} 0`,
   [theme.breakpoints.down("sm")]: {
@@ -67,6 +68,7 @@ export const ValueInfo = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "2rem",
   margin: "0 auto",
+  color: theme.palette.grey[700],
   overflowWrap: "anywhere",
   padding: "0 18px",
   [theme.breakpoints.down("md")]: {
@@ -149,5 +151,5 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
       backgroundColor: theme.palette.primary.main,
       color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400]
     }
-  },
+  }
 }));
