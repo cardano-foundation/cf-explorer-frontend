@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, styled, Table } from "@mui/material";
 import { Link } from "react-router-dom";
 import { TabList } from "@mui/lab";
 
@@ -29,5 +29,10 @@ export const StyledBoxContainer = styled(Box)(({ theme }) => ({
   marginTop: "32px",
   [theme.breakpoints.down("sm")]: {
     marginRight: "16px"
+  }
+}));
+export const StyledTable = styled(Table)(() => ({
+  "& .table-wrapper": {
+    minHeight: "75px"
   }
 }));

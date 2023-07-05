@@ -266,4 +266,3 @@ export { ReactComponent as OwnerAccountIcon } from "./icons/owner-account-ic.svg
 export { ReactComponent as PoolSizeIcon } from "./icons/pool-size-ic.svg";
 export { ReactComponent as RewardsAvailableIcon } from "./icons/rewards-available-ic.svg";
 export { ReactComponent as StatusIcon } from "./icons/status-ic.svg";
- 

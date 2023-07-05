@@ -334,12 +334,12 @@ export const TokenDescription = styled(Box)(({ theme }) => ({
   alignItems: "left",
   fontSize: "0.75rem",
   color: alpha(theme.palette.common.black, 0.5),
-  flexDirection: "column",
+  flexDirection: "column"
 }));
 
 export const TokenUrl = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(1),
-  cursor: "pointer",
+  cursor: "pointer"
 }));
 
 export const PolicyScriptBtn = styled(Button)(({ theme }) => ({

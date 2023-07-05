@@ -163,8 +163,7 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
       backgroundColor: theme.palette.primary.main,
       color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400]
     }
-  },
-
+  }
 }));
 
 export const TextCardHighlight = styled("span")`
