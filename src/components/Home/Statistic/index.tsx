@@ -226,8 +226,8 @@ const HomeStatistic = () => {
                       <b>{formatADA(activeStake)} </b>
                     </XValue>
                   </CustomTooltip>
-                  <CustomTooltip title={`${activeRate?.toFixed(5)}%`}>
-                    <Small data-testid="active-stake-percentage">({activeRate?.toFixed(1)}%)</Small>
+                  <CustomTooltip title={`${activeRate.toFixed(5)}%`}>
+                    <Small data-testid="active-stake-percentage">({activeRate.toFixed(1)}%)</Small>
                   </CustomTooltip>
                 </SmallValue>
                 <br />
