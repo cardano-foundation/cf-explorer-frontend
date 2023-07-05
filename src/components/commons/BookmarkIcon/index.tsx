@@ -26,9 +26,9 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
 
   useEffect(() => {
     setBookmark(
-      (JSON.parse(localStorage.getItem("bookmark") || "") || []).find((r: Bookmark) => r.keyword === `${keyword}`)
+      (JSON.parse(localStorage.getItem("bookmark") || "[]") || []).find((r: Bookmark) => r.keyword === `${keyword}`)
     );
-  }, [openSyncBookmarkModal, JSON.stringify(bookmarks)]);
+  }, [openSyncBookmarkModal, bookmarks, keyword]);
 
   const updateBookmark = async () => {
     if (!isLoggedIn) {

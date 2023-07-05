@@ -108,6 +108,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
   const handleClickItem = (link: string) => {
     history.push(link);
   };
+
   if (loading) {
     return (
       <HeaderDetailContainer>
@@ -316,7 +317,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
         <BufferList numberOfItems={numberOfItems} wide={+isDetailToken} itemOnRow={itemOnRow} />
       </DetailsInfo>
       <Backdrop
-        sx={{ zIndex: 100 }}
+        sx={{ zIndex: 100, touchAction: "none" }}
         onClick={() => setOpenBackdrop({ input: false, output: false })}
         open={openBackdrop.input || openBackdrop.output}
       />
