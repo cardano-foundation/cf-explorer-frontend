@@ -22,7 +22,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import DetailViewToken from "src/components/commons/DetailView/DetailViewToken";
 import SelectedIcon from "src/components/commons/SelectedIcon";
 
-import { AssetName, Logo, PolicyLabel, StyledContainer, TimeDuration } from "./styles";
+import { AssetName, Logo, StyledContainer, TimeDuration } from "./styles";
 
 const Tokens = () => {
   const [token, setToken] = useState<IToken | null>(null);
@@ -146,14 +146,10 @@ const Tokens = () => {
 
   return (
     <StyledContainer>
-      <Card
-        title="Token List"
-        extra={
-          <TimeDuration>
-            <FormNowMessage time={lastUpdated} />
-          </TimeDuration>
-        }
-      >
+      <Card title="Token List">
+        <TimeDuration>
+          <FormNowMessage time={lastUpdated} />
+        </TimeDuration>
         <Table
           {...fetchData}
           data={data}

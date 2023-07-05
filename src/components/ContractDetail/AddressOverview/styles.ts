@@ -71,7 +71,7 @@ export const BannerSuccess = styled(Box)`
   line-height: 21px;
   text-align: center;
   color: #ffffff;
-  background: #5a9c56;
+  background: ${(props) => props.theme.palette.green[700]};
   border-radius: 10px;
   width: 100%;
   padding: 12px 0px;
