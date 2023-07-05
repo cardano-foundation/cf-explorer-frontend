@@ -1,4 +1,4 @@
-# Cardano Blockchain Explorer
+# Iris Frontend
 
 <p align="left">
 <img alt="Tests" src="https://github.com/cardano-foundation/cf-explorer-frontend/actions/workflows/tests.yaml/badge.svg" />
@@ -7,7 +7,9 @@
 <a href="https://conventionalcommits.org"><img alt="conventionalcommits" src="https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits" /></a>
 </p>
 
-Cardano Blockchain Explorer showcases the utility of Cardano by providing descriptive and visual representation of the ledger. It presents the information both in a web application as well as through API services
+This repository houses the frontend component of Iris. Developed with TypeScript, React.js, and mui, it showcases a user-friendly interface that presents the Cardano blockchain data collected and aggregated by LedgerSync.
+
+👉 Check the [Iris repository](https://github.com/cardano-foundation/cf-explorer) to understand how the microservices work together
 
 ## Prerequisites
 
@@ -87,6 +89,8 @@ On opening Cypress, your testing journey begins with the Launchpad. Its job is t
 
 To run e2e test with all specs, try this command:
 `npm run cypress:run`
+
+
 
 ## Build into production
 

@@ -30,7 +30,7 @@ export const Title = styled("h3")`
   text-align: left;
   margin: 0px;
   font-size: 1.25rem;
-
+  color: ${(props) => props.theme.palette.grey[700]};
   &::after {
     position: absolute;
     top: 100%;
@@ -115,6 +115,7 @@ export const PriveValue = styled("span")`
   font-size: var(--font-size-text-x-large);
   font-weight: var(--font-weight-bold);
   line-height: 1;
+  color: ${(props) => props.theme.palette.grey[700]};
 `;
 
 export const ItemDetail = styled("div")`

@@ -20,6 +20,7 @@ export const Info = styled(Box)(({ theme }) => ({
 export const InfoText = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
+  color: theme.palette.grey[700],
   marginLeft: theme.spacing(1),
   fontWeight: 600,
   fontSize: "14px",

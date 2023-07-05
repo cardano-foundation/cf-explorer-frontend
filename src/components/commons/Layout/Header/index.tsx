@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
 import { LogoIcon, SearchIcon } from "src/commons/resources";
-import { setSidebar } from "src/stores/user";
+import { setOnDetailView, setSidebar } from "src/stores/user";
 import { routers } from "src/commons/routers";
 
 import TopSearch from "../Sidebar/TopSearch";
@@ -27,7 +27,7 @@ import {
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [
   routers.STAKING_LIFECYCLE.replace(":tab", "stake-key"),
   routers.STAKING_LIFECYCLE.replace(":tab", "pools"),
-  `/${routers.STAKE_DETAIL.split("/")[1]}/`,
+  `/${routers.DELEGATOR_LIFECYCLE.split("/")[1]}/`,
   `/${routers.SPO_LIFECYCLE.split("/")[1]}/`
 ];
 
@@ -54,6 +54,11 @@ const Header: React.FC<RouteComponentProps> = (props) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleOpenSearch = () => {
+    setOpenSearch((prev) => !prev);
+    setOnDetailView(false);
+  };
+
   return (
     <HeaderContainer data-testid="header">
       <HeaderBox home={home ? 1 : 0}>
@@ -73,7 +78,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
             </NetworkContainer>
             <LoginButton />
             {history.location.pathname !== routers.STAKING_LIFECYCLE && (
-              <SearchButton onClick={() => setOpenSearch((prev) => !prev)}>
+              <SearchButton onClick={handleOpenSearch}>
                 <SearchIcon fontSize={24} />
               </SearchButton>
             )}
