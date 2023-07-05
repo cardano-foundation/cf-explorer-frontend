@@ -1,8 +1,16 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Box, PaginationRenderItemParams, IconButton, MenuItem, styled, CircularProgress, alpha } from "@mui/material";
+import {
+  Box,
+  PaginationRenderItemParams,
+  IconButton,
+  MenuItem,
+  styled,
+  CircularProgress,
+  alpha,
+  useScrollTrigger
+} from "@mui/material";
 import { useUpdateEffect } from "react-use";
 import { useParams } from "react-router-dom";
-import { useScrollTrigger } from "@mui/material";
 
 import { handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
 import {
