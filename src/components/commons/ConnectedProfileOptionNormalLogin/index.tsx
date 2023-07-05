@@ -7,6 +7,7 @@ import { LinkOff, User2 } from "src/commons/resources/index";
 import { routers } from "src/commons/routers";
 import { removeAuthInfo } from "src/commons/utils/helper";
 import { signOut } from "src/commons/utils/userRequest";
+import { setOnDetailView } from "src/stores/user";
 
 import { Content, Disconnect, Icon, Name, Profile, Span, StyledButton, WrapContent } from "./style";
 
@@ -22,6 +23,7 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
   const history = useHistory();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+    setOnDetailView(false);
   };
 
   const handleClose = () => {

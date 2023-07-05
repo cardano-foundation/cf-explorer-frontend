@@ -8,7 +8,7 @@ import { BoxRaised } from "../BoxRaised";
 
 export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
   "& > div": {
-    zIndex: 9,
+    zIndex: 1302,
     background: `${theme.palette.background.neutral}`,
     border: "none",
     height: "100%",
