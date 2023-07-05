@@ -81,7 +81,7 @@ export const VerifyButton = styled(Box)<{ disabled: boolean }>`
 `;
 
 export const ErrorMessage = styled(Box)`
-  color: red;
+  color: ${(props) => props.theme.palette.red[700]};
   height: 132px;
   margin: 20px 0px;
 `;

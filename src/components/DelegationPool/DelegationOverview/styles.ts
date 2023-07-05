@@ -81,7 +81,7 @@ export const TimeDuration = styled("small")<{ mobile?: number }>(({ theme, mobil
   color: theme.palette.grey[400],
   display: mobile ? "none" : "block",
   textAlign: "left",
-  paddingTop: "0.5rem",
+  padding: `${theme.spacing(2)} 0`,
   [theme.breakpoints.down("md")]: {
     display: mobile ? "block" : "none",
     paddingTop: 0,

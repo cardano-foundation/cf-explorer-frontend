@@ -99,7 +99,7 @@ export const Icon = styled("img")`
 `;
 
 export const PolicyId = styled(Box)(({ theme }) => ({
-  color: theme.palette.common.black,
+  color: theme.palette.grey[700],
   fontSize: "1rem",
   fontWeight: "bold",
   wordBreak: "break-word",
@@ -330,7 +330,7 @@ export const TokenDescription = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "left",
   fontSize: "0.75rem",
-  color: alpha(theme.palette.common.black, 0.5),
+  color: theme.palette.grey[300],
   flexDirection: "column"
 }));
 
