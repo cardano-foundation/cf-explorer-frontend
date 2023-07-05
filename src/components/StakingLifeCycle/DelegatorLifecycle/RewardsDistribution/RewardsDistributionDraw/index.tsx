@@ -16,7 +16,11 @@ export interface IRewarsDistributionDrawProps {
   setTypeRewardModal: (type: RECEIVED_REWARDS) => void;
 }
 
-const RewardsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({ data, toggleRewardModal, setTypeRewardModal }) => {
+const RewardsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({
+  data,
+  toggleRewardModal,
+  setTypeRewardModal
+}) => {
   const cardanoBlockchainRef = useRef(null);
   const adaAmountFirstRef = useRef(null);
   const adaAmountSecondRef = useRef(null);
@@ -77,7 +81,7 @@ const RewardsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({ data,
   const handleToggleModal = (type: RECEIVED_REWARDS) => {
     toggleRewardModal();
     setTypeRewardModal(type);
-  }
+  };
 
   return (
     <DrawContainer>
@@ -94,7 +98,11 @@ const RewardsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({ data,
         <ADAHolderRect ref={adaHolderRef} />
         <ADAOperatorRewardRect ref={operatorRewardRef} disabled={!isRewardPool} />
       </HolderWrapper>
-      <RewardAccountBox toggleRewardModal={() => handleToggleModal(RECEIVED_REWARDS.ALL)} value={data?.rewardAvailable} ref={rewardAccountRef} />
+      <RewardAccountBox
+        toggleRewardModal={() => handleToggleModal(RECEIVED_REWARDS.ALL)}
+        value={data?.rewardAvailable}
+        ref={rewardAccountRef}
+      />
       <DrawPath paths={paths} />
     </DrawContainer>
   );
