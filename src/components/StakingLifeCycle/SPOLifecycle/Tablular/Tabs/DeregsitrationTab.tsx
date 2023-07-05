@@ -79,7 +79,7 @@ const DeregsitrationTab = () => {
       title: "Certificate",
       render: (data) => (
         <IconButton onClick={() => setSelected(data)}>
-          <EyeIcon style={{ transform: "scale(.8)" }} />
+          <EyeIcon />
         </IconButton>
       )
     }

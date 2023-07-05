@@ -11,7 +11,7 @@ const Result = styled(Box)`
   background: rgba(152, 162, 179, 0.1);
   border-radius: 10px;
   text-align: left;
-  color: #344054;
+  color: ${(props) => props.theme.palette.grey[700]};
   line-height: 19px;
   font-weight: 400;
   font-size: 16px;
@@ -26,6 +26,7 @@ const StyledBox = styled(Box)`
 
 const ScriptType = styled(Box)`
   margin: 12px 0px;
+  color: ${(props) => props.theme.palette.grey[700]};
   span {
     color: ${({ theme }) => theme.palette.blue[800]};
   }
@@ -33,7 +34,7 @@ const ScriptType = styled(Box)`
 
 const ScriptTab = () => {
   const { address } = useParams<{ address: string }>();
-  const { data, refresh } = useFetch(API.CONTRACTS.SCRIPT(address));
+  const { data, refresh } = useFetch<any>(API.CONTRACTS.SCRIPT(address));
   const { dispatch }: any = useContext(VerifyScriptContext);
 
   useEffect(() => {
@@ -47,13 +48,15 @@ const ScriptTab = () => {
 
   return (
     <StyledBox>
-      <Box>Contract</Box>
-      {data ? (
+      <Box color={({ palette }) => palette.grey[700]}>Contract</Box>
+      {data?.isVerified ? (
         <ScriptType>
           Script Type: <span>Native Script</span>
         </ScriptType>
       ) : null}
-      <Result>{data ? <pre>{JSON.stringify(data, null, " ")}</pre> : "No script found"}</Result>
+      <Result>
+        {data?.isVerified ? <pre>{JSON.stringify(JSON.parse(data?.data), null, " ")}</pre> : "No script found"}
+      </Result>
     </StyledBox>
   );
 };

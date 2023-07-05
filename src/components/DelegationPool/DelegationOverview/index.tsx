@@ -57,15 +57,8 @@ const OverViews: React.FC = () => {
   const hours = duration.hours();
   const minutes = duration.minutes();
   return (
-    <Card
-      title="Stake Pool"
-      extra={
-        <TimeDuration>
-          <FormNowMessage time={lastUpdated} />
-        </TimeDuration>
-      }
-    >
-      <TimeDuration mobile={1}>
+    <Card title="Stake Pool">
+      <TimeDuration>
         <FormNowMessage time={lastUpdated} />
       </TimeDuration>
       <Grid container spacing={2}>
@@ -136,9 +129,9 @@ const OverViews: React.FC = () => {
           <StyledCard.Container>
             <StyledCard.Content>
               <StyledCard.Title>Total Pools</StyledCard.Title>
-              <StyledCard.Link to={details.epoch(data?.epochNo)}>
+              <StyledCard.Value>
                 {(data?.activePools ? +data.activePools : 0) + (data?.retiredPools ? +data.retiredPools : 0)}
-              </StyledCard.Link>
+              </StyledCard.Value>
               <Box
                 component="span"
                 sx={{ color: (theme) => theme.palette.grey[400], textAlign: "left" }}
