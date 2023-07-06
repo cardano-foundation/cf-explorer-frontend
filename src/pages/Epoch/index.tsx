@@ -48,13 +48,13 @@ const Epoch: React.FC = () => {
       )
     },
     {
-      title: "Start Time",
+      title: "Start Timestamp",
       key: "startTime",
       minWidth: "100px",
       render: (r) => <BlueText>{formatDateTimeLocal(r.startTime || "")}</BlueText>
     },
     {
-      title: "End Time",
+      title: "End Timestamp",
       key: "endTime",
       minWidth: "100px",
       render: (r) => (
