@@ -10,8 +10,9 @@ interface ParseScriptModalProps {
   onClose: () => void;
   script: string;
   title?: string;
+  subTitle?: string;
 }
-const ParseScriptModal: React.FC<ParseScriptModalProps> = ({ title, script, ...props }) => {
+const ParseScriptModal: React.FC<ParseScriptModalProps> = ({ title, script, subTitle, ...props }) => {
   const theme = useTheme();
   return (
     <Modal {...props}>
@@ -30,9 +31,10 @@ const ParseScriptModal: React.FC<ParseScriptModalProps> = ({ title, script, ...p
           {title}
         </Box>
 
+        {subTitle && <Box mb={1}>{subTitle}</Box>}
         <ViewJson>
           <JsonViewer
-            value={script || ""}
+            value={script ? script : ""}
             displayObjectSize={false}
             displayDataTypes={false}
             enableClipboard={false}
