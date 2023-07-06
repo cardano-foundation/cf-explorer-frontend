@@ -3,7 +3,7 @@ version: '3.9'
 services:
   cardano-explorer-fe:
     stdin_open: true
-    image: cardano-explorer-fe-${REACT_APP_NETWORK}
+    image: cardano-explorer-fe
     build:
       context: .
     restart: always
