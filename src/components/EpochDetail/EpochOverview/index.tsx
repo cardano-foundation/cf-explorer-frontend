@@ -34,7 +34,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Start time </TitleCard>
+          <TitleCard mr={1}>Start Timestamp </TitleCard>
         </Box>
       ),
       value: formatDateTimeLocal(data?.startTime || "")
@@ -43,7 +43,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>End time </TitleCard>
+          <TitleCard mr={1}>End Timestamp </TitleCard>
         </Box>
       ),
       value: formatDateTimeLocal(data?.endTime || "")

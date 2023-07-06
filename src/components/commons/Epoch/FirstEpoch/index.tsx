@@ -55,7 +55,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> Start Time</TitleCard>
+          <TitleCard mr={1}> Start Timestamp</TitleCard>
         </Box>
       ),
       value: <Content>{formatDateTimeLocal(currentEpochData?.startTime || "")}</Content>
@@ -64,7 +64,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> End Time</TitleCard>
+          <TitleCard mr={1}> End Timestamp</TitleCard>
         </Box>
       ),
       value: <Content>{formatDateTimeLocal(currentEpochData?.endTime || "")}</Content>
