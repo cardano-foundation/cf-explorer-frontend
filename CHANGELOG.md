@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.4](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.3...v0.4.4) (2023-07-06)
+
+
+### Bug Fixes
+
+* remove duplicate constants ([5541e9c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/5541e9c22f2c9585f0c54a7dc984522bfaf7a622))
+* solve conflict 1279 vs develop ([b1e941a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b1e941ac91ccf23fde54d50ba4de725cba908d29))
+
 ## [0.4.3](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.2...v0.4.3) (2023-07-04)
 
 
