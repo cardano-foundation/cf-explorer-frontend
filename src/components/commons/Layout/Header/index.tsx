@@ -21,7 +21,8 @@ import {
   SideBarRight,
   SearchButton,
   Toggle,
-  NetworkContainer
+  NetworkContainer,
+  HeaderSearchContainer
 } from "./styles";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [
@@ -66,7 +67,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
           <Title home={home ? 1 : 0} data-testid="home-title">
             Cardano Blockchain Explorer
           </Title>
-          {!pathMatched && <HeaderSearch home={home} />}
+          <HeaderSearchContainer>{!pathMatched && <HeaderSearch home={home} />}</HeaderSearchContainer>
         </HeaderMain>
         <HeaderTop data-testid="header-top" ref={refElement}>
           <HeaderLogoLink to="/" data-testid="header-logo">
