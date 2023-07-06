@@ -113,10 +113,10 @@ export const XSmall = styled("span")`
 `;
 
 export const Value = styled(Small)<{ down?: number }>`
-  color: ${(props) => (props.down ? props.theme.palette.error.main : props.theme.palette.success.dark)};
+  color: ${(props) => (props.down ? props.theme.palette.error.main : props.theme.palette.success.main)};
 `;
 export const XValue = styled(XSmall)<{ down?: number }>`
-  color: ${(props) => (props.down ? props.theme.palette.error.main : props.theme.palette.success.dark)};
+  color: ${(props) => (props.down ? props.theme.palette.error.main : props.theme.palette.success.main)};
 `;
 
 export const Progress = styled("div")`
