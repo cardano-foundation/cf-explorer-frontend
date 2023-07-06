@@ -48,6 +48,23 @@ const Epoch: React.FC = () => {
       )
     },
     {
+      title: "Start Time",
+      key: "startTime",
+      minWidth: "100px",
+      render: (r) => <BlueText>{formatDateTimeLocal(r.startTime || "")}</BlueText>
+    },
+    {
+      title: "End Time",
+      key: "endTime",
+      minWidth: "100px",
+      render: (r) => (
+        <BlueText>
+          {formatDateTimeLocal(r.endTime || "")}
+          {epoch === r.no && <SelectedIcon />}
+        </BlueText>
+      )
+    },
+    {
       title: "Blocks",
       key: "blkCount",
       minWidth: "100px",
@@ -92,23 +109,6 @@ const Epoch: React.FC = () => {
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
-    },
-    {
-      title: "Start Timestamp",
-      key: "startTime",
-      minWidth: "100px",
-      render: (r) => <BlueText>{formatDateTimeLocal(r.startTime || "")}</BlueText>
-    },
-    {
-      title: "End Timestamp",
-      key: "endTime",
-      minWidth: "100px",
-      render: (r) => (
-        <BlueText>
-          {formatDateTimeLocal(r.endTime || "")}
-          {epoch === r.no && <SelectedIcon />}
-        </BlueText>
-      )
     }
   ];
 
