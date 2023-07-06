@@ -118,7 +118,7 @@ const PoolLifecycle: React.FC<IPoolLifecycleProps> = ({ onSort, fetchData, pagin
       }
     },
     {
-      title: "Status",
+      title: "Exporting Report",
       key: "status",
       minWidth: "100px",
       render(data) {
