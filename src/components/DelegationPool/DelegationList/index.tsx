@@ -71,10 +71,33 @@ const DelegationLists: React.FC = () => {
       }
     },
     {
+      title: "Saturation",
+      minWidth: "200px",
+      key: "Saturation",
+      render: (r) => (
+        <Box display="flex" alignItems="center" justifyContent={"space-between"}>
+          <Box component={"span"}>{formatPercent(r.saturation / 100) || `0%`}</Box>
+          <StyledLinearProgress variant="determinate" value={r.saturation > 100 ? 100 : r.saturation} />
+        </Box>
+      )
+    },
+    {
+      title: "Number of Delegators",
+      minWidth: "200px",
+      key: "numberDelegators",
+      render: (r) => <Box component={"span"}>{r.numberDelegators || 0}</Box>
+    },
+    {
       title: "Blocks in Epoch",
       key: "epochBlock",
       minWidth: "120px",
       render: (r) => <Box component={"span"}>{r.epochBlock || 0}</Box>
+    },
+    {
+      title: "Blocks lifetime",
+      minWidth: "100px",
+      key: "lifetimeBlock",
+      render: (r) => <Box component={"span"}>{r.lifetimeBlock || 0}</Box>
     },
     {
       title: (
@@ -85,6 +108,16 @@ const DelegationLists: React.FC = () => {
       key: "Reward",
       minWidth: "120px",
       render: (r) => <RateWithIcon value={r.reward} multiple={1} />
+    },
+    {
+      title: (
+        <CustomTooltip title="Gross average return during pool’s lifetime">
+          <span>Lifetime ROS</span>
+        </CustomTooltip>
+      ),
+      minWidth: "100px",
+      key: "lifetimeRos",
+      render: (r) => <Box component={"span"}>{r.lifetimeRos || 0}%</Box>
     },
     {
       title: "Fixed Cost (A)",
@@ -100,39 +133,6 @@ const DelegationLists: React.FC = () => {
       key: "margin",
       minWidth: "120px",
       render: (r) => `${formatPercent(r.feePercent)}`
-    },
-    {
-      title: "Number of Delegators",
-      minWidth: "200px",
-      key: "numberDelegators",
-      render: (r) => <Box component={"span"}>{r.numberDelegators || 0}</Box>
-    },
-    {
-      title: "Saturation",
-      minWidth: "200px",
-      key: "Saturation",
-      render: (r) => (
-        <Box display="flex" alignItems="center" justifyContent={"space-between"}>
-          <Box component={"span"}>{formatPercent(r.saturation / 100) || `0%`}</Box>
-          <StyledLinearProgress variant="determinate" value={r.saturation > 100 ? 100 : r.saturation} />
-        </Box>
-      )
-    },
-    {
-      title: "Blocks lifetime",
-      minWidth: "100px",
-      key: "lifetimeBlock",
-      render: (r) => <Box component={"span"}>{r.lifetimeBlock || 0}</Box>
-    },
-    {
-      title: (
-        <CustomTooltip title="Gross average return during pool’s lifetime">
-          <span>Lifetime ROS</span>
-        </CustomTooltip>
-      ),
-      minWidth: "100px",
-      key: "lifetimeRos",
-      render: (r) => <Box component={"span"}>{r.lifetimeRos || 0}%</Box>
     }
   ];
 
