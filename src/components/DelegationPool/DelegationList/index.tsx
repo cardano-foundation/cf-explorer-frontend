@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { Box } from "@mui/material";
+import { get } from "lodash";
 
 import Table, { Column } from "src/components/commons/Table";
 import { formatADAFull, formatPercent, getPageInfo, getShortWallet } from "src/commons/utils/helper";
@@ -114,7 +115,7 @@ const DelegationLists: React.FC = () => {
       render: (r) => (
         <Box display="flex" alignItems="center" justifyContent={"space-between"}>
           <Box component={"span"}>{formatPercent(r.saturation / 100) || `0%`}</Box>
-          <StyledLinearProgress variant="determinate" value={r.saturation > 100 ? 100 : r.saturation} />
+          <StyledLinearProgress variant="determinate" value={r.saturation > 100 ? 100 : get(r, "saturation", 0)} />
         </Box>
       )
     },
