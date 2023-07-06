@@ -42,7 +42,7 @@ export const StepHeader = styled(Typography)(({ theme }) => ({
 export const WrapTitle = styled(Box)(({ theme }) => ({
   fontSize: "1.5rem",
   fontWeight: "bold",
-  color: theme.palette.common.black
+  color: theme.palette.grey[700]
 }));
 
 export const NextButton = styled(Button)(({ theme }) => ({
@@ -61,7 +61,7 @@ export const NextButton = styled(Button)(({ theme }) => ({
   alignItems: "center"
 }));
 export const PreviousButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.grey[500],
+  color: theme.palette.grey[700],
   background: "transparent",
   textTransform: "capitalize",
   fontWeight: "bold",

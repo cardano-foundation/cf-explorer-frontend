@@ -24,7 +24,7 @@ interface Props {
 }
 const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   const [stakeKey, setStakeKey] = useState("");
-  const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(
+  const { data: dataStake, loading: loadingStake, lastUpdated } = useFetch<WalletStake>(
     stakeKey ? `${API.STAKE.DETAIL}/${stakeKey}` : ""
   );
   const { adaRate } = useSelector(({ system }: RootState) => system);
@@ -36,7 +36,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   }, [data]);
 
   const itemLeft = [
-    { title: "Transaction", value: data?.txCount || 0 },
+    { title: "Transactions", value: data?.txCount || 0 },
     {
       title: "ADA Balance",
       value: (
@@ -65,7 +65,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       )
     },
     {
-      title: "POOL NAME",
+      title: "Pool Name",
       value: (
         <Link
           to={dataStake?.pool?.poolId ? details.delegation(dataStake.pool.poolId) : "#"}
@@ -78,7 +78,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       )
     },
     {
-      title: "Reward",
+      title: "Reward Balance",
       value: (
         <Box>
           {formatADAFull(dataStake?.rewardAvailable)}
@@ -104,7 +104,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           justifyContent={"space-between"}
         >
           <Box component={"h2"} lineHeight={1} mt={2} display={"flex"} alignItems={"center"}>
-            <TitleText>Address Detail</TitleText>
+            <TitleText>Address Details</TitleText>
             <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
           </Box>
           {data?.isContract && (
@@ -122,18 +122,19 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
         <Grid item xs={12} md={6}>
           <StyledBoxCard>
             <CardAddress
-              title={"Wallet address"}
+              title={"Address"}
               type="left"
               address={data?.address || ""}
               item={itemLeft}
               loading={loading}
+              lastUpdated={lastUpdated}
             />
           </StyledBoxCard>
         </Grid>
         <Grid item xs={12} md={6}>
           <StyledBoxCard>
             <CardAddress
-              title={"Stake address"}
+              title={"Stake Key"}
               type="right"
               address={data?.stakeAddress || ""}
               item={itemRight}
