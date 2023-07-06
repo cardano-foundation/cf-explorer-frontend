@@ -27,7 +27,7 @@ import {
   StyledFeeBox
 } from "./styles";
 
-interface ISPOPropsData {
+export interface ISPOPropsData {
   poolName?: string;
   poolView?: string;
   stakeKeys?: string[];
