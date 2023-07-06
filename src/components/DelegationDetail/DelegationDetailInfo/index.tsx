@@ -111,7 +111,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Item item xs={6} md={3} top={1}>
             <StyledImg src={CalendarIcon} alt="Calendar Icon" />
             <InfoTitle>
-              <StyledTitle>Created date</StyledTitle>
+              <StyledTitle>Created at</StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.createDate && formatDateTimeLocal(data.createDate || "")}</InfoValue>
           </Item>
