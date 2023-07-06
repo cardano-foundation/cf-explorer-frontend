@@ -79,7 +79,7 @@ export const Label = styled(Box)`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-  opacity: 0.8;
+  color: ${(props) => props.theme.palette.grey[700]};
 `;
 
 export const ForgotPassword = styled("span")`
