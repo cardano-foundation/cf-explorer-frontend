@@ -126,3 +126,9 @@ export const Toggle = styled("i")`
     display: block;
   }
 `;
+
+export const HeaderSearchContainer = styled(Box)`
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    display: none;
+  }
+`;

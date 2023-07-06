@@ -19,6 +19,6 @@ export const StyledLink = styled(Link)`
 export const TimeDuration = styled("small")(({ theme }) => ({
   color: theme.palette.grey[400],
   display: "block",
-  textAlign: "right",
+  textAlign: "left",
   marginTop: "0.5rem"
 }));
