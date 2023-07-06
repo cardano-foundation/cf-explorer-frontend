@@ -65,7 +65,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       icon: cubeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> Block</TitleCard>
+          <TitleCard mr={1}> Blocks</TitleCard>
         </Box>
       ),
       value: data?.blkCount || 0

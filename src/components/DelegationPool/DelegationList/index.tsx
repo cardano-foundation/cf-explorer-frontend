@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { Box } from "@mui/material";
+import { get } from "lodash";
 
 import Table, { Column } from "src/components/commons/Table";
 import { formatADAFull, formatPercent, getPageInfo, getShortWallet } from "src/commons/utils/helper";

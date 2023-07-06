@@ -96,7 +96,7 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
 );
 
 export const FormHelperTextCustom = styled(FormHelperText)`
-  font-size: 14px
+  font-size: 14px;
   line-height: 16px;
 `;
 export const Label = styled(Box)`
@@ -104,6 +104,7 @@ export const Label = styled(Box)`
   font-size: 14px;
   line-height: 16px;
   opacity: 0.8;
+  color: ${(props) => props.theme.palette.grey[700]};
 `;
 
 export const ForgotPassword = styled(Box)`
@@ -112,7 +113,11 @@ export const ForgotPassword = styled(Box)`
   line-height: 16px;
   color: ${({ theme }) => theme.palette.blue[800]};
   text-decoration: underline;
-  cursor: pointer;
+  text-align: left;
+  & > span {
+    display: inline;
+    cursor: pointer;
+  }
 `;
 
 export const UserCustomIcon = styled(User2RC)`
