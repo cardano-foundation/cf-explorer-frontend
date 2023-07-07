@@ -111,7 +111,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Item item xs={6} md={3} top={1}>
             <StyledImg src={CalendarIcon} alt="Calendar Icon" />
             <InfoTitle>
-              <StyledTitle>Created date</StyledTitle>
+              <StyledTitle>Created At</StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.createDate && formatDateTimeLocal(data.createDate || "")}</InfoValue>
           </Item>
@@ -252,7 +252,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 alignItems={isGalaxyFoldSmall ? "flex-start" : "flex-end"}
                 marginTop="9px"
               >
-                <Box component={"span"} mt={1} style={{ fontSize: "14px", fontWeight: "400", opacity: "0.5" }}>
+                <Box component={"span"} mt={1} style={{ fontSize: "14px", fontWeight: "400" }}>
                   Saturation
                 </Box>
                 <Box fontSize={16}>{formatPercent(data?.saturation ? data?.saturation / 100 : 0)}</Box>

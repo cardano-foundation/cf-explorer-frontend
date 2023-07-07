@@ -44,7 +44,7 @@ const StakeDelegations = () => {
       title: "#",
       minWidth: 30,
       key: "index",
-      render: (r, idx) => numberWithCommas(idx + 1)
+      render: (r, idx) => numberWithCommas(pageInfo?.page * pageInfo?.size + idx + 1 || 0)
     },
     {
       title: "Tx Hash",
@@ -57,8 +57,8 @@ const StakeDelegations = () => {
       )
     },
     {
-      title: "Time",
-      key: "time",
+      title: "Created At",
+      key: "createdat",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time)
     },
@@ -75,8 +75,8 @@ const StakeDelegations = () => {
       )
     },
     {
-      title: "Stake Key",
-      key: "stakeKeys",
+      title: "Stake Address",
+      key: "stakeAddress",
       render: (r) => {
         const stakeKey = r.stakeKeys[0];
         return (

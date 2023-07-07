@@ -32,7 +32,8 @@ export const API = {
     CURRENT: "txs/current",
     DETAIL: "txs",
     LIST: "txs",
-    GRAPH: "txs/graph"
+    GRAPH: "txs/graph",
+    HASH_CONTRACT: (txHash: string, address: string) => `txs/${txHash}/contract?address=${address}`
   },
   STAKE: {
     ANALYTICS: "stakes/analytics",
