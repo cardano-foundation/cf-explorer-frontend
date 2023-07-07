@@ -45,7 +45,7 @@ const InstantReards = () => {
       title: "#",
       minWidth: 30,
       key: "index",
-      render: (r, idx) => numberWithCommas(idx + 1)
+      render: (r, idx) => numberWithCommas(pageInfo?.page * pageInfo?.size + idx + 1 || 0)
     },
     {
       title: "Tx Hash",
