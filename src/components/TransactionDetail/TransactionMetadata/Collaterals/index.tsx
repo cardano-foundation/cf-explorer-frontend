@@ -19,7 +19,7 @@ const Collaterals: React.FC<CollateralProps> = ({ data }) => {
   return (
     <Wrapper>
       <Header>
-        <Box>Wallet Addresses</Box>
+        <Box>Addresses</Box>
         <Box>Amount</Box>
       </Header>
       <ItemBox>
