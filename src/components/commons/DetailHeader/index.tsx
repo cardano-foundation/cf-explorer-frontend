@@ -46,7 +46,7 @@ import {
   TimeDuration
 } from "./styles";
 
-interface DetailHeaderProps {
+export interface DetailHeaderProps {
   type: Bookmark["type"];
   bookmarkData?: string;
   loading: boolean;
