@@ -78,7 +78,7 @@ const Stake = () => {
       )
     },
     {
-      title: "Time",
+      title: "Created At",
       key: "time",
       render: (r) => formatDateTimeLocal(r.txTime || "")
     },

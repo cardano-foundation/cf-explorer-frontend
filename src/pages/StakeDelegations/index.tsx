@@ -57,8 +57,8 @@ const StakeDelegations = () => {
       )
     },
     {
-      title: "Time",
-      key: "time",
+      title: "Created At",
+      key: "createdat",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time)
     },
