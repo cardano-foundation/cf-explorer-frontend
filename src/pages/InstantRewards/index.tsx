@@ -45,7 +45,7 @@ const InstantReards = () => {
       title: "#",
       minWidth: 30,
       key: "index",
-      render: (r, idx) => numberWithCommas(idx + 1)
+      render: (r, idx) => numberWithCommas(pageInfo?.page * pageInfo?.size + idx + 1 || 0)
     },
     {
       title: "Tx Hash",
@@ -58,8 +58,8 @@ const InstantReards = () => {
       )
     },
     {
-      title: "Time",
-      key: "time",
+      title: "Created At",
+      key: "createdat",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time)
     },
@@ -76,7 +76,7 @@ const InstantReards = () => {
       )
     },
     {
-      title: "Stake Key",
+      title: "Stake Address",
       key: "numberOfStakes",
       render: (r) => <Box component={"span"}>{r.numberOfStakes}</Box>
     },

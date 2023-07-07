@@ -52,7 +52,9 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       icon: txConfirmUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Confirmation</TitleCard>
+          <TitleCard mr={1}>
+            {data?.confirmation && data?.confirmation > 1 ? "Confirmations" : "Confirmation"}
+          </TitleCard>
         </Box>
       ),
       value: (
@@ -66,7 +68,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       icon: exchageIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Transaction</TitleCard>
+          <TitleCard mr={1}>{data?.txCount && data?.txCount > 1 ? "Transactions" : "Transaction"}</TitleCard>
         </Box>
       ),
       value: data?.txCount || 0

@@ -89,7 +89,7 @@ const Dashboard: React.FC = () => {
         <StakingLifeCycleSearch />
       </Container>
     );
-    
+
   return (
     <Container>
       <StakingLifeCycleSearch />

@@ -28,7 +28,7 @@ export const OverviewTitle = styled("p")`
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
-  color: ${(props) => props.theme.palette.text.primary};
+  color: ${(props) => props.theme.palette.grey[700]};
 `;
 
 export const Card = styled(CardMui)(() => ({
