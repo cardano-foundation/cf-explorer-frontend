@@ -76,7 +76,7 @@ const InstantReards = () => {
       )
     },
     {
-      title: "Stake Key",
+      title: "Stake Address",
       key: "numberOfStakes",
       render: (r) => <Box component={"span"}>{r.numberOfStakes}</Box>
     },

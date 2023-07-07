@@ -95,8 +95,8 @@ const Stake = () => {
       )
     },
     {
-      title: "Stake Key",
-      key: "stakeKey",
+      title: "Stake Address",
+      key: "stakeAddress",
       render: (r, idx) => (
         <>
           <CustomTooltip title={r.stakeKey}>

@@ -75,8 +75,8 @@ const StakeDelegations = () => {
       )
     },
     {
-      title: "Stake Key",
-      key: "stakeKeys",
+      title: "Stake Address",
+      key: "stakeAddress",
       render: (r) => {
         const stakeKey = r.stakeKeys[0];
         return (
