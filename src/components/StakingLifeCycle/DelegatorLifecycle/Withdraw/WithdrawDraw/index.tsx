@@ -84,55 +84,55 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
     return [
       {
         start: adaHolderRef,
-        startPosition: { 0: ["center", "bottom"], xl: ["center", "middle"] },
+        startPosition: { 0: ["center", "bottom"], 1440: ["center", "middle"] },
         end: paymentRef,
-        endPosition: { 0: ["center", "top"], xl: ["left", "middle"] },
-        arrow: { 0: "top", xl: "left" }
+        endPosition: { 0: ["center", "top"], 1440: ["left", "middle"] },
+        arrow: { 0: "top", 1440: "left" }
       },
       {
         start: netAmountRef,
-        startPosition: { 0: ["center", "top"], xl: ["left", "middle"] },
+        startPosition: { 0: ["center", "top"], 1440: ["left", "middle"] },
         end: paymentRef,
-        endPosition: { 0: ["center", "bottom"], xl: ["right", "middle"] },
-        startOffset: { 0: [0, -15], xl: [0] },
-        arrow: { 0: "bottom", xl: "right" },
-        autoAlign: { 0: "start-vertical", xl: "start-horizontal" }
+        endPosition: { 0: ["center", "bottom"], 1440: ["right", "middle"] },
+        startOffset: { 0: [0, -15], 1440: [0] },
+        arrow: { 0: "bottom", 1440: "right" },
+        autoAlign: { 0: "start-vertical", 1440: "start-horizontal" }
       },
       {
         start: paymentRef,
-        startPosition: { 0: ["center", "bottom"], xl: ["right", "middle"] },
+        startPosition: { 0: ["center", "bottom"], 1440: ["right", "middle"] },
         end: withDrawnRef,
-        endPosition: { 0: ["center", "top"], xl: ["left", "middle"] },
-        endOffset: { 0: [0, -15], xl: [0] },
-        arrow: { 0: "top", xl: "left" },
-        autoAlign: { 0: "end-vertical", xl: "end-horizontal" }
+        endPosition: { 0: ["center", "top"], 1440: ["left", "middle"] },
+        endOffset: { 0: [0, -15], 1440: [0] },
+        arrow: { 0: "top", 1440: "left" },
+        autoAlign: { 0: "end-vertical", 1440: "end-horizontal" }
       },
       {
         start: feeRef,
-        startPosition: { 0: ["center", "top"], xl: ["center", "top"] },
+        startPosition: { 0: ["center", "top"], 1440: ["center", "top"] },
         end: netAmountRef,
-        endPosition: { 0: ["center", "bottom"], xl: ["right", "middle"] },
-        startOffset: { 0: [0, 15], xl: [0] },
-        arrow: { 0: "bottom", xl: "right" },
-        fold: { 0: "none", xl: "vertical" }
+        endPosition: { 0: ["center", "bottom"], 1440: ["right", "middle"] },
+        startOffset: { 0: [0, 15], 1440: [0] },
+        arrow: { 0: "bottom", 1440: "right" },
+        fold: { 0: "none", 1440: "vertical" }
       },
       {
         start: cardanoBlockchainRef,
-        startPosition: { 0: ["right", "top"], xl: ["left", "middle"] },
+        startPosition: { 0: ["right", "top"], 1440: ["left", "middle"] },
         end: feeRef,
-        endPosition: { 0: ["center", "bottom"], xl: ["right", "middle"] },
-        startOffset: { 0: [0, 45], xl: [15, 0] },
-        arrow: { 0: "bottom", xl: "right" },
-        autoAlign: { 0: "end-vertical", xl: "none" }
+        endPosition: { 0: ["center", "bottom"], 1440: ["right", "middle"] },
+        startOffset: { 0: [0, 45], 1440: [15, 0] },
+        arrow: { 0: "bottom", 1440: "right" },
+        autoAlign: { 0: "end-vertical", 1440: "none" }
       },
       {
         start: withDrawnRef,
-        startPosition: { 0: ["center", "bottom"], xl: ["right", "middle"] },
+        startPosition: { 0: ["center", "bottom"], 1440: ["right", "middle"] },
         end: cardanoBlockchainRef,
-        endPosition: { 0: ["left", "top"], xl: ["left", "middle"] },
-        endOffset: { 0: [0, 45], sm: [0, 45], xl: [15] },
-        arrow: { 0: "top", xl: "left" },
-        autoAlign: { 0: "start-vertical", xl: "start-horizontal" }
+        endPosition: { 0: ["left", "top"], 1440: ["left", "middle"] },
+        endOffset: { 0: [0, 45], sm: [0, 45], 1440: [15] },
+        arrow: { 0: "top", 1440: "left" },
+        autoAlign: { 0: "start-vertical", 1440: "start-horizontal" }
       }
     ];
   }, []);
