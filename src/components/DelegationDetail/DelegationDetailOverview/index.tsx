@@ -1,7 +1,7 @@
 import { Box, Grid, Skeleton } from "@mui/material";
 import React from "react";
 
-import { formatADAFull, formatPercent, numberWithCommas } from "src/commons/utils/helper";
+import { formatADAFull, formatPercent, numberWithCommas, toFixedBigNumber } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import { Item, StyledContainer, Title, Value } from "./styles";
@@ -15,13 +15,8 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
   const overviewData = [
     {
       title: "Reward",
-      value: data?.reward || 0,
+      value: `${toFixedBigNumber(data?.reward || 0, 2)}%`,
       tooltip: "Last calculated gross return, as of the second last epoch"
-    },
-    {
-      title: "Margin",
-      value: formatPercent(data?.margin),
-      tooltip: ""
     },
     {
       title: "ROS",
@@ -29,22 +24,28 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
       tooltip: "Gross average return during pool’s lifetime"
     },
     {
-      title: "Pledge(A)",
-      value: formatADAFull(data?.pledge),
-      tooltip: ""
-    },
-    {
       title: "Fixed Cost(A)",
       value: formatADAFull(data?.cost),
       tooltip: ""
     },
     {
-      title: "Epoch Block",
+      title: "Margin",
+      value: formatPercent(data?.margin),
+      tooltip: ""
+    },
+
+    {
+      title: "Declared Pledge(A)",
+      value: formatADAFull(data?.pledge),
+      tooltip: ""
+    },
+    {
+      title: "Epoch Blocks",
       value: data?.epochBlock || 0,
       tooltip: ""
     },
     {
-      title: "Lifetime Block",
+      title: "Lifetime Blocks",
       value: numberWithCommas(data?.lifetimeBlock),
       tooltip: ""
     }
