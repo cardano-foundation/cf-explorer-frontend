@@ -3,7 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { Box } from "@mui/material";
 
 import Table, { Column } from "src/components/commons/Table";
-import { formatADAFull, formatPercent, getPageInfo, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, formatPercent, getPageInfo, getShortWallet, toFixedBigNumber } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import { HeaderSearchIcon } from "src/commons/resources";
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -132,7 +132,7 @@ const DelegationLists: React.FC = () => {
       ),
       minWidth: "100px",
       key: "lifetimeRos",
-      render: (r) => <Box component={"span"}>{r.lifetimeRos || 0}%</Box>
+      render: (r) => <Box component={"span"}>{toFixedBigNumber(r?.lifetimeRos || 0, 2)}%</Box>
     }
   ];
 
