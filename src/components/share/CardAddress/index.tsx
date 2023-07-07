@@ -1,10 +1,10 @@
 import React from "react";
 import { Box, Skeleton } from "@mui/material";
 
-import { EmptyIcon, InfoIcon } from "src/commons/resources";
+import { EmptyIcon } from "src/commons/resources";
 import CopyButton from "src/components/commons/CopyButton";
 import { details } from "src/commons/routers";
-import CustomIcon from "src/components/commons/CustomIcon";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
 import {
   AddressGroup,
@@ -13,6 +13,7 @@ import {
   ItemDetail,
   LabelItem,
   RowItem,
+  TimeDuration,
   TitleDetail,
   TokenAddress,
   ValueItem
@@ -25,8 +26,9 @@ interface DetailCardProps {
   type: "left" | "right";
   loading: boolean;
   addressDestination?: string;
+  lastUpdated?: number;
 }
-const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, loading, addressDestination }) => {
+const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, loading, addressDestination, lastUpdated }) => {
   if (loading) {
     return (
       <CardItemStyled padding={0}>
@@ -47,6 +49,11 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
   return (
     <CardItemStyled>
       <TitleDetail>{title}</TitleDetail>
+      {type === "left" ? (
+        <TimeDuration>
+          <FormNowMessage time={lastUpdated} />
+        </TimeDuration>
+      ) : null}
       <AddressGroup>
         {type === "left" ? (
           <TokenAddress>{address}</TokenAddress>
@@ -61,7 +68,6 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
             <ItemDetail key={ii}>
               {i.title && (
                 <RowItem>
-                  <CustomIcon icon={InfoIcon} width={22} />
                   <LabelItem>{i.title}</LabelItem>
                 </RowItem>
               )}
