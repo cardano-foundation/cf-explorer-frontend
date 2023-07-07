@@ -11,7 +11,7 @@ import { formatNumberDivByDecimals, getShortWallet } from "src/commons/utils/hel
 import CustomTooltip from "../CustomTooltip";
 import { CustomSelect, OptionSelect, TokenButton } from "./styles";
 
-interface IDropdownTokens {
+export interface IDropdownTokens {
   tokens: Token[];
   type?: "up" | "down" | undefined;
   hideInputLabel?: boolean;
