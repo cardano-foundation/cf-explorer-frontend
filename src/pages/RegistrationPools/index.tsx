@@ -113,8 +113,8 @@ const RegistrationPools = () => {
       }
     },
     {
-      title: "Stake Key",
-      key: "stakeKey",
+      title: "Stake Address",
+      key: "stakeAddress",
       render: (pool) => (
         <>
           {pool.stakeKey?.slice(0, 2).map((stakeKey) => (
