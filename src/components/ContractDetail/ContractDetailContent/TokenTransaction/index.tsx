@@ -41,7 +41,7 @@ const columns: Column<Transactions>[] = [
     )
   },
   {
-    title: "Time",
+    title: "Created At",
     key: "time",
     minWidth: "180px",
 
