@@ -42,7 +42,7 @@ const Epoch: React.FC = () => {
             <Box width={41} margin="auto">
               {r.no || 0}
             </Box>
-            <Status status={r.status.toLowerCase()}>{EPOCH_STATUS[r.status]}</Status>
+            <Status status={r.status as keyof typeof EPOCH_STATUS}>{EPOCH_STATUS[r.status]}</Status>
           </Box>
         </Link>
       )

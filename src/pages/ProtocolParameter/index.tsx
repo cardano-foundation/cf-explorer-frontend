@@ -382,7 +382,7 @@ export const ProtocolParameterHistory = () => {
           bgcolor={({ palette }) =>
             r[t as ProtocolTypeKey] !== null
               ? ["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string)
-                ? alpha(palette.green[600], 0.4)
+                ? alpha(palette.green[600], 0.15)
                 : "transparent"
               : "transparent"
           }
@@ -494,7 +494,7 @@ export const ProtocolParameterHistory = () => {
               component={Button}
               variant="text"
               textTransform={"capitalize"}
-              bgcolor={({ palette }) => alpha(palette.green[600], 0.1)}
+              bgcolor={({ palette }) => alpha(palette.green[600], 0.15)}
               px={2}
               onClick={() => setShowFiter(!showFilter)}
             >
@@ -675,30 +675,32 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           </AccordionSummary>
           <AccordionDetails>
             <Box height={170} overflow={"auto"}>
-              <Checkbox
-                checked={filterOption.length === Object.keys(PROTOCOL_TYPE).length}
-                id={"all"}
-                sx={{
-                  color: ({ palette }) => alpha(palette.common.black, 0.15),
-                  "&.Mui-checked": {
-                    color: `#0052CC !important`
-                  }
-                }}
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    clear();
-                    pushFilterOption(...Object.keys(PROTOCOL_TYPE));
-                  } else {
-                    clear();
-                  }
-                }}
-              />
-              <Box component={"label"} htmlFor={"all"} style={{ cursor: "pointer" }}>
-                All parameters
+              <Box>
+                <Checkbox
+                  checked={filterOption.length === Object.keys(PROTOCOL_TYPE).length}
+                  id={"all"}
+                  sx={{
+                    color: ({ palette }) => alpha(palette.common.black, 0.15),
+                    "&.Mui-checked": {
+                      color: `#0052CC !important`
+                    }
+                  }}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      clear();
+                      pushFilterOption(...Object.keys(PROTOCOL_TYPE));
+                    } else {
+                      clear();
+                    }
+                  }}
+                />
+                <Box component={"label"} htmlFor={"all"} style={{ cursor: "pointer" }}>
+                  All parameters
+                </Box>
               </Box>
 
               {Object.keys(PROTOCOL_TYPE).map((k, idx) => (
-                <Box key={idx} mb={2}>
+                <Box key={idx}>
                   <Checkbox
                     id={k}
                     checked={filterOption.includes(k)}

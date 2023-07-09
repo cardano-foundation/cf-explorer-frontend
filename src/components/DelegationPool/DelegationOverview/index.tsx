@@ -3,7 +3,7 @@ import { Box, Grid } from "@mui/material";
 import moment from "moment";
 import { useSelector } from "react-redux";
 
-import { CurentEpochIcon, LiveStakeIcon, RocketBackground, TotalPoolIcon } from "src/commons/resources";
+import { CurentEpochPool, LiveStakePoolIcon, RocketPoolIcon, TotalPoolIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
@@ -76,7 +76,7 @@ const OverViews: React.FC = () => {
                 </StyledCard.Comment>
               </Box>
             </StyledCard.Content>
-            <StyledImg src={CurentEpochIcon} alt="Clock" />
+            <StyledImg src={CurentEpochPool} alt="Clock" />
           </StyledCard.Container>
         </Grid>
         <Grid item xl={3} md={6} xs={12}>
@@ -97,7 +97,7 @@ const OverViews: React.FC = () => {
                     </Box>
                   </StyledCard.Value>
                 </StyledCard.Content>
-                <StyledImg src={RocketBackground} alt="Rocket" />
+                <StyledImg src={RocketPoolIcon} alt="Rocket" />
               </StyledCard.Container>
               <Box position={"relative"} top={-60} px={4}>
                 <StyledLinearProgress
@@ -121,7 +121,7 @@ const OverViews: React.FC = () => {
               <StyledCard.Value>{numberWithCommas(data?.delegators)}</StyledCard.Value>
             </StyledCard.Content>
             <Box>
-              <StyledImg src={LiveStakeIcon} alt="Rocket" />
+              <StyledImg src={LiveStakePoolIcon} alt="Rocket" />
             </Box>
           </StyledCard.Container>
         </Grid>
