@@ -58,6 +58,7 @@ const RegistrationPools = () => {
             <CustomTooltip title={pool.txHash}>
               <StyledLink to={details.transaction(pool.txHash)}>{getShortHash(pool.txHash || "")}</StyledLink>
             </CustomTooltip>
+            <Box color={({ palette }) => palette.grey[300]}>{formatDateTimeLocal(pool.txTime || "")}</Box>
           </>
         );
       },
@@ -67,8 +68,8 @@ const RegistrationPools = () => {
     },
     {
       title: "Created At",
-      key: 'created_at',
-      render: (pool) => <>{formatDateTimeLocal(pool.txTime || "")}</>,
+      key: "created_at",
+      render: (pool) => <>{formatDateTimeLocal(pool.txTime || "")}</>
     },
     {
       title: "Block",
@@ -77,7 +78,10 @@ const RegistrationPools = () => {
         <>
           <StyledLink to={details.block(pool.block)}>{pool.block}</StyledLink>
           <br />
-          <StyledLink to={details.epoch(pool.epoch)}>{pool.epoch}</StyledLink>/{pool.slotNo}
+          <StyledLink to={details.epoch(pool.epoch)}>{pool.epoch}</StyledLink>/{" "}
+          <Box component={"span"} color={({ palette }) => palette.grey[300]}>
+            {pool.slotNo}
+          </Box>
         </>
       )
     },
