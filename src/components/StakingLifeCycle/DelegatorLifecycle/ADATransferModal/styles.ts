@@ -23,7 +23,7 @@ export const TextTx = styled("span")`
   color: #667085;
 `;
 
-export const CustomTab = styled("span")`
+export const CustomTab = styled(Box)`
   font-weight: 700;
   font-size: 18px;
   line-height: 21px;

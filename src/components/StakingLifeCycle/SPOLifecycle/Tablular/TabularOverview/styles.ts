@@ -73,6 +73,7 @@ export const ClickAbleLink = styled(Link)`
   color: ${({ theme }) => theme.palette.blue[800]} !important;
   cursor: pointer;
   white-space: nowrap;
+  font-weight: bold;
 `;
 
 export const ViewMoreButton = styled(IconButton)`
