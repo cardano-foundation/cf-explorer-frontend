@@ -124,7 +124,13 @@ const TransactionChart: React.FC = () => {
                     <Box
                       data-testid={item.key}
                       textAlign={"left"}
-                      color={({ palette }) => palette.green[700]}
+                      color={({ palette }) =>
+                        item.key === "trx"
+                          ? palette.yellow[600]
+                          : item.key === "simple"
+                          ? palette.blue[800]
+                          : palette.green[600]
+                      }
                       fontWeight={"bold"}
                       fontSize={"1.6rem"}
                     >
