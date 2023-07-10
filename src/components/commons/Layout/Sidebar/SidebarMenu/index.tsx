@@ -97,7 +97,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
       (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1])) ||
       (href === "/timeline" && (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
     );
-  }
+  };
 
   return (
     <SidebarMenuContainer>
@@ -151,9 +151,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`menu-${index}` === active
                         ? {
-                          backgroundColor: (theme) => `${theme.palette.green[700_10]} !important`,
-                          color: (theme) => theme.palette.grey[500]
-                        }
+                            backgroundColor: (theme) => `${theme.palette.green[700_10]} !important`,
+                            color: (theme) => theme.palette.grey[500]
+                          }
                         : { color: (theme) => theme.palette.grey[500] })
                     })}
                   >
@@ -306,9 +306,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`footer-${index}` === active
                         ? {
-                          backgroundColor: (theme) => `${theme.palette.green[700_10]} !important`,
-                          color: (theme) => theme.palette.grey[500]
-                        }
+                            backgroundColor: (theme) => `${theme.palette.green[700_10]} !important`,
+                            color: (theme) => theme.palette.grey[500]
+                          }
                         : { color: (theme) => theme.palette.grey[500] })
                     })}
                   >

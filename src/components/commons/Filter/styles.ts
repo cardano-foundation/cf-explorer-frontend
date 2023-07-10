@@ -1,9 +1,9 @@
-import { Box, Button, ListItemText, MenuItem, styled } from "@mui/material";
+import { Box, Button, ListItemText, MenuItem, alpha, styled } from "@mui/material";
 
 export const FilterButton = styled(Button)`
   border: none;
   outline: none;
-  background-color: rgba(67, 143, 104, 0.1);
+  background-color: ${({ theme }) => alpha(theme.palette.green[700], 0.15)};
   display: flex;
   justify-content: center;
   align-items: center;

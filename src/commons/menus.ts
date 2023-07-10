@@ -35,7 +35,7 @@ export const menus: Menu[] = [
       { title: "Native Tokens", href: routers.TOKEN_LIST },
       { title: "Smart Contracts", href: routers.CONTRACT_LIST },
       { title: "Pools", href: routers.DELEGATION_POOLS },
-      { title: "Top ADA Holders", href: routers.ADDRESS_LIST},
+      { title: "Top ADA Holders", href: routers.ADDRESS_LIST }
     ]
   },
   {
@@ -47,7 +47,7 @@ export const menus: Menu[] = [
       { title: "Stake Delegation(s)", href: routers.STAKE_DELEGATIONS },
       { title: "Pool Certificate", href: routers.REGISTRATION_POOLS.replace(":poolType?", "registration") },
       { title: "Pool Deregistration", href: routers.REGISTRATION_POOLS.replace(":poolType?", "de-registration") },
-      { title: "Instantaneous Rewards ", href: routers.INSTANTANEOUS_REWARDS },
+      { title: "Instantaneous Rewards ", href: routers.INSTANTANEOUS_REWARDS }
     ]
   },
   {
@@ -87,7 +87,6 @@ export const footerMenus: Menu[] = [
     children: [
       { href: "https://education.cardanofoundation.org/", title: "Blockchain Course" },
       { href: "https://developers.cardano.org/tools/", title: "Builder Tools" },
-      { href: "https://dappsoncardano.com/", title: "Dapps" },
       { href: "https://github.com/cardano-foundation", title: "Github" }
     ]
   }

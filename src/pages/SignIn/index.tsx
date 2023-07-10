@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControlLabel, FormGroup, FormHelperText, IconButton, InputAdornment } from "@mui/material";
+import { Box, FormGroup, FormHelperText, IconButton, InputAdornment } from "@mui/material";
 import { useEffect, useReducer, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
@@ -68,7 +68,6 @@ export default function SignIn() {
   ];
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
   const { isLoggedIn } = useAuth();
   const [invalidInfomation, setInvalidInfomation] = useState(false);
   const [error, setError] = useState(false);
@@ -90,10 +89,6 @@ export default function SignIn() {
   const handleTogglePassword = () => {
     setShowPassword((prevState) => !prevState);
   };
-
-  function handleRememberMeChange(event: any) {
-    setRememberMe(event.target.checked);
-  }
 
   const handleRedirectBack = () => {
     if (history.length > 1 && !AUTHENTICATE_ROUTES.includes(history.location.pathname)) {
@@ -191,11 +186,6 @@ export default function SignIn() {
         password,
         type: 0
       };
-      if (rememberMe) {
-        localStorage.setItem("rememberMe", "true");
-      } else {
-        localStorage.removeItem("rememberMe");
-      }
       const response = await signIn(payload);
       const data = response.data;
 
@@ -278,31 +268,11 @@ export default function SignIn() {
                 <FormHelperText error>{formData.password.error}</FormHelperText>
               ) : null}
             </WrapInput>
-            <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    sx={{
-                      opacity: "0.15",
-                      "&.Mui-checked": {
-                        opacity: "1"
-                      }
-                    }}
-                    size="medium"
-                    checked={rememberMe}
-                    onChange={handleRememberMeChange}
-                  />
-                }
-                label={
-                  <Box fontSize={"14px"} fontWeight={400} textAlign={"left"} color={({ palette }) => palette.grey[700]}>
-                    Remember & Auto Login
-                  </Box>
-                }
-              />
-              <ForgotPassword onClick={() => history.push(routers.FORGOT_PASSWORD)} data-testid="forgot-password-link">
+            <ForgotPassword data-testid="forgot-password-link">
+              <Box component={"span"} onClick={() => history.push(routers.FORGOT_PASSWORD)}>
                 Forgot your password?
-              </ForgotPassword>
-            </Box>
+              </Box>
+            </ForgotPassword>
             <WrapButton
               data-testid="login-btn"
               variant="contained"

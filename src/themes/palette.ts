@@ -33,6 +33,7 @@ const COMMON = {
 
 const GREY = {
   50: "#F7F7F7",
+  80: "#F4F4F4",
   100: "#F2F2F2",
   200: "#E3E5E9",
   300: "#50596D",
@@ -119,7 +120,8 @@ const border = {
   main: GREY[200],
   disabled: GREY[400],
   hint: "#C8CDD8",
-  block: "#438F68"
+  block: "#438F68",
+  line: alpha(COMMON.black, 0.1)
 };
 const background = {
   paper: COMMON.white,

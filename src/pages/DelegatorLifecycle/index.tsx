@@ -133,7 +133,7 @@ const DelegatorLifecycle = () => {
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>
-            <CustomTooltip title={!isLoggedIn ? "Please log in to use this feature" : ""}>
+            <CustomTooltip title={!isLoggedIn ? "Please sign in to use this feature" : ""}>
               <ReportButtonContainer>
                 <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
                   Compose report

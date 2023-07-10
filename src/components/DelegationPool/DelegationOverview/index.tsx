@@ -129,9 +129,9 @@ const OverViews: React.FC = () => {
           <StyledCard.Container>
             <StyledCard.Content>
               <StyledCard.Title>Total Pools</StyledCard.Title>
-              <StyledCard.Link to={details.epoch(data?.epochNo)}>
+              <StyledCard.Value>
                 {(data?.activePools ? +data.activePools : 0) + (data?.retiredPools ? +data.retiredPools : 0)}
-              </StyledCard.Link>
+              </StyledCard.Value>
               <Box
                 component="span"
                 sx={{ color: (theme) => theme.palette.grey[400], textAlign: "left" }}
