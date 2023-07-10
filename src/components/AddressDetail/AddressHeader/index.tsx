@@ -104,7 +104,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           justifyContent={"space-between"}
         >
           <Box component={"h2"} lineHeight={1} mt={2} display={"flex"} alignItems={"center"}>
-            <TitleText>Address Detail</TitleText>
+            <TitleText>Address Details</TitleText>
             <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
           </Box>
           {data?.isContract && (

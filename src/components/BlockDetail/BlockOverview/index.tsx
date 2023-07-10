@@ -129,7 +129,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
         type="BLOCK"
         hash={data?.hash}
         bookmarkData={`${data?.blockNo || data?.hash}`}
-        title={"Block detail"}
+        title={"Block details"}
         lastUpdated={lastUpdated}
         epoch={
           data && {
