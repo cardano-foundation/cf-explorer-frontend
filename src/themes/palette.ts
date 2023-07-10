@@ -13,13 +13,14 @@ const GREEN = {
   400: "#65B98E",
   450: "#5A9C56",
   500: "#53A57B",
-  600: "#438F68",
-  600_10: alpha("#438F68", 0.1),
-  600_20: alpha("#438F68", 0.2),
-  600_30: alpha("#438F68", 0.3),
-  700: "#29744D",
-  700_10: alpha("#29744D", 0.1),
-  700_20: alpha("#29744D", 0.2),
+  600: "#146635",
+  600_10: alpha("#146635", 0.1),
+  600_15: alpha("#146635", 0.15),
+  600_20: alpha("#146635", 0.2),
+  600_30: alpha("#146635", 0.3),
+  700: "#146635",
+  700_10: alpha("#146635", 0.1),
+  700_20: alpha("#146635", 0.2),
   800: "#184c78",
   800_10: alpha("#184c78", 0.1),
   800_20: alpha("#184c78", 0.2)
@@ -39,9 +40,9 @@ const GREY = {
   400: "#50596D",
   500: "#50596D",
   600: "#1F213A",
-  700: "#13152F",
+  700: "#141520",
   A100: "#A3A3A3",
-  A200: "#ECECEC",
+  A200: "#E7E8E9",
   A400: "#B7B7B7"
 };
 
@@ -51,11 +52,12 @@ const RED = {
   300: "#FFACAC",
   400: "#FF8D8D",
   500: "#FF7474",
-  600: "#F75E5E",
-  700: "#DD4343",
-  700_10: alpha("#DD4343", 0.1),
-  700_20: alpha("#DD4343", 0.2),
-  800: "#DE350B"
+  600: "#B60000",
+  700: "#B60000",
+  800: "#B60000",
+  700_10: alpha("#B60000", 0.1),
+  700_15: alpha("#B60000", 0.15),
+  700_20: alpha("#B60000", 0.2)
 };
 
 const YELLOW = {
@@ -64,9 +66,10 @@ const YELLOW = {
   300: "#FFDD9B",
   400: "#FFD37E",
   500: "#FFC75A",
-  600: "#F9B736",
-  700: "#FFA800",
-  700_20: alpha("#FFA800", 0.2)
+  600: "#7A501D",
+  700: "#7A501D",
+  700_15: alpha("#7A501D", 0.15),
+  700_20: alpha("#7A501D", 0.2)
 };
 
 const BLUE = {
@@ -77,9 +80,11 @@ const BLUE = {
   500: "#3272A8",
   600: "#256289",
   700: "#154666",
-  800: "#0052CC",
-  800_7: alpha("#0052CC", 0.07),
-  800_20: alpha("#0052CC", 0.2)
+  800: "#0048DB",
+  900: "#0052CC",
+  800_7: alpha("#0048DB", 0.07),
+  800_10: alpha("#0048DB", 0.1),
+  800_20: alpha("#0048DB", 0.2)
 };
 
 const PURPLE = {
@@ -103,7 +108,7 @@ const secondary = {
 
 const text = {
   primary: GREY[700],
-  secondary: GREY[500],
+  secondary: GREY[300],
   disabled: alpha(GREY[400], 0.4),
   hint: GREY[300],
   dark: COMMON.black
@@ -125,13 +130,13 @@ const background = {
 };
 
 const error = {
-  light: RED[700_10],
+  light: RED[700_15],
   main: RED[700],
   dark: RED[700],
   contrastText: COMMON.white
 };
 const warning = {
-  light: YELLOW[700_20],
+  light: YELLOW[700_15],
   main: YELLOW[700],
   dark: YELLOW[700],
   contrastText: COMMON.white
@@ -145,7 +150,7 @@ const info = {
 };
 
 const success = {
-  light: GREEN[600_20],
+  light: GREEN[600_15],
   main: GREEN[600],
   dark: GREEN[700],
   contrastText: COMMON.white

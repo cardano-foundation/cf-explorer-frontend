@@ -16,7 +16,7 @@ export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => (
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? theme.palette.common.black : theme.palette.text.hint,
+  color: active ? theme.palette.green[700] : theme.palette.text.hint,
   paddingLeft: 8
 }));
 
@@ -106,7 +106,7 @@ export const VRFKeyText = styled(Box)(({ theme }) => ({
 }));
 
 export const Value = styled(VRFKeyText)(({ theme }) => ({
-  color: theme.palette.common.black
+  color: theme.palette.grey[700]
 }));
 
 export const StyledAdaLogoIcon = styled(AdaLogoIcon)(() => ({
@@ -145,7 +145,7 @@ export const ChangeBox = styled(Box)(() => ({
 export const MinimumText = styled(Box)(({ theme }) => ({
   fontSize: 12,
   lineHeight: "16px",
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   marginTop: 5
 }));
 

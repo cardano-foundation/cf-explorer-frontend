@@ -64,7 +64,7 @@ export const HeaderContainer = styled(Box)`
 `;
 
 export const HeaderTitle = styled("h2")`
-  color: ${(props) => props.theme.palette.common.black};
+  color: ${(props) => props.theme.palette.grey[700]};
   font-size: 2.25rem;
   margin: 0.5rem 0;
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -157,6 +157,7 @@ export const SlotLeaderValue = styled("span")`
 `;
 export const SlotLeaderTitle = styled("small")`
   font-family: var(--font-family-text);
+  color: ${({ theme }) => theme.palette.grey[300]};
 `;
 
 export const SlotLeaderCopy = styled(CopyButton)`
@@ -176,15 +177,16 @@ export const DetailsInfo = styled(Grid)<{ length: number }>`
   }
 `;
 
-export const EpochNumber = styled(Link)<{ is_epoch: number }>(({ theme, is_epoch }) => ({
+export const EpochNumber = styled(Link)<{ is_epoch: number }>(({ theme }) => ({
   fontWeight: "bold",
-  color: `${is_epoch ? theme.palette.common.black : theme.palette.secondary.main} !important`,
+  color: `${theme.palette.grey[700]} !important`,
   margin: 0,
   fontSize: "1.5rem"
 }));
 
 export const EpochText = styled("small")`
   opacity: 0.8;
+  color: ${(props) => props.theme.palette.grey[300]};
 `;
 
 export const Icon = styled("img")`
@@ -385,7 +387,7 @@ export const CardItem = styled(Grid)<CardItemProps>(({ theme, length, wide, item
 }));
 
 export const ValueCard = styled(Box)(({ theme }) => ({
-  color: theme.palette.common.black,
+  color: theme.palette.grey[700],
   fontSize: "1rem",
   fontWeight: "bold",
   wordBreak: "break-word"

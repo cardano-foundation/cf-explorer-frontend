@@ -378,7 +378,7 @@ const Table: React.FC<TableProps> = ({
   };
 
   useEffect(() => {
-    if (wrapperRef.current) {
+    if (wrapperRef.current && !loading) {
       wrapperRef.current.scrollTop = 0;
     }
   }, [loading]);
@@ -579,7 +579,7 @@ const PaginationCustom = ({
                 }
               }}
             />
-            <Box component={"span"} color={(theme) => theme.palette.grey[400]} fontSize="0.875rem">
+            <Box component={"span"} color={(theme) => theme.palette.grey[700]} fontSize="0.875rem">
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}
               {numberWithCommas((page > 0 ? page : 1) * size > total ? total : (page > 0 ? page : 1) * size)} of{" "}
               {numberWithCommas(pagination?.total || 0)}

@@ -5,7 +5,7 @@ export const TextLabel = styled("div")`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-  color: #667085;
+  color: ${(props) => props.theme.palette.grey[300]};
   width: 130px;
 `;
 
