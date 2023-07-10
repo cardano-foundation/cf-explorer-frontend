@@ -104,6 +104,7 @@ export const StyledBoxCard = styled(Box)`
 `;
 
 export const TitleText = styled(Box)`
+  color: ${(props) => props.theme.palette.grey[700]};
   ${({ theme }) => theme.breakpoints.down("md")} {
     font-size: 24px !important;
   }

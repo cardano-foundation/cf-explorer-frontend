@@ -21,13 +21,14 @@ import {
   SideBarRight,
   SearchButton,
   Toggle,
-  NetworkContainer
+  NetworkContainer,
+  HeaderSearchContainer
 } from "./styles";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [
   routers.STAKING_LIFECYCLE.replace(":tab", "stake-key"),
   routers.STAKING_LIFECYCLE.replace(":tab", "pools"),
-  `/${routers.STAKE_DETAIL.split("/")[1]}/`,
+  `/${routers.DELEGATOR_LIFECYCLE.split("/")[1]}/`,
   `/${routers.SPO_LIFECYCLE.split("/")[1]}/`
 ];
 
@@ -66,7 +67,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
           <Title home={home ? 1 : 0} data-testid="home-title">
             Cardano Blockchain Explorer
           </Title>
-          {!pathMatched && <HeaderSearch home={home} />}
+          <HeaderSearchContainer>{!pathMatched && <HeaderSearch home={home} />}</HeaderSearchContainer>
         </HeaderMain>
         <HeaderTop data-testid="header-top" ref={refElement}>
           <HeaderLogoLink to="/" data-testid="header-logo">
