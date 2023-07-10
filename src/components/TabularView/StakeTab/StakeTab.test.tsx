@@ -51,7 +51,6 @@ describe("StakeTab", () => {
 
     expect(tab1).toBeInTheDocument();
     expect(tab2).toBeInTheDocument();
-    screen.logTestingPlaygroundURL();
     expect(
       screen.getByRole("columnheader", {
         name: /certificate/i

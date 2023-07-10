@@ -73,6 +73,7 @@ export const ApplyFilterButton = styled(Button)(({ theme }) => ({
     background: alpha(theme.palette.grey[700], 0.8)
   },
   ":disabled": {
+    color: theme.palette.common.white,
     background: alpha(theme.palette.grey[700], 0.3)
   }
 }));

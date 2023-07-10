@@ -93,6 +93,7 @@ const HolderValueLabel = styled(Typography)(({ theme }) => ({
   wordBreak: "break-word",
   textAlign: "right",
   lineHeight: "20px",
+  color: theme.palette.grey[700],
   [theme.breakpoints.down("sm")]: {
     fontSize: 16
   }
