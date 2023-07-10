@@ -63,7 +63,6 @@ const HomeStatistic = () => {
   const { liveStake = 0, activeStake = 1 } = data || {};
   const supply = Number(circulating_supply);
   const liveRate = new BigNumber(liveStake).div(MILION).div(supply).multipliedBy(100);
-  const activeRate = activeStake && new BigNumber(liveStake).div(activeStake).minus(1).multipliedBy(100);
   const circulatingSupply = new BigNumber(supply).multipliedBy(MILION);
   const circulatingRate = circulatingSupply.div(total).div(MILION).multipliedBy(100);
   const progress = moment(currentEpoch?.endTime).isAfter(moment())
@@ -199,7 +198,7 @@ const HomeStatistic = () => {
                   src={LiveStakeIcon}
                   alt="Total ADA Stake"
                 />
-                <Name data-testid="live-stake-box-title">Live Stake</Name>
+                <Name data-testid="live-stake-box-title">Live Stake (ADA)</Name>
                 <CustomTooltip title={formatADAFull(liveStake)}>
                   <Title data-testid="live-stake-value">{formatADA(liveStake)}</Title>
                 </CustomTooltip>
@@ -218,7 +217,7 @@ const HomeStatistic = () => {
                     </ProgressPending>
                   </CustomTooltip>
                 </Progress>
-                <XSmall data-testid="active-stake-label">Active Stake: </XSmall>
+                <XSmall data-testid="active-stake-label">Active Stake (ADA): </XSmall>
                 {isMobile ? <br /> : null}
                 <SmallValue>
                   <CustomTooltip title={formatADAFull(activeStake)}>
@@ -226,12 +225,9 @@ const HomeStatistic = () => {
                       <b>{formatADA(activeStake)} </b>
                     </XValue>
                   </CustomTooltip>
-                  <CustomTooltip title={`${activeRate.toFixed(5)}%`}>
-                    <Small data-testid="active-stake-percentage">({activeRate.toFixed(1)}%)</Small>
-                  </CustomTooltip>
                 </SmallValue>
                 <br />
-                <XSmall data-testid="circulating-supply-label">Circulating supply: </XSmall>
+                <XSmall data-testid="circulating-supply-label">Circulating supply (ADA): </XSmall>
                 {isMobile ? <br /> : null}
                 <SmallValue>
                   <XValue data-testid="circulating-supply-value">
