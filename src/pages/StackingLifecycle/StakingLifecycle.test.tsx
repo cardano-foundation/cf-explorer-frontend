@@ -43,7 +43,6 @@ describe("StakingLifecycle page", () => {
     const mockUseFetchList = useFetchList as jest.Mock;
     mockUseFetchList.mockReturnValue(mockData);
     render(<Dashboard />);
-    screen.logTestingPlaygroundURL();
     expect(screen.getByText(/Showing 100 results/i)).toBeInTheDocument();
   });
 

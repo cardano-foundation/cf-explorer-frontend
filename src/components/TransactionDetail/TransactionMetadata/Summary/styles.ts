@@ -108,3 +108,19 @@ export const TokenButton = styled(Box)(({ theme }) => ({
   borderRadius: theme.spacing(1),
   border: `1px solid ${alpha(theme.palette.grey[300], 0.5)}`
 }));
+export const Item = styled(Box)(() => ({
+  width: "100%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexWrap: "wrap"
+}));
+
+export const TitleText = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  paddingRight: theme.spacing(1),
+  marginBottom: theme.spacing(1),
+  color: theme.palette.grey[300]
+}));

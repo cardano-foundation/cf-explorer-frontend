@@ -6,7 +6,7 @@ export const TabLabel = styled(Typography)<{ active: number }>(
  font-size: 24px;
     font-weight: 700;
     text-transform: capitalize;
-    color: ${props.active ? "#000" : "#98A2B3"};
+    color: ${props.active ? props.theme.palette.grey[700] : props.theme.palette.grey[300]};
 `
 );
 
