@@ -53,7 +53,6 @@ export const EpochNumber = styled(Box)(({ theme }) => ({
   fontSize: 20,
   marginBottom: 8,
   textAlign: "center",
-  color: theme.palette.grey[700],
   [theme.breakpoints.down("sm")]: {
     marginTop: "-8px"
   },
