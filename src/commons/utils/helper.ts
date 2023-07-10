@@ -186,6 +186,6 @@ export const tokenRegistry = (policy: string | undefined, name: string | undefin
   return tokenRegitryLink;
 };
 
-export const toFixedBigNumber = (value: string | number, dp = 0): number => {
-  return +new BigNumber(value).toFixed(dp);
+export const toFixedBigNumber = (value: string | number, dp = 0, rm = BigNumber.ROUND_DOWN): number => {
+  return +new BigNumber(value).toFixed(dp, rm);
 };
