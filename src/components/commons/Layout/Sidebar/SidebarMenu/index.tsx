@@ -99,6 +99,16 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     );
   };
 
+  const isActiveMenu = (href: string): boolean => {
+    if (
+      href === routers.STAKING_LIFECYCLE.replace(":tab", "stake-key") &&
+      (pathname.startsWith("/delegator-lifecycle/") || pathname.startsWith("/spo-lifecycle/"))
+    )
+      return true;
+
+    return pathname === href;
+  };
+
   return (
     <SidebarMenuContainer>
       <Menu>
@@ -125,10 +135,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                       component={Link}
                       to={href}
-                      selected={pathname === href}
+                      selected={isActiveMenu(href)}
                       sx={(theme) => ({
                         ...itemStyle(theme, sidebar),
-                        ...(pathname === href ? { backgroundColor: `${theme.palette.success.dark} !important` } : {})
+                        ...(isActiveMenu(href) ? { backgroundColor: `${theme.palette.success.dark} !important` } : {})
                       })}
                     >
                       {icon ? (
@@ -136,10 +146,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                           src={icon}
                           alt={title}
                           iconOnly={!sidebar ? 1 : 0}
-                          active={pathname === href ? 1 : 0}
+                          active={isActiveMenu(href) ? 1 : 0}
                         />
                       ) : null}
-                      <MenuText primary={title} open={sidebar ? 1 : 0} active={pathname === href ? 1 : 0} />
+                      <MenuText primary={title} open={sidebar ? 1 : 0} active={isActiveMenu(href) ? 1 : 0} />
                     </ListItem>
                   )
                 ) : (
