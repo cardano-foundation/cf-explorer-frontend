@@ -11,7 +11,7 @@ export const StyledLink = styled(Link)`
 `;
 
 export const RegistrationContainer = styled(Container)(({ theme }) => ({
-  padding: "30px 0px 40px",
+  paddingTop: "30px",
   textAlign: "left",
   position: "relative",
   [theme.breakpoints.down("md")]: {
@@ -46,7 +46,7 @@ export const WrapHeader = styled(Box)(({ theme }) => ({
 }));
 
 export const StyledTab = styled(Tab)`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   padding: 0;
   &.Mui-selected {
     color: ${(props) => props.theme.palette.text.primary};
@@ -59,7 +59,7 @@ export const TabLabel = styled("h3")`
 `;
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   display: "block",
   textAlign: "right",
   width: "max-content",

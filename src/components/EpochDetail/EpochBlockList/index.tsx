@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
+import { Box } from "@mui/material";
 
 import Card from "src/components/commons/Card";
 import Table, { Column } from "src/components/commons/Table";
@@ -70,11 +71,17 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       render: (r) => (
         <>
           <EpochNo>{r.slotNo}</EpochNo>
-          <div>
+          <Box color={({ palette }) => palette.grey[300]}>
             {r.epochNo}/{r.epochSlotNo || 0}
-          </div>
+          </Box>
         </>
       )
+    },
+    {
+      title: "Created At",
+      key: "time",
+      minWidth: "100px",
+      render: (r) => <PriceWrapper>{formatDateTimeLocal(r.time)}</PriceWrapper>
     },
     {
       title: "Transactions",
@@ -102,12 +109,6 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
           <ADAicon />
         </StyledOutput>
       )
-    },
-    {
-      title: "Created At",
-      key: "time",
-      minWidth: "100px",
-      render: (r) => <PriceWrapper>{formatDateTimeLocal(r.time)}</PriceWrapper>
     }
   ];
 

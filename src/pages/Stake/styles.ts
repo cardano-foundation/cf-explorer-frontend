@@ -2,7 +2,7 @@ import { styled, Container, Tabs, Tab } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)`
-  padding: 30px 0 40px;
+  padding-top: 30px;
   text-align: left;
 
   ${({ theme }) => theme.breakpoints.down("md")} {
@@ -27,7 +27,7 @@ export const StyledTabs = styled(Tabs)`
 `;
 
 export const StyledTab = styled(Tab)`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   padding: 0;
   &.Mui-selected {
     color: ${(props) => props.theme.palette.text.primary};
@@ -45,13 +45,10 @@ export const StyledLink = styled(Link)`
 `;
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   display: "block",
-  textAlign: "right",
-  position: "absolute",
+  textAlign: "left",
   width: "max-content",
-  top: 30,
-  right: 24,
   lineHeight: 1,
   marginTop: "0.5rem",
   [theme.breakpoints.down("sm")]: {

@@ -45,7 +45,7 @@ export const WrapHintText = styled(Box)`
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  color: ${({ theme }) => theme.palette.grey[400]};
+  color: ${({ theme }) => theme.palette.grey[300]};
   display: flex;
   gap: 5px;
 `;
@@ -96,7 +96,7 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
 );
 
 export const FormHelperTextCustom = styled(FormHelperText)`
-  font-size: 14px
+  font-size: 14px;
   line-height: 16px;
 `;
 export const Label = styled(Box)`
@@ -104,25 +104,30 @@ export const Label = styled(Box)`
   font-size: 14px;
   line-height: 16px;
   opacity: 0.8;
+  color: ${(props) => props.theme.palette.grey[400]};
 `;
 
 export const ForgotPassword = styled(Box)`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-  color: ${({ theme }) => theme.palette.blue[800]};
+  color: ${({ theme }) => theme.palette.blue[100]};
   text-decoration: underline;
-  cursor: pointer;
+  text-align: left;
+  & > span {
+    display: inline;
+    cursor: pointer;
+  }
 `;
 
 export const UserCustomIcon = styled(User2RC)`
   path {
-    fill: ${({ theme }) => theme.palette.grey[400]};
+    fill: ${({ theme }) => theme.palette.grey[300]};
   }
 `;
 
 export const WrapButton = styled(Button)`
-  background: ${({ theme }) => theme.palette.grey[700]};
+  background: ${({ theme }) => theme.palette.grey[400]};
   padding: 15px 20px;
   border-radius: 8px;
   font-weight: 700;
@@ -160,7 +165,7 @@ export const WrapSignUp = styled(Box)`
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  color: ${({ theme }) => theme.palette.blue[800]};
+  color: ${({ theme }) => theme.palette.blue[100]};
 `;
 
 export const AlertCustom = styled(Alert)`

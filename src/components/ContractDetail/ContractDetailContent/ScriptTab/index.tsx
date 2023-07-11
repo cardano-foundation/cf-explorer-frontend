@@ -11,7 +11,7 @@ const Result = styled(Box)`
   background: rgba(152, 162, 179, 0.1);
   border-radius: 10px;
   text-align: left;
-  color: #344054;
+  color: ${(props) => props.theme.palette.grey[400]};
   line-height: 19px;
   font-weight: 400;
   font-size: 16px;
@@ -26,8 +26,9 @@ const StyledBox = styled(Box)`
 
 const ScriptType = styled(Box)`
   margin: 12px 0px;
+  color: ${(props) => props.theme.palette.grey[400]};
   span {
-    color: ${({ theme }) => theme.palette.blue[800]};
+    color: ${({ theme }) => theme.palette.blue[100]};
   }
 `;
 
@@ -47,7 +48,7 @@ const ScriptTab = () => {
 
   return (
     <StyledBox>
-      <Box>Contract</Box>
+      <Box color={({ palette }) => palette.grey[400]}>Contract</Box>
       {data?.isVerified ? (
         <ScriptType>
           Script Type: <span>Native Script</span>

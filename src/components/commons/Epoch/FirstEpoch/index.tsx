@@ -34,7 +34,13 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
     {
       icon: ExchangeIcon,
       hideHeader: true,
-      title: <EpochNumber>{currentEpochData?.no}</EpochNumber>,
+      title: (
+        <EpochNumber>
+          <Box component={"span"} onClick={handleClick}>
+            {currentEpochData?.no}
+          </Box>
+        </EpochNumber>
+      ),
       value: (
         <Box display={"flex"} alignItems="center" justifyContent={"center"} onClick={handleClick}>
           <ProgressCircle
@@ -46,16 +52,36 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
             trailOpacity={1}
           >
             <EpochProgress>{`${progress}%`}</EpochProgress>
-            <Status status={currentEpochData?.status?.toLowerCase()}>{EPOCH_STATUS[currentEpochData?.status]}</Status>
+            <Status status={currentEpochData?.status as keyof typeof EPOCH_STATUS}>
+              {EPOCH_STATUS[currentEpochData?.status]}
+            </Status>
           </ProgressCircle>
         </Box>
       )
     },
     {
+      icon: timeIconUrl,
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <TitleCard mr={1}> Start Timestamp</TitleCard>
+        </Box>
+      ),
+      value: <Content>{formatDateTimeLocal(currentEpochData?.startTime || "")}</Content>
+    },
+    {
+      icon: timeIconUrl,
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <TitleCard mr={1}> End Timestamp</TitleCard>
+        </Box>
+      ),
+      value: <Content>{formatDateTimeLocal(currentEpochData?.endTime || "")}</Content>
+    },
+    {
       icon: cubeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Block </TitleCard>
+          <TitleCard mr={1}>Blocks </TitleCard>
         </Box>
       ),
       value: <Content>{currentEpochData?.blkCount}</Content>
@@ -75,24 +101,6 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
           <SubContent>/{MAX_SLOT_EPOCH}</SubContent>
         </Content>
       )
-    },
-    {
-      icon: timeIconUrl,
-      title: (
-        <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> Start Time</TitleCard>
-        </Box>
-      ),
-      value: <Content>{formatDateTimeLocal(currentEpochData?.startTime || "")}</Content>
-    },
-    {
-      icon: timeIconUrl,
-      title: (
-        <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> End Time</TitleCard>
-        </Box>
-      ),
-      value: <Content>{formatDateTimeLocal(currentEpochData?.endTime || "")}</Content>
     }
   ];
   return (

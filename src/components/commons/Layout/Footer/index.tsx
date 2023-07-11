@@ -28,7 +28,7 @@ const FooterContainer = styled(Container)`
 `;
 
 const Copyright = styled("small")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   font-family: var(--font-family-title);
   ::first-letter {
     font-size: 1em;
@@ -46,7 +46,7 @@ const Footer: React.FC = () => {
     <StyledFooter data-testid="footer">
       <FooterContainer>
         <FooterMenu bottom={true} />
-        <Copyright>
+        <Copyright data-testid="footer-text">
           &copy; {new Date().getFullYear()} Cardano Foundation. All rights reserved. Version: {APP_VERSION}
         </Copyright>
       </FooterContainer>
