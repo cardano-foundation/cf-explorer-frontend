@@ -245,7 +245,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
               </DetailsInfoItem>
             )}
             <DetailsInfoItem>
-              <DetailLabel>Create At</DetailLabel>
+              <DetailLabel>Created At</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.tx.time || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
