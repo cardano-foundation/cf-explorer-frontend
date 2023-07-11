@@ -30,7 +30,7 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
       )
     },
     {
-      title: "Time",
+      title: "Created At",
       key: "time",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time || "")
