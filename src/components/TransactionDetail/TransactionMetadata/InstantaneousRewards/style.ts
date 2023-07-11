@@ -82,7 +82,7 @@ export const Title = styled(Box)(({ theme }) => ({
 }));
 export const Value = styled(Box)(({ theme }) => ({
   whiteSpace: "nowrap",
-  color: theme.palette.primary.main,
+  color: theme.palette.grey[700],
   fontWeight: "bold",
   marginRight: theme.spacing(1)
 }));

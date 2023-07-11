@@ -29,6 +29,7 @@ export const LifeCycleTitle = styled("h2")(({ theme }) => ({
   margin: "0px 0px 5px",
   fontSize: 36,
   lineHeight: "42px",
+  color: theme.palette.grey[700],
   whiteSpace: "nowrap",
   [theme.breakpoints.down("sm")]: {
     fontSize: 24,

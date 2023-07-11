@@ -19,6 +19,7 @@ export const TextValue = styled("div")`
   font-size: 14px;
   line-height: 16px;
   word-break: break-all;
+  color: ${(props) => props.theme.palette.grey[700]};
 `;
 
 export const TextRightValue = styled("div")`
@@ -26,7 +27,7 @@ export const TextRightValue = styled("div")`
   font-weight: 700;
   font-size: 14px;
   line-height: 16px;
-  color: #000000;
+  color: ${(props) => props.theme.palette.grey[700]};
 `;
 
 export const TextNormal = styled(TextRightValue)`

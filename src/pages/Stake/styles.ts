@@ -47,11 +47,8 @@ export const StyledLink = styled(Link)`
 export const TimeDuration = styled("small")(({ theme }) => ({
   color: theme.palette.grey[400],
   display: "block",
-  textAlign: "right",
-  position: "absolute",
+  textAlign: "left",
   width: "max-content",
-  top: 30,
-  right: 24,
   lineHeight: 1,
   marginTop: "0.5rem",
   [theme.breakpoints.down("sm")]: {

@@ -77,7 +77,7 @@ export const VRFKeyText = styled(Box)(({ theme }) => ({
 }));
 
 export const Value = styled(VRFKeyText)(({ theme }) => ({
-  color: theme.palette.common.black,
+  color: theme.palette.grey[700],
   display: "flex",
   alignItems: "center",
   gap: 8
