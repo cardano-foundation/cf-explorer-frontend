@@ -48,10 +48,6 @@ export const HeaderMain = styled("div")<{ home: number }>(({ theme, home }) => (
   position: "relative",
   textAlign: "start",
   padding: home ? "0px 0px 50px" : "27px 0px",
-  "& > div": {
-    paddingTop: 0,
-    marginBottom: 0
-  },
   [theme.breakpoints.down("md")]: {
     padding: home ? "62px 0px 48px" : 0,
     display: home ? "block" : "none"
