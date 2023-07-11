@@ -2,7 +2,7 @@ import { styled, Container, Tabs, Tab } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)`
-  padding: 30px 0 40px;
+  padding-top: 30px;
   text-align: left;
 
   ${({ theme }) => theme.breakpoints.down("md")} {
