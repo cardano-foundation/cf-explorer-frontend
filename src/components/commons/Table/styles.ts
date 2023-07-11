@@ -97,7 +97,7 @@ export const TFooter = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "baseline",
   flexWrap: "wrap",
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   [theme.breakpoints.down("sm")]: {
     justifyContent: "flex-start",
     flexDirection: "column"
@@ -189,7 +189,7 @@ export const InputNumber = styled("input")<{ length: number }>(({ theme, length 
   textAlign: "center",
   fontWeight: "bold",
   border: `1px solid ${theme.palette.border.main}`,
-  color: theme.palette.grey[700],
+  color: theme.palette.grey[400],
   "::-webkit-inner-spin-button": {
     appearance: "none",
     margin: 0
@@ -202,7 +202,7 @@ export const SelectMui = styled(CustomSelect)(({ theme }) => ({
   fontSize: 14,
   minWidth: 50,
   border: "1px solid #E3E5E9",
-  color: theme.palette.grey[700],
+  color: theme.palette.grey[400],
   "& > div": {
     padding: "2.45px 14px"
   },

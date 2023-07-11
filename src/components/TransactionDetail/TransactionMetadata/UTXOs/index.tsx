@@ -48,11 +48,11 @@ const Card = ({
   return (
     <Box textAlign={"left"} mb={1} sx={{ background: (theme) => theme.palette.background.paper }}>
       <Header fontWeight="bold">
-        <Box color={(theme) => theme.palette.grey[700]} fontSize={"1rem"} lineHeight="19px" mb="2px">
+        <Box color={(theme) => theme.palette.grey[400]} fontSize={"1rem"} lineHeight="19px" mb="2px">
           {type === "down" ? "Input" : "Output"}
         </Box>
-        <Box color={(theme) => theme.palette.grey[500]} display="flex" justifyContent="space-between">
-          <Box>Addresses</Box>
+        <Box color={(theme) => theme.palette.grey[300]} display="flex" justifyContent="space-between">
+          <Box>Wallet Addresses</Box>
           <Box>Amount</Box>
         </Box>
       </Header>
@@ -80,7 +80,7 @@ const Card = ({
                                 component={"span"}
                                 fontWeight="bold"
                                 fontFamily={"var(--font-family-text)"}
-                                color={(theme) => theme.palette.blue[800]}
+                                color={(theme) => theme.palette.blue[100]}
                                 mr={1}
                               >
                                 {getShortHash(item.txHash)}
@@ -117,7 +117,7 @@ const Card = ({
                         <Link to={details.address(item.address)}>
                           <CustomTooltip title={item.address}>
                             <Box
-                              color={(theme) => theme.palette.blue[800]}
+                              color={(theme) => theme.palette.blue[100]}
                               fontWeight="bold"
                               fontFamily={"var(--font-family-text)"}
                               mr={1}
@@ -155,7 +155,7 @@ const Card = ({
                                   component={"span"}
                                   fontWeight="bold"
                                   fontFamily={"var(--font-family-text)"}
-                                  color={(theme) => theme.palette.blue[800]}
+                                  color={(theme) => theme.palette.blue[100]}
                                   mr={1}
                                 >
                                   {getShortWallet(item?.stakeAddress)}
@@ -180,7 +180,7 @@ const Card = ({
                     <Box
                       component={"span"}
                       whiteSpace="nowrap"
-                      color={(theme) => (type === "up" ? theme.palette.green[700] : theme.palette.red[800])}
+                      color={(theme) => (type === "up" ? theme.palette.green[200] : theme.palette.red[100])}
                       fontWeight="bold"
                       mr={1}
                     >
@@ -207,11 +207,11 @@ const Card = ({
         ))}
       </Box>
       <ItemFooter>
-        <Box fontWeight={"bold"} color={({ palette }) => palette.grey[700]}>
+        <Box fontWeight={"bold"} color={({ palette }) => palette.grey[400]}>
           Total {type === "down" ? "Input" : "Output"}
         </Box>
         <div>
-          <Box fontWeight={"bold"} component="span" pr={1} color={({ palette }) => palette.grey[700]}>
+          <Box fontWeight={"bold"} component="span" pr={1} color={({ palette }) => palette.grey[400]}>
             {type === "down" ? `-${formatADAFull(totalADA)}` : `${formatADAFull(totalADA)}`}
           </Box>
           <ADAicon />

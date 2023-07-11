@@ -16,7 +16,7 @@ export const Container = styled(Box)(({ theme }) => ({
 
 export const StyledLabel = styled("div")`
   font-weight: 400;
-  color: ${(props) => props.theme.palette.grey[700]};
+  color: ${(props) => props.theme.palette.grey[400]};
   font-size: 14px;
   line-height: 16px;
   margin: 6px 0px;
@@ -75,7 +75,7 @@ export const StyledAddressSelect = styled(Box)`
 `;
 
 export const StyledButton = styled(Button)`
-  background: ${(props) => props.theme.palette.grey[700]};
+  background: ${(props) => props.theme.palette.grey[400]};
   width: 100%;
   border-radius: 8px;
   height: 44px;
@@ -91,12 +91,12 @@ export const StyledButton = styled(Button)`
   gap: 10px;
   text-transform: none;
   &:disabled {
-    background: ${(props) => props.theme.palette.grey[700]};
+    background: ${(props) => props.theme.palette.grey[400]};
     opacity: 0.3;
     color: #fff;
   }
   &:hover {
-    background: ${(props) => props.theme.palette.grey[700]};
+    background: ${(props) => props.theme.palette.grey[400]};
     opacity: 0.8;
   }
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -109,7 +109,7 @@ export const StyledBackButton = styled(Button)<{ width?: number | string }>(({ w
   borderRadius: "8px",
   height: "44px",
   textAlign: "center",
-  color: theme.palette.grey[700],
+  color: theme.palette.grey[400],
   fontSize: 16,
   lineHeight: "19px",
   fontWeight: 700,
@@ -125,7 +125,7 @@ export const StyledBackButton = styled(Button)<{ width?: number | string }>(({ w
 }));
 
 export const SubText = styled("div")`
-  color: ${({ theme }) => theme.palette.grey[700]};
+  color: ${({ theme }) => theme.palette.grey[400]};
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
@@ -141,7 +141,7 @@ export const TextRequired = styled("div")`
 `;
 
 export const ButtonEvent = styled(Button)<{ active: number }>(({ theme, active }) => ({
-  background: active ? theme.palette.grey[300] : alpha(theme.palette.grey[700], 0.05),
+  background: active ? theme.palette.grey[300] : alpha(theme.palette.grey[400], 0.05),
   color: active ? theme.palette.common.white : theme.palette.grey[300],
   borderRadius: "6px",
   height: "44px",
@@ -153,7 +153,7 @@ export const ButtonEvent = styled(Button)<{ active: number }>(({ theme, active }
   lineHeight: "19px",
   fontWeight: 400,
   "&:hover": {
-    background: active ? theme.palette.grey[300] : alpha(theme.palette.grey[700], 0.05),
+    background: active ? theme.palette.grey[300] : alpha(theme.palette.grey[400], 0.05),
     color: active ? "#fff" : theme.palette.grey[300]
   },
   [theme.breakpoints.down("sm")]: {
@@ -192,7 +192,7 @@ export const TextLabelReview = styled("div")`
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  color: ${(props) => props.theme.palette.grey[700]};
+  color: ${(props) => props.theme.palette.grey[400]};
   opacity: 0.6;
   white-space: nowrap;
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -217,7 +217,7 @@ export const TextOverFlow = styled(Box)`
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  color: ${(props) => props.theme.palette.grey[700]};
+  color: ${(props) => props.theme.palette.grey[400]};
   width: 250px;
   text-align: right;
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -255,9 +255,9 @@ export const StyledSlider = styled(Slider)`
 `;
 
 export const StyledFormLabel = styled(FormLabel)`
-  color: ${(props) => props.theme.palette.grey[700]};
+  color: ${(props) => props.theme.palette.grey[400]};
   &.Mui-focused {
-    color: ${(props) => props.theme.palette.grey[700]};
+    color: ${(props) => props.theme.palette.grey[400]};
   }
 `;
 

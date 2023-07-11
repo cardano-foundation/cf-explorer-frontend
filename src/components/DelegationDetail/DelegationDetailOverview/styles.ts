@@ -26,7 +26,7 @@ export const Value = styled("span")(({ theme }) => ({
   fontWeight: "var(--font-weight-bold)",
   fontSize: 22,
   lineHeight: "33px",
-  color: theme.palette.grey[700],
+  color: theme.palette.grey[400],
   fontFamily: "var(--font-family-title)",
   [theme.breakpoints.down("sm")]: {
     fontSize: 14

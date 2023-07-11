@@ -99,7 +99,7 @@ export const Icon = styled("img")`
 `;
 
 export const PolicyId = styled(Box)(({ theme }) => ({
-  color: theme.palette.grey[700],
+  color: theme.palette.grey[400],
   fontSize: "1rem",
   fontWeight: "bold",
   wordBreak: "break-word",
@@ -325,7 +325,7 @@ export const TokenHeader = styled(Box)(({ theme }) => ({
   alignItems: "center",
   fontWeight: "bold",
   marginBottom: theme.spacing(2),
-  color: theme.palette.grey[700],
+  color: theme.palette.grey[400],
   overflowWrap: "anywhere"
 }));
 
