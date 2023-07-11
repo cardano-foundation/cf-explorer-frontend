@@ -44,7 +44,7 @@ const AddressAnalytics: React.FC = () => {
   const theme = useTheme();
   const { data, loading } = useFetch<AnalyticsData[]>(`${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`);
   const dataChart = data?.map((i) => {
-    const value = BigNumber(i.value);
+    const value = BigNumber(i.value || 0);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,6})?/)?.[0]);
   });
 
