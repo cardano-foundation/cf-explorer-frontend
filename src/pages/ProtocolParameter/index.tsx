@@ -61,14 +61,12 @@ const ProtocolParameter: React.FC = () => {
   const { data: dataLastest, loading: loadingLastest } = useFetch<any>(PROTOCOL_PARAMETER.LASTEST);
 
   const formatValueObjectRender = (valueObject: any) => {
-    if (typeof valueObject?.value === "object") {
+    if (isObject(valueObject?.value)) {
       return JSON.stringify(valueObject?.value);
     }
 
-    return valueObject?.value || "";
-  };
+    if (valueObject?.value) return valueObject?.value;
 
-  const formatValueFixedTable = (valueObject: any) => {
     if (typeof valueObject === "object") return JSON.stringify(valueObject);
 
     return valueObject || "";
@@ -78,7 +76,7 @@ const ProtocolParameter: React.FC = () => {
     isObject(dataFixed) &&
     Object.entries(dataFixed).map(([name, valueObject]: any) => ({
       name,
-      value: formatValueFixedTable(valueObject)
+      value: formatValueObjectRender(valueObject)
     }));
 
   const dataLatestVertical =
