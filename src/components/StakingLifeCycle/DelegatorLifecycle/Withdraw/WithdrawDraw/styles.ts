@@ -20,6 +20,7 @@ export const Info = styled(Box)(({ theme }) => ({
 export const InfoText = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
+  color: theme.palette.grey[400],
   marginLeft: theme.spacing(1),
   fontWeight: 600,
   fontSize: "14px",
@@ -61,7 +62,7 @@ export const DrawContainer = styled(Box)(({ theme }) => ({
   height: "max-content",
   position: "relative",
   marginTop: 35,
-  [theme.breakpoints.down("xl")]: {
+  [theme.breakpoints.down(1440)]: {
     flexDirection: "column",
     alignItems: "center",
     margin: "auto",
@@ -87,7 +88,7 @@ export const AccountContainer = styled(Box)(({ theme }) => ({
   border: "1.5px dashed #D2D2D2",
   background: alpha(theme.palette.grey[300], 0.1),
   borderRadius: 25,
-  [theme.breakpoints.down("xl")]: {
+  [theme.breakpoints.down(1440)]: {
     marginTop: 33
   }
 }));
@@ -146,7 +147,7 @@ export const AmountGroup = styled(Box)(({ theme }) => ({
   width: "max-content",
   flexDirection: "row",
   gap: 8,
-  [theme.breakpoints.down("xl")]: {
+  [theme.breakpoints.down(1440)]: {
     flexDirection: "column",
     gap: 49,
     marginTop: 72,
@@ -173,7 +174,7 @@ export const BoxGroup = styled(Box)(({ theme }) => ({
   width: 200,
   height: "100%",
   margin: "auto",
-  [theme.breakpoints.down("xl")]: {
+  [theme.breakpoints.down(1440)]: {
     flexDirection: "row-reverse",
     gap: 15,
     width: "100%"
@@ -187,15 +188,15 @@ export const NetAmountBox = styled(HoldBox)(({ theme }) => ({
   boxSizing: "border-box",
   minHeight: 70,
   height: "max-content",
-  borderColor: theme.palette.green[600],
+  borderColor: theme.palette.green[200],
   width: "100%",
   maxWidth: 200,
   minWidth: 180,
   "::after": {
     content: '"NET AMOUNT"',
-    background: theme.palette.green[600]
+    background: theme.palette.green[200]
   },
-  [theme.breakpoints.down("xl")]: {
+  [theme.breakpoints.down(1440)]: {
     width: 180,
     maxWidth: 180,
     minWidth: 180,
@@ -217,7 +218,7 @@ export const WithdrawnBox = styled(NetAmountBox)(() => ({
 
 export const StyledFeeBox = styled(FeeBox)(({ theme }) => ({
   width: 144,
-  [theme.breakpoints.down("xl")]: {
+  [theme.breakpoints.down(1440)]: {
     width: 156,
     padding: "16px 10px"
   },
@@ -230,7 +231,7 @@ export const StyledFeeBox = styled(FeeBox)(({ theme }) => ({
 export const BufferBox = styled(Box)(({ theme }) => ({
   display: "none",
 
-  [theme.breakpoints.down("xl")]: {
+  [theme.breakpoints.down(1440)]: {
     display: "block"
   }
 }));

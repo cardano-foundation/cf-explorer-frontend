@@ -67,9 +67,9 @@ const WithdrawalHistoryTab = () => {
           <AdaValue value={new BigNumber(r.value).minus(new BigNumber(r.fee)).toString()} />
           <TableSubTitle>
             <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-              <AdaValue color={theme.palette.grey[400]} value={r.value} gap="3px" fontSize="12px" />
+              <AdaValue color={theme.palette.grey[300]} value={r.value} gap="3px" fontSize="12px" />
               <Box mx="3px">/</Box>
-              <AdaValue color={theme.palette.grey[400]} value={r.fee} gap="3px" fontSize="12px" />
+              <AdaValue color={theme.palette.grey[300]} value={r.fee} gap="3px" fontSize="12px" />
             </Box>
           </TableSubTitle>
         </Box>
