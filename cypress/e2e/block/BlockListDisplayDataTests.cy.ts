@@ -1,4 +1,4 @@
-import BlockPage from "../../pagesobject/block/BlockPage";
+import BlockPage from "../../pagesobject/Block/BlockPage";
 const blockPage = new BlockPage();
 describe("block list", () => {
     beforeEach(() => {
