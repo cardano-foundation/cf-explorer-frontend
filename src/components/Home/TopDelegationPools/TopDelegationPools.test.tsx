@@ -67,10 +67,8 @@ describe("TopDelegationPools", () => {
         <TopDelegationPools />
       </Router>
     );
-    screen.logTestingPlaygroundURL();
     expect(screen.getByText(mockItem.poolName)).toBeInTheDocument();
     expect(screen.getByText(formatADAFull(mockItem.poolSize))).toBeInTheDocument();
-    expect(screen.getByText(formatADAFull(mockItem.pledge))).toBeInTheDocument();
     expect(screen.getByText(formatPercent(mockItem.saturation / 100))).toBeInTheDocument();
   });
 

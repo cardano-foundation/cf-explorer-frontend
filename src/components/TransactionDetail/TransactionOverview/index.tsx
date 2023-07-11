@@ -167,7 +167,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Created At </TitleCard>
+          <TitleCard mr={1}>Created At</TitleCard>
         </Box>
       ),
       value: formatDateTimeLocal(data?.tx?.time || "")
@@ -176,7 +176,9 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       icon: txConfirmUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Confirmation</TitleCard>
+          <TitleCard mr={1}>
+            {data?.tx?.confirmation && data?.tx?.confirmation > 1 ? "Confirmations" : "Confirmation"}
+          </TitleCard>
         </Box>
       ),
       value: (
