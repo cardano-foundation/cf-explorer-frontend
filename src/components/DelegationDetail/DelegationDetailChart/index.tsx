@@ -30,8 +30,8 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
   const { data, loading } = useFetch<AnalyticsDelegators>(`${API.DELEGATION.POOL_ANALYTICS}?poolView=${poolId}`);
   const theme = useTheme();
   const categories = data?.[selected]?.dataByDays?.map((item) => item.epochNo) || [];
-  const epochs = data?.epochChart?.dataByDays?.map((item) => item.totalStake / 10 ** 6) || [];
-  const delegators = data?.delegatorChart?.dataByDays?.map((item) => item.numberDelegator) || [];
+  const epochs = data?.epochChart?.dataByDays?.map((item) => item.totalStake / 10 ** 6 || 0) || [];
+  const delegators = data?.delegatorChart?.dataByDays?.map((item) => item.numberDelegator || 0) || [];
   return (
     <StyledContainer>
       <AnalyticsTitle>Analytics</AnalyticsTitle>
