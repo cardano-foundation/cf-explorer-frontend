@@ -124,7 +124,13 @@ const TransactionChart: React.FC = () => {
                     <Box
                       data-testid={item.key}
                       textAlign={"left"}
-                      color={({ palette }) => palette.green[700]}
+                      color={({ palette }) =>
+                        item.key === "trx"
+                          ? palette.yellow[100]
+                          : item.key === "simple"
+                          ? palette.blue[100]
+                          : palette.green[200]
+                      }
                       fontWeight={"bold"}
                       fontSize={"1.6rem"}
                     >
@@ -221,22 +227,22 @@ const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time
             type="monotone"
             dataKey="metadata"
             stackId="1"
-            stroke={theme.palette.green[600]}
-            fill={theme.palette.green[600]}
+            stroke={theme.palette.green[200]}
+            fill={theme.palette.green[200]}
           />
           <Area
             type="monotone"
             dataKey="smartContract"
             stackId="1"
-            stroke={theme.palette.blue[800]}
-            fill={theme.palette.blue[800]}
+            stroke={theme.palette.blue[100]}
+            fill={theme.palette.blue[100]}
           />
           <Area
             type="monotone"
             dataKey="simpleTransactions"
             stackId="1"
-            stroke={theme.palette.yellow[600]}
-            fill={theme.palette.yellow[600]}
+            stroke={theme.palette.yellow[100]}
+            fill={theme.palette.yellow[100]}
           />
         </AreaChart>
       </ResponsiveContainer>

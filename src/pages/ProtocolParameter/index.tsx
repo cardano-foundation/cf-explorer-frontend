@@ -110,7 +110,7 @@ const ProtocolParameter: React.FC = () => {
             overflow={"hidden"}
             whiteSpace={"nowrap"}
             textOverflow={"ellipsis"}
-            color={({ palette }) => (k === "costModel" ? palette.blue[800] : "unset")}
+            color={({ palette }) => (k === "costModel" ? palette.blue[100] : "unset")}
           >
             {r[k as ProtocolTypeKey] !== null ? r[k as ProtocolTypeKey]?.value || 0 : ""}
           </Box>
@@ -168,7 +168,7 @@ const ProtocolParameter: React.FC = () => {
             overflow={"hidden"}
             whiteSpace={"nowrap"}
             textOverflow={"ellipsis"}
-            color={({ palette }) => (k === "genDelegs" ? palette.blue[800] : "unset")}
+            color={({ palette }) => (k === "genDelegs" ? palette.blue[100] : "unset")}
           >
             {typeof r[k] === "object" ? JSON.stringify(r[k]) : r[k]}
           </Box>
@@ -195,7 +195,7 @@ const ProtocolParameter: React.FC = () => {
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
                 <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                  <Box fontWeight={"bold"} color={({ palette }) => palette.grey[700]} fontSize={"1.25rem"}>
+                  <Box fontWeight={"bold"} color={({ palette }) => palette.grey[400]} fontSize={"1.25rem"}>
                     Updatable Parameters
                   </Box>
                   <Box
@@ -224,7 +224,7 @@ const ProtocolParameter: React.FC = () => {
                 <Box>
                   <Box
                     textAlign={"left"}
-                    color={({ palette }) => palette.grey[700]}
+                    color={({ palette }) => palette.grey[400]}
                     fontWeight={"bold"}
                     fontSize={"1.25rem"}
                   >
@@ -347,7 +347,7 @@ export const ProtocolParameterHistory = () => {
           bgcolor={({ palette }) =>
             r[t as ProtocolTypeKey] !== null
               ? ["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string)
-                ? alpha(palette.green[600], 0.15)
+                ? alpha(palette.green[200], 0.15)
                 : "transparent"
               : "transparent"
           }
@@ -459,7 +459,7 @@ export const ProtocolParameterHistory = () => {
               component={Button}
               variant="text"
               textTransform={"capitalize"}
-              bgcolor={({ palette }) => alpha(palette.green[600], 0.15)}
+              bgcolor={({ palette }) => alpha(palette.green[200], 0.15)}
               px={2}
               onClick={() => setShowFiter(!showFilter)}
             >
@@ -589,7 +589,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
               <ImArrowDown2 />
-              <Box ml={1} color={({ palette }) => palette.grey[700]}>
+              <Box ml={1} color={({ palette }) => palette.grey[400]}>
                 Latest - First
               </Box>
             </Box>
@@ -600,7 +600,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
               <ImArrowUp2 />
-              <Box ml={1} color={({ palette }) => palette.grey[700]}>
+              <Box ml={1} color={({ palette }) => palette.grey[400]}>
                 First - Latest
               </Box>
             </Box>
@@ -611,7 +611,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
               <DateRangeIcon />
-              <Box ml={1} color={({ palette }) => palette.grey[700]}>
+              <Box ml={1} color={({ palette }) => palette.grey[400]}>
                 {" "}
                 Date range
               </Box>
@@ -631,7 +631,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
             >
               <Box display={"flex"} alignItems={"center"}>
                 <ProtocolParam />
-                <Box ml={1} color={({ palette }) => palette.grey[700]}>
+                <Box ml={1} color={({ palette }) => palette.grey[400]}>
                   Parameter changes {filterOption.length > 0 ? `(${filterOption.length})` : ""}
                 </Box>
               </Box>
@@ -710,7 +710,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           display={"flex"}
           alignItems={"center"}
           mt={2}
-          color={({ palette }) => `${palette.blue[800]} !important`}
+          color={({ palette }) => `${palette.blue[100]} !important`}
         >
           <Box mr={1}>Reset</Box>
           <ResetIcon />

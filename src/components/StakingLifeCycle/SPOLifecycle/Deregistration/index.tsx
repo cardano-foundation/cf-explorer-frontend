@@ -255,7 +255,7 @@ export const DeregistrationCertificateModal = ({
       <Grid container spacing={1}>
         <StyledGridItem item xs={6}>
           <Box>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
+            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[300]}>
               Pool ID
             </Box>
             {data && (
@@ -272,7 +272,7 @@ export const DeregistrationCertificateModal = ({
         </StyledGridItem>
         <StyledGridItem item xs={6}>
           <Box>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
+            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[300]}>
               Retirement in Epoch
             </Box>
             {data && (

@@ -14,7 +14,7 @@ export const StyledListItem = styled(ListItem)`
 export const StyledListItemText = styled(Typography)`
   font-size: 18px;
   font-weight: 700;
-  color: ${({ theme }) => theme.palette.blue[800]};
+  color: ${({ theme }) => theme.palette.blue[100]};
   cursor: pointer;
   overflow-wrap: anywhere;
 `;
@@ -22,5 +22,5 @@ export const StyledListItemText = styled(Typography)`
 export const ModalTitle = styled(Typography)`
   font-weight: 700;
   font-size: 24px;
-  color: #13152f;
+  color: ${({ theme }) => theme.palette.grey[400]};
 `;

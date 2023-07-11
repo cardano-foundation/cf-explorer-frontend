@@ -45,7 +45,7 @@ export const StyledTabs = styled(Tabs)`
 `;
 
 export const StyledTab = styled(Tab)`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   padding: 0;
   &.Mui-selected {
     color: ${(props) => props.theme.palette.text.primary};
@@ -96,7 +96,7 @@ export const StyledLinkKey = styled(Link)`
 
 export const OverviewIcon = styled(Box)`
   border-radius: 49px;
-  background: ${(props) => props.theme.palette.green[600_10]};
+  background: ${(props) => props.theme.palette.green[200_10]};
   width: 29px;
   height: 29px;
   display: flex;

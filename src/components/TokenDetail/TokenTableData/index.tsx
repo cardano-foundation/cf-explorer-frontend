@@ -74,7 +74,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, meta
         }}
         sx={({ palette }) =>
           isTablet
-            ? { borderBottom: `1px solid ${palette.green[700]}`, width: isMobile ? "calc(100% - 30px)" : "auto" }
+            ? { borderBottom: `1px solid ${palette.green[200]}`, width: isMobile ? "calc(100% - 30px)" : "auto" }
             : {}
         }
       >

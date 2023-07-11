@@ -38,10 +38,10 @@ export const Status = styled("span")<{ status: keyof typeof EPOCH_STATUS }>(({ t
   fontSize: "10px",
   color:
     status === "REWARDING"
-      ? theme.palette.green[700]
+      ? theme.palette.green[200]
       : status === "FINISHED"
-      ? theme.palette.blue[800]
-      : theme.palette.yellow[700],
+      ? theme.palette.blue[100]
+      : theme.palette.yellow[100],
   [theme.breakpoints.down("md")]: {
     fontSize: "7px"
   }

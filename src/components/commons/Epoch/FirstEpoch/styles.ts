@@ -53,7 +53,7 @@ export const EpochNumber = styled(Box)(({ theme }) => ({
   fontSize: 20,
   marginBottom: 8,
   textAlign: "center",
-  color: theme.palette.grey[700],
+  color: theme.palette.grey[400],
   [theme.breakpoints.down("sm")]: {
     marginTop: "-8px"
   }
@@ -65,12 +65,12 @@ export const TitleCard = styled(Box)(({ theme }) => ({
 }));
 
 export const EpochText = styled("span")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   text-transform: uppercase;
 `;
 
 export const EpochProgress = styled("h3")(({ theme }) => ({
-  color: theme.palette.grey[700],
+  color: theme.palette.grey[400],
   margin: 0,
   [theme.breakpoints.down("lg")]: {
     fontSize: 14
@@ -95,12 +95,12 @@ export const CardItem = styled(Grid)(({ theme }) => ({
 }));
 
 export const CardItemTitle = styled(Box)(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   marginLeft: 8
 }));
 
 export const MaxSlot = styled("span")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   font-size: 20px;
 `;
 
@@ -112,11 +112,11 @@ export const Date = styled("div")`
 
 export const Time = styled("div")`
   font-size: 1.25rem;
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
 `;
 
 export const Content = styled("span")`
-  color: ${(props) => props.theme.palette.grey[700]};
+  color: ${(props) => props.theme.palette.grey[400]};
   font-size: 18px;
 `;
 
