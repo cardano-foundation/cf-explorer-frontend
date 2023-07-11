@@ -1,6 +1,7 @@
 import { Box, alpha, styled } from "@mui/material";
 
 export const NormalDescription = styled(Box)`
+  color: ${(props) => props.theme.palette.grey[300]};
   position: relative;
   font-weight: 400;
   line-height: 21px;

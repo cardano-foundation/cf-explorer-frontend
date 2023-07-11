@@ -9,8 +9,8 @@ export default defineConfig({
     supportFile: "cypress/support/e2e.ts",
     viewportWidth: 1024,
     viewportHeight: 768,
-    setupNodeEvents(on, config) {
+    setupNodeEvents() {
       // implement node event listeners here
-    },
-  },
+    }
+  }
 });

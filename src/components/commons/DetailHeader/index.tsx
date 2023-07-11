@@ -46,7 +46,7 @@ import {
   TimeDuration
 } from "./styles";
 
-interface DetailHeaderProps {
+export interface DetailHeaderProps {
   type: Bookmark["type"];
   bookmarkData?: string;
   loading: boolean;
@@ -241,7 +241,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                       setOpenBackdrop((prev: any) => ({ ...prev, [keyItem]: true }));
                     }}
                   >
-                    <SearchIcon stroke={theme.palette.grey[400]} />
+                    <SearchIcon stroke={theme.palette.grey[300]} />
                   </AllowSearchButton>
                 )}
                 {item.allowSearch && keyItem && openBackdrop[keyItem] && (

@@ -36,7 +36,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
               )}
               <Box
                 component={Link}
-                color={({ palette }) => `${palette.blue["800"]} !important`}
+                color={({ palette }) => `${palette.blue[100]} !important`}
                 to={details.token(r.assetId)}
               >
                 {r.assetName}

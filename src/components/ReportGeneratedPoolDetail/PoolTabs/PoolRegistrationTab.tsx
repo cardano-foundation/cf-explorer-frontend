@@ -74,7 +74,7 @@ const PoolRegistrationTab = () => {
       title: "Certificate",
       render: (data) => (
         <IconButton onClick={() => setSelected(data?.poolUpdateId || 0)}>
-          <EyeIcon style={{ transform: "scale(.8)" }} />
+          <EyeIcon />
         </IconButton>
       )
     }
