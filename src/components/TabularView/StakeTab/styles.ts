@@ -7,7 +7,7 @@ export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => (
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? theme.palette.common.black : theme.palette.text.hint
+  color: active ? theme.palette.green[700] : theme.palette.text.hint
 }));
 
 export const LabelStatus = styled(Box)(({ theme }) => ({
@@ -105,7 +105,7 @@ export const Headline = styled(Typography)<{ collapsed?: number }>`
   font-weight: 700;
   font-size: 32px;
   line-height: 37px;
-  color: #000;
+  color: ${(props) => props.theme.palette.grey[700]};
   flex: 1;
   text-align: left;
   padding-top: 20px;
@@ -122,7 +122,7 @@ export const Headline = styled(Typography)<{ collapsed?: number }>`
 export const WrapperDelegationTab = styled(Box)`
   display: flex;
   justify-content: space-between;
-  align-items: center,
+  align-items: center;
   margin-top: 12px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     flex-direction: column;

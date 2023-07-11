@@ -1,7 +1,7 @@
 import { Grid, Skeleton, Button, styled, Box, alpha } from "@mui/material";
 
 export const BoxInfo = styled(Box)<{ space: number }>(({ theme }) => ({
-  background: theme.palette.secondary.dark,
+  background: theme.palette.common.white,
   borderRadius: "10px",
   color: theme.palette.primary.contrastText,
   display: "flex",
@@ -32,7 +32,6 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     width: "100%",
     borderRight: "none",
-    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
     minHeight: "0px",
 
     "& > div": {
@@ -51,12 +50,12 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   paddingTop: theme.spacing(2),
   width: "80%",
   margin: "0 auto",
-  borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+  borderBottom: `1px solid ${alpha(theme.palette.grey[700], 0.1)}`,
   overflow: "hidden",
   alignItems: "center",
   [theme.breakpoints.down("lg")]: {
     alignItems: "flex-start",
-    borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    borderRight: `1px solid ${alpha(theme.palette.grey[700], 0.1)}`,
     height: "100%",
     borderBottom: "none",
     width: "100%",
@@ -65,7 +64,6 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     width: "100%",
     borderRight: "none",
-    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
     minHeight: "0",
 
     "& > div": {
@@ -75,14 +73,15 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
       alignItems: "center",
       justifyContent: "space-between",
       padding: "0 10px 20px 10px",
-      borderRight: `1px solid ${alpha(theme.palette.common.white, 0.06)}`
+      borderRight: `1px solid ${alpha(theme.palette.grey[700], 0.1)}`
     }
   }
 }));
 
 export const Title = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
-  padding: `${theme.spacing(2)} 0`
+  padding: `${theme.spacing(2)} 0`,
+  color: theme.palette.grey[300]
 }));
 
 export const ValueInfo = styled(Box)(({ theme }) => ({
@@ -91,6 +90,7 @@ export const ValueInfo = styled(Box)(({ theme }) => ({
   margin: "0 auto",
   overflowWrap: "anywhere",
   padding: "0 18px",
+  color: theme.palette.grey[700],
   [theme.breakpoints.down("md")]: {
     padding: "0 10px"
   },
