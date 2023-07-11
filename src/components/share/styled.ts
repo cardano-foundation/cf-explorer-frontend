@@ -59,6 +59,6 @@ export const StyledDarkLoadingButton = styled(LoadingButton)`
   }
   &:disabled {
     color: white;
-    background: ${(props) => alpha(props.theme.palette.grey[700], 0.44)};
+    background: ${(props) => alpha(props.theme.palette.grey[400], 0.44)};
   }
 `;

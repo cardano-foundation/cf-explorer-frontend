@@ -20,7 +20,7 @@ export const Info = styled(Box)(({ theme }) => ({
 export const InfoText = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  color: theme.palette.grey[700],
+  color: theme.palette.grey[400],
   marginLeft: theme.spacing(1),
   fontWeight: 600,
   fontSize: "14px",
@@ -188,13 +188,13 @@ export const NetAmountBox = styled(HoldBox)(({ theme }) => ({
   boxSizing: "border-box",
   minHeight: 70,
   height: "max-content",
-  borderColor: theme.palette.green[600],
+  borderColor: theme.palette.green[200],
   width: "100%",
   maxWidth: 200,
   minWidth: 180,
   "::after": {
     content: '"NET AMOUNT"',
-    background: theme.palette.green[600]
+    background: theme.palette.green[200]
   },
   [theme.breakpoints.down("xl")]: {
     width: 180,

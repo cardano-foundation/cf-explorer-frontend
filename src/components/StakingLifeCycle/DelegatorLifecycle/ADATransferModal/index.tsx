@@ -60,7 +60,7 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
                     stroke="currentColor"
                   />
                   <CustomTab
-                    color={activityType === ActivityType.WALLET ? theme.palette.green[700] : theme.palette.grey[300]}
+                    color={activityType === ActivityType.WALLET ? theme.palette.green[200] : theme.palette.grey[300]}
                   >
                     Wallet Activity
                   </CustomTab>
@@ -78,7 +78,7 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
                     fill="currentColor"
                   />
                   <CustomTab
-                    color={activityType === ActivityType.REWARDS ? theme.palette.green[700] : theme.palette.grey[300]}
+                    color={activityType === ActivityType.REWARDS ? theme.palette.green[200] : theme.palette.grey[300]}
                   >
                     Rewards Activity
                   </CustomTab>

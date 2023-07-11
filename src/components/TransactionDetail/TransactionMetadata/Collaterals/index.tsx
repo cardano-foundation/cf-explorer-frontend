@@ -44,7 +44,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                 <Img src={type === "input" ? receiveImg : sendImg} alt="send icon" />
               </Box>
               {isTablet ? (
-                <Box color={({ palette }) => palette.grey[700]}>{type === "input" ? "From" : "To"}:</Box>
+                <Box color={({ palette }) => palette.grey[400]}>{type === "input" ? "From" : "To"}:</Box>
               ) : null}
             </Box>
             <Box width={"100%"}>
@@ -55,7 +55,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                     alignItems="center"
                     justifyContent={"flex-start"}
                     pr={1}
-                    color={({ palette }) => palette.grey[700]}
+                    color={({ palette }) => palette.grey[400]}
                   >
                     {type === "input" ? "From" : "To"}:
                   </Box>
@@ -71,7 +71,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                     <Link to={details.address(item.address)}>
                       <CustomTooltip title={item.address}>
                         <Box
-                          color={(theme) => theme.palette.blue[800]}
+                          color={(theme) => theme.palette.blue[100]}
                           fontWeight="bold"
                           fontFamily={"var(--font-family-text)"}
                         >
@@ -111,7 +111,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                             component={"span"}
                             fontWeight="bold"
                             fontFamily={"var(--font-family-text)"}
-                            color={(theme) => theme.palette.blue[800]}
+                            color={(theme) => theme.palette.blue[100]}
                             mr={1}
                           >
                             {getShortHash(item.txHash)}

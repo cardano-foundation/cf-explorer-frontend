@@ -253,7 +253,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
     >
       <Box>
         <ModalTitle>
-          <Box sx={{ fontSize: `${isMobile ? "20px" : "24px"}` }} color={({ palette }) => palette.grey[700]}>
+          <Box sx={{ fontSize: `${isMobile ? "20px" : "24px"}` }} color={({ palette }) => palette.grey[400]}>
             Report composer
           </Box>
         </ModalTitle>
@@ -301,13 +301,13 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
                           value={RatioGroupValue.yes}
                           control={<Radio onClick={() => handleClickRadio(key)} />}
                           label="Yes"
-                          sx={{ color: (props) => props.palette.grey[700] }}
+                          sx={{ color: (props) => props.palette.grey[400] }}
                         />
                         <FormControlLabel
                           value={RatioGroupValue.no}
                           control={<Radio onClick={() => handleClickRadio(key)} />}
                           label="No"
-                          sx={{ color: (props) => props.palette.grey[700] }}
+                          sx={{ color: (props) => props.palette.grey[400] }}
                         />
                       </Stack>
                     </RadioGroup>

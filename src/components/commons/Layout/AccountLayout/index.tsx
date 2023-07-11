@@ -94,7 +94,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
       Missing any data? click{" "}
       <StyledButton
         sx={{
-          color: theme.palette.blue[800]
+          color: theme.palette.blue[100]
         }}
         onClick={() => setOpenReportModal(true)}
       >

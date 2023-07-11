@@ -51,7 +51,7 @@ export const StyledSelect = styled(Select)`
 `;
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   display: "block",
   marginTop: "0.5rem",
   textAlign: "left"

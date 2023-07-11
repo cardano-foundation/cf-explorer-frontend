@@ -142,7 +142,7 @@ export const TokenLink: React.FC<{ token: Token }> = ({ token }) => {
           )}
         </Box>
         <Box display={"flex"} alignItems={"center"}>
-          <Box fontWeight={"bold"} fontSize={"14px"} color={({ palette }) => palette.grey[700]}>
+          <Box fontWeight={"bold"} fontSize={"14px"} color={({ palette }) => palette.grey[400]}>
             {isNegative ? "" : "+"}
             {formatNumberDivByDecimals(token?.assetQuantity || 0, token?.metadata?.decimals || 0)}
           </Box>

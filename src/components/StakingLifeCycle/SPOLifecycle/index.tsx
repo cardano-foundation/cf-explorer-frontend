@@ -145,10 +145,10 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
 
   const renderBackground = (isActive: boolean, hasData: boolean) => {
     if (isActive) {
-      return `${palette.green[600]} !important`;
+      return `${palette.green[200]} !important`;
     }
     if (hasData) {
-      return `${palette.grey[700]} !important`;
+      return `${palette.grey[400]} !important`;
     }
     return `${palette.grey[200]} !important`;
   };
