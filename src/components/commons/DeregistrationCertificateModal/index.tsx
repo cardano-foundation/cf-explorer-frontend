@@ -25,7 +25,7 @@ export const DeregistrationCertificateModal = ({
         {loading && <Skeleton variant="rectangular" width={500} height={90} />}
         {!loading && (
           <StyledContainerModal>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
+            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[300]}>
               Stake Key
             </Box>
             {data && (

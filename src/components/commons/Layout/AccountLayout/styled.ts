@@ -33,7 +33,7 @@ export const NavItem = styled(Link)<{ active: boolean }>(({ theme, active }) => 
   padding: "10px 0",
   margin: "auto",
   backgroundColor: active ? alpha(theme.palette.primary.main, 0.1) : theme.palette.background.paper,
-  color: `${active ? theme.palette.primary.main : theme.palette.grey[400]} !important`,
+  color: `${active ? theme.palette.primary.main : theme.palette.grey[300]} !important`,
   fontWeight: "bold",
   [theme.breakpoints.down("md")]: {
     display: "none"
@@ -64,7 +64,7 @@ export const NavItemMobile = styled(Link)<{ active: boolean }>(({ theme, active 
   fontSize: "14px",
   lineHeight: "16px",
   display: "none",
-  color: `${active ? theme.palette.common.white : theme.palette.grey[400]} !important`,
+  color: `${active ? theme.palette.common.white : theme.palette.grey[300]} !important`,
   backgroundColor: active ? theme.palette.primary.main : "#E7E8EA",
   padding: "10px 17px",
   textOverflow: "ellipsis",

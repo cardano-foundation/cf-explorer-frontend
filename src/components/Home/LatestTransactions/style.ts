@@ -30,7 +30,7 @@ export const Title = styled("h3")`
   text-align: left;
   margin: 0px;
   font-size: 1.25rem;
-  color: ${(props) => props.theme.palette.grey[700]};
+  color: ${(props) => props.theme.palette.grey[400]};
   &::after {
     position: absolute;
     top: 100%;
@@ -51,7 +51,7 @@ export const Actions = styled(Box)(() => ({
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   display: "block",
   [theme.breakpoints.down("sm")]: {
     display: "none"
@@ -59,7 +59,7 @@ export const TimeDuration = styled("small")(({ theme }) => ({
 }));
 
 export const TimeDurationSm = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   display: "none",
   [theme.breakpoints.down("sm")]: {
     display: "block",
@@ -115,11 +115,11 @@ export const PriveValue = styled("span")`
   font-size: var(--font-size-text-x-large);
   font-weight: var(--font-weight-bold);
   line-height: 1;
-  color: ${(props) => props.theme.palette.grey[700]};
+  color: ${(props) => props.theme.palette.grey[400]};
 `;
 
 export const ItemDetail = styled("div")`
-  color: ${({ theme }) => theme.palette.grey[400]};
+  color: ${({ theme }) => theme.palette.grey[300]};
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -161,7 +161,7 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
       case TRANSACTION_STATUS.PENDDING:
         return theme.palette.warning.main;
       case TRANSACTION_STATUS.SUCCESS:
-        return theme.palette.green[700];
+        return theme.palette.green[200];
       case "IN_PROGRESS":
         return theme.palette.warning.main;
       case "FINISHED":
@@ -177,7 +177,7 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
       case TRANSACTION_STATUS.PENDDING:
         return theme.palette.warning.light;
       case TRANSACTION_STATUS.SUCCESS:
-        return theme.palette.green[700_10];
+        return theme.palette.green[200_10];
       case "IN_PROGRESS":
         return theme.palette.warning.light;
       case "FINISHED":

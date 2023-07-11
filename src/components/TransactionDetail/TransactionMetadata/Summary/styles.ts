@@ -48,7 +48,7 @@ export const OptionSelect = styled(MenuItem)(({ theme }) => ({
   height: "40px",
   cursor: "pointer",
   "&:hover": {
-    background: theme.palette.green[60010]
+    background: theme.palette.green[200_10]
   }
 }));
 
@@ -61,7 +61,7 @@ export const CustomLink = styled(Link)(({ theme }) => ({
   height: "40px",
   cursor: "pointer",
   "&:hover": {
-    background: theme.palette.green[60010]
+    background: theme.palette.green[200_10]
   }
 }));
 
@@ -71,7 +71,7 @@ export const TokenLink = styled(Link)(({ theme }) => ({
   borderRadius: "2px",
   padding: "2px 10px",
   backgroundColor: alpha(theme.palette.grey[300], 0.2),
-  color: `${theme.palette.grey[400]} !important`,
+  color: `${theme.palette.grey[300]} !important`,
   fontSize: "var(--font-size-text)",
   lineHeight: "1.5rem",
   fontWeight: "bold",

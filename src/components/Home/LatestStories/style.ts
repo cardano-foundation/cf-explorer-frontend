@@ -77,8 +77,8 @@ export const Author = styled(Box)`
   overflow: hidden;
   text-overflow: ellipsis;
   font-family: var(--font-family-text);
-  color: ${(props) => props.theme.palette.green[700]};
-  background-color: ${(props) => props.theme.palette.green[700_10]};
+  color: ${(props) => props.theme.palette.green[200]};
+  background-color: ${(props) => props.theme.palette.green[200_10]};
   padding: 3px 4.5px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -93,7 +93,7 @@ export const ItemTitle = styled("h5")`
   max-height: 3.6em;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
-  color: ${(props) => props.theme.palette.grey[700]};
+  color: ${(props) => props.theme.palette.grey[400]};
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: var(--font-size-text-x-small);
@@ -111,7 +111,7 @@ export const Time = styled("h5")`
   gap: 6px;
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-normal);
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   margin: 0;
 `;
 export const TimeIcon = styled("img")`

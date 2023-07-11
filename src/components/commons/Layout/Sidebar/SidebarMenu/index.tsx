@@ -152,10 +152,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`menu-${index}` === active
                         ? {
-                            backgroundColor: (theme) => `${theme.palette.green[700_10]} !important`,
-                            color: (theme) => theme.palette.grey[500]
+                            backgroundColor: (theme) => `${theme.palette.green[200_10]} !important`,
+                            color: (theme) => theme.palette.grey[300]
                           }
-                        : { color: (theme) => theme.palette.grey[500] })
+                        : { color: (theme) => theme.palette.grey[300] })
                     })}
                   >
                     {icon ? (
@@ -307,10 +307,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`footer-${index}` === active
                         ? {
-                            backgroundColor: (theme) => `${theme.palette.green[700_10]} !important`,
-                            color: (theme) => theme.palette.grey[500]
+                            backgroundColor: (theme) => `${theme.palette.green[200_10]} !important`,
+                            color: (theme) => theme.palette.grey[300]
                           }
-                        : { color: (theme) => theme.palette.grey[500] })
+                        : { color: (theme) => theme.palette.grey[300] })
                     })}
                   >
                     {icon ? (

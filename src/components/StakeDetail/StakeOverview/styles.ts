@@ -15,8 +15,8 @@ export const Active = styled(Status)`
 `;
 
 export const Deactive = styled(Status)`
-  background: ${(props) => props.theme.palette.green[800_10]};
-  color: ${(props) => props.theme.palette.grey[400]};
+  background: ${(props) => props.theme.palette.green[300_10]};
+  color: ${(props) => props.theme.palette.grey[300]};
 `;
 
 export const Title = styled("div")`
@@ -40,7 +40,7 @@ export const StyledLink = styled(Link)`
 `;
 
 export const StyledLinkTo = styled(StyledLink)<{ isTo: boolean }>(({ theme, isTo }) => ({
-  color: isTo ? "inherit" : `${theme.palette.red[700]} !important`
+  color: isTo ? "inherit" : `${theme.palette.red[100]} !important`
 }));
 
 export const BackButton = styled(Link)`
@@ -131,7 +131,7 @@ export const TitleCard = styled(Box)(({ theme }) => ({
   fontSize: "0.875rem"
 }));
 export const ValueCard = styled(Box)(({ theme }) => ({
-  color: theme.palette.grey[700],
+  color: theme.palette.grey[400],
   fontSize: "var(--font-size-text-small)",
   fontWeight: "bold",
   marginTop: theme.spacing(1)
@@ -148,7 +148,7 @@ export const ButtonModal = styled(Button)(({ theme }) => ({
   textTransform: "capitalize",
   padding: 0,
   textDecoration: "underline",
-  color: theme.palette.blue[800],
+  color: theme.palette.blue[100],
   ":hover": {
     textDecoration: "underline"
   }

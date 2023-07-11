@@ -417,7 +417,7 @@ export default function SignUp() {
                   }
                   label={
                     <Box
-                      color={({ palette }) => palette.grey[700]}
+                      color={({ palette }) => palette.grey[400]}
                       fontSize={"14px"}
                       fontWeight={400}
                       display={"flex"}

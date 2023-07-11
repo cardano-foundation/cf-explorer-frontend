@@ -89,7 +89,7 @@ export const PoolUpdateModal = ({ data, ...props }: Props) => {
               TabIndicatorProps={{
                 sx: {
                   background: (theme) => theme.palette.primary.main,
-                  color: (theme) => theme.palette.grey[700],
+                  color: (theme) => theme.palette.grey[400],
                   height: "4px"
                 }
               }}

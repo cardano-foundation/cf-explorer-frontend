@@ -54,7 +54,7 @@ export const RectBox = styled(Box)<{ disabled?: number }>(({ disabled, theme }) 
 export const DisableAbleLabel = styled(Typography)<{ disabled?: number }>(({ theme, disabled }) => ({
   fontSize: "1ren",
   fontWeight: 700,
-  color: disabled ? alpha(theme.palette.grey[700], 0.3) : theme.palette.grey[700],
+  color: disabled ? alpha(theme.palette.grey[400], 0.3) : theme.palette.grey[400],
   textAlign: "left",
   flex: 1,
   [theme.breakpoints.down("lg")]: {
@@ -139,7 +139,7 @@ export const RewardValue = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   gap: 5,
-  color: theme.palette.grey[700]
+  color: theme.palette.grey[400]
 }));
 
 export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
