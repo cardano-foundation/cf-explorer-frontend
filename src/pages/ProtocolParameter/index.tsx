@@ -61,7 +61,7 @@ const ProtocolParameter: React.FC = () => {
   const { data: dataLastest, loading: loadingLastest } = useFetch<any>(PROTOCOL_PARAMETER.LASTEST);
 
   const formatValueObjectRender = (valueObject: any) => {
-    if (valueObject.value) return valueObject.value;
+    if (valueObject?.value) return valueObject.value;
     if (typeof valueObject === "object") {
       return JSON.stringify(valueObject);
     }
