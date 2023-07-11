@@ -5,6 +5,7 @@ import Highcharts from "highcharts";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 import { BigNumber } from "bignumber.js";
+import { isArray } from "lodash";
 
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
@@ -37,22 +38,33 @@ const options = [
   { value: "THREE_MONTH", label: "3m" }
 ];
 
+type IBalanceData = number[];
+
 const AddressAnalytics: React.FC = () => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const { address } = useParams<{ address: string }>();
   const { isMobile } = useScreen();
   const theme = useTheme();
   const { data, loading } = useFetch<AnalyticsData[]>(`${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`);
-  const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.ADDRESS.MIN_MAX_BALANCE}/${address}`);
-  const dataChart = data?.map((i) => {
-    const value = BigNumber(i.value).div(10 ** 6);
+
+  const { data: balance, loading: balanceLoading } = useFetch<IBalanceData>(
+    `${API.ADDRESS.MIN_MAX_BALANCE}/${address}`
+  );
+
+  const dataChartChecked = isArray(data) ? data : [];
+
+  const dataChart = dataChartChecked.map((i: AnalyticsData) => {
+    const value = BigNumber(i.value || 0).div(10 ** 6);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,6})?/)?.[0]);
   });
 
   const categories =
-    data?.map((i) => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
-  const minBalance = Math.min(...(balance || []));
-  const maxBalance = Math.max(...(balance || []), 0);
+    dataChartChecked.map((i: AnalyticsData) =>
+      moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)
+    ) || [];
+
+  const minBalance = isArray(balance) ? Math.min(...balance) : 0;
+  const maxBalance = isArray(balance) ? Math.max(...balance, 0) : 0;
 
   return (
     <Card title={<TextCardHighlight>Analytics</TextCardHighlight>}>

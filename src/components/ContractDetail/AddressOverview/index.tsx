@@ -32,7 +32,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
   const [showBanner, setShowBanner] = useState<boolean>(false);
 
   const itemLeft = [
-    { title: "Transaction", value: data?.txCount },
+    { title: "Transactions", value: data?.txCount },
     {
       title: "ADA Balance",
       value: (
@@ -79,7 +79,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       title: "Delegated To",
       value: (
         <Pool to={details.delegation(dataStake?.pool ? dataStake?.pool?.poolId : "")}>
-          {dataStake?.pool?.poolName || `Pool [${getShortWallet(dataStake?.pool?.poolId || "")}]`}
+          {dataStake?.pool?.poolName || getShortWallet(dataStake?.pool?.poolId || "")}
         </Pool>
       )
     }
@@ -103,7 +103,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
         <GridItem item xs={12} md={6}>
           <Box overflow="hidden" borderRadius={3} height={"100%"}>
             <CardAddress
-              title={"Wallet address"}
+              title={"Address"}
               type="left"
               address={data?.address || ""}
               item={itemLeft}
@@ -114,7 +114,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
         <GridItem item xs={12} md={6}>
           <Box overflow="hidden" borderRadius={3} height={"100%"}>
             <CardAddress
-              title={"Controlled stake key"}
+              title={"Stake Address"}
               type="right"
               address={dataStake?.stakeAddress || ""}
               item={itemRight}

@@ -248,6 +248,7 @@ export { ReactComponent as ChartMode } from "./icons/Staking/ChartMode.svg";
 export { ReactComponent as TableMode } from "./icons/Staking/TableMode.svg";
 export { ReactComponent as SummaryIcon } from "./images/summaryIcon.svg";
 export { ReactComponent as UtxoIcon } from "./images/utxoIcon.svg";
+export { ReactComponent as MetadataIconTx } from "./icons/metadataIcon.svg";
 export { ReactComponent as ContractIcon } from "./images/contractIcon.svg";
 export { ReactComponent as CollateralIcon } from "./images/collateralIcon.svg";
 export { ReactComponent as NoteIcon } from "./images/noteIcon.svg";
@@ -266,3 +267,5 @@ export { ReactComponent as OwnerAccountIcon } from "./icons/owner-account-ic.svg
 export { ReactComponent as PoolSizeIcon } from "./icons/pool-size-ic.svg";
 export { ReactComponent as RewardsAvailableIcon } from "./icons/rewards-available-ic.svg";
 export { ReactComponent as StatusIcon } from "./icons/status-ic.svg";
+export { ReactComponent as RedeemerPlusIcon } from "./icons/redeemer-plus.svg";
+export { ReactComponent as RedeemerArrowDownIcon } from "./icons/redeemer-arrow-down.svg";

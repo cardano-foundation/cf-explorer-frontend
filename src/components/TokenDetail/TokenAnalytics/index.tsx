@@ -14,7 +14,6 @@ import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import { API } from "../../../commons/utils/api";
 import { formatPrice, numberWithCommas } from "../../../commons/utils/helper";
 import Card from "../../commons/Card";
-import CustomTooltip from "../../commons/CustomTooltip";
 import {
   BoxInfo,
   BoxInfoItem,
@@ -45,7 +44,7 @@ const AddressAnalytics: React.FC = () => {
   const theme = useTheme();
   const { data, loading } = useFetch<AnalyticsData[]>(`${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`);
   const dataChart = data?.map((i) => {
-    const value = BigNumber(i.value);
+    const value = BigNumber(i.value || 0);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,6})?/)?.[0]);
   });
 
@@ -158,11 +157,9 @@ const AddressAnalytics: React.FC = () => {
                       <img src={HighestIcon} alt="heighest icon" />
                       <Title>Highest Volume</Title>
                     </Box>
-                    <CustomTooltip title={numberWithCommas(maxBalance.value || 0)}>
-                      <ValueInfo>
-                        {loading ? <SkeletonUI variant="rectangular" /> : numberWithCommas(maxBalance.value || 0)}
-                      </ValueInfo>
-                    </CustomTooltip>
+                    <ValueInfo>
+                      {loading ? <SkeletonUI variant="rectangular" /> : numberWithCommas(maxBalance.value || 0)}
+                    </ValueInfo>
                   </Box>
                 </BoxInfoItemRight>
               </Box>
@@ -173,11 +170,9 @@ const AddressAnalytics: React.FC = () => {
                       <img src={LowestIcon} alt="lowest icon" />
                       <Title>Lowest Volume</Title>
                     </Box>
-                    <CustomTooltip title={numberWithCommas(minBalance.value || 0)}>
-                      <ValueInfo>
-                        {loading ? <SkeletonUI variant="rectangular" /> : numberWithCommas(minBalance.value || 0)}
-                      </ValueInfo>
-                    </CustomTooltip>
+                    <ValueInfo>
+                      {loading ? <SkeletonUI variant="rectangular" /> : numberWithCommas(minBalance.value || 0)}
+                    </ValueInfo>
                   </Box>
                 </BoxInfoItem>
               </Box>
