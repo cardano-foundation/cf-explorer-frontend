@@ -37,7 +37,7 @@ export const OptionSelect = styled(MenuItem)(({ theme }) => ({
   height: "40px",
   cursor: "pointer",
   "&:hover": {
-    background: theme.palette.green[60010]
+    background: theme.palette.green[200_10]
   }
 }));
 
@@ -50,7 +50,7 @@ export const CustomLink = styled(Link)(({ theme }) => ({
   height: "40px",
   cursor: "pointer",
   "&:hover": {
-    background: theme.palette.green[60010]
+    background: theme.palette.green[200_10]
   }
 }));
 export const TokenButton = styled(Box)(({ theme }) => ({

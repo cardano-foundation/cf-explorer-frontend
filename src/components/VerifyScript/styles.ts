@@ -1,4 +1,4 @@
-import { Box, Typography, styled } from "@mui/material";
+import { Box, Typography, alpha, styled } from "@mui/material";
 
 export const Wrapper = styled(Box)`
   & h2 {
@@ -13,9 +13,9 @@ export const VerifyScriptContainer = styled(Box)`
   margin-bottom: 10px;
 `;
 
-export const StyledVerifyButton = styled(Box)<{ verified: number }>(({ verified }) => ({
-  color: verified ? "#438F68" : "#FFFFFF",
-  background: verified ? "rgba(67, 143, 104, 0.2)" : "#344054",
+export const StyledVerifyButton = styled(Box)<{ verified: number }>(({ verified, theme }) => ({
+  color: verified ? theme.palette.green[200] : theme.palette.common.white,
+  background: verified ? alpha(theme.palette.green[200], 0.2) : theme.palette.grey[300],
   cursor: "pointer",
   borderRadius: 2,
   padding: "4px 14px",
@@ -49,7 +49,7 @@ export const StyledLabel = styled("div")`
 export const ModalTitle = styled(Typography)`
   font-size: 24px;
   font-weight: 700;
-  color: rgba(19, 21, 47, 1);
+  color: ${(props) => props.theme.palette.grey[400]};
   margin-bottom: 48px;
   ${({ theme }) => theme.breakpoints.down("md")} {
     font-size: 20px;
@@ -62,7 +62,7 @@ export const VerifyButton = styled(Box)<{ disabled: boolean }>`
   line-height: 24px;
   text-align: center;
   color: #ffffff;
-  background: #13152f;
+  background: ${(props) => props.theme.palette.grey[400]};
   border-radius: 8px;
   padding: 10px 20px;
   position: absolute;
@@ -81,7 +81,7 @@ export const VerifyButton = styled(Box)<{ disabled: boolean }>`
 `;
 
 export const ErrorMessage = styled(Box)`
-  color: red;
+  color: ${(props) => props.theme.palette.red[100]};
   height: 132px;
   margin: 20px 0px;
 `;
