@@ -47,7 +47,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
         const baseURL = url.split("?")[0];
         const lastURL = url.split("?")[1];
         const res = await service.get(`${baseURL}?${lastURL ? `${lastURL}&` : ""}${qs.stringify(params)}`);
-        setData(res.data.data as T[]);
+        setData((res?.data?.data || []) as T[]);
         setError(null);
         setCurrentPage(res.data.currentPage);
         setTotalPage(res.data.totalPages);

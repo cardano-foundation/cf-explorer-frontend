@@ -4,8 +4,8 @@ import { Box, Skeleton } from "@mui/material";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import { EmptyIcon, InfoIcon } from "src/commons/resources";
 import CopyButton from "src/components/commons/CopyButton";
-import { details } from "src/commons/routers";
 import CustomIcon from "src/components/commons/CustomIcon";
+import { details } from "src/commons/routers";
 
 import {
   AddressGroup,

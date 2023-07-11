@@ -7,6 +7,9 @@ interface DelegationPool {
   feeAmount: number;
   pledge: number;
   saturation: number;
+  epochBlock: number;
+  lifetimeBlock: number;
+  lifetimeRos: number;
 }
 
 type DelegationPoolDetail = DelegationPool & {
