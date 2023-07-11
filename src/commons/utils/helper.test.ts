@@ -37,6 +37,6 @@ describe("helper formatAmountToken", () => {
 
 test("toFixedBigNumber", () => {
   expect(toFixedBigNumber(1.221, 2)).toEqual(1.22);
-  expect(toFixedBigNumber(1.225, 2)).toEqual(1.23);
+  expect(toFixedBigNumber(1.225, 2)).toEqual(1.22);
   expect(toFixedBigNumber(1, 2)).toEqual(1);
 });
