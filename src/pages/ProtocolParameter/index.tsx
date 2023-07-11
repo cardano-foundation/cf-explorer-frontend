@@ -67,7 +67,7 @@ const ProtocolParameter: React.FC = () => {
 
     if (valueObject?.value) return valueObject?.value;
 
-    if (typeof valueObject === "object") return JSON.stringify(valueObject);
+    if (isObject(valueObject)) return JSON.stringify(valueObject);
 
     return valueObject || "";
   };
