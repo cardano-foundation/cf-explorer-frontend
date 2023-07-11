@@ -61,11 +61,15 @@ const ProtocolParameter: React.FC = () => {
   const { data: dataLastest, loading: loadingLastest } = useFetch<any>(PROTOCOL_PARAMETER.LASTEST);
 
   const formatValueObjectRender = (valueObject: any) => {
-    if (valueObject?.value) return valueObject.value;
-    if (typeof valueObject === "object") {
-      return JSON.stringify(valueObject);
+    if (isObject(valueObject?.value)) {
+      return JSON.stringify(valueObject?.value);
     }
-    return valueObject;
+
+    if (valueObject?.value) return valueObject?.value;
+
+    if (isObject(valueObject)) return JSON.stringify(valueObject);
+
+    return valueObject || "";
   };
 
   const dataFixedVertical =
@@ -79,7 +83,9 @@ const ProtocolParameter: React.FC = () => {
     isObject(dataLastest) &&
     Object.entries(dataLastest).map(([name, valueObject]: any) => ({
       name,
-      value: formatValueObjectRender(valueObject)
+      value: formatValueObjectRender(valueObject),
+      epochNo: valueObject?.epochNo,
+      time: valueObject?.time
     }));
 
   const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
@@ -205,13 +211,13 @@ const ProtocolParameter: React.FC = () => {
     },
     {
       title: "Last Updated Epoch",
-      key: "epoch",
-      render: () => dataLastest?.epochChange?.startEpoch
+      key: "epochNo",
+      render: (r: any) => <Box>{r?.epochNo}</Box>
     },
     {
       title: "Timestamp",
       key: "timestamp",
-      render: () => (dataLastest?.timestamp ? formatDateTimeLocal(dataLastest.timestamp) : "")
+      render: (r: any) => (r?.time ? formatDateTimeLocal(r.time) : "")
     }
   ];
 
