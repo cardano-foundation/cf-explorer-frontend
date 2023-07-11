@@ -121,6 +121,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
               >
                 <Box component={"img"} src={editAva} alt="editava" />
                 <input
+                  data-testid="upload-input"
                   accept="image/*"
                   type="file"
                   ref={uploadImgRef}
@@ -228,7 +229,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
 
 export default AccountLayout;
 
-const router = [
+export const router = [
   { title: "My Profile", to: routers.MY_PROFILE },
   { title: "Bookmark", to: routers.BOOKMARK },
   { title: "Private Notes", to: routers.PRIVATE_NOTES }
