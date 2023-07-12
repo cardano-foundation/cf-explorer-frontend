@@ -58,8 +58,8 @@ const InstantReards = () => {
       )
     },
     {
-      title: "Time",
-      key: "time",
+      title: "Created At",
+      key: "createdat",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time)
     },
@@ -76,7 +76,7 @@ const InstantReards = () => {
       )
     },
     {
-      title: "Stake Key",
+      title: "Stake Address",
       key: "numberOfStakes",
       render: (r) => <Box component={"span"}>{r.numberOfStakes}</Box>
     },

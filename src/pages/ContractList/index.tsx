@@ -98,15 +98,10 @@ const Transactions: React.FC = () => {
 
   return (
     <StyledContainer>
-      <Card
-        title={"Contracts"}
-        underline={false}
-        extra={
-          <TimeDuration>
-            <FormNowMessage time={fetchData.lastUpdated} />
-          </TimeDuration>
-        }
-      >
+      <Card title={"Contracts"} underline={false}>
+        <TimeDuration>
+          <FormNowMessage time={fetchData.lastUpdated} />
+        </TimeDuration>
         <Table
           {...fetchData}
           columns={columns}

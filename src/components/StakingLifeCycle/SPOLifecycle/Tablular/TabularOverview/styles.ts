@@ -31,7 +31,7 @@ export const WrapIcon = styled(Box)(() => ({
 export const CardTitle = styled(Typography)(({ theme }) => ({
   fontWeight: theme.typography.fontWeightBold,
   fontSize: 14,
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   marginBottom: 4
 }));
 
@@ -40,7 +40,7 @@ export const CardValue = styled(Typography)<{ color?: string }>(({ theme, ...res
   whiteSpace: "break-spaces",
   fontWeight: theme.typography.fontWeightBold,
   fontSize: 16,
-  color: rest.color ? rest.color : theme.palette.grey[700]
+  color: rest.color ? rest.color : theme.palette.grey[400]
 }));
 
 export const TransferButton = styled(Button)(({ theme }) => ({
@@ -70,9 +70,10 @@ export const WrapWalletIcon = styled(Box)`
 `;
 
 export const ClickAbleLink = styled(Link)`
-  color: ${({ theme }) => theme.palette.blue[800]} !important;
+  color: ${({ theme }) => theme.palette.blue[100]} !important;
   cursor: pointer;
   white-space: nowrap;
+  font-weight: bold;
 `;
 
 export const ViewMoreButton = styled(IconButton)`

@@ -1,4 +1,4 @@
-import { alpha, Box, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 
 import { CONFIRMATION_STATUS } from "src/commons/utils/constants";
 
@@ -22,7 +22,7 @@ export const StyledImage = styled("img")`
   margin-left: 10px;
 `;
 export const TitleCard = styled(Box)(({ theme }) => ({
-  color: alpha(theme.palette.common.black, 0.5),
+  color: theme.palette.grey[300],
   fontSize: "0.875rem"
 }));
 

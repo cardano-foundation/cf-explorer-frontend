@@ -118,7 +118,7 @@ const AddressAnalytics: React.FC = () => {
                     xAxis: {
                       categories,
                       lineWidth: 2,
-                      lineColor: theme.palette.green[700],
+                      lineColor: theme.palette.green[200],
                       plotLines: [],
                       angle: 0,
                       labels: {
