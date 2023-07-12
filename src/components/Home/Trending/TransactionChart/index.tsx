@@ -181,7 +181,13 @@ const renderTooltipContent = (o: any, range: Time) => {
   const total = (payload || []).reduce((result: number, entry: any) => result + entry.value, 0);
   return (
     <Box>
-      <Box p={1} bgcolor={({ palette }) => alpha(palette.common.white, 0.8)} borderRadius={"8px"} textAlign={"left"}>
+      <Box
+        p={1}
+        bgcolor={({ palette }) => alpha(palette.common.white, 0.8)}
+        borderRadius={"8px"}
+        textAlign={"left"}
+        boxShadow={(theme) => theme.shadow.dropdown}
+      >
         <Box color={({ palette }) => palette.common.black} textAlign={"center"}>{`${moment(label).format(
           formatTimeX(range)
         )}`}</Box>
