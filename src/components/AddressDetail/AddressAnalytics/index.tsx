@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Box, Grid, useTheme } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
@@ -10,6 +10,7 @@ import { isArray } from "lodash";
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
 import { formatADAFull, formatPrice } from "src/commons/utils/helper";
+import useResizeHighChart from "src/commons/hooks/useResizeHighChart";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -42,6 +43,7 @@ type IBalanceData = number[];
 
 const AddressAnalytics: React.FC = () => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
+  const wrapperChartRef = useRef<HTMLDivElement>(null);
   const { address } = useParams<{ address: string }>();
   const { isMobile } = useScreen();
   const theme = useTheme();
@@ -50,6 +52,7 @@ const AddressAnalytics: React.FC = () => {
   const { data: balance, loading: balanceLoading } = useFetch<IBalanceData>(
     `${API.ADDRESS.MIN_MAX_BALANCE}/${address}`
   );
+  useResizeHighChart(wrapperChartRef);
 
   const dataChartChecked = isArray(data) ? data : [];
 
@@ -84,7 +87,7 @@ const AddressAnalytics: React.FC = () => {
               </Tabs>
             </Grid>
           </Grid>
-          <ChartBox>
+          <ChartBox ref={wrapperChartRef}>
             {loading ? (
               <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
             ) : (

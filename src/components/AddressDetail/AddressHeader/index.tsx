@@ -72,7 +72,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           style={{ fontFamily: "var(--font-family-text)", color: theme.palette.secondary.main }}
         >
           {dataStake?.pool?.poolName ||
-            (dataStake?.pool?.poolId && `Pool [${getShortWallet(dataStake.pool.poolId)}]`) ||
+            (dataStake?.pool?.poolId && getShortWallet(dataStake.pool.poolId)) ||
             ""}
         </Link>
       )

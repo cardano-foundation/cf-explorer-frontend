@@ -89,7 +89,15 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
     }
   ];
   return (
-    <StyledModal open={open} handleCloseModal={() => onClose?.()} width={600}>
+    <StyledModal
+      open={open}
+      handleCloseModal={() => {
+        onClose?.();
+        fetchData.update(() => []);
+        fetchData.setLoading(true);
+      }}
+      width={600}
+    >
       <ModalContainer>
         <ModalTitle>
           {type === RECEIVED_REWARDS.LEADER
