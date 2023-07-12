@@ -1,5 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { Box } from "@mui/material";
+import { get } from "lodash";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { details, routers } from "src/commons/routers";
