@@ -52,7 +52,7 @@ const Card = ({
           {type === "down" ? "Input" : "Output"}
         </Box>
         <Box color={(theme) => theme.palette.grey[300]} display="flex" justifyContent="space-between">
-          <Box>Wallet Addresses</Box>
+          <Box>Addresses</Box>
           <Box>Amount</Box>
         </Box>
       </Header>

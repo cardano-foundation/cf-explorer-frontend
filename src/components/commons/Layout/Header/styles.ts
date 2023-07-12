@@ -55,6 +55,9 @@ export const HeaderMain = styled("div")<{ home: number }>(({ theme, home }) => (
   [theme.breakpoints.down("md")]: {
     padding: home ? "62px 0px 48px" : 0,
     display: home ? "block" : "none"
+  },
+  [theme.breakpoints.down("sm")]: {
+    padding: 0
   }
 }));
 
