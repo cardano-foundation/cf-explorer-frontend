@@ -1,28 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import { useWindowSize } from "react-use";
+import { Collapse, Divider, ListItem, useTheme } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { BiChevronDown, BiChevronRight } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
-import { Collapse, Divider, ListItem, useTheme } from "@mui/material";
+import { useWindowSize } from "react-use";
 
 import { footerMenus, menus } from "src/commons/menus";
 import { isExtenalLink } from "src/commons/utils/helper";
-import { setSidebar } from "src/stores/user";
-import { RootState } from "src/stores/types";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import { RootState } from "src/stores/types";
+import { setSidebar } from "src/stores/user";
 import { routers } from "src/commons/routers";
 
 import FooterMenu from "../FooterMenu";
 import {
+  FooterMenuContainer,
+  IconMenu,
   Menu,
   MenuIcon,
   MenuText,
+  SidebarMenuContainer,
   SubMenu,
   SubMenuText,
-  itemStyle,
-  IconMenu,
-  SidebarMenuContainer,
-  FooterMenuContainer
+  itemStyle
 } from "./styles";
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
@@ -52,22 +52,23 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   }, [sidebar]);
 
   useEffect(() => {
-    if (pathname === "/") {
+    if (pathname === "/" || !sidebar) {
       setActive(null);
     } else if (
-      pathname.startsWith("/stake/") ||
-      pathname.startsWith("/transaction/") ||
-      pathname.startsWith("/stake-key/") ||
-      pathname.startsWith("/block/") ||
-      pathname.startsWith("/epoch/") ||
-      pathname.startsWith("/token/") ||
-      pathname.startsWith("/contracts/") ||
-      pathname.startsWith("/delegation-pool/") ||
-      pathname.startsWith("/policy/")
+      sidebar &&
+      (pathname.startsWith("/stake/") ||
+        pathname.startsWith("/transaction/") ||
+        pathname.startsWith("/stake-key/") ||
+        pathname.startsWith("/block/") ||
+        pathname.startsWith("/epoch/") ||
+        pathname.startsWith("/token/") ||
+        pathname.startsWith("/contracts/") ||
+        pathname.startsWith("/delegation-pool/") ||
+        pathname.startsWith("/policy/"))
     ) {
       setActive("menu-0");
     }
-  }, [pathname]);
+  }, [pathname, sidebar]);
 
   useEffect(() => {
     if (!sidebar && width >= theme.breakpoints.values.md) setSidebar(true);
@@ -164,10 +165,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`menu-${index}` === active
                         ? {
-                            backgroundColor: (theme) => `${theme.palette.green[700_10]} !important`,
-                            color: (theme) => theme.palette.grey[500]
+                            backgroundColor: (theme) => `${theme.palette.green[200_10]} !important`,
+                            color: (theme) => theme.palette.grey[300]
                           }
-                        : { color: (theme) => theme.palette.grey[500] })
+                        : { color: (theme) => theme.palette.grey[300] })
                     })}
                   >
                     {icon ? (
@@ -190,7 +191,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     {sidebar &&
                       (children?.length ? (
                         <IconMenu component={"span"}>
-                          {`menu-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
+                          {`menu-${index}` === active ? <BiChevronRight size={18} /> : <BiChevronDown size={18} />}
                         </IconMenu>
                       ) : null)}
                   </ListItem>
@@ -319,10 +320,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`footer-${index}` === active
                         ? {
-                            backgroundColor: (theme) => `${theme.palette.green[700_10]} !important`,
-                            color: (theme) => theme.palette.grey[500]
+                            backgroundColor: (theme) => `${theme.palette.green[200_10]} !important`,
+                            color: (theme) => theme.palette.grey[300]
                           }
-                        : { color: (theme) => theme.palette.grey[500] })
+                        : { color: (theme) => theme.palette.grey[300] })
                     })}
                   >
                     {icon ? (
@@ -343,7 +344,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     {sidebar &&
                       (children?.length ? (
                         <IconMenu component={"span"}>
-                          {`footer-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
+                          {`footer-${index}` === active ? <BiChevronRight size={18} /> : <BiChevronDown size={18} />}
                         </IconMenu>
                       ) : null)}
                   </ListItem>

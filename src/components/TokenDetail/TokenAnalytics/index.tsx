@@ -1,15 +1,16 @@
 import { Box, Grid, useTheme } from "@mui/material";
 import { BigNumber } from "bignumber.js";
 import Highcharts from "highcharts";
-import moment from "moment";
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
 import { HighchartsReact } from "highcharts-react-official";
+import moment from "moment";
+import { FC, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
+import useResizeHighChart from "src/commons/hooks/useResizeHighChart";
+import useFetch from "src/commons/hooks/useFetch";
 
-import useFetch from "../../../commons/hooks/useFetch";
 import { HighestIcon, LowestIcon } from "../../../commons/resources";
 import { API } from "../../../commons/utils/api";
 import { formatPrice, numberWithCommas } from "../../../commons/utils/helper";
@@ -37,14 +38,16 @@ const options = [
   { value: "THREE_MONTH", label: "3m" }
 ];
 
-const AddressAnalytics: React.FC = () => {
+const AddressAnalytics: FC = () => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
+  const wrapperChartRef = useRef<HTMLDivElement>(null);
+  useResizeHighChart(wrapperChartRef);
   const { tokenId } = useParams<{ tokenId: string }>();
   const { isMobile } = useScreen();
   const theme = useTheme();
   const { data, loading } = useFetch<AnalyticsData[]>(`${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`);
   const dataChart = data?.map((i) => {
-    const value = BigNumber(i.value);
+    const value = BigNumber(i.value || 0);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,6})?/)?.[0]);
   });
 
@@ -80,7 +83,7 @@ const AddressAnalytics: React.FC = () => {
                 </Tabs>
               </Grid>
             </Grid>
-            <ChartBox>
+            <ChartBox ref={wrapperChartRef}>
               {loading ? (
                 <SkeletonUI variant="rectangular" style={{ height: "375px", display: "block" }} />
               ) : (
@@ -131,7 +134,7 @@ const AddressAnalytics: React.FC = () => {
                           type: "areaspline",
                           marker: { enabled: true },
                           lineWidth: 4,
-                          color: theme.palette.green[700],
+                          color: theme.palette.green[200],
                           fillColor: {
                             linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
                             stops: [

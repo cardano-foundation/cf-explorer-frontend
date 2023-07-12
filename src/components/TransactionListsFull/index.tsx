@@ -62,8 +62,17 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
           <CustomTooltip title={r.hash}>
             <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
           </CustomTooltip>
-          <Box mt={1}>{formatDateTimeLocal(r.time || "")}</Box>
         </div>
+      )
+    },
+    {
+      title: "Created At",
+      key: "createdat",
+      minWidth: 120,
+      render: (r) => (
+        <Box mt={1} color={({ palette }) => palette.grey[300]}>
+          {formatDateTimeLocal(r.time || "")}
+        </Box>
       )
     },
     {
@@ -78,7 +87,10 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
             </StyledLink>
           </Box>
           <Box mt={1}>
-            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
+            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
+            <Box color={({ palette }) => palette.grey[300]} component={"span"}>
+              {r.epochSlotNo}
+            </Box>
           </Box>
         </Box>
       )

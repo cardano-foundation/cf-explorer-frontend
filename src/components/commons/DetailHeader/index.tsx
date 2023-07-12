@@ -46,7 +46,7 @@ import {
   TimeDuration
 } from "./styles";
 
-interface DetailHeaderProps {
+export interface DetailHeaderProps {
   type: Bookmark["type"];
   bookmarkData?: string;
   loading: boolean;
@@ -94,7 +94,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
 
   const getHashLabel = () => {
     if (type === "BLOCK") return "Block Id";
-    if (type === "STAKE_KEY") return "Stake key";
+    if (type === "STAKE_KEY") return "Stake address";
     if (type === "POOL") return "Pool Id";
     if (type === "TOKEN") return "Token ID";
   };
@@ -241,7 +241,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                       setOpenBackdrop((prev: any) => ({ ...prev, [keyItem]: true }));
                     }}
                   >
-                    <SearchIcon stroke={theme.palette.grey[400]} />
+                    <SearchIcon stroke={theme.palette.grey[300]} />
                   </AllowSearchButton>
                 )}
                 {item.allowSearch && keyItem && openBackdrop[keyItem] && (

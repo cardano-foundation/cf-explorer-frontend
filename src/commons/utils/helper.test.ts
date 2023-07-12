@@ -1,4 +1,4 @@
-import { getShortWallet, formatAmount, numberWithCommas } from "./helper";
+import { getShortWallet, formatAmount, numberWithCommas, toFixedBigNumber } from "./helper";
 
 describe("helper getShortWallet", () => {
   it("get short return correct value", () => {
@@ -31,6 +31,12 @@ describe("helper formatAmountToken", () => {
     expect(numberWithCommas(1234)).toEqual("1,234");
     expect(numberWithCommas(1.250255985)).toEqual("1.250255");
     // eslint-disable-next-line prettier/prettier
-    expect(numberWithCommas(1.250000)).toEqual("1.25");
+    expect(numberWithCommas(1.25)).toEqual("1.25");
   });
+});
+
+test("toFixedBigNumber", () => {
+  expect(toFixedBigNumber(1.221, 2)).toEqual(1.22);
+  expect(toFixedBigNumber(1.225, 2)).toEqual(1.22);
+  expect(toFixedBigNumber(1, 2)).toEqual(1);
 });

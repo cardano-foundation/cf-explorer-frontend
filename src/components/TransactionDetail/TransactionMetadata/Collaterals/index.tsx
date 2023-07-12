@@ -19,7 +19,7 @@ const Collaterals: React.FC<CollateralProps> = ({ data }) => {
   return (
     <Wrapper>
       <Header>
-        <Box>Wallet Addresses</Box>
+        <Box>Addresses</Box>
         <Box>Amount</Box>
       </Header>
       <ItemBox>
@@ -43,12 +43,20 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
               <Box width={50}>
                 <Img src={type === "input" ? receiveImg : sendImg} alt="send icon" />
               </Box>
-              {isTablet ? <Box>{type === "input" ? "From" : "To"}:</Box> : null}
+              {isTablet ? (
+                <Box color={({ palette }) => palette.grey[400]}>{type === "input" ? "From" : "To"}:</Box>
+              ) : null}
             </Box>
             <Box width={"100%"}>
               <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
                 {!isTablet ? (
-                  <Box display={"flex"} alignItems="center" justifyContent={"flex-start"} pr={1}>
+                  <Box
+                    display={"flex"}
+                    alignItems="center"
+                    justifyContent={"flex-start"}
+                    pr={1}
+                    color={({ palette }) => palette.grey[400]}
+                  >
                     {type === "input" ? "From" : "To"}:
                   </Box>
                 ) : null}
@@ -63,7 +71,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                     <Link to={details.address(item.address)}>
                       <CustomTooltip title={item.address}>
                         <Box
-                          color={(theme) => theme.palette.blue[800]}
+                          color={(theme) => theme.palette.blue[100]}
                           fontWeight="bold"
                           fontFamily={"var(--font-family-text)"}
                         >
@@ -103,7 +111,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                             component={"span"}
                             fontWeight="bold"
                             fontFamily={"var(--font-family-text)"}
-                            color={(theme) => theme.palette.blue[800]}
+                            color={(theme) => theme.palette.blue[100]}
                             mr={1}
                           >
                             {getShortHash(item.txHash)}
