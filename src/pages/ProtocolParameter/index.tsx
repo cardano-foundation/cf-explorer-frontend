@@ -602,6 +602,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
 }) => {
   const [filterOption, { push: pushFilterOption, removeAt: removeAtFilterOption, clear }] =
     useList<string>(filterParams);
+  const theme = useTheme();
 
   const [expanded, setExpanded] = useState<string | false>("");
   const [showDaterange, setShowDaterange] = useState<boolean>(false);
@@ -688,7 +689,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                   sx={{
                     color: ({ palette }) => alpha(palette.common.black, 0.15),
                     "&.Mui-checked": {
-                      color: `#0052CC !important`
+                      color: `${theme.palette.blue[100]} !important`
                     }
                   }}
                   onChange={(e) => {
