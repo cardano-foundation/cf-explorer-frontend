@@ -60,33 +60,23 @@ const ProtocolParameter: React.FC = () => {
   const { data: dataFixed, loading: loadingFixed } = useFetch<any>(PROTOCOL_PARAMETER.FIXED);
   const { data: dataLastest, loading: loadingLastest } = useFetch<any>(PROTOCOL_PARAMETER.LASTEST);
 
-  const formatValueObjectRender = (valueObject: any) => {
-    if (isObject(valueObject?.value)) {
-      return JSON.stringify(valueObject?.value);
-    }
-
-    if (valueObject?.value) return valueObject?.value;
-
-    if (isObject(valueObject)) return JSON.stringify(valueObject);
-
-    return valueObject || "";
-  };
-
   const dataFixedVertical =
     isObject(dataFixed) &&
-    Object.entries(dataFixed).map(([name, valueObject]: any) => ({
+    Object.entries(dataFixed).map(([name, value]: any) => ({
       name,
-      value: formatValueObjectRender(valueObject)
+      value: isObject(value) ? JSON.stringify(value) : value
     }));
 
   const dataLatestVertical =
     isObject(dataLastest) &&
-    Object.entries(dataLastest).map(([name, valueObject]: any) => ({
-      name,
-      value: formatValueObjectRender(valueObject),
-      epochNo: valueObject?.epochNo,
-      time: valueObject?.time
-    }));
+    Object.entries(dataLastest)
+      .map(([name, valueObject]: any) => ({
+        name,
+        value: name === "costModel" ? JSON.stringify(valueObject) : valueObject?.value,
+        epochNo: valueObject?.epochNo,
+        time: valueObject?.time
+      }))
+      .filter((item) => item.name !== "timestamp");
 
   const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
 
