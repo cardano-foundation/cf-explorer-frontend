@@ -43,6 +43,30 @@ Cypress.Commands.add("getAllTextContent", { prevSubject: false }, (ele, callback
     });
   });
 });
+Cypress.Commands.add("verifyDateTimeIsSorted", (locator, sortOrder = "asc", ...value) => {
+  let ele = format(locator, value);
+  
+  const datetimeList = [];
+
+  cy.xpath(ele).each(locator => {
+    const promise = cy.wrap(locator).invoke("text").then(text => {
+      const datetime = new Date(text);
+      datetimeList.push(datetime);
+    });
+  }).then(() => {
+    let sortedList;
+    if (sortOrder === "asc") {
+      sortedList = [...datetimeList].sort((a, b) => a.getTime() - b.getTime());
+    } else if (sortOrder === "desc") {
+      sortedList = [...datetimeList].sort((a, b) => b.getTime() - a.getTime());
+    } else {
+      cy.log("Invalid sorting order specified");
+      return;
+    }
+    const isSorted = datetimeList.every((value, index) => value === sortedList[index]);
+    expect(isSorted).to.be.true
+  });
+});
 
 Cypress.Commands.add("verifyElementDisplay", (locator, ...values) => {
   let ele = format(locator, values);

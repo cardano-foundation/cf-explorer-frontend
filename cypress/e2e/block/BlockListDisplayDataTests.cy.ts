@@ -20,5 +20,9 @@ describe("block list", () => {
         .verifyOutputDisplay()
         .verifyQuickViewsDisplay();
     });
+    it.only("Check display data of the 'block' list", () => {
+        blockPage
+        .verifyDateTimeOrdered();
+    });
   });
   

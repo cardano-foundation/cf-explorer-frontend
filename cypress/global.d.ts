@@ -14,6 +14,7 @@ declare namespace Cypress {
     verifyElementDisplayCssChainable(): Chainable<JQuery<HTMLElement>>;
     verifyElementNotVisible(locator: string, args?: any): Chainable<JQuery<HTMLElement>>;
     verifyElementNotExistXpath(locator: string, args?: any): Chainable<JQuery<HTMLElement>>;
+    verifyDateTimeIsSorted(locator:any, sortOrder?: any, ...value: any);
     verifyText(locator: string, expectedText:string): Chainable<JQuery<HTMLElement>>;
     verifyValueNotNull(locator: string, args?: any): Chainable<JQuery<HTMLElement>>;
     getTextContent(): Chainable<string>;
