@@ -115,6 +115,7 @@ export const PriveValue = styled("span")`
   font-size: var(--font-size-text-x-large);
   font-weight: var(--font-weight-bold);
   line-height: 1;
+  text-align: end;
 `;
 
 export const ItemDetail = styled("div")`
@@ -201,5 +202,5 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
 export const LatestTransactionItemHeader = styled(Box)`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 `;
