@@ -201,7 +201,7 @@ export const SelectMui = styled(CustomSelect)(({ theme }) => ({
   borderRadius: "4px",
   fontSize: 14,
   minWidth: 50,
-  border: "1px solid #E3E5E9",
+  border: `1px solid ${theme.palette.grey[200]}`,
   color: theme.palette.grey[400],
   "& > div": {
     padding: "2.45px 14px"
