@@ -21,7 +21,7 @@ export default PopupStaking;
 
 const Hash = styled(Link)(({ theme }) => ({
   fontSize: "1.125rem",
-  color: `${theme.palette.blue[800]} !important`,
+  color: `${theme.palette.blue[100]} !important`,
   textDecoration: "underline !important",
   fontWeight: 500,
   margin: `0 ${theme.spacing(1)}`

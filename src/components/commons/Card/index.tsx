@@ -20,7 +20,10 @@ const Header = styled(Box)`
 export const Title = styled("h2")<{ underline: number }>`
   text-align: left;
   padding-bottom: 8px;
+  margin-bottom: 0px;
   position: relative;
+  width: max-content;
+  color: ${(props) => props.theme.palette.grey[400]};
   ${(props) => (props.underline ? `font-size: 1.25rem;` : "")};
   &::after {
     content: "";
@@ -35,7 +38,6 @@ export const Title = styled("h2")<{ underline: number }>`
     font-size: 24px !important;
     padding-top: 10px;
   }
-},
 `;
 
 interface CardProps extends Omit<BoxProps, "title"> {
