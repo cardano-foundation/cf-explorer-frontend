@@ -11,19 +11,20 @@ declare namespace Cypress {
     clickElement(locator: string, args?: any): Chainable<JQuery<HTMLElement>>;
     verifyElementDisplay(locator: string, args?: any): Chainable<JQuery<HTMLElement>>;
     verifyAllElementDisplay(locator: string, args?: any): Chainable<JQuery<HTMLElement>>;
-    verifyElementDisplayCssChainable(): Chainable<JQuery<HTMLElement>>;
     verifyElementNotVisible(locator: string, args?: any): Chainable<JQuery<HTMLElement>>;
-    verifyElementNotExistXpath(locator: string, args?: any): Chainable<JQuery<HTMLElement>>;
+    verifyElementNotExist(selector: string, args?: any): Chainable<JQuery<HTMLElement>>;
     verifyDateTimeIsSorted(locator:any, sortOrder?: any, ...value: any);
     verifyText(locator: string, expectedText:string): Chainable<JQuery<HTMLElement>>;
     verifyValueNotNull(locator: string, args?: any): Chainable<JQuery<HTMLElement>>;
     getTextContent(): Chainable<string>;
     getAllTextContent(locator: any, txt:any, value:any);
-    checkDateTimeFormat(): Chainable<JQuery<HTMLElement>>;
+    checkDateTimeFormat(dateTime:string,format:string): Chainable<JQuery<HTMLElement>>;
     getAttributeValue(attName:string): Chainable<string>;
     setAttributeValue(attName:string,attValue:string): Chainable<JQuery<HTMLElement>>;
-    verifyElementEnabled(locator: string, args?: any): Chainable<JQuery<HTMLElement>>;
+    verifyElementEnabled(): Chainable<JQuery<HTMLElement>>;
     setInputValue(inputValue: string, args?: any): Chainable<JQuery<HTMLElement>>;
+    compareArrayText(selector: string, expectedText:string[]): Chainable<JQuery<HTMLElement>>;
+    compareArrayAttribute(selector: string,attName:string, expectedText:string[]): Chainable<JQuery<HTMLElement>>;
   }
 }
 
