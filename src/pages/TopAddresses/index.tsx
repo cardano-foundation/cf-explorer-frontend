@@ -68,7 +68,7 @@ const TopAddresses = () => {
           </Box>
           {tabs.map((item) => (
             <TabPanel
-              sx={{ padding: 0, borderTop: (theme) => `1px solid ${alpha(theme.palette.green[800], 0.1)}` }}
+              sx={{ padding: 0, borderTop: (theme) => `1px solid ${alpha(theme.palette.green[300], 0.1)}` }}
               key={item.key}
               value={item.key}
             >

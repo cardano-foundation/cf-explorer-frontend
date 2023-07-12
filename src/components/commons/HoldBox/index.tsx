@@ -16,7 +16,7 @@ const HoldContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => 
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.red[600]}`,
+  border: `2px solid ${theme.palette.red[100]}`,
   borderRadius: "10px",
   marginRight: theme.spacing(2.5),
   marginLeft: theme.spacing(2.5),
@@ -38,7 +38,7 @@ const HoldContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => 
     position: "absolute",
     top: "-50%",
     left: theme.spacing(2),
-    background: theme.palette.red[600],
+    background: theme.palette.red[100],
     transform: " translate(0, 60%)"
   },
   [theme.breakpoints.down(sidebar ? "lg" : "md")]: {
@@ -93,6 +93,7 @@ const HolderValueLabel = styled(Typography)(({ theme }) => ({
   wordBreak: "break-word",
   textAlign: "right",
   lineHeight: "20px",
+  color: theme.palette.grey[400],
   [theme.breakpoints.down("sm")]: {
     fontSize: 16
   }

@@ -49,14 +49,14 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
           title={
             <Box>
               <Box display={"flex"} alignItems={"center"}>
-                <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
+                <Box fontSize="1.125rem" color={({ palette }) => palette.grey[300]}>
                   Pool ID:
                 </Box>
                 <PoolNamePopup to={details.delegation(poolView)}>{getShortWallet(poolView || "")}</PoolNamePopup>
                 <CopyButton text={poolView} />
               </Box>
               <Box display={"flex"} alignItems={"center"}>
-                <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
+                <Box fontSize="1.125rem" color={({ palette }) => palette.grey[300]}>
                   Pool name:
                 </Box>
                 <PoolNamePopup to={details.delegation(poolView)}>{poolName}</PoolNamePopup>
@@ -137,7 +137,7 @@ export const PoolName = styled(Box)(({ theme }) => ({
   top: "64%",
   left: "50%",
   bottom: "30%",
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   fontWeight: 500,
   transform: "translate(-50%, 0)",
   maxWidth: "70%",
@@ -153,7 +153,7 @@ export const ButtonSPO = styled(Box)(() => ({
 }));
 export const PoolNamePopup = styled(Link)(({ theme }) => ({
   fontSize: "1.125rem",
-  color: `${theme.palette.blue[800]} !important`,
+  color: `${theme.palette.blue[100]} !important`,
   textDecoration: "underline !important",
   fontWeight: 500,
   margin: `0 ${theme.spacing(1)}`,
