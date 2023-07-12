@@ -39,6 +39,12 @@ export function getDumyData() {
   }));
 }
 
+export enum ReceivedRewardsType {
+  LEADER = "LEADER",
+  MEMBER = "MEMBER",
+  ALL = ""
+}
+
 export interface ReceivedRewardsModalProps {
   open?: boolean;
   onClose?: () => void;
@@ -57,6 +63,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       sort
     }
   );
+
 
   const columns: Column<ReceivedReward>[] = [
     {
@@ -89,7 +96,15 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
     }
   ];
   return (
-    <StyledModal open={open} handleCloseModal={() => onClose?.()} width={600}>
+    <StyledModal
+      open={open}
+      handleCloseModal={() => {
+        onClose?.();
+        fetchData.update(() => []);
+        fetchData.setLoading(true);
+      }}
+      width={600}
+    >
       <ModalContainer>
         <ModalTitle>
           {type === RECEIVED_REWARDS.LEADER

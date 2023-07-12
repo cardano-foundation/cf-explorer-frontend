@@ -118,8 +118,8 @@ const Tokens = () => {
       }
     },
     {
-      title: "Created",
-      key: "time",
+      title: "Created At",
+      key: "createdat",
       minWidth: "150px",
       render: (r) => (
         <>
@@ -146,14 +146,10 @@ const Tokens = () => {
 
   return (
     <StyledContainer>
-      <Card
-        title="Token List"
-        extra={
-          <TimeDuration>
-            <FormNowMessage time={lastUpdated} />
-          </TimeDuration>
-        }
-      >
+      <Card title="Token List">
+        <TimeDuration>
+          <FormNowMessage time={lastUpdated} />
+        </TimeDuration>
         <Table
           {...fetchData}
           data={data}
