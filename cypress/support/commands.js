@@ -23,7 +23,9 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import moment from 'moment';
 const format = require('string-format');
+
 Cypress.Commands.add("clickElement", (selector) => {
   if (selector.startsWith("/") || selector.startsWith("(")) {
     cy.xpath(selector).click();
@@ -55,11 +57,11 @@ Cypress.Commands.add("verifyElementDisplay", (locator, ...values) => {
 Cypress.Commands.add("verifyAllElementDisplay", (locator, ...values) => {
   let ele = format(locator, values);
   if (ele.startsWith("/") || ele.startsWith("(")) {
-    cy.xpath(ele).each(e => {
+    cy.xpath(ele, { timeout: 5000 }).each(e => {
       cy.wrap(e).scrollIntoView().should("be.visible");
     });
   } else {
-    cy.xpath(ele).each(e => {
+    cy.xpath(ele, { timeout: 5000 }).each(e => {
       cy.wrap(e).scrollIntoView().should("be.visible");
     });
   }
@@ -105,15 +107,13 @@ Cypress.Commands.add("verifyValueNotNull", (locator, ...value) => {
   }
 });
 
-Cypress.Commands.add(
-  "checkDateTimeFormat",
-  { prevSubject: true },
-  (subject, format) => {
-    const dateTimeRegex = /^\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2}$/; // mm/dd/yyyy hh:mm:ss
+Cypress.Commands.add('checkDateTimeFormat', (dateTimeString, format) => {
+  cy.log(`Verifying format of "${dateTimeString}" against format "${format}"`);
 
-    cy.wrap(subject).should("match", dateTimeRegex);
-  }
-);
+  const isValidFormat = moment(dateTimeString, format, true).isValid();
+  console.log(dateTimeString);
+  expect(isValidFormat).to.be.true;
+});
 
 Cypress.Commands.add(
   "getAttributeValue",
@@ -146,3 +146,15 @@ Cypress.Commands.add(
     return cy.wrap(subject).clear().type(value);
   }
 );
+
+Cypress.Commands.add('compareArrayText', (selector, expectedText) => {
+  cy.get(selector).each((element, index) => {
+    cy.wrap(element).should('have.text', expectedText[index]);
+  });
+});
+
+Cypress.Commands.add('compareArrayAttribute', (selector, attribute, expectedValues) => {
+  cy.get(selector).each((element, index) => {
+    cy.wrap(element).should('have.attr', attribute, expectedValues[index]);
+  });
+});

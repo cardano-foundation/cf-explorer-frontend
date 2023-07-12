@@ -1,16 +1,15 @@
-import EpochPanel from "../../../pagesobject/EpochPanel";
+import EpochPanel from "../../../pagesobject/Epoch/EpochPanel";
 
 const epochPanel = new EpochPanel();
-it("Check action of 'Number items' pulldown",{"retries": 0}, () => {
-    // Set the viewport to match the screen size
-    cy.viewport(1920,1080);
-
-    epochPanel.goToHomePage();
-
-    epochPanel.clickOnBlockChainDropDownList()
-              .clickOnEpochPanel()
+describe('Check action of "Number items" pulldown',()=>{
+beforeEach(() => {
+    epochPanel.goToEpochPage();
+  })
+it("Check action of 'Number items' pulldown", () => {
+    epochPanel
               .verifyDefaulDisplayRow('50')
               .clickOnPerPageDropdown()
+              .verifyDisplayRowSelection(['10','20','50','100'])
               .changePerPageValue('10')
               .verifyNumberOfDisplayRow('10')
               .clickOnPerPageDropdown()
@@ -24,3 +23,4 @@ it("Check action of 'Number items' pulldown",{"retries": 0}, () => {
               .verifyNumberOfDisplayRow('100')
              
 });
+})

@@ -82,7 +82,7 @@ export default class LoginPage extends WebApi {
     return this;
   }
   verifyFormatBlockId() {
-    cy.getAllTextContent(itemListsWithLink, (txt) => {
+    cy.getAllTextContent(itemListsWithLink, (txt:string) => {
       expect(this.isFormatStringRight(txt, 10, 7, 3)).be.true;
     }, BlockConstants.COLUMN_NAME[1])
     return this;
