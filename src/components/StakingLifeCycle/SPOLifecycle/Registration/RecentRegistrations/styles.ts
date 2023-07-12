@@ -32,7 +32,7 @@ export const GridBox = styled("div")<{ sidebar?: number }>(({ theme, sidebar }) 
 export const WrapFilterDescription = styled("span")(({ theme }) => ({
   fontSize: 14,
   fontWeight: 400,
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   [theme.breakpoints.down("sm")]: {
     fontSize: 12
   }

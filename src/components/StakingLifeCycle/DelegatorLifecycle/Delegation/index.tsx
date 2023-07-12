@@ -234,5 +234,5 @@ export const DelegationCertificateModal = ({
 
 const Link = styled(LinkDom)(({ theme }) => ({
   fontSize: "0.875rem",
-  color: `${theme.palette.blue[800]} !important`
+  color: `${theme.palette.blue[100]} !important`
 }));
