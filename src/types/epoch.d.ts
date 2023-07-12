@@ -15,6 +15,7 @@ interface IDataEpoch {
   epochSlotNo: number;
   maxSlot: number;
   rewardsDistributed: number;
+  account: number;
 }
 
 interface IEpoch {

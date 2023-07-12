@@ -88,7 +88,7 @@ const options: Option[] = [
   },
   {
     value: "policies",
-    label: "Policies",
+    label: "Policy Id",
     paths: [routers.POLICY_DETAIL],
     detail: details.policyDetail
   }
@@ -284,7 +284,7 @@ export const OptionsSearch = ({ show, home, value, handleSearch, error }: Option
         </>
       )}
       {!!error && (
-        <Box component={Option} color={({ palette }) => palette.red[700]} justifyContent={"center"}>
+        <Box component={Option} color={({ palette }) => palette.red[100]} justifyContent={"center"}>
           <Box>{error}</Box>
         </Box>
       )}

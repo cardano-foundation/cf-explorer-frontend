@@ -19,6 +19,7 @@ export const StyledLink = styled(Link)`
 `;
 export const Label = styled(Box)`
   min-width: 50px;
+  color: ${({ theme }) => theme.palette.grey[300]};
 `;
 
 export const Img = styled("img")(() => ({
