@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Box, Grid, useTheme } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
@@ -13,6 +13,7 @@ import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
+import useResizeHighChart from "src/commons/hooks/useResizeHighChart";
 
 import {
   BoxInfo,
@@ -46,6 +47,8 @@ const StakeAnalytics: React.FC = () => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const [tab, setTab] = useState<"BALANCE" | "REWARD">("BALANCE");
   const { stakeId } = useParams<{ stakeId: string }>();
+  const wrapperChartRef = useRef<HTMLDivElement>(null);
+  useResizeHighChart(wrapperChartRef);
   const theme = useTheme();
   const { isMobile } = useScreen();
   const { data, loading } = useFetch<AnalyticsBalance[]>(`${API.STAKE.ANALYTICS_BALANCE}/${stakeId}/${rangeTime}`);
@@ -126,7 +129,7 @@ const StakeAnalytics: React.FC = () => {
               )}
             </Grid>
           </Grid>
-          <ChartBox>
+          <ChartBox ref={wrapperChartRef}>
             {loading || loadingReward ? (
               <SkeletonUI variant="rectangular" style={{ height: "375px" }} />
             ) : (

@@ -63,7 +63,9 @@ export const HeaderContainer = styled(Box)`
   }
 `;
 
-export const HeaderTitle = styled("h2")`
+export const HeaderTitle = styled(Box)`
+  overflow-wrap: anywhere;
+  font-weight: var(--font-weight-bold);
   color: ${(props) => props.theme.palette.grey[400]};
   font-size: 2.25rem;
   margin: 0.5rem 0;
