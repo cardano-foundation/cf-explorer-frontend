@@ -1,5 +1,4 @@
-import BlockPage from "../../pagesobject/block/BlockPage";
-const { viewportWidth, viewportHeight } = Cypress.config()
+import BlockPage from "../../pagesobject/Block/BlockPage";
 const blockPage = new BlockPage();
 describe("block list", () => {
   it("Check initialzation the screen", () => {

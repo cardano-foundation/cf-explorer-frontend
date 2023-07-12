@@ -4,7 +4,7 @@ import {BlockConstants} from "../../fixtures/constants/BlockConstants"
 //locators
 const blockChainLocator = "//img[@alt='Blockchain']//parent::div";
 const blocksLocator = "//a[contains(@href,'/blocks')]";
-const txtColumnName = "//th[contains(text(),'%s')]";
+const txtColumnName = "//th[contains(text(),'{0}')]";
 const transactionBtn = "//th[contains(text(),'Transactions')]//button";
 const createdAtBtn = "//th[contains(text(),'Created At')]//button";
 const listBlock = '//div[@data-testid="blocks-card"]//tbody//tr';
@@ -86,7 +86,7 @@ export default class LoginPage extends WebApi {
       expect(this.isFormatStringRight(txt, 10, 7, 3)).be.true;
     }, BlockConstants.COLUMN_NAME[1])
     return this;
-  }
+  } 
   // verifyDateTimeOrdered() {
   //   const format = require('string-format');
   //   let ele = format(itemLists, "Created At")
