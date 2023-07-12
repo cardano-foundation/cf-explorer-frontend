@@ -10,6 +10,7 @@ import { generateStakeKeyReport, generateStakePoolReport } from "src/commons/uti
 import { getPoolEventType } from "src/components/PoolLifecycle";
 import { getEventType } from "src/components/StakekeySummary";
 import StyledModal from "src/components/commons/StyledModal";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import { EVENTS_NAME, ReportType } from "./FilledInfoModal";
 import {
@@ -91,7 +92,11 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
   const list = [
     {
       label: "Report name",
-      value: <TextOverFlow>{`${params.reportName}`.replaceAll("-", " ")}</TextOverFlow>
+      value: (
+        <CustomTooltip title={`${params.reportName}`.replaceAll("-", " ")}>
+          <TextOverFlow>{`${params.reportName}`.replaceAll("-", " ")}</TextOverFlow>
+        </CustomTooltip>
+      )
     },
     {
       label: isPoolReport ? "Epoch range" : "Date range",
@@ -101,7 +106,11 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
     },
     {
       label: isPoolReport ? "Pool ID" : "Stake key details",
-      value: <TextOverFlow>{params.address}</TextOverFlow>
+      value: (
+        <CustomTooltip title={params.address}>
+          <TextOverFlow>{params.address}</TextOverFlow>
+        </CustomTooltip>
+      )
     },
     {
       label: isPoolReport ? "Pool size" : "ADA transfers",
