@@ -1,5 +1,5 @@
-import React from "react";
 import { Box, Skeleton } from "@mui/material";
+import React from "react";
 
 import { EmptyIcon, InfoIcon } from "src/commons/resources";
 import CopyButton from "src/components/commons/CopyButton";

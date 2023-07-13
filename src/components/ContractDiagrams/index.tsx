@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { CgClose } from "react-icons/cg";
 
 import { RedeemerArrowDownIcon, RedeemerPlusIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
@@ -17,16 +18,19 @@ import {
   DatumnElement,
   DatumnText,
   DatumnItem,
-  IconContainer
+  IconContainer,
+  CloseButton
 } from "./styles";
+import CustomTooltip from "../commons/CustomTooltip";
 
 interface IContractDiagramProps {
   item: IContractItemTx;
   type?: "in" | "out";
   txHash?: string;
+  handleClose?: () => void;
 }
 
-export const ContractDiagrams = ({ item, txHash }: IContractDiagramProps) => {
+export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagramProps) => {
   const linkToPage = () => {
     if (txHash) return details.transaction(txHash);
     return item.address ? details.contract(item.address) : details.policyDetail(item.scriptHash);
@@ -35,7 +39,16 @@ export const ContractDiagrams = ({ item, txHash }: IContractDiagramProps) => {
   return (
     <ContractDiagramsContainer isTxPageView={!!txHash}>
       <ContractHeader>
-        <ContractText>{txHash ? "Transactions" : "Contract"}</ContractText>
+        <ContractText>
+          {txHash ? "Transactions" : "Contract"}
+          {handleClose ? (
+            <CustomTooltip title="Close">
+              <CloseButton onClick={handleClose}>
+                <CgClose />
+              </CloseButton>
+            </CustomTooltip>
+          ) : null}
+        </ContractText>
         <Link to={linkToPage()}>
           <ContractAddress>{txHash || item.address || item.scriptHash}</ContractAddress>
         </Link>
@@ -111,7 +124,7 @@ export const ContractDatumn = ({ item, type }: IContractDiagramProps) => {
         }}
       >
         <DatumnText>Datum</DatumnText>
-        <Typography component={"span"}>{isTypeIn ? item.datumHashIn : item.datumBytesOut}</Typography>
+        <Typography component={"span"}>{isTypeIn ? item.datumBytesIn : item.datumBytesOut}</Typography>
       </DatumnItem>
     </DatumnElement>
   );

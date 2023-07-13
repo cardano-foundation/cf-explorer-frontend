@@ -93,9 +93,9 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
                 <Img src={type !== "up" ? receiveImg : sendImg} alt="send icon" />
               </Box>
             )}
-              <CustomTooltip title={transaction.hash}>
-                <StyledLink to={details.transaction(transaction.hash)}>{getShortHash(transaction.hash)}</StyledLink>
-              </CustomTooltip>
+            <CustomTooltip title={transaction.hash}>
+              <StyledLink to={details.transaction(transaction.hash)}>{getShortHash(transaction.hash)}</StyledLink>
+            </CustomTooltip>
           </Box>
         );
       }

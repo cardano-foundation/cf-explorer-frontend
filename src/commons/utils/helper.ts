@@ -185,3 +185,15 @@ export const tokenRegistry = (policy: string | undefined, name: string | undefin
   const tokenRegitryLink = `https://raw.githubusercontent.com/cardano-foundation/cardano-token-registry/master/mappings/${policy}${name}.json`;
   return tokenRegitryLink;
 };
+
+export const getHostname = (url: string): string => {
+  try {
+    return new URL(url).hostname;
+  } catch {
+    return "";
+  }
+};
+
+export const toFixedBigNumber = (value: string | number, dp = 0, rm = BigNumber.ROUND_DOWN): number => {
+  return +new BigNumber(value).toFixed(dp, rm);
+};

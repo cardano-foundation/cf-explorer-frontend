@@ -21,6 +21,7 @@ export interface FetchReturnType<T> {
   refresh: () => void;
   update: (callback: (data: T[]) => T[]) => void;
   lastUpdated: number;
+  setLoading: (value: boolean) => void;
 }
 
 const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, timeout?: number): FetchReturnType<T> => {
@@ -100,7 +101,8 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
     currentPage,
     refresh: getList,
     update: setData,
-    lastUpdated: lastFetch.current
+    lastUpdated: lastFetch.current,
+    setLoading
   };
 };
 

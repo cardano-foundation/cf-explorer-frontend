@@ -127,7 +127,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
 
   const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
-    const option = options.find((item) => item.value === filter);
+    const option = options.find((item) => item.value === (filterParams || filter));
 
     if (option?.value === "lifecycle") {
       if (search.startsWith("stake")) {
@@ -284,7 +284,7 @@ export const OptionsSearch = ({ show, home, value, handleSearch, error }: Option
         </>
       )}
       {!!error && (
-        <Box component={Option} color={({ palette }) => palette.red[700]} justifyContent={"center"}>
+        <Box component={Option} color={({ palette }) => palette.red[100]} justifyContent={"center"}>
           <Box>{error}</Box>
         </Box>
       )}

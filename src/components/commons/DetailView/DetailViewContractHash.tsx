@@ -6,7 +6,6 @@ import { EmptyIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import ContractDiagrams from "src/components/ContractDiagrams";
-import useComponentVisible from "src/commons/hooks/useComponentVisible";
 
 import CustomTooltip from "../CustomTooltip";
 import {
@@ -40,14 +39,6 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
     undefined,
     false
   );
-
-  const { ref, isComponentVisible } = useComponentVisible(true);
-
-  useEffect(() => {
-    if (!isComponentVisible) {
-      handleClose();
-    }
-  }, [isComponentVisible, handleClose]);
 
   useEffect(() => {
     document.body.style.overflowY = "hidden";
@@ -108,7 +99,6 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
 
   return (
     <ViewDetailDrawerContractHash
-      ref={ref}
       anchor="right"
       open
       hideBackdrop
@@ -118,7 +108,7 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
       <ViewDetailContainerContractHash>
         <ViewDetailScrollContractHash>
           {data?.[0] ? (
-            <ContractDiagrams item={data[0]} txHash={txHash} />
+            <ContractDiagrams item={data[0]} txHash={txHash} handleClose={handleClose} />
           ) : (
             <Box sx={{ paddingTop: 10 }} height={"200px"} component={"img"} src={EmptyIcon} />
           )}
