@@ -84,11 +84,3 @@ export const CardItemStyled = styled(CardItem)`
     padding: 20px 15px;
   }
 `;
-
-export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
-  display: "block",
-  textAlign: "left",
-  flex: 1,
-  paddingTop: "10px"
-}));

@@ -188,12 +188,12 @@ const renderTooltipContent = (o: any, range: Time) => {
         textAlign={"left"}
         boxShadow={(theme) => theme.shadow.dropdown}
       >
-        <Box color={({ palette }) => palette.common.black} textAlign={"center"}>{`${moment(label).format(
+        <Box color={({ palette }) => palette.grey[400]} textAlign={"center"}>{`${moment(label).format(
           formatTimeX(range)
         )}`}</Box>
         {(payload || []).reverse().map((entry: any, index: number) => (
           <Box key={`item-${index}`} mt={1}>
-            <Box color={({ palette }) => alpha(palette.common.black, 0.7)} fontSize={"0.75rem"}>{`${
+            <Box color={({ palette }) => alpha(palette.grey[400], 0.7)} fontSize={"0.75rem"}>{`${
               nameTooltips[entry.name as keyof typeof nameTooltips]
             }`}</Box>
             <Box fontWeight={"bold"} style={{ color: entry.color }}>{`${numberWithCommas(entry.value)} (${getPercent(
@@ -226,8 +226,12 @@ const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" tickFormatter={(date: string) => formatX(date, range)} />
-          <YAxis tickFormatter={toPercent} />
+          <XAxis
+            color={theme.palette.grey[400]}
+            dataKey="date"
+            tickFormatter={(date: string) => formatX(date, range)}
+          />
+          <YAxis color={theme.palette.grey[400]} tickFormatter={toPercent} />
           <Tooltip content={(o: any) => renderTooltipContent(o, range)} />
           <Area
             type="monotone"

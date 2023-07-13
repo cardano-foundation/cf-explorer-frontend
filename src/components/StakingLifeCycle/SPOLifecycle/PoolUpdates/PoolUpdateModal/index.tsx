@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Skeleton } from "@mui/material";
+import { Box, Skeleton, useTheme } from "@mui/material";
 import { TabContext, TabList } from "@mui/lab";
 import { useHistory } from "react-router-dom";
 
@@ -56,7 +56,7 @@ interface Props {
 }
 export const PoolUpdateModal = ({ data, ...props }: Props) => {
   const [tabActive, setTabActive] = useState("poolCertificate");
-
+  const theme = useTheme();
   const tabs: TabProps[] = [
     {
       key: "poolCertificate",
@@ -100,7 +100,7 @@ export const PoolUpdateModal = ({ data, ...props }: Props) => {
                   value={key}
                   label={
                     <TabItem>
-                      <Icon fill={key === tabActive ? "#438F68" : "#98A2B3"} />
+                      <Icon fill={key === tabActive ? theme.palette.green[200] : theme.palette.grey[300]} />
                       <TitleTab pl={1} active={+(key === tabActive)}>
                         {label}
                       </TitleTab>

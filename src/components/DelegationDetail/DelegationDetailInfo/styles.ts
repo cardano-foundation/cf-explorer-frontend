@@ -182,12 +182,12 @@ export const SavingImg = styled("img")`
 `;
 
 export const ButtonViewAll = styled(Button)(({ theme }) => ({
-  backgroundColor: "#d9e9e1",
-  border: "1px solid #000",
+  backgroundColor: theme.palette.border.primary,
+  border: `1px solid ${theme.palette.common.black}`,
   padding: `0 ${theme.spacing(1)}`,
   textTransform: "capitalize",
+  color: theme.palette.grey[400],
   fontWeight: "bold",
-  opacity: 0.5,
   [theme.breakpoints.down("sm")]: {
     position: "absolute",
     top: 15,
