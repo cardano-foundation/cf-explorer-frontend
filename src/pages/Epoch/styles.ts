@@ -1,5 +1,4 @@
-import { Box } from "@mui/material";
-import { styled, Container } from "@mui/material";
+import { Box, styled, Container } from "@mui/material";
 
 import { EPOCH_STATUS } from "src/commons/utils/constants";
 

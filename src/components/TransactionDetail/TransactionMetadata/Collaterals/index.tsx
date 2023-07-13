@@ -127,7 +127,12 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                 </Box>
                 {item.tokens && item.tokens.length > 1 && (
                   <Box display={"flex"} alignItems={"center"}>
-                    <DropdownTokens tokens={item.tokens} type={type === "input" ? "up" : "down"} hideInputLabel hideMathChar />
+                    <DropdownTokens
+                      tokens={item.tokens}
+                      type={type === "input" ? "up" : "down"}
+                      hideInputLabel
+                      hideMathChar
+                    />
                   </Box>
                 )}
               </Box>

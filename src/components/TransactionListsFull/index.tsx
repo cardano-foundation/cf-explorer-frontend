@@ -69,11 +69,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       title: "Created At",
       key: "createdat",
       minWidth: 120,
-      render: (r) => (
-        <Box mt={1} color={({ palette }) => palette.grey[300]}>
-          {formatDateTimeLocal(r.time || "")}
-        </Box>
-      )
+      render: (r) => formatDateTimeLocal(r.time || "")
     },
     {
       title: "Block",
