@@ -24,7 +24,7 @@ export const Item = styled(Card)`
 `;
 
 export const EpochProgress = styled("h3")(({ theme }) => ({
-  color: theme.palette.common.black,
+  color: theme.palette.grey[400],
   margin: 0,
   [theme.breakpoints.down("lg")]: {
     fontSize: 14
