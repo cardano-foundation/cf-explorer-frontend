@@ -8,7 +8,7 @@ import { BigNumber } from "bignumber.js";
 
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
-import { formatADAFull, formatPrice } from "src/commons/utils/helper";
+import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/helper";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -171,7 +171,12 @@ const StakeAnalytics: React.FC = () => {
                       }
                     },
                     legend: { enabled: false },
-                    tooltip: { shared: true },
+                    tooltip: {
+                      shared: true,
+                      formatter: function (data: Highcharts.TooltipFormatterContextObject) {
+                        return "<span>" + data.x + "</span><br><strong>" + numberWithCommas(data.y || 0) + "</strong>";
+                      }
+                    },
                     credits: { enabled: false },
                     series: [
                       {

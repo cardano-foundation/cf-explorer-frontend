@@ -4,7 +4,7 @@ import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
 import useResizeHighChart from "src/commons/hooks/useResizeHighChart";
-import { formatADAFull, formatPrice } from "src/commons/utils/helper";
+import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/helper";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -88,7 +88,12 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                       angle: 0
                     },
                     legend: { enabled: false },
-                    tooltip: { shared: true },
+                    tooltip: {
+                      shared: true,
+                      formatter: function(data: Highcharts.TooltipFormatterContextObject) {
+                        return '<span>' + data.x + '</span><br><strong>' + numberWithCommas(data.y || 0) + "</strong>";
+                      }
+                    },
                     credits: { enabled: false },
                     series: [
                       {
