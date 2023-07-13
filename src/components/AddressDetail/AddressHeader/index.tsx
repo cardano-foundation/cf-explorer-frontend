@@ -138,7 +138,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
         <Grid item xs={12} md={6}>
           <StyledBoxCard>
             <CardAddress
-              title={"Stake Key"}
+              title={"Stake Address"}
               type="right"
               address={data?.stakeAddress || ""}
               item={itemRight}
