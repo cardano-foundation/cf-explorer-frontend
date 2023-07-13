@@ -14,7 +14,6 @@ const useResizeHighChart = (wrapperRef: React.RefObject<HTMLDivElement>) => {
     resizeObserver.observe(wrapperRef.current);
     return () => resizeObserver.disconnect();
   }, [wrapperRef]);
-
 };
 
 export default useResizeHighChart;

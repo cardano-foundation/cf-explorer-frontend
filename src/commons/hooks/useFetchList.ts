@@ -102,7 +102,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
     refresh: getList,
     update: setData,
     lastUpdated: lastFetch.current,
-    setLoading,
+    setLoading
   };
 };
 

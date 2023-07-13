@@ -67,8 +67,8 @@ const RegistrationPools = () => {
     },
     {
       title: "Created At",
-      key: 'created_at',
-      render: (pool) => <>{formatDateTimeLocal(pool.txTime || "")}</>,
+      key: "created_at",
+      render: (pool) => <>{formatDateTimeLocal(pool.txTime || "")}</>
     },
     {
       title: "Block",
