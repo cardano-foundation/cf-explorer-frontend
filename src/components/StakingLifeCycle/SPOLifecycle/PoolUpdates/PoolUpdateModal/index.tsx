@@ -86,6 +86,9 @@ export const PoolUpdateModal = ({ data, ...props }: Props) => {
           overflow: "auto"
         }
       }}
+      sx={{
+        overflow: "hidden"
+      }}
     >
       {isUpdated ? (
         <TabContext value={tabActive}>
