@@ -1,4 +1,4 @@
-import { Box, Grid, alpha, styled } from "@mui/material";
+import { Box, Grid, styled } from "@mui/material";
 
 export const EpochCard = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -60,17 +60,17 @@ export const EpochNumber = styled(Box)(({ theme }) => ({
 }));
 
 export const TitleCard = styled(Box)(({ theme }) => ({
-  color: alpha(theme.palette.common.black, 0.5),
+  color: theme.palette.grey[300],
   fontSize: "0.875rem"
 }));
 
 export const EpochText = styled("span")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   text-transform: uppercase;
 `;
 
 export const EpochProgress = styled("h3")(({ theme }) => ({
-  color: theme.palette.common.black,
+  color: theme.palette.grey[400],
   margin: 0,
   [theme.breakpoints.down("lg")]: {
     fontSize: 14
@@ -95,12 +95,12 @@ export const CardItem = styled(Grid)(({ theme }) => ({
 }));
 
 export const CardItemTitle = styled(Box)(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   marginLeft: 8
 }));
 
 export const MaxSlot = styled("span")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   font-size: 20px;
 `;
 
@@ -112,10 +112,11 @@ export const Date = styled("div")`
 
 export const Time = styled("div")`
   font-size: 1.25rem;
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
 `;
 
 export const Content = styled("span")`
+  color: ${(props) => props.theme.palette.grey[400]};
   font-size: 18px;
 `;
 

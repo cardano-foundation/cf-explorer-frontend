@@ -14,6 +14,7 @@ import Card from "src/components/commons/Card";
 import TokenAutocomplete from "src/components/TokenAutocomplete";
 import ADAicon from "src/components/commons/ADAIcon";
 import { useScreen } from "src/commons/hooks/useScreen";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import { GridContainer, GridItem, Pool, RedirectButton, StyledAAmount, BannerSuccess } from "./styles";
 
@@ -79,7 +80,13 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       title: "Delegated To",
       value: (
         <Pool to={details.delegation(dataStake?.pool ? dataStake?.pool?.poolId : "")}>
-          {dataStake?.pool?.poolName || getShortWallet(dataStake?.pool?.poolId || "")}
+          {dataStake?.pool?.poolName ? (
+            dataStake?.pool?.poolName
+          ) : (
+            <CustomTooltip title={dataStake?.pool?.poolId || ""} arrow>
+              <span>{getShortWallet(dataStake?.pool?.poolId || "")}</span>
+            </CustomTooltip>
+          )}
         </Pool>
       )
     }

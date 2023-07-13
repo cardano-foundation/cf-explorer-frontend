@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useRef, useMemo } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
@@ -44,7 +44,8 @@ import {
   PaymentWalleValue,
   BufferBox,
   StyledFeeBox,
-  StyledAdaLogoIcon
+  StyledAdaLogoIcon,
+  AmountWithIconBox
 } from "./styles";
 
 export interface WithdrawDetail {
@@ -67,6 +68,7 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
   const { data, loading } = useFetch<WithdrawDetail>(
     selected.txHash && stakeId && API.STAKE_LIFECYCLE.WITHDRAW_DETAIL(stakeId, selected.txHash)
   );
+  const theme = useTheme();
   const { amount, fee, stakeRewardAvailable, stakeTotalAmount, time, txHash } = data || {};
   const adaHolderRef = useRef(null);
   const paymentRef = useRef(null);
@@ -84,55 +86,55 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
     return [
       {
         start: adaHolderRef,
-        startPosition: { 0: ["center", "bottom"], xl: ["center", "middle"] },
+        startPosition: { 0: ["center", "bottom"], laptop: ["center", "middle"] },
         end: paymentRef,
-        endPosition: { 0: ["center", "top"], xl: ["left", "middle"] },
-        arrow: { 0: "top", xl: "left" }
+        endPosition: { 0: ["center", "top"], laptop: ["left", "middle"] },
+        arrow: { 0: "top", laptop: "left" }
       },
       {
         start: netAmountRef,
-        startPosition: { 0: ["center", "top"], xl: ["left", "middle"] },
+        startPosition: { 0: ["center", "top"], laptop: ["left", "middle"] },
         end: paymentRef,
-        endPosition: { 0: ["center", "bottom"], xl: ["right", "middle"] },
-        startOffset: { 0: [0, -15], xl: [0] },
-        arrow: { 0: "bottom", xl: "right" },
-        autoAlign: { 0: "start-vertical", xl: "start-horizontal" }
+        endPosition: { 0: ["center", "bottom"], laptop: ["right", "middle"] },
+        startOffset: { 0: [0, -15], laptop: [0] },
+        arrow: { 0: "bottom", laptop: "right" },
+        autoAlign: { 0: "start-vertical", laptop: "start-horizontal" }
       },
       {
         start: paymentRef,
-        startPosition: { 0: ["center", "bottom"], xl: ["right", "middle"] },
+        startPosition: { 0: ["center", "bottom"], laptop: ["right", "middle"] },
         end: withDrawnRef,
-        endPosition: { 0: ["center", "top"], xl: ["left", "middle"] },
-        endOffset: { 0: [0, -15], xl: [0] },
-        arrow: { 0: "top", xl: "left" },
-        autoAlign: { 0: "end-vertical", xl: "end-horizontal" }
+        endPosition: { 0: ["center", "top"], laptop: ["left", "middle"] },
+        endOffset: { 0: [0, -15], laptop: [0] },
+        arrow: { 0: "top", laptop: "left" },
+        autoAlign: { 0: "end-vertical", laptop: "end-horizontal" }
       },
       {
         start: feeRef,
-        startPosition: { 0: ["center", "top"], xl: ["center", "top"] },
+        startPosition: { 0: ["center", "top"], laptop: ["center", "top"] },
         end: netAmountRef,
-        endPosition: { 0: ["center", "bottom"], xl: ["right", "middle"] },
-        startOffset: { 0: [0, 15], xl: [0] },
-        arrow: { 0: "bottom", xl: "right" },
-        fold: { 0: "none", xl: "vertical" }
+        endPosition: { 0: ["center", "bottom"], laptop: ["right", "middle"] },
+        startOffset: { 0: [0, 15], laptop: [0] },
+        arrow: { 0: "bottom", laptop: "right" },
+        fold: { 0: "none", laptop: "vertical" }
       },
       {
         start: cardanoBlockchainRef,
-        startPosition: { 0: ["right", "top"], xl: ["left", "middle"] },
+        startPosition: { 0: ["right", "top"], laptop: ["left", "middle"] },
         end: feeRef,
-        endPosition: { 0: ["center", "bottom"], xl: ["right", "middle"] },
-        startOffset: { 0: [0, 45], xl: [15, 0] },
-        arrow: { 0: "bottom", xl: "right" },
-        autoAlign: { 0: "end-vertical", xl: "none" }
+        endPosition: { 0: ["center", "bottom"], laptop: ["right", "middle"] },
+        startOffset: { 0: [0, 45], laptop: [15, 0] },
+        arrow: { 0: "bottom", laptop: "right" },
+        autoAlign: { 0: "end-vertical", laptop: "none" }
       },
       {
         start: withDrawnRef,
-        startPosition: { 0: ["center", "bottom"], xl: ["right", "middle"] },
+        startPosition: { 0: ["center", "bottom"], laptop: ["right", "middle"] },
         end: cardanoBlockchainRef,
-        endPosition: { 0: ["left", "top"], xl: ["left", "middle"] },
-        endOffset: { 0: [0, 45], sm: [0, 45], xl: [15] },
-        arrow: { 0: "top", xl: "left" },
-        autoAlign: { 0: "start-vertical", xl: "start-horizontal" }
+        endPosition: { 0: ["left", "top"], laptop: ["left", "middle"] },
+        endOffset: { 0: [0, 45], sm: [0, 45], laptop: [15] },
+        arrow: { 0: "top", laptop: "left" },
+        autoAlign: { 0: "start-vertical", laptop: "start-horizontal" }
       }
     ];
   }, []);
@@ -150,7 +152,7 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
 
         <InfoGroup>
           <Info>
-            <AddressIcon fill="#438F68" />
+            <AddressIcon fill={theme.palette.green[200]} />
             <CustomTooltip title={txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(txHash)}>{getShortHash(txHash || "")}</StyledLink>
@@ -159,11 +161,11 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
             <StyledCopyButton text={txHash} />
           </Info>
           <Info>
-            <ADAGreen />
+            <ADAGreen fill={theme.palette.green[200]} />
             <InfoText>{formatADAFull(amount || 0)}</InfoText>
           </Info>
           <Info>
-            <TimeIcon />
+            <TimeIcon fill={theme.palette.green[200]} />
             <InfoText>{formatDateTimeLocal(time || "")}</InfoText>
           </Info>
         </InfoGroup>
@@ -178,8 +180,10 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
               <PaymentWalletValueContainer>
                 <PaymentWalletIconBox>
                   <WalletIconRewardGreen />
-                  <PaymentWalleValue>{formatADAFull(stakeTotalAmount || 0)}</PaymentWalleValue>
-                  <StyledAdaLogoIcon />
+                  <AmountWithIconBox>
+                    <PaymentWalleValue>{formatADAFull(stakeTotalAmount || 0)}</PaymentWalleValue>
+                    <StyledAdaLogoIcon />
+                  </AmountWithIconBox>
                 </PaymentWalletIconBox>
               </PaymentWalletValueContainer>
             </PaymentWalletInfo>
@@ -191,8 +195,10 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
               <PaymentWalletValueContainer>
                 <PaymentWalletIconBox>
                   <WalletIconRewardGreen />
-                  <PaymentWalleValue>{formatADAFull(stakeRewardAvailable || 0)}</PaymentWalleValue>
-                  <StyledAdaLogoIcon />
+                  <AmountWithIconBox>
+                    <PaymentWalleValue>{formatADAFull(stakeRewardAvailable || 0)}</PaymentWalleValue>
+                    <StyledAdaLogoIcon />
+                  </AmountWithIconBox>
                 </PaymentWalletIconBox>
               </PaymentWalletValueContainer>
             </PaymentWalletInfo>

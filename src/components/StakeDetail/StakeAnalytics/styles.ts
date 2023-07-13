@@ -8,7 +8,7 @@ export const StyledGrid = styled(Grid)(({ theme }) => ({
 }));
 
 export const BoxInfo = styled(Box)(({ theme }) => ({
-  background: theme.palette.secondary.dark,
+  background: theme.palette.common.white,
   borderRadius: "10px",
   color: theme.palette.primary.contrastText,
   display: "flex",
@@ -28,8 +28,8 @@ export const CustomButton = styled("button")<{ active: number }>(({ theme, activ
   borderRadius: "5px",
   padding: "6px 0",
   fontWeight: "var(--font-weight-bold)",
-  color: active ? theme.palette.primary.contrastText : theme.palette.grey[400],
-  backgroundColor: active ? theme.palette.green[700] : theme.palette.background.neutral,
+  color: active ? theme.palette.primary.contrastText : theme.palette.grey[300],
+  backgroundColor: active ? theme.palette.green[200] : theme.palette.background.neutral,
   cursor: "pointer",
   fontFamily: "var(--font-family-title)",
   fontSize: "16px",
@@ -59,7 +59,6 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     width: "100%",
     borderRight: "none",
-    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
     minHeight: "0px",
 
     "& > div": {
@@ -79,10 +78,10 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   paddingTop: theme.spacing(2),
   width: "80%",
   margin: "0 auto",
-  borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+  borderBottom: `1px solid ${alpha(theme.palette.grey[400], 0.1)}`,
   overflow: "hidden",
   [theme.breakpoints.down("lg")]: {
-    borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    borderRight: `1px solid ${alpha(theme.palette.grey[400], 0.1)}`,
     height: "100%",
     borderBottom: "none",
     width: "100%",
@@ -92,7 +91,6 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     width: "100%",
     borderRight: "none",
-    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
     minHeight: "0",
 
     "& > div": {
@@ -103,20 +101,22 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
       justifyContent: "space-between",
       padding: "0 10px",
       margin: "25px 0",
-      borderRight: `1px solid ${alpha(theme.palette.common.white, 0.06)}`
+      borderRight: `1px solid ${alpha(theme.palette.grey[400], 0.1)}`
     }
   }
 }));
 
 export const Title = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
-  padding: `${theme.spacing(2)} 0`
+  padding: `${theme.spacing(2)} 0`,
+  color: theme.palette.grey[300]
 }));
 
 export const ValueInfo = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "2rem",
   margin: "0 auto",
+  color: theme.palette.grey[400],
   overflowWrap: "anywhere",
   [theme.breakpoints.down("md")]: {
     padding: "0 10px"
@@ -138,10 +138,10 @@ export const ButtonTitle = styled("button")<{ active: boolean }>(({ theme, activ
   padding: "8px 30px",
   fontWeight: "bold",
   fontSize: "1rem",
-  color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
-  backgroundColor: active ? theme.palette.green[700] : "none",
+  color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[300],
+  backgroundColor: active ? theme.palette.green[200] : "none",
   fontFamily: "var(--font-family-title)",
-  border: `2px solid ${theme.palette.green[800_20]}`,
+  border: `2px solid ${theme.palette.green[300_20]}`,
   cursor: "pointer",
   [theme.breakpoints.down("sm")]: {
     width: "95px",
@@ -172,19 +172,19 @@ export const Tabs = styled(Box)(({ theme }) => ({
 export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   textTransform: "lowercase",
   borderRadius: 10,
-  border: `2px solid ${theme.palette.green[800_20]}`,
+  border: `2px solid ${theme.palette.green[300_20]}`,
   fontWeight: "bold",
-  color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
-  backgroundColor: active ? theme.palette.green[700] : "none",
+  color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[300],
+  backgroundColor: active ? theme.palette.green[200] : "none",
   "&:hover": {
-    color: active ? `${theme.palette.text.dark} !important` : theme.palette.grey[400]
+    color: active ? `${theme.palette.text.dark} !important` : theme.palette.grey[300]
   },
   [theme.breakpoints.down("lg")]: {
     backgroundColor: active ? `${theme.palette.primary.main} !important` : "none",
-    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
+    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[300],
     "&:hover": {
       backgroundColor: theme.palette.primary.main,
-      color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400]
+      color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[300]
     }
   },
   [theme.breakpoints.down("sm")]: {

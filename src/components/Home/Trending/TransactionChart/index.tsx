@@ -37,7 +37,7 @@ const TransactionChart: React.FC = () => {
   const optionsTime: Record<Time, { label: string; displayName: string }> = {
     ONE_DAY: {
       label: "1d",
-      displayName: "today"
+      displayName: "in the last day"
     },
     ONE_WEEK: {
       label: "1w",
@@ -61,7 +61,7 @@ const TransactionChart: React.FC = () => {
 
   const dataOverview = [
     { key: "trx", title: "Simple transactions", value: sumSimple || 0 },
-    { key: "simple", title: "Smart contracts", value: sumSmartContract || 0 },
+    { key: "simple", title: <Box textAlign={"left"}>Smart contracts</Box>, value: sumSmartContract || 0 },
     {
       key: "complex",
       title: (
@@ -124,7 +124,13 @@ const TransactionChart: React.FC = () => {
                     <Box
                       data-testid={item.key}
                       textAlign={"left"}
-                      color={({ palette }) => palette.green[700]}
+                      color={({ palette }) =>
+                        item.key === "trx"
+                          ? palette.yellow[100]
+                          : item.key === "simple"
+                          ? palette.blue[100]
+                          : palette.green[200]
+                      }
                       fontWeight={"bold"}
                       fontSize={"1.6rem"}
                     >
@@ -175,13 +181,19 @@ const renderTooltipContent = (o: any, range: Time) => {
   const total = (payload || []).reduce((result: number, entry: any) => result + entry.value, 0);
   return (
     <Box>
-      <Box p={1} bgcolor={alpha("#000", 0.8)} borderRadius={"8px"} textAlign={"left"}>
-        <Box color={({ palette }) => palette.common.white} textAlign={"center"}>{`${moment(label).format(
+      <Box
+        p={1}
+        bgcolor={({ palette }) => alpha(palette.common.white, 0.8)}
+        borderRadius={"8px"}
+        textAlign={"left"}
+        boxShadow={(theme) => theme.shadow.dropdown}
+      >
+        <Box color={({ palette }) => palette.grey[400]} textAlign={"center"}>{`${moment(label).format(
           formatTimeX(range)
         )}`}</Box>
         {(payload || []).reverse().map((entry: any, index: number) => (
           <Box key={`item-${index}`} mt={1}>
-            <Box color={({ palette }) => alpha(palette.common.white, 0.7)} fontSize={"0.75rem"}>{`${
+            <Box color={({ palette }) => alpha(palette.grey[400], 0.7)} fontSize={"0.75rem"}>{`${
               nameTooltips[entry.name as keyof typeof nameTooltips]
             }`}</Box>
             <Box fontWeight={"bold"} style={{ color: entry.color }}>{`${numberWithCommas(entry.value)} (${getPercent(
@@ -214,29 +226,33 @@ const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" tickFormatter={(date: string) => formatX(date, range)} />
-          <YAxis tickFormatter={toPercent} />
+          <XAxis
+            color={theme.palette.grey[400]}
+            dataKey="date"
+            tickFormatter={(date: string) => formatX(date, range)}
+          />
+          <YAxis color={theme.palette.grey[400]} tickFormatter={toPercent} />
           <Tooltip content={(o: any) => renderTooltipContent(o, range)} />
           <Area
             type="monotone"
             dataKey="metadata"
             stackId="1"
-            stroke={theme.palette.green[600]}
-            fill={theme.palette.green[600]}
+            stroke={theme.palette.green[200]}
+            fill={theme.palette.green[200]}
           />
           <Area
             type="monotone"
             dataKey="smartContract"
             stackId="1"
-            stroke={theme.palette.blue[800]}
-            fill={theme.palette.blue[800]}
+            stroke={theme.palette.blue[100]}
+            fill={theme.palette.blue[100]}
           />
           <Area
             type="monotone"
             dataKey="simpleTransactions"
             stackId="1"
-            stroke={theme.palette.yellow[600]}
-            fill={theme.palette.yellow[600]}
+            stroke={theme.palette.yellow[100]}
+            fill={theme.palette.yellow[100]}
           />
         </AreaChart>
       </ResponsiveContainer>
