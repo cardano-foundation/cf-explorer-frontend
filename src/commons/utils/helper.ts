@@ -193,3 +193,7 @@ export const getHostname = (url: string): string => {
     return "";
   }
 };
+
+export const toFixedBigNumber = (value: string | number, dp = 0, rm = BigNumber.ROUND_DOWN): number => {
+  return +new BigNumber(value).toFixed(dp, rm);
+};

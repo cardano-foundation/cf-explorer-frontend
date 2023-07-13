@@ -24,7 +24,7 @@ export const Title = styled("h3")`
   text-align: left;
   margin: 0px;
   font-size: 1.25rem;
-
+  color: ${({ theme }) => theme.palette.grey[400]};
   &::after {
     position: absolute;
     top: 100%;
@@ -70,7 +70,7 @@ export const Image = styled("img")`
   height: 132px;
   min-width: 80px;
   border-radius: 5px;
-  object-fit: cover;
+  object-fit: contain;
   background-color: ${(props) => props.theme.palette.background.default};
   ${({ theme }) => theme.breakpoints.down("lg")} {
     height: 90px;
@@ -102,8 +102,8 @@ export const Author = styled("span")`
   overflow: hidden;
   text-overflow: ellipsis;
   font-family: var(--font-family-text);
-  color: ${(props) => props.theme.palette.green[700]};
-  background-color: ${(props) => props.theme.palette.green[700_10]};
+  color: ${(props) => props.theme.palette.green[200]};
+  background-color: ${(props) => props.theme.palette.green[200_15]};
   padding: 6px 2px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -117,7 +117,9 @@ export const ItemTitle = styled("h5")`
   max-height: 3.6em;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+  color: ${(props) => props.theme.palette.grey[400]};
   overflow: hidden;
+  text-overflow: ellipsis;
   font-size: var(--font-size-text-x-small);
   line-height: 1.15;
   margin-top: 0;
@@ -136,7 +138,7 @@ export const Time = styled("h5")`
   gap: 6px;
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-normal);
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   margin: 0;
 `;
 export const TimeIcon = styled("img")`

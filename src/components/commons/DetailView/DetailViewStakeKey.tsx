@@ -57,33 +57,44 @@ type DetailViewStakeKeyProps = {
   stakeId: string;
   handleClose: () => void;
 };
-const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
-  {
-    key: "delegation",
-    label: "Delegation History",
-    icon: <DelegationHistoryMainIcon style={{ padding: "2px 4px 2px 2px" }} />
-  },
-  {
-    key: "stake-key",
-    label: "Stake Key History",
-    icon: (
-      <StakeKeyHistoryIcon fill="#438F68" width={"20px"} height={"20px"} style={{ padding: "2px" }} display={"block"} />
-    )
-  },
-  { key: "withdrawal", label: "Withdrawal History", icon: <DetailLinkImage src={FileEditIcon} alt="withdrawal" /> },
-  { key: "instantaneous", label: "Instantaneous Rewards", icon: <DetailLinkImage src={LightningIcon} alt="rewards" /> },
-  {
-    key: "transactions",
-    label: "Transactions",
-    icon: <TransactionIcon width={"20px"} height={"20px"} style={{ padding: "2px" }} display={"block"} />
-  }
-];
 
 const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
   const { stakeId, handleClose } = props;
   const { data } = useFetch<IStakeKeyDetail>(stakeId ? `${API.STAKE.DETAIL}/${stakeId}` : ``);
   const [open, setOpen] = useState(false);
   const theme = useTheme();
+
+  const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
+    {
+      key: "delegation",
+      label: "Delegation History",
+      icon: <DelegationHistoryMainIcon style={{ padding: "2px 4px 2px 2px" }} />
+    },
+    {
+      key: "stake-key",
+      label: "Stake Key History",
+      icon: (
+        <StakeKeyHistoryIcon
+          fill={theme.palette.border.block}
+          width={"20px"}
+          height={"20px"}
+          style={{ padding: "2px" }}
+          display={"block"}
+        />
+      )
+    },
+    { key: "withdrawal", label: "Withdrawal History", icon: <DetailLinkImage src={FileEditIcon} alt="withdrawal" /> },
+    {
+      key: "instantaneous",
+      label: "Instantaneous Rewards",
+      icon: <DetailLinkImage src={LightningIcon} alt="rewards" />
+    },
+    {
+      key: "transactions",
+      label: "Transactions",
+      icon: <TransactionIcon width={"20px"} height={"20px"} style={{ padding: "2px" }} display={"block"} />
+    }
+  ];
 
   useEffect(() => {
     document.body.style.overflowY = "hidden";
@@ -168,6 +179,10 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
     ? getShortWallet(data.pool.poolId)
     : "-";
 
+  const poolNameToolTip = data.pool?.poolName
+    ? `${data.pool.tickerName || ""} - ${data.pool.poolName}`
+    : data.pool?.poolId || "-";
+
   return (
     <ViewDetailDrawer anchor="right" open={!!stakeId} hideBackdrop variant="permanent">
       <ViewDetailHeader>
@@ -215,7 +230,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
               <WrapDetailInfo>
                 <DetailLabel>Delegated to</DetailLabel>
               </WrapDetailInfo>
-              <CustomTooltip title={poolName}>
+              <CustomTooltip title={poolNameToolTip}>
                 <Box component={Link} display="inline-block" to={details.delegation(data.pool?.poolId)}>
                   <DelegatedDetail>{poolName}</DelegatedDetail>
                 </Box>

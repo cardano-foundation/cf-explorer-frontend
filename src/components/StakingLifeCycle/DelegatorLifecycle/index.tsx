@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { Box, IconButton, useTheme } from "@mui/material";
+import { Box, IconButton, alpha, useTheme } from "@mui/material";
 
 import {
   DelegationIcon,
@@ -67,6 +67,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
   const { stakeId = "" } = useParams<{
     stakeId: string;
   }>();
+  const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
   const [tabsValid, setTabValid] = useState([
@@ -99,7 +100,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
         <RegistrationIcon
           width={"25px"}
           height={"25px"}
-          fill={tabsRenderConfig["hasRegistration"] ? "#fff" : "#98A2B3"}
+          fill={tabsRenderConfig["hasRegistration"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)}
         />
       ),
       title: "Registration",
@@ -115,7 +116,11 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
     },
     {
       icon: (
-        <DelegationIcon width={"25px"} height={"25px"} fill={tabsRenderConfig["hasDelegation"] ? "#fff" : "#98A2B3"} />
+        <DelegationIcon
+          width={"25px"}
+          height={"25px"}
+          fill={tabsRenderConfig["hasDelegation"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)}
+        />
       ),
       title: "Delegation",
       component: <Delegation />,
@@ -133,7 +138,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
         <RewardsDistributionIcon
           width={"25px"}
           height={"25px"}
-          fill={tabsRenderConfig["hashRewards"] ? "#fff" : "#98A2B3"}
+          fill={tabsRenderConfig["hashRewards"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)}
         />
       ),
       title: "Rewards Distribution",
@@ -152,7 +157,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
         <RewardsWithdrawalIcon
           width={"25px"}
           height={"25px"}
-          fill={tabsRenderConfig["hasWithdrawal"] ? "#fff" : "#98A2B3"}
+          fill={tabsRenderConfig["hasWithdrawal"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)}
         />
       ),
       title: "Rewards Withdrawal",
@@ -171,7 +176,9 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
         <DeredistrationIcon
           width={"25px"}
           height={"25px"}
-          fill={tabsRenderConfig["hasDeRegistration"] ? "#fff" : "#98A2B3"}
+          fill={
+            tabsRenderConfig["hasDeRegistration"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)
+          }
         />
       ),
       title: "Deregistration",
@@ -195,10 +202,10 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
 
   const renderBackground = (isActive: boolean, hasData: boolean) => {
     if (isActive) {
-      return `${palette.green[600]} !important`;
+      return `${palette.green[200]} !important`;
     }
     if (hasData) {
-      return `${palette.grey[700]} !important`;
+      return `${palette.grey[400]} !important`;
     }
     return `${palette.grey[200]} !important`;
   };

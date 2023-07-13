@@ -4,6 +4,7 @@ import { CalenderPaleIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import useFetch from "src/commons/hooks/useFetch";
 import { formatDateTime, getHostname } from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import {
   Author,
@@ -52,7 +53,9 @@ const LatestStories = () => {
                   <Image src={main_image} alt={main_image_alt} />
                   <Detail>
                     <HeaderCardContainer>
-                      <Author>{entity}</Author>
+                      <CustomTooltip title={entity}>
+                        <Author>{entity}</Author>
+                      </CustomTooltip>
                       <ResourceHref>{getHostname(resource_href)}</ResourceHref>
                     </HeaderCardContainer>
                     <ItemTitle>{title} </ItemTitle>
