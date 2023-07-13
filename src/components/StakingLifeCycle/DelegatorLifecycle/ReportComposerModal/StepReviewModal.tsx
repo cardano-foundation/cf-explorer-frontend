@@ -99,9 +99,13 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
     },
     {
       label: isPoolReport ? "Epoch range" : "Date range",
-      value: isPoolReport
-        ? `Epoch ${epochStart} -  Epoch ${epochEnd}`
-        : `${moment(start).format("MM/DD/yyyy")} - ${moment(end).format("MM/DD/yyyy")}`
+      value: (
+        <TextOverFlow>
+          {isPoolReport
+            ? `Epoch ${epochStart} -  Epoch ${epochEnd}`
+            : `${moment(start).format("MM/DD/yyyy")} - ${moment(end).format("MM/DD/yyyy")}`}
+        </TextOverFlow>
+      )
     },
     {
       label: isPoolReport ? "Pool ID" : "Stake key details",
@@ -113,11 +117,11 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
     },
     {
       label: isPoolReport ? "Pool size" : "ADA transfers",
-      value: isPoolReport ? params.poolSize : params.adaTransfers
+      value: <TextOverFlow>{isPoolReport ? params.poolSize : params.adaTransfers}</TextOverFlow>
     },
     {
       label: isPoolReport ? "Pool Report by event" : "Staking lifecycle events",
-      value: events
+      value: <TextOverFlow sx={{ whiteSpace: "normal" }}>{events}</TextOverFlow>
     }
   ];
   return (
@@ -128,14 +132,12 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
           all the details correctly?
         </TextRequired>
         <Stack marginBottom="35px">
-          {list.map(({ label, value }, idx) => {
+          {list.map(({ label, value }) => {
             return (
               <OverViewItem key={label}>
                 <OverViewValue>
                   <TextLabelReview>{label}</TextLabelReview>
-                  <TextValueReview>
-                    <TextOverFlow whiteSpace={idx === list.length - 1 ? "normal" : "nowrap"}>{value} </TextOverFlow>
-                  </TextValueReview>
+                  <TextValueReview>{value} </TextValueReview>
                 </OverViewValue>
               </OverViewItem>
             );

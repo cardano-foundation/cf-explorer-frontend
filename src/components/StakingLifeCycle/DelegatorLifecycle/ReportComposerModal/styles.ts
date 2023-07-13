@@ -210,18 +210,22 @@ export const TextValueReview = styled("div")`
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 14px;
     line-height: 16px;
+    max-width: 100%;
   }
 `;
 
 export const TextOverFlow = styled(Box)`
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
   color: ${(props) => props.theme.palette.grey[400]};
-  width: 250px;
+  width: max-content;
   text-align: right;
+  margin-left: auto;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     text-align: left;
+    margin-left: 0;
   }
 `;
 
