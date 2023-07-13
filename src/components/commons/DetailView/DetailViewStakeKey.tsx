@@ -181,9 +181,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
 
   const poolNameToolTip = data.pool?.poolName
     ? `${data.pool.tickerName || ""} - ${data.pool.poolName}`
-    : data.pool?.poolId
-    ? data.pool.poolId
-    : "-";
+    : data.pool?.poolId || "-";
 
   return (
     <ViewDetailDrawer anchor="right" open={!!stakeId} hideBackdrop variant="permanent">
