@@ -125,7 +125,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
                   </Box>
                   <CustomTooltip title={`${option.displayName || ""} #${option.name || option.fingerprint}`}>
                     <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="150px">
-                      {option.displayName || ""} #{option.name || option.fingerprint}
+                      {option.displayName || ""}
                     </Box>
                   </CustomTooltip>
                 </Box>
