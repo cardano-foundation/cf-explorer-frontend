@@ -1,7 +1,8 @@
+import { Box } from "@mui/material";
 import { styled, Container } from "@mui/material";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
-  padding: "20px 0 40px",
+  paddingTop: "20px",
   [theme.breakpoints.down("sm")]: {
     padding: "10px 0 40px",
     "& > div:nth-of-type(1)": {
@@ -45,4 +46,10 @@ export const Output = styled(Blocks)`
   display: inline-flex;
   align-items: center;
   gap: 10px;
+`;
+
+export const StyledBox = styled(Box)`
+  width: 41px;
+  margin: auto;
+  color: ${(props) => props.theme.palette.secondary.main} !important;
 `;
