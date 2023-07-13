@@ -181,13 +181,19 @@ const renderTooltipContent = (o: any, range: Time) => {
   const total = (payload || []).reduce((result: number, entry: any) => result + entry.value, 0);
   return (
     <Box>
-      <Box p={1} bgcolor={alpha("#000", 0.8)} borderRadius={"8px"} textAlign={"left"}>
-        <Box color={({ palette }) => palette.common.white} textAlign={"center"}>{`${moment(label).format(
+      <Box
+        p={1}
+        bgcolor={({ palette }) => alpha(palette.common.white, 0.8)}
+        borderRadius={"8px"}
+        textAlign={"left"}
+        boxShadow={(theme) => theme.shadow.dropdown}
+      >
+        <Box color={({ palette }) => palette.common.black} textAlign={"center"}>{`${moment(label).format(
           formatTimeX(range)
         )}`}</Box>
         {(payload || []).reverse().map((entry: any, index: number) => (
           <Box key={`item-${index}`} mt={1}>
-            <Box color={({ palette }) => alpha(palette.common.white, 0.7)} fontSize={"0.75rem"}>{`${
+            <Box color={({ palette }) => alpha(palette.common.black, 0.7)} fontSize={"0.75rem"}>{`${
               nameTooltips[entry.name as keyof typeof nameTooltips]
             }`}</Box>
             <Box fontWeight={"bold"} style={{ color: entry.color }}>{`${numberWithCommas(entry.value)} (${getPercent(

@@ -130,7 +130,7 @@ export const RedirectButton = styled(Box)(({ theme }) => ({
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[500],
+  color: theme.palette.grey[400],
   display: "block",
   textAlign: "left",
   flex: 1,

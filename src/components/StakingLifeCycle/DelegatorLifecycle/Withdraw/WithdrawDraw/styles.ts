@@ -135,7 +135,9 @@ export const PaymentWalletIconBox = styled(Box)(({ theme }) => ({
   gap: 5
 }));
 
-export const PaymentWalleValue = styled(Box)(({ theme }) => ({
+export const PaymentWalleValue = styled("span")(({ theme }) => ({
+  wordBreak: "break-word",
+  marginRight: 5,
   fontWeight: 400,
   fontSize: "14px",
   color: theme.palette.common.black
@@ -234,4 +236,9 @@ export const BufferBox = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down(1440)]: {
     display: "block"
   }
+}));
+
+export const AmountWithIconBox = styled(Box)(() => ({
+  display: "flex",
+  alignItems: "center"
 }));

@@ -150,7 +150,7 @@ export const InfoValue = styled(Box)(({ theme }) => ({
   color: theme.palette.grey[400]
 }));
 
-export const StyledLinearProgress = styled(LinearProgress)`
+export const StyledLinearProgress = styled(LinearProgress)<{ saturation: number }>`
   margin-top: 10px;
   width: 100%;
   height: 10px;
@@ -159,7 +159,7 @@ export const StyledLinearProgress = styled(LinearProgress)`
 
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
-    background: ${(props) => props.theme.palette.green[200]};
+    background: ${({ theme, saturation }) => (saturation > 100 ? theme.palette.red[100] : theme.palette.green[200])};
   }
 `;
 
