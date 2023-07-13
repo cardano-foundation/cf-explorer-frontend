@@ -124,9 +124,9 @@ const AddressAnalytics: React.FC = () => {
                       legend: { enabled: false },
                       tooltip: {
                         shared: true,
-                        formatter: function (data: Highcharts.TooltipFormatterContextObject) {
+                        formatter: function (this: Highcharts.TooltipFormatterContextObject) {
                           return (
-                            "<span>" + data.x + "</span><br><strong>" + numberWithCommas(data.y || 0) + "</strong>"
+                            "<span>" + this.x + "</span><br><strong>" + numberWithCommas(this.y || 0) + "</strong>"
                           );
                         }
                       },
