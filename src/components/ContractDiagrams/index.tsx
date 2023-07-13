@@ -111,7 +111,7 @@ export const ContractDatumn = ({ item, type }: IContractDiagramProps) => {
         }}
       >
         <DatumnText>Datum</DatumnText>
-        <Typography component={"span"}>{isTypeIn ? item.datumHashIn : item.datumBytesOut}</Typography>
+        <Typography component={"span"}>{isTypeIn ? item.datumBytesIn : item.datumBytesOut}</Typography>
       </DatumnItem>
     </DatumnElement>
   );

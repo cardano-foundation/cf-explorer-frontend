@@ -47,12 +47,6 @@ export const StyledSelect = styled(CustomSelect)(() => ({
   }
 }));
 
-export const ModalTitle = styled("div")`
-  font-weight: 700;
-  color: #13152f;
-  margin-bottom: 25px;
-`;
-
 export const StyledStack = styled(Stack)`
   margin-bottom: 20px;
 `;

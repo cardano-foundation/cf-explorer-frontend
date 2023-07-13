@@ -35,8 +35,8 @@ const ProgressCircle: React.FC<Props> = (props) => {
       <svg style={{ height: 0, width: 0 }}>
         <defs>
           <linearGradient id={"progress"} gradientTransform={gradientTransform}>
-            <stop offset="0%" stopColor={strokeColor || theme.palette.green[700]} />
-            <stop offset="100%" stopColor={strokeColor || theme.palette.green[700]} />
+            <stop offset="0%" stopColor={strokeColor || theme.palette.green[200]} />
+            <stop offset="100%" stopColor={strokeColor || theme.palette.green[200]} />
           </linearGradient>
         </defs>
       </svg>
@@ -52,7 +52,7 @@ const ProgressCircle: React.FC<Props> = (props) => {
           trail: {
             strokeWidth: trailWidth,
             fill: theme.palette.background.paper,
-            stroke: theme.palette.green[600_30],
+            stroke: theme.palette.green[200_30],
             opacity: trailOpacity
           }
         }}
