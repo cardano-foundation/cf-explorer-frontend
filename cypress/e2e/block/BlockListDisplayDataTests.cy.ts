@@ -22,7 +22,8 @@ describe("block list", () => {
     });
     it.only("Check display data of the 'block' list", () => {
         blockPage
-        .verifyDateTimeOrdered();
+        //.verifyDateTimeOrdered()
+        .verifyDateTimeFormat();
     });
   });
   

@@ -81,6 +81,10 @@ export default class LoginPage extends WebApi {
     cy.verifyAllElementDisplay(quickViews,'');
     return this;
   }
+  verifyDateTimeFormat() {
+    cy.checkDateTimeFormat(itemLists, BlockConstants.DATE_TIME[0], BlockConstants.COLUMN_NAME[6]);
+    return this;
+  }
   verifyFormatBlockId() {
     cy.getAllTextContent(itemListsWithLink, (txt: string) => {
       expect(this.isFormatStringRight(txt, 10, 7, 3)).be.true;
@@ -88,7 +92,8 @@ export default class LoginPage extends WebApi {
     return this;
   } 
 verifyDateTimeOrdered() {
-  cy.verifyDateTimeIsSorted(itemLists, BlockConstants.SORT[0], BlockConstants.COLUMN_NAME[5])
+  cy.verifyDateTimeIsSorted(itemLists, BlockConstants.SORT[1], BlockConstants.COLUMN_NAME[6]);
+  return this;
 }
 
   isFormatStringRight(text: string, firstPart: number, lastPart: number, dots: number) {

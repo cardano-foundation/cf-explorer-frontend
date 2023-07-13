@@ -131,12 +131,23 @@ Cypress.Commands.add("verifyValueNotNull", (locator, ...value) => {
   }
 });
 
-Cypress.Commands.add('checkDateTimeFormat', (dateTimeString, format) => {
-  cy.log(`Verifying format of "${dateTimeString}" against format "${format}"`);
-
-  const isValidFormat = moment(dateTimeString, format, true).isValid();
-  console.log(dateTimeString);
-  expect(isValidFormat).to.be.true;
+Cypress.Commands.add('checkDateTimeFormat', (locator, dateFormat, ...value) => {
+  let ele = format(locator, value);
+  if (ele.startsWith("/") || ele.startsWith("(")) {
+    cy.xpath(ele).each((ele) =>{
+      cy.wrap(ele).scrollIntoView().invoke("text").then(text => {
+        const isValidFormat = moment(text, dateFormat, true).isValid();
+        expect(isValidFormat).to.be.true;
+      });
+    });
+  } else {
+    cy.get(ele).each((ele) =>{
+      cy.wrap(ele).scrollIntoView().invoke("text").then(text => {
+        const isValidFormat = moment(text, dateFormat, true).isValid();
+        expect(isValidFormat).to.be.true;
+      });
+    });
+  }
 });
 
 Cypress.Commands.add(
