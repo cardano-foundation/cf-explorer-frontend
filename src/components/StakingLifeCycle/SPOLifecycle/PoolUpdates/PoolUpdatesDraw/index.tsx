@@ -1,5 +1,5 @@
-import { useMemo, useRef } from "react";
-import { Box } from "@mui/material";
+import { useRef, useMemo } from "react";
+import { Box, useTheme } from "@mui/material";
 import { useHistory } from "react-router-dom";
 
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
@@ -42,7 +42,7 @@ interface Props {
 export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton }: Props) => {
   const { fee, time, txHash } = poolUpdates;
   const { poolName, poolView, stakeKeys } = data ?? {};
-
+  const theme = useTheme();
   const SPOPoolRef = useRef(null);
   const feeRef = useRef(null);
   const registrationRef = useRef(null);
@@ -107,7 +107,7 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
         )}
         <InfoGroup>
           <Info>
-            <AddressIcon fill="#438F68" />
+            <AddressIcon fill={theme.palette.green[200]} />
             <CustomTooltip title={txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(data?.txHash)}>{getShortHash(txHash || "")}</StyledLink>
@@ -116,11 +116,11 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
             <CopyButton text={txHash} sx={{ marginLeft: "5px" }} />
           </Info>
           <Info>
-            <ADAGreen />
+            <ADAGreen fill={theme.palette.green[200]} />
             <InfoText>{formatADAFull(fee || 0)}</InfoText>
           </Info>
           <Info>
-            <TimeIcon />
+            <TimeIcon fill={theme.palette.green[200]} />
             <InfoText>{formatDateTimeLocal(time || "")}</InfoText>
           </Info>
         </InfoGroup>

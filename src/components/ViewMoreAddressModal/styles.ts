@@ -5,9 +5,9 @@ export const StyledListItem = styled(ListItem)`
   word-wrap: break-word;
   overflow-wrap: break-word;
   padding: ${({ theme }) => theme.spacing(2)} 0px;
-  border-bottom: 1px solid ${alpha("#000", 0.05)};
+  border-bottom: 1px solid ${({ theme }) => alpha(theme.palette.common.black, 0.05)};
   &:first-of-type {
-    border-top: 1px solid ${alpha("#000", 0.05)};
+    border-top: 1px solid ${({ theme }) => alpha(theme.palette.common.black, 0.05)};
   }
 `;
 
