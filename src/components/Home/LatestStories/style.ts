@@ -24,7 +24,7 @@ export const Title = styled("h3")`
   text-align: left;
   margin: 0px;
   font-size: 1.25rem;
-
+  color: ${({ theme }) => theme.palette.grey[400]};
   &::after {
     position: absolute;
     top: 100%;
@@ -78,7 +78,7 @@ export const Author = styled(Box)`
   text-overflow: ellipsis;
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.green[200]};
-  background-color: ${(props) => props.theme.palette.green[200_10]};
+  background-color: ${(props) => props.theme.palette.green[200_15]};
   padding: 3px 4.5px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
