@@ -1,42 +1,60 @@
-import WebApi from "../core/WebApi"
+import WebApi from "../../core/WebApi"
+import { EpochConstants } from "../../fixtures/constants/EpochConstants";
+import format from "@stdlib/string-format";
 
+//epoch list
 const blockchainDropdownList = "//span[text()='Blockchain']/..";
 const epochPanel = "//span[text()='Epochs']/..";
 const epochNumberHyperLink = "tr[class] > td>a";
 const epochNumberList = "tr[class] > td>a>div>div";
 const epochStatusList = "tr[class] > td>a>div>span";
 const dataInEpochTable = "tr[class]";
-const pagingNavigator = "nav[aria-label]";
-const textboxInputPage = "nav[aria-label] input";
-const latestEpochNumber = "div[class='MuiBox-root css-h1m9wf']";
+const pagingNavigator = "nav[aria-label='pagination navigation']";
+const textboxInputPage = "nav[aria-label='pagination navigation'] input";
+const latestEpochNumber = "//div[contains(@class,'MuiGrid-container')]//span[contains(@class,'MuiBox-root')]";
 const footer = "footer[data-testid]";
 const perPage = "//span[text()='Per page']/preceding-sibling::div/div";
 const perPageSelect = "//div[@id='menu-']/div[@class]/ul/li";
+const displayRowSelect = "ul[role='listbox'] li";
 const progressCircle = "div[data-test-id='CircularProgressbarWithChildren']";
 const blockSortButton = "//th[text()='Blocks']/button";
 const totalOutputSortButton = "//th[text()='Total Output']/button";
 const epochDetailPanel ="//a[text()='View Details']/..";
-const epochDetailViewDetailButton ="//a[text()='View Details']";
-const epochDetailProgressCircle ="//a[text()='View Details']/..//div[@data-test-id='CircularProgressbarWithChildren__children']";
-const epochDetailBlock ="//small[text()='Block']/..";
-const epochDetailSlot ="//small[text()='slot']/..";
-const epochDetailStartTime ="//small[text()='Start Timestamp']/following-sibling::small";
-const epochDetailEndTime ="//small[text()='End Timestamp']/following-sibling::small";
-const epochDetailTxCount ="//small[text()='Tx Count']/..";
-const epochDetailTotalOutput ="//small[text()='Total Output']/following-sibling::small";
-const epochDetailBlocksTab="//a/small[text()='Blocks']/..";
-const epochDetailCloseButton="//a[text()='View Details']/..//button";
-const epochDetailTitle ="//h2[text()='Epoch detail']";
+const epochDetailPanelViewDetailButton ="//a[text()='View Details']";
+const epochDetailPanelProgressCircle ="//a[text()='View Details']/..//div[@data-test-id='CircularProgressbarWithChildren__children']";
+const epochDetailPanelBlock ="//small[text()='Block']/..";
+const epochDetailPanelSlot ="//small[text()='slot']/..";
+const epochDetailPanelStartTime ="//small[text()='Start Timestamp']/following-sibling::small";
+const epochDetailPanelEndTime ="//small[text()='End Timestamp']/following-sibling::small";
+const epochDetailPanelTxCount ="//small[text()='Tx Count']/..";
+const epochDetailPanelTotalOutput ="//small[text()='Total Output']/following-sibling::small";
+const epochDetailPanelBlocksTab="//a/small[text()='Blocks']/..";
+const epochDetailPanelCloseButton="//a[text()='View Details']/..//button";
+const epochDetailPanelTitle ="//h2[text()='Epoch detail']";
 const totalRecord = "//div[text()='Results']/span";
+const itemListsWithLink = "//table//tbody//tr//td[count(//th[contains(text(),'{0}')]//preceding-sibling::th) + boolean(//th[contains(text(),'{0}')])]//a";
+const itemLists = "//table//tbody//tr//td[count(//th[contains(text(),'{0}')]//preceding-sibling::th) + boolean(//th[contains(text(),'{0}')])]//span";
+
+
+//epoch detail
+const epochDetailStatus ="//h2[text()='Epoch detail']/following-sibling::small";
+const epochDetailStartTimeStamp="//div[text()='Start Timestamp ']/../../..";
+const epochDetailEndTimeStamp="//div[text()='End Timestamp ']/../../..";
+const epochDetailTotalOutput="//div[text()=' Total Output']/../../..";
+const epochDetailBlock="//div[text()=' Blocks']/../../..";
+const epochDetailSlot="//div[text()=' Slot']/../../..";
+const epochDetailTransactionCount="//div[text()=' Transaction Count']/../../..";
+const epochDetailRewardsDistributed="//div[text()=' Rewards Distributed']/../../..";
+const backButton ="//small[text()='Back']/.."
 
 export default class EpochPanel extends WebApi{
   
   constructor(){
     super();
   }
-
-  goToHomePage() {  
-    this.openAnyUrl("/")
+  
+  goToEpochPage() {  
+    this.openAnyUrl("/epochs")
     return this;
   }
 
@@ -56,17 +74,17 @@ export default class EpochPanel extends WebApi{
   }
 
   clickOnCloseEpochDetailPopUp() {
-    cy.clickElement(epochDetailCloseButton);
+    cy.clickElement(epochDetailPanelCloseButton);
     return this;
   }
 
   clickOnViewDetailInEpochDetailPopUp() {
-    cy.clickElement(epochDetailViewDetailButton);
+    cy.clickElement(epochDetailPanelViewDetailButton);
     return this;
   }
 
   clickOnBlockTabInEpochDetailPopUp() {
-    cy.clickElement(epochDetailBlocksTab);
+    cy.clickElement(epochDetailPanelBlocksTab);
     return this;
   }
 
@@ -98,18 +116,23 @@ export default class EpochPanel extends WebApi{
     return this;
   }
 
+  verifyDisplayRowSelection(displayRowSelection:string[]){
+    cy.compareArrayText(displayRowSelect,displayRowSelection)
+    return this;
+  }
+
   verifyNumberOfDisplayRow(expectedCount:string){
     cy.get(epochNumberList).should('have.length', parseInt(expectedCount)-1);
     return this;
   }
 
   verifyEpochPopupDisapper(){
-    cy.verifyElementNotExistXpath(epochDetailPanel);
+    cy.verifyElementNotExist(epochDetailPanel);
     return this;
   }
 
   verifyEpochDetail(){
-    cy.verifyElementDisplay(epochDetailTitle);
+    cy.verifyElementDisplay(epochDetailPanelTitle);
     return this;
   }
 
@@ -127,12 +150,12 @@ export default class EpochPanel extends WebApi{
   }
 
   verifyPagingNavigatorDisplay(){
-    let totalRecord :number;
-    cy.get(latestEpochNumber)
+    let totalRecords :number;
+    cy.xpath(totalRecord)
       .invoke('text')
       .then((text) => {
-        totalRecord = parseInt(text) +1; 
-        if(totalRecord>=10){
+        totalRecords = parseInt(text); 
+        if(totalRecords>=10){
           cy.get(footer).scrollIntoView();
           cy.verifyElementDisplay(pagingNavigator);
         }else{
@@ -145,23 +168,29 @@ export default class EpochPanel extends WebApi{
 
   verifyDetailEpochPopUpIsDisplayed(){
     cy.verifyElementDisplay(epochDetailPanel);
-    cy.verifyElementDisplay(epochDetailProgressCircle);
-    cy.verifyElementDisplay(epochDetailBlock);
-    cy.verifyElementDisplay(epochDetailSlot);
-    cy.verifyElementDisplay(epochDetailStartTime);
-    cy.verifyElementDisplay(epochDetailEndTime);
-    cy.verifyElementDisplay(epochDetailTxCount);
-    cy.verifyElementDisplay(epochDetailTotalOutput);
-    cy.verifyElementDisplay(epochDetailBlocksTab);
-    cy.verifyElementDisplay(epochDetailViewDetailButton);
-    cy.verifyElementDisplay(epochDetailCloseButton);
+    cy.verifyElementDisplay(epochDetailPanelProgressCircle);
+    cy.verifyElementDisplay(epochDetailPanelBlock);
+    cy.verifyElementDisplay(epochDetailPanelSlot);
+    cy.verifyElementDisplay(epochDetailPanelStartTime);
+    cy.verifyElementDisplay(epochDetailPanelEndTime);
+    cy.verifyElementDisplay(epochDetailPanelTxCount);
+    cy.verifyElementDisplay(epochDetailPanelTotalOutput);
+    cy.verifyElementDisplay(epochDetailPanelBlocksTab);
+    cy.verifyElementDisplay(epochDetailPanelViewDetailButton);
+    cy.verifyElementDisplay(epochDetailPanelCloseButton);
     return this;
   }
 
-  verifyDetailEpochPopUpFormat(){
-    cy.xpath(epochDetailStartTime).invoke('text').checkDateTimeFormat();
-    cy.xpath(epochDetailEndTime).invoke('text').checkDateTimeFormat();
-    cy.xpath(epochDetailTotalOutput).invoke('text').then((text)=>{
+  verifyDetailEpochPopUpFormat(format:string){
+    cy.xpath(epochDetailPanelStartTime).invoke('text').then((dateTime)=>{
+      cy.checkDateTimeFormat(dateTime,format);
+    })
+
+    cy.xpath(epochDetailPanelEndTime).invoke('text').then((dateTime)=>{
+      cy.checkDateTimeFormat(dateTime,format);
+    })
+
+    cy.xpath(epochDetailPanelTotalOutput).invoke('text').then((text)=>{
       expect(text.endsWith("₳")).to.be.true;
     });
     return this;
@@ -223,79 +252,29 @@ export default class EpochPanel extends WebApi{
   }
 
   verifyDisplayOfTransaction(){
-    cy.xpath(perPage).invoke("text").then((page)=>{
-      for (let i = 0; i < parseInt(page)-1; i++) {
-        cy.get(dataInEpochTable)
-          .eq(i)
-          .find('td>span')
-          .eq(3)
-          .scrollIntoView()
-          .verifyElementDisplayCssChainable()
-          };
-      })
+    cy.verifyAllElementDisplay(itemLists, EpochConstants.COLUMN_NAME[4]);
    }
 
   verifyDisplayOfBlock(){
-    cy.xpath(perPage).invoke("text").then((page)=>{
-      for (let i = 0; i < parseInt(page)-1; i++) {
-        cy.get(dataInEpochTable)
-          .eq(i)
-          .find('td>span')
-          .eq(2)
-          .scrollIntoView()
-          .verifyElementDisplayCssChainable()
-          };
-      })
+    cy.verifyAllElementDisplay(itemLists, EpochConstants.COLUMN_NAME[3]);
    }
 
   verifyDisplayOfTotalOutput(){
-    cy.xpath(perPage).invoke("text").then((page)=>{
-      for (let i = 0; i < parseInt(page)-1; i++) {
-        let j = i >= 2 ? 5 : 4;
-        cy.get(dataInEpochTable)
-          .eq(i)
-          .find('td>span')
-          .eq(j)
-          .scrollIntoView()
-          .verifyElementDisplayCssChainable();
-          };
-      })
+    cy.verifyAllElementDisplay(itemLists, EpochConstants.COLUMN_NAME[6]);
    }
 
   verifyDisplayOfRewardDistributed(){
-    cy.xpath(perPage).invoke("text").then((page)=>{
-      for (let i = 0; i < parseInt(page)-1; i++) {
-        cy.get(dataInEpochTable)
-          .eq(i)
-          .find('td')
-          .eq(5)
-          .scrollIntoView()
-          .verifyElementDisplayCssChainable();
-          };
+    cy.verifyAllElementDisplay(itemLists, EpochConstants.COLUMN_NAME[5]);
 
-      for (let i = 0; i < parseInt(page)-1; i++) {
-        cy.get(dataInEpochTable)
-          .eq(i)
-          .find('td')
-          .eq(5)
-          .scrollIntoView()
-          .invoke('text')
-          .then((text1)=>{
-            cy.get(epochStatusList).eq(i).invoke('text').then((text2)=>{
-              if(text2==='Rewarding'){
-                expect(text1).to.equal('Not available');
-              }else{
-                expect(text1.endsWith("₳")).to.be.true;
-              }
-                  
-              })
-          });
-          };
-          
-      })
+    cy.getAllTextContent(itemLists, (txt:string) => {
+      expect(txt).to.satisfy((text:string) => {
+        return text === "Not Available" || text.endsWith("₳");
+      });
+    },  EpochConstants.COLUMN_NAME[5]);
+    return this;
    }
 
-   verifyDateTimeFormat(time:string){
+   verifyDateTimeFormat(time:string,format:string){
     switch (time){
         case 'Start Timestamp':
           cy.xpath(perPage).invoke("text").then((page)=>{
@@ -307,7 +286,9 @@ export default class EpochPanel extends WebApi{
                 .eq(0)
                 .scrollIntoView()
                 .invoke('text')
-                .checkDateTimeFormat();
+                .then((dateTime)=>{
+                  cy.checkDateTimeFormat(dateTime,format)
+                });
                 };
             });
             break;
@@ -321,50 +302,45 @@ export default class EpochPanel extends WebApi{
                 .eq(1)
                 .scrollIntoView()
                 .invoke('text')
-                .checkDateTimeFormat();
+                .then((dateTime)=>{
+                  cy.checkDateTimeFormat(dateTime,format)
+                });
                 };
             });  
             break;  
     }
    }
 
-   verifySortField(field:string,sortType:string){
+   async verifySortField(field:string,sortType:string){
+    cy.wait(2000)
     switch (field){
       case 'Blocks':
-          cy.xpath(perPage).invoke("text").then((page) => {
-            const valuesArray = []; 
-            for (let i = 0; i < parseInt(page) - 1; i++) {
-              cy.get(dataInEpochTable)
-                .eq(i)
-                .find('td>span')
-                .eq(2)
-                // .scrollIntoView()
-                .invoke('text')
-                .then((value) => {
-                  valuesArray.push(parseInt(value));
-                  if (valuesArray.length > 1) {
-                    const previousValue = valuesArray[valuesArray.length - 2];
-                    const currentValue = valuesArray[valuesArray.length - 1];
-                    if(sortType==='DESC'){
-                      expect(previousValue).to.be.gte(currentValue);
-                    }else if(sortType==='ASC'){
-                      expect(previousValue).to.be.lte(currentValue);
-                    }
-                  }
-                });
+        var blockList = format(itemLists, EpochConstants.COLUMN_NAME[3]);
+        cy.xpath(blockList).then((list) => {
+          for (let i = 0; i < list.length - 1; i++) {
+            const currentElement = Cypress.$(list[i]);
+            const nextElement = Cypress.$(list[i + 1]);
+      
+            const currentValue = parseInt(currentElement.text().trim(), 10);
+            const nextValue = parseInt(nextElement.text().trim(), 10);
+            if(sortType==='DESC'){
+              expect(currentValue).to.be.gte(nextValue);
+            }else if(sortType==='ASC'){
+              expect(currentValue).to.be.lte(nextValue);
             }
-         });
+          }
+        });
          break;
 
       case 'Total Output':
           cy.xpath(perPage).invoke("text").then((page) => {
-            const valuesArray = []; 
+            const valuesArray :number[] = []; 
             for (let i = 0; i < parseInt(page) - 1; i++) {
-              let j = i = 4 ? 5 : 4;
+              let j = i == 5 ? 5 : 4;
               cy.get(dataInEpochTable)
                 .eq(i)
                 .find('td>span')
-                .eq(j)
+                .eq(4)
                 // .scrollIntoView()
                 .invoke('text')
                 .then((value) => {
@@ -446,8 +422,33 @@ export default class EpochPanel extends WebApi{
    return this; 
   }
 
+  verifyFirstPageButtonIsDisable(){
+    cy.get(pagingNavigator).find('ul>li').eq(0).find('button').should('have.attr', 'disabled');
+   return this; 
+  }
+
+  verifyLastPageButtonIsDisable(){
+    cy.get(pagingNavigator).find('ul>li').eq(10).find('button').should('have.attr', 'disabled');
+   return this; 
+  }
+
+  verifyFirstPageButtonIsEnable(){
+    cy.get(pagingNavigator).find('ul>li').eq(0).find('button').should('not.be', 'disabled');
+   return this; 
+  }
+
+  verifyLastPageButtonIsEnable(){
+    cy.get(pagingNavigator).find('ul>li').eq(10).find('button').should('not.be', 'disabled');
+   return this; 
+  }
+
   clickToTheEndPage(){
     cy.get(pagingNavigator).find('ul>li').eq(10).click()
+    return this;
+  }
+
+  clickToTheFirstPage(){
+    cy.get(pagingNavigator).find('ul>li').eq(0).click()
     return this;
   }
 
@@ -494,6 +495,22 @@ export default class EpochPanel extends WebApi{
         }
         });
     })
+  }
 
+  verifyEpochDetailStatusIsDisplayed(){
+    cy.verifyElementDisplay(epochDetailStatus);
+    cy.verifyElementDisplay(epochDetailStartTimeStamp);
+    cy.verifyElementDisplay(epochDetailEndTimeStamp);
+    cy.verifyElementDisplay(epochDetailTotalOutput);
+    cy.verifyElementDisplay(epochDetailBlock);
+    cy.verifyElementDisplay(epochDetailSlot);
+    cy.verifyElementDisplay(epochDetailTransactionCount);
+    cy.verifyElementDisplay(epochDetailRewardsDistributed);
+    return this;
+  }
+
+  verifyBackButtonIsEnable(){
+    cy.xpath(backButton).verifyElementEnabled();
+    return this;
   }
 }

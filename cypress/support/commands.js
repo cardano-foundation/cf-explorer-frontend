@@ -23,7 +23,9 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import moment from 'moment';
 const format = require('string-format');
+
 Cypress.Commands.add("clickElement", (selector) => {
   if (selector.startsWith("/") || selector.startsWith("(")) {
     cy.xpath(selector).click();
@@ -31,7 +33,47 @@ Cypress.Commands.add("clickElement", (selector) => {
     cy.get(selector).click();
   }
 });
-
+Cypress.Commands.add("clickElementRandomly", (selector) => {
+  if (selector.startsWith("/") || selector.startsWith("(")) {
+    cy.xpath(selector).then($elements => {
+      const elements = $elements.toArray();
+      const randomIndex = Math.floor(Math.random() * elements.length);
+      const randomElement = elements[randomIndex];
+      cy.wrap(randomElement).click();
+    });
+  } else {
+    cy.get(selector).then($elements => {
+      const elements = $elements.toArray();
+      const randomIndex = Math.floor(Math.random() * elements.length);
+      const randomElement = elements[randomIndex];
+      cy.wrap(randomElement).click();
+    });
+  }
+});
+Cypress.Commands.add("hoverToElementRandomly", (selector) => {
+  if (selector.startsWith("/") || selector.startsWith("(")) {
+    cy.xpath(selector).then($elements => {
+      const elements = $elements.toArray();
+      const randomIndex = Math.floor(Math.random() * elements.length);
+      const randomElement = elements[randomIndex];
+      cy.wrap(randomElement).trigger('mouseover');
+    });
+  } else {
+    cy.get(selector).then($elements => {
+      const elements = $elements.toArray();
+      const randomIndex = Math.floor(Math.random() * elements.length);
+      const randomElement = elements[randomIndex];
+      cy.wrap(randomElement).trigger('mouseover');
+    });
+  }
+});
+Cypress.Commands.add("hoverToElement", (selector) => {
+  if (selector.startsWith("/") || selector.startsWith("(")) {
+    cy.xpath(selector).trigger();
+  } else {
+    cy.get(selector).trigger();
+  }
+});
 Cypress.Commands.add("getTextContent", { prevSubject: true }, (subject) => {
   return cy.wrap(subject).invoke("text");
 });
@@ -41,6 +83,30 @@ Cypress.Commands.add("getAllTextContent", { prevSubject: false }, (ele, callback
     cy.wrap(el).invoke("text").then((txt) => {
       callback(txt);
     });
+  });
+});
+Cypress.Commands.add("verifyDateTimeIsSorted", (locator, sortOrder = "asc", ...value) => {
+  let ele = format(locator, value);
+  
+  const datetimeList = [];
+
+  cy.xpath(ele).each(locator => {
+    const promise = cy.wrap(locator).invoke("text").then(text => {
+      const datetime = new Date(text);
+      datetimeList.push(datetime);
+    });
+  }).then(() => {
+    let sortedList;
+    if (sortOrder === "asc") {
+      sortedList = [...datetimeList].sort((a, b) => a.getTime() - b.getTime());
+    } else if (sortOrder === "desc") {
+      sortedList = [...datetimeList].sort((a, b) => b.getTime() - a.getTime());
+    } else {
+      cy.log("Invalid sorting order specified");
+      return;
+    }
+    const isSorted = datetimeList.every((value, index) => value === sortedList[index]);
+    expect(isSorted).to.be.true
   });
 });
 
@@ -55,11 +121,11 @@ Cypress.Commands.add("verifyElementDisplay", (locator, ...values) => {
 Cypress.Commands.add("verifyAllElementDisplay", (locator, ...values) => {
   let ele = format(locator, values);
   if (ele.startsWith("/") || ele.startsWith("(")) {
-    cy.xpath(ele).each(e => {
+    cy.xpath(ele, { timeout: 5000 }).each(e => {
       cy.wrap(e).scrollIntoView().should("be.visible");
     });
   } else {
-    cy.xpath(ele).each(e => {
+    cy.xpath(ele, { timeout: 5000 }).each(e => {
       cy.wrap(e).scrollIntoView().should("be.visible");
     });
   }
@@ -105,15 +171,24 @@ Cypress.Commands.add("verifyValueNotNull", (locator, ...value) => {
   }
 });
 
-Cypress.Commands.add(
-  "checkDateTimeFormat",
-  { prevSubject: true },
-  (subject, format) => {
-    const dateTimeRegex = /^\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2}$/; // mm/dd/yyyy hh:mm:ss
-
-    cy.wrap(subject).should("match", dateTimeRegex);
+Cypress.Commands.add('checkDateTimeFormat', (locator, dateFormat, ...value) => {
+  let ele = format(locator, value);
+  if (ele.startsWith("/") || ele.startsWith("(")) {
+    cy.xpath(ele).each((ele) =>{
+      cy.wrap(ele).scrollIntoView().invoke("text").then(text => {
+        const isValidFormat = moment(text, dateFormat, true).isValid();
+        expect(isValidFormat).to.be.true;
+      });
+    });
+  } else {
+    cy.get(ele).each((ele) =>{
+      cy.wrap(ele).scrollIntoView().invoke("text").then(text => {
+        const isValidFormat = moment(text, dateFormat, true).isValid();
+        expect(isValidFormat).to.be.true;
+      });
+    });
   }
-);
+});
 
 Cypress.Commands.add(
   "getAttributeValue",
@@ -146,3 +221,15 @@ Cypress.Commands.add(
     return cy.wrap(subject).clear().type(value);
   }
 );
+
+Cypress.Commands.add('compareArrayText', (selector, expectedText) => {
+  cy.get(selector).each((element, index) => {
+    cy.wrap(element).should('have.text', expectedText[index]);
+  });
+});
+
+Cypress.Commands.add('compareArrayAttribute', (selector, attribute, expectedValues) => {
+  cy.get(selector).each((element, index) => {
+    cy.wrap(element).should('have.attr', attribute, expectedValues[index]);
+  });
+});
