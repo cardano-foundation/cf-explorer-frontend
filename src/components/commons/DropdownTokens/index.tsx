@@ -11,7 +11,7 @@ import { formatNumberDivByDecimals, getShortWallet } from "src/commons/utils/hel
 import CustomTooltip from "../CustomTooltip";
 import { CustomSelect, OptionSelect, TokenButton } from "./styles";
 
-interface IDropdownTokens {
+export interface IDropdownTokens {
   tokens: Token[];
   type?: "up" | "down" | undefined;
   hideInputLabel?: boolean;
@@ -131,7 +131,7 @@ export const TokenLink: React.FC<{ token: Token }> = ({ token }) => {
         width={"100%"}
         height={38}
       >
-        <Box mr={2}>
+        <Box mr={2} color={({ palette }) => palette.grey[300]}>
           {isTokenNameLong ? (
             <CustomTooltip title={tokenName} placement="top">
               <Box>{shortTokenName}</Box>

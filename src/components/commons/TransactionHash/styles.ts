@@ -7,7 +7,7 @@ export const AddressIconCustom = styled(AddressIcon)`
     fill: ${(props) => props.theme.palette.secondary.main};
   }
   rect {
-    fill: #fff;
+    fill: ${(props) => props.theme.palette.common.white};
   }
 `;
 

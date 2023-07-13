@@ -37,7 +37,7 @@ const RewardsDistributionTab = () => {
       minWidth: "120px",
       render: (r) => (
         <AmountADARow>
-          +{formatADAFull(r.amount)} <ADAicon color="#333333" />
+          +{formatADAFull(r.amount)} <ADAicon />
         </AmountADARow>
       )
     },

@@ -43,7 +43,7 @@ export const THeader = styled("th")`
   color: ${(props) => props.theme.palette.grey[300]};
   position: sticky;
   top: 0;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.palette.common.white};
   z-index: 2;
 `;
 
@@ -97,7 +97,7 @@ export const TFooter = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "baseline",
   flexWrap: "wrap",
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   [theme.breakpoints.down("sm")]: {
     justifyContent: "flex-start",
     flexDirection: "column"
@@ -139,7 +139,7 @@ export const WrappModalScrollBar = styled(Box)(
 
 export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number; loading?: number }>(
   ({ maxHeight, height, theme, loading }) => `
-  overflow-x: auto;
+  overflow: scroll;
   height: ${height || 800}px;
   background: ${theme.palette.common.white};
   padding: ${theme.spacing(1)};
@@ -189,6 +189,7 @@ export const InputNumber = styled("input")<{ length: number }>(({ theme, length 
   textAlign: "center",
   fontWeight: "bold",
   border: `1px solid ${theme.palette.border.main}`,
+  color: theme.palette.grey[400],
   "::-webkit-inner-spin-button": {
     appearance: "none",
     margin: 0
@@ -196,11 +197,12 @@ export const InputNumber = styled("input")<{ length: number }>(({ theme, length 
   background: "transparent"
 }));
 
-export const SelectMui = styled(CustomSelect)(() => ({
+export const SelectMui = styled(CustomSelect)(({ theme }) => ({
   borderRadius: "4px",
   fontSize: 14,
   minWidth: 50,
-  border: "1px solid #E3E5E9",
+  border: `1px solid ${theme.palette.grey[200]}`,
+  color: theme.palette.grey[400],
   "& > div": {
     padding: "2.45px 14px"
   },
@@ -229,7 +231,7 @@ export const TableTitle = styled(Typography)`
   font-weight: 700;
   font-size: 32px;
   line-height: 37px;
-  color: #000;
+  color: ${(props) => props.theme.palette.common.black};
   flex: 1;
   text-align: left;
   padding-top: 20px;
