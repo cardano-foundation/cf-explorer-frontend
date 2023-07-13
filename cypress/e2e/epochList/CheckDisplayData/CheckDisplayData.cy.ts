@@ -5,7 +5,7 @@ describe('Check display data of Epoch list screen',()=>{
 beforeEach(() => {
     epochPanel.goToEpochPage();
   })
-xit("Check display data of [Epoch number] column ", () => {
+it("Check display data of [Epoch number] column ", () => {
     epochPanel
               .verifyEpochRecordIsInDesc()
               .verifyProgressCircleIsDisplayed();

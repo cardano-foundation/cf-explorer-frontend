@@ -6,7 +6,7 @@ describe('Check action of all item',()=>{
         epochPanel.goToEpochPage();
       })
 
-    xit("Check click on [Sort up] with Blocks", () => {
+    it("Check click on [Sort up] with Blocks", () => {
         epochPanel
                   .verifyEpochNumberIsHyperLink()
                   .verifyOrtherFieldIsTextLabel()
@@ -30,7 +30,7 @@ describe('Check action of all item',()=>{
                   .verifySortField('Blocks','DESC')
     });
     
-    xit("Check click on [Sort up] with Total Output", () => {
+    it("Check click on [Sort up] with Total Output", () => {
         
         epochPanel
                   .verifyEpochNumberIsHyperLink()
@@ -43,7 +43,7 @@ describe('Check action of all item',()=>{
                   .verifySortField('Total Output','ASC')
     });
     
-    xit("Check click on [Sort decreasing]  Total Output", () => {
+    it("Check click on [Sort decreasing]  Total Output", () => {
         epochPanel
                   .verifyEpochNumberIsHyperLink()
                   .verifyOrtherFieldIsTextLabel()
@@ -54,7 +54,7 @@ describe('Check action of all item',()=>{
                   .verifySortField('Total Output','DESC')
     });
     
-    xit("Check action click on one record or click on icon [Quick View Icon] ", () => {
+    it("Check action click on one record or click on icon [Quick View Icon] ", () => {
         epochPanel
                   .clickOnOneEpochRecord()
                   .verifyDetailEpochPopUpIsDisplayed()

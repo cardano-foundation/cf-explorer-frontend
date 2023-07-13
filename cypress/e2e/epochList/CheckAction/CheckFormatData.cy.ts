@@ -1,6 +1,7 @@
 import EpochPanel from "../../../pagesobject/Epoch/EpochPanel";
 
 const epochPanel = new EpochPanel();
+
 describe('Check format data ',()=>{
 beforeEach(() => {
     epochPanel.goToEpochPage();
