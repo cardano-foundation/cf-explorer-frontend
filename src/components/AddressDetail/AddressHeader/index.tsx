@@ -15,8 +15,9 @@ import BookmarkButton from "src/components/commons/BookmarkIcon";
 import TokenAutocomplete from "src/components/TokenAutocomplete";
 import ADAicon from "src/components/commons/ADAIcon";
 import { useScreen } from "src/commons/hooks/useScreen";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
-import { BackButton, BackText, RedirectButton, StyledBoxCard, TitleText, WrapHeader } from "./styles";
+import { BackButton, BackText, RedirectButton, StyledBoxCard, TimeDuration, TitleText, WrapHeader } from "./styles";
 
 interface Props {
   data: WalletAddress | null;
@@ -24,9 +25,11 @@ interface Props {
 }
 const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   const [stakeKey, setStakeKey] = useState("");
-  const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(
-    stakeKey ? `${API.STAKE.DETAIL}/${stakeKey}` : ""
-  );
+  const {
+    data: dataStake,
+    loading: loadingStake,
+    lastUpdated
+  } = useFetch<WalletStake>(stakeKey ? `${API.STAKE.DETAIL}/${stakeKey}` : "");
   const { adaRate } = useSelector(({ system }: RootState) => system);
   const theme = useTheme();
   const { isMobile } = useScreen();
@@ -36,7 +39,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   }, [data]);
 
   const itemLeft = [
-    { title: "Transaction", value: data?.txCount || 0 },
+    { title: "Transactions", value: data?.txCount || 0 },
     {
       title: "ADA Balance",
       value: (
@@ -65,7 +68,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       )
     },
     {
-      title: "POOL NAME",
+      title: "Pool Name",
       value: (
         <Link
           to={dataStake?.pool?.poolId ? details.delegation(dataStake.pool.poolId) : "#"}
@@ -78,7 +81,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       )
     },
     {
-      title: "Reward",
+      title: "Reward Balance",
       value: (
         <Box>
           {formatADAFull(dataStake?.rewardAvailable)}
@@ -98,13 +101,12 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
         <Box
           width={"100%"}
           display={"flex"}
-          pb={2}
           flexWrap={"wrap"}
           alignItems={"center"}
           justifyContent={"space-between"}
         >
           <Box component={"h2"} lineHeight={1} mt={2} display={"flex"} alignItems={"center"}>
-            <TitleText>Address Detail</TitleText>
+            <TitleText>Address Details</TitleText>
             <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
           </Box>
           {data?.isContract && (
@@ -117,12 +119,15 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
             </RedirectButton>
           )}
         </Box>
+        <TimeDuration>
+          <FormNowMessage time={lastUpdated} />
+        </TimeDuration>
       </WrapHeader>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <StyledBoxCard>
             <CardAddress
-              title={"Wallet address"}
+              title={"Address"}
               type="left"
               address={data?.address || ""}
               item={itemLeft}
@@ -133,7 +138,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
         <Grid item xs={12} md={6}>
           <StyledBoxCard>
             <CardAddress
-              title={"Stake address"}
+              title={"Stake Key"}
               type="right"
               address={data?.stakeAddress || ""}
               item={itemRight}

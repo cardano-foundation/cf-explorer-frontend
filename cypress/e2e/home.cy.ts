@@ -4,7 +4,7 @@ describe("Home page should display all elements", () => {
   beforeEach(() => {
     cy.visit("/");
   });
-  
+
   it("should navigate to the home page", () => {
     cy.title().should("eq", "Cardano Explorer");
     cy.getBySelector('home-title').should("have.text", "Cardano Blockchain Explorer");
@@ -33,7 +33,7 @@ describe("Home page should display all elements", () => {
     cy.getBySelector('home-top-delegation').should('exist');
     cy.getBySelector('home-latest-stories').should('exist');
   });
-  
+
 });
 
 describe("Home page function should work", () => {
@@ -56,7 +56,7 @@ describe("Home page function should work", () => {
   it("should navigate to SignIn page", () => {
     cy.getBySelector("header-signin").click();
     cy.title().should("eq", "Sign In | Cardano Explorer");
-    cy.getBySelector("signin-title").contains(/^(Sign-In)$/i);
+    cy.getBySelector("signin-title").contains(/^(Sign In)$/i);
   });
 
   it("should change the search option", () => {
