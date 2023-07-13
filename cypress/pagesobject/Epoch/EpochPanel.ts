@@ -1,3 +1,4 @@
+import { BlockConstants } from "cypress/fixtures/constants/BlockConstants";
 import WebApi from "../../core/WebApi"
 import { EpochConstants } from "../../fixtures/constants/EpochConstants";
 import * as util from 'util';
@@ -33,12 +34,16 @@ const epochDetailPanelCloseButton="//a[text()='View Details']/..//button";
 const epochDetailPanelTitle ="//div[text()='Epoch details']";
 const totalRecord = "//div[text()='Results']/span";
 const itemListsWithLink = "//table//tbody//tr//td[count(//th[contains(text(),'{0}')]//preceding-sibling::th) + boolean(//th[contains(text(),'{0}')])]//a";
+const itemListsWithLink2 = "//table//tbody//tr//td[count(//th[contains(text(),'%s')]//preceding-sibling::th) + boolean(//th[contains(text(),'%s')])]//a";
+const itemListsWithLinkAndText = "//table//tbody//tr//td[count(//th[contains(text(),'%s')]//preceding-sibling::th) + boolean(//th[contains(text(),'%s')])]//div[text()='%s']";
 const itemLists = "//table//tbody//tr//td[count(//th[contains(text(),'{0}')]//preceding-sibling::th) + boolean(//th[contains(text(),'{0}')])]//span";
 const itemLists2 = "//table//tbody//tr//td[count(//th[contains(text(),'%s')]//preceding-sibling::th) + boolean(//th[contains(text(),'%s')])]/span";
 
+//epoch current
+const epochCurrentElement = "//div[contains(@class,'MuiGrid-container')]//div[contains(text(),'%s')]/../../following-sibling::div/span";
 
 //epoch detail
-const epochDetailStatus ="//h2[text()='Epoch detail']/following-sibling::small";
+const epochDetailStatus ="//div[text()='Epoch details']/following-sibling::small";
 const epochDetailStartTimeStamp="//div[text()='Start Timestamp ']/../../..";
 const epochDetailEndTimeStamp="//div[text()='End Timestamp ']/../../..";
 const epochDetailTotalOutput="//div[text()=' Total Output']/../../..";
@@ -56,6 +61,11 @@ export default class EpochPanel extends WebApi{
   
   goToEpochPage() {  
     this.openAnyUrl("/epochs")
+    return this;
+  }
+  goToSpecificEpochDetails(epochNumber:string) {  
+    const specificEpoch = util.format(itemListsWithLinkAndText,EpochConstants.COLUMN_NAME[0],EpochConstants.COLUMN_NAME[0],epochNumber)
+    cy.clickElement(specificEpoch);
     return this;
   }
 
@@ -150,13 +160,13 @@ export default class EpochPanel extends WebApi{
     return this;
   }
 
-  verifyPagingNavigatorDisplay(){
+  verifyPagingNavigatorDisplay(caseOfTotalRecord:number){
     let totalRecords :number;
     cy.xpath(totalRecord)
       .invoke('text')
       .then((text) => {
         totalRecords = parseInt(text); 
-        if(totalRecords>=10){
+        if(totalRecords>=caseOfTotalRecord){
           cy.get(footer).scrollIntoView();
           cy.verifyElementDisplay(pagingNavigator);
         }else{
@@ -182,14 +192,9 @@ export default class EpochPanel extends WebApi{
     return this;
   }
 
-  verifyDetailEpochPopUpFormat(format:string){
-    cy.xpath(epochDetailPanelStartTime).invoke('text').then((dateTime)=>{
-      cy.checkDateTimeFormat(dateTime,format);
-    })
-
-    cy.xpath(epochDetailPanelEndTime).invoke('text').then((dateTime)=>{
-      cy.checkDateTimeFormat(dateTime,format);
-    })
+  verifyDetailEpochPopUpFormat(){
+    cy.checkDateTimeFormat(epochDetailPanelStartTime,EpochConstants.DATE_TIME[0],'');
+    cy.checkDateTimeFormat(epochDetailPanelEndTime,EpochConstants.DATE_TIME[0],'');
 
     cy.xpath(epochDetailPanelTotalOutput).invoke('text').then((text)=>{
       expect(text.endsWith("₳")).to.be.true;
@@ -199,6 +204,60 @@ export default class EpochPanel extends WebApi{
 
   verifyEpochNumberIsHyperLink(){
     this.verifyListElementAttribute(epochNumberHyperLink,'href');
+    return this;
+  }
+
+  verifyBlockNoIsHyperLink(){
+    const blockNoList = util.format(itemListsWithLink2,BlockConstants.COLUMN_NAME[0],BlockConstants.COLUMN_NAME[0])
+    this.verifyListElementAttribute(blockNoList,'href');
+    return this;
+  }
+
+  verifyBlockIDIsHyperLink(){
+    const blockNoList = util.format(itemListsWithLink2,BlockConstants.COLUMN_NAME[1],BlockConstants.COLUMN_NAME[1])
+    this.verifyListElementAttribute(blockNoList,'href');
+    return this;
+  }
+
+  verifySlotAlongWithEpoch(){
+    const blockNoList = util.format(itemLists2,EpochConstants.DETAILS_COLUMN_NAME[2],EpochConstants.DETAILS_COLUMN_NAME[2])+'/following-sibling::div';
+    cy.xpath(blockNoList)
+    .each(($li) => {
+      cy.wrap($li).should('contain', '/');
+    });
+    return this;
+  }
+
+  verifyTransactionDisplayAmount(){
+    const blockNoList = util.format(itemLists2,EpochConstants.DETAILS_COLUMN_NAME[2],EpochConstants.DETAILS_COLUMN_NAME[2])+'/following-sibling::div';
+    cy.xpath(blockNoList).each(($element) => {
+      cy.wrap($element).should(($el) => {
+        expect($el.text().trim()).not.to.be.empty;
+      });
+    });
+    return this;
+  }
+  verifyFeeDisplay(){
+    const blockNoList = util.format(itemLists2,EpochConstants.DETAILS_COLUMN_NAME[2],EpochConstants.DETAILS_COLUMN_NAME[2])+'/following-sibling::div';
+    cy.xpath(blockNoList).each(($element) => {
+      cy.wrap($element).should(($el) => {
+        expect($el.text().trim()).not.to.be.empty;
+      });
+    });
+    return this;
+  }
+  verifyOutputDisplay(){
+    const blockNoList = util.format(itemLists2,EpochConstants.DETAILS_COLUMN_NAME[2],EpochConstants.DETAILS_COLUMN_NAME[2])+'/following-sibling::div';
+    cy.xpath(blockNoList).each(($element) => {
+      cy.wrap($element).should(($el) => {
+        expect($el.text().trim()).not.to.be.empty;
+      });
+    });
+    return this;
+  }
+
+  verifyCreateAtTimeFormat(){
+    cy.checkDateTimeFormat(itemLists,EpochConstants.DATE_TIME[0],EpochConstants.DETAILS_COLUMN_NAME[6]);
     return this;
   }
 
@@ -226,6 +285,15 @@ export default class EpochPanel extends WebApi{
 
   verifyProgressCircleIsDisplayed(){
     cy.verifyElementDisplay(progressCircle);
+    return this;
+  }
+
+  verifyEpochCurrentDetailDisplay(){
+    cy.verifyElementDisplay(latestEpochNumber);
+    cy.checkDateTimeFormat(util.format(epochCurrentElement,EpochConstants.COLUMN_NAME[1]),EpochConstants.DATE_TIME[0],'');
+    cy.checkDateTimeFormat(util.format(epochCurrentElement,EpochConstants.COLUMN_NAME[2]),EpochConstants.DATE_TIME[0],'');
+    cy.verifyElementDisplay(util.format(epochCurrentElement,EpochConstants.COLUMN_NAME[3]));
+    cy.verifyElementDisplay(util.format(epochCurrentElement,EpochConstants.COLUMN_NAME[7]));
     return this;
   }
 
@@ -275,32 +343,19 @@ export default class EpochPanel extends WebApi{
     return this;
    }
 
-   verifyDateTimeFormat(time:string,format:string){
+   verifyDateTimeFormat(time:string){
     switch (time){
         case 'Start Timestamp':
-          var blockList = util.format(itemLists2,EpochConstants.COLUMN_NAME[1],EpochConstants.COLUMN_NAME[1]);
-          cy.xpath(blockList).then((list) => {
-            for (let i = 1; i < list.length - 1; i++) {
-              const currentElement = Cypress.$(list[i]);
-              cy.checkDateTimeFormat(currentElement.text(),format)
-            }
-          });
+          cy.checkDateTimeFormat(itemLists,EpochConstants.DATE_TIME[0],EpochConstants.COLUMN_NAME[1]);
           break;
 
         case 'End Timestamp':
-          var blockList = util.format(itemLists2,EpochConstants.COLUMN_NAME[2],EpochConstants.COLUMN_NAME[2]);
-          cy.xpath(blockList).then((list) => {
-            for (let i = 1; i < list.length - 1; i++) {
-              const currentElement = Cypress.$(list[i]);
-              cy.checkDateTimeFormat(currentElement.text(),format)
-            }
-          });
+          cy.checkDateTimeFormat(itemLists,EpochConstants.DATE_TIME[0],EpochConstants.COLUMN_NAME[2]);
           break; 
     }
    }
 
    async verifySortField(field:string,sortType:string){
-    cy.wait(2000)
     switch (field){
       case 'Blocks':
         var blockList = util.format(itemLists2,EpochConstants.COLUMN_NAME[3],EpochConstants.COLUMN_NAME[3]);

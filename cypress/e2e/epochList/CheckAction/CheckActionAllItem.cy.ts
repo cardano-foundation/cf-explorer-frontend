@@ -11,7 +11,7 @@ describe('Check action of all item',()=>{
                   .verifyEpochNumberIsHyperLink()
                   .verifyOrtherFieldIsTextLabel()
                   .verifyDefaultInputPage('1')
-                  .verifyPagingNavigatorDisplay();
+                  .verifyPagingNavigatorDisplay(10);
     
         epochPanel.clickOnSort('Blocks')
                   .clickOnSort('Blocks')
@@ -24,7 +24,7 @@ describe('Check action of all item',()=>{
                   .verifyEpochNumberIsHyperLink()
                   .verifyOrtherFieldIsTextLabel()
                   .verifyDefaultInputPage('1')
-                  .verifyPagingNavigatorDisplay();
+                  .verifyPagingNavigatorDisplay(10);
     
         epochPanel.clickOnSort('Blocks')
                   .verifySortField('Blocks','DESC')
@@ -36,7 +36,7 @@ describe('Check action of all item',()=>{
                   .verifyEpochNumberIsHyperLink()
                   .verifyOrtherFieldIsTextLabel()
                   .verifyDefaultInputPage('1')
-                  .verifyPagingNavigatorDisplay();
+                  .verifyPagingNavigatorDisplay(10);
     
         epochPanel.clickOnSort('Total Output')
                   .clickOnSort('Total Output')
@@ -48,7 +48,7 @@ describe('Check action of all item',()=>{
                   .verifyEpochNumberIsHyperLink()
                   .verifyOrtherFieldIsTextLabel()
                   .verifyDefaultInputPage('1')
-                  .verifyPagingNavigatorDisplay();
+                  .verifyPagingNavigatorDisplay(10);
     
         epochPanel.clickOnSort('Total Output')
                   .verifySortField('Total Output','DESC')

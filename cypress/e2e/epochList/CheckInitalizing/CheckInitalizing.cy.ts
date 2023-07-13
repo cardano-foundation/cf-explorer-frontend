@@ -5,11 +5,17 @@ describe('Check initialization the screen',()=>{
 beforeEach(() => {
     epochPanel.goToEpochPage();
   })
-it.only("Check initalizing successfully when gridview have data", () => {
+it("Check initalizing successfully when gridview have data", () => {
     epochPanel
               .verifyEpochNumberIsHyperLink()
               .verifyOrtherFieldIsTextLabel()
               .verifyDefaultInputPage('1')
-              .verifyPagingNavigatorDisplay();
+              .verifyPagingNavigatorDisplay(10);
+});
+
+it("Check initalizing successfully when gridview have data current epoch", () => {
+    epochPanel
+              .verifyProgressCircleIsDisplayed()
+              .verifyEpochCurrentDetailDisplay();
 });
 })

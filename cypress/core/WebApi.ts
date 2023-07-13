@@ -24,10 +24,17 @@ export default class WebApi {
   }
 
   verifyListElementAttribute(locatorOfListElement:string,attributeName:string){
-    cy.get(locatorOfListElement).each(($element) => {
-      // Perform assertions on each element
-      cy.wrap($element).should('have.attr', attributeName);
-    });
+    if (locatorOfListElement.startsWith("/") || locatorOfListElement.startsWith("(")) {
+      cy.xpath(locatorOfListElement).each(($element) => {
+        // Perform assertions on each element
+        cy.wrap($element).should('have.attr', attributeName);
+      });;
+    } else {
+      cy.get(locatorOfListElement).each(($element) => {
+        // Perform assertions on each element
+        cy.wrap($element).should('have.attr', attributeName);
+      });;
+    }
   }
 
   verifyNumberOfListElement(locatorOfListElement:string,numberOfElement:number){

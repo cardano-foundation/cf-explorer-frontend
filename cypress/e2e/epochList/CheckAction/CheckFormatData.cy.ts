@@ -11,7 +11,6 @@ it("Check format data Start Timestamp, EndTime stamp Total Output", () => {
     epochPanel
               .clickOnOneEpochRecord()
               .verifyDetailEpochPopUpIsDisplayed()
-              .verifyDetailEpochPopUpFormat('MM/DD/YYYY HH:mm:ss')
-              
+              .verifyDetailEpochPopUpFormat()         
 });
 })
