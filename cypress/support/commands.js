@@ -56,14 +56,14 @@ Cypress.Commands.add("hoverToElementRandomly", (selector) => {
       const elements = $elements.toArray();
       const randomIndex = Math.floor(Math.random() * elements.length);
       const randomElement = elements[randomIndex];
-      cy.wrap(randomElement).trigger();
+      cy.wrap(randomElement).trigger('mouseover');
     });
   } else {
     cy.get(selector).then($elements => {
       const elements = $elements.toArray();
       const randomIndex = Math.floor(Math.random() * elements.length);
       const randomElement = elements[randomIndex];
-      cy.wrap(randomElement).trigger();
+      cy.wrap(randomElement).trigger('mouseover');
     });
   }
 });
