@@ -10,7 +10,7 @@ export const Button = styled(IconButton)(({ theme }) => ({
 
 export const DotsIcon = styled(Box)`
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.palette.grey[400]};
+  background-color: ${({ theme }) => theme.palette.grey[300]};
   width: 3.6px;
   height: 3.6px;
   position: relative;
@@ -23,7 +23,7 @@ export const DotsIcon = styled(Box)`
     right: -7px;
     top: 0px;
     border-radius: 50%;
-    background-color: ${({ theme }) => theme.palette.grey[400]};
+    background-color: ${({ theme }) => theme.palette.grey[300]};
   }
   &::after {
     content: "";
@@ -34,7 +34,7 @@ export const DotsIcon = styled(Box)`
     left: -7px;
     top: 0px;
     border-radius: 50%;
-    background-color: ${({ theme }) => theme.palette.grey[400]};
+    background-color: ${({ theme }) => theme.palette.grey[300]};
   }
 `;
 

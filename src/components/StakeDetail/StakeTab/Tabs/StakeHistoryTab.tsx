@@ -31,7 +31,7 @@ const StakeHistoryTab = ({ isMobile = false }) => {
       )
     },
     {
-      title: "Time",
+      title: "Created At",
       key: "time",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time || "")
@@ -55,10 +55,10 @@ const StakeHistoryTab = ({ isMobile = false }) => {
       minWidth: "120px",
       render: (r) => (
         <LabelStatus
-          color={(theme) => (r.action === "Registered" ? theme.palette.red[700] : theme.palette.grey[400])}
+          color={(theme) => (r.action === "Registered" ? theme.palette.red[100] : theme.palette.grey[300])}
           sx={{
             background: (theme) =>
-              r.action === "Registered" ? theme.palette.red[700_20] : alpha(theme.palette.grey[400], 0.2)
+              r.action === "Registered" ? theme.palette.red[100_20] : alpha(theme.palette.grey[300], 0.2)
           }}
         >
           {r.action ? r.action.split(" ").join("") : ""}

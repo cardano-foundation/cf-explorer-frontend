@@ -24,7 +24,7 @@ const columns: Column<WithdrawalHistory>[] = [
     )
   },
   {
-    title: "Time",
+    title: "Created At",
     key: "time",
     minWidth: "120px",
     render: (r) => formatDateTimeLocal(r.time || "")

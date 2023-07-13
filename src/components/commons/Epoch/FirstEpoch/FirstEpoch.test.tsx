@@ -29,7 +29,8 @@ const mockedEpochData: IDataEpoch = {
   rewardsDistributed: 0,
   endTime: mockedCurrentEpoch.endTime,
   startTime: mockedCurrentEpoch.startTime,
-  status: "IN_PROGRESS"
+  status: "IN_PROGRESS",
+  account: 100
 };
 
 describe("FirstEpoch component", () => {

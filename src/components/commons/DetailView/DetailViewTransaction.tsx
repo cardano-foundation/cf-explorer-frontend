@@ -245,7 +245,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
               </DetailsInfoItem>
             )}
             <DetailsInfoItem>
-              <DetailLabel>Time</DetailLabel>
+              <DetailLabel>Created At</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.tx.time || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
@@ -255,7 +255,9 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Confirmation</DetailLabel>
+              <DetailLabel>
+                {data.tx.confirmation && data.tx.confirmation > 1 ? "Confirmations" : "Confirmation"}
+              </DetailLabel>
               <DetailValue>{data.tx.confirmation}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>

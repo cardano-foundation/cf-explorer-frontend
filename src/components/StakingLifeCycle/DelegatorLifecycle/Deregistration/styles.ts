@@ -6,7 +6,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.green[600]}`,
+  border: `2px solid ${theme.palette.green[200]}`,
   borderRadius: "10px",
   marginRight: theme.spacing(5),
   position: "relative",
@@ -22,7 +22,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
     position: "absolute",
     top: "-50%",
     left: theme.spacing(2),
-    background: theme.palette.green[600],
+    background: theme.palette.green[200],
     transform: " translate(0, 60%)"
   }
 }));
@@ -32,7 +32,7 @@ export const FeeBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.red[600]}`,
+  border: `2px solid ${theme.palette.red[100]}`,
   borderRadius: "10px",
   background: theme.palette.common.white,
   marginRight: theme.spacing(5),
@@ -47,7 +47,7 @@ export const FeeBox = styled(Box)(({ theme }) => ({
     position: "absolute",
     top: "-50%",
     left: theme.spacing(2),
-    background: theme.palette.red[600],
+    background: theme.palette.red[100],
     transform: " translate(0, 60%)"
   }
 }));
@@ -68,6 +68,7 @@ export const Info = styled(Box)(({ theme }) => ({
 export const InfoText = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
+  color: theme.palette.grey[400],
   marginLeft: theme.spacing(1),
   fontWeight: 600,
   fontSize: "14px"
