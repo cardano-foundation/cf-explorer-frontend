@@ -295,9 +295,9 @@ export default function SignUp() {
     <Container>
       {!success ? (
         <WrapContent>
-          <WrapTitle>Sign-Up</WrapTitle>
+          <WrapTitle>Sign Up</WrapTitle>
           <WrapHintText>
-            Already have an account? <WrapSignUp onClick={() => handleRedirect()}>Sign-In Here</WrapSignUp>
+            Already have an account? <WrapSignUp onClick={() => handleRedirect()}>Sign In</WrapSignUp>
           </WrapHintText>
           <FormGroup>
             <WrapForm>
