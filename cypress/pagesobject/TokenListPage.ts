@@ -111,13 +111,32 @@ export default class TokenListPage extends WebApi{
         }
         return this;
     }
+
     verifyFormatOfCreatedAt(){
-        cy.xpath(ListCreatedAt).then((items)=>{
-            for(var i =0; i<items.length; i++){
-                const currentElement = Cypress.$(items[i]);
-                cy.checkDateTimeFormat(currentElement);
-            }
-        });
+        cy.checkDateTimeFormat(itemListsWithTitle, TokenConstants.DATE_TIME[0], TokenConstants.COLUMN_NAME[7]);
+        return this;
+    }
+
+    verifyDataColumnCreateAt(){
+        cy.verifyAllElementDisplay(itemListsWithTitle, TokenConstants.COLUMN_NAME[7])
+        return this;
+    }
+
+    verifyDataColumnTotalSupply(){
+        cy.verifyAllElementDisplay(itemListsWithTitle, TokenConstants.COLUMN_NAME[8])
+        return this;
+    }
+
+    verifyDataColumnVolume24H(){
+        cy.verifyAllElementDisplay(itemListsWithTitle, TokenConstants.COLUMN_NAME[6])
+        return this;
+    }
+    verifyDataColumnTotalVolume(){
+        cy.verifyAllElementDisplay(itemListsWithTitle, TokenConstants.COLUMN_NAME[5])
+        return this;
+    }
+    verifyDataColumnTotalTransaction(){
+        cy.verifyAllElementDisplay(itemListsWithTitle, TokenConstants.COLUMN_NAME[3])
         return this;
     }
 }
