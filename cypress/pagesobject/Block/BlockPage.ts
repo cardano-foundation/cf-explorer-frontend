@@ -1,6 +1,8 @@
 import { first } from "cypress/types/lodash";
 import WebApi from "../../core/WebApi";
 import {BlockConstants} from "../../fixtures/constants/BlockConstants"
+import BlockDetail from "src/pages/BlockDetail";
+import BlockDetailPage from "./BlockDetailPage";
 //locators
 const blockChainLocator = "//img[@alt='Blockchain']//parent::div";
 const blocksLocator = "//a[contains(@href,'/blocks')]";
@@ -12,6 +14,8 @@ const numberBlockPerPage = '//span[contains(text(),"Per page")]//preceding-sibli
 const itemListsWithLink = "//table//tbody//tr//td[count(//th[contains(text(),'{0}')]//preceding-sibling::th) + boolean(//th[contains(text(),'{0}')])]//a";
 const itemLists = "//table//tbody//tr//td[count(//th[contains(text(),'{0}')]//preceding-sibling::th) + boolean(//th[contains(text(),'{0}')])]//span";
 const quickViews = "//table//tbody//tr//td[count(//th[contains(text(),'')]//preceding-sibling::th) + boolean(//th[contains(text(),'')])]";
+const fieldBlock = "//table//tbody/tr";
+const viewDetailTxt = "//a[contains(text(),'View Details')]";
 export default class LoginPage extends WebApi {
   goToHomePage() {
     this.openAnyUrl("/");
@@ -25,9 +29,17 @@ export default class LoginPage extends WebApi {
     this.clickToElementByXpath(blockChainLocator);
     return this;
   }
+  clickToAnyBlock() {
+    cy.clickElementRandomly(fieldBlock);
+    return BlockDetailPage;
+  }
 
   clickToBlocksField() {
     this.clickToElementByXpath(blocksLocator);
+    return this;
+  }
+  hoverToBlockId() {
+    cy.hoverToElementRandomly(blocksLocator);
     return this;
   }
   verifyColumnName() {
@@ -38,6 +50,10 @@ export default class LoginPage extends WebApi {
     cy.verifyElementDisplay(txtColumnName, BlockConstants.COLUMN_NAME[4]);
     cy.verifyElementDisplay(txtColumnName, BlockConstants.COLUMN_NAME[5]);
     cy.verifyElementDisplay(txtColumnName, BlockConstants.COLUMN_NAME[6]);
+    return this;
+  }
+  verifyBlockdetailScreenDisplay() {
+    cy.verifyElementDisplay(viewDetailTxt);
     return this;
   }
   verifySortBtnEnable() {
