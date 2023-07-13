@@ -43,7 +43,8 @@ import {
   StyledMenuItem,
   WrapHeader,
   EpochDetail,
-  TimeDuration
+  TimeDuration,
+  WrapLeaderValue
 } from "./styles";
 
 export interface DetailHeaderProps {
@@ -176,14 +177,16 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           {hash && (
             <SlotLeader>
               {hashLabel ? <SlotLeaderTitle>{hashLabel}: </SlotLeaderTitle> : ""}
-              {isMobile ? (
-                <CustomTooltip title={hash}>
-                  <SlotLeaderValue>{getShortHash(hash)}</SlotLeaderValue>
-                </CustomTooltip>
-              ) : (
-                <SlotLeaderValue>{hash}</SlotLeaderValue>
-              )}
-              <SlotLeaderCopy text={hash} />
+              <WrapLeaderValue>
+                {isMobile ? (
+                  <CustomTooltip title={hash}>
+                    <SlotLeaderValue>{getShortHash(hash)}</SlotLeaderValue>
+                  </CustomTooltip>
+                ) : (
+                  <SlotLeaderValue>{hash}</SlotLeaderValue>
+                )}
+                <SlotLeaderCopy text={hash} />
+              </WrapLeaderValue>
             </SlotLeader>
           )}
           <TimeDuration>

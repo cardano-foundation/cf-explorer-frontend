@@ -137,4 +137,3 @@ export const TimeDuration = styled("small")(({ theme }) => ({
   paddingTop: "10px",
   paddingBottom: theme.spacing(2)
 }));
-
