@@ -1,4 +1,4 @@
-import { IconButton, Box, styled } from "@mui/material";
+import { IconButton, Box, styled, alpha } from "@mui/material";
 
 export const SelectDateButton = styled(Box)(() => ({
   position: "absolute",
@@ -38,8 +38,8 @@ export const HiddenScroll = styled(Box)(({ theme }) => ({
   width: "fit-content",
   height: "200px",
   overflow: "auto",
-  backgroundColor: "#fff",
-  boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.12)",
+  backgroundColor: theme.palette.common.white,
+  boxShadow: `0px 4px 16px ${alpha(theme.palette.common.white, 0.12)}`,
   borderRadius: "8px",
   zIndex: 1,
   "&::-webkit-scrollbar": {
@@ -66,7 +66,7 @@ export const SelectYear = styled(Box)<{ isActive: number }>(({ theme, isActive }
   cursor: "pointer",
   borderRadius: "18px",
   backgroundColor: isActive ? theme.palette.primary.main : "transparent",
-  color: isActive ? "#fff" : theme.palette.text.primary,
+  color: isActive ? theme.palette.common.white : theme.palette.text.primary,
   "&:hover": {
     backgroundColor: isActive ? theme.palette.primary.main : theme.palette.grey[100]
   }

@@ -49,7 +49,17 @@ const BLUE = {
   100: "#0048DB",
   100_7: alpha("#0048DB", 0.07),
   100_10: alpha("#0048DB", 0.1),
-  100_20: alpha("#0048DB", 0.2)
+  100_15: alpha("#0048DB", 0.15),
+  100_20: alpha("#0048DB", 0.2),
+  200: "#78BBF2",
+  300: "#5DA2DC",
+  400: "#4084BD",
+  500: "#3272A8",
+  600: "#256289",
+  700: "#154666",
+  800: "#0052CC",
+  800_7: alpha("#0052CC", 0.07),
+  800_20: alpha("#0052CC", 0.2)
 };
 
 const PURPLE = {
@@ -80,7 +90,7 @@ const text = {
 };
 
 const border = {
-  primary: "#ECECEC",
+  primary: "#E3E5E9",
   secondary: GREEN[300_10],
   main: GREY[200],
   disabled: GREY[300],

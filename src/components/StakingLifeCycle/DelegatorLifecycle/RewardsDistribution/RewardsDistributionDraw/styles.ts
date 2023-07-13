@@ -40,7 +40,7 @@ export const RectBox = styled(Box)<{ disabled?: number }>(({ disabled, theme }) 
   borderRadius: 12,
   gap: 12,
   padding: "15px 20px",
-  backgroundColor: disabled ? "#E3E5E9" : theme.palette.common.white,
+  backgroundColor: disabled ? theme.palette.grey[200] : theme.palette.common.white,
   boxSizing: "border-box",
   position: "relative",
   "& > image": {
@@ -79,8 +79,8 @@ export const RewardAccountCcontainer = styled(RectBox)(({ theme }) => ({
 
 export const HolderWrapper = styled(Box)(({ theme }) => ({
   padding: "20px 35px",
-  border: "1.5px dashed #D2D2D2",
-  background: "rgba(152, 162, 179, 0.1)",
+  border: `1.5px dashed ${theme.palette.border.hint}`,
+  background: alpha(theme.palette.grey[300], 0.03),
   borderRadius: 25,
   width: "100%",
   maxWidth: 340,

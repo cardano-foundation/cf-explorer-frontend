@@ -128,10 +128,10 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
                       textAlign={"left"}
                       overflow={"hidden"}
                       textOverflow={"ellipsis"}
-                      color={({ palette }) => palette.grey[300]}
                       maxWidth="150px"
+                      color={({ palette }) => palette.grey[300]}
                     >
-                      {option.displayName || ""} #{option.name || option.fingerprint}
+                      {option.displayName || ""}
                     </Box>
                   </CustomTooltip>
                 </Box>

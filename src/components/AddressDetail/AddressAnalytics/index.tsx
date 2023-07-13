@@ -9,7 +9,7 @@ import { isArray } from "lodash";
 
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
-import { formatADAFull, formatPrice } from "src/commons/utils/helper";
+import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/helper";
 import useResizeHighChart from "src/commons/hooks/useResizeHighChart";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
@@ -129,7 +129,12 @@ const AddressAnalytics: React.FC = () => {
                       }
                     },
                     legend: { enabled: false },
-                    tooltip: { shared: true },
+                    tooltip: {
+                      shared: true,
+                      formatter: function (this: Highcharts.TooltipFormatterContextObject) {
+                        return "<span>" + this.x + "</span><br><strong>" + numberWithCommas(this.y || 0) + "</strong>";
+                      }
+                    },
                     credits: { enabled: false },
                     series: [
                       {
