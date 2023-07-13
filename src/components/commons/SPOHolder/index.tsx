@@ -1,4 +1,4 @@
-import { Box, BoxProps, styled, IconButton } from "@mui/material";
+import { Box, BoxProps, styled, IconButton, useTheme, alpha } from "@mui/material";
 import { Link, useHistory } from "react-router-dom";
 import React, { forwardRef, useRef } from "react";
 import { isArray } from "lodash";
@@ -25,6 +25,8 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
   const SPOInfoRef = useRef(null);
   const SPOKeyRef = useRef(null);
   const history = useHistory();
+  const theme = useTheme();
+
   const rewardAccounts = isArray(stakeKeys) ? stakeKeys : [stakeKeys];
   return (
     <PolygonShapeSPO {...props} ref={boxRef}>
@@ -40,7 +42,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
             transition: {
               style: {
                 backgroundColor: "white",
-                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+                boxShadow: `0px 0px 10px ${alpha(theme.palette.common.white, 0.25)}`,
                 padding: "10px"
               }
             },
@@ -72,7 +74,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
               SPOInfoRef?.current && history.push(details.delegation(poolView));
             }}
           >
-            <SPOInfo />
+            <SPOInfo fill={theme.palette.green[200]} />
           </ButtonSPO>
         </CustomTooltip>
         <CustomTooltip
@@ -92,7 +94,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
               <StakeKeyItemList>
                 {rewardAccounts.map((item) => (
                   <StakeKeyItem key={item}>
-                    <SPOKey fill="#0052CC" />
+                    <SPOKey fill={theme.palette.blue[100]} />
                     <PoolNamePopup to={details.stake(item)}>{getShortWallet(item)}</PoolNamePopup>
                     <CopyButton text={item} />
                   </StakeKeyItem>
@@ -102,7 +104,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
           }
         >
           <ButtonSPO ref={SPOKeyRef} component={IconButton}>
-            <SPOKey fill="#438F68" />
+            <SPOKey fill={theme.palette.green[200]} />
           </ButtonSPO>
         </CustomTooltip>
       </Box>

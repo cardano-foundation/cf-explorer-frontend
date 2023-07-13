@@ -2,9 +2,9 @@ import { Box, Skeleton } from "@mui/material";
 import React from "react";
 
 import { EmptyIcon, InfoIcon } from "src/commons/resources";
-import { details } from "src/commons/routers";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomIcon from "src/components/commons/CustomIcon";
+import { details } from "src/commons/routers";
 
 import {
   AddressGroup,

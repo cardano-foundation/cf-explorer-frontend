@@ -20,7 +20,7 @@ export const TextUserInfo = styled("span")(({ theme }) => ({
 export const TextTx = styled("span")`
   font-weight: 400;
   font-size: 14px;
-  color: #667085;
+  color: ${({ theme }) => theme.palette.grey[300]};
 `;
 
 export const CustomTab = styled(Box)`

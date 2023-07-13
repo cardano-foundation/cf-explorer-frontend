@@ -80,7 +80,7 @@ const text = {
 };
 
 const border = {
-  primary: "#ECECEC",
+  primary: "#E3E5E9",
   secondary: GREEN[300_10],
   main: GREY[200],
   disabled: GREY[300],
