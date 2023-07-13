@@ -11,11 +11,11 @@ import {
   slotIconUrl
 } from "src/commons/resources";
 import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
-import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import ADAicon from "src/components/commons/ADAIcon";
 import DetailHeader from "src/components/commons/DetailHeader";
 
-import { ConfirmStatus, Subtext, TitleCard, WrapConfirmation } from "./styles";
+import { Subtext, TitleCard, WrapConfirmation } from "./styles";
 
 interface BlockOverviewProps {
   data: BlockDetail | null;
@@ -25,18 +25,6 @@ interface BlockOverviewProps {
 
 const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdated }) => {
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
-
-  const renderConfirmationTag = () => {
-    if (data && data.confirmation) {
-      if (data.confirmation <= 2) {
-        return CONFIRMATION_STATUS.LOW;
-      }
-      if (data.confirmation <= 8) {
-        return CONFIRMATION_STATUS.MEDIUM;
-      }
-      return CONFIRMATION_STATUS.HIGH;
-    }
-  };
 
   const listOverview = [
     {
@@ -57,12 +45,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
           </TitleCard>
         </Box>
       ),
-      value: (
-        <WrapConfirmation>
-          {data?.confirmation || 0}
-          <ConfirmStatus status={renderConfirmationTag() || "LOW"}>{renderConfirmationTag() || "LOW"}</ConfirmStatus>
-        </WrapConfirmation>
-      )
+      value: <WrapConfirmation>{data?.confirmation || 0}</WrapConfirmation>
     },
     {
       icon: exchageIconUrl,
@@ -131,7 +114,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
         type="BLOCK"
         hash={data?.hash}
         bookmarkData={`${data?.blockNo || data?.hash}`}
-        title={"Block detail"}
+        title={"Block details"}
         lastUpdated={lastUpdated}
         epoch={
           data && {

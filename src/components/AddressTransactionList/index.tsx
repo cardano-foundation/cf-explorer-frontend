@@ -77,7 +77,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
           return (t.quantity < 0 && transaction?.balance >= 0) || (t.quantity >= 0 && transaction?.balance < 0);
         });
         return (
-          <Box display={"flex"}>
+          <Box display={"flex"} alignItems={"center"}>
             {isTransferType ? (
               <Box width={40} ml={"2px"} mr={"8px"}>
                 <TransferIcon style={{ scale: "1.15" }} />
@@ -87,15 +87,22 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
                 <Img src={type !== "up" ? receiveImg : sendImg} alt="send icon" />
               </Box>
             )}
-            <Box display={"grid"}>
-              <CustomTooltip title={transaction.hash}>
-                <StyledLink to={details.transaction(transaction.hash)}>{getShortHash(transaction.hash)}</StyledLink>
-              </CustomTooltip>
-              <SmallText>{formatDateTimeLocal(transaction.time || "")}</SmallText>
-            </Box>
+            <CustomTooltip title={transaction.hash}>
+              <StyledLink to={details.transaction(transaction.hash)}>{getShortHash(transaction.hash)}</StyledLink>
+            </CustomTooltip>
           </Box>
         );
       }
+    },
+    {
+      title: "Created At",
+      key: "created_at",
+      minWidth: 120,
+      render: (transaction) => (
+        <Box display="inline-flex" alignItems="center">
+          <Box mr={1}>{formatDateTimeLocal(transaction.time || "")}</Box>
+        </Box>
+      )
     },
     {
       title: "Block",

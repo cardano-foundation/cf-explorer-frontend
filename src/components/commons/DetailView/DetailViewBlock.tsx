@@ -3,7 +3,7 @@ import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { useSelector } from "react-redux";
 import { BiChevronRight } from "react-icons/bi";
 
-import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
 import { CubeIcon, RocketIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
@@ -39,7 +39,6 @@ import {
   StyledLink,
   DetailLinkName,
   ViewDetailHeader,
-  ConfirmStatus,
   ViewDetailScroll,
   TimeDuration
 } from "./styles";
@@ -64,19 +63,6 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
     REFRESH_TIMES.BLOCK_DETAIL
   );
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
-
-  const renderConfirmationTag = () => {
-    if (data?.confirmation) {
-      if (data.confirmation <= 2) {
-        return CONFIRMATION_STATUS.LOW;
-      }
-      if (data.confirmation <= 8) {
-        return CONFIRMATION_STATUS.MEDIUM;
-      }
-      return CONFIRMATION_STATUS.HIGH;
-    }
-    return CONFIRMATION_STATUS.LOW;
-  };
 
   useEffect(() => {
     document.body.style.overflowY = "hidden";
@@ -215,10 +201,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Confirmation</DetailLabel>
-              <DetailValue>
-                {data.confirmation}
-                <ConfirmStatus status={renderConfirmationTag()}>{renderConfirmationTag()}</ConfirmStatus>
-              </DetailValue>
+              <DetailValue>{data.confirmation}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Transaction Fees</DetailLabel>

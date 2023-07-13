@@ -55,7 +55,8 @@ export const EpochNumber = styled(Box)(({ theme }) => ({
   textAlign: "center",
   [theme.breakpoints.down("sm")]: {
     marginTop: "-8px"
-  }
+  },
+  color: theme.palette.secondary.main
 }));
 
 export const TitleCard = styled(Box)(({ theme }) => ({
