@@ -3,6 +3,7 @@
   "version": "0.4.2",
   "private": true,
   "dependencies": {
+    "@stdlib/string-format": "^0.0.3",
     "@cardano-foundation/cardano-connect-with-wallet": "^0.1.57",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
