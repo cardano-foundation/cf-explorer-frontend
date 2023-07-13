@@ -29,7 +29,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
       (JSON.parse(localStorage.getItem("bookmark") || "[]") || []).find((r: Bookmark) => r.keyword === `${keyword}`)
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [openSyncBookmarkModal, bookmarks, keyword]);
+  }, [openSyncBookmarkModal, JSON.stringify(bookmarks)]);
 
   const updateBookmark = async () => {
     if (!isLoggedIn) return;

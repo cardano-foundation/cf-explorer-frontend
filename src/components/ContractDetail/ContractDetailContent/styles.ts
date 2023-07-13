@@ -18,3 +18,12 @@ export const TabTitle = styled(Box)`
 `;
 
 export const TabListStyled = styled(TabList)``;
+export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => {
+  return {
+    fontWeight: "bold",
+    textTransform: "capitalize",
+    fontFamily: '"Roboto", sans-serif',
+    fontSize: "1.125rem",
+    color: `${active ? theme.palette.green[200] : theme.palette.grey[300]} !important`
+  };
+});

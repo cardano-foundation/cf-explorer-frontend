@@ -78,7 +78,15 @@ export const PoolUpdateModal = ({ data, ...props }: Props) => {
   const isUpdated = data?.previousMargin !== data?.margin || data?.previousPledge !== data?.pledge;
 
   return (
-    <StyledModal {...props} title="Pool certificate">
+    <StyledModal
+      {...props}
+      title="Pool certificate"
+      modalContainerProps={{
+        sx: {
+          overflow: "auto"
+        }
+      }}
+    >
       {isUpdated ? (
         <TabContext value={tabActive}>
           <TabContainer>
@@ -89,7 +97,7 @@ export const PoolUpdateModal = ({ data, ...props }: Props) => {
               TabIndicatorProps={{
                 sx: {
                   background: (theme) => theme.palette.primary.main,
-                  color: (theme) => theme.palette.primary.main,
+                  color: (theme) => theme.palette.grey[400],
                   height: "4px"
                 }
               }}
@@ -197,7 +205,7 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
       content: (
         <>
           <Value>{data?.margin ? numberWithCommas(data?.margin * 100, 2) : 0}%</Value>{" "}
-          {data?.previousMargin !== null && (
+          {data?.previousMargin !== null && data?.previousMargin !== data?.margin && (
             <SupperMinimumText>
               Previous: {data?.previousMargin ? numberWithCommas(data?.previousMargin * 100, 2) : 0} %
             </SupperMinimumText>
@@ -214,7 +222,7 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
             {formatADAFull(data?.pledge)}
             <StyledAdaLogoIcon />
           </Value>
-          {data?.previousPledge !== null && (
+          {data?.previousPledge !== null && data?.previousPledge !== data?.pledge && (
             <MinimumText>
               Previous: {formatADAFull(data?.previousPledge || 0)} <MinimumAdaLogoIcon />
             </MinimumText>
