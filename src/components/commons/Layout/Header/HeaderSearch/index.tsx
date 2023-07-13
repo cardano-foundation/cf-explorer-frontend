@@ -127,7 +127,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
 
   const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
-    const option = options.find((item) => item.value === filter);
+    const option = options.find((item) => item.value === (filterParams || filter));
 
     if (option?.value === "lifecycle") {
       if (search.startsWith("stake")) {
