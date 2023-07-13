@@ -81,32 +81,20 @@ export default class LoginPage extends WebApi {
     cy.verifyAllElementDisplay(quickViews,'');
     return this;
   }
+  verifyDateTimeFormat() {
+    cy.checkDateTimeFormat(itemLists, BlockConstants.DATE_TIME[0], BlockConstants.COLUMN_NAME[6]);
+    return this;
+  }
   verifyFormatBlockId() {
-    cy.getAllTextContent(itemListsWithLink, (txt:string) => {
+    cy.getAllTextContent(itemListsWithLink, (txt: string) => {
       expect(this.isFormatStringRight(txt, 10, 7, 3)).be.true;
     }, BlockConstants.COLUMN_NAME[1])
     return this;
   } 
-  // verifyDateTimeOrdered() {
-  //   const format = require('string-format');
-  //   let ele = format(itemLists, "Created At")
-  //   const datetimeList = [];
-  //   const textPromises = [];
-    
-  //   cy.xpath(ele).each(locator => {
-  //     const promise = cy.wrap(locator).invoke("text").then(text => {
-  //       const datetime = new Date(text);
-  //       datetimeList.push(text);
-  //       cy.log(text);
-  //     });
-  //     textPromises.push(promise);
-  //   }).then(() => {
-  //     // Wait for all text promises to resolve
-  //     return Promise.all(textPromises);
-  //   }).then(() => {
-  //     cy.log(datetimeList[0]);
-  //   });
-  // }
+verifyDateTimeOrdered() {
+  cy.verifyDateTimeIsSorted(itemLists, BlockConstants.SORT[1], BlockConstants.COLUMN_NAME[6]);
+  return this;
+}
 
   isFormatStringRight(text: string, firstPart: number, lastPart: number, dots: number) {
     let totalLength = firstPart + lastPart + dots;
