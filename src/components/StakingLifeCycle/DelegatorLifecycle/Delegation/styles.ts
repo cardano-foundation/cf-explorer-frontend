@@ -1,6 +1,4 @@
-import { Typography, Box, styled, alpha, IconButton as IconButtonMui } from "@mui/material";
-
-import ADAicon from "src/components/commons/ADAIcon";
+import { Box, styled, alpha, IconButton as IconButtonMui } from "@mui/material";
 
 export const HoldBox = styled(Box)(({ theme }) => ({
   width: "200px",
@@ -9,7 +7,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.red[600]}`,
+  border: `2px solid ${theme.palette.red[100]}`,
   borderRadius: "10px",
   marginRight: theme.spacing(5),
   position: "relative",
@@ -24,7 +22,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
     position: "absolute",
     top: "-50%",
     left: theme.spacing(2),
-    background: theme.palette.red[600],
+    background: theme.palette.red[100],
     transform: " translate(0, 60%)"
   }
 }));
@@ -34,7 +32,7 @@ export const FeeBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.red[600]}`,
+  border: `2px solid ${theme.palette.red[100]}`,
   borderRadius: "10px",
   background: theme.palette.common.white,
   position: "relative",
@@ -49,7 +47,7 @@ export const FeeBox = styled(Box)(({ theme }) => ({
     position: "absolute",
     top: "-50%",
     left: theme.spacing(2),
-    background: theme.palette.red[600],
+    background: theme.palette.red[100],
     transform: " translate(0, 60%)"
   }
 }));
@@ -72,13 +70,14 @@ export const InfoText = styled(Box)(({ theme }) => ({
   alignItems: "center",
   marginLeft: theme.spacing(1),
   fontWeight: 600,
-  fontSize: "14px"
+  fontSize: "14px",
+  color: theme.palette.grey[400]
 }));
 
 export const FilterDateLabel = styled("span")(({ theme }) => ({
   fontSize: 14,
   fontWeight: 400,
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   [theme.breakpoints.down("sm")]: {
     display: "none",
     fontSize: 12
@@ -113,21 +112,8 @@ export const InfoGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) 
   }
 }));
 
-export const ADATotalStake = styled(Typography)`
-  font-size: 12px;
-  position: absolute;
-  left: 50%;
-  bottom: 36px;
-  transform: translateX(-50%);
-  color: #13152f;
-`;
-
 export const ADATotalStakeContainer = styled(Box)`
   position: relative;
-`;
-
-export const StyledADAicon = styled(ADAicon)`
-  color: #13152f;
 `;
 
 export const ItemList = styled(Box)(({ theme }) => ({
@@ -165,7 +151,7 @@ export const Label = styled(Box)(({ theme }) => ({
   fontWeight: 700,
   fontSize: 14,
   lineHeight: "16px",
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   marginBottom: 8
 }));
 
