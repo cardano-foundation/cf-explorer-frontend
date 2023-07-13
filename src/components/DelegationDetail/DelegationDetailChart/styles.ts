@@ -20,7 +20,7 @@ export const Button = styled("button")<{ active: number }>`
   border-radius: 5px;
   padding: 6px 0;
   font-weight: var(--font-weight-bold);
-  color: ${({ theme, active }) => (active ? theme.palette.primary.contrastText : theme.palette.grey[400])};
+  color: ${({ theme, active }) => (active ? theme.palette.primary.contrastText : theme.palette.grey[300])};
   background-color: ${({ theme, active }) => (active ? theme.palette.primary.main : theme.palette.background.neutral)};
   cursor: pointer;
   font-family: var(--font-family-title);
@@ -29,9 +29,8 @@ export const Button = styled("button")<{ active: number }>`
 `;
 
 export const BoxInfo = styled(Box)<{ space: number }>(({ theme }) => ({
-  background: theme.palette.secondary.dark,
+  background: theme.palette.common.white,
   borderRadius: "10px",
-  color: theme.palette.primary.contrastText,
   display: "flex",
   flexDirection: "column",
   textAlign: "center",
@@ -59,7 +58,6 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     width: "100%",
     borderRight: "none",
-    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
     minHeight: "0px",
 
     "& > div": {
@@ -79,10 +77,10 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   paddingTop: theme.spacing(2),
   width: "80%",
   margin: "0 auto",
-  borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+  borderBottom: `1px solid ${alpha(theme.palette.grey[400], 0.1)}`,
   overflow: "hidden",
   [theme.breakpoints.down("lg")]: {
-    borderRight: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    borderRight: `1px solid ${alpha(theme.palette.grey[400], 0.1)}`,
     height: "100%",
     borderBottom: "none",
     width: "100%",
@@ -91,8 +89,7 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.down("sm")]: {
     width: "100%",
-    borderRight: "none",
-    borderBottom: `1px solid ${alpha(theme.palette.common.white, 0.07)}`,
+    borderRight: `1px solid ${alpha(theme.palette.grey[400], 0.1)}`,
     minHeight: "0",
 
     "& > div": {
@@ -148,14 +145,15 @@ export const AnalyticsTitle = styled("h2")(({ theme }) => ({
   margin: "40px 0 15px",
   width: "max-content",
   fontSize: "20px",
-  borderBottom: `2px solid ${theme.palette.green[600]}`,
+  color: theme.palette.grey[400],
+  borderBottom: `2px solid ${theme.palette.green[200]}`,
   [theme.breakpoints.down("sm")]: {
     margin: "30px 0 15px"
   }
 }));
 export const Title = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
-  color: theme.palette.primary.contrastText,
+  color: theme.palette.grey[300],
   padding: `${theme.spacing(2)} 0`
 }));
 
@@ -163,7 +161,7 @@ export const Value = styled("div")(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "2rem",
   overflowWrap: "anywhere",
-  color: theme.palette.primary.contrastText,
+  color: theme.palette.grey[400],
   [theme.breakpoints.down("md")]: {
     padding: "0 10px"
   },

@@ -1,7 +1,6 @@
 import { Box, Typography, styled } from "@mui/material";
 
 export const ClickAbleLink = styled(Typography)`
-  color: #0052cc;
   font-size: 14px;
 `;
 
@@ -29,7 +28,7 @@ export const ADAValueLabel = styled(Typography)`
 
 export const ADAValueSubLabel = styled("span")`
   font-size: 12px;
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   display: inline-flex;
   gap: 4px;
   align-items: center;

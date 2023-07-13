@@ -183,7 +183,7 @@ const FilterReport: React.FC<StackingFilterProps> = ({ onFilterValueChange, filt
               textTransform={"capitalize"}
               display={"flex"}
               alignItems={"center"}
-              color={`#0052CC !important`}
+              color={({ palette }) => `${palette.blue[100]} !important`}
               onClick={() => {
                 onFilterValueChange?.({ fromDate: undefined, sort: undefined, toDate: undefined, txHash: undefined });
                 setOpen(false);

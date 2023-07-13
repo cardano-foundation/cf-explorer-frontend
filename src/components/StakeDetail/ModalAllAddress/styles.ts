@@ -29,7 +29,7 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
       backgroundClip: "padding-box"
     },
     ":active": {
-      background: theme.palette.grey[400],
+      background: theme.palette.grey[300],
       backgroundClip: "padding-box"
     }
   },
