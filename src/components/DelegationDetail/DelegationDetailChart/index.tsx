@@ -90,8 +90,8 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                     legend: { enabled: false },
                     tooltip: {
                       shared: true,
-                      formatter: function(this: Highcharts.TooltipFormatterContextObject) {
-                        return '<span>' + this.x + '</span><br><strong>' + numberWithCommas(this.y || 0) + "</strong>";
+                      formatter: function(data: Highcharts.TooltipFormatterContextObject) {
+                        return '<span>' + data.x + '</span><br><strong>' + numberWithCommas(data.y || 0) + "</strong>";
                       }
                     },
                     credits: { enabled: false },

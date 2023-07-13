@@ -127,9 +127,9 @@ const AddressAnalytics: FC = () => {
                       legend: { enabled: false },
                       tooltip: {
                         shared: true,
-                        formatter: function (this: Highcharts.TooltipFormatterContextObject) {
+                        formatter: function (data: Highcharts.TooltipFormatterContextObject) {
                           return (
-                            "<span>" + this.x + "</span><br><strong>" + numberWithCommas(this.y || 0) + "</strong>"
+                            "<span>" + data.x + "</span><br><strong>" + numberWithCommas(data.y || 0) + "</strong>"
                           );
                         }
                       },
