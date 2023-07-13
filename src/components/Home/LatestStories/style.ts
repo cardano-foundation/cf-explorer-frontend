@@ -109,7 +109,7 @@ export const Author = styled("span")`
   text-transform: uppercase;
   font-size: 11px;
   font-weight: var(--font-weight-bold);
-  margin-right: 5px;
+  margin: 11px 5px 0 0;
 `;
 export const ItemTitle = styled("h5")`
   display: -webkit-box;
@@ -147,6 +147,8 @@ export const TimeIcon = styled("img")`
 `;
 
 export const ResourceHref = styled("span")`
+  margin: 5px 0px;
+  width: max-content;
   background-color: ${(props) => props.theme.palette.blue[100_15]};
   color: ${(props) => props.theme.palette.blue[100]};
   font-weight: 700;
@@ -155,16 +157,6 @@ export const ResourceHref = styled("span")`
   padding: 6px 2px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     display: none;
-  }
-`;
-
-export const HeaderCardContainer = styled(Box)`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin: 10px 0;
-  ${({ theme }) => theme.breakpoints.down("lg")} {
-    margin: 0 0 7px;
   }
 `;
 
