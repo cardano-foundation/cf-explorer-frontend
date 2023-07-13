@@ -58,13 +58,17 @@ const RegistrationPools = () => {
             <CustomTooltip title={pool.txHash}>
               <StyledLink to={details.transaction(pool.txHash)}>{getShortHash(pool.txHash || "")}</StyledLink>
             </CustomTooltip>
-            <Box color={({ palette }) => palette.grey[300]}>{formatDateTimeLocal(pool.txTime || "")}</Box>
           </>
         );
       },
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
+    },
+    {
+      title: "Created At",
+      key: "created_at",
+      render: (pool) => <>{formatDateTimeLocal(pool.txTime || "")}</>
     },
     {
       title: "Block",

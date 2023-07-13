@@ -52,22 +52,23 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   }, [sidebar]);
 
   useEffect(() => {
-    if (pathname === "/") {
+    if (pathname === "/" || !sidebar) {
       setActive(null);
     } else if (
-      pathname.startsWith("/stake/") ||
-      pathname.startsWith("/transaction/") ||
-      pathname.startsWith("/stake-key/") ||
-      pathname.startsWith("/block/") ||
-      pathname.startsWith("/epoch/") ||
-      pathname.startsWith("/token/") ||
-      pathname.startsWith("/contracts/") ||
-      pathname.startsWith("/delegation-pool/") ||
-      pathname.startsWith("/policy/")
+      sidebar &&
+      (pathname.startsWith("/stake/") ||
+        pathname.startsWith("/transaction/") ||
+        pathname.startsWith("/stake-key/") ||
+        pathname.startsWith("/block/") ||
+        pathname.startsWith("/epoch/") ||
+        pathname.startsWith("/token/") ||
+        pathname.startsWith("/contracts/") ||
+        pathname.startsWith("/delegation-pool/") ||
+        pathname.startsWith("/policy/"))
     ) {
       setActive("menu-0");
     }
-  }, [pathname]);
+  }, [pathname, sidebar]);
 
   useEffect(() => {
     if (!sidebar && width >= theme.breakpoints.values.md) setSidebar(true);

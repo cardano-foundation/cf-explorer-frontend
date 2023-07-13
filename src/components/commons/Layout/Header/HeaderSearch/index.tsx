@@ -88,7 +88,7 @@ const options: Option[] = [
   },
   {
     value: "policies",
-    label: "Policies",
+    label: "Policy Id",
     paths: [routers.POLICY_DETAIL],
     detail: details.policyDetail
   }
