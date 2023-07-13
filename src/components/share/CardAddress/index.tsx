@@ -3,8 +3,8 @@ import { Box, Skeleton } from "@mui/material";
 
 import { EmptyIcon, InfoIcon } from "src/commons/resources";
 import CopyButton from "src/components/commons/CopyButton";
-import { details } from "src/commons/routers";
 import CustomIcon from "src/components/commons/CustomIcon";
+import { details } from "src/commons/routers";
 
 import {
   AddressGroup,
@@ -61,7 +61,7 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
             <ItemDetail key={ii}>
               {i.title && (
                 <RowItem>
-                  <CustomIcon icon={InfoIcon} width={22} />
+                  {type == "right" ? <CustomIcon icon={InfoIcon} width={22} /> : null}
                   <LabelItem>{i.title}</LabelItem>
                 </RowItem>
               )}

@@ -55,7 +55,7 @@ const StakeAnalytics: React.FC = () => {
   const { data: balanceRaw, loading: balanceLoading } = useFetch<number[]>(`${API.STAKE.MIN_MAX_BALANCE}/${stakeId}`);
   const balance = balanceRaw?.length ? balanceRaw : [0, 0];
   const dataBalanceChart = data?.map((i) => {
-    const value = BigNumber(i.value).div(10 ** 6);
+    const value = BigNumber(i.value || 0).div(10 ** 6);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,6})?/)?.[0]);
   });
   const categoriesBalance =
@@ -63,7 +63,7 @@ const StakeAnalytics: React.FC = () => {
   const minBalance = Math.min(...(balance || []));
   const maxBalance = Math.max(...(balance || []), 0);
   const dataRewardChart = dataReward?.map((i) => {
-    const value = BigNumber(i.value).div(10 ** 6);
+    const value = BigNumber(i.value || 0).div(10 ** 6);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,6})?/)?.[0]);
   });
   const categoriesReward = dataReward?.map((i) => i.epoch) || [];

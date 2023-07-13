@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.4.5](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.4...v0.4.5) (2023-07-11)
+
+
+### Features
+
+* update new order column pool list ([6f19318](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6f19318143e3df928d70ab04c8c2f6e307d8c19f))
+
+
+### Bug Fixes
+
+* MET-1377-remove-missing-any-data-click-here-to-report ([9913d96](https://github.com/cardano-foundation/cf-explorer-frontend/commit/9913d96d1778f4afceb02cf0280d11014fb58483))
+* MET-1414-change-text-in-epoch-overview-page(Finding-3,4,5,6) ([cefaaf3](https://github.com/cardano-foundation/cf-explorer-frontend/commit/cefaaf3b7cc5432a1bf7557fc1c3644696b1fe35))
+* MET-1432 token overview ([9a1a648](https://github.com/cardano-foundation/cf-explorer-frontend/commit/9a1a648dae02365664ba606386ae9c587c3ff3cd))
+* remove main search when home page on mobile ([8a1c2b3](https://github.com/cardano-foundation/cf-explorer-frontend/commit/8a1c2b3625dfc8c0cc279fcd13a8ea68015d9880))
+
+## [0.4.4](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.3...v0.4.4) (2023-07-06)
+
+
+### Bug Fixes
+
+* remove duplicate constants ([5541e9c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/5541e9c22f2c9585f0c54a7dc984522bfaf7a622))
+* solve conflict 1279 vs develop ([b1e941a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b1e941ac91ccf23fde54d50ba4de725cba908d29))
+
 ## [0.4.3](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.2...v0.4.3) (2023-07-04)
 
 
