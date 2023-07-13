@@ -33,7 +33,47 @@ Cypress.Commands.add("clickElement", (selector) => {
     cy.get(selector).click();
   }
 });
-
+Cypress.Commands.add("clickElementRandomly", (selector) => {
+  if (selector.startsWith("/") || selector.startsWith("(")) {
+    cy.xpath(selector).then($elements => {
+      const elements = $elements.toArray();
+      const randomIndex = Math.floor(Math.random() * elements.length);
+      const randomElement = elements[randomIndex];
+      cy.wrap(randomElement).click();
+    });
+  } else {
+    cy.get(selector).then($elements => {
+      const elements = $elements.toArray();
+      const randomIndex = Math.floor(Math.random() * elements.length);
+      const randomElement = elements[randomIndex];
+      cy.wrap(randomElement).click();
+    });
+  }
+});
+Cypress.Commands.add("hoverToElementRandomly", (selector) => {
+  if (selector.startsWith("/") || selector.startsWith("(")) {
+    cy.xpath(selector).then($elements => {
+      const elements = $elements.toArray();
+      const randomIndex = Math.floor(Math.random() * elements.length);
+      const randomElement = elements[randomIndex];
+      cy.wrap(randomElement).trigger();
+    });
+  } else {
+    cy.get(selector).then($elements => {
+      const elements = $elements.toArray();
+      const randomIndex = Math.floor(Math.random() * elements.length);
+      const randomElement = elements[randomIndex];
+      cy.wrap(randomElement).trigger();
+    });
+  }
+});
+Cypress.Commands.add("hoverToElement", (selector) => {
+  if (selector.startsWith("/") || selector.startsWith("(")) {
+    cy.xpath(selector).trigger();
+  } else {
+    cy.get(selector).trigger();
+  }
+});
 Cypress.Commands.add("getTextContent", { prevSubject: true }, (subject) => {
   return cy.wrap(subject).invoke("text");
 });
