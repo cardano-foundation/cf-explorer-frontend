@@ -12,7 +12,7 @@ export const TabTitle = styled(Box)`
     line-height: 16px;
   }
   &.active {
-    color: ${({ theme }) => theme.palette.common.black};
+    color: ${({ theme }) => theme.palette.grey[400]};
   }
 `;
 

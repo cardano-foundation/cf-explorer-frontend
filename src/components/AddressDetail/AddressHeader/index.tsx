@@ -75,7 +75,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           style={{ fontFamily: "var(--font-family-text)", color: theme.palette.secondary.main }}
         >
           {dataStake?.pool?.poolName ||
-            (dataStake?.pool?.poolId && `Pool [${getShortWallet(dataStake.pool.poolId)}]`) ||
+            (dataStake?.pool?.poolId && getShortWallet(dataStake.pool.poolId)) ||
             ""}
         </Link>
       )
@@ -98,13 +98,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           <HiArrowLongLeft fontSize="16px" />
           <BackText>Back</BackText>
         </BackButton>
-        <Box
-          width={"100%"}
-          display={"flex"}
-          flexWrap={"wrap"}
-          alignItems={"center"}
-          justifyContent={"space-between"}
-        >
+        <Box width={"100%"} display={"flex"} flexWrap={"wrap"} alignItems={"center"} justifyContent={"space-between"}>
           <Box component={"h2"} lineHeight={1} mt={2} display={"flex"} alignItems={"center"}>
             <TitleText>Address Details</TitleText>
             <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />

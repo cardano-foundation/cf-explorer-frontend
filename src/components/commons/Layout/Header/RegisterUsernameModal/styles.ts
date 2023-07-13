@@ -22,7 +22,7 @@ export const Label = styled(FormLabel)`
   color: ${({ theme }) => theme.palette.text.primary};
   margin-top: 20px;
   .MuiFormLabel-asterisk {
-    color: #dd4343;
+    color: ${({ theme }) => theme.palette.text.primary};
   }
 `;
 

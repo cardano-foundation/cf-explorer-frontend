@@ -20,6 +20,7 @@ export const Info = styled(Box)(({ theme }) => ({
 export const InfoText = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
+  color: theme.palette.grey[400],
   marginLeft: theme.spacing(1),
   fontWeight: 600,
   fontSize: "14px",
@@ -84,8 +85,8 @@ export const AccountContainer = styled(Box)(({ theme }) => ({
   width: 245,
   height: 238,
   padding: "30px 20px",
-  border: "1.5px dashed #D2D2D2",
-  background: alpha(theme.palette.grey[300], 0.1),
+  border: `1.5px dashed ${theme.palette.border.hint}`,
+  background: alpha(theme.palette.grey[300], 0.03),
   borderRadius: 25,
   [theme.breakpoints.down(1440)]: {
     marginTop: 33
@@ -189,13 +190,13 @@ export const NetAmountBox = styled(HoldBox)(({ theme }) => ({
   boxSizing: "border-box",
   minHeight: 70,
   height: "max-content",
-  borderColor: theme.palette.green[600],
+  borderColor: theme.palette.green[200],
   width: "100%",
   maxWidth: 200,
   minWidth: 180,
   "::after": {
     content: '"NET AMOUNT"',
-    background: theme.palette.green[600]
+    background: theme.palette.green[200]
   },
   [theme.breakpoints.down(1440)]: {
     width: 180,
