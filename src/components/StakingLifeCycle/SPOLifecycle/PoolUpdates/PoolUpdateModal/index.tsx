@@ -78,7 +78,18 @@ export const PoolUpdateModal = ({ data, ...props }: Props) => {
   const isUpdated = data?.previousMargin !== data?.margin || data?.previousPledge !== data?.pledge;
 
   return (
-    <StyledModal {...props} title="Pool certificate">
+    <StyledModal
+      {...props}
+      title="Pool certificate"
+      modalContainerProps={{
+        sx: {
+          overflow: "auto"
+        }
+      }}
+      sx={{
+        overflow: "hidden"
+      }}
+    >
       {isUpdated ? (
         <TabContext value={tabActive}>
           <TabContainer>
