@@ -268,7 +268,7 @@ export default ProtocolParameter;
 export const ProtocolParameterHistory = () => {
   const { PROTOCOL_PARAMETER } = API;
   const TOTAL_PARAMETER = 29;
-
+  const theme = useTheme();
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
   const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
@@ -501,7 +501,7 @@ export const ProtocolParameterHistory = () => {
                 alignItems={"center"}
                 mt={3}
                 mb={2}
-                color={"#0052CC !important"}
+                color={`${theme.palette.blue[100]} !important`}
               >
                 <Box mr={1}>Reset</Box>
                 <ResetIcon />
@@ -594,7 +594,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                 Latest - First
               </Box>
             </Box>
-            {sort === "LastFirst" && <BsFillCheckCircleFill size={16} style={{ color: "#0052CC !important" }} />}
+            {sort === "LastFirst" && <BsFillCheckCircleFill size={16} />}
           </Box>
         </ButtonFilter>
         <ButtonFilter onClick={() => setSort("FirstLast")}>
@@ -605,7 +605,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                 First - Latest
               </Box>
             </Box>
-            {sort === "FirstLast" && <BsFillCheckCircleFill size={16} style={{ color: "#0052CC !important" }} />}
+            {sort === "FirstLast" && <BsFillCheckCircleFill size={16} />}
           </Box>
         </ButtonFilter>
         <ButtonFilter onClick={() => setShowDaterange(true)}>
@@ -617,7 +617,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                 Date range
               </Box>
             </Box>
-            {!_.isEmpty(dateRange) && <BsFillCheckCircleFill size={16} style={{ color: "#0052CC !important" }} />}
+            {!_.isEmpty(dateRange) && <BsFillCheckCircleFill size={16} />}
           </Box>
         </ButtonFilter>
 
@@ -678,7 +678,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                     sx={{
                       color: ({ palette }) => alpha(palette.common.black, 0.15),
                       "&.Mui-checked": {
-                        color: `#0052CC !important`
+                        color: `${theme.palette.blue[100]} !important`
                       }
                     }}
                   />

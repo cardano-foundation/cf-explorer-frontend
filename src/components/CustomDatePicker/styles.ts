@@ -1,14 +1,14 @@
-import { IconButton, Box, styled } from "@mui/material";
+import { IconButton, Box, styled, alpha } from "@mui/material";
 import DatePicker from "react-datepicker";
 
 export const StyledDatePicker = styled(DatePicker)`
-  border: 1.5px solid #e3e5e9;
+  border: 1.5px solid ${(props) => props.theme.palette.border.primary};
   height: 40px;
   border-radius: 8px;
   padding-left: 20px;
   width: calc(100% - 20px);
   &.react-datepicker__header {
-    background-color: #fff !important;
+    background-color: ${(props) => props.theme.palette.common.white} !important;
     border-bottom: 0px !important;
     padding-bottom: 5px !important;
   }
@@ -140,8 +140,8 @@ export const HiddenScroll = styled(Box)(({ theme }) => ({
   width: "fit-content",
   height: "200px",
   overflow: "auto",
-  backgroundColor: "#fff",
-  boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.12)",
+  backgroundColor: theme.palette.common.white,
+  boxShadow: `0px 4px 16px ${alpha(theme.palette.common.white, 0.12)}`,
   borderRadius: "8px",
   zIndex: 1,
   "&::-webkit-scrollbar": {
@@ -168,7 +168,7 @@ export const SelectYear = styled(Box)<{ isActive: number }>(({ theme, isActive }
   cursor: "pointer",
   borderRadius: "18px",
   backgroundColor: isActive ? theme.palette.primary.main : "transparent",
-  color: isActive ? "#fff" : theme.palette.text.primary,
+  color: isActive ? theme.palette.common.white : theme.palette.text.primary,
   "&:hover": {
     backgroundColor: isActive ? theme.palette.primary.main : theme.palette.grey[100]
   }

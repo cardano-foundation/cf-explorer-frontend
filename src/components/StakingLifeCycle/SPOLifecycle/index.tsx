@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Box, IconButton, useTheme } from "@mui/material";
+import { Box, IconButton, alpha, useTheme } from "@mui/material";
 import { useHistory, useParams } from "react-router";
 
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -60,6 +60,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
   const history = useHistory();
   const { isMobile } = useScreen();
   const { palette } = useTheme();
+  const theme = useTheme();
   const [tabsValid, setTabValid] = useState(["isRegistration", "isUpdate", "isReward", "isDeRegistration"]);
   useEffect(() => {
     const element = document.getElementById(`step-${currentStep}`);
@@ -80,7 +81,11 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
   const stepper: StepperProps[] = [
     {
       icon: (
-        <RegistrationIcon width={"25px"} height={"25px"} fill={renderTabsSPO["isRegistration"] ? "#fff" : "#98A2B3"} />
+        <RegistrationIcon
+          width={"25px"}
+          height={"25px"}
+          fill={renderTabsSPO["isRegistration"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)}
+        />
       ),
       title: "Registration",
       component: <Registration />,
@@ -94,7 +99,13 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       keyCheckShow: "isRegistration"
     },
     {
-      icon: <PoolUpdateIcon width={"25px"} height={"25px"} fill={renderTabsSPO["isUpdate"] ? "#fff" : "#98A2B3"} />,
+      icon: (
+        <PoolUpdateIcon
+          width={"25px"}
+          height={"25px"}
+          fill={renderTabsSPO["isUpdate"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)}
+        />
+      ),
       title: "Pool Updates",
       component: <PoollUpdates />,
       description: (
@@ -107,7 +118,13 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       keyCheckShow: "isUpdate"
     },
     {
-      icon: <OperatorRewardIcon width={"25px"} height={"25px"} fill={renderTabsSPO["isReward"] ? "#fff" : "#98A2B3"} />,
+      icon: (
+        <OperatorRewardIcon
+          width={"25px"}
+          height={"25px"}
+          fill={renderTabsSPO["isReward"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)}
+        />
+      ),
       title: "Operator Rewards",
       component: <OperatorReward />,
       description: (
@@ -121,7 +138,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
         <DeredistrationIcon
           width={"25px"}
           height={"25px"}
-          fill={renderTabsSPO["isDeRegistration"] ? "#fff" : "#98A2B3"}
+          fill={renderTabsSPO["isDeRegistration"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)}
         />
       ),
       title: "Deregistration",

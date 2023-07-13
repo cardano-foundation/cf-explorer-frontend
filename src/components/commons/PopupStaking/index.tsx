@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, styled, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import { AddressIcon } from "src/commons/resources";
@@ -8,9 +8,10 @@ import { details } from "src/commons/routers";
 import CopyButton from "../CopyButton";
 
 const PopupStaking = ({ hash }: { hash: string }) => {
+  const theme = useTheme();
   return (
     <Box display={"flex"} alignItems={"center"}>
-      <AddressIcon fill="#0052CC" />
+      <AddressIcon fill={theme.palette.blue[100]} />
       <Hash to={details.transaction(hash)}>{getShortHash(hash)}</Hash>
       <CopyButton text={hash} />
     </Box>

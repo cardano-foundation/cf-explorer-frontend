@@ -45,7 +45,7 @@ export const WrapItemMobile = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     display: "flex",
     width: "unset",
-    backgroundColor: "#E7E8EA",
+    backgroundColor: theme.palette.grey["A200"],
     borderRadius: "8px"
   },
   [theme.breakpoints.down("sm")]: {
@@ -65,7 +65,7 @@ export const NavItemMobile = styled(Link)<{ active: boolean }>(({ theme, active 
   lineHeight: "16px",
   display: "none",
   color: `${active ? theme.palette.common.white : theme.palette.grey[300]} !important`,
-  backgroundColor: active ? theme.palette.primary.main : "#E7E8EA",
+  backgroundColor: active ? theme.palette.primary.main : theme.palette.grey["A200"],
   padding: "10px 17px",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
@@ -101,7 +101,7 @@ export const StyledButtonClose = styled(Button)(({ theme }) => ({
   border: `2px solid ${theme.palette.border.hint} `,
   textTransform: "capitalize",
   fontWeight: "bold",
-  color: "#344054",
+  color: theme.palette.grey[400],
   fontSize: "1rem",
   width: "150px",
   height: "44px",

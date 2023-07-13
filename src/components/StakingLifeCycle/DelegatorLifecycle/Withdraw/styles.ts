@@ -136,18 +136,6 @@ export const Withdrawn = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const Payment = styled(Box)(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-between",
-  alignItems: "center",
-  height: "220px",
-  padding: `${theme.spacing(3)} 0`,
-  border: "2px dashed #D2D2D2",
-  background: alpha(theme.palette.grey[300], 0.1),
-  borderRadius: "25px"
-}));
-
 export const RoundBox = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
