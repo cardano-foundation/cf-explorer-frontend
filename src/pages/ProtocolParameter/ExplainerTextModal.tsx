@@ -30,6 +30,7 @@ export function ExplainerTextModal({ open, handleCloseModal, explainerText }: Pr
 const NormalDescription = styled(Box)`
   position: relative;
   font-weight: 400;
+  color: ${({ theme }) => theme.palette.grey[300]};
   line-height: 21px;
   z-index: 2;
   font-size: 16px;
