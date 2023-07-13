@@ -229,7 +229,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
     <DetailHeader
       type="TRANSACTION"
       bookmarkData={data?.tx.hash || ""}
-      title={"Transaction detail"}
+      title={"Transaction details"}
       hash={data?.tx.hash}
       transactionStatus={data?.tx.status}
       epoch={
