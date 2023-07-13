@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { styled, Container } from "@mui/material";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
@@ -45,4 +46,10 @@ export const Output = styled(Blocks)`
   display: inline-flex;
   align-items: center;
   gap: 10px;
+`;
+
+export const StyledBox = styled(Box)`
+  width: 41px;
+  margin: auto;
+  color: ${(props) => props.theme.palette.secondary.main} !important;
 `;
