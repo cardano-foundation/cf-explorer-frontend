@@ -3,6 +3,7 @@ import WebApi from "../../core/WebApi";
 import {BlockConstants} from "../../fixtures/constants/BlockConstants"
 import BlockDetail from "src/pages/BlockDetail";
 import BlockDetailPage from "./BlockDetailPage";
+import { text } from "stream/consumers";
 //locators
 const blockChainLocator = "//img[@alt='Blockchain']//parent::div";
 const blocksLocator = "//a[contains(@href,'/blocks')]";
@@ -11,6 +12,7 @@ const transactionBtn = "//th[contains(text(),'Transactions')]//button";
 const createdAtBtn = "//th[contains(text(),'Created At')]//button";
 const listBlock = '//div[@data-testid="blocks-card"]//tbody//tr';
 const numberBlockPerPage = '//span[contains(text(),"Per page")]//preceding-sibling::div/div';
+const perPageDropDown = "//ul//li[text()='{0}']";
 const itemListsWithLink = "//table//tbody//tr//td[count(//th[contains(text(),'{0}')]//preceding-sibling::th) + boolean(//th[contains(text(),'{0}')])]//a";
 const itemLists = "//table//tbody//tr//td[count(//th[contains(text(),'{0}')]//preceding-sibling::th) + boolean(//th[contains(text(),'{0}')])]//span";
 const quickViews = "//table//tbody//tr//td[count(//th[contains(text(),'')]//preceding-sibling::th) + boolean(//th[contains(text(),'')])]";
@@ -22,7 +24,7 @@ const waitingIcon = "//span[contains(@class,'MuiCircularProgress-root')]";
 const blockTxt = "//small[text()='Block']";
 const slotTxt = "//small[text()='slot']";
 const epochTxt = "//span[text()='Epoch']";
-const createdTxt = "//small[text()='Created At']";
+const createdTxt = "//small[contains(text(),'Created At')]//following-sibling::small";
 const confirmationTxt = "//small[text()='Confirmation']";
 const transactionFeeTxt = "//small[text()='Transaction Fees']";
 const totalAmountTxt = "//small[contains(text(),'Total Output in ADA')]";
@@ -30,6 +32,11 @@ const blockIdOnQuickModel = "//small[text()='Block Id']//parent::div//small//a";
 const transactionBtnOnQuickView = "//h4[contains(text(),'Transactions')]";
 const closeBtn = "//button[@aria-label='Close']";
 const clipBoard = "//button[contains(@aria-label,'Copy')]";
+const numberPerPageList = "//ul[@role='listbox']//li";
+const nextBtn = "//ul//li[10]//button";
+const nextLastPageBtn = "//ul//li[11]//button";
+const firstPageBtn = "//ul//li[1]//button";
+const inputPageNumber = "//li/div/input";
 export default class LoginPage extends WebApi {
   goToHomePage() {
     this.openAnyUrl("/");
@@ -43,6 +50,24 @@ export default class LoginPage extends WebApi {
     this.clickToElementByXpath(blockChainLocator);
     return this;
   }
+  enterPageNumber(numberPage: string) {
+    cy.xpath(inputPageNumber).setInputValue(numberPage);
+    cy.xpath(inputPageNumber).type('{enter}');
+    return this;
+  }
+  verifyPageWhenEnterPageNumber(numberPage: string) {
+    cy.xpath(inputPageNumber).getAttributeValue("value").then(textBefore => {
+      this.enterPageNumber(numberPage)
+      cy.xpath(inputPageNumber).getAttributeValue("value").then(textAfter => {
+        if(parseInt(numberPage) < 1){
+          expect(textBefore).to.equal("1");
+        }else{
+          expect(parseInt(numberPage)).not.to.equal(textAfter);
+      }
+    })
+    })
+  return this;
+}
   clickToAnyBlock() {
     cy.clickElementRandomly(fieldBlock);
     return new BlockDetailPage;
@@ -68,12 +93,60 @@ export default class LoginPage extends WebApi {
     cy.clickElementRandomly(quickViews);
     return this;
   }
+  clickToPerPage() {
+    cy.clickElement(numberBlockPerPage);
+    return this;
+  }
+  clickToNextBtn() {
+    cy.clickElement(nextBtn);
+    return this;
+  }
+  selectAmountDataPerPage(amount: number) {
+    cy.clickElement(perPageDropDown, amount);
+    return this;
+  }
   hoverToBlockId() {
     cy.hoverToElementRandomly(itemListsWithLink, BlockConstants.COLUMN_NAME[1]);
     return this;
   }
   verifyBlockIdShowFull() {
     cy.verifyElementDisplay(blockIdDetailTxt);
+    return this;
+  }
+  verifyClickNextBtnSuccessfully() {
+
+    cy.xpath(inputPageNumber).getAttributeValue("value").then(textBefore => {
+      this.clickToNextBtn();
+      cy.xpath(inputPageNumber).getAttributeValue("value").then(textAfter => {
+      expect(textBefore).not.to.equal(textAfter);
+      })
+    })
+    return this;
+  }
+  verifyClickFisrtPageBtnSuccessfully() {
+
+    cy.xpath(inputPageNumber).getAttributeValue("value").then(textBefore => {
+      this.clickToBackFisrtPageBtn();
+      cy.xpath(inputPageNumber).getAttributeValue("value").then(textAfter => {
+      expect(textBefore).not.to.equal(textAfter);
+      })
+    })
+    return this;
+  }
+  clickToNextLastPageBtn() {
+    cy.clickElement(nextLastPageBtn);
+    return this;
+  }
+  verifyNextLastPageBtnIsDisable() {
+    cy.xpath(nextLastPageBtn).verifyElementUnabled();
+    return this;
+  }
+  clickToBackFisrtPageBtn() {
+    cy.clickElement(firstPageBtn);
+    return this;
+  }
+  verifyFirstPageBtnIsDisable() {
+    cy.xpath(firstPageBtn).verifyElementUnabled();
     return this;
   }
   verifyEpochDetailPageDisplay() {
@@ -95,6 +168,17 @@ export default class LoginPage extends WebApi {
     cy.verifyElementDisplay(txtColumnName, BlockConstants.COLUMN_NAME[6]);
     return this;
   }
+  verifyEnoughChoiceInPerPage() {
+    const expected: any[] = []
+    cy.getAllTextContent(numberPerPageList, (txt: string) => {
+      expected.push(parseInt(txt));
+
+    }).then(() =>{
+      expect(expected).to.deep.equal(BlockConstants.PER_PAGE);
+    })
+
+    return this;
+  }
   verifyQuickViewModel() {
     cy.verifyElementDisplay(blockTxt);
     cy.verifyElementDisplay(slotTxt);
@@ -113,6 +197,10 @@ export default class LoginPage extends WebApi {
   }
   verifyBlockdetailScreenDisplay() {
     cy.verifyElementDisplay(viewDetailTxt);
+    return this;
+  }
+  verifyFormatCreatedDateOnQuickViewModel() {
+    cy.checkDateTimeFormat(createdTxt, BlockConstants.DATE_TIME[0],'');
     return this;
   }
   verifySortBtnEnable() {
@@ -168,6 +256,12 @@ export default class LoginPage extends WebApi {
   } 
 verifyDateTimeOrdered() {
   cy.verifyDateTimeIsSorted(itemLists, BlockConstants.SORT[1], BlockConstants.COLUMN_NAME[6]);
+  return this;
+}
+verifyDefaultPageNumber(defaultNumber: number) {
+  cy.xpath(numberBlockPerPage).getTextContent().then(text =>{
+    expect(defaultNumber).to.equal(parseInt(text));
+  })
   return this;
 }
 
