@@ -21,7 +21,6 @@ export interface FetchReturnType<T> {
   refresh: () => void;
   update: (callback: (data: T[]) => T[]) => void;
   lastUpdated: number;
-  setLoading: (value: boolean) => void;
 }
 
 const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, timeout?: number): FetchReturnType<T> => {
@@ -37,7 +36,17 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
 
   const getList = useCallback(
     async (needLoading?: boolean) => {
-      if (!url) return;
+      if (!url) {
+        setData([]);
+        setInitialized(false);
+        setLoading(false);
+        setError(null);
+        setCurrentPage(0);
+        setTotalPage(0);
+        setTotal(0);
+        setRefreshLoading(false);
+        return;
+      }
       let service: AxiosInstance = isAuth ? authAxios : defaultAxios;
       if (url.search("http://") === 0 || url.search("https://") === 0) {
         service = axios;
@@ -101,8 +110,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
     currentPage,
     refresh: getList,
     update: setData,
-    lastUpdated: lastFetch.current,
-    setLoading
+    lastUpdated: lastFetch.current
   };
 };
 
