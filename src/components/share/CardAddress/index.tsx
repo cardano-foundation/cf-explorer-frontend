@@ -1,10 +1,9 @@
-import React from "react";
 import { Box, Skeleton } from "@mui/material";
+import React from "react";
 
-import { EmptyIcon, InfoIcon } from "src/commons/resources";
-import CopyButton from "src/components/commons/CopyButton";
-import CustomIcon from "src/components/commons/CustomIcon";
+import { EmptyIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
+import CopyButton from "src/components/commons/CopyButton";
 
 import {
   AddressGroup,
@@ -61,7 +60,6 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
             <ItemDetail key={ii}>
               {i.title && (
                 <RowItem>
-                  {type == "right" ? <CustomIcon icon={InfoIcon} width={22} /> : null}
                   <LabelItem>{i.title}</LabelItem>
                 </RowItem>
               )}
