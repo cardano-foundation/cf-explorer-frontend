@@ -200,9 +200,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
               <DetailValue>{formatDateTimeLocal(data.time || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                {data?.confirmation && data?.confirmation > 1 ? "Confirmations" : "Confirmation"}
-              </DetailLabel>
+              <DetailLabel>{data?.confirmation > 1 ? "Confirmations" : "Confirmation"}</DetailLabel>
               <DetailValue>{data?.confirmation}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>

@@ -255,9 +255,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                {data?.tx?.confirmation && data?.tx?.confirmation > 1 ? "Confirmations" : "Confirmation"}
-              </DetailLabel>
+              <DetailLabel>{data?.tx?.confirmation > 1 ? "Confirmations" : "Confirmation"}</DetailLabel>
               <DetailValue>{data?.tx?.confirmation}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
