@@ -1,63 +1,69 @@
 import React, { useEffect } from "react";
-import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { BiChevronRight } from "react-icons/bi";
+import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { useSelector } from "react-redux";
 
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import useFetch from "src/commons/hooks/useFetch";
 import {
   CubeIcon,
   DelegationHistoryMainIcon,
+  DelegationIconUrl,
   FileEditIcon,
+  InstantaneousHistoryIconUrl,
+  MetadataIconUrl,
   MintingIconUrl,
   NoteEditIcon,
+  ProtocolUpdateIconUrl,
+  RewardsDistributionIconUrl,
   RocketIcon,
+  StakeCertificatesIconUrl,
   USDIcon,
   WithdrawlIcon
 } from "src/commons/resources";
-import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
 import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
 import { RootState } from "src/stores/types";
-import { API } from "src/commons/utils/api";
 
-import ProgressCircle from "../ProgressCircle";
-import ViewMoreButton from "../ViewMoreButton";
-import CustomTooltip from "../CustomTooltip";
-import CopyButton from "../CopyButton";
-import ViewAllButton from "../ViewAllButton";
 import ADAicon from "../ADAIcon";
+import CopyButton from "../CopyButton";
+import CustomTooltip from "../CustomTooltip";
 import FormNowMessage from "../FormNowMessage";
+import ProgressCircle from "../ProgressCircle";
+import ViewAllButton from "../ViewAllButton";
+import ViewMoreButton from "../ViewMoreButton";
 import {
+  BlockDefault,
   CloseButton,
+  DetailLabel,
+  DetailLabelSkeleton,
+  DetailLink,
+  DetailLinkIcon,
+  DetailLinkImage,
+  DetailLinkName,
+  DetailLinkRight,
+  DetailValue,
+  DetailValueSkeleton,
+  DetailsInfoItem,
   EpochNumber,
   EpochText,
+  Group,
   HeaderContainer,
-  ViewDetailContainer,
-  DetailsInfoItem,
-  DetailLabel,
-  DetailValue,
   Icon,
-  BlockDefault,
-  DetailLabelSkeleton,
-  DetailValueSkeleton,
   IconSkeleton,
-  ProgressSkeleton,
-  ViewDetailDrawer,
   Item,
   ItemName,
   ItemValue,
   ListItem,
-  Group,
-  DetailLink,
-  DetailLinkIcon,
-  DetailLinkRight,
+  ProgressSkeleton,
   StyledLink,
+  TimeDuration,
   TxStatus,
-  DetailLinkName,
-  DetailLinkImage,
-  ViewDetailScroll,
+  ViewDetailContainer,
+  ViewDetailDrawer,
   ViewDetailHeader,
-  TimeDuration
+  ViewDetailScroll
 } from "./styles";
 
 type DetailViewTransactionProps = {
@@ -71,7 +77,25 @@ const tabs: { key: keyof Transaction; label: string; icon?: React.ReactNode }[] 
   { key: "collaterals", label: "Collateral", icon: <DetailLinkImage src={USDIcon} alt="contact" /> },
   { key: "notes", label: "Notes", icon: <DetailLinkImage src={NoteEditIcon} alt="contact" /> },
   { key: "withdrawals", label: "Withdrawal", icon: <DetailLinkImage src={WithdrawlIcon} alt="contact" /> },
-  { key: "mints", label: "Minting", icon: <DetailLinkImage src={MintingIconUrl} alt="contact" /> }
+  { key: "delegations", label: "Delegations", icon: <DetailLinkImage src={DelegationIconUrl} alt="contact" /> },
+  { key: "mints", label: "Minting", icon: <DetailLinkImage src={MintingIconUrl} alt="contact" /> },
+  {
+    key: "poolCertificates",
+    label: "Pool certificates",
+    icon: <DetailLinkImage src={RewardsDistributionIconUrl} alt="contact" />
+  },
+  {
+    key: "stakeCertificates",
+    label: "Stake Certificates",
+    icon: <DetailLinkImage src={StakeCertificatesIconUrl} alt="contact" />
+  },
+  { key: "protocols", label: "Protocol Update", icon: <DetailLinkImage src={ProtocolUpdateIconUrl} alt="contact" /> },
+  {
+    key: "instantaneousRewards",
+    label: "Instantaneous Rewards",
+    icon: <DetailLinkImage src={InstantaneousHistoryIconUrl} alt="contact" />
+  },
+  { key: "metadata", label: "Metadata", icon: <DetailLinkImage src={MetadataIconUrl} alt="contact" /> }
 ];
 
 const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
