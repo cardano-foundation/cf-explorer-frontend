@@ -24,6 +24,11 @@ const DeregistrationTab = () => {
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
   const [sort, setSort] = useState<string>("");
+
+  const fetchData = useFetchList<DeregistrationItem>(
+    reportId ? API.REPORT.SREPORT_DETAIL_DEGEGISTRATIONS(reportId) : "",
+    { ...pageInfo, sort }
+  );
   const columns: Column<DeregistrationItem>[] = [
     {
       title: "Transaction Hash",
@@ -72,16 +77,11 @@ const DeregistrationTab = () => {
       minWidth: "120px",
       render: () => (
         <IconButton onClick={() => setOpenModal(true)}>
-          <EyeIcon style={{ transform: "scale(.8)" }} />
+          <EyeIcon />
         </IconButton>
       )
     }
   ];
-
-  const fetchData = useFetchList<DeregistrationItem>(
-    reportId ? API.REPORT.SREPORT_DETAIL_DEGEGISTRATIONS(reportId) : "",
-    { ...pageInfo, sort }
-  );
 
   return (
     <>

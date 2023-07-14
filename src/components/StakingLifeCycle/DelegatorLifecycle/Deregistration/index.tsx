@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
@@ -46,6 +46,8 @@ type DeregistrationProps = {
 export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: DeregistrationProps) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const history = useHistory();
+  const theme = useTheme();
+
   const handleBack = () => {
     history.push(details.staking(stakeId, "timeline", "deregistration"));
   };
@@ -63,7 +65,7 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
 
         <InfoGroup>
           <Info>
-            <AddressIcon fill="#438F68" />
+            <AddressIcon fill={theme.palette.green[200]} />
             <CustomTooltip title={selected.txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(selected.txHash)}>{getShortHash(selected.txHash || "")}</StyledLink>
@@ -72,11 +74,11 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
             <StyledCopyButton text={selected.txHash} />
           </Info>
           <Info>
-            <ADAGreen />
+            <ADAGreen fill={theme.palette.green[200]} />
             <InfoText>{formatADAFull(Math.abs(selected.deposit) - selected.fee || 0)}</InfoText>
           </Info>
           <Info>
-            <TimeIcon />
+            <TimeIcon fill={theme.palette.green[200]} />
             <InfoText>{formatDateTimeLocal(selected.time)}</InfoText>
           </Info>
         </InfoGroup>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Box, Grid, useTheme } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
@@ -8,11 +8,12 @@ import { BigNumber } from "bignumber.js";
 
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
-import { formatADAFull, formatPrice } from "src/commons/utils/helper";
+import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/helper";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
+import useResizeHighChart from "src/commons/hooks/useResizeHighChart";
 
 import {
   BoxInfo,
@@ -46,6 +47,8 @@ const StakeAnalytics: React.FC = () => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const [tab, setTab] = useState<"BALANCE" | "REWARD">("BALANCE");
   const { stakeId } = useParams<{ stakeId: string }>();
+  const wrapperChartRef = useRef<HTMLDivElement>(null);
+  useResizeHighChart(wrapperChartRef);
   const theme = useTheme();
   const { isMobile } = useScreen();
   const { data, loading } = useFetch<AnalyticsBalance[]>(`${API.STAKE.ANALYTICS_BALANCE}/${stakeId}/${rangeTime}`);
@@ -126,7 +129,7 @@ const StakeAnalytics: React.FC = () => {
               )}
             </Grid>
           </Grid>
-          <ChartBox>
+          <ChartBox ref={wrapperChartRef}>
             {loading || loadingReward ? (
               <SkeletonUI variant="rectangular" style={{ height: "375px" }} />
             ) : (
@@ -168,7 +171,12 @@ const StakeAnalytics: React.FC = () => {
                       }
                     },
                     legend: { enabled: false },
-                    tooltip: { shared: true },
+                    tooltip: {
+                      shared: true,
+                      formatter: function (this: Highcharts.TooltipFormatterContextObject) {
+                        return "<span>" + this.x + "</span><br><strong>" + numberWithCommas(this.y || 0) + "</strong>";
+                      }
+                    },
                     credits: { enabled: false },
                     series: [
                       {
@@ -177,7 +185,7 @@ const StakeAnalytics: React.FC = () => {
                         type: "areaspline",
                         marker: { enabled: tab === "BALANCE" },
                         lineWidth: 4,
-                        color: theme.palette.green[700],
+                        color: theme.palette.green[200],
                         fillColor: {
                           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
                           stops: [

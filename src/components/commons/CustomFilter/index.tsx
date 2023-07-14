@@ -193,7 +193,7 @@ const CustomFilter: React.FC<Props> = (props) => {
               textTransform={"capitalize"}
               display={"flex"}
               alignItems={"center"}
-              color={`#0052CC !important`}
+              color={({ palette }) => `${palette.blue[100]} !important`}
               onClick={handleReset}
             >
               <Box mr={1}>Reset</Box>

@@ -41,11 +41,11 @@ import StakingLifecycle from "./pages/StakingLifecycle";
 import VerifyEmail from "./pages/VerifyEmail";
 import ReportGeneratedStakingDetail from "./pages/ReportGeneratedStakingDetail";
 import ReportGeneratedPoolDetail from "./pages/ReportGeneratedPoolDetail";
-import StakeDelegations from "./pages/StakeDelegations";
-import InstantRewards from "./pages/InstantRewards";
 import { getAllBookmarks } from "./commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "./commons/utils/constants";
 import { setOpenSyncBookmarkModal } from "./stores/user";
+import StakeDelegations from "./pages/StakeDelegations";
+import InstantRewards from "./pages/InstantRewards";
 
 const Routes: React.FC = () => {
   const { isLoggedIn } = useAuth();

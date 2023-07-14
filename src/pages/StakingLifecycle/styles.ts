@@ -4,7 +4,7 @@ import { Box, Tab, Tabs, Typography, styled } from "@mui/material";
 export const TextHeadline = styled("span")`
   font-weight: 700;
   font-size: 36px;
-  color: #000000;
+  color: ${(props) => props.theme.palette.grey[400]};
   margin-bottom: 14px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 24px;
@@ -40,7 +40,7 @@ export const StyledTabLabel = styled(Typography)<{ active: number }>(
   font-size: 18px;
     font-weight: 700;
     text-transform: capitalize;
-    color: ${props.active ? "#000" : "#98A2B3"};
+    color: ${props.active ? props.theme.palette.grey[400] : props.theme.palette.grey[300]};
 `
 );
 
