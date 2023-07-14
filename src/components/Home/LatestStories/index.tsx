@@ -1,9 +1,11 @@
 import { Box, Grid, Skeleton } from "@mui/material";
 
+import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
 import { CalenderPaleIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import useFetch from "src/commons/hooks/useFetch";
 import { formatDateTime, getHostname } from "src/commons/utils/helper";
+import { CARDANO_NEWS_URL } from "src/commons/utils/constants";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import {
@@ -12,7 +14,6 @@ import {
   Detail,
   FooterCard,
   Header,
-  HeaderCardContainer,
   Image,
   Item,
   ItemTitle,
@@ -43,6 +44,7 @@ const LatestStories = () => {
     <LatestStoriesContainer data-testid="home-latest-stories">
       <Header>
         <Title>Latest Stories</Title>
+        <ViewAllButtonExternal to={CARDANO_NEWS_URL as string} />
       </Header>
       <Grid container spacing={2}>
         {(data || []).map(({ resource_href, main_image, main_image_alt, title, published_on, entity, blurb }) => {
@@ -52,12 +54,10 @@ const LatestStories = () => {
                 <Item>
                   <Image src={main_image} alt={main_image_alt} />
                   <Detail>
-                    <HeaderCardContainer>
-                      <CustomTooltip title={entity}>
-                        <Author>{entity}</Author>
-                      </CustomTooltip>
-                      <ResourceHref>{getHostname(resource_href)}</ResourceHref>
-                    </HeaderCardContainer>
+                    <CustomTooltip title={entity}>
+                      <Author>{entity}</Author>
+                    </CustomTooltip>
+                    <ResourceHref>{getHostname(resource_href)}</ResourceHref>
                     <ItemTitle>{title} </ItemTitle>
                     <Description>{blurb}</Description>
                     <FooterCard>

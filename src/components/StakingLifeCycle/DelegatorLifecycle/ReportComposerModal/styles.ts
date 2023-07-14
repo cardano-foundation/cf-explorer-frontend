@@ -205,7 +205,7 @@ export const TextValueReview = styled("div")`
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
-  max-width: 100%;
+  max-width: 250px;
   color: ${({ theme }) => theme.palette.common.black};
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 14px;
