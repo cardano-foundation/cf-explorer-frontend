@@ -76,7 +76,7 @@ export const Image = styled("img")`
   height: 132px;
   min-width: 80px;
   border-radius: 5px;
-  object-fit: contain;
+  object-fit: cover;
   background-color: ${(props) => props.theme.palette.background.default};
   ${({ theme }) => theme.breakpoints.down("lg")} {
     height: 90px;
