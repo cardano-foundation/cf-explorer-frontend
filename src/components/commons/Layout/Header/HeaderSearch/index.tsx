@@ -404,8 +404,6 @@ export const OptionsSearch = ({ show, home, value, error, data }: OptionProps) =
         .filter(Boolean)) ||
     [];
 
-  console.log({ listOptions });
-
   return (
     <OptionsWrapper display={show ? "block" : "none"} home={+home}>
       {!error ? (
