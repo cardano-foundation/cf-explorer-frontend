@@ -61,7 +61,7 @@ const TransactionChart: React.FC = () => {
 
   const dataOverview = [
     { key: "trx", title: "Simple transactions", value: sumSimple || 0 },
-    { key: "simple", title: "Smart contracts", value: sumSmartContract || 0 },
+    { key: "simple", title: <Box textAlign={"left"}>Smart contracts</Box>, value: sumSmartContract || 0 },
     {
       key: "complex",
       title: (
