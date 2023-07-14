@@ -17,7 +17,7 @@ export const StyledLinearProgress = styled(LinearProgress)`
 
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
-    background: ${(props) => props.theme.palette.gradient[0]};
+    background: ${(props) => props.theme.palette.green[200]};
   }
 `;
 
@@ -62,12 +62,14 @@ export const StyledCard = {
     font-weight: var(--font-weight-bold);
     font-size: var(--font-size-title);
     margin-bottom: 8px;
+    color: ${(props) => props.theme.palette.grey[400]};
   `,
   Link: styled(Link)`
     font-weight: var(--font-weight-bold);
     font-size: var(--font-size-title);
     margin-bottom: 8px;
     font-family: var(--font-family-text) !important;
+    color: ${(props) => props.theme.palette.grey[400]} !important;
   `,
   Comment: styled("span")`
     font-weight: var(--font-weight-bold);
@@ -76,10 +78,10 @@ export const StyledCard = {
 };
 
 export const TimeDuration = styled("small")<{ mobile?: number }>(({ theme, mobile }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   display: mobile ? "none" : "block",
   textAlign: "left",
-  paddingTop: "0.5rem",
+  padding: `${theme.spacing(2)} 0`,
   [theme.breakpoints.down("md")]: {
     display: mobile ? "block" : "none",
     paddingTop: 0,
@@ -88,10 +90,10 @@ export const TimeDuration = styled("small")<{ mobile?: number }>(({ theme, mobil
 }));
 export const PoolTitle = styled(Box)(({ theme }) => ({
   fontSize: "12px",
-  color: alpha(theme.palette.common.black, 0.5)
+  color: theme.palette.grey[300]
 }));
 export const PoolValue = styled(Box)(({ theme }) => ({
   fontSize: "14px",
-  color: theme.palette.common.black,
+  color: theme.palette.grey[400],
   fontWeight: "bold"
 }));

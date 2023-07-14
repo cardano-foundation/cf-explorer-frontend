@@ -1,4 +1,4 @@
-import { styled, Box, Typography } from "@mui/material";
+import { styled, Box, Typography, IconButton } from "@mui/material";
 
 export const ContractDiagramsContainer = styled(Box)<{ isTxPageView?: boolean }>`
   background: ${(props) => (props.isTxPageView ? "inherit" : props.theme.palette.background.paper)};
@@ -14,10 +14,13 @@ export const ContractHeader = styled(Box)`
 export const ContractText = styled(Typography)`
   font-size: 16px;
   font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: self-end;
 `;
 
 export const ContractAddress = styled(Box)`
-  color: ${(props) => props.theme.palette.blue[400]};
+  color: ${(props) => props.theme.palette.blue[100]};
   font-size: 14px;
   font-weight: 400;
   padding-top: 10px;
@@ -95,4 +98,9 @@ export const DatumnText = styled(TitleText)`
 export const IconContainer = styled(Box)`
   display: flex;
   margin: 20px 50px;
+`;
+
+export const CloseButton = styled(IconButton)`
+  color: ${(props) => props.theme.palette.text.hint};
+  padding: 5.5px;
 `;

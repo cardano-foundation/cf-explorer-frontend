@@ -1,7 +1,7 @@
 import { styled, Button, LinearProgress, alpha } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export const StyledLinearProgress = styled(LinearProgress)`
+export const StyledLinearProgress = styled(LinearProgress)<{ saturation: number }>`
   display: inline-block;
   width: 150px;
   height: 8px;
@@ -10,7 +10,7 @@ export const StyledLinearProgress = styled(LinearProgress)`
   margin-left: 8px;
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
-    background: ${(props) => props.theme.palette.gradient[0]};
+    background: ${({ theme, saturation }) => (saturation > 100 ? theme.palette.red[100] : theme.palette.green[200])};
   }
 `;
 

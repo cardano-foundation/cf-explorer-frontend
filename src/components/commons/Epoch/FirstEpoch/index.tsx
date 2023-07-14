@@ -52,7 +52,9 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
             trailOpacity={1}
           >
             <EpochProgress>{`${progress}%`}</EpochProgress>
-            <Status status={currentEpochData?.status?.toLowerCase()}>{EPOCH_STATUS[currentEpochData?.status]}</Status>
+            <Status status={currentEpochData?.status as keyof typeof EPOCH_STATUS}>
+              {EPOCH_STATUS[currentEpochData?.status]}
+            </Status>
           </ProgressCircle>
         </Box>
       )
