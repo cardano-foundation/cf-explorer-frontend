@@ -29,9 +29,9 @@ const format = require('string-format');
 Cypress.Commands.add("clickElement", (selector, ...value) => {
   selector = format(selector, value);
   if (selector.startsWith("/") || selector.startsWith("(")) {
-    cy.xpath(selector).click();
+    cy.xpath(selector).click({force: true});
   } else {
-    cy.get(selector).click();
+    cy.get(selector).click({force: true});
   }
 });
 Cypress.Commands.add("clickElementRandomly", (selector, ...value) => {
@@ -41,14 +41,14 @@ Cypress.Commands.add("clickElementRandomly", (selector, ...value) => {
       const elements = $elements.toArray();
       const randomIndex = Math.floor(Math.random() * elements.length);
       const randomElement = elements[randomIndex];
-      cy.wrap(randomElement).click();
+      cy.wrap(randomElement).click({force: true});
     });
   } else {
     cy.get(selector).then($elements => {
       const elements = $elements.toArray();
       const randomIndex = Math.floor(Math.random() * elements.length);
       const randomElement = elements[randomIndex];
-      cy.wrap(randomElement).click();
+      cy.wrap(randomElement).click({force: true});
     });
   }
 });
@@ -245,6 +245,13 @@ Cypress.Commands.add(
   { prevSubject: true },
   (subject) => {
     cy.wrap(subject).should("not.be", "disabled");
+  }
+);
+Cypress.Commands.add(
+  "verifyElementUnabled",
+  { prevSubject: true },
+  (subject) => {
+    cy.wrap(subject).should("be.disabled");
   }
 );
 
