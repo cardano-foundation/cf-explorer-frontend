@@ -44,7 +44,7 @@ const columnsToken: Column<TokenPolicys>[] = [
     )
   },
   {
-    title: "Created Date",
+    title: "Created At",
     key: "date",
     minWidth: "150px",
     render: (r) => formatDateTimeLocal(r.createdOn || "")

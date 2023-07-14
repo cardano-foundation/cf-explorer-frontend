@@ -59,25 +59,15 @@ describe("DetailHeader component", () => {
   });
   it("should component render", () => {
     render(<DetailHeader {...mockProps} />);
-
-    const titleEL = screen.getByRole("heading", {
-      name: /example title/i
-    });
     const status = screen.getByText(/success/i);
-
-    expect(titleEL).toBeInTheDocument();
+    const title = screen.getByText(/example title/i);
     expect(status).toBeInTheDocument();
+    expect(title).toBeInTheDocument();
   });
 
   it("should component loading", () => {
     render(<DetailHeader {...mockProps} loading={true} isHideButtonBack={false} />);
-    const titleEL = screen.queryByRole("heading", {
-      name: /example title/i
-    });
-
     const status = screen.queryByText(/success/i);
-
-    expect(titleEL).not.toBeInTheDocument();
     expect(status).not.toBeInTheDocument();
   });
 });

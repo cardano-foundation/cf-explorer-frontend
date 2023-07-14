@@ -68,12 +68,13 @@ export const ApplyFilterButton = styled(Button)(({ theme }) => ({
   textTransform: "capitalize",
   fontWeight: "bold",
   color: theme.palette.common.white,
-  background: theme.palette.grey[700],
+  background: theme.palette.grey[400],
   ":hover": {
-    background: alpha(theme.palette.grey[700], 0.8)
+    background: alpha(theme.palette.grey[400], 0.8)
   },
   ":disabled": {
-    background: alpha(theme.palette.grey[700], 0.3)
+    color: theme.palette.common.white,
+    background: alpha(theme.palette.grey[400], 0.3)
   }
 }));
 

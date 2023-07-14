@@ -29,7 +29,8 @@ describe("useFetchList", () => {
       currentPage: 0,
       refresh: expect.any(Function),
       update: expect.any(Function),
-      lastUpdated: expect.any(Number)
+      lastUpdated: expect.any(Number),
+      setLoading: expect.any(Function)
     };
 
     expect(result.current).toEqual(expected);
