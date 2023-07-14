@@ -104,7 +104,7 @@ const RegistrationPools = () => {
       }
     },
     {
-      title: "Cost (A)",
+      title: "Fixed Cost (A)",
       key: poolType === POOL_TYPE.REGISTRATION ? "fixedCost" : "pu.fixedCost",
       render: (pool) => <>{formatADAFull(pool.cost)}</>,
       sort: ({ columnKey, sortValue }) => {
@@ -112,7 +112,7 @@ const RegistrationPools = () => {
       }
     },
     {
-      title: "Fee",
+      title: "Margin",
       key: poolType === POOL_TYPE.REGISTRATION ? "margin" : "pu.margin",
       render: (pool) => formatPercent(pool.margin),
       sort: ({ columnKey, sortValue }) => {
