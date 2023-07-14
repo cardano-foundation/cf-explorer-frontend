@@ -62,6 +62,7 @@ export const WrapConfirmation = styled(Box)(({ theme }) => ({
 }));
 
 export const Subtext = styled("span")`
-  opacity: 0.5;
+  color: ${(props) => props.theme.palette.grey[300]};
+  font-weight: normal;
   font-weight: 400;
 `;

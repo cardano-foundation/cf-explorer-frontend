@@ -51,7 +51,9 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
             percent={Number(progress)}
             trailOpacity={1}
           >
-            <EpochProgress>{`${progress}%`}</EpochProgress>
+            <EpochProgress
+              status={currentEpochData?.status as keyof typeof EPOCH_STATUS}
+            >{`${progress}%`}</EpochProgress>
             <Status status={currentEpochData?.status as keyof typeof EPOCH_STATUS}>
               {EPOCH_STATUS[currentEpochData?.status]}
             </Status>

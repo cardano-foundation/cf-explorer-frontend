@@ -344,7 +344,7 @@ export const TokenUrl = styled(Box)(({ theme }) => ({
 }));
 
 export const PolicyScriptBtn = styled(Button)(({ theme }) => ({
-  color: theme.palette.primary.main,
+  color: theme.palette.blue[100],
   fontFamily: '"Roboto", sans-serif',
   fontSize: "14px",
   border: "none",
