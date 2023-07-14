@@ -3,6 +3,7 @@ import { styled, Stack, Box, Button, TextField, Slider, FormLabel, alpha } from 
 import CustomSelect from "src/components/commons/CustomSelect";
 
 export const Container = styled(Box)(({ theme }) => ({
+  maxHeight: "calc(100vh - 120px)",
   [theme.breakpoints.down("sm")]: {
     label: {
       "*": {
@@ -45,12 +46,6 @@ export const StyledSelect = styled(CustomSelect)(({ theme }) => ({
     borderRight: `1px solid ${theme.palette.border.primary}`
   }
 }));
-
-export const ModalTitle = styled("div")`
-  font-weight: 700;
-  color: ${(props) => props.theme.palette.grey[400]};
-  margin-bottom: 25px;
-`;
 
 export const StyledStack = styled(Stack)`
   margin-bottom: 20px;

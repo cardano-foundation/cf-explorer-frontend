@@ -115,6 +115,7 @@ export const ButtonText = styled(Typography)`
   font-weight: 700;
 `;
 export const StyledGroupButton = styled(Box)(({ theme }) => ({
+  marginBottom: "40px",
   [theme.breakpoints.down("sm")]: {
     paddingTop: "30px",
     borderTop: `1px solid ${alpha(theme.palette.grey[200], 1)}`
