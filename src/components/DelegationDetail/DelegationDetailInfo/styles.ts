@@ -155,7 +155,7 @@ export const StyledLinearProgress = styled(LinearProgress)<{ saturation: number 
   width: 100%;
   height: 10px;
   border-radius: 34px;
-  background: ${(props) => alpha(props.theme.palette.common.black, 0.1)};
+  background: ${(props) => alpha(props.theme.palette.grey[400], 0.1)};
 
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;

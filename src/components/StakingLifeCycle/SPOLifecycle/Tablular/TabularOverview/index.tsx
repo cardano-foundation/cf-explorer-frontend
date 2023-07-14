@@ -93,7 +93,7 @@ const TabularOverview: React.FC = () => {
   const STATUS = {
     ACTIVE: ["Active", theme.palette.grey[400]],
     INACTIVE: ["Inactive", "rgb(255,0,0)"],
-    RETIRING: ["Retiring", "rgb(255,153,0)"]
+    RETIRING: ["Retiring", theme.palette.yellow[100]]
   };
 
   return (

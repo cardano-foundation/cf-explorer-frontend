@@ -53,19 +53,19 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
           <ContractAddress>{txHash || item.address || item.scriptHash}</ContractAddress>
         </Link>
       </ContractHeader>
-      <ContractRedeemer item={item} />
+      <ContractRedeemer item={item} txHash={txHash} />
       {item.datumHashIn && (
         <>
           <IconContainer>
             <RedeemerPlusIcon />
           </IconContainer>
-          <ContractDatumn key="in" item={item} type="in" />
+          <ContractDatumn txHash={txHash} key="in" item={item} type="in" />
         </>
       )}
       <IconContainer>
         <RedeemerArrowDownIcon />
       </IconContainer>
-      <ContractBytecode item={item} />
+      <ContractBytecode item={item} txHash={txHash} />
 
       {item.datumHashOut && (
         <>
@@ -79,36 +79,44 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
   );
 };
 
-export const ContractRedeemer = ({ item }: IContractDiagramProps) => {
+export const ContractRedeemer = ({ item, txHash }: IContractDiagramProps) => {
   return (
     <CardDiagram>
       <TabLabel>Redeemer</TabLabel>
-      <TabElement>
+      <TabElement isContractPage={+!!txHash}>
         <TabItem>
           <TitleText>Tag</TitleText>
-          <Typography component={"span"}>{item.purpose}</Typography>
+          <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
+            {item.purpose}
+          </Typography>
         </TabItem>
         <TabItem>
           <TitleText>Data</TitleText>
-          <Typography component={"span"}>{item.redeemerBytes}</Typography>
+          <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
+            {item.redeemerBytes}
+          </Typography>
         </TabItem>
         <TabItem>
           <TitleText>Mem</TitleText>
-          <Typography component={"span"}>{item.redeemerMem}</Typography>
+          <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
+            {item.redeemerMem}
+          </Typography>
         </TabItem>
         <TabItem>
           <TitleText>Steps</TitleText>
-          <Typography component={"span"}>{item.redeemerSteps}</Typography>
+          <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
+            {item.redeemerSteps}
+          </Typography>
         </TabItem>
       </TabElement>
     </CardDiagram>
   );
 };
 
-export const ContractDatumn = ({ item, type }: IContractDiagramProps) => {
+export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) => {
   const isTypeIn = type === "in";
   return (
-    <DatumnElement>
+    <DatumnElement isContractPage={+!!txHash}>
       <DatumnItem
         sx={{
           borderBottom: (props) => `1px solid ${props.palette.border.line}`,
@@ -116,7 +124,9 @@ export const ContractDatumn = ({ item, type }: IContractDiagramProps) => {
         }}
       >
         <DatumnText>Datum Hash</DatumnText>
-        <Typography component={"span"}>{isTypeIn ? item.datumHashIn : item.datumHashOut}</Typography>
+        <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
+          {isTypeIn ? item.datumHashIn : item.datumHashOut}
+        </Typography>
       </DatumnItem>
       <DatumnItem
         sx={{
@@ -124,17 +134,19 @@ export const ContractDatumn = ({ item, type }: IContractDiagramProps) => {
         }}
       >
         <DatumnText>Datum</DatumnText>
-        <Typography component={"span"}>{isTypeIn ? item.datumBytesIn : item.datumBytesOut}</Typography>
+        <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
+          {isTypeIn ? item.datumBytesIn : item.datumBytesOut}
+        </Typography>
       </DatumnItem>
     </DatumnElement>
   );
 };
 
-const ContractBytecode = ({ item }: IContractDiagramProps) => {
+const ContractBytecode = ({ item, txHash }: IContractDiagramProps) => {
   return (
     <CardDiagram>
       <TabLabel>Contract Bytecode</TabLabel>
-      <TabElement>{item.scriptBytes}</TabElement>
+      <TabElement isContractPage={+!!txHash}>{item.scriptBytes}</TabElement>
     </CardDiagram>
   );
 };
