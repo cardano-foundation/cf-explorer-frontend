@@ -44,14 +44,29 @@ const epochCurrentElement = "//div[contains(@class,'MuiGrid-container')]//div[co
 
 //epoch detail
 const epochDetailStatus ="//div[text()='Epoch details']/following-sibling::small";
-const epochDetailStartTimeStamp="//div[text()='Start Timestamp ']/../../..";
-const epochDetailEndTimeStamp="//div[text()='End Timestamp ']/../../..";
-const epochDetailTotalOutput="//div[text()=' Total Output']/../../..";
+const epochDetailStartTimeStamp="//div[text()='Start Timestamp ']/../../following-sibling::div";
+const epochDetailEndTimeStamp="//div[text()='End Timestamp ']/../../following-sibling::div";
+const epochDetailTotalOutput="//div[text()=' Total Output']/../../following-sibling::div/span/span";
 const epochDetailBlock="//div[text()=' Blocks']/../../..";
-const epochDetailSlot="//div[text()=' Slot']/../../..";
+const epochDetailSlot="//div[text()=' Slot']/../../following-sibling::div";
 const epochDetailTransactionCount="//div[text()=' Transaction Count']/../../..";
 const epochDetailRewardsDistributed="//div[text()=' Rewards Distributed']/../../..";
-const backButton ="//small[text()='Back']/.."
+const backButton ="//small[text()='Back']/..";
+const bookMarkButton ="//div[text()='Epoch details']/following-sibling::div//button";
+const popUpMessage ="//div[contains(@class,'MuiAlert-message')]";
+
+const signInButton ="//span[text()='Sign In']/..";
+const inputEmail ="//input[@name='email']";
+const inputPassword ="//input[@name='password']";
+const logInButton ="//button[@data-testid='login-btn']";
+const buttonAccount ="//div[@data-testid='header-top']/div/div//button";
+const userProfile ="//h4[text()='User Profile']/..";
+const signOutBtn ="//h4[text()='Sign Out']/..";
+const bookMarkPanel ="//div[text()='Bookmark']/..";
+const epochTab ="//div[text()='Epoch']";
+const epochBookMarked ="(//tbody/tr/td/a)[1]";
+const deleteBookmarkButton ="(//tbody//button)[1]";
+const confirmDelete ="//button[contains(text(),'Continue')]";
 
 export default class EpochPanel extends WebApi{
   
@@ -63,6 +78,7 @@ export default class EpochPanel extends WebApi{
     this.openAnyUrl("/epochs")
     return this;
   }
+
   goToSpecificEpochDetails(epochNumber:string) {  
     const specificEpoch = util.format(itemListsWithLinkAndText,EpochConstants.COLUMN_NAME[0],EpochConstants.COLUMN_NAME[0],epochNumber)
     cy.clickElement(specificEpoch);
@@ -359,20 +375,7 @@ export default class EpochPanel extends WebApi{
     switch (field){
       case 'Blocks':
         var blockList = util.format(itemLists2,EpochConstants.COLUMN_NAME[3],EpochConstants.COLUMN_NAME[3]);
-        cy.xpath(blockList).then((list) => {
-          for (let i = 1; i < list.length - 1; i++) {
-            const currentElement = Cypress.$(list[i]);
-            const nextElement = Cypress.$(list[i + 1]);
-      
-            const currentValue = parseInt(currentElement.text());
-            const nextValue = parseInt(nextElement.text());
-            if(sortType==='DESC'){
-              expect(currentValue).to.be.gte(nextValue);
-            }else if(sortType==='ASC'){
-              expect(currentValue).to.be.lte(nextValue);
-            }
-          }
-        });
+        cy.verifyFieldSorted(blockList,sortType)
          break;
 
       case 'Total Output':
@@ -546,6 +549,81 @@ export default class EpochPanel extends WebApi{
 
   verifyBackButtonIsEnable(){
     cy.xpath(backButton).verifyElementEnabled();
+    return this;
+  }
+
+  verifyEpochDetailsDateTimeFormat(){
+    cy.checkDateTimeFormat(epochDetailStartTimeStamp,EpochConstants.DATE_TIME[0],'');
+    cy.checkDateTimeFormat(epochDetailEndTimeStamp,EpochConstants.DATE_TIME[0],'');
+    return this;
+  }
+
+  verifyEpochDetailsSlotDisplay(){
+    cy.xpath(epochDetailSlot).should('contain','/')
+    return this;
+  }
+
+  verifyEpochDetailsTotalOutputDisplay(){
+    cy.xpath(epochDetailTotalOutput).invoke('text').then((text)=>{
+      expect(text.endsWith("₳")).to.be.true;
+    })
+    return this;
+  }
+
+  clickOnBackButton(){
+    cy.clickElement(backButton);
+    return this;
+  }
+
+  signIn(){
+    cy.clickElement(signInButton);
+    cy.xpath(inputEmail).setInputValue('hanh.luu+2@sotatek.com');
+    cy.xpath(inputPassword).setInputValue('Test1234@');
+    cy.clickElement(logInButton);
+    return this;
+  }
+
+  clickBookMark(){
+    cy.clickElement(bookMarkButton);
+    return this;
+  }
+
+  verifyBookMarkButtonStatusChanged(){
+    cy.xpath(bookMarkButton+"/*[local-name()='svg']").getAttributeValue('fill').then((value)=>{
+      expect(value).to.equal('none')
+    })
+    return this;
+  }
+
+  verifyMessagePopUpDisplayed(){
+    cy.verifyElementDisplay(popUpMessage);
+    return this;
+  }
+
+  verifyClickProfile(){
+    cy.clickElement(buttonAccount);
+    cy.clickElement(userProfile);
+    return this;
+  }
+
+  clickOnBookMarkPanelThenVerify(epochBookMarkedValue:string){
+    cy.clickElement(bookMarkPanel);
+    cy.clickElement(epochTab);
+    cy.xpath(epochBookMarked).getTextContent().then((value)=>{
+      expect(value).to.be.equal(epochBookMarkedValue);
+    })
+    return this;
+  }
+
+  clickOnSignOutButton(){
+    cy.clickElement(buttonAccount);
+    cy.clickElement(signOutBtn);
+    return this;
+  }
+
+  clickDeleteBookmark(){
+    cy.clickElement(deleteBookmarkButton);
+    cy.clickElement(confirmDelete);
     return this;
   }
 }

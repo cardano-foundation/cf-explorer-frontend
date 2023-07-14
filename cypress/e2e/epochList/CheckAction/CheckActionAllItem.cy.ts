@@ -15,7 +15,7 @@ describe('Check action of all item',()=>{
     
         epochPanel.clickOnSort('Blocks')
                   .clickOnSort('Blocks')
-                  .verifySortField('Blocks','ASC')
+                  .verifySortField('Blocks','asc')
     });
     
     it("Check click on [Sort decreasing] Blocks", () => {
@@ -27,7 +27,7 @@ describe('Check action of all item',()=>{
                   .verifyPagingNavigatorDisplay(10);
     
         epochPanel.clickOnSort('Blocks')
-                  .verifySortField('Blocks','DESC')
+                  .verifySortField('Blocks','desc')
     });
     
     it("Check click on [Sort up] with Total Output", () => {
