@@ -26,7 +26,8 @@
 import moment from 'moment';
 const format = require('string-format');
 
-Cypress.Commands.add("clickElement", (selector) => {
+Cypress.Commands.add("clickElement", (selector, ...value) => {
+  selector = format(selector, value);
   if (selector.startsWith("/") || selector.startsWith("(")) {
     cy.xpath(selector).click();
   } else {
@@ -89,7 +90,7 @@ Cypress.Commands.add("getAllTextContent", { prevSubject: false }, (ele, callback
 });
 Cypress.Commands.add("verifyDateTimeIsSorted", (locator, sortOrder = "asc", ...value) => {
   let ele = format(locator, value);
-  
+
   const datetimeList = [];
 
   cy.xpath(ele).each(locator => {
@@ -113,7 +114,7 @@ Cypress.Commands.add("verifyDateTimeIsSorted", (locator, sortOrder = "asc", ...v
 });
 Cypress.Commands.add("verifyFieldSorted", (locator, sortOrder = "asc", ...value) => {
   let ele = format(locator, value);
-  
+
   const numberList = [];
 
   cy.xpath(ele).each(locator => {
@@ -138,9 +139,9 @@ Cypress.Commands.add("verifyFieldSorted", (locator, sortOrder = "asc", ...value)
 Cypress.Commands.add("verifyElementDisplay", (locator, ...values) => {
   let ele = format(locator, values);
   if (ele.startsWith("/") || ele.startsWith("(")) {
-    cy.xpath(ele, { timeout: 10000 }).should("be.visible");
+    cy.xpath(ele, { timeout: 10000 }).scrollIntoView().should("be.visible");
   } else {
-    cy.get(ele, { timeout: 10000 }).should("be.visible");
+    cy.get(ele, { timeout: 10000 }).scrollIntoView().should("be.visible");
   }
 });
 Cypress.Commands.add("verifyElementInvisible", (locator, ...values) => {
