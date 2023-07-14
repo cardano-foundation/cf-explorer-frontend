@@ -67,8 +67,8 @@ const RegistrationPools = () => {
     },
     {
       title: "Created At",
-      key: 'created_at',
-      render: (pool) => <>{formatDateTimeLocal(pool.txTime || "")}</>,
+      key: "created_at",
+      render: (pool) => <>{formatDateTimeLocal(pool.txTime || "")}</>
     },
     {
       title: "Block",
@@ -77,7 +77,10 @@ const RegistrationPools = () => {
         <>
           <StyledLink to={details.block(pool.block)}>{pool.block}</StyledLink>
           <br />
-          <StyledLink to={details.epoch(pool.epoch)}>{pool.epoch}</StyledLink>/{pool.slotNo}
+          <StyledLink to={details.epoch(pool.epoch)}>{pool.epoch}</StyledLink>/{" "}
+          <Box component={"span"} color={({ palette }) => palette.grey[300]}>
+            {pool.slotNo}
+          </Box>
         </>
       )
     },
@@ -101,7 +104,7 @@ const RegistrationPools = () => {
       }
     },
     {
-      title: "Cost (A)",
+      title: "Fixed Cost (A)",
       key: poolType === POOL_TYPE.REGISTRATION ? "fixedCost" : "pu.fixedCost",
       render: (pool) => <>{formatADAFull(pool.cost)}</>,
       sort: ({ columnKey, sortValue }) => {
@@ -109,7 +112,7 @@ const RegistrationPools = () => {
       }
     },
     {
-      title: "Fee",
+      title: "Margin",
       key: poolType === POOL_TYPE.REGISTRATION ? "margin" : "pu.margin",
       render: (pool) => formatPercent(pool.margin),
       sort: ({ columnKey, sortValue }) => {
@@ -117,8 +120,8 @@ const RegistrationPools = () => {
       }
     },
     {
-      title: "Stake Key",
-      key: "stakeKey",
+      title: "Stake Address",
+      key: "stakeAddress",
       render: (pool) => (
         <>
           {pool.stakeKey?.slice(0, 2).map((stakeKey) => (

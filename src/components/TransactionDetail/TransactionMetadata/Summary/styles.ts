@@ -48,7 +48,7 @@ export const OptionSelect = styled(MenuItem)(({ theme }) => ({
   height: "40px",
   cursor: "pointer",
   "&:hover": {
-    background: theme.palette.green[60010]
+    background: theme.palette.green[200_10]
   }
 }));
 
@@ -61,7 +61,7 @@ export const CustomLink = styled(Link)(({ theme }) => ({
   height: "40px",
   cursor: "pointer",
   "&:hover": {
-    background: theme.palette.green[60010]
+    background: theme.palette.green[200_10]
   }
 }));
 
@@ -71,7 +71,7 @@ export const TokenLink = styled(Link)(({ theme }) => ({
   borderRadius: "2px",
   padding: "2px 10px",
   backgroundColor: alpha(theme.palette.grey[300], 0.2),
-  color: `${theme.palette.grey[400]} !important`,
+  color: `${theme.palette.grey[300]} !important`,
   fontSize: "var(--font-size-text)",
   lineHeight: "1.5rem",
   fontWeight: "bold",
@@ -107,4 +107,20 @@ export const TokenButton = styled(Box)(({ theme }) => ({
   height: 38,
   borderRadius: theme.spacing(1),
   border: `1px solid ${alpha(theme.palette.grey[300], 0.5)}`
+}));
+export const Item = styled(Box)(() => ({
+  width: "100%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexWrap: "wrap"
+}));
+
+export const TitleText = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  paddingRight: theme.spacing(1),
+  marginBottom: theme.spacing(1),
+  color: theme.palette.grey[300]
 }));
