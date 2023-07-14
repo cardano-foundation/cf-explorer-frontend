@@ -94,6 +94,7 @@ export const StyledComponent = styled(Box)(({ theme }) => ({
 }));
 
 export const StyledGroupButton = styled(Box)<{ isShowPrev: boolean }>(({ theme, isShowPrev }) => ({
+  marginBottom: "40px",
   justifyContent: `${isShowPrev ? `space-between` : `flex-end`}`,
   alignItems: "center",
   [theme.breakpoints.down("sm")]: {

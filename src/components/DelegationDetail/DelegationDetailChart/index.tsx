@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Grid, Skeleton, styled, Box, useTheme } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
 import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/helper";
+import useResizeHighChart from "src/commons/hooks/useResizeHighChart";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -29,6 +30,8 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
   const [selected, setSelected] = useState<"epochChart" | "delegatorChart">("epochChart");
   const { data, loading } = useFetch<AnalyticsDelegators>(`${API.DELEGATION.POOL_ANALYTICS}?poolView=${poolId}`);
   const theme = useTheme();
+  const wrapperChartRef = useRef<HTMLDivElement>(null);
+  useResizeHighChart(wrapperChartRef);
   const categories = data?.[selected]?.dataByDays?.map((item) => item.epochNo) || [];
   const epochs = data?.epochChart?.dataByDays?.map((item) => item.totalStake / 10 ** 6 || 0) || [];
   const delegators = data?.delegatorChart?.dataByDays?.map((item) => item.numberDelegator || 0) || [];
@@ -49,7 +52,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
               Delegator
             </Button>
           </Box>
-          <ChartContainer>
+          <ChartContainer ref={wrapperChartRef}>
             {loading ? (
               <SkeletonUI variant="rectangular" height={280} />
             ) : (
