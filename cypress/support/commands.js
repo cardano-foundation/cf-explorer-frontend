@@ -41,7 +41,8 @@ Cypress.Commands.add("clickElement", (selector, ...value) => {
     cy.get(selector).click();
   }
 });
-Cypress.Commands.add("clickElementRandomly", (selector) => {
+Cypress.Commands.add("clickElementRandomly", (selector, ...value) => {
+  selector = format(selector, value);
   if (selector.startsWith("/") || selector.startsWith("(")) {
     cy.xpath(selector).then($elements => {
       const elements = $elements.toArray();
@@ -58,7 +59,8 @@ Cypress.Commands.add("clickElementRandomly", (selector) => {
     });
   }
 });
-Cypress.Commands.add("hoverToElementRandomly", (selector) => {
+Cypress.Commands.add("hoverToElementRandomly", (selector, ...value) => {
+  selector = format(selector, value);
   if (selector.startsWith("/") || selector.startsWith("(")) {
     cy.xpath(selector).then($elements => {
       const elements = $elements.toArray();
@@ -95,7 +97,7 @@ Cypress.Commands.add("getAllTextContent", { prevSubject: false }, (ele, callback
 });
 Cypress.Commands.add("verifyDateTimeIsSorted", (locator, sortOrder = "asc", ...value) => {
   let ele = format(locator, value);
-  
+
   const datetimeList = [];
 
   cy.xpath(ele).each(locator => {
@@ -117,13 +119,44 @@ Cypress.Commands.add("verifyDateTimeIsSorted", (locator, sortOrder = "asc", ...v
     expect(isSorted).to.be.true
   });
 });
+Cypress.Commands.add("verifyFieldSorted", (locator, sortOrder = "asc", ...value) => {
+  let ele = format(locator, value);
+
+  const numberList = [];
+
+  cy.xpath(ele).each(locator => {
+    const promise = cy.wrap(locator).invoke("text").then(text => {
+      numberList.push(text);
+    });
+  }).then(() => {
+    let sortedList;
+    if (sortOrder === "asc") {
+      sortedList = [...numberList].sort((a, b) => a - b);
+    } else if (sortOrder === "desc") {
+      sortedList = [...numberList].sort((a, b) => b - a);
+    } else {
+      cy.log("Invalid sorting order specified");
+      return;
+    }
+    const isSorted = numberList.every((value, index) => value === sortedList[index]);
+    expect(isSorted).to.be.true
+  });
+});
 
 Cypress.Commands.add("verifyElementDisplay", (locator, ...values) => {
   let ele = format(locator, values);
   if (ele.startsWith("/") || ele.startsWith("(")) {
-    cy.xpath(ele).should("be.visible");
+    cy.xpath(ele, { timeout: 10000 }).should("be.visible");
   } else {
-    cy.get(ele).should("be.visible");
+    cy.get(ele, { timeout: 10000 }).should("be.visible");
+  }
+});
+Cypress.Commands.add("verifyElementInvisible", (locator, ...values) => {
+  let ele = format(locator, values);
+  if (ele.startsWith("/") || ele.startsWith("(")) {
+    cy.xpath(ele, { timeout: 10000 }).should('not.exist');
+  } else {
+    cy.get(ele, { timeout: 10000 }).should('not.exist');
   }
 });
 Cypress.Commands.add("verifyAllElementDisplay", (locator, ...values) => {
