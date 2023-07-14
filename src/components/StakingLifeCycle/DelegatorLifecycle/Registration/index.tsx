@@ -64,7 +64,7 @@ export const RegistrationCertificateModal = ({
         {!loading && (
           <Box>
             <Box fontWeight={"bold"} mb={1} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
-              Stake Key
+              Stake Address
             </Box>
             {data && (
               <Box>

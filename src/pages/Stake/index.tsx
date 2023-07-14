@@ -78,7 +78,7 @@ const Stake = () => {
       )
     },
     {
-      title: "Time",
+      title: "Created At",
       key: "time",
       render: (r) => formatDateTimeLocal(r.txTime || "")
     },
@@ -95,8 +95,8 @@ const Stake = () => {
       )
     },
     {
-      title: "Stake Key",
-      key: "stakeKey",
+      title: "Stake Address",
+      key: "stakeAddress",
       render: (r, idx) => (
         <>
           <CustomTooltip title={r.stakeKey}>

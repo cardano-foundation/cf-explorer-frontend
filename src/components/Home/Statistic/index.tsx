@@ -170,7 +170,7 @@ const HomeStatistic = () => {
                   <b data-testid="curent-epoch-account">{numberWithCommas(currentEpoch?.account)}</b>
                 </XValue>
                 <br />
-                <XSmall>End time: </XSmall>
+                <XSmall>End timestamp: </XSmall>
                 {isMobile ? <br /> : null}
                 <XValue>
                   <b

@@ -94,7 +94,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
 
   const getHashLabel = () => {
     if (type === "BLOCK") return "Block Id";
-    if (type === "STAKE_KEY") return "Stake key";
+    if (type === "STAKE_KEY") return "Stake address";
     if (type === "POOL") return "Pool Id";
     if (type === "TOKEN") return "Token ID";
   };
