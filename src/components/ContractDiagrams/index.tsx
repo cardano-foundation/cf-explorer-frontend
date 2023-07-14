@@ -86,19 +86,27 @@ export const ContractRedeemer = ({ item }: IContractDiagramProps) => {
       <TabElement>
         <TabItem>
           <TitleText>Tag</TitleText>
-          <Typography component={"span"}>{item.purpose}</Typography>
+          <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
+            {item.purpose}
+          </Typography>
         </TabItem>
         <TabItem>
           <TitleText>Data</TitleText>
-          <Typography component={"span"}>{item.redeemerBytes}</Typography>
+          <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
+            {item.redeemerBytes}
+          </Typography>
         </TabItem>
         <TabItem>
           <TitleText>Mem</TitleText>
-          <Typography component={"span"}>{item.redeemerMem}</Typography>
+          <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
+            {item.redeemerMem}
+          </Typography>
         </TabItem>
         <TabItem>
           <TitleText>Steps</TitleText>
-          <Typography component={"span"}>{item.redeemerSteps}</Typography>
+          <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
+            {item.redeemerSteps}
+          </Typography>
         </TabItem>
       </TabElement>
     </CardDiagram>
@@ -116,7 +124,9 @@ export const ContractDatumn = ({ item, type }: IContractDiagramProps) => {
         }}
       >
         <DatumnText>Datum Hash</DatumnText>
-        <Typography component={"span"}>{isTypeIn ? item.datumHashIn : item.datumHashOut}</Typography>
+        <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
+          {isTypeIn ? item.datumHashIn : item.datumHashOut}
+        </Typography>
       </DatumnItem>
       <DatumnItem
         sx={{
@@ -124,7 +134,9 @@ export const ContractDatumn = ({ item, type }: IContractDiagramProps) => {
         }}
       >
         <DatumnText>Datum</DatumnText>
-        <Typography component={"span"}>{isTypeIn ? item.datumBytesIn : item.datumBytesOut}</Typography>
+        <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
+          {isTypeIn ? item.datumBytesIn : item.datumBytesOut}
+        </Typography>
       </DatumnItem>
     </DatumnElement>
   );

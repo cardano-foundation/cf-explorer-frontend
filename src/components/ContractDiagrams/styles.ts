@@ -34,7 +34,7 @@ export const TabLabel = styled(Typography)`
   color: ${(props) => props.theme.palette.common.white};
   padding: 7px 11px;
   border-radius: 5px;
-  background: ${(props) => props.theme.palette.common.black};
+  background: ${(props) => props.theme.palette.grey[400]};
   position: absolute;
   left: 20px;
   top: -25px;
@@ -52,8 +52,8 @@ export const TabElement = styled(Box)`
   word-break: break-word;
   padding: 18px 20px;
   border-radius: 5px;
-  background: ${(props) => props.theme.palette.grey[80]};
-  color: ${(props) => props.theme.palette.common.black};
+  background: ${(props) => props.theme.palette.common.white};
+  color: ${(props) => props.theme.palette.grey[400]};
 `;
 
 export const TabItem = styled(Box)`
@@ -69,7 +69,7 @@ export const TitleText = styled(Typography)`
 `;
 
 export const DatumnElement = styled(Box)`
-  background: ${(props) => props.theme.palette.grey[80]};
+  background: ${(props) => props.theme.palette.common.white};
   color: ${(props) => props.theme.palette.common.black};
   word-break: break-word;
   text-align: left;
