@@ -20,7 +20,8 @@ import {
   ResourceHref,
   Time,
   TimeIcon,
-  Title
+  Title,
+  WrapHeader
 } from "./style";
 
 const LatestStories = () => {
@@ -53,8 +54,10 @@ const LatestStories = () => {
                 <Item>
                   <Image src={main_image} alt={main_image_alt} />
                   <Detail>
-                    <Author>{entity}</Author>
-                    <ResourceHref>{getHostname(resource_href)}</ResourceHref>
+                    <WrapHeader>
+                      <Author>{entity}</Author>
+                      <ResourceHref>{getHostname(resource_href)}</ResourceHref>
+                    </WrapHeader>
                     <ItemTitle>{title} </ItemTitle>
                     <Description>{blurb}</Description>
                     <FooterCard>
