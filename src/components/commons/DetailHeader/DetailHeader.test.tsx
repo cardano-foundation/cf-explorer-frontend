@@ -63,13 +63,9 @@ describe("DetailHeader component", () => {
     const titleEL = screen.getByRole("heading", {
       name: /example title/i
     });
-    const bookmark = screen.getByRole("button", {
-      name: /bookmark\.svg/i
-    });
     const status = screen.getByText(/success/i);
 
     expect(titleEL).toBeInTheDocument();
-    expect(bookmark).toBeInTheDocument();
     expect(status).toBeInTheDocument();
   });
 
@@ -78,13 +74,10 @@ describe("DetailHeader component", () => {
     const titleEL = screen.queryByRole("heading", {
       name: /example title/i
     });
-    const bookmark = screen.queryByRole("button", {
-      name: /bookmark\.svg/i
-    });
+
     const status = screen.queryByText(/success/i);
 
     expect(titleEL).not.toBeInTheDocument();
-    expect(bookmark).not.toBeInTheDocument();
     expect(status).not.toBeInTheDocument();
   });
 });

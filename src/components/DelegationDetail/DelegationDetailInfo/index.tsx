@@ -44,7 +44,7 @@ import {
   StyledTitle
 } from "./styles";
 
-interface IDelegationDetailInfo {
+export interface IDelegationDetailInfo {
   data: DelegationOverview | null;
   loading: boolean;
   poolId: string;
