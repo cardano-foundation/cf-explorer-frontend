@@ -22,11 +22,12 @@ declare namespace Cypress {
     verifyText(locator: string, expectedText:string): Chainable<JQuery<HTMLElement>>;
     verifyValueNotNull(locator: string, args?: any): Chainable<JQuery<HTMLElement>>;
     getTextContent(): Chainable<string>;
-    getAllTextContent(locator: any, txt:any, value:any);
+    getAllTextContent(locator: any, txt:any, ...value: any);
     checkDateTimeFormat(dateTime:any,format:any, value:any): Chainable<JQuery<HTMLElement>>;
     getAttributeValue(attName:string): Chainable<string>;
     setAttributeValue(attName:string,attValue:string): Chainable<JQuery<HTMLElement>>;
     verifyElementEnabled(): Chainable<JQuery<HTMLElement>>;
+    verifyElementUnabled(): Chainable<JQuery<HTMLElement>>;
     setInputValue(inputValue: string, args?: any): Chainable<JQuery<HTMLElement>>;
     compareArrayText(selector: string, expectedText:string[]): Chainable<JQuery<HTMLElement>>;
     compareArrayAttribute(selector: string,attName:string, expectedText:string[]): Chainable<JQuery<HTMLElement>>;
