@@ -53,19 +53,19 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
           <ContractAddress>{txHash || item.address || item.scriptHash}</ContractAddress>
         </Link>
       </ContractHeader>
-      <ContractRedeemer item={item} />
+      <ContractRedeemer item={item} txHash={txHash} />
       {item.datumHashIn && (
         <>
           <IconContainer>
             <RedeemerPlusIcon />
           </IconContainer>
-          <ContractDatumn key="in" item={item} type="in" />
+          <ContractDatumn txHash={txHash} key="in" item={item} type="in" />
         </>
       )}
       <IconContainer>
         <RedeemerArrowDownIcon />
       </IconContainer>
-      <ContractBytecode item={item} />
+      <ContractBytecode item={item} txHash={txHash} />
 
       {item.datumHashOut && (
         <>
@@ -79,11 +79,11 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
   );
 };
 
-export const ContractRedeemer = ({ item }: IContractDiagramProps) => {
+export const ContractRedeemer = ({ item, txHash }: IContractDiagramProps) => {
   return (
     <CardDiagram>
       <TabLabel>Redeemer</TabLabel>
-      <TabElement>
+      <TabElement isContractPage={+!!txHash}>
         <TabItem>
           <TitleText>Tag</TitleText>
           <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
@@ -113,10 +113,10 @@ export const ContractRedeemer = ({ item }: IContractDiagramProps) => {
   );
 };
 
-export const ContractDatumn = ({ item, type }: IContractDiagramProps) => {
+export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) => {
   const isTypeIn = type === "in";
   return (
-    <DatumnElement>
+    <DatumnElement isContractPage={+!!txHash}>
       <DatumnItem
         sx={{
           borderBottom: (props) => `1px solid ${props.palette.border.line}`,
@@ -142,11 +142,11 @@ export const ContractDatumn = ({ item, type }: IContractDiagramProps) => {
   );
 };
 
-const ContractBytecode = ({ item }: IContractDiagramProps) => {
+const ContractBytecode = ({ item, txHash }: IContractDiagramProps) => {
   return (
     <CardDiagram>
       <TabLabel>Contract Bytecode</TabLabel>
-      <TabElement>{item.scriptBytes}</TabElement>
+      <TabElement isContractPage={+!!txHash}>{item.scriptBytes}</TabElement>
     </CardDiagram>
   );
 };

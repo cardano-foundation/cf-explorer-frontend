@@ -45,14 +45,14 @@ export const CardDiagram = styled(Box)`
   margin-top: 50px;
 `;
 
-export const TabElement = styled(Box)`
+export const TabElement = styled(Box)<{ isContractPage?: number }>`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   word-break: break-word;
   padding: 18px 20px;
   border-radius: 5px;
-  background: ${(props) => props.theme.palette.common.white};
+  background: ${({ isContractPage, theme }) => (isContractPage ? theme.palette.common.white : theme.palette.grey[500])};
   color: ${(props) => props.theme.palette.grey[400]};
 `;
 
@@ -68,8 +68,8 @@ export const TitleText = styled(Typography)`
   min-width: 50px;
 `;
 
-export const DatumnElement = styled(Box)`
-  background: ${(props) => props.theme.palette.common.white};
+export const DatumnElement = styled(Box)<{ isContractPage?: number }>`
+  background: ${({ isContractPage, theme }) => (isContractPage ? theme.palette.common.white : theme.palette.grey[500])};
   color: ${(props) => props.theme.palette.common.black};
   word-break: break-word;
   text-align: left;
