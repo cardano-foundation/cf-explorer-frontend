@@ -16,6 +16,7 @@ const btnSortTotalSupply = "//th[normalize-space()='Total Supply']//button[@type
 const btnSortCreated = "//th[normalize-space()='Created At']//button[@type='button']//*[name()='svg']"
 const txbPageNumber = "//input[@value='1']"
 const selectNumberItemsPage = "//span[text()= 'Per page']/preceding-sibling::div"
+const listTitleColumn = "//thead[@class='css-1dz0v3k']//tr//th[normalize-space()='{0}']";
 
 const itemListsWithTitle = "(//table//tbody//tr//td[count(//th[contains(text(),'{0}')]//preceding-sibling::th) + boolean(//th[contains(text(),'{0}')])])";
 const btnViewDetail = "//a[normalize-space()='View Details']"
@@ -39,6 +40,26 @@ export default class TokenListPage extends WebApi{
 
     clickToNativeTokensPanel() {
         this.clickToElementByXpath(nativeTokensPanel);
+        return this;
+    } 
+
+    verifyIconIsEnable(){
+        cy.xpath(listIcon, { timeout: 10000 }).each((ele)=>{
+            cy.wrap(ele).should('not.have.attr', 'disabled');
+        })
+        return this;
+    }
+
+    checkTitleColumn(){
+        cy.verifyElementDisplay(listTitleColumn, TokenConstants.COLUMN_NAME[0])
+        cy.verifyElementDisplay(listTitleColumn, TokenConstants.COLUMN_NAME[1])
+        cy.verifyElementDisplay(listTitleColumn, TokenConstants.COLUMN_NAME[2])
+        cy.verifyElementDisplay(listTitleColumn, TokenConstants.COLUMN_NAME[3])
+        cy.verifyElementDisplay(listTitleColumn, TokenConstants.COLUMN_NAME[4])
+        cy.verifyElementDisplay(listTitleColumn, TokenConstants.COLUMN_NAME[5])
+        cy.verifyElementDisplay(listTitleColumn, TokenConstants.COLUMN_NAME[6])
+        cy.verifyElementDisplay(listTitleColumn, TokenConstants.COLUMN_NAME[7])
+        cy.verifyElementDisplay(listTitleColumn, TokenConstants.COLUMN_NAME[8])
         return this;
     }
 
@@ -145,4 +166,10 @@ export default class TokenListPage extends WebApi{
         cy.clickElement(btnBack)
         return this;
     }
+    verifyTotalTransactionsIsSorted(){
+        cy.clickElement(btnSortTotalTransactions)
+        cy.verifyFieldSorted(itemListsWithTitle, TokenConstants.COLUMN_NAME[3])
+        return this;
+    }
+
 }
