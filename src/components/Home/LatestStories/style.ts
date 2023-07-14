@@ -24,7 +24,7 @@ export const Title = styled("h3")`
   text-align: left;
   margin: 0px;
   font-size: 1.25rem;
-
+  color: ${({ theme }) => theme.palette.grey[400]};
   &::after {
     position: absolute;
     top: 100%;
@@ -37,55 +37,79 @@ export const Title = styled("h3")`
 `;
 
 export const Item = styled(BoxRaised)`
-  display: flex;
-  gap: 15px;
+  position: relative;
+  height: 340px;
+  width: 218px;
   text-align: left;
   cursor: pointer;
   overflow: hidden;
   &:hover {
     box-shadow: ${(props) => props.theme.shadow.card};
   }
-  ${({ theme }) => theme.breakpoints.down("sm")} {
+
+  display: flex;
+  flex-direction: column;
+  padding: 20px 15px;
+
+  ${({ theme }) => theme.breakpoints.between("lg", "laptop")} {
+    width: 180px;
+  }
+
+  ${({ theme }) => theme.breakpoints.down("lg")} {
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
+    height: 90px;
     padding: 15px;
   }
 `;
 
 export const Image = styled("img")`
   aspect-ratio: 80/80;
-  width: 80px;
-  height: 80px;
+  width: 100%;
+  height: 132px;
   min-width: 80px;
   border-radius: 5px;
-  object-fit: cover;
+  object-fit: contain;
   background-color: ${(props) => props.theme.palette.background.default};
+  ${({ theme }) => theme.breakpoints.down("lg")} {
+    height: 90px;
+    width: 90px;
+  }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    height: 80px;
+    width: 80px;
+  }
 `;
+
 export const Detail = styled(Box)`
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  ${({ theme }) => theme.breakpoints.down("lg")} {
+    flex-grow: 1;
+    justify-content: start;
+  }
 `;
 
-export const Author = styled(Box)`
+export const Author = styled("span")`
   width: max-content;
   white-space: nowrap;
-  width: 100%;
-  line-height: 1.15;
   max-height: 1em;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   font-family: var(--font-family-text);
-  color: ${(props) => props.theme.palette.green[700]};
-  background-color: ${(props) => props.theme.palette.green[700_10]};
-  padding: 3px 4.5px;
+  color: ${(props) => props.theme.palette.green[200]};
+  background-color: ${(props) => props.theme.palette.green[200_15]};
+  padding: 6px 2px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-top: 0;
   font-size: 11px;
   font-weight: var(--font-weight-bold);
-  margin-bottom: 5px;
+  margin: 11px 5px 0 0;
 `;
 export const ItemTitle = styled("h5")`
   display: -webkit-box;
@@ -93,11 +117,16 @@ export const ItemTitle = styled("h5")`
   max-height: 3.6em;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+  color: ${(props) => props.theme.palette.grey[400]};
   overflow: hidden;
+  text-overflow: ellipsis;
   font-size: var(--font-size-text-x-small);
   line-height: 1.15;
   margin-top: 0;
   margin-bottom: 5px;
+  ${({ theme }) => theme.breakpoints.down("lg")} {
+    -webkit-line-clamp: 2;
+  }
 `;
 
 export const Time = styled("h5")`
@@ -109,10 +138,55 @@ export const Time = styled("h5")`
   gap: 6px;
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-normal);
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   margin: 0;
 `;
 export const TimeIcon = styled("img")`
   width: 12px;
   height: 12px;
+`;
+
+export const ResourceHref = styled("span")`
+  margin: 5px 0px;
+  width: max-content;
+  background-color: ${(props) => props.theme.palette.blue[100_15]};
+  color: ${(props) => props.theme.palette.blue[100]};
+  font-weight: 700;
+  font-size: 10px;
+  cursor: pointer;
+  padding: 6px 2px;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    display: none;
+  }
+`;
+
+export const Description = styled(Box)`
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  font-weight: 400;
+  color: ${(props) => props.theme.palette.grey[300]};
+
+  ${({ theme }) => theme.breakpoints.down("lg")} {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    display: none;
+  }
+`;
+
+export const FooterCard = styled(Box)`
+  position: absolute;
+  bottom: 20px;
+  ${({ theme }) => theme.breakpoints.down("lg")} {
+    bottom: 15px;
+  }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    bottom: 25px;
+  }
 `;

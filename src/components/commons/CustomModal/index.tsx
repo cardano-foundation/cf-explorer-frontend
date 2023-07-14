@@ -12,14 +12,25 @@ interface Props extends Omit<BoxProps, "title"> {
   closeButton?: React.ReactNode;
   title?: React.ReactNode;
   titleProps?: BoxProps;
+  modalContainerProps?: BoxProps;
 }
 
 export const CustomModal: React.FC<Props> = forwardRef((props, ref) => {
-  const { open, onClose, closeButton, closeButtonProps, title, titleProps, modalProps, children, ...contentProps } =
-    props;
+  const {
+    open,
+    onClose,
+    closeButton,
+    closeButtonProps,
+    title,
+    titleProps,
+    modalProps,
+    children,
+    modalContainerProps,
+    ...contentProps
+  } = props;
   return (
     <Modal open={open} onClose={onClose} {...modalProps}>
-      <ModalContainer>
+      <ModalContainer {...modalContainerProps}>
         {closeButton || (
           <CloseButton {...closeButtonProps} onClick={onClose} data-testid="close-modal-button">
             <IoMdClose />

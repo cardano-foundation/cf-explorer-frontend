@@ -131,7 +131,7 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
   ];
 
   return (
-    <StyledModal {...props} title="Pool registration certificate">
+    <StyledModal {...props} title="Pool registration certificate" sx={{ maxHeight: "min(70vh, 800px)" }}>
       <ViewMoreAddressModal
         showFullHash={true}
         maxWidth={680}

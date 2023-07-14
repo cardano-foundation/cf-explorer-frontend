@@ -31,7 +31,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.red[600]}`,
+  border: `2px solid ${theme.palette.red[100]}`,
   borderRadius: "10px",
   marginRight: theme.spacing(2.5),
   marginLeft: theme.spacing(2.5),
@@ -51,7 +51,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
     position: "absolute",
     top: "-50%",
     left: theme.spacing(2),
-    background: theme.palette.red[600],
+    background: theme.palette.red[100],
     transform: " translate(0, 60%)"
   }
 }));
@@ -124,7 +124,7 @@ export const InfoText = styled(Box)(({ theme }) => ({
 }));
 export const StakeLink = styled(Link)`
   font-size: 0.875rem;
-  color: ${({ theme }) => theme.palette.blue[800]} !important;
+  color: ${({ theme }) => theme.palette.blue[100]} !important;
   margin-right: 6px;
   ${({ theme }) => theme.breakpoints.down(theme.breakpoints.values.sm)} {
     overflow-wrap: break-word;

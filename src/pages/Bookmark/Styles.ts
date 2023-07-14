@@ -39,7 +39,7 @@ export const StyledTable = styled(Table)(({ theme }) => ({
 
 export const CancelButton = styled(Button)(({ theme }) => ({
   textTransform: "capitalize",
-  color: theme.palette.grey[500],
+  color: theme.palette.grey[300],
   fontWeight: "bold",
   marginRight: theme.spacing(2),
   padding: "6px 35px",
@@ -50,13 +50,13 @@ export const CancelButton = styled(Button)(({ theme }) => ({
 }));
 
 export const DeleteButton = styled(LoadingButton)(({ theme }) => ({
-  background: theme.palette.grey[700],
+  background: theme.palette.grey[400],
   textTransform: "capitalize",
   fontWeight: "bold",
   padding: "8px 35px",
   color: theme.palette.common.white,
   ":hover": {
-    background: theme.palette.grey[700]
+    background: theme.palette.grey[400]
   }
 }));
 
