@@ -34,7 +34,7 @@ type DetailViewEpochProps = {
 };
 
 const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handleClose, address }) => {
-  const { data, loading } = useFetch<IContractItemTx[]>(
+  const { data, loading, initialized } = useFetch<IContractItemTx[]>(
     API.TRANSACTION.HASH_CONTRACT(txHash, address),
     undefined,
     false
@@ -48,7 +48,7 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
     };
   }, []);
 
-  if (loading) {
+  if (loading || !initialized) {
     return (
       <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent" data-testid="view-detail-drawer-loading">
         <ViewDetailHeader>
