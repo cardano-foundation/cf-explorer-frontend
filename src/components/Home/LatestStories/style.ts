@@ -64,6 +64,12 @@ export const Item = styled(BoxRaised)`
   }
 `;
 
+export const WrapHeader = styled(Box)`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+`;
+
 export const Image = styled("img")`
   aspect-ratio: 80/80;
   width: 100%;
@@ -110,6 +116,9 @@ export const Author = styled("span")`
   font-size: 11px;
   font-weight: var(--font-weight-bold);
   margin: 11px 5px 0 0;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    margin: 0 0 10px 0;
+  }
 `;
 export const ItemTitle = styled("h5")`
   display: -webkit-box;
