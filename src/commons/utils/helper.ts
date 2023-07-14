@@ -185,3 +185,9 @@ export const tokenRegistry = (policy: string | undefined, name: string | undefin
   const tokenRegitryLink = `https://raw.githubusercontent.com/cardano-foundation/cardano-token-registry/master/mappings/${policy}${name}.json`;
   return tokenRegitryLink;
 };
+
+export const cleanObject = (obj: { [key: string]: string | number | Date | string[] | undefined }) => {
+  const cleaned: Partial<typeof obj> = {};
+  Object.keys(obj).forEach((key) => obj[key] !== undefined && (cleaned[key] = obj[key]));
+  return cleaned;
+};
