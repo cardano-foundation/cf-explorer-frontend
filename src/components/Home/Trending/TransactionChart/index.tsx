@@ -37,7 +37,7 @@ const TransactionChart: React.FC = () => {
   const optionsTime: Record<Time, { label: string; displayName: string }> = {
     ONE_DAY: {
       label: "1d",
-      displayName: "today"
+      displayName: "in the last day"
     },
     ONE_WEEK: {
       label: "1w",
