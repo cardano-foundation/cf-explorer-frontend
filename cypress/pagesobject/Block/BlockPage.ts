@@ -86,7 +86,7 @@ export default class LoginPage extends WebApi {
     return this;
   }
   clickToTransactionBtn() {
-    cy.clickElementRandomly(transactionBtn);
+    cy.clickElement(transactionBtn);
     return this;
   }
   clickToQuickView() {

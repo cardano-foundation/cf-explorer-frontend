@@ -65,7 +65,7 @@ describe("block list", () => {
     .clickToBackFisrtPageBtn()
     .verifyFirstPageBtnIsDisable();
   });
-  it.only("Check input [Page] textbox success", () => {
+  it("Check input [Page] textbox success", () => {
 
     blockPage
     .goToBlockPage()
