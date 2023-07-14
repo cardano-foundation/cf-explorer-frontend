@@ -103,12 +103,12 @@ export enum RECEIVED_REWARDS {
   ALL = ""
 }
 
+export const AUTH_API_URL = process.env.REACT_APP_AUTH_API_URL || get(window, "env.REACT_APP_AUTH_API_URL");
+export const API_URL = process.env.REACT_APP_API_URL || get(window, "env.REACT_APP_API_URL");
 export const APP_VERSION = process.env.REACT_APP_VERSION || get(window, "env.REACT_APP_VERSION") || "1.0.0";
 export const EXT_ADA_PRICE_URL =
   process.env.REACT_APP_EXT_ADA_PRICE_URL || get(window, "env.REACT_APP_EXT_ADA_PRICE_URL");
-export const AUTH_API_URL = process.env.REACT_APP_AUTH_API_URL || get(window, "env.REACT_APP_AUTH_API_URL");
-export const API_URL = process.env.REACT_APP_API_URL || get(window, "env.REACT_APP_API_URL");
-export const CARDANO_NEWS_URL = process.env.REACT_APP_CARDANO_NEWS_URL || get(window, "env.REACT_APP_CARDANO_NEWS_URL");
+  export const CARDANO_NEWS_URL = process.env.REACT_APP_CARDANO_NEWS_URL || get(window, "env.REACT_APP_CARDANO_NEWS_URL");
 
 export enum ACCOUNT_ERROR {
   UNKNOWN_ERROR = "CC_1",
