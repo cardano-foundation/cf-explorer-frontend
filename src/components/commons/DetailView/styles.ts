@@ -356,7 +356,7 @@ export const DetailLinkRight = styled("span")`
   color: ${(props) => props.theme.palette.grey[400]};
 `;
 
-export const TxStatus = styled("small")<{ status?: keyof typeof TransactionStatus }>`
+export const TxStatus = styled("small")<{ status?: TransactionStatus }>`
   color: ${({ status, theme }) => {
     switch (status) {
       case TRANSACTION_STATUS.FAIL:

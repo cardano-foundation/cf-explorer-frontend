@@ -152,7 +152,7 @@ export const BlankImage = styled("img")`
   vertical-align: baseline;
 `;
 
-export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionStatus | IDataEpoch["status"] }>`
+export const HeaderStatus = styled("small")<{ status?: TransactionStatus | IDataEpoch["status"] }>`
   color: ${({ status, theme }) => {
     switch (status) {
       case TRANSACTION_STATUS.FAIL:
