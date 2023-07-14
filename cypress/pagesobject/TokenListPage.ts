@@ -17,11 +17,10 @@ const btnSortCreated = "//th[normalize-space()='Created At']//button[@type='butt
 const txbPageNumber = "//input[@value='1']"
 const selectNumberItemsPage = "//span[text()= 'Per page']/preceding-sibling::div"
 
-const txtColumnName = "//th[contains(text(),'%s')]";
-const itemListsWithTitle = "//table//tbody//tr//td[count(//th[contains(text(),'{0}')]//preceding-sibling::th) + boolean(//th[contains(text(),'{0}')])]";
-const listTotalTransactions = "//table//tbody//tr//td[count(//th[contains(text(),'Total Transactions')]//preceding-sibling::th) + boolean(//th[contains(text(),'Total Transactions')])]";
-const ListCreatedAt = "//table//tbody//tr//td[count(//th[contains(text(),'Created At')]//preceding-sibling::th) + boolean(//th[contains(text(),'Created At')])]";
-
+const itemListsWithTitle = "(//table//tbody//tr//td[count(//th[contains(text(),'{0}')]//preceding-sibling::th) + boolean(//th[contains(text(),'{0}')])])";
+const btnViewDetail = "//a[normalize-space()='View Details']"
+const labelTokenId = "//small[contains(text(), 'Token ID')]"
+const btnBack = "//small[contains(text(), 'Back')]"
 
 export default class TokenListPage extends WebApi{
     constructor(){
@@ -137,6 +136,13 @@ export default class TokenListPage extends WebApi{
     }
     verifyDataColumnTotalTransaction(){
         cy.verifyAllElementDisplay(itemListsWithTitle, TokenConstants.COLUMN_NAME[3])
+        return this;
+    }
+
+    checkActionClickOnAssetName(){
+        cy.clickElement(itemListsWithTitle + "[1]/a", TokenConstants.COLUMN_NAME[1])
+        cy.verifyElementDisplay(labelTokenId)
+        cy.clickElement(btnBack)
         return this;
     }
 }

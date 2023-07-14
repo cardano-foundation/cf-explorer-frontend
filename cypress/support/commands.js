@@ -33,6 +33,14 @@ Cypress.Commands.add("clickElement", (selector) => {
     cy.get(selector).click();
   }
 });
+Cypress.Commands.add("clickElement", (selector, ...value) => {
+  selector = format(selector, value);
+  if (selector.startsWith("/") || selector.startsWith("(")) {
+    cy.xpath(selector).click();
+  } else {
+    cy.get(selector).click();
+  }
+});
 Cypress.Commands.add("clickElementRandomly", (selector) => {
   if (selector.startsWith("/") || selector.startsWith("(")) {
     cy.xpath(selector).then($elements => {
