@@ -1,15 +1,17 @@
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
-import sendImg from "../../../../commons/resources/images/sendImg.svg";
-import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
-import { formatADAFull, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
-import { details } from "../../../../commons/routers";
-import CopyButton from "../../../commons/CopyButton";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import { Header, Img, Item, ItemBox, ItemContent, TokenLink, WrapToken, Wrapper } from "./style";
-import ADAicon from "../../../commons/ADAIcon";
-import { useScreen } from "../../../../commons/hooks/useScreen";
+import { useScreen } from "src/commons/hooks/useScreen";
+import receiveImg from "src/commons/resources/images/receiveImg.svg";
+import sendImg from "src/commons/resources/images/sendImg.svg";
+import { details } from "src/commons/routers";
+import { formatADAFull, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import ADAicon from "src/components/commons/ADAIcon";
+import CopyButton from "src/components/commons/CopyButton";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import DropdownTokens from "src/components/commons/DropdownTokens";
+
+import { Header, Img, Item, ItemBox, ItemContent, Wrapper } from "./style";
 
 interface CollateralProps {
   data: Transaction["collaterals"] | null;
@@ -48,7 +50,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
             <Box width={"100%"}>
               <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
                 {!isTablet ? (
-                  <Box display={"flex"} alignItems="center" justifyContent={"flex-start"} pr={1}>
+                  <Box display={"flex"} alignItems="center" justifyContent={"flex-start"} pr={1} mr={1}>
                     {type === "input" ? "From" : "To"}:
                   </Box>
                 ) : null}
@@ -66,6 +68,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                           color={(theme) => theme.palette.blue[800]}
                           fontWeight="bold"
                           fontFamily={"var(--font-family-text)"}
+                          mr={1}
                         >
                           {getShortWallet(item.address)}
                         </Box>
@@ -114,17 +117,16 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                     </Box>
                   )}
                 </Box>
-                <Box display={"flex"} alignItems="center" justifyContent={"space-between"}>
-                  <Box overflow={"hidden"} display="flex" justifyContent={"flex-end"} flexWrap={"wrap"} gap={1}>
-                    {(item?.tokens || []).map((token, idx) => (
-                      <WrapToken key={idx}>
-                        <TokenLink to={details.token(token.assetId)}>
-                          {token.assetName || getShortWallet(token.assetId)}
-                        </TokenLink>
-                      </WrapToken>
-                    ))}
+                {item.tokens && item.tokens.length > 1 && (
+                  <Box display={"flex"} alignItems={"center"}>
+                    <DropdownTokens
+                      tokens={item.tokens}
+                      type={type === "input" ? "up" : "down"}
+                      hideInputLabel
+                      hideMathChar
+                    />
                   </Box>
-                </Box>
+                )}
               </Box>
             </Box>
           </ItemContent>
