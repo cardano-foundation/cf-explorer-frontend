@@ -7,7 +7,7 @@ export const OutlineButton = styled(Button)`
   border: none;
   box-shadow: none;
   border-radius: 8px;
-  background: ${(props) => props.theme.palette.green[600_10]};
+  background: ${(props) => props.theme.palette.green[200_10]};
   color: ${(props) => props.theme.palette.primary.dark};
   font-weight: 700;
   font-size: 14px;
@@ -21,6 +21,6 @@ export const WrapPopoverContent = styled("div")`
   padding: 10px 20px;
   cursor: pointer;
   &:hover {
-    background: ${(props) => props.theme.palette.green[600_10]};
+    background: ${(props) => props.theme.palette.green[200_10]};
   }
 `;

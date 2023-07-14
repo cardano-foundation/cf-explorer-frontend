@@ -27,7 +27,7 @@ export const HeaderContainer = styled(Box)`
 `;
 
 export const HeaderTitle = styled("h2")`
-  color: ${(props) => props.theme.palette.common.black};
+  color: ${(props) => props.theme.palette.grey[400]};
   font-size: 2.25rem;
   margin: 0.5rem 0;
   max-width: 75%;
@@ -138,7 +138,7 @@ export const StyledTitle = styled("span")`
   display: flex;
   align-items: center;
   gap: 7px;
-  opacity: 0.5;
+  color: ${(props) => props.theme.palette.grey[300]};
 `;
 
 export const InfoValue = styled(Box)(({ theme }) => ({
@@ -146,19 +146,20 @@ export const InfoValue = styled(Box)(({ theme }) => ({
   fontSize: 18,
   [theme.breakpoints.down("sm")]: {
     fontSize: 16
-  }
+  },
+  color: theme.palette.grey[400]
 }));
 
-export const StyledLinearProgress = styled(LinearProgress)`
+export const StyledLinearProgress = styled(LinearProgress)<{ saturation: number }>`
   margin-top: 10px;
   width: 100%;
   height: 10px;
   border-radius: 34px;
-  background: ${(props) => alpha(props.theme.palette.common.black, 0.1)};
+  background: ${(props) => alpha(props.theme.palette.grey[400], 0.1)};
 
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
-    background: ${(props) => props.theme.palette.gradient[0]};
+    background: ${({ theme, saturation }) => (saturation > 100 ? theme.palette.red[100] : theme.palette.green[200])};
   }
 `;
 
@@ -181,12 +182,12 @@ export const SavingImg = styled("img")`
 `;
 
 export const ButtonViewAll = styled(Button)(({ theme }) => ({
-  backgroundColor: "#d9e9e1",
-  border: "1px solid #000",
+  backgroundColor: theme.palette.border.primary,
+  border: `1px solid ${theme.palette.common.black}`,
   padding: `0 ${theme.spacing(1)}`,
   textTransform: "capitalize",
+  color: theme.palette.grey[400],
   fontWeight: "bold",
-  opacity: 0.5,
   [theme.breakpoints.down("sm")]: {
     position: "absolute",
     top: 15,
