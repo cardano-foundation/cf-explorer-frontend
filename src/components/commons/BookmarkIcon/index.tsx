@@ -29,7 +29,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
       (JSON.parse(localStorage.getItem("bookmark") || "[]") || []).find((r: Bookmark) => r.keyword === `${keyword}`)
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [openSyncBookmarkModal, JSON.stringify(bookmarks)]);
+  }, [openSyncBookmarkModal, bookmarks, keyword]);
 
   const updateBookmark = async () => {
     if (!isLoggedIn) return;
@@ -43,7 +43,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
             network: NETWORK_TYPES[NETWORK]
           });
           setBookmarks([...(bookmarks || []), data]);
-          toast.success("Add bookmark successfully!");
+          toast.success("Bookmark has been added.");
         } else {
           toast.error("Maximum bookmarks is 2000!");
         }
@@ -51,13 +51,13 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
         try {
           deleteBookmark(bookmark?.id || 0);
           setBookmarks((bookmarks || []).filter((b) => b.keyword !== `${keyword}`));
-          toast.success("Delete bookmark successfully!");
+          toast.success("Bookmark has been removed.");
         } catch (error) {
-          toast.error("Something went wrong!");
+          toast.error("Something went wrong! Please try again!");
         }
       }
     } catch (error) {
-      toast.error("Something went wrong!");
+      toast.error("Something went wrong! Please try again!");
     } finally {
       setLoading(false);
     }

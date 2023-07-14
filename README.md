@@ -52,6 +52,9 @@ In the terminal run command: `cp .env.example .env`
 - Update link to the cardano price
     >Example: `REACT_APP_EXT_ADA_PRICE_URL=https://www.coingecko.com/en/coins/cardano`
 
+- Update link to the cardano news
+    >Example: `REACT_APP_CARDANO_NEWS_URL=https://cardanofoundation.org/en/news`
+
 - Update application network (`mainnet`, `testnet`, `preprod` or `preview`)
     >Example: `REACT_APP_NETWORK=mainnet`
 

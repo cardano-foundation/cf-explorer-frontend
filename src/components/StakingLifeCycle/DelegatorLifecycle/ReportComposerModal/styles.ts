@@ -22,11 +22,11 @@ export const StyledLabel = styled("div")`
   margin: 6px 0px;
 `;
 
-export const StyledSelect = styled(CustomSelect)(() => ({
+export const StyledSelect = styled(CustomSelect)(({ theme }) => ({
   borderRadius: "4px",
   fontSize: 14,
   minWidth: 50,
-  border: "1px solid #E3E5E9",
+  border: `1px solid ${theme.palette.border.primary}`,
   width: 200,
   textAlign: "left",
   paddingLeft: 14,
@@ -43,7 +43,7 @@ export const StyledSelect = styled(CustomSelect)(() => ({
   ".MuiOutlinedInput-notchedOutline": {
     border: 0,
     borderRadius: 0,
-    borderRight: "1px solid #E3E5E9"
+    borderRight: `1px solid ${theme.palette.border.primary}`
   }
 }));
 
@@ -65,7 +65,7 @@ export const TextError = styled(TextWarning)`
 `;
 
 export const StyledAddressSelect = styled(Box)`
-  border: 1.5px solid #e3e5e9;
+  border: 1.5px solid ${({ theme }) => theme.palette.border.primary};
   border-radius: 8px;
   padding: 4px 0px;
   .MuiInputBase-root {
@@ -81,7 +81,7 @@ export const StyledButton = styled(Button)`
   height: 44px;
   padding: 10px 20px;
   text-align: center;
-  color: #fff;
+  color: ${(props) => props.theme.palette.common.white};
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
@@ -93,7 +93,7 @@ export const StyledButton = styled(Button)`
   &:disabled {
     background: ${(props) => props.theme.palette.grey[400]};
     opacity: 0.3;
-    color: #fff;
+    color: ${(props) => props.theme.palette.common.white};
   }
   &:hover {
     background: ${(props) => props.theme.palette.grey[400]};
@@ -113,7 +113,7 @@ export const StyledBackButton = styled(Button)<{ width?: number | string }>(({ w
   fontSize: 16,
   lineHeight: "19px",
   fontWeight: 700,
-  border: "2px solid #c8cdd8",
+  border: `2px solid ${theme.palette.border.hint}`,
   textTransform: "none",
   ":hover": {
     opacity: 0.8
@@ -154,7 +154,7 @@ export const ButtonEvent = styled(Button)<{ active: number }>(({ theme, active }
   fontWeight: 400,
   "&:hover": {
     background: active ? theme.palette.grey[300] : alpha(theme.palette.grey[400], 0.05),
-    color: active ? "#fff" : theme.palette.grey[300]
+    color: active ? theme.palette.common.white : theme.palette.grey[300]
   },
   [theme.breakpoints.down("sm")]: {
     fontSize: 14,
@@ -162,13 +162,13 @@ export const ButtonEvent = styled(Button)<{ active: number }>(({ theme, active }
   }
 }));
 
-export const OverViewItem = styled(Box)(() => ({
+export const OverViewItem = styled(Box)(({ theme }) => ({
   display: "flex",
   padding: "10px 0px",
   justifyContent: "space-between",
   alignItems: "center",
   width: "100%",
-  borderBottom: "1px solid #000000",
+  borderBottom: `1px solid ${theme.palette.common.black}`,
   "&:last-of-type": {
     borderBottom: "none"
   }
@@ -205,23 +205,27 @@ export const TextValueReview = styled("div")`
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
-  max-width: 100%;
-  color: #000000;
+  max-width: 250px;
+  color: ${({ theme }) => theme.palette.common.black};
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 14px;
     line-height: 16px;
+    max-width: 100%;
   }
 `;
 
 export const TextOverFlow = styled(Box)`
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
   color: ${(props) => props.theme.palette.grey[400]};
-  width: 250px;
+  width: max-content;
   text-align: right;
+  margin-left: auto;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     text-align: left;
+    margin-left: 0;
   }
 `;
 

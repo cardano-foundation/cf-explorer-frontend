@@ -1,4 +1,4 @@
-import { Box, Skeleton, styled } from "@mui/material";
+import { Box, Skeleton, styled, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
@@ -76,6 +76,7 @@ export const DelegationTimeline = ({ selected, showBackButton = false }: Props) 
   const [openModal, setOpenModal] = useState(false);
   const history = useHistory();
   const { sidebar } = useSelector(({ user }: RootState) => user);
+  const theme = useTheme();
   const { data, loading } = useFetch<DelegationDetail>(
     (selected && selected.txHash && stakeId && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stakeId, selected.txHash)) || ""
   );
@@ -100,15 +101,15 @@ export const DelegationTimeline = ({ selected, showBackButton = false }: Props) 
 
           <InfoGroup sidebar={+sidebar}>
             <Info>
-              <AddressIcon fill="#438F68" />
+              <AddressIcon fill={theme.palette.green[200]} />
               <Box component={Skeleton} variant="rectangular" width={145} height={18} />
             </Info>
             <Info>
-              <ADAGreen />
+              <ADAGreen fill={theme.palette.green[200]} />
               <Box component={Skeleton} variant="rectangular" width={60} height={18} />
             </Info>
             <Info>
-              <TimeIcon />
+              <TimeIcon fill={theme.palette.green[200]} />
               <Box component={Skeleton} variant="rectangular" width={130} height={18} />
             </Info>
           </InfoGroup>
@@ -130,7 +131,7 @@ export const DelegationTimeline = ({ selected, showBackButton = false }: Props) 
         )}
         <InfoGroup>
           <Info>
-            <AddressIcon fill="#438F68" />
+            <AddressIcon fill={theme.palette.green[200]} />
             <CustomTooltip title={data?.txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(data?.txHash)}>{getShortHash(data?.txHash || "")}</StyledLink>
@@ -139,11 +140,11 @@ export const DelegationTimeline = ({ selected, showBackButton = false }: Props) 
             <StyledCopyButton text={data?.txHash} />
           </Info>
           <Info>
-            <ADAGreen />
+            <ADAGreen fill={theme.palette.green[200]} />
             <InfoText>{formatADAFull(data?.fee || 0)}</InfoText>
           </Info>
           <Info>
-            <TimeIcon />
+            <TimeIcon fill={theme.palette.green[200]} />
             <InfoText>{formatDateTimeLocal(data?.time || "")}</InfoText>
           </Info>
         </InfoGroup>
@@ -194,7 +195,7 @@ export const DelegationCertificateModal = ({
       )
     },
     {
-      label: "Stake Key",
+      label: "Stake Address",
       content: (
         <LineData>
           <CustomTooltip title={stake}>

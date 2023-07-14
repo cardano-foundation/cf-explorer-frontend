@@ -30,11 +30,6 @@ export const TextRightValue = styled("div")`
   color: ${(props) => props.theme.palette.grey[400]};
 `;
 
-export const TextNormal = styled(TextRightValue)`
-  font-weight: 400;
-  color: #667085;
-`;
-
 export const CardHeader = styled(Box)(({ theme }) => ({
   padding: "15px 0px",
   fontWeight: "bold",

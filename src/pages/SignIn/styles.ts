@@ -174,7 +174,6 @@ export const AlertCustom = styled(Alert)`
   border-width: 1px;
   color: ${({ theme }) => theme.palette.text.primary};
   padding: 0 16px;
-  background: "#FFF7F7";
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 12px;
   }

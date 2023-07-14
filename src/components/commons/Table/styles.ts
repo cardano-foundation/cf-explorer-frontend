@@ -43,7 +43,7 @@ export const THeader = styled("th")`
   color: ${(props) => props.theme.palette.grey[300]};
   position: sticky;
   top: 0;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.palette.common.white};
   z-index: 2;
 `;
 
@@ -201,7 +201,7 @@ export const SelectMui = styled(CustomSelect)(({ theme }) => ({
   borderRadius: "4px",
   fontSize: 14,
   minWidth: 50,
-  border: "1px solid #E3E5E9",
+  border: `1px solid ${theme.palette.grey[200]}`,
   color: theme.palette.grey[400],
   "& > div": {
     padding: "2.45px 14px"
@@ -231,7 +231,7 @@ export const TableTitle = styled(Typography)`
   font-weight: 700;
   font-size: 32px;
   line-height: 37px;
-  color: #000;
+  color: ${(props) => props.theme.palette.common.black};
   flex: 1;
   text-align: left;
   padding-top: 20px;

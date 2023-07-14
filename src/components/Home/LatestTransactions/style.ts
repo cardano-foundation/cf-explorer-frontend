@@ -115,7 +115,7 @@ export const PriveValue = styled("span")`
   font-size: var(--font-size-text-x-large);
   font-weight: var(--font-weight-bold);
   line-height: 1;
-  color: ${(props) => props.theme.palette.grey[400]};
+  text-align: end;
 `;
 
 export const ItemDetail = styled("div")`
@@ -136,7 +136,7 @@ export const BlockNo = styled("small")`
   font-style: normal;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text);
-  color: black;
+  color: ${(props) => props.theme.palette.grey[400]};
 `;
 
 export const WalletAddress = styled("small")`
@@ -177,7 +177,7 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
       case TRANSACTION_STATUS.PENDDING:
         return theme.palette.warning.light;
       case TRANSACTION_STATUS.SUCCESS:
-        return theme.palette.green[200_10];
+        return theme.palette.green[200_15];
       case "IN_PROGRESS":
         return theme.palette.warning.light;
       case "FINISHED":
@@ -202,5 +202,5 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
 export const LatestTransactionItemHeader = styled(Box)`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 `;

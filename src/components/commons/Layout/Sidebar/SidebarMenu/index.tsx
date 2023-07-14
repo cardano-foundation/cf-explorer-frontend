@@ -103,7 +103,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const isActiveMenu = (href: string): boolean => {
     if (
       href === routers.STAKING_LIFECYCLE.replace(":tab", "stake-key") &&
-      (pathname.startsWith("/delegator-lifecycle/") || pathname.startsWith("/spo-lifecycle/"))
+      (pathname.startsWith("/delegator-lifecycle/") ||
+        pathname.startsWith("/spo-lifecycle/") ||
+        pathname.startsWith("/report-generated/") ||
+        pathname === routers.STAKING_LIFECYCLE.replace(":tab", "pools"))
     )
       return true;
 

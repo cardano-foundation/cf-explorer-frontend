@@ -93,10 +93,10 @@ export const LabelSwitch = styled(Box)(({ theme }) => ({
   whiteSpace: "break-spaces"
 }));
 
-export const SwitchGroup = styled(Box)(() => ({
+export const SwitchGroup = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  background: "#E7E8EA",
+  background: alpha(theme.palette.grey[300], 0.1),
   padding: 3,
   borderRadius: 22,
   gap: 8

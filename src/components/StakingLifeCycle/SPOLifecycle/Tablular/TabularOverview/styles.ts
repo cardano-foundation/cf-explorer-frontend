@@ -78,12 +78,12 @@ export const ClickAbleLink = styled(Link)`
 
 export const ViewMoreButton = styled(IconButton)`
   padding: 14px;
-  background-color: #e3e5e9;
+  background-color: ${({ theme }) => theme.palette.border.primary};
 `;
 
 export const DotsIcon = styled(Box)`
   border-radius: 50%;
-  background-color: #667085;
+  background-color: ${({ theme }) => theme.palette.grey[300]};
   width: 3.6px;
   height: 3.6px;
   position: relative;
@@ -96,7 +96,7 @@ export const DotsIcon = styled(Box)`
     right: -7px;
     top: 0px;
     border-radius: 50%;
-    background-color: #667085;
+    background-color: ${({ theme }) => theme.palette.grey[300]};
   }
   &::after {
     content: "";
@@ -107,7 +107,7 @@ export const DotsIcon = styled(Box)`
     left: -7px;
     top: 0px;
     border-radius: 50%;
-    background-color: #667085;
+    background-color: ${({ theme }) => theme.palette.grey[300]};
   }
 `;
 

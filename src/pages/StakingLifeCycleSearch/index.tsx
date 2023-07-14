@@ -71,7 +71,7 @@ export const WrapButton = styled(Button)`
   font-size: 16px;
   line-height: 19px;
   text-align: center;
-  color: #fff;
+  color: ${({ theme }) => theme.palette.common.white};
   margin-top: 16px;
 `;
 

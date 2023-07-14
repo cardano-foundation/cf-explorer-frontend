@@ -147,6 +147,7 @@ export const StyledTransactionTypes = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "1.5rem",
   textAlign: "left",
+  color: theme.palette.grey[400],
   [theme.breakpoints.between("lg", "xl")]: {
     textWrap: "nowrap"
   }

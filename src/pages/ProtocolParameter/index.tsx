@@ -10,7 +10,7 @@ import {
   alpha,
   useTheme
 } from "@mui/material";
-import { isObject, isEmpty } from "lodash";
+import _, { isObject, isEmpty } from "lodash";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { BsFillCheckCircleFill } from "react-icons/bs";
@@ -60,33 +60,23 @@ const ProtocolParameter: React.FC = () => {
   const { data: dataFixed, loading: loadingFixed } = useFetch<any>(PROTOCOL_PARAMETER.FIXED);
   const { data: dataLastest, loading: loadingLastest } = useFetch<any>(PROTOCOL_PARAMETER.LASTEST);
 
-  const formatValueObjectRender = (valueObject: any) => {
-    if (isObject(valueObject?.value)) {
-      return JSON.stringify(valueObject?.value);
-    }
-
-    if (valueObject?.value) return valueObject?.value;
-
-    if (isObject(valueObject)) return JSON.stringify(valueObject);
-
-    return valueObject || "";
-  };
-
   const dataFixedVertical =
     isObject(dataFixed) &&
-    Object.entries(dataFixed).map(([name, valueObject]: any) => ({
+    Object.entries(dataFixed).map(([name, value]: any) => ({
       name,
-      value: formatValueObjectRender(valueObject)
+      value: isObject(value) ? JSON.stringify(value) : value
     }));
 
   const dataLatestVertical =
     isObject(dataLastest) &&
-    Object.entries(dataLastest).map(([name, valueObject]: any) => ({
-      name,
-      value: formatValueObjectRender(valueObject),
-      epochNo: valueObject?.epochNo,
-      time: valueObject?.time
-    }));
+    Object.entries(dataLastest)
+      .map(([name, valueObject]: any) => ({
+        name,
+        value: name === "costModel" ? JSON.stringify(valueObject) : valueObject?.value,
+        epochNo: valueObject?.epochNo,
+        time: valueObject?.time
+      }))
+      .filter((item) => item.name !== "timestamp");
 
   const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
 
@@ -309,7 +299,7 @@ export default ProtocolParameter;
 export const ProtocolParameterHistory = () => {
   const { PROTOCOL_PARAMETER } = API;
   const TOTAL_PARAMETER = 29;
-
+  const theme = useTheme();
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
   const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
@@ -542,7 +532,7 @@ export const ProtocolParameterHistory = () => {
                 alignItems={"center"}
                 mt={3}
                 mb={2}
-                color={"#0052CC !important"}
+                color={`${theme.palette.blue[100]} !important`}
               >
                 <Box mr={1}>Reset</Box>
                 <ResetIcon />
@@ -602,6 +592,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
 }) => {
   const [filterOption, { push: pushFilterOption, removeAt: removeAtFilterOption, clear }] =
     useList<string>(filterParams);
+  const theme = useTheme();
 
   const [expanded, setExpanded] = useState<string | false>("");
   const [showDaterange, setShowDaterange] = useState<boolean>(false);
@@ -634,7 +625,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                 Latest - First
               </Box>
             </Box>
-            {sort === "LastFirst" && <BsFillCheckCircleFill size={16} style={{ color: "#0052CC !important" }} />}
+            {sort === "LastFirst" && <BsFillCheckCircleFill size={16} />}
           </Box>
         </ButtonFilter>
         <ButtonFilter onClick={() => setSort("FirstLast")}>
@@ -645,7 +636,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                 First - Latest
               </Box>
             </Box>
-            {sort === "FirstLast" && <BsFillCheckCircleFill size={16} style={{ color: "#0052CC !important" }} />}
+            {sort === "FirstLast" && <BsFillCheckCircleFill size={16} />}
           </Box>
         </ButtonFilter>
         <ButtonFilter onClick={() => setShowDaterange(true)}>
@@ -657,7 +648,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                 Date range
               </Box>
             </Box>
-            {!isEmpty(dateRange) && <BsFillCheckCircleFill size={16} style={{ color: "#0052CC !important" }} />}
+            {!_.isEmpty(dateRange) && <BsFillCheckCircleFill size={16} />}
           </Box>
         </ButtonFilter>
 
@@ -688,7 +679,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                   sx={{
                     color: ({ palette }) => alpha(palette.common.black, 0.15),
                     "&.Mui-checked": {
-                      color: `#0052CC !important`
+                      color: `${theme.palette.blue[100]} !important`
                     }
                   }}
                   onChange={(e) => {
@@ -718,7 +709,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                     sx={{
                       color: ({ palette }) => alpha(palette.common.black, 0.15),
                       "&.Mui-checked": {
-                        color: `#0052CC !important`
+                        color: `${theme.palette.blue[100]} !important`
                       }
                     }}
                   />

@@ -243,6 +243,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <InfoValue>
               <StyledLinearProgress
                 variant="determinate"
+                saturation={data?.saturation || 0}
                 value={data?.saturation ? (data?.saturation > 100 ? 100 : data?.saturation) : 0}
               />
               <Box

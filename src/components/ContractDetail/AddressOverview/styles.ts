@@ -70,7 +70,7 @@ export const BannerSuccess = styled(Box)`
   font-size: 18px;
   line-height: 21px;
   text-align: center;
-  color: #ffffff;
+  color: ${(props) => props.theme.palette.common.white};
   background: ${(props) => props.theme.palette.green[200]};
   border-radius: 10px;
   width: 100%;

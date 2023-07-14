@@ -39,7 +39,6 @@ export const ADAOperator = styled(Box)(({ theme }) => ({
   }
 }));
 export const ADATitle = styled(Box)(({ theme }) => ({
-  background: "#F6F6F6",
   height: "30px",
   color: theme.palette.grey[400],
   display: "flex",

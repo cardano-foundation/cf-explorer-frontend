@@ -38,14 +38,6 @@ export const Container = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const StyledLabel = styled("div")`
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 16px;
-  color: #000000;
-  margin: 6px 0px;
-`;
-
 export const ModalTitle = styled(Typography)`
   font-size: 24px;
   font-weight: 700;
@@ -61,7 +53,7 @@ export const VerifyButton = styled(Box)<{ disabled: boolean }>`
   font-size: 16px;
   line-height: 24px;
   text-align: center;
-  color: #ffffff;
+  color: ${(props) => props.theme.palette.common.white};
   background: ${(props) => props.theme.palette.grey[400]};
   border-radius: 8px;
   padding: 10px 20px;

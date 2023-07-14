@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Box, Skeleton } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Box, Skeleton, useTheme } from "@mui/material";
 import { TabContext, TabList } from "@mui/lab";
 import { useHistory } from "react-router-dom";
 
@@ -54,9 +54,14 @@ interface Props {
   data: PoolUpdateDetail | null;
   onClose: () => void;
 }
-export const PoolUpdateModal = ({ data, ...props }: Props) => {
+export const PoolUpdateModal = ({ data, open, ...props }: Props) => {
   const [tabActive, setTabActive] = useState("poolCertificate");
 
+  useEffect(() => {
+    setTabActive("poolCertificate");
+  }, [open]);
+
+  const theme = useTheme();
   const tabs: TabProps[] = [
     {
       key: "poolCertificate",
@@ -78,7 +83,7 @@ export const PoolUpdateModal = ({ data, ...props }: Props) => {
   const isUpdated = data?.previousMargin !== data?.margin || data?.previousPledge !== data?.pledge;
 
   return (
-    <StyledModal {...props} title="Pool certificate">
+    <StyledModal {...props} open={open} title="Pool certificate" sx={{ maxHeight: "min(70vh, 800px)" }}>
       {isUpdated ? (
         <TabContext value={tabActive}>
           <TabContainer>
@@ -100,7 +105,7 @@ export const PoolUpdateModal = ({ data, ...props }: Props) => {
                   value={key}
                   label={
                     <TabItem>
-                      <Icon fill={key === tabActive ? "#438F68" : "#98A2B3"} />
+                      <Icon fill={key === tabActive ? theme.palette.green[200] : theme.palette.grey[300]} />
                       <TitleTab pl={1} active={+(key === tabActive)}>
                         {label}
                       </TitleTab>

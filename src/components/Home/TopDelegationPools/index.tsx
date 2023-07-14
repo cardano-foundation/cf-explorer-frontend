@@ -61,8 +61,10 @@ const TopDelegationPools = () => {
       key: "Saturation",
       minWidth: "200px",
       render: (r) => (
-        <Box display="flex" alignItems="center" justifyContent={"space-between"}>
-          <Box component={"span"}>{formatPercent(r.saturation / 100) || `0%`}</Box>
+        <Box display="flex" alignItems="center" justifyContent={"end"}>
+          <Box component={"span"} mr={1}>
+            {formatPercent(r.saturation / 100) || `0%`}
+          </Box>
           <StyledLinearProgress
             saturation={r.saturation}
             variant="determinate"
