@@ -47,7 +47,7 @@ export const StyledLink = styled(Link)`
 
 export const SmallText = styled("small")`
   display: inline-block;
-  color: ${(props) => props.theme.palette.text.primary};
+  color: ${(props) => props.theme.palette.grey[300]};
   margin-bottom: 5px;
 `;
 
