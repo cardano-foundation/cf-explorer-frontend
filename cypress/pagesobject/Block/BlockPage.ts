@@ -1,4 +1,4 @@
-import { first } from "cypress/types/lodash";
+import { String, first } from "cypress/types/lodash";
 import WebApi from "../../core/WebApi";
 import {BlockConstants} from "../../fixtures/constants/BlockConstants"
 import BlockDetail from "src/pages/BlockDetail";
@@ -16,6 +16,20 @@ const itemLists = "//table//tbody//tr//td[count(//th[contains(text(),'{0}')]//pr
 const quickViews = "//table//tbody//tr//td[count(//th[contains(text(),'')]//preceding-sibling::th) + boolean(//th[contains(text(),'')])]";
 const fieldBlock = "//table//tbody/tr";
 const viewDetailTxt = "//a[contains(text(),'View Details')]";
+const blockIdDetailTxt = "//div[contains(@class,'MuiTooltip-tooltip')]";
+const epchoDetailTxt = "//div[contains(text(),'Epoch details')]";
+const waitingIcon = "//span[contains(@class,'MuiCircularProgress-root')]";
+const blockTxt = "//small[text()='Block']";
+const slotTxt = "//small[text()='slot']";
+const epochTxt = "//span[text()='Epoch']";
+const createdTxt = "//small[text()='Created At']";
+const confirmationTxt = "//small[text()='Confirmation']";
+const transactionFeeTxt = "//small[text()='Transaction Fees']";
+const totalAmountTxt = "//small[contains(text(),'Total Output in ADA')]";
+const blockIdOnQuickModel = "//small[text()='Block Id']//parent::div//small//a";
+const transactionBtnOnQuickView = "//h4[contains(text(),'Transactions')]";
+const closeBtn = "//button[@aria-label='Close']";
+const clipBoard = "//button[contains(@aria-label,'Copy')]";
 export default class LoginPage extends WebApi {
   goToHomePage() {
     this.openAnyUrl("/");
@@ -31,15 +45,44 @@ export default class LoginPage extends WebApi {
   }
   clickToAnyBlock() {
     cy.clickElementRandomly(fieldBlock);
-    return BlockDetailPage;
+    return new BlockDetailPage;
   }
 
   clickToBlocksField() {
     this.clickToElementByXpath(blocksLocator);
     return this;
   }
+  clickToEpochCell() {
+    cy.clickElementRandomly(itemListsWithLink, BlockConstants.COLUMN_NAME[2]);
+    return this;
+  }
+  goBackToPreviousPage() {
+    cy.go('back');
+    return this;
+  }
+  clickToTransactionBtn() {
+    cy.clickElementRandomly(transactionBtn);
+    return this;
+  }
+  clickToQuickView() {
+    cy.clickElementRandomly(quickViews);
+    return this;
+  }
   hoverToBlockId() {
-    cy.hoverToElementRandomly(blocksLocator);
+    cy.hoverToElementRandomly(itemListsWithLink, BlockConstants.COLUMN_NAME[1]);
+    return this;
+  }
+  verifyBlockIdShowFull() {
+    cy.verifyElementDisplay(blockIdDetailTxt);
+    return this;
+  }
+  verifyEpochDetailPageDisplay() {
+    cy.verifyElementDisplay(epchoDetailTxt);
+    return this;
+  }
+  verifyTranSactionSorted(sortOrder: string) {
+    cy.verifyElementInvisible(waitingIcon);
+    cy.verifyFieldSorted(itemLists, sortOrder, BlockConstants.COLUMN_NAME[3]);
     return this;
   }
   verifyColumnName() {
@@ -50,6 +93,22 @@ export default class LoginPage extends WebApi {
     cy.verifyElementDisplay(txtColumnName, BlockConstants.COLUMN_NAME[4]);
     cy.verifyElementDisplay(txtColumnName, BlockConstants.COLUMN_NAME[5]);
     cy.verifyElementDisplay(txtColumnName, BlockConstants.COLUMN_NAME[6]);
+    return this;
+  }
+  verifyQuickViewModel() {
+    cy.verifyElementDisplay(blockTxt);
+    cy.verifyElementDisplay(slotTxt);
+    cy.verifyElementDisplay(epochTxt);
+    cy.verifyElementDisplay(createdTxt);
+    cy.verifyElementDisplay(confirmationTxt);
+    cy.verifyElementDisplay(transactionFeeTxt);
+    cy.verifyElementDisplay(totalAmountTxt);
+    cy.xpath(transactionBtnOnQuickView).verifyElementEnabled();
+    cy.xpath(blockIdOnQuickModel).invoke("text").then(text => {
+      expect(this.isFormatStringRight(text, 10, 7, 3)).be.true;
+    })
+    cy.xpath(closeBtn).verifyElementEnabled();
+    cy.xpath(viewDetailTxt).verifyElementEnabled();
     return this;
   }
   verifyBlockdetailScreenDisplay() {
