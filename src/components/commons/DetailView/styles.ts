@@ -172,12 +172,12 @@ export const TokenInfoValue = styled("span")`
 `;
 
 export const EpochNumber = styled("h1")`
-  color: ${(props) => props.theme.palette.green[700]};
+  color: ${(props) => props.theme.palette.green[200]};
   margin: 0;
 `;
 
 export const EpochText = styled("span")`
-  color: ${(props) => props.theme.palette.grey[500]};
+  color: ${(props) => props.theme.palette.grey[300]};
   text-transform: uppercase;
 `;
 
@@ -195,7 +195,7 @@ export const Item = styled(Box)`
   justify-content: center;
   align-items: center;
   flex: 1;
-  background: ${(props) => props.theme.palette.gradient[1]};
+  background: ${(props) => props.theme.palette.green[200]};
   color: ${(props) => props.theme.palette.primary.contrastText};
   border-radius: 20px;
   padding: 15px;
@@ -248,7 +248,7 @@ export const DetailLabel = styled("small")`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  color: ${(props) => props.theme.palette.grey[700]};
+  color: ${(props) => props.theme.palette.grey[300]};
   line-height: 26px;
 `;
 export const InfoIcon = styled(FiInfo)`
@@ -258,7 +258,7 @@ export const InfoIcon = styled(FiInfo)`
 `;
 
 export const DetailValue = styled("small")`
-  color: ${(props) => props.theme.palette.grey[700]};
+  color: ${(props) => props.theme.palette.grey[400]};
   font-weight: var(--font-weight-bold);
   display: flex;
   justify-content: flex-end;
@@ -339,7 +339,7 @@ export const DetailLinkIcon = styled("h3")(({ theme }) => ({
   lineHeight: 1,
   marginRight: 10,
   "svg path": {
-    fill: theme.palette.green[600]
+    fill: theme.palette.green[200]
   }
 }));
 
@@ -351,6 +351,7 @@ export const DetailLinkImage = styled("img")`
 export const DetailLinkName = styled("h4")`
   margin: 0;
   font-size: var(--font-size-text-large);
+  color: ${(props) => props.theme.palette.grey[400]};
 `;
 export const DetailLinkRight = styled("span")`
   color: ${(props) => props.theme.palette.grey[400]};
@@ -419,7 +420,7 @@ export const TokenDetailInfo = styled(Box)`
 `;
 
 export const TokenDetailName = styled("small")`
-  color: ${(props) => props.theme.palette.common.black};
+  color: ${(props) => props.theme.palette.grey[400]};
 `;
 
 export const TokenDetailIcon = styled("img")`
@@ -524,7 +525,7 @@ export const ButtonModal = styled(Button)(() => ({
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[500],
+  color: theme.palette.grey[300],
   display: "block",
   textAlign: "left",
   flex: 1,

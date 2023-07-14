@@ -186,8 +186,8 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
       </ViewDetailDrawer>
     );
 
-  const input = data.utxOs?.inputs[0]?.address || "";
-  const output = data.utxOs?.outputs[0]?.address || "";
+  const input = data?.utxOs?.inputs[0]?.address || "";
+  const output = data?.utxOs?.outputs[0]?.address || "";
 
   return (
     <ViewDetailDrawer anchor="right" open={!!hash} hideBackdrop variant="permanent">
@@ -211,13 +211,13 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
               pathWidth={4}
               trailWidth={2}
               percent={
-                data.tx.epochNo === currentEpoch?.no
-                  ? ((data.tx.epochSlot || 0) / (data.tx.maxEpochSlot || MAX_SLOT_EPOCH)) * 100
+                data?.tx?.epochNo === currentEpoch?.no
+                  ? ((data?.tx?.epochSlot || 0) / (data?.tx?.maxEpochSlot || MAX_SLOT_EPOCH)) * 100
                   : 100
               }
               trailOpacity={1}
             >
-              <EpochNumber>{data.tx.epochNo}</EpochNumber>
+              <EpochNumber>{data?.tx?.epochNo}</EpochNumber>
               <EpochText>Epoch</EpochText>
             </ProgressCircle>
           </HeaderContainer>
@@ -225,14 +225,14 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
             <Item>
               <Icon src={CubeIcon} alt="socket" />
               <ItemName>Block</ItemName>
-              <ItemValue>{data.tx.blockNo}</ItemValue>
+              <ItemValue>{data?.tx?.blockNo}</ItemValue>
             </Item>
             <Item>
               <Icon src={RocketIcon} alt="socket" />
               <ItemName>slot</ItemName>
               <ItemValue>
-                {data.tx.epochSlot}
-                <BlockDefault>/{data.tx.maxEpochSlot || MAX_SLOT_EPOCH}</BlockDefault>
+                {data?.tx?.epochSlot}
+                <BlockDefault>/{data?.tx?.maxEpochSlot || MAX_SLOT_EPOCH}</BlockDefault>
               </ItemValue>
             </Item>
           </ListItem>
@@ -270,29 +270,29 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
             )}
             <DetailsInfoItem>
               <DetailLabel>Created At</DetailLabel>
-              <DetailValue>{formatDateTimeLocal(data.tx.time || "")}</DetailValue>
+              <DetailValue>{formatDateTimeLocal(data?.tx?.time || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Status</DetailLabel>
               <DetailValue>
-                <TxStatus status={data.tx.status}>{data.tx.status}</TxStatus>
+                <TxStatus status={data?.tx?.status}>{data?.tx?.status}</TxStatus>
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Confirmation</DetailLabel>
-              <DetailValue>{data.tx.confirmation}</DetailValue>
+              <DetailLabel>{data?.tx?.confirmation > 1 ? "Confirmations" : "Confirmation"}</DetailLabel>
+              <DetailValue>{data?.tx?.confirmation}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Transaction Fees</DetailLabel>
               <DetailValue>
-                {formatADAFull(data.tx.fee)}
+                {formatADAFull(data?.tx?.fee)}
                 <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Total Output</DetailLabel>
               <DetailValue>
-                {formatADAFull(data.tx.totalOutput)}
+                {formatADAFull(data?.tx?.totalOutput)}
                 <ADAicon />
               </DetailValue>
             </DetailsInfoItem>

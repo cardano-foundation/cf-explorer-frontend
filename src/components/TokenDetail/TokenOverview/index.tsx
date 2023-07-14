@@ -57,6 +57,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
           {data?.metadata?.url ? (
             <TokenUrl onClick={() => window.open(data?.metadata?.url, "_blank")}>{data?.metadata?.url}</TokenUrl>
           ) : null}
+          <Box mt={1}>Hex Format: #{data?.name || data?.fingerprint}</Box>
         </TokenDescription>
       )
     },
@@ -71,7 +72,9 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       value: (
         <>
           <Box position={"relative"}>
-            <PolicyId>{data?.policy || ""}</PolicyId>
+            <CustomTooltip title={data?.policy}>
+              <PolicyId>{data?.policy || ""}</PolicyId>
+            </CustomTooltip>
             <Box position={"absolute"} top={"-5px"} right={0}>
               <CopyButton text={data?.policy}></CopyButton>
             </Box>
@@ -151,7 +154,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
-            <WrapTitle>Created</WrapTitle>
+            <WrapTitle>Created At</WrapTitle>
           </Box>
         </Box>
       ),
