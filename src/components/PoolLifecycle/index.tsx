@@ -40,7 +40,7 @@ export function getPoolEventType(data: any) {
   }
   return events;
 }
-interface IPoolLifecycleProps {
+export interface IPoolLifecycleProps {
   fetchData: FetchReturnType<IPoolReportList>;
   pagination: { page: number; size: number };
   onSort?: (sort?: string) => void;
