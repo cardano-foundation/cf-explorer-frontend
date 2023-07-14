@@ -43,10 +43,11 @@ import {
   StyledMenuItem,
   WrapHeader,
   EpochDetail,
-  TimeDuration
+  TimeDuration,
+  WrapLeaderValue
 } from "./styles";
 
-interface DetailHeaderProps {
+export interface DetailHeaderProps {
   type: Bookmark["type"];
   bookmarkData?: string;
   loading: boolean;
@@ -94,7 +95,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
 
   const getHashLabel = () => {
     if (type === "BLOCK") return "Block Id";
-    if (type === "STAKE_KEY") return "Stake key";
+    if (type === "STAKE_KEY") return "Stake address";
     if (type === "POOL") return "Pool Id";
     if (type === "TOKEN") return "Token ID";
   };
@@ -176,14 +177,16 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           {hash && (
             <SlotLeader>
               {hashLabel ? <SlotLeaderTitle>{hashLabel}: </SlotLeaderTitle> : ""}
-              {isMobile ? (
-                <CustomTooltip title={hash}>
-                  <SlotLeaderValue>{getShortHash(hash)}</SlotLeaderValue>
-                </CustomTooltip>
-              ) : (
-                <SlotLeaderValue>{hash}</SlotLeaderValue>
-              )}
-              <SlotLeaderCopy text={hash} />
+              <WrapLeaderValue>
+                {isMobile ? (
+                  <CustomTooltip title={hash}>
+                    <SlotLeaderValue>{getShortHash(hash)}</SlotLeaderValue>
+                  </CustomTooltip>
+                ) : (
+                  <SlotLeaderValue>{hash}</SlotLeaderValue>
+                )}
+                <SlotLeaderCopy text={hash} />
+              </WrapLeaderValue>
             </SlotLeader>
           )}
           <TimeDuration>

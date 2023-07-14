@@ -1,8 +1,7 @@
 import { render, screen } from "src/test-utils";
 import useFetchList from "src/commons/hooks/useFetchList";
-import { formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 
-import PoollUpdates, { PoollUpdatesList } from ".";
+import PoollUpdates from ".";
 
 const mockData = [
   {
@@ -18,7 +17,7 @@ jest.mock("src/commons/hooks/useFetchList");
 
 describe("PoolUpdates component", () => {
   beforeEach(() => {
-    (useFetchList as jest.Mock).mockReturnValue({ data: [] });
+    (useFetchList as jest.Mock).mockReturnValue({ data: mockData });
   });
   it("should component render", () => {
     render(<PoollUpdates />);
@@ -27,14 +26,5 @@ describe("PoolUpdates component", () => {
     });
     expect(screen.getByText(/recent updates/i)).toBeInTheDocument();
     expect(filterIC).toBeInTheDocument();
-  });
-});
-
-describe("PoollUpdatesList component", () => {
-  it("should component render", () => {
-    (useFetchList as jest.Mock).mockReturnValue({ data: mockData });
-    render(<PoollUpdatesList onSelect={jest.fn()} setShowBackButton={jest.fn()} />);
-    expect(screen.getByText(getShortHash(mockData[0].txHash)));
-    expect(screen.getByText(formatDateTimeLocal(mockData[0].time))).toBeInTheDocument();
   });
 });

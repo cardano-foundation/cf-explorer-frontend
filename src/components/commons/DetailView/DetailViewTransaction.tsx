@@ -3,7 +3,7 @@ import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { BiChevronRight } from "react-icons/bi";
 import { useSelector } from "react-redux";
 
-import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
 import {
   CubeIcon,
   DelegationHistoryMainIcon,
@@ -53,7 +53,6 @@ import {
   DetailLinkRight,
   StyledLink,
   TxStatus,
-  ConfirmStatus,
   DetailLinkName,
   DetailLinkImage,
   ViewDetailScroll,
@@ -166,19 +165,6 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
   const input = data.utxOs?.inputs[0]?.address || "";
   const output = data.utxOs?.outputs[0]?.address || "";
 
-  const renderConfirmationTag = () => {
-    if (data?.tx?.confirmation) {
-      if (data.tx.confirmation <= 2) {
-        return CONFIRMATION_STATUS.LOW;
-      }
-      if (data.tx.confirmation <= 8) {
-        return CONFIRMATION_STATUS.MEDIUM;
-      }
-      return CONFIRMATION_STATUS.HIGH;
-    }
-    return CONFIRMATION_STATUS.LOW;
-  };
-
   return (
     <ViewDetailDrawer anchor="right" open={!!hash} hideBackdrop variant="permanent">
       <ViewDetailHeader>
@@ -259,7 +245,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
               </DetailsInfoItem>
             )}
             <DetailsInfoItem>
-              <DetailLabel>Time</DetailLabel>
+              <DetailLabel>Created At</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.tx.time || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
@@ -270,10 +256,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Confirmation</DetailLabel>
-              <DetailValue>
-                {data.tx.confirmation}
-                <ConfirmStatus status={renderConfirmationTag()}>{renderConfirmationTag()}</ConfirmStatus>
-              </DetailValue>
+              <DetailValue>{data.tx.confirmation}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Transaction Fees</DetailLabel>

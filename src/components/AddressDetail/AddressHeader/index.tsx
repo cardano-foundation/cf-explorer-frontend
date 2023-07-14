@@ -15,8 +15,10 @@ import BookmarkButton from "src/components/commons/BookmarkIcon";
 import TokenAutocomplete from "src/components/TokenAutocomplete";
 import ADAicon from "src/components/commons/ADAIcon";
 import { useScreen } from "src/commons/hooks/useScreen";
+import FormNowMessage from "src/components/commons/FormNowMessage";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
-import { BackButton, BackText, RedirectButton, StyledBoxCard, TitleText, WrapHeader } from "./styles";
+import { BackButton, BackText, RedirectButton, StyledBoxCard, TimeDuration, TitleText, WrapHeader } from "./styles";
 
 interface Props {
   data: WalletAddress | null;
@@ -24,9 +26,11 @@ interface Props {
 }
 const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   const [stakeKey, setStakeKey] = useState("");
-  const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(
-    stakeKey ? `${API.STAKE.DETAIL}/${stakeKey}` : ""
-  );
+  const {
+    data: dataStake,
+    loading: loadingStake,
+    lastUpdated
+  } = useFetch<WalletStake>(stakeKey ? `${API.STAKE.DETAIL}/${stakeKey}` : "");
   const { adaRate } = useSelector(({ system }: RootState) => system);
   const theme = useTheme();
   const { isMobile } = useScreen();
@@ -36,7 +40,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   }, [data]);
 
   const itemLeft = [
-    { title: "Transaction", value: data?.txCount || 0 },
+    { title: "Transactions", value: data?.txCount || 0 },
     {
       title: "ADA Balance",
       value: (
@@ -65,20 +69,24 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       )
     },
     {
-      title: "POOL NAME",
+      title: "Pool Name",
       value: (
         <Link
           to={dataStake?.pool?.poolId ? details.delegation(dataStake.pool.poolId) : "#"}
           style={{ fontFamily: "var(--font-family-text)", color: theme.palette.secondary.main }}
         >
-          {dataStake?.pool?.poolName ||
-            (dataStake?.pool?.poolId && `Pool [${getShortWallet(dataStake.pool.poolId)}]`) ||
-            ""}
+          {dataStake?.pool?.poolName ? (
+            dataStake?.pool?.poolName
+          ) : (
+            <CustomTooltip title={dataStake?.pool?.poolId || ""} arrow>
+              <span>{getShortWallet(dataStake?.pool?.poolId || "")}</span>
+            </CustomTooltip>
+          )}
         </Link>
       )
     },
     {
-      title: "Reward",
+      title: "Reward Balance",
       value: (
         <Box>
           {formatADAFull(dataStake?.rewardAvailable)}
@@ -95,16 +103,9 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           <HiArrowLongLeft fontSize="16px" />
           <BackText>Back</BackText>
         </BackButton>
-        <Box
-          width={"100%"}
-          display={"flex"}
-          pb={2}
-          flexWrap={"wrap"}
-          alignItems={"center"}
-          justifyContent={"space-between"}
-        >
+        <Box width={"100%"} display={"flex"} flexWrap={"wrap"} alignItems={"center"} justifyContent={"space-between"}>
           <Box component={"h2"} lineHeight={1} mt={2} display={"flex"} alignItems={"center"}>
-            <TitleText>Address Detail</TitleText>
+            <TitleText>Address Details</TitleText>
             <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
           </Box>
           {data?.isContract && (
@@ -117,12 +118,15 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
             </RedirectButton>
           )}
         </Box>
+        <TimeDuration>
+          <FormNowMessage time={lastUpdated} />
+        </TimeDuration>
       </WrapHeader>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <StyledBoxCard>
             <CardAddress
-              title={"Wallet address"}
+              title={"Address"}
               type="left"
               address={data?.address || ""}
               item={itemLeft}
@@ -133,7 +137,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
         <Grid item xs={12} md={6}>
           <StyledBoxCard>
             <CardAddress
-              title={"Stake address"}
+              title={"Stake Key"}
               type="right"
               address={data?.stakeAddress || ""}
               item={itemRight}

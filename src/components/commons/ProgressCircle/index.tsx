@@ -3,7 +3,7 @@ import React from "react";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
-interface Props {
+export interface Props {
   percent: number;
   children?: React.ReactNode;
   size?: number;

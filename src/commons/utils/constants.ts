@@ -11,8 +11,7 @@ export const STORAGE_KEYS = {
 export enum NETWORKS {
   mainnet = "mainnet",
   preprod = "preprod",
-  preview = "preview",
-  testnet = "testnet"
+  preview = "preview"
 }
 
 export const SUPPORTED_WALLETS: Wallet[] = [
@@ -26,13 +25,13 @@ export const SUPPORTED_WALLETS: Wallet[] = [
     name: "Nami",
     icon: NamiIcon,
     link: "https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo",
-    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview, NETWORKS.testnet]
+    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview]
   },
   {
     name: "Eternl",
     icon: EternlIcon,
     link: "https://chrome.google.com/webstore/detail/eternl/kmhcihpebfmpgmihbkipmjlmmioameka",
-    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview, NETWORKS.testnet]
+    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview]
   },
   {
     name: "Yoroi",
@@ -44,13 +43,13 @@ export const SUPPORTED_WALLETS: Wallet[] = [
     name: "Yoroi",
     icon: YoroiIcon,
     link: "https://chrome.google.com/webstore/detail/yoroi-nightly/poonlenmfdfbjfeeballhiibknlknepo",
-    networks: [NETWORKS.testnet, NETWORKS.preprod]
+    networks: [NETWORKS.preprod]
   },
   {
     name: "Typhon",
     icon: TyphonIcon,
     link: "https://chrome.google.com/webstore/detail/typhon-wallet/kfdniefadaanbjodldohaedphafoffoh",
-    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview, NETWORKS.testnet]
+    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview]
   }
 ];
 
@@ -66,21 +65,18 @@ export const MAX_SLOT_EPOCH = 432000;
 export enum NETWORK_NAMES {
   mainnet = "Mainnet",
   preprod = "Preprod",
-  preview = "Preview",
-  testnet = "Testnet"
+  preview = "Preview"
 }
 
 export enum NETWORK_TYPES {
   mainnet = "MAIN_NET",
   preprod = "PRE_PROD",
-  preview = "PREVIEW",
-  testnet = "TEST_NET"
+  preview = "PREVIEW"
 }
 export const FRONT_END_NETWORK = {
   mainnet: process.env.REACT_APP_MAINNET_APP_URL || get(window, "env.REACT_APP_MAINNET_APP_URL"),
   preprod: process.env.REACT_APP_PREPROD_APP_URL || get(window, "env.REACT_APP_PREPROD_APP_URL"),
-  preview: process.env.REACT_APP_PREVIEW_APP_URL || get(window, "env.REACT_APP_PREVIEW_APP_URL"),
-  testnet: process.env.REACT_APP_TESTNET_APP_URL || get(window, "env.REACT_APP_TESTNET_APP_URL")
+  preview: process.env.REACT_APP_PREVIEW_APP_URL || get(window, "env.REACT_APP_PREVIEW_APP_URL")
 };
 
 export const NETWORK: NETWORKS =
@@ -107,11 +103,12 @@ export enum RECEIVED_REWARDS {
   MEMBER = "MEMBER",
   ALL = ""
 }
-export const APP_VERSION = process.env.REACT_APP_VERSION || get(window, "env.REACT_APP_VERSION") || "1.0.0";
-export const EXT_ADA_PRICE_URL =
-  process.env.REACT_APP_EXT_ADA_PRICE_URL || get(window, "env.REACT_APP_EXT_ADA_PRICE_URL");
+
 export const AUTH_API_URL = process.env.REACT_APP_AUTH_API_URL || get(window, "env.REACT_APP_AUTH_API_URL");
 export const API_URL = process.env.REACT_APP_API_URL || get(window, "env.REACT_APP_API_URL");
+export const APP_VERSION = process.env.REACT_APP_VERSION || get(window, "env.REACT_APP_VERSION");
+export const EXT_ADA_PRICE_URL =
+  process.env.REACT_APP_EXT_ADA_PRICE_URL || get(window, "env.REACT_APP_EXT_ADA_PRICE_URL");
 
 export enum ACCOUNT_ERROR {
   UNKNOWN_ERROR = "CC_1",
