@@ -141,7 +141,7 @@ const AddressAnalytics: FC = () => {
                           type: "areaspline",
                           marker: { enabled: true },
                           lineWidth: 4,
-                          color: theme.palette.green[700],
+                          color: theme.palette.green[200],
                           fillColor: {
                             linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
                             stops: [
