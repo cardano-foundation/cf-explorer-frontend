@@ -12,10 +12,11 @@ export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
     background: `${theme.palette.background.neutral}`,
     border: "none",
     height: "100%",
+    boxShadow: theme.shadow.rightDraw,
     [theme.breakpoints.down("md")]: {
       display: "flex",
-      height: "calc(100% - 75px)",
-      top: "75px"
+      height: "calc(100% - 76px)",
+      top: "76px"
     },
     [theme.breakpoints.down("sm")]: {
       right: "auto",
@@ -357,10 +358,10 @@ export const DetailLinkRight = styled("span")`
   color: ${(props) => props.theme.palette.grey[400]};
 `;
 
-export const TxStatus = styled("small")<{ status?: keyof typeof TransactionStatus }>`
+export const TxStatus = styled("small")<{ status?: TransactionStatus }>`
   color: ${({ status, theme }) => {
     switch (status) {
-      case TRANSACTION_STATUS.FAIL:
+      case TRANSACTION_STATUS.FAILED:
         return theme.palette.error.main;
       case TRANSACTION_STATUS.PENDDING:
         return theme.palette.warning.main;
@@ -370,7 +371,7 @@ export const TxStatus = styled("small")<{ status?: keyof typeof TransactionStatu
   }};
   background-color: ${({ status, theme }) => {
     switch (status) {
-      case TRANSACTION_STATUS.FAIL:
+      case TRANSACTION_STATUS.FAILED:
         return theme.palette.error.light;
       case TRANSACTION_STATUS.PENDDING:
         return theme.palette.warning.light;

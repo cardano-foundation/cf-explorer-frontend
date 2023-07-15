@@ -3,8 +3,8 @@ import { Grid, Skeleton, styled, Box, useTheme } from "@mui/material";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
-import useResizeHighChart from "src/commons/hooks/useResizeHighChart";
 import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/helper";
+import useResizeHighChart from "src/commons/hooks/useResizeHighChart";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
