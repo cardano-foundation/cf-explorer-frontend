@@ -77,7 +77,10 @@ const RegistrationPools = () => {
         <>
           <StyledLink to={details.block(pool.block)}>{pool.block}</StyledLink>
           <br />
-          <StyledLink to={details.epoch(pool.epoch)}>{pool.epoch}</StyledLink>/{pool.slotNo}
+          <StyledLink to={details.epoch(pool.epoch)}>{pool.epoch}</StyledLink>/{" "}
+          <Box component={"span"} color={({ palette }) => palette.grey[300]}>
+            {pool.slotNo}
+          </Box>
         </>
       )
     },

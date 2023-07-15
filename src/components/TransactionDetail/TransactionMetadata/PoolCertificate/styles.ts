@@ -5,7 +5,7 @@ export const TextLabel = styled("div")(({ theme }) => ({
   fontWeight: 400,
   fontSize: 14,
   lineHeight: "16px",
-  color: theme.palette.grey[500],
+  color: theme.palette.grey[300],
   width: 130,
   flexShrink: 0,
   [theme.breakpoints.down("sm")]: {
@@ -19,6 +19,7 @@ export const TextValue = styled("div")`
   font-size: 14px;
   line-height: 16px;
   word-break: break-all;
+  color: ${(props) => props.theme.palette.grey[400]};
 `;
 
 export const TextRightValue = styled("div")`
@@ -26,12 +27,7 @@ export const TextRightValue = styled("div")`
   font-weight: 700;
   font-size: 14px;
   line-height: 16px;
-  color: #000000;
-`;
-
-export const TextNormal = styled(TextRightValue)`
-  font-weight: 400;
-  color: #667085;
+  color: ${(props) => props.theme.palette.grey[400]};
 `;
 
 export const CardHeader = styled(Box)(({ theme }) => ({

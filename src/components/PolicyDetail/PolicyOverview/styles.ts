@@ -15,8 +15,8 @@ export const Active = styled(Status)`
 `;
 
 export const Deactive = styled(Status)`
-  background: ${(props) => props.theme.palette.green[800_10]};
-  color: ${(props) => props.theme.palette.grey[400]};
+  background: ${(props) => props.theme.palette.green[300_10]};
+  color: ${(props) => props.theme.palette.grey[300]};
 `;
 
 export const Title = styled("div")`
@@ -47,7 +47,7 @@ export const BackButton = styled("button")`
   font-family: "Roboto", sans-serif;
   ${({ theme }) => theme.breakpoints.down("xl")} {
     svg {
-      fill: ${(props) => props.theme.palette.grey[500]} !important;
+      fill: ${(props) => props.theme.palette.grey[300]} !important;
     }
   }
 `;
