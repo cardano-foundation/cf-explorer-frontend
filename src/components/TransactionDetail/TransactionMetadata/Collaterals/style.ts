@@ -86,7 +86,7 @@ export const BoxHeaderTop = styled(Box)(({ theme }) => ({
   marginBottom: "2px"
 }));
 export const BoxHeaderBottom = styled(Box)(({ theme }) => ({
-  color: theme.palette.grey[500],
+  color: theme.palette.grey[300],
   display: "flex",
   justifyContent: "space-between"
 }));

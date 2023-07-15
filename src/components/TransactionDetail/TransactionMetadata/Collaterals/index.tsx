@@ -22,19 +22,23 @@ const Collaterals: React.FC<CollateralProps> = ({ data }) => {
   const totalADA = data?.collateralOutputResponses.reduce((prv, item) => {
     return prv + item.value;
   }, 0);
+  const isShowCardInput = data?.collateralInputResponses && data?.collateralInputResponses.length > 0;
+  const isShowCardOutput = data?.collateralOutputResponses && data?.collateralOutputResponses.length > 0;
   return (
     <Box>
-      <Card type="input" items={data?.collateralInputResponses} />
-      <Card type="output" items={data?.collateralOutputResponses} sx={{ mt: 1 }} />
-      <ItemFooter>
-        <Box fontWeight={"bold"}>Total Output</Box>
-        <div>
-          <Box fontWeight={"bold"} component="span" pr={1}>
-            {formatADAFull(totalADA)}
-          </Box>
-          <ADAicon />
-        </div>
-      </ItemFooter>
+      {isShowCardInput && <Card type="input" items={data?.collateralInputResponses} />}
+      {isShowCardOutput && <Card type="output" items={data?.collateralOutputResponses} sx={{ mt: 1 }} />}
+      {isShowCardOutput && (
+        <ItemFooter>
+          <Box fontWeight={"bold"}>Total Output</Box>
+          <div>
+            <Box fontWeight={"bold"} component="span" pr={1}>
+              {formatADAFull(totalADA)}
+            </Box>
+            <ADAicon />
+          </div>
+        </ItemFooter>
+      )}
     </Box>
   );
 };
