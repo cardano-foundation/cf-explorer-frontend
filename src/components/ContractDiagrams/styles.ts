@@ -47,7 +47,6 @@ export const CardDiagram = styled(Box)`
 
 export const TabElement = styled(Box)<{ isContractPage?: number }>`
   display: flex;
-  flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
   word-break: break-word;
