@@ -53,8 +53,8 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
         <ToggleSidebar handleToggle={handleToggle} />
         <Sidebar />
       </Drawer>
-      <MainContainer>
-        <Main id="main" component="main" open={sidebar ? 1 : 0}>
+      <MainContainer id="main">
+        <Main component="main" open={sidebar ? 1 : 0}>
           <Header />
           {children}
         </Main>
