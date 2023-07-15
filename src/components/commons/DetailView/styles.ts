@@ -360,7 +360,7 @@ export const DetailLinkRight = styled("span")`
 export const TxStatus = styled("small")<{ status?: TransactionStatus }>`
   color: ${({ status, theme }) => {
     switch (status) {
-      case TRANSACTION_STATUS.FAIL:
+      case TRANSACTION_STATUS.FAILED:
         return theme.palette.error.main;
       case TRANSACTION_STATUS.PENDDING:
         return theme.palette.warning.main;
@@ -370,7 +370,7 @@ export const TxStatus = styled("small")<{ status?: TransactionStatus }>`
   }};
   background-color: ${({ status, theme }) => {
     switch (status) {
-      case TRANSACTION_STATUS.FAIL:
+      case TRANSACTION_STATUS.FAILED:
         return theme.palette.error.light;
       case TRANSACTION_STATUS.PENDDING:
         return theme.palette.warning.light;

@@ -156,7 +156,7 @@ export const BlankImage = styled("img")`
 export const HeaderStatus = styled("small")<{ status?: TransactionStatus | IDataEpoch["status"] }>`
   color: ${({ status, theme }) => {
     switch (status) {
-      case TRANSACTION_STATUS.FAIL:
+      case TRANSACTION_STATUS.FAILED:
         return theme.palette.error.main;
       case TRANSACTION_STATUS.PENDDING:
         return theme.palette.warning.main;
@@ -172,7 +172,7 @@ export const HeaderStatus = styled("small")<{ status?: TransactionStatus | IData
   }};
   background-color: ${({ status, theme }) => {
     switch (status) {
-      case TRANSACTION_STATUS.FAIL:
+      case TRANSACTION_STATUS.FAILED:
         return theme.palette.error.light;
       case TRANSACTION_STATUS.PENDDING:
         return theme.palette.warning.light;
