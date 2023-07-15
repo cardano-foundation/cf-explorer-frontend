@@ -53,7 +53,7 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
           <ContractAddress>{txHash || item.address || item.scriptHash}</ContractAddress>
         </Link>
       </ContractHeader>
-      <ContractRedeemer item={item} txHash={txHash} />
+      <ContractRedeemer item={item} txHash={txHash}/>
       {item.datumHashIn && (
         <>
           <IconContainer>
@@ -83,7 +83,7 @@ export const ContractRedeemer = ({ item, txHash }: IContractDiagramProps) => {
   return (
     <CardDiagram>
       <TabLabel>Redeemer</TabLabel>
-      <TabElement isContractPage={+!!txHash}>
+      <TabElement flexDirection={!txHash ? "row" : "column"} isContractPage={+!!txHash}>
         <TabItem>
           <TitleText>Tag</TitleText>
           <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
