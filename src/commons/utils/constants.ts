@@ -83,7 +83,7 @@ export const NETWORK: NETWORKS =
   (process.env.REACT_APP_NETWORK as NETWORKS) || get(window, "env.REACT_APP_NETWORK") || NETWORKS.mainnet;
 
 export enum TRANSACTION_STATUS {
-  FAIL = "FAIL",
+  FAILED = "FAILED",
   SUCCESS = "SUCCESS",
   PENDDING = "PENDDING"
 }
@@ -105,9 +105,10 @@ export enum RECEIVED_REWARDS {
 
 export const AUTH_API_URL = process.env.REACT_APP_AUTH_API_URL || get(window, "env.REACT_APP_AUTH_API_URL");
 export const API_URL = process.env.REACT_APP_API_URL || get(window, "env.REACT_APP_API_URL");
-export const APP_VERSION = process.env.REACT_APP_VERSION || get(window, "env.REACT_APP_VERSION");
+export const APP_VERSION = process.env.REACT_APP_VERSION || get(window, "env.REACT_APP_VERSION") || "1.0.0";
 export const EXT_ADA_PRICE_URL =
   process.env.REACT_APP_EXT_ADA_PRICE_URL || get(window, "env.REACT_APP_EXT_ADA_PRICE_URL");
+  export const CARDANO_NEWS_URL = process.env.REACT_APP_CARDANO_NEWS_URL || get(window, "env.REACT_APP_CARDANO_NEWS_URL");
 
 export enum ACCOUNT_ERROR {
   UNKNOWN_ERROR = "CC_1",

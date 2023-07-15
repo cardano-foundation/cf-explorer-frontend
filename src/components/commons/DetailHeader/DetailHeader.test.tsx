@@ -1,6 +1,7 @@
 import { useHistory } from "react-router-dom";
 
 import { render, screen } from "src/test-utils";
+import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 
 import DetailHeader, { DetailHeaderProps } from ".";
 
@@ -11,7 +12,7 @@ const mockProps: DetailHeaderProps = {
   title: "Example Title",
   lastUpdated: 1625272628000,
   hash: "hash123",
-  transactionStatus: "SUCCESS",
+  transactionStatus: TRANSACTION_STATUS.SUCCESS,
   stakeKeyStatus: "ACTIVE",
   epoch: {
     no: 1,
