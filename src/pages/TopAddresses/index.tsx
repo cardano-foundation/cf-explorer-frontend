@@ -53,7 +53,7 @@ const TopAddresses = () => {
                   key={key}
                   label={
                     <Box display={"flex"} alignItems="center">
-                      <Icon fill={key === tabActive ? theme.palette.green[700] : theme.palette.grey[500]} />
+                      <Icon fill={key === tabActive ? theme.palette.green[200] : theme.palette.grey[300]} />
                       <TabTitle className={tabActive === "ada-balance" ? "active" : ""}>
                         <Box>{label}</Box>
                       </TabTitle>
