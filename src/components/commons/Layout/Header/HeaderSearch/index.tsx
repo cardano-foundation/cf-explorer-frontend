@@ -6,7 +6,7 @@ import { BiChevronDown } from "react-icons/bi";
 import { GoChevronRight } from "react-icons/go";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, useHistory, withRouter } from "react-router-dom";
-import { isEmpty, isObject } from "lodash";
+import { isEmpty, isNil, isObject, omitBy } from "lodash";
 
 import { HeaderSearchIcon } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
@@ -332,7 +332,7 @@ export const OptionsSearch = ({ show, home, value, error, data }: OptionProps) =
 
   const listOptions =
     (isObject(data) &&
-      Object.entries(data)
+      Object.entries(omitBy(data, isNil))
         .map(([key, objValue]) => {
           switch (key) {
             case "epoch":
