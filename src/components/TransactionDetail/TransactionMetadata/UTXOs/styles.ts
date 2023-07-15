@@ -46,7 +46,7 @@ export const ItemFooter = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "center",
   padding: "12px 25px",
-  background: theme.palette.green[800_10],
+  background: theme.palette.green[300_10],
   [theme.breakpoints.down("sm")]: {
     padding: "12px 15px"
   }
@@ -58,7 +58,7 @@ export const TokenLink = styled(Link)(({ theme }) => ({
   borderRadius: "2px",
   padding: "2px 10px",
   backgroundColor: alpha(theme.palette.grey[300], 0.2),
-  color: `${theme.palette.grey[400]} !important`,
+  color: `${theme.palette.grey[300]} !important`,
   fontSize: "var(--font-size-text-small)",
   lineHeight: "1.5rem",
   fontWeight: "bold",
@@ -131,7 +131,7 @@ export const OptionSelect = styled(MenuItem)(({ theme }) => ({
   height: "40px",
   cursor: "pointer",
   "&:hover": {
-    background: theme.palette.green[60010]
+    background: theme.palette.green[200_10]
   }
 }));
 
@@ -144,6 +144,6 @@ export const CustomLink = styled(Link)(({ theme }) => ({
   height: "40px",
   cursor: "pointer",
   "&:hover": {
-    background: theme.palette.green[60010]
+    background: theme.palette.green[200_10]
   }
 }));
