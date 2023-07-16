@@ -78,7 +78,7 @@ const PoolLifecycle: React.FC<IPoolLifecycleProps> = ({ onSort, fetchData, pagin
         return formatDateTimeLocal(data.createdAt);
       },
       sort({ sortValue }) {
-        onSort?.(`id,${sortValue}`);
+        onSort?.(sortValue ? `id,${sortValue}` : "");
       }
     },
     {
