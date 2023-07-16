@@ -303,7 +303,16 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
         disableUnderline
         onFocus={() => onFocus()}
       />
-      {showOption && <OptionsSearch error={error} home={home} show={showOption} value={search} data={dataSearchAll} />}
+      {showOption && (
+        <OptionsSearch
+          showResultNotFound={showResultNotFound}
+          error={error}
+          home={home}
+          show={showOption}
+          value={search}
+          data={dataSearchAll}
+        />
+      )}
       {loading ? (
         <Box mr={"10px"}>
           <CircularProgress size={20} />
@@ -325,9 +334,10 @@ interface OptionProps {
   value: string;
   error: string;
   data?: IResponseSearchAll;
+  showResultNotFound: () => void;
 }
 
-export const OptionsSearch = ({ show, home, value, error, data }: OptionProps) => {
+export const OptionsSearch = ({ show, home, value, error, data, showResultNotFound }: OptionProps) => {
   const history = useHistory();
 
   const listOptions =
@@ -396,13 +406,17 @@ export const OptionsSearch = ({ show, home, value, error, data }: OptionProps) =
             case "policy":
               return {
                 suggestText: "Search for a Policy by",
-                cb: history.push(details.policyDetail(value)),
+                cb: () => history.push(details.policyDetail(value)),
                 formatter: formatLongText
               };
           }
         })
         .filter(Boolean)) ||
     [];
+
+  useEffect(() => {
+    if (listOptions.length === 0) showResultNotFound();
+  }, [JSON.stringify(data)]);
 
   return (
     <OptionsWrapper display={show ? "block" : "none"} home={+home}>
