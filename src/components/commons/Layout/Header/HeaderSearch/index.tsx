@@ -313,9 +313,9 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
         />
       )}
       {loading ? (
-        <Box mr={"10px"}>
+        <SubmitButton type="submit" home={home ? 1 : 0} disabled={true}>
           <CircularProgress size={20} />
-        </Box>
+        </SubmitButton>
       ) : (
         <SubmitButton type="submit" home={home ? 1 : 0} disabled={!search}>
           <Image src={HeaderSearchIcon} alt="search" home={home ? 1 : 0} />
