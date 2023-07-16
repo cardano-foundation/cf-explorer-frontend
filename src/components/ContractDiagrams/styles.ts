@@ -52,6 +52,7 @@ export const TabElement = styled(Box)<{ isContractPage?: number }>`
   word-break: break-word;
   padding: 18px 20px;
   border-radius: 5px;
+  text-align: left;
   background: ${({ isContractPage, theme }) => (isContractPage ? theme.palette.common.white : theme.palette.grey[500])};
   color: ${(props) => props.theme.palette.grey[400]};
 `;
