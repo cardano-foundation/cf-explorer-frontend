@@ -154,7 +154,6 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
 };
 
 export const formatDateTime = (date: string) => {
-  console.log(date);
   return moment(date).format("MM/DD/YYYY HH:mm:ss");
 };
 export const formatDateTimeLocal = (date: string) => {
