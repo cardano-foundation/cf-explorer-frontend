@@ -6,7 +6,7 @@ import { BiChevronDown } from "react-icons/bi";
 import { GoChevronRight } from "react-icons/go";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, useHistory, withRouter } from "react-router-dom";
-import { isEmpty, isNil, isObject, omitBy } from "lodash";
+import { isNil, isObject, omitBy } from "lodash";
 
 import { HeaderSearchIcon } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
@@ -151,12 +151,8 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     try {
       setLoading(true);
       const res = await defaultAxios.get(API.SEARCH_ALL(querry));
-      if (isEmpty(res?.data)) {
-        showResultNotFound();
-      } else {
-        setDataSearchAll(res?.data);
-        setShowOption(true);
-      }
+      setDataSearchAll(res?.data);
+      setShowOption(true);
       setLoading(false);
     } catch {
       showResultNotFound();
@@ -415,7 +411,7 @@ export const OptionsSearch = ({ show, home, value, error, data, showResultNotFou
     [];
 
   useEffect(() => {
-    if (listOptions.length === 0) showResultNotFound();
+    if (listOptions.length === 0 && isObject(data) && Object.keys(data).length > 0) showResultNotFound();
   }, [JSON.stringify(data)]);
 
   return (
