@@ -237,7 +237,7 @@ const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time
             type="monotone"
             dataKey="metadata"
             stackId="1"
-            stroke={theme.palette.green[200]}
+            stroke={theme.palette.primary.main}
             fill={theme.palette.green[200]}
           />
           <Area
