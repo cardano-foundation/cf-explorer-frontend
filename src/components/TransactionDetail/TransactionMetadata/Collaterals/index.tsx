@@ -19,7 +19,7 @@ interface CollateralProps {
 }
 
 const Collaterals: React.FC<CollateralProps> = ({ data }) => {
-  const totalADA = data?.collateralOutputResponses.reduce((prv, item) => {
+  const totalADA = (data?.collateralOutputResponses || []).reduce((prv, item) => {
     return prv + item.value;
   }, 0);
   const isShowCardInput = data?.collateralInputResponses && data?.collateralInputResponses.length > 0;
