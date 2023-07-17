@@ -83,8 +83,8 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                 >
                   <defs>
                     <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor={theme.palette.green[700]} stopOpacity={0.2} />
-                      <stop offset="100%" stopColor={theme.palette.green[700]} stopOpacity={0} />
+                      <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
+                      <stop offset="100%" stopColor={theme.palette.primary.main} stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <XAxis dataKey="epochNo" tickLine={false} tickMargin={5} dx={-5} interval={9} />
@@ -99,7 +99,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                     stackId="1"
                     type="monotone"
                     dataKey={selected === "epochChart" ? "totalStake" : "numberDelegator"}
-                    stroke={theme.palette.green[700]}
+                    stroke={theme.palette.primary.main}
                     strokeWidth={4}
                     fill="url(#colorUv)"
                     activeDot={{ r: 6 }}

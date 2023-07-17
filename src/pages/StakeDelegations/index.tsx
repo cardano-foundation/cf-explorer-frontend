@@ -69,7 +69,10 @@ const StakeDelegations = () => {
         <>
           <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
           <Box mt={1}>
-            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
+            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
+            <Box color={({ palette }) => palette.grey[300]} component={"span"}>
+              {r.epochSlotNo}
+            </Box>
           </Box>
         </>
       )
@@ -125,7 +128,7 @@ const StakeDelegations = () => {
             total: fetchData.total,
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
-              mainRef.current?.scrollTo(0, 0);
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
         />

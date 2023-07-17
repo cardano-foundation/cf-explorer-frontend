@@ -10,7 +10,7 @@ import CustomIcon from "src/components/commons/CustomIcon";
 
 import ScriptTab from "./ScriptTab";
 import TokenTransaction from "./TokenTransaction";
-import { TabListStyled, TabTitle } from "./styles";
+import { TabListStyled, TabTitle, TitleTab } from "./styles";
 
 const ContractDetailContent: React.FC = () => {
   const { tabActive = "transaction", address } = useParams<{
@@ -30,7 +30,9 @@ const ContractDetailContent: React.FC = () => {
         <TabTitle className={tabActive === "transaction" ? "active" : ""}>
           <Box display={"flex"} alignItems="center">
             <UtxoIcon fill={tabActive === "transaction" ? theme.palette.primary.main : theme.palette.text.hint} />
-            <Box pl={1}>Transactions</Box>
+            <TitleTab active={+(tabActive === "transaction")} pl={1}>
+              Transactions
+            </TitleTab>
           </Box>
         </TabTitle>
       ),
@@ -47,7 +49,9 @@ const ContractDetailContent: React.FC = () => {
               fill="currentColor"
               color={tabActive === "transcript" ? theme.palette.primary.main : theme.palette.text.hint}
             />
-            <Box pl={1}>Script</Box>
+            <TitleTab active={+(tabActive === "transcript")} pl={1}>
+              Script
+            </TitleTab>
           </Box>
         </TabTitle>
       ),
@@ -78,7 +82,7 @@ const ContractDetailContent: React.FC = () => {
       </Box>
       {tabs.map((item) => (
         <TabPanel
-          sx={{ padding: 0, borderTop: (theme) => `1px solid ${alpha(theme.palette.green[800], 0.1)}` }}
+          sx={{ padding: 0, borderTop: (theme) => `1px solid ${alpha(theme.palette.green[300], 0.1)}` }}
           key={item.key}
           value={item.key}
         >
