@@ -186,6 +186,8 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     if (!search) {
       setShowOption(false);
     }
+    setDataSearchAll(undefined);
+    setDataSearchTokensAndPools(undefined);
   }, [search, filter]);
 
   const currentPath = history.location.pathname.split("/")[1];
@@ -463,6 +465,7 @@ export const OptionsSearch = ({
       showResultNotFound();
     if (
       (listOptionsTokensAndPools || []).length === 0 &&
+      dataSearchTokensAndPools &&
       (filter === "delegations/pool-detail-header" || filter === "tokens")
     )
       showResultNotFound();
