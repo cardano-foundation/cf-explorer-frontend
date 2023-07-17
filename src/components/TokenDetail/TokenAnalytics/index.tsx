@@ -51,8 +51,7 @@ const AddressAnalytics: FC = () => {
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,6})?/)?.[0]);
   });
 
-  const categories =
-    data?.map((i) => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
+  const categories = data?.map((i) => moment(i.date)) || [];
   const minBalance = data
     ? data.reduce(function (prev, current) {
         return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
@@ -121,7 +120,12 @@ const AddressAnalytics: FC = () => {
                           style: {
                             fontSize: rangeTime === "THREE_MONTH" ? 10 : 12
                           },
-                          rotation: isMobile || rangeTime === "THREE_MONTH" ? -45 : null
+                          rotation: isMobile || rangeTime === "THREE_MONTH" ? -45 : null,
+                          formatter: (e: { value: string }) => {
+                            return moment(e.value).format(
+                              rangeTime === "ONE_DAY" ? "HH:mm" : `DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`
+                            );
+                          }
                         }
                       },
                       legend: { enabled: false },
@@ -129,7 +133,12 @@ const AddressAnalytics: FC = () => {
                         shared: true,
                         formatter: function (this: Highcharts.TooltipFormatterContextObject) {
                           return (
-                            "<span>" + this.x + "</span><br><strong>" + numberWithCommas(this.y || 0) + "</strong>"
+                            "<span>" +
+                            moment(`${this.x}`).format("DD MMM HH:mm:ss") +
+                            " (UTC time zone)" +
+                            "</span><br><strong>" +
+                            numberWithCommas(this.y || 0) +
+                            "</strong>"
                           );
                         }
                       },
@@ -141,7 +150,7 @@ const AddressAnalytics: FC = () => {
                           type: "areaspline",
                           marker: { enabled: true },
                           lineWidth: 4,
-                          color: theme.palette.green[700],
+                          color: theme.palette.green[200],
                           fillColor: {
                             linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
                             stops: [

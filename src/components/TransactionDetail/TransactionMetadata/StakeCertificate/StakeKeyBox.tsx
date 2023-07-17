@@ -30,7 +30,11 @@ const StakeKeyBox = ({ data }: TProps) => {
                 <TextLabel>{label}: </TextLabel>
                 <TextValue>
                   <CustomTooltip title={value}>
-                    <Box color={"#0052CC !important"} component={Link} to={details.stake(value)}>
+                    <Box
+                      color={({ palette }) => `${palette.blue[100]} !important`}
+                      component={Link}
+                      to={details.stake(value)}
+                    >
                       {getShortWallet(value)}
                     </Box>
                   </CustomTooltip>

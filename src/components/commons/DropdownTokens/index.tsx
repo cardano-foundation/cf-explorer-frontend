@@ -115,7 +115,6 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
 export default DropdownTokens;
 
 export const TokenLink: React.FC<{ token: Token }> = ({ token }) => {
-  const isNegative = token.assetQuantity <= 0;
   const tokenName = token.assetName || token.assetId;
   const shortTokenName = getShortWallet(tokenName);
   const isTokenNameLong = tokenName.length > 20;
@@ -132,7 +131,7 @@ export const TokenLink: React.FC<{ token: Token }> = ({ token }) => {
         width={"100%"}
         height={38}
       >
-        <Box mr={2}>
+        <Box mr={2} color={({ palette }) => palette.grey[300]}>
           {isTokenNameLong ? (
             <CustomTooltip title={tokenName} placement="top">
               <Box>{shortTokenName}</Box>
@@ -142,8 +141,7 @@ export const TokenLink: React.FC<{ token: Token }> = ({ token }) => {
           )}
         </Box>
         <Box display={"flex"} alignItems={"center"}>
-          <Box fontWeight={"bold"} fontSize={"14px"}>
-            {isNegative ? "" : "+"}
+          <Box fontWeight={"bold"} fontSize={"14px"} color={({ palette }) => palette.grey[400]}>
             {formatNumberDivByDecimals(token?.assetQuantity || 0, token?.metadata?.decimals || 0)}
           </Box>
           <Box mr={1} mt={"2px"}>

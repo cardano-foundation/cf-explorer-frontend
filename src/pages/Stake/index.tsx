@@ -89,7 +89,10 @@ const Stake = () => {
         <>
           <StyledLink to={details.block(r.block)}>{r.block}</StyledLink>
           <div style={{ display: "flex", marginTop: "6px" }}>
-            <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>/{r.epochSlotNo}
+            <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>/
+            <Box component={"span"} color={({ palette }) => palette.grey[300]}>
+              {r.epochSlotNo}
+            </Box>
           </div>
         </>
       )
@@ -128,7 +131,7 @@ const Stake = () => {
               ...pageInfo,
               total: fetchData.total,
               onChange: (page, size) => {
-                mainRef.current?.scrollTo(0, 0);
+                mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
                 history.push({ search: stringify({ page, size, poolType }) });
               },
               handleCloseDetailView: handleClose

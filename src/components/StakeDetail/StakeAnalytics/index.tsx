@@ -61,8 +61,7 @@ const StakeAnalytics: React.FC = () => {
     const value = BigNumber(i.value || 0).div(10 ** 6);
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,6})?/)?.[0]);
   });
-  const categoriesBalance =
-    data?.map((i) => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
+  const categoriesBalance = data?.map((i) => moment(i.date)) || [];
   const minBalance = Math.min(...(balance || []));
   const maxBalance = Math.max(...(balance || []), 0);
   const dataRewardChart = dataReward?.map((i) => {
@@ -167,13 +166,27 @@ const StakeAnalytics: React.FC = () => {
                         style: {
                           fontSize: rangeTime === "THREE_MONTH" ? 10 : 12
                         },
-                        rotation: isMobile || rangeTime === "THREE_MONTH" ? -45 : null
+                        rotation: isMobile || rangeTime === "THREE_MONTH" ? -45 : null,
+                        formatter: (e: { value: string }) => {
+                          if (tab === "BALANCE")
+                            return moment(e.value).format(rangeTime === "ONE_DAY" ? "HH:mm" : `DD MMM`);
+                          return e.value;
+                        }
                       }
                     },
                     legend: { enabled: false },
                     tooltip: {
                       shared: true,
                       formatter: function (this: Highcharts.TooltipFormatterContextObject) {
+                        if (tab === "BALANCE")
+                          return (
+                            "<span>" +
+                            moment(`${this.x}`).format("DD MMM HH:mm:ss") +
+                            " (UTC time zone)" +
+                            "</span><br><strong>" +
+                            numberWithCommas(this.y || 0) +
+                            "</strong>"
+                          );
                         return "<span>" + this.x + "</span><br><strong>" + numberWithCommas(this.y || 0) + "</strong>";
                       }
                     },
@@ -185,7 +198,7 @@ const StakeAnalytics: React.FC = () => {
                         type: "areaspline",
                         marker: { enabled: tab === "BALANCE" },
                         lineWidth: 4,
-                        color: theme.palette.green[700],
+                        color: theme.palette.green[200],
                         fillColor: {
                           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
                           stops: [
