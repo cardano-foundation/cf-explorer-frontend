@@ -110,7 +110,7 @@ const DelegationDetail: React.FC = () => {
       <DelegationDetailInfo data={data} loading={loading} poolId={poolId} />
       <DelegationDetailOverview data={data} loading={loading} />
       <DelegationDetailChart poolId={poolId} />
-      <Box sx={{ my: 4, [theme.breakpoints.down("sm")]: { my: 2 } }}>
+      <Box sx={{ mt: 4, [theme.breakpoints.down("sm")]: { my: 2 } }}>
         <TabContext value={tab}>
           <TabsContainer>
             <TabList

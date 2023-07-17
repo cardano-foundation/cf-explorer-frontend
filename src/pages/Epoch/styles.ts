@@ -1,8 +1,7 @@
-import { Box } from "@mui/material";
-import { styled, Container } from "@mui/material";
+import { Box, styled, Container } from "@mui/material";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
-  padding: "20px 0 40px",
+  paddingTop: "20px",
   [theme.breakpoints.down("sm")]: {
     padding: "10px 0 40px",
     "& > div:nth-of-type(1)": {

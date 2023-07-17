@@ -3,6 +3,7 @@ import { styled, Stack, Box, Button, TextField, Slider, FormLabel } from "@mui/m
 import CustomSelect from "src/components/commons/CustomSelect";
 
 export const Container = styled(Box)(({ theme }) => ({
+  maxHeight: "calc(100vh - 120px)",
   [theme.breakpoints.down("sm")]: {
     label: {
       "*": {
@@ -45,12 +46,6 @@ export const StyledSelect = styled(CustomSelect)(() => ({
     borderRight: "1px solid #E3E5E9"
   }
 }));
-
-export const ModalTitle = styled("div")`
-  font-weight: 700;
-  color: #13152f;
-  margin-bottom: 25px;
-`;
 
 export const StyledStack = styled(Stack)`
   margin-bottom: 20px;

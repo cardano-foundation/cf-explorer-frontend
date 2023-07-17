@@ -72,6 +72,12 @@ const Epoch: React.FC = () => {
       }
     },
     {
+      title: "Unique Accounts",
+      key: "account",
+      minWidth: "100px",
+      render: (r) => <Blocks>{r.account}</Blocks>
+    },
+    {
       title: "Transaction Count",
       key: "transactionCount",
       minWidth: "100px",

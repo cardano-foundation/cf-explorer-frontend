@@ -151,7 +151,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
-            <WrapTitle>Created</WrapTitle>
+            <WrapTitle>Created At</WrapTitle>
           </Box>
         </Box>
       ),
