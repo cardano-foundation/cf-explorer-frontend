@@ -54,7 +54,7 @@ const StakingLifeCycleSearch = () => {
             <Image src={HeaderSearchIcon} alt="Search" />
           </SubmitButton>
         </SearchContainer>
-        <Box color={({ palette }) => palette.red[700]}>{error}</Box>
+        <Box color={({ palette }) => palette.red[100]}>{error}</Box>
       </Box>
       <InfoGraphicModal open={openInfoModal} onClose={() => setOpenInfoModal(false)} />
     </StyledContainer>
@@ -64,14 +64,14 @@ const StakingLifeCycleSearch = () => {
 export default StakingLifeCycleSearch;
 
 export const WrapButton = styled(Button)`
-  background: ${({ theme }) => theme.palette.grey[700]};
+  background: ${({ theme }) => theme.palette.grey[400]};
   padding: 12px 97px;
   border-radius: 8px;
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
   text-align: center;
-  color: #fff;
+  color: ${({ theme }) => theme.palette.common.white};
   margin-top: 16px;
 `;
 
@@ -141,7 +141,7 @@ const SearchTitle = styled(Typography)(({ theme }) => ({
 }));
 
 const InfoLink = styled("span")`
-  color: #006cff;
+  color: ${(props) => props.theme.palette.blue[100]};
   text-decoration: underline;
   margin-left: 6px;
   cursor: pointer;
