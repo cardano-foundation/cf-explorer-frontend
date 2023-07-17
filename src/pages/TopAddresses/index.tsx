@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import Card from "src/components/commons/Card";
 import TopAddressesByADABalance from "src/components/TopAddresses/ByADABalance";
 import TopAddressesByAmountStaked from "src/components/TopAddresses/ByAmountStaked";
-import { ADAbalanceIcon, ClockIcon } from "src/commons/resources";
+import { DelegationHistoryIcon, StakeKeyHistoryIcon } from "src/commons/resources";
 
 import { StyledContainer, TabTitle } from "./styles";
 
@@ -28,13 +28,13 @@ const TopAddresses = () => {
     {
       label: "By Address ADA Balance",
       key: "ada-balance",
-      icon: ADAbalanceIcon,
+      icon: DelegationHistoryIcon,
       children: <TopAddressesByADABalance />
     },
     {
       label: "By Amount Staked",
       key: "amount-staked",
-      icon: ClockIcon,
+      icon: StakeKeyHistoryIcon,
       children: <TopAddressesByAmountStaked />
     }
   ];
@@ -54,7 +54,7 @@ const TopAddresses = () => {
                   label={
                     <Box display={"flex"} alignItems="center">
                       <Icon fill={key === tabActive ? theme.palette.green[700] : theme.palette.grey[500]} />
-                      <TabTitle className={tabActive === "ada-balance" ? "active" : ""}>
+                      <TabTitle className={key === tabActive ? "active" : ""}>
                         <Box>{label}</Box>
                       </TabTitle>
                     </Box>
