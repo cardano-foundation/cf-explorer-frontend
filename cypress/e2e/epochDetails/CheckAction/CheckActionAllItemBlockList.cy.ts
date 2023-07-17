@@ -10,7 +10,17 @@ beforeEach(() => {
     epochPanel.goToSpecificEpochDetails(epochNumber);
   })
 it("Check action of [Block number] text button", () => {
-    epochPanel.clickOnBackButton()
-              .verifyEpochCurrentDetailDisplay();  
+    epochPanel.clickOnBlockRecordByBlockNo()
+              .verifyBlockPanelDisplayed();  
+});
+
+it("Check action of [Block ID] text button", () => {
+    epochPanel.clickOnBlockRecordByBlockID()
+              .verifyBlockPanelDisplayed();  
+});
+
+it("Check action of [Epoch Slot] text button", () => {
+    epochPanel.clickOnBlockRecordByEpochSlot()
+              .verifyBlockPanelDisplayed();  
 });
 })

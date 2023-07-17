@@ -55,6 +55,10 @@ const backButton ="//small[text()='Back']/..";
 const bookMarkButton ="//div[text()='Epoch details']/following-sibling::div//button";
 const popUpMessage ="//div[contains(@class,'MuiAlert-message')]";
 
+const firstBlockRecord ="(//tbody/tr)[1]";
+const blockPanelTitle ="//div[text()='Block details']";
+const blockListRecord ="//tbody//tr";
+
 const signInButton ="//span[text()='Sign In']/..";
 const inputEmail ="//input[@name='email']";
 const inputPassword ="//input[@name='password']";
@@ -150,6 +154,11 @@ export default class EpochPanel extends WebApi{
 
   verifyNumberOfDisplayRow(expectedCount:string){
     cy.get(epochNumberList).should('have.length', parseInt(expectedCount)-1);
+    return this;
+  }
+
+  verifyNumberOfBlockDisplayRow(expectedCount:string){
+    cy.xpath(blockListRecord).should('have.length.lte', parseInt(expectedCount));
     return this;
   }
 
@@ -450,6 +459,16 @@ export default class EpochPanel extends WebApi{
    return this; 
   }
 
+  verifyNextButtonIsEnable(){
+        cy.get(pagingNavigator).find('ul>li').eq(9).should('not.be', 'disabled');
+   return this; 
+  }
+
+  verifyPrevButtonIsEnable(){
+        cy.get(pagingNavigator).find('ul>li').eq(1).should('not.be', 'disabled');
+   return this; 
+  }
+
   verifyNextButtonIsDisable(){
         cy.get(pagingNavigator).find('ul>li').eq(9).find('button').should('have.attr', 'disabled');
    return this; 
@@ -496,7 +515,7 @@ export default class EpochPanel extends WebApi{
 
   verifyTotalPage(perPage:string){
     cy.xpath(totalRecord).getTextContent().then((text)=>{
-      const number = parseInt(text);
+      const number = parseInt(text.replace(/,/g, ""));
       const integerPart = Math.floor(number / parseInt(perPage));
 
       cy.get(textboxInputPage).getAttributeValue('value').then((value)=>{
@@ -509,6 +528,18 @@ export default class EpochPanel extends WebApi{
   inputPage(pageNumber:string){
     cy.get(textboxInputPage).setInputValue(pageNumber);
     cy.get(textboxInputPage).type('{enter}');
+    return this;
+  }
+
+  inputRandomPage(perpage1:string){
+    cy.xpath(totalRecord).getTextContent().then((text)=>{
+      const number :number= parseInt(text.replace(/,/g, ""));
+      const integerPart :number= Math.floor(number / parseInt(perpage1));
+      const randomPage = Math.floor(Math.random() * (integerPart - 2)) +2;
+      cy.get(textboxInputPage).setInputValue((randomPage).toString());
+      cy.get(textboxInputPage).type('{enter}');
+      
+    })
     return this;
   }
 
@@ -624,6 +655,26 @@ export default class EpochPanel extends WebApi{
   clickDeleteBookmark(){
     cy.clickElement(deleteBookmarkButton);
     cy.clickElement(confirmDelete);
+    return this;
+  }
+
+  clickOnBlockRecordByBlockNo(){
+    cy.clickElementRandomly(itemListsWithLink,EpochConstants.DETAILS_COLUMN_NAME[0])
+    return this;
+  }
+
+  clickOnBlockRecordByBlockID(){
+    cy.clickElementRandomly(itemListsWithLink,EpochConstants.DETAILS_COLUMN_NAME[1])
+    return this;
+  }
+
+  clickOnBlockRecordByEpochSlot(){
+    cy.clickElementRandomly(itemLists,EpochConstants.DETAILS_COLUMN_NAME[2])
+    return this;
+  }
+
+  verifyBlockPanelDisplayed(){
+    cy.verifyElementDisplay(blockPanelTitle);
     return this;
   }
 }
