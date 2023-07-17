@@ -4,11 +4,11 @@ import moment from "moment";
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import { TooltipProps } from "recharts/types/component/Tooltip";
+import BigNumber from "bignumber.js";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
 import useFetch from "src/commons/hooks/useFetch";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { formatPrice, numberWithCommas } from "src/commons/utils/helper";
@@ -47,9 +47,10 @@ const AddressAnalytics: FC = () => {
   const theme = useTheme();
   const { data, loading } = useFetch<AnalyticsData[]>(`${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`);
 
-  const minBalance = Math.min(...(data?.map((item) => item.value) || []));
-  const maxBalance = Math.max(...(data?.map((item) => item.value) || []), 0);
-
+  const values = data?.map((item) => item.value).filter((item) => item !== null) || [];
+  const maxBalance = BigNumber.max(0, ...values).toString();
+  const minBalance = BigNumber.min(maxBalance, ...values).toString(); 
+  
   const formatPriceValue = (value: string) => {
     return formatPrice(value);
   };
@@ -129,11 +130,9 @@ const AddressAnalytics: FC = () => {
                       <img src={HighestIcon} alt="heighest icon" />
                       <Title>Highest Volume</Title>
                     </Box>
-                    <CustomTooltip title={numberWithCommas(maxBalance)}>
-                      <ValueInfo>
-                        {loading ? <SkeletonUI variant="rectangular" /> : numberWithCommas(maxBalance)}
-                      </ValueInfo>
-                    </CustomTooltip>
+                    <ValueInfo>
+                      {loading ? <SkeletonUI variant="rectangular" /> : numberWithCommas(maxBalance)}
+                    </ValueInfo>
                   </Box>
                 </BoxInfoItemRight>
               </Box>
@@ -144,11 +143,9 @@ const AddressAnalytics: FC = () => {
                       <img src={LowestIcon} alt="lowest icon" />
                       <Title>Lowest Volume</Title>
                     </Box>
-                    <CustomTooltip title={numberWithCommas(minBalance)}>
-                      <ValueInfo>
-                        {loading ? <SkeletonUI variant="rectangular" /> : numberWithCommas(minBalance)}
-                      </ValueInfo>
-                    </CustomTooltip>
+                    <ValueInfo>
+                      {loading ? <SkeletonUI variant="rectangular" /> : numberWithCommas(minBalance)}
+                    </ValueInfo>
                   </Box>
                 </BoxInfoItem>
               </Box>

@@ -64,23 +64,14 @@ const StakeAnalytics: React.FC = () => {
   const { data: dataReward, loading: loadingReward } = useFetch<AnalyticsReward[]>(
     `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`
   );
-  const { data: balanceRaw, loading: balanceLoading } = useFetch<number[]>(`${API.STAKE.MIN_MAX_BALANCE}/${stakeId}`);
-  const balance = balanceRaw?.length ? balanceRaw : [0, 0];
-  const minBalance = Math.min(...(balance || []));
-  const maxBalance = Math.max(...(balance || []), 0);
 
-  const minReward = dataReward
-    ? dataReward.reduce((prev, current) => (new BigNumber(prev.value).lt(current.value) ? prev : current), {
-        epoch: 0,
-        value: 0
-      })
-    : { epoch: 0, value: 0 };
-  const maxReward = dataReward
-    ? dataReward.reduce((prev, current) => (new BigNumber(prev.value).gt(current.value) ? prev : current), {
-        epoch: 0,
-        value: 0
-      })
-    : { epoch: 0, value: 0 };
+  const values = data?.map((item) => item.value).filter((item) => item !== null) || [];
+  const maxBalance = BigNumber.max(0, ...values).toString();
+  const minBalance = BigNumber.min(maxBalance, ...values).toString();
+
+  const rewards = data?.map((item) => item.value).filter((item) => item !== null) || [];
+  const maxReward = BigNumber.max(0, ...rewards).toString();
+  const minReward = BigNumber.min(maxReward, ...rewards).toString();
 
   const formatPriceValue = (value: string) => {
     return formatPrice(value);
@@ -192,12 +183,10 @@ const StakeAnalytics: React.FC = () => {
                   <img src={HighestIcon} alt="heighest icon" />
                   <Title>{tab === "BALANCE" ? "Highest Balance" : "Highest Reward"}</Title>
                   <ValueInfo>
-                    {balanceLoading ? (
+                    {loading || loadingReward ? (
                       <SkeletonUI variant="rectangular" />
-                    ) : tab === "BALANCE" ? (
-                      formatADAFull(maxBalance)
                     ) : (
-                      formatADAFull(maxReward.value)
+                      formatADAFull(tab === "BALANCE" ? maxBalance : maxReward)
                     )}
                   </ValueInfo>
                 </Box>
@@ -209,12 +198,10 @@ const StakeAnalytics: React.FC = () => {
                   <img src={LowestIcon} alt="lowest icon" />
                   <Title>{tab === "BALANCE" ? "Lowest Balance" : "Lowest Reward"}</Title>
                   <ValueInfo>
-                    {balanceLoading ? (
+                    {loading || loadingReward ? (
                       <SkeletonUI variant="rectangular" />
-                    ) : tab === "BALANCE" ? (
-                      formatADAFull(minBalance)
                     ) : (
-                      formatADAFull(minReward.value)
+                      formatADAFull(tab === "BALANCE" ? minBalance : minReward)
                     )}
                   </ValueInfo>
                 </Box>
