@@ -54,7 +54,7 @@ const StakingLifeCycleSearch = () => {
             <Image src={HeaderSearchIcon} alt="Search" />
           </SubmitButton>
         </SearchContainer>
-        <Box color={({ palette }) => palette.red[700]}>{error}</Box>
+        <Box color={({ palette }) => palette.red[100]}>{error}</Box>
       </Box>
       <InfoGraphicModal open={openInfoModal} onClose={() => setOpenInfoModal(false)} />
     </StyledContainer>
@@ -64,14 +64,14 @@ const StakingLifeCycleSearch = () => {
 export default StakingLifeCycleSearch;
 
 export const WrapButton = styled(Button)`
-  background: ${({ theme }) => theme.palette.grey[700]};
+  background: ${({ theme }) => theme.palette.grey[400]};
   padding: 12px 97px;
   border-radius: 8px;
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
   text-align: center;
-  color: #fff;
+  color: ${({ theme }) => theme.palette.common.white};
   margin-top: 16px;
 `;
 
@@ -80,8 +80,7 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
     paddingBottom: "50px"
   },
   [theme.breakpoints.down("sm")]: {
-    padding: "37px 58px",
-    marginBottom: "50px"
+    padding: "37px 5px"
   }
 }));
 
@@ -94,7 +93,7 @@ const SearchContainer = styled(Box)(({ theme }) => ({
   padding: "0 20px 0 30px",
   borderRadius: 100,
   marginBottom: 15,
-  height: 70,
+  height: 60,
   border: `1.5px solid ${theme.palette.grey[200]}`,
   [theme.breakpoints.down("sm")]: {
     width: "unset",
@@ -127,14 +126,22 @@ const Image = styled("img")`
   height: 20px;
 `;
 
-const SearchTitle = styled(Typography)`
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 36px;
-`;
+const SearchTitle = styled(Typography)(({ theme }) => ({
+  fontSize: "18px",
+  fontWeight: 700,
+  margin: "30px 0px 20px 0px",
+  [theme.breakpoints.down("md")]: {
+    margin: "60px 0px 20px 0px",
+    padding: "0px 60px"
+  },
+  [theme.breakpoints.down("sm")]: {
+    margin: "0px 0px 20px 0px",
+    padding: "0px 5px"
+  }
+}));
 
 const InfoLink = styled("span")`
-  color: #006cff;
+  color: ${(props) => props.theme.palette.blue[100]};
   text-decoration: underline;
   margin-left: 6px;
   cursor: pointer;

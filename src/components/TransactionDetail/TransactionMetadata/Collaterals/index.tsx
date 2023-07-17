@@ -98,9 +98,9 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                       <Link to={details.address(item.address)}>
                         <CustomTooltip title={item.address}>
                           <Box
-                            color={(theme) => theme.palette.blue[800]}
                             fontWeight="bold"
                             fontFamily={"var(--font-family-text)"}
+                            color={(theme) => theme.palette.blue[100]}
                             mr={1}
                           >
                             {getShortWallet(item.address)}

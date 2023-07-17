@@ -98,15 +98,10 @@ const Transactions: React.FC = () => {
 
   return (
     <StyledContainer>
-      <Card
-        title={"Contracts"}
-        underline={false}
-        extra={
-          <TimeDuration>
-            <FormNowMessage time={fetchData.lastUpdated} />
-          </TimeDuration>
-        }
-      >
+      <Card title={"Contracts"} underline={false}>
+        <TimeDuration>
+          <FormNowMessage time={fetchData.lastUpdated} />
+        </TimeDuration>
         <Table
           {...fetchData}
           columns={columns}
@@ -116,7 +111,7 @@ const Transactions: React.FC = () => {
             total: fetchData.total,
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
-              mainRef.current?.scrollTo(0, 0);
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
         />

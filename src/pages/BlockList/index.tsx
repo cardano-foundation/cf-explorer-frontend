@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
+import { Box } from "@mui/material";
 
 import { Column } from "src/types/table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -58,7 +59,10 @@ const BlockList = () => {
       minWidth: "150px",
       render: (r) => (
         <>
-          <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
+          <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
+          <Box component={"span"} color={({ palette }) => palette.grey[300]}>
+            {r.epochSlotNo}
+          </Box>
         </>
       )
     },
@@ -128,7 +132,7 @@ const BlockList = () => {
             total: fetchData.total,
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
-              mainRef.current?.scrollTo(0, 0);
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             },
             handleCloseDetailView: handleClose
           }}

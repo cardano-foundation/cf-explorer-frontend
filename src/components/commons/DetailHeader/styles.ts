@@ -66,7 +66,7 @@ export const HeaderContainer = styled(Box)`
 export const HeaderTitle = styled(Box)`
   overflow-wrap: anywhere;
   font-weight: var(--font-weight-bold);
-  color: ${(props) => props.theme.palette.common.black};
+  color: ${(props) => props.theme.palette.grey[400]};
   font-size: 2.25rem;
   margin: 0.5rem 0;
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -81,10 +81,10 @@ export const HeaderTitleSkeleton = styled(Skeleton)`
   border-radius: 4px;
 `;
 
-export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionStatus | IDataEpoch["status"] }>`
+export const HeaderStatus = styled("small")<{ status?: TransactionStatus | IDataEpoch["status"] }>`
   color: ${({ status, theme }) => {
     switch (status) {
-      case TRANSACTION_STATUS.FAIL:
+      case TRANSACTION_STATUS.FAILED:
         return theme.palette.error.main;
       case TRANSACTION_STATUS.SUCCESS:
         return theme.palette.success.main;
@@ -100,7 +100,7 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
   }};
   background-color: ${({ status, theme }) => {
     switch (status) {
-      case TRANSACTION_STATUS.FAIL:
+      case TRANSACTION_STATUS.FAILED:
         return theme.palette.error.light;
       case TRANSACTION_STATUS.SUCCESS:
         return theme.palette.success.light;
@@ -126,7 +126,7 @@ export const StakeKeyStatus = styled("small")<{ status?: StakeStatus }>`
       case "ACTIVE":
         return theme.palette.success.main;
       default:
-        return theme.palette.grey[400];
+        return theme.palette.grey[300];
     }
   }};
   background-color: ${({ theme, status }) => {
@@ -134,7 +134,7 @@ export const StakeKeyStatus = styled("small")<{ status?: StakeStatus }>`
       case "ACTIVE":
         return theme.palette.success.light;
       default:
-        return alpha(theme.palette.grey[400], 0.2);
+        return alpha(theme.palette.grey[300], 0.2);
     }
   }};
   text-transform: uppercase;
@@ -164,6 +164,7 @@ export const SlotLeaderValue = styled("span")`
 
 export const SlotLeaderTitle = styled("small")`
   font-family: var(--font-family-text);
+  color: ${({ theme }) => theme.palette.grey[300]};
 `;
 
 export const SlotLeaderCopy = styled(CopyButton)`
@@ -183,15 +184,16 @@ export const DetailsInfo = styled(Grid)<{ length: number }>`
   }
 `;
 
-export const EpochNumber = styled(Link)<{ is_epoch: number }>(({ theme, is_epoch }) => ({
+export const EpochNumber = styled(Link)<{ is_epoch: number }>(({ theme }) => ({
   fontWeight: "bold",
-  color: `${is_epoch ? theme.palette.common.black : theme.palette.secondary.main} !important`,
+  color: `${theme.palette.grey[400]} !important`,
   margin: 0,
   fontSize: "1.5rem"
 }));
 
 export const EpochText = styled("small")`
   opacity: 0.8;
+  color: ${(props) => props.theme.palette.grey[300]};
 `;
 
 export const Icon = styled("img")`
@@ -392,7 +394,7 @@ export const CardItem = styled(Grid)<CardItemProps>(({ theme, length, wide, item
 }));
 
 export const ValueCard = styled(Box)(({ theme }) => ({
-  color: theme.palette.common.black,
+  color: theme.palette.grey[400],
   fontSize: "1rem",
   fontWeight: "bold",
   wordBreak: "break-word"
@@ -411,7 +413,7 @@ export const AllowSearchButton = styled(Box)(({ theme }) => ({
   borderRadius: 4,
   cursor: "pointer",
   "& path": {
-    stroke: theme.palette.grey[400]
+    stroke: theme.palette.grey[300]
   }
 }));
 
@@ -440,7 +442,7 @@ export const StyledMenuItem = styled(MenuItem)(() => ({
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   display: "block",
   marginBottom: 10
 }));
