@@ -93,7 +93,7 @@ const SearchContainer = styled(Box)(({ theme }) => ({
   padding: "0 20px 0 30px",
   borderRadius: 100,
   marginBottom: 15,
-  height: 60,
+  height: 58,
   border: `1.5px solid ${theme.palette.grey[200]}`,
   [theme.breakpoints.down("sm")]: {
     width: "unset",
