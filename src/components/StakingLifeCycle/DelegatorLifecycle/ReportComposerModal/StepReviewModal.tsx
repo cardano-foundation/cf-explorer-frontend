@@ -74,7 +74,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
       }, 2000);
     } catch (err: any) {
       console.error(err);
-      toast.error("This stake key has no transaction history");
+      toast.error("This stake address has no transaction history");
     }
     setLoading(false);
   };
@@ -99,7 +99,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
         : `${moment(start).format("MM/DD/yyyy")} - ${moment(end).format("MM/DD/yyyy")}`
     },
     {
-      label: isPoolReport ? "Pool ID" : "Stake key details",
+      label: isPoolReport ? "Pool ID" : "Stake address details",
       value: <TextOverFlow>{params.address}</TextOverFlow>
     },
     {
