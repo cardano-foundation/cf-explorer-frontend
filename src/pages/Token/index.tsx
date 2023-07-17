@@ -35,10 +35,13 @@ const Tokens = () => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
+
+  const queries = new URLSearchParams(search);
+
   const mainRef = useRef(document.querySelector("#main"));
   const { data, lastUpdated, ...fetchData } = useFetchList<ITokenOverview>(
     API.TOKEN.LIST,
-    { ...pageInfo, sort },
+    { ...pageInfo, sort, query: queries.get("tokenName") || "" },
     false,
     REFRESH_TIMES.TOKEN_LIST
   );
@@ -162,8 +165,8 @@ const Tokens = () => {
             ...pageInfo,
             total: fetchData.total,
             onChange: (page, size) => {
-              mainRef.current?.scrollTo(0, 0);
-              history.replace({ search: stringify({ page, size }) });
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+              history.replace({ search: stringify({ page, size, tokenName: queries.get("tokenName") || "" }) });
             },
             handleCloseDetailView: handleClose
           }}

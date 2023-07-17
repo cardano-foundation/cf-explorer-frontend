@@ -192,6 +192,12 @@ export const cleanObject = (obj: { [key: string]: string | number | Date | strin
   return cleaned;
 };
 
+export const formatLongText = (text: string): string => {
+  if (text?.length > 10) {
+    return `${text.slice(0, 5)}...${text.slice(-5)}`;
+  }
+  return text;
+};
 export const getHostname = (url: string): string => {
   try {
     return new URL(url).hostname;

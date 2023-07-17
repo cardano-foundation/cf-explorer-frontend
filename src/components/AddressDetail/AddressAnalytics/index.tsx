@@ -61,10 +61,7 @@ const AddressAnalytics: React.FC = () => {
     return Number(value.toString().match(/^-?\d+(?:\.\d{0,6})?/)?.[0]);
   });
 
-  const categories =
-    dataChartChecked.map((i: AnalyticsData) =>
-      moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)
-    ) || [];
+  const categories = dataChartChecked.map((i: AnalyticsData) => moment(i.date)) || [];
 
   const minBalance = isArray(balance) ? Math.min(...balance) : 0;
   const maxBalance = isArray(balance) ? Math.max(...balance, 0) : 0;
@@ -125,14 +122,26 @@ const AddressAnalytics: React.FC = () => {
                         style: {
                           fontSize: rangeTime === "THREE_MONTH" ? 10 : 12
                         },
-                        rotation: isMobile || rangeTime === "THREE_MONTH" ? -45 : null
+                        rotation: isMobile || rangeTime === "THREE_MONTH" ? -45 : null,
+                        formatter: (e: { value: string }) => {
+                          return moment(e.value).format(
+                            rangeTime === "ONE_DAY" ? "HH:mm" : `DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`
+                          );
+                        }
                       }
                     },
                     legend: { enabled: false },
                     tooltip: {
                       shared: true,
                       formatter: function (this: Highcharts.TooltipFormatterContextObject) {
-                        return "<span>" + this.x + "</span><br><strong>" + numberWithCommas(this.y || 0) + "</strong>";
+                        return (
+                          "<span>" +
+                          moment(`${this.x}`).format("DD MMM HH:mm:ss") +
+                          " (UTC time zone)" +
+                          "</span><br><strong>" +
+                          numberWithCommas(this.y || 0) +
+                          "</strong>"
+                        );
                       }
                     },
                     credits: { enabled: false },

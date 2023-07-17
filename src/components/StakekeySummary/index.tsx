@@ -78,7 +78,7 @@ const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort, p
       title: "Timestamp",
       key: "createdAt",
       sort({ sortValue }) {
-        onSort?.(`id,${sortValue}`);
+        onSort?.(sortValue ? `id,${sortValue}` : "");
       },
       render(data) {
         return formatDateTimeLocal(data.createdAt);
