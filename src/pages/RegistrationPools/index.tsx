@@ -154,7 +154,7 @@ const RegistrationPools = () => {
             ...pageInfo,
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
-              mainRef.current?.scrollTo(0, 0);
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             },
             total: fetchData.total
           }}

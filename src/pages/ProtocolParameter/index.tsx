@@ -299,6 +299,8 @@ export default ProtocolParameter;
 export const ProtocolParameterHistory = () => {
   const { PROTOCOL_PARAMETER } = API;
   const TOTAL_PARAMETER = 29;
+  let timer: any = null;
+  const [initing, setIniting] = useState(true);
   const theme = useTheme();
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
@@ -469,6 +471,17 @@ export const ProtocolParameterHistory = () => {
     setColumnsTable([columnsTable[0], ...columnsTable.slice(1).reverse()]);
   }, [sortTimeFilter]);
 
+  useEffect(() => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    if (!loading) {
+      timer = setTimeout(() => {
+        setIniting(false);
+      }, 200);
+    }
+  }, [loading]);
+
   if (loading) {
     return (
       <Box component={Skeleton} mt={2} borderRadius={({ spacing }) => spacing(2)} variant="rectangular" height={400} />
@@ -516,6 +529,7 @@ export const ProtocolParameterHistory = () => {
       >
         {initialized && !!dataHistory ? (
           columnsTable?.length === 1 &&
+          !initing &&
           !loading && (
             <Box textAlign={"center"}>
               <Box component={"img"} src={EmptyIcon} mt={3} />
