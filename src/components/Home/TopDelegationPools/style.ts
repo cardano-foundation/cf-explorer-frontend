@@ -26,7 +26,7 @@ export const Title = styled("h3")`
   text-align: left;
   margin: 0px;
   font-size: 1.25rem;
-
+  color: ${({ theme }) => theme.palette.grey[400]};
   &::after {
     position: absolute;
     top: 100%;
@@ -47,7 +47,7 @@ export const Actions = styled(Box)(() => ({
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   display: "block",
   [theme.breakpoints.down("sm")]: {
     display: "none"
@@ -55,7 +55,7 @@ export const TimeDuration = styled("small")(({ theme }) => ({
 }));
 
 export const TimeDurationSm = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   display: "none",
   [theme.breakpoints.down("sm")]: {
     display: "block",
@@ -136,22 +136,22 @@ export const StyledProgress = styled("div")<{ value: number; width?: number }>`
   }
 `;
 
-export const StyledLinearProgress = styled(LinearProgress)`
+export const StyledLinearProgress = styled(LinearProgress)<{ saturation: number }>`
   display: inline-block;
   width: 150px;
   height: 8px;
   border-radius: 8px;
-  background: ${(props) => alpha(props.theme.palette.common.black, 0.1)};
+  background: ${(props) => alpha(props.theme.palette.grey[400], 0.1)};
   margin-left: 8px;
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 8px;
-    background: ${(props) => props.theme.palette.gradient[0]};
+    background: ${({ theme, saturation }) => (saturation > 100 ? theme.palette.red[100] : theme.palette.green[200])};
   }
 `;
 
 export const SubHeader = styled(Box)`
   font-weight: 400;
   font-size: 14px;
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   margin-bottom: 6px;
 `;

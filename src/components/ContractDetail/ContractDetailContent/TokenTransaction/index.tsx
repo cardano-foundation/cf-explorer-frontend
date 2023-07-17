@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
+import { Box } from "@mui/material";
 
 import {
   formatADAFull,
@@ -55,7 +56,10 @@ const columns: Column<Transactions>[] = [
       <>
         <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
         <br />
-        <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/<SmallText>{r.epochSlotNo} </SmallText>
+        <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
+        <Box component={"span"} color={({ palette }) => palette.grey[300]}>
+          {r.epochSlotNo}{" "}
+        </Box>
       </>
     )
   },
@@ -123,6 +127,12 @@ const TokenTransaction: React.FC = () => {
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<Transactions>(`${API.ADDRESS.DETAIL}/${params.address}/txs`, pageInfo);
   const [txHashSelected, setTxHashSelected] = useState<string>("");
+  const [selected, setSelected] = useState<number | null>(null);
+
+  const openDetail = (_: any, r: Transactions, index: number) => {
+    setTxHashSelected(r.hash);
+    setSelected(index);
+  };
 
   return (
     <>
@@ -130,7 +140,8 @@ const TokenTransaction: React.FC = () => {
         {...fetchData}
         columns={columns}
         total={{ count: fetchData.total, title: "Total Transactions" }}
-        onClickRow={(_, r: Transactions) => setTxHashSelected(r.hash)}
+        onClickRow={openDetail}
+        selected={selected}
         pagination={{
           ...pageInfo,
           total: fetchData.total,
