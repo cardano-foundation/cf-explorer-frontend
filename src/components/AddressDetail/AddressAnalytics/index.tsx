@@ -43,10 +43,10 @@ const AddressAnalytics: React.FC = () => {
   const { address } = useParams<{ address: string }>();
   const theme = useTheme();
   const { data, loading } = useFetch<AnalyticsData[]>(`${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`);
-  const { data: balance, loading: balanceLoading } = useFetch<number[]>(`${API.ADDRESS.MIN_MAX_BALANCE}/${address}`);
 
-  const minBalance = Math.min(...(balance || []));
-  const maxBalance = Math.max(...(balance || []), 0);
+  const values = data?.map((item) => item.value).filter((item) => item !== null) || [];
+  const maxBalance = BigNumber.max(0, ...values).toString();
+  const minBalance = BigNumber.min(maxBalance, ...values).toString();
 
   const formatPriceValue = (value: string) => {
     const bigValue = BigNumber(value).div(10 ** 6);
@@ -127,9 +127,7 @@ const AddressAnalytics: React.FC = () => {
                     <img src={HighestIcon} alt="heighest icon" />
                     <Title>Highest Balance</Title>
                   </Box>
-                  <ValueInfo>
-                    {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(maxBalance)}
-                  </ValueInfo>
+                  <ValueInfo>{loading ? <SkeletonUI variant="rectangular" /> : formatADAFull(maxBalance)}</ValueInfo>
                 </Box>
               </BoxInfoItemRight>
             </Box>
@@ -140,9 +138,7 @@ const AddressAnalytics: React.FC = () => {
                     <img src={LowestIcon} alt="lowest icon" />
                     <Title>Lowest Balance</Title>
                   </Box>
-                  <ValueInfo>
-                    {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(minBalance)}
-                  </ValueInfo>
+                  <ValueInfo>{loading ? <SkeletonUI variant="rectangular" /> : formatADAFull(minBalance)}</ValueInfo>
                 </Box>
               </BoxInfoItem>
             </Box>

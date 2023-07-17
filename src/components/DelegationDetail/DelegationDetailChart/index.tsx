@@ -32,7 +32,16 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
   const [selected, setSelected] = useState<"epochChart" | "delegatorChart">("epochChart");
   const { data, loading } = useFetch<AnalyticsDelegators>(`${API.DELEGATION.POOL_ANALYTICS}?poolView=${poolId}`);
   const theme = useTheme();
-  const categories = data?.[selected]?.dataByDays?.map((item) => item.epochNo) || [];
+
+  const totalStakes =
+    data?.epochChart?.dataByDays?.map((item) => item.totalStake).filter((item) => item !== null) || [];
+  const maxTotalStake = BigNumber.max(0, ...totalStakes).toString();
+  const minTotalStake = BigNumber.min(maxTotalStake, ...totalStakes).toString();
+
+  const numberDelegators =
+    data?.delegatorChart?.dataByDays?.map((item) => item.numberDelegator).filter((item) => item !== null) || [];
+  const maxNumberDelegation = BigNumber.max(0, ...numberDelegators).toString();
+  const minNumberDelegation = BigNumber.min(maxNumberDelegation, ...numberDelegators).toString();
 
   const formatValue = (value: string) => {
     if (selected === "delegatorChart") return numberWithCommas(value);
@@ -78,7 +87,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                 <AreaChart
                   width={900}
                   height={400}
-                  data={data[selected]?.dataByDays || ""}
+                  data={data[selected]?.dataByDays || []}
                   margin={{ top: 5, right: 10, bottom: 10 }}
                 >
                   <defs>
@@ -110,7 +119,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
           </ChartContainer>
         </Grid>
         <Grid item xs={24} lg={6}>
-          <BoxInfo height={"100%"} space={categories.length ? 36 : 16}>
+          <BoxInfo height={"100%"} space={data?.[selected]?.dataByDays?.length ? 36 : 16}>
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
@@ -120,9 +129,9 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                     {loading || !data?.[selected] ? (
                       <SkeletonUI variant="rectangular" />
                     ) : selected === "epochChart" ? (
-                      formatADAFull(data[selected].highest)
+                      formatADAFull(maxTotalStake)
                     ) : (
-                      data[selected].highest
+                      maxNumberDelegation
                     )}
                   </Value>
                 </Box>
@@ -134,12 +143,12 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                   <img src={LowestIcon} alt="lowest icon" />
                   <Title>{selected === "epochChart" ? "Lowest stake" : "Lowest number of delegators"}</Title>
                   <Value>
-                    {loading || !data ? (
+                    {loading || !data?.[selected] ? (
                       <SkeletonUI variant="rectangular" />
                     ) : selected === "epochChart" ? (
-                      formatADAFull(data[selected].lowest)
+                      formatADAFull(minTotalStake)
                     ) : (
-                      data[selected].lowest
+                      minNumberDelegation
                     )}
                   </Value>
                 </Box>
