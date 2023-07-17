@@ -22,6 +22,28 @@ const itemListsWithTitle = "(//table//tbody//tr//td[count(//th[contains(text(),'
 const btnViewDetail = "//a[normalize-space()='View Details']"
 const labelTokenId = "//small[contains(text(), 'Token ID')]"
 const btnBack = "//small[contains(text(), 'Back')]"
+const listRowItems = "//tr[@class='css-1ius8pw']"
+
+const labelTotalSupplyInQuickView = "//small[normalize-space()='Total Supply']"
+const totalSupplyInQuickView = "//small[normalize-space()='Total Supply']/following-sibling::span"
+const labelDecimalInQuickView = "//small[normalize-space()='Decimal']"
+const decimalInQuickView = "//small[normalize-space()='Decimal']/following-sibling::span"
+const policyIdInQuickView = "//small[normalize-space()='Policy ID']/following-sibling::small/a"
+const tokenIdInQuickView = "//small[normalize-space()='Token ID']/following-sibling::small/a"
+const assetNameInQuickView = "//small[normalize-space()='Asset name']/following-sibling::small//small"
+const totalTransactionsInQuickView = "//small[normalize-space()='Total Transactions']/following-sibling::small"
+const numberOfHoldersInQuickView = "//small[normalize-space()='Number of Holders']/following-sibling::small"
+const totalVolumeInQuickView = "//small[normalize-space()='Total Volume']/following-sibling::small"
+const volume24HInQuickView = "//small[normalize-space()='Volume 24H']/following-sibling::small"
+const iconCopyInQuickView = "//small[normalize-space()='Policy ID']/following-sibling::small//button"
+const tabTransactionInQuickView = "//h4[normalize-space()='Transactions']"
+const tabTopHolders = "//h4[normalize-space()='Top Holders']"
+const tabTokenMint = "//h4[normalize-space()='Token Mint']"
+const tabTopHoldersInTokenDetail = "//div[text()='Top Holders']/ancestor::button"
+const tabTransactionInTokenDetail = "//div[text()='Transactions']/ancestor::button"
+const tabMintingInTokenDetail = "//div[text()='Minting']/ancestor::button"
+const btnClose = "//button[@aria-label='Close']"
+
 
 export default class TokenListPage extends WebApi{
     constructor(){
@@ -162,14 +184,98 @@ export default class TokenListPage extends WebApi{
 
     checkActionClickOnAssetName(){
         cy.clickElement(itemListsWithTitle + "[1]/a", TokenConstants.COLUMN_NAME[1])
+        cy.wait(10000)
         cy.verifyElementDisplay(labelTokenId)
         cy.clickElement(btnBack)
         return this;
     }
-    verifyTotalTransactionsIsSorted(){
-        cy.clickElement(btnSortTotalTransactions)
-        cy.verifyFieldSorted(itemListsWithTitle, TokenConstants.COLUMN_NAME[3])
+
+    verifyTotalTransactionsIsSorted(typeSorted: string){
+        cy.verifyFieldSorted(itemListsWithTitle, typeSorted, TokenConstants.COLUMN_NAME[3])
         return this;
     }
 
+    verifyTotalSupplyIsSorted(typeSorted: string){
+        cy.verifyFieldSorted(itemListsWithTitle, typeSorted, TokenConstants.COLUMN_NAME[8])
+        return this;
+    }
+
+    verifyCreatedAtIsSorted(typeSorted: string){
+        cy.verifyFieldSorted(itemListsWithTitle, typeSorted, TokenConstants.COLUMN_NAME[7])
+        return this;
+    }
+
+    clickRowFirst(){
+        cy.clickElement(listRowItems+"[1]")
+        return this;
+    }
+
+    verifyTokenId(){
+        cy.xpath(tokenIdInQuickView).invoke("text").then((text)=>{
+            cy.contains(text).should("contain", "asset")
+        })
+    }
+    verifyQuickViewIcon(){
+        cy.verifyElementDisplay(totalSupplyInQuickView)
+        cy.verifyElementDisplay(decimalInQuickView)
+        this.verifyTokenId()
+        cy.verifyElementDisplay(policyIdInQuickView)
+        cy.verifyElementDisplay(assetNameInQuickView)
+        cy.verifyElementDisplay(totalTransactionsInQuickView)
+        cy.verifyElementDisplay(numberOfHoldersInQuickView)
+        cy.verifyElementDisplay(volume24HInQuickView)
+        cy.xpath(iconCopyInQuickView).verifyElementEnabled()
+        cy.xpath(btnViewDetail).verifyElementEnabled()
+        cy.xpath(tabTransactionInQuickView).verifyElementEnabled()
+        cy.xpath(tabTopHolders).verifyElementEnabled()
+        cy.xpath(tabTokenMint).verifyElementEnabled()
+        return this;
+    }
+
+    clickTokenId(){
+        cy.clickElement(tokenIdInQuickView)
+        return this;
+    }
+
+    verifyOpenTokenDetail(){
+        cy.verifyElementDisplay(labelTokenId)
+        cy.clickElement(btnBack)
+        return this;
+    }
+
+    verifyFocusTabTransaction(){
+        cy.clickElement(tabTransactionInQuickView)
+        cy.xpath(tabTransactionInTokenDetail).scrollIntoView().should('have.attr', 'aria-selected', 'true')
+        cy.xpath(btnBack).scrollIntoView().click()
+        return this;
+    }
+
+    verifyFocusTabTopHolders(){
+        cy.clickElement(tabTopHolders)
+        cy.xpath(tabTopHoldersInTokenDetail).scrollIntoView().should('have.attr', 'aria-selected', 'true')
+        cy.xpath(btnBack).scrollIntoView().click()
+        return this;
+    }
+
+    verifyFocusTabMint(){
+        cy.clickElement(tabTokenMint)
+        cy.xpath(tabMintingInTokenDetail).scrollIntoView().should('have.attr', 'aria-selected', 'true')
+        cy.xpath(btnBack).scrollIntoView().click()
+        return this;
+    }
+
+    clickButtonClose(){
+        cy.clickElement(btnClose)
+        return this;
+    }
+
+    clickButtonViewDetail(){
+        cy.clickElement(btnViewDetail)
+        return this;
+    }
+
+    reload(){
+        cy.reload()
+        return this;
+    }
 }
