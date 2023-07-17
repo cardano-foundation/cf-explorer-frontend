@@ -1,10 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Grid, Skeleton, styled, Box, useTheme } from "@mui/material";
-import HighchartsReact from "highcharts-react-official";
-import Highcharts from "highcharts";
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
+import BigNumber from "bignumber.js";
 
 import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/helper";
-import useResizeHighChart from "src/commons/hooks/useResizeHighChart";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -19,6 +18,9 @@ import {
   GridWrapper,
   StyledContainer,
   Title,
+  TooltipBody,
+  TooltipLabel,
+  TooltipValue,
   Value
 } from "./styles";
 
@@ -30,11 +32,27 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
   const [selected, setSelected] = useState<"epochChart" | "delegatorChart">("epochChart");
   const { data, loading } = useFetch<AnalyticsDelegators>(`${API.DELEGATION.POOL_ANALYTICS}?poolView=${poolId}`);
   const theme = useTheme();
-  const wrapperChartRef = useRef<HTMLDivElement>(null);
-  useResizeHighChart(wrapperChartRef);
   const categories = data?.[selected]?.dataByDays?.map((item) => item.epochNo) || [];
-  const epochs = data?.epochChart?.dataByDays?.map((item) => item.totalStake / 10 ** 6 || 0) || [];
-  const delegators = data?.delegatorChart?.dataByDays?.map((item) => item.numberDelegator || 0) || [];
+
+  const formatValue = (value: string) => {
+    if (selected === "delegatorChart") return numberWithCommas(value);
+    const bigValue = BigNumber(value).div(10 ** 6);
+    return formatPrice(bigValue.toString());
+  };
+
+  const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
+    return (
+      <TooltipBody>
+        <TooltipLabel>{content.label}</TooltipLabel>
+        <TooltipValue>
+          {selected === "delegatorChart"
+            ? content.payload?.[0]?.value || 0
+            : formatADAFull(content.payload?.[0]?.value) || 0}
+        </TooltipValue>
+      </TooltipBody>
+    );
+  };
+
   return (
     <StyledContainer>
       <AnalyticsTitle>Analytics</AnalyticsTitle>
@@ -52,70 +70,42 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
               Delegator
             </Button>
           </Box>
-          <ChartContainer ref={wrapperChartRef}>
-            {loading ? (
-              <SkeletonUI variant="rectangular" height={280} />
+          <ChartContainer>
+            {loading || !data ? (
+              <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
             ) : (
-              <Box position={"relative"}>
-                <HighchartsReact
-                  key={selected}
-                  highcharts={Highcharts}
-                  options={{
-                    chart: {
-                      type: "areaspline",
-                      backgroundColor: "transparent",
-                      style: { fontFamily: "Roboto, sans-serif" }
-                    },
-                    title: { text: "" },
-                    yAxis: {
-                      title: { text: null },
-                      lineWidth: 2,
-                      lineColor: theme.palette.border.main,
-                      className: "y-axis-lable",
-                      gridLineWidth: 1,
-                      labels: {
-                        style: { fontSize: 12 },
-                        formatter: (e: { value: string }) => {
-                          return formatPrice(e.value || 0);
-                        }
-                      }
-                    },
-                    xAxis: {
-                      categories,
-                      lineWidth: 2,
-                      lineColor: theme.palette.border.main,
-                      plotLines: [],
-                      angle: 0
-                    },
-                    legend: { enabled: false },
-                    tooltip: {
-                      shared: true,
-                      formatter: function(this: Highcharts.TooltipFormatterContextObject) {
-                        return '<span>' + this.x + '</span><br><strong>' + numberWithCommas(this.y || 0) + "</strong>";
-                      }
-                    },
-                    credits: { enabled: false },
-                    series: [
-                      {
-                        name: "",
-                        pointPlacement: "on",
-                        type: "areaspline",
-                        marker: { enabled: false },
-                        lineWidth: 4,
-                        color: theme.palette.primary.main,
-                        fillColor: {
-                          linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-                          stops: [
-                            [0, theme.palette.success.light],
-                            [1, "transparent"]
-                          ]
-                        },
-                        data: selected === "epochChart" ? epochs : delegators
-                      }
-                    ]
-                  }}
-                />{" "}
-              </Box>
+              <ResponsiveContainer width="100%" height={400}>
+                <AreaChart
+                  width={900}
+                  height={400}
+                  data={data[selected]?.dataByDays || ""}
+                  margin={{ top: 5, right: 10, bottom: 10 }}
+                >
+                  <defs>
+                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor={theme.palette.green[700]} stopOpacity={0.2} />
+                      <stop offset="100%" stopColor={theme.palette.green[700]} stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis dataKey="epochNo" tickLine={false} tickMargin={5} dx={-5} interval={9} />
+                  <YAxis
+                    dataKey={selected === "epochChart" ? "totalStake" : "numberDelegator"}
+                    tickFormatter={formatValue}
+                    tickLine={false}
+                  />
+                  <Tooltip content={renderTooltip} cursor={false} />
+                  <CartesianGrid vertical={false} strokeWidth={0.33} />
+                  <Area
+                    stackId="1"
+                    type="monotone"
+                    dataKey={selected === "epochChart" ? "totalStake" : "numberDelegator"}
+                    stroke={theme.palette.green[700]}
+                    strokeWidth={4}
+                    fill="url(#colorUv)"
+                    activeDot={{ r: 6 }}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
             )}
           </ChartContainer>
         </Grid>
