@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.4.6](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.5...v0.4.6) (2023-07-14)
+
+
+### Features
+
+* update new design protocol paramerter page ([9d6b33f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/9d6b33f59e0d67fd25d6cb3ac9bad350d3b92b6f))
+
+
+### Bug Fixes
+
+* Add code handle reset state of useFetchList hook ([eb14a7f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/eb14a7fa5ea5e1ac41cd2121761b9d9d0c687cb5))
+* amount word-break and add a new breakpoint ([5175a78](https://github.com/cardano-foundation/cf-explorer-frontend/commit/5175a78ea711f3a06234f6daa1099c5e4fbecb2a))
+* MET-1412-finding-3-replace-terminology ([0af878d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/0af878db5cccbbb3d23c04e52b416deca43c8989))
+* MET-1454 Finding 1 Format number on chart hover ([fe38362](https://github.com/cardano-foundation/cf-explorer-frontend/commit/fe38362d2a6ba08e0e647c706f83817b8bb7d681))
+* MET-1454 Finding 1 Format number on chart hover ([dcdce62](https://github.com/cardano-foundation/cf-explorer-frontend/commit/dcdce622aadfec9e37e36ffb48e9ed0f2ec96d76))
+* MET-265 Finding 2 Fix Position saturation col in pool table ([750fa15](https://github.com/cardano-foundation/cf-explorer-frontend/commit/750fa15bfa1582100cb03e5a1b95a833e1f1724c))
+* MET-615 Common Ui bugs ([f76630c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f76630c9d6bb8d7d58f027a528f617357d499e10))
+
 ## [0.4.5](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.4...v0.4.5) (2023-07-11)
 
 

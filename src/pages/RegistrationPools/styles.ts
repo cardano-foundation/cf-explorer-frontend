@@ -11,7 +11,7 @@ export const StyledLink = styled(Link)`
 `;
 
 export const RegistrationContainer = styled(Container)(({ theme }) => ({
-  padding: "30px 0px 40px",
+  paddingTop: "30px",
   textAlign: "left",
   position: "relative",
   [theme.breakpoints.down("md")]: {
