@@ -294,7 +294,6 @@ export default ProtocolParameter;
 export const ProtocolParameterHistory = () => {
   const { PROTOCOL_PARAMETER } = API;
   const TOTAL_PARAMETER = 29;
-  let timer: any = null;
   const [initing, setIniting] = useState(true);
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
@@ -450,6 +449,7 @@ export const ProtocolParameterHistory = () => {
 
   useUpdateEffect(() => {
     setDataTable([...dataHistoryMapping].slice(1));
+    setIniting(false);
   }, [JSON.stringify(dataHistoryMapping)]);
 
   useUpdateEffect(() => {
@@ -464,17 +464,6 @@ export const ProtocolParameterHistory = () => {
   useUpdateEffect(() => {
     setColumnsTable([columnsTable[0], ...columnsTable.slice(1).reverse()]);
   }, [sortTimeFilter]);
-
-  useEffect(() => {
-    if (timer) {
-      clearTimeout(timer);
-    }
-    if (!loading) {
-      timer = setTimeout(() => {
-        setIniting(false);
-      }, 200);
-    }
-  }, [loading]);
 
   if (loading) {
     return (
