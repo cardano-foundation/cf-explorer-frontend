@@ -54,7 +54,7 @@ export interface DetailHeaderProps {
   title: number | string;
   lastUpdated?: number;
   hash?: string;
-  transactionStatus?: keyof typeof TransactionStatus;
+  transactionStatus?: TransactionStatus;
   stakeKeyStatus?: StakeStatus;
   epoch?: DetailHeaderBlock | null;
   listItem: {

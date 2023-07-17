@@ -76,7 +76,7 @@ export const DataContainer = styled("div")(({ theme }) => ({
   background: theme.palette.background.paper,
   display: "flex",
   flexDirection: "column",
-  boxShadow: theme.shadow[4],
+  boxShadow: theme.shadow.detailHeader,
   borderRadius: 12,
   padding: "30px 25px",
   [theme.breakpoints.down("sm")]: {

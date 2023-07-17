@@ -53,11 +53,11 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       ),
       value: (
         <TokenDescription>
+          <Box mb={1}>Hex Format: #{data?.name || data?.fingerprint}</Box>
           {data?.metadata?.description || ""}
           {data?.metadata?.url ? (
             <TokenUrl onClick={() => window.open(data?.metadata?.url, "_blank")}>{data?.metadata?.url}</TokenUrl>
           ) : null}
-          <Box mt={1}>Hex Format: #{data?.name || data?.fingerprint}</Box>
         </TokenDescription>
       )
     },
