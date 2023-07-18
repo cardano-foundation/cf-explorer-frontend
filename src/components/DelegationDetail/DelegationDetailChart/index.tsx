@@ -95,13 +95,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                       <stop offset="100%" stopColor={theme.palette.green[700]} stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <XAxis
-                    dataKey="epochNo"
-                    tickLine={false}
-                    tickMargin={5}
-                    dx={-5}
-                    // interval={isMobile ? 3 : undefined}
-                  />
+                  <XAxis dataKey="epochNo" tickLine={false} tickMargin={5} dx={-5} />
                   <YAxis
                     dataKey={selected === "epochChart" ? "totalStake" : "numberDelegator"}
                     tickFormatter={formatValue}

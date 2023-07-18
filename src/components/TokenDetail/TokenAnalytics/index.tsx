@@ -101,7 +101,6 @@ const AddressAnalytics: FC = () => {
                       tickLine={false}
                       tickMargin={5}
                       dx={-15}
-                      interval={isMobile ? 3 : undefined}
                     />
                     <YAxis tickFormatter={formatPriceValue} tickLine={false} />
                     <Tooltip content={renderTooltip} cursor={false} />
