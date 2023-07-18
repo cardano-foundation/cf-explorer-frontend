@@ -1,4 +1,3 @@
-import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { CgClose } from "react-icons/cg";
 
@@ -19,7 +18,8 @@ import {
   DatumnText,
   DatumnItem,
   IconContainer,
-  CloseButton
+  CloseButton,
+  DataTitle
 } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 
@@ -59,7 +59,7 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
           <IconContainer>
             <RedeemerPlusIcon />
           </IconContainer>
-          <ContractDatumn key="in" item={item} type="in" />
+          <ContractDatumn key="in" item={item} type="in" txHash={txHash} />
         </>
       )}
       <IconContainer>
@@ -86,45 +86,47 @@ export const ContractRedeemer = ({ item }: IContractDiagramProps) => {
       <TabElement>
         <TabItem>
           <TitleText>Tag</TitleText>
-          <Typography component={"span"}>{item.purpose}</Typography>
+          <DataTitle>{item.purpose}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Data</TitleText>
-          <Typography component={"span"}>{item.redeemerBytes}</Typography>
+          <DataTitle>{item.redeemerBytes}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Mem</TitleText>
-          <Typography component={"span"}>{item.redeemerMem}</Typography>
+          <DataTitle>{item.redeemerMem}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Steps</TitleText>
-          <Typography component={"span"}>{item.redeemerSteps}</Typography>
+          <DataTitle>{item.redeemerSteps}</DataTitle>
         </TabItem>
       </TabElement>
     </CardDiagram>
   );
 };
 
-export const ContractDatumn = ({ item, type }: IContractDiagramProps) => {
+export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) => {
   const isTypeIn = type === "in";
   return (
     <DatumnElement>
       <DatumnItem
+        isTxHash={!!txHash}
         sx={{
           borderBottom: (props) => `1px solid ${props.palette.border.line}`,
           paddingBottom: "10px"
         }}
       >
         <DatumnText>Datum Hash</DatumnText>
-        <Typography component={"span"}>{isTypeIn ? item.datumHashIn : item.datumHashOut}</Typography>
+        <DataTitle>{isTypeIn ? item.datumHashIn : item.datumHashOut}</DataTitle>
       </DatumnItem>
       <DatumnItem
+        isTxHash={!!txHash}
         sx={{
           paddingTop: "10px"
         }}
       >
         <DatumnText>Datum</DatumnText>
-        <Typography component={"span"}>{isTypeIn ? item.datumBytesIn : item.datumBytesOut}</Typography>
+        <DataTitle>{isTypeIn ? item.datumBytesIn : item.datumBytesOut}</DataTitle>
       </DatumnItem>
     </DatumnElement>
   );
