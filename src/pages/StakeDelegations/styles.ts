@@ -35,7 +35,11 @@ export const PageSize = styled(Box)(() => ({
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   display: "block",
   margin: "12px 0px"
 }));
+export const PoolName = styled(Link)`
+  font-family: var(--font-family-text) !important;
+  color: ${({ theme }) => theme.palette.secondary.main} !important;
+`;

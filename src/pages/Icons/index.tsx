@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Box } from "@mui/system";
-import { Container, Modal, TextareaAutosize, Theme, styled, useTheme } from "@mui/material";
+import { Container, Modal, TextareaAutosize, Theme, styled, useTheme, alpha } from "@mui/material";
 
 import * as icons from "src/commons/resources";
 import CustomIcon from "src/components/commons/CustomIcon";
 
 const StyledContainer = styled(Container)`
   padding: 20px 0 40px;
-  background: #dfdfdf;
+  background: ${({ theme }) => alpha(theme.palette.grey[300], 0.1)};
 `;
 
 const StyledImage = styled("img")`
@@ -20,12 +20,12 @@ const StyledImage = styled("img")`
 
 const Group = styled(Box)`
   padding: 20px 20px 50px;
-  border-bottom: 2px solid #444;
+  border-bottom: 2px solid ${({ theme }) => theme.palette.border.primary};
   text-align: left;
 `;
 
 const Title = styled("h3")`
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid ${({ theme }) => theme.palette.border.primary};
   width: max-content;
 `;
 const IconList = styled(Box)`
@@ -128,7 +128,7 @@ const Item = ({ name, Icon }: { name: string; Icon: React.FunctionComponent<Reac
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
         <Box>
-          <Box width={700} sx={{ background: "#FFF", padding: "30px" }}>
+          <Box width={700} sx={{ background: theme.palette.common.white, padding: "30px" }}>
             <TextareaAutosize
               value={stringify}
               style={{
@@ -140,7 +140,12 @@ const Item = ({ name, Icon }: { name: string; Icon: React.FunctionComponent<Reac
               }}
               minRows={3}
             />
-            <Box display={"flex"} flexWrap={"wrap"} gap={"20px"} sx={{ background: "#dfdfdf", padding: "30px" }}>
+            <Box
+              display={"flex"}
+              flexWrap={"wrap"}
+              gap={"20px"}
+              sx={{ background: theme.palette.common.white, padding: "30px" }}
+            >
               {styleList.map((item, idx) => {
                 let color: string | ((theme: Theme) => string) | undefined = item.color;
                 switch (item.color) {
@@ -195,6 +200,7 @@ const ItemConvert = ({ name, Icon }: { name: string; Icon: string }) => {
   const [open, setOpen] = useState(false);
   const svgName = Icon.split("/").slice(-1)[0];
   const svgNameArray = svgName.split(".");
+  const theme = useTheme();
   const svgOriginName = svgNameArray[0] + "." + svgNameArray[2];
   const stringify = `export { ReactComponent as ${name} } from "./icons/${svgOriginName}";`;
   return (
@@ -206,7 +212,7 @@ const ItemConvert = ({ name, Icon }: { name: string; Icon: string }) => {
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
         <Box>
-          <Box width={700} sx={{ background: "#FFF", padding: "30px" }}>
+          <Box width={700} sx={{ background: theme.palette.common.white, padding: "30px" }}>
             <TextareaAutosize
               value={stringify}
               style={{

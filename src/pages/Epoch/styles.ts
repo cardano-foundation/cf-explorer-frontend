@@ -1,5 +1,7 @@
 import { Box, styled, Container } from "@mui/material";
 
+import { EPOCH_STATUS } from "src/commons/utils/constants";
+
 export const StyledContainer = styled(Container)(({ theme }) => ({
   paddingTop: "20px",
   [theme.breakpoints.down("sm")]: {
@@ -28,12 +30,18 @@ export const BlueText = styled("span")`
   color: ${(props) => props.theme.palette.text.primary};
 `;
 
-export const Status = styled("span")<{ status: string }>(({ theme }) => ({
+export const Status = styled("span")<{ status: keyof typeof EPOCH_STATUS }>(({ theme, status }) => ({
   fontFamily: "var(--font-family-title)",
   fontWeight: "var(--font-weight-bold)",
   borderRadius: "2px",
   textTransform: "uppercase",
   fontSize: "10px",
+  color:
+    status === "REWARDING"
+      ? theme.palette.green[200]
+      : status === "FINISHED"
+      ? theme.palette.blue[100]
+      : theme.palette.yellow[100],
   [theme.breakpoints.down("md")]: {
     fontSize: "7px"
   }
