@@ -97,7 +97,7 @@ const StakingLifecycle: React.FC = () => {
               >
                 <StyledTab
                   value={"stake-key"}
-                  label={<StyledTabLabel active={+(tab === "stake-key")}>Stake Key Reports</StyledTabLabel>}
+                  label={<StyledTabLabel active={+(tab === "stake-key")}>Stake Address Reports</StyledTabLabel>}
                 />
                 <StyledTab
                   value={"pools"}

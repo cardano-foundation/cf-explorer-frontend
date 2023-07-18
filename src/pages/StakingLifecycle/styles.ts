@@ -16,6 +16,10 @@ export const TitleHead = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 50px;
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    margin-top: 0;
+  }
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
     display: flex;
