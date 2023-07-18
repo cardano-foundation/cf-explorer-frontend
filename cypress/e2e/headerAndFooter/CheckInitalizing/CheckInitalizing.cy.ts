@@ -8,5 +8,9 @@ beforeEach(() => {
 it.only("Check initializing successfully", () => {
   dashboardPage.clickNetworkDropDownList()
                .verifyNetworkSelection(['Mainnet','Preprod','Preview'])
-});
+               .clickNetworkDropDownListRandom()
+               .clickAllFiltersDropDownList()
+               .verifyAllFilterSelection(['All Filters','Epochs','Blocks','Transactions','Tokens','Addresses','Pools','Policy Id'])
+               .verifySearchBoxDisplay()
+              });
 })
