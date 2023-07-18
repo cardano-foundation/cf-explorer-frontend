@@ -56,7 +56,7 @@ const AddressAnalytics: React.FC = () => {
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
     return (
       <TooltipBody>
-        <TooltipLabel>{moment(content.label).format("DD MMM HH:mm:ss")} (UTC time zone)</TooltipLabel>
+        <TooltipLabel>{moment(content.label).format("DD MMM YYYY HH:mm:ss")} (UTC time zone)</TooltipLabel>
         <TooltipValue>{formatADAFull(content.payload?.[0]?.value) || 0}</TooltipValue>
       </TooltipBody>
     );
@@ -98,7 +98,6 @@ const AddressAnalytics: React.FC = () => {
                     tickLine={false}
                     tickMargin={5}
                     dx={-15}
-                    interval={0}
                   />
                   <YAxis tickFormatter={formatPriceValue} tickLine={false} />
                   <Tooltip content={renderTooltip} cursor={false} />

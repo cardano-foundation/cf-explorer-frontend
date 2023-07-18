@@ -81,14 +81,16 @@ const StakeAnalytics: React.FC = () => {
     return (
       <TooltipBody>
         <TooltipLabel>
-          {tab === "BALANCE" ? moment(content.label).format("DD MMM HH:mm:ss") + " (UTC time zone)" : content.label}
+          {tab === "BALANCE"
+            ? moment(content.label).format("DD MMM YYYY HH:mm:ss") + " (UTC time zone)"
+            : content.label}
         </TooltipLabel>
         <TooltipValue>{numberWithCommas(content.payload?.[0]?.value) || 0}</TooltipValue>
       </TooltipBody>
     );
   };
 
-  const xAxisProps: XAxisProps = tab === "BALANCE" ? { tickMargin: 5, dx: -15, interval: 0 } : { tickMargin: 5 };
+  const xAxisProps: XAxisProps = tab === "BALANCE" ? { tickMargin: 5, dx: -15 } : { tickMargin: 5 };
 
   return (
     <Card title={<TextCardHighlight>Analytics</TextCardHighlight>}>
@@ -157,7 +159,7 @@ const StakeAnalytics: React.FC = () => {
                     tickLine={false}
                     {...xAxisProps}
                   />
-                  <YAxis tickFormatter={formatPriceValue} tickLine={false} />
+                  <YAxis tickFormatter={formatPriceValue} tickLine={false} interval={isMobile ? 3 : undefined} />
                   <Tooltip content={renderTooltip} cursor={false} />
                   <CartesianGrid vertical={false} strokeWidth={0.33} />
                   <Area
