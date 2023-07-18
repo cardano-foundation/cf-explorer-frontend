@@ -3,17 +3,18 @@ import userEvent from "@testing-library/user-event";
 
 import { render } from "src/test-utils";
 
-import FilterReport from "./index";
+import CustomFilter from "./index";
 
-describe("FilterReport", () => {
+describe("CustomFilter", () => {
   it("should render filter button", () => {
-    render(<FilterReport />);
+    const onChange = jest.fn();
+    render(<CustomFilter onChange={onChange} searchLabel="Search report name" />);
     expect(screen.getByText("Filter")).toBeInTheDocument();
   });
 
   it("should render options when click button", async () => {
-    const onFilterValueChange = jest.fn();
-    render(<FilterReport onFilterValueChange={onFilterValueChange} />);
+    const onChange = jest.fn();
+    render(<CustomFilter onChange={onChange} searchLabel="Search report name" />);
 
     const elm = screen.getByText("Filter");
     await userEvent.click(elm);
