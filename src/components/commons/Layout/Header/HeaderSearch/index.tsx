@@ -99,6 +99,14 @@ const options: Option[] = [
   }
 ];
 
+const URL_FETCH_DETAIL = {
+  epochs: (epoch: number) => `${API.EPOCH.DETAIL}/${epoch}`,
+  blocks: (block: number) => `${API.BLOCK.DETAIL}/${block}`,
+  txs: (trx: string) => `${API.TRANSACTION.DETAIL}/${trx}`,
+  addresses: (address: string) => `${API.ADDRESS.DETAIL}/${address}`,
+  policies: (policy: string) => `${API.POLICY}/${policy}`
+};
+
 interface Props extends RouteComponentProps {
   home: boolean;
   callback?: () => void;
@@ -131,9 +139,9 @@ interface IResponseSearchAll {
   validPoolName?: true;
   policy?: "string";
 }
+const RESULT_SIZE = 5;
 
 const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, history }) => {
-  const RESULT_SIZE = 5;
   const [{ search, filter }, setValues] = useState<FormValues>({ ...intitalValue });
   const [showOption, setShowOption] = useState(false);
   const [error, setError] = useState("");
@@ -144,11 +152,13 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     TokensSearch[] | DelegationPool[] | undefined
   >();
   const [loading, setLoading] = useState<boolean>(false);
+  const [totalResult, setTotalResult] = useState<number>(0);
 
   const showResultNotFound = () => {
     setError("No results found");
     setShowErrorMobile?.(true);
     setDataSearchAll(undefined);
+    setShowOption(true);
   };
 
   const handleSearchAll = async (querry: string) => {
@@ -173,7 +183,8 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       }=${querry}`;
 
       const res = await defaultAxios.get(url);
-      setDataSearchTokensAndPools(res?.data ? res?.data?.data : undefined);
+      setTotalResult(res?.data && res.data?.totalItems ? res.data?.totalItems : 0);
+      setDataSearchTokensAndPools(res?.data && res?.data?.data ? res?.data?.data : undefined);
       setShowOption(true);
       setLoading(false);
     } catch {
@@ -207,6 +218,22 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
     const option = options.find((item) => item.value === (filterParams || filter));
+
+    if (!["all", "tokens", "delegations/pool-detail-header"].includes(option?.value || "")) {
+      setLoading(true);
+      const url = URL_FETCH_DETAIL[option?.value as keyof typeof URL_FETCH_DETAIL]
+        ? URL_FETCH_DETAIL[option?.value as keyof typeof URL_FETCH_DETAIL](search as never)
+        : "";
+      try {
+        await defaultAxios.get(url);
+      } catch (error) {
+        showResultNotFound();
+        setShowOption(true);
+        return;
+      } finally {
+        setLoading(false);
+      }
+    }
 
     if (option?.value === "lifecycle") {
       if (search.startsWith("stake")) {
@@ -328,6 +355,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           showResultNotFound={showResultNotFound}
           error={error}
           home={home}
+          totalResult={totalResult}
           filter={filter}
           show={showOption}
           value={search}
@@ -359,6 +387,7 @@ interface OptionProps {
   dataSearchTokensAndPools?: TokensSearch[] | DelegationPool[];
   showResultNotFound: () => void;
   filter: FilterParams;
+  totalResult: number;
 }
 
 export const OptionsSearch = ({
@@ -369,7 +398,8 @@ export const OptionsSearch = ({
   data,
   showResultNotFound,
   filter,
-  dataSearchTokensAndPools
+  dataSearchTokensAndPools,
+  totalResult
 }: OptionProps) => {
   const history = useHistory();
 
@@ -483,6 +513,30 @@ export const OptionsSearch = ({
                 </Option>
               );
             })}
+            {listOptionsTokensAndPools && totalResult && totalResult > RESULT_SIZE && (
+              <Option
+                onClick={() =>
+                  filter === "tokens"
+                    ? history.push(`${routers.TOKEN_LIST}?tokenName=${value}`)
+                    : history.push(routers.DELEGATION_POOLS, {
+                        tickerNameSearch: value
+                      })
+                }
+              >
+                <Box
+                  display="flex"
+                  alignItems={"center"}
+                  justifyContent="center"
+                  width={"100%"}
+                  fontSize={"14px"}
+                  padding={0}
+                  gap="10px"
+                  minHeight="34px"
+                >
+                  See more
+                </Box>
+              </Option>
+            )}
           </>
         ) : (
           <Box component={Option} color={({ palette }) => palette.red[100]} justifyContent={"center"}>
