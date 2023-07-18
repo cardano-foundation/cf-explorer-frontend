@@ -17,7 +17,6 @@
     "@textea/json-viewer": "^2.13.1",
     "@types/jest": "^27.5.2",
     "@types/json-bigint": "^1.0.1",
-    "@types/lodash": "^4.14.188",
     "@types/node": "^16.18.3",
     "@types/react": "^18.0.25",
     "@types/react-datepicker": "^4.10.0",
@@ -95,6 +94,7 @@
   },
   "devDependencies": {
     "@stdlib/string-format": "^0.0.3",
+    "@types/lodash": "^4.14.195",
     "@types/mocha": "^10.0.1",
     "@types/react-router-dom": "^5.3.3",
     "@typescript-eslint/eslint-plugin": "^5.59.5",

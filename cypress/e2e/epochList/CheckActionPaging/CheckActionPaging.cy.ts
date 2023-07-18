@@ -10,7 +10,7 @@ it("Check action of Paging : Check paging navigator when gridview have ((10*n)+1
     epochPanel
               .clickOnPerPageDropdown()
               .changePerPageValue('10')
-              .verifyPagingNavigatorDisplay()
+              .verifyPagingNavigatorDisplay(10)
               .clickToNextPageTillTheEndAndCheckNumberRecord('10')
               .verifyTotalPage('10')
 
