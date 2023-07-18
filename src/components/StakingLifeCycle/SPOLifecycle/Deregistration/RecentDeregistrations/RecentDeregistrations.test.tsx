@@ -35,6 +35,6 @@ test("check RecentDeregistrations call mock api", async () => {
     });
   });
 
-  render(<RecentDeregistrations onSelect={onSelect} />);
+  render(<RecentDeregistrations onSelect={onSelect} setShowBackButton={jest.fn()} />);
   expect(mockFetchData).toHaveBeenCalled();
 });

@@ -112,7 +112,8 @@ export const API = {
     VERIFY_SCRIPT: "contracts/verify/native",
     SCRIPT: (address: string) => `contracts/${address}/script`
   },
-  STORIES: "news"
+  STORIES: "news",
+  SEARCH_ALL: (q: string) => `/search?query=${q}`
 };
 
 export const USER_API = {

@@ -78,7 +78,7 @@ const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort, p
       title: "Timestamp",
       key: "createdAt",
       sort({ sortValue }) {
-        onSort?.(`id,${sortValue}`);
+        onSort?.(sortValue ? `id,${sortValue}` : "");
       },
       render(data) {
         return formatDateTimeLocal(data.createdAt);
@@ -160,7 +160,7 @@ const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort, p
       <Table
         {...fetchData}
         columns={columns}
-        total={{ title: "Stake key summary", count: fetchData.total }}
+        total={{ title: "Stake address summary", count: fetchData.total }}
         onClickRow={(e, row) => history.push(details.generated_staking_detail(row.id))}
         pagination={{
           page,
