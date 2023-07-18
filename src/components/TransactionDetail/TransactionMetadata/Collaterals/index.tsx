@@ -19,9 +19,13 @@ interface CollateralProps {
 }
 
 const Collaterals: React.FC<CollateralProps> = ({ data }) => {
-  const totalADA = (data?.collateralOutputResponses || []).reduce((prv, item) => {
+  const totalADAInput = (data?.collateralInputResponses || []).reduce((prv, item) => {
     return prv + item.value;
   }, 0);
+  const totalADAOutput = (data?.collateralOutputResponses || []).reduce((prv, item) => {
+    return prv + item.value;
+  }, 0);
+  const totalADA = totalADAInput - totalADAOutput;
   const isShowCardInput = data?.collateralInputResponses && data?.collateralInputResponses.length > 0;
   const isShowCardOutput = data?.collateralOutputResponses && data?.collateralOutputResponses.length > 0;
   return (
@@ -49,7 +53,7 @@ const Card = ({ type, items, sx }: { type: "input" | "output"; items?: Collatera
       <Header fontWeight="bold">
         <BoxHeaderTop>{type === "input" ? "Input" : "Output"}</BoxHeaderTop>
         <BoxHeaderBottom>
-          <Box>Wallet Addresses</Box>
+          <Box>Addresses</Box>
           <Box>Amount</Box>
         </BoxHeaderBottom>
       </Header>
@@ -94,9 +98,9 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                       <Link to={details.address(item.address)}>
                         <CustomTooltip title={item.address}>
                           <Box
+                            color={(theme) => theme.palette.blue[800]}
                             fontWeight="bold"
                             fontFamily={"var(--font-family-text)"}
-                            color={(theme) => theme.palette.blue[100]}
                             mr={1}
                           >
                             {getShortWallet(item.address)}
