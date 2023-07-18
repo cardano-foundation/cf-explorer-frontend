@@ -12,7 +12,7 @@ export const ContractHeader = styled(Box)`
 `;
 
 export const ContractText = styled(Typography)`
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   display: flex;
   justify-content: space-between;
@@ -48,12 +48,19 @@ export const CardDiagram = styled(Box)`
 export const TabElement = styled(Box)`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 10px 50px;
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    gap: 10px 20px;
+  }
   word-break: break-word;
   padding: 18px 20px;
   border-radius: 5px;
   background: ${(props) => props.theme.palette.grey[80]};
   color: ${(props) => props.theme.palette.common.black};
+  text-align: left;
+  max-height: 150px;
+  overflow: scroll;
 `;
 
 export const TabItem = styled(Box)`
@@ -65,9 +72,13 @@ export const TitleText = styled(Typography)`
   display: inline;
   color: ${(props) => props.theme.palette.grey[300]};
   margin-right: 10px;
-  min-width: 50px;
+  min-width: 36px;
+  font-size: 14px;
 `;
 
+export const DataTitle = styled(Typography)`
+  font-size: 14px;
+`;
 export const DatumnElement = styled(Box)`
   background: ${(props) => props.theme.palette.grey[80]};
   color: ${(props) => props.theme.palette.common.black};
@@ -79,9 +90,10 @@ export const DatumnElement = styled(Box)`
   font-weight: 400;
 `;
 
-export const DatumnItem = styled(Box)`
+export const DatumnItem = styled(Box)<{ isTxHash?: boolean }>`
   display: flex;
-  gap: 50px;
+  flex-direction: ${(props) => (props.isTxHash ? `column` : `row`)};
+  gap: ${(props) => (props.isTxHash ? `10px` : `50px`)};
   ${({ theme }) => theme.breakpoints.down("sm")} {
     gap: 20px;
   }
