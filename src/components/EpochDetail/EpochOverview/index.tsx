@@ -121,7 +121,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
         listItem={listOverview}
         type="EPOCH"
         bookmarkData={data?.no?.toString()}
-        title={"Epoch detail"}
+        title={"Epoch details"}
         lastUpdated={lastUpdated}
         epoch={
           data && {

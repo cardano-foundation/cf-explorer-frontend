@@ -7,7 +7,7 @@ import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/util
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
-import { FilterParams } from "src/components/StackingFilter";
+import { FilterParams } from "src/components/commons/CustomFilter";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
@@ -25,15 +25,11 @@ const DelegationTab = () => {
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
   const [sort, setSort] = useState<string>("");
-  const [params] = useState<FilterParams>({
-    fromDate: undefined,
-    sort: undefined,
-    toDate: undefined,
-    txHash: undefined
-  });
+  const [params] = useState<FilterParams>({});
   const fetchData = useFetchList<DelegationItem>(reportId ? API.REPORT.SREPORT_DETAIL_DELEGATIONS(reportId) : "", {
     ...pageInfo,
     ...params,
+    txHash: params.search,
     sort: sort || params.sort
   });
   const { total } = fetchData;
@@ -69,7 +65,7 @@ const DelegationTab = () => {
       minWidth: "120px",
       render: (r) => (
         <IconButton onClick={() => setSelected(r.txHash)}>
-          <EyeIcon style={{ transform: "scale(.8)" }} />
+          <EyeIcon />
         </IconButton>
       )
     }
@@ -90,7 +86,7 @@ const DelegationTab = () => {
         total={{ title: "Total", count: fetchData.total }}
         pagination={{
           ...pageInfo,
-          page: pageInfo.page + 1,
+          page: pageInfo.page,
           total: fetchData.total,
           onChange: (page, size) => setPageInfo((pre) => ({ ...pre, page: page - 1, size }))
         }}

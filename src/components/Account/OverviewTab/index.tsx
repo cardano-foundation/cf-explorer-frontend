@@ -144,13 +144,13 @@ const OverviewTab = () => {
                   <Box
                     component={IoMdClose}
                     size={"24px"}
-                    color={theme.palette.red[700]}
+                    color={theme.palette.red[100]}
                     onClick={() => setShowInput(false)}
                     mr={1}
                   />
                 )}
                 {!loading ? (
-                  <Box color={theme.palette.green[700]} component={GoCheck} size={"24px"} onClick={handleSubmitEmail} />
+                  <Box color={theme.palette.green[200]} component={GoCheck} size={"24px"} onClick={handleSubmitEmail} />
                 ) : (
                   <CircularProgress size={"24px"} />
                 )}
@@ -286,11 +286,11 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
         <Box textAlign={"center"} mb={3}>
           <Box component={"img"} src={questionConfirm} />
         </Box>
-        <Box textAlign={"center"} color={({ palette }) => palette.grey[700]} fontWeight={"bold"} fontSize={"20px"}>
+        <Box textAlign={"center"} color={({ palette }) => palette.grey[400]} fontWeight={"bold"} fontSize={"20px"}>
           Confirmation Required
         </Box>
-        <Box textAlign={"center"} color={({ palette }) => palette.grey[700]} fontWeight={"bold"} fontSize={"18px"}>
-          This is your stake key {getShortWallet(stakeKey || "")}, are you sure to continue?
+        <Box textAlign={"center"} color={({ palette }) => palette.grey[400]} fontWeight={"bold"} fontSize={"18px"}>
+          This is your stake address {getShortWallet(stakeKey || "")}, are you sure to continue?
         </Box>
         <Box display={"flex"} justifyContent={"center"} mt={2}>
           <StyledButton disabled={loading} onClick={() => setStakeKey(null)}>

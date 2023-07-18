@@ -1,13 +1,13 @@
 import { useTheme } from "@emotion/react";
-import { Breakpoint, styled } from "@mui/material";
+import { Breakpoint, alpha, styled } from "@mui/material";
 import React, { MutableRefObject, useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useWindowSize } from "react-use";
 
-const StyledLine = styled("path")(() => ({
+const StyledLine = styled("path")(({ theme }) => ({
   strokeWidth: 3,
   strokeLinecap: "round",
-  stroke: "#00000015",
+  stroke: alpha(theme.palette.common.black, 0.08),
   fill: "none"
 }));
 
@@ -100,7 +100,9 @@ export const LineArrow: React.FC<LineArrowProps> = (props) => {
 
   const getKey = (obj: Partial<{ [key in Breakpoint | number]: any }>): Breakpoint | number => {
     const listKeys: (Breakpoint | number)[] = Object.keys(obj) as (Breakpoint | number)[];
-    const listPoints = listKeys.map((item) => (typeof item === "number" ? item : theme.breakpoints.values[item] || 0));
+    const listPoints = listKeys.map((item) =>
+      typeof item === "number" || Number(item) ? Number(item) : theme.breakpoints.values[item] || 0
+    );
     const listMatch = listPoints.filter((item) => item <= width);
     const key = Math.max(...listMatch);
     const index = listPoints.indexOf(key);

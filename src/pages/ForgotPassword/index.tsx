@@ -1,4 +1,4 @@
-import { Box, FormGroup } from "@mui/material";
+  import { Box, FormGroup } from "@mui/material";
 import { useEffect, useReducer, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { HiArrowLongLeft } from "react-icons/hi2";
@@ -161,7 +161,7 @@ export default function ForgotPassword() {
       <WrapContent>
         <WrapTitle>Forgot Password</WrapTitle>
         <WrapHintText>
-          <WrapSignUp onClick={() => history.replace(routers.SIGN_IN)}>Sign-In</WrapSignUp>
+          <WrapSignUp onClick={() => history.replace(routers.SIGN_IN)}>Sign In</WrapSignUp>
         </WrapHintText>
         <FormGroup>
           {!success ? (

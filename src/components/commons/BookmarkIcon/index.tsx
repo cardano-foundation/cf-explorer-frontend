@@ -8,7 +8,7 @@ import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
 import useToast from "src/commons/hooks/useToast";
 import useAuth from "src/commons/hooks/useAuth";
 import { BookmarkIcon, Bookmarked } from "src/commons/resources";
-
+import CustomTooltip from "src/components/commons/CustomTooltip";
 interface BookmarkButtonProps {
   keyword: string;
   type: Bookmark["type"];
@@ -28,60 +28,65 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
     setBookmark(
       (JSON.parse(localStorage.getItem("bookmark") || "[]") || []).find((r: Bookmark) => r.keyword === `${keyword}`)
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openSyncBookmarkModal, bookmarks, keyword]);
 
   const updateBookmark = async () => {
-    if (!isLoggedIn) {
+    if (!isLoggedIn) return;
+    try {
+      setLoading(true);
       if (!bookmark) {
-        setBookmarks([...(bookmarks || []), { keyword: `${keyword}`, type, network: NETWORK_TYPES[NETWORK] }]);
-        toast.success("Add bookmark successfully!");
-      } else {
-        setBookmarks((bookmarks || []).filter((b) => b.keyword !== `${keyword}`));
-        toast.success("Delete bookmark successfully!");
-      }
-    }
-
-    if (isLoggedIn)
-      try {
-        setLoading(true);
-        if (!bookmark) {
-          if ((bookmarks || [])?.length < 2000) {
-            const { data } = await addBookmark({
-              keyword,
-              type,
-              network: NETWORK_TYPES[NETWORK]
-            });
-            setBookmarks([...(bookmarks || []), data]);
-            toast.success("Add bookmark successfully!");
-          } else {
-            toast.error("Maximum bookmarks is 2000!");
-          }
+        if ((bookmarks || [])?.length < 2000) {
+          const { data } = await addBookmark({
+            keyword,
+            type,
+            network: NETWORK_TYPES[NETWORK]
+          });
+          setBookmarks([...(bookmarks || []), data]);
+          toast.success("Bookmark has been added.");
         } else {
-          try {
-            deleteBookmark(bookmark?.id || 0);
-            setBookmarks((bookmarks || []).filter((b) => b.keyword !== `${keyword}`));
-            toast.success("Delete bookmark successfully!");
-          } catch (error) {
-            toast.error("Something went wrong!");
-          }
+          toast.error("Maximum bookmarks is 2000!");
         }
-      } catch (error) {
-        toast.error("Something went wrong!");
-      } finally {
-        setLoading(false);
+      } else {
+        try {
+          deleteBookmark(bookmark?.id || 0);
+          setBookmarks((bookmarks || []).filter((b) => b.keyword !== `${keyword}`));
+          toast.success("Bookmark has been removed.");
+        } catch (error) {
+          toast.error("Something went wrong! Please try again!");
+        }
       }
+    } catch (error) {
+      toast.error("Something went wrong! Please try again!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const renderBookmark = () => {
+    if (loading) {
+      return <CircularProgress size={"30px"} />;
+    }
+    if (!isLoggedIn) {
+      return (
+        <CustomTooltip title="Please sign in to save your bookmark">
+          <BookmarkIcon fill={theme.palette.text.hint} />
+        </CustomTooltip>
+      );
+    }
+    if (bookmark) {
+      return <Bookmarked />;
+    }
+    return <BookmarkIcon fill={theme.palette.text.hint} />;
   };
 
   return (
     <Box>
-      <IconButton style={{ width: 45, height: 45 }} onClick={updateBookmark}>
-        {loading ? (
-          <CircularProgress size={"30px"} />
-        ) : bookmark ? (
-          <Bookmarked />
-        ) : (
-          <BookmarkIcon fill={theme.palette.text.hint} />
-        )}
+      <IconButton
+        style={{ width: 45, height: 45, cursor: isLoggedIn ? "pointer" : "default" }}
+        onClick={updateBookmark}
+      >
+        {renderBookmark()}
       </IconButton>
     </Box>
   );

@@ -1,5 +1,5 @@
 import { useRef, useMemo } from "react";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useHistory } from "react-router-dom";
 
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
@@ -44,6 +44,7 @@ export const RegistrationDraw = ({ selected, toggleModal, data, showBackButton }
   const { poolHold, fee, time, txHash } = selected;
   const { poolName, poolView, stakeKeys } = data ?? {};
 
+  const theme = useTheme();
   const SPOPoolRef = useRef(null);
   const poolHoldRef = useRef(null);
   const feeRef = useRef(null);
@@ -113,7 +114,7 @@ export const RegistrationDraw = ({ selected, toggleModal, data, showBackButton }
 
         <InfoGroup>
           <Info>
-            <AddressIcon fill="#438F68" />
+            <AddressIcon fill={theme.palette.green[200]} />
             <CustomTooltip title={txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(data?.txHash)}>{getShortHash(txHash || "")}</StyledLink>
@@ -122,11 +123,11 @@ export const RegistrationDraw = ({ selected, toggleModal, data, showBackButton }
             <StyledCopyButton text={txHash} />
           </Info>
           <Info>
-            <ADAGreen />
+            <ADAGreen fill={theme.palette.green[200]} />
             <InfoText>{formatADAFull(poolHold + fee || 0)}</InfoText>
           </Info>
           <Info>
-            <TimeIcon />
+            <TimeIcon fill={theme.palette.green[200]} />
             <InfoText>{formatDateTimeLocal(time || "")}</InfoText>
           </Info>
         </InfoGroup>

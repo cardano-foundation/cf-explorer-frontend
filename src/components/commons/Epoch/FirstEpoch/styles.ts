@@ -1,4 +1,6 @@
-import { Box, Grid, alpha, styled } from "@mui/material";
+import { Box, Grid, styled } from "@mui/material";
+
+import { EPOCH_STATUS } from "src/commons/utils/constants";
 
 export const EpochCard = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -55,21 +57,27 @@ export const EpochNumber = styled(Box)(({ theme }) => ({
   textAlign: "center",
   [theme.breakpoints.down("sm")]: {
     marginTop: "-8px"
-  }
+  },
+  color: theme.palette.secondary.main
 }));
 
 export const TitleCard = styled(Box)(({ theme }) => ({
-  color: alpha(theme.palette.common.black, 0.5),
+  color: theme.palette.grey[300],
   fontSize: "0.875rem"
 }));
 
 export const EpochText = styled("span")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   text-transform: uppercase;
 `;
 
-export const EpochProgress = styled("h3")(({ theme }) => ({
-  color: theme.palette.common.black,
+export const EpochProgress = styled("h3")<{ status: keyof typeof EPOCH_STATUS }>(({ theme, status }) => ({
+  color:
+    status === "REWARDING"
+      ? theme.palette.green[200]
+      : status === "FINISHED"
+      ? theme.palette.blue[100]
+      : theme.palette.yellow[100],
   margin: 0,
   [theme.breakpoints.down("lg")]: {
     fontSize: 14
@@ -94,12 +102,12 @@ export const CardItem = styled(Grid)(({ theme }) => ({
 }));
 
 export const CardItemTitle = styled(Box)(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   marginLeft: 8
 }));
 
 export const MaxSlot = styled("span")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   font-size: 20px;
 `;
 
@@ -111,14 +119,16 @@ export const Date = styled("div")`
 
 export const Time = styled("div")`
   font-size: 1.25rem;
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
 `;
 
 export const Content = styled("span")`
+  color: ${(props) => props.theme.palette.grey[400]};
   font-size: 18px;
 `;
 
 export const SubContent = styled("span")`
   font-size: 16px;
-  opacity: 0.5;
+  font-weight: normal;
+  color: ${(props) => props.theme.palette.grey[300]};
 `;

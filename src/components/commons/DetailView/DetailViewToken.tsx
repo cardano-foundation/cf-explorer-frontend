@@ -181,7 +181,10 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                   )}
                 </TokenInfo>
                 <Box pb={2}>
-                  <MetaData>{data?.metadata?.description || ""}</MetaData>
+                  <MetaData>
+                    {`Hex Format: #${data?.name || data?.fingerprint}`}
+                    <Box mt={1}>{data?.metadata?.description || ""}</Box>
+                  </MetaData>
                 </Box>
               </TokenMetaData>
             ) : (
@@ -257,7 +260,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
               <DetailValue>{numberWithCommas(data.volumeIn24h || 0)}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Created</DetailLabel>
+              <DetailLabel>Created At</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.createdOn || "")}</DetailValue>
             </DetailsInfoItem>
           </Group>
@@ -265,7 +268,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
             <DetailLink to={details.token(tokenId)}>
               <DetailLabel>
                 <DetailLinkIcon>
-                  <TransactionIcon fill={theme.palette.green[600]} />
+                  <TransactionIcon fill={theme.palette.green[200]} />
                 </DetailLinkIcon>
                 <DetailLinkName>Transactions</DetailLinkName>
               </DetailLabel>
@@ -280,7 +283,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
             <DetailLink to={details.token(tokenId, "topHolders")}>
               <DetailLabel>
                 <DetailLinkIcon>
-                  <PeopleIcon fill={theme.palette.green[600]} />
+                  <PeopleIcon fill={theme.palette.green[200]} />
                 </DetailLinkIcon>
                 <DetailLinkName>Top Holders</DetailLinkName>
               </DetailLabel>
@@ -295,7 +298,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
             <DetailLink to={details.token(tokenId, "tokenMint")}>
               <DetailLabel>
                 <DetailLinkIcon>
-                  <UnionTokenIcon fill={theme.palette.green[600]} />
+                  <UnionTokenIcon fill={theme.palette.green[200]} />
                 </DetailLinkIcon>
                 <DetailLinkName>Token Mint</DetailLinkName>
               </DetailLabel>

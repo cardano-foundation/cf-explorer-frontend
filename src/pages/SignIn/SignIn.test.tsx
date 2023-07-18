@@ -16,8 +16,8 @@ jest.mock("src/commons/utils/userRequest", () => ({
 
 describe("SignIn page", () => {
   it("should render the page and availble to use", () => {
-    expect(screen.getByText("Sign-In")).toBeInTheDocument();
-    expect(screen.getByText("Sign-Up")).toBeInTheDocument();
+    expect(screen.getByText("Sign In")).toBeInTheDocument();
+    expect(screen.getByText("Sign Up")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Email Address")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Password")).toBeInTheDocument();
     expect(screen.getByText("Log in")).toBeInTheDocument();

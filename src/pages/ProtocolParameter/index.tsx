@@ -10,7 +10,7 @@ import {
   alpha,
   useTheme
 } from "@mui/material";
-import _ from "lodash";
+import { isObject, isEmpty } from "lodash";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { BsFillCheckCircleFill } from "react-icons/bs";
@@ -26,7 +26,7 @@ import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { PROTOCOL_TYPE } from "src/commons/utils/constants";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
-import DateRangeModal from "src/components/FilterReport/DateRangeModal";
+import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
 import ParseScriptModal from "src/components/ParseScriptModal";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -46,25 +46,39 @@ import {
   FilterContainer
 } from "./styles";
 
+interface IProtocolParamVertical {
+  name: string;
+  value: any;
+  epoch?: number;
+  timestamp?: string;
+}
+
 const ProtocolParameter: React.FC = () => {
-  const [fixedColumnKeys, { push: pushFixedColumnKeys }] = useList<string>([]);
-  const [variableColumnList, { push: pushVariableColumn }] = useList<string>([]);
   const [costModelScript, setCostModelScript] = useState("");
   const [showHistory, setShowHistory] = useState(false);
   const { PROTOCOL_PARAMETER } = API;
-  const { data: dataFixed, loading: loadingFixed } = useFetch(PROTOCOL_PARAMETER.FIXED);
-  const { data: dataLastest, loading: loadingLastest } = useFetch<TProtocolParam>(PROTOCOL_PARAMETER.LASTEST);
-  const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
-  useUpdateEffect(() => {
-    dataLastest &&
-      [...Object.keys(PROTOCOL_TYPE), "startEpoch", "endEpoch"].map((k) =>
-        dataLastest[k as ProtocolTypeKey] !== null && dataLastest[k as ProtocolTypeKey]?.transactionHash !== null
-          ? pushVariableColumn(k)
-          : ""
-      );
+  const { data: dataFixed, loading: loadingFixed } = useFetch<any>(PROTOCOL_PARAMETER.FIXED);
+  const { data: dataLastest, loading: loadingLastest } = useFetch<any>(PROTOCOL_PARAMETER.LASTEST);
 
-    dataLastest && [...Object.keys(dataFixed || {})].map((k) => pushFixedColumnKeys(k));
-  }, [dataFixed, dataLastest]);
+  const dataFixedVertical =
+    isObject(dataFixed) &&
+    Object.entries(dataFixed).map(([name, value]: any) => ({
+      name,
+      value: isObject(value) ? JSON.stringify(value) : value
+    }));
+
+  const dataLatestVertical =
+    isObject(dataLastest) &&
+    Object.entries(dataLastest)
+      .map(([name, valueObject]: any) => ({
+        name,
+        value: name === "costModel" ? JSON.stringify(valueObject) : valueObject?.value,
+        epochNo: valueObject?.epochNo,
+        time: valueObject?.time
+      }))
+      .filter((item) => item.name !== "timestamp");
+
+  const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
@@ -73,110 +87,129 @@ const ProtocolParameter: React.FC = () => {
 
   const theme = useTheme();
 
-  const columnsMap = Object.keys(PROTOCOL_TYPE).map((k) => ({
-    title: (
-      <Box>
-        {k}{" "}
-        {explainerTextProtocolHistory[k as keyof Omit<ProtocolHistory, "epochChanges">] && (
-          <Box
-            component={IconButton}
-            padding={"2px"}
-            onClick={() =>
-              setExplainerText({
-                content: explainerTextProtocolHistory[k as keyof Omit<ProtocolHistory, "epochChanges">],
-                title: k
-              })
-            }
-          >
-            <InfoIcon style={{ cursor: "pointer" }} />
-          </Box>
-        )}
-      </Box>
-    ),
-    key: k,
-    render: (r: TProtocolParam) => {
-      return (
-        <Box
-          component={k === "costModel" ? Button : Box}
-          onClick={() =>
-            k === "costModel" && setCostModelScript(r["costModel"] !== null ? r["costModel"]?.value || 0 : "")
-          }
-          p={0}
-          justifyItems={"flex-start"}
-          textTransform={"capitalize"}
-        >
-          <Box
-            maxWidth={300}
-            overflow={"hidden"}
-            whiteSpace={"nowrap"}
-            textOverflow={"ellipsis"}
-            color={({ palette }) => (k === "costModel" ? palette.blue[800] : "unset")}
-          >
-            {r[k as ProtocolTypeKey] !== null ? r[k as ProtocolTypeKey]?.value || 0 : ""}
-          </Box>
-        </Box>
-      );
-    }
-  }));
-
-  const columnsFull: Column<TProtocolParam>[] = [
+  const columnsVerticalFixedTable: Column<any>[] = [
     {
-      title: "Last updated in epoch",
-      key: "startEpoch",
-      render: (r: TProtocolParam) => {
-        return r?.epochChange?.startEpoch || 0;
+      title: "Parameter Name",
+      key: "name",
+      render: (r: IProtocolParamVertical) => {
+        const k = r.name;
+        return (
+          <Box>
+            {k}{" "}
+            {explainerTextGlobalConstants[k as keyof Omit<ProtocolHistory, "epochChanges">] && (
+              <Box
+                component={IconButton}
+                padding={"2px"}
+                onClick={() =>
+                  setExplainerText({
+                    content: explainerTextGlobalConstants[k as keyof Omit<ProtocolHistory, "epochChanges">],
+                    title: k
+                  })
+                }
+              >
+                <InfoIcon style={{ cursor: "pointer" }} />
+              </Box>
+            )}
+          </Box>
+        );
       }
+    },
+    {
+      title: "Value",
+      key: "value",
+      maxWidth: 400,
+      render: (r: any) => {
+        const k = r.name;
+        const isModalType = k === "genDelegs";
+        return (
+          <Box
+            component={isModalType ? Button : Box}
+            onClick={() => isModalType && setCostModelScript(r.value)}
+            p={0}
+            justifyItems={"flex-start"}
+            textTransform={"capitalize"}
+          >
+            <Box
+              maxWidth={300}
+              overflow={"hidden"}
+              whiteSpace={"nowrap"}
+              textOverflow={"ellipsis"}
+              color={({ palette }) => (isModalType ? palette.blue[100] : "unset")}
+            >
+              {r.value}
+            </Box>
+          </Box>
+        );
+      }
+    }
+  ];
+
+  const columnsVerticalLatestTable: Column<any>[] = [
+    {
+      title: "Parameter Name",
+      key: "name",
+      render: (r: IProtocolParamVertical) => {
+        const k = r.name;
+        return (
+          <Box>
+            {k}{" "}
+            {explainerTextProtocolHistory[k as keyof Omit<ProtocolHistory, "epochChanges">] && (
+              <Box
+                component={IconButton}
+                padding={"2px"}
+                onClick={() =>
+                  setExplainerText({
+                    content: explainerTextProtocolHistory[k as keyof Omit<ProtocolHistory, "epochChanges">],
+                    title: k
+                  })
+                }
+              >
+                <InfoIcon style={{ cursor: "pointer" }} />
+              </Box>
+            )}
+          </Box>
+        );
+      }
+    },
+    {
+      title: "Value",
+      key: "value",
+      maxWidth: 400,
+      render: (r: any) => {
+        const k = r.name;
+        const isModalType = k === "costModel";
+        return (
+          <Box
+            component={isModalType ? Button : Box}
+            onClick={() => isModalType && setCostModelScript(r.value)}
+            p={0}
+            justifyItems={"flex-start"}
+            textTransform={"capitalize"}
+          >
+            <Box
+              maxWidth={300}
+              overflow={"hidden"}
+              whiteSpace={"nowrap"}
+              textOverflow={"ellipsis"}
+              color={({ palette }) => (isModalType ? palette.blue[100] : "unset")}
+            >
+              {r.value}
+            </Box>
+          </Box>
+        );
+      }
+    },
+    {
+      title: "Last Updated Epoch",
+      key: "epochNo",
+      render: (r: any) => <Box>{r?.epochNo}</Box>
     },
     {
       title: "Timestamp",
-      key: "startEpoch",
-      render: (r: TProtocolParam) => {
-        return r?.timestamp ? formatDateTimeLocal(r.timestamp || "") : "";
-      }
-    },
-    ...columnsMap
-  ];
-
-  const fixedColumn = (fixedColumnKeys || []).map((k) => ({
-    title: (
-      <Box>
-        {k}
-        {explainerTextGlobalConstants[k] && (
-          <Box
-            component={IconButton}
-            padding={"2px"}
-            onClick={() => setExplainerText({ content: explainerTextGlobalConstants[k], title: k })}
-          >
-            <InfoIcon style={{ cursor: "pointer" }} />
-          </Box>
-        )}
-      </Box>
-    ),
-    key: k,
-    render: (r: any) => {
-      return (
-        <Box
-          component={k === "genDelegs" ? Button : Box}
-          onClick={() => {
-            return k === "genDelegs" && setCostModelScript(r["genDelegs"] !== null ? r["genDelegs"] || 0 : "");
-          }}
-          justifyItems={"flex-start"}
-          textTransform={"capitalize"}
-        >
-          <Box
-            maxWidth={300}
-            overflow={"hidden"}
-            whiteSpace={"nowrap"}
-            textOverflow={"ellipsis"}
-            color={({ palette }) => (k === "genDelegs" ? palette.blue[800] : "unset")}
-          >
-            {typeof r[k] === "object" ? JSON.stringify(r[k]) : r[k]}
-          </Box>
-        </Box>
-      );
+      key: "timestamp",
+      render: (r: any) => (r?.time ? formatDateTimeLocal(r.time) : "")
     }
-  }));
-  const variableColumn = columnsFull.filter((c) => variableColumnList.includes(c.key));
+  ];
 
   return (
     <Container>
@@ -195,7 +228,7 @@ const ProtocolParameter: React.FC = () => {
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
                 <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                  <Box fontWeight={"bold"} fontSize={"1.25rem"}>
+                  <Box fontWeight={"bold"} color={({ palette }) => palette.grey[400]} fontSize={"1.25rem"}>
                     Updatable Parameters
                   </Box>
                   <Box
@@ -218,11 +251,16 @@ const ProtocolParameter: React.FC = () => {
                     height={280}
                   />
                 )}
-                {!loadingLastest && <Table columns={variableColumn} data={dataLastest !== null ? [dataLastest] : []} />}
+                {!loadingLastest && <Table columns={columnsVerticalLatestTable} data={dataLatestVertical || []} />}
               </Box>
               <Box pt={"30px"}>
                 <Box>
-                  <Box textAlign={"left"} fontWeight={"bold"} fontSize={"1.25rem"}>
+                  <Box
+                    textAlign={"left"}
+                    color={({ palette }) => palette.grey[400]}
+                    fontWeight={"bold"}
+                    fontSize={"1.25rem"}
+                  >
                     Global Constants
                   </Box>
                   {loadingFixed && (
@@ -234,9 +272,7 @@ const ProtocolParameter: React.FC = () => {
                       height={280}
                     />
                   )}
-                  {!loadingFixed && (
-                    <Table columns={fixedColumn} data={dataFixed !== null && dataFixed ? [dataFixed] : []} />
-                  )}
+                  {!loadingFixed && <Table columns={columnsVerticalFixedTable} data={dataFixedVertical || []} />}
                 </Box>
               </Box>
             </>
@@ -263,7 +299,9 @@ export default ProtocolParameter;
 export const ProtocolParameterHistory = () => {
   const { PROTOCOL_PARAMETER } = API;
   const TOTAL_PARAMETER = 29;
-
+  let timer: any = null;
+  const [initing, setIniting] = useState(true);
+  const theme = useTheme();
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
   const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
@@ -278,7 +316,7 @@ export const ProtocolParameterHistory = () => {
   }
 
   let dateRangeQueryParams = "";
-  if (!_.isEmpty(dateRangeFilter)) {
+  if (!isEmpty(dateRangeFilter)) {
     const endDate = moment(dateRangeFilter.toDate).endOf("D").utc().format("X");
     const startDate = moment(dateRangeFilter.fromDate).startOf("D").utc().format("X");
     dateRangeQueryParams = `?endTime=${endDate}&startTime=${startDate}`;
@@ -342,7 +380,7 @@ export const ProtocolParameterHistory = () => {
           bgcolor={({ palette }) =>
             r[t as ProtocolTypeKey] !== null
               ? ["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string)
-                ? alpha(palette.green[600], 0.4)
+                ? alpha(palette.green[200], 0.15)
                 : "transparent"
               : "transparent"
           }
@@ -433,6 +471,17 @@ export const ProtocolParameterHistory = () => {
     setColumnsTable([columnsTable[0], ...columnsTable.slice(1).reverse()]);
   }, [sortTimeFilter]);
 
+  useEffect(() => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    if (!loading) {
+      timer = setTimeout(() => {
+        setIniting(false);
+      }, 200);
+    }
+  }, [loading]);
+
   if (loading) {
     return (
       <Box component={Skeleton} mt={2} borderRadius={({ spacing }) => spacing(2)} variant="rectangular" height={400} />
@@ -454,7 +503,7 @@ export const ProtocolParameterHistory = () => {
               component={Button}
               variant="text"
               textTransform={"capitalize"}
-              bgcolor={({ palette }) => alpha(palette.green[600], 0.1)}
+              bgcolor={({ palette }) => alpha(palette.green[200], 0.15)}
               px={2}
               onClick={() => setShowFiter(!showFilter)}
             >
@@ -480,6 +529,7 @@ export const ProtocolParameterHistory = () => {
       >
         {initialized && !!dataHistory ? (
           columnsTable?.length === 1 &&
+          !initing &&
           !loading && (
             <Box textAlign={"center"}>
               <Box component={"img"} src={EmptyIcon} mt={3} />
@@ -496,7 +546,7 @@ export const ProtocolParameterHistory = () => {
                 alignItems={"center"}
                 mt={3}
                 mb={2}
-                color={"#0052CC !important"}
+                color={`${theme.palette.blue[100]} !important`}
               >
                 <Box mr={1}>Reset</Box>
                 <ResetIcon />
@@ -556,6 +606,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
 }) => {
   const [filterOption, { push: pushFilterOption, removeAt: removeAtFilterOption, clear }] =
     useList<string>(filterParams);
+  const theme = useTheme();
 
   const [expanded, setExpanded] = useState<string | false>("");
   const [showDaterange, setShowDaterange] = useState<boolean>(false);
@@ -584,27 +635,34 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
               <ImArrowDown2 />
-              <Box ml={1}>Latest - First</Box>
+              <Box ml={1} color={({ palette }) => palette.grey[400]}>
+                Latest - First
+              </Box>
             </Box>
-            {sort === "LastFirst" && <BsFillCheckCircleFill size={16} style={{ color: "#0052CC !important" }} />}
+            {sort === "LastFirst" && <BsFillCheckCircleFill size={16} />}
           </Box>
         </ButtonFilter>
         <ButtonFilter onClick={() => setSort("FirstLast")}>
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
               <ImArrowUp2 />
-              <Box ml={1}>First - Latest</Box>
+              <Box ml={1} color={({ palette }) => palette.grey[400]}>
+                First - Latest
+              </Box>
             </Box>
-            {sort === "FirstLast" && <BsFillCheckCircleFill size={16} style={{ color: "#0052CC !important" }} />}
+            {sort === "FirstLast" && <BsFillCheckCircleFill size={16} />}
           </Box>
         </ButtonFilter>
         <ButtonFilter onClick={() => setShowDaterange(true)}>
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
               <DateRangeIcon />
-              <Box ml={1}> Date range</Box>
+              <Box ml={1} color={({ palette }) => palette.grey[400]}>
+                {" "}
+                Date range
+              </Box>
             </Box>
-            {!_.isEmpty(dateRange) && <BsFillCheckCircleFill size={16} style={{ color: "#0052CC !important" }} />}
+            {!isEmpty(dateRange) && <BsFillCheckCircleFill size={16} />}
           </Box>
         </ButtonFilter>
 
@@ -619,37 +677,41 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
             >
               <Box display={"flex"} alignItems={"center"}>
                 <ProtocolParam />
-                <Box ml={1}>Parameter changes {filterOption.length > 0 ? `(${filterOption.length})` : ""}</Box>
+                <Box ml={1} color={({ palette }) => palette.grey[400]}>
+                  Parameter changes {filterOption.length > 0 ? `(${filterOption.length})` : ""}
+                </Box>
               </Box>
               <Box>{expanded === "params" ? <IoIosArrowDown /> : <IoIosArrowUp />}</Box>
             </Box>
           </AccordionSummary>
           <AccordionDetails>
             <Box height={170} overflow={"auto"}>
-              <Checkbox
-                checked={filterOption.length === Object.keys(PROTOCOL_TYPE).length}
-                id={"all"}
-                sx={{
-                  color: ({ palette }) => alpha(palette.common.black, 0.15),
-                  "&.Mui-checked": {
-                    color: `#0052CC !important`
-                  }
-                }}
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    clear();
-                    pushFilterOption(...Object.keys(PROTOCOL_TYPE));
-                  } else {
-                    clear();
-                  }
-                }}
-              />
-              <Box component={"label"} htmlFor={"all"} style={{ cursor: "pointer" }}>
-                All parameters
+              <Box>
+                <Checkbox
+                  checked={filterOption.length === Object.keys(PROTOCOL_TYPE).length}
+                  id={"all"}
+                  sx={{
+                    color: ({ palette }) => alpha(palette.common.black, 0.15),
+                    "&.Mui-checked": {
+                      color: `${theme.palette.blue[100]} !important`
+                    }
+                  }}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      clear();
+                      pushFilterOption(...Object.keys(PROTOCOL_TYPE));
+                    } else {
+                      clear();
+                    }
+                  }}
+                />
+                <Box component={"label"} htmlFor={"all"} style={{ cursor: "pointer" }}>
+                  All parameters
+                </Box>
               </Box>
 
               {Object.keys(PROTOCOL_TYPE).map((k, idx) => (
-                <Box key={idx} mb={2}>
+                <Box key={idx}>
                   <Checkbox
                     id={k}
                     checked={filterOption.includes(k)}
@@ -661,7 +723,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                     sx={{
                       color: ({ palette }) => alpha(palette.common.black, 0.15),
                       "&.Mui-checked": {
-                        color: `#0052CC !important`
+                        color: `${theme.palette.blue[100]} !important`
                       }
                     }}
                   />
@@ -678,7 +740,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           <ApplyFilterButton
             data-testid="apply-filters"
             onClick={handleApplyFilter}
-            disabled={filterOption.length === 0 && !sort && _.isEmpty(dateRange)}
+            disabled={filterOption.length === 0 && !sort && isEmpty(dateRange)}
           >
             Apply filters
           </ApplyFilterButton>
@@ -694,7 +756,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           display={"flex"}
           alignItems={"center"}
           mt={2}
-          color={`#0052CC !important`}
+          color={({ palette }) => `${palette.blue[100]} !important`}
         >
           <Box mr={1}>Reset</Box>
           <ResetIcon />

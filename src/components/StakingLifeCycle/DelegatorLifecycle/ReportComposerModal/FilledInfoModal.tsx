@@ -1,15 +1,14 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Box, FormControl, FormControlLabel, RadioGroup, Stack, Radio } from "@mui/material";
 
-import StyledModal from "src/components/commons/StyledModal";
-import { useScreen } from "src/commons/hooks/useScreen";
-import CustomDatePicker, { IDateRange } from "src/components/CustomDatePicker";
+import CustomModal from "src/components/commons/CustomModal";
+import CustomDatePicker, { IDateRange } from "src/components/commons/CustomDatePicker";
 
 import {
   ButtonEvent,
-  ModalTitle,
+  Container,
   StyledButton,
   StyledFormLabel,
   StyledLabel,
@@ -106,7 +105,6 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
   const reportType: ReportType = isDelegatorPage ? ReportType.StakeKeyReport : ReportType.PoolReport;
   const address = poolId || stakeId;
 
-  const { isMobile } = useScreen();
   const [dateRange, setDateRange] = useState<IDateRange>([null, null]);
   const [adaTransfers, setADATransfer] = useState<RatioGroupValue>(RatioGroupValue.unTicked);
   const [poolSize, setPoolSize] = useState<RatioGroupValue>(RatioGroupValue.unTicked);
@@ -243,18 +241,21 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
     setEpochRange([Math.min(min), Math.min(max)]);
   };
 
+  useEffect(() => {
+    setDateRange([null, null]);
+    setEpochRange([30, 50]);
+  }, [open]);
+
   return (
-    <StyledModal
+    <CustomModal
       open={open}
-      handleCloseModal={handleCloseModal}
-      paddingX={isMobile ? "10px" : "40px"}
-      paddingY={isMobile ? "20px" : "30px"}
-      contentStyle={{ overflowY: "unset", overflowX: "auto" }}
+      onClose={handleCloseModal}
+      title="Report composer"
+      width={500}
+      padding="0px 24px !important"
+      margin="0px -24px !important"
     >
-      <Box>
-        <ModalTitle>
-          <Box sx={{ fontSize: `${isMobile ? "20px" : "24px"}` }}>Report composer</Box>
-        </ModalTitle>
+      <Container>
         <StyledStack>
           <StyledLabel>Report name</StyledLabel>
           <StyledTextField placeholder="Enter report name" value={reportName} onChange={onChangeReportName} />
@@ -299,11 +300,13 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
                           value={RatioGroupValue.yes}
                           control={<Radio onClick={() => handleClickRadio(key)} />}
                           label="Yes"
+                          sx={{ color: (props) => props.palette.grey[400] }}
                         />
                         <FormControlLabel
                           value={RatioGroupValue.no}
                           control={<Radio onClick={() => handleClickRadio(key)} />}
                           label="No"
+                          sx={{ color: (props) => props.palette.grey[400] }}
                         />
                       </Stack>
                     </RadioGroup>
@@ -336,8 +339,8 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
             Next
           </StyledButton>
         </StyledStack>
-      </Box>
-    </StyledModal>
+      </Container>
+    </CustomModal>
   );
 };
 

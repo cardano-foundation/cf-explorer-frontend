@@ -3,6 +3,7 @@ import { stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
+import { TransferIcon } from "src/commons/resources";
 import receiveImg from "src/commons/resources/images/receiveImg.svg";
 import sendImg from "src/commons/resources/images/sendImg.svg";
 import { details } from "src/commons/routers";
@@ -19,8 +20,6 @@ import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DropdownTokens, { TokenLink } from "src/components/commons/DropdownTokens";
 import Table, { Column } from "src/components/commons/Table";
-import { SmallText } from "src/components/share/styled";
-import { TransferIcon } from "src/commons/resources";
 
 import { Img, StyledContainer, StyledLink } from "./styles";
 
@@ -84,7 +83,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
           return (t.quantity < 0 && transaction?.balance >= 0) || (t.quantity >= 0 && transaction?.balance < 0);
         });
         return (
-          <Box display={"flex"}>
+          <Box display={"flex"} alignItems={"center"}>
             {isTransferType ? (
               <Box width={40} ml={"2px"} mr={"8px"}>
                 <TransferIcon style={{ scale: "1.15" }} />
@@ -94,15 +93,22 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
                 <Img src={type !== "up" ? receiveImg : sendImg} alt="send icon" />
               </Box>
             )}
-            <Box display={"grid"}>
-              <CustomTooltip title={transaction.hash}>
-                <StyledLink to={details.transaction(transaction.hash)}>{getShortHash(transaction.hash)}</StyledLink>
-              </CustomTooltip>
-              <SmallText>{formatDateTimeLocal(transaction.time || "")}</SmallText>
-            </Box>
+            <CustomTooltip title={transaction.hash}>
+              <StyledLink to={details.transaction(transaction.hash)}>{getShortHash(transaction.hash)}</StyledLink>
+            </CustomTooltip>
           </Box>
         );
       }
+    },
+    {
+      title: "Created At",
+      key: "created_at",
+      minWidth: 120,
+      render: (r) => (
+        <Box display="inline-flex" alignItems="center">
+          <Box mr={1}>{formatDateTimeLocal(r.time || "")}</Box>
+        </Box>
+      )
     },
     {
       title: "Block",
@@ -116,7 +122,10 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
             </StyledLink>
           </Box>
           <Box mt={1}>
-            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
+            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{" "}
+            <Box component={"span"} color={({ palette }) => palette.grey[300]}>
+              {r.epochSlotNo}
+            </Box>
           </Box>
         </Box>
       )

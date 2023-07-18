@@ -15,7 +15,8 @@ const mockData = [
     rewardsDistributed: null,
     startTime: "2023/06/09 21:47:26",
     status: "REWARDING",
-    txCount: 375738
+    txCount: 375738,
+    account: 100
   }
 ];
 
@@ -29,7 +30,8 @@ const mockDataLatestEpoch = [
     rewardsDistributed: null,
     startTime: "2023/06/14 21:44:54",
     status: "IN_PROGRESS",
-    txCount: 37219
+    txCount: 37219,
+    account: 100
   }
 ];
 
