@@ -9,6 +9,7 @@ declare namespace Cypress {
 declare namespace Cypress {
   interface Chainable {
     clickElement(locator: string, args?: any): Chainable<JQuery<HTMLElement>>;
+    clickToSpecificElement(locator: string, index: number, args?: any): Chainable<JQuery<HTMLElement>>;
     clickElementRandomly(locator: string, args?: any): Chainable<JQuery<HTMLElement>>;
     hoverToElement(locator: string, args?: any): Chainable<JQuery<HTMLElement>>;
     hoverToElementRandomly(locator: string, args?: any): Chainable<JQuery<HTMLElement>>;
@@ -22,8 +23,8 @@ declare namespace Cypress {
     verifyText(locator: string, expectedText:string): Chainable<JQuery<HTMLElement>>;
     verifyValueNotNull(locator: string, args?: any): Chainable<JQuery<HTMLElement>>;
     getTextContent(): Chainable<string>;
-    getAllTextContent(locator: any, txt:any, ...value: any);
-    checkDateTimeFormat(dateTime:any,format:any, value:any): Chainable<JQuery<HTMLElement>>;
+    getAllTextContent(locator: any, txt:any, ...value: any); 
+    checkDateTimeFormat(dateTime:any,format:any, ...value:any): Chainable<JQuery<HTMLElement>>;
     getAttributeValue(attName:string): Chainable<string>;
     setAttributeValue(attName:string,attValue:string): Chainable<JQuery<HTMLElement>>;
     verifyElementEnabled(): Chainable<JQuery<HTMLElement>>;

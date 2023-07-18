@@ -1,15 +1,15 @@
 var format = require("@stdlib/string-format");
 export default class WebApi {
-  openAnyUrl(url) {
+  openAnyUrl(url: string) {
     cy.visit(url);
   }
   getPageTitle() {
     return cy.title;
   }
-  clickToElementByXpath(locator) {
+  clickToElementByXpath(locator: string) {
     cy.xpath(locator).click();
   }
-  clickToElement(locator) {
+  clickToElement(locator: any) {
     cy.get(locator).click();
   }
 
@@ -36,13 +36,44 @@ export default class WebApi {
     });
   }
 
-  isElementVisibleByXpath(locator, ...values) {
+  isElementVisibleByXpath(locator: any, ...values: any[]) {
     let ele = format(locator, values);
     cy.xpath(ele).should("be.visible");
   }
   
-  isControlEnabledByXpath(locator, ...values) {
+  isControlEnabledByXpath(locator: string, ...values: undefined[]) {
     let ele = format(locator, values);
     cy.xpath(ele).should("be.enabled");
+  }
+  async getTextElement(locator: string, ...values: undefined[]) {
+    let ele = format(locator, values);
+    const text = await new Cypress.Promise<string>((resolve) => {
+      if (ele.startsWith("/") || ele.startsWith("(")) {
+      cy.xpath(ele)
+        .invoke('text')
+        .then((txt) => resolve(txt.toString()))
+      }else {
+      cy.get(ele)
+        .invoke('text')
+        .then((txt) => resolve(txt.toString()))  
+      }
+    })
+    return text;
+  }
+  async getTextSpecificElement(locator: string,no: number,...values: undefined[]) {
+    let ele = format(locator, values);
+    const text = await new Cypress.Promise<string>((resolve) => {
+      if (ele.startsWith("/") || ele.startsWith("(")) {
+      cy.xpath(ele)
+        .eq(no)
+        .invoke('text')
+        .then((txt) => resolve(txt.toString()))
+      }else {
+      cy.get(ele)
+        .invoke('text')
+        .then((txt) => resolve(txt.toString()))  
+      }
+    })
+    return text;
   }
 }
