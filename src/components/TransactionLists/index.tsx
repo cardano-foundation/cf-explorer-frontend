@@ -167,7 +167,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
           ...pageInfo,
           total: fetchData.total,
           onChange: (page, size) => {
-            mainRef.current?.scrollTo(0, 0);
+            mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             history.replace({ search: stringify({ page, size }) });
           },
           handleCloseDetailView: handleClose
