@@ -7,6 +7,7 @@ const blockchainDropdownList = "//span[text()='Blockchain']/..";
 const nativeTokensPanel = "//span[text()='Native Tokens']/..";
 const listIcon = "//img[@class='css-1nkc52']";
 const listHyperLink = "a[class='css-1f770t5']"
+const tokenNumberList = "tr[class]";
 const btnNextPage = "//ul[contains(@class, 'MuiPagination-ul')]/li[10]//button"
 const btnPrePage = "//ul[contains(@class, 'MuiPagination-ul')]/li[2]//button"
 const btnFirstPage = "//ul[contains(@class, 'MuiPagination-ul')]/li[1]//button"
@@ -43,6 +44,10 @@ const tabTopHoldersInTokenDetail = "//div[text()='Top Holders']/ancestor::button
 const tabTransactionInTokenDetail = "//div[text()='Transactions']/ancestor::button"
 const tabMintingInTokenDetail = "//div[text()='Minting']/ancestor::button"
 const btnClose = "//button[@aria-label='Close']"
+
+const displayRowSelect = "ul[role='listbox'] li";
+const perPage = "//span[text()='Per page']/preceding-sibling::div/div";
+const perPageSelect = "//div[@id='menu-']/div[@class]/ul/li";
 
 
 export default class TokenListPage extends WebApi{
@@ -278,4 +283,43 @@ export default class TokenListPage extends WebApi{
         cy.reload()
         return this;
     }
+
+    verifyDefaulDisplayRow(defaultValue:string){
+        cy.verifyText(perPage,defaultValue).scrollIntoView()
+        return this;
+    }
+
+    clickOnPerPageDropdown() {
+        cy.xpath(perPage).scrollIntoView().click();
+        return this;
+    }
+
+    verifyDisplayRowSelection(displayRowSelection:string[]){
+        cy.compareArrayText(displayRowSelect,displayRowSelection)
+        return this;
+    }
+
+    changePerPageValue(value:string) {
+        switch (value){
+          case '10':
+            cy.xpath(perPageSelect).eq(0).click();
+            break;
+          case '20':
+            cy.xpath(perPageSelect).eq(1).click();
+            break;
+          case '50':
+            cy.xpath(perPageSelect).eq(2).click();
+            break;
+          case '100':
+            cy.xpath(perPageSelect).eq(3).click();
+            break;
+        }
+        return this;
+    }
+
+    verifyNumberOfDisplayRow(expectedCount:string){
+        cy.reload()
+        cy.get(tokenNumberList).should('have.length', parseInt(expectedCount));
+        return this;
+      }
 }
