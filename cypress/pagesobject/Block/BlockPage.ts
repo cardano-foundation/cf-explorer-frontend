@@ -42,6 +42,13 @@ export default class LoginPage extends WebApi {
     this.openAnyUrl("/");
     return this;
   }
+  clickToRandomRow(randomBlock: number) {
+    cy.clickToSpecificElement(itemListsWithLink, randomBlock, BlockConstants.COLUMN_NAME[1]);
+    return new BlockDetailPage;
+  }
+  getTotalBlock() {
+    return this.getTextElement(numberBlockPerPage);
+  }
   goToBlockPage() {
     this.openAnyUrl("/blocks");
     return this;

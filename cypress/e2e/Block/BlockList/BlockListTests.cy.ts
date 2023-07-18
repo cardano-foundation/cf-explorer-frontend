@@ -1,4 +1,4 @@
-import BlockPage from "../../pagesobject/Block/BlockPage";
+import BlockPage from "../../../pagesobject/Block/BlockPage";
 const blockPage = new BlockPage();
 describe("block list", () => {
   it("Check initialzation the screen", () => {

@@ -1,5 +1,5 @@
-import BlockPage from "../../pagesobject/Block/BlockPage";
-import {BlockConstants} from "../../fixtures/constants/BlockConstants"
+import BlockPage from "../../../pagesobject/Block/BlockPage";
+import {BlockConstants} from "../../../fixtures/constants/BlockConstants"
 const blockPage = new BlockPage();
 describe("block list", () => {
   it("Check action of all items in the screen", () => {
