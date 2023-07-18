@@ -40,7 +40,7 @@ export const ContractDiagrams = ({ item, txHash }: IContractDiagramProps) => {
           <ContractAddress>{txHash || item.address || item.scriptHash}</ContractAddress>
         </Link>
       </ContractHeader>
-      <ContractRedeemer item={item} />
+      <ContractRedeemer item={item} txHash={txHash}/>
       {item.datumHashIn && (
         <>
           <IconContainer>
@@ -66,11 +66,11 @@ export const ContractDiagrams = ({ item, txHash }: IContractDiagramProps) => {
   );
 };
 
-export const ContractRedeemer = ({ item }: IContractDiagramProps) => {
+export const ContractRedeemer = ({ item, txHash }: IContractDiagramProps) => {
   return (
     <CardDiagram>
       <TabLabel>Redeemer</TabLabel>
-      <TabElement>
+      <TabElement flexDirection={!txHash ? "row" : "column"}>
         <TabItem>
           <TitleText>Tag</TitleText>
           <Typography component={"span"}>{item.purpose}</Typography>
