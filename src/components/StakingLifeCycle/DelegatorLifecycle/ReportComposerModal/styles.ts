@@ -1,4 +1,4 @@
-import { styled, Stack, Box, Button, TextField, Slider, FormLabel } from "@mui/material";
+import { styled, Stack, Box, Button, TextField, Slider, FormLabel, alpha } from "@mui/material";
 
 import CustomSelect from "src/components/commons/CustomSelect";
 
@@ -16,9 +16,9 @@ export const Container = styled(Box)(({ theme }) => ({
 
 export const StyledLabel = styled("div")`
   font-weight: 400;
+  color: ${(props) => props.theme.palette.grey[400]};
   font-size: 14px;
   line-height: 16px;
-  color: #000000;
   margin: 6px 0px;
 `;
 
@@ -75,7 +75,7 @@ export const StyledAddressSelect = styled(Box)`
 `;
 
 export const StyledButton = styled(Button)`
-  background: #13152f;
+  background: ${(props) => props.theme.palette.grey[400]};
   width: 100%;
   border-radius: 8px;
   height: 44px;
@@ -91,12 +91,12 @@ export const StyledButton = styled(Button)`
   gap: 10px;
   text-transform: none;
   &:disabled {
-    background: #13152f;
+    background: ${(props) => props.theme.palette.grey[400]};
     opacity: 0.3;
     color: #fff;
   }
   &:hover {
-    background: #13152f;
+    background: ${(props) => props.theme.palette.grey[400]};
     opacity: 0.8;
   }
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -109,7 +109,7 @@ export const StyledBackButton = styled(Button)<{ width?: number | string }>(({ w
   borderRadius: "8px",
   height: "44px",
   textAlign: "center",
-  color: "#344054",
+  color: theme.palette.grey[400],
   fontSize: 16,
   lineHeight: "19px",
   fontWeight: 700,
@@ -125,7 +125,7 @@ export const StyledBackButton = styled(Button)<{ width?: number | string }>(({ w
 }));
 
 export const SubText = styled("div")`
-  color: #000000;
+  color: ${({ theme }) => theme.palette.grey[400]};
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
@@ -136,13 +136,13 @@ export const TextRequired = styled("div")`
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
-  color: #667085;
+  color: ${(props) => props.theme.palette.grey[300]};
   line-height: 22px;
 `;
 
 export const ButtonEvent = styled(Button)<{ active: number }>(({ theme, active }) => ({
-  background: active ? "#667085" : "#f2f2f2",
-  color: active ? "#fff" : "#667085",
+  background: active ? theme.palette.grey[300] : alpha(theme.palette.grey[400], 0.05),
+  color: active ? theme.palette.common.white : theme.palette.grey[300],
   borderRadius: "6px",
   height: "44px",
   alignItems: "center",
@@ -153,8 +153,8 @@ export const ButtonEvent = styled(Button)<{ active: number }>(({ theme, active }
   lineHeight: "19px",
   fontWeight: 400,
   "&:hover": {
-    background: active ? "#667085" : "#f2f2f2",
-    color: active ? "#fff" : "#667085"
+    background: active ? theme.palette.grey[300] : alpha(theme.palette.grey[400], 0.05),
+    color: active ? "#fff" : theme.palette.grey[300]
   },
   [theme.breakpoints.down("sm")]: {
     fontSize: 14,
@@ -192,7 +192,7 @@ export const TextLabelReview = styled("div")`
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  color: #000000;
+  color: ${(props) => props.theme.palette.grey[400]};
   opacity: 0.6;
   white-space: nowrap;
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -205,22 +205,27 @@ export const TextValueReview = styled("div")`
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
-  max-width: 100%;
+  max-width: 250px;
   color: #000000;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 14px;
     line-height: 16px;
+    max-width: 100%;
   }
 `;
 
 export const TextOverFlow = styled(Box)`
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  width: 250px;
+  color: ${(props) => props.theme.palette.grey[400]};
+  width: max-content;
   text-align: right;
+  margin-left: auto;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     text-align: left;
+    margin-left: 0;
   }
 `;
 
@@ -254,8 +259,9 @@ export const StyledSlider = styled(Slider)`
 `;
 
 export const StyledFormLabel = styled(FormLabel)`
+  color: ${(props) => props.theme.palette.grey[400]};
   &.Mui-focused {
-    color: ${(props) => props.theme.palette.grey[500]};
+    color: ${(props) => props.theme.palette.grey[400]};
   }
 `;
 
