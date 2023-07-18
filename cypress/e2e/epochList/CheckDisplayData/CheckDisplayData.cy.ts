@@ -5,7 +5,7 @@ describe('Check display data of Epoch list screen',()=>{
 beforeEach(() => {
     epochPanel.goToEpochPage();
   })
-xit("Check display data of [Epoch number] column ", () => {
+it("Check display data of [Epoch number] column ", () => {
     epochPanel
               .verifyEpochRecordIsInDesc()
               .verifyProgressCircleIsDisplayed();
@@ -18,12 +18,12 @@ it("Check display data of [Transaction Count] column ", () => {
 
 it("Check display data of [Start Timestamp] column  ", () => {
     epochPanel
-              .verifyDateTimeFormat('Start Timestamp','MM/DD/YYYY HH:mm:ss');
+              .verifyDateTimeFormat('Start Timestamp');
 });
 
 it("Check display data of [End Timestamp] column", () => {
     epochPanel
-              .verifyDateTimeFormat('End Timestamp','MM/DD/YYYY HH:mm:ss');
+              .verifyDateTimeFormat('End Timestamp');
 });
 
 it("Check display data of [Blocks] column ", () => {
