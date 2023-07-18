@@ -16,7 +16,6 @@ import {
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ViewAllButton from "src/components/commons/ViewAllButton";
 import useFetch from "src/commons/hooks/useFetch";
-import { useScreen } from "src/commons/hooks/useScreen";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 
 import {
@@ -49,7 +48,6 @@ const LatestTransactions: React.FC = () => {
   );
 
   const history = useHistory();
-  const { isTablet } = useScreen();
   return (
     <TransactionContainer data-testid="home-latest-transactions">
       <Header>
@@ -93,8 +91,8 @@ const LatestTransactions: React.FC = () => {
                     <Item onClick={(e) => handleClicktWithoutAnchor(e, () => history.push(details.transaction(hash)))}>
                       <ItemHeader>
                         <LatestTransactionItemHeader>
+                          <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>
                           <PriceImage src={ADAIcon} alt="check green" />
-                          {!isTablet && <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>}
                         </LatestTransactionItemHeader>
                         <PriveValue>{formatADAFull(amount)}</PriveValue>
                       </ItemHeader>
@@ -108,7 +106,6 @@ const LatestTransactions: React.FC = () => {
                               </Link>
                             </CustomTooltip>
                           </RowItem>
-                          {isTablet && <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>}
                         </Box>
                         <RowItem>
                           <small>Block: </small>

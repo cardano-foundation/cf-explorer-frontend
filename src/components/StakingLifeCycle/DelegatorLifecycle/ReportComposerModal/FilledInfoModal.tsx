@@ -3,13 +3,12 @@ import { useHistory, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Box, FormControl, FormControlLabel, RadioGroup, Stack, Radio } from "@mui/material";
 
-import StyledModal from "src/components/commons/StyledModal";
-import { useScreen } from "src/commons/hooks/useScreen";
+import CustomModal from "src/components/commons/CustomModal";
 import CustomDatePicker, { IDateRange } from "src/components/CustomDatePicker";
 
 import {
   ButtonEvent,
-  ModalTitle,
+  Container,
   StyledButton,
   StyledFormLabel,
   StyledLabel,
@@ -106,7 +105,6 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
   const reportType: ReportType = isDelegatorPage ? ReportType.StakeKeyReport : ReportType.PoolReport;
   const address = poolId || stakeId;
 
-  const { isMobile } = useScreen();
   const [dateRange, setDateRange] = useState<IDateRange>([null, null]);
   const [adaTransfers, setADATransfer] = useState<RatioGroupValue>(RatioGroupValue.unTicked);
   const [poolSize, setPoolSize] = useState<RatioGroupValue>(RatioGroupValue.unTicked);
@@ -244,17 +242,8 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
   };
 
   return (
-    <StyledModal
-      open={open}
-      handleCloseModal={handleCloseModal}
-      paddingX={isMobile ? "10px" : "40px"}
-      paddingY={isMobile ? "20px" : "30px"}
-      contentStyle={{ overflowY: "unset", overflowX: "auto" }}
-    >
-      <Box>
-        <ModalTitle>
-          <Box sx={{ fontSize: `${isMobile ? "20px" : "24px"}` }}>Report composer</Box>
-        </ModalTitle>
+    <CustomModal open={open} onClose={handleCloseModal} title="Report composer" width={500}>
+      <Container>
         <StyledStack>
           <StyledLabel>Report name</StyledLabel>
           <StyledTextField placeholder="Enter report name" value={reportName} onChange={onChangeReportName} />
@@ -336,8 +325,8 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
             Next
           </StyledButton>
         </StyledStack>
-      </Box>
-    </StyledModal>
+      </Container>
+    </CustomModal>
   );
 };
 
