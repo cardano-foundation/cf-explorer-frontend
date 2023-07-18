@@ -32,7 +32,6 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
   const [selected, setSelected] = useState<"epochChart" | "delegatorChart">("epochChart");
   const { data, loading } = useFetch<AnalyticsDelegators>(`${API.DELEGATION.POOL_ANALYTICS}?poolView=${poolId}`);
   const theme = useTheme();
-
   const totalStakes =
     data?.epochChart?.dataByDays?.map((item) => item.totalStake).filter((item) => item !== null) || [];
   const maxTotalStake = BigNumber.max(0, ...totalStakes).toString();
@@ -96,7 +95,13 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                       <stop offset="100%" stopColor={theme.palette.green[700]} stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <XAxis dataKey="epochNo" tickLine={false} tickMargin={5} dx={-5} interval={9} />
+                  <XAxis
+                    dataKey="epochNo"
+                    tickLine={false}
+                    tickMargin={5}
+                    dx={-5}
+                    // interval={isMobile ? 3 : undefined}
+                  />
                   <YAxis
                     dataKey={selected === "epochChart" ? "totalStake" : "numberDelegator"}
                     tickFormatter={formatValue}

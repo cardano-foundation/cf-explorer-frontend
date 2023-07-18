@@ -49,8 +49,8 @@ const AddressAnalytics: FC = () => {
 
   const values = data?.map((item) => item.value).filter((item) => item !== null) || [];
   const maxBalance = BigNumber.max(0, ...values).toString();
-  const minBalance = BigNumber.min(maxBalance, ...values).toString(); 
-  
+  const minBalance = BigNumber.min(maxBalance, ...values).toString();
+
   const formatPriceValue = (value: string) => {
     return formatPrice(value);
   };
@@ -58,7 +58,7 @@ const AddressAnalytics: FC = () => {
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
     return (
       <TooltipBody>
-        <TooltipLabel>{moment(content.label).format("DD MMM HH:mm:ss")} (UTC time zone)</TooltipLabel>
+        <TooltipLabel>{moment(content.label).format("DD MMM YYYY HH:mm:ss")} (UTC time zone)</TooltipLabel>
         <TooltipValue>{numberWithCommas(content.payload?.[0]?.value) || 0}</TooltipValue>
       </TooltipBody>
     );
@@ -101,7 +101,7 @@ const AddressAnalytics: FC = () => {
                       tickLine={false}
                       tickMargin={5}
                       dx={-15}
-                      interval={0}
+                      interval={isMobile ? 3 : undefined}
                     />
                     <YAxis tickFormatter={formatPriceValue} tickLine={false} />
                     <Tooltip content={renderTooltip} cursor={false} />
