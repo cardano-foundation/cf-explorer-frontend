@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.4.7](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.6...v0.4.7) (2023-07-18)
+
+
+### Bug Fixes
+
+* logout user when switch network ([49cde6d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/49cde6d3206c180a5e9228280ecb83c1f46325f1))
+* MET-1453-Rename-fail-to-failed-in-transaction-detail ([52f4c45](https://github.com/cardano-foundation/cf-explorer-frontend/commit/52f4c4599658f67952815f63a7b2de38adb91f84))
+* MET-615 Hotfix Sign up then sign in met error ([1117d92](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1117d927208c273e388a288419820149fbc7e50b))
+* MET-615 Missing Skeletion Detail page (Degrade) ([1375bcd](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1375bcd3009d554d70ad5ce7cc2250460a421373))
+* MET-615--Contract-detail-have-wrong-design ([51293b7](https://github.com/cardano-foundation/cf-explorer-frontend/commit/51293b70df483c4b882e117f8a016d2ec2897c3d))
+* MET-615-Top-ada-holders-missing-icon-in-tabs ([fd6d57d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/fd6d57d8248b6cba4e1cd64b1e156f326eb28ea0))
+* MET-615-Top-ada-holders-missing-icon-in-tabs ([0547c93](https://github.com/cardano-foundation/cf-explorer-frontend/commit/0547c9313cd3dfd99e381b7af7285569f154e338))
+* text align left contract detail ([d1597de](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d1597de3d62680238041bc8c70cd20933043da80))
+
 ## [0.4.6](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.5...v0.4.6) (2023-07-14)
 
 
