@@ -6,16 +6,16 @@ describe('Check action of all item',()=>{
         epochPanel.goToEpochPage();
       })
 
-    xit("Check click on [Sort up] with Blocks", () => {
+    it("Check click on [Sort up] with Blocks", () => {
         epochPanel
                   .verifyEpochNumberIsHyperLink()
                   .verifyOrtherFieldIsTextLabel()
                   .verifyDefaultInputPage('1')
-                  .verifyPagingNavigatorDisplay();
+                  .verifyPagingNavigatorDisplay(10);
     
         epochPanel.clickOnSort('Blocks')
                   .clickOnSort('Blocks')
-                  .verifySortField('Blocks','ASC')
+                  .verifySortField('Blocks','asc')
     });
     
     it("Check click on [Sort decreasing] Blocks", () => {
@@ -24,37 +24,37 @@ describe('Check action of all item',()=>{
                   .verifyEpochNumberIsHyperLink()
                   .verifyOrtherFieldIsTextLabel()
                   .verifyDefaultInputPage('1')
-                  .verifyPagingNavigatorDisplay();
+                  .verifyPagingNavigatorDisplay(10);
     
         epochPanel.clickOnSort('Blocks')
-                  .verifySortField('Blocks','DESC')
+                  .verifySortField('Blocks','desc')
     });
     
-    xit("Check click on [Sort up] with Total Output", () => {
+    it("Check click on [Sort up] with Total Output", () => {
         
         epochPanel
                   .verifyEpochNumberIsHyperLink()
                   .verifyOrtherFieldIsTextLabel()
                   .verifyDefaultInputPage('1')
-                  .verifyPagingNavigatorDisplay();
+                  .verifyPagingNavigatorDisplay(10);
     
         epochPanel.clickOnSort('Total Output')
                   .clickOnSort('Total Output')
                   .verifySortField('Total Output','ASC')
     });
     
-    xit("Check click on [Sort decreasing]  Total Output", () => {
+    it("Check click on [Sort decreasing]  Total Output", () => {
         epochPanel
                   .verifyEpochNumberIsHyperLink()
                   .verifyOrtherFieldIsTextLabel()
                   .verifyDefaultInputPage('1')
-                  .verifyPagingNavigatorDisplay();
+                  .verifyPagingNavigatorDisplay(10);
     
         epochPanel.clickOnSort('Total Output')
                   .verifySortField('Total Output','DESC')
     });
     
-    xit("Check action click on one record or click on icon [Quick View Icon] ", () => {
+    it("Check action click on one record or click on icon [Quick View Icon] ", () => {
         epochPanel
                   .clickOnOneEpochRecord()
                   .verifyDetailEpochPopUpIsDisplayed()
