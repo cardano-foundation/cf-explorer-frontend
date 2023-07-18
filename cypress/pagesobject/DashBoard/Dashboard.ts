@@ -2,7 +2,6 @@ import exp from "constants";
 import WebApi from "../../core/WebApi"
 import * as util from 'util';
 
-//epoch list
 const networkDropdownList = "//div[@id='main']//div[@data-testid='header-network']";
 const networkDropdownListSelection = "//div[@id='menu-']//ul//li";
 const blockchainDropdownList = "//span[text()='Blockchain']/..";
@@ -12,9 +11,10 @@ const allFiltersDropdownSelection ="//li[@data-testid='filter-options']";
 const allFiltersDropdownOption ="//li[@data-testid='filter-options' and text()='%s']";
 const searchBar ="//div[@data-testid='search-bar']";
 const searchBarInput ="//div[@data-testid='search-bar']//input";
-const searchBarButton ="//div[@data-testid='search-bar']/following-sibling::button"
+const searchBarButton ="//div[@data-testid='search-bar']/following-sibling::button";
 
-
+const pageTitleEle ="//header[@data-testid='header']/following-sibling::div//div[text()='%s']";
+const detailValue = "//header[@data-testid='header']/following-sibling::div//p/div/span";
 
 export default class DashboardPage extends WebApi{
   
@@ -103,6 +103,17 @@ inputValueToSearchBar(value:string){
 
 clickSearchButton(){
   cy.clickElement(searchBarButton);
+  return this;
+}
+
+verifyNavigatedToPage(pageTitle:string){
+  cy.wait(2000)
+  cy.verifyElementDisplay(util.format(pageTitleEle,pageTitle))
+  return this;
+}
+
+verifyDetailValueAfterSearch(valueExpected:string){
+  cy.verifyText(detailValue,valueExpected)
   return this;
 }
 
