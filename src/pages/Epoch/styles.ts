@@ -48,7 +48,12 @@ export const Output = styled(Blocks)`
 `;
 
 export const StyledBox = styled(Box)`
-  width: 41px;
-  margin: auto;
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  width: "max-content";
+  margin-right: 10px;
+`;
+
+export const EpochNumber = styled(Box)`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 `;
