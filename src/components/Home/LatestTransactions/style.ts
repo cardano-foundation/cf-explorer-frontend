@@ -115,6 +115,7 @@ export const PriveValue = styled("span")`
   font-size: var(--font-size-text-x-large);
   font-weight: var(--font-weight-bold);
   line-height: 1;
+  text-align: end;
 `;
 
 export const ItemDetail = styled("div")`
@@ -152,10 +153,10 @@ export const BlankImage = styled("img")`
   vertical-align: baseline;
 `;
 
-export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionStatus | IDataEpoch["status"] }>`
+export const HeaderStatus = styled("small")<{ status?: TransactionStatus | IDataEpoch["status"] }>`
   color: ${({ status, theme }) => {
     switch (status) {
-      case TRANSACTION_STATUS.FAIL:
+      case TRANSACTION_STATUS.FAILED:
         return theme.palette.error.main;
       case TRANSACTION_STATUS.PENDDING:
         return theme.palette.warning.main;
@@ -171,7 +172,7 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
   }};
   background-color: ${({ status, theme }) => {
     switch (status) {
-      case TRANSACTION_STATUS.FAIL:
+      case TRANSACTION_STATUS.FAILED:
         return theme.palette.error.light;
       case TRANSACTION_STATUS.PENDDING:
         return theme.palette.warning.light;
@@ -201,5 +202,5 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
 export const LatestTransactionItemHeader = styled(Box)`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 `;

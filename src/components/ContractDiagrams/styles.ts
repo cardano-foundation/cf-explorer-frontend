@@ -49,6 +49,7 @@ export const TabElement = styled(Box)`
   word-break: break-word;
   padding: 18px 20px;
   border-radius: 5px;
+  text-align: left;
   background: ${(props) => props.theme.palette.grey[80]};
   color: ${(props) => props.theme.palette.common.black};
 `;

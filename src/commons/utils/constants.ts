@@ -83,7 +83,7 @@ export const NETWORK: NETWORKS =
   (process.env.REACT_APP_NETWORK as NETWORKS) || get(window, "env.REACT_APP_NETWORK") || NETWORKS.mainnet;
 
 export enum TRANSACTION_STATUS {
-  FAIL = "FAIL",
+  FAILED = "FAILED",
   SUCCESS = "SUCCESS",
   PENDDING = "PENDDING"
 }
