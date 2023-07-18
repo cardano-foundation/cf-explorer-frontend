@@ -42,6 +42,14 @@ Cypress.Commands.add("clickElement", (selector, ...value) => {
     cy.get(selector).click();
   }
 });
+Cypress.Commands.add("clickToSpecificElement", (selector, index,...value) => {
+  selector = format(selector, value);
+  if (selector.startsWith("/") || selector.startsWith("(")) {
+    cy.xpath(selector).eq(index).click();
+  } else {
+    cy.get(selector).eq(index).click();
+  }
+});
 Cypress.Commands.add("clickElementRandomly", (selector, ...value) => {
   selector = format(selector, value);
   if (selector.startsWith("/") || selector.startsWith("(")) {
