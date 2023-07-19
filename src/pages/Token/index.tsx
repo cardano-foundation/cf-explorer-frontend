@@ -119,7 +119,7 @@ const Tokens = () => {
     },
     {
       title: "Created At",
-      key: "createdat",
+      key: "time",
       minWidth: "150px",
       render: (r) => (
         <>

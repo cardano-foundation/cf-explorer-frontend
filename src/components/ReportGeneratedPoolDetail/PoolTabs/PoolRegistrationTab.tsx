@@ -44,7 +44,7 @@ const PoolRegistrationTab = () => {
     },
     {
       key: "time",
-      title: "Timestamp",
+      title: "Created At",
       sort({ columnKey, sortValue }) {
         sortValue ? setSort(`bk.${columnKey},${sortValue}`) : setSort("");
       },
