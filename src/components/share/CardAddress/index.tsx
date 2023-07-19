@@ -17,7 +17,7 @@ import {
   ValueItem
 } from "./styles";
 
-interface DetailCardProps {
+export interface DetailCardProps {
   title: string;
   address: string;
   item: { title?: string; value: React.ReactNode }[];
