@@ -26,7 +26,7 @@ const StakingLifeCycleSearch = () => {
   useKey("enter", hanldeSearch);
 
   useEffect(() => {
-    document.title = "Welcome to Staking Lifecycle | Cardano Explorer";
+    document.title = "Welcome to Staking Lifecycle | Iris - Cardano Blockchain Explorer";
   }, []);
 
   return (

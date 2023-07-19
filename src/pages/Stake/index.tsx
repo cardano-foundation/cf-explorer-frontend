@@ -51,7 +51,7 @@ const Stake = () => {
 
   useEffect(() => {
     const title = poolType === POOL_TYPE.REGISTRATION ? "Registrations" : "Deregistrations";
-    document.title = `${title} Stake Keys | Cardano Explorer`;
+    document.title = `${title} Stake Keys | Iris - Cardano Blockchain Explorer`;
   }, [poolType]);
 
   const openDetail = (_: any, r: IStakeKey, index: number) => {
