@@ -19,7 +19,8 @@ import {
   DatumnText,
   DatumnItem,
   IconContainer,
-  CloseButton
+  CloseButton,
+  DataTitle
 } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 
@@ -86,27 +87,19 @@ export const ContractRedeemer = ({ item, txHash }: IContractDiagramProps) => {
       <TabElement flexDirection={!txHash ? "row" : "column"} isContractPage={+!!txHash}>
         <TabItem>
           <TitleText>Tag</TitleText>
-          <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
-            {item.purpose}
-          </Typography>
+          <DataTitle color={({ palette }) => palette.grey[400]}>{item.purpose}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Data</TitleText>
-          <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
-            {item.redeemerBytes}
-          </Typography>
+          <DataTitle color={({ palette }) => palette.grey[400]}>{item.redeemerBytes}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Mem</TitleText>
-          <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
-            {item.redeemerMem}
-          </Typography>
+          <DataTitle color={({ palette }) => palette.grey[400]}>{item.redeemerMem}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Steps</TitleText>
-          <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
-            {item.redeemerSteps}
-          </Typography>
+          <DataTitle color={({ palette }) => palette.grey[400]}>{item.redeemerSteps}</DataTitle>
         </TabItem>
       </TabElement>
     </CardDiagram>
@@ -118,6 +111,7 @@ export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) =>
   return (
     <DatumnElement isContractPage={+!!txHash}>
       <DatumnItem
+        isTxHash={!!txHash}
         sx={{
           borderBottom: (props) => `1px solid ${props.palette.border.line}`,
           paddingBottom: "10px"
@@ -129,6 +123,7 @@ export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) =>
         </Typography>
       </DatumnItem>
       <DatumnItem
+        isTxHash={!!txHash}
         sx={{
           paddingTop: "10px"
         }}
