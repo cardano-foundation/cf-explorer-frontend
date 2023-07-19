@@ -4,7 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 
 import { FailIcon, HideIcon, LockIcon, ShowIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
-import { resetPassword } from "src/commons/utils/userRequest";
+import { resetPassword, verifyCodeResetPassword } from "src/commons/utils/userRequest";
 
 import {
   Container,
@@ -111,6 +111,18 @@ export default function ResetPassword() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path.search]);
+
+  useEffect(() => {
+    if (!code) return;
+    verifyCode();
+  }, [code]);
+
+  async function verifyCode() {
+    const { data } = await verifyCodeResetPassword({ code });
+    if (!data) {
+      setError(true);
+    }
+  }
 
   const handleChange = (event: any) => {
     setFormData({
