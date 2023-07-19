@@ -3,6 +3,7 @@ import { Router } from "react-router-dom";
 
 import { fireEvent, render, screen } from "src/test-utils";
 import { FetchReturnType } from "src/commons/hooks/useFetchList";
+import { details } from "src/commons/routers";
 
 import PoolLifecycle, { IPoolLifecycleProps } from ".";
 
@@ -67,7 +68,8 @@ describe("PoolLifecycle component", () => {
         <PoolLifecycle {...mockProps} />
       </Router>
     );
+    const { reportHistory } = mockProps.fetchData.data[0];
     fireEvent.click(screen.getByText(/in progress/i));
-    expect(history.location.pathname).toBe("/report-generated/1/pool");
+    expect(history.location.pathname).toBe(details.generated_pool_detail(reportHistory.id.toString()));
   });
 });
