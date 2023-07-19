@@ -1,4 +1,3 @@
-import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { CgClose } from "react-icons/cg";
 
@@ -54,7 +53,7 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
           <ContractAddress>{txHash || item.address || item.scriptHash}</ContractAddress>
         </Link>
       </ContractHeader>
-      <ContractRedeemer item={item} txHash={txHash}/>
+      <ContractRedeemer item={item} txHash={txHash} />
       {item.datumHashIn && (
         <>
           <IconContainer>
@@ -118,9 +117,9 @@ export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) =>
         }}
       >
         <DatumnText>Datum Hash</DatumnText>
-        <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
+        <DataTitle color={({ palette }) => palette.grey[400]}>
           {isTypeIn ? item.datumHashIn : item.datumHashOut}
-        </Typography>
+        </DataTitle>
       </DatumnItem>
       <DatumnItem
         isTxHash={!!txHash}
@@ -129,9 +128,9 @@ export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) =>
         }}
       >
         <DatumnText>Datum</DatumnText>
-        <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
+        <DataTitle color={({ palette }) => palette.grey[400]}>
           {isTypeIn ? item.datumBytesIn : item.datumBytesOut}
-        </Typography>
+        </DataTitle>
       </DatumnItem>
     </DatumnElement>
   );

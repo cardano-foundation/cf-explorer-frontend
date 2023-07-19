@@ -61,6 +61,7 @@ export const TabElement = styled(Box)<{ isContractPage?: number }>`
   color: ${(props) => props.theme.palette.grey[400]};
   max-height: 150px;
   overflow: scroll;
+  font-size: 14px;
 `;
 
 export const TabItem = styled(Box)`

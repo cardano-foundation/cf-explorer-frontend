@@ -51,13 +51,7 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
   if (loading || !initialized) {
     return (
       <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent" data-testid="view-detail-drawer-loading">
-        <ViewDetailHeader>
-          <CustomTooltip title="Close">
-            <CloseButton onClick={handleClose}>
-              <CgClose />
-            </CloseButton>
-          </CustomTooltip>
-        </ViewDetailHeader>
+        <ViewDetailHeader />
         <ViewDetailContainer>
           <ViewDetailScroll>
             <HeaderContainer>
@@ -110,7 +104,14 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
           {data?.[0] ? (
             <ContractDiagrams item={data[0]} txHash={txHash} handleClose={handleClose} />
           ) : (
-            <Box sx={{ paddingTop: 10 }} height={"200px"} component={"img"} src={EmptyIcon} />
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "10px" }}>
+              <CustomTooltip title="Close">
+                <CloseButton onClick={handleClose} sx={{ alignSelf: "end" }}>
+                  <CgClose />
+                </CloseButton>
+              </CustomTooltip>
+              <Box sx={{ paddingTop: 10 }} width={"200px"} component={"img"} src={EmptyIcon} />
+            </Box>
           )}
         </ViewDetailScrollContractHash>
       </ViewDetailContainerContractHash>
