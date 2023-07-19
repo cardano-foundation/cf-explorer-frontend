@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import { useHistory, useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
@@ -132,10 +131,10 @@ const SPOLifecycle = () => {
               <LabelSwitch>Switch to {validMode === "timeline" ? "tabular" : "timeline"} view</LabelSwitch>
               <SwitchGroup>
                 <ButtonSwitch active={+(validMode === "timeline")} onClick={() => changeMode("timeline")}>
-                  <TableMode fill={validMode === "timeline" ? theme.palette.common.white : theme.palette.grey[500]} />
+                  <TableMode fill={validMode === "timeline" ? theme.palette.common.white : theme.palette.grey[300]} />
                 </ButtonSwitch>
                 <ButtonSwitch active={+(validMode === "tabular")} onClick={() => changeMode("tabular")}>
-                  <ChartMode fill={validMode === "tabular" ? theme.palette.common.white : theme.palette.grey[500]} />
+                  <ChartMode fill={validMode === "tabular" ? theme.palette.common.white : theme.palette.grey[300]} />
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>

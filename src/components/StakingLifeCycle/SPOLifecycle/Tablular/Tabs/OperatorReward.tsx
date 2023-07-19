@@ -32,7 +32,7 @@ const OperatorRewardTab = () => {
     },
     {
       key: "time",
-      title: "Timestamp",
+      title: "Created At",
       sort({ columnKey, sortValue }) {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       },
@@ -46,7 +46,7 @@ const OperatorRewardTab = () => {
       render(data) {
         return (
           <AmountADARow>
-            +{formatADAFull(data.amount)} <ADAicon color="#333333" />
+            +{formatADAFull(data.amount)} <ADAicon />
           </AmountADARow>
         );
       }
