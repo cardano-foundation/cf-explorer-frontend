@@ -95,7 +95,7 @@ export const EVENTS_NAME = [
 
 type IEpochRange = [number, number];
 
-const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, saveParams, gotoStep }) => {
+const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, saveParams, gotoStep, currentStep }) => {
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   const history = useHistory();
 
@@ -242,8 +242,10 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
   };
 
   useEffect(() => {
-    setDateRange([null, null]);
-    setEpochRange([30, 50]);
+    if (!currentStep && !open) {
+      setDateRange([null, null]);
+      setEpochRange([30, 50]);
+    }
   }, [open]);
 
   return (
