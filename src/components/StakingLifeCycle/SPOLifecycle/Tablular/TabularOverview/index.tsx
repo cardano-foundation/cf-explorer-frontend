@@ -1,4 +1,4 @@
-import { Box, BoxProps, Grid, Icon } from "@mui/material";
+import { Box, BoxProps, Grid, Icon, useTheme } from "@mui/material";
 import { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -45,12 +45,6 @@ export interface OverviewCardProps {
   subtitle?: string;
 }
 
-const STATUS = {
-  ACTIVE: ["Active", "rgb(0,128,0)"],
-  INACTIVE: ["Inactive", "rgb(255,0,0)"],
-  RETIRING: ["Retiring", "rgb(255,153,0)"]
-};
-
 type TGridItem = {
   action?: React.ReactNode;
   title: string;
@@ -89,11 +83,19 @@ const TabularOverview: React.FC = () => {
   const { stakeKeys, poolSize, epochNo, status, rewardAvailable } = data ?? {};
   const [open, setOpen] = useState(false);
   const history = useHistory();
+  const theme = useTheme();
+
   const onOwnerItemClick = (key: string) => {
     return history.push(details.stake(key));
   };
 
   const ownerAccountValue = getShortWallet(stakeKeys?.[0]);
+  const STATUS = {
+    ACTIVE: ["Active", theme.palette.grey[400]],
+    INACTIVE: ["Inactive", "rgb(255,0,0)"],
+    RETIRING: ["Retiring", theme.palette.yellow[100]]
+  };
+
   return (
     <Box>
       <Grid container spacing={2}>
