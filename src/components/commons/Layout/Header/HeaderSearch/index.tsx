@@ -99,6 +99,14 @@ const options: Option[] = [
   }
 ];
 
+const URL_FETCH_DETAIL = {
+  epochs: (epoch: number) => `${API.EPOCH.DETAIL}/${epoch}`,
+  blocks: (block: number) => `${API.BLOCK.DETAIL}/${block}`,
+  txs: (trx: string) => `${API.TRANSACTION.DETAIL}/${trx}`,
+  addresses: (address: string) => `${API.ADDRESS.DETAIL}/${address}`,
+  policies: (policy: string) => `${API.POLICY}/${policy}`
+};
+
 interface Props extends RouteComponentProps {
   home: boolean;
   callback?: () => void;
@@ -131,6 +139,7 @@ interface IResponseSearchAll {
   validPoolName?: true;
   policy?: "string";
 }
+const RESULT_SIZE = 5;
 
 const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, history }) => {
   const [{ search, filter }, setValues] = useState<FormValues>({ ...intitalValue });
@@ -139,15 +148,20 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const { sidebar } = useSelector(({ user }: RootState) => user);
 
   const [dataSearchAll, setDataSearchAll] = useState<IResponseSearchAll | undefined>();
+  const [dataSearchTokensAndPools, setDataSearchTokensAndPools] = useState<
+    TokensSearch[] | DelegationPool[] | undefined
+  >();
   const [loading, setLoading] = useState<boolean>(false);
+  const [totalResult, setTotalResult] = useState<number>(0);
 
   const showResultNotFound = () => {
     setError("No results found");
     setShowErrorMobile?.(true);
     setDataSearchAll(undefined);
+    setShowOption(true);
   };
 
-  const handleSerchAll = async (querry: string) => {
+  const handleSearchAll = async (querry: string) => {
     try {
       setLoading(true);
       const res = await defaultAxios.get(API.SEARCH_ALL(querry));
@@ -160,10 +174,31 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     }
   };
 
+  const FetchSearchTokensAndPools = async (querry: string, filter: FilterParams) => {
+    try {
+      setLoading(true);
+
+      const url = `${filter === "tokens" ? API.TOKEN.LIST : API.DELEGATION.POOL_LIST}?page=0&size=${RESULT_SIZE}&${
+        filter === "tokens" ? "query" : "search"
+      }=${querry}`;
+
+      const res = await defaultAxios.get(url);
+      setTotalResult(res?.data && res.data?.totalItems ? res.data?.totalItems : 0);
+      setDataSearchTokensAndPools(res?.data && res?.data?.data ? res?.data?.data : undefined);
+      setShowOption(true);
+      setLoading(false);
+    } catch {
+      showResultNotFound();
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (!search) {
       setShowOption(false);
     }
+    setDataSearchAll(undefined);
+    setDataSearchTokensAndPools(undefined);
   }, [search, filter]);
 
   const currentPath = history.location.pathname.split("/")[1];
@@ -184,6 +219,22 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     e?.preventDefault();
     const option = options.find((item) => item.value === (filterParams || filter));
 
+    if (!["all", "tokens", "delegations/pool-detail-header"].includes(option?.value || "")) {
+      setLoading(true);
+      const url = URL_FETCH_DETAIL[option?.value as keyof typeof URL_FETCH_DETAIL]
+        ? URL_FETCH_DETAIL[option?.value as keyof typeof URL_FETCH_DETAIL](search as never)
+        : "";
+      try {
+        await defaultAxios.get(url);
+      } catch (error) {
+        showResultNotFound();
+        setShowOption(true);
+        return;
+      } finally {
+        setLoading(false);
+      }
+    }
+
     if (option?.value === "lifecycle") {
       if (search.startsWith("stake")) {
         history.push(details.staking(search, "timeline"));
@@ -199,7 +250,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     }
 
     if (search && filter === "all") {
-      handleSerchAll(search);
+      handleSearchAll(search);
       return;
     }
 
@@ -213,10 +264,11 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     }
 
     callback?.();
-    const isPoolTicketName =
-      option?.value === "delegations/pool-detail-header" && !search?.toLowerCase().startsWith("pool");
 
-    if (option?.detail && !isPoolTicketName) return history.push(option?.detail(search));
+    if (option?.value === "tokens" || option?.value === "delegations/pool-detail-header") {
+      FetchSearchTokensAndPools(search, filter);
+      return;
+    }
 
     if (option?.value === "all" && search.startsWith("stake")) {
       history.push(details.stake(search));
@@ -284,14 +336,14 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           home && !isMobile
             ? "Search transactions, address, blocks, epochs, pools..."
             : isStakingLifecycle && !isMobile
-            ? "Search Stake key, Pools"
+            ? "Search Stake Address, Pools"
             : "Search ..."
         }
         title={
           home && !isMobile
             ? "Search transactions, address, blocks, epochs, pools..."
             : isStakingLifecycle && !isMobile
-            ? "Search Stake key, Pools"
+            ? "Search Stake Address, Pools"
             : "Search ..."
         }
         onChange={handleChangeSearch}
@@ -303,12 +355,15 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           showResultNotFound={showResultNotFound}
           error={error}
           home={home}
+          totalResult={totalResult}
+          filter={filter}
           show={showOption}
           value={search}
           data={dataSearchAll}
+          dataSearchTokensAndPools={dataSearchTokensAndPools}
         />
       )}
-      {loading ? (
+      {loading && search ? (
         <SubmitButton type="submit" home={home ? 1 : 0} disabled={true}>
           <CircularProgress size={20} />
         </SubmitButton>
@@ -329,11 +384,36 @@ interface OptionProps {
   value: string;
   error: string;
   data?: IResponseSearchAll;
+  dataSearchTokensAndPools?: TokensSearch[] | DelegationPool[];
   showResultNotFound: () => void;
+  filter: FilterParams;
+  totalResult: number;
 }
 
-export const OptionsSearch = ({ show, home, value, error, data, showResultNotFound }: OptionProps) => {
+export const OptionsSearch = ({
+  show,
+  home,
+  value,
+  error,
+  data,
+  showResultNotFound,
+  filter,
+  dataSearchTokensAndPools,
+  totalResult
+}: OptionProps) => {
   const history = useHistory();
+
+  const listOptionsTokensAndPools = dataSearchTokensAndPools?.map((i) => ({
+    suggestText: `Search for an ${filter === "tokens" ? "token" : "pool"}
+      ${filter === "tokens" ? (i as TokensSearch)?.displayName : (i as DelegationPool)?.poolName}`,
+    cb: () =>
+      history.push(
+        filter === "tokens"
+          ? details.token((i as TokensSearch)?.fingerprint)
+          : details.delegation((i as DelegationPool)?.poolId)
+      ),
+    formatter: formatLongText
+  }));
 
   const listOptions =
     (isObject(data) &&
@@ -410,9 +490,62 @@ export const OptionsSearch = ({ show, home, value, error, data, showResultNotFou
     [];
 
   useEffect(() => {
-    if (listOptions.length === 0 && isObject(data) && Object.keys(data).length > 0) showResultNotFound();
-  }, [JSON.stringify(data)]);
+    if (listOptions.length === 0 && isObject(data) && Object.keys(data).length > 0 && filter === "all")
+      showResultNotFound();
+    if (
+      (listOptionsTokensAndPools || []).length === 0 &&
+      dataSearchTokensAndPools &&
+      (filter === "delegations/pool-detail-header" || filter === "tokens")
+    )
+      showResultNotFound();
+  }, [JSON.stringify(data), JSON.stringify(dataSearchTokensAndPools)]);
 
+  if (filter === "tokens" || filter === "delegations/pool-detail-header") {
+    return (
+      <OptionsWrapper display={show ? "block" : "none"} home={+home}>
+        {!error ? (
+          <>
+            {(listOptionsTokensAndPools || [])?.map((item, i: number) => {
+              return (
+                <Option key={i} onClick={() => item?.cb?.()} data-testid="option-search-epoch">
+                  <Box>{item?.suggestText}</Box>
+                  <GoChevronRight />
+                </Option>
+              );
+            })}
+            {listOptionsTokensAndPools && totalResult && totalResult > RESULT_SIZE && (
+              <Option
+                onClick={() =>
+                  filter === "tokens"
+                    ? history.push(`${routers.TOKEN_LIST}?tokenName=${value}`)
+                    : history.push(routers.DELEGATION_POOLS, {
+                        tickerNameSearch: value
+                      })
+                }
+              >
+                <Box
+                  display="flex"
+                  alignItems={"center"}
+                  justifyContent="center"
+                  width={"100%"}
+                  fontSize={"14px"}
+                  padding={0}
+                  gap="10px"
+                  minHeight="34px"
+                >
+                  See more
+                </Box>
+              </Option>
+            )}
+          </>
+        ) : (
+          <Box component={Option} color={({ palette }) => palette.red[100]} justifyContent={"center"}>
+            <Box>{error}</Box>
+          </Box>
+        )}
+      </OptionsWrapper>
+    );
+  }
   return (
     <OptionsWrapper display={show ? "block" : "none"} home={+home}>
       {!error && (

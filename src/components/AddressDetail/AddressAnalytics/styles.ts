@@ -124,7 +124,8 @@ export const ButtonTitle = styled("button")(({ theme }) => ({
 }));
 
 export const ChartBox = styled(Box)(({ theme }) => ({
-  paddingTop: theme.spacing(3)
+  paddingTop: theme.spacing(3),
+  fontSize: 12
 }));
 
 export const SkeletonUI = styled(Skeleton)(({ theme }) => ({
@@ -170,3 +171,20 @@ export const TextCardHighlight = styled("span")`
   font-size: 20px;
   border-bottom: ${(props) => `2px solid ${props.theme.palette.green[200]}`};
 `;
+
+export const TooltipBody = styled(Box)(({ theme }) => ({
+  backgroundColor: alpha(theme.palette.common.white, 0.8),
+  borderRadius: 2,
+  padding: 8,
+  border: `1px solid ${theme.palette.primary.main}`,
+  fontSize: 12,
+  color: theme.palette.grey[400]
+}));
+
+export const TooltipLabel = styled(Box)(() => ({
+  marginBottom: 3
+}));
+
+export const TooltipValue = styled(Box)(() => ({
+  fontWeight: 700
+}));

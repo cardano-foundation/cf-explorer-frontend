@@ -1,4 +1,3 @@
-import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { CgClose } from "react-icons/cg";
 
@@ -19,7 +18,8 @@ import {
   DatumnText,
   DatumnItem,
   IconContainer,
-  CloseButton
+  CloseButton,
+  DataTitle
 } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 
@@ -53,7 +53,7 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
           <ContractAddress>{txHash || item.address || item.scriptHash}</ContractAddress>
         </Link>
       </ContractHeader>
-      <ContractRedeemer item={item} txHash={txHash}/>
+      <ContractRedeemer item={item} txHash={txHash} />
       {item.datumHashIn && (
         <>
           <IconContainer>
@@ -86,27 +86,19 @@ export const ContractRedeemer = ({ item, txHash }: IContractDiagramProps) => {
       <TabElement flexDirection={!txHash ? "row" : "column"} isContractPage={+!!txHash}>
         <TabItem>
           <TitleText>Tag</TitleText>
-          <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
-            {item.purpose}
-          </Typography>
+          <DataTitle color={({ palette }) => palette.grey[400]}>{item.purpose}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Data</TitleText>
-          <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
-            {item.redeemerBytes}
-          </Typography>
+          <DataTitle color={({ palette }) => palette.grey[400]}>{item.redeemerBytes}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Mem</TitleText>
-          <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
-            {item.redeemerMem}
-          </Typography>
+          <DataTitle color={({ palette }) => palette.grey[400]}>{item.redeemerMem}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Steps</TitleText>
-          <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
-            {item.redeemerSteps}
-          </Typography>
+          <DataTitle color={({ palette }) => palette.grey[400]}>{item.redeemerSteps}</DataTitle>
         </TabItem>
       </TabElement>
     </CardDiagram>
@@ -118,25 +110,27 @@ export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) =>
   return (
     <DatumnElement isContractPage={+!!txHash}>
       <DatumnItem
+        isTxHash={!!txHash}
         sx={{
           borderBottom: (props) => `1px solid ${props.palette.border.line}`,
           paddingBottom: "10px"
         }}
       >
         <DatumnText>Datum Hash</DatumnText>
-        <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
+        <DataTitle color={({ palette }) => palette.grey[400]}>
           {isTypeIn ? item.datumHashIn : item.datumHashOut}
-        </Typography>
+        </DataTitle>
       </DatumnItem>
       <DatumnItem
+        isTxHash={!!txHash}
         sx={{
           paddingTop: "10px"
         }}
       >
         <DatumnText>Datum</DatumnText>
-        <Typography color={({ palette }) => palette.grey[400]} component={"span"}>
+        <DataTitle color={({ palette }) => palette.grey[400]}>
           {isTypeIn ? item.datumBytesIn : item.datumBytesOut}
-        </Typography>
+        </DataTitle>
       </DatumnItem>
     </DatumnElement>
   );

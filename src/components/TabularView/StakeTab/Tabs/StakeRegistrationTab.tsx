@@ -40,7 +40,7 @@ const StakeRegistrationTab = () => {
       )
     },
     {
-      title: "Timestamp",
+      title: "Created At",
       key: "id",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),

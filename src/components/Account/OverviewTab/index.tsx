@@ -290,7 +290,7 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
           Confirmation Required
         </Box>
         <Box textAlign={"center"} color={({ palette }) => palette.grey[400]} fontWeight={"bold"} fontSize={"18px"}>
-          This is your stake key {getShortWallet(stakeKey || "")}, are you sure to continue?
+          This is your stake address {getShortWallet(stakeKey || "")}, are you sure to continue?
         </Box>
         <Box display={"flex"} justifyContent={"center"} mt={2}>
           <StyledButton disabled={loading} onClick={() => setStakeKey(null)}>
