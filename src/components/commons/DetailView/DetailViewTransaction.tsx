@@ -1,63 +1,69 @@
 import React, { useEffect } from "react";
-import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { BiChevronRight } from "react-icons/bi";
+import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { useSelector } from "react-redux";
 
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import useFetch from "src/commons/hooks/useFetch";
 import {
   CubeIcon,
   DelegationHistoryMainIcon,
+  DelegationIconUrl,
   FileEditIcon,
+  InstantaneousHistoryIconUrl,
+  MetadataIconUrl,
   MintingIconUrl,
   NoteEditIcon,
+  ProtocolUpdateIconUrl,
+  RewardsDistributionIconUrl,
   RocketIcon,
+  StakeCertificatesIconUrl,
   USDIcon,
   WithdrawlIcon
 } from "src/commons/resources";
-import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
 import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
 import { RootState } from "src/stores/types";
-import { API } from "src/commons/utils/api";
 
-import ProgressCircle from "../ProgressCircle";
-import ViewMoreButton from "../ViewMoreButton";
-import CustomTooltip from "../CustomTooltip";
-import CopyButton from "../CopyButton";
-import ViewAllButton from "../ViewAllButton";
 import ADAicon from "../ADAIcon";
+import CopyButton from "../CopyButton";
+import CustomTooltip from "../CustomTooltip";
 import FormNowMessage from "../FormNowMessage";
+import ProgressCircle from "../ProgressCircle";
+import ViewAllButton from "../ViewAllButton";
+import ViewMoreButton from "../ViewMoreButton";
 import {
+  BlockDefault,
   CloseButton,
+  DetailLabel,
+  DetailLabelSkeleton,
+  DetailLink,
+  DetailLinkIcon,
+  DetailLinkImage,
+  DetailLinkName,
+  DetailLinkRight,
+  DetailValue,
+  DetailValueSkeleton,
+  DetailsInfoItem,
   EpochNumber,
   EpochText,
+  Group,
   HeaderContainer,
-  ViewDetailContainer,
-  DetailsInfoItem,
-  DetailLabel,
-  DetailValue,
   Icon,
-  BlockDefault,
-  DetailLabelSkeleton,
-  DetailValueSkeleton,
   IconSkeleton,
-  ProgressSkeleton,
-  ViewDetailDrawer,
   Item,
   ItemName,
   ItemValue,
   ListItem,
-  Group,
-  DetailLink,
-  DetailLinkIcon,
-  DetailLinkRight,
+  ProgressSkeleton,
   StyledLink,
+  TimeDuration,
   TxStatus,
-  DetailLinkName,
-  DetailLinkImage,
-  ViewDetailScroll,
+  ViewDetailContainer,
+  ViewDetailDrawer,
   ViewDetailHeader,
-  TimeDuration
+  ViewDetailScroll
 } from "./styles";
 
 type DetailViewTransactionProps = {
@@ -71,7 +77,25 @@ const tabs: { key: keyof Transaction; label: string; icon?: React.ReactNode }[] 
   { key: "collaterals", label: "Collateral", icon: <DetailLinkImage src={USDIcon} alt="contact" /> },
   { key: "notes", label: "Notes", icon: <DetailLinkImage src={NoteEditIcon} alt="contact" /> },
   { key: "withdrawals", label: "Withdrawal", icon: <DetailLinkImage src={WithdrawlIcon} alt="contact" /> },
-  { key: "mints", label: "Minting", icon: <DetailLinkImage src={MintingIconUrl} alt="contact" /> }
+  { key: "delegations", label: "Delegations", icon: <DetailLinkImage src={DelegationIconUrl} alt="contact" /> },
+  { key: "mints", label: "Minting", icon: <DetailLinkImage src={MintingIconUrl} alt="contact" /> },
+  {
+    key: "poolCertificates",
+    label: "Pool certificates",
+    icon: <DetailLinkImage src={RewardsDistributionIconUrl} alt="contact" />
+  },
+  {
+    key: "stakeCertificates",
+    label: "Stake Certificates",
+    icon: <DetailLinkImage src={StakeCertificatesIconUrl} alt="contact" />
+  },
+  { key: "protocols", label: "Protocol Update", icon: <DetailLinkImage src={ProtocolUpdateIconUrl} alt="contact" /> },
+  {
+    key: "instantaneousRewards",
+    label: "Instantaneous Rewards",
+    icon: <DetailLinkImage src={InstantaneousHistoryIconUrl} alt="contact" />
+  },
+  { key: "metadata", label: "Metadata", icon: <DetailLinkImage src={MetadataIconUrl} alt="contact" /> }
 ];
 
 const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
@@ -162,8 +186,8 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
       </ViewDetailDrawer>
     );
 
-  const input = data.utxOs?.inputs[0]?.address || "";
-  const output = data.utxOs?.outputs[0]?.address || "";
+  const input = data?.utxOs?.inputs[0]?.address || "";
+  const output = data?.utxOs?.outputs[0]?.address || "";
 
   return (
     <ViewDetailDrawer anchor="right" open={!!hash} hideBackdrop variant="permanent">
@@ -187,13 +211,13 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
               pathWidth={4}
               trailWidth={2}
               percent={
-                data.tx.epochNo === currentEpoch?.no
-                  ? ((data.tx.epochSlot || 0) / (data.tx.maxEpochSlot || MAX_SLOT_EPOCH)) * 100
+                data?.tx?.epochNo === currentEpoch?.no
+                  ? ((data?.tx?.epochSlot || 0) / (data?.tx?.maxEpochSlot || MAX_SLOT_EPOCH)) * 100
                   : 100
               }
               trailOpacity={1}
             >
-              <EpochNumber>{data.tx.epochNo}</EpochNumber>
+              <EpochNumber>{data?.tx?.epochNo}</EpochNumber>
               <EpochText>Epoch</EpochText>
             </ProgressCircle>
           </HeaderContainer>
@@ -201,14 +225,14 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
             <Item>
               <Icon src={CubeIcon} alt="socket" />
               <ItemName>Block</ItemName>
-              <ItemValue>{data.tx.blockNo}</ItemValue>
+              <ItemValue>{data?.tx?.blockNo}</ItemValue>
             </Item>
             <Item>
               <Icon src={RocketIcon} alt="socket" />
               <ItemName>slot</ItemName>
               <ItemValue>
-                {data.tx.epochSlot}
-                <BlockDefault>/{data.tx.maxEpochSlot || MAX_SLOT_EPOCH}</BlockDefault>
+                {data?.tx?.epochSlot}
+                <BlockDefault>/{data?.tx?.maxEpochSlot || MAX_SLOT_EPOCH}</BlockDefault>
               </ItemValue>
             </Item>
           </ListItem>
@@ -246,31 +270,29 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
             )}
             <DetailsInfoItem>
               <DetailLabel>Created At</DetailLabel>
-              <DetailValue>{formatDateTimeLocal(data.tx.time || "")}</DetailValue>
+              <DetailValue>{formatDateTimeLocal(data?.tx?.time || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Status</DetailLabel>
               <DetailValue>
-                <TxStatus status={data.tx.status}>{data.tx.status}</TxStatus>
+                <TxStatus status={data?.tx?.status}>{data?.tx?.status}</TxStatus>
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                {data.tx.confirmation && data.tx.confirmation > 1 ? "Confirmations" : "Confirmation"}
-              </DetailLabel>
-              <DetailValue>{data.tx.confirmation}</DetailValue>
+              <DetailLabel>{data?.tx?.confirmation > 1 ? "Confirmations" : "Confirmation"}</DetailLabel>
+              <DetailValue>{data?.tx?.confirmation}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Transaction Fees</DetailLabel>
               <DetailValue>
-                {formatADAFull(data.tx.fee)}
+                {formatADAFull(data?.tx?.fee)}
                 <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Total Output</DetailLabel>
               <DetailValue>
-                {formatADAFull(data.tx.totalOutput)}
+                {formatADAFull(data?.tx?.totalOutput)}
                 <ADAicon />
               </DetailValue>
             </DetailsInfoItem>

@@ -3,6 +3,7 @@ import axios, { AxiosError, AxiosInstance } from "axios";
 import qs from "qs";
 
 import { authAxios, defaultAxios } from "../utils/axios";
+import { cleanObject } from "../utils/helper";
 
 interface Params {
   page?: number;
@@ -21,7 +22,7 @@ export interface FetchReturnType<T> {
   refresh: () => void;
   update: (callback: (data: T[]) => T[]) => void;
   lastUpdated: number;
-  setLoading: (value: boolean) => void;
+  query: Params;
 }
 
 const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, timeout?: number): FetchReturnType<T> => {
@@ -33,11 +34,22 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
   const [totalPage, setTotalPage] = useState(0);
   const [total, setTotal] = useState(0);
   const [refreshLoading, setRefreshLoading] = useState(false);
+  const [query, setQuery] = useState<Params>(cleanObject(params));
   const lastFetch = useRef<number>(Date.now());
 
   const getList = useCallback(
     async (needLoading?: boolean) => {
-      if (!url) return;
+      if (!url) {
+        setData([]);
+        setInitialized(false);
+        setLoading(false);
+        setError(null);
+        setCurrentPage(0);
+        setTotalPage(0);
+        setTotal(0);
+        setRefreshLoading(false);
+        return;
+      }
       let service: AxiosInstance = isAuth ? authAxios : defaultAxios;
       if (url.search("http://") === 0 || url.search("https://") === 0) {
         service = axios;
@@ -48,6 +60,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
         const baseURL = url.split("?")[0];
         const lastURL = url.split("?")[1];
         const res = await service.get(`${baseURL}?${lastURL ? `${lastURL}&` : ""}${qs.stringify(params)}`);
+        setQuery(cleanObject(params));
         setData((res?.data?.data || []) as T[]);
         setError(null);
         setCurrentPage(res.data.currentPage);
@@ -65,7 +78,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
       else setRefreshLoading(false);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [url, isAuth, ...Object.values(params || {})]
+    [url, isAuth, JSON.stringify(params || {})]
   );
 
   useEffect(() => {
@@ -102,7 +115,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
     refresh: getList,
     update: setData,
     lastUpdated: lastFetch.current,
-    setLoading
+    query
   };
 };
 

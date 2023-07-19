@@ -76,7 +76,7 @@ export const DataContainer = styled("div")(({ theme }) => ({
   background: theme.palette.background.paper,
   display: "flex",
   flexDirection: "column",
-  boxShadow: theme.shadow[4],
+  boxShadow: theme.shadow.detailHeader,
   borderRadius: 12,
   padding: "30px 25px",
   [theme.breakpoints.down("sm")]: {
@@ -155,7 +155,7 @@ export const StyledLinearProgress = styled(LinearProgress)<{ saturation: number 
   width: 100%;
   height: 10px;
   border-radius: 34px;
-  background: ${(props) => alpha(props.theme.palette.common.black, 0.1)};
+  background: ${(props) => alpha(props.theme.palette.grey[400], 0.1)};
 
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;

@@ -80,8 +80,7 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
     paddingBottom: "50px"
   },
   [theme.breakpoints.down("sm")]: {
-    padding: "37px 58px",
-    marginBottom: "50px"
+    padding: "37px 5px"
   }
 }));
 
@@ -94,7 +93,7 @@ const SearchContainer = styled(Box)(({ theme }) => ({
   padding: "0 20px 0 30px",
   borderRadius: 100,
   marginBottom: 15,
-  height: 70,
+  height: 58,
   border: `1.5px solid ${theme.palette.grey[200]}`,
   [theme.breakpoints.down("sm")]: {
     width: "unset",
@@ -127,12 +126,19 @@ const Image = styled("img")`
   height: 20px;
 `;
 
-const SearchTitle = styled(Typography)`
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 36px;
-  color: ${(props) => props.theme.palette.grey[400]};
-`;
+const SearchTitle = styled(Typography)(({ theme }) => ({
+  fontSize: "18px",
+  fontWeight: 700,
+  margin: "30px 0px 20px 0px",
+  [theme.breakpoints.down("md")]: {
+    margin: "60px 0px 20px 0px",
+    padding: "0px 60px"
+  },
+  [theme.breakpoints.down("sm")]: {
+    margin: "0px 0px 20px 0px",
+    padding: "0px 5px"
+  }
+}));
 
 const InfoLink = styled("span")`
   color: ${(props) => props.theme.palette.blue[100]};

@@ -34,7 +34,7 @@ const TokenDetail: React.FC = () => {
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `Token ${tokenId} | Cardano Explorer`;
-    mainRef.current?.scrollTo(0, 0);
+    mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   }, [tokenId]);
 
   if ((initialized && !data) || error) return <NoRecord />;

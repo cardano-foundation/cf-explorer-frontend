@@ -75,6 +75,12 @@ import txOutputIconUrl from "./icons/txOutput.svg";
 import totalOutputUrl from "./icons/totalOutput.svg";
 import CopyIconSquareUrl from "./images/copy.svg";
 import fileGuardUrl from "./icons/file-guard.svg";
+import DelegationIconUrl from "./icons/delegationIcon.svg";
+import RewardsDistributionIconUrl from "./icons/rewardsDistribution.svg";
+import StakeCertificatesIconUrl from "./icons/stakeCertificateIcon.svg";
+import ProtocolUpdateIconUrl from "./icons/protocolUpdateIcon.svg";
+import InstantaneousHistoryIconUrl from "./icons/instantaneousHistoryIcon.svg";
+import MetadataIconUrl from "./icons/metadataIcon2.svg";
 import ADALogoUrl from "./icons/ada-logo.svg";
 
 export {
@@ -155,7 +161,13 @@ export {
   txOutputIconUrl,
   totalOutputUrl,
   CopyIconSquareUrl,
-  fileGuardUrl
+  fileGuardUrl,
+  DelegationIconUrl,
+  RewardsDistributionIconUrl,
+  StakeCertificatesIconUrl,
+  ProtocolUpdateIconUrl,
+  InstantaneousHistoryIconUrl,
+  MetadataIconUrl
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";

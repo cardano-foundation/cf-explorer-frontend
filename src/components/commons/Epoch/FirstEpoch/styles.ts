@@ -1,5 +1,7 @@
 import { Box, Grid, styled } from "@mui/material";
 
+import { EPOCH_STATUS } from "src/commons/utils/constants";
+
 export const EpochCard = styled(Box)(({ theme }) => ({
   display: "flex",
   backgroundColor: theme.palette.common.white,
@@ -55,8 +57,7 @@ export const EpochNumber = styled(Box)(({ theme }) => ({
   textAlign: "center",
   [theme.breakpoints.down("sm")]: {
     marginTop: "-8px"
-  },
-  color: theme.palette.secondary.main
+  }
 }));
 
 export const TitleCard = styled(Box)(({ theme }) => ({
@@ -69,8 +70,13 @@ export const EpochText = styled("span")`
   text-transform: uppercase;
 `;
 
-export const EpochProgress = styled("h3")(({ theme }) => ({
-  color: theme.palette.grey[400],
+export const EpochProgress = styled("h3")<{ status: keyof typeof EPOCH_STATUS }>(({ theme, status }) => ({
+  color:
+    status === "REWARDING"
+      ? theme.palette.green[200]
+      : status === "FINISHED"
+      ? theme.palette.blue[100]
+      : theme.palette.yellow[100],
   margin: 0,
   [theme.breakpoints.down("lg")]: {
     fontSize: 14
@@ -122,5 +128,6 @@ export const Content = styled("span")`
 
 export const SubContent = styled("span")`
   font-size: 16px;
-  opacity: 0.5;
+  font-weight: normal;
+  color: ${(props) => props.theme.palette.grey[300]};
 `;

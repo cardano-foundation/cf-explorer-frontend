@@ -32,7 +32,7 @@ const OperatorRewardTab = () => {
     },
     {
       key: "time",
-      title: "Timestamp",
+      title: "Created At",
       sort({ columnKey, sortValue }) {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       },

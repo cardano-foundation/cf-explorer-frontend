@@ -21,19 +21,13 @@ const StakeDetail: React.FC = () => {
     false,
     REFRESH_TIMES.STAKE_REGISTRATION
   );
-
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `Stake address ${stakeId} | Cardano Explorer`;
-    mainRef.current?.scrollTo(0, 0);
+    mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   }, [stakeId]);
 
-  if (!initialized) {
-    return null;
-  }
-
   if ((initialized && !data) || error) return <NoRecord />;
-
   return (
     <StyledContainer>
       <StakeKeyOverview data={data} loading={loading} lastUpdated={lastUpdated} />

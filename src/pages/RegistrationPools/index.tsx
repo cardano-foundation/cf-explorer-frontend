@@ -104,7 +104,7 @@ const RegistrationPools = () => {
       }
     },
     {
-      title: "Cost (A)",
+      title: "Fixed Cost (A)",
       key: poolType === POOL_TYPE.REGISTRATION ? "fixedCost" : "pu.fixedCost",
       render: (pool) => <>{formatADAFull(pool.cost)}</>,
       sort: ({ columnKey, sortValue }) => {
@@ -112,7 +112,7 @@ const RegistrationPools = () => {
       }
     },
     {
-      title: "Fee",
+      title: "Margin",
       key: poolType === POOL_TYPE.REGISTRATION ? "margin" : "pu.margin",
       render: (pool) => formatPercent(pool.margin),
       sort: ({ columnKey, sortValue }) => {
@@ -154,7 +154,7 @@ const RegistrationPools = () => {
             ...pageInfo,
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
-              mainRef.current?.scrollTo(0, 0);
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             },
             total: fetchData.total
           }}

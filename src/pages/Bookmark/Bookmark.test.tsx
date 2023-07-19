@@ -41,7 +41,7 @@ describe("Bookmark compenent", () => {
     expect(screen.getByRole("tab", { name: /block/i })).toBeInTheDocument();
     expect(screen.getByRole("tab", { name: /epoch/i })).toBeInTheDocument();
     expect(screen.getByRole("tab", { name: /pool/i })).toBeInTheDocument();
-    expect(screen.getByRole("tab", { name: /stake key/i })).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: /stake address/i })).toBeInTheDocument();
   });
 
   it("checking dialog open", async () => {

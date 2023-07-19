@@ -253,7 +253,12 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 alignItems={isGalaxyFoldSmall ? "flex-start" : "flex-end"}
                 marginTop="9px"
               >
-                <Box component={"span"} mt={1} style={{ fontSize: "14px", fontWeight: "400" }}>
+                <Box
+                  component={"span"}
+                  mt={1}
+                  color={({ palette }) => palette.grey[300]}
+                  style={{ fontSize: "14px", fontWeight: "400" }}
+                >
                   Saturation
                 </Box>
                 <Box fontSize={16}>{formatPercent(data?.saturation ? data?.saturation / 100 : 0)}</Box>

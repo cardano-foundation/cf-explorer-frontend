@@ -10,7 +10,7 @@ import {
   alpha,
   useTheme
 } from "@mui/material";
-import _, { isObject, isEmpty } from "lodash";
+import { isObject, isEmpty } from "lodash";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { BsFillCheckCircleFill } from "react-icons/bs";
@@ -26,7 +26,7 @@ import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { PROTOCOL_TYPE } from "src/commons/utils/constants";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
-import DateRangeModal from "src/components/FilterReport/DateRangeModal";
+import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
 import ParseScriptModal from "src/components/ParseScriptModal";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -205,7 +205,7 @@ const ProtocolParameter: React.FC = () => {
       render: (r: any) => <Box>{r?.epochNo}</Box>
     },
     {
-      title: "Timestamp",
+      title: "Created At",
       key: "timestamp",
       render: (r: any) => (r?.time ? formatDateTimeLocal(r.time) : "")
     }
@@ -299,6 +299,7 @@ export default ProtocolParameter;
 export const ProtocolParameterHistory = () => {
   const { PROTOCOL_PARAMETER } = API;
   const TOTAL_PARAMETER = 29;
+  const [initing, setIniting] = useState(true);
   const theme = useTheme();
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
@@ -454,6 +455,7 @@ export const ProtocolParameterHistory = () => {
 
   useUpdateEffect(() => {
     setDataTable([...dataHistoryMapping].slice(1));
+    setIniting(false);
   }, [JSON.stringify(dataHistoryMapping)]);
 
   useUpdateEffect(() => {
@@ -516,6 +518,7 @@ export const ProtocolParameterHistory = () => {
       >
         {initialized && !!dataHistory ? (
           columnsTable?.length === 1 &&
+          !initing &&
           !loading && (
             <Box textAlign={"center"}>
               <Box component={"img"} src={EmptyIcon} mt={3} />
@@ -648,7 +651,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                 Date range
               </Box>
             </Box>
-            {!_.isEmpty(dateRange) && <BsFillCheckCircleFill size={16} />}
+            {!isEmpty(dateRange) && <BsFillCheckCircleFill size={16} />}
           </Box>
         </ButtonFilter>
 

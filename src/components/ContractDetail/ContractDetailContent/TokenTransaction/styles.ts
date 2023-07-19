@@ -30,6 +30,7 @@ export const PriceValue = styled(Box)`
 
 export const Label = styled(SmallText)`
   min-width: 50px;
+  color: ${(props) => props.theme.palette.grey[300]};
 `;
 
 export const PriceIcon = styled("img")`
