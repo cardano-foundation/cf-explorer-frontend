@@ -60,15 +60,22 @@ const PURPLE = {
 
 const primary = {
   light: GREEN[100],
-  main: GREEN[200],
-  dark: GREEN[200],
+
+  100: "#F6F9FF",
+  200: "#D6E2FF",
+  500: "#5C8DFF",
+  main: "#0033AD",
+  dark: "#001F66",
   contrastText: COMMON.white
 };
 
 const secondary = {
-  light: BLUE[100_7],
-  main: BLUE[100],
   dark: GREY[300],
+
+  0: "#FFFFFF",
+  600: "#6C6F89",
+  light: "#434656",
+  main: "#24262E",
   contrastText: COMMON.white
 };
 
@@ -96,16 +103,23 @@ const background = {
 };
 
 const error = {
+  100: "#FFEBEE",
+  700: "#C20024",
+  contrastText: COMMON.white,
+
   light: RED[100_15],
   main: RED[100],
-  dark: RED[100],
-  contrastText: COMMON.white
+  dark: RED[100]
 };
 const warning = {
+  100: "#FEF8EC",
+  700: "#F6C667",
+  800: "#744F07",
+  contrastText: COMMON.white,
+
   light: YELLOW[100_15],
   main: YELLOW[100],
-  dark: YELLOW[100],
-  contrastText: COMMON.white
+  dark: YELLOW[100]
 };
 
 const info = {
@@ -116,10 +130,14 @@ const info = {
 };
 
 const success = {
+  100: "#EDFCF8",
+  700: "#1EC198",
+  800: "#116A54",
+  contrastText: COMMON.white,
+
   light: GREEN[200_15],
   main: GREEN[200],
-  dark: GREEN[200],
-  contrastText: COMMON.white
+  dark: GREEN[200]
 };
 
 const GRADIENTS = {

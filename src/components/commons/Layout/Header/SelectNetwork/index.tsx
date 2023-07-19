@@ -7,9 +7,9 @@ import { setOnDetailView } from "src/stores/user";
 
 const StyledSelect = styled(Select)(({ theme }) => ({
   fontFamily: "var(--font-family-title)",
-  border: `2px solid ${theme.palette.border.hint}`,
+  border: `2px solid ${theme.palette.primary[200]}`,
   background: "transparent",
-  color: theme.palette.text.secondary,
+  color: theme.palette.secondary.main,
   borderRadius: "8px",
   "& > div": {
     padding: "6.5px 12px",

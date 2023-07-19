@@ -76,11 +76,11 @@ const TransactionChart: React.FC = () => {
   const renderLoading = () => {
     return (
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={3} md={3} lg={9}>
-          <Skeleton variant="rectangular" height={"300px"} style={{ borderRadius: 10 }} />
+        <Grid item xs={12} lg={9}>
+          <Skeleton variant="rectangular" height={"250px"} style={{ borderRadius: 10 }} />
         </Grid>
-        <Grid item xs={12} sm={3} md={3}>
-          <Skeleton variant="rectangular" height={"300px"} />
+        <Grid item xs={12} lg={3}>
+          <Skeleton variant="rectangular" height={"250px"} />
         </Grid>
       </Grid>
     );
@@ -126,10 +126,10 @@ const TransactionChart: React.FC = () => {
                       textAlign={"left"}
                       color={({ palette }) =>
                         item.key === "trx"
-                          ? palette.yellow[100]
+                          ? palette.success[700]
                           : item.key === "simple"
-                          ? palette.blue[100]
-                          : palette.green[200]
+                          ? palette.primary[500]
+                          : palette.warning[700]
                       }
                       fontWeight={"bold"}
                       fontSize={"1.6rem"}
@@ -183,7 +183,7 @@ const renderTooltipContent = (o: any, range: Time) => {
     <Box>
       <Box
         p={1}
-        bgcolor={({ palette }) => alpha(palette.common.white, 0.8)}
+        bgcolor={({ palette }) => alpha(palette.common.white, 0.9)}
         borderRadius={"8px"}
         textAlign={"left"}
         boxShadow={(theme) => theme.shadow.dropdown}
@@ -196,7 +196,7 @@ const renderTooltipContent = (o: any, range: Time) => {
             <Box color={({ palette }) => alpha(palette.grey[400], 0.7)} fontSize={"0.75rem"}>{`${
               nameTooltips[entry.name as keyof typeof nameTooltips]
             }`}</Box>
-            <Box fontWeight={"bold"} style={{ color: entry.color }}>{`${numberWithCommas(entry.value)} (${getPercent(
+            <Box fontWeight={"bold"} style={{ color: entry.fill }}>{`${numberWithCommas(entry.value)} (${getPercent(
               entry.value,
               total
             )})`}</Box>
@@ -227,32 +227,35 @@ const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
-            color={theme.palette.grey[400]}
+            color={theme.palette.secondary.light}
             dataKey="date"
             tickFormatter={(date: string) => formatX(date, range)}
           />
-          <YAxis color={theme.palette.grey[400]} tickFormatter={toPercent} />
+          <YAxis color={theme.palette.secondary.light} tickFormatter={toPercent} />
           <Tooltip content={(o: any) => renderTooltipContent(o, range)} />
           <Area
             type="monotone"
-            dataKey="metadata"
+            dataKey="simpleTransactions"
             stackId="1"
-            stroke={theme.palette.green[200]}
-            fill={theme.palette.green[200]}
+            strokeWidth={3}
+            stroke={theme.palette.secondary[0]}
+            fill={theme.palette.warning[700]}
           />
           <Area
             type="monotone"
             dataKey="smartContract"
             stackId="1"
-            stroke={theme.palette.blue[100]}
-            fill={theme.palette.blue[100]}
+            strokeWidth={3}
+            stroke={theme.palette.secondary[0]}
+            fill={theme.palette.primary[500]}
           />
           <Area
             type="monotone"
-            dataKey="simpleTransactions"
+            dataKey="metadata"
+            strokeWidth={3}
             stackId="1"
-            stroke={theme.palette.yellow[100]}
-            fill={theme.palette.yellow[100]}
+            stroke={theme.palette.secondary[0]}
+            fill={theme.palette.success[700]}
           />
         </AreaChart>
       </ResponsiveContainer>

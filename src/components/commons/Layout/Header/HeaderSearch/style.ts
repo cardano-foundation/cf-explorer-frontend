@@ -16,7 +16,7 @@ export const Form = styled("form")<{ home: number; sidebar?: number }>(({ theme,
   padding: `0px 0px 0px ${home ? 15 : 0}px`,
   boxSizing: "border-box",
   marginTop: home ? 30 : 0,
-  border: `1.5px solid ${theme.palette.grey[200]}`,
+  border: `1.5px solid ${theme.palette.primary[200]}`,
   [theme.breakpoints.down("lg")]: {
     minWidth: sidebar ? "unset" : home ? 785 : 400
   },
@@ -45,14 +45,14 @@ export const StyledSelect = styled(Select)<{ home: number }>`
     border-radius: 0px !important;
     padding-right: 40px !important;
     min-width: 80px;
-    color: ${(props) => props.theme.palette.text.primary};
+    color: ${(props) => props.theme.palette.secondary.light};
   }
   & > fieldset {
     top: 0;
     border: none !important;
   }
   & > svg {
-    color: ${(props) => props.theme.palette.grey[300]};
+    color: ${(props) => props.theme.palette.secondary.light};
     font-size: 1.75rem;
   }
 `;
