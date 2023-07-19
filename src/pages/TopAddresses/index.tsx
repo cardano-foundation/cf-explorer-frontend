@@ -1,16 +1,17 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Box, Tab, alpha } from "@mui/material";
+import { Box, Tab, alpha, useTheme } from "@mui/material";
 import React, { useEffect } from "react";
 
 import Card from "src/components/commons/Card";
 import TopAddressesByADABalance from "src/components/TopAddresses/ByADABalance";
 import TopAddressesByAmountStaked from "src/components/TopAddresses/ByAmountStaked";
+import { DelegationHistoryIcon, StakeKeyHistoryIcon } from "src/commons/resources";
 
 import { StyledContainer, TabTitle } from "./styles";
 
 const TopAddresses = () => {
   const [tabActive, setTabActive] = React.useState<"ada-balance" | "amount-staked">("ada-balance");
-
+  const theme = useTheme();
   useEffect(() => {
     document.title = `Top Addresses | Cardano Explorer`;
   }, []);
@@ -18,28 +19,22 @@ const TopAddresses = () => {
   const handleChange = (event: React.SyntheticEvent, tab: "ada-balance" | "amount-staked") => {
     setTabActive(tab);
   };
-
-  const tabs: { label: React.ReactNode; key: string; children: React.ReactNode }[] = [
+  const tabs: {
+    label: string;
+    key: string;
+    icon: React.FC<React.SVGProps<SVGSVGElement>>;
+    children: React.ReactNode;
+  }[] = [
     {
-      label: (
-        <TabTitle className={tabActive === "ada-balance" ? "active" : ""}>
-          <Box display={"flex"} alignItems="center">
-            <Box>By Address ADA Balance</Box>
-          </Box>
-        </TabTitle>
-      ),
+      label: "By Address ADA Balance",
       key: "ada-balance",
+      icon: DelegationHistoryIcon,
       children: <TopAddressesByADABalance />
     },
     {
-      label: (
-        <TabTitle className={tabActive === "amount-staked" ? "active" : ""}>
-          <Box display={"flex"} alignItems="center">
-            <Box>By Amount Staked</Box>
-          </Box>
-        </TabTitle>
-      ),
+      label: "By Amount Staked",
       key: "amount-staked",
+      icon: StakeKeyHistoryIcon,
       children: <TopAddressesByAmountStaked />
     }
   ];
@@ -53,11 +48,18 @@ const TopAddresses = () => {
               onChange={handleChange}
               TabIndicatorProps={{ sx: { background: (theme) => theme.palette.primary.main, height: 3 } }}
             >
-              {tabs?.map((item) => (
+              {tabs?.map(({ key, icon: Icon, label }) => (
                 <Tab
-                  key={item.key}
-                  label={item.label}
-                  value={item.key}
+                  key={key}
+                  label={
+                    <Box display={"flex"} alignItems="center">
+                      <Icon fill={key === tabActive ? theme.palette.green[300] : theme.palette.grey[500]} />
+                      <TabTitle className={key === tabActive ? "active" : ""}>
+                        <Box>{label}</Box>
+                      </TabTitle>
+                    </Box>
+                  }
+                  value={key}
                   sx={{
                     padding: "12px 0px",
                     marginRight: "24px"

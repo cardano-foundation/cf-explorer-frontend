@@ -16,6 +16,7 @@ import TokenAutocomplete from "src/components/TokenAutocomplete";
 import ADAicon from "src/components/commons/ADAIcon";
 import { useScreen } from "src/commons/hooks/useScreen";
 import FormNowMessage from "src/components/commons/FormNowMessage";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import { BackButton, BackText, RedirectButton, StyledBoxCard, TimeDuration, TitleText, WrapHeader } from "./styles";
 
@@ -74,9 +75,13 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           to={dataStake?.pool?.poolId ? details.delegation(dataStake.pool.poolId) : "#"}
           style={{ fontFamily: "var(--font-family-text)", color: theme.palette.secondary.main }}
         >
-          {dataStake?.pool?.poolName ||
-            (dataStake?.pool?.poolId && `Pool [${getShortWallet(dataStake.pool.poolId)}]`) ||
-            ""}
+          {dataStake?.pool?.poolName ? (
+            dataStake?.pool?.poolName
+          ) : (
+            <CustomTooltip title={dataStake?.pool?.poolId || ""} arrow>
+              <span>{getShortWallet(dataStake?.pool?.poolId || "")}</span>
+            </CustomTooltip>
+          )}
         </Link>
       )
     },

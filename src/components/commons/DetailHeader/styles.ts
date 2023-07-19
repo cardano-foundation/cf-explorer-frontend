@@ -63,7 +63,9 @@ export const HeaderContainer = styled(Box)`
   }
 `;
 
-export const HeaderTitle = styled("h2")`
+export const HeaderTitle = styled(Box)`
+  overflow-wrap: anywhere;
+  font-weight: var(--font-weight-bold);
   color: ${(props) => props.theme.palette.grey[400]};
   font-size: 2.25rem;
   margin: 0.5rem 0;
@@ -79,10 +81,10 @@ export const HeaderTitleSkeleton = styled(Skeleton)`
   border-radius: 4px;
 `;
 
-export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionStatus | IDataEpoch["status"] }>`
+export const HeaderStatus = styled("small")<{ status?: TransactionStatus | IDataEpoch["status"] }>`
   color: ${({ status, theme }) => {
     switch (status) {
-      case TRANSACTION_STATUS.FAIL:
+      case TRANSACTION_STATUS.FAILED:
         return theme.palette.error.main;
       case TRANSACTION_STATUS.SUCCESS:
         return theme.palette.success.main;
@@ -98,7 +100,7 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
   }};
   background-color: ${({ status, theme }) => {
     switch (status) {
-      case TRANSACTION_STATUS.FAIL:
+      case TRANSACTION_STATUS.FAILED:
         return theme.palette.error.light;
       case TRANSACTION_STATUS.SUCCESS:
         return theme.palette.success.light;
@@ -147,6 +149,10 @@ export const SlotLeader = styled("p")`
   margin-top: 0px;
 `;
 
+export const WrapLeaderValue = styled(Box)`
+  display: inline-block;
+`;
+
 export const SlotLeaderValue = styled("span")`
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.secondary.main};
@@ -155,6 +161,7 @@ export const SlotLeaderValue = styled("span")`
   line-height: 1.5;
   font-weight: bold;
 `;
+
 export const SlotLeaderTitle = styled("small")`
   font-family: var(--font-family-text);
   color: ${({ theme }) => theme.palette.grey[300]};

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Skeleton, useTheme } from "@mui/material";
 import { TabContext, TabList } from "@mui/lab";
 import { useHistory } from "react-router-dom";
@@ -54,9 +54,14 @@ interface Props {
   data: PoolUpdateDetail | null;
   onClose: () => void;
 }
-export const PoolUpdateModal = ({ data, ...props }: Props) => {
+export const PoolUpdateModal = ({ data, open, ...props }: Props) => {
   const [tabActive, setTabActive] = useState("poolCertificate");
   const theme = useTheme();
+
+  useEffect(() => {
+    setTabActive("poolCertificate");
+  }, [open]);
+
   const tabs: TabProps[] = [
     {
       key: "poolCertificate",
@@ -78,7 +83,7 @@ export const PoolUpdateModal = ({ data, ...props }: Props) => {
   const isUpdated = data?.previousMargin !== data?.margin || data?.previousPledge !== data?.pledge;
 
   return (
-    <StyledModal {...props} title="Pool certificate">
+    <StyledModal open={open} {...props} title="Pool certificate" sx={{ maxHeight: "min(70vh, 800px)" }}>
       {isUpdated ? (
         <TabContext value={tabActive}>
           <TabContainer>

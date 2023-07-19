@@ -51,7 +51,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
   const [sort, setSort] = useState<string>("");
   const { isMobile, isGalaxyFoldSmall } = useScreen();
   const fetchData = useFetchList<RewardDistributionItem>(
-    stakeId ? API.STAKE_LIFECYCLE.RECEIVED_REWARD(stakeId) + (type ? `?type=${type}` : "") : "",
+    stakeId && open ? API.STAKE_LIFECYCLE.RECEIVED_REWARD(stakeId) + (type ? `?type=${type}` : "") : "",
     {
       ...params,
       sort
@@ -89,7 +89,13 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
     }
   ];
   return (
-    <StyledModal open={open} handleCloseModal={() => onClose?.()} width={600}>
+    <StyledModal
+      open={open}
+      handleCloseModal={() => {
+        onClose?.();
+      }}
+      width={600}
+    >
       <ModalContainer>
         <ModalTitle>
           {type === RECEIVED_REWARDS.LEADER

@@ -70,7 +70,7 @@ export const ContractRedeemer = ({ item, txHash }: IContractDiagramProps) => {
   return (
     <CardDiagram>
       <TabLabel>Redeemer</TabLabel>
-      <TabElement isContractPage={+!!txHash}>
+      <TabElement flexDirection={!txHash ? "row" : "column"}>
         <TabItem>
           <TitleText>Tag</TitleText>
           <Typography color={({ palette }) => palette.grey[400]} component={"span"}>

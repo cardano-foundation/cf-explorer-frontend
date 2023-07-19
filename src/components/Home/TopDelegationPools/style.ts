@@ -138,7 +138,7 @@ export const StyledProgress = styled("div")<{ value: number; width?: number }>`
 
 export const StyledLinearProgress = styled(LinearProgress)<{ saturation: number }>`
   display: inline-block;
-  width: 100%;
+  width: 150px;
   height: 8px;
   border-radius: 8px;
   background: ${(props) => alpha(props.theme.palette.grey[400], 0.1)};

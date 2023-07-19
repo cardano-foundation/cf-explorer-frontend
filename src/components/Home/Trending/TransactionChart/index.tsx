@@ -37,7 +37,7 @@ const TransactionChart: React.FC = () => {
   const optionsTime: Record<Time, { label: string; displayName: string }> = {
     ONE_DAY: {
       label: "1d",
-      displayName: "today"
+      displayName: "in the last day"
     },
     ONE_WEEK: {
       label: "1w",
@@ -61,7 +61,7 @@ const TransactionChart: React.FC = () => {
 
   const dataOverview = [
     { key: "trx", title: "Simple transactions", value: sumSimple || 0 },
-    { key: "simple", title: "Smart contracts", value: sumSmartContract || 0 },
+    { key: "simple", title: <Box textAlign={"left"}>Smart contracts</Box>, value: sumSmartContract || 0 },
     {
       key: "complex",
       title: (

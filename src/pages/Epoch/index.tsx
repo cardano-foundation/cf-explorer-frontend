@@ -72,6 +72,12 @@ const Epoch: React.FC = () => {
       }
     },
     {
+      title: "Unique Accounts",
+      key: "account",
+      minWidth: "100px",
+      render: (r) => <Blocks>{r.account}</Blocks>
+    },
+    {
       title: "Transaction Count",
       key: "transactionCount",
       minWidth: "100px",
@@ -143,7 +149,7 @@ const Epoch: React.FC = () => {
             total: fetchData.total,
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
-              mainRef.current?.scrollTo(0, 0);
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             },
             handleCloseDetailView: handleClose
           }}

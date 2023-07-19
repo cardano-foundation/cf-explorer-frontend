@@ -76,7 +76,7 @@ const DelegationLists: React.FC = () => {
       minWidth: "200px",
       key: "Saturation",
       render: (r) => (
-        <Box display="flex" alignItems="center" justifyContent={"space-between"}>
+        <Box display="flex" alignItems="center" justifyContent={"end"}>
           <Box component={"span"}>{formatPercent(r.saturation / 100) || `0%`}</Box>
           <StyledLinearProgress
             variant="determinate"

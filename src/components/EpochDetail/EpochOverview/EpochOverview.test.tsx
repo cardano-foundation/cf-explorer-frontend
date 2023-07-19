@@ -13,7 +13,8 @@ const mockedData: IDataEpoch = {
   startTime: "2023/06/09 21:47:26",
   status: "REWARDING",
   txCount: 375738,
-  epochSlotNo: 0
+  epochSlotNo: 0,
+  account: 100
 };
 
 describe("EpochOverview", () => {
