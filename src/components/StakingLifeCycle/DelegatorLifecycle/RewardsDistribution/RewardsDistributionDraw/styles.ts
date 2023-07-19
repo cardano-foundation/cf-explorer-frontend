@@ -1,4 +1,4 @@
-import { Box, Typography, styled } from "@mui/material";
+import { Box, Typography, alpha, styled } from "@mui/material";
 
 import { AdaLogoIcon } from "src/components/commons/ADAIcon";
 import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
@@ -40,7 +40,7 @@ export const RectBox = styled(Box)<{ disabled?: number }>(({ disabled, theme }) 
   borderRadius: 12,
   gap: 12,
   padding: "15px 20px",
-  backgroundColor: disabled ? "#E3E5E9" : theme.palette.common.white,
+  backgroundColor: disabled ? theme.palette.grey[200] : theme.palette.common.white,
   boxSizing: "border-box",
   position: "relative",
   "& > image": {
@@ -54,7 +54,7 @@ export const RectBox = styled(Box)<{ disabled?: number }>(({ disabled, theme }) 
 export const DisableAbleLabel = styled(Typography)<{ disabled?: number }>(({ theme, disabled }) => ({
   fontSize: "1ren",
   fontWeight: 700,
-  color: disabled ? "#98A2B3" : theme.palette.common.black,
+  color: disabled ? alpha(theme.palette.grey[400], 0.3) : theme.palette.grey[400],
   textAlign: "left",
   flex: 1,
   [theme.breakpoints.down("lg")]: {
@@ -79,8 +79,8 @@ export const RewardAccountCcontainer = styled(RectBox)(({ theme }) => ({
 
 export const HolderWrapper = styled(Box)(({ theme }) => ({
   padding: "20px 35px",
-  border: "1.5px dashed #D2D2D2",
-  background: "rgba(152, 162, 179, 0.1)",
+  border: `1.5px dashed ${theme.palette.border.hint}`,
+  background: alpha(theme.palette.grey[300], 0.03),
   borderRadius: 25,
   width: "100%",
   maxWidth: 340,
@@ -135,10 +135,11 @@ export const RewardBoxImg = styled("img")(() => ({
   height: 100
 }));
 
-export const RewardValue = styled(Box)(() => ({
+export const RewardValue = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  gap: 5
+  gap: 5,
+  color: theme.palette.grey[400]
 }));
 
 export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({

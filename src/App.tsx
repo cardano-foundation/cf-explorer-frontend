@@ -11,7 +11,7 @@ import AppContainer from "./AppContainer";
 const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <Router>
+      <Router basename="/en">
         <AppContainer>
           <Routers />
         </AppContainer>
