@@ -10,6 +10,7 @@ export interface IPropsModal {
   saveParams?: (params: any) => void;
   gotoStep?: (step: number) => void;
   params?: any;
+  currentStep?: number;
 }
 
 export enum STEPS {
@@ -36,6 +37,7 @@ const ReportComposerModal = ({ open, handleCloseModal }: IPropsModal) => {
     <Box data-testid="report-compose-modal">
       <FilledInfoModal
         open={currentStep === STEPS.step1}
+        currentStep={currentStep}
         handleCloseModal={handleCloseModal}
         saveParams={setParams}
         gotoStep={gotoStep}

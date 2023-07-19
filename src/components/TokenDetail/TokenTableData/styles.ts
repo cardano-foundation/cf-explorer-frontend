@@ -107,6 +107,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
   backgroundColor: `${alpha(theme.palette.grey[300], 0.1)}`,
   borderRadius: 10,
   padding: theme.spacing(2),
+  marginBottom: theme.spacing(3),
   maxHeight: "50vh",
   [theme.breakpoints.up("md")]: {
     "& .MuiSvgIcon-root": {
