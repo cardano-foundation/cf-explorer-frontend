@@ -65,13 +65,22 @@ const StakeAnalytics: React.FC = () => {
     `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`
   );
 
-  const values = data?.map((item) => item.value).filter((item) => item !== null) || [];
+  const values = data?.map((item) => item.value || 0) || [];
   const maxBalance = BigNumber.max(0, ...values).toString();
   const minBalance = BigNumber.min(maxBalance, ...values).toString();
 
-  const rewards = data?.map((item) => item.value).filter((item) => item !== null) || [];
+  const rewards = dataReward?.map((item) => item.value || 0) || [];
   const maxReward = BigNumber.max(0, ...rewards).toString();
   const minReward = BigNumber.min(maxReward, ...rewards).toString();
+
+  const convertDataChart = data?.map((item) => ({
+    value: item.value || 0,
+    date: item.date
+  }));
+  const convertRewardChart = dataReward?.map((item) => ({
+    value: item.value || 0,
+    epoch: item.epoch
+  }));
 
   const formatPriceValue = (value: string) => {
     return formatPrice(value);
@@ -142,7 +151,7 @@ const StakeAnalytics: React.FC = () => {
                 <AreaChart
                   width={900}
                   height={400}
-                  data={tab === "BALANCE" ? data : dataReward}
+                  data={tab === "BALANCE" ? convertDataChart : convertRewardChart}
                   margin={{ top: 5, right: 10, bottom: 10 }}
                 >
                   <defs>
