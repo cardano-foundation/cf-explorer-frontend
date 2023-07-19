@@ -44,10 +44,14 @@ const AddressAnalytics: React.FC = () => {
   const theme = useTheme();
   const { data, loading } = useFetch<AnalyticsData[]>(`${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`);
 
-  const values = data?.map((item) => item.value).filter((item) => item !== null) || [];
+  const values = data?.map((item) => item.value || 0) || [];
   const maxBalance = BigNumber.max(0, ...values).toString();
   const minBalance = BigNumber.min(maxBalance, ...values).toString();
 
+  const convertDataChart = data?.map((item) => ({
+    value: item.value || 0,
+    date: item.date
+  }));
   const formatPriceValue = (value: string) => {
     const bigValue = BigNumber(value).div(10 ** 6);
     return formatPrice(bigValue.toString());
@@ -85,7 +89,7 @@ const AddressAnalytics: React.FC = () => {
               <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
             ) : (
               <ResponsiveContainer width="100%" height={400}>
-                <AreaChart width={900} height={400} data={data} margin={{ top: 5, right: 5, bottom: 10 }}>
+                <AreaChart width={900} height={400} data={convertDataChart} margin={{ top: 5, right: 5, bottom: 10 }}>
                   <defs>
                     <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor={theme.palette.green[700]} stopOpacity={0.2} />
