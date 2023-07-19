@@ -80,7 +80,7 @@ const SearchResult = () => {
   const { filter, search: value }: SearchParams = parse(search.split("?")[1]);
 
   useEffect(() => {
-    document.title = loading ? `Search For ${value}...` : `No Record Found: ${value} | Cardano Explorer`;
+    document.title = loading ? `Search For ${value}...` : `No Record Found: ${value} | Iris - Cardano Blockchain Explorer`;
   }, [loading, value]);
 
   const handleFilterByPool = (data: any) => {

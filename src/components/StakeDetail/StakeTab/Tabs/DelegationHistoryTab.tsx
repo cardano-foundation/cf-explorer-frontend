@@ -76,7 +76,7 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
         const name = poolData.name?.length > 30 ? getShortWallet(poolData.name) : poolData.name;
         return (
           <CustomTooltip title={poolData.name || r.poolId}>
-            <StyledLink to={details.delegation(r.poolId)}>{name || `Pool [${getShortWallet(r.poolId)}]`}</StyledLink>
+            <StyledLink to={details.delegation(r.poolId)}>{name || getShortWallet(r.poolId)}</StyledLink>
           </CustomTooltip>
         );
       }
