@@ -40,7 +40,7 @@ const WalletActivity: React.FC = () => {
       )
     },
     {
-      title: "Timestamp",
+      title: "Created At",
       key: "time",
       minWidth: "100px",
       render: (r) => formatDateTimeLocal(r.time || ""),
