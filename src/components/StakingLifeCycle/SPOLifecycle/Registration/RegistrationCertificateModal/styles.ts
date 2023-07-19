@@ -40,7 +40,7 @@ export const Label = styled(Box)(({ theme }) => ({
   fontWeight: 700,
   fontSize: 14,
   lineHeight: "16px",
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   marginBottom: 8
 }));
 
@@ -54,7 +54,7 @@ export const LineData = styled(Box)(() => ({
 export const StyledLink = styled(Link)(({ theme }) => ({
   fontSize: 14,
   lineHeight: "22px",
-  color: `${theme.palette.blue[800]} !important`,
+  color: `${theme.palette.blue[100]} !important`,
   wordBreak: "break-all",
   fontWeight: 500,
   marginRight: 5,
@@ -66,7 +66,7 @@ export const StyledLink = styled(Link)(({ theme }) => ({
 export const VRFKeyText = styled(Box)(({ theme }) => ({
   fontSize: 14,
   lineHeight: "22px",
-  color: theme.palette.blue[800],
+  color: theme.palette.blue[100],
   wordBreak: "break-all",
   fontWeight: 500,
   display: "inline",
@@ -77,7 +77,7 @@ export const VRFKeyText = styled(Box)(({ theme }) => ({
 }));
 
 export const Value = styled(VRFKeyText)(({ theme }) => ({
-  color: theme.palette.common.black,
+  color: theme.palette.grey[400],
   display: "flex",
   alignItems: "center",
   gap: 8

@@ -7,7 +7,7 @@ export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => (
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? theme.palette.common.black : theme.palette.text.hint
+  color: active ? theme.palette.green[200] : theme.palette.text.hint
 }));
 
 export const LabelStatus = styled(Box)(({ theme }) => ({
@@ -68,7 +68,7 @@ export const TableSubTitle = styled("span")(({ theme }) => ({
 }));
 
 export const TableSubContent = styled("span")(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   fontSize: "0.75rem",
   fontWeight: "var(--font-weight-normal)"
 }));
@@ -76,7 +76,7 @@ export const TableSubContent = styled("span")(({ theme }) => ({
 export const ButtonFilter = styled(Button)(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "0.875rem",
-  color: theme.palette.green[600],
+  color: theme.palette.green[200],
   textTransform: "none",
   background: "rgba(67, 143, 104, 0.1)",
   borderRadius: 5,
@@ -84,7 +84,7 @@ export const ButtonFilter = styled(Button)(({ theme }) => ({
 }));
 
 export const TextResult = styled(Box)(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   fontSize: "0.875rem"
 }));
 
@@ -96,8 +96,8 @@ export const WrapWalletLabel = styled(Box)(() => ({
 }));
 
 export const TabHead = styled(Box)<{ active?: number }>(
-  ({ active }) => `
-  color: ${active ? "#438F68" : "#98A2B3"} !important;
+  ({ active, theme }) => `
+  color: ${active ? theme.palette.green[200] : theme.palette.grey[300]} !important;
 `
 );
 
@@ -105,7 +105,7 @@ export const Headline = styled(Typography)<{ collapsed?: number }>`
   font-weight: 700;
   font-size: 32px;
   line-height: 37px;
-  color: #000;
+  color: ${(props) => props.theme.palette.grey[400]};
   flex: 1;
   text-align: left;
   padding-top: 20px;
@@ -122,7 +122,7 @@ export const Headline = styled(Typography)<{ collapsed?: number }>`
 export const WrapperDelegationTab = styled(Box)`
   display: flex;
   justify-content: space-between;
-  align-items: center,
+  align-items: center;
   margin-top: 12px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     flex-direction: column;

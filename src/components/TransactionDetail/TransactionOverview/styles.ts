@@ -1,16 +1,16 @@
-import { styled, Box, alpha } from "@mui/material";
+import { styled, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import { CONFIRMATION_STATUS } from "../../../commons/utils/constants";
 
 export const TitleCard = styled(Box)(({ theme }) => ({
-  color: alpha(theme.palette.common.black, 0.5),
+  color: theme.palette.grey[300],
   fontSize: "0.875rem",
   minHeight: 20
 }));
 
 export const MaxSlot = styled("span")(({ theme }) => ({
-  color: alpha(theme.palette.common.black, 0.5),
+  color: theme.palette.grey[300],
   fontWeight: "400"
 }));
 

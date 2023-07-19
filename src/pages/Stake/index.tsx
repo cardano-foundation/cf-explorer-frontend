@@ -51,7 +51,7 @@ const Stake = () => {
 
   useEffect(() => {
     const title = poolType === POOL_TYPE.REGISTRATION ? "Registrations" : "Deregistrations";
-    document.title = `${title} Stake Keys | Cardano Explorer`;
+    document.title = `${title} Stake Addresses | Cardano Explorer`;
   }, [poolType]);
 
   const openDetail = (_: any, r: IStakeKey, index: number) => {
@@ -89,7 +89,10 @@ const Stake = () => {
         <>
           <StyledLink to={details.block(r.block)}>{r.block}</StyledLink>
           <div style={{ display: "flex", marginTop: "6px" }}>
-            <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>/{r.epochSlotNo}
+            <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>/
+            <Box component={"span"} color={({ palette }) => palette.grey[300]}>
+              {r.epochSlotNo}
+            </Box>
           </div>
         </>
       )
@@ -114,7 +117,9 @@ const Stake = () => {
   return (
     <StyledContainer>
       <Box className="stake-list">
-        <Card title={poolType === POOL_TYPE.REGISTRATION ? "Stake Key Registration" : "Stake Key Deregistration"}>
+        <Card
+          title={poolType === POOL_TYPE.REGISTRATION ? "Stake Address Registration" : "Stake Address Deregistration"}
+        >
           <TimeDuration>
             <FormNowMessage time={fetchData.lastUpdated} />
           </TimeDuration>

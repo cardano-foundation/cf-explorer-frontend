@@ -35,7 +35,7 @@ beforeEach(() => {
     accountBalance: 100
   };
   (isWalletInstalled as jest.Mock).mockReturnValue(true);
-  mockUseCardano.mockReturnValueOnce(mockedReturnValue);
+  mockUseCardano.mockReturnValue(mockedReturnValue);
 });
 describe("ConnectWallet component", () => {
   it("should component render", () => {
