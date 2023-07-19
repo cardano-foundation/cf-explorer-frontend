@@ -91,7 +91,7 @@ export default function SignIn() {
   };
 
   const handleRedirectBack = () => {
-    if (history.length > 1 && !AUTHENTICATE_ROUTES.includes(history.location.pathname)) {
+    if (history.length > 1 && !AUTHENTICATE_ROUTES.includes(history.location.pathname) && history.location.pathname !== routers.HOME) {
       history.goBack();
     } else {
       history.replace(routers.HOME);
