@@ -44,9 +44,7 @@ const mockFetchData: FetchReturnType<IPoolReportList> = {
   refresh: jest.fn(),
   update: jest.fn(),
   lastUpdated: 1626088800,
-  setLoading: function (): void {
-    throw new Error("Function not implemented.");
-  }
+  query: {}
 };
 
 const mockProps: IPoolLifecycleProps = {
