@@ -143,7 +143,7 @@ export default function SignUp() {
             name: "confirmPassword",
             value: formData.confirmPassword.value,
             touched: true,
-            error: "Confirm Password does not match"
+            error: "Password does not match"
           });
         }
         break;
@@ -151,7 +151,7 @@ export default function SignUp() {
         if (!value) {
           error = "Please enter your Confirm Password";
         } else if (value !== formData.password.value) {
-          error = "Confirm Password does not match";
+          error = "Password does not match";
         }
         break;
       case "email":
@@ -172,7 +172,7 @@ export default function SignUp() {
             name: "confirmEmail",
             value: formData.confirmEmail.value,
             touched: true,
-            error: "Confirm Email does not match"
+            error: "Email address does not match"
           });
         }
         break;
@@ -180,7 +180,7 @@ export default function SignUp() {
         if (!value) {
           error = "Please enter your Confirm Email";
         } else if (value !== formData.email.value) {
-          error = "Confirm Email does not match";
+          error = "Email address does not match";
         }
         break;
       default:
