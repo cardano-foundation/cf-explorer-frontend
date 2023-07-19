@@ -78,7 +78,7 @@ const Stake = () => {
       )
     },
     {
-      title: "Time",
+      title: "Created At",
       key: "time",
       render: (r) => formatDateTimeLocal(r.txTime || "")
     },
@@ -95,8 +95,8 @@ const Stake = () => {
       )
     },
     {
-      title: "Stake Key",
-      key: "stakeKey",
+      title: "Stake Address",
+      key: "stakeAddress",
       render: (r, idx) => (
         <>
           <CustomTooltip title={r.stakeKey}>
@@ -126,7 +126,7 @@ const Stake = () => {
               ...pageInfo,
               total: fetchData.total,
               onChange: (page, size) => {
-                mainRef.current?.scrollTo(0, 0);
+                mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
                 history.push({ search: stringify({ page, size, poolType }) });
               },
               handleCloseDetailView: handleClose

@@ -194,7 +194,7 @@ export const DelegationCertificateModal = ({
       )
     },
     {
-      label: "Stake Key",
+      label: "Stake Address",
       content: (
         <LineData>
           <CustomTooltip title={stake}>

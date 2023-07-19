@@ -57,8 +57,8 @@ const StakeDelegations = () => {
       )
     },
     {
-      title: "Time",
-      key: "time",
+      title: "Created At",
+      key: "createdat",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time)
     },
@@ -75,8 +75,8 @@ const StakeDelegations = () => {
       )
     },
     {
-      title: "Stake Key",
-      key: "stakeKeys",
+      title: "Stake Address",
+      key: "stakeAddress",
       render: (r) => {
         const stakeKey = r.stakeKeys[0];
         return (
@@ -125,7 +125,7 @@ const StakeDelegations = () => {
             total: fetchData.total,
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
-              mainRef.current?.scrollTo(0, 0);
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
         />
