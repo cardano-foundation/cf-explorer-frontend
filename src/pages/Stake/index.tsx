@@ -51,7 +51,7 @@ const Stake = () => {
 
   useEffect(() => {
     const title = poolType === POOL_TYPE.REGISTRATION ? "Registrations" : "Deregistrations";
-    document.title = `${title} Stake Keys | Cardano Explorer`;
+    document.title = `${title} Stake Addresses | Cardano Explorer`;
   }, [poolType]);
 
   const openDetail = (_: any, r: IStakeKey, index: number) => {
@@ -78,7 +78,7 @@ const Stake = () => {
       )
     },
     {
-      title: "Time",
+      title: "Created At",
       key: "time",
       render: (r) => formatDateTimeLocal(r.txTime || "")
     },
@@ -89,14 +89,17 @@ const Stake = () => {
         <>
           <StyledLink to={details.block(r.block)}>{r.block}</StyledLink>
           <div style={{ display: "flex", marginTop: "6px" }}>
-            <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>/{r.epochSlotNo}
+            <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>/
+            <Box component={"span"} color={({ palette }) => palette.grey[300]}>
+              {r.epochSlotNo}
+            </Box>
           </div>
         </>
       )
     },
     {
-      title: "Stake Key",
-      key: "stakeKey",
+      title: "Stake Address",
+      key: "stakeAddress",
       render: (r, idx) => (
         <>
           <CustomTooltip title={r.stakeKey}>
@@ -114,7 +117,9 @@ const Stake = () => {
   return (
     <StyledContainer>
       <Box className="stake-list">
-        <Card title={poolType === POOL_TYPE.REGISTRATION ? "Stake Key Registration" : "Stake Key Deregistration"}>
+        <Card
+          title={poolType === POOL_TYPE.REGISTRATION ? "Stake Address Registration" : "Stake Address Deregistration"}
+        >
           <TimeDuration>
             <FormNowMessage time={fetchData.lastUpdated} />
           </TimeDuration>
@@ -126,7 +131,7 @@ const Stake = () => {
               ...pageInfo,
               total: fetchData.total,
               onChange: (page, size) => {
-                mainRef.current?.scrollTo(0, 0);
+                mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
                 history.push({ search: stringify({ page, size, poolType }) });
               },
               handleCloseDetailView: handleClose

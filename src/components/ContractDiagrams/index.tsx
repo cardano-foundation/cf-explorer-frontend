@@ -53,19 +53,19 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
           <ContractAddress>{txHash || item.address || item.scriptHash}</ContractAddress>
         </Link>
       </ContractHeader>
-      <ContractRedeemer item={item} />
+      <ContractRedeemer item={item} txHash={txHash} />
       {item.datumHashIn && (
         <>
           <IconContainer>
             <RedeemerPlusIcon />
           </IconContainer>
-          <ContractDatumn key="in" item={item} type="in" txHash={txHash} />
+          <ContractDatumn txHash={txHash} key="in" item={item} type="in" />
         </>
       )}
       <IconContainer>
         <RedeemerArrowDownIcon />
       </IconContainer>
-      <ContractBytecode item={item} />
+      <ContractBytecode item={item} txHash={txHash} />
 
       {item.datumHashOut && (
         <>
@@ -79,26 +79,26 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
   );
 };
 
-export const ContractRedeemer = ({ item }: IContractDiagramProps) => {
+export const ContractRedeemer = ({ item, txHash }: IContractDiagramProps) => {
   return (
     <CardDiagram>
       <TabLabel>Redeemer</TabLabel>
-      <TabElement>
+      <TabElement flexDirection={!txHash ? "row" : "column"} isContractPage={+!!txHash}>
         <TabItem>
           <TitleText>Tag</TitleText>
-          <DataTitle>{item.purpose}</DataTitle>
+          <DataTitle color={({ palette }) => palette.grey[400]}>{item.purpose}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Data</TitleText>
-          <DataTitle>{item.redeemerBytes}</DataTitle>
+          <DataTitle color={({ palette }) => palette.grey[400]}>{item.redeemerBytes}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Mem</TitleText>
-          <DataTitle>{item.redeemerMem}</DataTitle>
+          <DataTitle color={({ palette }) => palette.grey[400]}>{item.redeemerMem}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Steps</TitleText>
-          <DataTitle>{item.redeemerSteps}</DataTitle>
+          <DataTitle color={({ palette }) => palette.grey[400]}>{item.redeemerSteps}</DataTitle>
         </TabItem>
       </TabElement>
     </CardDiagram>
@@ -108,7 +108,7 @@ export const ContractRedeemer = ({ item }: IContractDiagramProps) => {
 export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) => {
   const isTypeIn = type === "in";
   return (
-    <DatumnElement>
+    <DatumnElement isContractPage={+!!txHash}>
       <DatumnItem
         isTxHash={!!txHash}
         sx={{
@@ -117,7 +117,9 @@ export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) =>
         }}
       >
         <DatumnText>Datum Hash</DatumnText>
-        <DataTitle>{isTypeIn ? item.datumHashIn : item.datumHashOut}</DataTitle>
+        <DataTitle color={({ palette }) => palette.grey[400]}>
+          {isTypeIn ? item.datumHashIn : item.datumHashOut}
+        </DataTitle>
       </DatumnItem>
       <DatumnItem
         isTxHash={!!txHash}
@@ -126,17 +128,19 @@ export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) =>
         }}
       >
         <DatumnText>Datum</DatumnText>
-        <DataTitle>{isTypeIn ? item.datumBytesIn : item.datumBytesOut}</DataTitle>
+        <DataTitle color={({ palette }) => palette.grey[400]}>
+          {isTypeIn ? item.datumBytesIn : item.datumBytesOut}
+        </DataTitle>
       </DatumnItem>
     </DatumnElement>
   );
 };
 
-const ContractBytecode = ({ item }: IContractDiagramProps) => {
+const ContractBytecode = ({ item, txHash }: IContractDiagramProps) => {
   return (
     <CardDiagram>
       <TabLabel>Contract Bytecode</TabLabel>
-      <TabElement>{item.scriptBytes}</TabElement>
+      <TabElement isContractPage={+!!txHash}>{item.scriptBytes}</TabElement>
     </CardDiagram>
   );
 };

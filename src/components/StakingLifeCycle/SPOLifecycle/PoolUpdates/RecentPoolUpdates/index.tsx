@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { useUpdateEffect } from "react-use";
 import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
-import StackingFilter, { FilterParams } from "src/components/StackingFilter";
+import CustomFilter, { FilterParams } from "src/components/commons/CustomFilter";
 import OverviewStaking from "src/components/commons/OverviewStaking";
 import { EmptyRecord, FooterTable } from "src/components/commons/Table";
 import { details } from "src/commons/routers";
@@ -14,25 +14,30 @@ import { details } from "src/commons/routers";
 import { GridBox, WrapFilterDescription, StyledList, StyledContainer } from "./styles";
 import { DescriptionText } from "../../../DelegatorLifecycle/styles";
 
-const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null) => void }) => {
+declare interface Props {
+  onSelect: (pool: PoolUpdateItem | null) => void;
+  setShowBackButton: (status: boolean) => void;
+}
+
+const RecentPoolUpdates = ({ onSelect, setShowBackButton }: Props) => {
   const { poolId = "", txHash = "" } = useParams<{ poolId: string; txHash?: string }>();
   const history = useHistory();
-  const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
-  const [params, setParams] = useState<FilterParams>({
-    fromDate: undefined,
-    sort: undefined,
-    toDate: undefined,
-    txHash: undefined
-  });
   const { sidebar } = useSelector(({ user }: RootState) => user);
-  const { data, total, loading, initialized, error } = useFetchList<PoolUpdateItem>(
+  const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
+  const [params, setParams] = useState<FilterParams>({});
+  const { data, total, loading, initialized, error, query } = useFetchList<PoolUpdateItem>(
     API.SPO_LIFECYCLE.POOL_UPDATE(poolId),
-    { ...pageInfo, ...params }
+    { ...pageInfo, ...params, txHash: params.search }
   );
+
+  useEffect(() => {
+    if (initialized) setShowBackButton(data.length > 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialized, setShowBackButton]);
+
   useEffect(() => {
     const currentItem = data.find((item) => item.txHash === txHash);
     onSelect(currentItem || null);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txHash, data]);
 
@@ -40,55 +45,52 @@ const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null
     history.push(details.spo(poolId, "timeline", "pool-updates", poolUpdated.txHash));
   };
 
-  const { txHash: txHashParms, fromDate, toDate } = params || {};
-  const isNoFilter = txHashParms === undefined && fromDate === undefined && toDate === undefined;
-  const isOneItemOnly = data.length === 1 && isNoFilter;
+  const isOneItemOnly = data.length === 1 && Object.keys(query).length === 2;
 
   useUpdateEffect(() => {
-    if (isOneItemOnly) history.replace(details.spo(poolId, "timeline", "pool-updates", data[0].txHash));
+    if (isOneItemOnly) history.push(details.spo(poolId, "timeline", "pool-updates", data[0].txHash));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  if (txHash || isOneItemOnly) return null;
+  if (txHash) return null;
 
   return (
     <StyledContainer>
       <StyledList>
         <DescriptionText>Recent Updates</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
-          <WrapFilterDescription data-testid="showing">
-            Showing {data.length} {data.length > 1 ? "results" : "result"}
+          <WrapFilterDescription>
+            Showing {total} {total > 1 ? "results" : "result"}
           </WrapFilterDescription>
-          <StackingFilter
+          <CustomFilter
             filterValue={params}
-            onFilterValueChange={(params) => {
-              params &&
-                setParams({
-                  fromDate: undefined,
-                  sort: undefined,
-                  toDate: undefined,
-                  txHash: undefined,
-                  ...params
-                });
+            onChange={(params) => {
+              setParams(params);
               setPageInfo((pre) => ({ ...pre, page: 0 }));
             }}
+            searchLabel="Search transaction"
           />
         </Box>
       </StyledList>
       <GridBox sidebar={+sidebar}>
-        {data.map((item, ii) => {
-          return (
-            <OverviewStaking
-              key={ii}
-              item={item}
-              onClick={handleSelect}
-              hash={item.txHash}
-              amount={item.fee}
-              time={item.time}
-            />
-          );
-        })}
+        {loading &&
+          [...new Array(12)].map((i, ii) => (
+            <Skeleton key={ii} style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
+          ))}
+        {!loading &&
+          data.map((item, ii) => {
+            return (
+              <OverviewStaking
+                key={ii}
+                item={item}
+                onClick={handleSelect}
+                hash={item.txHash}
+                amount={item.fee}
+                time={item.time}
+              />
+            );
+          })}
       </GridBox>
       {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord />}
       {initialized && data?.length > 0 && !error && (
@@ -104,4 +106,4 @@ const PoollUpdatesList = ({ onSelect }: { onSelect: (pool: PoolUpdateItem | null
     </StyledContainer>
   );
 };
-export default PoollUpdatesList;
+export default RecentPoolUpdates;

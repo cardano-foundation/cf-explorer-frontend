@@ -1,9 +1,9 @@
-import React from "react";
 import { Box, Skeleton } from "@mui/material";
+import React from "react";
 
 import { EmptyIcon } from "src/commons/resources";
-import CopyButton from "src/components/commons/CopyButton";
 import { details } from "src/commons/routers";
+import CopyButton from "src/components/commons/CopyButton";
 
 import {
   AddressGroup,
@@ -17,7 +17,7 @@ import {
   ValueItem
 } from "./styles";
 
-interface DetailCardProps {
+export interface DetailCardProps {
   title: string;
   address: string;
   item: { title?: string; value: React.ReactNode }[];

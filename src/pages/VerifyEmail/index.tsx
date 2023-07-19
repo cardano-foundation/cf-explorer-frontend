@@ -55,9 +55,9 @@ export default function VerifyEmail() {
           ) : success ? (
             <WrapForm alignItems={"center"}>
               <SuccessIcon />
-              <Title mb={3}>You has successfully verified the account</Title>
+              <Title mb={3}>You have successfully verified the account.</Title>
               <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.SIGN_IN)}>
-                Sign-In
+                Sign In
               </WrapButton>
             </WrapForm>
           ) : (

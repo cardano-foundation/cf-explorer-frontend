@@ -12,7 +12,8 @@ export const createShadow = (color: string) => {
     )}`,
     dropdown: `0px 4px 30px ${alpha(color, 0.1)}`,
     draw: `0px 1px 20px ${alpha(color, 0.05)}`,
-    4: `0px 4px 50px ${alpha(color, 0.05)}`
+    detailHeader: `0px 4px 50px ${alpha(color, 0.05)}`,
+    rightDraw: `5px 10px 15px ${alpha(color, 0.5)}`
   };
 };
 

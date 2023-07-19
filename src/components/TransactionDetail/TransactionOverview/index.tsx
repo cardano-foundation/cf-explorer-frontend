@@ -14,7 +14,7 @@ import {
   txOutputIconUrl
 } from "src/commons/resources";
 import { formatADAFull, formatDateTimeLocal, getShortWallet } from "src/commons/utils/helper";
-import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { details } from "src/commons/routers";
 import { RootState } from "src/stores/types";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -24,7 +24,7 @@ import DropdownDetail from "src/components/commons/DropdownDetail";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
 
-import { ConfirmStatus, MaxSlot, StyledLink, TitleCard } from "./styles";
+import { MaxSlot, StyledLink, TitleCard } from "./styles";
 
 interface Props {
   data: Transaction | null;
@@ -38,18 +38,6 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
   const [openListOutput, setOpenListOutput] = useState(false);
   const theme = useTheme();
   const { isMobile } = useScreen();
-
-  const renderConfirmationTag = () => {
-    if (data && data.tx && data.tx.confirmation) {
-      if (data.tx.confirmation <= 2) {
-        return CONFIRMATION_STATUS.LOW;
-      }
-      if (data.tx.confirmation <= 8) {
-        return CONFIRMATION_STATUS.MEDIUM;
-      }
-      return CONFIRMATION_STATUS.HIGH;
-    }
-  };
 
   const inputTransaction = useMemo(() => {
     const result = [];
@@ -167,7 +155,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Created At</TitleCard>
+          <TitleCard mr={1}>Created At </TitleCard>
         </Box>
       ),
       value: formatDateTimeLocal(data?.tx?.time || "")
@@ -181,12 +169,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
           </TitleCard>
         </Box>
       ),
-      value: (
-        <>
-          {data?.tx?.confirmation || 0}
-          <ConfirmStatus status={renderConfirmationTag() || "LOW"}>{renderConfirmationTag() || "LOW"}</ConfirmStatus>
-        </>
-      )
+      value: <>{data?.tx?.confirmation || 0}</>
     },
     {
       icon: totalOutputUrl,
@@ -246,7 +229,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
     <DetailHeader
       type="TRANSACTION"
       bookmarkData={data?.tx.hash || ""}
-      title={"Transaction detail"}
+      title={"Transaction details"}
       hash={data?.tx.hash}
       transactionStatus={data?.tx.status}
       epoch={

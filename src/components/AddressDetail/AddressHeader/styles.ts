@@ -68,7 +68,7 @@ export const StyledTextField = styled(TextField)`
 `;
 
 export const Option = styled("li")<{ active: number }>(({ theme, active }) => ({
-  background: active ? theme.palette.green[600_10] : theme.palette.background.paper
+  background: active ? theme.palette.green[200_10] : theme.palette.background.paper
 }));
 
 export const Logo = styled("img")`
@@ -104,6 +104,7 @@ export const StyledBoxCard = styled(Box)`
 `;
 
 export const TitleText = styled(Box)`
+  color: ${(props) => props.theme.palette.grey[400]};
   ${({ theme }) => theme.breakpoints.down("md")} {
     font-size: 24px !important;
   }
@@ -117,6 +118,7 @@ export const WrapHeader = styled(Box)(({ theme }) => ({
     paddingTop: "56px"
   }
 }));
+
 export const RedirectButton = styled(Box)(({ theme }) => ({
   textTransform: "capitalize",
   backgroundColor: theme.palette.common.black,
@@ -125,4 +127,13 @@ export const RedirectButton = styled(Box)(({ theme }) => ({
   ":hover": {
     backgroundColor: alpha(theme.palette.common.black, 0.8)
   }
+}));
+
+export const TimeDuration = styled("small")(({ theme }) => ({
+  color: theme.palette.grey[300],
+  display: "block",
+  textAlign: "left",
+  flex: 1,
+  paddingTop: "10px",
+  paddingBottom: theme.spacing(2)
 }));

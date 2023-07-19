@@ -24,7 +24,7 @@ const columns: Column<Instantaneous>[] = [
     )
   },
   {
-    title: "Time",
+    title: "Created At",
     key: "time",
     minWidth: "120px",
     render: (r) => formatDateTimeLocal(r.time || "")
@@ -37,7 +37,10 @@ const columns: Column<Instantaneous>[] = [
       <Box>
         <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
         <Box marginTop="5px">
-          <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
+          <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{" "}
+          <Box component={"span"} color={({ palette }) => palette.grey[300]}>
+            {r.epochSlotNo}
+          </Box>
         </Box>
       </Box>
     )

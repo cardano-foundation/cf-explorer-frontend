@@ -24,7 +24,7 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
   const history = useHistory();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
-    setOnDetailView(false)
+    setOnDetailView(false);
   };
 
   const handleClose = () => {

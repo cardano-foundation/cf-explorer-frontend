@@ -7,22 +7,14 @@ export const createGradient = (deg: number, startColor: string, endColor: string
 };
 
 const GREEN = {
-  100: "#B9FFDB",
-  200: "#9EEFC5",
-  300: "#7ED4A8",
-  400: "#65B98E",
-  450: "#5A9C56",
-  500: "#53A57B",
-  600: "#438F68",
-  600_10: alpha("#438F68", 0.1),
-  600_20: alpha("#438F68", 0.2),
-  600_30: alpha("#438F68", 0.3),
-  700: "#29744D",
-  700_10: alpha("#29744D", 0.1),
-  700_20: alpha("#29744D", 0.2),
-  800: "#184c78",
-  800_10: alpha("#184c78", 0.1),
-  800_20: alpha("#184c78", 0.2)
+  100: "#53A57B",
+  200: "#146635",
+  200_10: alpha("#146635", 0.1),
+  200_15: alpha("#146635", 0.15),
+  200_30: alpha("#146635", 0.3),
+  300: "#184c78",
+  300_10: alpha("#184c78", 0.1),
+  300_20: alpha("#184c78", 0.2)
 };
 
 const COMMON = {
@@ -36,41 +28,30 @@ const GREY = {
   100: "#F2F2F2",
   200: "#E3E5E9",
   300: "#50596D",
-  400: "#50596D",
-  500: "#50596D",
-  600: "#1F213A",
-  700: "#13152F",
+  400: "#141520",
+  500: "#F6F6F6",
   A100: "#A3A3A3",
-  A200: "#ECECEC",
+  A200: "#E7E8E9",
   A400: "#B7B7B7"
 };
 
 const RED = {
-  100: "#FFE2E2",
-  200: "#FFC6C6",
-  300: "#FFACAC",
-  400: "#FF8D8D",
-  500: "#FF7474",
-  600: "#F75E5E",
-  700: "#DD4343",
-  700_10: alpha("#DD4343", 0.1),
-  700_20: alpha("#DD4343", 0.2),
-  800: "#DE350B"
+  100: "#B60000",
+  100_15: alpha("#B60000", 0.15),
+  100_20: alpha("#B60000", 0.2)
 };
 
 const YELLOW = {
-  100: "#FFF2DA",
-  200: "#FFE8BA",
-  300: "#FFDD9B",
-  400: "#FFD37E",
-  500: "#FFC75A",
-  600: "#F9B736",
-  700: "#FFA800",
-  700_20: alpha("#FFA800", 0.2)
+  100: "#7A501D",
+  100_15: alpha("#7A501D", 0.15)
 };
 
 const BLUE = {
-  100: "#A3D5FF",
+  100: "#0048DB",
+  100_7: alpha("#0048DB", 0.07),
+  100_10: alpha("#0048DB", 0.1),
+  100_15: alpha("#0048DB", 0.15),
+  100_20: alpha("#0048DB", 0.2),
   200: "#78BBF2",
   300: "#5DA2DC",
   400: "#4084BD",
@@ -83,37 +64,37 @@ const BLUE = {
 };
 
 const PURPLE = {
-  200: "#E3E2FC",
-  500: "#6866D4"
+  100: "#E3E2FC",
+  200: "#6866D4"
 };
 
 const primary = {
-  light: GREEN[500],
-  main: GREEN[600],
-  dark: GREEN[700],
+  light: GREEN[100],
+  main: GREEN[200],
+  dark: GREEN[200],
   contrastText: COMMON.white
 };
 
 const secondary = {
-  light: BLUE[800_7],
-  main: BLUE[800],
-  dark: GREY[500],
+  light: BLUE[100_7],
+  main: BLUE[100],
+  dark: GREY[300],
   contrastText: COMMON.white
 };
 
 const text = {
-  primary: GREY[700],
-  secondary: GREY[500],
-  disabled: alpha(GREY[400], 0.4),
+  primary: GREY[400],
+  secondary: GREY[300],
+  disabled: alpha(GREY[300], 0.4),
   hint: GREY[300],
   dark: COMMON.black
 };
 
 const border = {
-  primary: "#ECECEC",
-  secondary: GREEN[800_10],
+  primary: "#E3E5E9",
+  secondary: GREEN[300_10],
   main: GREY[200],
-  disabled: GREY[400],
+  disabled: GREY[300],
   hint: "#C8CDD8",
   block: "#438F68",
   line: alpha(COMMON.black, 0.1)
@@ -125,29 +106,29 @@ const background = {
 };
 
 const error = {
-  light: RED[700_10],
-  main: RED[700],
-  dark: RED[700],
+  light: RED[100_15],
+  main: RED[100],
+  dark: RED[100],
   contrastText: COMMON.white
 };
 const warning = {
-  light: YELLOW[700_20],
-  main: YELLOW[700],
-  dark: YELLOW[700],
+  light: YELLOW[100_15],
+  main: YELLOW[100],
+  dark: YELLOW[100],
   contrastText: COMMON.white
 };
 
 const info = {
-  light: BLUE[800_20],
-  main: BLUE[800],
-  dark: BLUE[800],
+  light: BLUE[100_20],
+  main: BLUE[100],
+  dark: BLUE[100],
   contrastText: COMMON.white
 };
 
 const success = {
-  light: GREEN[600_20],
-  main: GREEN[600],
-  dark: GREEN[700],
+  light: GREEN[200_15],
+  main: GREEN[200],
+  dark: GREEN[200],
   contrastText: COMMON.white
 };
 

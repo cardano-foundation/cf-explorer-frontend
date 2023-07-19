@@ -22,7 +22,7 @@ jest.mock("src/commons/utils/userRequest", () => ({
 describe("Forgot password page", () => {
   it("should render the page and availble to use", () => {
     expect(screen.getByText("Forgot Password")).toBeInTheDocument();
-    expect(screen.getByText("Sign-In")).toBeInTheDocument();
+    expect(screen.getByText("Sign In")).toBeInTheDocument();
     expect(screen.getByText("Email")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Email")).toBeInTheDocument();
   });

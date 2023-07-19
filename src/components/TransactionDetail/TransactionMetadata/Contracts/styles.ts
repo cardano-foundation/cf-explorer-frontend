@@ -25,7 +25,8 @@ export const WrapAddress = styled(Box)(({ theme }) => ({
   wordBreak: "break-all"
 }));
 
-export const Title = styled(Box)(() => ({
+export const Title = styled(Box)(({ theme }) => ({
+  color: theme.palette.text.primary,
   fontFamily: "var(--font-family-title)"
 }));
 

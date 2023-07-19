@@ -7,7 +7,7 @@ import Table from ".";
 
 const columnsMock = [
   {
-    title: "Timestamp",
+    title: "Created At",
     key: "Timestamp"
   },
   {

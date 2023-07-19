@@ -3,7 +3,7 @@ import { Box, Button, Typography, alpha, styled } from "@mui/material";
 export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
   width: "100%",
   padding: `0 0 ${theme.spacing(3)}`,
-  borderBottom: `3px solid ${active ? theme.palette.green[600] : theme.palette.grey[200]}`,
+  borderBottom: `3px solid ${active ? theme.palette.green[200] : theme.palette.grey[200]}`,
   [theme.breakpoints.down("lg")]: {
     minWidth: "190px"
   },
@@ -14,13 +14,13 @@ export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
 }));
 
 export const StepButton = styled(Box)<{ active: number }>(({ theme, active }) => ({
-  background: active ? theme.palette.green[600] : theme.palette.grey[200],
+  background: active ? theme.palette.green[200] : theme.palette.grey[200],
   ":hover": {
-    background: active ? theme.palette.green[600] : theme.palette.grey[200]
+    background: active ? theme.palette.green[200] : theme.palette.grey[200]
   }
 }));
 export const TitleStep = styled(Box)<{ active: number }>(({ theme, active }) => ({
-  color: active ? theme.palette.grey[700] : theme.palette.grey[300],
+  color: active ? theme.palette.grey[400] : theme.palette.grey[300],
   fontWeight: "bold",
   fontSize: "0.875rem",
   marginTop: theme.spacing(1)
@@ -28,17 +28,17 @@ export const TitleStep = styled(Box)<{ active: number }>(({ theme, active }) => 
 
 export const NextButton = styled(Button)(({ theme }) => ({
   color: theme.palette.common.white,
-  background: theme.palette.grey[700],
+  background: theme.palette.grey[400],
   textTransform: "capitalize",
   fontWeight: "bold",
   padding: "10px 20px",
   borderRadius: "8px",
   ":hover": {
-    background: alpha(theme.palette.grey[700], 0.8)
+    background: alpha(theme.palette.grey[400], 0.8)
   }
 }));
 export const PreviousButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.grey[500],
+  color: `${theme.palette.grey[400]} !important`,
   background: "transparent",
   textTransform: "capitalize",
   fontWeight: "bold",
@@ -46,19 +46,19 @@ export const PreviousButton = styled(Button)(({ theme }) => ({
   padding: "10px 20px",
   border: `2px solid ${theme.palette.border.hint}`,
   ":hover": {
-    background: alpha(theme.palette.grey[700], 0.1)
+    background: alpha(theme.palette.grey[400], 0.1)
   }
 }));
 
 export const ADATransfersButton = styled(Button)(({ theme }) => ({
-  background: theme.palette.green[600],
+  background: theme.palette.green[200],
   color: theme.palette.common.white,
   borderRadius: "8px",
   textTransform: "capitalize",
   fontWeight: "bold",
   minWidth: 115,
   ":hover": {
-    background: alpha(theme.palette.green[600], 0.8)
+    background: alpha(theme.palette.green[200], 0.8)
   },
   fontSize: "12px"
 }));
@@ -66,7 +66,7 @@ export const ADATransfersButton = styled(Button)(({ theme }) => ({
 export const TabTitle = styled(Typography)(({ theme }) => ({
   fontSize: "20px",
   fontWeight: 700,
-  color: theme.palette.common.black,
+  color: theme.palette.grey[400],
   textAlign: "left"
 }));
 
@@ -102,7 +102,7 @@ export const StyledBox = styled(Box)`
 `;
 
 export const DescriptionText = styled(Typography)(({ theme }) => ({
-  color: theme.palette.common.black,
+  color: theme.palette.grey[400],
   fontSize: "18px",
   lineHeight: "21px",
   [theme.breakpoints.down("sm")]: {
@@ -115,6 +115,7 @@ export const ButtonText = styled(Typography)`
   font-weight: 700;
 `;
 export const StyledGroupButton = styled(Box)(({ theme }) => ({
+  marginBottom: "40px",
   [theme.breakpoints.down("sm")]: {
     paddingTop: "30px",
     borderTop: `1px solid ${alpha(theme.palette.grey[200], 1)}`

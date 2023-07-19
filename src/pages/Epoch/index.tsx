@@ -1,11 +1,9 @@
-import { Box } from "@mui/material";
 import { stringify } from "qs";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
-import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { EPOCH_STATUS } from "src/commons/utils/constants";
 import { formatADAFull, formatDateTimeLocal, getPageInfo } from "src/commons/utils/helper";
@@ -17,7 +15,7 @@ import SelectedIcon from "src/components/commons/SelectedIcon";
 import Table, { Column } from "src/components/commons/Table";
 import { setOnDetailView } from "src/stores/user";
 
-import { Blocks, BlueText, Output, Status, StyledContainer } from "./styles";
+import { Blocks, BlueText, EpochNumber, Output, Status, StyledBox, StyledContainer } from "./styles";
 
 const Epoch: React.FC = () => {
   const [epoch, setEpoch] = useState<number | null>(null);
@@ -37,14 +35,10 @@ const Epoch: React.FC = () => {
       key: "epochNumber",
       minWidth: "50px",
       render: (r) => (
-        <Link to={details.epoch(r.no || 0)}>
-          <Box textAlign="center">
-            <Box width={41} margin="auto">
-              {r.no || 0}
-            </Box>
-            <Status status={r.status.toLowerCase()}>{EPOCH_STATUS[r.status]}</Status>
-          </Box>
-        </Link>
+        <EpochNumber>
+          <StyledBox>{r.no || 0}</StyledBox>
+          <Status status={r.status as keyof typeof EPOCH_STATUS}>{EPOCH_STATUS[r.status]}</Status>
+        </EpochNumber>
       )
     },
     {
@@ -72,6 +66,12 @@ const Epoch: React.FC = () => {
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
+    },
+    {
+      title: "Unique Accounts",
+      key: "account",
+      minWidth: "100px",
+      render: (r) => <Blocks>{r.account}</Blocks>
     },
     {
       title: "Transaction Count",
@@ -145,7 +145,7 @@ const Epoch: React.FC = () => {
             total: fetchData.total,
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
-              mainRef.current?.scrollTo(0, 0);
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             },
             handleCloseDetailView: handleClose
           }}

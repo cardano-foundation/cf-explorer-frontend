@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Grid, Skeleton, styled, Box, useTheme } from "@mui/material";
-import HighchartsReact from "highcharts-react-official";
-import Highcharts from "highcharts";
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
+import BigNumber from "bignumber.js";
 
-import { formatADAFull, formatPrice } from "src/commons/utils/helper";
+import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/helper";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -18,6 +18,9 @@ import {
   GridWrapper,
   StyledContainer,
   Title,
+  TooltipBody,
+  TooltipLabel,
+  TooltipValue,
   Value
 } from "./styles";
 
@@ -29,9 +32,35 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
   const [selected, setSelected] = useState<"epochChart" | "delegatorChart">("epochChart");
   const { data, loading } = useFetch<AnalyticsDelegators>(`${API.DELEGATION.POOL_ANALYTICS}?poolView=${poolId}`);
   const theme = useTheme();
-  const categories = data?.[selected]?.dataByDays?.map((item) => item.epochNo) || [];
-  const epochs = data?.epochChart?.dataByDays?.map((item) => item.totalStake / 10 ** 6 || 0) || [];
-  const delegators = data?.delegatorChart?.dataByDays?.map((item) => item.numberDelegator || 0) || [];
+  const totalStakes =
+    data?.epochChart?.dataByDays?.map((item) => item.totalStake).filter((item) => item !== null) || [];
+  const maxTotalStake = BigNumber.max(0, ...totalStakes).toString();
+  const minTotalStake = BigNumber.min(maxTotalStake, ...totalStakes).toString();
+
+  const numberDelegators =
+    data?.delegatorChart?.dataByDays?.map((item) => item.numberDelegator).filter((item) => item !== null) || [];
+  const maxNumberDelegation = BigNumber.max(0, ...numberDelegators).toString();
+  const minNumberDelegation = BigNumber.min(maxNumberDelegation, ...numberDelegators).toString();
+
+  const formatValue = (value: string) => {
+    if (selected === "delegatorChart") return numberWithCommas(value);
+    const bigValue = BigNumber(value).div(10 ** 6);
+    return formatPrice(bigValue.toString());
+  };
+
+  const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
+    return (
+      <TooltipBody>
+        <TooltipLabel>{content.label}</TooltipLabel>
+        <TooltipValue>
+          {selected === "delegatorChart"
+            ? content.payload?.[0]?.value || 0
+            : formatADAFull(content.payload?.[0]?.value) || 0}
+        </TooltipValue>
+      </TooltipBody>
+    );
+  };
+
   return (
     <StyledContainer>
       <AnalyticsTitle>Analytics</AnalyticsTitle>
@@ -50,69 +79,46 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
             </Button>
           </Box>
           <ChartContainer>
-            {loading ? (
-              <SkeletonUI variant="rectangular" height={280} />
+            {loading || !data ? (
+              <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
             ) : (
-              <Box position={"relative"}>
-                <HighchartsReact
-                  key={selected}
-                  highcharts={Highcharts}
-                  options={{
-                    chart: {
-                      type: "areaspline",
-                      backgroundColor: "transparent",
-                      style: { fontFamily: "Roboto, sans-serif" }
-                    },
-                    title: { text: "" },
-                    yAxis: {
-                      title: { text: null },
-                      lineWidth: 2,
-                      lineColor: theme.palette.border.main,
-                      className: "y-axis-lable",
-                      gridLineWidth: 1,
-                      labels: {
-                        style: { fontSize: 12 },
-                        formatter: (e: { value: string }) => {
-                          return formatPrice(e.value || 0);
-                        }
-                      }
-                    },
-                    xAxis: {
-                      categories,
-                      lineWidth: 2,
-                      lineColor: theme.palette.border.main,
-                      plotLines: [],
-                      angle: 0
-                    },
-                    legend: { enabled: false },
-                    tooltip: { shared: true },
-                    credits: { enabled: false },
-                    series: [
-                      {
-                        name: "",
-                        pointPlacement: "on",
-                        type: "areaspline",
-                        marker: { enabled: false },
-                        lineWidth: 4,
-                        color: theme.palette.primary.main,
-                        fillColor: {
-                          linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-                          stops: [
-                            [0, theme.palette.success.light],
-                            [1, "transparent"]
-                          ]
-                        },
-                        data: selected === "epochChart" ? epochs : delegators
-                      }
-                    ]
-                  }}
-                />{" "}
-              </Box>
+              <ResponsiveContainer width="100%" height={400}>
+                <AreaChart
+                  width={900}
+                  height={400}
+                  data={data[selected]?.dataByDays || []}
+                  margin={{ top: 5, right: 10, bottom: 10 }}
+                >
+                  <defs>
+                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
+                      <stop offset="100%" stopColor={theme.palette.primary.main} stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis dataKey="epochNo" tickLine={false} tickMargin={5} dx={-5} />
+                  <YAxis
+                    dataKey={selected === "epochChart" ? "totalStake" : "numberDelegator"}
+                    tickFormatter={formatValue}
+                    tickLine={false}
+                  />
+                  <Tooltip content={renderTooltip} cursor={false} />
+                  <CartesianGrid vertical={false} strokeWidth={0.33} />
+                  <Area
+                    stackId="1"
+                    type="monotone"
+                    dataKey={selected === "epochChart" ? "totalStake" : "numberDelegator"}
+                    stroke={theme.palette.primary.main}
+                    strokeWidth={4}
+                    fill="url(#colorUv)"
+                    activeDot={{ r: 6 }}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
             )}
           </ChartContainer>
         </Grid>
         <Grid item xs={24} lg={6}>
-          <BoxInfo height={"100%"} space={categories.length ? 36 : 16}>
+          <BoxInfo height={"100%"} space={data?.[selected]?.dataByDays?.length ? 36 : 16}>
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
@@ -122,9 +128,9 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                     {loading || !data?.[selected] ? (
                       <SkeletonUI variant="rectangular" />
                     ) : selected === "epochChart" ? (
-                      formatADAFull(data[selected].highest)
+                      formatADAFull(maxTotalStake)
                     ) : (
-                      data[selected].highest
+                      maxNumberDelegation
                     )}
                   </Value>
                 </Box>
@@ -136,12 +142,12 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                   <img src={LowestIcon} alt="lowest icon" />
                   <Title>{selected === "epochChart" ? "Lowest stake" : "Lowest number of delegators"}</Title>
                   <Value>
-                    {loading || !data ? (
+                    {loading || !data?.[selected] ? (
                       <SkeletonUI variant="rectangular" />
                     ) : selected === "epochChart" ? (
-                      formatADAFull(data[selected].lowest)
+                      formatADAFull(minTotalStake)
                     ) : (
-                      data[selected].lowest
+                      minNumberDelegation
                     )}
                   </Value>
                 </Box>

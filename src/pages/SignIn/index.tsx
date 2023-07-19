@@ -91,7 +91,7 @@ export default function SignIn() {
   };
 
   const handleRedirectBack = () => {
-    if (history.length > 1 && !AUTHENTICATE_ROUTES.includes(history.location.pathname)) {
+    if (history.length > 1 && !AUTHENTICATE_ROUTES.includes(history.location.pathname) && history.location.pathname !== routers.HOME) {
       history.goBack();
     } else {
       history.replace(routers.HOME);
@@ -208,9 +208,9 @@ export default function SignIn() {
   return (
     <Container>
       <WrapContent>
-        <WrapTitle data-testid="signin-title">Sign-In</WrapTitle>
+        <WrapTitle data-testid="signin-title">Sign In</WrapTitle>
         <WrapHintText>
-          Don't have an account? <WrapSignUp onClick={() => history.push(routers.SIGN_UP)}>Sign-Up</WrapSignUp>
+          Don't have an account? <WrapSignUp onClick={() => history.push(routers.SIGN_UP)}>Sign Up</WrapSignUp>
         </WrapHintText>
         <FormGroup>
           <WrapForm>

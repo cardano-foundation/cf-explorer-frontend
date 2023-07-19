@@ -21,6 +21,7 @@ import { REFRESH_TIMES } from "src/commons/utils/constants";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DetailViewToken from "src/components/commons/DetailView/DetailViewToken";
 import SelectedIcon from "src/components/commons/SelectedIcon";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import { AssetName, Logo, StyledContainer, TimeDuration } from "./styles";
 
@@ -28,15 +29,19 @@ const Tokens = () => {
   const [token, setToken] = useState<IToken | null>(null);
   const [sort, setSort] = useState<string>("txCount,DESC");
   const { onDetailView } = useSelector(({ user }: RootState) => user);
+  const { isGalaxyFoldSmall } = useScreen();
 
   const [selected, setSelected] = useState<number | null>(null);
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
+
+  const queries = new URLSearchParams(search);
+
   const mainRef = useRef(document.querySelector("#main"));
   const { data, lastUpdated, ...fetchData } = useFetchList<ITokenOverview>(
     API.TOKEN.LIST,
-    { ...pageInfo, sort },
+    { ...pageInfo, sort, query: queries.get("tokenName") || "" },
     false,
     REFRESH_TIMES.TOKEN_LIST
   );
@@ -118,7 +123,7 @@ const Tokens = () => {
       }
     },
     {
-      title: "Created",
+      title: "Created At",
       key: "time",
       minWidth: "150px",
       render: (r) => (
@@ -146,14 +151,10 @@ const Tokens = () => {
 
   return (
     <StyledContainer>
-      <Card
-        title="Token List"
-        extra={
-          <TimeDuration>
-            <FormNowMessage time={lastUpdated} />
-          </TimeDuration>
-        }
-      >
+      <Card title="Token List">
+        <TimeDuration component={"small"} px={isGalaxyFoldSmall ? 2 : 0}>
+          <FormNowMessage time={lastUpdated} />
+        </TimeDuration>
         <Table
           {...fetchData}
           data={data}
@@ -164,8 +165,8 @@ const Tokens = () => {
             ...pageInfo,
             total: fetchData.total,
             onChange: (page, size) => {
-              mainRef.current?.scrollTo(0, 0);
-              history.replace({ search: stringify({ page, size }) });
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+              history.replace({ search: stringify({ page, size, tokenName: queries.get("tokenName") || "" }) });
             },
             handleCloseDetailView: handleClose
           }}

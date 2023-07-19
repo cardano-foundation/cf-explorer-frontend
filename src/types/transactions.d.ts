@@ -1,8 +1,4 @@
-enum TransactionStatus {
-  FAIL = "FAIL",
-  SUCCESS = "SUCCESS",
-  PENDDING = "PENDDING"
-}
+type TransactionStatus = import("src/commons/utils/constants").TRANSACTION_STATUS;
 
 interface Transactions {
   hash: string;
@@ -140,7 +136,7 @@ interface Transaction {
     blockNo: number;
     epochSlot: number;
     epochNo: number;
-    status: keyof typeof TransactionStatus;
+    status: TransactionStatus;
     confirmation: number;
     fee: number;
     totalOutput: number;

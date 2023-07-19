@@ -1,14 +1,23 @@
 import React, { useState } from "react";
 import { Box, Grid, useTheme } from "@mui/material";
-import HighchartsReact from "highcharts-react-official";
-import Highcharts from "highcharts";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+  TooltipProps,
+  XAxisProps
+} from "recharts";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 import { BigNumber } from "bignumber.js";
 
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
-import { formatADAFull, formatPrice } from "src/commons/utils/helper";
+import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/helper";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -26,7 +35,10 @@ import {
   Title,
   ValueInfo,
   Wrapper,
-  CustomButton
+  CustomButton,
+  TooltipBody,
+  TooltipValue,
+  TooltipLabel
 } from "./styles";
 
 type AnalyticsBalance = { date: string; value: number };
@@ -52,38 +64,34 @@ const StakeAnalytics: React.FC = () => {
   const { data: dataReward, loading: loadingReward } = useFetch<AnalyticsReward[]>(
     `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`
   );
-  const { data: balanceRaw, loading: balanceLoading } = useFetch<number[]>(`${API.STAKE.MIN_MAX_BALANCE}/${stakeId}`);
-  const balance = balanceRaw?.length ? balanceRaw : [0, 0];
-  const dataBalanceChart = data?.map((i) => {
-    const value = BigNumber(i.value || 0).div(10 ** 6);
-    return Number(value.toString().match(/^-?\d+(?:\.\d{0,6})?/)?.[0]);
-  });
-  const categoriesBalance =
-    data?.map((i) => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
-  const minBalance = Math.min(...(balance || []));
-  const maxBalance = Math.max(...(balance || []), 0);
-  const dataRewardChart = dataReward?.map((i) => {
-    const value = BigNumber(i.value || 0).div(10 ** 6);
-    return Number(value.toString().match(/^-?\d+(?:\.\d{0,6})?/)?.[0]);
-  });
-  const categoriesReward = dataReward?.map((i) => i.epoch) || [];
 
-  const minReward = dataReward
-    ? dataReward.reduce(
-        function (prev, current) {
-          return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
-        },
-        { epoch: 0, value: 0 }
-      )
-    : { epoch: 0, value: 0 };
-  const maxReward = dataReward
-    ? dataReward.reduce(
-        function (prev, current) {
-          return new BigNumber(prev.value).isGreaterThan(new BigNumber(current.value)) ? prev : current;
-        },
-        { epoch: 0, value: 0 }
-      )
-    : { epoch: 0, value: 0 };
+  const values = data?.map((item) => item.value).filter((item) => item !== null) || [];
+  const maxBalance = BigNumber.max(0, ...values).toString();
+  const minBalance = BigNumber.min(maxBalance, ...values).toString();
+
+  const rewards = data?.map((item) => item.value).filter((item) => item !== null) || [];
+  const maxReward = BigNumber.max(0, ...rewards).toString();
+  const minReward = BigNumber.min(maxReward, ...rewards).toString();
+
+  const formatPriceValue = (value: string) => {
+    return formatPrice(value);
+  };
+
+  const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
+    return (
+      <TooltipBody>
+        <TooltipLabel>
+          {tab === "BALANCE"
+            ? moment(content.label).format("DD MMM YYYY HH:mm:ss") + " (UTC time zone)"
+            : content.label}
+        </TooltipLabel>
+        <TooltipValue>{numberWithCommas(content.payload?.[0]?.value) || 0}</TooltipValue>
+      </TooltipBody>
+    );
+  };
+
+  const xAxisProps: XAxisProps = tab === "BALANCE" ? { tickMargin: 5, dx: -15 } : { tickMargin: 5 };
+
   return (
     <Card title={<TextCardHighlight>Analytics</TextCardHighlight>}>
       <Wrapper container columns={24} spacing="35px">
@@ -127,70 +135,45 @@ const StakeAnalytics: React.FC = () => {
             </Grid>
           </Grid>
           <ChartBox>
-            {loading || loadingReward ? (
-              <SkeletonUI variant="rectangular" style={{ height: "375px" }} />
+            {loading || loadingReward || !data || !dataReward ? (
+              <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
             ) : (
-              <Box position={"relative"}>
-                <HighchartsReact
-                  highcharts={Highcharts}
-                  options={{
-                    chart: {
-                      type: "areaspline",
-                      backgroundColor: "transparent",
-                      style: { fontFamily: "Helvetica, monospace" }
-                    },
-                    title: { text: "" },
-                    yAxis: {
-                      title: { text: null },
-                      lineWidth: 2,
-                      lineColor: theme.palette.border.main,
-                      className: "y-axis-lable",
-                      gridLineWidth: 1,
-                      minorGridLineWidth: 1,
-                      labels: {
-                        style: { fontSize: 12 },
-                        formatter: (e: { value: string }) => {
-                          return formatPrice(e.value);
-                        }
-                      }
-                    },
-                    xAxis: {
-                      categories: tab === "BALANCE" ? categoriesBalance : categoriesReward,
-                      lineWidth: 2,
-                      lineColor: theme.palette.border.main,
-                      plotLines: [],
-                      angle: 0,
-                      labels: {
-                        style: {
-                          fontSize: rangeTime === "THREE_MONTH" ? 10 : 12
-                        },
-                        rotation: isMobile || rangeTime === "THREE_MONTH" ? -45 : null
-                      }
-                    },
-                    legend: { enabled: false },
-                    tooltip: { shared: true },
-                    credits: { enabled: false },
-                    series: [
-                      {
-                        name: "",
-                        pointPlacement: "on",
-                        type: "areaspline",
-                        marker: { enabled: tab === "BALANCE" },
-                        lineWidth: 4,
-                        color: theme.palette.green[700],
-                        fillColor: {
-                          linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-                          stops: [
-                            [0, theme.palette.success.light],
-                            [1, "transparent"]
-                          ]
-                        },
-                        data: tab === "BALANCE" ? dataBalanceChart : dataRewardChart
-                      }
-                    ]
-                  }}
-                />
-              </Box>
+              <ResponsiveContainer width="100%" height={400}>
+                <AreaChart
+                  width={900}
+                  height={400}
+                  data={tab === "BALANCE" ? data : dataReward}
+                  margin={{ top: 5, right: 10, bottom: 10 }}
+                >
+                  <defs>
+                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
+                      <stop offset="100%" stopColor={theme.palette.primary.main} stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis
+                    dataKey={tab === "BALANCE" ? "date" : "epoch"}
+                    tickFormatter={(value) =>
+                      tab === "BALANCE" ? moment(value).format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM") : value
+                    }
+                    tickLine={false}
+                    {...xAxisProps}
+                  />
+                  <YAxis tickFormatter={formatPriceValue} tickLine={false} interval={isMobile ? 3 : undefined} />
+                  <Tooltip content={renderTooltip} cursor={false} />
+                  <CartesianGrid vertical={false} strokeWidth={0.33} />
+                  <Area
+                    stackId="1"
+                    type="monotone"
+                    dataKey="value"
+                    stroke={theme.palette.primary.main}
+                    strokeWidth={4}
+                    fill="url(#colorUv)"
+                    dot={tab === "BALANCE" ? { r: 2 } : { r: 0 }}
+                    activeDot={{ r: 6 }}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
             )}
           </ChartBox>
         </Grid>
@@ -202,12 +185,10 @@ const StakeAnalytics: React.FC = () => {
                   <img src={HighestIcon} alt="heighest icon" />
                   <Title>{tab === "BALANCE" ? "Highest Balance" : "Highest Reward"}</Title>
                   <ValueInfo>
-                    {balanceLoading ? (
+                    {loading || loadingReward ? (
                       <SkeletonUI variant="rectangular" />
-                    ) : tab === "BALANCE" ? (
-                      formatADAFull(maxBalance)
                     ) : (
-                      formatADAFull(maxReward.value)
+                      formatADAFull(tab === "BALANCE" ? maxBalance : maxReward)
                     )}
                   </ValueInfo>
                 </Box>
@@ -219,12 +200,10 @@ const StakeAnalytics: React.FC = () => {
                   <img src={LowestIcon} alt="lowest icon" />
                   <Title>{tab === "BALANCE" ? "Lowest Balance" : "Lowest Reward"}</Title>
                   <ValueInfo>
-                    {balanceLoading ? (
+                    {loading || loadingReward ? (
                       <SkeletonUI variant="rectangular" />
-                    ) : tab === "BALANCE" ? (
-                      formatADAFull(minBalance)
                     ) : (
-                      formatADAFull(minReward.value)
+                      formatADAFull(tab === "BALANCE" ? minBalance : minReward)
                     )}
                   </ValueInfo>
                 </Box>

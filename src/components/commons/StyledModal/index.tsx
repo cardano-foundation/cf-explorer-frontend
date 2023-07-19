@@ -25,7 +25,7 @@ const StyledModal: React.FC<IProps> = ({
   paddingX,
   paddingY,
   contentStyle = {},
-  modalStyle = {}
+  modalStyle = {},
 }) => {
   const { isMobile } = useScreen();
 
