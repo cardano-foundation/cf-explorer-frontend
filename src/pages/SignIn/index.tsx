@@ -103,7 +103,7 @@ export default function SignIn() {
   };
 
   const handleLoginSuccess = () => {
-    toast.success("You are now signed in");
+    toast.success("You are now signed in", false);
     handleRedirectBack();
   };
 
