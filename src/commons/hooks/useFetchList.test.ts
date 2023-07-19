@@ -30,6 +30,7 @@ describe("useFetchList", () => {
       refresh: expect.any(Function),
       update: expect.any(Function),
       lastUpdated: expect.any(Number),
+      setLoading: expect.any(Function),
       query: {}
     };
 
