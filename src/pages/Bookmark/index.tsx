@@ -150,7 +150,7 @@ const Bookmark = () => {
       )
     },
     STAKE_KEY: {
-      title: "Stake Key",
+      title: "Stake Address",
       key: "StakeKey",
       minWidth: 120,
       render: (data) => (
@@ -308,7 +308,7 @@ const Bookmark = () => {
       )
     },
     {
-      label: "Stake Key",
+      label: "Stake Address",
       key: "STAKE_KEY",
       component: (
         <StyledTable

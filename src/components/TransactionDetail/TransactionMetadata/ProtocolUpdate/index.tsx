@@ -41,7 +41,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
               overflow={"hidden"}
               whiteSpace={"nowrap"}
               textOverflow={"ellipsis"}
-              color={({ palette }) => (r.protocol === "costModel" ? palette.blue[800] : "unset")}
+              color={({ palette }) => (r.protocol === "costModel" ? palette.blue[100] : "unset")}
             >
               {r?.oldValue}
             </Box>
@@ -68,7 +68,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
               overflow={"hidden"}
               whiteSpace={"nowrap"}
               textOverflow={"ellipsis"}
-              color={({ palette }) => (r.protocol === "costModel" ? palette.blue[800] : "unset")}
+              color={({ palette }) => (r.protocol === "costModel" ? palette.blue[100] : "unset")}
             >
               {r?.value}
             </Box>

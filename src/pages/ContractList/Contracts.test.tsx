@@ -61,6 +61,26 @@ describe("Contracts list view", () => {
     expect(screen.getByText("Test Data")).toBeInTheDocument();
   });
 
+  it("renders the table with given column and data", () => {
+    const columns = [
+      {
+        title: "Test Column",
+        key: "test",
+        render: (r: any) => <div>{r.test}</div>
+      }
+    ];
+
+    const data = [
+      {
+        test: "Test Data"
+      }
+    ];
+    render(<Table columns={columns} data={data} />);
+
+    expect(screen.getByText("Test Column")).toBeInTheDocument();
+    expect(screen.getByText("Test Data")).toBeInTheDocument();
+  });
+
   it("should navigate to the correct route when button is clicked", async () => {
     const mockUseFetchList = useFetchList as jest.Mock;
     mockUseFetchList.mockReturnValue(mockData);

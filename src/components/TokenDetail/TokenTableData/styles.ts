@@ -47,7 +47,7 @@ export const StyledLink = styled(Link)`
 
 export const SmallText = styled("small")`
   display: inline-block;
-  color: ${(props) => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.grey[300]};
   margin-bottom: 5px;
 `;
 
@@ -98,7 +98,7 @@ export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => 
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? theme.palette.common.black : theme.palette.text.hint
+  color: active ? theme.palette.green[200] : theme.palette.text.hint
 }));
 
 export const ViewJson = styled(Box)(({ theme }) => ({
@@ -107,6 +107,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
   backgroundColor: `${alpha(theme.palette.grey[300], 0.1)}`,
   borderRadius: 10,
   padding: theme.spacing(2),
+  marginBottom: theme.spacing(3),
   maxHeight: "50vh",
   [theme.breakpoints.up("md")]: {
     "& .MuiSvgIcon-root": {
