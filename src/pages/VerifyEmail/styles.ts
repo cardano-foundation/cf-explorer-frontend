@@ -1,4 +1,4 @@
-import { Box, Button, Divider, FormHelperText, Input, styled } from "@mui/material";
+import { Box, Button, Divider, Input, styled } from "@mui/material";
 
 import { User2RC } from "src/commons/resources";
 
@@ -87,10 +87,6 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
   })
 );
 
-export const FormHelperTextCustom = styled(FormHelperText)`
-  font-size: 14px
-  line-height: 16px;
-`;
 export const Label = styled(Box)`
   font-weight: 400;
   font-size: 14px;
