@@ -1,21 +1,30 @@
 import WebApi from "../core/WebApi"
 
-const priceLocator = "//a[normalize-space()='Pricing']";
+const signInBtn = "//span[contains(text(),'Sign In')]//parent::button";
+const fieldEmail = "//input[@name='email']";
+const fieldPassword = "//input[@name='password']";
+const loginBtn = "[data-testid='login-btn']";
+const successfullNotification = "//div[contains(text(),'You are now signed in')]";
 export default class LoginPage extends WebApi{
-  constructor(){
-    super();
-  }
-  goToHomePage() {
-    this.openAnyUrl("/")
-    return this;
-  }
-  clickToPriceField() {
-    this.clickToElementByXpath(priceLocator);
-    return this;
-  }
 
-  verifyPriceName() {
-    cy.xpath(priceLocator).should("have.text", "Pricing");
+  clickToSignInBtn(){
+    cy.clickElement(signInBtn);
+    return this;
+  }
+  enterEmail(email: string){
+    cy.xpath(fieldEmail).setInputValue(email);
+    return this;
+  }
+  enterPassword(password: string){
+    cy.xpath(fieldPassword).setInputValue(password);
+    return this;
+  }
+  clickToLoginBtn(){
+    cy.clickElement(loginBtn);
+    return this;
+  }
+  verifySignInSuccessFull(){
+    cy.verifyElementDisplay(successfullNotification);
     return this;
   }
 }
