@@ -85,7 +85,7 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void 
       render: (r) => <StyledEpoch to={details.epoch(r.epochNo)}>{r.epochNo}</StyledEpoch>
     },
     {
-      title: "Timestamp",
+      title: "Created At",
       key: "time",
       minWidth: "50px",
       render: (r) => <Box>{moment(r?.time).format("MM/DD/yyyy HH:mm:ss")}</Box>,

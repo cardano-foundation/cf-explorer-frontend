@@ -12,7 +12,7 @@ describe("RecentWithdraws", () => {
       stakeId: "1"
     });
 
-    render(<RecentWithdraws onSelect={onSelect} />);
+    render(<RecentWithdraws onSelect={onSelect} setShowBackButton={jest.fn()} />);
     expect(screen.getByText("Recent Withdrawals")).toBeInTheDocument();
   });
 });

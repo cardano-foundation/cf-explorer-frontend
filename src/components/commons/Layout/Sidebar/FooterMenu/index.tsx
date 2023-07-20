@@ -57,12 +57,12 @@ const itemStyle: CustomSX = (theme, sidebar, bottom) => ({
   borderRadius: 30,
   padding: 0,
   color: `${theme.palette.text.hint} !important`,
-  background: theme.palette.green[800_10],
+  background: theme.palette.green[300_10],
   [theme.breakpoints.down("md")]: {
     display: bottom ? "flex" : sidebar ? "flex" : "none"
   },
   "&:hover": {
-    background: theme.palette.green[800_20],
+    background: theme.palette.green[300_20],
     color: `${theme.palette.common.black} !important`,
     img: {
       filter: "brightness(0.75)"
