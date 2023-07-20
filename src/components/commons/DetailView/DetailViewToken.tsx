@@ -181,7 +181,10 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                   )}
                 </TokenInfo>
                 <Box pb={2}>
-                  <MetaData>{data?.metadata?.description || ""}</MetaData>
+                  <MetaData>
+                    {`Hex Format: #${data?.name || data?.fingerprint}`}
+                    <Box mt={1}>{data?.metadata?.description || ""}</Box>
+                  </MetaData>
                 </Box>
               </TokenMetaData>
             ) : (
