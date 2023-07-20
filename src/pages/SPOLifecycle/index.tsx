@@ -55,7 +55,7 @@ const SPOLifecycle = () => {
   const { poolId = "", mode = "timeline", tab = "registration" } = useParams<Params>();
 
   useEffect(() => {
-    document.title = `Staking Delegation Lifecycle ${poolId} | Cardano Explorer`;
+    document.title = `Staking Delegation Lifecycle ${poolId} | Iris - Cardano Blockchain Explorer`;
   }, [poolId]);
 
   const tabList = {

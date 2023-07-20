@@ -97,7 +97,7 @@ const DelegatorLifecycle = () => {
   }, [listTabs]);
 
   useEffect(() => {
-    document.title = `Staking Delegation Lifecycle ${stakeId} | Cardano Explorer`;
+    document.title = `Staking Delegation Lifecycle ${stakeId} | Iris - Cardano Blockchain Explorer`;
   }, [stakeId]);
 
   const changeMode = (mode: ViewMode) => {

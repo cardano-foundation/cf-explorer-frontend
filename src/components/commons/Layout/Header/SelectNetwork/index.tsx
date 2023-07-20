@@ -59,9 +59,9 @@ const SelectNetwork: React.FC = () => {
       MenuProps={{ style: { zIndex: 1303 } }}
       onOpen={handleOpen}
     >
-      {Object.entries(NETWORK_NAMES).map(([value, name]) => (
-        <MenuItem data-testid="network-options" key={value} value={value}>
-          {name}
+      {Object.entries(NETWORK_NAMES).map(([key, value]) => (
+        <MenuItem data-testid="network-options" key={key} value={key}>
+          {String(value)}
         </MenuItem>
       ))}
     </StyledSelect>

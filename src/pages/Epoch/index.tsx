@@ -114,7 +114,7 @@ const Epoch: React.FC = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Epochs List | Cardano Explorer`;
+    document.title = `Epochs List | Iris - Cardano Blockchain Explorer`;
   }, []);
 
   const openDetail = (_: any, r: IDataEpoch, index: number) => {
