@@ -13,7 +13,7 @@ const TopAddresses = () => {
   const [tabActive, setTabActive] = React.useState<"ada-balance" | "amount-staked">("ada-balance");
   const theme = useTheme();
   useEffect(() => {
-    document.title = `Top Addresses | Cardano Explorer`;
+    document.title = `Top Addresses | Iris - Cardano Blockchain Explorer`;
   }, []);
 
   const handleChange = (event: React.SyntheticEvent, tab: "ada-balance" | "amount-staked") => {

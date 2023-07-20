@@ -61,7 +61,7 @@ export default function ResetPassword() {
   });
 
   useEffect(() => {
-    document.title = "Reset Password | Cardano Explorer";
+    document.title = "Reset Password | Iris - Cardano Blockchain Explorer";
   }, []);
 
   const handleTogglePassword = () => {

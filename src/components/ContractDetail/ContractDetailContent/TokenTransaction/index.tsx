@@ -127,6 +127,12 @@ const TokenTransaction: React.FC = () => {
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<Transactions>(`${API.ADDRESS.DETAIL}/${params.address}/txs`, pageInfo);
   const [txHashSelected, setTxHashSelected] = useState<string>("");
+  const [selected, setSelected] = useState<number | null>(null);
+
+  const openDetail = (_: any, r: Transactions, index: number) => {
+    setTxHashSelected(r.hash);
+    setSelected(index);
+  };
 
   return (
     <>
@@ -134,7 +140,8 @@ const TokenTransaction: React.FC = () => {
         {...fetchData}
         columns={columns}
         total={{ count: fetchData.total, title: "Total Transactions" }}
-        onClickRow={(_, r: Transactions) => setTxHashSelected(r.hash)}
+        onClickRow={openDetail}
+        selected={selected}
         pagination={{
           ...pageInfo,
           total: fetchData.total,

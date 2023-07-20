@@ -1,19 +1,18 @@
 import { Box, Grid, useTheme } from "@mui/material";
-import { BigNumber } from "bignumber.js";
-import Highcharts from "highcharts";
-import { HighchartsReact } from "highcharts-react-official";
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import moment from "moment";
-import { FC, useRef, useState } from "react";
+import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
+import { TooltipProps } from "recharts/types/component/Tooltip";
+import BigNumber from "bignumber.js";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
-import useResizeHighChart from "src/commons/hooks/useResizeHighChart";
 import useFetch from "src/commons/hooks/useFetch";
+import { HighestIcon, LowestIcon } from "src/commons/resources";
+import { API } from "src/commons/utils/api";
+import { formatPrice, numberWithCommas } from "src/commons/utils/helper";
 
-import { HighestIcon, LowestIcon } from "../../../commons/resources";
-import { API } from "../../../commons/utils/api";
-import { formatPrice, numberWithCommas } from "../../../commons/utils/helper";
 import Card from "../../commons/Card";
 import {
   BoxInfo,
@@ -26,7 +25,10 @@ import {
   Tabs,
   Title,
   ValueInfo,
-  Wrapper
+  Wrapper,
+  TooltipBody,
+  TooltipLabel,
+  TooltipValue
 } from "./styles";
 
 type AnalyticsData = { date: string; value: number };
@@ -40,29 +42,33 @@ const options = [
 
 const AddressAnalytics: FC = () => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
-  const wrapperChartRef = useRef<HTMLDivElement>(null);
-  useResizeHighChart(wrapperChartRef);
   const { tokenId } = useParams<{ tokenId: string }>();
   const { isMobile } = useScreen();
   const theme = useTheme();
   const { data, loading } = useFetch<AnalyticsData[]>(`${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`);
-  const dataChart = data?.map((i) => {
-    const value = BigNumber(i.value || 0);
-    return Number(value.toString().match(/^-?\d+(?:\.\d{0,6})?/)?.[0]);
-  });
 
-  const categories =
-    data?.map((i) => moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)) || [];
-  const minBalance = data
-    ? data.reduce(function (prev, current) {
-        return new BigNumber(prev.value).isLessThan(new BigNumber(current.value)) ? prev : current;
-      })
-    : { date: "", value: 0 };
-  const maxBalance = data
-    ? data.reduce(function (prev, current) {
-        return new BigNumber(prev.value).isGreaterThan(new BigNumber(current.value)) ? prev : current;
-      })
-    : { date: "", value: 0 };
+  const values = data?.map((item) => item.value || 0) || [];
+
+  const maxBalance = BigNumber.max(0, ...values).toString();
+  const minBalance = BigNumber.min(maxBalance, ...values).toString();
+
+  const formatPriceValue = (value: string) => {
+    return formatPrice(value);
+  };
+
+  const convertDataChart = data?.map((item) => ({
+    value: item.value || 0,
+    date: item.date
+  }));
+
+  const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
+    return (
+      <TooltipBody>
+        <TooltipLabel>{moment(content.label).format("DD MMM YYYY HH:mm:ss")} (UTC time zone)</TooltipLabel>
+        <TooltipValue>{numberWithCommas(content.payload?.[0]?.value) || 0}</TooltipValue>
+      </TooltipBody>
+    );
+  };
 
   return (
     <Box pt={isMobile ? 0 : "20px"}>
@@ -83,78 +89,45 @@ const AddressAnalytics: FC = () => {
                 </Tabs>
               </Grid>
             </Grid>
-            <ChartBox ref={wrapperChartRef}>
-              {loading ? (
+            <ChartBox>
+              {loading || !data ? (
                 <SkeletonUI variant="rectangular" style={{ height: "375px", display: "block" }} />
               ) : (
-                <Box position={"relative"}>
-                  <HighchartsReact
-                    highcharts={Highcharts}
-                    options={{
-                      chart: {
-                        type: "areaspline",
-                        backgroundColor: "transparent",
-                        style: { fontFamily: "Helvetica, monospace" }
-                      },
-                      title: { text: "" },
-                      yAxis: {
-                        title: { text: null },
-                        lineWidth: 2,
-                        lineColor: theme.palette.border.main,
-                        className: "y-axis-lable",
-                        gridLineWidth: 1,
-                        minorGridLineWidth: 1,
-                        labels: {
-                          style: { fontSize: 12 },
-                          formatter: (e: { value: string }) => {
-                            return formatPrice(e.value);
-                          }
-                        }
-                      },
-                      xAxis: {
-                        categories,
-                        lineWidth: 2,
-                        lineColor: theme.palette.border.main,
-                        plotLines: [],
-                        angle: 0,
-                        labels: {
-                          style: {
-                            fontSize: rangeTime === "THREE_MONTH" ? 10 : 12
-                          },
-                          rotation: isMobile || rangeTime === "THREE_MONTH" ? -45 : null
-                        }
-                      },
-                      legend: { enabled: false },
-                      tooltip: {
-                        shared: true,
-                        formatter: function (this: Highcharts.TooltipFormatterContextObject) {
-                          return (
-                            "<span>" + this.x + "</span><br><strong>" + numberWithCommas(this.y || 0) + "</strong>"
-                          );
-                        }
-                      },
-                      credits: { enabled: false },
-                      series: [
-                        {
-                          name: "",
-                          pointPlacement: "on",
-                          type: "areaspline",
-                          marker: { enabled: true },
-                          lineWidth: 4,
-                          color: theme.palette.green[200],
-                          fillColor: {
-                            linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-                            stops: [
-                              [0, theme.palette.success.light],
-                              [1, "transparent"]
-                            ]
-                          },
-                          data: dataChart
-                        }
-                      ]
-                    }}
-                  />
-                </Box>
+                <ResponsiveContainer width="100%" height={400}>
+                  <AreaChart
+                    width={900}
+                    height={400}
+                    data={convertDataChart || []}
+                    margin={{ top: 5, right: 5, bottom: 10 }}
+                  >
+                    <defs>
+                      <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor={theme.palette.green[300]} stopOpacity={0.2} />
+                        <stop offset="100%" stopColor={theme.palette.green[300]} stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <XAxis
+                      dataKey="date"
+                      tickFormatter={(value) => moment(value).format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM")}
+                      tickLine={false}
+                      tickMargin={5}
+                      dx={-15}
+                    />
+                    <YAxis tickFormatter={formatPriceValue} tickLine={false} />
+                    <Tooltip content={renderTooltip} cursor={false} />
+                    <CartesianGrid vertical={false} strokeWidth={0.33} />
+                    <Area
+                      stackId="1"
+                      type="monotone"
+                      dataKey="value"
+                      stroke={theme.palette.green[300]}
+                      strokeWidth={4}
+                      fill="url(#colorUv)"
+                      dot={{ r: 2 }}
+                      activeDot={{ r: 6 }}
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
               )}
             </ChartBox>
           </Grid>
@@ -168,7 +141,7 @@ const AddressAnalytics: FC = () => {
                       <Title>Highest Volume</Title>
                     </Box>
                     <ValueInfo>
-                      {loading ? <SkeletonUI variant="rectangular" /> : numberWithCommas(maxBalance.value || 0)}
+                      {loading ? <SkeletonUI variant="rectangular" /> : numberWithCommas(maxBalance)}
                     </ValueInfo>
                   </Box>
                 </BoxInfoItemRight>
@@ -181,7 +154,7 @@ const AddressAnalytics: FC = () => {
                       <Title>Lowest Volume</Title>
                     </Box>
                     <ValueInfo>
-                      {loading ? <SkeletonUI variant="rectangular" /> : numberWithCommas(minBalance.value || 0)}
+                      {loading ? <SkeletonUI variant="rectangular" /> : numberWithCommas(minBalance)}
                     </ValueInfo>
                   </Box>
                 </BoxInfoItem>

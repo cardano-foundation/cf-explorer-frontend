@@ -179,6 +179,10 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
     ? getShortWallet(data.pool.poolId)
     : "-";
 
+  const poolNameToolTip = data.pool?.poolName
+    ? `${data.pool.tickerName || ""} - ${data.pool.poolName}`
+    : data.pool?.poolId || "-";
+
   return (
     <ViewDetailDrawer anchor="right" open={!!stakeId} hideBackdrop variant="permanent">
       <ViewDetailHeader>
@@ -226,7 +230,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
               <WrapDetailInfo>
                 <DetailLabel>Delegated to</DetailLabel>
               </WrapDetailInfo>
-              <CustomTooltip title={poolName}>
+              <CustomTooltip title={poolNameToolTip}>
                 <Box component={Link} display="inline-block" to={details.delegation(data.pool?.poolId)}>
                   <DelegatedDetail>{poolName}</DelegatedDetail>
                 </Box>

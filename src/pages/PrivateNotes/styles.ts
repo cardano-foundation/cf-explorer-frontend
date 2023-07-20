@@ -71,6 +71,9 @@ export const StyledTable = styled(Table)(({ theme }) => ({
   "& .table-wrapper": {
     minHeight: "75px"
   },
+  "& .hide-scroll": {
+    overflow: "hidden"
+  },
   "& thead tr th": {
     fontSize: "var(--font-size-text-x-small)",
     padding: "10px 20px"

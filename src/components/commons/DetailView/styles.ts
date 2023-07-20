@@ -12,10 +12,11 @@ export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
     background: `${theme.palette.primary[100]}`,
     border: "none",
     height: "100%",
+    boxShadow: theme.shadow.rightDraw,
     [theme.breakpoints.down("md")]: {
       display: "flex",
-      height: "calc(100% - 75px)",
-      top: "75px"
+      height: "calc(100% - 76px)",
+      top: "76px"
     },
     [theme.breakpoints.down("sm")]: {
       right: "auto",

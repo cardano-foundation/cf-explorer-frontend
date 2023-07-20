@@ -151,7 +151,8 @@ export const ButtonTitle = styled("button")<{ active: boolean }>(({ theme, activ
 }));
 
 export const ChartBox = styled(Box)(({ theme }) => ({
-  paddingTop: theme.spacing(3)
+  paddingTop: theme.spacing(3),
+  fontSize: 12
 }));
 
 export const SkeletonUI = styled(Skeleton)(({ theme }) => ({
@@ -192,4 +193,21 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
     height: `28px !important`,
     marginRight: "0px"
   }
+}));
+
+export const TooltipBody = styled(Box)(({ theme }) => ({
+  backgroundColor: alpha(theme.palette.common.white, 0.8),
+  borderRadius: 2,
+  padding: 8,
+  border: "1px solid #146635",
+  fontSize: 12,
+  color: theme.palette.grey[500]
+}));
+
+export const TooltipLabel = styled(Box)(() => ({
+  marginBottom: 3
+}));
+
+export const TooltipValue = styled(Box)(() => ({
+  fontWeight: 700
 }));
