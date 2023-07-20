@@ -39,6 +39,18 @@ export const Status = styled("span")<{ status: string }>(({ theme }) => ({
   }
 }));
 
+export const StatusTableRow = styled(Status)<{ status: string }>(({ theme, status }) => ({
+  backgroundColor: theme.palette.green[400_10],
+  padding: "5px 10px",
+  borderRadius: "3px",
+  color:
+    status === "REWARDING"
+      ? theme.palette.green[200]
+      : status === "FINISHED"
+      ? theme.palette.blue[100]
+      : theme.palette.yellow[100],
+}));
+
 export const Blocks = styled(BlueText)``;
 
 export const Output = styled(Blocks)`
