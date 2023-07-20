@@ -1,10 +1,10 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Box, FormControl, FormControlLabel, RadioGroup, Stack, Radio } from "@mui/material";
 
 import CustomModal from "src/components/commons/CustomModal";
-import CustomDatePicker, { IDateRange } from "src/components/CustomDatePicker";
+import CustomDatePicker, { IDateRange } from "src/components/commons/CustomDatePicker";
 
 import {
   ButtonEvent,
@@ -95,7 +95,7 @@ export const EVENTS_NAME = [
 
 type IEpochRange = [number, number];
 
-const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, saveParams, gotoStep }) => {
+const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, saveParams, gotoStep, currentStep }) => {
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   const history = useHistory();
 
@@ -241,8 +241,22 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
     setEpochRange([Math.min(min), Math.min(max)]);
   };
 
+  useEffect(() => {
+    if (!currentStep && !open) {
+      setDateRange([null, null]);
+      setEpochRange([30, 50]);
+    }
+  }, [open]);
+
   return (
-    <CustomModal open={open} onClose={handleCloseModal} title="Report composer" width={500}>
+    <CustomModal
+      open={open}
+      onClose={handleCloseModal}
+      title="Report composer"
+      width={500}
+      padding="0px 24px !important"
+      margin="0px -24px !important"
+    >
       <Container>
         <StyledStack>
           <StyledLabel>Report name</StyledLabel>
@@ -288,11 +302,13 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
                           value={RatioGroupValue.yes}
                           control={<Radio onClick={() => handleClickRadio(key)} />}
                           label="Yes"
+                          sx={{ color: (props) => props.palette.grey[400] }}
                         />
                         <FormControlLabel
                           value={RatioGroupValue.no}
                           control={<Radio onClick={() => handleClickRadio(key)} />}
                           label="No"
+                          sx={{ color: (props) => props.palette.grey[400] }}
                         />
                       </Stack>
                     </RadioGroup>

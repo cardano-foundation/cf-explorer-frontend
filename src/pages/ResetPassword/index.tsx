@@ -4,7 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 
 import { FailIcon, HideIcon, LockIcon, ShowIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
-import { resetPassword } from "src/commons/utils/userRequest";
+import { resetPassword, verifyCodeResetPassword } from "src/commons/utils/userRequest";
 
 import {
   Container,
@@ -94,7 +94,7 @@ export default function ResetPassword() {
         if (!value) {
           error = "Please enter your Confirm Password";
         } else if (value !== formData.password.value) {
-          error = "Confirm Password does not match";
+          error = "Password does not match";
         }
         break;
       default:
@@ -111,6 +111,18 @@ export default function ResetPassword() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path.search]);
+
+  useEffect(() => {
+    if (!code) return;
+    verifyCode();
+  }, [code]);
+
+  async function verifyCode() {
+    const { data } = await verifyCodeResetPassword({ code });
+    if (!data) {
+      setError(true);
+    }
+  }
 
   const handleChange = (event: any) => {
     setFormData({
