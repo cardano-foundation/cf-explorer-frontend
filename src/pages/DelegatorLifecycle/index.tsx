@@ -145,7 +145,11 @@ const DelegatorLifecycle = () => {
               }
             >
               <ReportButtonContainer>
-                <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
+                <ButtonReport
+                  disabled={!isLoggedIn || dataReportLimit?.isLimitReached}
+                  onClick={() => setOpen(true)}
+                  sidebar={+sidebar}
+                >
                   Compose report
                 </ButtonReport>
               </ReportButtonContainer>
