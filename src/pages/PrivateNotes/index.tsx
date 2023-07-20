@@ -123,11 +123,6 @@ const PrivateNotes = () => {
     setLoadingDelete(true);
     try {
       await removePrivateNote(note.id);
-      toast.success(
-        <Box>
-          Delete transaction private note <Box>{getShortHash(note.txHash || "")} successfully</Box>
-        </Box>
-      );
       setSelected(null);
       refresh();
     } catch (error) {

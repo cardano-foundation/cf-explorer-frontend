@@ -48,10 +48,16 @@ export interface ListTabResponseSPO {
   isDeRegistration: boolean;
 }
 
+export interface IReportLimit {
+  isLimitReached: boolean;
+  limitPer24hours: number;
+}
+
 const MODES: ViewMode[] = ["timeline", "tabular"];
 
 const SPOLifecycle = () => {
   const { poolId = "", mode = "timeline", tab = "registration" } = useParams<Params>();
+  const { data: dataReportLimit } = useFetch<IReportLimit>(API.REPORT.REPORT_LIMIT);
 
   useEffect(() => {
     document.title = `Staking Delegation Lifecycle ${poolId} | Iris - Cardano Blockchain Explorer`;
@@ -132,9 +138,21 @@ const SPOLifecycle = () => {
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>
-            <CustomTooltip title={!isLoggedIn ? "Please sign in to use this feature" : ""}>
+            <CustomTooltip
+              title={
+                !isLoggedIn
+                  ? "Please sign in to use this feature"
+                  : `Please note that you can only compose ${
+                      dataReportLimit?.limitPer24hours || 0
+                    } reports within the 24 hours period`
+              }
+            >
               <ReportButtonContainer>
-                <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
+                <ButtonReport
+                  disabled={!isLoggedIn || dataReportLimit?.isLimitReached}
+                  onClick={() => setOpen(true)}
+                  sidebar={+sidebar}
+                >
                   Compose report
                 </ButtonReport>
               </ReportButtonContainer>

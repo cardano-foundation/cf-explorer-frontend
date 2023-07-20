@@ -106,7 +106,8 @@ export const API = {
     PREPORT_PROTOCOL_UPDATE: (reportId: number | string) => `pool-report/detail/${reportId}/pool-update`,
     PREPORT_REWARD_DISTRIBUTIONS: (reportId: number | string) => `pool-report/detail/${reportId}/rewards-distribution`,
     PREPORT_DEREGSITRATION: (reportId: number | string) => `pool-report/detail/${reportId}/deregistration`,
-    PREPORT_EPOCH_SIZE: (reportId: number | string) => `pool-report/detail/${reportId}/epoch-size`
+    PREPORT_EPOCH_SIZE: (reportId: number | string) => `pool-report/detail/${reportId}/epoch-size`,
+    REPORT_LIMIT: "staking-lifecycle/report/report-limit"
   },
   CONTRACTS: {
     VERIFY_SCRIPT: "contracts/verify/native",
