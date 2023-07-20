@@ -48,7 +48,7 @@ export const Status = styled("span")<{ status: keyof typeof EPOCH_STATUS }>(({ t
 }));
 
 export const StatusTableRow = styled(Status)<{ status: string }>(({ theme, status }) => ({
-  backgroundColor: theme.palette.green[400_10],
+  backgroundColor: theme.palette.green[100_10],
   padding: "5px 10px",
   borderRadius: "3px",
   color:
