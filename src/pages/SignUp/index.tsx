@@ -416,7 +416,14 @@ export default function SignUp() {
                     />
                   }
                   label={
-                    <Box fontSize={"14px"} fontWeight={400} display={"flex"} alignItems={"baseline"} gap={"5px"}>
+                    <Box
+                      color={({ palette }) => palette.grey[400]}
+                      fontSize={"14px"}
+                      fontWeight={400}
+                      display={"flex"}
+                      alignItems={"baseline"}
+                      gap={"5px"}
+                    >
                       I agree to the <ForgotPassword>Terms of Service</ForgotPassword>
                     </Box>
                   }
