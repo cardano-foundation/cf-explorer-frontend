@@ -244,7 +244,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                       setOpenBackdrop((prev: any) => ({ ...prev, [keyItem]: true }));
                     }}
                   >
-                    <SearchIcon stroke={theme.palette.grey[400]} />
+                    <SearchIcon stroke={theme.palette.grey[300]} />
                   </AllowSearchButton>
                 )}
                 {item.allowSearch && keyItem && openBackdrop[keyItem] && (

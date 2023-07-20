@@ -3,6 +3,7 @@ declare interface ToastItem {
   severity: AlertProps["severity"];
   message: React.ReactNode;
   duration?: number;
+  title?: string | boolean;
 }
 
 declare interface ToastStoreType {

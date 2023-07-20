@@ -49,7 +49,6 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
             };
             try {
               await addPrivateNote(payload);
-              toast.success(`Add transaction private note successfully!`);
             } catch (error) {
               toast.error("Private note is already exists");
             }
@@ -57,7 +56,6 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
             const payload = { note: privateNote?.value || "", noteId: currentNote.id };
             try {
               await editPrivateNote(payload);
-              toast.success(`Update transaction private note successfully!`);
             } catch (error) {
               toast.error("Something went wrong!");
             }
@@ -81,26 +79,10 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
       }
   };
 
-  const containsSpecialCharacters = (inputValue: string) => {
-    const regex = /[!@#$%^&*(),.?":{}|<>]/;
-    return regex.test(inputValue);
-  };
-
   const handleChangeTxHash = (e: any) => {
     const inputValue = e.target.value;
-    const isHasSpecialCharacters = containsSpecialCharacters(inputValue);
-    const isLengthToLong = inputValue.length > 70;
-    const isLengthToShort = inputValue.length === 1;
-    let error = "";
-    if (isHasSpecialCharacters || isLengthToShort) {
-      error = "Address is invalid, please try again!";
-    }
-    if (isLengthToLong) {
-      error = "Maximum reached!";
-    }
     setTxHash({
-      value: inputValue.slice(0, 70),
-      error
+      value: inputValue.slice(0, 70)
     });
   };
   return (

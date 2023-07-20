@@ -8,7 +8,9 @@ import NotFoundIcon from "./images/icon-404.png";
 import AdaPriceIcon from "./icons/ada-price.svg";
 import MarketCapIcon from "./icons/market-cap.svg";
 import CurentEpochIcon from "./icons/curent-epoch.svg";
+import CurentEpochPool from "./icons/curent-epoch-pool.svg";
 import LiveStakeIcon from "./icons/live-stake.svg";
+import LiveStakePoolIcon from "./icons/live-stake-pool.svg";
 import ComingSoonIcon from "./icons/coming-soon.svg";
 import DownRedIcon from "./icons/down-red.svg";
 import UpGreenIcon from "./icons/up-green.svg";
@@ -22,6 +24,7 @@ import ProtocolParameterIcon from "./icons/protocolParameter.svg";
 import BrowseIcon from "./icons/menus/browser.svg";
 import ResourcesIcon from "./icons/menus/resources.svg";
 import RocketIcon from "./icons/rocket.svg";
+import RocketPoolIcon from "./icons/rocket-pool.svg";
 import CubeIcon from "./icons/cube.svg";
 import ExchangeIcon from "./icons/exchange-alt.svg";
 import ADAIcon from "./icons/ADA.svg";
@@ -71,7 +74,6 @@ import txInputIconUrl from "./icons/txInput.svg";
 import txOutputIconUrl from "./icons/txOutput.svg";
 import totalOutputUrl from "./icons/totalOutput.svg";
 import CopyIconSquareUrl from "./images/copy.svg";
-import ADALogoUrl from "./icons/ada-logo.svg";
 import fileGuardUrl from "./icons/file-guard.svg";
 import DelegationIconUrl from "./icons/delegationIcon.svg";
 import RewardsDistributionIconUrl from "./icons/rewardsDistribution.svg";
@@ -79,6 +81,7 @@ import StakeCertificatesIconUrl from "./icons/stakeCertificateIcon.svg";
 import ProtocolUpdateIconUrl from "./icons/protocolUpdateIcon.svg";
 import InstantaneousHistoryIconUrl from "./icons/instantaneousHistoryIcon.svg";
 import MetadataIconUrl from "./icons/metadataIcon2.svg";
+import ADALogoUrl from "./icons/ada-logo.svg";
 
 export {
   LogoFullIcon,
@@ -98,8 +101,10 @@ export {
   MarketCapIcon,
   CurentEpochIcon,
   LiveStakeIcon,
+  LiveStakePoolIcon,
   ComingSoonIcon,
   UpGreenIcon,
+  CurentEpochPool,
   DownRedIcon,
   BlankBlueIcon,
   CalenderPaleIcon,
@@ -109,6 +114,7 @@ export {
   ProtocolParameterIcon,
   EmptyIcon,
   RocketIcon,
+  RocketPoolIcon,
   CubeIcon,
   ExchangeIcon,
   ADAIcon,

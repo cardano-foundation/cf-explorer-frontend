@@ -2,7 +2,7 @@ import { AlertProps } from "@mui/material";
 
 import { addToast, removeToast } from "../../stores/toast";
 
-type ToastFn = (message: React.ReactNode) => void;
+type ToastFn = (message: React.ReactNode, title?: boolean | string) => void;
 
 interface FetchReturnType {
   error: ToastFn;
@@ -14,9 +14,9 @@ interface FetchReturnType {
 const useToast = (): FetchReturnType => {
   const createToast =
     (severity: AlertProps["severity"]): ToastFn =>
-    (message: React.ReactNode, duration = 3000) => {
+    (message: React.ReactNode, title?: string | boolean, duration = 3000) => {
       const id = performance.now();
-      addToast({ id, severity, message, duration });
+      addToast({ id, severity, message, duration, title: title ?? true });
       setTimeout(() => removeToast(id), duration);
     };
 

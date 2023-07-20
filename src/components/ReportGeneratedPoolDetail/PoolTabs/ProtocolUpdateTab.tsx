@@ -38,7 +38,7 @@ const ProtocolUpdateTab = () => {
     },
     {
       key: "time",
-      title: "Timestamp",
+      title: "Created At",
       sort({ columnKey, sortValue }) {
         sortValue ? setSort(`bk.${columnKey},${sortValue}`) : setSort("");
       },
@@ -63,7 +63,7 @@ const ProtocolUpdateTab = () => {
       render(data) {
         return (
           <ClickAbleLink onClick={() => setSelectedValue(data)}>
-            <EyeIcon style={{ transform: "scale(.8)" }} />
+            <EyeIcon />
           </ClickAbleLink>
         );
       }
