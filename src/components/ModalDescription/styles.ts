@@ -1,6 +1,7 @@
 import { Box, alpha, styled } from "@mui/material";
 
 export const NormalDescription = styled(Box)`
+  color: ${(props) => props.theme.palette.grey[300]};
   position: relative;
   font-weight: 400;
   line-height: 21px;
@@ -47,38 +48,6 @@ export const ContentContainer = styled(Box)`
   width: 100%;
   height: auto;
   overflow: hidden;
-`;
-
-export const Watermark = styled("span")`
-  position: absolute;
-  z-index: 1;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  aspect-ratio: 1;
-  max-height: 100%;
-  left: 0;
-  top: 70px;
-  bottom: 0;
-  &::after {
-    content: "FOR \\a ILLUSTRION \\a ONLY";
-    white-space: pre;
-    z-index: 1;
-    width: max-content;
-    font-weight: 900;
-    font-size: 80px;
-    line-height: 94px;
-    text-align: center;
-    text-transform: uppercase;
-    color: #e9eaec;
-    transform: rotate(45deg);
-    ${({ theme }) => theme.breakpoints.down("sm")} {
-      font-size: 50px;
-      line-height: 59px;
-    }
-  }
 `;
 
 export const BoxDescription = styled(Box)`

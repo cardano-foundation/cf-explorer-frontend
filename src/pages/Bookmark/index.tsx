@@ -150,7 +150,7 @@ const Bookmark = () => {
       )
     },
     STAKE_KEY: {
-      title: "Stake Key",
+      title: "Stake Address",
       key: "StakeKey",
       minWidth: 120,
       render: (data) => (
@@ -184,7 +184,7 @@ const Bookmark = () => {
       minWidth: 120,
       render: (data) => (
         <Box display="flex" justifyContent={"flex-end"}>
-          <IconButton data-testid="action-button" onClick={() => setSelected(data.keyword || "")}>
+          <IconButton data-testid="action-button" onClick={() => deleteBookMark(data.keyword)}>
             <DeleteBookmark fontSize={10} />
           </IconButton>
         </Box>
@@ -308,7 +308,7 @@ const Bookmark = () => {
       )
     },
     {
-      label: "Stake Key",
+      label: "Stake Address",
       key: "STAKE_KEY",
       component: (
         <StyledTable

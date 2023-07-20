@@ -13,7 +13,7 @@ const StyledLink = styled(Link)`
   width: 35px;
   height: 35px;
   border-radius: 5px;
-  background: ${(props) => alpha(props.theme.palette.primary.main, 0.1)};
+  background: ${(props) => alpha(props.theme.palette.primary.main, 0.15)};
   &:hover {
     background: ${(props) => alpha(props.theme.palette.primary.main, 0.3)};
   }
