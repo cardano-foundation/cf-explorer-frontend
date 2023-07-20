@@ -25,16 +25,16 @@ export const Tab = styled("button")<{ active: number }>(({ theme, active }) => (
   cursor: "pointer",
   textTransform: "lowercase",
   borderRadius: 5,
-  border: `2px solid ${theme.palette.green[800_20]}`,
-  color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
+  border: `2px solid ${theme.palette.green[300_20]}`,
+  color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[300],
   fontWeight: "bold",
   backgroundColor: active ? theme.palette.primary.main : theme.palette.common.white,
   ":hover": {
-    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[400],
+    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[300],
     backgroundColor: active ? theme.palette.primary.main : "none"
   },
   [theme.breakpoints.down("sm")]: {
-    border: `1.5px solid ${theme.palette.green[800_20]}`,
+    border: `1.5px solid ${theme.palette.green[300_20]}`,
     borderRadius: 5,
     height: 28,
     width: 70
@@ -44,19 +44,6 @@ export const TransactionContainer = styled(BoxRaised)`
   margin-bottom: 24px;
   padding: 20px;
   height: calc(100% - 56px);
-  [class*="highcharts-container"] {
-    height: 230px;
-    max-height: 300px;
-    width: 100%;
-    [class*="highcharts-xaxis-labels"] {
-      background: red;
-      text {
-        &:last-child {
-          text-anchor: end !important;
-        }
-      }
-    }
-  }
   ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 25px 15px;
     height: auto;
@@ -79,7 +66,7 @@ export const Title = styled("h3")`
   margin-top: 0px;
   margin-bottom: 1.5rem;
   font-size: 1.25rem;
-
+  color: ${(props) => props.theme.palette.grey[400]};
   &::after {
     position: absolute;
     top: 100%;
@@ -123,14 +110,14 @@ export const ColorChart = styled(Box)<{ type: TypeChart }>(({ theme, type }) => 
   const bgColor = (type: TypeChart) => {
     switch (type) {
       case "trx":
-        return theme.palette.yellow[600];
+        return theme.palette.yellow[100];
       case "simple":
-        return theme.palette.blue[800];
+        return theme.palette.blue[100];
       case "complex":
-        return theme.palette.green[600];
+        return theme.palette.green[200];
 
       default:
-        return theme.palette.yellow[600];
+        return theme.palette.yellow[100];
     }
   };
 
@@ -147,12 +134,13 @@ export const StyledTransactionTypes = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "1.5rem",
   textAlign: "left",
+  color: theme.palette.grey[400],
   [theme.breakpoints.between("lg", "xl")]: {
     textWrap: "nowrap"
   }
 }));
 
 export const StyledTransactionTypeItem = styled(Box)(({ theme }) => ({
-  color: `${theme.palette.grey[400]}`,
+  color: `${theme.palette.grey[300]}`,
   fontSize: "0.8125rem"
 }));

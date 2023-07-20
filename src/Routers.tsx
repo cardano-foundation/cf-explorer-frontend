@@ -37,15 +37,15 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
-import StackingLifecycle from "./pages/StackingLifecycle";
+import StakingLifecycle from "./pages/StakingLifecycle";
 import VerifyEmail from "./pages/VerifyEmail";
 import ReportGeneratedStakingDetail from "./pages/ReportGeneratedStakingDetail";
 import ReportGeneratedPoolDetail from "./pages/ReportGeneratedPoolDetail";
-import StakeDelegations from "./pages/StakeDelegations";
-import InstantRewards from "./pages/InstantRewards";
 import { getAllBookmarks } from "./commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "./commons/utils/constants";
 import { setOpenSyncBookmarkModal } from "./stores/user";
+import StakeDelegations from "./pages/StakeDelegations";
+import InstantRewards from "./pages/InstantRewards";
 
 const Routes: React.FC = () => {
   const { isLoggedIn } = useAuth();
@@ -94,7 +94,7 @@ const Routes: React.FC = () => {
       <Route path={routers.POLICY_DETAIL} exact component={PolicyDetail} />
       <Route path={routers.ADDRESS_LIST} exact component={TopAddresses} />
       <Route path={routers.TOP_DELEGATOR} exact component={TopDelegators} />
-      <Route path={routers.STAKING_LIFECYCLE} exact component={StackingLifecycle} />
+      <Route path={routers.STAKING_LIFECYCLE} exact component={StakingLifecycle} />
       <Route
         path={routers.STAKING_LIFECYCLE.replace(":tab", "")}
         exact
