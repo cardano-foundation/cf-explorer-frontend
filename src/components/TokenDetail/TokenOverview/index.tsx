@@ -6,15 +6,18 @@ import { RewardIcon, USDIcon, exchageIconUrl, fileGuardUrl, slotIconUrl, timeIco
 import {
   formatDateTimeLocal,
   formatNumberDivByDecimals,
+  getShortWallet,
   numberWithCommas,
   tokenRegistry
 } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import DetailHeader from "src/components/commons/DetailHeader";
 import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import ScriptModal from "../../ScriptModal";
 import { ButtonLink, PolicyId, PolicyScriptBtn, TokenDescription, TokenHeader, TokenUrl, WrapTitle } from "./styles";
+
 BigNumber.config({ DECIMAL_PLACES: 40 });
 
 interface ITokenOverview {
@@ -31,7 +34,9 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
     {
       title: (
         <TokenHeader>
-          {data?.displayName || ""}
+          <CustomTooltip title={data?.displayName || data?.fingerprint || ""}>
+            <span>{data?.displayName || getShortWallet(data?.fingerprint) || ""}</span>
+          </CustomTooltip>
           {data?.metadata && data?.metadata?.logo ? (
             <Box
               component={"img"}
@@ -146,7 +151,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
-            <WrapTitle>Created</WrapTitle>
+            <WrapTitle>Created At</WrapTitle>
           </Box>
         </Box>
       ),

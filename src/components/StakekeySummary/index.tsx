@@ -119,7 +119,7 @@ const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort, p
       }
     },
     {
-      title: "Status",
+      title: "Exporting Report",
       key: "status",
       minWidth: "100px",
       render(data) {

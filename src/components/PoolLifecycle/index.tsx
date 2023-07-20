@@ -40,7 +40,7 @@ export function getPoolEventType(data: any) {
   }
   return events;
 }
-interface IPoolLifecycleProps {
+export interface IPoolLifecycleProps {
   fetchData: FetchReturnType<IPoolReportList>;
   pagination: { page: number; size: number };
   onSort?: (sort?: string) => void;
@@ -118,7 +118,7 @@ const PoolLifecycle: React.FC<IPoolLifecycleProps> = ({ onSort, fetchData, pagin
       }
     },
     {
-      title: "Status",
+      title: "Exporting Report",
       key: "status",
       minWidth: "100px",
       render(data) {

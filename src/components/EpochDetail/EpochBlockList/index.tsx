@@ -77,6 +77,12 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       )
     },
     {
+      title: "Created At",
+      key: "time",
+      minWidth: "100px",
+      render: (r) => <PriceWrapper>{formatDateTimeLocal(r.time)}</PriceWrapper>
+    },
+    {
       title: "Transactions",
       key: "blkCount",
       minWidth: "100px",
@@ -102,12 +108,6 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
           <ADAicon />
         </StyledOutput>
       )
-    },
-    {
-      title: "Created At",
-      key: "time",
-      minWidth: "100px",
-      render: (r) => <PriceWrapper>{formatDateTimeLocal(r.time)}</PriceWrapper>
     }
   ];
 

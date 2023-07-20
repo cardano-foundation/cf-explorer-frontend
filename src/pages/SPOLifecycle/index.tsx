@@ -55,7 +55,7 @@ const SPOLifecycle = () => {
   const { poolId = "", mode = "timeline", tab = "registration" } = useParams<Params>();
 
   useEffect(() => {
-    document.title = `Staking Delegation Lifecycle ${poolId} | Cardano Explorer`;
+    document.title = `Staking Delegation Lifecycle ${poolId} | Iris - Cardano Blockchain Explorer`;
   }, [poolId]);
 
   const tabList = {
@@ -133,7 +133,7 @@ const SPOLifecycle = () => {
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>
-            <CustomTooltip title={!isLoggedIn ? "Please log in to use this feature" : ""}>
+            <CustomTooltip title={!isLoggedIn ? "Please sign in to use this feature" : ""}>
               <ReportButtonContainer>
                 <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
                   Compose report

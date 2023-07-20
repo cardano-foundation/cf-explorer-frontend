@@ -14,6 +14,7 @@ import Card from "src/components/commons/Card";
 import TokenAutocomplete from "src/components/TokenAutocomplete";
 import ADAicon from "src/components/commons/ADAIcon";
 import { useScreen } from "src/commons/hooks/useScreen";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import { GridContainer, GridItem, Pool, RedirectButton, StyledAAmount, BannerSuccess } from "./styles";
 
@@ -32,7 +33,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
   const [showBanner, setShowBanner] = useState<boolean>(false);
 
   const itemLeft = [
-    { title: "Transaction", value: data?.txCount },
+    { title: "Transactions", value: data?.txCount },
     {
       title: "ADA Balance",
       value: (
@@ -79,7 +80,13 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       title: "Delegated To",
       value: (
         <Pool to={details.delegation(dataStake?.pool ? dataStake?.pool?.poolId : "")}>
-          {dataStake?.pool?.poolName || getShortWallet(dataStake?.pool?.poolId || "")}
+          {dataStake?.pool?.poolName ? (
+            dataStake?.pool?.poolName
+          ) : (
+            <CustomTooltip title={dataStake?.pool?.poolId || ""} arrow>
+              <span>{getShortWallet(dataStake?.pool?.poolId || "")}</span>
+            </CustomTooltip>
+          )}
         </Pool>
       )
     }
@@ -103,7 +110,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
         <GridItem item xs={12} md={6}>
           <Box overflow="hidden" borderRadius={3} height={"100%"}>
             <CardAddress
-              title={"Wallet address"}
+              title={"Address"}
               type="left"
               address={data?.address || ""}
               item={itemLeft}
@@ -114,7 +121,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
         <GridItem item xs={12} md={6}>
           <Box overflow="hidden" borderRadius={3} height={"100%"}>
             <CardAddress
-              title={"Controlled stake key"}
+              title={"Stake Address"}
               type="right"
               address={dataStake?.stakeAddress || ""}
               item={itemRight}

@@ -17,7 +17,7 @@ import SelectedIcon from "src/components/commons/SelectedIcon";
 import Table, { Column } from "src/components/commons/Table";
 import { setOnDetailView } from "src/stores/user";
 
-import { Blocks, BlueText, Output, Status, StyledContainer } from "./styles";
+import { Blocks, BlueText, Output, Status, StyledBox, StyledContainer } from "./styles";
 
 const Epoch: React.FC = () => {
   const [epoch, setEpoch] = useState<number | null>(null);
@@ -39,12 +39,27 @@ const Epoch: React.FC = () => {
       render: (r) => (
         <Link to={details.epoch(r.no || 0)}>
           <Box textAlign="center">
-            <Box width={41} margin="auto">
-              {r.no || 0}
-            </Box>
+            <StyledBox>{r.no || 0}</StyledBox>
             <Status status={r.status.toLowerCase()}>{EPOCH_STATUS[r.status]}</Status>
           </Box>
         </Link>
+      )
+    },
+    {
+      title: "Start Timestamp",
+      key: "startTime",
+      minWidth: "100px",
+      render: (r) => <BlueText>{formatDateTimeLocal(r.startTime || "")}</BlueText>
+    },
+    {
+      title: "End Timestamp",
+      key: "endTime",
+      minWidth: "100px",
+      render: (r) => (
+        <BlueText>
+          {formatDateTimeLocal(r.endTime || "")}
+          {epoch === r.no && <SelectedIcon />}
+        </BlueText>
       )
     },
     {
@@ -55,6 +70,12 @@ const Epoch: React.FC = () => {
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
+    },
+    {
+      title: "Unique Accounts",
+      key: "account",
+      minWidth: "100px",
+      render: (r) => <Blocks>{r.account}</Blocks>
     },
     {
       title: "Transaction Count",
@@ -92,29 +113,12 @@ const Epoch: React.FC = () => {
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
-    },
-    {
-      title: "Start Timestamp",
-      key: "startTime",
-      minWidth: "100px",
-      render: (r) => <BlueText>{formatDateTimeLocal(r.startTime || "")}</BlueText>
-    },
-    {
-      title: "End Timestamp",
-      key: "endTime",
-      minWidth: "100px",
-      render: (r) => (
-        <BlueText>
-          {formatDateTimeLocal(r.endTime || "")}
-          {epoch === r.no && <SelectedIcon />}
-        </BlueText>
-      )
     }
   ];
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Epochs List | Cardano Explorer`;
+    document.title = `Epochs List | Iris - Cardano Blockchain Explorer`;
   }, []);
 
   const openDetail = (_: any, r: IDataEpoch, index: number) => {
@@ -145,7 +149,7 @@ const Epoch: React.FC = () => {
             total: fetchData.total,
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
-              mainRef.current?.scrollTo(0, 0);
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             },
             handleCloseDetailView: handleClose
           }}

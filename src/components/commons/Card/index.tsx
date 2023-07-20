@@ -35,7 +35,6 @@ export const Title = styled("h2")<{ underline: number }>`
     font-size: 24px !important;
     padding-top: 10px;
   }
-},
 `;
 
 interface CardProps extends Omit<BoxProps, "title"> {

@@ -1,6 +1,6 @@
 {
-  "name": "cardano-blockchain-explorer",
-  "version": "0.4.3",
+  "name": "iris",
+  "version": "0.4.7",
   "private": true,
   "dependencies": {
     "@cardano-foundation/cardano-connect-with-wallet": "^0.1.57",

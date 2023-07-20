@@ -41,6 +41,15 @@ declare module "@mui/material" {
     mode: ThemeType;
     isDark: boolean;
   }
+  interface BreakpointOverrides {
+    xs: true;
+    sm: true;
+    md: true;
+    lg: true;
+    xl: true;
+    laptop: true;
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface ThemeOptions extends CustomTheme {}
 }

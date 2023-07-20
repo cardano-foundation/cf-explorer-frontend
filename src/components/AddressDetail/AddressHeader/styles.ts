@@ -117,6 +117,7 @@ export const WrapHeader = styled(Box)(({ theme }) => ({
     paddingTop: "56px"
   }
 }));
+
 export const RedirectButton = styled(Box)(({ theme }) => ({
   textTransform: "capitalize",
   backgroundColor: theme.palette.common.black,
@@ -125,4 +126,13 @@ export const RedirectButton = styled(Box)(({ theme }) => ({
   ":hover": {
     backgroundColor: alpha(theme.palette.common.black, 0.8)
   }
+}));
+
+export const TimeDuration = styled("small")(({ theme }) => ({
+  color: theme.palette.grey[500],
+  display: "block",
+  textAlign: "left",
+  flex: 1,
+  paddingTop: "10px",
+  paddingBottom: theme.spacing(2)
 }));

@@ -34,7 +34,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Start time </TitleCard>
+          <TitleCard mr={1}>Start Timestamp </TitleCard>
         </Box>
       ),
       value: formatDateTimeLocal(data?.startTime || "")
@@ -43,7 +43,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>End time </TitleCard>
+          <TitleCard mr={1}>End Timestamp </TitleCard>
         </Box>
       ),
       value: formatDateTimeLocal(data?.endTime || "")
@@ -65,7 +65,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       icon: cubeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> Block</TitleCard>
+          <TitleCard mr={1}> Blocks</TitleCard>
         </Box>
       ),
       value: data?.blkCount || 0
@@ -121,7 +121,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
         listItem={listOverview}
         type="EPOCH"
         bookmarkData={data?.no?.toString()}
-        title={"Epoch detail"}
+        title={"Epoch details"}
         lastUpdated={lastUpdated}
         epoch={
           data && {

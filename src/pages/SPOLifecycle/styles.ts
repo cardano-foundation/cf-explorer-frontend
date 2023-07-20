@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)`
   padding-top: 20px;
-  padding-bottom: 40px;
   position: relative;
   min-height: calc(100vh - 170px);
 `;

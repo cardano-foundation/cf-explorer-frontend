@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
 import { LogoIcon, SearchIcon } from "src/commons/resources";
-import { setSidebar } from "src/stores/user";
+import { setOnDetailView, setSidebar } from "src/stores/user";
 import { routers } from "src/commons/routers";
 
 import TopSearch from "../Sidebar/TopSearch";
@@ -21,7 +21,8 @@ import {
   SideBarRight,
   SearchButton,
   Toggle,
-  NetworkContainer
+  NetworkContainer,
+  HeaderSearchContainer
 } from "./styles";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [
@@ -54,6 +55,11 @@ const Header: React.FC<RouteComponentProps> = (props) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleOpenSearch = () => {
+    setOpenSearch((prev) => !prev);
+    setOnDetailView(false);
+  };
+
   return (
     <HeaderContainer data-testid="header">
       <HeaderBox home={home ? 1 : 0}>
@@ -61,7 +67,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
           <Title home={home ? 1 : 0} data-testid="home-title">
             Cardano Blockchain Explorer
           </Title>
-          {!pathMatched && <HeaderSearch home={home} />}
+          <HeaderSearchContainer>{!pathMatched && <HeaderSearch home={home} />}</HeaderSearchContainer>
         </HeaderMain>
         <HeaderTop data-testid="header-top" ref={refElement}>
           <HeaderLogoLink to="/" data-testid="header-logo">
@@ -73,7 +79,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
             </NetworkContainer>
             <LoginButton />
             {history.location.pathname !== routers.STAKING_LIFECYCLE && (
-              <SearchButton onClick={() => setOpenSearch((prev) => !prev)}>
+              <SearchButton onClick={handleOpenSearch}>
                 <SearchIcon fontSize={24} />
               </SearchButton>
             )}

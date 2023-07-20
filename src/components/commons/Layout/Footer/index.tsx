@@ -46,7 +46,7 @@ const Footer: React.FC = () => {
     <StyledFooter data-testid="footer">
       <FooterContainer>
         <FooterMenu bottom={true} />
-        <Copyright>
+        <Copyright data-testid="footer-text">
           &copy; {new Date().getFullYear()} Cardano Foundation. All rights reserved. Version: {APP_VERSION}
         </Copyright>
       </FooterContainer>

@@ -1,10 +1,9 @@
-import React from "react";
 import { Box, Skeleton } from "@mui/material";
+import React from "react";
 
-import { EmptyIcon, InfoIcon } from "src/commons/resources";
-import CopyButton from "src/components/commons/CopyButton";
+import { EmptyIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import CustomIcon from "src/components/commons/CustomIcon";
+import CopyButton from "src/components/commons/CopyButton";
 
 import {
   AddressGroup,
@@ -18,7 +17,7 @@ import {
   ValueItem
 } from "./styles";
 
-interface DetailCardProps {
+export interface DetailCardProps {
   title: string;
   address: string;
   item: { title?: string; value: React.ReactNode }[];
@@ -61,7 +60,6 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
             <ItemDetail key={ii}>
               {i.title && (
                 <RowItem>
-                  <CustomIcon icon={InfoIcon} width={22} />
                   <LabelItem>{i.title}</LabelItem>
                 </RowItem>
               )}

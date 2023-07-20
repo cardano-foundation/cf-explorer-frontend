@@ -30,7 +30,7 @@ const ContractDetailContent: React.FC = () => {
         <TabTitle className={tabActive === "transaction" ? "active" : ""}>
           <Box display={"flex"} alignItems="center">
             <UtxoIcon fill={tabActive === "transaction" ? theme.palette.primary.main : theme.palette.text.hint} />
-            <Box pl={1}>Transaction</Box>
+            <Box pl={1}>Transactions</Box>
           </Box>
         </TabTitle>
       ),

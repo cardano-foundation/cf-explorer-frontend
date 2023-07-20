@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe("template spec", () => {
+describe("transactions spec", () => {
   it("should navigate to the transactions page", () => {
     cy.visit("/");
     cy.get('[data-testid="menu-button-blockchain"]').click();

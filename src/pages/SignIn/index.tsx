@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControlLabel, FormGroup, FormHelperText, IconButton, InputAdornment } from "@mui/material";
+import { Box, FormGroup, FormHelperText, IconButton, InputAdornment } from "@mui/material";
 import { useEffect, useReducer, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
@@ -68,7 +68,6 @@ export default function SignIn() {
   ];
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
   const { isLoggedIn } = useAuth();
   const [invalidInfomation, setInvalidInfomation] = useState(false);
   const [error, setError] = useState(false);
@@ -82,7 +81,7 @@ export default function SignIn() {
   });
 
   useEffect(() => {
-    document.title = "Sign In | Cardano Explorer";
+    document.title = "Sign In | Iris - Cardano Blockchain Explorer";
   }, []);
 
   const enableButton = Object.values(formData).every((value) => value.touched) && !error && !loading;
@@ -91,12 +90,8 @@ export default function SignIn() {
     setShowPassword((prevState) => !prevState);
   };
 
-  function handleRememberMeChange(event: any) {
-    setRememberMe(event.target.checked);
-  }
-
   const handleRedirectBack = () => {
-    if (history.length > 1 && !AUTHENTICATE_ROUTES.includes(history.location.pathname)) {
+    if (history.length > 1 && !AUTHENTICATE_ROUTES.includes(history.location.pathname) && history.location.pathname !== routers.HOME) {
       history.goBack();
     } else {
       history.replace(routers.HOME);
@@ -191,11 +186,6 @@ export default function SignIn() {
         password,
         type: 0
       };
-      if (rememberMe) {
-        localStorage.setItem("rememberMe", "true");
-      } else {
-        localStorage.removeItem("rememberMe");
-      }
       const response = await signIn(payload);
       const data = response.data;
 
@@ -218,9 +208,9 @@ export default function SignIn() {
   return (
     <Container>
       <WrapContent>
-        <WrapTitle data-testid="signin-title">Sign-In</WrapTitle>
+        <WrapTitle data-testid="signin-title">Sign In</WrapTitle>
         <WrapHintText>
-          Don't have an account? <WrapSignUp onClick={() => history.push(routers.SIGN_UP)}>Sign-Up</WrapSignUp>
+          Don't have an account? <WrapSignUp onClick={() => history.push(routers.SIGN_UP)}>Sign Up</WrapSignUp>
         </WrapHintText>
         <FormGroup>
           <WrapForm>
@@ -278,31 +268,11 @@ export default function SignIn() {
                 <FormHelperText error>{formData.password.error}</FormHelperText>
               ) : null}
             </WrapInput>
-            <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    sx={{
-                      opacity: "0.15",
-                      "&.Mui-checked": {
-                        opacity: "1"
-                      }
-                    }}
-                    size="medium"
-                    checked={rememberMe}
-                    onChange={handleRememberMeChange}
-                  />
-                }
-                label={
-                  <Box fontSize={"14px"} fontWeight={400} textAlign={"left"}>
-                    Remember & Auto Login
-                  </Box>
-                }
-              />
-              <ForgotPassword onClick={() => history.push(routers.FORGOT_PASSWORD)} data-testid="forgot-password-link">
+            <ForgotPassword data-testid="forgot-password-link">
+              <Box component={"span"} onClick={() => history.push(routers.FORGOT_PASSWORD)}>
                 Forgot your password?
-              </ForgotPassword>
-            </Box>
+              </Box>
+            </ForgotPassword>
             <WrapButton
               data-testid="login-btn"
               variant="contained"

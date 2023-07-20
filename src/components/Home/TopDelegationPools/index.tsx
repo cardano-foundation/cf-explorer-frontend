@@ -1,5 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { Box } from "@mui/material";
+import { get } from "lodash";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { details, routers } from "src/commons/routers";
@@ -60,9 +61,9 @@ const TopDelegationPools = () => {
       key: "Saturation",
       minWidth: "200px",
       render: (r) => (
-        <Box display="flex" alignItems="center" justifyContent={"space-between"}>
-          <Box component={"span"}>{formatPercent(r.saturation / 100) || `0%`}</Box>
-          <StyledLinearProgress variant="determinate" value={r.saturation > 100 ? 100 : r.saturation} />
+        <Box display="flex" alignItems="center" justifyContent={"end"}>
+          <Box component={"span"} mr={1}>{formatPercent(r.saturation / 100) || `0%`}</Box>
+          <StyledLinearProgress variant="determinate" value={r.saturation > 100 ? 100 : get(r, "saturation", 0)} />
         </Box>
       )
     },

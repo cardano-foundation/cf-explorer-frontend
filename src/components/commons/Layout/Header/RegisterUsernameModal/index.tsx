@@ -14,7 +14,7 @@ import { StyledInput, StyledDarkLoadingButton } from "src/components/share/style
 import StyledModal from "src/components/commons/StyledModal";
 
 import { Label, StyledTitle, TextError, TextNote, WrapButton } from "./styles";
-interface IProps {
+export interface IProps {
   nonce: NonceObject | null;
   signature: string;
   open: boolean;

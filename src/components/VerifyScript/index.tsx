@@ -6,7 +6,7 @@ import { defaultAxios } from "src/commons/utils/axios";
 import { VerifyScriptContext } from "src/pages/ContractDetail";
 import { API } from "src/commons/utils/api";
 
-import VerifySCriptModal from "./VerifyScriptModal";
+import VerifyScriptModal from "./VerifyScriptModal";
 import { StyledVerifyButton, VerifyScriptContainer } from "./styles";
 
 export interface IVerifyScript {
@@ -62,13 +62,13 @@ export const VerifyScript = ({ verified, setShowBanner }: IVerifyScript) => {
   return (
     <>
       <VerifyScriptContainer>
-        <Box>Contract Detail</Box>
+        <Box>Contract Details</Box>
         <StyledVerifyButton onClick={handleClickVerifyButton} verified={+verified}>
           {verified ? "VERIFIED SCRIPT " : "VERIFY SCRIPT"}
         </StyledVerifyButton>
       </VerifyScriptContainer>
       {openModal && (
-        <VerifySCriptModal
+        <VerifyScriptModal
           open={openModal}
           handleCloseModal={handleCloseModal}
           onSubmit={verifyScript}

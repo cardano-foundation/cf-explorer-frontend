@@ -11,7 +11,7 @@ interface IVerifyScriptProps extends IPropsModal {
   loading?: boolean;
 }
 
-const VerifySCriptModal = ({ open, handleCloseModal, onSubmit, error, loading = false }: IVerifyScriptProps) => {
+const VerifyScriptModal = ({ open, handleCloseModal, onSubmit, error, loading = false }: IVerifyScriptProps) => {
   const [value, setValue] = useState<string>("");
 
   const handleChange = (e: any) => {
@@ -32,4 +32,4 @@ const VerifySCriptModal = ({ open, handleCloseModal, onSubmit, error, loading = 
   );
 };
 
-export default VerifySCriptModal;
+export default VerifyScriptModal;
