@@ -23,6 +23,8 @@ const perPageSelect = "//div[@id='menu-']/div[@class]/ul/li";
 
 const listBtnNextAndPre = "(//li//button)"
 const txbNumberPage = "(//li//input)"
+const rangeOfPage = "//li//input/following-sibling::span"
+const telegram = "//footer//ul//a[@title='Telegram']"
 
 export default class EpochPanel extends WebApi{
     constructor(){
@@ -215,10 +217,43 @@ export default class EpochPanel extends WebApi{
     }
     
     checkButtonNextIsEnable(){
-        cy.xpath(txbNumberPage).invoke('attr','value').then(value=>{
+        cy.xpath(txbNumberPage).invoke('attr', 'value').then((value:any)=>{    
+            const numberPage1 = parseInt(value)       
             cy.clickElement(listBtnNextAndPre+'[3]')
-            expect(txbNumberOfPage).shou
+            cy.xpath(txbNumberPage).invoke('attr', 'value').then((numberPage2:any)=>{            
+                expect(numberPage1+1).to.equal(parseInt(numberPage2));
+            })
         })
+        return this;
+    }
+
+    checkInputTxbPageTo1FromMax(value:string){
+        cy.xpath(btnPerPage).getTextContent().then(text=>{
+            const perPage = parseInt(text)
+            const numberPage = parseInt(value)
+            cy.xpath(txbNumberOfPage).clear().type(""+numberPage+"").type('{enter}')
+            cy.xpath(rangeOfPage).getTextContent().then(text=>{
+                const subString = text.substring(6, 9);    
+                expect(perPage*numberPage).to.equal(parseInt(subString))   
+            })
+        })
+        return this;
+    }
+    
+    checkInputNumberPageLessThan1(value:string){
+        cy.xpath(txbNumberOfPage).invoke('attr', 'value').then((text:any)=>{
+            const pageCurrent = parseInt(text)
+            const numberPage = parseInt(value)
+            cy.xpath(txbNumberOfPage).clear().type(""+numberPage+"").type('{enter}')
+            cy.xpath(txbNumberOfPage).invoke('attr', 'value').then((text:any)=>{
+                expect(pageCurrent).to.equal(parseInt(text))   
+            })
+        })
+        return this;
+    }
+
+    checkInputNumberPageMoreThanMax(){
+        cy.clickElement(listBtnNextAndPre+"[4]")
 
         return this;
     }
