@@ -460,7 +460,7 @@ export const OptionsSearch = ({
                 };
               }
               return;
-            case "pools":
+            case "pool":
               return {
                 suggestText: "Search for a Pool by",
                 cb: () => history.push(details.delegation(value)),
