@@ -11,7 +11,6 @@ describe("RateWithIcon component", () => {
 
   it("should compoent render with negative", () => {
     render(<RateWithIcon value={100} multiple={-10} />);
-    screen.logTestingPlaygroundURL();
     expect(screen.getByRole("img", { name: /rate/i })).toBeInTheDocument();
     expect(screen.getByText(/-1000,00 %/i)).toBeInTheDocument();
   });

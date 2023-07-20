@@ -40,7 +40,7 @@ export function getPoolEventType(data: any) {
   }
   return events;
 }
-interface IPoolLifecycleProps {
+export interface IPoolLifecycleProps {
   fetchData: FetchReturnType<IPoolReportList>;
   pagination: { page: number; size: number };
   onSort?: (sort?: string) => void;
@@ -78,7 +78,7 @@ const PoolLifecycle: React.FC<IPoolLifecycleProps> = ({ onSort, fetchData, pagin
         return formatDateTimeLocal(data.createdAt);
       },
       sort({ sortValue }) {
-        onSort?.(`id,${sortValue}`);
+        onSort?.(sortValue ? `id,${sortValue}` : "");
       }
     },
     {

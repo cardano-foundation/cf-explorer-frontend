@@ -46,7 +46,7 @@ const BackToHome = styled(Link)`
 
 const NotFound = () => {
   useEffect(() => {
-    document.title = `Page Not Found | Cardano Explorer`;
+    document.title = `Page Not Found | Iris - Cardano Blockchain Explorer`;
   }, []);
 
   return (

@@ -1,5 +1,5 @@
 {
-  "name": "cardano-blockchain-explorer",
+  "name": "iris",
   "version": "0.4.7",
   "private": true,
   "dependencies": {
@@ -27,8 +27,6 @@
     "axios-mock-adapter": "^1.21.5",
     "bignumber.js": "^9.1.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "highcharts": "^10.3.1",
-    "highcharts-react-official": "^3.1.0",
     "json-bigint": "^1.0.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",

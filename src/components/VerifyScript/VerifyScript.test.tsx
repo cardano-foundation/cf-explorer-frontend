@@ -31,7 +31,7 @@ describe("VerifyScript", () => {
 
   it("renders the VerifyScript component", () => {
     const { getByText } = render(<VerifyScript {...defaultProps} />);
-    expect(getByText("Contract Detail")).toBeInTheDocument();
+    expect(getByText("Contract Details")).toBeInTheDocument();
     expect(getByText("VERIFY SCRIPT")).toBeInTheDocument();
   });
 
