@@ -2,14 +2,14 @@ import { Box } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { useScreen } from "src/commons/hooks/useScreen";
 import receiveImg from "src/commons/resources/images/receiveImg.svg";
 import sendImg from "src/commons/resources/images/sendImg.svg";
 import { details } from "src/commons/routers";
 import { formatADAFull, getShortHash, getShortWallet } from "src/commons/utils/helper";
-import { useScreen } from "src/commons/hooks/useScreen";
 import ADAicon from "src/components/commons/ADAIcon";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import CopyButton from "src/components/commons/CopyButton";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 import DropdownTokens, { TokenLink } from "src/components/commons/DropdownTokens";
 
 import { Header, Img, Item, ItemContent, ItemFooter, WrapInfo, WrapUTXOs } from "./styles";
@@ -17,13 +17,14 @@ import { Header, Img, Item, ItemContent, ItemFooter, WrapInfo, WrapUTXOs } from 
 interface Props {
   data: Transaction["utxOs"] | null;
   fee: number;
+  isFailed?: boolean;
 }
 
-const UTXO: React.FC<Props> = ({ data, fee }) => {
+const UTXO: React.FC<Props> = ({ data, fee, isFailed }) => {
   return (
     <div>
-      <Card type="down" items={data?.inputs} />
-      <Card type="up" items={data?.outputs} fee={fee} />
+      <Card type="down" items={data?.inputs} isFailed={isFailed} />
+      <Card type="up" items={data?.outputs} fee={fee} isFailed={isFailed} />
     </div>
   );
 };
@@ -32,11 +33,13 @@ export default UTXO;
 
 const Card = ({
   type,
-  items
+  items,
+  isFailed
 }: {
   type: "up" | "down";
   items?: Required<Transaction>["utxOs"]["inputs"];
   fee?: number;
+  isFailed?: boolean;
 }) => {
   const totalADA =
     items &&
@@ -205,7 +208,7 @@ const Card = ({
         <Box fontWeight={"bold"}>Total {type === "down" ? "Input" : "Output"}</Box>
         <div>
           <Box fontWeight={"bold"} component="span" pr={1}>
-            {type === "down" ? `-${formatADAFull(totalADA)}` : `${formatADAFull(totalADA)}`}
+            {isFailed ? 0 : type === "down" ? `-${formatADAFull(totalADA)}` : `${formatADAFull(totalADA)}`}
           </Box>
           <ADAicon />
         </div>
