@@ -12,10 +12,34 @@ const blockIdValue = "//small[contains(text(),'Block Id')]//following-sibling::d
 const createdAtValue = "//div[contains(text(),'Created At ')]//..//..//following-sibling::div";
 const blockValue = "//div[text()=' Block']/../../following-sibling::div";
 const cellColumn = "//tbody//tr//td[count(//th[contains(text(),'{0}')]//preceding-sibling::th) + boolean(//th[contains(text(),'{0}')])]";
+const cellColumnWithLink = "//tbody//tr//td[count(//th[contains(text(),'{0}')]//preceding-sibling::th) + boolean(//th[contains(text(),'{0}')])]//a";
 const cellColumnBlockAmount = "//tbody//tr//td[count(//th[contains(text(),'Block')]//preceding-sibling::th) + boolean(//th[contains(text(),'Block')])]/div/div/a[contains(@href,'block')]";
+const cellColumnEpochAmount = "//tbody//tr//td[count(//th[contains(text(),'Block')]//preceding-sibling::th) + boolean(//th[contains(text(),'Block')])]/div/div/a[contains(@href,'epoch')]";
+const cellColumnAddressInput = "//table//tbody//tr//td[count(//th[contains(text(),'Addresses')]//preceding-sibling::th) + boolean(//th[contains(text(),'Addresses')])]//div[contains(text(),'Input:')]//following-sibling::div/a[contains(@href,'address')]";
+const transactionDetailTitlePage = "//div[contains(text(),'Transaction details')]";
+const txHashDetailTxt = "//div[contains(@class,'MuiTooltip-tooltip')]";
+const addressDetailTxt = "//div[contains(@class,'MuiTooltip-tooltip')]";
+const addressDetailTitle = "//div[contains(text(),'Address Details')]";
+const numberBlockPerPage = '//span[contains(text(),"Per page")]//preceding-sibling::div/div';
+const numberPerPageList = "//ul[@role='listbox']//li";
+const bookMarkDetailBtn = "//div[contains(text(),'Block details')]//parent::div//button";
+const bookMarkDetailColor = "//div[contains(text(),'Block details')]//parent::div//button//*[local-name()='svg' ]";
 export default class BlockDetailPage extends WebApi {
   goToHomePage() {
     this.openAnyUrl("/");
+    return this;
+  }
+  clickToBookMarkBtn(){
+    cy.xpath(bookMarkDetailColor).getAttributeValue("fill").then(value =>{
+      cy.log(value);
+      if(value == "none"){
+        cy.clickElement(bookMarkDetailBtn);
+      }else{
+      cy.clickElement(bookMarkDetailBtn);
+      cy.clickElement(bookMarkDetailBtn);
+      }
+    })
+
     return this;
   }
   goToBlockPage() {
@@ -26,9 +50,52 @@ export default class BlockDetailPage extends WebApi {
     cy.verifyElementDisplay(viewDetailTxt);
     return this;
   }
+  verifyAddressDetailPageDisplay() {
+    this.isElementVisibleByXpath(addressDetailTitle);
+    return this;
+  }
 
   clickToCloseBtn() {
     cy.clickElement(closeBtn);
+    return this;
+  }
+  clickRamdomlyToEpoch() {
+    cy.clickElementRandomly(cellColumnEpochAmount);
+    return this;
+  }
+  clickRamdomlyToTxHash() {
+    cy.clickElementRandomly(cellColumn, BlockDetailConstants.COLUMN_NAME[0]);
+    return this;
+  }
+  clickRandomlyToTransaction() {
+    cy.clickElementRandomly(cellColumnAddressInput);
+    return this;
+  }
+  clickToPerPage() {
+    cy.clickElement(numberBlockPerPage);
+    return this;
+  }
+  goBackToPreviousPage() {
+    cy.go('back');
+    return this;
+  }
+  async getTextElementBlockValue(){
+    return await this.getTextElement(blockValue);
+  }
+  hoverToTxHash() {
+    cy.hoverToElementRandomly(cellColumnWithLink, BlockDetailConstants.COLUMN_NAME[0]);
+    return this;
+  }
+  hoverToAddress() {
+    cy.hoverToElementRandomly(cellColumnAddressInput);
+    return this;
+  }
+  verifytxHashShowFull(){
+    cy.verifyElementDisplay(txHashDetailTxt);
+    return this;
+  }
+  verifyTransactionShowFull(){
+    cy.verifyElementDisplay(addressDetailTxt);
     return this;
   }
   verifyBlockintilizingScreen() {
@@ -70,6 +137,10 @@ export default class BlockDetailPage extends WebApi {
     cy.verifyAllElementDisplay(cellColumn,BlockDetailConstants.COLUMN_NAME[4]);
     return this;
   }
+  verifyTransactionDetailPageDisplay() {
+    cy.verifyElementDisplay(transactionDetailTitlePage);
+    return this;
+  }
   async verifyBlockDisplayCorrectly() {
     const block = await this.getTextElement(blockValue);
     const expected: any[] = []
@@ -82,6 +153,17 @@ export default class BlockDetailPage extends WebApi {
       });
     })
     
+    return this;
+  }
+  verifyEnoughChoiceInPerPage() {
+    const expected: any[] = []
+    cy.getAllTextContent(numberPerPageList, (txt: string) => {
+      expected.push(parseInt(txt));
+
+    }).then(() =>{
+      expect(expected).to.deep.equal(BlockConstants.PER_PAGE);
+    })
+
     return this;
   }
 }
