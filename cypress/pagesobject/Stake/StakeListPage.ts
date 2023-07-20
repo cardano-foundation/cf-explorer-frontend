@@ -4,14 +4,25 @@ import { log } from "console";
 const format = require('string-format');
 import * as util from 'util';
 import { text } from "stream/consumers";
-
-
+import { each } from "cypress/types/bluebird";
 
 const listItemFollowColumn = "(//table//tbody//tr//td[count(//th[contains(text(),'{0}')]//preceding-sibling::th) + boolean(//th[contains(text(),'{0}')])])";
 const listButtonNextAndPrevious = "(//ul[contains(@class,'MuiPagination')]//button)"
 const txbNumberOfPage = "//ul[contains(@class,'MuiPagination')]//input"
 const txbNumberPageCurrentOfLastPage = "//ul[contains(@class,'MuiPagination')]//input/following-sibling::span"
+const btnBack = "//small[text()='Back']"
+const labelTransactionDetial = "//div[text()='Transaction details']"
+const labelBlockDetail = "//div[text()='Block details']"
+const labelEpochDetail = "//div[text()='Epoch details']"
+const tabListTitle = "//div[@role='tablist']//div[text()='Delegation History']/ancestor::button"
+const listBoxNumberPage = "ul[role='listbox'] li"
+const listRecoredInPage = "//table//tr[@class]"
+const labelFullWhenHoverOn = "//div[@role='tooltip']"
+const btnPerPage = "//span[text()='Per page']/preceding-sibling::div/div";
+const perPageSelect = "//div[@id='menu-']/div[@class]/ul/li";
 
+const listBtnNextAndPre = "(//li//button)"
+const txbNumberPage = "(//li//input)"
 
 export default class EpochPanel extends WebApi{
     constructor(){
@@ -21,6 +32,11 @@ export default class EpochPanel extends WebApi{
     goToStakeRegistration() {  
       this.openAnyUrl("/stake-keys/registration")
       return this;
+    }
+
+    clickButtonBack(){
+        cy.clickElement(btnBack)
+        return this;
     }
 
     verifyHyperLinkIsEnable(){
@@ -122,8 +138,88 @@ export default class EpochPanel extends WebApi{
         return this;
     }
 
-    checkActionClickOnTrxHash(){
-
+    checkActionClickOnTxHash(){
+        cy.clickElement(format(listItemFollowColumn, "Tx Hash")+"[1]/a")
+        cy.verifyElementDisplay(labelTransactionDetial)
         return this;
     } 
+
+    checkHoverOnTxHash(){
+        cy.hoverToElementRandomly(format(listItemFollowColumn, "Tx Hash"))
+        cy.verifyElementDisplay(labelFullWhenHoverOn)
+        return this;
+    }
+
+    checkActionClickOnBlock(){
+        cy.clickElementRandomly(format(listItemFollowColumn, "Block")+"/a")
+        cy.verifyElementDisplay(labelBlockDetail)
+        return this;
+    }
+
+    checkActionClickOnEpoch(){
+        cy.clickElementRandomly(format(listItemFollowColumn, "Block")+"/div/a")
+        cy.verifyElementDisplay(labelEpochDetail)
+        return this;
+    }
+
+    checkHoverOnBlock(){
+        cy.hoverToElementRandomly(format(listItemFollowColumn, "Block")+"/div/a")
+        return this;
+    }
+
+    checkHoverOnStakeKey(){
+        cy.hoverToElementRandomly(format(listItemFollowColumn, "Stake Address")+"/a")
+        cy.verifyElementDisplay(labelFullWhenHoverOn)
+        return this;
+    }
+
+    checkActionClickOnStakeKey(){
+        cy.clickElementRandomly(format(listItemFollowColumn, "Stake Address")+"/a")
+        cy.xpath(format(tabListTitle, "Delegation History")).should('have.attr', 'aria-selected', 'true')
+        return this;
+    }
+
+
+    clickOnPerPageDropdown() {
+        cy.xpath(btnPerPage).scrollIntoView().click();
+        return this;
+    }
+
+    changePerPageValue(value:string) {
+        switch (value){
+          case '10':
+            cy.xpath(perPageSelect).eq(0).click();
+            break;
+          case '20':
+            cy.xpath(perPageSelect).eq(1).click();
+            break;
+          case '50':
+            cy.xpath(perPageSelect).eq(2).click();
+            break;
+          case '100':
+            cy.xpath(perPageSelect).eq(3).click();
+            break;
+        }
+        return this;
+    }
+
+    checkActionNumberItemPullDown(listNumberPage : string[]){
+        cy.compareArrayText(listBoxNumberPage,listNumberPage)
+
+        return this;
+    }  
+    
+    verifyNumberOfBlockDisplayRow(expectedCount:string){
+        cy.xpath(listRecoredInPage).should('have.length.lte', parseInt(expectedCount));
+        return this;
+    }
+    
+    checkButtonNextIsEnable(){
+        cy.xpath(txbNumberPage).invoke('attr','value').then(value=>{
+            cy.clickElement(listBtnNextAndPre+'[3]')
+            expect(txbNumberOfPage).shou
+        })
+
+        return this;
+    }
 }
