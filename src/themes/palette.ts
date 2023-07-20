@@ -9,6 +9,7 @@ export const createGradient = (deg: number, startColor: string, endColor: string
 const GREEN = {
   100: "#53A57B",
   200: "#146635",
+  100_10: "#D6E2FF",
   200_10: alpha("#146635", 0.1),
   200_15: alpha("#146635", 0.15),
   200_30: alpha("#146635", 0.3),

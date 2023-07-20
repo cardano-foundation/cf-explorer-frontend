@@ -15,7 +15,7 @@ import SelectedIcon from "src/components/commons/SelectedIcon";
 import Table, { Column } from "src/components/commons/Table";
 import { setOnDetailView } from "src/stores/user";
 
-import { Blocks, BlueText, EpochNumber, Output, Status, StyledBox, StyledContainer } from "./styles";
+import { Blocks, BlueText, EpochNumber, Output, StatusTableRow, StyledBox, StyledContainer } from "./styles";
 
 const Epoch: React.FC = () => {
   const [epoch, setEpoch] = useState<number | null>(null);
@@ -37,7 +37,7 @@ const Epoch: React.FC = () => {
       render: (r) => (
         <EpochNumber>
           <StyledBox>{r.no || 0}</StyledBox>
-          <Status status={r.status as keyof typeof EPOCH_STATUS}>{EPOCH_STATUS[r.status]}</Status>
+          <StatusTableRow status={r.status as keyof typeof EPOCH_STATUS}>{EPOCH_STATUS[r.status]}</StatusTableRow>
         </EpochNumber>
       )
     },
