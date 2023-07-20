@@ -76,6 +76,8 @@ const TabularOverview: React.FC = () => {
   const { tickerName, poolName, poolId, iconUrl } = pool ?? {};
   const delegatingToValue =
     tickerName || poolName ? `${tickerName && tickerName + " -"}  ${poolName && poolName}` : getShortHash(poolId || "");
+  const delegatingTovalueTooltip =
+    tickerName || poolName ? `${tickerName && tickerName + " -"}  ${poolName && poolName}` : poolId;
   const [open, setOpen] = useState(false);
   return (
     <Grid container spacing={2}>
@@ -117,7 +119,7 @@ const TabularOverview: React.FC = () => {
             pool?.poolId ? (
               <StyledBoxDelegating to={details.delegation(pool?.poolId)}>
                 <CardValueDelegating>
-                  <CustomTooltip title={delegatingToValue}>
+                  <CustomTooltip title={delegatingTovalueTooltip}>
                     <BoxStyled>{delegatingToValue}</BoxStyled>
                   </CustomTooltip>
                 </CardValueDelegating>
