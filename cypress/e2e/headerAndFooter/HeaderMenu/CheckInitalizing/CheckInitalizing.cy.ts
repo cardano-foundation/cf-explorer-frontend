@@ -8,7 +8,7 @@ beforeEach(() => {
 it.only("Check initializing successfully", () => {
   dashboardPage.clickNetworkDropDownList()
                .verifyNetworkSelection(['Mainnet','Preprod','Preview'])
-               .clickNetworkDropDownListRandom()
+               .clickNetworkDropDownListOption()
                .clickAllFiltersDropDownList()
                .verifyAllFilterSelection(['All Filters','Epochs','Blocks','Transactions','Tokens','Addresses','Pools','Policy Id'])
                .verifySearchBoxDisplay()
