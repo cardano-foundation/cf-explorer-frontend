@@ -168,7 +168,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
           <TabList
             onChange={handleChange}
             TabIndicatorProps={{
-              sx: { background: (theme) => theme.palette.green[700], color: (theme) => theme.palette.green[700] }
+              sx: { background: (theme) => theme.palette.green[200], color: (theme) => theme.palette.green[200] }
             }}
             variant="scrollable"
             scrollButtons={false}
@@ -180,7 +180,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
                 style={{ padding: "12px 0px", marginRight: 40 }}
                 label={
                   <Box display={"flex"} alignItems="center">
-                    <Icon fill={key === tabActive ? theme.palette.green[700] : theme.palette.grey[500]} />
+                    <Icon fill={key === tabActive ? theme.palette.green[200] : theme.palette.grey[300]} />
                     <TitleTab pl={1} active={+(key === tabActive)}>
                       {label}
                     </TitleTab>

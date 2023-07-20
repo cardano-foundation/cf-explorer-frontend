@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
-import StackingFilter, { FilterParams } from "src/components/StackingFilter";
+import CustomFilter, { FilterParams } from "src/components/commons/CustomFilter";
 import OverviewStaking from "src/components/commons/OverviewStaking";
 import { EmptyRecord, FooterTable } from "src/components/commons/Table";
 import { details } from "src/commons/routers";
@@ -14,35 +14,26 @@ import { details } from "src/commons/routers";
 import { GridBox, WrapFilterDescription, StyledList, StyledContainer } from "./styles";
 import { DescriptionText } from "../../../DelegatorLifecycle/styles";
 
-export const PoollUpdatesList = ({
-  onSelect,
-  setShowBackButton
-}: {
+declare interface Props {
   onSelect: (pool: PoolUpdateItem | null) => void;
   setShowBackButton: (status: boolean) => void;
-}) => {
+}
+
+const RecentPoolUpdates = ({ onSelect, setShowBackButton }: Props) => {
   const { poolId = "", txHash = "" } = useParams<{ poolId: string; txHash?: string }>();
   const history = useHistory();
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
-
-  const [params, setParams] = useState<FilterParams>({
-    fromDate: undefined,
-    sort: undefined,
-    toDate: undefined,
-    txHash: undefined
-  });
-  const { data, total, loading, initialized, error } = useFetchList<PoolUpdateItem>(
+  const [params, setParams] = useState<FilterParams>({});
+  const { data, total, loading, initialized, error, query } = useFetchList<PoolUpdateItem>(
     API.SPO_LIFECYCLE.POOL_UPDATE(poolId),
-    { ...pageInfo, ...params }
+    { ...pageInfo, ...params, txHash: params.search }
   );
 
   useEffect(() => {
-    if (initialized) {
-      setShowBackButton?.(data.length > 1);
-    }
+    if (initialized) setShowBackButton(data.length > 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialized]);
+  }, [initialized, setShowBackButton]);
 
   useEffect(() => {
     const currentItem = data.find((item) => item.txHash === txHash);
@@ -54,11 +45,13 @@ export const PoollUpdatesList = ({
     history.push(details.spo(poolId, "timeline", "pool-updates", poolUpdated.txHash));
   };
 
+  const isOneItemOnly = data.length === 1 && Object.keys(query).length === 2;
+
   useUpdateEffect(() => {
-    if (data?.length === 1 && !params?.txHash && !params?.fromDate && !params?.toDate) {
-      handleSelect(data[0]);
-    }
-  }, [JSON.stringify(data)]);
+    if (isOneItemOnly) history.push(details.spo(poolId, "timeline", "pool-updates", data[0].txHash));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   if (txHash) return null;
 
@@ -70,17 +63,13 @@ export const PoollUpdatesList = ({
           <WrapFilterDescription>
             Showing {total} {total > 1 ? "results" : "result"}
           </WrapFilterDescription>
-          <StackingFilter
+          <CustomFilter
             filterValue={params}
-            onFilterValueChange={(params) =>
-              setParams({
-                fromDate: undefined,
-                sort: undefined,
-                toDate: undefined,
-                txHash: undefined,
-                ...params
-              })
-            }
+            onChange={(params) => {
+              setParams(params);
+              setPageInfo((pre) => ({ ...pre, page: 0 }));
+            }}
+            searchLabel="Search transaction"
           />
         </Box>
       </StyledList>
@@ -117,4 +106,4 @@ export const PoollUpdatesList = ({
     </StyledContainer>
   );
 };
-export default PoollUpdatesList;
+export default RecentPoolUpdates;

@@ -1,4 +1,4 @@
-import { Box, Checkbox, alpha, Typography, styled, Pagination } from "@mui/material";
+import { Box, Checkbox, Typography, styled, Pagination } from "@mui/material";
 
 import CustomSelect from "../CustomSelect";
 
@@ -38,12 +38,11 @@ export const THeader = styled("th")`
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-text-small);
-  border-bottom: 1px solid ${(props) => props.theme.palette.border.main};
   padding: 20px;
   color: ${(props) => props.theme.palette.grey[300]};
   position: sticky;
   top: 0;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.palette.common.white};
   z-index: 2;
 `;
 
@@ -68,7 +67,6 @@ export const TCol = styled("td")<{
   hiddenBorder?: boolean;
   selected?: number;
 }>`
-  border-bottom: ${({ hiddenBorder, theme }) => (hiddenBorder ? "none" : `1px solid ${theme.palette.grey[200]}`)};
   width: ${({ width }) => (typeof width === "number" ? `${width}px` : width || "max-content")};
   min-width: ${({ minWidth }) => (typeof minWidth === "number" ? `${minWidth}px` : minWidth || "80px")};
   max-width: ${({ maxWidth }) => (typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth || "unset")};
@@ -97,7 +95,7 @@ export const TFooter = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "baseline",
   flexWrap: "wrap",
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   [theme.breakpoints.down("sm")]: {
     justifyContent: "flex-start",
     flexDirection: "column"
@@ -145,7 +143,6 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number
   padding: ${theme.spacing(1)};
   padding-top: 0;
   border-radius: ${theme.spacing(1.5)};
-  border: 1px solid ${alpha(theme.palette.common.black, 0.1)};
   ${loading ? "overflow-y: hidden;" : ""}
   ${maxHeight ? "max-height:" + (typeof maxHeight === "number" ? maxHeight + "px" : maxHeight) : ""};
 
@@ -189,6 +186,7 @@ export const InputNumber = styled("input")<{ length: number }>(({ theme, length 
   textAlign: "center",
   fontWeight: "bold",
   border: `1px solid ${theme.palette.border.main}`,
+  color: theme.palette.grey[400],
   "::-webkit-inner-spin-button": {
     appearance: "none",
     margin: 0
@@ -196,11 +194,12 @@ export const InputNumber = styled("input")<{ length: number }>(({ theme, length 
   background: "transparent"
 }));
 
-export const SelectMui = styled(CustomSelect)(() => ({
+export const SelectMui = styled(CustomSelect)(({ theme }) => ({
   borderRadius: "4px",
   fontSize: 14,
   minWidth: 50,
-  border: "1px solid #E3E5E9",
+  border: `1px solid ${theme.palette.grey[200]}`,
+  color: theme.palette.grey[400],
   "& > div": {
     padding: "2.45px 14px"
   },
@@ -229,7 +228,7 @@ export const TableTitle = styled(Typography)`
   font-weight: 700;
   font-size: 32px;
   line-height: 37px;
-  color: #000;
+  color: ${(props) => props.theme.palette.common.black};
   flex: 1;
   text-align: left;
   padding-top: 20px;
