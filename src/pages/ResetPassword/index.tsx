@@ -94,7 +94,7 @@ export default function ResetPassword() {
         if (!value) {
           error = "Please enter your Confirm Password";
         } else if (value !== formData.password.value) {
-          error = "Confirm Password does not match";
+          error = "Password does not match";
         }
         break;
       default:

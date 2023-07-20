@@ -209,3 +209,5 @@ export const getHostname = (url: string): string => {
 export const toFixedBigNumber = (value: string | number, dp = 0, rm = BigNumber.ROUND_DOWN): number => {
   return +new BigNumber(value).toFixed(dp, rm);
 };
+
+export const isValidEmail = (email: string) => regexEmail.test(email);
