@@ -163,7 +163,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
         <Box width="100%">
           {isHideButtonBack === true ? null : (
             <BackButton onClick={history.goBack}>
-              <HiArrowLongLeft />
+              <HiArrowLongLeft color={theme.palette.secondary.light} />
               <BackText>Back</BackText>
             </BackButton>
           )}

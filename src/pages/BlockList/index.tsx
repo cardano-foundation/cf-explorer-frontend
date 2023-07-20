@@ -60,7 +60,7 @@ const BlockList = () => {
       render: (r) => (
         <>
           <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
-          <Box component={"span"} color={({ palette }) => palette.grey[300]}>
+          <Box component={"span"} color={({ palette }) => palette.secondary.light}>
             {r.epochSlotNo}
           </Box>
         </>

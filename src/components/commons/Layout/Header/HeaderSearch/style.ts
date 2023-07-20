@@ -58,7 +58,7 @@ export const StyledSelect = styled(Select)<{ home: number }>`
 `;
 export const SelectOption = styled(MenuItem)<{ home: number }>`
   font-size: ${(props) => (props.home ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
   font-weight: var(--font-weight-normal);
 `;
 

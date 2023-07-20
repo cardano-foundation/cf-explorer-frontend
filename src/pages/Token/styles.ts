@@ -18,7 +18,7 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
 }));
 
 export const AssetName = styled(Link)`
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
   font-family: var(--font-family-text) !important;
 `;
 

@@ -40,7 +40,7 @@ export const BackButton = styled(Box)`
 `;
 
 export const BackText = styled("small")`
-  color: ${(props) => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.secondary.light};
   font-weight: var(--font-weight-bold);
 `;
 
@@ -66,7 +66,7 @@ export const HeaderContainer = styled(Box)`
 export const HeaderTitle = styled(Box)`
   overflow-wrap: anywhere;
   font-weight: var(--font-weight-bold);
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.main};
   font-size: 2.25rem;
   margin: 0.5rem 0;
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -85,33 +85,33 @@ export const HeaderStatus = styled("small")<{ status?: TransactionStatus | IData
   color: ${({ status, theme }) => {
     switch (status) {
       case TRANSACTION_STATUS.FAILED:
-        return theme.palette.error.main;
+        return theme.palette.error[700];
       case TRANSACTION_STATUS.SUCCESS:
-        return theme.palette.success.main;
+        return theme.palette.success[800];
       case TRANSACTION_STATUS.PENDDING:
       case "IN_PROGRESS":
       case "SYNCING":
-        return theme.palette.warning.main;
+        return theme.palette.warning[800];
       case "FINISHED":
-        return theme.palette.info.main;
+        return theme.palette.primary.main;
       default:
-        return theme.palette.success.main;
+        return theme.palette.success[800];
     }
   }};
   background-color: ${({ status, theme }) => {
     switch (status) {
       case TRANSACTION_STATUS.FAILED:
-        return theme.palette.error.light;
+        return theme.palette.error[100];
       case TRANSACTION_STATUS.SUCCESS:
-        return theme.palette.success.light;
+        return theme.palette.success[100];
       case TRANSACTION_STATUS.PENDDING:
       case "IN_PROGRESS":
       case "SYNCING":
-        return theme.palette.warning.light;
+        return theme.palette.warning[100];
       case "FINISHED":
-        return theme.palette.info.light;
+        return theme.palette.primary[100];
       default:
-        return theme.palette.success.light;
+        return theme.palette.success[100];
     }
   }};
   font-weight: var(--font-weight-bold);
@@ -164,7 +164,7 @@ export const SlotLeaderValue = styled("span")`
 
 export const SlotLeaderTitle = styled("small")`
   font-family: var(--font-family-text);
-  color: ${({ theme }) => theme.palette.grey[300]};
+  color: ${({ theme }) => theme.palette.secondary.light};
 `;
 
 export const SlotLeaderCopy = styled(CopyButton)`
@@ -186,14 +186,14 @@ export const DetailsInfo = styled(Grid)<{ length: number }>`
 
 export const EpochNumber = styled(Link)<{ is_epoch: number }>(({ theme }) => ({
   fontWeight: "bold",
-  color: `${theme.palette.grey[400]} !important`,
+  color: `${theme.palette.secondary.main} !important`,
   margin: 0,
   fontSize: "1.5rem"
 }));
 
 export const EpochText = styled("small")`
   opacity: 0.8;
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
 `;
 
 export const Icon = styled("img")`
@@ -303,8 +303,8 @@ export const ProgressPercent = styled("h4")`
 export const CardItem = styled(Grid)<CardItemProps>(({ theme, length, wide, itemOnRow }) => ({
   width: "max-content",
   padding: length > 6 ? "20px 25px" : "0px 15px",
-  borderLeft: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
-  borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+  borderLeft: `1px solid ${theme.palette.primary[200]}`,
+  borderBottom: `1px solid ${theme.palette.primary[200]}`,
   ":first-of-type": {
     borderLeft: "none"
   },
@@ -394,7 +394,7 @@ export const CardItem = styled(Grid)<CardItemProps>(({ theme, length, wide, item
 }));
 
 export const ValueCard = styled(Box)(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   fontSize: "1rem",
   fontWeight: "bold",
   wordBreak: "break-word"
@@ -442,7 +442,7 @@ export const StyledMenuItem = styled(MenuItem)(() => ({
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   display: "block",
   marginBottom: 10
 }));

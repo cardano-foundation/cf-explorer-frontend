@@ -22,7 +22,7 @@ export const StyledImage = styled("img")`
   margin-left: 10px;
 `;
 export const TitleCard = styled(Box)(({ theme }) => ({
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   fontSize: "0.875rem"
 }));
 
@@ -62,7 +62,7 @@ export const WrapConfirmation = styled(Box)(({ theme }) => ({
 }));
 
 export const Subtext = styled("span")`
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
   font-weight: normal;
   font-weight: 400;
 `;

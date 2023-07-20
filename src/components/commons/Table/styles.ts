@@ -40,7 +40,7 @@ export const THeader = styled("th")`
   font-size: var(--font-size-text-small);
   border-bottom: 1px solid ${(props) => props.theme.palette.border.main};
   padding: 20px;
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.main};
   position: sticky;
   top: 0;
   background-color: ${(props) => props.theme.palette.common.white};
@@ -76,10 +76,10 @@ export const TCol = styled("td")<{
   overflow: hidden;
   text-align: left;
   font-family: var(--font-family-text);
-  color: ${(props) => props.theme.palette.text.primary};
+  color: ${(props) => props.theme.palette.secondary.light};
   padding: 24px 20px;
   background: ${(props) =>
-    props.selected ? props.theme.palette.background.neutral : props.theme.palette.common.white};
+    props.selected ? props.theme.palette.background.neutral : props.theme.palette.secondary[0]};
 `;
 
 export const TBody = styled("tbody")`

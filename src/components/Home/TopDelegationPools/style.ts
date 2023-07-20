@@ -1,4 +1,4 @@
-import { alpha, Box, LinearProgress, styled } from "@mui/material";
+import { Box, LinearProgress, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import { BoxRaised } from "src/components/commons/BoxRaised";
@@ -26,7 +26,7 @@ export const Title = styled("h3")`
   text-align: left;
   margin: 0px;
   font-size: 1.25rem;
-  color: ${({ theme }) => theme.palette.grey[400]};
+  color: ${({ theme }) => theme.palette.secondary.main};
   &::after {
     position: absolute;
     top: 100%;
@@ -34,7 +34,7 @@ export const Title = styled("h3")`
     content: "";
     width: 50px;
     height: 4px;
-    background: ${({ theme }) => theme.palette.primary.main};
+    background: ${({ theme }) => theme.palette.primary[200]};
   }
 `;
 
@@ -47,7 +47,7 @@ export const Actions = styled(Box)(() => ({
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   display: "block",
   [theme.breakpoints.down("sm")]: {
     display: "none"
@@ -78,7 +78,7 @@ export const DelegateTable = styled(Table)`
         background-color: transparent !important;
         border-bottom-width: 2px !important;
         font-size: var(--font-size-text-small) !important;
-        color: ${({ theme }) => theme.palette.text.hint} !important;
+        color: ${({ theme }) => theme.palette.secondary.main} !important;
         font-weight: var(--font-weight-bold) !important;
 
         &::before {
@@ -105,7 +105,7 @@ export const DelegateTable = styled(Table)`
 
 export const PoolName = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
 `;
 
 export const ProgressContainer = styled("div")`
@@ -141,17 +141,18 @@ export const StyledLinearProgress = styled(LinearProgress)<{ saturation: number 
   width: 150px;
   height: 8px;
   border-radius: 8px;
-  background: ${(props) => alpha(props.theme.palette.grey[400], 0.1)};
+  background: ${(props) => props.theme.palette.primary[200]};
   margin-left: 8px;
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 8px;
-    background: ${({ theme, saturation }) => (saturation > 100 ? theme.palette.red[100] : theme.palette.green[200])};
+    background: ${({ theme, saturation }) =>
+      saturation > 100 ? theme.palette.error[700] : theme.palette.primary.main};
   }
 `;
 
 export const SubHeader = styled(Box)`
   font-weight: 400;
   font-size: 14px;
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
   margin-bottom: 6px;
 `;
