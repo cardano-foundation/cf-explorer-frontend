@@ -383,7 +383,7 @@ const Table: React.FC<TableProps> = ({
   };
 
   useEffect(() => {
-    if (wrapperRef.current) {
+    if (wrapperRef.current && !loading) {
       wrapperRef.current.scrollTop = 0;
     }
   }, [loading]);
@@ -410,7 +410,7 @@ const Table: React.FC<TableProps> = ({
         maxHeight={maxHeight}
         minHeight={(!data || data.length === 0) && !loading ? 360 : loading ? 400 : 150}
         height={heightTable}
-        className={data && data.length !== 0 ? "table-wrapper" : ""}
+        className={data && data.length !== 0 ? "table-wrapper" : "hide-scroll"}
         loading={loading ? 1 : 0}
       >
         <TableFullWidth ref={tableRef}>
@@ -606,16 +606,16 @@ const PaginationCustom = ({
 };
 
 const StartPageIcon = styled(StartPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400]
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[300]
 }));
 const EndPageIcon = styled(EndPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400]
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[300]
 }));
 const NextPageIcon = styled(NextPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400]
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[300]
 }));
 const PrevPageIcon = styled(PrevPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400]
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[300]
 }));
 
 function useSelection<T>({ onSelectionChange }: { onSelectionChange?: (items: T[]) => void }) {

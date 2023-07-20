@@ -19,7 +19,8 @@ export const InfoText = styled(Box)(({ theme }) => ({
   alignItems: "center",
   marginLeft: theme.spacing(1),
   fontWeight: 600,
-  fontSize: "14px"
+  fontSize: "14px",
+  color: theme.palette.grey[400]
 }));
 
 export const StepInfo = styled(Box)(({ theme }) => ({
@@ -113,7 +114,8 @@ export const StyledCertificateShape = styled(CertificateShape)(({ theme }) => ({
   width: 220,
   height: 220,
   margin: "auto",
-  border: `2px solid ${theme.palette.border.block}`,
+  color: theme.palette.grey[400],
+  border: `2px solid ${theme.palette.blue[100]}`,
   [theme.breakpoints.down("sm")]: {
     width: 140
   }

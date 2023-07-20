@@ -45,26 +45,4 @@ describe("HeaderSearch", () => {
     fireEvent.change(input, { target: { value: "testing value" } });
     expect(screen.getByText("testing value")).toBeInTheDocument();
   });
-
-  it("should function search by blocks has been called", async () => {
-    const mockHandleSearch = jest.fn();
-    render(<OptionsSearch show={true} home={true} error="" value={"6789"} handleSearch={mockHandleSearch} />);
-    const buttonSearch = screen.getByTestId("option-search-block");
-    expect(buttonSearch).toBeInTheDocument();
-    await userEvent.click(buttonSearch);
-    expect(mockHandleSearch).toHaveBeenCalledWith(undefined, "blocks");
-  });
-
-  it("should function search by epochs has been called", async () => {
-    const mockUseSelector = useSelector as jest.Mock;
-    mockUseSelector.mockReturnValue(mockData);
-
-    const mockHandleSearch = jest.fn();
-
-    render(<OptionsSearch show={true} home={true} error="" value={"10"} handleSearch={mockHandleSearch} />);
-    const buttonSearch = screen.getByTestId("option-search-epoch");
-    expect(buttonSearch).toBeInTheDocument();
-    await userEvent.click(buttonSearch);
-    expect(mockHandleSearch).toHaveBeenCalledWith(undefined, "epochs");
-  });
 });

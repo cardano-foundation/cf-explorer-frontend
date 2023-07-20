@@ -1,11 +1,10 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
 import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
-import { FilterParams } from "src/components/StackingFilter";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { DeregistrationCertificateModal } from "src/components/commons/DeregistrationCertificateModal";
 
@@ -19,12 +18,6 @@ const Deregistration = () => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [selected, setSelected] = useState<DeregistrationItem | null>(null);
   const [openModal, setOpenModal] = useState(false);
-  const [params, setParams] = useState<FilterParams>({
-    fromDate: undefined,
-    sort: undefined,
-    toDate: undefined,
-    txHash: undefined
-  });
   const handleSelect = (deregistration: DeregistrationItem | null) => {
     setSelected(deregistration);
   };
@@ -35,12 +28,7 @@ const Deregistration = () => {
   return (
     <Box>
       <DeregistrationCertificateModal open={openModal} handleCloseModal={handleToggleModal} stake={stakeId} />
-      <RecentDeregistrations
-        onSelect={handleSelect}
-        params={params}
-        setParams={setParams}
-        setShowBackButton={setShowBackButton}
-      />
+      <RecentDeregistrations onSelect={handleSelect} setShowBackButton={setShowBackButton} />
       {selected && (
         <DeregistrationTimeline selected={selected} toggleModal={handleToggleModal} showBackButton={showBackButton} />
       )}
@@ -58,6 +46,8 @@ type DeregistrationProps = {
 export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: DeregistrationProps) => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const history = useHistory();
+  const theme = useTheme();
+
   const handleBack = () => {
     history.push(details.staking(stakeId, "timeline", "deregistration"));
   };
@@ -75,7 +65,7 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
 
         <InfoGroup>
           <Info>
-            <AddressIcon fill="#438F68" />
+            <AddressIcon fill={theme.palette.green[200]} />
             <CustomTooltip title={selected.txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(selected.txHash)}>{getShortHash(selected.txHash || "")}</StyledLink>
@@ -84,11 +74,11 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
             <StyledCopyButton text={selected.txHash} />
           </Info>
           <Info>
-            <ADAGreen />
+            <ADAGreen fill={theme.palette.green[200]} />
             <InfoText>{formatADAFull(Math.abs(selected.deposit) - selected.fee || 0)}</InfoText>
           </Info>
           <Info>
-            <TimeIcon />
+            <TimeIcon fill={theme.palette.green[200]} />
             <InfoText>{formatDateTimeLocal(selected.time)}</InfoText>
           </Info>
         </InfoGroup>
