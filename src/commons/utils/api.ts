@@ -1,3 +1,5 @@
+import { stringify } from "qs";
+
 export const API = {
   ADDRESS: {
     ANALYTICS: "addresses/analytics",
@@ -114,7 +116,7 @@ export const API = {
     SCRIPT: (address: string) => `contracts/${address}/script`
   },
   STORIES: "news",
-  SEARCH_ALL: (q: string) => `/search?query=${q}`
+  SEARCH_ALL: (query: string) => `/search?${stringify({ query })}`
 };
 
 export const USER_API = {
