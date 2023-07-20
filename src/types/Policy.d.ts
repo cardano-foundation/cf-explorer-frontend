@@ -33,6 +33,13 @@ interface PolicyHolder {
   fingerprint: string;
   displayName: string;
   quantity: number;
+  metadata: {
+    url: string;
+    ticker: string;
+    decimals: number;
+    logo: string;
+    description: string;
+  };
 }
 interface PolicyScript {
   type: string;

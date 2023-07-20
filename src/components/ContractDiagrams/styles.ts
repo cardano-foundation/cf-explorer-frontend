@@ -1,4 +1,4 @@
-import { styled, Box, Typography } from "@mui/material";
+import { styled, Box, Typography, IconButton } from "@mui/material";
 
 export const ContractDiagramsContainer = styled(Box)<{ isTxPageView?: boolean }>`
   background: ${(props) => (props.isTxPageView ? "inherit" : props.theme.palette.background.paper)};
@@ -12,12 +12,15 @@ export const ContractHeader = styled(Box)`
 `;
 
 export const ContractText = styled(Typography)`
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: self-end;
 `;
 
 export const ContractAddress = styled(Box)`
-  color: ${(props) => props.theme.palette.blue[400]};
+  color: ${(props) => props.theme.palette.blue[100]};
   font-size: 14px;
   font-weight: 400;
   padding-top: 10px;
@@ -31,7 +34,7 @@ export const TabLabel = styled(Typography)`
   color: ${(props) => props.theme.palette.common.white};
   padding: 7px 11px;
   border-radius: 5px;
-  background: ${(props) => props.theme.palette.common.black};
+  background: ${(props) => props.theme.palette.grey[400]};
   position: absolute;
   left: 20px;
   top: -25px;
@@ -42,16 +45,23 @@ export const CardDiagram = styled(Box)`
   margin-top: 50px;
 `;
 
-export const TabElement = styled(Box)`
+export const TabElement = styled(Box)<{ isContractPage?: number }>`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 10px 50px;
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    gap: 10px 20px;
+  }
   word-break: break-word;
   padding: 18px 20px;
   border-radius: 5px;
   text-align: left;
-  background: ${(props) => props.theme.palette.grey[80]};
-  color: ${(props) => props.theme.palette.common.black};
+  background: ${({ isContractPage, theme }) => (isContractPage ? theme.palette.common.white : theme.palette.grey[500])};
+  color: ${(props) => props.theme.palette.grey[400]};
+  max-height: 150px;
+  overflow: scroll;
+  font-size: 14px;
 `;
 
 export const TabItem = styled(Box)`
@@ -63,11 +73,16 @@ export const TitleText = styled(Typography)`
   display: inline;
   color: ${(props) => props.theme.palette.grey[300]};
   margin-right: 10px;
-  min-width: 50px;
+  min-width: 36px;
+  font-size: 14px;
 `;
 
-export const DatumnElement = styled(Box)`
-  background: ${(props) => props.theme.palette.grey[80]};
+export const DataTitle = styled(Typography)`
+  font-size: 14px;
+`;
+
+export const DatumnElement = styled(Box)<{ isContractPage?: number }>`
+  background: ${({ isContractPage, theme }) => (isContractPage ? theme.palette.common.white : theme.palette.grey[500])};
   color: ${(props) => props.theme.palette.common.black};
   word-break: break-word;
   text-align: left;
@@ -77,9 +92,10 @@ export const DatumnElement = styled(Box)`
   font-weight: 400;
 `;
 
-export const DatumnItem = styled(Box)`
+export const DatumnItem = styled(Box)<{ isTxHash?: boolean }>`
   display: flex;
-  gap: 50px;
+  flex-direction: ${(props) => (props.isTxHash ? `column` : `row`)};
+  gap: ${(props) => (props.isTxHash ? `10px` : `50px`)};
   ${({ theme }) => theme.breakpoints.down("sm")} {
     gap: 20px;
   }
@@ -96,4 +112,9 @@ export const DatumnText = styled(TitleText)`
 export const IconContainer = styled(Box)`
   display: flex;
   margin: 20px 50px;
+`;
+
+export const CloseButton = styled(IconButton)`
+  color: ${(props) => props.theme.palette.text.hint};
+  padding: 5.5px;
 `;
