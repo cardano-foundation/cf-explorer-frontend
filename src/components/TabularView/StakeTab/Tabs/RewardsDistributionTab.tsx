@@ -11,7 +11,7 @@ import useFetchList from "../../../../commons/hooks/useFetchList";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";
 import { formatADAFull, formatDateTimeLocal, getPageInfo } from "../../../../commons/utils/helper";
-import StackingFilter, { FilterParams } from "../../../StackingFilter";
+import CustomFilter, { FilterParams } from "../../../commons/CustomFilter";
 import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import Table, { Column } from "../../../commons/Table";
 import { AmountADARow, StyledLink, WrapWalletLabel, WrapperDelegationTab } from "../styles";
@@ -23,12 +23,7 @@ const RewardsDistributionTab = () => {
   const { search } = useLocation();
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
-  const [params, setParams] = useState<FilterParams>({
-    fromDate: undefined,
-    sort: undefined,
-    toDate: undefined,
-    txHash: undefined
-  });
+  const [params, setParams] = useState<FilterParams>({});
 
   const columns: Column<RewardDistributionItem>[] = [
     {
@@ -37,12 +32,12 @@ const RewardsDistributionTab = () => {
       minWidth: "120px",
       render: (r) => (
         <AmountADARow>
-          +{formatADAFull(r.amount)} <ADAicon color="#333333" />
+          +{formatADAFull(r.amount)} <ADAicon />
         </AmountADARow>
       )
     },
     {
-      title: "Timestamp",
+      title: "Created At",
       key: "id",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
@@ -76,17 +71,13 @@ const RewardsDistributionTab = () => {
           <WrapFilterDescription>
             Showing {Math.min(total, pageInfo.size)} {Math.min(total, pageInfo.size) > 1 ? "results" : "result"}
           </WrapFilterDescription>
-          <StackingFilter
-            fullFilter={false}
+          <CustomFilter
+            excludes={["search"]}
+            searchLabel=""
+            sortKey="id"
             filterValue={params}
-            onFilterValueChange={(params) => {
-              setParams(() => ({
-                fromDate: undefined,
-                toDate: undefined,
-                txHash: undefined,
-                ...params,
-                sort: params?.sort ? params?.sort.replace("time", "id") : undefined
-              }));
+            onChange={(params) => {
+              setParams(params);
               setPageInfo((pre) => ({ ...pre, page: 0 }));
             }}
           />
