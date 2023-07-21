@@ -21,6 +21,7 @@ export const Item = styled(Card)`
   ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 15px;
   }
+  cursor: pointer;
 `;
 
 export const EpochProgress = styled("h3")(({ theme }) => ({
