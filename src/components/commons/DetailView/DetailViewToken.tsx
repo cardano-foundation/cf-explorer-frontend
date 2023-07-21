@@ -231,8 +231,12 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                       <CustomTooltip title={data.displayName}>
                         <div>{getShortWallet(data.displayName)}</div>
                       </CustomTooltip>
-                    ) : (
+                    ) : data.displayName ? (
                       data.displayName
+                    ) : (
+                      <CustomTooltip title={data.fingerprint || ""}>
+                        <div>{getShortWallet(data.fingerprint || "")}</div>
+                      </CustomTooltip>
                     )}
                   </TokenDetailName>
                   {data.metadata?.logo ? (
