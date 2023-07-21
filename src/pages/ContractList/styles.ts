@@ -2,6 +2,7 @@ import { styled, Container } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)`
+  max-width: 95vw !important;
   margin-top: 18px;
 
   @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
@@ -17,8 +18,8 @@ export const StyledLink = styled(Link)`
 `;
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   display: "block",
-  textAlign: "right",
+  textAlign: "left",
   marginTop: "0.5rem"
 }));

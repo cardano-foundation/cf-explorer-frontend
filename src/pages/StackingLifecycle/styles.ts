@@ -78,7 +78,7 @@ export const Status = styled("span")<{ status: string }>`
 export const TextHeadline = styled("span")`
   font-weight: 700;
   font-size: 36px;
-  color: #000000;
+  color: ${(props) => props.theme.palette.grey[400]};
   margin-bottom: 14px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 24px;
@@ -126,4 +126,7 @@ export const WrapReportName = styled(Box)`
 `;
 export const StyledTabLabel = styled(TabLabel)`
   font-size: 18px;
+`;
+export const StyledContainer = styled(Container)`
+  max-width: 95vw !important;
 `;

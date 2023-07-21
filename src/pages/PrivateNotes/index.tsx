@@ -1,23 +1,24 @@
-import { useEffect, useState } from "react";
 import { Box, Dialog, DialogActions, DialogContentText } from "@mui/material";
-import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 
-import { ReactComponent as QuestionConfirm } from "src/commons/resources/icons/questionConfirm.svg";
-import { ReactComponent as Plus } from "src/commons/resources/icons/plus.svg";
-import { formatDateTime, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import useFetchList from "src/commons/hooks/useFetchList";
-import AddPrivateNoteModal from "src/components/Account/AddPrivateNoteModal";
-import { Column } from "src/types/table";
-import CustomTooltip from "src/components/commons/CustomTooltip";
-import { ReactComponent as Expand } from "src/commons/resources/icons/expand.svg";
-import { ReactComponent as Warning } from "src/commons/resources/icons/warning.svg";
-import { removePrivateNote } from "src/commons/utils/userRequest";
-import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
-import { details } from "src/commons/routers";
-import { ButtonClose } from "src/components/ScriptModal/styles";
-import { CloseIcon } from "src/commons/resources";
-import useToast from "src/commons/hooks/useToast";
 import { useScreen } from "src/commons/hooks/useScreen";
+import useToast from "src/commons/hooks/useToast";
+import { CloseIcon } from "src/commons/resources";
+import { ReactComponent as Expand } from "src/commons/resources/icons/expand.svg";
+import { ReactComponent as Plus } from "src/commons/resources/icons/plus.svg";
+import { ReactComponent as QuestionConfirm } from "src/commons/resources/icons/questionConfirm.svg";
+import { ReactComponent as Warning } from "src/commons/resources/icons/warning.svg";
+import { details, routers } from "src/commons/routers";
+import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
+import { formatDateTime, getPageInfo, getShortHash } from "src/commons/utils/helper";
+import { removePrivateNote } from "src/commons/utils/userRequest";
+import AddPrivateNoteModal from "src/components/Account/AddPrivateNoteModal";
+import { ButtonClose } from "src/components/ScriptModal/styles";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { Column } from "src/types/table";
+import useAuth from "src/commons/hooks/useAuth";
 
 import {
   ActionButton,
@@ -93,9 +94,14 @@ const RemoveButton: React.FC<TAction> = ({ onClick }) => {
 };
 
 const PrivateNotes = () => {
+  const history = useHistory();
+  const { isLoggedIn } = useAuth();
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `My Notes | Iris - Cardano Blockchain Explorer`;
+    if (!isLoggedIn) {
+      history.replace(routers.HOME);
+    }
   }, []);
 
   const [page, setPage] = useState(0);
@@ -123,11 +129,6 @@ const PrivateNotes = () => {
     setLoadingDelete(true);
     try {
       await removePrivateNote(note.id);
-      toast.success(
-        <Box>
-          Delete transaction private note <Box>{getShortHash(note.txHash || "")} successfully</Box>
-        </Box>
-      );
       setSelected(null);
       refresh();
     } catch (error) {
