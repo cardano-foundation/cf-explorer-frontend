@@ -30,7 +30,7 @@ const FooterContainer = styled(Container)`
 `;
 
 const Copyright = styled("small")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   font-family: var(--font-family-title);
   ::first-letter {
     font-size: 1em;

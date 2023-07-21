@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
-import StackingFilter, { FilterParams } from "../../../../StackingFilter";
+import CustomFilter, { FilterParams } from "../../../../commons/CustomFilter";
 import OverviewStaking from "../../../../commons/OverviewStaking";
 import { EmptyRecord, FooterTable } from "../../../../commons/Table";
 import { GridBox, WrapFilterDescription, StyledList, StyledContainer } from "./styles";
@@ -16,27 +16,26 @@ import { details } from "../../../../../commons/routers";
 
 interface Props {
   onSelect: (registration: SPORegistration | null) => void;
-  params?: FilterParams;
-  setParams?: (params: FilterParams) => void;
-  setShowBackButton?: (status: boolean) => void;
+  setShowBackButton: (status: boolean) => void;
 }
 
-const RecentRegistrations: React.FC<Props> = ({ onSelect, params, setParams, setShowBackButton }) => {
+const RecentRegistrations: React.FC<Props> = ({ onSelect, setShowBackButton }) => {
   const { poolId = "", txHash = "" } = useParams<{ poolId: string; txHash?: string }>();
   const history = useHistory();
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
+  const [params, setParams] = useState<FilterParams>({});
 
-  const { data, total, loading, initialized, error } = useFetchList<SPORegistration>(
+  const { data, total, loading, initialized, error, query } = useFetchList<SPORegistration>(
     poolId ? API.SPO_LIFECYCLE.SPO_REGISTRATION(poolId) : "",
-    { ...pageInfo, ...params }
+    { ...pageInfo, ...params, txHash: params.search }
   );
 
   useEffect(() => {
-    if (initialized) setShowBackButton?.(data.length > 1);
+    if (initialized) setShowBackButton(data.length > 1);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialized]);
+  }, [initialized, setShowBackButton]);
 
   useEffect(() => {
     const currentItem = data.find((item) => item.txHash === txHash);
@@ -49,9 +48,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, params, setParams, set
     history.push(details.spo(poolId, "timeline", "registration", registration.txHash));
   };
 
-  const { txHash: txHashParms, fromDate, toDate } = params || {};
-  const isNoFilter = txHashParms === undefined && fromDate === undefined && toDate === undefined;
-  const isOneItemOnly = data.length === 1 && isNoFilter;
+  const isOneItemOnly = data.length === 1 && Object.keys(query).length === 2;
 
   useUpdateEffect(() => {
     if (isOneItemOnly) history.replace(details.spo(poolId, "timeline", "registration", data[0].txHash));
@@ -69,19 +66,13 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, params, setParams, set
           <WrapFilterDescription>
             Showing {data.length} {data.length > 1 ? "results" : "result"}
           </WrapFilterDescription>
-          <StackingFilter
+          <CustomFilter
             filterValue={params}
-            onFilterValueChange={(params) => {
-              setParams &&
-                setParams({
-                  fromDate: undefined,
-                  sort: undefined,
-                  toDate: undefined,
-                  txHash: undefined,
-                  ...params
-                });
+            onChange={(params) => {
+              setParams(params);
               setPageInfo((pre) => ({ ...pre, page: 0 }));
             }}
+            searchLabel="Search transaction"
           />
         </Box>
       </StyledList>

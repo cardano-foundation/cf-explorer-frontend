@@ -17,7 +17,7 @@ export const TokenLink = styled(Link)(({ theme }) => ({
   borderRadius: "2px",
   padding: "2px 10px",
   backgroundColor: alpha(theme.palette.grey[300], 0.2),
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   fontSize: "var(--font-size-text)",
   lineHeight: "1.5rem",
   fontWeight: "bold",
@@ -86,7 +86,7 @@ export const BoxHeaderTop = styled(Box)(({ theme }) => ({
   marginBottom: "2px"
 }));
 export const BoxHeaderBottom = styled(Box)(({ theme }) => ({
-  color: theme.palette.grey[500],
+  color: theme.palette.grey[300],
   display: "flex",
   justifyContent: "space-between"
 }));
@@ -96,7 +96,7 @@ export const ItemFooter = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "center",
   padding: "12px 25px",
-  background: theme.palette.green[800_10],
+  background: theme.palette.green[20010],
   [theme.breakpoints.down("sm")]: {
     padding: "12px 15px"
   }
