@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.4.8](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.7...v0.4.8) (2023-07-20)
+
+
+### Features
+
+* dynamic supported networks from env file ([4491e38](https://github.com/cardano-foundation/cf-explorer-frontend/commit/4491e38cd4643b26641b402b4a5fbf82d94bb9f3))
+
+
+### Bug Fixes
+
+* 1470 remove search icon in tablet ([b200e0c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b200e0c5f7e4042de3350ad26ef97e677fee8ad4))
+* change text no script  found ([6ace812](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6ace812fdfec1eaca7528e4a9444f10f3e188e43))
+* MET-1249 update chart ([faed408](https://github.com/cardano-foundation/cf-explorer-frontend/commit/faed40821dcbaf1bb852076c995392090aa2c195))
+* MET-1465-All-tables-and-Epoch-table-UX-fix ([4eda6dc](https://github.com/cardano-foundation/cf-explorer-frontend/commit/4eda6dc1b20e542a37e855aeb918926a40cc414d))
+* MET-1465-All-tables-and-Epoch-table-UX-fix ([22658bb](https://github.com/cardano-foundation/cf-explorer-frontend/commit/22658bbc4017575ed286d4c8812dc43943b62c1c))
+* MET-615-account-overview-hide-scroll-when-empty-data ([671bb34](https://github.com/cardano-foundation/cf-explorer-frontend/commit/671bb347738b2fc03ef3b97da38a29c2e187c8e0))
+* MET-615-Epoch-list-bug-ui ([138b271](https://github.com/cardano-foundation/cf-explorer-frontend/commit/138b271a6af863a5a680d34b435b337be613413e))
+* MET-615-pool-list-can-not-sort-at-field-fixed-cost ([626d78f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/626d78ff105d08de7703245d12e2e0a70967b803))
+* MET-615-stake-address-detail-remove-space-at-bottom-page ([e08ea83](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e08ea836dc549062a9c7e2ca8912609b268b9a7d))
+* remove unvar use ([c8774e1](https://github.com/cardano-foundation/cf-explorer-frontend/commit/c8774e11ab2a511fafdd14375cc45dd8d7ff4800))
+
 ## [0.4.7](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.6...v0.4.7) (2023-07-18)
 
 
