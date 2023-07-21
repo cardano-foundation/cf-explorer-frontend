@@ -32,6 +32,7 @@ declare namespace Cypress {
     setInputValue(inputValue: string, args?: any): Chainable<JQuery<HTMLElement>>;
     compareArrayText(selector: string, expectedText:string[]): Chainable<JQuery<HTMLElement>>;
     compareArrayAttribute(selector: string,attName:string, expectedText:string[]): Chainable<JQuery<HTMLElement>>;
+    verifyFieldIsConsecutive(selector: any,...value: any): Chainable<JQuery<HTMLElement>>;
   }
 }
 
