@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { Container } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { HiArrowLongLeft } from "react-icons/hi2";
 
@@ -7,6 +6,7 @@ import ReportGeneratedDetailTabs from "src/components/ReportGeneratedStakingDeta
 import { BackButton, BackText } from "src/components/commons/DetailHeader/styles";
 
 import { TopHeader } from "../ReportGeneratedPoolDetail/styles";
+import { StyledContainer } from "./styles";
 
 const ReportGeneratedStakingDetail = () => {
   const history = useHistory();
@@ -16,7 +16,7 @@ const ReportGeneratedStakingDetail = () => {
   }, []);
 
   return (
-    <Container>
+    <StyledContainer>
       <TopHeader>
         <BackButton onClick={history.goBack}>
           <HiArrowLongLeft />
@@ -24,7 +24,7 @@ const ReportGeneratedStakingDetail = () => {
         </BackButton>
       </TopHeader>
       <ReportGeneratedDetailTabs />
-    </Container>
+    </StyledContainer>
   );
 };
 
