@@ -57,7 +57,7 @@ export const StatusTableRow = styled(Status)<{ status: string }>(({ theme, statu
       ? theme.palette.green[800]
       : status === "FINISHED"
       ? theme.palette.blue[800]
-      : theme.palette.yellow[700]
+      : theme.palette.yellow[100]
 }));
 
 export const Blocks = styled(BlueText)``;
