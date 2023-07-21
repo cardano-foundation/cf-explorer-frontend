@@ -20,8 +20,9 @@ export const Button = styled("button")<{ active: number }>`
   border-radius: 5px;
   padding: 6px 0;
   font-weight: var(--font-weight-bold);
-  color: ${({ theme, active }) => (active ? theme.palette.primary.contrastText : theme.palette.grey[300])};
-  background-color: ${({ theme, active }) => (active ? theme.palette.primary.main : theme.palette.background.neutral)};
+  color: ${({ theme, active }) => (active ? theme.palette.primary[100] : theme.palette.secondary.main)};
+  border: 1px solid ${({ theme }) => theme.palette.primary[200]};
+  background-color: ${({ theme, active }) => (active ? theme.palette.primary.main : theme.palette.primary[100])};
   cursor: pointer;
   font-family: var(--font-family-title);
   font-size: 16px;
@@ -77,10 +78,10 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   paddingTop: theme.spacing(2),
   width: "80%",
   margin: "0 auto",
-  borderBottom: `1px solid ${alpha(theme.palette.grey[400], 0.1)}`,
+  borderBottom: `1px solid ${theme.palette.primary[200]}`,
   overflow: "hidden",
   [theme.breakpoints.down("lg")]: {
-    borderRight: `1px solid ${alpha(theme.palette.grey[400], 0.1)}`,
+    borderRight: `1px solid ${theme.palette.primary[200]}`,
     height: "100%",
     borderBottom: "none",
     width: "100%",
@@ -89,7 +90,7 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.down("sm")]: {
     width: "100%",
-    borderRight: `1px solid ${alpha(theme.palette.grey[400], 0.1)}`,
+    borderRight: `1px solid ${theme.palette.primary[200]}`,
     minHeight: "0",
 
     "& > div": {
@@ -100,7 +101,7 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
       justifyContent: "space-between",
       padding: "0 10px",
       margin: "25px 0",
-      borderRight: `1px solid ${alpha(theme.palette.common.white, 0.06)}`
+      borderRight: `1px solid ${theme.palette.primary[200]}`
     }
   }
 }));
@@ -154,7 +155,7 @@ export const AnalyticsTitle = styled("h2")(({ theme }) => ({
 }));
 export const Title = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   padding: `${theme.spacing(2)} 0`
 }));
 
@@ -162,7 +163,7 @@ export const Value = styled("div")(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "2rem",
   overflowWrap: "anywhere",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   [theme.breakpoints.down("md")]: {
     padding: "0 10px"
   },

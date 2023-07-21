@@ -56,7 +56,7 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
 }));
 
 export const Title = styled(Box)(({ theme }) => ({
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   fontWeight: "bold",
   padding: `${theme.spacing(2)} 0`,
   [theme.breakpoints.down("sm")]: {
@@ -68,7 +68,7 @@ export const ValueInfo = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "2rem",
   margin: "0 auto",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   overflowWrap: "anywhere",
   padding: "0 18px",
   [theme.breakpoints.down("md")]: {
@@ -156,12 +156,12 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
 }));
 
 export const TooltipBody = styled(Box)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.common.white, 0.8),
+  backgroundColor: alpha(theme.palette.secondary[0], 0.8),
   borderRadius: 2,
   padding: 8,
   border: "1px solid #146635",
   fontSize: 12,
-  color: theme.palette.grey[500]
+  color: theme.palette.secondary.light
 }));
 
 export const TooltipLabel = styled(Box)(() => ({

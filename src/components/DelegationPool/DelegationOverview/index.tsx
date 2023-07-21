@@ -67,7 +67,7 @@ const OverViews: React.FC = () => {
             <StyledCard.Content>
               <StyledCard.Title>Epoch</StyledCard.Title>
               <StyledCard.Link to={details.epoch(data?.epochNo)}>{data?.epochNo}</StyledCard.Link>
-              <Box component="span" sx={{ color: (theme) => theme.palette.grey[300], textAlign: "left" }}>
+              <Box component="span" sx={{ color: (theme) => theme.palette.secondary.light, textAlign: "left" }}>
                 End in:{" "}
                 <StyledCard.Comment>
                   {`${days} day${days > 1 ? "s" : ""} `}
@@ -92,7 +92,7 @@ const OverViews: React.FC = () => {
                   <StyledCard.Title>Slot</StyledCard.Title>
                   <StyledCard.Value>
                     {(currentEpoch?.slot || 0) % MAX_SLOT_EPOCH}
-                    <Box component="span" sx={{ color: (theme) => theme.palette.text.hint, fontWeight: "400" }}>
+                    <Box component="span" sx={{ color: (theme) => theme.palette.secondary.light, fontWeight: "400" }}>
                       / {MAX_SLOT_EPOCH}
                     </Box>
                   </StyledCard.Value>

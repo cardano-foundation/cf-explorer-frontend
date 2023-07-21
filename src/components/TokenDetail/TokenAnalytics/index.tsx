@@ -102,8 +102,8 @@ const AddressAnalytics: FC = () => {
                   >
                     <defs>
                       <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor={theme.palette.green[300]} stopOpacity={0.2} />
-                        <stop offset="100%" stopColor={theme.palette.green[300]} stopOpacity={0} />
+                        <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.5} />
+                        <stop offset="100%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
                       </linearGradient>
                     </defs>
                     <XAxis
@@ -112,15 +112,16 @@ const AddressAnalytics: FC = () => {
                       tickLine={false}
                       tickMargin={5}
                       dx={-15}
+                      color={theme.palette.secondary.main}
                     />
-                    <YAxis tickFormatter={formatPriceValue} tickLine={false} />
+                    <YAxis tickFormatter={formatPriceValue} tickLine={false} color={theme.palette.secondary.main} />
                     <Tooltip content={renderTooltip} cursor={false} />
                     <CartesianGrid vertical={false} strokeWidth={0.33} />
                     <Area
                       stackId="1"
                       type="monotone"
                       dataKey="value"
-                      stroke={theme.palette.green[300]}
+                      stroke={theme.palette.secondary.light}
                       strokeWidth={4}
                       fill="url(#colorUv)"
                       dot={{ r: 2 }}

@@ -266,7 +266,7 @@ export const DetailValue = styled("small")`
 `;
 export const DelegatedDetail = styled("small")`
   display: block;
-  color: ${(props) => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.primary.main};
   overflow: hidden;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text) !important;
@@ -497,9 +497,9 @@ export const StakeKeyStatus = styled("small")<{ status: StakeStatus }>`
   background-color: ${(props) => {
     switch (props.status) {
       case STAKE_KEY_STATUS.ACTIVE:
-        return props.theme.palette.success.light;
+        return props.theme.palette.success[100];
       default:
-        return props.theme.palette.warning.light;
+        return props.theme.palette.warning[100];
     }
   }};
   padding: 3px 10px;

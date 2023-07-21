@@ -49,7 +49,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
                 <CopyButton text={data?.policyId || ""} />
               </Box>
               <Box>
-                <Box component={"span"} color={({ palette }) => palette.grey[300]}>
+                <Box component={"span"} color={({ palette }) => palette.secondary.light}>
                   Total Token:
                 </Box>
                 <Box

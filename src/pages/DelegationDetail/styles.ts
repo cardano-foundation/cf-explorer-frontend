@@ -5,7 +5,7 @@ export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => (
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? theme.palette.green[200] : theme.palette.text.hint
+  color: active ? theme.palette.primary.main : theme.palette.secondary[600]
 }));
 
 export const DelegationData = styled(Box)`

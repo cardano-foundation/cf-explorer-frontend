@@ -90,7 +90,7 @@ const Stake = () => {
           <StyledLink to={details.block(r.block)}>{r.block}</StyledLink>
           <div style={{ display: "flex", marginTop: "6px" }}>
             <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>/
-            <Box component={"span"} color={({ palette }) => palette.grey[300]}>
+            <Box component={"span"} color={({ palette }) => palette.secondary.light}>
               {r.epochSlotNo}
             </Box>
           </div>

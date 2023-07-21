@@ -104,7 +104,7 @@ const TableHeader = <T extends ColumnType>({
     if (key === columnKey)
       switch (sort) {
         case "DESC":
-          return <SortTableDown />;
+          return <SortTableDown fill="#fff" />;
         case "ASC":
           return <SortTableUp />;
         default: {

@@ -256,7 +256,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 <Box
                   component={"span"}
                   mt={1}
-                  color={({ palette }) => palette.grey[300]}
+                  color={({ palette }) => palette.secondary.light}
                   style={{ fontSize: "14px", fontWeight: "400" }}
                 >
                   Saturation

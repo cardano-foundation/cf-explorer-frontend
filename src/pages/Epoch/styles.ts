@@ -48,15 +48,20 @@ export const Status = styled("span")<{ status: keyof typeof EPOCH_STATUS }>(({ t
 }));
 
 export const StatusTableRow = styled(Status)<{ status: string }>(({ theme, status }) => ({
-  backgroundColor: theme.palette.green[300_10],
+  backgroundColor:
+    status === "REWARDING"
+      ? theme.palette.success[100]
+      : status === "FINISHED"
+      ? theme.palette.primary[100]
+      : theme.palette.warning[100],
   padding: "5px 10px",
   borderRadius: "3px",
   color:
     status === "REWARDING"
-      ? theme.palette.green[200]
+      ? theme.palette.success[800]
       : status === "FINISHED"
-      ? theme.palette.blue[100]
-      : theme.palette.yellow[100]
+      ? theme.palette.primary.main
+      : theme.palette.warning[800]
 }));
 
 export const Blocks = styled(BlueText)``;
@@ -68,11 +73,6 @@ export const Output = styled(Blocks)`
 `;
 
 export const StyledBox = styled(Box)`
-<<<<<<< HEAD
-  width: 41px;
-  margin: auto;
-  color: ${(props) => props.theme.palette.primary.main} !important;
-=======
   width: "max-content";
   margin-right: 10px;
 `;
@@ -81,5 +81,4 @@ export const EpochNumber = styled(Box)`
   display: flex;
   align-items: center;
   justify-content: flex-start;
->>>>>>> develop
 `;

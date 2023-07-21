@@ -41,11 +41,11 @@ export const TabLabel = styled("h3")`
 
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
 `;
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   display: "block",
   textAlign: "left",
   width: "max-content",

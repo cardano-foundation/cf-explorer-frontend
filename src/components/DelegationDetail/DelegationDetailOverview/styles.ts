@@ -19,7 +19,7 @@ export const Item = styled("div")`
 export const Title = styled("span")`
   font-family: var(--font-family-title);
   line-height: 24px;
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
 `;
 
 export const Value = styled("span")(({ theme }) => ({

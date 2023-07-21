@@ -13,7 +13,7 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson }) => {
   return (
     <ViewJson>
       {!metadataJson ? (
-        <Box textAlign={"left"} color={({ palette }) => palette.grey[300]}>
+        <Box textAlign={"left"} color={({ palette }) => palette.secondary.light}>
           No records found
         </Box>
       ) : (

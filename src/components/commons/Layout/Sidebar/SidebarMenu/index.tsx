@@ -142,7 +142,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       selected={isActiveMenu(href)}
                       sx={(theme) => ({
                         ...itemStyle(theme, sidebar),
-                        ...(isActiveMenu(href) ? { backgroundColor: `${theme.palette.success.dark} !important` } : {})
+                        ...(isActiveMenu(href) ? { backgroundColor: `${theme.palette.primary.main} !important` } : {})
                       })}
                     >
                       {icon ? (
