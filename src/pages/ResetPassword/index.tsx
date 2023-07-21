@@ -49,6 +49,7 @@ export default function ResetPassword() {
   const [code, setCode] = useState("");
   const [success, setSuccess] = useState(false);
   const [hasErrorForm, setHasErrorForm] = useState(false);
+  const [initing, setIniting] = useState(true);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useReducer(formReducer, {
@@ -118,10 +119,12 @@ export default function ResetPassword() {
   }, [code]);
 
   async function verifyCode() {
+    setIniting(true);
     const { data } = await verifyCodeResetPassword({ code });
     if (!data) {
       setError(true);
     }
+    setIniting(false);
   }
 
   const handleChange = (event: any) => {
@@ -191,6 +194,9 @@ export default function ResetPassword() {
       handleResetPassword(formData.password.value);
     }
   };
+
+  if (initing) return null;
+
   return (
     <Container>
       <WrapContent>
