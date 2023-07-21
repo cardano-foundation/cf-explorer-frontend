@@ -2,6 +2,7 @@ import { styled, Container, Tabs, Tab } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
+  maxWidth: "95vw !important",
   paddingTop: "30px",
   textAlign: "left",
   [theme.breakpoints.down("md")]: {

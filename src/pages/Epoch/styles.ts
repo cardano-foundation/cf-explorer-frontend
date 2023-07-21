@@ -3,6 +3,7 @@ import { Box, styled, Container } from "@mui/material";
 import { EPOCH_STATUS } from "src/commons/utils/constants";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
+  maxWidth: "95vw !important",
   paddingTop: "20px",
   [theme.breakpoints.down("sm")]: {
     padding: "10px 0 40px",
@@ -53,10 +54,10 @@ export const StatusTableRow = styled(Status)<{ status: string }>(({ theme, statu
   borderRadius: "3px",
   color:
     status === "REWARDING"
-      ? theme.palette.green[200]
+      ? theme.palette.green[800]
       : status === "FINISHED"
-      ? theme.palette.blue[100]
-      : theme.palette.yellow[100],
+      ? theme.palette.blue[800]
+      : theme.palette.yellow[100]
 }));
 
 export const Blocks = styled(BlueText)``;

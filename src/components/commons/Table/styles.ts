@@ -135,10 +135,10 @@ export const WrappModalScrollBar = styled(Box)(
 `
 );
 
-export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number; loading?: number }>(
-  ({ maxHeight, height, theme, loading }) => `
+export const Wrapper = styled(Box)<{ maxHeight?: number | string; loading?: number }>(
+  ({ maxHeight, theme, loading }) => `
   overflow: scroll;
-  height: ${height || 800}px;
+  height: 50vh;
   background: ${theme.palette.common.white};
   padding: ${theme.spacing(1)};
   padding-top: 0;

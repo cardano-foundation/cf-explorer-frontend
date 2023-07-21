@@ -1,6 +1,7 @@
 import { Container, Skeleton, styled } from "@mui/material";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
+  maxWidth: "95vw !important",
   paddingTop: "30px",
   "& > div:nth-of-type(3)": {
     svg: {

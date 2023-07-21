@@ -2,6 +2,7 @@ import { Box, Container, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)`
+  max-width: 95vw !important;
   margin-top: 18px;
 
   .MuiSelect-select.MuiSelect-outlined {

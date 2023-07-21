@@ -21,6 +21,7 @@ export const PriceWrapper = styled(BlueText)`
 `;
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
+  maxWidth: "95vw !important",
   paddingTop: "20px",
   [theme.breakpoints.down("sm")]: {
     padding: "10px 0 40px",
