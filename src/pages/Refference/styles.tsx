@@ -25,8 +25,31 @@ export const Content = styled(Box)`
 
 export const TextReffer = styled(Box)`
   font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
   color: ${(props) => props.theme.palette.blue[650]};
   margin: 20px 0px;
+`;
+
+export const TitleSection = styled(Box)`
+  font-weight: 700;
+  font-size: 16px;
+`;
+
+export const TextSubHeader = styled(Box)`
+  font-size: 24px;
+  margin: 30px 0px;
+`;
+
+export const TextHeader = styled(Box)`
+  font-weight: 700;
+  font-size: 36px;
+`;
+
+export const TextItalic = styled("span")`
+  font-style: italic;
+  font-size: 16px;
+`;
+
+export const TextBold = styled("span")`
+  font-size: 16px;
+  font-weight: 700;
 `;

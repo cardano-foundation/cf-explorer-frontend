@@ -25,7 +25,7 @@ const AppContainer: React.FC<Props> = (props) => {
     routers.RESET_PASSWORD,
     routers.VERIFY_EMAIL,
     routers.FAQ,
-    routers.TERM_OF_SERVICE,
+    routers.TERMS_AND_CONDITIONS,
     routers.POLICY
   ];
   return (
