@@ -44,6 +44,9 @@ import ReportGeneratedPoolDetail from "./pages/ReportGeneratedPoolDetail";
 import { getAllBookmarks } from "./commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "./commons/utils/constants";
 import { setOpenSyncBookmarkModal } from "./stores/user";
+import FAQ from "./pages/Refference/FAQ";
+import Policy from "./pages/Refference/Policy";
+import TermOfServices from "./pages/Refference/TermOfServices";
 import StakeDelegations from "./pages/StakeDelegations";
 import InstantRewards from "./pages/InstantRewards";
 
@@ -119,7 +122,9 @@ const Routes: React.FC = () => {
           </Switch>
         </AccountLayout>
       </Route>
-      <Route path={routers.NOT_FOUND} component={NotFound} />
+      <Route path={routers.FAQ} exact component={FAQ} />
+      <Route path={routers.POLICY} exact component={Policy} />
+      <Route path={routers.TERM_OF_SERVICE} exact component={TermOfServices} />
     </Switch>
   );
 };
