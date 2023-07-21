@@ -52,7 +52,7 @@ const OverViews: React.FC = () => {
     );
   }
   const slot = currentEpoch?.slot || 0;
-  const countdown = 432000 - slot;
+  const countdown = MAX_SLOT_EPOCH - slot;
 
   const duration = moment.duration(countdown ? countdown : 0, "second");
   const days = duration.days();
