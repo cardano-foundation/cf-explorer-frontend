@@ -17,15 +17,14 @@ const labelEpochDetail = "//div[text()='Epoch details']"
 const tabListTitle = "//div[@role='tablist']//div[text()='Delegation History']/ancestor::button"
 const listBoxNumberPage = "ul[role='listbox'] li"
 const listRecoredInPage = "//table//tr[@class]"
-const labelFullWhenHoverOn = "//div[@role='tooltip']"
+const labelFullWhenHoverOn = "//div[@role='tooltip']//div"
 const btnPerPage = "//span[text()='Per page']/preceding-sibling::div/div";
 const perPageSelect = "//div[@id='menu-']/div[@class]/ul/li";
 
 const listBtnNextAndPre = "(//li//button)"
 const txbNumberPage = "(//li//input)"
 const rangeOfPage = "//li//input/following-sibling::span"
-const telegram = "//footer//ul//a[@title='Telegram']"
-
+const fullTxHash = "//button[@aria-label='Copy']/preceding-sibling::span"
 export default class EpochPanel extends WebApi{
     constructor(){
       super();
@@ -34,6 +33,11 @@ export default class EpochPanel extends WebApi{
     goToStakeRegistration() {  
       this.openAnyUrl("/stake-keys/registration")
       return this;
+    }
+
+    goToStakeDeregistration() {  
+        this.openAnyUrl("/stake-keys/de-registration")
+        return this;
     }
 
     clickButtonBack(){
@@ -68,6 +72,11 @@ export default class EpochPanel extends WebApi{
         return this;
     }
 
+    checkTxHashIsDisplay(){
+        cy.verifyAllElementDisplay(listItemFollowColumn, "Tx Hash")
+        return this;
+    }
+
     checkFormatTxHash(){
         const xpath = format(listItemFollowColumn, "Tx Hash")
         cy.xpath(xpath).each((element)=>{
@@ -87,6 +96,17 @@ export default class EpochPanel extends WebApi{
     }
     
     checkFormatCreatedAt(){
+        const xpathCreatedAt = format(listItemFollowColumn, "Created At")
+        const timeRegex = /^\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2}$/;
+        cy.xpath(xpathCreatedAt).each(($element)=>{
+            cy.wrap($element).invoke('text').then((text)=>{
+                expect(text).to.match(timeRegex);
+            })
+        })
+        return this;
+    }
+
+    checkFormatCreatedAt2(){
         const xpathCreatedAt = format(listItemFollowColumn, "Created At")
         cy.xpath(xpathCreatedAt).each(($element)=>{
             cy.wrap($element).invoke('text').then((text)=>{
@@ -147,7 +167,16 @@ export default class EpochPanel extends WebApi{
     } 
 
     checkHoverOnTxHash(){
-        cy.hoverToElementRandomly(format(listItemFollowColumn, "Tx Hash"))
+        // const xpathFirstItem = format(listItemFollowColumn, "Tx Hash")+'[1]/a'
+        // cy.clickElement(xpathFirstItem)
+        // cy.xpath(fullTxHash).invoke('text').then(txHashInTransactionDetail=>{
+        //     cy.clickElement(btnBack)
+        //     cy.hoverToElement(xpathFirstItem)
+        //     cy.xpath(labelFullWhenHoverOn).invoke('text').then(text=>{
+        //         expect(text).to.equal(txHashInTransactionDetail)
+        //     })
+        // })
+        cy.hoverToElementRandomly(format(listItemFollowColumn, 'Tx Hash'))
         cy.verifyElementDisplay(labelFullWhenHoverOn)
         return this;
     }
@@ -224,6 +253,26 @@ export default class EpochPanel extends WebApi{
                 expect(numberPage1+1).to.equal(parseInt(numberPage2));
             })
         })
+        return this;
+    }
+
+    checkButtonNextIsDisable(){
+        cy.xpath(listButtonNextAndPrevious+'[4]').click()
+        cy.xpath(listButtonNextAndPrevious+'[3]').scrollIntoView().should('to.be.disabled')
+        cy.wait(5000)
+        return this;
+    }
+
+    checkButtonPreIsEnable(numberPage:string){
+        cy.xpath(txbNumberOfPage).clear().type(""+numberPage+"").type('{enter}')
+        cy.xpath(listButtonNextAndPrevious+'[1]').verifyElementEnabled()
+        cy.xpath(listButtonNextAndPrevious+'[2]').verifyElementEnabled()
+        return this;
+    }
+
+    checkButtonPreIsDisable(){
+        cy.xpath(listButtonNextAndPrevious+'[1]').click()
+        cy.xpath(listButtonNextAndPrevious+'[2]').scrollIntoView().should('to.be.disabled')
         return this;
     }
 
