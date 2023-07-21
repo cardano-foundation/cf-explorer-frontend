@@ -411,28 +411,32 @@ export const OptionsSearch = ({
 }: OptionProps) => {
   const history = useHistory();
 
-  const listOptionsTokensAndPools = dataSearchTokensAndPools?.map((i) => ({
-    suggestText: (
-      <Box>
-        Search for an {filter === "tokens" ? "token" : "pool"}{" "}
-        {filter === "tokens" ? (
-          <ValueOption>
-            {(i as TokensSearch)?.displayName || getShortWallet((i as TokensSearch)?.fingerprint || "")}
-          </ValueOption>
-        ) : (
-          <ValueOption>
-            {(i as DelegationPool)?.poolName || getShortWallet((i as DelegationPool)?.poolId || "")}
-          </ValueOption>
-        )}
-      </Box>
-    ),
-    cb: () =>
-      history.push(
-        filter === "tokens"
-          ? details.token(encodeURIComponent((i as TokensSearch)?.fingerprint))
-          : details.delegation(encodeURIComponent((i as DelegationPool)?.poolId))
-      )
-  }));
+  const listOptionsTokensAndPools = dataSearchTokensAndPools?.map((i) => {
+    return {
+      suggestText: (
+        <Box>
+          Search for an {filter === "tokens" ? "token" : "pool"}{" "}
+          {filter === "tokens" ? (
+            <ValueOption>
+              {(i as TokensSearch)?.displayName.startsWith("asset") && (i as TokensSearch)?.displayName.length > 43
+                ? getShortWallet((i as TokensSearch)?.fingerprint || "")
+                : (i as TokensSearch)?.displayName}
+            </ValueOption>
+          ) : (
+            <ValueOption>
+              {(i as DelegationPool)?.poolName || getShortWallet((i as DelegationPool)?.poolId || "")}
+            </ValueOption>
+          )}
+        </Box>
+      ),
+      cb: () =>
+        history.push(
+          filter === "tokens"
+            ? details.token(encodeURIComponent((i as TokensSearch)?.fingerprint))
+            : details.delegation(encodeURIComponent((i as DelegationPool)?.poolId))
+        )
+    };
+  });
 
   const listOptions =
     (isObject(data) &&
