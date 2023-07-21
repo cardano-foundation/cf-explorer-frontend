@@ -42,6 +42,9 @@ export const routers = {
   REPORT_GENERATED: "/report-generated/:tab",
   REPORT_GENERATED_STAKING_DETAIL: "/report-generated/:reportId/staking",
   REPORT_GENERATED_POOL_DETAIL: "/report-generated/:reportId/pool",
+  POLICY: "/policy",
+  FAQ: "/faq",
+  TERM_OF_SERVICE: "/terms-of-service",
   NOT_FOUND: "/*"
 } as const;
 

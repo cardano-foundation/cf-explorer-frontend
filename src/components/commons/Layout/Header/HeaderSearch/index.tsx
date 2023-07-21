@@ -161,10 +161,10 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     setShowOption(true);
   };
 
-  const handleSearchAll = async (querry: string) => {
+  const handleSearchAll = async (query: string) => {
     try {
       setLoading(true);
-      const res = await defaultAxios.get(API.SEARCH_ALL(querry));
+      const res = await defaultAxios.get(API.SEARCH_ALL(query.trim()));
       setDataSearchAll(res?.data);
       setShowOption(true);
       setLoading(false);
@@ -174,13 +174,18 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     }
   };
 
-  const FetchSearchTokensAndPools = async (querry: string, filter: FilterParams) => {
+  const FetchSearchTokensAndPools = async (query: string, filter: FilterParams) => {
     try {
       setLoading(true);
-
-      const url = `${filter === "tokens" ? API.TOKEN.LIST : API.DELEGATION.POOL_LIST}?page=0&size=${RESULT_SIZE}&${
-        filter === "tokens" ? "query" : "search"
-      }=${querry}`;
+      const search: { query?: string; search?: string } = {};
+      if (filter === "tokens") {
+        search.query = query.trim();
+      } else {
+        search.search = query.trim();
+      }
+      const url = `${
+        filter === "tokens" ? API.TOKEN.LIST : API.DELEGATION.POOL_LIST
+      }?page=0&size=${RESULT_SIZE}&${stringify(search)}`;
 
       const res = await defaultAxios.get(url);
       setTotalResult(res?.data && res.data?.totalItems ? res.data?.totalItems : 0);
@@ -360,6 +365,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           show={showOption}
           value={search}
           data={dataSearchAll}
+          setShowOption={setShowOption}
           dataSearchTokensAndPools={dataSearchTokensAndPools}
         />
       )}
@@ -386,6 +392,7 @@ interface OptionProps {
   data?: IResponseSearchAll;
   dataSearchTokensAndPools?: TokensSearch[] | DelegationPool[];
   showResultNotFound: () => void;
+  setShowOption: (show: boolean) => void;
   filter: FilterParams;
   totalResult: number;
 }
@@ -397,23 +404,39 @@ export const OptionsSearch = ({
   error,
   data,
   showResultNotFound,
+  setShowOption,
   filter,
   dataSearchTokensAndPools,
   totalResult
 }: OptionProps) => {
   const history = useHistory();
 
-  const listOptionsTokensAndPools = dataSearchTokensAndPools?.map((i) => ({
-    suggestText: `Search for an ${filter === "tokens" ? "token" : "pool"}
-      ${filter === "tokens" ? (i as TokensSearch)?.displayName : (i as DelegationPool)?.poolName}`,
-    cb: () =>
-      history.push(
-        filter === "tokens"
-          ? details.token((i as TokensSearch)?.fingerprint)
-          : details.delegation((i as DelegationPool)?.poolId)
+  const listOptionsTokensAndPools = dataSearchTokensAndPools?.map((i) => {
+    return {
+      suggestText: (
+        <Box>
+          Search for an {filter === "tokens" ? "token" : "pool"}{" "}
+          {filter === "tokens" ? (
+            <ValueOption>
+              {(i as TokensSearch)?.displayName.startsWith("asset") && (i as TokensSearch)?.displayName.length > 43
+                ? getShortWallet((i as TokensSearch)?.fingerprint || "")
+                : (i as TokensSearch)?.displayName}
+            </ValueOption>
+          ) : (
+            <ValueOption>
+              {(i as DelegationPool)?.poolName || getShortWallet((i as DelegationPool)?.poolId || "")}
+            </ValueOption>
+          )}
+        </Box>
       ),
-    formatter: formatLongText
-  }));
+      cb: () =>
+        history.push(
+          filter === "tokens"
+            ? details.token(encodeURIComponent((i as TokensSearch)?.fingerprint))
+            : details.delegation(encodeURIComponent((i as DelegationPool)?.poolId))
+        )
+    };
+  });
 
   const listOptions =
     (isObject(data) &&
@@ -448,14 +471,14 @@ export const OptionsSearch = ({
             case "token":
               return {
                 suggestText: "Search for a Token by",
-                cb: () => history.push(details.token(value)),
+                cb: () => history.push(details.token(encodeURIComponent(value))),
                 formatter: getShortWallet
               };
             case "validTokenName":
               if (data.validTokenName) {
                 return {
                   suggestText: "Search for a Token by",
-                  cb: () => history.push(`${routers.TOKEN_LIST}?tokenName=${value}`),
+                  cb: () => history.push(`${routers.TOKEN_LIST}?tokenName=${encodeURIComponent(value)}`),
                   formatter: formatLongText
                 };
               }
@@ -463,7 +486,7 @@ export const OptionsSearch = ({
             case "pool":
               return {
                 suggestText: "Search for a Pool by",
-                cb: () => history.push(details.delegation(value)),
+                cb: () => history.push(details.delegation(encodeURIComponent(value))),
                 formatter: getShortWallet
               };
             case "validPoolName":
@@ -472,7 +495,7 @@ export const OptionsSearch = ({
                   suggestText: "Search for a Pool by",
                   cb: () =>
                     history.push(routers.DELEGATION_POOLS, {
-                      tickerNameSearch: value
+                      tickerNameSearch: encodeURIComponent(value)
                     }),
                   formatter: formatLongText
                 };
@@ -481,7 +504,7 @@ export const OptionsSearch = ({
             case "policy":
               return {
                 suggestText: "Search for a Policy by",
-                cb: () => history.push(details.policyDetail(value)),
+                cb: () => history.push(details.policyDetail(encodeURIComponent(value))),
                 formatter: formatLongText
               };
           }
@@ -508,20 +531,21 @@ export const OptionsSearch = ({
             {(listOptionsTokensAndPools || [])?.map((item, i: number) => {
               return (
                 <Option key={i} onClick={() => item?.cb?.()} data-testid="option-search-epoch">
-                  <Box>{item?.suggestText}</Box>
+                  <Box>{item?.suggestText} </Box>
                   <GoChevronRight />
                 </Option>
               );
             })}
             {listOptionsTokensAndPools && totalResult && totalResult > RESULT_SIZE && (
               <Option
-                onClick={() =>
+                onClick={() => {
+                  setShowOption(false);
                   filter === "tokens"
                     ? history.push(`${routers.TOKEN_LIST}?tokenName=${value}`)
                     : history.push(routers.DELEGATION_POOLS, {
                         tickerNameSearch: value
-                      })
-                }
+                      });
+                }}
               >
                 <Box
                   display="flex"
