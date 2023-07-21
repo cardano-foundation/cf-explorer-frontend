@@ -67,22 +67,7 @@ export const StyledInput = styled(Input)<{ home: number }>`
   border: none;
   box-shadow: none !important;
   border-radius: 0;
-  font-size: var(--font-size-text-large);
-  ${({ theme }) => theme.breakpoints.up("sm")} {
-    ${(props) =>
-      !props.home &&
-      `
-      font-size: var(--font-size-text-small);
-    `}
-  }
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    ${(props) =>
-      !props.home &&
-      `
-    transform-origin: left center;
-    transform: scale(0.75);
-    `}
-  }
+  font-size: ${(props) => (props.home ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
   width: 100%;
   border-left: 2px solid ${(props) => props.theme.palette.border.main};
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -142,4 +127,10 @@ export const Option = styled(Button)(({ theme }) => ({
 export const ValueOption = styled("span")(({ theme }) => ({
   color: theme.palette.primary.main,
   fontWeight: "500"
+}));
+
+export const WrapInput = styled(Box)(() => ({
+  width: "100%",
+  display: "flex",
+  justifyContent: "space-between",
 }));
