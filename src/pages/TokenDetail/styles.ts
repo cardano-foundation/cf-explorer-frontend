@@ -9,7 +9,7 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
     },
     ".Mui-selected": {
       "svg path": {
-        fill: "#438F68"
+        fill: theme.palette.green[200]
       }
     }
   },

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { TabContext, TabPanel } from "@mui/lab";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 
 import { BalanceIcon, RewardsIcon } from "src/commons/resources";
 import CustomIcon from "src/components/commons/CustomIcon";
@@ -24,6 +24,7 @@ enum ActivityType {
 const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
   const [activityType, setActivityType] = useState<ActivityType>(ActivityType.WALLET);
   const { isGalaxyFoldSmall } = useScreen();
+  const theme = useTheme();
   useEffect(() => {
     if (!open) setActivityType(ActivityType.WALLET);
   }, [open]);
@@ -58,7 +59,11 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
                     color={(theme) => theme.palette.primary.main}
                     stroke="currentColor"
                   />
-                  <CustomTab>Wallet Activity</CustomTab>
+                  <CustomTab
+                    color={activityType === ActivityType.WALLET ? theme.palette.green[200] : theme.palette.grey[300]}
+                  >
+                    Wallet Activity
+                  </CustomTab>
                 </Box>
               }
             />
@@ -72,7 +77,11 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
                     color={(theme) => theme.palette.primary.main}
                     fill="currentColor"
                   />
-                  <CustomTab>Rewards Activity</CustomTab>
+                  <CustomTab
+                    color={activityType === ActivityType.REWARDS ? theme.palette.green[200] : theme.palette.grey[300]}
+                  >
+                    Rewards Activity
+                  </CustomTab>
                 </Box>
               }
             />

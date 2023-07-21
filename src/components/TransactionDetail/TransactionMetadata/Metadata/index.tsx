@@ -50,7 +50,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
           fontWeight={"bold"}
           display={"block"}
           pt={2}
-          color={({ palette }) => `${palette.grey[700]}  !important`}
+          color={({ palette }) => `${palette.grey[400]}  !important`}
         >
           {isTablet ? getShortHash(hash || "") : hash}
           <CopyButton text={hash || ""} />
@@ -59,7 +59,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
       {(data || [])?.map((metadata, idx) => (
         <Wrapper mt={2} key={idx}>
           <RowMetadata>
-            <Title>Publish Label</Title>
+            <Title>Metadatum Label</Title>
             <TitleValue>{metadata.label || ""}</TitleValue>
           </RowMetadata>
           <RowMetadata>

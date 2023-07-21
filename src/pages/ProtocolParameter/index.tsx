@@ -16,7 +16,7 @@ import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { PROTOCOL_TYPE } from "src/commons/utils/constants";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
-import DateRangeModal from "src/components/FilterReport/DateRangeModal";
+import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
 import ParseScriptModal from "src/components/ParseScriptModal";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -125,7 +125,7 @@ const ProtocolParameter: React.FC = () => {
               overflow={"hidden"}
               whiteSpace={"nowrap"}
               textOverflow={"ellipsis"}
-              color={({ palette }) => (isModalType ? palette.blue[800] : "unset")}
+              color={({ palette }) => (isModalType ? palette.blue[100] : "unset")}
             >
               {r.value}
             </Box>
@@ -182,7 +182,7 @@ const ProtocolParameter: React.FC = () => {
               overflow={"hidden"}
               whiteSpace={"nowrap"}
               textOverflow={"ellipsis"}
-              color={({ palette }) => (isModalType ? palette.blue[800] : "unset")}
+              color={({ palette }) => (isModalType ? palette.blue[100] : "unset")}
             >
               {r.value}
             </Box>
@@ -196,7 +196,7 @@ const ProtocolParameter: React.FC = () => {
       render: (r: any) => <Box>{r?.epochNo}</Box>
     },
     {
-      title: "Timestamp",
+      title: "Created At",
       key: "timestamp",
       render: (r: any) => (r?.time ? formatDateTimeLocal(r.time) : "")
     }
@@ -219,7 +219,7 @@ const ProtocolParameter: React.FC = () => {
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
                 <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                  <Box fontWeight={"bold"} fontSize={"1.25rem"}>
+                  <Box fontWeight={"bold"} color={({ palette }) => palette.grey[400]} fontSize={"1.25rem"}>
                     Updatable Parameters
                   </Box>
                   <Box
@@ -246,7 +246,12 @@ const ProtocolParameter: React.FC = () => {
               </Box>
               <Box pt={"30px"}>
                 <Box>
-                  <Box textAlign={"left"} fontWeight={"bold"} fontSize={"1.25rem"}>
+                  <Box
+                    textAlign={"left"}
+                    color={({ palette }) => palette.grey[400]}
+                    fontWeight={"bold"}
+                    fontSize={"1.25rem"}
+                  >
                     Global Constants
                   </Box>
                   {loadingFixed && (
@@ -286,6 +291,7 @@ export const ProtocolParameterHistory = () => {
   const { PROTOCOL_PARAMETER } = API;
   const TOTAL_PARAMETER = 29;
   const [initing, setIniting] = useState(true);
+  const theme = useTheme();
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
   const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
@@ -364,7 +370,7 @@ export const ProtocolParameterHistory = () => {
           bgcolor={({ palette }) =>
             r[t as ProtocolTypeKey] !== null
               ? ["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string)
-                ? alpha(palette.green[600], 0.4)
+                ? alpha(palette.green[200], 0.15)
                 : "transparent"
               : "transparent"
           }
@@ -477,7 +483,7 @@ export const ProtocolParameterHistory = () => {
               component={Button}
               variant="text"
               textTransform={"capitalize"}
-              bgcolor={({ palette }) => alpha(palette.green[600], 0.1)}
+              bgcolor={({ palette }) => alpha(palette.green[200], 0.15)}
               px={2}
               onClick={() => setShowFiter(!showFilter)}
             >
@@ -520,7 +526,7 @@ export const ProtocolParameterHistory = () => {
                 alignItems={"center"}
                 mt={3}
                 mb={2}
-                color={"#0052CC !important"}
+                color={`${theme.palette.blue[100]} !important`}
               >
                 <Box mr={1}>Reset</Box>
                 <ResetIcon />
@@ -580,6 +586,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
 }) => {
   const [filterOption, { push: pushFilterOption, removeAt: removeAtFilterOption, clear }] =
     useList<string>(filterParams);
+  const theme = useTheme();
 
   const [expanded, setExpanded] = useState<string | false>("");
   const [showDaterange, setShowDaterange] = useState<boolean>(false);
@@ -608,27 +615,34 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
               <ImArrowDown2 />
-              <Box ml={1}>Latest - First</Box>
+              <Box ml={1} color={({ palette }) => palette.grey[400]}>
+                Latest - First
+              </Box>
             </Box>
-            {sort === "LastFirst" && <BsFillCheckCircleFill size={16} style={{ color: "#0052CC !important" }} />}
+            {sort === "LastFirst" && <BsFillCheckCircleFill size={16} />}
           </Box>
         </ButtonFilter>
         <ButtonFilter onClick={() => setSort("FirstLast")}>
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
               <ImArrowUp2 />
-              <Box ml={1}>First - Latest</Box>
+              <Box ml={1} color={({ palette }) => palette.grey[400]}>
+                First - Latest
+              </Box>
             </Box>
-            {sort === "FirstLast" && <BsFillCheckCircleFill size={16} style={{ color: "#0052CC !important" }} />}
+            {sort === "FirstLast" && <BsFillCheckCircleFill size={16} />}
           </Box>
         </ButtonFilter>
         <ButtonFilter onClick={() => setShowDaterange(true)}>
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
               <DateRangeIcon />
-              <Box ml={1}> Date range</Box>
+              <Box ml={1} color={({ palette }) => palette.grey[400]}>
+                {" "}
+                Date range
+              </Box>
             </Box>
-            {!isEmpty(dateRange) && <BsFillCheckCircleFill size={16} style={{ color: "#0052CC !important" }} />}
+            {!isEmpty(dateRange) && <BsFillCheckCircleFill size={16} />}
           </Box>
         </ButtonFilter>
 
@@ -643,37 +657,41 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
             >
               <Box display={"flex"} alignItems={"center"}>
                 <ProtocolParam />
-                <Box ml={1}>Parameter changes {filterOption.length > 0 ? `(${filterOption.length})` : ""}</Box>
+                <Box ml={1} color={({ palette }) => palette.grey[400]}>
+                  Parameter changes {filterOption.length > 0 ? `(${filterOption.length})` : ""}
+                </Box>
               </Box>
               <Box>{expanded === "params" ? <IoIosArrowDown /> : <IoIosArrowUp />}</Box>
             </Box>
           </AccordionSummary>
           <AccordionDetails>
             <Box height={170} overflow={"auto"}>
-              <Checkbox
-                checked={filterOption.length === Object.keys(PROTOCOL_TYPE).length}
-                id={"all"}
-                sx={{
-                  color: ({ palette }) => alpha(palette.common.black, 0.15),
-                  "&.Mui-checked": {
-                    color: `#0052CC !important`
-                  }
-                }}
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    clear();
-                    pushFilterOption(...Object.keys(PROTOCOL_TYPE));
-                  } else {
-                    clear();
-                  }
-                }}
-              />
-              <Box component={"label"} htmlFor={"all"} style={{ cursor: "pointer" }}>
-                All parameters
+              <Box>
+                <Checkbox
+                  checked={filterOption.length === Object.keys(PROTOCOL_TYPE).length}
+                  id={"all"}
+                  sx={{
+                    color: ({ palette }) => alpha(palette.common.black, 0.15),
+                    "&.Mui-checked": {
+                      color: `${theme.palette.blue[100]} !important`
+                    }
+                  }}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      clear();
+                      pushFilterOption(...Object.keys(PROTOCOL_TYPE));
+                    } else {
+                      clear();
+                    }
+                  }}
+                />
+                <Box component={"label"} htmlFor={"all"} style={{ cursor: "pointer" }}>
+                  All parameters
+                </Box>
               </Box>
 
               {Object.keys(PROTOCOL_TYPE).map((k, idx) => (
-                <Box key={idx} mb={2}>
+                <Box key={idx}>
                   <Checkbox
                     id={k}
                     checked={filterOption.includes(k)}
@@ -685,7 +703,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                     sx={{
                       color: ({ palette }) => alpha(palette.common.black, 0.15),
                       "&.Mui-checked": {
-                        color: `#0052CC !important`
+                        color: `${theme.palette.blue[100]} !important`
                       }
                     }}
                   />
@@ -718,7 +736,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           display={"flex"}
           alignItems={"center"}
           mt={2}
-          color={`#0052CC !important`}
+          color={({ palette }) => `${palette.blue[100]} !important`}
         >
           <Box mr={1}>Reset</Box>
           <ResetIcon />
