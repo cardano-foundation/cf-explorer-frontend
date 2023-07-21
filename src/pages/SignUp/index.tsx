@@ -2,7 +2,7 @@ import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment 
 import { useEffect, useReducer, useRef, useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { IoMdClose } from "react-icons/io";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import useAuth from "src/commons/hooks/useAuth";
 import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessIcon } from "src/commons/resources";
@@ -424,7 +424,10 @@ export default function SignUp() {
                       alignItems={"baseline"}
                       gap={"5px"}
                     >
-                      I agree to the <ForgotPassword>Terms of Service</ForgotPassword>
+                      I agree to the
+                      <Link to={routers.TERM_OF_SERVICE} target="_blank">
+                        <ForgotPassword>Terms of Service</ForgotPassword>
+                      </Link>
                     </Box>
                   }
                 />
