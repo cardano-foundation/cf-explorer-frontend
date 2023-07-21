@@ -282,3 +282,30 @@ Cypress.Commands.add('compareArrayAttribute', (selector, attribute, expectedValu
     cy.wrap(element).should('have.attr', attribute, expectedValues[index]);
   });
 });
+
+Cypress.Commands.add('verifyFieldIsConsecutive', (selector, ...value) => {
+  let ele = format(selector, value)
+  if (ele.startsWith("/") || ele.startsWith("(")) {
+    cy.xpath(ele).invoke('text').then((list)=>{
+      const numbers = list.split('\n').map((itemText) => parseInt(itemText.trim()));
+      const areConsecutive = numbers.every((number, index) => {
+        if (index === 0) {
+          return true;
+        }
+        return number === numbers[index - 1] + 1;
+      });
+      expect(areConsecutive).to.be.true;
+    });
+  } else {
+    cy.get(ele).invoke('text').then((list)=>{
+      const numbers = list.split('\n').map((itemText) => parseInt(itemText.trim()));
+      const areConsecutive = numbers.every((number, index) => {
+        if (index === 0) {
+          return true; 
+        }
+        return number === numbers[index - 1] + 1;
+      });
+      expect(areConsecutive).to.be.true;
+    });
+  }
+});
