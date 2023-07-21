@@ -40,7 +40,7 @@ const StakeRegistrationTab = () => {
       )
     },
     {
-      title: "Timestamp",
+      title: "Created At",
       key: "id",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
@@ -62,9 +62,9 @@ const StakeRegistrationTab = () => {
           <AdaValue value={new BigNumber(r.deposit).plus(new BigNumber(r.fee)).toString()} />
           <TableSubTitle>
             <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-              <AdaValue value={r.deposit} color={theme.palette.grey[400]} gap="3px" fontSize="12px" />
+              <AdaValue value={r.deposit} color={theme.palette.grey[300]} gap="3px" fontSize="12px" />
               <Box mx={1}>/</Box>
-              <AdaValue value={r.fee} color={theme.palette.grey[400]} gap="3px" fontSize="12px" />
+              <AdaValue value={r.fee} color={theme.palette.grey[300]} gap="3px" fontSize="12px" />
             </Box>
           </TableSubTitle>
         </Box>
@@ -76,7 +76,7 @@ const StakeRegistrationTab = () => {
       minWidth: "120px",
       render: () => (
         <IconButton onClick={() => setOpenModal(true)}>
-          <EyeIcon style={{ transform: "scale(.8)" }} />
+          <EyeIcon />
         </IconButton>
       )
     }

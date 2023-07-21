@@ -54,7 +54,7 @@ const StakingRegistrationTab = () => {
       )
     },
     {
-      title: "Timestamp",
+      title: "Created At",
       key: "time",
       minWidth: "120px",
       sort: ({ columnKey, sortValue }) => {
@@ -90,7 +90,7 @@ const StakingRegistrationTab = () => {
       minWidth: "120px",
       render: () => (
         <IconButton onClick={() => setOpenModal(true)}>
-          <EyeIcon style={{ transform: "scale(.8)" }} />
+          <EyeIcon />
         </IconButton>
       )
     }
