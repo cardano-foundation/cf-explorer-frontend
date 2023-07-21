@@ -25,7 +25,7 @@ export const Item = styled(Card)`
 `;
 
 export const EpochProgress = styled("h3")(({ theme }) => ({
-  color: theme.palette.common.black,
+  color: theme.palette.grey[400],
   margin: 0,
   [theme.breakpoints.down("lg")]: {
     fontSize: 14
@@ -81,7 +81,7 @@ export const Title = styled("h3")`
 `;
 
 export const Small = styled("small")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 11px;
   }
@@ -92,7 +92,7 @@ export const SmallValue = styled("small")`
 `;
 
 export const AdaPrice = styled("small")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   white-space: nowrap;
   margin-left: 15px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -100,7 +100,7 @@ export const AdaPrice = styled("small")`
   }
 `;
 export const TimeDuration = styled("small")<{ marginTop?: string }>`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   margin-top: ${(props) => props.marginTop || 0};
   white-space: nowrap;
   display: block;
@@ -110,14 +110,14 @@ export const TimeDuration = styled("small")<{ marginTop?: string }>`
 `;
 export const XSmall = styled("span")`
   font-size: var(--font-size-text-small);
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
 `;
 
 export const Value = styled(Small)<{ down?: number }>`
-  color: ${(props) => (props.down ? props.theme.palette.error.main : props.theme.palette.success.dark)};
+  color: ${(props) => (props.down ? props.theme.palette.error.main : props.theme.palette.success.main)};
 `;
 export const XValue = styled(XSmall)<{ down?: number }>`
-  color: ${(props) => (props.down ? props.theme.palette.error.main : props.theme.palette.success.dark)};
+  color: ${(props) => (props.down ? props.theme.palette.error.main : props.theme.palette.success.main)};
 `;
 
 export const Progress = styled("div")`

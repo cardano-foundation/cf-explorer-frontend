@@ -190,7 +190,9 @@ const HomeStatistic = () => {
                 src={LiveStakeIcon}
                 alt="Total ADA Stake"
               />
-              <Name data-testid="live-stake-box-title">Live Stake (ADA)</Name>
+              <Name data-testid="live-stake-box-title" style={isGalaxyFoldSmall ? { maxWidth: "70px" } : {}}>
+                Live Stake (ADA)
+              </Name>
               <CustomTooltip title={formatADAFull(liveStake)}>
                 <Title data-testid="live-stake-value">{formatADA(liveStake)}</Title>
               </CustomTooltip>

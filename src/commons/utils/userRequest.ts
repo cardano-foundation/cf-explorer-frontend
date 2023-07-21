@@ -11,6 +11,7 @@ export const verifyActive = (payload: TVerifyActive) => authAxios.get("verify/ac
 export const forgotPassword = (payload: TForgotPassword) =>
   authAxios.get("verify/forgot-password", { params: payload });
 export const resetPassword = (payload: TResetPassword) => authAxios.put("verify/reset-password", payload);
+export const verifyCodeResetPassword = (payload: TVerifyCodeResetPassword) => authAxios.get("verify/expired-code", { params: payload });
 export const transferWallet = (payload: TTransferWallet) => authAxios.post("auth/transfers-wallet", payload);
 export const refreshToken = (payload: TRefreshToken) => authAxios.get("auth/refresh-token", { params: payload });
 //auth

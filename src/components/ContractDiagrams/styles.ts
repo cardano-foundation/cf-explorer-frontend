@@ -20,7 +20,7 @@ export const ContractText = styled(Typography)`
 `;
 
 export const ContractAddress = styled(Box)`
-  color: ${(props) => props.theme.palette.blue[400]};
+  color: ${(props) => props.theme.palette.blue[100]};
   font-size: 14px;
   font-weight: 400;
   padding-top: 10px;
@@ -34,7 +34,7 @@ export const TabLabel = styled(Typography)`
   color: ${(props) => props.theme.palette.common.white};
   padding: 7px 11px;
   border-radius: 5px;
-  background: ${(props) => props.theme.palette.common.black};
+  background: ${(props) => props.theme.palette.grey[400]};
   position: absolute;
   left: 20px;
   top: -25px;
@@ -45,7 +45,7 @@ export const CardDiagram = styled(Box)`
   margin-top: 50px;
 `;
 
-export const TabElement = styled(Box)`
+export const TabElement = styled(Box)<{ isContractPage?: number }>`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -57,9 +57,8 @@ export const TabElement = styled(Box)`
   padding: 18px 20px;
   border-radius: 5px;
   text-align: left;
-  background: ${(props) => props.theme.palette.grey[80]};
-  color: ${(props) => props.theme.palette.common.black};
-  text-align: left;
+  background: ${({ isContractPage, theme }) => (isContractPage ? theme.palette.common.white : theme.palette.grey[500])};
+  color: ${(props) => props.theme.palette.grey[400]};
   max-height: 150px;
   overflow: scroll;
   font-size: 14px;
@@ -81,8 +80,9 @@ export const TitleText = styled(Typography)`
 export const DataTitle = styled(Typography)`
   font-size: 14px;
 `;
-export const DatumnElement = styled(Box)`
-  background: ${(props) => props.theme.palette.grey[80]};
+
+export const DatumnElement = styled(Box)<{ isContractPage?: number }>`
+  background: ${({ isContractPage, theme }) => (isContractPage ? theme.palette.common.white : theme.palette.grey[500])};
   color: ${(props) => props.theme.palette.common.black};
   word-break: break-word;
   text-align: left;

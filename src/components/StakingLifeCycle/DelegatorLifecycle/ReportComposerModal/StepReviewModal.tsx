@@ -12,6 +12,7 @@ import { getEventType } from "src/components/StakekeySummary";
 import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
+
 import { EVENTS_NAME, ReportType } from "./FilledInfoModal";
 import {
   Container,
@@ -75,7 +76,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
       }, 2000);
     } catch (err: any) {
       console.error(err);
-      toast.error("This stake key has no transaction history");
+      toast.error("This stake address has no transaction history");
     }
     setLoading(false);
   };
@@ -108,7 +109,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
       )
     },
     {
-      label: isPoolReport ? "Pool ID" : "Stake key details",
+      label: isPoolReport ? "Pool ID" : "Stake address details",
       value: (
         <CustomTooltip title={params.address}>
           <TextOverFlow>{params.address}</TextOverFlow>
