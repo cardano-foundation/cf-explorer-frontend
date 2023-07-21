@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useRef, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -42,6 +42,7 @@ export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false
   const registrationRef = useRef(null);
   const cardanoBlockchainRef = useRef(null);
   const history = useHistory();
+  const theme = useTheme();
 
   const handleBack = () => {
     history.goBack();
@@ -101,7 +102,7 @@ export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false
         )}
         <InfoGroup>
           <Info>
-            <AddressIcon fill="#438F68" />
+            <AddressIcon fill={theme.palette.green[200]} />
             <CustomTooltip title={txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(txHash)}>{getShortHash(txHash || "")}</StyledLink>
@@ -110,11 +111,11 @@ export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false
             <StyledCopyButton text={txHash} />
           </Info>
           <Info>
-            <ADAGreen />
+            <ADAGreen fill={theme.palette.green[200]} />
             <InfoText>{formatADAFull(deposit + fee || 0)}</InfoText>
           </Info>
           <Info>
-            <TimeIcon />
+            <TimeIcon fill={theme.palette.green[200]} />
             <InfoText>{formatDateTimeLocal(time)}</InfoText>
           </Info>
         </InfoGroup>

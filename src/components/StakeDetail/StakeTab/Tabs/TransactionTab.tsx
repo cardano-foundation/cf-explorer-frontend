@@ -122,7 +122,10 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
             </StyledLink>
           </Box>
           <Box mt={1}>
-            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
+            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{" "}
+            <Box component={"span"} color={({ palette }) => palette.grey[300]}>
+              {r.epochSlotNo}
+            </Box>
           </Box>
         </Box>
       )

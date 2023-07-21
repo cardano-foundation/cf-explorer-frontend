@@ -37,7 +37,10 @@ const columns: Column<WithdrawalHistory>[] = [
       <Box>
         <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
         <Box marginTop="10px">
-          <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
+          <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{" "}
+          <Box component={"span"} color={({ palette }) => palette.grey[300]}>
+            {r.epochSlotNo}
+          </Box>
         </Box>
       </Box>
     )

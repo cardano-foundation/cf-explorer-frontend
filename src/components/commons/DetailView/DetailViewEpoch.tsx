@@ -3,6 +3,7 @@ import { CgClose } from "react-icons/cg";
 import { BiChevronRight } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import { Box } from "@mui/material";
 
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
 import { BlockIcon, CubeIcon, RocketIcon } from "src/commons/resources";
@@ -214,8 +215,25 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
               <DetailValue>{data.blkCount}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
+              <DetailLabel>Unique Accounts</DetailLabel>
+              <DetailValue>{data.account}</DetailValue>
+            </DetailsInfoItem>
+            <DetailsInfoItem>
               <DetailLabel>Tx Count</DetailLabel>
               <DetailValue>{data.txCount}</DetailValue>
+            </DetailsInfoItem>
+            <DetailsInfoItem>
+              <DetailLabel>Rewards Distribute</DetailLabel>
+              <DetailValue>
+                {data?.rewardsDistributed ? (
+                  <Box>
+                    {formatADAFull(data?.rewardsDistributed)}
+                    <ADAicon />
+                  </Box>
+                ) : (
+                  "Not available"
+                )}
+              </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Total Output</DetailLabel>

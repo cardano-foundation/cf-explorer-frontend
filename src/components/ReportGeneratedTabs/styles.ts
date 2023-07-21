@@ -6,7 +6,7 @@ export const TabLabel = styled(Typography)<{ active: number }>(
  font-size: 24px;
     font-weight: 700;
     text-transform: capitalize;
-    color: ${props.active ? "#000" : "#98A2B3"};
+    color: ${props.active ? props.theme.palette.grey[400] : props.theme.palette.grey[300]};
 `
 );
 
@@ -38,7 +38,7 @@ export const StyledTabs = styled(Tabs)`
 `;
 
 export const StyledTab = styled(Tab)`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   padding: 0;
   &.Mui-selected {
     color: ${(props) => props.theme.palette.text.primary};
