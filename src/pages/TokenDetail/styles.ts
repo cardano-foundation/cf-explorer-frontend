@@ -1,6 +1,7 @@
 import { Container, Skeleton, styled } from "@mui/material";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
+  maxWidth: "95vw !important",
   paddingTop: "30px",
   "& > div:nth-of-type(3)": {
     svg: {
@@ -8,7 +9,7 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
     },
     ".Mui-selected": {
       "svg path": {
-        fill: "#438F68"
+        fill: theme.palette.green[200]
       }
     }
   },

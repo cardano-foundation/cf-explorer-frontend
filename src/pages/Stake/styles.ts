@@ -1,21 +1,34 @@
 import { styled, Container, Tabs, Tab } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export const StyledContainer = styled(Container)`
-  padding-top: 30px;
-  text-align: left;
-
-  ${({ theme }) => theme.breakpoints.down("md")} {
-    padding-top: 0px;
+export const StyledContainer = styled(Container)(({ theme }) => ({
+  maxWidth: "95vw !important",
+  paddingTop: "30px",
+  textAlign: "left",
+  [theme.breakpoints.down("md")]: {
+    paddingTop: "0px"
+  },
+  [theme.breakpoints.down("sm")]: {
+    padding: "10px 0 40px",
+    "& > div:nth-of-type(1)": {
+      "& > div:nth-of-type(1)": {
+        padding: "0 16px"
+      },
+      "& > div:nth-of-type(2)": {
+        "& > div:nth-of-type(2)": {
+          marginTop: "0px"
+        }
+      }
+    },
+    "& > div > div:nth-of-type(2)": {
+      margin: "0 16px"
+    },
+    "& > div > div:nth-of-type(3)": {
+      padding: "0 16px"
+    },
+    marginTop: "0px !important"
   }
-
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    margin-top: 0px !important;
-    .stake-list {
-      padding: 0px 16px;
-    }
-  }
-`;
+}));
 
 export const StyledTabs = styled(Tabs)`
   .MuiTabs-flexContainer {
@@ -27,7 +40,7 @@ export const StyledTabs = styled(Tabs)`
 `;
 
 export const StyledTab = styled(Tab)`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   padding: 0;
   &.Mui-selected {
     color: ${(props) => props.theme.palette.text.primary};
@@ -45,13 +58,10 @@ export const StyledLink = styled(Link)`
 `;
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   display: "block",
-  textAlign: "right",
-  position: "absolute",
+  textAlign: "left",
   width: "max-content",
-  top: 30,
-  right: 24,
   lineHeight: 1,
   marginTop: "0.5rem",
   [theme.breakpoints.down("sm")]: {

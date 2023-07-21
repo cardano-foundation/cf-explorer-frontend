@@ -371,9 +371,7 @@ const Table: React.FC<TableProps> = ({
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange
   });
-  const tableRef = useRef(null);
   const wrapperRef = useRef<HTMLElement>(null);
-  const heightTable = Math.min((tableRef?.current as any)?.clientHeight || 0, 800);
   const toggleSelectAll = (isChecked: boolean) => {
     if (data && isChecked) {
       selectAll(data);
@@ -383,7 +381,7 @@ const Table: React.FC<TableProps> = ({
   };
 
   useEffect(() => {
-    if (wrapperRef.current) {
+    if (wrapperRef.current && !loading) {
       wrapperRef.current.scrollTop = 0;
     }
   }, [loading]);
@@ -409,11 +407,10 @@ const Table: React.FC<TableProps> = ({
         ref={wrapperRef}
         maxHeight={maxHeight}
         minHeight={(!data || data.length === 0) && !loading ? 360 : loading ? 400 : 150}
-        height={heightTable}
         className={data && data.length !== 0 ? "table-wrapper" : "hide-scroll"}
         loading={loading ? 1 : 0}
       >
-        <TableFullWidth ref={tableRef}>
+        <TableFullWidth>
           <TableHeader
             columns={columns}
             loading={loading}
@@ -606,16 +603,16 @@ const PaginationCustom = ({
 };
 
 const StartPageIcon = styled(StartPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400]
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[300]
 }));
 const EndPageIcon = styled(EndPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400]
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[300]
 }));
 const NextPageIcon = styled(NextPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400]
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[300]
 }));
 const PrevPageIcon = styled(PrevPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[400]
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[300]
 }));
 
 function useSelection<T>({ onSelectionChange }: { onSelectionChange?: (items: T[]) => void }) {

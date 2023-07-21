@@ -12,6 +12,7 @@ import { getEventType } from "src/components/StakekeySummary";
 import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
+
 import { EVENTS_NAME, ReportType } from "./FilledInfoModal";
 import {
   Container,
@@ -108,7 +109,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
       )
     },
     {
-      label: isPoolReport ? "Pool ID" : "Stake key details",
+      label: isPoolReport ? "Pool ID" : "Stake address details",
       value: (
         <CustomTooltip title={params.address}>
           <TextOverFlow>{params.address}</TextOverFlow>

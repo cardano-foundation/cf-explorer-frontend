@@ -22,7 +22,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
       <Box data-testid="modal-testid" height={"100%"}>
         <Box
           textAlign={"left"}
-          color={({ palette }) => palette.grey[700]}
+          color={({ palette }) => palette.grey[400]}
           fontSize="1.5rem"
           fontWeight="bold"
           fontFamily={'"Roboto", sans-serif '}
@@ -49,7 +49,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
                 <CopyButton text={data?.policyId || ""} />
               </Box>
               <Box>
-                <Box component={"span"} color={({ palette }) => palette.grey[500]}>
+                <Box component={"span"} color={({ palette }) => palette.grey[300]}>
                   Total Token:
                 </Box>
                 <Box
@@ -57,13 +57,13 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
                   component={"span"}
                   ml={2}
                   fontWeight="bold"
-                  color={({ palette }) => palette.common.black}
+                  color={({ palette }) => palette.text.primary}
                 >
                   {data?.totalToken || 0}
                 </Box>
               </Box>
               <Box>
-                <Box data-testid="policy-script" mb={1} color={({ palette }) => palette.grey[500]}>
+                <Box data-testid="policy-script" mb={1} color={({ palette }) => palette.grey[300]}>
                   Policy script:
                 </Box>
                 <ViewJson>

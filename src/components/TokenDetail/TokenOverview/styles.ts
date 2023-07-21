@@ -10,7 +10,7 @@ export const HeaderDetailContainer = styled(Container)`
 `;
 
 export const WrapTitle = styled(Box)(({ theme }) => ({
-  opacity: 0.5,
+  color: theme.palette.grey[300],
   [theme.breakpoints.down("md")]: {
     paddingBottom: "4px"
   }
@@ -99,7 +99,7 @@ export const Icon = styled("img")`
 `;
 
 export const PolicyId = styled(Box)(({ theme }) => ({
-  color: theme.palette.common.black,
+  color: theme.palette.grey[400],
   fontSize: "1rem",
   fontWeight: "bold",
   wordBreak: "break-word",
@@ -325,7 +325,7 @@ export const TokenHeader = styled(Box)(({ theme }) => ({
   alignItems: "center",
   fontWeight: "bold",
   marginBottom: theme.spacing(2),
-  color: theme.palette.common.black,
+  color: theme.palette.grey[400],
   overflowWrap: "anywhere"
 }));
 
@@ -333,17 +333,25 @@ export const TokenDescription = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "left",
   fontSize: "0.75rem",
-  color: alpha(theme.palette.common.black, 0.5),
+  color: theme.palette.grey[300],
   flexDirection: "column"
 }));
 
 export const TokenUrl = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(1),
-  cursor: "pointer"
+  cursor: "pointer",
+  fontWeight: "bold",
+  color: `${theme.palette.secondary.main} !important`,
+  fontFamily: "Roboto, sans-serif !important",
+  textAlign: "left",
+  wordBreak: "break-all",
+  fontSize: "12px",
+  display: "inline-block",
+  textDecoration: "underline !important"
 }));
 
 export const PolicyScriptBtn = styled(Button)(({ theme }) => ({
-  color: theme.palette.primary.main,
+  color: `${theme.palette.secondary.main} !important`,
   fontFamily: '"Roboto", sans-serif',
   fontSize: "14px",
   border: "none",
@@ -353,5 +361,9 @@ export const PolicyScriptBtn = styled(Button)(({ theme }) => ({
   marginTop: theme.spacing(1),
   justifyContent: "flex-start",
   textAlign: "left",
-  cursor: "pointer"
+  cursor: "pointer",
+  fontWeight: "bold",
+  wordBreak: "break-all",
+  display: "inline-block",
+  textDecoration: "underline !important"
 }));

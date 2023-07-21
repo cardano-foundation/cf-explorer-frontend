@@ -39,3 +39,16 @@ interface ITokenMintingTable {
   amount: number;
   time: string;
 }
+
+interface TokensSearch {
+  createdOn: string;
+  displayName: string;
+  fingerprint: string;
+  name: string;
+  numberOfHolders: number;
+  policy: string;
+  supply: string;
+  totalVolume: string;
+  txCount: number;
+  volumeIn24h: string;
+}

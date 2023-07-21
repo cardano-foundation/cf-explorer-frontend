@@ -6,7 +6,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
-import { FilterParams } from "src/components/StackingFilter";
+import { FilterParams } from "src/components/commons/CustomFilter";
 import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
 import { AdaValue } from "src/components/commons/ADAValue";
@@ -20,17 +20,13 @@ const WithdrawalHistoryTab = () => {
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
   const [sort, setSort] = useState<string>("");
-  const [params] = useState<FilterParams>({
-    fromDate: undefined,
-    sort: undefined,
-    toDate: undefined,
-    txHash: undefined
-  });
+  const [params] = useState<FilterParams>({});
   const fetchData = useFetchList<WithdrawalHistoryItem>(
     reportId ? API.REPORT.SREPORT_DETAIL_WITHDRAWALS(reportId) : "",
     {
       ...pageInfo,
       ...params,
+      txHash: params.search,
       sort: sort || params.sort
     }
   );
@@ -47,7 +43,7 @@ const WithdrawalHistoryTab = () => {
       )
     },
     {
-      title: "Timestamp",
+      title: "Created At",
       key: "time",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
