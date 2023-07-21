@@ -1,13 +1,13 @@
 import { IRisLogo } from "src/commons/resources";
 
-import { ContainerReffer, TextReffer, Content } from "./styles";
+import { ContainerReffer, TextReffer, Content, TextHeader, TextBold } from "./styles";
 
 const Policy = () => {
   return (
     <ContainerReffer>
       <IRisLogo />
       <Content>
-        <TextReffer>Terms of Service - Iris.cardano.org</TextReffer>
+        <TextHeader>Terms and Service - Iris.cardano.org</TextHeader>
 
         <TextReffer>PLEASE READ THESE TERMS OF SERVICE CAREFULLY.</TextReffer>
 
@@ -34,9 +34,10 @@ const Policy = () => {
         <TextReffer>
           2. Using the Services
           <br />
-          Eligibility: You represent and warrant that you: (a) are of legal age to form a binding contract; (b) have not
-          previously been suspended or removed from using our Services; and (c) have full power and authority to enter
-          into this agreement and in doing so will not violate any other agreement to which you are a party.
+          &ensp;<TextBold> a. Eligibility</TextBold>: You represent and warrant that you: (a) are of legal age to form a
+          binding contract; (b) have not previously been suspended or removed from using our Services; and (c) have full
+          power and authority to enter into this agreement and in doing so will not violate any other agreement to which
+          you are a party.
         </TextReffer>
 
         <TextReffer>
@@ -44,18 +45,18 @@ const Policy = () => {
           (i) such legal entity is duly organized and validly existing under the applicable laws of the jurisdiction of
           its organization, and (ii) you are duly authorized by such legal entity to act on its behalf.
           <br />
-          Service Changes: We reserve the right to make changes or updates to the Services at any time without notice,
-          for any reason at our sole discretion
+          &ensp;<TextBold>b. Service Changes</TextBold>: We reserve the right to make changes or updates to the Services
+          at any time without notice, for any reason at our sole discretion
         </TextReffer>
 
         <TextReffer>
-          Privacy Policy: By using the Services in any way, you understand and acknowledge that the terms of the Privacy
-          Policy apply to you.
+          &ensp;<TextBold>c. Privacy Policy</TextBold>: By using the Services in any way, you understand and acknowledge
+          that the terms of the Privacy Policy apply to you.
         </TextReffer>
 
         <TextReffer>
-          Feedback: We welcome your feedback and suggestions about how to improve the Services. Feel free to submit any
-          feedback or suggestions at iris.support@cardanofoundation.atlassian.net
+          &ensp;<TextBold>d. Feedback</TextBold>: We welcome your feedback and suggestions about how to improve the
+          Services. Feel free to submit any feedback or suggestions at iris.support@cardanofoundation.atlassian.net
         </TextReffer>
 
         <TextReffer>

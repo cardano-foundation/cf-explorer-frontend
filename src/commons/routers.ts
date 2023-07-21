@@ -44,7 +44,7 @@ export const routers = {
   REPORT_GENERATED_POOL_DETAIL: "/report-generated/:reportId/pool",
   POLICY: "/policy",
   FAQ: "/faq",
-  TERM_OF_SERVICE: "/terms-of-service",
+  TERMS_AND_CONDITIONS: "/terms-and-conditions",
   NOT_FOUND: "/*"
 } as const;
 
