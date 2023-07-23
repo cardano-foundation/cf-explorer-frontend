@@ -14,6 +14,8 @@ const btnBack = "//small[text()='Back']"
 const labelTransactionDetial = "//div[text()='Transaction details']"
 const labelBlockDetail = "//div[text()='Block details']"
 const labelEpochDetail = "//div[text()='Epoch details']"
+const labelAddressDetail = "//div[text()='Address Details']"
+const labelStakeAddressDetail = "//div[text()='Stake Address Details']"
 const tabListTitle = "//div[@role='tablist']//div[text()='Delegation History']/ancestor::button"
 const listBoxNumberPage = "ul[role='listbox'] li"
 const listRecoredInPage = "//table//tr[@class]"
@@ -25,6 +27,29 @@ const listBtnNextAndPre = "(//li//button)"
 const txbNumberPage = "(//li//input)"
 const rangeOfPage = "//li//input/following-sibling::span"
 const fullTxHash = "//button[@aria-label='Copy']/preceding-sibling::span"
+
+const stakeKeySideBar = "//button[@aria-label='Copy']/preceding-sibling::a"
+const delegatedToSideBar = "//small[text()='Delegated to']/parent::div/following-sibling::a"
+const btnViewDetailSideBar = "//a[text()='View Details']"
+const btnCoppyStakeSideBar = "//button[@aria-label='Copy']"
+const tagStatus = "//small[text()='Status']/parent::div/following-sibling::small/small"
+const rewardAvailable = "//small[text()='Reward available']/parent::div/following-sibling::small"
+const rewardWithdrawn = "//small[text()='Reward withdrawn']/parent::div/following-sibling::small"
+const totalStake = "//small[text()='Total Stake']/parent::div/following-sibling::small"
+const delegationHistorySideBar = "//h4[text()='Delegation History']/ancestor::a"
+const stakeAddressHistorySideBar = "//h4[text()='Stake Address History']/ancestor::a"
+const withdrawalHistorySideBar = "//h4[text()='Withdrawal History']/ancestor::a"
+const instantaneousRewardSideBar = "//h4[text()='Instantaneous Rewards']/ancestor::a"
+const labelOfPool = "h2[aria-label]"
+const titlePoolId = "//small[text()='Pool Id: ']"
+const btnViewAllAdressSideBar = "//button[text()='View all addresses']"
+const labelAddressList = "//div[text()='Addresses list']"
+const btnCloseAddressList = "//button[@data-testid='close-modal-button']"
+const columnAddress = "//tr//th[text()='Addresses']"
+const columnBalance = "//tr//th[text()='Balance']"
+const tabList = "//div[@role='tablist']//div[text()='{0}']/ancestor::button"
+
+
 export default class EpochPanel extends WebApi{
     constructor(){
       super();
@@ -303,7 +328,182 @@ export default class EpochPanel extends WebApi{
 
     checkInputNumberPageMoreThanMax(){
         cy.clickElement(listBtnNextAndPre+"[4]")
+        return this;
+    }
 
+    clickRecordRandom(){
+        cy.clickElementRandomly(listRecoredInPage)
+        return this;
+    }
+
+    checkStakeKeySideBarIsHyperLink(){
+        cy.xpath(stakeKeySideBar).should('match', 'a')
+        cy.xpath(stakeKeySideBar).then(($element)=>{
+            expect($element).to.have.prop('href').and.not.to.be.empty;
+        })
+        return this;
+    }
+
+    checkDisplayFullStakeKey(lengthOfStakeKey:number){
+        cy.xpath(stakeKeySideBar).invoke('text').should('have.length', lengthOfStakeKey)
+        return this;
+    }
+
+    checkDelegationToSideBarIsHyperLink(){
+        cy.xpath(delegatedToSideBar).should('match', 'a')
+        cy.xpath(delegatedToSideBar).then(($element)=>{
+            expect($element).to.have.prop('href').and.not.to.be.empty;
+        })
+        return this;
+    }
+
+    checkButtonCoppyIsEnable(){
+        cy.xpath(btnCoppyStakeSideBar).verifyElementEnabled()
+        return this;
+    }
+
+    checkButtonViewDetailIsEnable(){
+        cy.xpath(btnViewDetailSideBar).verifyElementEnabled()
+        return this;
+    }
+
+    checkElementInSideBarIsDisplay(){
+        cy.verifyElementDisplay(tagStatus)
+        cy.verifyElementDisplay(delegatedToSideBar)
+        cy.verifyElementDisplay(stakeAddressHistorySideBar)
+        cy.verifyElementDisplay(withdrawalHistorySideBar)
+        cy.verifyElementDisplay(instantaneousRewardSideBar)
+        return this;
+    }
+
+    checkRewardAvailable(){
+        cy.xpath(rewardAvailable).invoke('text').then(text=>{
+            const characterEnd = text.slice(-1);
+            const numberOfReward = text.slice(-text.length, -1);
+            expect(characterEnd).to.equal('₳')
+            const isNumber = !isNaN(Number(numberOfReward))
+            cy.wrap(isNumber).should('be.true')
+        })
+        return this;
+    }
+
+    checkRewardWithdrawn(){
+        cy.xpath(rewardWithdrawn).invoke('text').then(text=>{
+            const characterEnd = text.slice(-1);
+            const numberOfReward = text.slice(-text.length, -1);
+            expect(characterEnd).to.equal('₳')
+            const isNumber = !isNaN(Number(numberOfReward))
+            cy.wrap(isNumber).should('be.true')
+        })
+        return this;
+    }
+
+    checkFormatDelegatedTo(){
+        cy.xpath(delegatedToSideBar).invoke('text').then(text=>{
+            const hasDashOrEllipsis = text.includes("-") || text.includes("...")
+            cy.wrap(hasDashOrEllipsis).should('be.true')
+        })
+        return this;
+    }
+
+    checkTotalStake(){
+        cy.xpath(totalStake).invoke('text').then(text=>{
+            const characterEnd = text.slice(-1);
+            const numberOfStake = text.slice(-text.length, -1);
+            expect(characterEnd).to.equal('₳')            
+            const isNumber = !isNaN(parseFloat(numberOfStake))
+            cy.wrap(isNumber).should('be.true')
+        })
+        return this;
+    }
+
+    checkClickOnStakeKeySideBar(){
+        cy.clickElement(stakeKeySideBar)
+        cy.verifyElementDisplay(labelStakeAddressDetail)
+        return this;
+    }
+
+    checkClickOnDelegatedToSideBar(){
+        cy.clickElement(delegatedToSideBar)
+        cy.verifyElementDisplay(titlePoolId)
+        return this;
+    }
+
+    checkHoverOnDelegatedToSideBar(){
+        cy.hoverToElement(delegatedToSideBar)
+        cy.verifyElementDisplay(labelFullWhenHoverOn)
+        return this;
+    }
+
+    checkClickOnViewAllAddress(){
+        cy.clickElement(btnViewAllAdressSideBar)
+        cy.verifyElementDisplay(labelAddressList)
+        cy.verifyElementDisplay(columnAddress)
+        cy.verifyElementDisplay(columnBalance)
+        cy.verifyElementDisplay(btnCloseAddressList)
+        cy.xpath(btnCloseAddressList).verifyElementEnabled()
+        cy.clickElement(btnCloseAddressList)
+        return this;
+    }
+
+    checkClickOnAddress(){
+        cy.clickElement(btnViewAllAdressSideBar)
+        return this;
+    }
+
+    checkClickOnDelegationHistorySideBar(){
+        cy.clickElement(delegationHistorySideBar)
+        cy.verifyElementDisplay(titlePoolId)
+        return this;
+    }
+    
+    checkClickOnDelegationHistory(){
+        cy.clickElement(delegationHistorySideBar)
+        cy.xpath(format(tabList, "Delegation History")).should('have.attr', 'aria-selected', 'true')
+        cy.clickElement(btnBack)
+        return this;
+    }
+
+    checkClickOnStakeAddressHistory(){
+        cy.clickElement(stakeAddressHistorySideBar)
+        cy.xpath(format(tabList, "Stake Address History")).should('have.attr', 'aria-selected', 'true')
+        cy.clickElement(btnBack)
+        return this;
+    }
+
+    checkClickOnWithrawalHistory(){
+        cy.clickElement(withdrawalHistorySideBar)
+        cy.xpath(format(tabList, "Withdrawal History")).should('have.attr', 'aria-selected', 'true')
+        cy.clickElement(btnBack)
+        return this;
+    }
+
+    
+    checkClickOnInstantaneousReward(){
+        cy.clickElement(instantaneousRewardSideBar)
+        cy.xpath(format(tabList, "Instantaneous Rewards")).should('have.attr', 'aria-selected', 'true')
+        cy.clickElement(btnBack)
+        return this;
+    }
+
+    checkHoverOnButtonCoppy(){
+        cy.hoverToElement(btnCoppyStakeSideBar)
+        cy.verifyElementDisplay(labelFullWhenHoverOn)
+        return this;
+    }
+
+    checkCoppyStakeAddress(){
+        cy.clickElement(btnCoppyStakeSideBar)
+        cy.xpath(labelFullWhenHoverOn).invoke('text').then(text=>{
+            expect(text).to.equal('Copied')
+        })
+        return this;
+    }
+
+    checkClickOnButtonViewDetail(){
+        cy.clickElement(btnViewDetailSideBar)
+        cy.verifyElementDisplay(labelStakeAddressDetail)
+        cy.clickElement(btnBack)
         return this;
     }
 }
