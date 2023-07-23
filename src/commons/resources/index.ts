@@ -74,7 +74,6 @@ import txInputIconUrl from "./icons/txInput.svg";
 import txOutputIconUrl from "./icons/txOutput.svg";
 import totalOutputUrl from "./icons/totalOutput.svg";
 import CopyIconSquareUrl from "./images/copy.svg";
-import ADALogoUrl from "./icons/ada-logo.svg";
 import fileGuardUrl from "./icons/file-guard.svg";
 import DelegationIconUrl from "./icons/delegationIcon.svg";
 import RewardsDistributionIconUrl from "./icons/rewardsDistribution.svg";
@@ -82,6 +81,7 @@ import StakeCertificatesIconUrl from "./icons/stakeCertificateIcon.svg";
 import ProtocolUpdateIconUrl from "./icons/protocolUpdateIcon.svg";
 import InstantaneousHistoryIconUrl from "./icons/instantaneousHistoryIcon.svg";
 import MetadataIconUrl from "./icons/metadataIcon2.svg";
+import ADALogoUrl from "./icons/ada-logo.svg";
 
 export {
   LogoFullIcon,
@@ -287,3 +287,4 @@ export { ReactComponent as RewardsAvailableIcon } from "./icons/rewards-availabl
 export { ReactComponent as StatusIcon } from "./icons/status-ic.svg";
 export { ReactComponent as RedeemerPlusIcon } from "./icons/redeemer-plus.svg";
 export { ReactComponent as RedeemerArrowDownIcon } from "./icons/redeemer-arrow-down.svg";
+export { ReactComponent as IRisLogo } from "./icons/iris-logo.svg";

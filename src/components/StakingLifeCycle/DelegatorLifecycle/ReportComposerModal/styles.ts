@@ -219,7 +219,11 @@ export const TextOverFlow = styled(Box)`
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
+<<<<<<< HEAD
   color: ${(props) => props.theme.palette.secondary.main};
+=======
+  color: ${(props) => props.theme.palette.grey[400]};
+>>>>>>> sota-test
   width: max-content;
   text-align: right;
   margin-left: auto;

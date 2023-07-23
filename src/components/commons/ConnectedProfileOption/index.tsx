@@ -55,8 +55,8 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
       // setUser({ ...user, userData: {} });
       if (window.location.pathname.includes("report-generated")) {
         history.push(routers.STAKING_LIFECYCLE);
-      } else if (window.location.pathname.includes(routers.MY_PROFILE)) {
-        history.push(routers.HOME);
+      } else if (window.location.pathname.includes(routers.ACCOUNT)) {
+        history.replace(routers.HOME);
       } else {
         window.location.reload();
       }

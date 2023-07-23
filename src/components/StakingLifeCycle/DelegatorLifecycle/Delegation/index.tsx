@@ -9,7 +9,6 @@ import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "src/commons/resources
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
-import { FilterParams } from "src/components/StackingFilter";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import StyledModal from "src/components/commons/StyledModal";
@@ -28,12 +27,6 @@ interface CertificateItemType {
 
 const Delegation = () => {
   const [selected, setSelected] = useState<DelegationItem | null>(null);
-  const [params, setParams] = useState<FilterParams>({
-    fromDate: undefined,
-    sort: undefined,
-    toDate: undefined,
-    txHash: undefined
-  });
   const handleSelect = (delegation: DelegationItem | null) => {
     setSelected(delegation);
   };
@@ -42,12 +35,7 @@ const Delegation = () => {
 
   return (
     <Box>
-      <RecentDelegations
-        onSelect={handleSelect}
-        params={params}
-        setParams={setParams}
-        setShowBackButton={setShowBackButton}
-      />
+      <RecentDelegations onSelect={handleSelect} setShowBackButton={setShowBackButton} />
       {selected && <DelegationTimeline selected={selected} showBackButton={showBackButton} />}
     </Box>
   );
@@ -162,16 +150,14 @@ export const DelegationTimeline = ({ selected, showBackButton = false }: Props) 
   );
 };
 
-export const DelegationCertificateModal = ({
-  stake,
-  txHash,
-  ...props
-}: {
+interface DelegationCertificateModalProps {
   stake: string;
   open: boolean;
   txHash: string;
   handleCloseModal: () => void;
-}) => {
+}
+
+export const DelegationCertificateModal = ({ stake, txHash, ...props }: DelegationCertificateModalProps) => {
   const { data } = useFetch<DelegationDetail>((txHash && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stake, txHash)) || "");
 
   const list: CertificateItemType[] = [
@@ -189,9 +175,11 @@ export const DelegationCertificateModal = ({
     {
       label: "Pool Name",
       content: (
-        <LineData>
-          <Link to={details.delegation(data?.poolId || "")}>{data?.poolName || ""}</Link>{" "}
-        </LineData>
+        <CustomTooltip title={data?.poolName || data?.poolId}>
+          <LineData>
+            <Link to={details.delegation(data?.poolId || "")}>{data?.poolName || getShortWallet(data?.poolId)}</Link>{" "}
+          </LineData>
+        </CustomTooltip>
       )
     },
     {

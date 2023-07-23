@@ -169,12 +169,7 @@ const StakeAnalytics: React.FC = () => {
                     tickLine={false}
                     {...xAxisProps}
                   />
-                  <YAxis
-                    color={theme.palette.secondary.main}
-                    tickFormatter={formatPriceValue}
-                    tickLine={false}
-                    interval={isMobile ? 3 : undefined}
-                  />
+                  <YAxis color={theme.palette.secondary.main} tickFormatter={formatPriceValue} tickLine={false} />
                   <Tooltip content={renderTooltip} cursor={false} />
                   <CartesianGrid vertical={false} strokeWidth={0.33} />
                   <Area

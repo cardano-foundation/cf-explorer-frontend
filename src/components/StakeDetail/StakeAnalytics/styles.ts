@@ -192,7 +192,7 @@ export const TooltipBody = styled(Box)(({ theme }) => ({
   backgroundColor: alpha(theme.palette.secondary[0], 0.8),
   borderRadius: 2,
   padding: 8,
-  border: "1px solid #146635",
+  border: `1px solid ${theme.palette.primary.main}`,
   fontSize: 12,
   color: theme.palette.secondary.main
 }));

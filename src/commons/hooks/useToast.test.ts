@@ -21,7 +21,8 @@ describe("useToast", () => {
       id: expect.any(Number),
       severity: "error",
       message: "Error message",
-      duration: 3000
+      duration: 3000,
+      title: true
     });
     setTimeout(() => {
       expect(removeToast).toHaveBeenCalledWith(expect.any(Number));

@@ -51,11 +51,14 @@ const OverViews: React.FC = () => {
       </Grid>
     );
   }
+  const slot = currentEpoch?.slot || 0;
+  const countdown = MAX_SLOT_EPOCH - slot;
 
-  const duration = moment.duration(data?.countDownEndTime ? data.countDownEndTime : 0, "millisecond");
+  const duration = moment.duration(countdown ? countdown : 0, "second");
   const days = duration.days();
   const hours = duration.hours();
   const minutes = duration.minutes();
+  const seconds = duration.seconds();
   return (
     <Card title="Stake Pool">
       <TimeDuration>
@@ -72,7 +75,8 @@ const OverViews: React.FC = () => {
                 <StyledCard.Comment>
                   {`${days} day${days > 1 ? "s" : ""} `}
                   {`${hours} hour${hours > 1 ? "s" : ""} `}
-                  {`${minutes} minute${minutes > 1 ? "s" : ""}`}
+                  {`${minutes} minute${minutes > 1 ? "s" : ""} `}
+                  {`${seconds} second${seconds > 1 ? "s" : ""}`}
                 </StyledCard.Comment>
               </Box>
             </StyledCard.Content>
