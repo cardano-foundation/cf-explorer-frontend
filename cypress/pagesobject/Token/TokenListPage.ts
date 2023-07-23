@@ -53,7 +53,7 @@ const perPageSelect = "//div[@id='menu-']/div[@class]/ul/li";
 const xpathTotalRecord = "//div[text()='Results']/span"
 const listButtonNextAndPre = "(//ul//button)"
 const currentPage = "//li//input"
-
+const rangeOfPage = "//li//input/following-sibling::span"
 
 export default class TokenListPage extends WebApi{
     constructor(){
@@ -385,7 +385,7 @@ export default class TokenListPage extends WebApi{
     }
 
     checkInputTxbPageTo1FromMax(value:string){
-        cy.xpath(btnPerPage).getTextContent().then(text=>{
+        cy.xpath(perPage).getTextContent().then(text=>{
             const perPage = parseInt(text)
             const numberPage = parseInt(value)
             cy.xpath(currentPage).clear().type(""+numberPage+"").type('{enter}')
