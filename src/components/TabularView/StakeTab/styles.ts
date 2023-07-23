@@ -1,5 +1,5 @@
 import { TabList } from "@mui/lab";
-import { Box, Button, Typography, styled } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => ({
@@ -42,7 +42,7 @@ export const StyledTabList = styled(TabList)(({ theme }) => ({
         background: theme.palette.secondary.light
       },
       "&::-webkit-scrollbar-track": {
-        background: theme.palette.grey[100]
+        background: theme.palette.primary[100]
       }
     }
   },
@@ -71,16 +71,6 @@ export const TableSubContent = styled("span")(({ theme }) => ({
   color: theme.palette.secondary.light,
   fontSize: "0.75rem",
   fontWeight: "var(--font-weight-normal)"
-}));
-
-export const ButtonFilter = styled(Button)(({ theme }) => ({
-  fontWeight: "bold",
-  fontSize: "0.875rem",
-  color: theme.palette.green[200],
-  textTransform: "none",
-  background: "rgba(67, 143, 104, 0.1)",
-  borderRadius: 5,
-  margin: "15px 0 15px 15px"
 }));
 
 export const TextResult = styled(Box)(({ theme }) => ({

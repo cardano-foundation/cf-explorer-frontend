@@ -10,8 +10,8 @@ export const Header = styled(Box)`
   justify-content: space-between;
   font-size: var(--font-size-text-small);
   font-weight: var(--font-weight-bold);
-  color: ${(props) => props.theme.palette.secondary.light};
-  border-bottom: 1px solid ${(props) => alpha(props.theme.palette.common.black, 0.1)};
+  color: ${(props) => props.theme.palette.primary.main};
+  border-bottom: 1px solid ${(props) => props.theme.palette.primary[200]};
   padding-bottom: 8px;
 `;
 
@@ -42,12 +42,6 @@ export const AddressLink = styled(Link)`
   font-family: var(--font-size-text);
   color: ${(props) => props.theme.palette.primary.main} !important;
   margin-right: 8px;
-`;
-
-export const Amount = styled("span")`
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-size-text);
-  color: ${(props) => props.theme.palette.green[200]};
 `;
 
 export const RowMetadata = styled(Box)(({ theme }) => ({

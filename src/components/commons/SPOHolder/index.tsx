@@ -74,7 +74,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
               SPOInfoRef?.current && history.push(details.delegation(poolView));
             }}
           >
-            <SPOInfo fill={theme.palette.green[200]} />
+            <SPOInfo fill={theme.palette.primary.main} />
           </ButtonSPO>
         </CustomTooltip>
         <CustomTooltip
@@ -104,7 +104,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
           }
         >
           <ButtonSPO ref={SPOKeyRef} component={IconButton}>
-            <SPOKey fill={theme.palette.green[200]} />
+            <SPOKey fill={theme.palette.primary.main} />
           </ButtonSPO>
         </CustomTooltip>
       </Box>

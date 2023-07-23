@@ -16,6 +16,7 @@ export const ContractText = styled(Typography)`
   font-weight: 700;
   display: flex;
   justify-content: space-between;
+  color: ${({ theme }) => theme.palette.secondary.main};
   align-items: self-end;
 `;
 
@@ -50,6 +51,7 @@ export const TabElement = styled(Box)<{ isContractPage?: number }>`
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 10px 50px;
+  color: ${(props) => props.theme.palette.secondary.main} !important;
   ${(props) => props.theme.breakpoints.down("sm")} {
     gap: 10px 20px;
   }
@@ -80,6 +82,7 @@ export const TitleText = styled(Typography)`
 
 export const DataTitle = styled(Typography)`
   font-size: 14px;
+  color: ${(props) => props.theme.palette.secondary.main};
 `;
 export const DatumnElement = styled(Box)<{ isContractPage?: number }>`
   background: ${({ isContractPage, theme }) => (isContractPage ? theme.palette.common.white : theme.palette.grey[500])};

@@ -8,7 +8,7 @@ import CustomModal from "src/components/commons/CustomModal";
 export const StyledModal = styled(CustomModal)(() => ({}));
 
 export const TabContainer = styled(Box)(({ theme }) => ({
-  borderBottom: `1px solid ${theme.palette.border.secondary}`
+  borderBottom: `1px solid ${theme.palette.primary[200]}`
 }));
 
 export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => ({
@@ -16,7 +16,7 @@ export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => (
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? theme.palette.green[200] : theme.palette.text.hint,
+  color: active ? theme.palette.primary.main : theme.palette.secondary[600],
   paddingLeft: 8
 }));
 

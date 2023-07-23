@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
 
 export const ContainerReffer = styled(Box)`
-  background: ${(props) => props.theme.palette.grey[40]};
+  background: ${(props) => props.theme.palette.primary[100]};
   text-align: left;
   padding: 30px 55px;
   ${({ theme }) => theme.breakpoints.down("lg")} {

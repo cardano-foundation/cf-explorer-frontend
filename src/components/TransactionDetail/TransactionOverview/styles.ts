@@ -18,21 +18,21 @@ export const ConfirmStatus = styled("small")<{ status?: keyof typeof CONFIRMATIO
   color: ${({ status, theme }) => {
     switch (status) {
       case CONFIRMATION_STATUS.HIGH:
-        return theme.palette.success.main;
+        return theme.palette.success[800];
       case CONFIRMATION_STATUS.MEDIUM:
-        return theme.palette.warning.main;
+        return theme.palette.warning[800];
       default:
-        return theme.palette.error.main;
+        return theme.palette.error[700];
     }
   }};
   background-color: ${({ status, theme }) => {
     switch (status) {
       case CONFIRMATION_STATUS.HIGH:
-        return theme.palette.success.light;
+        return theme.palette.success[100];
       case CONFIRMATION_STATUS.MEDIUM:
-        return theme.palette.warning.light;
+        return theme.palette.warning[100];
       default:
-        return theme.palette.error.light;
+        return theme.palette.error[100];
     }
   }};
   margin-left: 5px;

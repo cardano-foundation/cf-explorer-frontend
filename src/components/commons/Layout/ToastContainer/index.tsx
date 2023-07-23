@@ -30,26 +30,26 @@ const ToastContainer: React.FC = () => {
       case "error": {
         return {
           title: getTitle(title, "Error"),
-          color: theme.palette.error.dark,
-          background: theme.palette.error.light
+          color: theme.palette.error[700],
+          background: theme.palette.error[100]
         };
       }
       case "success": {
         return {
           title: getTitle(title, "Successfully"),
-          color: theme.palette.success.dark,
-          background: theme.palette.success.light
+          color: theme.palette.success[800],
+          background: theme.palette.success[100]
         };
       }
       case "warning": {
         return {
           title: getTitle(title, "Warning"),
-          color: theme.palette.warning.dark,
-          background: theme.palette.warning.light
+          color: theme.palette.warning[800],
+          background: theme.palette.warning[100]
         };
       }
       default: {
-        return { title: getTitle(title, "Info"), color: theme.palette.info.dark, background: theme.palette.info.light };
+        return { title: getTitle(title, "Info"), color: theme.palette.info.main, background: theme.palette.info.dark };
       }
     }
   };
@@ -63,10 +63,10 @@ const ToastContainer: React.FC = () => {
             <StyledAlert
               key={idx}
               iconMapping={{
-                error: <MdOutlineErrorOutline color={theme.palette.error.dark} />,
-                success: <MdOutlineCheckCircleOutline color={theme.palette.success.dark} />,
-                info: <MdInfoOutline color={theme.palette.info.dark} />,
-                warning: <MdOutlineWarningAmber color={theme.palette.info.dark} />
+                error: <MdOutlineErrorOutline color={theme.palette.error[700]} />,
+                success: <MdOutlineCheckCircleOutline color={theme.palette.success[800]} />,
+                info: <MdInfoOutline color={theme.palette.info.main} />,
+                warning: <MdOutlineWarningAmber color={theme.palette.warning[800]} />
               }}
               severity={severity}
               variant="standard"

@@ -1,10 +1,10 @@
-import { Box, MenuItem, Select, alpha, styled } from "@mui/material";
+import { Box, MenuItem, Select, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const CustomSelect = styled(Select)`
   font-family: var(--font-family-text);
-  background: ${(props) => props.theme.palette.background.paper};
-  color: ${(props) => props.theme.palette.text.secondary};
+  background: ${(props) => props.theme.palette.secondary[0]};
+  color: ${(props) => props.theme.palette.secondary.light};
   border-radius: 8px;
   border: 1px solid rgba(152, 162, 179, 0.5);
   height: 35px;
@@ -28,30 +28,24 @@ export const CustomSelect = styled(Select)`
   }
 `;
 
-export const OptionSelect = styled(MenuItem)(({ theme }) => ({
+export const OptionSelect = styled(MenuItem)(() => ({
   textAlign: "center",
   alignItems: "center",
   display: "flex",
   padding: "12px 16px",
   justifyContent: "space-between",
   height: "40px",
-  cursor: "pointer",
-  "&:hover": {
-    background: theme.palette.green[200_10]
-  }
+  cursor: "pointer"
 }));
 
-export const CustomLink = styled(Link)(({ theme }) => ({
+export const CustomLink = styled(Link)(() => ({
   textAlign: "center",
   alignItems: "center",
   display: "flex",
   padding: "12px 16px",
   justifyContent: "space-between",
   height: "40px",
-  cursor: "pointer",
-  "&:hover": {
-    background: theme.palette.green[200_10]
-  }
+  cursor: "pointer"
 }));
 export const TokenButton = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -59,5 +53,5 @@ export const TokenButton = styled(Box)(({ theme }) => ({
   minWidth: 250,
   height: 38,
   borderRadius: theme.spacing(1),
-  border: `1px solid ${alpha(theme.palette.secondary.light, 0.5)}`
+  border: `1px solid ${theme.palette.primary[200]}`
 }));

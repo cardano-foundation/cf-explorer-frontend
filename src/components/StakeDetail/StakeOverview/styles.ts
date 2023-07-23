@@ -9,27 +9,6 @@ export const Status = styled("span")`
   border-radius: 2px;
 `;
 
-export const Active = styled(Status)`
-  background: ${(props) => props.theme.palette.success.light};
-  color: ${(props) => props.theme.palette.success.main};
-`;
-
-export const Deactive = styled(Status)`
-  background: ${(props) => props.theme.palette.green[300_10]};
-  color: ${(props) => props.theme.palette.secondary.light};
-`;
-
-export const Title = styled("div")`
-  display: flex;
-  align-items: center;
-`;
-
-export const Flex = styled("div")`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 export const StyledLink = styled(Link)`
   width: 100%;
   text-overflow: ellipsis;

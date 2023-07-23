@@ -176,7 +176,7 @@ const StakeAnalytics: React.FC = () => {
                     stackId="1"
                     type="monotone"
                     dataKey="value"
-                    stroke={theme.palette.green["300"]}
+                    stroke={theme.palette.primary.main}
                     strokeWidth={4}
                     fill="url(#colorUv)"
                     dot={tab === "BALANCE" ? { r: 2 } : { r: 0 }}

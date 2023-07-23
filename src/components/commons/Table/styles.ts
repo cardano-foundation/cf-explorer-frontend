@@ -129,7 +129,7 @@ export const WrappModalScrollBar = styled(Box)(
       background: ${theme.palette.secondary.light};
     }
     &::-webkit-scrollbar-track {
-      background: ${theme.palette.grey[100]};
+      background: ${theme.palette.primary[100]};
     }
   }
 `
@@ -164,7 +164,7 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string; loading?: numb
       background: ${theme.palette.secondary.light};
     }
     &::-webkit-scrollbar-track {
-      background: ${theme.palette.grey[100]};
+      background: ${theme.palette.primary[100]};
     }
   }
 `

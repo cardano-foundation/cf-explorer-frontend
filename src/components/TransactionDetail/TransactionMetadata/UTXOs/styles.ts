@@ -1,4 +1,4 @@
-import { MenuItem, Select, alpha, Box, styled } from "@mui/material";
+import { Select, alpha, Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const Img = styled("img")(() => ({
@@ -46,7 +46,7 @@ export const ItemFooter = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "center",
   padding: "12px 25px",
-  background: theme.palette.green[300_10],
+  background: theme.palette.primary[100],
   [theme.breakpoints.down("sm")]: {
     padding: "12px 15px"
   }
@@ -121,29 +121,3 @@ export const CustomSelect = styled(Select)`
     border-radius: 8px;
   }
 `;
-
-export const OptionSelect = styled(MenuItem)(({ theme }) => ({
-  textAlign: "center",
-  alignItems: "center",
-  display: "flex",
-  padding: "12px 16px",
-  justifyContent: "space-between",
-  height: "40px",
-  cursor: "pointer",
-  "&:hover": {
-    background: theme.palette.green[200_10]
-  }
-}));
-
-export const CustomLink = styled(Link)(({ theme }) => ({
-  textAlign: "center",
-  alignItems: "center",
-  display: "flex",
-  padding: "12px 16px",
-  justifyContent: "space-between",
-  height: "40px",
-  cursor: "pointer",
-  "&:hover": {
-    background: theme.palette.green[200_10]
-  }
-}));

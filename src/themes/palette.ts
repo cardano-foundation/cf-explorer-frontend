@@ -6,26 +6,12 @@ export const createGradient = (deg: number, startColor: string, endColor: string
   return `linear-gradient(${deg}deg, ${startColor} ${start}%, ${endColor} ${end}%)`;
 };
 
-const GREEN = {
-  100: "#53A57B",
-  200: "#146635",
-  200_10: alpha("#146635", 0.1),
-  300: "#184c78",
-  300_10: alpha("#184c78", 0.1),
-  300_20: alpha("#184c78", 0.2),
-  650: "#434656"
-};
-
 const COMMON = {
   black: "#000000",
   white: "#FFFFFF"
 };
 
 const GREY = {
-  50: "#F7F7F7",
-  40: "#F6F6F6",
-  80: "#F4F4F4",
-  100: "#F2F2F2",
   200: "#E3E5E9",
   300: "#50596D",
   400: "#141520",
@@ -71,14 +57,12 @@ const PURPLE = {
 };
 
 const primary = {
-  light: GREEN[100],
-
   100: "#F6F9FF",
   200: "#D6E2FF",
   500: "#5C8DFF",
   main: "#0033AD",
   dark: "#001F66",
-  contrastText: COMMON.white
+  contrastText: "#fff"
 };
 
 const secondary = {
@@ -101,7 +85,6 @@ const text = {
 
 const border = {
   primary: "#E3E5E9",
-  secondary: GREEN[300_10],
   main: GREY[200],
   disabled: GREY[300],
   hint: "#C8CDD8",
@@ -110,7 +93,7 @@ const border = {
 };
 const background = {
   paper: COMMON.white,
-  default: GREY[50],
+  default: "#F7F7F7",
   neutral: GREY["A200"]
 };
 
@@ -146,10 +129,7 @@ const success = {
   700: "#1EC198",
   800: "#116A54",
   contrastText: COMMON.white,
-
-  light: GREEN[300],
-  main: GREEN[200],
-  dark: GREEN[200]
+  main: "#116A54"
 };
 
 const GRADIENTS = {
@@ -176,7 +156,6 @@ const customPalette = {
   grey: GREY,
   text,
   background,
-  green: GREEN,
   blue: BLUE,
   red: RED,
   yellow: YELLOW,

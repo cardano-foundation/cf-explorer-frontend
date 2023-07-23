@@ -114,7 +114,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                     stackId="1"
                     type="monotone"
                     dataKey={selected === "epochChart" ? "totalStake" : "numberDelegator"}
-                    stroke={theme.palette.green[300]}
+                    stroke={theme.palette.primary.main}
                     strokeWidth={4}
                     fill="url(#colorUv)"
                     activeDot={{ r: 6 }}

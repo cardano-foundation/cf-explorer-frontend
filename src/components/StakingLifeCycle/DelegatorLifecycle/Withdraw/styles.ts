@@ -53,7 +53,7 @@ export const FeeBox = styled(Box)(({ theme }) => ({
 }));
 
 export const IconButton = styled(IconButtonMui)(({ theme }) => ({
-  background: theme.palette.grey[100]
+  background: theme.palette.primary[100]
 }));
 export const IconButtonBack = styled(IconButtonMui)(() => ({
   padding: 0
@@ -92,7 +92,7 @@ export const NetAmount = styled(Box)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.green[200]}`,
+  border: `2px solid ${theme.palette.success[800]}`,
   borderRadius: "10px",
   position: "relative",
   background: theme.palette.common.white,
@@ -106,7 +106,7 @@ export const NetAmount = styled(Box)(({ theme }) => ({
     position: "absolute",
     top: "-50%",
     left: theme.spacing(2),
-    background: theme.palette.green[200],
+    background: theme.palette.success[800],
     transform: " translate(0, 60%)"
   }
 }));
@@ -117,7 +117,7 @@ export const Withdrawn = styled(Box)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.green[200]}`,
+  border: `2px solid ${theme.palette.success[800]}`,
   borderRadius: "10px",
   position: "relative",
   background: theme.palette.common.white,
@@ -131,7 +131,7 @@ export const Withdrawn = styled(Box)(({ theme }) => ({
     position: "absolute",
     top: "-50%",
     left: theme.spacing(2),
-    background: theme.palette.green[200],
+    background: theme.palette.success[800],
     transform: " translate(0, 60%)"
   }
 }));

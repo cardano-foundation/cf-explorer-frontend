@@ -33,6 +33,6 @@ export const TextRightValue = styled("div")`
 export const CardHeader = styled(Box)(({ theme }) => ({
   padding: "15px 0px",
   fontWeight: "bold",
-  color: theme.palette.secondary.light,
-  borderBottom: `1px solid ${theme.palette.border.main}`
+  color: theme.palette.secondary.main,
+  borderBottom: `1px solid ${theme.palette.primary[200]}`
 }));

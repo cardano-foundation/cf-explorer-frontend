@@ -42,7 +42,7 @@ export const StyledTabList = styled(TabList)(({ theme }) => ({
         background: theme.palette.secondary.light
       },
       "&::-webkit-scrollbar-track": {
-        background: theme.palette.grey[100]
+        background: theme.palette.primary[100]
       }
     }
   },
@@ -62,5 +62,5 @@ export const StyledTabList = styled(TabList)(({ theme }) => ({
 }));
 
 export const WrapperTabList = styled(Box)(({ theme }) => ({
-  borderBottom: `1px solid ${theme.palette.border.secondary}`
+  borderBottom: `1px solid ${theme.palette.primary[200]}`
 }));

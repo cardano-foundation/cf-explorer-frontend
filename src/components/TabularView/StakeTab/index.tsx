@@ -43,7 +43,7 @@ const StakeTab: React.FC<StackTabProps> = ({
   return (
     <Box mt={4}>
       <TabContext value={tabActive}>
-        <Box sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.secondary}` }} marginBottom="15px">
+        <Box sx={{ borderBottom: (theme) => `1px solid ${theme.palette.primary[200]}` }} marginBottom="15px">
           <StyledTabList
             onChange={handleChange}
             TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}

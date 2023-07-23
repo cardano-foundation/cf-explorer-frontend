@@ -382,7 +382,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
                               ...(pathname === href
-                                ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
+                                ? { backgroundColor: (theme) => `${theme.palette.success[700]} !important` }
                                 : {}),
                               paddingLeft: "70px",
                               [theme.breakpoints.down("md")]: {

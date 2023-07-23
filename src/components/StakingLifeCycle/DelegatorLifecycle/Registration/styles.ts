@@ -103,7 +103,7 @@ export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
 }));
 
 export const IconButton = styled(IconButtonMui)(({ theme }) => ({
-  background: theme.palette.grey[100]
+  background: theme.palette.primary[100]
 }));
 
 export const IconButtonBack = styled(IconButtonMui)(() => ({

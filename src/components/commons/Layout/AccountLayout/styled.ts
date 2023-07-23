@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const Wrapper = styled(Container)(() => ({}));
 export const ContentBox = styled(Box)(({ theme }) => ({
   display: "flex",
-  background: theme.palette.background.paper,
+  background: theme.palette.secondary[0],
   minHeight: "calc(100vh - 252px)",
   borderTopLeftRadius: 10,
   borderTopRightRadius: 10,
@@ -13,7 +13,7 @@ export const ContentBox = styled(Box)(({ theme }) => ({
   }
 }));
 export const SideBar = styled(Box)(({ theme }) => ({
-  borderRight: `1px solid ${theme.palette.grey[50]}`,
+  borderRight: `1px solid ${theme.palette.primary[200]}`,
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
@@ -82,6 +82,7 @@ export const StyledUsername = styled(Box)`
   padding-left: ${({ theme }) => theme.spacing(1)};
   padding-right: ${({ theme }) => theme.spacing(1)};
   overflow: hidden;
+  color: ${({ theme }) => theme.palette.secondary.main};
   text-overflow: ellipsis;
 `;
 

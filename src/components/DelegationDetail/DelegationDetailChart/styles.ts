@@ -148,7 +148,7 @@ export const AnalyticsTitle = styled("h2")(({ theme }) => ({
   width: "max-content",
   fontSize: "20px",
   color: theme.palette.secondary.main,
-  borderBottom: `2px solid ${theme.palette.green[200]}`,
+  borderBottom: `2px solid ${theme.palette.primary[200]}`,
   [theme.breakpoints.down("sm")]: {
     margin: "30px 0 15px"
   }
@@ -185,7 +185,7 @@ export const TooltipBody = styled(Box)(({ theme }) => ({
   padding: 8,
   border: `1px solid ${theme.palette.primary.main}`,
   fontSize: 12,
-  color: theme.palette.grey[400]
+  color: theme.palette.secondary.main
 }));
 
 export const TooltipLabel = styled(Box)(() => ({

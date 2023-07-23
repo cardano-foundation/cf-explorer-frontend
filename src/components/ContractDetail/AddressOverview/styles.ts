@@ -70,8 +70,9 @@ export const BannerSuccess = styled(Box)`
   font-size: 18px;
   line-height: 21px;
   text-align: center;
-  color: ${(props) => props.theme.palette.common.white};
-  background: ${(props) => props.theme.palette.green[200]};
+  color: ${(props) => props.theme.palette.success[800]};
+  background: ${(props) => props.theme.palette.success[100]};
+  border: ${(props) => props.theme.palette.primary[200]};
   border-radius: 10px;
   width: 100%;
   padding: 12px 0px;

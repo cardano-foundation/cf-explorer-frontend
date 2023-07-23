@@ -233,21 +233,21 @@ export const ConfirmStatus = styled("small")<{ status?: keyof typeof CONFIRMATIO
   color: ${({ status, theme }) => {
     switch (status) {
       case CONFIRMATION_STATUS.HIGH:
-        return theme.palette.success.main;
+        return theme.palette.success[800];
       case CONFIRMATION_STATUS.MEDIUM:
-        return theme.palette.warning.main;
+        return theme.palette.warning[800];
       default:
-        return theme.palette.error.main;
+        return theme.palette.error[700];
     }
   }};
   background-color: ${({ status, theme }) => {
     switch (status) {
       case CONFIRMATION_STATUS.HIGH:
-        return theme.palette.success.light;
+        return theme.palette.success[100];
       case CONFIRMATION_STATUS.MEDIUM:
-        return theme.palette.warning.light;
+        return theme.palette.warning[100];
       default:
-        return theme.palette.error.light;
+        return theme.palette.error[100];
     }
   }};
   margin-left: 10px;
@@ -407,7 +407,7 @@ export const AllowSearchButton = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   width: 35,
   height: 35,
-  backgroundColor: theme.palette.grey[100],
+  backgroundColor: theme.palette.primary[100],
   top: -10,
   right: 0,
   borderRadius: 4,
@@ -423,7 +423,7 @@ export const StyledSelect = styled(Select)(({ theme }) => ({
   left: 0,
   right: 0,
   zIndex: 101,
-  backgroundColor: theme.palette.common.white,
+  backgroundColor: theme.palette.secondary[0],
   borderRadius: 8,
   height: 35,
   fieldset: {
@@ -435,10 +435,7 @@ export const StyledMenuItem = styled(MenuItem)(() => ({
   height: 40,
   display: "flex",
   alignItems: "center",
-  justifyContent: "space-between",
-  "&:hover": {
-    backgroundColor: "rgba(67, 143, 104, 0.1)"
-  }
+  justifyContent: "space-between"
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({

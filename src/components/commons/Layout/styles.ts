@@ -30,7 +30,7 @@ export const Layout = styled(Box)<{ sidebar: number }>`
         background: ${({ theme }) => theme.palette.secondary.light};
       }
       &::-webkit-scrollbar-track {
-        background: ${({ theme }) => theme.palette.grey[100]};
+        background: ${({ theme }) => theme.palette.primary[100]};
       }
     }
     ${({ theme }) => theme.breakpoints.down("sm")} {
