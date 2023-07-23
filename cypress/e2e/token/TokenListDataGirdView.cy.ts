@@ -1,4 +1,4 @@
-import TokenListPage from "../../pagesobject/TokenListPage";
+import TokenListPage from "../../pagesobject/Token/TokenListPage";
 
 const tokenListPage = new TokenListPage();
 it("Check display data of the Token List grid view", () => {

@@ -1,6 +1,6 @@
-import TokenListPage from "cypress/pagesobject/TokenListPage";
+import TokenListPage from "cypress/pagesobject/Token/TokenListPage";
 const tokenListPage = new TokenListPage();
-describe('Check action of "Number items" pulldown',()=>{
+describe('Token list',()=>{
     beforeEach(() => {
         tokenListPage.goToHomePage();
     })
