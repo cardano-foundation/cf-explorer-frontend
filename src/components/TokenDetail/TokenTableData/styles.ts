@@ -126,7 +126,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
         background: theme.palette.secondary.light
       },
       "&::-webkit-scrollbar-track": {
-        background: theme.palette.grey[100]
+        background: theme.palette.primary[100]
       }
     }
   }

@@ -31,7 +31,11 @@ const ParseScriptModal: React.FC<ParseScriptModalProps> = ({ title, script, subT
           {title}
         </Box>
 
-        {subTitle && <Box mb={1}>{subTitle}</Box>}
+        {subTitle && (
+          <Box color={({ palette }) => palette.secondary.main} mb={1}>
+            {subTitle}
+          </Box>
+        )}
         <ViewJson>
           <JsonViewer
             value={script ? script : ""}

@@ -4,19 +4,14 @@ import { Link } from "react-router-dom";
 export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
   width: "100%",
   padding: `0 0 ${theme.spacing(3)}`,
-  borderBottom: `3px solid ${active ? theme.palette.green[200] : theme.palette.grey[200]}`,
+  borderBottom: `3px solid ${active ? theme.palette.primary.main : theme.palette.primary[200]}`,
   [theme.breakpoints.down("sm")]: {
     padding: "16px 30px"
   },
   cursor: "pointer"
 }));
 
-export const StepButton = styled(Box)<{ active: number }>(({ theme, active }) => ({
-  background: active ? theme.palette.green[200] : theme.palette.grey[200],
-  ":hover": {
-    background: active ? theme.palette.green[200] : theme.palette.grey[200]
-  }
-}));
+export const StepButton = styled(Box)<{ active: number }>(() => ({}));
 export const TitleStep = styled(Box)<{ active: number }>(({ theme, active }) => ({
   color: active ? theme.palette.secondary.main : theme.palette.secondary.light,
   fontWeight: "bold",

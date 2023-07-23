@@ -43,7 +43,8 @@ export const AddressLine = styled(Box)(({ theme }) => ({
   color: theme.palette.text.secondary
 }));
 
-export const Label = styled("small")(() => ({
+export const Label = styled("small")(({ theme }) => ({
+  color: theme.palette.secondary.light,
   lineHeight: 1
 }));
 
@@ -103,11 +104,11 @@ export const SwitchGroup = styled(Box)(({ theme }) => ({
 }));
 
 export const ButtonSwitch = styled(IconButton)<{ active: number }>(({ theme, active }) => ({
-  background: active ? theme.palette.green[200] : "transparent",
+  background: active ? theme.palette.primary.main : "transparent",
   width: 38,
   height: 38,
   ":hover": {
-    background: active ? theme.palette.green[200] : theme.palette.green[200_10]
+    background: active ? theme.palette.primary.main : "transparent"
   }
 }));
 

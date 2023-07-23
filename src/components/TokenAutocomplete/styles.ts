@@ -70,7 +70,7 @@ export const StyledTextField = styled(TextField)`
 `;
 
 export const Option = styled("li")<{ active: number }>(({ theme, active }) => ({
-  background: active ? theme.palette.green[200_10] : theme.palette.background.paper
+  background: active ? theme.palette.primary[200] : theme.palette.secondary[0]
 }));
 
 export const Logo = styled("img")`

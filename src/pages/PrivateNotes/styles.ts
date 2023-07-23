@@ -1,4 +1,4 @@
-import { alpha, Box, Button, styled } from "@mui/material";
+import { Box, Button, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 
@@ -14,7 +14,7 @@ export const Header = styled(Box)(({ theme }) => ({
   fontSize: "var(--font-size-text-x-large)",
   fontWeight: "var(--font-weight-bold)",
   paddingBottom: "8px",
-  borderBottom: `1px solid ${alpha(theme.palette.green[300], 0.1)}`,
+  borderBottom: `1px solid ${theme.palette.primary[200]}`,
   [theme.breakpoints.down("sm")]: {
     alignItems: "center"
   }
@@ -22,7 +22,7 @@ export const Header = styled(Box)(({ theme }) => ({
 
 export const Title = styled("span")(({ theme }) => ({
   lineHeight: 1,
-  color: theme.palette.common.black,
+  color: theme.palette.secondary.main,
   [theme.breakpoints.down("sm")]: {
     fontSize: "14px"
   },
@@ -99,7 +99,7 @@ export const ActionButton = styled("button")<{ typeButton: string }>`
   width: 30px;
   height: 30px;
   background-color: ${({ typeButton, theme }) =>
-    typeButton === "View" ? theme.palette.success.light : alpha(theme.palette.error[700], 0.1)};
+    typeButton === "View" ? theme.palette.success[100] : theme.palette.error[100]};
   border-radius: 5px;
   border-width: 0px;
   display: flex;

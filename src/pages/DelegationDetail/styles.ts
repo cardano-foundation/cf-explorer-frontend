@@ -15,5 +15,5 @@ export const DelegationData = styled(Box)`
 `;
 
 export const TabsContainer = styled(Box)(({ theme }) => ({
-  borderBottom: `1px solid ${theme.palette.border.secondary}`
+  borderBottom: `1px solid ${theme.palette.primary[200]}`
 }));

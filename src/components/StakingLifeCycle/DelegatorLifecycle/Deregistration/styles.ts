@@ -6,7 +6,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.green[200]}`,
+  border: `2px solid ${theme.palette.success[800]}`,
   borderRadius: "10px",
   marginRight: theme.spacing(5),
   position: "relative",
@@ -22,7 +22,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
     position: "absolute",
     top: "-50%",
     left: theme.spacing(2),
-    background: theme.palette.green[200],
+    background: theme.palette.success[800],
     transform: " translate(0, 60%)"
   }
 }));
@@ -53,7 +53,7 @@ export const FeeBox = styled(Box)(({ theme }) => ({
 }));
 
 export const IconButton = styled(IconButtonMui)(({ theme }) => ({
-  background: theme.palette.grey[100]
+  background: theme.palette.primary[100]
 }));
 export const IconButtonBack = styled(IconButtonMui)(() => ({
   padding: 0

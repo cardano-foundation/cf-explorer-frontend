@@ -23,7 +23,7 @@ export const CopyContainer = styled(Box)`
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: ${(props) => props.theme.palette.grey[100]};
+  background: ${(props) => props.theme.palette.primary[100]};
   display: flex;
   align-items: center;
   justify-content: center;

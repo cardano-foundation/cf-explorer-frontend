@@ -53,7 +53,7 @@ export const FeeBox = styled(Box)(({ theme }) => ({
 }));
 
 export const IconButton = styled(IconButtonMui)(({ theme }) => ({
-  background: theme.palette.grey[100]
+  background: theme.palette.primary[100]
 }));
 export const IconButtonBack = styled(IconButtonMui)(() => ({
   padding: 0

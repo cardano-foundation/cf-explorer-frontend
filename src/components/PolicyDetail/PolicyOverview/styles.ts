@@ -10,13 +10,8 @@ export const Status = styled("span")`
 `;
 
 export const Active = styled(Status)`
-  background: ${(props) => props.theme.palette.success.light};
-  color: ${(props) => props.theme.palette.success.main};
-`;
-
-export const Deactive = styled(Status)`
-  background: ${(props) => props.theme.palette.green[300_10]};
-  color: ${(props) => props.theme.palette.secondary.light};
+  background: ${(props) => props.theme.palette.success[100]};
+  color: ${(props) => props.theme.palette.success[800]};
 `;
 
 export const Title = styled("div")`
@@ -52,7 +47,7 @@ export const BackButton = styled("button")`
   }
 `;
 export const BackText = styled("small")`
-  color: ${(props) => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.secondary.light};
   font-weight: var(--font-weight-bold);
 `;
 
@@ -62,7 +57,7 @@ export const HeaderContainer = styled(Box)`
 `;
 
 export const HeaderTitle = styled("h2")`
-  color: ${(props) => props.theme.palette.common.black};
+  color: ${(props) => props.theme.palette.secondary.main};
   font-size: 2.25rem;
   margin: 0.5rem 0;
 `;

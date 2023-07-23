@@ -114,7 +114,7 @@ export const XSmall = styled("span")`
 `;
 
 export const Value = styled(Small)<{ down?: number }>`
-  color: ${(props) => (props.down ? props.theme.palette.error.main : props.theme.palette.success.main)};
+  color: ${(props) => (props.down ? props.theme.palette.error.main : props.theme.palette.success[800])};
 `;
 export const XValue = styled(XSmall)<{ down?: number }>`
   color: ${(props) => (props.down ? props.theme.palette.error[700] : props.theme.palette.success[800])};

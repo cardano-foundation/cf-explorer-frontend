@@ -80,13 +80,13 @@ export const Header = styled(Box)(({ theme }) => ({
   }
 }));
 export const BoxHeaderTop = styled(Box)(({ theme }) => ({
-  color: theme.palette.text.dark,
+  color: theme.palette.secondary.main,
   fontSize: "1rem",
   lineHeight: "19px",
   marginBottom: "2px"
 }));
 export const BoxHeaderBottom = styled(Box)(({ theme }) => ({
-  color: theme.palette.grey[500],
+  color: theme.palette.secondary.light,
   display: "flex",
   justifyContent: "space-between"
 }));
@@ -96,7 +96,7 @@ export const ItemFooter = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "center",
   padding: "12px 25px",
-  background: theme.palette.green["30010"],
+  background: theme.palette.primary[200],
   [theme.breakpoints.down("sm")]: {
     padding: "12px 15px"
   }

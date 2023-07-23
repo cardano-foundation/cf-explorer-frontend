@@ -87,7 +87,9 @@ const Card = ({
                               </Box>
                             </CustomTooltip>
                           </Link>
-                          <Box fontWeight={"bold"}>#{item?.index}</Box>
+                          <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
+                            #{item?.index}
+                          </Box>
                           <CopyButton text={item.txHash} />
                         </Box>
                       </Box>
@@ -180,7 +182,7 @@ const Card = ({
                     <Box
                       component={"span"}
                       whiteSpace="nowrap"
-                      color={(theme) => (type === "up" ? theme.palette.green[200] : theme.palette.error[700])}
+                      color={(theme) => (type === "up" ? theme.palette.success[800] : theme.palette.error[700])}
                       fontWeight="bold"
                       mr={1}
                     >

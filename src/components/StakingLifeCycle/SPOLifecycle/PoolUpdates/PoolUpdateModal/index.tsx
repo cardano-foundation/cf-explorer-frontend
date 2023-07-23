@@ -105,7 +105,7 @@ export const PoolUpdateModal = ({ data, open, ...props }: Props) => {
                   value={key}
                   label={
                     <TabItem>
-                      <Icon fill={key === tabActive ? theme.palette.green[200] : theme.palette.secondary.light} />
+                      <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.secondary[600]} />
                       <TitleTab pl={1} active={+(key === tabActive)}>
                         {label}
                       </TitleTab>

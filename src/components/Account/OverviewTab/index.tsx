@@ -150,7 +150,12 @@ const OverviewTab = () => {
                   />
                 )}
                 {!loading ? (
-                  <Box color={theme.palette.green[200]} component={GoCheck} size={"24px"} onClick={handleSubmitEmail} />
+                  <Box
+                    color={theme.palette.success[800]}
+                    component={GoCheck}
+                    size={"24px"}
+                    onClick={handleSubmitEmail}
+                  />
                 ) : (
                   <CircularProgress size={"24px"} />
                 )}

@@ -54,7 +54,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
         background: theme.palette.secondary.light
       },
       "&::-webkit-scrollbar-track": {
-        background: theme.palette.grey[100]
+        background: theme.palette.primary[100]
       }
     }
   }
@@ -62,7 +62,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
 
 export const ButtonLink = styled(Link)(({ theme }) => ({
   fontWeight: "bold",
-  color: `${theme.palette.secondary.main} !important`,
+  color: `${theme.palette.primary.main} !important`,
   fontFamily: "Roboto, sans-serif !important",
   textAlign: "left",
   wordBreak: "break-all",

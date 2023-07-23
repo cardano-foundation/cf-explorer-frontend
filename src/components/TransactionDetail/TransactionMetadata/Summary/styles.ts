@@ -39,32 +39,6 @@ export const CustomSelect = styled(Select)`
   }
 `;
 
-export const OptionSelect = styled(MenuItem)(({ theme }) => ({
-  textAlign: "center",
-  alignItems: "center",
-  display: "flex",
-  padding: "12px 16px",
-  justifyContent: "space-between",
-  height: "40px",
-  cursor: "pointer",
-  "&:hover": {
-    background: theme.palette.green[200_10]
-  }
-}));
-
-export const CustomLink = styled(Link)(({ theme }) => ({
-  textAlign: "center",
-  alignItems: "center",
-  display: "flex",
-  padding: "12px 16px",
-  justifyContent: "space-between",
-  height: "40px",
-  cursor: "pointer",
-  "&:hover": {
-    background: theme.palette.green[200_10]
-  }
-}));
-
 export const TokenLink = styled(Link)(({ theme }) => ({
   margin: "0px 4px",
   textTransform: "uppercase",

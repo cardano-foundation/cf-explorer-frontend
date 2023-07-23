@@ -55,7 +55,7 @@ export const WrapContent = styled(Box)`
       background: ${(props) => props.theme.palette.secondary.light};
     }
     &::-webkit-scrollbar-track {
-      background: ${(props) => props.theme.palette.grey[100]};
+      background: ${(props) => props.theme.palette.primary[100]};
     }
   }
 `;

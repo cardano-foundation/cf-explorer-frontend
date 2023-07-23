@@ -69,7 +69,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
                   background: theme.palette.secondary.light
                 },
                 "&::-webkit-scrollbar-track": {
-                  background: theme.palette.grey[100]
+                  background: theme.palette.primary[100]
                 }
               }
             };

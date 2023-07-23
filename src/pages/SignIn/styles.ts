@@ -37,7 +37,7 @@ export const WrapContent = styled(Box)`
 export const WrapTitle = styled(Box)`
   font-size: 36px;
   font-weight: 700;
-  color: ${({ theme }) => theme.palette.text.primary};
+  color: ${({ theme }) => theme.palette.secondary.main};
   line-height: 42px;
 `;
 
@@ -134,6 +134,9 @@ export const WrapButton = styled(Button)`
   font-size: 16px;
   line-height: 19px;
   text-align: center;
+  &:hover {
+    background: ${({ theme }) => theme.palette.secondary.main};
+  }
 `;
 
 export const WrapButtonConnectWallet = styled(Button)`

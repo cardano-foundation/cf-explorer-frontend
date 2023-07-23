@@ -76,7 +76,7 @@ const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
 }));
 
 const Button = styled(IconButton)<{ over?: number; sidebar?: number }>(({ theme, over, sidebar }) => ({
-  background: theme.palette.grey[100],
+  background: theme.palette.primary[100],
   [theme.breakpoints.down(over ? (sidebar ? "xl" : "lg") : "sm")]: {
     padding: 3
   }

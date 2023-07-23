@@ -270,9 +270,6 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                           "&:hover": {
                             "&::-webkit-scrollbar-thumb": {
                               background: theme.palette.secondary.light
-                            },
-                            "&::-webkit-scrollbar-track": {
-                              background: theme.palette.grey[100]
                             }
                           }
                         }
@@ -291,11 +288,15 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                           key={index}
                         >
                           <CustomTooltip title={item.assetName}>
-                            <Box mr={2} sx={{ maxWidth: "120px", textOverflow: "ellipsis", overflow: "hidden" }}>
+                            <Box
+                              color={({ palette }) => palette.secondary.main}
+                              mr={2}
+                              sx={{ maxWidth: "120px", textOverflow: "ellipsis", overflow: "hidden" }}
+                            >
                               {item.assetName}
                             </Box>
                           </CustomTooltip>
-                          <Box fontWeight={500}>
+                          <Box color={({ palette }) => palette.secondary.main} fontWeight={500}>
                             {formatNumberDivByDecimals(item?.assetQuantity || 0, item?.metadata?.decimals || 0)}
                           </Box>
                         </StyledMenuItem>

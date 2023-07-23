@@ -94,7 +94,7 @@ const SummaryItems = ({
                 <Box
                   component={"span"}
                   whiteSpace="nowrap"
-                  color={(theme) => (type === "up" ? theme.palette.green[200] : theme.palette.error[700])}
+                  color={(theme) => (type === "up" ? theme.palette.success[800] : theme.palette.error[700])}
                   fontWeight="bold"
                   mr={1}
                 >
