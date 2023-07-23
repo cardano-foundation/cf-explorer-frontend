@@ -352,4 +352,48 @@ export default class TokenListPage extends WebApi{
         })
         return this;
     }
+
+    checkButtonNextIsEnable(){
+        cy.xpath(currentPage).invoke('attr', 'value').then((value:any)=>{    
+            const numberPage1 = parseInt(value)       
+            cy.clickElement(listButtonNextAndPre+'[3]')
+            cy.xpath(currentPage).invoke('attr', 'value').then((numberPage2:any)=>{            
+                expect(numberPage1+1).to.equal(parseInt(numberPage2));
+            })
+        })
+        return this;
+    }
+
+    checkButtonNextIsDisable(){
+        cy.xpath(listButtonNextAndPre+'[4]').click()
+        cy.xpath(listButtonNextAndPre+'[3]').scrollIntoView().should('to.be.disabled')
+        cy.wait(5000)
+        return this;
+    }
+
+    checkButtonPreIsEnable(numberPage:string){
+        cy.xpath(currentPage).clear().type(""+numberPage+"").type('{enter}')
+        cy.xpath(listButtonNextAndPre+'[1]').verifyElementEnabled()
+        cy.xpath(listButtonNextAndPre+'[2]').verifyElementEnabled()
+        return this;
+    }
+
+    checkButtonPreIsDisable(){
+        cy.xpath(listButtonNextAndPre+'[1]').click()
+        cy.xpath(listButtonNextAndPre+'[2]').scrollIntoView().should('to.be.disabled')
+        return this;
+    }
+
+    checkInputTxbPageTo1FromMax(value:string){
+        cy.xpath(btnPerPage).getTextContent().then(text=>{
+            const perPage = parseInt(text)
+            const numberPage = parseInt(value)
+            cy.xpath(currentPage).clear().type(""+numberPage+"").type('{enter}')
+            cy.xpath(rangeOfPage).getTextContent().then(text=>{
+                const subString = text.substring(6, 9);    
+                expect(perPage*numberPage).to.equal(parseInt(subString))   
+            })
+        })
+        return this;
+    }
 }
