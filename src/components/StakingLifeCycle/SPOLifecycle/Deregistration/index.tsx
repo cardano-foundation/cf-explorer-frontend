@@ -188,7 +188,7 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
         )}
         <InfoGroup>
           <Info>
-            <AddressIcon fill={theme.palette.green[200]} />
+            <AddressIcon fill={theme.palette.secondary.light} />
             <CustomTooltip title={selected?.txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(selected?.txHash)}>
@@ -199,13 +199,13 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
             <StyledCopyButton text={selected?.txHash} />
           </Info>
           <Info>
-            <ADAGreen fill={theme.palette.green[200]} />
+            <ADAGreen fill={theme.palette.secondary.light} />
             <InfoText>
               {formatADAFull(selected?.poolHold ? selected?.poolHold - selected?.fee : selected?.fee || 0)}
             </InfoText>
           </Info>
           <Info>
-            <TimeIcon fill={theme.palette.green[200]} />
+            <TimeIcon fill={theme.palette.secondary.light} />
             <InfoText>{formatDateTimeLocal(selected?.time || "")}</InfoText>
           </Info>
         </InfoGroup>
@@ -256,7 +256,7 @@ export const DeregistrationCertificateModal = ({
       <Grid container spacing={1}>
         <StyledGridItem item xs={6}>
           <Box>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[300]}>
+            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
               Pool ID
             </Box>
             {data && (
@@ -273,7 +273,7 @@ export const DeregistrationCertificateModal = ({
         </StyledGridItem>
         <StyledGridItem item xs={6}>
           <Box>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[300]}>
+            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
               Retirement in Epoch
             </Box>
             {data && (

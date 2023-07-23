@@ -17,7 +17,7 @@ export const BackButton = styled(Box)`
 `;
 
 export const BackText = styled("small")`
-  color: ${(props) => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.secondary.light};
   font-weight: var(--font-weight-bold);
 `;
 
@@ -75,14 +75,14 @@ export const ApplyFilterButton = styled(Button)(({ theme }) => ({
   width: "100%",
   textTransform: "capitalize",
   fontWeight: "bold",
-  color: theme.palette.common.white,
-  background: theme.palette.grey[400],
+  color: theme.palette.secondary[0],
+  background: theme.palette.secondary.main,
   ":hover": {
-    background: alpha(theme.palette.grey[400], 0.8)
+    background: alpha(theme.palette.secondary.main, 0.8)
   },
   ":disabled": {
     color: theme.palette.common.white,
-    background: alpha(theme.palette.grey[400], 0.3)
+    background: alpha(theme.palette.secondary.main, 0.3)
   }
 }));
 

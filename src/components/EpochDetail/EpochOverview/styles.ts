@@ -54,6 +54,6 @@ export const Output = styled("span")`
 
 export const Subtext = styled("span")`
   font-weight: 400;
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
   font-weight: normal;
 `;

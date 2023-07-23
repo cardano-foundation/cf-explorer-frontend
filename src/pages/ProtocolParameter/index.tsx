@@ -125,7 +125,7 @@ const ProtocolParameter: React.FC = () => {
               overflow={"hidden"}
               whiteSpace={"nowrap"}
               textOverflow={"ellipsis"}
-              color={({ palette }) => (isModalType ? palette.blue[100] : "unset")}
+              color={({ palette }) => (isModalType ? palette.primary.main : "unset")}
             >
               {r.value}
             </Box>
@@ -182,7 +182,7 @@ const ProtocolParameter: React.FC = () => {
               overflow={"hidden"}
               whiteSpace={"nowrap"}
               textOverflow={"ellipsis"}
-              color={({ palette }) => (isModalType ? palette.blue[100] : "unset")}
+              color={({ palette }) => (isModalType ? palette.primary.main : "unset")}
             >
               {r.value}
             </Box>
@@ -219,7 +219,7 @@ const ProtocolParameter: React.FC = () => {
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
                 <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                  <Box fontWeight={"bold"} color={({ palette }) => palette.grey[400]} fontSize={"1.25rem"}>
+                  <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main} fontSize={"1.25rem"}>
                     Updatable Parameters
                   </Box>
                   <Box
@@ -248,7 +248,7 @@ const ProtocolParameter: React.FC = () => {
                 <Box>
                   <Box
                     textAlign={"left"}
-                    color={({ palette }) => palette.grey[400]}
+                    color={({ palette }) => palette.secondary.main}
                     fontWeight={"bold"}
                     fontSize={"1.25rem"}
                   >
@@ -370,7 +370,7 @@ export const ProtocolParameterHistory = () => {
           bgcolor={({ palette }) =>
             r[t as ProtocolTypeKey] !== null
               ? ["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string)
-                ? alpha(palette.green[200], 0.15)
+                ? palette.warning[100]
                 : "transparent"
               : "transparent"
           }
@@ -483,7 +483,8 @@ export const ProtocolParameterHistory = () => {
               component={Button}
               variant="text"
               textTransform={"capitalize"}
-              bgcolor={({ palette }) => alpha(palette.green[200], 0.15)}
+              bgcolor={({ palette }) => palette.primary[100]}
+              border={({ palette }) => `1px solid ${palette.primary[200]}`}
               px={2}
               onClick={() => setShowFiter(!showFilter)}
             >
@@ -526,7 +527,7 @@ export const ProtocolParameterHistory = () => {
                 alignItems={"center"}
                 mt={3}
                 mb={2}
-                color={`${theme.palette.blue[100]} !important`}
+                color={`${theme.palette.primary.main} !important`}
               >
                 <Box mr={1}>Reset</Box>
                 <ResetIcon />
@@ -615,7 +616,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
               <ImArrowDown2 />
-              <Box ml={1} color={({ palette }) => palette.grey[400]}>
+              <Box ml={1} color={({ palette }) => palette.secondary.main}>
                 Latest - First
               </Box>
             </Box>
@@ -626,7 +627,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
               <ImArrowUp2 />
-              <Box ml={1} color={({ palette }) => palette.grey[400]}>
+              <Box ml={1} color={({ palette }) => palette.secondary.main}>
                 First - Latest
               </Box>
             </Box>
@@ -637,7 +638,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
               <DateRangeIcon />
-              <Box ml={1} color={({ palette }) => palette.grey[400]}>
+              <Box ml={1} color={({ palette }) => palette.secondary.main}>
                 {" "}
                 Date range
               </Box>
@@ -657,7 +658,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
             >
               <Box display={"flex"} alignItems={"center"}>
                 <ProtocolParam />
-                <Box ml={1} color={({ palette }) => palette.grey[400]}>
+                <Box ml={1} color={({ palette }) => palette.secondary.main}>
                   Parameter changes {filterOption.length > 0 ? `(${filterOption.length})` : ""}
                 </Box>
               </Box>
@@ -673,7 +674,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                   sx={{
                     color: ({ palette }) => alpha(palette.common.black, 0.15),
                     "&.Mui-checked": {
-                      color: `${theme.palette.blue[100]} !important`
+                      color: `${theme.palette.primary.main} !important`
                     }
                   }}
                   onChange={(e) => {
@@ -703,7 +704,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                     sx={{
                       color: ({ palette }) => alpha(palette.common.black, 0.15),
                       "&.Mui-checked": {
-                        color: `${theme.palette.blue[100]} !important`
+                        color: `${theme.palette.primary.main} !important`
                       }
                     }}
                   />
@@ -736,7 +737,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           display={"flex"}
           alignItems={"center"}
           mt={2}
-          color={({ palette }) => `${palette.blue[100]} !important`}
+          color={({ palette }) => `${palette.primary.main} !important`}
         >
           <Box mr={1}>Reset</Box>
           <ResetIcon />

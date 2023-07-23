@@ -8,7 +8,7 @@ import CustomModal from "src/components/commons/CustomModal";
 export const StyledModal = styled(CustomModal)(() => ({}));
 
 export const TabContainer = styled(Box)(({ theme }) => ({
-  borderBottom: `1px solid ${theme.palette.border.secondary}`
+  borderBottom: `1px solid ${theme.palette.primary[200]}`
 }));
 
 export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => ({
@@ -16,7 +16,7 @@ export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => (
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? theme.palette.green[200] : theme.palette.text.hint,
+  color: active ? theme.palette.primary.main : theme.palette.secondary[600],
   paddingLeft: 8
 }));
 
@@ -47,7 +47,7 @@ export const ItemList = styled(Box)(({ theme }) => ({
 }));
 
 export const Item = styled(Box)(({ theme, flexDirection }) => ({
-  backgroundColor: alpha(theme.palette.grey[300], 0.1),
+  backgroundColor: alpha(theme.palette.secondary.light, 0.1),
   padding: 20,
   flex: 1,
   display: "flex",
@@ -69,7 +69,7 @@ export const Label = styled(Box)(({ theme }) => ({
   fontWeight: 700,
   fontSize: 14,
   lineHeight: "16px",
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   marginBottom: 8
 }));
 
@@ -83,7 +83,7 @@ export const LineData = styled(Box)(() => ({
 export const StyledLink = styled(Link)(({ theme }) => ({
   fontSize: 14,
   lineHeight: "22px",
-  color: `${theme.palette.blue[100]} !important`,
+  color: `${theme.palette.primary.main} !important`,
   wordBreak: "break-all",
   fontWeight: 500,
   marginRight: 5,
@@ -95,7 +95,7 @@ export const StyledLink = styled(Link)(({ theme }) => ({
 export const VRFKeyText = styled(Box)(({ theme }) => ({
   fontSize: 14,
   lineHeight: "22px",
-  color: theme.palette.blue[100],
+  color: theme.palette.primary.main,
   wordBreak: "break-all",
   fontWeight: 500,
   display: "inline",
@@ -106,7 +106,7 @@ export const VRFKeyText = styled(Box)(({ theme }) => ({
 }));
 
 export const Value = styled(VRFKeyText)(({ theme }) => ({
-  color: theme.palette.grey[400]
+  color: theme.palette.secondary.main
 }));
 
 export const StyledAdaLogoIcon = styled(AdaLogoIcon)(() => ({
@@ -145,7 +145,7 @@ export const ChangeBox = styled(Box)(() => ({
 export const MinimumText = styled(Box)(({ theme }) => ({
   fontSize: 12,
   lineHeight: "16px",
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   marginTop: 5
 }));
 
@@ -157,6 +157,6 @@ export const SupperMinimumText = styled(MinimumText)(() => ({
 export const MinimumAdaLogoIcon = styled(StyledAdaLogoIcon)(({ theme }) => ({
   fontSize: 10,
   lineHeight: "12px",
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   marginLeft: 5
 }));

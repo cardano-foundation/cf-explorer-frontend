@@ -31,7 +31,7 @@ export const WrapIcon = styled(Box)(() => ({
 export const CardTitle = styled(Typography)(({ theme }) => ({
   fontWeight: theme.typography.fontWeightBold,
   fontSize: 14,
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   marginBottom: 4
 }));
 
@@ -40,7 +40,7 @@ export const CardValue = styled(Typography)<{ color?: string }>(({ theme, ...res
   whiteSpace: "break-spaces",
   fontWeight: theme.typography.fontWeightBold,
   fontSize: 16,
-  color: rest.color ? rest.color : theme.palette.grey[400]
+  color: rest.color ? rest.color : theme.palette.secondary.main
 }));
 
 export const TransferButton = styled(Button)(({ theme }) => ({
@@ -70,7 +70,7 @@ export const WrapWalletIcon = styled(Box)`
 `;
 
 export const ClickAbleLink = styled(Link)`
-  color: ${({ theme }) => theme.palette.blue[100]} !important;
+  color: ${({ theme }) => theme.palette.primary.main} !important;
   cursor: pointer;
   white-space: nowrap;
   font-weight: bold;
@@ -83,7 +83,7 @@ export const ViewMoreButton = styled(IconButton)`
 
 export const DotsIcon = styled(Box)`
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.palette.grey[300]};
+  background-color: ${({ theme }) => theme.palette.secondary.light};
   width: 3.6px;
   height: 3.6px;
   position: relative;
@@ -96,7 +96,7 @@ export const DotsIcon = styled(Box)`
     right: -7px;
     top: 0px;
     border-radius: 50%;
-    background-color: ${({ theme }) => theme.palette.grey[300]};
+    background-color: ${({ theme }) => theme.palette.secondary.light};
   }
   &::after {
     content: "";
@@ -107,7 +107,7 @@ export const DotsIcon = styled(Box)`
     left: -7px;
     top: 0px;
     border-radius: 50%;
-    background-color: ${({ theme }) => theme.palette.grey[300]};
+    background-color: ${({ theme }) => theme.palette.secondary.light};
   }
 `;
 

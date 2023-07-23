@@ -10,8 +10,8 @@ export const Header = styled(Box)`
   justify-content: space-between;
   font-size: var(--font-size-text-small);
   font-weight: var(--font-weight-bold);
-  color: ${(props) => props.theme.palette.grey[300]};
-  border-bottom: 1px solid ${(props) => alpha(props.theme.palette.common.black, 0.1)};
+  color: ${(props) => props.theme.palette.primary.main};
+  border-bottom: 1px solid ${(props) => props.theme.palette.primary[200]};
   padding-bottom: 8px;
 `;
 
@@ -40,14 +40,8 @@ export const StatusIcon = styled("img")`
 export const AddressLink = styled(Link)`
   font-weight: var(--font-weight-bold);
   font-family: var(--font-size-text);
-  color: ${(props) => props.theme.palette.blue[100]} !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
   margin-right: 8px;
-`;
-
-export const Amount = styled("span")`
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-size-text);
-  color: ${(props) => props.theme.palette.green[200]};
 `;
 
 export const RowMetadata = styled(Box)(({ theme }) => ({
@@ -58,18 +52,18 @@ export const RowMetadata = styled(Box)(({ theme }) => ({
 export const Title = styled(Box)(({ theme }) => ({
   width: "200px",
   textAlign: "left",
-  color: theme.palette.grey[300]
+  color: theme.palette.secondary.light
 }));
 export const TitleValue = styled(Box)(({ theme }) => ({
   width: "100%",
   textAlign: "left",
-  color: theme.palette.grey[400]
+  color: theme.palette.secondary.main
 }));
 export const Value = styled(Box)(({ theme }) => ({
   wordBreak: "break-all",
   width: "100%",
   textAlign: "left",
-  background: alpha(theme.palette.grey[300], 0.05),
+  background: alpha(theme.palette.secondary.light, 0.05),
   padding: `${theme.spacing(2)} 50px ${theme.spacing(2)} ${theme.spacing(1)}`,
   minHeight: 40,
   position: "relative",
@@ -83,7 +77,7 @@ export const ValueText = styled(Box)(({ theme }) => ({
   display: "-webkit-box",
   WebkitLineClamp: 3,
   WebkitBoxOrient: "vertical",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   paddingRight: theme.spacing(1)
 }));
 

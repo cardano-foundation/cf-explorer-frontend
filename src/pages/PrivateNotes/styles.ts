@@ -1,4 +1,4 @@
-import { alpha, Box, Button, styled } from "@mui/material";
+import { Box, Button, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 
@@ -14,7 +14,7 @@ export const Header = styled(Box)(({ theme }) => ({
   fontSize: "var(--font-size-text-x-large)",
   fontWeight: "var(--font-weight-bold)",
   paddingBottom: "8px",
-  borderBottom: `1px solid ${alpha(theme.palette.green[300], 0.1)}`,
+  borderBottom: `1px solid ${theme.palette.primary[200]}`,
   [theme.breakpoints.down("sm")]: {
     alignItems: "center"
   }
@@ -22,7 +22,7 @@ export const Header = styled(Box)(({ theme }) => ({
 
 export const Title = styled("span")(({ theme }) => ({
   lineHeight: 1,
-  color: theme.palette.common.black,
+  color: theme.palette.secondary.main,
   [theme.breakpoints.down("sm")]: {
     fontSize: "14px"
   },
@@ -99,7 +99,7 @@ export const ActionButton = styled("button")<{ typeButton: string }>`
   width: 30px;
   height: 30px;
   background-color: ${({ typeButton, theme }) =>
-    typeButton === "View" ? theme.palette.success.light : alpha(theme.palette.red[100], 0.1)};
+    typeButton === "View" ? theme.palette.success[100] : theme.palette.error[100]};
   border-radius: 5px;
   border-width: 0px;
   display: flex;
@@ -124,14 +124,14 @@ export const StyledLink = styled(Link)`
 export const SmallText = styled("small")`
   display: block;
   white-space: nowrap;
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
   margin-top: 4px;
   text-overflow: ellipsis;
   overflow: hidden;
 `;
 export const CancelButton = styled(Button)(({ theme }) => ({
   textTransform: "capitalize",
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   fontWeight: "bold",
   marginRight: theme.spacing(2),
   padding: "6px 35px",
@@ -142,12 +142,12 @@ export const CancelButton = styled(Button)(({ theme }) => ({
 }));
 
 export const DeleteButton = styled(LoadingButton)(({ theme }) => ({
-  background: theme.palette.grey[400],
+  background: theme.palette.secondary.main,
   textTransform: "capitalize",
   padding: "8px 35px",
   fontWeight: "bold",
   color: theme.palette.common.white,
   ":hover": {
-    background: theme.palette.grey[400]
+    background: theme.palette.secondary.main
   }
 }));

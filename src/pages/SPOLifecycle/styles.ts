@@ -31,7 +31,7 @@ export const LifeCycleTitle = styled("h2")(({ theme }) => ({
   fontSize: 36,
   lineHeight: "42px",
   whiteSpace: "nowrap",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   [theme.breakpoints.down("sm")]: {
     fontSize: 24,
     lineHeight: "28px"
@@ -44,14 +44,15 @@ export const AddressLine = styled(Box)(({ theme }) => ({
   color: theme.palette.text.secondary
 }));
 
-export const Label = styled("small")(() => ({
+export const Label = styled("small")(({ theme }) => ({
+  color: theme.palette.secondary.light,
   lineHeight: 1
 }));
 
 export const StakeId = styled(Link)(({ theme }) => ({
   lineHeight: 1,
   fontWeight: "bold",
-  color: `${theme.palette.blue[100]} !important`,
+  color: `${theme.palette.primary.main} !important`,
   margin: `0 ${theme.spacing(1)} `,
   fontSize: "0.875rem"
 }));
@@ -90,25 +91,25 @@ export const BoxSwitchContainer = styled(Box)<{ sidebar?: number }>(({ theme, si
 export const LabelSwitch = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   whiteSpace: "break-spaces"
 }));
 
 export const SwitchGroup = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  background: alpha(theme.palette.grey[300], 0.1),
+  background: alpha(theme.palette.secondary.light, 0.1),
   padding: 3,
   borderRadius: 22,
   gap: 8
 }));
 
 export const ButtonSwitch = styled(IconButton)<{ active: number }>(({ theme, active }) => ({
-  background: active ? theme.palette.green[200] : "transparent",
+  background: active ? theme.palette.primary.main : "transparent",
   width: 38,
   height: 38,
   ":hover": {
-    background: active ? theme.palette.green[200] : theme.palette.green[200_10]
+    background: active ? theme.palette.primary.main : "transparent"
   }
 }));
 
@@ -122,7 +123,7 @@ export const ButtonReport = styled(Button)<{ sidebar?: number }>(({ theme }) => 
   borderRadius: "8px",
   whiteSpace: "nowrap",
   ":hover": {
-    background: alpha(theme.palette.grey[400], 0.8)
+    background: alpha(theme.palette.secondary.main, 0.8)
   },
   "&:disabled": {
     opacity: 0.5,

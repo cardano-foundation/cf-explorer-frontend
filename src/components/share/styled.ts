@@ -5,17 +5,17 @@ import { Link } from "react-router-dom";
 export const StyledLink = styled(Link)`
   text-decoration: none;
   font-family: var(--font-family-text);
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
   font-weight: var(--font-weight-normal);
   &:hover {
     font-family: var(--font-family-text);
-    color: ${(props) => props.theme.palette.secondary.main};
+    color: ${(props) => props.theme.palette.primary.main};
   }
 `;
 
 export const SmallText = styled("small")`
   white-space: nowrap;
-  color: ${({ theme }) => theme.palette.grey[300]};
+  color: ${({ theme }) => theme.palette.secondary.light};
 `;
 
 export const StyledInput = styled(InputBase)`
@@ -59,6 +59,6 @@ export const StyledDarkLoadingButton = styled(LoadingButton)`
   }
   &:disabled {
     color: white;
-    background: ${(props) => alpha(props.theme.palette.grey[400], 0.44)};
+    background: ${(props) => alpha(props.theme.palette.secondary.main, 0.44)};
   }
 `;

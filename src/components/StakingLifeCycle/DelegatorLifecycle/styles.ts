@@ -3,7 +3,7 @@ import { Box, Button, Typography, alpha, styled } from "@mui/material";
 export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
   width: "100%",
   padding: `0 0 ${theme.spacing(3)}`,
-  borderBottom: `3px solid ${active ? theme.palette.green[200] : theme.palette.grey[200]}`,
+  borderBottom: `3px solid ${active ? theme.palette.primary.main : theme.palette.primary[200]}`,
   [theme.breakpoints.down("lg")]: {
     minWidth: "190px"
   },
@@ -13,14 +13,9 @@ export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
   cursor: "pointer"
 }));
 
-export const StepButton = styled(Box)<{ active: number }>(({ theme, active }) => ({
-  background: active ? theme.palette.green[200] : theme.palette.grey[200],
-  ":hover": {
-    background: active ? theme.palette.green[200] : theme.palette.grey[200]
-  }
-}));
+export const StepButton = styled(Box)<{ active: number }>(() => ({}));
 export const TitleStep = styled(Box)<{ active: number }>(({ theme, active }) => ({
-  color: active ? theme.palette.grey[400] : theme.palette.grey[300],
+  color: active ? theme.palette.secondary.main : theme.palette.secondary.light,
   fontWeight: "bold",
   fontSize: "0.875rem",
   marginTop: theme.spacing(1)
@@ -28,45 +23,45 @@ export const TitleStep = styled(Box)<{ active: number }>(({ theme, active }) => 
 
 export const NextButton = styled(Button)(({ theme }) => ({
   color: theme.palette.common.white,
-  background: theme.palette.grey[400],
+  background: theme.palette.secondary.main,
   textTransform: "capitalize",
   fontWeight: "bold",
   padding: "10px 20px",
   borderRadius: "8px",
   ":hover": {
-    background: alpha(theme.palette.grey[400], 0.8)
+    background: theme.palette.secondary.main
   }
 }));
 export const PreviousButton = styled(Button)(({ theme }) => ({
-  color: `${theme.palette.grey[400]} !important`,
+  color: `${theme.palette.secondary.main} !important`,
   background: "transparent",
   textTransform: "capitalize",
   fontWeight: "bold",
   borderRadius: "8px",
   padding: "10px 20px",
-  border: `2px solid ${theme.palette.border.hint}`,
+  border: `2px solid ${theme.palette.primary[200]}`,
   ":hover": {
-    background: alpha(theme.palette.grey[400], 0.1)
+    background: "transparent"
   }
 }));
 
 export const ADATransfersButton = styled(Button)(({ theme }) => ({
-  background: theme.palette.green[200],
-  color: theme.palette.common.white,
+  color: theme.palette.secondary[0],
   borderRadius: "8px",
   textTransform: "capitalize",
   fontWeight: "bold",
   minWidth: 115,
+  fontSize: "12px",
+  background: theme.palette.primary.main,
   ":hover": {
-    background: alpha(theme.palette.green[200], 0.8)
-  },
-  fontSize: "12px"
+    background: theme.palette.primary.dark
+  }
 }));
 
 export const TabTitle = styled(Typography)(({ theme }) => ({
   fontSize: "20px",
   fontWeight: 700,
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   textAlign: "left"
 }));
 
@@ -102,7 +97,7 @@ export const StyledBox = styled(Box)`
 `;
 
 export const DescriptionText = styled(Typography)(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   fontSize: "18px",
   lineHeight: "21px",
   [theme.breakpoints.down("sm")]: {

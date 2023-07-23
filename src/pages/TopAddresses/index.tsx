@@ -1,5 +1,5 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Box, Tab, alpha, useTheme } from "@mui/material";
+import { Box, Tab, useTheme } from "@mui/material";
 import React, { useEffect } from "react";
 
 import Card from "src/components/commons/Card";
@@ -53,7 +53,7 @@ const TopAddresses = () => {
                   key={key}
                   label={
                     <Box display={"flex"} alignItems="center">
-                      <Icon fill={key === tabActive ? theme.palette.green[200] : theme.palette.grey[300]} />
+                      <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.secondary[600]} />
                       <TabTitle className={key === tabActive ? "active" : ""}>
                         <Box>{label}</Box>
                       </TabTitle>
@@ -70,7 +70,7 @@ const TopAddresses = () => {
           </Box>
           {tabs.map((item) => (
             <TabPanel
-              sx={{ padding: 0, borderTop: (theme) => `1px solid ${alpha(theme.palette.green[300], 0.1)}` }}
+              sx={{ padding: 0, borderTop: (theme) => `1px solid ${theme.palette.primary[200]}` }}
               key={item.key}
               value={item.key}
             >

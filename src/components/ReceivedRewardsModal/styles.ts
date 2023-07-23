@@ -6,7 +6,7 @@ export const Container = styled(Box);
 export const ModalTitle = styled(Typography)`
   font-size: 24px;
   font-weight: 700;
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.main};
 `;
 
 export const ModalContainer = styled(Box)`
@@ -51,7 +51,7 @@ export const AmountADARow = styled(Typography)`
 
 export const EpochRow = styled(Link)`
   font-size: 14px !important;
-  color: ${({ theme }) => theme.palette.blue[100]} !important;
+  color: ${({ theme }) => theme.palette.primary.main} !important;
 `;
 
 export const TableContainer = styled(Box)`

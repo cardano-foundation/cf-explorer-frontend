@@ -593,7 +593,7 @@ export const OptionsSearch = ({
       )}
 
       {!!error && (
-        <Box component={Option} color={({ palette }) => palette.red[100]} justifyContent={"center"}>
+        <Box component={Option} color={({ palette }) => palette.error[700]} justifyContent={"center"}>
           <Box>{error}</Box>
         </Box>
       )}

@@ -7,7 +7,7 @@ import CustomIcon from "src/components/commons/CustomIcon";
 
 const StyledContainer = styled(Container)`
   padding: 20px 0 40px;
-  background: ${({ theme }) => alpha(theme.palette.grey[300], 0.1)};
+  background: ${({ theme }) => alpha(theme.palette.secondary.light, 0.1)};
 `;
 
 const StyledImage = styled("img")`

@@ -56,11 +56,15 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
                   <CustomIcon
                     icon={BalanceIcon}
                     width={23}
-                    color={(theme) => theme.palette.primary.main}
+                    color={(theme) =>
+                      activityType === ActivityType.WALLET ? theme.palette.primary.main : theme.palette.secondary[600]
+                    }
                     stroke="currentColor"
                   />
                   <CustomTab
-                    color={activityType === ActivityType.WALLET ? theme.palette.green[200] : theme.palette.grey[300]}
+                    color={
+                      activityType === ActivityType.WALLET ? theme.palette.primary.main : theme.palette.secondary[600]
+                    }
                   >
                     Wallet Activity
                   </CustomTab>
@@ -74,11 +78,15 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
                   <CustomIcon
                     icon={RewardsIcon}
                     width={23}
-                    color={(theme) => theme.palette.primary.main}
+                    color={(theme) =>
+                      activityType === ActivityType.REWARDS ? theme.palette.primary.main : theme.palette.secondary[600]
+                    }
                     fill="currentColor"
                   />
                   <CustomTab
-                    color={activityType === ActivityType.REWARDS ? theme.palette.green[200] : theme.palette.grey[300]}
+                    color={
+                      activityType === ActivityType.REWARDS ? theme.palette.primary.main : theme.palette.secondary[600]
+                    }
                   >
                     Rewards Activity
                   </CustomTab>

@@ -70,7 +70,7 @@ export const StyledTextField = styled(TextField)`
 `;
 
 export const Option = styled("li")<{ active: number }>(({ theme, active }) => ({
-  background: active ? theme.palette.green[200_10] : theme.palette.background.paper
+  background: active ? theme.palette.primary[200] : theme.palette.secondary[0]
 }));
 
 export const Logo = styled("img")`
@@ -157,6 +157,6 @@ export const Image = styled("img")`
 `;
 
 export const AssetName = styled(Link)`
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
   font-family: var(--font-family-text) !important;
 `;

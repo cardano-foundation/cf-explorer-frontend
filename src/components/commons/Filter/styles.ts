@@ -1,9 +1,9 @@
-import { Box, Button, ListItemText, MenuItem, alpha, styled } from "@mui/material";
+import { Box, Button, ListItemText, MenuItem, styled } from "@mui/material";
 
 export const FilterButton = styled(Button)`
   border: none;
   outline: none;
-  background-color: ${({ theme }) => alpha(theme.palette.green[200], 0.15)};
+  background-color: ${({ theme }) => theme.palette.primary[200]};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,7 +52,7 @@ export const FilterIconContainer = styled(Box)`
 export const FilterListItemText = styled(ListItemText)`
   font-size: 14px;
   text-align: left;
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.main};
 `;
 export const FilterMenuItem = styled(MenuItem)<{ active?: number }>`
   padding: 8px 16px;

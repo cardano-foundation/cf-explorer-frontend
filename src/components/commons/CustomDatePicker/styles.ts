@@ -53,10 +53,10 @@ export const HiddenScroll = styled(Box)(({ theme }) => ({
   },
   "&:hover": {
     "&::-webkit-scrollbar-thumb": {
-      background: theme.palette.grey[300]
+      background: theme.palette.secondary.light
     },
     "&::-webkit-scrollbar-track": {
-      background: theme.palette.grey[100]
+      background: theme.palette.primary[100]
     }
   }
 }));
@@ -68,7 +68,7 @@ export const SelectYear = styled(Box)<{ isActive: number }>(({ theme, isActive }
   backgroundColor: isActive ? theme.palette.primary.main : "transparent",
   color: isActive ? theme.palette.common.white : theme.palette.text.primary,
   "&:hover": {
-    backgroundColor: isActive ? theme.palette.primary.main : theme.palette.grey[100]
+    backgroundColor: isActive ? theme.palette.primary.main : theme.palette.primary[100]
   }
 }));
 

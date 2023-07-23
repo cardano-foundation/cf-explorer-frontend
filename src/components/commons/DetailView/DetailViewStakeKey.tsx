@@ -248,7 +248,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
             <Box textAlign={"right"}>
               <ButtonModal
                 sx={{
-                  color: theme.palette.secondary.main
+                  color: theme.palette.primary.main
                 }}
                 onClick={() => setOpen(true)}
               >

@@ -16,7 +16,7 @@ const PolygonBox = styled(Box)(({ theme }) => ({
   fontSize: 16,
   lineHeight: "19px",
   textAlign: "center",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   padding: "40px 40px 50px",
   backgroundImage: `url(${PolygonWhiteIconUrl})`,
   backgroundSize: "contain",

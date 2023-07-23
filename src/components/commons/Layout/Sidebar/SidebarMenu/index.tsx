@@ -142,7 +142,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       selected={isActiveMenu(href)}
                       sx={(theme) => ({
                         ...itemStyle(theme, sidebar),
-                        ...(isActiveMenu(href) ? { backgroundColor: `${theme.palette.success.dark} !important` } : {})
+                        ...(isActiveMenu(href) ? { backgroundColor: `${theme.palette.primary.main} !important` } : {})
                       })}
                     >
                       {icon ? (
@@ -165,10 +165,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`menu-${index}` === active
                         ? {
-                            backgroundColor: (theme) => `${theme.palette.green[200_10]} !important`,
-                            color: (theme) => theme.palette.grey[300]
+                            backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
+                            color: (theme) => theme.palette.secondary[0]
                           }
-                        : { color: (theme) => theme.palette.grey[300] })
+                        : { color: (theme) => theme.palette.secondary.light })
                     })}
                   >
                     {icon ? (
@@ -231,7 +231,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
                               ...(isActiveSubMenu(href, item.title)
-                                ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
+                                ? { backgroundColor: (theme) => `${theme.palette.primary[200]} !important` }
                                 : {}),
                               paddingLeft: "70px",
                               [theme.breakpoints.down("md")]: {
@@ -297,7 +297,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       sx={(theme) => ({
                         ...itemStyle(theme, sidebar),
                         ...(pathname === href
-                          ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
+                          ? { backgroundColor: (theme) => `${theme.palette.primary.main} !important` }
                           : {})
                       })}
                     >
@@ -320,10 +320,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`footer-${index}` === active
                         ? {
-                            backgroundColor: (theme) => `${theme.palette.green[200_10]} !important`,
-                            color: (theme) => theme.palette.grey[300]
+                            backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
+                            color: (theme) => theme.palette.secondary[0]
                           }
-                        : { color: (theme) => theme.palette.grey[300] })
+                        : { color: (theme) => theme.palette.secondary.light })
                     })}
                   >
                     {icon ? (
@@ -382,7 +382,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
                               ...(pathname === href
-                                ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
+                                ? { backgroundColor: (theme) => `${theme.palette.success[700]} !important` }
                                 : {}),
                               paddingLeft: "70px",
                               [theme.breakpoints.down("md")]: {

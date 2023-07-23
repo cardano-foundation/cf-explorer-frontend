@@ -30,7 +30,7 @@ const FooterContainer = styled(Container)`
 `;
 
 const Copyright = styled("small")`
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
   font-family: var(--font-family-title);
   ::first-letter {
     font-size: 1em;
@@ -64,7 +64,7 @@ const DotDivide = styled(Box)`
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: ${(props) => props.theme.palette.green[650]};
+  background: ${(props) => props.theme.palette.primary.main};
 `;
 
 const LinkTo = styled(Link)`

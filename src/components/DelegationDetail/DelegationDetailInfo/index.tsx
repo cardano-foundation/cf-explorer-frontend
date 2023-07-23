@@ -172,7 +172,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                       <CustomTooltip title={data?.ownerAccounts[0] || ""}>
                         <Box
                           component={Link}
-                          color={(theme) => `${theme.palette.blue[100]} !important`}
+                          color={(theme) => `${theme.palette.primary.main} !important`}
                           to={details.stake(data?.ownerAccounts[0] || "")}
                           style={{ fontFamily: "var(--font-family-text)" }}
                         >
@@ -256,7 +256,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 <Box
                   component={"span"}
                   mt={1}
-                  color={({ palette }) => palette.grey[300]}
+                  color={({ palette }) => palette.secondary.light}
                   style={{ fontSize: "14px", fontWeight: "400" }}
                 >
                   Saturation

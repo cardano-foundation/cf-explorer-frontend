@@ -11,6 +11,6 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
 export const Horizon = styled("div")`
   margin: 30px 0;
   width: 100%;
-  border: 1px solid ${(props) => props.theme.palette.common.black};
+  border: 1px solid ${(props) => props.theme.palette.secondary.main};
   opacity: 0.07;
 `;

@@ -10,7 +10,7 @@ export const AdaHolderImage = styled("img")(() => ({
 export const AdaHolderValue = styled(Typography)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   fontSize: 14,
   gap: 5,
   marginTop: 3
