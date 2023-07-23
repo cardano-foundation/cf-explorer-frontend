@@ -32,7 +32,7 @@ export const FeeBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.red[100]}`,
+  border: `2px solid ${theme.palette.error[700]}`,
   borderRadius: "10px",
   background: theme.palette.common.white,
   marginRight: theme.spacing(5),
@@ -47,7 +47,7 @@ export const FeeBox = styled(Box)(({ theme }) => ({
     position: "absolute",
     top: "-50%",
     left: theme.spacing(2),
-    background: theme.palette.red[100],
+    background: theme.palette.error[700],
     transform: " translate(0, 60%)"
   }
 }));
@@ -68,7 +68,7 @@ export const Info = styled(Box)(({ theme }) => ({
 export const InfoText = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   marginLeft: theme.spacing(1),
   fontWeight: 600,
   fontSize: "14px"
@@ -100,7 +100,7 @@ export const InfoGroup = styled(Box)(({ theme }) => ({
 }));
 
 export const StyledContainerModal = styled(Box)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.grey[300], 0.1),
+  backgroundColor: alpha(theme.palette.secondary.light, 0.1),
   padding: 24,
   [theme.breakpoints.down("md")]: {
     padding: "15px !important"

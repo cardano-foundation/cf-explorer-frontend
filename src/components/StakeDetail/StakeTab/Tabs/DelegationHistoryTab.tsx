@@ -44,7 +44,7 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
           <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
           <Box marginTop="5px">
             <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
-            <Box color={({ palette }) => palette.grey[300]} component={"span"}>
+            <Box color={({ palette }) => palette.secondary.light} component={"span"}>
               {r.epochSlotNo}
             </Box>
           </Box>

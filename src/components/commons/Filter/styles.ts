@@ -52,7 +52,7 @@ export const FilterIconContainer = styled(Box)`
 export const FilterListItemText = styled(ListItemText)`
   font-size: 14px;
   text-align: left;
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.main};
 `;
 export const FilterMenuItem = styled(MenuItem)<{ active?: number }>`
   padding: 8px 16px;

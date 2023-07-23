@@ -1,7 +1,7 @@
 import { Box, alpha, styled } from "@mui/material";
 
 export const NormalDescription = styled(Box)`
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
   position: relative;
   font-weight: 400;
   line-height: 21px;
@@ -35,7 +35,7 @@ export const WrapContent = styled(Box)`
   }
   &:hover {
     &::-webkit-scrollbar-thumb {
-      background: ${(props) => props.theme.palette.grey[300]};
+      background: ${(props) => props.theme.palette.secondary.light};
     }
     &::-webkit-scrollbar-track {
       background: ${(props) => props.theme.palette.grey[100]};
@@ -57,7 +57,7 @@ export const BoxDescription = styled(Box)`
 `;
 
 export const BoxDetails = styled(BoxDescription)`
-  background: ${(props) => alpha(props.theme.palette.grey[300], 0.1)};
+  background: ${(props) => alpha(props.theme.palette.secondary.light, 0.1)};
   padding: 20px 25px;
   padding-left: 35px;
   margin: 15px 0px;

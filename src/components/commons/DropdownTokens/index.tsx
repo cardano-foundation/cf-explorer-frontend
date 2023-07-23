@@ -71,7 +71,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
             },
             "&:hover": {
               "&::-webkit-scrollbar-thumb": {
-                background: theme.palette.grey[300]
+                background: theme.palette.secondary.light
               },
               "&::-webkit-scrollbar-track": {
                 background: theme.palette.grey[100]
@@ -131,7 +131,7 @@ export const TokenLink: React.FC<{ token: Token }> = ({ token }) => {
         width={"100%"}
         height={38}
       >
-        <Box mr={2} color={({ palette }) => palette.grey[300]}>
+        <Box mr={2} color={({ palette }) => palette.secondary.light}>
           {isTokenNameLong ? (
             <CustomTooltip title={tokenName} placement="top">
               <Box>{shortTokenName}</Box>

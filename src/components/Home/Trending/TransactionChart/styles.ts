@@ -30,7 +30,7 @@ export const Tab = styled("button")<{ active: number }>(({ theme, active }) => (
   fontWeight: "bold",
   backgroundColor: active ? theme.palette.secondary.light : theme.palette.secondary[0],
   // ":hover": {
-  //   color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[300],
+  //   color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.secondary.light,
   //   backgroundColor: active ? theme.palette.primary.main : "none"
   // },
   [theme.breakpoints.down("sm")]: {

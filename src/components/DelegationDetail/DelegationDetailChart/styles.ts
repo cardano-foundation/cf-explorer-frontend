@@ -147,7 +147,7 @@ export const AnalyticsTitle = styled("h2")(({ theme }) => ({
   margin: "40px 0 15px",
   width: "max-content",
   fontSize: "20px",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   borderBottom: `2px solid ${theme.palette.green[200]}`,
   [theme.breakpoints.down("sm")]: {
     margin: "30px 0 15px"

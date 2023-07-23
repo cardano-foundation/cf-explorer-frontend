@@ -78,7 +78,7 @@ export const StyledCard = {
 };
 
 export const TimeDuration = styled("small")<{ mobile?: number }>(({ theme, mobile }) => ({
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   display: mobile ? "none" : "block",
   textAlign: "left",
   padding: `${theme.spacing(2)} 0`,

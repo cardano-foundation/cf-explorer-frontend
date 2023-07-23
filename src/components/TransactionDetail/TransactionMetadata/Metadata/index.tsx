@@ -50,7 +50,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
           fontWeight={"bold"}
           display={"block"}
           pt={2}
-          color={({ palette }) => `${palette.grey[400]}  !important`}
+          color={({ palette }) => `${palette.secondary.main}  !important`}
         >
           {isTablet ? getShortHash(hash || "") : hash}
           <CopyButton text={hash || ""} />

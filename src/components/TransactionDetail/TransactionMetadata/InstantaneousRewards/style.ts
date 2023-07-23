@@ -10,7 +10,7 @@ export const Header = styled(Box)`
   justify-content: space-between;
   font-size: var(--font-size-text-small);
   font-weight: var(--font-weight-bold);
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
   border-bottom: 1px solid ${(props) => alpha(props.theme.palette.common.black, 0.1)};
   padding-bottom: 8px;
 `;
@@ -25,8 +25,8 @@ export const TokenLink = styled(Link)(({ theme }) => ({
   textTransform: "uppercase",
   borderRadius: "2px",
   padding: "2px 10px",
-  backgroundColor: alpha(theme.palette.grey[300], 0.2),
-  color: theme.palette.grey[300],
+  backgroundColor: alpha(theme.palette.secondary.light, 0.2),
+  color: theme.palette.secondary.light,
   fontSize: "var(--font-size-text)",
   lineHeight: "1.5rem",
   fontWeight: "bold",
@@ -82,7 +82,7 @@ export const Title = styled(Box)(({ theme }) => ({
 }));
 export const Value = styled(Box)(({ theme }) => ({
   whiteSpace: "nowrap",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   fontWeight: "bold",
   marginRight: theme.spacing(1)
 }));

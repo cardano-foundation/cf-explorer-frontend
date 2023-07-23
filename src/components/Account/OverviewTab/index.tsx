@@ -144,7 +144,7 @@ const OverviewTab = () => {
                   <Box
                     component={IoMdClose}
                     size={"24px"}
-                    color={theme.palette.red[100]}
+                    color={theme.palette.error[700]}
                     onClick={() => setShowInput(false)}
                     mr={1}
                   />
@@ -286,10 +286,10 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
         <Box textAlign={"center"} mb={3}>
           <Box component={"img"} src={questionConfirm} />
         </Box>
-        <Box textAlign={"center"} color={({ palette }) => palette.grey[400]} fontWeight={"bold"} fontSize={"20px"}>
+        <Box textAlign={"center"} color={({ palette }) => palette.secondary.main} fontWeight={"bold"} fontSize={"20px"}>
           Confirmation Required
         </Box>
-        <Box textAlign={"center"} color={({ palette }) => palette.grey[400]} fontWeight={"bold"} fontSize={"18px"}>
+        <Box textAlign={"center"} color={({ palette }) => palette.secondary.main} fontWeight={"bold"} fontSize={"18px"}>
           This is your stake key {getShortWallet(stakeKey || "")}, are you sure to continue?
         </Box>
         <Box display={"flex"} justifyContent={"center"} mt={2}>
@@ -311,7 +311,7 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
         {!stakeKey && (
           <>
             <Title>Link wallet to your account</Title>
-            <Box color={({ palette }) => palette.grey[300]} fontWeight={"bold"} fontSize={"14px"}>
+            <Box color={({ palette }) => palette.secondary.light} fontWeight={"bold"} fontSize={"14px"}>
               You can only link wallet once per account
             </Box>
             <>

@@ -57,11 +57,11 @@ export const GridItem = styled(Grid)``;
 
 export const RedirectButton = styled(Box)(({ theme }) => ({
   textTransform: "capitalize",
-  backgroundColor: theme.palette.grey[400],
+  backgroundColor: theme.palette.secondary.main,
   color: theme.palette.common.white,
   padding: `${theme.spacing(1)} ${theme.spacing(2)} `,
   ":hover": {
-    backgroundColor: alpha(theme.palette.grey[400], 0.8)
+    backgroundColor: alpha(theme.palette.secondary.main, 0.8)
   }
 }));
 

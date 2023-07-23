@@ -53,7 +53,7 @@ export const HiddenScroll = styled(Box)(({ theme }) => ({
   },
   "&:hover": {
     "&::-webkit-scrollbar-thumb": {
-      background: theme.palette.grey[300]
+      background: theme.palette.secondary.light
     },
     "&::-webkit-scrollbar-track": {
       background: theme.palette.grey[100]

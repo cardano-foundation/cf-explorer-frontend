@@ -16,7 +16,7 @@ export const Active = styled(Status)`
 
 export const Deactive = styled(Status)`
   background: ${(props) => props.theme.palette.green[300_10]};
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
 `;
 
 export const Title = styled("div")`
@@ -47,7 +47,7 @@ export const BackButton = styled("button")`
   font-family: "Roboto", sans-serif;
   ${({ theme }) => theme.breakpoints.down("xl")} {
     svg {
-      fill: ${(props) => props.theme.palette.grey[300]} !important;
+      fill: ${(props) => props.theme.palette.secondary.light} !important;
     }
   }
 `;
@@ -175,7 +175,7 @@ export const ButtonClose = styled(Button)(({ theme }) => ({
 export const ViewJson = styled(Box)(({ theme }) => ({
   textAlign: "left",
   overflowY: "auto",
-  backgroundColor: alpha(theme.palette.grey[300], 0.1),
+  backgroundColor: alpha(theme.palette.secondary.light, 0.1),
   borderRadius: 10,
   padding: theme.spacing(2),
   marginTop: theme.spacing(2),

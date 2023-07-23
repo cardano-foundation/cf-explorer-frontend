@@ -101,15 +101,15 @@ export const DelegationTimeline = ({ selected, showBackButton = false }: Props) 
 
           <InfoGroup sidebar={+sidebar}>
             <Info>
-              <AddressIcon fill={theme.palette.green[200]} />
+              <AddressIcon fill={theme.palette.secondary.light} />
               <Box component={Skeleton} variant="rectangular" width={145} height={18} />
             </Info>
             <Info>
-              <ADAGreen fill={theme.palette.green[200]} />
+              <ADAGreen fill={theme.palette.secondary.light} />
               <Box component={Skeleton} variant="rectangular" width={60} height={18} />
             </Info>
             <Info>
-              <TimeIcon fill={theme.palette.green[200]} />
+              <TimeIcon fill={theme.palette.secondary.light} />
               <Box component={Skeleton} variant="rectangular" width={130} height={18} />
             </Info>
           </InfoGroup>
@@ -131,7 +131,7 @@ export const DelegationTimeline = ({ selected, showBackButton = false }: Props) 
         )}
         <InfoGroup>
           <Info>
-            <AddressIcon fill={theme.palette.green[200]} />
+            <AddressIcon fill={theme.palette.secondary.light} />
             <CustomTooltip title={data?.txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(data?.txHash)}>{getShortHash(data?.txHash || "")}</StyledLink>
@@ -140,11 +140,11 @@ export const DelegationTimeline = ({ selected, showBackButton = false }: Props) 
             <StyledCopyButton text={data?.txHash} />
           </Info>
           <Info>
-            <ADAGreen fill={theme.palette.green[200]} />
+            <ADAGreen fill={theme.palette.secondary.light} />
             <InfoText>{formatADAFull(data?.fee || 0)}</InfoText>
           </Info>
           <Info>
-            <TimeIcon fill={theme.palette.green[200]} />
+            <TimeIcon fill={theme.palette.secondary.light} />
             <InfoText>{formatDateTimeLocal(data?.time || "")}</InfoText>
           </Info>
         </InfoGroup>
@@ -235,5 +235,5 @@ export const DelegationCertificateModal = ({
 
 const Link = styled(LinkDom)(({ theme }) => ({
   fontSize: "0.875rem",
-  color: `${theme.palette.blue[100]} !important`
+  color: `${theme.palette.primary.main} !important`
 }));

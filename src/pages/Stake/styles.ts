@@ -27,7 +27,7 @@ export const StyledTabs = styled(Tabs)`
 `;
 
 export const StyledTab = styled(Tab)`
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
   padding: 0;
   &.Mui-selected {
     color: ${(props) => props.theme.palette.text.primary};

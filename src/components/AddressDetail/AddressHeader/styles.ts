@@ -93,7 +93,7 @@ export const BackButton = styled(Box)`
 `;
 
 export const BackText = styled("small")`
-  color: ${(props) => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.secondary.light};
   font-weight: var(--font-weight-bold);
 `;
 
@@ -104,7 +104,7 @@ export const StyledBoxCard = styled(Box)`
 `;
 
 export const TitleText = styled(Box)`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.main};
   ${({ theme }) => theme.breakpoints.down("md")} {
     font-size: 24px !important;
   }
@@ -121,16 +121,13 @@ export const WrapHeader = styled(Box)(({ theme }) => ({
 
 export const RedirectButton = styled(Box)(({ theme }) => ({
   textTransform: "capitalize",
-  backgroundColor: theme.palette.common.black,
-  color: theme.palette.common.white,
-  padding: `${theme.spacing(1)} ${theme.spacing(2)} `,
-  ":hover": {
-    backgroundColor: alpha(theme.palette.common.black, 0.8)
-  }
+  backgroundColor: theme.palette.secondary.main,
+  color: theme.palette.secondary[0],
+  padding: `${theme.spacing(1)} ${theme.spacing(2)} `
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   display: "block",
   textAlign: "left",
   flex: 1,

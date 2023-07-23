@@ -84,7 +84,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
         <RegistrationIcon
           width={"25px"}
           height={"25px"}
-          fill={renderTabsSPO["isRegistration"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)}
+          fill={renderTabsSPO["isRegistration"] ? theme.palette.common.white : alpha(theme.palette.secondary.light, 0.5)}
         />
       ),
       title: "Registration",
@@ -103,7 +103,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
         <PoolUpdateIcon
           width={"25px"}
           height={"25px"}
-          fill={renderTabsSPO["isUpdate"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)}
+          fill={renderTabsSPO["isUpdate"] ? theme.palette.common.white : alpha(theme.palette.secondary.light, 0.5)}
         />
       ),
       title: "Pool Updates",
@@ -122,7 +122,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
         <OperatorRewardIcon
           width={"25px"}
           height={"25px"}
-          fill={renderTabsSPO["isReward"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)}
+          fill={renderTabsSPO["isReward"] ? theme.palette.common.white : alpha(theme.palette.secondary.light, 0.5)}
         />
       ),
       title: "Operator Rewards",
@@ -138,7 +138,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
         <DeredistrationIcon
           width={"25px"}
           height={"25px"}
-          fill={renderTabsSPO["isDeRegistration"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)}
+          fill={renderTabsSPO["isDeRegistration"] ? theme.palette.common.white : alpha(theme.palette.secondary.light, 0.5)}
         />
       ),
       title: "Deregistration",
@@ -165,7 +165,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       return `${palette.green[200]} !important`;
     }
     if (hasData) {
-      return `${palette.grey[400]} !important`;
+      return `${palette.secondary.main} !important`;
     }
     return `${palette.grey[200]} !important`;
   };
@@ -194,7 +194,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
                 component={IconButton}
                 active={+(currentStep === idx)}
                 bgcolor={renderBackground(currentStep === idx, renderTabsSPO[step.keyCheckShow])}
-                color={({ palette }) => (renderTabsSPO[step.keyCheckShow] ? palette.common.white : palette.grey[300])}
+                color={({ palette }) => (renderTabsSPO[step.keyCheckShow] ? palette.common.white : palette.secondary.light)}
               >
                 {step.icon}
               </StepButton>

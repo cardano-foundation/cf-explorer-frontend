@@ -55,7 +55,7 @@ export const TimeDuration = styled("small")(({ theme }) => ({
 }));
 
 export const TimeDurationSm = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   display: "none",
   [theme.breakpoints.down("sm")]: {
     display: "block",

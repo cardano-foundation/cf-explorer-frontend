@@ -99,7 +99,7 @@ export const ActionButton = styled("button")<{ typeButton: string }>`
   width: 30px;
   height: 30px;
   background-color: ${({ typeButton, theme }) =>
-    typeButton === "View" ? theme.palette.success.light : alpha(theme.palette.red[100], 0.1)};
+    typeButton === "View" ? theme.palette.success.light : alpha(theme.palette.error[700], 0.1)};
   border-radius: 5px;
   border-width: 0px;
   display: flex;
@@ -124,14 +124,14 @@ export const StyledLink = styled(Link)`
 export const SmallText = styled("small")`
   display: block;
   white-space: nowrap;
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
   margin-top: 4px;
   text-overflow: ellipsis;
   overflow: hidden;
 `;
 export const CancelButton = styled(Button)(({ theme }) => ({
   textTransform: "capitalize",
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   fontWeight: "bold",
   marginRight: theme.spacing(2),
   padding: "6px 35px",
@@ -142,12 +142,12 @@ export const CancelButton = styled(Button)(({ theme }) => ({
 }));
 
 export const DeleteButton = styled(LoadingButton)(({ theme }) => ({
-  background: theme.palette.grey[400],
+  background: theme.palette.secondary.main,
   textTransform: "capitalize",
   padding: "8px 35px",
   fontWeight: "bold",
   color: theme.palette.common.white,
   ":hover": {
-    background: theme.palette.grey[400]
+    background: theme.palette.secondary.main
   }
 }));

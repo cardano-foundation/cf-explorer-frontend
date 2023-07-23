@@ -187,7 +187,7 @@ export const ButtonViewAll = styled(Button)(({ theme }) => ({
   border: `1px solid ${theme.palette.common.black}`,
   padding: `0 ${theme.spacing(1)}`,
   textTransform: "capitalize",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   fontWeight: "bold",
   [theme.breakpoints.down("sm")]: {
     position: "absolute",

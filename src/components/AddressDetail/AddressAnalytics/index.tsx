@@ -92,8 +92,8 @@ const AddressAnalytics: React.FC = () => {
                 <AreaChart width={900} height={400} data={convertDataChart} margin={{ top: 5, right: 5, bottom: 10 }}>
                   <defs>
                     <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor={theme.palette.green["300"]} stopOpacity={0.2} />
-                      <stop offset="100%" stopColor={theme.palette.green["300"]} stopOpacity={0} />
+                      <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.5} />
+                      <stop offset="100%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
                     </linearGradient>
                   </defs>
                   <XAxis
@@ -101,9 +101,10 @@ const AddressAnalytics: React.FC = () => {
                     tickFormatter={(value) => moment(value).format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM")}
                     tickLine={false}
                     tickMargin={5}
+                    color={theme.palette.secondary.main}
                     dx={-15}
                   />
-                  <YAxis tickFormatter={formatPriceValue} tickLine={false} />
+                  <YAxis tickFormatter={formatPriceValue} tickLine={false} color={theme.palette.secondary.main} />
                   <Tooltip content={renderTooltip} cursor={false} />
                   <CartesianGrid vertical={false} strokeWidth={0.33} />
                   <Area

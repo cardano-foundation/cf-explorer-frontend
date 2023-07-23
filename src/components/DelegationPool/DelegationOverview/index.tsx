@@ -134,7 +134,7 @@ const OverViews: React.FC = () => {
               </StyledCard.Value>
               <Box
                 component="span"
-                sx={{ color: (theme) => theme.palette.grey[300], textAlign: "left" }}
+                sx={{ color: (theme) => theme.palette.secondary.light, textAlign: "left" }}
                 display={"flex"}
                 alignItems={"center"}
                 width={"100%"}

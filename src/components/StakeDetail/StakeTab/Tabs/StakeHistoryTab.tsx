@@ -1,4 +1,4 @@
-import { alpha, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
 
@@ -58,10 +58,9 @@ const StakeHistoryTab = ({ isMobile = false }) => {
       minWidth: "120px",
       render: (r) => (
         <LabelStatus
-          color={(theme) => (r.action === "Registered" ? theme.palette.red[100] : theme.palette.grey[300])}
+          color={(theme) => (r.action === "Registered" ? theme.palette.error[700] : theme.palette.secondary.light)}
           sx={{
-            background: (theme) =>
-              r.action === "Registered" ? theme.palette.red[100_15] : alpha(theme.palette.grey[300], 0.15)
+            background: (theme) => (r.action === "Registered" ? theme.palette.error[100] : theme.palette.primary[200])
           }}
         >
           {r.action ? r.action.split(" ").join("") : ""}

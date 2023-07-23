@@ -100,7 +100,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                           <Box
                             fontWeight="bold"
                             fontFamily={"var(--font-family-text)"}
-                            color={(theme) => theme.palette.blue[100]}
+                            color={(theme) => theme.palette.primary.main}
                             mr={1}
                           >
                             {getShortWallet(item.address)}
@@ -139,7 +139,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                               component={"span"}
                               fontWeight="bold"
                               fontFamily={"var(--font-family-text)"}
-                              color={(theme) => theme.palette.blue[100]}
+                              color={(theme) => theme.palette.primary.main}
                               mr={1}
                             >
                               {getShortHash(item.txHash)}

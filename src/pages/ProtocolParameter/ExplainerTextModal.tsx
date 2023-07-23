@@ -30,7 +30,7 @@ export function ExplainerTextModal({ open, handleCloseModal, explainerText }: Pr
 const NormalDescription = styled(Box)`
   position: relative;
   font-weight: 400;
-  color: ${({ theme }) => theme.palette.grey[300]};
+  color: ${({ theme }) => theme.palette.secondary.light};
   line-height: 21px;
   z-index: 2;
   font-size: 16px;
@@ -61,7 +61,7 @@ const WrapContent = styled(Box)`
   }
   &:hover {
     &::-webkit-scrollbar-thumb {
-      background: ${(props) => props.theme.palette.grey[300]};
+      background: ${(props) => props.theme.palette.secondary.light};
     }
     &::-webkit-scrollbar-track {
       background: ${(props) => props.theme.palette.grey[100]};

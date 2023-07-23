@@ -419,7 +419,7 @@ export const TokenDetailInfo = styled(Box)`
 `;
 
 export const TokenDetailName = styled("small")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.main};
 `;
 
 export const TokenDetailIcon = styled("img")`
@@ -524,7 +524,7 @@ export const ButtonModal = styled(Button)(() => ({
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   display: "block",
   textAlign: "left",
   flex: 1,

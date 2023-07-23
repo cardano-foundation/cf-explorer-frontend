@@ -18,7 +18,7 @@ export const StepButton = styled(Box)<{ active: number }>(({ theme, active }) =>
   }
 }));
 export const TitleStep = styled(Box)<{ active: number }>(({ theme, active }) => ({
-  color: active ? theme.palette.grey[400] : theme.palette.grey[300],
+  color: active ? theme.palette.secondary.main : theme.palette.secondary.light,
   fontWeight: "bold",
   fontSize: "0.875rem",
   marginTop: theme.spacing(1),
@@ -42,26 +42,26 @@ export const StepHeader = styled(Typography)(({ theme }) => ({
 export const WrapTitle = styled(Box)(({ theme }) => ({
   fontSize: "1.5rem",
   fontWeight: "bold",
-  color: theme.palette.grey[400]
+  color: theme.palette.secondary.main
 }));
 
 export const NextButton = styled(Button)(({ theme }) => ({
   color: theme.palette.common.white,
-  background: theme.palette.grey[400],
+  background: theme.palette.secondary.main,
   textTransform: "capitalize",
   fontWeight: "bold",
   padding: "8px 20px",
   borderRadius: "8px",
   border: "2px solid transparent",
   ":hover": {
-    background: alpha(theme.palette.grey[400], 0.8)
+    background: alpha(theme.palette.secondary.main, 0.8)
   },
   display: "flex",
   gap: 12,
   alignItems: "center"
 }));
 export const PreviousButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   background: "transparent",
   textTransform: "capitalize",
   fontWeight: "bold",
@@ -69,7 +69,7 @@ export const PreviousButton = styled(Button)(({ theme }) => ({
   borderRadius: "8px",
   border: `2px solid ${theme.palette.border.hint}`,
   ":hover": {
-    background: alpha(theme.palette.grey[400], 0.1)
+    background: alpha(theme.palette.secondary.main, 0.1)
   },
   display: "flex",
   alignItems: "center"

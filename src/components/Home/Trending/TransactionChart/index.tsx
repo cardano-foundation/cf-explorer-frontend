@@ -188,12 +188,12 @@ const renderTooltipContent = (o: any, range: Time) => {
         textAlign={"left"}
         boxShadow={(theme) => theme.shadow.dropdown}
       >
-        <Box color={({ palette }) => palette.grey[400]} textAlign={"center"}>{`${moment(label).format(
+        <Box color={({ palette }) => palette.secondary.main} textAlign={"center"}>{`${moment(label).format(
           formatTimeX(range)
         )}`}</Box>
         {(payload || []).reverse().map((entry: any, index: number) => (
           <Box key={`item-${index}`} mt={1}>
-            <Box color={({ palette }) => alpha(palette.grey[400], 0.7)} fontSize={"0.75rem"}>{`${
+            <Box color={({ palette }) => alpha(palette.secondary.main, 0.7)} fontSize={"0.75rem"}>{`${
               nameTooltips[entry.name as keyof typeof nameTooltips]
             }`}</Box>
             <Box fontWeight={"bold"} style={{ color: entry.fill }}>{`${numberWithCommas(entry.value)} (${getPercent(

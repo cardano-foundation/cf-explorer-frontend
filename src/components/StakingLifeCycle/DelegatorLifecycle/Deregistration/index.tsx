@@ -77,7 +77,7 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
 
         <InfoGroup>
           <Info>
-            <AddressIcon fill={theme.palette.green[200]} />
+            <AddressIcon fill={theme.palette.secondary.light} />
             <CustomTooltip title={selected.txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(selected.txHash)}>{getShortHash(selected.txHash || "")}</StyledLink>
@@ -86,11 +86,11 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
             <StyledCopyButton text={selected.txHash} />
           </Info>
           <Info>
-            <ADAGreen fill={theme.palette.green[200]} />
+            <ADAGreen fill={theme.palette.secondary.light} />
             <InfoText>{formatADAFull(Math.abs(selected.deposit) - selected.fee || 0)}</InfoText>
           </Info>
           <Info>
-            <TimeIcon fill={theme.palette.green[200]} />
+            <TimeIcon fill={theme.palette.secondary.light} />
             <InfoText>{formatDateTimeLocal(selected.time)}</InfoText>
           </Info>
         </InfoGroup>

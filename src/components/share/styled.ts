@@ -15,7 +15,7 @@ export const StyledLink = styled(Link)`
 
 export const SmallText = styled("small")`
   white-space: nowrap;
-  color: ${({ theme }) => theme.palette.grey[300]};
+  color: ${({ theme }) => theme.palette.secondary.light};
 `;
 
 export const StyledInput = styled(InputBase)`
@@ -59,6 +59,6 @@ export const StyledDarkLoadingButton = styled(LoadingButton)`
   }
   &:disabled {
     color: white;
-    background: ${(props) => alpha(props.theme.palette.grey[400], 0.44)};
+    background: ${(props) => alpha(props.theme.palette.secondary.main, 0.44)};
   }
 `;

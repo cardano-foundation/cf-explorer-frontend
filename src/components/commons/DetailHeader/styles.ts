@@ -124,17 +124,17 @@ export const StakeKeyStatus = styled("small")<{ status?: StakeStatus }>`
   color: ${({ theme, status }) => {
     switch (status) {
       case "ACTIVE":
-        return theme.palette.success.main;
+        return theme.palette.success[800];
       default:
-        return theme.palette.grey[300];
+        return theme.palette.secondary.light;
     }
   }};
   background-color: ${({ theme, status }) => {
     switch (status) {
       case "ACTIVE":
-        return theme.palette.success.light;
+        return theme.palette.success[100];
       default:
-        return alpha(theme.palette.grey[300], 0.2);
+        return alpha(theme.palette.secondary.light, 0.2);
     }
   }};
   text-transform: uppercase;
@@ -155,7 +155,7 @@ export const WrapLeaderValue = styled(Box)`
 
 export const SlotLeaderValue = styled("span")`
   font-family: var(--font-family-text);
-  color: ${(props) => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.primary.main};
   white-space: pre-wrap;
   word-break: break-word;
   line-height: 1.5;
@@ -413,7 +413,7 @@ export const AllowSearchButton = styled(Box)(({ theme }) => ({
   borderRadius: 4,
   cursor: "pointer",
   "& path": {
-    stroke: theme.palette.grey[300]
+    stroke: theme.palette.secondary.light
   }
 }));
 

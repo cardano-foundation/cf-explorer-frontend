@@ -27,7 +27,7 @@ export const Layout = styled(Box)<{ sidebar: number }>`
     }
     &:hover {
       &::-webkit-scrollbar-thumb {
-        background: ${({ theme }) => theme.palette.grey[300]};
+        background: ${({ theme }) => theme.palette.secondary.light};
       }
       &::-webkit-scrollbar-track {
         background: ${({ theme }) => theme.palette.grey[100]};

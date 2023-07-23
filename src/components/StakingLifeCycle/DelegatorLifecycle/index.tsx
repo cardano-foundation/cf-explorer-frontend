@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { Box, IconButton, alpha, useTheme } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
 
 import {
   DelegationIcon,
@@ -100,7 +100,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
         <RegistrationIcon
           width={"25px"}
           height={"25px"}
-          fill={tabsRenderConfig["hasRegistration"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)}
+          fill={tabsRenderConfig["hasRegistration"] ? theme.palette.secondary[0] : theme.palette.secondary[600]}
         />
       ),
       title: "Registration",
@@ -119,7 +119,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
         <DelegationIcon
           width={"25px"}
           height={"25px"}
-          fill={tabsRenderConfig["hasDelegation"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)}
+          fill={tabsRenderConfig["hasDelegation"] ? theme.palette.secondary[0] : theme.palette.secondary[600]}
         />
       ),
       title: "Delegation",
@@ -138,7 +138,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
         <RewardsDistributionIcon
           width={"25px"}
           height={"25px"}
-          fill={tabsRenderConfig["hashRewards"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)}
+          fill={tabsRenderConfig["hashRewards"] ? theme.palette.secondary[0] : theme.palette.secondary[600]}
         />
       ),
       title: "Rewards Distribution",
@@ -157,7 +157,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
         <RewardsWithdrawalIcon
           width={"25px"}
           height={"25px"}
-          fill={tabsRenderConfig["hasWithdrawal"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)}
+          fill={tabsRenderConfig["hasWithdrawal"] ? theme.palette.secondary[0] : theme.palette.secondary[600]}
         />
       ),
       title: "Rewards Withdrawal",
@@ -176,9 +176,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
         <DeredistrationIcon
           width={"25px"}
           height={"25px"}
-          fill={
-            tabsRenderConfig["hasDeRegistration"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)
-          }
+          fill={tabsRenderConfig["hasDeRegistration"] ? theme.palette.secondary[0] : theme.palette.secondary[600]}
         />
       ),
       title: "Deregistration",
@@ -202,12 +200,12 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
 
   const renderBackground = (isActive: boolean, hasData: boolean) => {
     if (isActive) {
-      return `${palette.green[200]} !important`;
+      return `${palette.primary.main} !important`;
     }
     if (hasData) {
-      return `${palette.grey[400]} !important`;
+      return `${palette.secondary.main} !important`;
     }
-    return `${palette.grey[200]} !important`;
+    return `${palette.primary[100]} !important`;
   };
 
   const handleChangeTab = (step: StepperProps, idx: number) => {
@@ -233,9 +231,10 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
                 <StepButton
                   component={IconButton}
                   active={+(currentStep === idx)}
+                  border={({ palette }) => `1px solid ${palette.primary[200]}`}
                   bgcolor={renderBackground(currentStep === idx, tabsRenderConfig[step.keyCheckShow])}
                   color={({ palette }) =>
-                    tabsRenderConfig[step.keyCheckShow] ? palette.common.white : palette.grey[300]
+                    tabsRenderConfig[step.keyCheckShow] ? palette.common.white : palette.secondary.light
                   }
                 >
                   {step.icon}

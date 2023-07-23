@@ -31,7 +31,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                 <StatusIcon src={sendImg} alt="wallet icon" />
               </Box>
               {isMobile ? (
-                <Box component={"span"} color={({ palette }) => palette.grey[400]}>
+                <Box component={"span"} color={({ palette }) => palette.secondary.main}>
                   From:
                 </Box>
               ) : null}
@@ -40,7 +40,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
               <Box flex={1} display="flex" justifyContent="space-between">
                 <Box minWidth={120}>
                   {!isMobile ? (
-                    <Box component={"span"} color={({ palette }) => palette.grey[400]}>
+                    <Box component={"span"} color={({ palette }) => palette.secondary.main}>
                       From:
                     </Box>
                   ) : null}
@@ -63,7 +63,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                 </Box>
               </Box>
               <Box display={"flex"} flexDirection={isMobile ? "column" : "row"}>
-                <Box minWidth="1.75rem" color={({ palette }) => palette.grey[400]}>
+                <Box minWidth="1.75rem" color={({ palette }) => palette.secondary.main}>
                   To:
                 </Box>
                 <Box flex={1}>

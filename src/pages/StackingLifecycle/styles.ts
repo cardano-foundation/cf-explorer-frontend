@@ -78,7 +78,7 @@ export const Status = styled("span")<{ status: string }>`
 export const TextHeadline = styled("span")`
   font-weight: 700;
   font-size: 36px;
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.main};
   margin-bottom: 14px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 24px;

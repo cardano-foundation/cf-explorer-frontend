@@ -51,14 +51,14 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
           title={
             <Box>
               <Box display={"flex"} alignItems={"center"}>
-                <Box fontSize="1.125rem" color={({ palette }) => palette.grey[300]}>
+                <Box fontSize="1.125rem" color={({ palette }) => palette.secondary.light}>
                   Pool ID:
                 </Box>
                 <PoolNamePopup to={details.delegation(poolView)}>{getShortWallet(poolView || "")}</PoolNamePopup>
                 <CopyButton text={poolView} />
               </Box>
               <Box display={"flex"} alignItems={"center"}>
-                <Box fontSize="1.125rem" color={({ palette }) => palette.grey[300]}>
+                <Box fontSize="1.125rem" color={({ palette }) => palette.secondary.light}>
                   Pool name:
                 </Box>
                 <PoolNamePopup to={details.delegation(poolView)}>{poolName}</PoolNamePopup>
@@ -94,7 +94,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
               <StakeKeyItemList>
                 {rewardAccounts.map((item) => (
                   <StakeKeyItem key={item}>
-                    <SPOKey fill={theme.palette.blue[100]} />
+                    <SPOKey fill={theme.palette.primary.main} />
                     <PoolNamePopup to={details.stake(item)}>{getShortWallet(item)}</PoolNamePopup>
                     <CopyButton text={item} />
                   </StakeKeyItem>
@@ -139,7 +139,7 @@ export const PoolName = styled(Box)(({ theme }) => ({
   top: "64%",
   left: "50%",
   bottom: "30%",
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   fontWeight: 500,
   transform: "translate(-50%, 0)",
   maxWidth: "70%",
@@ -155,7 +155,7 @@ export const ButtonSPO = styled(Box)(() => ({
 }));
 export const PoolNamePopup = styled(Link)(({ theme }) => ({
   fontSize: "1.125rem",
-  color: `${theme.palette.blue[100]} !important`,
+  color: `${theme.palette.primary.main} !important`,
   textDecoration: "underline !important",
   fontWeight: 500,
   margin: `0 ${theme.spacing(1)}`,

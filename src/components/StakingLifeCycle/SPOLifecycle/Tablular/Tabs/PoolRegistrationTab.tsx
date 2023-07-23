@@ -64,9 +64,9 @@ const PoolRegistrationTab = () => {
             <AdaValue value={data.totalFee} />
             <TableSubTitle>
               <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-                <AdaValue color={theme.palette.grey[300]} value={data.deposit} gap="3px" fontSize="12px" />
+                <AdaValue color={theme.palette.secondary.light} value={data.deposit} gap="3px" fontSize="12px" />
                 <Box mx="3px">/</Box>
-                <AdaValue color={theme.palette.grey[300]} value={data.fee} gap="3px" fontSize="12px" />
+                <AdaValue color={theme.palette.secondary.light} value={data.fee} gap="3px" fontSize="12px" />
               </Box>
             </TableSubTitle>
           </Box>

@@ -20,7 +20,7 @@ export const TextUserInfo = styled("span")(({ theme }) => ({
 export const TextTx = styled("span")`
   font-weight: 400;
   font-size: 14px;
-  color: ${({ theme }) => theme.palette.grey[300]};
+  color: ${({ theme }) => theme.palette.secondary.light};
 `;
 
 export const CustomTab = styled(Box)`
@@ -45,7 +45,7 @@ export const StyledTabs = styled(Tabs)`
 `;
 
 export const StyledTab = styled(Tab)`
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
   padding: 0;
   &.Mui-selected {
     color: ${(props) => props.theme.palette.text.primary};
@@ -105,7 +105,7 @@ export const OverviewIcon = styled(Box)`
 `;
 
 export const Amount = styled(Box)<{ type: "up" | "down" }>(({ type, theme }) => ({
-  color: type === "up" ? theme.palette.success.main : theme.palette.error.main,
+  color: type === "up" ? theme.palette.success[800] : theme.palette.error[700],
   display: "flex",
   alignItems: "center",
   gap: 5,

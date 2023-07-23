@@ -8,10 +8,10 @@ import { CONTRACT_ADDRESS_TYPE, VerifyScriptContext } from "src/pages/ContractDe
 
 const Result = styled(Box)`
   padding: 9px 25px;
-  background: ${(props) => alpha(props.theme.palette.grey[300], 0.1)};
+  background: ${(props) => alpha(props.theme.palette.secondary.light, 0.1)};
   border-radius: 10px;
   text-align: left;
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.main};
   line-height: 19px;
   font-weight: 400;
   font-size: 16px;
@@ -26,9 +26,9 @@ const StyledBox = styled(Box)`
 
 const ScriptType = styled(Box)`
   margin: 12px 0px;
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.main};
   span {
-    color: ${({ theme }) => theme.palette.blue[100]};
+    color: ${({ theme }) => theme.palette.primary.main};
   }
 `;
 
@@ -48,7 +48,7 @@ const ScriptTab = () => {
 
   return (
     <StyledBox>
-      <Box color={({ palette }) => palette.grey[400]}>Contract</Box>
+      <Box color={({ palette }) => palette.secondary.main}>Contract</Box>
       {data?.isVerified ? (
         <ScriptType>
           Script Type: <span>Native Script</span>

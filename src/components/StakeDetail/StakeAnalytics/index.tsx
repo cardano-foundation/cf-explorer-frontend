@@ -156,11 +156,12 @@ const StakeAnalytics: React.FC = () => {
                 >
                   <defs>
                     <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor={theme.palette.green["300"]} stopOpacity={0.2} />
-                      <stop offset="100%" stopColor={theme.palette.green["300"]} stopOpacity={0} />
+                      <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.5} />
+                      <stop offset="100%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
                     </linearGradient>
                   </defs>
                   <XAxis
+                    color={theme.palette.secondary.main}
                     dataKey={tab === "BALANCE" ? "date" : "epoch"}
                     tickFormatter={(value) =>
                       tab === "BALANCE" ? moment(value).format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM") : value
@@ -168,7 +169,12 @@ const StakeAnalytics: React.FC = () => {
                     tickLine={false}
                     {...xAxisProps}
                   />
-                  <YAxis tickFormatter={formatPriceValue} tickLine={false} interval={isMobile ? 3 : undefined} />
+                  <YAxis
+                    color={theme.palette.secondary.main}
+                    tickFormatter={formatPriceValue}
+                    tickLine={false}
+                    interval={isMobile ? 3 : undefined}
+                  />
                   <Tooltip content={renderTooltip} cursor={false} />
                   <CartesianGrid vertical={false} strokeWidth={0.33} />
                   <Area

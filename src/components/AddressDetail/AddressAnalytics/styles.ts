@@ -50,12 +50,12 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   paddingTop: theme.spacing(2),
   width: "80%",
   margin: "0 auto",
-  borderBottom: `1px solid ${alpha(theme.palette.grey[400], 0.1)}`,
+  borderBottom: `1px solid ${alpha(theme.palette.secondary.main, 0.1)}`,
   overflow: "hidden",
   alignItems: "center",
   [theme.breakpoints.down("lg")]: {
     alignItems: "flex-start",
-    borderRight: `1px solid ${alpha(theme.palette.grey[400], 0.1)}`,
+    borderRight: `1px solid ${alpha(theme.palette.secondary.main, 0.1)}`,
     height: "100%",
     borderBottom: "none",
     width: "100%",
@@ -73,7 +73,7 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
       alignItems: "center",
       justifyContent: "space-between",
       padding: "0 10px 20px 10px",
-      borderRight: `1px solid ${alpha(theme.palette.grey[400], 0.1)}`
+      borderRight: `1px solid ${alpha(theme.palette.secondary.main, 0.1)}`
     }
   }
 }));
@@ -81,7 +81,7 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
 export const Title = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
   padding: `${theme.spacing(2)} 0`,
-  color: theme.palette.grey[300]
+  color: theme.palette.secondary.light
 }));
 
 export const ValueInfo = styled(Box)(({ theme }) => ({
@@ -90,7 +90,7 @@ export const ValueInfo = styled(Box)(({ theme }) => ({
   margin: "0 auto",
   overflowWrap: "anywhere",
   padding: "0 18px",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   [theme.breakpoints.down("md")]: {
     padding: "0 10px"
   },
@@ -113,8 +113,8 @@ export const ButtonTitle = styled("button")(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "1rem",
   marginRight: 5,
-  color: theme.palette.primary.contrastText,
-  backgroundColor: theme.palette.green[200],
+  color: theme.palette.secondary[0],
+  backgroundColor: theme.palette.primary.main,
   fontFamily: "var(--font-family-title)",
 
   [theme.breakpoints.down("sm")]: {
@@ -143,42 +143,30 @@ export const Tabs = styled(Box)(() => ({
 export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   textTransform: "lowercase",
   borderRadius: 10,
-  border: `2px solid ${theme.palette.green[300_20]}`,
-  color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[300],
+  border: `2px solid ${theme.palette.primary[200]}`,
+  marginRight: theme.spacing(1),
+  color: active ? `${theme.palette.secondary[0]} !important` : theme.palette.secondary.light,
   fontWeight: "bold",
-  backgroundColor: active ? theme.palette.green[200] : "none",
-
-  "&:hover": {
-    color: active ? `${theme.palette.text.dark} !important` : theme.palette.grey[300]
-  },
-
-  [theme.breakpoints.down("sm")]: {
-    minWidth: `40px !important`,
-    height: `28px !important`
-  },
+  backgroundColor: active ? theme.palette.primary.main : "none",
 
   [theme.breakpoints.down("lg")]: {
     backgroundColor: active ? `${theme.palette.primary.main} !important` : "none",
-    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[300],
-    "&:hover": {
-      backgroundColor: theme.palette.primary.main,
-      color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[300]
-    }
+    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.secondary.light
   }
 }));
 
 export const TextCardHighlight = styled("span")`
   font-size: 20px;
-  border-bottom: ${(props) => `2px solid ${props.theme.palette.green[200]}`};
+  border-bottom: ${(props) => `2px solid ${props.theme.palette.primary[200]}`};
 `;
 
 export const TooltipBody = styled(Box)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.common.white, 0.8),
+  backgroundColor: alpha(theme.palette.secondary[0], 0.8),
   borderRadius: 2,
   padding: 8,
   border: "1px solid #146635",
   fontSize: 12,
-  color: theme.palette.grey[500]
+  color: theme.palette.secondary.light
 }));
 
 export const TooltipLabel = styled(Box)(() => ({

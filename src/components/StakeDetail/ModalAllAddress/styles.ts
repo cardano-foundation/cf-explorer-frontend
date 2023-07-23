@@ -25,11 +25,11 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
     border: "4px solid transparent",
     backgroundClip: "padding-box",
     ":hover": {
-      background: theme.palette.grey[300],
+      background: theme.palette.secondary.light,
       backgroundClip: "padding-box"
     },
     ":active": {
-      background: theme.palette.grey[300],
+      background: theme.palette.secondary.light,
       backgroundClip: "padding-box"
     }
   },
@@ -52,7 +52,7 @@ export const WrapContent = styled(Box)`
   }
   &:hover {
     &::-webkit-scrollbar-thumb {
-      background: ${(props) => props.theme.palette.grey[300]};
+      background: ${(props) => props.theme.palette.secondary.light};
     }
     &::-webkit-scrollbar-track {
       background: ${(props) => props.theme.palette.grey[100]};

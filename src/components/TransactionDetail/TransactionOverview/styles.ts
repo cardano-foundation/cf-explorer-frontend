@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import { CONFIRMATION_STATUS } from "../../../commons/utils/constants";
 
 export const TitleCard = styled(Box)(({ theme }) => ({
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   fontSize: "0.875rem",
   minHeight: 20
 }));
 
 export const MaxSlot = styled("span")(({ theme }) => ({
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   fontWeight: "400"
 }));
 

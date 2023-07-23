@@ -168,7 +168,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
                             color: (theme) => theme.palette.secondary[0]
                           }
-                        : { color: (theme) => theme.palette.grey[300] })
+                        : { color: (theme) => theme.palette.secondary.light })
                     })}
                   >
                     {icon ? (
@@ -323,7 +323,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
                             color: (theme) => theme.palette.secondary[0]
                           }
-                        : { color: (theme) => theme.palette.grey[300] })
+                        : { color: (theme) => theme.palette.secondary.light })
                     })}
                   >
                     {icon ? (

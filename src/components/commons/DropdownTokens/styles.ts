@@ -59,5 +59,5 @@ export const TokenButton = styled(Box)(({ theme }) => ({
   minWidth: 250,
   height: 38,
   borderRadius: theme.spacing(1),
-  border: `1px solid ${alpha(theme.palette.grey[300], 0.5)}`
+  border: `1px solid ${alpha(theme.palette.secondary.light, 0.5)}`
 }));

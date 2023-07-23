@@ -94,7 +94,7 @@ export const PoolUpdateModal = ({ data, open, ...props }: Props) => {
               TabIndicatorProps={{
                 sx: {
                   background: (theme) => theme.palette.primary.main,
-                  color: (theme) => theme.palette.grey[400],
+                  color: (theme) => theme.palette.secondary.main,
                   height: "4px"
                 }
               }}
@@ -105,7 +105,7 @@ export const PoolUpdateModal = ({ data, open, ...props }: Props) => {
                   value={key}
                   label={
                     <TabItem>
-                      <Icon fill={key === tabActive ? theme.palette.green[200] : theme.palette.grey[300]} />
+                      <Icon fill={key === tabActive ? theme.palette.green[200] : theme.palette.secondary.light} />
                       <TitleTab pl={1} active={+(key === tabActive)}>
                         {label}
                       </TitleTab>

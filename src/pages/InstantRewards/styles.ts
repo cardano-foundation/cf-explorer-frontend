@@ -35,7 +35,7 @@ export const PageSize = styled(Box)(() => ({
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   display: "block",
   margin: "12px 0px"
 }));

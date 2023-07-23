@@ -7,7 +7,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.red[100]}`,
+  border: `2px solid ${theme.palette.error[700]}`,
   borderRadius: "10px",
   marginRight: theme.spacing(5),
   position: "relative",
@@ -22,7 +22,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
     position: "absolute",
     top: "-50%",
     left: theme.spacing(2),
-    background: theme.palette.red[100],
+    background: theme.palette.error[700],
     transform: " translate(0, 60%)"
   }
 }));
@@ -32,7 +32,7 @@ export const FeeBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.red[100]}`,
+  border: `2px solid ${theme.palette.error[700]}`,
   borderRadius: "10px",
   background: theme.palette.common.white,
   position: "relative",
@@ -47,7 +47,7 @@ export const FeeBox = styled(Box)(({ theme }) => ({
     position: "absolute",
     top: "-50%",
     left: theme.spacing(2),
-    background: theme.palette.red[100],
+    background: theme.palette.error[700],
     transform: " translate(0, 60%)"
   }
 }));
@@ -71,13 +71,13 @@ export const InfoText = styled(Box)(({ theme }) => ({
   marginLeft: theme.spacing(1),
   fontWeight: 600,
   fontSize: "14px",
-  color: theme.palette.grey[400]
+  color: theme.palette.secondary.main
 }));
 
 export const FilterDateLabel = styled("span")(({ theme }) => ({
   fontSize: 14,
   fontWeight: 400,
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   [theme.breakpoints.down("sm")]: {
     display: "none",
     fontSize: 12
@@ -128,7 +128,7 @@ export const ItemList = styled(Box)(({ theme }) => ({
 }));
 
 export const Item = styled(Box)(({ theme, flexDirection }) => ({
-  backgroundColor: alpha(theme.palette.grey[300], 0.1),
+  backgroundColor: alpha(theme.palette.secondary.light, 0.1),
   padding: 20,
   flex: 1,
   display: "flex",
@@ -151,7 +151,7 @@ export const Label = styled(Box)(({ theme }) => ({
   fontWeight: 700,
   fontSize: 14,
   lineHeight: "16px",
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   marginBottom: 8
 }));
 

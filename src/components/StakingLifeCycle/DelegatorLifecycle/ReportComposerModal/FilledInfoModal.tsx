@@ -288,13 +288,13 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
                           value={RatioGroupValue.yes}
                           control={<Radio onClick={() => handleClickRadio(key)} />}
                           label="Yes"
-                          sx={{ color: (props) => props.palette.grey[400] }}
+                          sx={{ color: (props) => props.palette.secondary.main }}
                         />
                         <FormControlLabel
                           value={RatioGroupValue.no}
                           control={<Radio onClick={() => handleClickRadio(key)} />}
                           label="No"
-                          sx={{ color: (props) => props.palette.grey[400] }}
+                          sx={{ color: (props) => props.palette.secondary.main }}
                         />
                       </Stack>
                     </RadioGroup>

@@ -70,7 +70,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       key: "createdat",
       minWidth: 120,
       render: (r) => (
-        <Box mt={1} color={({ palette }) => palette.grey[300]}>
+        <Box mt={1} color={({ palette }) => palette.secondary.light}>
           {formatDateTimeLocal(r.time || "")}
         </Box>
       )
@@ -88,7 +88,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
           </Box>
           <Box mt={1}>
             <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
-            <Box color={({ palette }) => palette.grey[300]} component={"span"}>
+            <Box color={({ palette }) => palette.secondary.light} component={"span"}>
               {r.epochSlotNo}
             </Box>
           </Box>

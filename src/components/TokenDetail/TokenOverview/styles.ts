@@ -270,7 +270,7 @@ export const ButtonClose = styled(Button)(({ theme }) => ({
 
 export const ViewJson = styled(Box)(({ theme }) => ({
   textAlign: "left",
-  backgroundColor: alpha(theme.palette.grey[300], 0.1),
+  backgroundColor: alpha(theme.palette.secondary.light, 0.1),
   borderRadius: 10,
   padding: theme.spacing(2),
   "& .object-contentw": {
@@ -340,7 +340,7 @@ export const TokenDescription = styled(Box)(({ theme }) => ({
 export const TokenUrl = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(1),
   cursor: "pointer",
-  color: theme.palette.grey[300]
+  color: theme.palette.secondary.light
 }));
 
 export const PolicyScriptBtn = styled(Button)(({ theme }) => ({

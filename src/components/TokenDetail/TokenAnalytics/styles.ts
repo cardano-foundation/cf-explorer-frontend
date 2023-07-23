@@ -38,19 +38,19 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   paddingTop: theme.spacing(2),
   width: "80%",
   margin: "0 auto",
-  borderBottom: `1px solid ${alpha(theme.palette.grey[400], 0.1)}`,
+  borderBottom: `1px solid ${alpha(theme.palette.secondary.main, 0.1)}`,
   overflow: "hidden",
   alignItems: "center",
   [theme.breakpoints.down("lg")]: {
     alignItems: "flex-start",
-    borderRight: `1px solid ${alpha(theme.palette.grey[400], 0.1)}`,
+    borderRight: `1px solid ${alpha(theme.palette.secondary.main, 0.1)}`,
     height: "100%",
     borderBottom: "none",
     width: "100%",
     minHeight: "160px"
   },
   [theme.breakpoints.down("sm")]: {
-    borderRight: `1px solid ${alpha(theme.palette.grey[400], 0.1)}`,
+    borderRight: `1px solid ${alpha(theme.palette.secondary.main, 0.1)}`,
     minHeight: "150px"
   }
 }));
@@ -137,21 +137,15 @@ export const Tabs = styled(Box)(({ theme }) => ({
 export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   textTransform: "lowercase",
   borderRadius: 10,
-  border: `2px solid ${theme.palette.green[300_20]}`,
+  border: `2px solid ${theme.palette.primary[200]}`,
   marginRight: theme.spacing(1),
-  color: active ? `${theme.palette.primary[100]} !important` : theme.palette.grey[300],
+  color: active ? `${theme.palette.secondary[0]} !important` : theme.palette.secondary.light,
   fontWeight: "bold",
   backgroundColor: active ? theme.palette.primary.main : "none",
-  "&:hover": {
-    color: active ? `${theme.palette.text.dark} !important` : theme.palette.grey[300]
-  },
+
   [theme.breakpoints.down("lg")]: {
     backgroundColor: active ? `${theme.palette.primary.main} !important` : "none",
-    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[300],
-    "&:hover": {
-      backgroundColor: theme.palette.primary.main,
-      color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.grey[300]
-    }
+    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.secondary.light
   }
 }));
 

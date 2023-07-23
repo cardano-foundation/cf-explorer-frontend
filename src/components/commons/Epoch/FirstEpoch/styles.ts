@@ -67,7 +67,7 @@ export const EpochProgress = styled("h3")<{ status: keyof typeof EPOCH_STATUS }>
 }));
 
 export const MaxSlot = styled("span")`
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
   font-size: 20px;
 `;
 

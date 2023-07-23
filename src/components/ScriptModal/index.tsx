@@ -22,7 +22,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
       <Box data-testid="modal-testid" height={"100%"}>
         <Box
           textAlign={"left"}
-          color={({ palette }) => palette.grey[400]}
+          color={({ palette }) => palette.secondary.main}
           fontSize="1.5rem"
           fontWeight="bold"
           fontFamily={'"Roboto", sans-serif '}
@@ -63,7 +63,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
                 </Box>
               </Box>
               <Box>
-                <Box data-testid="policy-script" mb={1} color={({ palette }) => palette.grey[300]}>
+                <Box data-testid="policy-script" mb={1} color={({ palette }) => palette.secondary.light}>
                   Policy script:
                 </Box>
                 <ViewJson>
@@ -79,7 +79,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
                       rootName={false}
                     />
                   ) : (
-                    <Box textAlign={"center"} py={2} color={({ palette }) => palette.grey[300]}>
+                    <Box textAlign={"center"} py={2} color={({ palette }) => palette.secondary.light}>
                       Script not found
                     </Box>
                   )}

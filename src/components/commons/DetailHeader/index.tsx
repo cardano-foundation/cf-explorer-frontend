@@ -244,7 +244,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                       setOpenBackdrop((prev: any) => ({ ...prev, [keyItem]: true }));
                     }}
                   >
-                    <SearchIcon stroke={theme.palette.grey[300]} />
+                    <SearchIcon stroke={theme.palette.secondary.light} />
                   </AllowSearchButton>
                 )}
                 {item.allowSearch && keyItem && openBackdrop[keyItem] && (
@@ -269,7 +269,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                           },
                           "&:hover": {
                             "&::-webkit-scrollbar-thumb": {
-                              background: theme.palette.grey[300]
+                              background: theme.palette.secondary.light
                             },
                             "&::-webkit-scrollbar-track": {
                               background: theme.palette.grey[100]
