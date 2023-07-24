@@ -269,3 +269,4 @@ export { ReactComponent as RewardsAvailableIcon } from "./icons/rewards-availabl
 export { ReactComponent as StatusIcon } from "./icons/status-ic.svg";
 export { ReactComponent as RedeemerPlusIcon } from "./icons/redeemer-plus.svg";
 export { ReactComponent as RedeemerArrowDownIcon } from "./icons/redeemer-arrow-down.svg";
+export { ReactComponent as SliderRight } from "./icons/swipper-right.svg";
