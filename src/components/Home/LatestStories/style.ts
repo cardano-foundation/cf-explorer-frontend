@@ -177,6 +177,9 @@ export const NextSwipper = styled(Box)`
   position: absolute;
   right: -10px;
   bottom: 46%;
+  ${(props) => props.theme.breakpoints.up("sm")} {
+    display: none;
+  }
 `;
 
 export const CustomGrid = styled(Grid)`

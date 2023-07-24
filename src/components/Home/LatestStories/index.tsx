@@ -8,6 +8,7 @@ import { API } from "src/commons/utils/api";
 import { CARDANO_NEWS_URL } from "src/commons/utils/constants";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { formatDateTime, getHostname } from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import {
   Author,
@@ -27,7 +28,6 @@ import {
   WrapHeader,
   CustomGrid
 } from "./style";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 
 const defaultNumberOfItems = 4;
 
@@ -43,19 +43,15 @@ const LatestStories = () => {
 
   const [amountNewsByDevice, setAmountNewsByDevice] = useState<number>(0);
 
-  const [isShown, setIsShown] = useState(false);
   const { isLaptop, isMobile } = useScreen();
 
   useEffect(() => {
     setCurrentIndexData(0);
     if (isMobile) {
       setAmountNewsByDevice(AMOUNT_OF_NEWS_SHOWING.MOBILE);
-      setIsShown(true);
     } else if (isLaptop) {
       setAmountNewsByDevice(AMOUNT_OF_NEWS_SHOWING.TABLET);
-      setIsShown(false);
     } else {
-      setIsShown(false);
       setAmountNewsByDevice(AMOUNT_OF_NEWS_SHOWING.DESKTOP);
     }
   }, [isLaptop, isMobile]);
@@ -91,19 +87,13 @@ const LatestStories = () => {
     );
   }
 
-  const onMouseLeave = () => {
-    if (!isLaptop) {
-      setIsShown(false);
-    }
-  };
-
   return (
     <LatestStoriesContainer data-testid="home-latest-stories">
       <Header>
         <Title>Latest Stories</Title>
         <ViewAllButtonExternal to={CARDANO_NEWS_URL as string} />
       </Header>
-      <Box position={"relative"} onMouseEnter={() => setIsShown(true)} onMouseLeave={onMouseLeave}>
+      <Box position={"relative"}>
         <Grid container spacing={2}>
           {(data?.slice(currentIndexData, currentIndexData + amountNewsByDevice) || []).map(
             ({ resource_href, main_image, main_image_alt, title, published_on, entity, blurb }, index) => {
@@ -140,11 +130,9 @@ const LatestStories = () => {
             }
           )}
         </Grid>
-        {isShown && (
-          <NextSwipper onClick={handleNextSwipper}>
-            <SliderRight />
-          </NextSwipper>
-        )}
+        <NextSwipper onClick={handleNextSwipper}>
+          <SliderRight />
+        </NextSwipper>
       </Box>
     </LatestStoriesContainer>
   );
