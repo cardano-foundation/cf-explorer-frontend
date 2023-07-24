@@ -275,6 +275,17 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       return;
     }
 
+    if (option?.value === "blocks") {
+      history.push(details.block(search.trim()));
+      callback?.();
+      return;
+    }
+    if (option?.value === "epochs") {
+      history.push(details.epoch(search.trim()));
+      callback?.();
+      return;
+    }
+
     if (option?.value === "all" && search.startsWith("stake")) {
       history.push(details.stake(search));
       callback?.();
