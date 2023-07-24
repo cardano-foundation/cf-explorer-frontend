@@ -2,11 +2,12 @@ import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 import { fireEvent, render, screen } from "src/test-utils";
+import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
 
-import TransactionOverview from ".";
+import Transaction from ".";
 
-const mockTransaction = {
+const transaction = {
   tx: {
     hash: "transaction-hash",
     time: "2022-01-01 12:00:00",
@@ -181,33 +182,37 @@ const mockTransaction = {
       value: "value-2"
     }
   ]
-};
+} as Transaction;
 
-const mockProps = {
-  data: mockTransaction as Transaction,
-  loading: false,
-  lastUpdated: 1625112345
-};
+jest.mock("src/commons/hooks/useFetch");
 
-describe("TransactionOverview component", () => {
-  it("should component render", () => {
-    render(<TransactionOverview {...mockProps} />);
-    expect(screen.getByText(/created at/i)).toBeInTheDocument();
-    expect(screen.getByText(/confirmations/i)).toBeInTheDocument();
-    expect(screen.getByText(/total output/i)).toBeInTheDocument();
-    expect(screen.getByText(/transaction fees/i)).toBeInTheDocument();
-    expect(screen.getByText(/block/i)).toBeInTheDocument();
+describe("TransactionDetail page", () => {
+  beforeEach(() => {
+    (useFetch as jest.Mock).mockReturnValue({
+      data: transaction,
+      loading: false,
+      initialized: true,
+      error: false,
+      lastUpdated: new Date().getTime()
+    });
   });
 
-  it("should user goto detail page", () => {
-    const block = 123;
+  it("should component render", () => {
+    render(<Transaction />);
+    expect(screen.getByText(/transaction details/i)).toBeInTheDocument();
+    expect(screen.getByText(/pendding/i)).toBeInTheDocument();
+    expect(screen.getByText(/transaction-hash/i)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: String(transaction.tx.epochNo) })).toBeInTheDocument();
+  });
+
+  it("should user goto epoch detail page", () => {
     const history = createBrowserHistory();
     render(
       <Router history={history}>
-        <TransactionOverview {...mockProps} />
+        <Transaction />
       </Router>
     );
-    fireEvent.click(screen.getByRole("link", { name: String(block) }));
-    expect(history.location.pathname).toBe(details.block(block));
+    fireEvent.click(screen.getByRole("link", { name: String(transaction.tx.epochNo) }));
+    expect(history.location.pathname).toBe(details.epoch(transaction.tx.epochNo));
   });
 });
