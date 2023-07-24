@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { stringify } from "qs";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { Box } from "@mui/material";
 
 import Card from "src/components/commons/Card";
@@ -28,13 +28,16 @@ export enum POOL_TYPE {
   DEREREGISTRATION = "de-registration"
 }
 
-const RegistrationPools = () => {
+interface Props {
+  poolType: POOL_TYPE;
+}
+
+const RegistrationPools: React.FC<Props> = ({ poolType }) => {
   const history = useHistory();
   const { search } = useLocation();
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
   const mainRef = useRef(document.querySelector("#main"));
-  const { poolType = POOL_TYPE.REGISTRATION } = useParams<{ poolType: POOL_TYPE }>();
 
   const fetchData = useFetchList<Registration>(
     `${API.POOL}/${poolType}`,
@@ -85,7 +88,9 @@ const RegistrationPools = () => {
       title: "Pool",
       key: "pool",
       render: (pool) => (
-        <StyledLink to={details.delegation(pool.poolView || "")}>
+        <StyledLink
+          to={{ pathname: details.delegation(pool.poolView), state: { fromPath: history.location.pathname } }}
+        >
           <CustomTooltip title={pool.poolName || pool.poolView || ""}>
             <Box component={"span"}>{pool.poolName || getShortHash(pool.poolView)}</Box>
           </CustomTooltip>

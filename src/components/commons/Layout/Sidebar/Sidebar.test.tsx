@@ -9,7 +9,7 @@ describe("Sidebar component", () => {
   it("should component render", () => {
     render(<Sidebar />);
 
-    expect(screen.getByRole("link", { name: /logo cardano mainnet/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /logo cardano/i })).toBeInTheDocument();
     expect(screen.getByRole("img", { name: /browse/i })).toBeInTheDocument();
     expect(screen.getByText(/resources/i)).toBeInTheDocument();
   });
@@ -22,7 +22,7 @@ describe("Sidebar component", () => {
       </Router>
     );
 
-    fireEvent.click(screen.getByRole("link", { name: /logo cardano mainnet/i }));
+    fireEvent.click(screen.getByRole("link", { name: /logo cardano/i }));
     expect(history.location.pathname).toBe("/");
   });
 });

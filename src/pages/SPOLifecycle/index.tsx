@@ -41,14 +41,6 @@ interface Params {
   tab: SPOStep;
 }
 
-export interface ListTabResponseSPO {
-  [key: string]: boolean;
-  isRegistration: boolean;
-  isUpdate: boolean;
-  isReward: boolean;
-  isDeRegistration: boolean;
-}
-
 const MODES: ViewMode[] = ["timeline", "tabular"];
 
 const SPOLifecycle = () => {

@@ -5,18 +5,17 @@ import { useHistory, useParams } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { useScreen } from "src/commons/hooks/useScreen";
-import { details } from "src/commons/routers";
+import { lists } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import FilterReport, { FilterParams } from "src/components/FilterReport";
 import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 
 import { TabContext } from "@mui/lab";
 import PoolLifecycle from "src/components/PoolLifecycle";
-import { TabContent, TabHeader } from "src/components/ReportGeneratedTabs/styles";
 import StakekeySummary from "src/components/StakekeySummary";
 import { StyledTab, StyledTabs } from "../RegistrationPools/styles";
 import StakingLifeCycleSearch from "../StakingLifeCycleSearch";
-import { FilterHead, StyledTabLabel, TextHeadline, TitleHead } from "./styles";
+import { TabContent, TabHeader, FilterHead, StyledTabLabel, TextHeadline, TitleHead } from "./styles";
 import { useSelector } from "react-redux";
 
 export interface SavedReport {
@@ -35,11 +34,13 @@ const DEFAULT_PAGINING = { page: 0, size: 50 };
 const Dashboard: React.FC = () => {
   const history = useHistory();
   const { userData } = useSelector(({ user }: RootState) => user);
-  const [onDownload, setOnDownload] = useState<number | false>(false);
   const [sort, setSort] = useState<string>("");
   const [{ page, size }, setPagi] = useState<{ page: number; size: number; sort?: string }>(DEFAULT_PAGINING);
   const [params, setParams] = useState<any>(DEFAULT_PARAMS);
-  const { tab = "stake-key" } = useParams<{ tab: "stake-key" | "pools" }>();
+  const { tab } = useParams<{ tab?: LifecycleReportType }>();
+
+  const validTab: LifecycleReportType = tab || "stake-key-reports";
+
   const query = {
     page,
     size,
@@ -52,9 +53,9 @@ const Dashboard: React.FC = () => {
   }, []);
   const handleSort = (sort: string = "") => setSort(sort);
 
-  const handleChange = (e: React.SyntheticEvent, newValue: string) => {
+  const handleChange = (e: React.SyntheticEvent, newValue: LifecycleReportType) => {
     handleFilterChange(DEFAULT_PARAMS);
-    history.replace(details.dashboard(newValue));
+    history.replace(lists.dashboard(newValue));
     handlePaginationChange(DEFAULT_PAGINING);
   };
 
@@ -79,17 +80,23 @@ const Dashboard: React.FC = () => {
     setParams(body);
   };
 
-  const fetchDataPool = useFetchList<IPoolReportList>(tab === "pools" ? API.REPORT.POOL_REPORT_SUMMARY : "", query);
-  const fetchDataStake = useFetchList<IStakeKeySummary>(tab === "stake-key" ? API.REPORT.STAKE_KEY_SUMMARY : "", query);
+  const fetchDataPool = useFetchList<IPoolReportList>(
+    validTab === "pool-reports" ? API.REPORT.POOL_REPORT_SUMMARY : "",
+    query
+  );
+  const fetchDataStake = useFetchList<IStakeKeySummary>(
+    validTab === "stake-key-reports" ? API.REPORT.STAKE_KEY_SUMMARY : "",
+    query
+  );
   const { isMobile } = useScreen();
-  const totalResult = tab === "pools" ? fetchDataPool.total : fetchDataStake.total;
+  const totalResult = validTab === "pool-reports" ? fetchDataPool.total : fetchDataStake.total;
   if (!userData)
     return (
       <Container>
         <StakingLifeCycleSearch />
       </Container>
     );
-    
+
   return (
     <Container>
       <StakingLifeCycleSearch />
@@ -102,32 +109,28 @@ const Dashboard: React.FC = () => {
           <FilterReport filterValue={params} onFilterValueChange={handleFilterChange} />
         </FilterHead>
       </TitleHead>
-      <TabContext value={tab}>
+      <TabContext value={validTab}>
         <TabHeader>
-          <Tabs style={{ flex: 1 }}>
-            <Box width={"100%"}>
-              <StyledTabs
-                value={tab}
-                onChange={handleChange}
-                sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.main}` }}
-                TabIndicatorProps={{ sx: { backgroundColor: (theme) => theme.palette.primary.main, height: 4 } }}
-                scrollButtons="auto"
-                variant="scrollable"
-                aria-label="lab API tabs example"
-              >
-                <StyledTab
-                  value={"stake-key"}
-                  label={<StyledTabLabel active={+(tab === "stake-key")}>Stake Key Reports</StyledTabLabel>}
-                />
-                <StyledTab
-                  value={"pools"}
-                  label={<StyledTabLabel active={+(tab === "pools")}>Pool Reports</StyledTabLabel>}
-                />
-              </StyledTabs>
-            </Box>
-          </Tabs>
+          <StyledTabs
+            value={validTab}
+            onChange={handleChange}
+            sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.main}` }}
+            TabIndicatorProps={{ sx: { backgroundColor: (theme) => theme.palette.primary.main, height: 4 } }}
+            scrollButtons="auto"
+            variant="scrollable"
+            aria-label="lab API tabs example"
+          >
+            <StyledTab
+              value={"stake-key-reports"}
+              label={<StyledTabLabel active={+(validTab === "stake-key-reports")}>Stake Key Reports</StyledTabLabel>}
+            />
+            <StyledTab
+              value={"pool-reports"}
+              label={<StyledTabLabel active={+(validTab === "pool-reports")}>Pool Reports</StyledTabLabel>}
+            />
+          </StyledTabs>
         </TabHeader>
-        <TabContent value={"stake-key"}>
+        <TabContent value={"stake-key-reports"}>
           <StakekeySummary
             pagination={{ page, size }}
             onPagination={handlePaginationChange}
@@ -135,7 +138,7 @@ const Dashboard: React.FC = () => {
             fetchData={fetchDataStake}
           />
         </TabContent>
-        <TabContent value={"pools"}>
+        <TabContent value={"pool-reports"}>
           <PoolLifecycle
             pagination={{ page, size }}
             onPagination={handlePaginationChange}

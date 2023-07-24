@@ -14,10 +14,10 @@ import Epoch from "./pages/Epoch";
 import EpochDetail from "./pages/EpochDetail";
 import DelegationPools from "./pages/DelegationPools";
 import DelegationDetail from "./pages/DelegationDetail";
-import RegistrationPools from "./pages/RegistrationPools";
+import RegistrationPools, { POOL_TYPE } from "./pages/RegistrationPools";
 import Tokens from "./pages/Token";
 import TokenDetail from "./pages/TokenDetail";
-import Stake from "./pages/Stake";
+import Stake, { STAKE_ADDRESS_TYPE } from "./pages/Stake";
 import StakeDetail from "./pages/StakeDetail";
 import AddressWalletDetail from "./pages/AddressWalletDetail";
 import PolicyDetail from "./pages/PolicyDetail";
@@ -46,6 +46,12 @@ import InstantRewards from "./pages/InstantRewards";
 import { getAllBookmarks } from "./commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "./commons/utils/constants";
 import { setOpenSyncBookmarkModal } from "./stores/user";
+
+const StakeAddressRegistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.REGISTRATION} />;
+const StakeAddressDeregistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.DEREREGISTRATION} />;
+
+const PoolsCertificate = () => <RegistrationPools poolType={POOL_TYPE.REGISTRATION} />;
+const PoolsDeregistration = () => <RegistrationPools poolType={POOL_TYPE.DEREREGISTRATION} />;
 
 const Routes: React.FC = () => {
   const { isLoggedIn } = useAuth();
@@ -83,10 +89,12 @@ const Routes: React.FC = () => {
       <Route path={routers.EPOCH_DETAIL} exact component={EpochDetail} />
       <Route path={routers.DELEGATION_POOLS} exact component={DelegationPools} />
       <Route path={routers.DELEGATION_POOL_DETAIL} exact component={DelegationDetail} />
-      <Route path={routers.REGISTRATION_POOLS} exact component={RegistrationPools} />
+      <Route path={routers.POOL_CERTIFICATE} exact component={PoolsCertificate} />
+      <Route path={routers.POOL_DEREGISTRATION} exact component={PoolsDeregistration} />
       <Route path={routers.TOKEN_LIST} exact component={Tokens} />
       <Route path={routers.TOKEN_DETAIL} exact component={TokenDetail} />
-      <Route path={routers.STAKE_LIST} exact component={Stake} />
+      <Route path={routers.STAKE_ADDRESS_REGISTRATION} exact component={StakeAddressRegistration} />
+      <Route path={routers.STAKE_ADDRESS_DEREGISTRATION} exact component={StakeAddressDeregistration} />
       <Route path={routers.STAKE_DETAIL} exact component={StakeDetail} />
       <Route path={routers.CONTRACT_LIST} exact component={ContractList} />
       <Route path={routers.CONTRACT_DETAIL} exact component={ContractDetail} />
@@ -95,18 +103,13 @@ const Routes: React.FC = () => {
       <Route path={routers.ADDRESS_LIST} exact component={TopAddresses} />
       <Route path={routers.TOP_DELEGATOR} exact component={TopDelegators} />
       <Route path={routers.STAKING_LIFECYCLE} exact component={StackingLifecycle} />
-      <Route
-        path={routers.STAKING_LIFECYCLE.replace(":tab", "")}
-        exact
-        component={() => <Redirect to={routers.STAKING_LIFECYCLE.replace(":tab", "stake-key")} />}
-      />
       <PrivateRoute path={routers.REPORT_GENERATED_STAKING_DETAIL} exact component={ReportGeneratedStakingDetail} />
       <PrivateRoute path={routers.REPORT_GENERATED_POOL_DETAIL} exact component={ReportGeneratedPoolDetail} />
       <Route path={routers.PROTOCOL_PARAMETER} exact component={ProtocolParameter} />
       <Route path={routers.SEARCH} exact component={SearchResult} />
       <Route path={routers.DELEGATOR_LIFECYCLE} exact component={DelegatorLifecycle} />
       <Route path={routers.SPO_LIFECYCLE} exact component={SPOLifecycle} />
-      <Route path={routers.STAKE_DELEGATIONS} exact component={StakeDelegations} />
+      <Route path={routers.STAKE_ADDRESS_DELEGATIONS} exact component={StakeDelegations} />
       <Route path={routers.INSTANTANEOUS_REWARDS} exact component={InstantRewards} />
       <Route path={routers.ACCOUNT}>
         <AccountLayout>

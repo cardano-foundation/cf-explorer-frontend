@@ -6,11 +6,10 @@ import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 import { Collapse, Divider, ListItem, useTheme } from "@mui/material";
 
 import { footerMenus, menus } from "src/commons/menus";
-import { isExtenalLink } from "src/commons/utils/helper";
+import { isExternalLink } from "src/commons/utils/helper";
 import { setSidebar } from "src/stores/user";
 import { RootState } from "src/stores/types";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import { routers } from "src/commons/routers";
 
 import FooterMenu from "../FooterMenu";
 import {
@@ -28,23 +27,29 @@ import {
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const pathname = history.location.pathname;
   const { sidebar } = useSelector(({ user }: RootState) => user);
+  const specialPath = useSelector(({ system }: RootState) => system.specialPath);
   const { width } = useWindowSize(0);
   const theme = useTheme();
 
-  const getActive = () => {
-    const active = menus.findIndex((menu) => {
-      return menu?.children?.find((r) => {
-        return pathname.split("/").length > 2 ? r.href?.includes(pathname.split("/")[1]) : r.href === pathname;
-      });
-    });
-
-    if (active !== -1) {
-      return `menu-${active}`;
+  const isActiveMenu = (href: string, isSpecialPath?: boolean): boolean => {
+    if (href === pathname) return true;
+    if (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1])) {
+      if (isSpecialPath) return href === specialPath;
+      return true;
     }
+    return false;
+  };
+
+  const getActive = () => {
+    const active = menus.findIndex(
+      ({ href, children }) =>
+        (href && isActiveMenu(href)) ||
+        children?.find(({ href, isSpecialPath }) => href && isActiveMenu(href, isSpecialPath))
+    );
+    if (active + 1) return `menu-${active}`;
 
     return "";
   };
-
   const [active, setActive] = useState<string | null>(getActive());
 
   useEffect(() => {
@@ -52,65 +57,28 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   }, [sidebar]);
 
   useEffect(() => {
-    if (pathname === "/" || !sidebar) {
-      setActive(null);
-    } else if (
-      sidebar &&
-      (pathname.startsWith("/stake/") ||
-        pathname.startsWith("/transaction/") ||
-        pathname.startsWith("/stake-key/") ||
-        pathname.startsWith("/block/") ||
-        pathname.startsWith("/epoch/") ||
-        pathname.startsWith("/token/") ||
-        pathname.startsWith("/contracts/") ||
-        pathname.startsWith("/delegation-pool/") ||
-        pathname.startsWith("/policy/"))
-    ) {
-      setActive("menu-0");
-    }
-  }, [pathname, sidebar]);
+    if (pathname === "/" || !sidebar) setActive(null);
+    else setActive(getActive());
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname, sidebar, specialPath]);
 
   useEffect(() => {
     if (!sidebar && width >= theme.breakpoints.values.md) setSidebar(true);
     else if (sidebar && width < theme.breakpoints.values.md) setSidebar(false);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width >= theme.breakpoints.values.md]);
 
   useEffect(() => {
     if (width <= theme.breakpoints.values.md) setSidebar(false);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const handleOpen = (item: string) => {
     setActive(item !== active ? item : null);
     if (!sidebar) setSidebar(true);
-  };
-
-  const isActiveSubMenu = (href: string, categoryName?: string): boolean => {
-    if (categoryName === "Operational Certificates") return pathname === href;
-
-    if (pathname.startsWith("/stake/") && href === routers.ADDRESS_LIST) return true;
-    if (pathname.startsWith("/stake-key/") && href === routers.ADDRESS_LIST) return true;
-    if (pathname.startsWith("/policy/") && href === routers.TOKEN_LIST) return true;
-
-    return (
-      pathname === href ||
-      (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1])) ||
-      (href === "/timeline" && (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
-    );
-  };
-
-  const isActiveMenu = (href: string): boolean => {
-    if (
-      href === routers.STAKING_LIFECYCLE.replace(":tab", "stake-key") &&
-      (pathname.startsWith("/delegator-lifecycle/") ||
-        pathname.startsWith("/spo-lifecycle/") ||
-        pathname.startsWith("/report-generated/") ||
-        pathname === routers.STAKING_LIFECYCLE.replace(":tab", "pools"))
-    )
-      return true;
-
-    return pathname === href;
   };
 
   return (
@@ -123,39 +91,28 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
             <React.Fragment key={index}>
               <CustomTooltip key={index} title={tooltipTitle} placement="right">
                 {href ? (
-                  isExtenalLink(href) ? (
-                    <ListItem
-                      data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
-                      button
-                      onClick={() => window.open(href, "_blank")}
-                      sx={(theme) => itemStyle(theme, sidebar)}
-                    >
-                      {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} /> : null}
-                      <MenuText primary={title} open={sidebar ? 1 : 0} />
-                    </ListItem>
-                  ) : (
-                    <ListItem
-                      button
-                      data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
-                      component={Link}
-                      to={href}
-                      selected={isActiveMenu(href)}
-                      sx={(theme) => ({
-                        ...itemStyle(theme, sidebar),
-                        ...(isActiveMenu(href) ? { backgroundColor: `${theme.palette.success.dark} !important` } : {})
-                      })}
-                    >
-                      {icon ? (
-                        <MenuIcon
-                          src={icon}
-                          alt={title}
-                          iconOnly={!sidebar ? 1 : 0}
-                          active={isActiveMenu(href) ? 1 : 0}
-                        />
-                      ) : null}
-                      <MenuText primary={title} open={sidebar ? 1 : 0} active={isActiveMenu(href) ? 1 : 0} />
-                    </ListItem>
-                  )
+                  <ListItem
+                    button
+                    data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
+                    {...(isExternalLink(href)
+                      ? { component: "a", href, target: "_blank" }
+                      : { component: Link, to: href })}
+                    selected={isActiveMenu(href)}
+                    sx={(theme) => ({
+                      ...itemStyle(theme, sidebar),
+                      ...(isActiveMenu(href) ? { backgroundColor: `${theme.palette.success.dark} !important` } : {})
+                    })}
+                  >
+                    {icon ? (
+                      <MenuIcon
+                        src={icon}
+                        alt={title}
+                        iconOnly={!sidebar ? 1 : 0}
+                        active={isActiveMenu(href) ? 1 : 0}
+                      />
+                    ) : null}
+                    <MenuText primary={title} open={sidebar ? 1 : 0} active={isActiveMenu(href) ? 1 : 0} />
+                  </ListItem>
                 ) : (
                   <ListItem
                     button
@@ -201,59 +158,41 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 <Collapse in={`menu-${index}` === active} timeout="auto" unmountOnExit>
                   <SubMenu disablePadding>
                     {children.map((subItem, subIndex) => {
-                      const { href, title, icon } = subItem;
+                      const { href, title, icon, isSpecialPath } = subItem;
                       return href ? (
-                        isExtenalLink(href) ? (
-                          <ListItem
-                            data-testid={`submenu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
-                            key={subIndex}
-                            button
-                            onClick={() => window.open(href, "_blank")}
-                            sx={(theme) => ({
-                              ...itemStyle(theme, sidebar),
-                              paddingLeft: "70px",
-                              [theme.breakpoints.down("md")]: {
-                                paddingLeft: "60px"
-                              }
-                            })}
-                          >
-                            {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} /> : null}
-                            <SubMenuText primary={title} open={sidebar ? 1 : 0} />
-                          </ListItem>
-                        ) : (
-                          <ListItem
-                            data-testid={`submenu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
-                            key={subIndex}
-                            button
-                            component={Link}
-                            to={href}
-                            selected={pathname === href}
-                            sx={(theme) => ({
-                              ...itemStyle(theme, sidebar),
-                              ...(isActiveSubMenu(href, item.title)
-                                ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
-                                : {}),
-                              paddingLeft: "70px",
-                              [theme.breakpoints.down("md")]: {
-                                paddingLeft: "60px"
-                              }
-                            })}
-                          >
-                            {icon ? (
-                              <MenuIcon
-                                src={icon}
-                                alt={title}
-                                iconOnly={!sidebar ? 1 : 0}
-                                active={pathname === href ? 1 : 0}
-                              />
-                            ) : null}
-                            <SubMenuText
-                              primary={title}
-                              open={sidebar ? 1 : 0}
-                              active={+isActiveSubMenu(href, item.title)}
+                        <ListItem
+                          data-testid={`submenu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
+                          key={subIndex}
+                          button
+                          {...(isExternalLink(href)
+                            ? { component: "a", href, target: "_blank" }
+                            : { component: Link, to: href })}
+                          selected={isActiveMenu(href)}
+                          sx={(theme) => ({
+                            ...itemStyle(theme, sidebar),
+                            ...(isActiveMenu(href, isSpecialPath)
+                              ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
+                              : {}),
+                            paddingLeft: "70px",
+                            [theme.breakpoints.down("md")]: {
+                              paddingLeft: "60px"
+                            }
+                          })}
+                        >
+                          {icon ? (
+                            <MenuIcon
+                              src={icon}
+                              alt={title}
+                              iconOnly={!sidebar ? 1 : 0}
+                              active={isActiveMenu(href) ? 1 : 0}
                             />
-                          </ListItem>
-                        )
+                          ) : null}
+                          <SubMenuText
+                            primary={title}
+                            open={sidebar ? 1 : 0}
+                            active={+isActiveMenu(href, isSpecialPath)}
+                          />
+                        </ListItem>
                       ) : null;
                     })}
                   </SubMenu>
@@ -279,39 +218,29 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
             <React.Fragment key={index}>
               <CustomTooltip key={index} title={tooltipTitle} placement="right">
                 {href ? (
-                  isExtenalLink(href) ? (
-                    <ListItem
-                      button
-                      onClick={() => window.open(href, "_blank")}
-                      sx={(theme) => itemStyle(theme, sidebar)}
-                    >
-                      {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} /> : null}
-                      <MenuText primary={title} open={sidebar ? 1 : 0} />
-                    </ListItem>
-                  ) : (
-                    <ListItem
-                      button
-                      component={Link}
-                      to={href}
-                      selected={pathname === href}
-                      sx={(theme) => ({
-                        ...itemStyle(theme, sidebar),
-                        ...(pathname === href
-                          ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
-                          : {})
-                      })}
-                    >
-                      {icon ? (
-                        <MenuIcon
-                          src={icon}
-                          alt={title}
-                          iconOnly={!sidebar ? 1 : 0}
-                          active={pathname === href ? 1 : 0}
-                        />
-                      ) : null}
-                      <MenuText primary={title} open={sidebar ? 1 : 0} active={pathname === href ? 1 : 0} />
-                    </ListItem>
-                  )
+                  <ListItem
+                    button
+                    {...(isExternalLink(href)
+                      ? { component: "a", href, target: "_blank" }
+                      : { component: Link, to: href })}
+                    selected={isActiveMenu(href)}
+                    sx={(theme) => ({
+                      ...itemStyle(theme, sidebar),
+                      ...(isActiveMenu(href)
+                        ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
+                        : {})
+                    })}
+                  >
+                    {icon ? (
+                      <MenuIcon
+                        src={icon}
+                        alt={title}
+                        iconOnly={!sidebar ? 1 : 0}
+                        active={isActiveMenu(href) ? 1 : 0}
+                      />
+                    ) : null}
+                    <MenuText primary={title} open={sidebar ? 1 : 0} active={isActiveMenu(href) ? 1 : 0} />
+                  </ListItem>
                 ) : (
                   <ListItem
                     button
@@ -356,51 +285,34 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     {children.map((subItem, subIndex) => {
                       const { href, title, icon } = subItem;
                       return href ? (
-                        isExtenalLink(href) ? (
-                          <ListItem
-                            key={subIndex}
-                            button
-                            onClick={() => window.open(href, "_blank")}
-                            sx={(theme) => ({
-                              ...itemStyle(theme, sidebar),
-                              paddingLeft: "70px",
-                              [theme.breakpoints.down("md")]: {
-                                paddingLeft: "60px"
-                              }
-                            })}
-                          >
-                            {icon ? <MenuIcon src={icon} alt={title} iconOnly={!sidebar ? 1 : 0} /> : null}
-                            <SubMenuText primary={title} open={sidebar ? 1 : 0} />
-                          </ListItem>
-                        ) : (
-                          <ListItem
-                            key={subIndex}
-                            button
-                            component={Link}
-                            to={href}
-                            selected={pathname === href}
-                            sx={(theme) => ({
-                              ...itemStyle(theme, sidebar),
-                              ...(pathname === href
-                                ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
-                                : {}),
-                              paddingLeft: "70px",
-                              [theme.breakpoints.down("md")]: {
-                                paddingLeft: "60px"
-                              }
-                            })}
-                          >
-                            {icon ? (
-                              <MenuIcon
-                                src={icon}
-                                alt={title}
-                                iconOnly={!sidebar ? 1 : 0}
-                                active={pathname === href ? 1 : 0}
-                              />
-                            ) : null}
-                            <SubMenuText primary={title} open={sidebar ? 1 : 0} active={pathname === href ? 1 : 0} />
-                          </ListItem>
-                        )
+                        <ListItem
+                          key={subIndex}
+                          button
+                          {...(isExternalLink(href)
+                            ? { component: "a", href, target: "_blank" }
+                            : { component: Link, to: href })}
+                          selected={isActiveMenu(href)}
+                          sx={(theme) => ({
+                            ...itemStyle(theme, sidebar),
+                            ...(isActiveMenu(href)
+                              ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
+                              : {}),
+                            paddingLeft: "70px",
+                            [theme.breakpoints.down("md")]: {
+                              paddingLeft: "60px"
+                            }
+                          })}
+                        >
+                          {icon ? (
+                            <MenuIcon
+                              src={icon}
+                              alt={title}
+                              iconOnly={!sidebar ? 1 : 0}
+                              active={isActiveMenu(href) ? 1 : 0}
+                            />
+                          ) : null}
+                          <SubMenuText primary={title} open={sidebar ? 1 : 0} active={isActiveMenu(href) ? 1 : 0} />
+                        </ListItem>
                       ) : null;
                     })}
                   </SubMenu>

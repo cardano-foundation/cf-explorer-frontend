@@ -3,7 +3,6 @@ import { Box, IconButton, useTheme } from "@mui/material";
 import { useHistory, useParams } from "react-router";
 
 import { useScreen } from "src/commons/hooks/useScreen";
-import { ListTabResponseSPO } from "src/pages/SPOLifecycle";
 import {
   DeredistrationIcon,
   InfoIcon,
