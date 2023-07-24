@@ -51,9 +51,8 @@ const OverViews: React.FC = () => {
       </Grid>
     );
   }
-  const slot = currentEpoch?.slot || 0;
+  const slot = (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH;
   const countdown = MAX_SLOT_EPOCH - slot;
-
   const duration = moment.duration(countdown ? countdown : 0, "second");
   const days = duration.days();
   const hours = duration.hours();
