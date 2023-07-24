@@ -145,3 +145,7 @@ export const ProgressPending = styled(ProcessActive)<{ rate: number }>`
   width: ${(props) => props.rate}%;
   background-color: ${(props) => props.theme.palette.warning.main};
 `;
+
+export const Link = styled("a")`
+  display: contents;
+`;
