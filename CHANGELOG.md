@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.9](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.8...v0.4.9) (2023-07-24)
+
+
+### Bug Fixes
+
+* 1271 add field unique account reward accounts ([47568c3](https://github.com/cardano-foundation/cf-explorer-frontend/commit/47568c378c4ea82e0c2242de3b1d4852d58ae75c))
+* MET-1474 add limit compose report ([32d9868](https://github.com/cardano-foundation/cf-explorer-frontend/commit/32d98684aabad4fc578162b358b8f3e6122cb5f1))
+
 ## [0.4.8](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.7...v0.4.8) (2023-07-20)
 
 
