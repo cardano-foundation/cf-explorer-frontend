@@ -8,6 +8,7 @@ import useFetch from "src/commons/hooks/useFetch";
 import { formatDateTime, getHostname } from "src/commons/utils/helper";
 import { CARDANO_NEWS_URL } from "src/commons/utils/constants";
 import { useScreen } from "src/commons/hooks/useScreen";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import {
   Author,
@@ -28,7 +29,7 @@ import {
   CustomGrid
 } from "./style";
 
-const defaultNumberOfItems = 40;
+const defaultNumberOfItems = 4;
 
 enum AMOUNT_OF_NEWS_SHOWING {
   DESKTOP = 4,
@@ -37,22 +38,19 @@ enum AMOUNT_OF_NEWS_SHOWING {
 }
 
 const LatestStories = () => {
-  const [numberOfItems, setNumberOfItems] = useState<number>(defaultNumberOfItems);
-  const { data, loading } = useFetch<Story[]>(`${API.STORIES}?amount=${numberOfItems}`);
+  const { data, loading } = useFetch<Story[]>(`${API.STORIES}?amount=${defaultNumberOfItems}`);
   const [currentIndexData, setCurrentIndexData] = useState<number>(0);
 
   const [amountNewsByDevice, setAmountNewsByDevice] = useState<number>(0);
 
-  const [isShown, setIsShown] = useState(false);
   const { isLaptop, isMobile } = useScreen();
 
   useEffect(() => {
+    setCurrentIndexData(0);
     if (isMobile) {
       setAmountNewsByDevice(AMOUNT_OF_NEWS_SHOWING.MOBILE);
-      setIsShown(true);
     } else if (isLaptop) {
       setAmountNewsByDevice(AMOUNT_OF_NEWS_SHOWING.TABLET);
-      setIsShown(true);
     } else {
       setAmountNewsByDevice(AMOUNT_OF_NEWS_SHOWING.DESKTOP);
     }
@@ -67,8 +65,7 @@ const LatestStories = () => {
     if (isHasMore) {
       setCurrentIndexData(newIndex);
     } else {
-      await setNumberOfItems(numberOfItems + defaultNumberOfItems);
-      setCurrentIndexData(newIndex);
+      setCurrentIndexData(0);
     }
   };
 
@@ -90,19 +87,13 @@ const LatestStories = () => {
     );
   }
 
-  const onMouseLeave = () => {
-    if (!isLaptop) {
-      setIsShown(false);
-    }
-  };
-
   return (
     <LatestStoriesContainer data-testid="home-latest-stories">
       <Header>
         <Title>Latest Stories</Title>
         <ViewAllButtonExternal to={CARDANO_NEWS_URL as string} />
       </Header>
-      <Box position={"relative"} onMouseEnter={() => setIsShown(true)} onMouseLeave={onMouseLeave}>
+      <Box position={"relative"}>
         <Grid container spacing={2}>
           {(data?.slice(currentIndexData, currentIndexData + amountNewsByDevice) || []).map(
             ({ resource_href, main_image, main_image_alt, title, published_on, entity, blurb }, index) => {
@@ -117,7 +108,9 @@ const LatestStories = () => {
                       <Image src={main_image} alt={main_image_alt} />
                       <Detail>
                         <WrapHeader>
-                          <Author>{entity}</Author>
+                          <CustomTooltip title={entity}>
+                            <Author>{entity}</Author>
+                          </CustomTooltip>
                           <ResourceHref>{getHostname(resource_href)}</ResourceHref>
                         </WrapHeader>
                         <ItemTitle>{title} </ItemTitle>
@@ -136,11 +129,9 @@ const LatestStories = () => {
             }
           )}
         </Grid>
-        {isShown && (
-          <NextSwipper onClick={handleNextSwipper}>
-            <SliderRight />
-          </NextSwipper>
-        )}
+        <NextSwipper onClick={handleNextSwipper}>
+          <SliderRight />
+        </NextSwipper>
       </Box>
     </LatestStoriesContainer>
   );
