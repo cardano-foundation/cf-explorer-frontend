@@ -223,7 +223,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
               <DetailValue>{data.txCount}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Rewards Distribute</DetailLabel>
+              <DetailLabel>Rewards Distributed</DetailLabel>
               <DetailValue>
                 {data?.rewardsDistributed ? (
                   <Box>
