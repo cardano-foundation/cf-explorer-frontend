@@ -1,5 +1,4 @@
 import ContractPage from "cypress/pagesobject/Contract/ContractPage";
-import EpochPanel from "../../../pagesobject/Epoch/EpochPanel";
 
 const contractPage = new ContractPage();
 describe('Check initialization the screen',()=>{
