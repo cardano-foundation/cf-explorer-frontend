@@ -58,7 +58,7 @@ const TokenMinting: React.FC<ITokenMinting> = ({ tokenId, metadata }) => {
     },
     {
       title: "Created At",
-      key: "createdat",
+      key: "time",
       minWidth: "200px",
       render: (r) => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>
     }

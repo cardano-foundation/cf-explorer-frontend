@@ -187,7 +187,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   );
   return (
     <Wrapper>
-      <Box component={"h2"} textAlign="left">
+      <Box component={"h2"} textAlign="left" color={({ palette }) => palette.secondary.main}>
         Account Overview
       </Box>
       <ContentBox>

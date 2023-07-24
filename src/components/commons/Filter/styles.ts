@@ -3,7 +3,7 @@ import { Box, Button, ListItemText, MenuItem, styled } from "@mui/material";
 export const FilterButton = styled(Button)`
   border: none;
   outline: none;
-  background-color: rgba(67, 143, 104, 0.1);
+  background-color: ${({ theme }) => theme.palette.primary[200]};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,6 +52,7 @@ export const FilterIconContainer = styled(Box)`
 export const FilterListItemText = styled(ListItemText)`
   font-size: 14px;
   text-align: left;
+  color: ${(props) => props.theme.palette.secondary.main};
 `;
 export const FilterMenuItem = styled(MenuItem)<{ active?: number }>`
   padding: 8px 16px;

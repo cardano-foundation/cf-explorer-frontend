@@ -48,10 +48,12 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
             ) : (
               <Box>
                 <SlotLeader>
-                  <Box fontWeight={400} color={(theme) => theme.palette.text.secondary}>
+                  <Box fontWeight={400} color={(theme) => theme.palette.secondary.light}>
                     Policy ID:{" "}
                   </Box>{" "}
-                  <Box ml={2}>{isMobile || isTablet ? truncateCustom(data?.policyId ?? "", 5, 5) : data?.policyId}</Box>{" "}
+                  <Box color={({ palette }) => palette.primary.main} ml={2}>
+                    {isMobile || isTablet ? truncateCustom(data?.policyId ?? "", 5, 5) : data?.policyId}
+                  </Box>{" "}
                   <CopyButton text={data?.policyId} />
                 </SlotLeader>
               </Box>

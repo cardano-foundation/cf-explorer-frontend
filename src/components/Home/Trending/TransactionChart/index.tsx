@@ -76,11 +76,11 @@ const TransactionChart: React.FC = () => {
   const renderLoading = () => {
     return (
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={3} md={3} lg={9}>
-          <Skeleton variant="rectangular" height={"300px"} style={{ borderRadius: 10 }} />
+        <Grid item xs={12} lg={9}>
+          <Skeleton variant="rectangular" height={"250px"} style={{ borderRadius: 10 }} />
         </Grid>
-        <Grid item xs={12} sm={3} md={3}>
-          <Skeleton variant="rectangular" height={"300px"} />
+        <Grid item xs={12} lg={3}>
+          <Skeleton variant="rectangular" height={"250px"} />
         </Grid>
       </Grid>
     );
@@ -124,7 +124,13 @@ const TransactionChart: React.FC = () => {
                     <Box
                       data-testid={item.key}
                       textAlign={"left"}
-                      color={({ palette }) => palette.green[700]}
+                      color={({ palette }) =>
+                        item.key === "trx"
+                          ? palette.success[700]
+                          : item.key === "simple"
+                          ? palette.primary[500]
+                          : palette.warning[700]
+                      }
                       fontWeight={"bold"}
                       fontSize={"1.6rem"}
                     >
@@ -175,16 +181,22 @@ const renderTooltipContent = (o: any, range: Time) => {
   const total = (payload || []).reduce((result: number, entry: any) => result + entry.value, 0);
   return (
     <Box>
-      <Box p={1} bgcolor={alpha("#000", 0.8)} borderRadius={"8px"} textAlign={"left"}>
-        <Box color={({ palette }) => palette.common.white} textAlign={"center"}>{`${moment(label).format(
+      <Box
+        p={1}
+        bgcolor={({ palette }) => alpha(palette.common.white, 0.9)}
+        borderRadius={"8px"}
+        textAlign={"left"}
+        boxShadow={(theme) => theme.shadow.dropdown}
+      >
+        <Box color={({ palette }) => palette.secondary.main} textAlign={"center"}>{`${moment(label).format(
           formatTimeX(range)
         )}`}</Box>
         {(payload || []).reverse().map((entry: any, index: number) => (
           <Box key={`item-${index}`} mt={1}>
-            <Box color={({ palette }) => alpha(palette.common.white, 0.7)} fontSize={"0.75rem"}>{`${
+            <Box color={({ palette }) => alpha(palette.secondary.main, 0.7)} fontSize={"0.75rem"}>{`${
               nameTooltips[entry.name as keyof typeof nameTooltips]
             }`}</Box>
-            <Box fontWeight={"bold"} style={{ color: entry.color }}>{`${numberWithCommas(entry.value)} (${getPercent(
+            <Box fontWeight={"bold"} style={{ color: entry.fill }}>{`${numberWithCommas(entry.value)} (${getPercent(
               entry.value,
               total
             )})`}</Box>
@@ -214,29 +226,36 @@ const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" tickFormatter={(date: string) => formatX(date, range)} />
-          <YAxis tickFormatter={toPercent} />
+          <XAxis
+            color={theme.palette.secondary.light}
+            dataKey="date"
+            tickFormatter={(date: string) => formatX(date, range)}
+          />
+          <YAxis color={theme.palette.secondary.light} tickFormatter={toPercent} />
           <Tooltip content={(o: any) => renderTooltipContent(o, range)} />
           <Area
             type="monotone"
-            dataKey="metadata"
+            dataKey="simpleTransactions"
             stackId="1"
-            stroke={theme.palette.green[600]}
-            fill={theme.palette.green[600]}
+            strokeWidth={3}
+            stroke={theme.palette.secondary[0]}
+            fill={theme.palette.warning[700]}
           />
           <Area
             type="monotone"
             dataKey="smartContract"
             stackId="1"
-            stroke={theme.palette.blue[800]}
-            fill={theme.palette.blue[800]}
+            strokeWidth={3}
+            stroke={theme.palette.secondary[0]}
+            fill={theme.palette.primary[500]}
           />
           <Area
             type="monotone"
-            dataKey="simpleTransactions"
+            dataKey="metadata"
+            strokeWidth={3}
             stackId="1"
-            stroke={theme.palette.yellow[600]}
-            fill={theme.palette.yellow[600]}
+            stroke={theme.palette.secondary[0]}
+            fill={theme.palette.success[700]}
           />
         </AreaChart>
       </ResponsiveContainer>

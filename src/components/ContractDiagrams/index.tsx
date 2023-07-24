@@ -53,19 +53,19 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
           <ContractAddress>{txHash || item.address || item.scriptHash}</ContractAddress>
         </Link>
       </ContractHeader>
-      <ContractRedeemer item={item} txHash={txHash}/>
+      <ContractRedeemer item={item} txHash={txHash} />
       {item.datumHashIn && (
         <>
           <IconContainer>
             <RedeemerPlusIcon />
           </IconContainer>
-          <ContractDatumn key="in" item={item} type="in" txHash={txHash} />
+          <ContractDatumn txHash={txHash} key="in" item={item} type="in" />
         </>
       )}
       <IconContainer>
         <RedeemerArrowDownIcon />
       </IconContainer>
-      <ContractBytecode item={item} />
+      <ContractBytecode item={item} txHash={txHash} />
 
       {item.datumHashOut && (
         <>
@@ -83,7 +83,7 @@ export const ContractRedeemer = ({ item, txHash }: IContractDiagramProps) => {
   return (
     <CardDiagram>
       <TabLabel>Redeemer</TabLabel>
-      <TabElement flexDirection={!txHash ? "row" : "column"}>
+      <TabElement flexDirection={!txHash ? "row" : "column"} isContractPage={+!!txHash}>
         <TabItem>
           <TitleText>Tag</TitleText>
           <DataTitle>{item.purpose}</DataTitle>
@@ -108,7 +108,7 @@ export const ContractRedeemer = ({ item, txHash }: IContractDiagramProps) => {
 export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) => {
   const isTypeIn = type === "in";
   return (
-    <DatumnElement>
+    <DatumnElement isContractPage={+!!txHash}>
       <DatumnItem
         isTxHash={!!txHash}
         sx={{
@@ -132,11 +132,11 @@ export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) =>
   );
 };
 
-const ContractBytecode = ({ item }: IContractDiagramProps) => {
+const ContractBytecode = ({ item, txHash }: IContractDiagramProps) => {
   return (
     <CardDiagram>
       <TabLabel>Contract Bytecode</TabLabel>
-      <TabElement>{item.scriptBytes}</TabElement>
+      <TabElement isContractPage={+!!txHash}>{item.scriptBytes}</TabElement>
     </CardDiagram>
   );
 };

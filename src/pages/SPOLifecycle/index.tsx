@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import { useHistory, useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
@@ -49,10 +48,16 @@ export interface ListTabResponseSPO {
   isDeRegistration: boolean;
 }
 
+export interface IReportLimit {
+  isLimitReached: boolean;
+  limitPer24hours: number;
+}
+
 const MODES: ViewMode[] = ["timeline", "tabular"];
 
 const SPOLifecycle = () => {
   const { poolId = "", mode = "timeline", tab = "registration" } = useParams<Params>();
+  const { data: dataReportLimit } = useFetch<IReportLimit>(API.REPORT.REPORT_LIMIT);
 
   useEffect(() => {
     document.title = `Staking Delegation Lifecycle ${poolId} | Iris - Cardano Blockchain Explorer`;
@@ -126,16 +131,32 @@ const SPOLifecycle = () => {
               <LabelSwitch>Switch to {validMode === "timeline" ? "tabular" : "timeline"} view</LabelSwitch>
               <SwitchGroup>
                 <ButtonSwitch active={+(validMode === "timeline")} onClick={() => changeMode("timeline")}>
-                  <TableMode fill={validMode === "timeline" ? theme.palette.common.white : theme.palette.grey[500]} />
+                  <TableMode
+                    fill={validMode === "timeline" ? theme.palette.common.white : theme.palette.secondary.light}
+                  />
                 </ButtonSwitch>
                 <ButtonSwitch active={+(validMode === "tabular")} onClick={() => changeMode("tabular")}>
-                  <ChartMode fill={validMode === "tabular" ? theme.palette.common.white : theme.palette.grey[500]} />
+                  <ChartMode
+                    fill={validMode === "tabular" ? theme.palette.common.white : theme.palette.secondary.light}
+                  />
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>
-            <CustomTooltip title={!isLoggedIn ? "Please sign in to use this feature" : ""}>
+            <CustomTooltip
+              title={
+                !isLoggedIn
+                  ? "Please sign in to use this feature"
+                  : `Please note that you can only compose ${
+                      dataReportLimit?.limitPer24hours || 0
+                    } reports within the 24 hours period`
+              }
+            >
               <ReportButtonContainer>
-                <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
+                <ButtonReport
+                  disabled={!isLoggedIn || dataReportLimit?.isLimitReached}
+                  onClick={() => setOpen(true)}
+                  sidebar={+sidebar}
+                >
                   Compose report
                 </ButtonReport>
               </ReportButtonContainer>

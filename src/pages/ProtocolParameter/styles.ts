@@ -1,4 +1,12 @@
-import { styled, Box, Button, Accordion, AccordionSummary as AccordionSummaryMUI, alpha } from "@mui/material";
+import {
+  styled,
+  Box,
+  Button,
+  Accordion,
+  AccordionSummary as AccordionSummaryMUI,
+  alpha,
+  Container
+} from "@mui/material";
 
 export const BackButton = styled(Box)`
   display: inline-flex;
@@ -9,7 +17,7 @@ export const BackButton = styled(Box)`
 `;
 
 export const BackText = styled("small")`
-  color: ${(props) => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.secondary.light};
   font-weight: var(--font-weight-bold);
 `;
 
@@ -67,13 +75,14 @@ export const ApplyFilterButton = styled(Button)(({ theme }) => ({
   width: "100%",
   textTransform: "capitalize",
   fontWeight: "bold",
-  color: theme.palette.common.white,
-  background: theme.palette.grey[700],
+  color: theme.palette.secondary[0],
+  background: theme.palette.secondary.main,
   ":hover": {
-    background: alpha(theme.palette.grey[700], 0.8)
+    background: alpha(theme.palette.secondary.main, 0.8)
   },
   ":disabled": {
-    background: alpha(theme.palette.grey[700], 0.3)
+    color: theme.palette.common.white,
+    background: alpha(theme.palette.secondary.main, 0.3)
   }
 }));
 
@@ -91,3 +100,7 @@ export const UpdatableParameters = styled(Box)(({ theme }) => ({
     }
   }
 }));
+
+export const StyledContainer = styled(Container)`
+  max-width: 95vw !important;
+`;
