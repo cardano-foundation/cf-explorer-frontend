@@ -6,17 +6,17 @@ export const StatisticContainer = styled(Grid)`
 
 export const Item = styled(Card)`
   height: 100%;
+  min-height: 150px;
   font-family: var(--font-family-text);
   box-shadow: ${(props) => props.theme.shadow.card};
   padding: 20px;
   display: block;
   position: relative;
-  padding-top: 30px;
   margin-bottom: 0px;
   border-radius: 12px;
   text-align: left;
   &:hover {
-    box-shadow: ${(props) => props.theme.shadow.card};
+    box-shadow: ${(props) => props.theme.shadow.cardHover};
   }
   ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 15px;
@@ -37,9 +37,6 @@ export const ItemSkeleton = styled(Skeleton)`
 `;
 
 export const ItemIcon = styled("img")`
-  position: absolute;
-  top: 15px;
-  right: 20px;
   width: 40px;
   height: 40px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -57,6 +54,7 @@ export const Content = styled(Box)`
 export const Name = styled("h4")`
   width: calc(100% - 60px);
   margin-bottom: 0.75rem;
+  margin-left: ${({ theme }) => theme.spacing(2)};
   color: ${(props) => props.theme.palette.secondary.light};
   font-family: var(--font-family-text);
   font-size: 14px;
@@ -70,9 +68,9 @@ export const Title = styled("h3")`
   display: inline-block;
   font-family: var(--font-family-text);
   margin-top: 0;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0;
   color: ${({ theme }) => theme.palette.secondary.main};
-  font-size: 20px;
+  font-size: 28px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 16px;
     max-width: 87px;
@@ -123,7 +121,7 @@ export const XValue = styled(XSmall)<{ down?: number }>`
 export const Progress = styled("div")`
   display: flex;
   width: 100%;
-  height: 12px;
+  height: 13px;
   border-radius: 10px;
   overflow: hidden;
   font-size: 10px;

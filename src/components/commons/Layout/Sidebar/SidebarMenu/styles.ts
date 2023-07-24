@@ -62,8 +62,8 @@ export const MenuText = styled(ListItemText)<{ open?: number; active?: number; t
   opacity: ${(props) => (props.open ? 1 : 0)};
   width: ${(props) => (props.open ? "unset" : 0)};
   * {
+    font-weight: inherit !important;
     font-family: var(--font-family-title) !important;
-    font-weight: var(--font-weight-bold) !important;
     color: ${({ active, text, disable, theme }) =>
       active
         ? text
@@ -83,11 +83,14 @@ export const MenuText = styled(ListItemText)<{ open?: number; active?: number; t
 
 export const SubMenuText = styled(MenuText)`
   * {
-    font-weight: var(--font-weight-normal) !important;
     color: ${({ active, theme }) => (active ? theme.palette.secondary.main : theme.palette.secondary.light)};
   }
 `;
+// font-weight: var(--font-weight-normal) !important;
 
+// &:hover {
+//   font-weight: ${({ active }) => (active ? "var(--font-weight-normal) !important" : "bold !important")};
+// }
 export const FooterMenuContainer = styled(Box)(({ theme }) => ({
   display: "block",
   [theme.breakpoints.down("md")]: {
