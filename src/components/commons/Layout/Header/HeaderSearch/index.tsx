@@ -222,7 +222,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
 
   const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
-    const option = options.find((item) => item.value === filter);
+    const option = options.find((item) => item.value === filter || filterParams);
 
     if (!["all", "tokens", "delegations/pool-detail-header"].includes(option?.value || "")) {
       setLoading(true);
@@ -272,6 +272,17 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
 
     if (option?.value === "tokens" || option?.value === "delegations/pool-detail-header") {
       FetchSearchTokensAndPools(search, filter);
+      return;
+    }
+
+    if (option?.value === "blocks") {
+      history.push(details.block(search.trim()));
+      callback?.();
+      return;
+    }
+    if (option?.value === "epochs") {
+      history.push(details.epoch(search.trim()));
+      callback?.();
       return;
     }
 
