@@ -164,7 +164,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const handleSearchAll = async (query: string) => {
     try {
       setLoading(true);
-      const res = await defaultAxios.get(API.SEARCH_ALL(query.trim()));
+      const res = await defaultAxios.get(API.SEARCH_ALL(query));
       setDataSearchAll(res?.data);
       setShowOption(true);
       setLoading(false);
