@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, Grid, styled } from "@mui/material";
 
 import { BoxRaised } from "src/components/commons/BoxRaised";
 
@@ -38,29 +38,18 @@ export const Title = styled("h3")`
 
 export const Item = styled(BoxRaised)`
   position: relative;
-  height: 340px;
-  width: 218px;
+  height: 337px;
   text-align: left;
   cursor: pointer;
   overflow: hidden;
   &:hover {
     box-shadow: ${(props) => props.theme.shadow.card};
   }
-
   display: flex;
   flex-direction: column;
   padding: 20px 15px;
-
-  ${({ theme }) => theme.breakpoints.between("lg", "laptop")} {
-    width: 180px;
-  }
-
-  ${({ theme }) => theme.breakpoints.down("lg")} {
-    flex-direction: row;
-    gap: 15px;
-    width: 100%;
-    height: 90px;
-    padding: 15px;
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    min-width: 258px;
   }
 `;
 
@@ -78,14 +67,6 @@ export const Image = styled("img")`
   border-radius: 5px;
   object-fit: cover;
   background-color: ${(props) => props.theme.palette.background.default};
-  ${({ theme }) => theme.breakpoints.down("lg")} {
-    height: 90px;
-    width: 90px;
-  }
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    height: 80px;
-    width: 80px;
-  }
 `;
 
 export const Detail = styled(Box)`
@@ -93,10 +74,6 @@ export const Detail = styled(Box)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  ${({ theme }) => theme.breakpoints.down("lg")} {
-    flex-grow: 1;
-    justify-content: start;
-  }
 `;
 
 export const Author = styled("span")`
@@ -116,9 +93,6 @@ export const Author = styled("span")`
   font-size: 11px;
   font-weight: var(--font-weight-bold);
   margin: 11px 5px 0 0;
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    margin: 0 0 10px 0;
-  }
 `;
 export const ItemTitle = styled("h5")`
   display: -webkit-box;
@@ -133,9 +107,6 @@ export const ItemTitle = styled("h5")`
   line-height: 1.15;
   margin-top: 0;
   margin-bottom: 5px;
-  ${({ theme }) => theme.breakpoints.down("lg")} {
-    -webkit-line-clamp: 2;
-  }
 `;
 
 export const Time = styled("h5")`
@@ -164,9 +135,6 @@ export const ResourceHref = styled("span")`
   font-size: 10px;
   cursor: pointer;
   padding: 6px 2px;
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    display: none;
-  }
 `;
 
 export const Description = styled(Box)`
@@ -192,10 +160,28 @@ export const Description = styled(Box)`
 export const FooterCard = styled(Box)`
   position: absolute;
   bottom: 20px;
-  ${({ theme }) => theme.breakpoints.down("lg")} {
-    bottom: 15px;
+`;
+
+export const NextSwipper = styled(Box)`
+  background: ${(props) => props.theme.palette.purple[600]};
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    background: ${(props) => props.theme.palette.blue[200]};
   }
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    bottom: 25px;
+  position: absolute;
+  right: -10px;
+  bottom: 46%;
+  ${(props) => props.theme.breakpoints.up("sm")} {
+    display: none;
   }
+`;
+
+export const CustomGrid = styled(Grid)`
+  width: 100%;
 `;

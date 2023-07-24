@@ -53,7 +53,8 @@ const BLUE = {
 
 const PURPLE = {
   100: "#E3E2FC",
-  200: "#6866D4"
+  200: "#6866D4",
+  600: "#D6E2FF"
 };
 
 const primary = {
