@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import { get } from "lodash";
 
 import Table, { Column } from "src/components/commons/Table";
-import { formatADAFull, formatPercent, getPageInfo, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, formatPercent, getPageInfo, getShortWallet, toFixedBigNumber } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import { HeaderSearchIcon } from "src/commons/resources";
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -19,8 +19,8 @@ const DelegationLists: React.FC = () => {
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const { tickerNameSearch = "" } = history.location.state || {};
 
-  const [value, setValue] = useState(tickerNameSearch);
-  const [search, setSearch] = useState(tickerNameSearch);
+  const [value, setValue] = useState(decodeURIComponent(tickerNameSearch));
+  const [search, setSearch] = useState(decodeURIComponent(tickerNameSearch));
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(50);
   const [sort, setSort] = useState<string>("");
@@ -81,7 +81,11 @@ const DelegationLists: React.FC = () => {
           <Box component={"span"} mr={1}>
             {formatPercent(r.saturation / 100) || `0%`}
           </Box>
-          <StyledLinearProgress variant="determinate" value={r.saturation > 100 ? 100 : get(r, "saturation", 0)} />
+          <StyledLinearProgress
+            variant="determinate"
+            saturation={r.saturation}
+            value={r.saturation > 100 ? 100 : get(r, "saturation", 0)}
+          />
         </Box>
       )
     },
@@ -121,7 +125,7 @@ const DelegationLists: React.FC = () => {
       ),
       minWidth: "100px",
       key: "lifetimeRos",
-      render: (r) => <Box component={"span"}>{r.lifetimeRos || 0}%</Box>
+      render: (r) => <Box component={"span"}>{toFixedBigNumber(r?.lifetimeRos || 0, 2)}%</Box>
     },
     {
       title: "Fixed Cost (A)",

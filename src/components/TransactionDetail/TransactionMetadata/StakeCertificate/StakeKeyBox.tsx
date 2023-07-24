@@ -14,7 +14,7 @@ type TProps = {
 const StakeKeyBox = ({ data }: TProps) => {
   const leftRow = [
     {
-      label: "Address Stake Key",
+      label: "Address Stake Address",
       value: data.stakeAddress,
       originValue: data.stakeAddress
     }
@@ -30,7 +30,11 @@ const StakeKeyBox = ({ data }: TProps) => {
                 <TextLabel>{label}: </TextLabel>
                 <TextValue>
                   <CustomTooltip title={value}>
-                    <Box color={"#0052CC !important"} component={Link} to={details.stake(value)}>
+                    <Box
+                      color={({ palette }) => `${palette.primary.main} !important`}
+                      component={Link}
+                      to={details.stake(value)}
+                    >
                       {getShortWallet(value)}
                     </Box>
                   </CustomTooltip>

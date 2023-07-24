@@ -80,7 +80,10 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
         <>
           <StyledLink to={details.block(pool.block)}>{pool.block}</StyledLink>
           <br />
-          <StyledLink to={details.epoch(pool.epoch)}>{pool.epoch}</StyledLink>/{pool.slotNo}
+          <StyledLink to={details.epoch(pool.epoch)}>{pool.epoch}</StyledLink>/{" "}
+          <Box component={"span"} color={({ palette }) => palette.secondary.light}>
+            {pool.slotNo}
+          </Box>
         </>
       )
     },

@@ -37,15 +37,18 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
-import StackingLifecycle from "./pages/StackingLifecycle";
+import StakingLifecycle from "./pages/StakingLifecycle";
 import VerifyEmail from "./pages/VerifyEmail";
 import ReportGeneratedStakingDetail from "./pages/ReportGeneratedStakingDetail";
 import ReportGeneratedPoolDetail from "./pages/ReportGeneratedPoolDetail";
-import StakeDelegations from "./pages/StakeDelegations";
-import InstantRewards from "./pages/InstantRewards";
 import { getAllBookmarks } from "./commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "./commons/utils/constants";
 import { setOpenSyncBookmarkModal } from "./stores/user";
+import FAQ from "./pages/Refference/FAQ";
+import Policy from "./pages/Refference/Policy";
+import TermOfServices from "./pages/Refference/TermOfServices";
+import StakeDelegations from "./pages/StakeDelegations";
+import InstantRewards from "./pages/InstantRewards";
 
 const StakeAddressRegistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.REGISTRATION} />;
 const StakeAddressDeregistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.DEREREGISTRATION} />;
@@ -102,7 +105,7 @@ const Routes: React.FC = () => {
       <Route path={routers.POLICY_DETAIL} exact component={PolicyDetail} />
       <Route path={routers.ADDRESS_LIST} exact component={TopAddresses} />
       <Route path={routers.TOP_DELEGATOR} exact component={TopDelegators} />
-      <Route path={routers.STAKING_LIFECYCLE} exact component={StackingLifecycle} />
+      <Route path={routers.STAKING_LIFECYCLE} exact component={StakingLifecycle} />
       <PrivateRoute path={routers.REPORT_GENERATED_STAKING_DETAIL} exact component={ReportGeneratedStakingDetail} />
       <PrivateRoute path={routers.REPORT_GENERATED_POOL_DETAIL} exact component={ReportGeneratedPoolDetail} />
       <Route path={routers.PROTOCOL_PARAMETER} exact component={ProtocolParameter} />
@@ -122,6 +125,9 @@ const Routes: React.FC = () => {
           </Switch>
         </AccountLayout>
       </Route>
+      <Route path={routers.FAQ} exact component={FAQ} />
+      <Route path={routers.POLICY} exact component={Policy} />
+      <Route path={routers.TERMS_AND_CONDITIONS} exact component={TermOfServices} />
       <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
   );

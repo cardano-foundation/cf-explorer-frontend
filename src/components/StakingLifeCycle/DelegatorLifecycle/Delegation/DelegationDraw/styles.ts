@@ -56,7 +56,8 @@ export const StyledCertificateShape = styled(CertificateShape)(({ theme }) => ({
   width: 220,
   height: 220,
   margin: "auto",
-  border: `2px solid ${theme.palette.border.block}`,
+  border: `2px solid ${theme.palette.primary.main}`,
+  color: theme.palette.secondary.main,
   [theme.breakpoints.down("sm")]: {
     width: 140
   }

@@ -1,4 +1,4 @@
-import { Box, Container, Tab, useTheme } from "@mui/material";
+import { Box, Tab, useTheme } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { parse, stringify } from "qs";
@@ -19,7 +19,7 @@ import { StakingDelegators, StakeKeyHistoryIcon } from "src/commons/resources";
 import { setSpecialPath } from "src/stores/system";
 import { routers } from "src/commons/routers";
 
-import { TabsContainer, TitleTab } from "./styles";
+import { StyledContainer, TabsContainer, TitleTab } from "./styles";
 
 const DelegationDetail: React.FC = () => {
   const { poolId } = useParams<{ poolId: string }>();
@@ -115,7 +115,7 @@ const DelegationDetail: React.FC = () => {
   ];
 
   return (
-    <Container>
+    <StyledContainer>
       <DelegationDetailInfo data={data} loading={loading} poolId={poolId} />
       <DelegationDetailOverview data={data} loading={loading} />
       <DelegationDetailChart poolId={poolId} />
@@ -136,7 +136,7 @@ const DelegationDetail: React.FC = () => {
                   style={{ padding: "12px 0px", marginRight: 40 }}
                   label={
                     <Box display={"flex"} alignItems="center">
-                      <Icon fill={key === tab ? theme.palette.primary.main : theme.palette.text.hint} />
+                      <Icon fill={key === tab ? theme.palette.primary.main : theme.palette.secondary[600]} />
                       <TitleTab pl={1} active={+(key === tab)}>
                         {label}
                       </TitleTab>
@@ -153,7 +153,7 @@ const DelegationDetail: React.FC = () => {
           ))}
         </TabContext>
       </Box>
-    </Container>
+    </StyledContainer>
   );
 };
 

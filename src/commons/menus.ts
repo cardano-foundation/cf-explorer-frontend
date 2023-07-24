@@ -43,8 +43,8 @@ export const menus: Menu[] = [
     title: "Operational Certificates",
     icon: DelegatePoolMenuIcon,
     children: [
-      { title: "Stake Key Registration", href: routers.STAKE_ADDRESS_REGISTRATION, isSpecialPath: true },
-      { title: "Stake Key Deregistration", href: routers.STAKE_ADDRESS_DEREGISTRATION, isSpecialPath: true },
+      { title: "Stake Address Registration", href: routers.STAKE_ADDRESS_REGISTRATION, isSpecialPath: true },
+      { title: "Stake Address Deregistration", href: routers.STAKE_ADDRESS_DEREGISTRATION, isSpecialPath: true },
       { title: "Stake Delegation(s)", href: routers.STAKE_ADDRESS_DELEGATIONS, isSpecialPath: true },
       { title: "Pool Certificate", href: routers.POOL_CERTIFICATE, isSpecialPath: true },
       { title: "Pool Deregistration", href: routers.POOL_DEREGISTRATION, isSpecialPath: true },

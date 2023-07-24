@@ -2,6 +2,7 @@ import { Box, Container, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)`
+  max-width: 95vw !important;
   margin-top: 18px;
 
   .MuiSelect-select.MuiSelect-outlined {
@@ -12,7 +13,7 @@ export const StyledContainer = styled(Container)`
 
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
 `;
 
 export const PerPage = styled("div")`
@@ -35,7 +36,7 @@ export const PageSize = styled(Box)(() => ({
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.light,
   display: "block",
   margin: "12px 0px"
 }));

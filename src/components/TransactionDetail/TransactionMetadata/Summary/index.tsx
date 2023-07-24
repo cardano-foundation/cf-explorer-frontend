@@ -12,7 +12,7 @@ import ADAicon from "../../../commons/ADAIcon";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import DropdownTokens, { TokenLink } from "../../../commons/DropdownTokens";
-import { Icon } from "./styles";
+import { Icon, Item, TitleText } from "./styles";
 import { useScreen } from "../../../../commons/hooks/useScreen";
 
 const SummaryItems = ({
@@ -56,10 +56,8 @@ const SummaryItems = ({
         )}
         <Box flex={1} pt="4px">
           <Box display={"flex"} alignItems="center" justifyContent={"flex-start"}>
-            <Box width={"100%"} display="flex" alignItems={"center"} justifyContent="center" flexWrap={"wrap"}>
-              <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} pr={1} mb={1}>
-                {type === "down" ? "From" : "To"}:{" "}
-              </Box>
+            <Item>
+              <TitleText>{type === "down" ? "From" : "To"}: </TitleText>
               <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} flex={1} mb={1}>
                 <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} flexWrap={"nowrap"}>
                   <Link
@@ -67,7 +65,7 @@ const SummaryItems = ({
                   >
                     <CustomTooltip title={item.address}>
                       <Box
-                        color={(theme) => theme.palette.blue[800]}
+                        color={(theme) => theme.palette.primary.main}
                         fontWeight="bold"
                         fontFamily={"var(--font-family-text)"}
                       >
@@ -78,7 +76,7 @@ const SummaryItems = ({
                   <CopyButton text={item.address} style={{ cursor: "pointer", verticalAlign: "text-bottom" }} />
                 </Box>
               </Box>
-            </Box>
+            </Item>
           </Box>
           <Box
             display={"flex"}
@@ -89,14 +87,14 @@ const SummaryItems = ({
             mb={1}
           >
             <Box display="flex" justifyContent={"space-between"} alignItems={"baseline"} pr={1} flexDirection={"row"}>
-              <Box pr={1} whiteSpace={"nowrap"}>
+              <Box pr={1} whiteSpace={"nowrap"} color={({ palette }) => palette.secondary.light}>
                 {type === "down" ? "ADA sent:" : "ADA received:"}{" "}
               </Box>
               <Box display="flex" justifyContent={"space-between"} alignItems="center">
                 <Box
                   component={"span"}
                   whiteSpace="nowrap"
-                  color={(theme) => (type === "up" ? theme.palette.green[700] : theme.palette.red[800])}
+                  color={(theme) => (type === "up" ? theme.palette.success[800] : theme.palette.error[700])}
                   fontWeight="bold"
                   mr={1}
                 >

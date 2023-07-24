@@ -1,4 +1,4 @@
-import { alpha, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
 
@@ -44,7 +44,10 @@ const StakeHistoryTab = ({ isMobile = false }) => {
         <Box>
           <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
           <Box marginTop="10px">
-            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
+            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
+            <Box component={"span"} color={({ palette }) => palette.secondary.light}>
+              {r.epochSlotNo}
+            </Box>
           </Box>
         </Box>
       )
@@ -55,10 +58,9 @@ const StakeHistoryTab = ({ isMobile = false }) => {
       minWidth: "120px",
       render: (r) => (
         <LabelStatus
-          color={(theme) => (r.action === "Registered" ? theme.palette.red[700] : theme.palette.grey[400])}
+          color={(theme) => (r.action === "Registered" ? theme.palette.error[700] : theme.palette.secondary.light)}
           sx={{
-            background: (theme) =>
-              r.action === "Registered" ? theme.palette.red[700_20] : alpha(theme.palette.grey[400], 0.2)
+            background: (theme) => (r.action === "Registered" ? theme.palette.error[100] : theme.palette.primary[200])
           }}
         >
           {r.action ? r.action.split(" ").join("") : ""}

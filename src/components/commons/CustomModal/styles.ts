@@ -40,7 +40,7 @@ export const CloseButton = styled(IconButton)(({ theme }) => ({
 }));
 
 export const WrapTitle = styled(Box)(({ theme }) => ({
-  color: theme.palette.text.primary,
+  color: theme.palette.secondary.main,
   fontSize: 24,
   lineHeight: "28px",
   fontWeight: 700,

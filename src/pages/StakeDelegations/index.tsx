@@ -70,7 +70,10 @@ const StakeDelegations = () => {
         <>
           <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
           <Box mt={1}>
-            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
+            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
+            <Box color={({ palette }) => palette.secondary.light} component={"span"}>
+              {r.epochSlotNo}
+            </Box>
           </Box>
         </>
       )

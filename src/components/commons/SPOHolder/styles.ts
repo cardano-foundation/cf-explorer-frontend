@@ -1,7 +1,7 @@
 import { styled, IconButton as IconButtonMui, Box } from "@mui/material";
 
 export const IconButton = styled(IconButtonMui)(({ theme }) => ({
-  background: theme.palette.grey[100]
+  background: theme.palette.primary[100]
 }));
 
 export const ButtonSPO = styled(Box)(() => ({

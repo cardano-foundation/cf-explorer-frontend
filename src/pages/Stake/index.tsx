@@ -54,7 +54,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
 
   useEffect(() => {
     const title = stakeAddressType === STAKE_ADDRESS_TYPE.REGISTRATION ? "Registrations" : "Deregistrations";
-    document.title = `${title} Stake Keys | Iris - Cardano Blockchain Explorer`;
+    document.title = `${title} Stake Addresses | Iris - Cardano Blockchain Explorer`;
   }, [stakeAddressType]);
 
   const openDetail = (_: any, r: IStakeKey, index: number) => {
@@ -92,7 +92,10 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
         <>
           <StyledLink to={details.block(r.block)}>{r.block}</StyledLink>
           <div style={{ display: "flex", marginTop: "6px" }}>
-            <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>/{r.epochSlotNo}
+            <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>/
+            <Box component={"span"} color={({ palette }) => palette.secondary.light}>
+              {r.epochSlotNo}
+            </Box>
           </div>
         </>
       )
@@ -119,7 +122,9 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
       <Box className="stake-list">
         <Card
           title={
-            stakeAddressType === STAKE_ADDRESS_TYPE.REGISTRATION ? "Stake Key Registration" : "Stake Key Deregistration"
+            stakeAddressType === STAKE_ADDRESS_TYPE.REGISTRATION
+              ? "Stake Address Registration"
+              : "Stake Address Deregistration"
           }
         >
           <TimeDuration>

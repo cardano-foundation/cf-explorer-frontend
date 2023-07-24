@@ -1,8 +1,8 @@
 import { styled, TextareaAutosize } from "@mui/material";
 
 const CustomTextArea = styled(TextareaAutosize)`
-  background: #ffffff;
-  border: 1.5px solid #e3e5e9;
+  background: ${({ theme }) => theme.palette.common.white};
+  border: 1.5px solid ${({ theme }) => theme.palette.border.primary};
   border-radius: 8px;
   font-weight: 400;
   font-size: 14px;

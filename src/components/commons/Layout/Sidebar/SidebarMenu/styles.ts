@@ -47,11 +47,12 @@ export const MenuIcon = styled("img")<{ iconOnly?: number; active?: number; text
   height: 24px;
   min-width: 24px;
   margin-right: ${(props) => (props.iconOnly ? 0 : 15)}px;
-  filter: ${(props) => (props.active ? (props.text ? `none` : `brightness(5)`) : `grayscale(1)`)};
+  filter: ${(props) => (props.active ? `brightness(5)` : props.theme.palette.secondary.light)};
   ${({ theme }) => theme.breakpoints.down("md")} {
     margin-right: 15px;
   }
 `;
+// filter: ${(props) => (props.active ? (props.text ? `none` : `brightness(5)`) : `grayscale(1)`)};
 
 export const SubMenu = styled(List)<{ isActive?: number }>`
   margin-left: 0px;
@@ -66,11 +67,11 @@ export const MenuText = styled(ListItemText)<{ open?: number; active?: number; t
     color: ${({ active, text, disable, theme }) =>
       active
         ? text
-          ? theme.palette.text.primary
-          : theme.palette.common.white
+          ? theme.palette.secondary[0]
+          : theme.palette.secondary[0]
         : disable
-        ? theme.palette.text.disabled
-        : theme.palette.grey[500]};
+        ? theme.palette.secondary[600]
+        : theme.palette.secondary.light};
     white-space: break-spaces;
     width: 165px;
   }
@@ -83,7 +84,7 @@ export const MenuText = styled(ListItemText)<{ open?: number; active?: number; t
 export const SubMenuText = styled(MenuText)`
   * {
     font-weight: var(--font-weight-normal) !important;
-    color: ${({ active, theme }) => (active ? theme.palette.primary.contrastText : theme.palette.grey[500])};
+    color: ${({ active, theme }) => (active ? theme.palette.secondary.main : theme.palette.secondary.light)};
   }
 `;
 

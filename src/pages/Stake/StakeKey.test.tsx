@@ -26,25 +26,25 @@ const mockData = {
 
 jest.mock("src/commons/hooks/useFetchList");
 
-describe("Stake key view", () => {
+describe("Stake adress view", () => {
   afterEach(() => {
     cleanup();
   });
 
-  it("should render stake key registration page", () => {
+  it("should render stake adress registration page", () => {
     const mockUseFetch = useFetchList as jest.Mock;
     mockUseFetch.mockReturnValue({ data: [] });
     render(<Stake stakeAddressType={STAKE_ADDRESS_TYPE.REGISTRATION} />);
     expect(useFetchList).toBeCalled();
-    expect(screen.getByText("Stake Key Registration")).toBeInTheDocument();
+    expect(screen.getByText("Stake Address Registration")).toBeInTheDocument();
   });
 
-  it("should render stake key de-registration page", () => {
+  it("should render stake address de-registration page", () => {
     const mockUseFetch = useFetchList as jest.Mock;
     mockUseFetch.mockReturnValue({ data: [] });
     render(<Stake stakeAddressType={STAKE_ADDRESS_TYPE.DEREREGISTRATION} />);
     expect(useFetchList).toBeCalled();
-    expect(screen.getByText("Stake Key Deregistration")).toBeInTheDocument();
+    expect(screen.getByText("Stake Address Deregistration")).toBeInTheDocument();
   });
 
   it("should navigate to the correct route when txHash item is clicked", () => {
@@ -77,7 +77,7 @@ describe("Stake key view", () => {
     fireEvent.click(BlockItem);
     expect(history.location.pathname).toBe(details.block(mockData.data[0].block.toString()));
   });
-  it("should navigate to the correct route when stake key item is clicked", () => {
+  it("should navigate to the correct route when stake address item is clicked", () => {
     const mockUseFetchList = useFetchList as jest.Mock;
     mockUseFetchList.mockReturnValue(mockData);
     const history = createMemoryHistory();
