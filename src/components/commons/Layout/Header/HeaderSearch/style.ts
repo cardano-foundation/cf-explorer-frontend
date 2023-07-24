@@ -16,7 +16,7 @@ export const Form = styled("form")<{ home: number; sidebar?: number }>(({ theme,
   padding: `0px 0px 0px ${home ? 15 : 0}px`,
   boxSizing: "border-box",
   marginTop: home ? 30 : 0,
-  border: `1.5px solid ${theme.palette.grey[200]}`,
+  border: `1.5px solid ${theme.palette.primary[200]}`,
   [theme.breakpoints.down("lg")]: {
     minWidth: sidebar ? "unset" : home ? 785 : 400
   },
@@ -45,20 +45,20 @@ export const StyledSelect = styled(Select)<{ home: number }>`
     border-radius: 0px !important;
     padding-right: 40px !important;
     min-width: 80px;
-    color: ${(props) => props.theme.palette.text.primary};
+    color: ${(props) => props.theme.palette.secondary.light};
   }
   & > fieldset {
     top: 0;
     border: none !important;
   }
   & > svg {
-    color: ${(props) => props.theme.palette.grey[400]};
+    color: ${(props) => props.theme.palette.secondary.light};
     font-size: 1.75rem;
   }
 `;
 export const SelectOption = styled(MenuItem)<{ home: number }>`
   font-size: ${(props) => (props.home ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.light};
   font-weight: var(--font-weight-normal);
 `;
 
@@ -67,22 +67,7 @@ export const StyledInput = styled(Input)<{ home: number }>`
   border: none;
   box-shadow: none !important;
   border-radius: 0;
-  font-size: var(--font-size-text-large);
-  ${({ theme }) => theme.breakpoints.up("sm")} {
-    ${(props) =>
-      !props.home &&
-      `
-      font-size: var(--font-size-text-small);
-    `}
-  }
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    ${(props) =>
-      !props.home &&
-      `
-    transform-origin: left center;
-    transform: scale(0.75);
-    `}
-  }
+  font-size: ${(props) => (props.home ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
   width: 100%;
   border-left: 2px solid ${(props) => props.theme.palette.border.main};
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -142,4 +127,10 @@ export const Option = styled(Button)(({ theme }) => ({
 export const ValueOption = styled("span")(({ theme }) => ({
   color: theme.palette.primary.main,
   fontWeight: "500"
+}));
+
+export const WrapInput = styled(Box)(() => ({
+  width: "100%",
+  display: "flex",
+  justifyContent: "space-between",
 }));

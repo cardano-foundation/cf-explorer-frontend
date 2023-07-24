@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 
 import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
 import { CalenderPaleIcon, SliderRight } from "src/commons/resources";
-import { API } from "src/commons/utils/api";
 import useFetch from "src/commons/hooks/useFetch";
-import { formatDateTime, getHostname } from "src/commons/utils/helper";
+import { API } from "src/commons/utils/api";
 import { CARDANO_NEWS_URL } from "src/commons/utils/constants";
 import { useScreen } from "src/commons/hooks/useScreen";
+import { formatDateTime, getHostname } from "src/commons/utils/helper";
 
 import {
   Author,
@@ -27,6 +27,7 @@ import {
   WrapHeader,
   CustomGrid
 } from "./style";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 const defaultNumberOfItems = 4;
 
@@ -117,6 +118,9 @@ const LatestStories = () => {
                       <Image src={main_image} alt={main_image_alt} />
                       <Detail>
                         <WrapHeader>
+                          <CustomTooltip title={entity}>
+                            <Author>{entity}</Author>
+                          </CustomTooltip>
                           <Author>{entity}</Author>
                           <ResourceHref>{getHostname(resource_href)}</ResourceHref>
                         </WrapHeader>

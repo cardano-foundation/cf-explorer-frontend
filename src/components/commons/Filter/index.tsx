@@ -22,6 +22,7 @@ export interface Option {
   value: any;
   label?: string | React.ReactNode;
   icon: React.ReactNode;
+  active?: boolean;
 }
 
 const Filter: React.FC<FilterProps> = ({ options, onOptionChange }) => {

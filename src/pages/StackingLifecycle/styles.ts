@@ -51,26 +51,26 @@ export const Status = styled("span")<{ status: string }>`
     switch (status) {
       case "EXPIRED":
       case "FAILED":
-        return theme.palette.error.light;
+        return theme.palette.error[100];
       case "GENERATED":
-        return theme.palette.success.light;
+        return theme.palette.success[100];
       case "IN_PROGRESS":
-        return theme.palette.warning.light;
+        return theme.palette.warning[100];
       default:
-        return theme.palette.success.light;
+        return theme.palette.success[100];
     }
   }};
   color: ${({ status, theme }) => {
     switch (status) {
       case "EXPIRED":
       case "FAILED":
-        return theme.palette.error.main;
+        return theme.palette.error[100];
       case "GENERATED":
-        return theme.palette.success.main;
+        return theme.palette.success[800];
       case "IN_PROGRESS":
-        return theme.palette.warning.main;
+        return theme.palette.warning[800];
       default:
-        return theme.palette.success.main;
+        return theme.palette.success[800];
     }
   }};
 `;
@@ -78,7 +78,7 @@ export const Status = styled("span")<{ status: string }>`
 export const TextHeadline = styled("span")`
   font-weight: 700;
   font-size: 36px;
-  color: #000000;
+  color: ${(props) => props.theme.palette.secondary.main};
   margin-bottom: 14px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 24px;
@@ -126,4 +126,7 @@ export const WrapReportName = styled(Box)`
 `;
 export const StyledTabLabel = styled(TabLabel)`
   font-size: 18px;
+`;
+export const StyledContainer = styled(Container)`
+  max-width: 95vw !important;
 `;
