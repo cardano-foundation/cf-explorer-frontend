@@ -125,6 +125,7 @@ const Routes: React.FC = () => {
       <Route path={routers.FAQ} exact component={FAQ} />
       <Route path={routers.POLICY} exact component={Policy} />
       <Route path={routers.TERMS_AND_CONDITIONS} exact component={TermOfServices} />
+      <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
   );
 };

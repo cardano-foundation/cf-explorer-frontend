@@ -426,7 +426,11 @@ export default function SignUp() {
                     >
                       I agree to the
                       <Link to={routers.TERMS_AND_CONDITIONS} target="_blank">
-                        <ForgotPassword>Terms and Conditions</ForgotPassword>
+                        <ForgotPassword>Terms & Conditions</ForgotPassword>
+                      </Link>
+                      and
+                      <Link to={routers.POLICY} target="_blank">
+                        <ForgotPassword>Privacy Policy</ForgotPassword>
                       </Link>
                     </Box>
                   }
