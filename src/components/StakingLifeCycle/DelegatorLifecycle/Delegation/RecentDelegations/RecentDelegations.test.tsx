@@ -10,7 +10,7 @@ describe("RecentDelegations", () => {
     const onSelect = jest.fn();
     jest.spyOn(Router, "useParams").mockReturnValue({ stakeId: "1" });
 
-    render(<RecentDelegations onSelect={onSelect} />);
+    render(<RecentDelegations onSelect={onSelect} setShowBackButton={jest.fn()} />);
     expect(screen.getByText("Recent Delegations")).toBeInTheDocument();
   });
 });

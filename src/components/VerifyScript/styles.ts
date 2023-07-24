@@ -13,9 +13,9 @@ export const VerifyScriptContainer = styled(Box)`
   margin-bottom: 10px;
 `;
 
-export const StyledVerifyButton = styled(Box)<{ verified: number }>(({ verified }) => ({
-  color: verified ? "#438F68" : "#FFFFFF",
-  background: verified ? "rgba(67, 143, 104, 0.2)" : "#344054",
+export const StyledVerifyButton = styled(Box)<{ verified: number }>(({ verified, theme }) => ({
+  color: verified ? theme.palette.success[700] : theme.palette.common.white,
+  background: verified ? theme.palette.success[100] : theme.palette.secondary.main,
   cursor: "pointer",
   borderRadius: 2,
   padding: "4px 14px",
@@ -38,18 +38,10 @@ export const Container = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const StyledLabel = styled("div")`
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 16px;
-  color: #000000;
-  margin: 6px 0px;
-`;
-
 export const ModalTitle = styled(Typography)`
   font-size: 24px;
   font-weight: 700;
-  color: rgba(19, 21, 47, 1);
+  color: ${(props) => props.theme.palette.secondary.main};
   margin-bottom: 48px;
   ${({ theme }) => theme.breakpoints.down("md")} {
     font-size: 20px;
@@ -61,8 +53,8 @@ export const VerifyButton = styled(Box)<{ disabled: boolean }>`
   font-size: 16px;
   line-height: 24px;
   text-align: center;
-  color: #ffffff;
-  background: #13152f;
+  color: ${(props) => props.theme.palette.common.white};
+  background: ${(props) => props.theme.palette.secondary.main};
   border-radius: 8px;
   padding: 10px 20px;
   position: absolute;
@@ -81,7 +73,7 @@ export const VerifyButton = styled(Box)<{ disabled: boolean }>`
 `;
 
 export const ErrorMessage = styled(Box)`
-  color: red;
+  color: ${(props) => props.theme.palette.error[700]};
   height: 132px;
   margin: 20px 0px;
 `;

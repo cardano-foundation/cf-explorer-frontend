@@ -8,6 +8,7 @@ import { routers } from "src/commons/routers";
 import { removeAuthInfo } from "src/commons/utils/helper";
 import { signOut } from "src/commons/utils/userRequest";
 import { setOnDetailView } from "src/stores/user";
+import useToast from "src/commons/hooks/useToast";
 
 import { Content, Disconnect, Icon, Name, Profile, Span, StyledButton, WrapContent } from "./style";
 
@@ -19,6 +20,7 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
   const [, setBookmark] = useLocalStorage<string[]>("bookmark", []);
   const [, setUsername] = useLocalStorage<string>("username", "");
   const [user, setUser] = useLocalStorage("persist:user", {});
+  const toast = useToast();
 
   const history = useHistory();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -39,6 +41,7 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
         refreshJwt: localStorage.getItem("refreshToken") || "",
         accountId: localStorage.getItem("username") || ""
       });
+      toast.success("You are now signed out");
     } catch (error) {
       console.log(error);
     } finally {
@@ -48,10 +51,12 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
       setUser({ ...user, userData: {} });
       if (window.location.pathname.includes("report-generated")) {
         history.push(routers.STAKING_LIFECYCLE);
-      } else if (window.location.pathname.includes(routers.MY_PROFILE)) {
-        history.push(routers.HOME);
+      } else if (window.location.pathname.includes(routers.ACCOUNT)) {
+        history.replace(routers.HOME);
       } else {
-        window.location.reload();
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       }
     }
   };

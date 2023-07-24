@@ -24,7 +24,7 @@ export const Item = styled(Card)`
 `;
 
 export const EpochProgress = styled("h3")(({ theme }) => ({
-  color: theme.palette.common.black,
+  color: theme.palette.secondary.main,
   margin: 0,
   [theme.breakpoints.down("lg")]: {
     fontSize: 14
@@ -57,7 +57,7 @@ export const Content = styled(Box)`
 export const Name = styled("h4")`
   width: calc(100% - 60px);
   margin-bottom: 0.75rem;
-  color: ${(props) => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.secondary.light};
   font-family: var(--font-family-text);
   font-size: 14px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -71,6 +71,7 @@ export const Title = styled("h3")`
   font-family: var(--font-family-text);
   margin-top: 0;
   margin-bottom: 0.25rem;
+  color: ${({ theme }) => theme.palette.secondary.main};
   font-size: 20px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 16px;
@@ -80,7 +81,7 @@ export const Title = styled("h3")`
 `;
 
 export const Small = styled("small")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.light};
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 11px;
   }
@@ -91,7 +92,7 @@ export const SmallValue = styled("small")`
 `;
 
 export const AdaPrice = styled("small")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.light};
   white-space: nowrap;
   margin-left: 15px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -99,7 +100,7 @@ export const AdaPrice = styled("small")`
   }
 `;
 export const TimeDuration = styled("small")<{ marginTop?: string }>`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.light};
   margin-top: ${(props) => props.marginTop || 0};
   white-space: nowrap;
   display: block;
@@ -109,14 +110,14 @@ export const TimeDuration = styled("small")<{ marginTop?: string }>`
 `;
 export const XSmall = styled("span")`
   font-size: var(--font-size-text-small);
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.light};
 `;
 
 export const Value = styled(Small)<{ down?: number }>`
-  color: ${(props) => (props.down ? props.theme.palette.error.main : props.theme.palette.success.dark)};
+  color: ${(props) => (props.down ? props.theme.palette.error.main : props.theme.palette.success[800])};
 `;
 export const XValue = styled(XSmall)<{ down?: number }>`
-  color: ${(props) => (props.down ? props.theme.palette.error.main : props.theme.palette.success.dark)};
+  color: ${(props) => (props.down ? props.theme.palette.error[700] : props.theme.palette.success[800])};
 `;
 
 export const Progress = styled("div")`
@@ -142,5 +143,5 @@ export const ProcessActive = styled("div")<{ rate: number }>`
 
 export const ProgressPending = styled(ProcessActive)<{ rate: number }>`
   width: ${(props) => props.rate}%;
-  background-color: ${(props) => props.theme.palette.warning.main};
+  background-color: ${(props) => props.theme.palette.primary[200]};
 `;

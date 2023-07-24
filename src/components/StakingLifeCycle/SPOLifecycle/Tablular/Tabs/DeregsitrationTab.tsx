@@ -41,7 +41,7 @@ const DeregsitrationTab = () => {
     },
     {
       key: "time",
-      title: "Timestamp",
+      title: "Created At",
       sort({ columnKey, sortValue }) {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       },
@@ -65,9 +65,9 @@ const DeregsitrationTab = () => {
             <AdaValue value={data.poolHold ? new BigNumber(data.poolHold).minus(data.fee).toString() : 0} />
             <TableSubTitle>
               <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-                <AdaValue color={theme.palette.grey[400]} value={data.poolHold} gap="3px" fontSize="12px" />
+                <AdaValue color={theme.palette.secondary.light} value={data.poolHold} gap="3px" fontSize="12px" />
                 <Box mx="3px">/</Box>
-                <AdaValue color={theme.palette.grey[400]} value={data.fee} gap="3px" fontSize="12px" />
+                <AdaValue color={theme.palette.secondary.light} value={data.fee} gap="3px" fontSize="12px" />
               </Box>
             </TableSubTitle>
           </Box>
@@ -79,7 +79,7 @@ const DeregsitrationTab = () => {
       title: "Certificate",
       render: (data) => (
         <IconButton onClick={() => setSelected(data)}>
-          <EyeIcon style={{ transform: "scale(.8)" }} />
+          <EyeIcon />
         </IconButton>
       )
     }

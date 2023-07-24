@@ -1,28 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import { useWindowSize } from "react-use";
+import { Collapse, Divider, ListItem, useTheme } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { BiChevronDown, BiChevronRight } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
-import { Collapse, Divider, ListItem, useTheme } from "@mui/material";
+import { useWindowSize } from "react-use";
 
 import { footerMenus, menus } from "src/commons/menus";
 import { isExtenalLink } from "src/commons/utils/helper";
-import { setSidebar } from "src/stores/user";
-import { RootState } from "src/stores/types";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import { RootState } from "src/stores/types";
+import { setSidebar } from "src/stores/user";
 import { routers } from "src/commons/routers";
 
 import FooterMenu from "../FooterMenu";
 import {
+  FooterMenuContainer,
+  IconMenu,
   Menu,
   MenuIcon,
   MenuText,
+  SidebarMenuContainer,
   SubMenu,
   SubMenuText,
-  itemStyle,
-  IconMenu,
-  SidebarMenuContainer,
-  FooterMenuContainer
+  itemStyle
 } from "./styles";
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
@@ -142,7 +142,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       selected={isActiveMenu(href)}
                       sx={(theme) => ({
                         ...itemStyle(theme, sidebar),
-                        ...(isActiveMenu(href) ? { backgroundColor: `${theme.palette.success.dark} !important` } : {})
+                        ...(isActiveMenu(href) ? { backgroundColor: `${theme.palette.primary.main} !important` } : {})
                       })}
                     >
                       {icon ? (
@@ -165,10 +165,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`menu-${index}` === active
                         ? {
-                            backgroundColor: (theme) => `${theme.palette.green[700_10]} !important`,
-                            color: (theme) => theme.palette.grey[500]
+                            backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
+                            color: (theme) => theme.palette.secondary[0]
                           }
-                        : { color: (theme) => theme.palette.grey[500] })
+                        : { color: (theme) => theme.palette.secondary.light })
                     })}
                   >
                     {icon ? (
@@ -191,7 +191,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     {sidebar &&
                       (children?.length ? (
                         <IconMenu component={"span"}>
-                          {`menu-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
+                          {`menu-${index}` === active ? <BiChevronRight size={18} /> : <BiChevronDown size={18} />}
                         </IconMenu>
                       ) : null)}
                   </ListItem>
@@ -231,7 +231,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
                               ...(isActiveSubMenu(href, item.title)
-                                ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
+                                ? { backgroundColor: (theme) => `${theme.palette.primary[200]} !important` }
                                 : {}),
                               paddingLeft: "70px",
                               [theme.breakpoints.down("md")]: {
@@ -297,7 +297,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       sx={(theme) => ({
                         ...itemStyle(theme, sidebar),
                         ...(pathname === href
-                          ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
+                          ? { backgroundColor: (theme) => `${theme.palette.primary.main} !important` }
                           : {})
                       })}
                     >
@@ -320,10 +320,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`footer-${index}` === active
                         ? {
-                            backgroundColor: (theme) => `${theme.palette.green[700_10]} !important`,
-                            color: (theme) => theme.palette.grey[500]
+                            backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
+                            color: (theme) => theme.palette.secondary[0]
                           }
-                        : { color: (theme) => theme.palette.grey[500] })
+                        : { color: (theme) => theme.palette.secondary.light })
                     })}
                   >
                     {icon ? (
@@ -344,7 +344,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     {sidebar &&
                       (children?.length ? (
                         <IconMenu component={"span"}>
-                          {`footer-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
+                          {`footer-${index}` === active ? <BiChevronRight size={18} /> : <BiChevronDown size={18} />}
                         </IconMenu>
                       ) : null)}
                   </ListItem>
@@ -382,7 +382,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
                               ...(pathname === href
-                                ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
+                                ? { backgroundColor: (theme) => `${theme.palette.success[700]} !important` }
                                 : {}),
                               paddingLeft: "70px",
                               [theme.breakpoints.down("md")]: {

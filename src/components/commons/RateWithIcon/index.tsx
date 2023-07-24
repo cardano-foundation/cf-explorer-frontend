@@ -24,7 +24,7 @@ const ImageRate = styled("img")<{ sign: number }>`
 `;
 
 const PriceValue = styled("span")<{ sign: number }>`
-  color: ${({ theme, sign }) => (sign > 0 ? theme.palette.primary.main : theme.palette.error.main)};
+  color: ${({ theme, sign }) => (sign > 0 ? theme.palette.success[800] : theme.palette.error[700])};
   font-weight: var(--font-weight-bold);
 `;
 

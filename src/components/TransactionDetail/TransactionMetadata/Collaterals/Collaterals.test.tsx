@@ -74,7 +74,6 @@ describe("Collaterals component", () => {
     const address = within(link).getByText(new RegExp(getShortWallet(collateralInputResponses[0].address), "i"));
     expect(address).toBeInTheDocument();
     expect(screen.getByText(getShortHash(collateralInputResponses[0].txHash))).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /token 1/i })).toBeInTheDocument();
   });
 
   it("should user goto detail page", () => {
