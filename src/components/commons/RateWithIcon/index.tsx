@@ -38,8 +38,9 @@ interface Props {
   value: number;
   size?: string | number;
   multiple?: number;
+  showIcon?: boolean;
 }
-const RateWithIcon = ({ value, size, multiple = 1 }: Props) => {
+const RateWithIcon = ({ value, size, multiple = 1, showIcon = true }: Props) => {
   if (!value) return <PriceNoValue>0</PriceNoValue>;
 
   const multiplied = BigNumber(value).multipliedBy(multiple);
@@ -48,7 +49,7 @@ const RateWithIcon = ({ value, size, multiple = 1 }: Props) => {
   return (
     <CustomTooltip title={`${sign > 0 ? "+" : ""}${multiplied.toNumber()}`}>
       <PriceRate size={size}>
-        <ImageRate sign={sign} src={sign > 0 ? UpGreenIcon : DownRedIcon} alt="rate" />
+        {showIcon && <ImageRate sign={sign} src={sign > 0 ? UpGreenIcon : DownRedIcon} alt="rate" />}
         <PriceValue sign={sign}>
           {sign > 0 ? "+" : ""}
           {multiplied.toFixed(2, BigNumber.ROUND_DOWN).toString().replace(".", ",")} %
