@@ -139,9 +139,9 @@ const DelegatorLifecycle = () => {
               title={
                 !isLoggedIn
                   ? "Please sign in to use this feature"
-                  : `Please note that you can only compose ${
+                  : `Please note that you can only create ${
                       dataReportLimit?.limitPer24hours || 0
-                    } reports within the 24 hours period`
+                    } reports within 24 hours`
               }
             >
               <ReportButtonContainer>
