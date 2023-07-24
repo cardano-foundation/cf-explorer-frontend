@@ -20,7 +20,7 @@ const Image = styled("img")`
 `;
 
 const Title = styled("h3")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[300]};
   margin-bottom: 2rem;
   font-weight: var(--font-weight-normal);
 `;
@@ -46,7 +46,7 @@ const BackToHome = styled(Link)`
 
 const NotFound = () => {
   useEffect(() => {
-    document.title = `Page Not Found | Cardano Explorer`;
+    document.title = `Page Not Found | Iris - Cardano Blockchain Explorer`;
   }, []);
 
   return (

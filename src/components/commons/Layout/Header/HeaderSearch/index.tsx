@@ -222,7 +222,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
 
   const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
-    const option = options.find((item) => item.value === filter || filterParams);
+    const option = options.find((item) => item.value === (filterParams || filter));
 
     if (!["all", "tokens", "delegations/pool-detail-header"].includes(option?.value || "")) {
       setLoading(true);
@@ -352,14 +352,14 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           home && !isMobile
             ? "Search transactions, address, blocks, epochs, pools..."
             : isStakingLifecycle && !isMobile
-            ? "Search Stake key, Pools"
+            ? "Search Stake Address, Pools"
             : "Search ..."
         }
         title={
           home && !isMobile
             ? "Search transactions, address, blocks, epochs, pools..."
             : isStakingLifecycle && !isMobile
-            ? "Search Stake key, Pools"
+            ? "Search Stake Address, Pools"
             : "Search ..."
         }
         onChange={handleChangeSearch}
@@ -579,7 +579,7 @@ export const OptionsSearch = ({
             )}
           </>
         ) : (
-          <Box component={Option} color={({ palette }) => palette.red[700]} justifyContent={"center"}>
+          <Box component={Option} color={({ palette }) => palette.red[100]} justifyContent={"center"}>
             <Box>{error}</Box>
           </Box>
         )}
@@ -588,7 +588,7 @@ export const OptionsSearch = ({
   }
   return (
     <OptionsWrapper display={show ? "block" : "none"} home={+home}>
-      {!error ? (
+      {!error && (
         <>
           {listOptions.map((item, i: number) => {
             return (
@@ -601,8 +601,10 @@ export const OptionsSearch = ({
             );
           })}
         </>
-      ) : (
-        <Box component={Option} color={({ palette }) => palette.red[700]} justifyContent={"center"}>
+      )}
+
+      {!!error && (
+        <Box component={Option} color={({ palette }) => palette.red[100]} justifyContent={"center"}>
           <Box>{error}</Box>
         </Box>
       )}

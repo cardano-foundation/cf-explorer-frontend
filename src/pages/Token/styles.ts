@@ -1,7 +1,8 @@
-import { styled, Container, Select } from "@mui/material";
+import { styled, Container, Select, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
+  maxWidth: "95vw !important",
   paddingTop: "20px",
   [theme.breakpoints.down("sm")]: {
     padding: "10px 0 40px",
@@ -50,8 +51,18 @@ export const StyledSelect = styled(Select)`
   }
 `;
 
-export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
+export const TimeDuration = styled(Box)(({ theme }) => ({
+  color: theme.palette.grey[300],
   display: "block",
-  marginTop: "0.5rem"
+  marginTop: "0.5rem",
+  textAlign: "left"
 }));
+
+export const PolicyLabel = styled(AssetName)`
+  display: inline-block;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+`;

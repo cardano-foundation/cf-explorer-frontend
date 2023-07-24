@@ -22,7 +22,7 @@ const BlockDetail = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Block ${blockId} | Cardano Explorer`;
+    document.title = `Block ${blockId} | Iris - Cardano Blockchain Explorer`;
   }, [blockId]);
 
   if (!initialized) {

@@ -9,6 +9,7 @@ import DetailViewTransaction from "src/components/commons/DetailView/DetailViewT
 import { setOnDetailView } from "src/stores/user";
 
 const StyledContainer = styled(Container)`
+  max-width: 95vw !important;
   padding-top: 20px;
   @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
     padding-top: 10px;
@@ -23,7 +24,7 @@ const Transactions = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Transactions List | Cardano Explorer`;
+    document.title = `Transactions List | Iris - Cardano Blockchain Explorer`;
   }, []);
 
   const openDetail = (_: any, r: Transactions, index: number) => {

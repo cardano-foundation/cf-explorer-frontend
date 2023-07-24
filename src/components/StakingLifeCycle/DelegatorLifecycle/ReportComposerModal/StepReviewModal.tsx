@@ -10,6 +10,8 @@ import { generateStakeKeyReport, generateStakePoolReport } from "src/commons/uti
 import { getPoolEventType } from "src/components/PoolLifecycle";
 import { getEventType } from "src/components/StakekeySummary";
 import CustomModal from "src/components/commons/CustomModal";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+
 
 import { EVENTS_NAME, ReportType } from "./FilledInfoModal";
 import {
@@ -67,14 +69,14 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
         await generateStakeKeyReport(paramsStakeKeyReport);
       }
 
-      toast.success("Generate report success");
+      toast.success("Generated report successfully");
       handleCloseModal();
       setTimeout(() => {
         history.push(details.dashboard(isPoolReport ? "pools" : "stake-key"));
       }, 2000);
     } catch (err: any) {
       console.error(err);
-      toast.error("This stake key has no transaction history");
+      toast.error("Fail to generate report");
     }
     setLoading(false);
   };
@@ -90,25 +92,37 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
   const list = [
     {
       label: "Report name",
-      value: <TextOverFlow>{`${params.reportName}`.replaceAll("-", " ")}</TextOverFlow>
+      value: (
+        <CustomTooltip title={`${params.reportName}`.replaceAll("-", " ")}>
+          <TextOverFlow>{`${params.reportName}`.replaceAll("-", " ")}</TextOverFlow>
+        </CustomTooltip>
+      )
     },
     {
       label: isPoolReport ? "Epoch range" : "Date range",
-      value: isPoolReport
-        ? `Epoch ${epochStart} -  Epoch ${epochEnd}`
-        : `${moment(start).format("MM/DD/yyyy")} - ${moment(end).format("MM/DD/yyyy")}`
+      value: (
+        <TextOverFlow>
+          {isPoolReport
+            ? `Epoch ${epochStart} -  Epoch ${epochEnd}`
+            : `${moment(start).format("MM/DD/yyyy")} - ${moment(end).format("MM/DD/yyyy")}`}
+        </TextOverFlow>
+      )
     },
     {
-      label: isPoolReport ? "Pool ID" : "Stake key details",
-      value: <TextOverFlow>{params.address}</TextOverFlow>
+      label: isPoolReport ? "Pool ID" : "Stake address details",
+      value: (
+        <CustomTooltip title={params.address}>
+          <TextOverFlow>{params.address}</TextOverFlow>
+        </CustomTooltip>
+      )
     },
     {
       label: isPoolReport ? "Pool size" : "ADA transfers",
-      value: isPoolReport ? params.poolSize : params.adaTransfers
+      value: <TextOverFlow>{isPoolReport ? params.poolSize : params.adaTransfers}</TextOverFlow>
     },
     {
       label: isPoolReport ? "Pool Report by event" : "Staking lifecycle events",
-      value: events
+      value: <TextOverFlow sx={{ whiteSpace: "normal" }}>{events}</TextOverFlow>
     }
   ];
   return (
@@ -119,14 +133,12 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
           all the details correctly?
         </TextRequired>
         <Stack marginBottom="35px">
-          {list.map(({ label, value }, idx) => {
+          {list.map(({ label, value }) => {
             return (
               <OverViewItem key={label}>
                 <OverViewValue>
                   <TextLabelReview>{label}</TextLabelReview>
-                  <TextValueReview>
-                    <TextOverFlow whiteSpace={idx === list.length - 1 ? "normal" : "nowrap"}>{value} </TextOverFlow>
-                  </TextValueReview>
+                  <TextValueReview>{value} </TextValueReview>
                 </OverViewValue>
               </OverViewItem>
             );

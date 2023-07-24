@@ -110,7 +110,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
     <DetailHeader
       type="STAKE_KEY"
       bookmarkData={data?.stakeAddress || ""}
-      title="Stake Key Details"
+      title="Stake Address Details"
       hash={data?.stakeAddress}
       stakeKeyStatus={data?.status}
       listItem={listOverview}

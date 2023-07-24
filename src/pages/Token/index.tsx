@@ -21,6 +21,7 @@ import { REFRESH_TIMES } from "src/commons/utils/constants";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DetailViewToken from "src/components/commons/DetailView/DetailViewToken";
 import SelectedIcon from "src/components/commons/SelectedIcon";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import { AssetName, Logo, StyledContainer, TimeDuration } from "./styles";
 
@@ -28,6 +29,7 @@ const Tokens = () => {
   const [token, setToken] = useState<IToken | null>(null);
   const [sort, setSort] = useState<string>("txCount,DESC");
   const { onDetailView } = useSelector(({ user }: RootState) => user);
+  const { isGalaxyFoldSmall } = useScreen();
 
   const [selected, setSelected] = useState<number | null>(null);
   const { search } = useLocation();
@@ -46,7 +48,7 @@ const Tokens = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Tokens List | Cardano Explorer`;
+    document.title = `Tokens List | Iris - Cardano Blockchain Explorer`;
   }, []);
 
   const columns: Column<IToken>[] = [
@@ -122,7 +124,7 @@ const Tokens = () => {
     },
     {
       title: "Created At",
-      key: "createdat",
+      key: "time",
       minWidth: "150px",
       render: (r) => (
         <>
@@ -149,14 +151,10 @@ const Tokens = () => {
 
   return (
     <StyledContainer>
-      <Card
-        title="Token List"
-        extra={
-          <TimeDuration>
-            <FormNowMessage time={lastUpdated} />
-          </TimeDuration>
-        }
-      >
+      <Card title="Token List">
+        <TimeDuration component={"small"} px={isGalaxyFoldSmall ? 2 : 0}>
+          <FormNowMessage time={lastUpdated} />
+        </TimeDuration>
         <Table
           {...fetchData}
           data={data}
@@ -167,7 +165,7 @@ const Tokens = () => {
             ...pageInfo,
             total: fetchData.total,
             onChange: (page, size) => {
-              mainRef.current?.scrollTo(0, 0);
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
               history.replace({ search: stringify({ page, size, tokenName: queries.get("tokenName") || "" }) });
             },
             handleCloseDetailView: handleClose

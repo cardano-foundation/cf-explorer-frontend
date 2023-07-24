@@ -62,11 +62,9 @@ export enum EPOCH_STATUS {
 
 export const MAX_SLOT_EPOCH = 432000;
 
-export enum NETWORK_NAMES {
-  mainnet = "Mainnet",
-  preprod = "Preprod",
-  preview = "Preview"
-}
+export const NETWORK_NAMES = JSON.parse(
+  String(process.env.REACT_APP_NETWORK_NAMES || get(window, "env.REACT_APP_NETWORK_NAMES"))
+);
 
 export enum NETWORK_TYPES {
   mainnet = "MAIN_NET",
@@ -83,7 +81,7 @@ export const NETWORK: NETWORKS =
   (process.env.REACT_APP_NETWORK as NETWORKS) || get(window, "env.REACT_APP_NETWORK") || NETWORKS.mainnet;
 
 export enum TRANSACTION_STATUS {
-  FAIL = "FAIL",
+  FAILED = "FAILED",
   SUCCESS = "SUCCESS",
   PENDDING = "PENDDING"
 }
@@ -97,7 +95,6 @@ export enum STAKE_KEY_STATUS {
   ACTIVE = "ACTIVE",
   DEACTIVATED = "DEACTIVATED"
 }
-
 export enum RECEIVED_REWARDS {
   LEADER = "LEADER",
   MEMBER = "MEMBER",
@@ -106,9 +103,10 @@ export enum RECEIVED_REWARDS {
 
 export const AUTH_API_URL = process.env.REACT_APP_AUTH_API_URL || get(window, "env.REACT_APP_AUTH_API_URL");
 export const API_URL = process.env.REACT_APP_API_URL || get(window, "env.REACT_APP_API_URL");
-export const APP_VERSION = process.env.REACT_APP_VERSION || get(window, "env.REACT_APP_VERSION");
+export const APP_VERSION = process.env.REACT_APP_VERSION || get(window, "env.REACT_APP_VERSION") || "1.0.0";
 export const EXT_ADA_PRICE_URL =
   process.env.REACT_APP_EXT_ADA_PRICE_URL || get(window, "env.REACT_APP_EXT_ADA_PRICE_URL");
+export const CARDANO_NEWS_URL = process.env.REACT_APP_CARDANO_NEWS_URL || get(window, "env.REACT_APP_CARDANO_NEWS_URL");
 
 export enum ACCOUNT_ERROR {
   UNKNOWN_ERROR = "CC_1",

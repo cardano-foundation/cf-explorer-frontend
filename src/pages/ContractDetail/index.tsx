@@ -21,6 +21,11 @@ interface IAction {
   payload: any;
 }
 
+interface IAction {
+  type: string;
+  payload: any;
+}
+
 export enum CONTRACT_ADDRESS_TYPE {
   SET_REFRESH_SCRIPT_TAB = "SET_REFRESH_SCRIPT_TAB"
 }
@@ -44,7 +49,7 @@ const ContractDetail: React.FC = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Contract ${address} | Cardano Explorer`;
+    document.title = `Contract ${address} | Iris - Cardano Blockchain Explorer`;
   }, [address]);
 
   if (!initialized) {

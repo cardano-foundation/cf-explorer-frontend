@@ -71,7 +71,7 @@ export const CardTitle = styled(Typography)(({ theme }) => ({
   fontWeight: 700,
   fontSize: 16,
   lineHeight: "19px",
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[300],
   [theme.breakpoints.down("sm")]: {
     fontSize: 14,
     lineHeight: "16px"
@@ -83,14 +83,14 @@ export const CardValue = styled(Typography)(({ theme }) => ({
   fontWeight: 700,
   fontSize: 24,
   lineHeight: "23px",
-  color: theme.palette.grey[700],
+  color: theme.palette.grey[400],
   whiteSpace: "nowrap",
   wordBreak: "break-all",
+  width: "100%",
+  display: "flex",
   [theme.breakpoints.down("sm")]: {
     fontSize: 20,
-    lineHeight: "23px",
-    whiteSpace: "wrap",
-    wordBreak: "break-all"
+    lineHeight: "23px"
   }
 }));
 export const CardValueDelegating = styled(CardValue)(() => ({
@@ -108,6 +108,14 @@ export const BoxStyled = styled(CardValue)(({ theme }) => ({
     whiteSpace: "nowrap"
   }
 }));
+export const BoxValue = styled(CardValue)(() => ({
+  display: "block",
+  textOverflow: "ellipsis",
+  overflow: "hidden",
+  textAlign: "left",
+  width: "max-content"
+}));
+
 export const StyledBoxDelegating = styled(Link)(() => ({
   width: "100%",
   display: "flex",
@@ -115,7 +123,7 @@ export const StyledBoxDelegating = styled(Link)(() => ({
   alignItems: "center"
 }));
 export const NoDelegatedStakePool = styled(Box)(({ theme }) => ({
-  color: theme.palette.red[700],
+  color: theme.palette.red[100],
   fontWeight: 500,
   fontSize: 16
 }));
@@ -123,6 +131,7 @@ export const NoDelegatedStakePool = styled(Box)(({ theme }) => ({
 export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
   fontSize: 18,
   marginLeft: 8,
+  paddingTop: 2,
   [theme.breakpoints.down("sm")]: {
     marginLeft: 5,
     fontSize: 16

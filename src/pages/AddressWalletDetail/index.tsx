@@ -19,7 +19,7 @@ const AddressWalletDetail = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Address ${address} | Cardano Explorer`;
+    document.title = `Address ${address} | Iris - Cardano Blockchain Explorer`;
     document.documentElement.scrollTop = 0;
   }, [address]);
 
@@ -41,6 +41,7 @@ const AddressWalletDetail = () => {
 export default AddressWalletDetail;
 
 const ContainerBox = styled(Container)`
+  max-width: 95vw !important;
   padding-top: 30px;
   display: flex;
   flex-direction: column;

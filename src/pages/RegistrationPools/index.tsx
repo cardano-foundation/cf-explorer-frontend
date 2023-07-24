@@ -45,7 +45,7 @@ const RegistrationPools = () => {
 
   useEffect(() => {
     const title = poolType === POOL_TYPE.REGISTRATION ? "Registration" : "Deregistration";
-    document.title = `${title} Pools | Cardano Explorer`;
+    document.title = `${title} Pools | Iris - Cardano Blockchain Explorer`;
   }, [poolType]);
 
   const columns: Column<Registration>[] = [
@@ -77,7 +77,10 @@ const RegistrationPools = () => {
         <>
           <StyledLink to={details.block(pool.block)}>{pool.block}</StyledLink>
           <br />
-          <StyledLink to={details.epoch(pool.epoch)}>{pool.epoch}</StyledLink>/{pool.slotNo}
+          <StyledLink to={details.epoch(pool.epoch)}>{pool.epoch}</StyledLink>/{" "}
+          <Box component={"span"} color={({ palette }) => palette.grey[300]}>
+            {pool.slotNo}
+          </Box>
         </>
       )
     },
@@ -151,7 +154,7 @@ const RegistrationPools = () => {
             ...pageInfo,
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
-              mainRef.current?.scrollTo(0, 0);
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             },
             total: fetchData.total
           }}

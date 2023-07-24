@@ -8,13 +8,14 @@ import TopDelegationPools from "src/components/Home/TopDelegationPools";
 import HomeTrending from "src/components/Home/Trending";
 
 const HomeContainer = styled(Container)`
+  max-width: 95vw !important;
   padding-top: 30px;
   padding-bottom: 40px;
 `;
 
 const Home = () => {
   useEffect(() => {
-    document.title = `Cardano Explorer`;
+    document.title = `Iris - Cardano Blockchain Explorer`;
   }, []);
 
   return (

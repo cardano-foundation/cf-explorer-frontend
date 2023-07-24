@@ -11,6 +11,5 @@ describe("ViewMoreButton component", () => {
     render(<TransactionHash hash={mockHash} />);
     expect(screen.getByText(/addressicon\.svg/i)).toBeInTheDocument();
     expect(screen.getByText(getShortHash(mockHash))).toBeInTheDocument();
-    screen.logTestingPlaygroundURL();
   });
 });

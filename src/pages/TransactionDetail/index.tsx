@@ -11,6 +11,7 @@ import { API } from "src/commons/utils/api";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
 
 const StyledContainer = styled(Container)`
+  max-width: 95vw !important;
   padding: 30px 16px 40px;
 
   @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
@@ -31,7 +32,7 @@ const Transaction: React.FC = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Transaction ${trxHash} | Cardano Explorer`;
+    document.title = `Transaction ${trxHash} | Iris - Cardano Blockchain Explorer`;
   }, [trxHash]);
 
   if (!initialized) {

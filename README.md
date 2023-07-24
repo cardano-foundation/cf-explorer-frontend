@@ -52,8 +52,11 @@ In the terminal run command: `cp .env.example .env`
 - Update link to the cardano price
     >Example: `REACT_APP_EXT_ADA_PRICE_URL=https://www.coingecko.com/en/coins/cardano`
 
-- Update application network (`mainnet`, `testnet`, `preprod` or `preview`)
+- Update application network (`mainnet`, `preprod` or `preview`)
     >Example: `REACT_APP_NETWORK=mainnet`
+
+- Configure supported network names (`mainnet`, `preprod` or `preview`)
+    >Example: `REACT_APP_NETWORK_NAMES="{"mainnet":"Mainnet","preprod":"Preprod", ...}"`
 
 **Step 4** Run on localhost
 
@@ -87,6 +90,8 @@ On opening Cypress, your testing journey begins with the Launchpad. Its job is t
 
 To run e2e test with all specs, try this command:
 `npm run cypress:run`
+
+
 
 ## Build into production
 
