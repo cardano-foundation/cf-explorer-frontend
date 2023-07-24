@@ -4,7 +4,7 @@ import { parse } from "qs";
 
 import { setUserData } from "../../stores/user";
 import { getInfo, signIn } from "./userRequest";
-import { MAX_SLOT_EPOCH, NETWORK, NETWORK_TYPES } from "./constants";
+import { MAX_SLOT_EPOCH, NETWORK, NETWORKS, NETWORK_TYPES } from "./constants";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
 export const alphaNumeric = /[^0-9a-zA-Z]/;
@@ -181,9 +181,13 @@ export const formatBlockHashById = (hash: string): string => {
   return `${hash.slice(0, 20)}...`;
 };
 
-export const tokenRegistry = (policy: string | undefined, name: string | undefined) => {
-  const tokenRegitryLink = `https://raw.githubusercontent.com/cardano-foundation/cardano-token-registry/master/mappings/${policy}${name}.json`;
-  return tokenRegitryLink;
+export const tokenRegistry = (policy?: string, name?: string): string => {
+  switch (NETWORK) {
+    case NETWORKS.mainnet:
+      return `https://raw.githubusercontent.com/cardano-foundation/cardano-token-registry/master/mappings/${policy}${name}.json`;
+    default:
+      return `https://github.com/input-output-hk/metadata-registry-testnet/blob/master/registry/${policy}${name}.json`;
+  }
 };
 
 export const cleanObject = (obj: { [key: string]: string | number | Date | string[] | undefined }) => {
