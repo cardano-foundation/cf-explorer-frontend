@@ -38,7 +38,7 @@ const RewardsDistributionTab = () => {
       render: (r) => <AdaValue value={r.amount} />
     },
     {
-      title: "Timestamp",
+      title: "Created At",
       key: "time",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
