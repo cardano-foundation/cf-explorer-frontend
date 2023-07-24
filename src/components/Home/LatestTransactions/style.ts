@@ -78,7 +78,7 @@ export const Item = styled(BoxRaised)`
   cursor: pointer;
   height: calc(100% - 56px);
   &:hover {
-    box-shadow: ${(props) => props.theme.shadow.card};
+    box-shadow: ${(props) => props.theme.shadow.cardHover};
   }
   ${({ theme }) => theme.breakpoints.down("md")} {
     padding: 20px 15px;
