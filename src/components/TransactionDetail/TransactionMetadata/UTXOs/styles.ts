@@ -1,4 +1,4 @@
-import { MenuItem, Select, alpha, Box, styled } from "@mui/material";
+import { Select, alpha, Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const Img = styled("img")(() => ({
@@ -46,7 +46,7 @@ export const ItemFooter = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "center",
   padding: "12px 25px",
-  background: theme.palette.green[800_10],
+  background: theme.palette.primary[100],
   [theme.breakpoints.down("sm")]: {
     padding: "12px 15px"
   }
@@ -57,8 +57,8 @@ export const TokenLink = styled(Link)(({ theme }) => ({
   textTransform: "uppercase",
   borderRadius: "2px",
   padding: "2px 10px",
-  backgroundColor: alpha(theme.palette.grey[300], 0.2),
-  color: `${theme.palette.grey[400]} !important`,
+  backgroundColor: alpha(theme.palette.secondary.light, 0.2),
+  color: `${theme.palette.secondary.light} !important`,
   fontSize: "var(--font-size-text-small)",
   lineHeight: "1.5rem",
   fontWeight: "bold",
@@ -121,29 +121,3 @@ export const CustomSelect = styled(Select)`
     border-radius: 8px;
   }
 `;
-
-export const OptionSelect = styled(MenuItem)(({ theme }) => ({
-  textAlign: "center",
-  alignItems: "center",
-  display: "flex",
-  padding: "12px 16px",
-  justifyContent: "space-between",
-  height: "40px",
-  cursor: "pointer",
-  "&:hover": {
-    background: theme.palette.green[60010]
-  }
-}));
-
-export const CustomLink = styled(Link)(({ theme }) => ({
-  textAlign: "center",
-  alignItems: "center",
-  display: "flex",
-  padding: "12px 16px",
-  justifyContent: "space-between",
-  height: "40px",
-  cursor: "pointer",
-  "&:hover": {
-    background: theme.palette.green[60010]
-  }
-}));

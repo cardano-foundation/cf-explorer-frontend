@@ -38,13 +38,13 @@ export const ADAOperator = styled(Box)(({ theme }) => ({
     padding: "0px 0px 20px"
   }
 }));
-export const ADATitle = styled(Box)(() => ({
-  background: "#F6F6F6",
+export const ADATitle = styled(Box)(({ theme }) => ({
   height: "30px",
+  color: theme.palette.secondary.main,
   display: "flex",
   alignItems: "flex-end",
   fontWeight: 700
 }));
 export const ADAAmount = styled(Box)`
-  color: ${(props) => props.theme.palette.green[600]} !important;
+  color: ${(props) => props.theme.palette.success[800]} !important;
 `;

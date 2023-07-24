@@ -1,39 +1,40 @@
-import React, { useMemo, useRef } from "react";
-import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { Box, Tab, useTheme } from "@mui/material";
+import React, { useMemo, useRef } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
-import { details } from "src/commons/routers";
 import {
   CollateralIcon,
   ContractIcon,
-  TransactionDelegationIcon,
+  InstantaneousHistoryIcon,
+  MetadataIconTx,
   MintingIcon,
   NoteIcon,
   ProtocolUpdateIcon,
   RewardsDistributionIcon,
   StakeCertificates,
   SummaryIcon,
+  TransactionDelegationIcon,
   UtxoIcon,
-  WithdrawalIcon,
-  InstantaneousHistoryIcon,
-  MetadataIconTx
+  WithdrawalIcon
 } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 
-import "./index.css";
-import UTXO from "./UTXOs";
-import Summary from "./Summary";
-import Contracts from "./Contracts";
 import Collaterals from "./Collaterals";
-import Withdrawals from "./Withdrawals";
+import Contracts from "./Contracts";
 import Delegations from "./Delegations";
+import InstantaneousRewards from "./InstantaneousRewards";
+import Metadata from "./Metadata";
 import Minting from "./Minting";
-import { TitleTab } from "./styles";
 import PoolCertificate from "./PoolCertificate";
 import ProtocolUpdate from "./ProtocolUpdate";
 import StakeCertificate from "./StakeCertificate";
-import InstantaneousRewards from "./InstantaneousRewards";
-import Metadata from "./Metadata";
+import Summary from "./Summary";
+import UTXO from "./UTXOs";
+import Withdrawals from "./Withdrawals";
+import "./index.css";
+import { TitleTab } from "./styles";
 
 interface TransactionMetadataProps {
   data: Transaction | null;
@@ -84,7 +85,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
       key: "utxOs",
       icon: UtxoIcon,
       label: "UTXOs",
-      children: <UTXO data={data?.utxOs} fee={data?.tx.fee || 0} />
+      children: <UTXO data={data?.utxOs} fee={data?.tx.fee || 0} isFailed={data?.tx.status === TRANSACTION_STATUS.FAILED} />
     },
     {
       key: "contracts",
@@ -163,11 +164,11 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
   return (
     <Box mt={4} ref={tabRef}>
       <TabContext value={tabActive}>
-        <Box sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.secondary}` }}>
+        <Box sx={{ borderBottom: (theme) => `1px solid ${theme.palette.primary[200]}` }}>
           <TabList
             onChange={handleChange}
             TabIndicatorProps={{
-              sx: { background: (theme) => theme.palette.green[700], color: (theme) => theme.palette.green[700] }
+              sx: { background: (theme) => theme.palette.primary.main, color: (theme) => theme.palette.primary.main }
             }}
             variant="scrollable"
             scrollButtons={false}
@@ -179,7 +180,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
                 style={{ padding: "12px 0px", marginRight: 40 }}
                 label={
                   <Box display={"flex"} alignItems="center">
-                    <Icon fill={key === tabActive ? theme.palette.green[700] : theme.palette.grey[500]} />
+                    <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.secondary[600]} />
                     <TitleTab pl={1} active={+(key === tabActive)}>
                       {label}
                     </TitleTab>

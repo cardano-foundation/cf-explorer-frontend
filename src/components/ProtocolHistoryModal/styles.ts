@@ -24,6 +24,6 @@ export const StyledTableHeadCell = styled(TableCell)(({ theme }) => ({
   paddingLeft: 0,
   paddingRight: 0,
   fontWeight: "bold",
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   top: "-1px"
 }));

@@ -5,7 +5,7 @@ export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => (
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? theme.palette.common.black : theme.palette.text.hint
+  color: active ? theme.palette.primary.main : theme.palette.secondary[600]
 }));
 
 export const DelegationData = styled(Box)`
@@ -15,7 +15,7 @@ export const DelegationData = styled(Box)`
 `;
 
 export const TabsContainer = styled(Box)(({ theme }) => ({
-  borderBottom: `1px solid ${theme.palette.border.secondary}`
+  borderBottom: `1px solid ${theme.palette.primary[200]}`
 }));
 
 export const StyledContainer = styled(Container)`

@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, alpha, styled } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -8,10 +8,10 @@ import { CONTRACT_ADDRESS_TYPE, VerifyScriptContext } from "src/pages/ContractDe
 
 const Result = styled(Box)`
   padding: 9px 25px;
-  background: rgba(152, 162, 179, 0.1);
+  background: ${(props) => alpha(props.theme.palette.secondary.light, 0.1)};
   border-radius: 10px;
   text-align: left;
-  color: #344054;
+  color: ${(props) => props.theme.palette.secondary.main};
   line-height: 19px;
   font-weight: 400;
   font-size: 16px;
@@ -22,12 +22,14 @@ const Result = styled(Box)`
 const StyledBox = styled(Box)`
   text-align: left;
   margin-top: 20px;
+  margin-bottom: 20px;
 `;
 
 const ScriptType = styled(Box)`
   margin: 12px 0px;
+  color: ${(props) => props.theme.palette.secondary.main};
   span {
-    color: ${({ theme }) => theme.palette.blue[800]};
+    color: ${({ theme }) => theme.palette.primary.main};
   }
 `;
 
@@ -47,7 +49,7 @@ const ScriptTab = () => {
 
   return (
     <StyledBox>
-      <Box>Contract</Box>
+      <Box color={({ palette }) => palette.secondary.main}>Contract</Box>
       {data?.isVerified ? (
         <ScriptType>
           Script Type: <span>Native Script</span>

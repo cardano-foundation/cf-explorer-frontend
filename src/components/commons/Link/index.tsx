@@ -8,6 +8,6 @@ const Link: React.FC<LinkProps & { children: React.ReactNode }> = ({ children, .
 export default Link;
 
 const LinkStyled = styled(LinkDom)`
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
   font-family: var(--font-family-text) !important;
 `;

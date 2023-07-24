@@ -1,5 +1,5 @@
 import { TabList } from "@mui/lab";
-import { Box, Button, Typography, styled } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => ({
@@ -7,7 +7,7 @@ export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => (
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? theme.palette.common.black : theme.palette.text.hint
+  color: active ? theme.palette.primary.main : theme.palette.secondary[600]
 }));
 
 export const LabelStatus = styled(Box)(({ theme }) => ({
@@ -23,7 +23,7 @@ export const LabelStatus = styled(Box)(({ theme }) => ({
 
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${(props) => props.theme.palette.secondary.main}!important;
+  color: ${(props) => props.theme.palette.primary.main}!important;
 `;
 
 export const StyledTabList = styled(TabList)(({ theme }) => ({
@@ -39,10 +39,10 @@ export const StyledTabList = styled(TabList)(({ theme }) => ({
     },
     "&:hover": {
       "&::-webkit-scrollbar-thumb": {
-        background: theme.palette.grey[300]
+        background: theme.palette.secondary.light
       },
       "&::-webkit-scrollbar-track": {
-        background: theme.palette.grey[100]
+        background: theme.palette.primary[100]
       }
     }
   },
@@ -62,29 +62,19 @@ export const StyledTabList = styled(TabList)(({ theme }) => ({
 }));
 
 export const TableSubTitle = styled("span")(({ theme }) => ({
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   fontSize: "0.75rem",
   fontWeight: "var(--font-weight-normal)"
 }));
 
 export const TableSubContent = styled("span")(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.light,
   fontSize: "0.75rem",
   fontWeight: "var(--font-weight-normal)"
 }));
 
-export const ButtonFilter = styled(Button)(({ theme }) => ({
-  fontWeight: "bold",
-  fontSize: "0.875rem",
-  color: theme.palette.green[600],
-  textTransform: "none",
-  background: "rgba(67, 143, 104, 0.1)",
-  borderRadius: 5,
-  margin: "15px 0 15px 15px"
-}));
-
 export const TextResult = styled(Box)(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.light,
   fontSize: "0.875rem"
 }));
 
@@ -96,8 +86,8 @@ export const WrapWalletLabel = styled(Box)(() => ({
 }));
 
 export const TabHead = styled(Box)<{ active?: number }>(
-  ({ active }) => `
-  color: ${active ? "#438F68" : "#98A2B3"} !important;
+  ({ active, theme }) => `
+  color: ${active ? theme.palette.primary.main : theme.palette.secondary[600]} !important;
 `
 );
 
@@ -105,7 +95,7 @@ export const Headline = styled(Typography)<{ collapsed?: number }>`
   font-weight: 700;
   font-size: 32px;
   line-height: 37px;
-  color: #000;
+  color: ${(props) => props.theme.palette.secondary.main};
   flex: 1;
   text-align: left;
   padding-top: 20px;
@@ -122,7 +112,7 @@ export const Headline = styled(Typography)<{ collapsed?: number }>`
 export const WrapperDelegationTab = styled(Box)`
   display: flex;
   justify-content: space-between;
-  align-items: center,
+  align-items: center;
   margin-top: 12px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     flex-direction: column;

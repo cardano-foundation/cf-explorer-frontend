@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { MenuIcon } from "src/commons/resources";
 
 export const HeaderContainer = styled("header")`
-  color: ${(props) => props.theme.palette.text.primary};
+  color: ${(props) => props.theme.palette.secondary.main};
   position: relative;
 `;
 

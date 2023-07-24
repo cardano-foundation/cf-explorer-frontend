@@ -30,6 +30,7 @@ export const LifeCycleTitle = styled("h2")(({ theme }) => ({
   margin: "0px 0px 5px",
   fontSize: 36,
   lineHeight: "42px",
+  color: theme.palette.secondary.main,
   whiteSpace: "nowrap",
   [theme.breakpoints.down("sm")]: {
     fontSize: 24,
@@ -43,14 +44,15 @@ export const AddressLine = styled(Box)(({ theme }) => ({
   color: theme.palette.text.secondary
 }));
 
-export const Label = styled("small")(() => ({
+export const Label = styled("small")(({ theme }) => ({
+  color: theme.palette.secondary.light,
   lineHeight: 1
 }));
 
 export const StakeId = styled(Link)(({ theme }) => ({
   lineHeight: 1,
   fontWeight: "bold",
-  color: `${theme.palette.blue[800]} !important`,
+  color: `${theme.palette.primary.main} !important`,
   margin: `0 ${theme.spacing(1)} `,
   fontSize: "0.875rem"
 }));
@@ -89,31 +91,31 @@ export const BoxSwitchContainer = styled(Box)<{ sidebar?: number }>(({ theme, si
 export const LabelSwitch = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.light,
   whiteSpace: "break-spaces"
 }));
 
-export const SwitchGroup = styled(Box)(() => ({
+export const SwitchGroup = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  background: "#E7E8EA",
+  background: alpha(theme.palette.secondary.light, 0.1),
   padding: 3,
   borderRadius: 22,
   gap: 8
 }));
 
 export const ButtonSwitch = styled(IconButton)<{ active: number }>(({ theme, active }) => ({
-  background: active ? theme.palette.green[600] : "transparent",
+  background: active ? theme.palette.primary.main : "transparent",
   width: 38,
   height: 38,
   ":hover": {
-    background: active ? theme.palette.green[600] : theme.palette.green[600_10]
+    background: active ? theme.palette.primary.main : "transparent"
   }
 }));
 
 export const ButtonReport = styled(Button)<{ sidebar?: number }>(({ theme }) => ({
-  color: theme.palette.common.white,
-  background: theme.palette.text.primary,
+  color: theme.palette.secondary[0],
+  background: theme.palette.secondary.main,
   height: "44px",
   textTransform: "capitalize",
   fontWeight: 700,
@@ -121,11 +123,12 @@ export const ButtonReport = styled(Button)<{ sidebar?: number }>(({ theme }) => 
   borderRadius: "8px",
   whiteSpace: "nowrap",
   ":hover": {
-    background: alpha(theme.palette.grey[700], 0.8)
+    background: theme.palette.secondary.main
   },
   "&:disabled": {
     opacity: 0.5,
-    color: theme.palette.common.white
+    color: theme.palette.secondary[0],
+    background: theme.palette.secondary[600]
   },
   [theme.breakpoints.down("lg")]: {
     width: "auto"
