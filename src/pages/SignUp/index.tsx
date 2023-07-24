@@ -74,7 +74,7 @@ export default function SignUp() {
   const [checkedAgree, setCheckedAgree] = useState(false);
 
   useEffect(() => {
-    document.title = "Sign Up | Cardano Explorer";
+    document.title = "Sign Up | Iris - Cardano Blockchain Explorer";
   }, []);
 
   const handleChangeAgree = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -8,7 +8,6 @@ import ViewAllButton from ".";
 describe("ViewMoreButton component", () => {
   it("should component render", () => {
     render(<ViewAllButton to={"/example"} />);
-    screen.logTestingPlaygroundURL();
     expect(screen.getByRole("img", { name: /view all/i })).toBeInTheDocument();
   });
   it("should component redirect to details", () => {

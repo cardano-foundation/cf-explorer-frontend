@@ -69,7 +69,7 @@ const Bookmark = () => {
   };
 
   useEffect(() => {
-    document.title = `Bookmarks | Cardano Explorer`;
+    document.title = `Bookmarks | Iris - Cardano Blockchain Explorer`;
   }, []);
 
   const colDynamic: Record<string, Column<Bookmark>> = {

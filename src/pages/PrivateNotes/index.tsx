@@ -95,7 +95,7 @@ const RemoveButton: React.FC<TAction> = ({ onClick }) => {
 const PrivateNotes = () => {
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `My Notes | Cardano Explorer`;
+    document.title = `My Notes | Iris - Cardano Blockchain Explorer`;
   }, []);
 
   const [page, setPage] = useState(0);
