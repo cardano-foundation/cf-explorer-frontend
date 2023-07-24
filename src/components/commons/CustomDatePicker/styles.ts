@@ -33,8 +33,8 @@ export const MyGrid = styled(Box)(() => ({
 
 export const HiddenScroll = styled(Box)(({ theme }) => ({
   position: "absolute",
-  top: "50%",
-  left: "-10%",
+  top: "60%",
+  left: 0,
   width: "fit-content",
   height: "200px",
   overflow: "auto",
