@@ -69,7 +69,7 @@ const DelegationDetail: React.FC = () => {
     if (state?.fromPath) return setSpecialPath(state.fromPath);
     if (status.data?.isDeRegistration) return setSpecialPath(routers.POOL_DEREGISTRATION);
     if (status.data?.isRegistration) return setSpecialPath(routers.POOL_CERTIFICATE);
-    setSpecialPath(routers.DELEGATION_POOLS);
+    if (status.data) setSpecialPath(routers.DELEGATION_POOLS);
   }, [state, status]);
 
   if ((initialized && !data) || error) return <NoRecord />;
