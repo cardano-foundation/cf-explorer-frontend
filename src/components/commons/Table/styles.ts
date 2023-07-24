@@ -135,16 +135,16 @@ export const WrappModalScrollBar = styled(Box)(
 `
 );
 
-export const Wrapper = styled(Box)<{ maxHeight?: number | string; loading?: number }>(
-  ({ maxHeight, theme, loading }) => `
+export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number; loading?: number }>(
+  ({ maxHeight, height, theme, loading }) => `
   overflow: scroll;
-  height: 50vh;
+  height: ${height || 800}px;
   background: ${theme.palette.common.white};
   padding: ${theme.spacing(1)};
   padding-top: 0;
   border-radius: ${theme.spacing(1.5)};
   ${loading ? "overflow-y: hidden;" : ""}
-  ${maxHeight ? "max-height:" + (typeof maxHeight === "number" ? maxHeight + "px" : maxHeight) : ""};
+  max-height: ${maxHeight || "50vh"};
 
   ${theme.breakpoints.down("sm")} {
     padding: 0;
