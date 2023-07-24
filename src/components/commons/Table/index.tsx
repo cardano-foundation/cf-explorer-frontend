@@ -373,7 +373,7 @@ const Table: React.FC<TableProps> = ({
   });
   const tableRef = useRef(null);
   const wrapperRef = useRef<HTMLElement>(null);
-  const heightTable = Math.min((tableRef?.current as any)?.clientHeight || 0, 800);
+  const heightTable = Math.min((tableRef?.current as any)?.clientHeight || 0, window.innerHeight * 0.5);
   const toggleSelectAll = (isChecked: boolean) => {
     if (data && isChecked) {
       selectAll(data);
