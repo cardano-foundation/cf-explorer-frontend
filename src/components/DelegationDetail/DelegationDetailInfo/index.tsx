@@ -44,7 +44,7 @@ import {
   StyledTitle
 } from "./styles";
 
-interface IDelegationDetailInfo {
+export interface IDelegationDetailInfo {
   data: DelegationOverview | null;
   loading: boolean;
   poolId: string;
@@ -111,7 +111,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Item item xs={6} md={3} top={1}>
             <StyledImg src={CalendarIcon} alt="Calendar Icon" />
             <InfoTitle>
-              <StyledTitle>Created at</StyledTitle>
+              <StyledTitle>Created At</StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.createDate && formatDateTimeLocal(data.createDate || "")}</InfoValue>
           </Item>

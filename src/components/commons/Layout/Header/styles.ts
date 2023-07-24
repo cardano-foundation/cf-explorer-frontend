@@ -48,10 +48,6 @@ export const HeaderMain = styled("div")<{ home: number }>(({ theme, home }) => (
   position: "relative",
   textAlign: "start",
   padding: home ? "0px 0px 50px" : "27px 0px",
-  "& > div": {
-    paddingTop: home ? "0px" : "30px",
-    marginBottom: home ? "0px" : "calc(-25px - 1.5715rem)"
-  },
   [theme.breakpoints.down("md")]: {
     padding: home ? "62px 0px 48px" : 0,
     display: home ? "block" : "none"
@@ -87,13 +83,16 @@ export const HeaderLogo = styled("img")(({ theme }) => ({
   }
 }));
 
-export const SearchButton = styled(Button)(({ theme }) => ({
+export const SearchButton = styled(Button)<{ home?: boolean }>(({ theme, home }) => ({
   padding: 0,
   minWidth: 24,
   height: 24,
   display: "none",
   [theme.breakpoints.down("md")]: {
     display: "block"
+  },
+  [theme.breakpoints.between("sm", "md")]: {
+    display: home ? "none" : "block"
   }
 }));
 

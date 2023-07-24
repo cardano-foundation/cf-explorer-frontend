@@ -181,7 +181,10 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                   )}
                 </TokenInfo>
                 <Box pb={2}>
-                  <MetaData>{data?.metadata?.description || ""}</MetaData>
+                  <MetaData>
+                    {`Hex Format: #${data?.name || data?.fingerprint}`}
+                    <Box mt={1}>{data?.metadata?.description || ""}</Box>
+                  </MetaData>
                 </Box>
               </TokenMetaData>
             ) : (
@@ -257,7 +260,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
               <DetailValue>{numberWithCommas(data.volumeIn24h || 0)}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Created</DetailLabel>
+              <DetailLabel>Created At</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.createdOn || "")}</DetailValue>
             </DetailsInfoItem>
           </Group>

@@ -1,10 +1,13 @@
-import React, { useEffect, useState, useRef } from "react";
-import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { useLocation, useHistory } from "react-router-dom";
+import { stringify } from "qs";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { REFRESH_TIMES } from "src/commons/utils/constants";
 import {
   exchangeADAToUSD,
   formatADAFull,
@@ -12,15 +15,12 @@ import {
   getShortWallet,
   numberWithCommas
 } from "src/commons/utils/helper";
-import { details } from "src/commons/routers";
-import Table, { Column } from "src/components/commons/Table";
+import ADAicon from "src/components/commons/ADAIcon";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import { RootState } from "src/stores/types";
-import { API } from "src/commons/utils/api";
-import ADAicon from "src/components/commons/ADAIcon";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 import FormNowMessage from "src/components/commons/FormNowMessage";
+import Table, { Column } from "src/components/commons/Table";
+import { RootState } from "src/stores/types";
 
 import { StyledContainer, StyledLink, TimeDuration } from "./styles";
 
@@ -34,7 +34,7 @@ const Transactions: React.FC = () => {
   const { adaRate } = useSelector(({ system }: RootState) => system);
 
   useEffect(() => {
-    document.title = `Contracts List | Cardano Explorer`;
+    document.title = `Contracts List | Iris - Cardano Blockchain Explorer`;
   }, []);
 
   const columns: Column<Contracts>[] = [
@@ -76,11 +76,9 @@ const Transactions: React.FC = () => {
       key: "value",
       minWidth: 120,
       render: (r) => (
-        <CustomTooltip title={exchangeADAToUSD(r.balance, adaRate, true)}>
-          <Box display="inline-flex" alignItems="center">
-            {exchangeADAToUSD(r.balance, adaRate, true)}
-          </Box>
-        </CustomTooltip>
+        <Box display="inline-flex" alignItems="center">
+          {exchangeADAToUSD(r.balance, adaRate, true)}
+        </Box>
       )
     },
     {
@@ -118,7 +116,7 @@ const Transactions: React.FC = () => {
             total: fetchData.total,
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
-              mainRef.current?.scrollTo(0, 0);
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
         />

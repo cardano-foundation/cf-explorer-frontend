@@ -5,10 +5,6 @@ import BookmarkButton from ".";
 describe("BookmarkButton component", () => {
   it("should component render", () => {
     render(<BookmarkButton keyword="bookmark-icon" type="ADDRESS" />);
-    expect(
-      screen.getByRole("button", {
-        name: /bookmark\.svg/i
-      })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /please sign in to save your bookmark/i })).toBeInTheDocument();
   });
 });

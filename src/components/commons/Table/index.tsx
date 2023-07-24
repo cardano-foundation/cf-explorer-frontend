@@ -300,6 +300,11 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
               }}
               value={size}
               IconComponent={DownIcon}
+              MenuProps={{
+                sx: {
+                  zIndex: 1305
+                }
+              }}
             >
               <MenuItem value={10}>10</MenuItem>
               <MenuItem value={20}>20</MenuItem>
@@ -405,7 +410,7 @@ const Table: React.FC<TableProps> = ({
         maxHeight={maxHeight}
         minHeight={(!data || data.length === 0) && !loading ? 360 : loading ? 400 : 150}
         height={heightTable}
-        className={data && data.length !== 0 ? "table-wrapper" : ""}
+        className={data && data.length !== 0 ? "table-wrapper" : "hide-scroll"}
         loading={loading ? 1 : 0}
       >
         <TableFullWidth ref={tableRef}>

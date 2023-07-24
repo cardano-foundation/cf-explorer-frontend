@@ -1,8 +1,7 @@
-import { Box } from "@mui/material";
-import { styled, Container } from "@mui/material";
+import { Box, styled, Container } from "@mui/material";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
-  padding: "20px 0 40px",
+  paddingTop: "20px",
   [theme.breakpoints.down("sm")]: {
     padding: "10px 0 40px",
     "& > div:nth-of-type(1)": {
@@ -40,6 +39,18 @@ export const Status = styled("span")<{ status: string }>(({ theme }) => ({
   }
 }));
 
+export const StatusTableRow = styled(Status)<{ status: string }>(({ theme, status }) => ({
+  backgroundColor: theme.palette.green[400_10],
+  padding: "5px 10px",
+  borderRadius: "3px",
+  color:
+    status === "REWARDING"
+      ? theme.palette.green[200]
+      : status === "FINISHED"
+      ? theme.palette.blue[100]
+      : theme.palette.yellow[100],
+}));
+
 export const Blocks = styled(BlueText)``;
 
 export const Output = styled(Blocks)`
@@ -49,7 +60,12 @@ export const Output = styled(Blocks)`
 `;
 
 export const StyledBox = styled(Box)`
-  width: 41px;
-  margin: auto;
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  width: "max-content";
+  margin-right: 10px;
+`;
+
+export const EpochNumber = styled(Box)`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 `;
