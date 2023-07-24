@@ -9,7 +9,8 @@ import {
   cubeIconUrl,
   slotIconUrl,
   exchageIconUrl,
-  RewardIcon
+  RewardIcon,
+  User2
 } from "src/commons/resources";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import DetailHeader from "src/components/commons/DetailHeader";
@@ -83,6 +84,15 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
           <Subtext>/{MAX_SLOT_EPOCH}</Subtext>
         </>
       )
+    },
+    {
+      icon: User2,
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <TitleCard mr={1}> Unique Accounts</TitleCard>
+        </Box>
+      ),
+      value: data?.account
     },
     {
       icon: exchageIconUrl,

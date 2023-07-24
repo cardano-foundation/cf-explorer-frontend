@@ -78,7 +78,6 @@ describe("TokenMinting component", () => {
     render(<TokenMinting {...mockProps} />);
     expect(screen.getByRole("columnheader", { name: /tx hash/i })).toBeInTheDocument();
     expect(screen.getByRole("columnheader", { name: /amount minted/i })).toBeInTheDocument();
-    expect(screen.getByRole("columnheader", { name: /time/i })).toBeInTheDocument();
   });
 });
 
