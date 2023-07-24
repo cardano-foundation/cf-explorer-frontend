@@ -191,3 +191,7 @@ export const cleanObject = (obj: { [key: string]: string | number | Date | strin
   Object.keys(obj).forEach((key) => obj[key] !== undefined && (cleaned[key] = obj[key]));
   return cleaned;
 };
+
+export const toFixedBigNumber = (value: string | number, dp = 0, rm = BigNumber.ROUND_DOWN): number => {
+  return +new BigNumber(value).toFixed(dp, rm);
+};

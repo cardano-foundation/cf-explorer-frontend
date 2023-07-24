@@ -7,7 +7,7 @@ import { Header, Title } from "../PrivateNotes/styles";
 
 const MyProfile: React.FC = () => {
   useEffect(() => {
-    document.title = `My Profile | Cardano Explorer`;
+    document.title = `My Profile | Iris - Cardano Blockchain Explorer`;
   }, []);
 
   return (

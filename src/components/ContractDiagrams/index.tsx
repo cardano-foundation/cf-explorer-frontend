@@ -1,5 +1,5 @@
-import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { CgClose } from "react-icons/cg";
 
 import { RedeemerArrowDownIcon, RedeemerPlusIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
@@ -17,16 +17,20 @@ import {
   DatumnElement,
   DatumnText,
   DatumnItem,
-  IconContainer
+  IconContainer,
+  CloseButton,
+  DataTitle
 } from "./styles";
+import CustomTooltip from "../commons/CustomTooltip";
 
 interface IContractDiagramProps {
   item: IContractItemTx;
   type?: "in" | "out";
   txHash?: string;
+  handleClose?: () => void;
 }
 
-export const ContractDiagrams = ({ item, txHash }: IContractDiagramProps) => {
+export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagramProps) => {
   const linkToPage = () => {
     if (txHash) return details.transaction(txHash);
     return item.address ? details.contract(item.address) : details.policyDetail(item.scriptHash);
@@ -35,18 +39,27 @@ export const ContractDiagrams = ({ item, txHash }: IContractDiagramProps) => {
   return (
     <ContractDiagramsContainer isTxPageView={!!txHash}>
       <ContractHeader>
-        <ContractText>{txHash ? "Transactions" : "Contract"}</ContractText>
+        <ContractText>
+          {txHash ? "Transactions" : "Contract"}
+          {handleClose ? (
+            <CustomTooltip title="Close">
+              <CloseButton onClick={handleClose}>
+                <CgClose />
+              </CloseButton>
+            </CustomTooltip>
+          ) : null}
+        </ContractText>
         <Link to={linkToPage()}>
           <ContractAddress>{txHash || item.address || item.scriptHash}</ContractAddress>
         </Link>
       </ContractHeader>
-      <ContractRedeemer item={item} />
+      <ContractRedeemer item={item} txHash={txHash}/>
       {item.datumHashIn && (
         <>
           <IconContainer>
             <RedeemerPlusIcon />
           </IconContainer>
-          <ContractDatumn key="in" item={item} type="in" />
+          <ContractDatumn key="in" item={item} type="in" txHash={txHash} />
         </>
       )}
       <IconContainer>
@@ -66,52 +79,54 @@ export const ContractDiagrams = ({ item, txHash }: IContractDiagramProps) => {
   );
 };
 
-export const ContractRedeemer = ({ item }: IContractDiagramProps) => {
+export const ContractRedeemer = ({ item, txHash }: IContractDiagramProps) => {
   return (
     <CardDiagram>
       <TabLabel>Redeemer</TabLabel>
-      <TabElement>
+      <TabElement flexDirection={!txHash ? "row" : "column"}>
         <TabItem>
           <TitleText>Tag</TitleText>
-          <Typography component={"span"}>{item.purpose}</Typography>
+          <DataTitle>{item.purpose}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Data</TitleText>
-          <Typography component={"span"}>{item.redeemerBytes}</Typography>
+          <DataTitle>{item.redeemerBytes}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Mem</TitleText>
-          <Typography component={"span"}>{item.redeemerMem}</Typography>
+          <DataTitle>{item.redeemerMem}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Steps</TitleText>
-          <Typography component={"span"}>{item.redeemerSteps}</Typography>
+          <DataTitle>{item.redeemerSteps}</DataTitle>
         </TabItem>
       </TabElement>
     </CardDiagram>
   );
 };
 
-export const ContractDatumn = ({ item, type }: IContractDiagramProps) => {
+export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) => {
   const isTypeIn = type === "in";
   return (
     <DatumnElement>
       <DatumnItem
+        isTxHash={!!txHash}
         sx={{
           borderBottom: (props) => `1px solid ${props.palette.border.line}`,
           paddingBottom: "10px"
         }}
       >
         <DatumnText>Datum Hash</DatumnText>
-        <Typography component={"span"}>{isTypeIn ? item.datumHashIn : item.datumHashOut}</Typography>
+        <DataTitle>{isTypeIn ? item.datumHashIn : item.datumHashOut}</DataTitle>
       </DatumnItem>
       <DatumnItem
+        isTxHash={!!txHash}
         sx={{
           paddingTop: "10px"
         }}
       >
         <DatumnText>Datum</DatumnText>
-        <Typography component={"span"}>{isTypeIn ? item.datumHashIn : item.datumBytesOut}</Typography>
+        <DataTitle>{isTypeIn ? item.datumBytesIn : item.datumBytesOut}</DataTitle>
       </DatumnItem>
     </DatumnElement>
   );

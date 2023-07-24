@@ -37,7 +37,7 @@ const InstantReards = () => {
   const mainRef = useRef(document.querySelector("#main"));
 
   useEffect(() => {
-    document.title = `Stake Delegations | Cardano Explorer`;
+    document.title = `Stake Delegations | Iris - Cardano Blockchain Explorer`;
   }, []);
 
   const columns: Column<InstantRewards>[] = [
@@ -58,8 +58,8 @@ const InstantReards = () => {
       )
     },
     {
-      title: "Time",
-      key: "time",
+      title: "Created At",
+      key: "createdat",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time)
     },
@@ -76,7 +76,7 @@ const InstantReards = () => {
       )
     },
     {
-      title: "Stake Key",
+      title: "Stake Address",
       key: "numberOfStakes",
       render: (r) => <Box component={"span"}>{r.numberOfStakes}</Box>
     },
@@ -108,7 +108,7 @@ const InstantReards = () => {
             total: fetchData.total,
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
-              mainRef.current?.scrollTo(0, 0);
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
         />

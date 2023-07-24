@@ -81,7 +81,7 @@ export default function SignIn() {
   });
 
   useEffect(() => {
-    document.title = "Sign In | Cardano Explorer";
+    document.title = "Sign In | Iris - Cardano Blockchain Explorer";
   }, []);
 
   const enableButton = Object.values(formData).every((value) => value.touched) && !error && !loading;
@@ -91,7 +91,7 @@ export default function SignIn() {
   };
 
   const handleRedirectBack = () => {
-    if (history.length > 1 && !AUTHENTICATE_ROUTES.includes(history.location.pathname)) {
+    if (history.length > 1 && !AUTHENTICATE_ROUTES.includes(history.location.pathname) && history.location.pathname !== routers.HOME) {
       history.goBack();
     } else {
       history.replace(routers.HOME);

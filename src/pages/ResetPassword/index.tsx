@@ -4,7 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 
 import { FailIcon, HideIcon, LockIcon, ShowIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
-import { resetPassword } from "src/commons/utils/userRequest";
+import { resetPassword, verifyCodeResetPassword } from "src/commons/utils/userRequest";
 
 import {
   Container,
@@ -49,6 +49,7 @@ export default function ResetPassword() {
   const [code, setCode] = useState("");
   const [success, setSuccess] = useState(false);
   const [hasErrorForm, setHasErrorForm] = useState(false);
+  const [initing, setIniting] = useState(true);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useReducer(formReducer, {
@@ -61,7 +62,7 @@ export default function ResetPassword() {
   });
 
   useEffect(() => {
-    document.title = "Reset Password | Cardano Explorer";
+    document.title = "Reset Password | Iris - Cardano Blockchain Explorer";
   }, []);
 
   const handleTogglePassword = () => {
@@ -111,6 +112,20 @@ export default function ResetPassword() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path.search]);
+
+  useEffect(() => {
+    if (!code) return;
+    verifyCode();
+  }, [code]);
+
+  async function verifyCode() {
+    setIniting(true);
+    const { data } = await verifyCodeResetPassword({ code });
+    if (!data) {
+      setError(true);
+    }
+    setIniting(false);
+  }
 
   const handleChange = (event: any) => {
     setFormData({
@@ -179,6 +194,9 @@ export default function ResetPassword() {
       handleResetPassword(formData.password.value);
     }
   };
+
+  if (initing) return null;
+
   return (
     <Container>
       <WrapContent>

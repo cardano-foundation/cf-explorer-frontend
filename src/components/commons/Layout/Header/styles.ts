@@ -83,13 +83,16 @@ export const HeaderLogo = styled("img")(({ theme }) => ({
   }
 }));
 
-export const SearchButton = styled(Button)(({ theme }) => ({
+export const SearchButton = styled(Button)<{ home?: boolean }>(({ theme, home }) => ({
   padding: 0,
   minWidth: 24,
   height: 24,
   display: "none",
   [theme.breakpoints.down("md")]: {
     display: "block"
+  },
+  [theme.breakpoints.between("sm", "md")]: {
+    display: home ? "none" : "block"
   }
 }));
 

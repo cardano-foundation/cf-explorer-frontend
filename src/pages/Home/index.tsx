@@ -14,7 +14,7 @@ const HomeContainer = styled(Container)`
 
 const Home = () => {
   useEffect(() => {
-    document.title = `Cardano Explorer`;
+    document.title = `Iris - Cardano Blockchain Explorer`;
   }, []);
 
   return (

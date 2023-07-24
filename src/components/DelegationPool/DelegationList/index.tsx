@@ -76,8 +76,8 @@ const DelegationLists: React.FC = () => {
       minWidth: "200px",
       key: "Saturation",
       render: (r) => (
-        <Box display="flex" alignItems="center" justifyContent={"space-between"}>
-          <Box component={"span"}>{formatPercent(r.saturation / 100) || `0%`}</Box>
+        <Box display="flex" alignItems="center" justifyContent={"end"}>
+          <Box component={"span"} mr={1}>{formatPercent(r.saturation / 100) || `0%`}</Box>
           <StyledLinearProgress variant="determinate" value={r.saturation > 100 ? 100 : get(r, "saturation", 0)} />
         </Box>
       )
@@ -122,7 +122,7 @@ const DelegationLists: React.FC = () => {
     },
     {
       title: "Fixed Cost (A)",
-      key: "fixedCost",
+      key: "pu.fixedCost",
       minWidth: "120px",
       render: (r) => `${formatADAFull(r.feeAmount)} A`,
       sort: ({ columnKey, sortValue }) => {

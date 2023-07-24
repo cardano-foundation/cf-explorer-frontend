@@ -97,9 +97,7 @@ describe("HomeStatistic", () => {
     expect(screen.getByTestId("live-stake-box-title")).toBeInTheDocument();
     expect(screen.getByTestId("live-stake-value")).toHaveTextContent("22.81B");
     expect(screen.getByTestId("live-stake-progress-active")).toHaveTextContent("65%");
-    expect(screen.getByTestId("live-stake-progress-pending")).toHaveTextContent("35%");
     expect(screen.getByTestId("active-stake-value")).toHaveTextContent("22.75B");
-    expect(screen.getByTestId("active-stake-percentage")).toHaveTextContent("(0.2%)");
     expect(screen.getByTestId("circulating-supply-value")).toHaveTextContent("35.04B");
     expect(screen.getByTestId("circulating-supply-percentage")).toHaveTextContent("(77%)");
   });

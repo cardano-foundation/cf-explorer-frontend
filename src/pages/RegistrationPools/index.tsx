@@ -45,7 +45,7 @@ const RegistrationPools = () => {
 
   useEffect(() => {
     const title = poolType === POOL_TYPE.REGISTRATION ? "Registration" : "Deregistration";
-    document.title = `${title} Pools | Cardano Explorer`;
+    document.title = `${title} Pools | Iris - Cardano Blockchain Explorer`;
   }, [poolType]);
 
   const columns: Column<Registration>[] = [
@@ -67,8 +67,8 @@ const RegistrationPools = () => {
     },
     {
       title: "Created At",
-      key: 'created_at',
-      render: (pool) => <>{formatDateTimeLocal(pool.txTime || "")}</>,
+      key: "created_at",
+      render: (pool) => <>{formatDateTimeLocal(pool.txTime || "")}</>
     },
     {
       title: "Block",
@@ -101,7 +101,7 @@ const RegistrationPools = () => {
       }
     },
     {
-      title: "Cost (A)",
+      title: "Fixed Cost (A)",
       key: poolType === POOL_TYPE.REGISTRATION ? "fixedCost" : "pu.fixedCost",
       render: (pool) => <>{formatADAFull(pool.cost)}</>,
       sort: ({ columnKey, sortValue }) => {
@@ -109,7 +109,7 @@ const RegistrationPools = () => {
       }
     },
     {
-      title: "Fee",
+      title: "Margin",
       key: poolType === POOL_TYPE.REGISTRATION ? "margin" : "pu.margin",
       render: (pool) => formatPercent(pool.margin),
       sort: ({ columnKey, sortValue }) => {
@@ -117,8 +117,8 @@ const RegistrationPools = () => {
       }
     },
     {
-      title: "Stake Key",
-      key: "stakeKey",
+      title: "Stake Address",
+      key: "stakeAddress",
       render: (pool) => (
         <>
           {pool.stakeKey?.slice(0, 2).map((stakeKey) => (
@@ -151,7 +151,7 @@ const RegistrationPools = () => {
             ...pageInfo,
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
-              mainRef.current?.scrollTo(0, 0);
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             },
             total: fetchData.total
           }}

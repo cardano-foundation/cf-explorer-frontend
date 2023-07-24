@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import { Box, Grid, useTheme } from "@mui/material";
-import HighchartsReact from "highcharts-react-official";
-import Highcharts from "highcharts";
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, TooltipProps } from "recharts";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 import { BigNumber } from "bignumber.js";
-import { isArray } from "lodash";
 
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
 import { formatADAFull, formatPrice } from "src/commons/utils/helper";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import { useScreen } from "src/commons/hooks/useScreen";
 
 import {
   BoxInfo,
@@ -26,7 +23,10 @@ import {
   Title,
   ValueInfo,
   Wrapper,
-  TextCardHighlight
+  TextCardHighlight,
+  TooltipBody,
+  TooltipLabel,
+  TooltipValue
 } from "./styles";
 
 type AnalyticsData = { date: string; value: number };
@@ -38,33 +38,33 @@ const options = [
   { value: "THREE_MONTH", label: "3m" }
 ];
 
-type IBalanceData = number[];
-
 const AddressAnalytics: React.FC = () => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const { address } = useParams<{ address: string }>();
-  const { isMobile } = useScreen();
   const theme = useTheme();
   const { data, loading } = useFetch<AnalyticsData[]>(`${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`);
 
-  const { data: balance, loading: balanceLoading } = useFetch<IBalanceData>(
-    `${API.ADDRESS.MIN_MAX_BALANCE}/${address}`
-  );
+  const values = data?.map((item) => item.value || 0) || [];
+  const maxBalance = BigNumber.max(0, ...values).toString();
+  const minBalance = BigNumber.min(maxBalance, ...values).toString();
 
-  const dataChartChecked = isArray(data) ? data : [];
+  const convertDataChart = data?.map((item) => ({
+    value: item.value || 0,
+    date: item.date
+  }));
+  const formatPriceValue = (value: string) => {
+    const bigValue = BigNumber(value).div(10 ** 6);
+    return formatPrice(bigValue.toString());
+  };
 
-  const dataChart = dataChartChecked.map((i: AnalyticsData) => {
-    const value = BigNumber(i.value || 0).div(10 ** 6);
-    return Number(value.toString().match(/^-?\d+(?:\.\d{0,6})?/)?.[0]);
-  });
-
-  const categories =
-    dataChartChecked.map((i: AnalyticsData) =>
-      moment(i.date).format(`DD MMM ${rangeTime === "THREE_MONTH" ? "YYYY" : ""}`)
-    ) || [];
-
-  const minBalance = isArray(balance) ? Math.min(...balance) : 0;
-  const maxBalance = isArray(balance) ? Math.max(...balance, 0) : 0;
+  const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
+    return (
+      <TooltipBody>
+        <TooltipLabel>{moment(content.label).format("DD MMM YYYY HH:mm:ss")} (UTC time zone)</TooltipLabel>
+        <TooltipValue>{formatADAFull(content.payload?.[0]?.value) || 0}</TooltipValue>
+      </TooltipBody>
+    );
+  };
 
   return (
     <Card title={<TextCardHighlight>Analytics</TextCardHighlight>}>
@@ -85,75 +85,44 @@ const AddressAnalytics: React.FC = () => {
             </Grid>
           </Grid>
           <ChartBox>
-            {loading ? (
+            {loading || !data ? (
               <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
             ) : (
-              <Box position={"relative"}>
-                <HighchartsReact
-                  highcharts={Highcharts}
-                  options={{
-                    chart: {
-                      type: "areaspline",
-                      backgroundColor: "transparent",
-                      style: { fontFamily: "Roboto, sans-serif" }
-                    },
-                    title: { text: "" },
-                    yAxis: {
-                      title: { text: null },
-                      lineWidth: 2,
-                      lineColor: theme.palette.border.main,
-                      className: "y-axis-lable",
-                      gridLineWidth: 1,
-                      minorGridLineWidth: 1,
-                      labels: {
-                        style: { fontSize: 12 },
-                        formatter: (e: { value: string }) => {
-                          return formatPrice(e.value);
-                        }
-                      }
-                    },
-                    xAxis: {
-                      categories,
-                      lineWidth: 2,
-                      lineColor: theme.palette.green[700],
-                      plotLines: [],
-                      angle: 0,
-                      labels: {
-                        style: {
-                          fontSize: rangeTime === "THREE_MONTH" ? 10 : 12
-                        },
-                        rotation: isMobile || rangeTime === "THREE_MONTH" ? -45 : null
-                      }
-                    },
-                    legend: { enabled: false },
-                    tooltip: { shared: true },
-                    credits: { enabled: false },
-                    series: [
-                      {
-                        name: "",
-                        pointPlacement: "on",
-                        type: "areaspline",
-                        marker: { enabled: true },
-                        lineWidth: 4,
-                        color: theme.palette.primary.main,
-                        fillColor: {
-                          linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-                          stops: [
-                            [0, theme.palette.success.light],
-                            [1, "transparent"]
-                          ]
-                        },
-                        data: dataChart
-                      }
-                    ]
-                  }}
-                />
-              </Box>
+              <ResponsiveContainer width="100%" height={400}>
+                <AreaChart width={900} height={400} data={convertDataChart} margin={{ top: 5, right: 5, bottom: 10 }}>
+                  <defs>
+                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor={theme.palette.green[700]} stopOpacity={0.2} />
+                      <stop offset="100%" stopColor={theme.palette.green[700]} stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis
+                    dataKey="date"
+                    tickFormatter={(value) => moment(value).format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM")}
+                    tickLine={false}
+                    tickMargin={5}
+                    dx={-15}
+                  />
+                  <YAxis tickFormatter={formatPriceValue} tickLine={false} />
+                  <Tooltip content={renderTooltip} cursor={false} />
+                  <CartesianGrid vertical={false} strokeWidth={0.33} />
+                  <Area
+                    stackId="1"
+                    type="monotone"
+                    dataKey="value"
+                    stroke={theme.palette.green[700]}
+                    strokeWidth={4}
+                    fill="url(#colorUv)"
+                    dot={{ r: 2 }}
+                    activeDot={{ r: 6 }}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
             )}
           </ChartBox>
         </Grid>
         <Grid item xs={24} lg={6}>
-          <BoxInfo height={"100%"} space={categories.length ? 36 : 16}>
+          <BoxInfo height={"100%"} space={data?.length ? 36 : 16}>
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} justifyContent={"center"}>
                 <Box>
@@ -161,9 +130,7 @@ const AddressAnalytics: React.FC = () => {
                     <img src={HighestIcon} alt="heighest icon" />
                     <Title>Highest Balance</Title>
                   </Box>
-                  <ValueInfo>
-                    {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(maxBalance)}
-                  </ValueInfo>
+                  <ValueInfo>{loading ? <SkeletonUI variant="rectangular" /> : formatADAFull(maxBalance)}</ValueInfo>
                 </Box>
               </BoxInfoItemRight>
             </Box>
@@ -174,9 +141,7 @@ const AddressAnalytics: React.FC = () => {
                     <img src={LowestIcon} alt="lowest icon" />
                     <Title>Lowest Balance</Title>
                   </Box>
-                  <ValueInfo>
-                    {balanceLoading ? <SkeletonUI variant="rectangular" /> : formatADAFull(minBalance)}
-                  </ValueInfo>
+                  <ValueInfo>{loading ? <SkeletonUI variant="rectangular" /> : formatADAFull(minBalance)}</ValueInfo>
                 </Box>
               </BoxInfoItem>
             </Box>
