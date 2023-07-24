@@ -39,17 +39,18 @@ export const Title = styled("h3")`
 export const Item = styled(BoxRaised)`
   position: relative;
   height: 337px;
-  min-width: 258px;
   text-align: left;
   cursor: pointer;
   overflow: hidden;
   &:hover {
     box-shadow: ${(props) => props.theme.shadow.card};
   }
-
   display: flex;
   flex-direction: column;
   padding: 20px 15px;
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    min-width: 258px;
+  }
 `;
 
 export const WrapHeader = styled(Box)`

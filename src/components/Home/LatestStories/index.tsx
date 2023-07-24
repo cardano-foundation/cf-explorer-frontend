@@ -28,7 +28,7 @@ import {
   CustomGrid
 } from "./style";
 
-const defaultNumberOfItems = 40;
+const defaultNumberOfItems = 4;
 
 enum AMOUNT_OF_NEWS_SHOWING {
   DESKTOP = 4,
@@ -37,8 +37,7 @@ enum AMOUNT_OF_NEWS_SHOWING {
 }
 
 const LatestStories = () => {
-  const [numberOfItems, setNumberOfItems] = useState<number>(defaultNumberOfItems);
-  const { data, loading } = useFetch<Story[]>(`${API.STORIES}?amount=${numberOfItems}`);
+  const { data, loading } = useFetch<Story[]>(`${API.STORIES}?amount=${defaultNumberOfItems}`);
   const [currentIndexData, setCurrentIndexData] = useState<number>(0);
 
   const [amountNewsByDevice, setAmountNewsByDevice] = useState<number>(0);
@@ -47,13 +46,15 @@ const LatestStories = () => {
   const { isLaptop, isMobile } = useScreen();
 
   useEffect(() => {
+    setCurrentIndexData(0);
     if (isMobile) {
       setAmountNewsByDevice(AMOUNT_OF_NEWS_SHOWING.MOBILE);
       setIsShown(true);
     } else if (isLaptop) {
       setAmountNewsByDevice(AMOUNT_OF_NEWS_SHOWING.TABLET);
-      setIsShown(true);
+      setIsShown(false);
     } else {
+      setIsShown(false);
       setAmountNewsByDevice(AMOUNT_OF_NEWS_SHOWING.DESKTOP);
     }
   }, [isLaptop, isMobile]);
@@ -67,8 +68,7 @@ const LatestStories = () => {
     if (isHasMore) {
       setCurrentIndexData(newIndex);
     } else {
-      await setNumberOfItems(numberOfItems + defaultNumberOfItems);
-      setCurrentIndexData(newIndex);
+      setCurrentIndexData(0);
     }
   };
 
