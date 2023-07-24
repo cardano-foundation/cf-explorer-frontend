@@ -167,7 +167,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                           {...(isExternalLink(href)
                             ? { component: "a", href, target: "_blank" }
                             : { component: Link, to: href })}
-                          selected={isActiveMenu(href)}
+                          selected={isActiveMenu(href, isSpecialPath)}
                           sx={(theme) => ({
                             ...itemStyle(theme, sidebar),
                             ...(isActiveMenu(href, isSpecialPath)
@@ -184,7 +184,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                               src={icon}
                               alt={title}
                               iconOnly={!sidebar ? 1 : 0}
-                              active={isActiveMenu(href) ? 1 : 0}
+                              active={isActiveMenu(href, isSpecialPath) ? 1 : 0}
                             />
                           ) : null}
                           <SubMenuText
