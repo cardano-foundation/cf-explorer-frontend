@@ -186,7 +186,7 @@ const OverviewTab = () => {
         value={moment(userData?.lastLogin).format("MM/DD/YYYY hh:mm:ss")}
         isTablet={isTablet}
       />
-      <ConnectWalletModal open={openModal} setOpen={setOpenModal} />
+      {openModal && <ConnectWalletModal open={openModal} setOpen={setOpenModal} />}
     </Box>
   );
 };
@@ -204,7 +204,6 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
   });
   const [stakeKey, setStakeKey] = useState<string | null>("");
   const [selectedWallet, setSelectedWallet] = useState("");
-  const [loadingStake, setLoadingStake] = useState(false);
 
   useEffect(() => {
     if (stakeKey === null && selectedWallet) {
@@ -223,16 +222,12 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
     setStakeKey(null);
   };
   const handleClick = (name: SupportedWallets, loading = true) => {
-    loading && setLoadingStake(true);
-
     connect(
       name,
       () => {
         setStakeKey(stakeAddress);
-        loading && setLoadingStake(false);
       },
       (e) => {
-        loading && setLoadingStake(false);
         if (e.name === "EnablementFailedError") {
           loading &&
             toast.error(
@@ -250,44 +245,42 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
   return (
     <StyledModal open={open} handleCloseModal={onClose}>
       <>
-        {!stakeKey && (
+        <>
+          <Title>Link wallet to your account</Title>
+          <Box color={({ palette }) => palette.grey[300]} fontWeight={"bold"} fontSize={"14px"}>
+            You can only link wallet once per account
+          </Box>
           <>
-            <Title>Link wallet to your account</Title>
-            <Box color={({ palette }) => palette.grey[300]} fontWeight={"bold"} fontSize={"14px"}>
-              You can only link wallet once per account
-            </Box>
-            <>
-              {SUPPORTED_WALLETS.filter((wallet) => wallet.networks.includes(NETWORK)).map((wallet) => {
-                return (
-                  <WalletItem
-                    key={wallet.name}
-                    active={0}
-                    connecting={0}
-                    onClick={() => {
-                      setSelectedWallet(wallet.name);
-                      handleClick(wallet.name);
-                    }}
-                  >
-                    <GroupFlex>
-                      <WalletName>{wallet.name}</WalletName>
-                      {wallet.name === selectedWallet && loadingStake ? <CircularProgress size={30} /> : ""}
-                    </GroupFlex>
-                    <GroupFlex>
-                      {!isWalletInstalled(wallet.name.toLocaleLowerCase()) ? (
-                        <InstallButton onClick={() => handleOpenLink(wallet)}>
-                          Not Installed <MdOutlineFileDownload size={18} />
-                        </InstallButton>
-                      ) : (
-                        <i />
-                      )}
-                      <WalletIcon src={wallet.icon} alt={wallet.name} />
-                    </GroupFlex>
-                  </WalletItem>
-                );
-              })}
-            </>
+            {SUPPORTED_WALLETS.filter((wallet) => wallet.networks.includes(NETWORK)).map((wallet) => {
+              return (
+                <WalletItem
+                  key={wallet.name}
+                  active={0}
+                  connecting={0}
+                  onClick={() => {
+                    setSelectedWallet(wallet.name);
+                    handleClick(wallet.name);
+                  }}
+                >
+                  <GroupFlex>
+                    <WalletName>{wallet.name}</WalletName>
+                    {wallet.name === selectedWallet ? <CircularProgress size={30} /> : ""}
+                  </GroupFlex>
+                  <GroupFlex>
+                    {!isWalletInstalled(wallet.name.toLocaleLowerCase()) ? (
+                      <InstallButton onClick={() => handleOpenLink(wallet)}>
+                        Not Installed <MdOutlineFileDownload size={18} />
+                      </InstallButton>
+                    ) : (
+                      <i />
+                    )}
+                    <WalletIcon src={wallet.icon} alt={wallet.name} />
+                  </GroupFlex>
+                </WalletItem>
+              );
+            })}
           </>
-        )}
+        </>
       </>
     </StyledModal>
   );
