@@ -14,8 +14,8 @@ export const VerifyScriptContainer = styled(Box)`
 `;
 
 export const StyledVerifyButton = styled(Box)<{ verified: number }>(({ verified, theme }) => ({
-  color: verified ? theme.palette.success[700] : theme.palette.common.white,
-  background: verified ? theme.palette.success[100] : theme.palette.secondary.main,
+  color: verified ? theme.palette.success[800] : theme.palette.common.white,
+  background: verified ? theme.palette.success[100] : theme.palette.secondary.light,
   cursor: "pointer",
   borderRadius: 2,
   padding: "4px 14px",

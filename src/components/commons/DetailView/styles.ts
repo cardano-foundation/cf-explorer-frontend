@@ -127,7 +127,7 @@ export const TokenInfo = styled(Box)`
 
 export const TokenName = styled("h4")`
   font-size: var(--font-size-text-large);
-  color: ${(props) => props.theme.palette.primary.contrastText};
+  color: ${(props) => props.theme.palette.secondary[0]};
   margin: 0;
 `;
 
@@ -137,7 +137,7 @@ export const TokenIcon = styled("img")`
 `;
 
 export const MetaData = styled("small")`
-  color: ${(props) => alpha(props.theme.palette.common.white, 0.5)};
+  color: ${(props) => props.theme.palette.secondary[0]};
   font-size: var(--font-size-text-x-small);
 `;
 
@@ -159,10 +159,9 @@ export const TokenDecimal = styled(Box)`
 
 export const TokenInfoLabel = styled("small")`
   display: block;
-  color: ${(props) => props.theme.palette.primary.contrastText};
+  color: ${(props) => props.theme.palette.secondary[0]};
   font-size: var(--font-size-text-x-small);
   margin-bottom: 5px;
-  opacity: 0.5;
 `;
 
 export const TokenInfoValue = styled("span")`
@@ -247,7 +246,7 @@ export const DetailLabel = styled("small")`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  color: ${(props) => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.secondary.light};
   line-height: 26px;
 `;
 export const InfoIcon = styled(FiInfo)`
@@ -353,7 +352,7 @@ export const DetailLinkName = styled("h4")`
   color: ${(props) => props.theme.palette.secondary.main};
 `;
 export const DetailLinkRight = styled("span")`
-  color: ${(props) => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.secondary.light};
 `;
 
 export const TxStatus = styled("small")<{ status?: TransactionStatus }>`
@@ -472,6 +471,7 @@ export const StakeKeyHeader = styled(BoxRaised)`
   padding: 17px 20px;
   gap: 20px;
   margin: 10px 0px;
+  background-color: ${({ theme }) => theme.palette.primary[200]};
 `;
 
 export const StakeKeyLink = styled(StyledLink)`

@@ -20,9 +20,9 @@ export const Button = styled("button")<{ active: number }>`
   border-radius: 5px;
   padding: 6px 0;
   font-weight: var(--font-weight-bold);
-  color: ${({ theme, active }) => (active ? theme.palette.primary[100] : theme.palette.secondary.main)};
+  color: ${({ theme, active }) => (active ? `${theme.palette.secondary[0]} !important` : theme.palette.secondary.main)};
   border: 1px solid ${({ theme }) => theme.palette.primary[200]};
-  background-color: ${({ theme, active }) => (active ? theme.palette.primary.main : theme.palette.primary[100])};
+  background-color: ${({ theme, active }) => (active ? theme.palette.secondary.light : "transparent")};
   cursor: pointer;
   font-family: var(--font-family-title);
   font-size: 16px;

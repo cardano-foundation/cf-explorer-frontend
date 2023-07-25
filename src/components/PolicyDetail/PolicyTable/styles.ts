@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { TabList } from "@mui/lab";
 
 export const LinkComponent = styled(Link)(({ theme }) => ({
-  color: `${theme.palette.secondary.main} !important`
+  color: `${theme.palette.primary.main} !important`
 }));
 export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => ({
   fontWeight: "bold",

@@ -10,7 +10,7 @@ export const Header = styled(Box)`
   justify-content: space-between;
   font-size: var(--font-size-text-small);
   font-weight: var(--font-weight-bold);
-  color: ${(props) => props.theme.palette.primary.main};
+  color: ${(props) => props.theme.palette.secondary.light};
   border-bottom: 1px solid ${(props) => props.theme.palette.primary[200]};
   padding-bottom: 8px;
 `;
@@ -77,7 +77,7 @@ export const ValueText = styled(Box)(({ theme }) => ({
   display: "-webkit-box",
   WebkitLineClamp: 3,
   WebkitBoxOrient: "vertical",
-  color: theme.palette.secondary.main,
+  color: theme.palette.secondary.light,
   paddingRight: theme.spacing(1)
 }));
 

@@ -113,8 +113,8 @@ export const ButtonTitle = styled("button")(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "1rem",
   marginRight: 5,
-  color: theme.palette.secondary[0],
-  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.secondary.light,
+  backgroundColor: theme.palette.primary[200],
   fontFamily: "var(--font-family-title)",
 
   [theme.breakpoints.down("sm")]: {
@@ -145,13 +145,16 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   borderRadius: 10,
   border: `2px solid ${theme.palette.primary[200]}`,
   marginRight: theme.spacing(1),
-  color: active ? `${theme.palette.secondary[0]} !important` : theme.palette.secondary.light,
   fontWeight: "bold",
-  backgroundColor: active ? theme.palette.primary.main : "none",
-
+  color: active ? `${theme.palette.secondary[0]} !important` : theme.palette.secondary.main,
+  backgroundColor: active ? theme.palette.secondary.light : "none",
+  "&:hover": {
+    color: active ? `${theme.palette.secondary[0]} !important` : theme.palette.secondary.main,
+    backgroundColor: active ? theme.palette.secondary.light : "none"
+  },
   [theme.breakpoints.down("lg")]: {
-    backgroundColor: active ? `${theme.palette.primary.main} !important` : "none",
-    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.secondary.light
+    backgroundColor: active ? theme.palette.secondary.light : "none",
+    color: active ? `${theme.palette.secondary[0]} !important` : theme.palette.secondary.main
   },
   [theme.breakpoints.down("sm")]: {
     minWidth: "40px !important",

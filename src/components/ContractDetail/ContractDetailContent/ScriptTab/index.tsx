@@ -1,4 +1,4 @@
-import { Box, alpha, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -8,15 +8,16 @@ import { CONTRACT_ADDRESS_TYPE, VerifyScriptContext } from "src/pages/ContractDe
 
 const Result = styled(Box)`
   padding: 9px 25px;
-  background: ${(props) => alpha(props.theme.palette.secondary.light, 0.1)};
+  background: ${(props) => props.theme.palette.secondary[0]};
   border-radius: 10px;
   text-align: left;
-  color: ${(props) => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.secondary.light};
   line-height: 19px;
   font-weight: 400;
   font-size: 16px;
   margin-top: 12px;
   over-flow: scroll;
+  box-shadow: ${(props) => props.theme.shadow.card};
 `;
 
 const StyledBox = styled(Box)`
