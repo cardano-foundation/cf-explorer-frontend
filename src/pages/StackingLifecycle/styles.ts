@@ -1,6 +1,6 @@
-import { Box, Button, Container, Grid, styled } from "@mui/material";
+import { TabPanel } from "@mui/lab";
+import { Box, Button, Container, Grid, Typography, styled } from "@mui/material";
 
-import { TabLabel } from "src/components/ReportGeneratedTabs/styles";
 import Table from "src/components/commons/Table";
 
 export const DashboardCardList = styled(Box)`
@@ -124,8 +124,25 @@ export const WrapReportName = styled(Box)`
   text-overflow: ellipsis;
   max-width: 20ch;
 `;
-export const StyledTabLabel = styled(TabLabel)`
+
+export const StyledTabLabel = styled(Typography)<{ active: number }>`
   font-size: 18px;
+  font-weight: 700;
+  text-transform: capitalize;
+  color: ${(props) => (props.active ? "#000" : "#98A2B3")};
+`;
+
+export const TabContent = styled(TabPanel)`
+  padding: 0px;
+`;
+
+export const TabHeader = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  & .MuiTabs-indicator {
+    height: 4px;
+  }
 `;
 export const StyledContainer = styled(Container)`
   max-width: 95vw !important;

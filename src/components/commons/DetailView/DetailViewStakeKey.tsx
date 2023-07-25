@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { BiChevronRight } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Box } from "@mui/material";
 import { useTheme } from "@emotion/react";
 
@@ -63,6 +63,8 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
   const { data } = useFetch<IStakeKeyDetail>(stakeId ? `${API.STAKE.DETAIL}/${stakeId}` : ``);
   const [open, setOpen] = useState(false);
   const theme = useTheme();
+  const history = useHistory();
+  const fromPath = history.location.pathname as SpecialPath;
 
   const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
     {
@@ -246,12 +248,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
               </DetailValue>
             </DetailsInfoItem>
             <Box textAlign={"right"}>
-              <ButtonModal
-                sx={{
-                  color: theme.palette.primary.main
-                }}
-                onClick={() => setOpen(true)}
-              >
+              <ButtonModal sx={{ color: theme.palette.primary.main }} onClick={() => setOpen(true)}>
                 View all addresses
               </ButtonModal>
             </Box>
@@ -260,7 +257,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
           {tabs.map(({ key, label, icon }) => {
             return (
               <Group key={key}>
-                <DetailLink to={details.stake(stakeId, key)}>
+                <DetailLink to={{ pathname: details.stake(stakeId, key), state: { fromPath } }}>
                   <DetailLabel>
                     <DetailLinkIcon>{icon}</DetailLinkIcon>
                     <DetailLinkName>{label}</DetailLinkName>
@@ -276,7 +273,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
           })}
         </ViewDetailScroll>
       </ViewDetailContainer>
-      <ViewMoreButton to={details.stake(stakeId)} />
+      <ViewMoreButton to={{ pathname: details.stake(stakeId), state: { fromPath } }} />
     </ViewDetailDrawer>
   );
 };

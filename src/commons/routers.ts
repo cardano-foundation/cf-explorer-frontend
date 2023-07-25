@@ -11,22 +11,23 @@ export const routers = {
   TRANSACTION_DETAIL: "/transaction/:trxHash/:tabActive?",
   EPOCH_LIST: "/epochs",
   EPOCH_DETAIL: "/epoch/:epochId",
-  DELEGATION_POOLS: "/delegation-pools",
-  DELEGATION_POOL_DETAIL: "/delegation-pool/:poolId",
-  REGISTRATION_POOLS: "/registration-pools/:poolType?",
+  DELEGATION_POOLS: "/pools",
+  DELEGATION_POOL_DETAIL: "/pool/:poolId",
+  POOL_CERTIFICATE: "/pool-certificates",
+  POOL_DEREGISTRATION: "/pool-de-registrations",
   STORY_LIST: "/stories",
   STORY_DETAIL: "/story/:storyId",
   ADDRESS_LIST: "/addresses",
   ADDRESS_DETAIL: "/address/:address",
   TOKEN_LIST: "/tokens",
   TOKEN_DETAIL: "/token/:tokenId/:tabActive?",
-  STAKE_LIST: "/stake-keys/:poolType?",
-  STAKE_DELEGATIONS: "/stake-delegations",
+  STAKE_ADDRESS_REGISTRATION: "/stake-address-registrations",
+  STAKE_ADDRESS_DEREGISTRATION: "/stake-address-de-registrations",
+  STAKE_ADDRESS_DELEGATIONS: "/stake-address-delegations",
   INSTANTANEOUS_REWARDS: "/instantaneous-rewards",
-  STAKE_DETAIL: "/stake-key/:stakeId/:tabActive?",
+  STAKE_DETAIL: "/stake-address/:stakeId/:tabActive?",
   CONTRACT_LIST: "/contracts",
   CONTRACT_DETAIL: "/contracts/:address/:tabActive?",
-  NFT_LIST: "/nfts",
   POLICY_DETAIL: "/policy/:policyId",
   NFT_DETAIL: "/nft/:nftId",
   TOP_DELEGATOR: "/top-delegator",
@@ -36,17 +37,20 @@ export const routers = {
   BOOKMARK: "/account/bookmark",
   PRIVATE_NOTES: "/account/notes",
   PROTOCOL_PARAMETER: "/protocol-parameters",
-  DELEGATOR_LIFECYCLE: "/delegator-lifecycle/:stakeId/:mode?/:tab?/:txHash?",
-  SPO_LIFECYCLE: "/spo-lifecycle/:poolId/:mode?/:tab?/:txHash?",
-  STAKING_LIFECYCLE: "/staking-lifecycle/:tab",
-  REPORT_GENERATED: "/report-generated/:tab",
-  REPORT_GENERATED_STAKING_DETAIL: "/report-generated/:reportId/staking",
-  REPORT_GENERATED_POOL_DETAIL: "/report-generated/:reportId/pool",
+  STAKING_LIFECYCLE: "/staking-lifecycle/:tab?",
+  DELEGATOR_LIFECYCLE: "/staking-lifecycle/delegator/:stakeId/:mode?/:tab?/:txHash?",
+  SPO_LIFECYCLE: "/staking-lifecycle/spo/:poolId/:mode?/:tab?/:txHash?",
+  REPORT_GENERATED_STAKING_DETAIL: "/staking-lifecycle/staking-report-generated/:reportId",
+  REPORT_GENERATED_POOL_DETAIL: "/staking-lifecycle/pool-report-generated/:reportId",
   POLICY: "/policy",
   FAQ: "/faq",
   TERMS_AND_CONDITIONS: "/terms-and-conditions",
   NOT_FOUND: "/*"
 } as const;
+
+export const lists = {
+  dashboard: (tab?: LifecycleReportType) => routers.STAKING_LIFECYCLE.replace(":tab?", tab || "")
+};
 
 export const details = {
   block: (blockId?: number | string) => routers.BLOCK_DETAIL.replace(":blockId", `${blockId ?? ""}`),
@@ -76,9 +80,7 @@ export const details = {
       .replace(":txHash?", txHash ?? ""),
   generated_staking_detail: (reportId: string) =>
     routers.REPORT_GENERATED_STAKING_DETAIL.replace(":reportId", reportId),
-  generated_pool_detail: (reportId: string) => routers.REPORT_GENERATED_POOL_DETAIL.replace(":reportId", reportId),
-  generated_report: (tab: string) => routers.REPORT_GENERATED.replace(":tab", tab),
-  dashboard: (tab: string) => routers.STAKING_LIFECYCLE.replace(":tab", tab)
+  generated_pool_detail: (reportId: string) => routers.REPORT_GENERATED_POOL_DETAIL.replace(":reportId", reportId)
 };
 
 export const listRouters = [
@@ -86,11 +88,13 @@ export const listRouters = [
   routers.TRANSACTION_LIST,
   routers.EPOCH_LIST,
   routers.DELEGATION_POOLS,
-  routers.REGISTRATION_POOLS.replace("/:poolType?", ""),
+  routers.POOL_CERTIFICATE,
+  routers.POOL_DEREGISTRATION,
   routers.ADDRESS_LIST,
   routers.TOKEN_LIST,
-  routers.STAKE_LIST.replace("/:poolType?", ""),
+  routers.STAKE_ADDRESS_REGISTRATION,
+  routers.STAKE_ADDRESS_DEREGISTRATION,
+  routers.STAKE_ADDRESS_DELEGATIONS,
   routers.CONTRACT_LIST,
-  routers.NFT_LIST,
   routers.TOP_DELEGATOR
 ];

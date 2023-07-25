@@ -4,7 +4,6 @@ import { useHistory, useParams } from "react-router";
 import StakeTab, { StakeTabItem } from "src/components/TabularView/StakeTab";
 import { DeredistrationIcon, OperatorRewardIcon, PoolUpdateIcon, RegistrationIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { ListTabResponseSPO } from "src/pages/SPOLifecycle";
 
 import TabularOverview from "./TabularOverview";
 import PoolRegistrationTab from "./Tabs/PoolRegistrationTab";

@@ -16,7 +16,7 @@ import { REFRESH_TIMES } from "src/commons/utils/constants";
 import { Image, PoolName, SearchContainer, StyledInput, StyledLinearProgress, SubmitButton } from "./styles";
 
 const DelegationLists: React.FC = () => {
-  const history = useHistory<{ tickerNameSearch: string | undefined }>();
+  const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const { tickerNameSearch = "" } = history.location.state || {};
 
   const [value, setValue] = useState(decodeURIComponent(tickerNameSearch));
@@ -33,6 +33,7 @@ const DelegationLists: React.FC = () => {
   );
   const { search: locationSearch } = useLocation();
   const pageInfo = getPageInfo(locationSearch);
+  const fromPath = history.location.pathname as SpecialPath;
 
   useEffect(() => {
     if (fetchData.initialized) {
@@ -48,7 +49,7 @@ const DelegationLists: React.FC = () => {
       maxWidth: "350px",
       render: (r) => (
         <CustomTooltip title={r.poolName || r.poolId}>
-          <PoolName to={details.delegation(r.poolId)}>
+          <PoolName to={{ pathname: details.delegation(r.poolId), state: { fromPath } }}>
             <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
               {r.poolName || `${getShortWallet(r.poolId)}`}
             </Box>
@@ -165,7 +166,7 @@ const DelegationLists: React.FC = () => {
         {...fetchData}
         columns={columns}
         total={{ count: fetchData.total, title: "Total" }}
-        onClickRow={(_, r: Delegators) => history.push(details.delegation(r.poolId))}
+        onClickRow={(_, r: Delegators) => history.push(details.delegation(r.poolId), { fromPath })}
         pagination={{
           ...pageInfo,
           size,
