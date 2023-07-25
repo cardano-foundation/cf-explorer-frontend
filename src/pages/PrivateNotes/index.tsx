@@ -99,10 +99,13 @@ const PrivateNotes = () => {
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `My Notes | Iris - Cardano Blockchain Explorer`;
+  }, []);
+
+  useEffect(() => {
     if (!isLoggedIn) {
       history.replace(routers.HOME);
     }
-  }, []);
+  }, [isLoggedIn]);
 
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
