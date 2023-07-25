@@ -199,11 +199,13 @@ export const formatLongText = (text: string): string => {
   return text;
 };
 export const getHostname = (url: string): string => {
+  let hostname = "";
   try {
-    return new URL(url).hostname;
-  } catch {
-    return "";
+    hostname = new URL(url).hostname;
+  } catch (error) {
+    console.warn(error);
   }
+  return hostname;
 };
 
 export const toFixedBigNumber = (value: string | number, dp = 0, rm = BigNumber.ROUND_DOWN): number => {
