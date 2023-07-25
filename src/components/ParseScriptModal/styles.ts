@@ -31,7 +31,7 @@ export const ButtonClose = styled(Button)(({ theme }) => ({
 export const ViewJson = styled(Box)(({ theme }) => ({
   overflowY: "auto",
   textAlign: "left",
-  backgroundColor: `${alpha(theme.palette.grey[300], 0.1)}`,
+  backgroundColor: `${alpha(theme.palette.secondary.light, 0.1)}`,
   borderRadius: 10,
   padding: theme.spacing(2),
 

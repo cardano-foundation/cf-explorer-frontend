@@ -14,7 +14,7 @@ export const WrapContainer = styled("div")`
 `;
 export const OverviewIcon = styled("div")`
   border-radius: 49px;
-  background: ${(props) => props.theme.palette.green[600_10]};
+  background: ${(props) => props.theme.palette.primary[100]};
   width: 29px;
   height: 29px;
   display: flex;
@@ -28,7 +28,7 @@ export const OverviewTitle = styled("p")`
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
-  color: ${(props) => props.theme.palette.text.primary};
+  color: ${(props) => props.theme.palette.secondary.main};
 `;
 
 export const Card = styled(CardMui)(() => ({

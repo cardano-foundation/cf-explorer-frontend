@@ -4,8 +4,8 @@ import { IconType } from "react-icons/lib";
 import {
   BlockChainMenuIcon,
   BrowseIcon,
-  DelegatePoolMenuIcon,
-  ProtocolParameterIcon,
+  OperationalIcon,
+  ProtocolIcon,
   ResourcesIcon,
   StakingLifecycleIcon
 } from "./resources";
@@ -40,7 +40,7 @@ export const menus: Menu[] = [
   },
   {
     title: "Operational Certificates",
-    icon: DelegatePoolMenuIcon,
+    icon: OperationalIcon,
     children: [
       { title: "Stake Address Registration", href: routers.STAKE_LIST.replace(":poolType?", "registration") },
       { title: "Stake Address Deregistration", href: routers.STAKE_LIST.replace(":poolType?", "de-registration") },
@@ -57,7 +57,7 @@ export const menus: Menu[] = [
   },
   {
     title: "Protocol Parameters",
-    icon: ProtocolParameterIcon,
+    icon: ProtocolIcon,
     href: "/protocol-parameters",
     children: []
   }

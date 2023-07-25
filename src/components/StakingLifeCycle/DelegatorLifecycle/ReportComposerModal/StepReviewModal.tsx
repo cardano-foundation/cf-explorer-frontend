@@ -12,6 +12,7 @@ import { getEventType } from "src/components/StakekeySummary";
 import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
+
 import { EVENTS_NAME, ReportType } from "./FilledInfoModal";
 import {
   Container,

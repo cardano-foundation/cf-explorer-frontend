@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
+import { Box } from "@mui/material";
 
 import Card from "src/components/commons/Card";
 import Table, { Column } from "src/components/commons/Table";
@@ -70,9 +71,9 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       render: (r) => (
         <>
           <EpochNo>{r.slotNo}</EpochNo>
-          <div>
+          <Box color={({ palette }) => palette.secondary.light}>
             {r.epochNo}/{r.epochSlotNo || 0}
-          </div>
+          </Box>
         </>
       )
     },

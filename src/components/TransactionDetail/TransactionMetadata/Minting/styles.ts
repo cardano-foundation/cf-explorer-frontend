@@ -20,7 +20,7 @@ export const LogoEmpty = styled(Box)`
 
 export const Amount = styled(Box)`
   font-size: var(--font-size-text-small);
-  color: ${(props) => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.secondary.light};
 `;
 
 export const TableMinting = styled(Table)(({ theme }) => ({
