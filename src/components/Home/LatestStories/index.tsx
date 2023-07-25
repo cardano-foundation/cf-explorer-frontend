@@ -111,7 +111,6 @@ const LatestStories = () => {
                           <CustomTooltip title={entity}>
                             <Author>{entity}</Author>
                           </CustomTooltip>
-                          <Author>{entity}</Author>
                           <ResourceHref>{getHostname(resource_href)}</ResourceHref>
                         </WrapHeader>
                         <ItemTitle>{title} </ItemTitle>
