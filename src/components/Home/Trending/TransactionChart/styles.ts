@@ -110,10 +110,7 @@ export const BoxInfo = styled(Box)(({ theme }) => ({
     gap: 20
   }
 }));
-export const InfoItem = styled(Box)(() => ({
-  display: "flex",
-  alignItems: "center"
-}));
+export const InfoItem = styled(Box)(() => ({}));
 export const Skeleton = styled(SkeletonMUI)(() => ({
   height: 300,
   borderRadius: 12
@@ -135,11 +132,11 @@ export const ColorChart = styled(Box)<{ type: TypeChart }>(({ theme, type }) => 
   };
 
   return {
-    width: "38px",
-    height: "38px",
-    borderRadius: "5px",
+    width: "16px",
+    height: "16px",
+    borderRadius: "4px",
     background: bgColor(type),
-    marginRight: theme.spacing(3)
+    marginRight: theme.spacing(1)
   };
 });
 
@@ -156,4 +153,11 @@ export const StyledTransactionTypes = styled(Box)(({ theme }) => ({
 export const StyledTransactionTypeItem = styled(Box)(({ theme }) => ({
   color: theme.palette.secondary.light,
   fontSize: "0.8125rem"
+}));
+
+export const ValueChart = styled(Box)(({ theme }) => ({
+  textAlign: "left",
+  color: theme.palette.secondary.light,
+  fontWeight: "bold",
+  fontSize: "20px"
 }));

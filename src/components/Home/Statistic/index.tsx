@@ -217,7 +217,7 @@ const HomeStatistic = () => {
                         data-testid="live-stake-progress-pending"
                         rate={liveRate.div(-1).plus(100).toNumber()}
                       >
-                        <Box color={({ palette }) => palette.secondary.light}>
+                        <Box color={({ palette }) => palette.secondary.main}>
                           {liveRate.div(-1).plus(100).toFixed(0)}%
                         </Box>
                       </ProgressPending>

@@ -39,6 +39,7 @@ export const Container = styled(Box)(({ theme }) => ({
 }));
 
 export const EpochNumber = styled(Box)(({ theme }) => ({
+  color: theme.palette.primary.main,
   fontWeight: 600,
   fontSize: 20,
   marginBottom: 8,

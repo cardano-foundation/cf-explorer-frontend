@@ -152,6 +152,10 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   [theme.breakpoints.down("lg")]: {
     backgroundColor: active ? `${theme.palette.primary.main} !important` : "none",
     color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.secondary.light
+  },
+  [theme.breakpoints.down("sm")]: {
+    minWidth: "40px !important",
+    height: "28px !important"
   }
 }));
 

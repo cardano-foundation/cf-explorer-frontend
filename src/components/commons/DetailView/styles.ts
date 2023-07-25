@@ -9,7 +9,7 @@ import { BoxRaised } from "../BoxRaised";
 export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
   "& > div": {
     zIndex: 1302,
-    background: `${theme.palette.primary[100]}`,
+    background: `${theme.palette.secondary[0]}`,
     border: "none",
     height: "100%",
     boxShadow: theme.shadow.rightDraw,
@@ -247,7 +247,7 @@ export const DetailLabel = styled("small")`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  color: ${(props) => props.theme.palette.secondary.light};
+  color: ${(props) => props.theme.palette.secondary.main};
   line-height: 26px;
 `;
 export const InfoIcon = styled(FiInfo)`

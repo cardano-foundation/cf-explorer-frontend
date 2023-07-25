@@ -45,20 +45,20 @@ export const StyledSelect = styled(Select)<{ home: number }>`
     border-radius: 0px !important;
     padding-right: 40px !important;
     min-width: 80px;
-    color: ${(props) => props.theme.palette.secondary.light};
+    color: ${(props) => props.theme.palette.secondary.main};
   }
   & > fieldset {
     top: 0;
     border: none !important;
   }
   & > svg {
-    color: ${(props) => props.theme.palette.secondary.light};
+    color: ${(props) => props.theme.palette.secondary.main};
     font-size: 1.75rem;
   }
 `;
 export const SelectOption = styled(MenuItem)<{ home: number }>`
   font-size: ${(props) => (props.home ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
-  color: ${(props) => props.theme.palette.secondary.light};
+  color: ${(props) => props.theme.palette.secondary.main};
   font-weight: var(--font-weight-normal);
 `;
 

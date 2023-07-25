@@ -86,6 +86,7 @@ import InstantaneousHistoryIconUrl from "./icons/instantaneousHistoryIcon.svg";
 import MetadataIconUrl from "./icons/metadataIcon2.svg";
 import CurrentEpochHome from "./icons/currentEpochHome.svg";
 import HomeUpIcon from "./icons/HomeUpIcon.svg";
+import DashboardIcon from "./icons/menus/Dashboard.svg";
 
 export {
   LogoFullIcon,
@@ -175,7 +176,8 @@ export {
   OperationalIcon,
   ProtocolIcon,
   CurrentEpochHome,
-  HomeUpIcon
+  HomeUpIcon,
+  DashboardIcon
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";

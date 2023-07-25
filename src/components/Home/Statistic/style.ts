@@ -6,7 +6,7 @@ export const StatisticContainer = styled(Grid)`
 
 export const Item = styled(Card)`
   height: 100%;
-  min-height: 150px;
+  min-height: 164px;
   font-family: var(--font-family-text);
   box-shadow: ${(props) => props.theme.shadow.card};
   padding: 20px;

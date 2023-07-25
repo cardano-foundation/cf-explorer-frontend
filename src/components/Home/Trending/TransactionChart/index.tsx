@@ -18,7 +18,8 @@ import {
   Tab,
   Tabs,
   Title,
-  TransactionContainer
+  TransactionContainer,
+  ValueChart
 } from "./styles";
 
 export interface TransactionChartIF {
@@ -118,25 +119,12 @@ const TransactionChart: React.FC = () => {
               <StyledTransactionTypes>Transaction Types</StyledTransactionTypes>
               {dataOverview.map((item) => (
                 <InfoItem key={item.key}>
-                  <ColorChart type={item.key as TypeChart} />
-                  <Box>
+                  <Box display={"flex"} alignItems={"center"} mb={1}>
+                    <ColorChart type={item.key as TypeChart} />
                     <StyledTransactionTypeItem>{item.title}</StyledTransactionTypeItem>
-                    <Box
-                      data-testid={item.key}
-                      textAlign={"left"}
-                      color={({ palette }) =>
-                        item.key === "trx"
-                          ? palette.success[700]
-                          : item.key === "simple"
-                          ? palette.primary[500]
-                          : palette.warning[700]
-                      }
-                      fontWeight={"bold"}
-                      fontSize={"1.6rem"}
-                    >
-                      {numberWithCommas(item.value)}
-                    </Box>
                   </Box>
+
+                  <ValueChart data-testid={item.key}>{numberWithCommas(item.value)}</ValueChart>
                 </InfoItem>
               ))}
             </BoxInfo>

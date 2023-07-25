@@ -255,7 +255,6 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                                   }
                                 : { color: (theme) => theme.palette.secondary.light }),
                               paddingLeft: "70px",
-                              fontWeight: "normal !important",
                               [theme.breakpoints.down("md")]: {
                                 paddingLeft: "60px"
                               },
@@ -264,8 +263,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                                     color: `#fff !important`
                                   }
                                 : {
-                                    backgroundColor: (theme) => `${theme.palette.primary[200]} !important`,
-                                    fontWeight: "bold !important"
+                                    backgroundColor: (theme) => `${theme.palette.primary[200]} !important`
                                   }
                             })}
                           >
@@ -414,7 +412,6 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                                 paddingLeft: "60px"
                               },
                               ":hover": {
-                                fontWeight: "bold !important",
                                 backgroundColor: (theme) => `${theme.palette.primary[200]} !important`
                               }
                             })}
