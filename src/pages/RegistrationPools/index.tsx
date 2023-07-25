@@ -45,7 +45,7 @@ const RegistrationPools = () => {
 
   useEffect(() => {
     const title = poolType === POOL_TYPE.REGISTRATION ? "Registration" : "Deregistration";
-    document.title = `${title} Pools | Cardano Explorer`;
+    document.title = `${title} Pools | Iris - Cardano Blockchain Explorer`;
   }, [poolType]);
 
   const columns: Column<Registration>[] = [

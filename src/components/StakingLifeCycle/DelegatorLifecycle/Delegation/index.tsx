@@ -175,9 +175,11 @@ export const DelegationCertificateModal = ({ stake, txHash, ...props }: Delegati
     {
       label: "Pool Name",
       content: (
-        <LineData>
-          <Link to={details.delegation(data?.poolId || "")}>{data?.poolName || ""}</Link>{" "}
-        </LineData>
+        <CustomTooltip title={data?.poolName || data?.poolId}>
+          <LineData>
+            <Link to={details.delegation(data?.poolId || "")}>{data?.poolName || getShortWallet(data?.poolId)}</Link>{" "}
+          </LineData>
+        </CustomTooltip>
       )
     },
     {

@@ -15,7 +15,7 @@ export default function VerifyEmail() {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    document.title = "Verify Email | Cardano Explorer";
+    document.title = "Verify Email | Iris - Cardano Blockchain Explorer";
   }, []);
 
   const handleVerify = async (code: string) => {
