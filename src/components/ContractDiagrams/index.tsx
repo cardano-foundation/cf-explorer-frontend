@@ -86,19 +86,19 @@ export const ContractRedeemer = ({ item, txHash }: IContractDiagramProps) => {
       <TabElement flexDirection={!txHash ? "row" : "column"} isContractPage={+!!txHash}>
         <TabItem>
           <TitleText>Tag</TitleText>
-          <DataTitle color={({ palette }) => palette.grey[400]}>{item.purpose}</DataTitle>
+          <DataTitle>{item.purpose}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Data</TitleText>
-          <DataTitle color={({ palette }) => palette.grey[400]}>{item.redeemerBytes}</DataTitle>
+          <DataTitle>{item.redeemerBytes}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Mem</TitleText>
-          <DataTitle color={({ palette }) => palette.grey[400]}>{item.redeemerMem}</DataTitle>
+          <DataTitle>{item.redeemerMem}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Steps</TitleText>
-          <DataTitle color={({ palette }) => palette.grey[400]}>{item.redeemerSteps}</DataTitle>
+          <DataTitle>{item.redeemerSteps}</DataTitle>
         </TabItem>
       </TabElement>
     </CardDiagram>
@@ -117,9 +117,7 @@ export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) =>
         }}
       >
         <DatumnText>Datum Hash</DatumnText>
-        <DataTitle color={({ palette }) => palette.grey[400]}>
-          {isTypeIn ? item.datumHashIn : item.datumHashOut}
-        </DataTitle>
+        <DataTitle>{isTypeIn ? item.datumHashIn : item.datumHashOut}</DataTitle>
       </DatumnItem>
       <DatumnItem
         isTxHash={!!txHash}
@@ -128,9 +126,7 @@ export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) =>
         }}
       >
         <DatumnText>Datum</DatumnText>
-        <DataTitle color={({ palette }) => palette.grey[400]}>
-          {isTypeIn ? item.datumBytesIn : item.datumBytesOut}
-        </DataTitle>
+        <DataTitle>{isTypeIn ? item.datumBytesIn : item.datumBytesOut}</DataTitle>
       </DatumnItem>
     </DatumnElement>
   );

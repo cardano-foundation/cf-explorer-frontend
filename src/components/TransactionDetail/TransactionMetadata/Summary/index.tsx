@@ -65,7 +65,7 @@ const SummaryItems = ({
                   >
                     <CustomTooltip title={item.address}>
                       <Box
-                        color={(theme) => theme.palette.blue[100]}
+                        color={(theme) => theme.palette.primary.main}
                         fontWeight="bold"
                         fontFamily={"var(--font-family-text)"}
                       >
@@ -87,14 +87,14 @@ const SummaryItems = ({
             mb={1}
           >
             <Box display="flex" justifyContent={"space-between"} alignItems={"baseline"} pr={1} flexDirection={"row"}>
-              <Box pr={1} whiteSpace={"nowrap"} color={({ palette }) => palette.grey[300]}>
+              <Box pr={1} whiteSpace={"nowrap"} color={({ palette }) => palette.secondary.light}>
                 {type === "down" ? "ADA sent:" : "ADA received:"}{" "}
               </Box>
               <Box display="flex" justifyContent={"space-between"} alignItems="center">
                 <Box
                   component={"span"}
                   whiteSpace="nowrap"
-                  color={(theme) => (type === "up" ? theme.palette.green[200] : theme.palette.red[100])}
+                  color={(theme) => (type === "up" ? theme.palette.success[800] : theme.palette.error[700])}
                   fontWeight="bold"
                   mr={1}
                 >

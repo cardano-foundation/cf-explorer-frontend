@@ -20,6 +20,7 @@ import MenuIcon from "./icons/menus/hamburger.svg";
 import PolicyWhiteIcon from "./icons/policy-white.svg";
 import BlockChainMenuIcon from "./icons/menus/blockchain.svg";
 import DelegatePoolMenuIcon from "./icons/menus/delegate.svg";
+import OperationalIcon from "./icons/menus/Operational.svg";
 import ProtocolParameterIcon from "./icons/protocolParameter.svg";
 import BrowseIcon from "./icons/menus/browser.svg";
 import ResourcesIcon from "./icons/menus/resources.svg";
@@ -55,6 +56,7 @@ import YoroiIcon from "./icons/yoroi.svg";
 import TyphonIcon from "./icons/typhon.svg";
 import EmptyIcon from "./images/noData.png";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
+import ProtocolIcon from "./icons/menus/Protocol.svg";
 import PolygonWhiteIconUrl from "./icons/polygon-white.svg";
 import AdaHolderIconUrl from "./images/ada-holder.png";
 import PaymentWalletUrl from "./images/payment-wallet.png";
@@ -82,6 +84,8 @@ import ProtocolUpdateIconUrl from "./icons/protocolUpdateIcon.svg";
 import InstantaneousHistoryIconUrl from "./icons/instantaneousHistoryIcon.svg";
 import MetadataIconUrl from "./icons/metadataIcon2.svg";
 import ADALogoUrl from "./icons/ada-logo.svg";
+import CurrentEpochHome from "./icons/currentEpochHome.svg";
+import HomeUpIcon from "./icons/HomeUpIcon.svg";
 
 export {
   LogoFullIcon,
@@ -167,7 +171,11 @@ export {
   StakeCertificatesIconUrl,
   ProtocolUpdateIconUrl,
   InstantaneousHistoryIconUrl,
-  MetadataIconUrl
+  MetadataIconUrl,
+  OperationalIcon,
+  ProtocolIcon,
+  CurrentEpochHome,
+  HomeUpIcon
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
@@ -287,4 +295,5 @@ export { ReactComponent as RewardsAvailableIcon } from "./icons/rewards-availabl
 export { ReactComponent as StatusIcon } from "./icons/status-ic.svg";
 export { ReactComponent as RedeemerPlusIcon } from "./icons/redeemer-plus.svg";
 export { ReactComponent as RedeemerArrowDownIcon } from "./icons/redeemer-arrow-down.svg";
+export { ReactComponent as SliderRight } from "./icons/swipper-right.svg";
 export { ReactComponent as IRisLogo } from "./icons/iris-logo.svg";

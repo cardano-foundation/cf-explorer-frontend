@@ -16,7 +16,7 @@ const HoldContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => 
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.red[100]}`,
+  border: `2px solid ${theme.palette.error[700]}`,
   borderRadius: "10px",
   marginRight: theme.spacing(2.5),
   marginLeft: theme.spacing(2.5),
@@ -38,7 +38,7 @@ const HoldContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => 
     position: "absolute",
     top: "-50%",
     left: theme.spacing(2),
-    background: theme.palette.red[100],
+    background: theme.palette.error[700],
     transform: " translate(0, 60%)"
   },
   [theme.breakpoints.down(sidebar ? "lg" : "md")]: {
@@ -76,7 +76,7 @@ const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
 }));
 
 const Button = styled(IconButton)<{ over?: number; sidebar?: number }>(({ theme, over, sidebar }) => ({
-  background: theme.palette.grey[100],
+  background: theme.palette.primary[100],
   [theme.breakpoints.down(over ? (sidebar ? "xl" : "lg") : "sm")]: {
     padding: 3
   }
@@ -93,7 +93,7 @@ const HolderValueLabel = styled(Typography)(({ theme }) => ({
   wordBreak: "break-word",
   textAlign: "right",
   lineHeight: "20px",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   [theme.breakpoints.down("sm")]: {
     fontSize: 16
   }

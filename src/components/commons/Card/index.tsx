@@ -23,14 +23,14 @@ export const Title = styled("h2")<{ underline: number }>`
   margin-bottom: 0px;
   position: relative;
   width: max-content;
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.main};
   ${(props) => (props.underline ? `font-size: 1.25rem;` : "")};
   &::after {
     content: "";
     position: absolute;
     width: 100%;
     height: 4px;
-    background-color: ${(props) => (props.underline ? props.theme.palette.primary.main : "unset")};
+    background-color: ${(props) => (props.underline ? props.theme.palette.primary[200] : "unset")};
     left: 0;
     bottom: 0;
   }

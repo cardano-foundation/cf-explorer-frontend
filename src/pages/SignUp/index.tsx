@@ -417,7 +417,7 @@ export default function SignUp() {
                   }
                   label={
                     <Box
-                      color={({ palette }) => palette.grey[400]}
+                      color={({ palette }) => palette.secondary.main}
                       fontSize={"14px"}
                       fontWeight={400}
                       display={"flex"}
@@ -425,8 +425,12 @@ export default function SignUp() {
                       gap={"5px"}
                     >
                       I agree to the
-                      <Link to={routers.TERM_OF_SERVICE} target="_blank">
-                        <ForgotPassword>Terms of Service</ForgotPassword>
+                      <Link to={routers.TERMS_AND_CONDITIONS} target="_blank">
+                        <ForgotPassword>Terms & Conditions</ForgotPassword>
+                      </Link>
+                      and
+                      <Link to={routers.POLICY} target="_blank">
+                        <ForgotPassword>Privacy Policy</ForgotPassword>
                       </Link>
                     </Box>
                   }

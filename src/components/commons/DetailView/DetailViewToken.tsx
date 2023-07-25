@@ -1,15 +1,10 @@
-import { useTheme } from "@emotion/react";
 import React, { useEffect } from "react";
 import { BiChevronRight } from "react-icons/bi";
 import { CgClose } from "react-icons/cg";
 
 import { PeopleIcon, TransactionIcon, UnionTokenIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import {
-  formatDateTimeLocal,
-  getShortWallet,
-  numberWithCommas
-} from "src/commons/utils/helper";
+import { formatDateTimeLocal, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
 
 import CopyButton from "../CopyButton";
 import CustomTooltip from "../CustomTooltip";
@@ -54,8 +49,6 @@ type DetailViewTokenProps = {
 
 const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
   const { token: data, handleClose, tokenId } = props;
-  const theme = useTheme();
-
   useEffect(() => {
     document.body.style.overflowY = "hidden";
 
@@ -215,7 +208,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
             <DetailLink to={details.token(tokenId)}>
               <DetailLabel>
                 <DetailLinkIcon>
-                  <TransactionIcon fill={theme.palette.green[200]} />
+                  <TransactionIcon />
                 </DetailLinkIcon>
                 <DetailLinkName>Transactions</DetailLinkName>
               </DetailLabel>
@@ -230,7 +223,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
             <DetailLink to={details.token(tokenId, "topHolders")}>
               <DetailLabel>
                 <DetailLinkIcon>
-                  <PeopleIcon fill={theme.palette.green[200]} />
+                  <PeopleIcon />
                 </DetailLinkIcon>
                 <DetailLinkName>Top Holders</DetailLinkName>
               </DetailLabel>
@@ -245,7 +238,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
             <DetailLink to={details.token(tokenId, "tokenMint")}>
               <DetailLabel>
                 <DetailLinkIcon>
-                  <UnionTokenIcon fill={theme.palette.green[200]} />
+                  <UnionTokenIcon />
                 </DetailLinkIcon>
                 <DetailLinkName>Token Mint</DetailLinkName>
               </DetailLabel>

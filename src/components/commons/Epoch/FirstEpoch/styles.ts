@@ -1,18 +1,6 @@
-import { Box, Grid, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 
 import { EPOCH_STATUS } from "src/commons/utils/constants";
-
-export const EpochCard = styled(Box)(({ theme }) => ({
-  display: "flex",
-  backgroundColor: theme.palette.common.white,
-  cursor: "pointer",
-  borderRadius: 12,
-  padding: 24,
-  marginBottom: 24,
-  flexDirection: "column",
-  alignItems: "flex-start",
-  overflowX: "scroll"
-}));
 
 export const Container = styled(Box)(({ theme }) => ({
   cursor: "pointer",
@@ -61,52 +49,25 @@ export const EpochNumber = styled(Box)(({ theme }) => ({
 }));
 
 export const TitleCard = styled(Box)(({ theme }) => ({
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   fontSize: "0.875rem"
 }));
-
-export const EpochText = styled("span")`
-  color: ${(props) => props.theme.palette.grey[300]};
-  text-transform: uppercase;
-`;
 
 export const EpochProgress = styled("h3")<{ status: keyof typeof EPOCH_STATUS }>(({ theme, status }) => ({
   color:
     status === "REWARDING"
-      ? theme.palette.green[200]
+      ? theme.palette.success[800]
       : status === "FINISHED"
-      ? theme.palette.blue[100]
-      : theme.palette.yellow[100],
+      ? theme.palette.primary.main
+      : theme.palette.warning[800],
   margin: 0,
   [theme.breakpoints.down("lg")]: {
     fontSize: 14
   }
 }));
 
-export const EpochValue = styled(Box)(({ theme }) => ({
-  color: theme.palette.common.black,
-  fontSize: 25,
-  fontWeight: 600,
-  marginTop: 12
-}));
-
-export const CardItem = styled(Grid)(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "flex-start",
-  paddingLeft: 16,
-  borderLeft: `1px solid ${theme.palette.grey[200]}`,
-  minWidth: 250,
-  margin: "8px 0"
-}));
-
-export const CardItemTitle = styled(Box)(({ theme }) => ({
-  color: theme.palette.grey[300],
-  marginLeft: 8
-}));
-
 export const MaxSlot = styled("span")`
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
   font-size: 20px;
 `;
 
@@ -116,18 +77,13 @@ export const Date = styled("div")`
   font-weight: 600;
 `;
 
-export const Time = styled("div")`
-  font-size: 1.25rem;
-  color: ${(props) => props.theme.palette.grey[300]};
-`;
-
 export const Content = styled("span")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.main};
   font-size: 18px;
 `;
 
 export const SubContent = styled("span")`
   font-size: 16px;
   font-weight: normal;
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
 `;

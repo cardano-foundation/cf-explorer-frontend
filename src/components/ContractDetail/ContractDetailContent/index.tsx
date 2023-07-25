@@ -1,5 +1,5 @@
 import { TabContext, TabPanel } from "@mui/lab";
-import { alpha, Box, Tab, useTheme } from "@mui/material";
+import { Box, Tab, useTheme } from "@mui/material";
 import { useHistory, useParams } from "react-router-dom";
 import React from "react";
 
@@ -82,7 +82,7 @@ const ContractDetailContent: React.FC = () => {
       </Box>
       {tabs.map((item) => (
         <TabPanel
-          sx={{ padding: 0, borderTop: (theme) => `1px solid ${alpha(theme.palette.green[300], 0.1)}` }}
+          sx={{ padding: 0, borderTop: (theme) => `1px solid ${theme.palette.primary[200]}` }}
           key={item.key}
           value={item.key}
         >

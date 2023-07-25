@@ -14,7 +14,7 @@ export const StyledLink = styled(Link)`
   display: inline-block;
   font-family: var(--font-family-text) !important;
   font-size: var(--font-size-text-small);
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
   margin-bottom: 5px;
 `;
 
@@ -30,7 +30,7 @@ export const PriceValue = styled(Box)`
 
 export const Label = styled(SmallText)`
   min-width: 50px;
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
 `;
 
 export const PriceIcon = styled("img")`

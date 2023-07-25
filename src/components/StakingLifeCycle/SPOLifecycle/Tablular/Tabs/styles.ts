@@ -28,7 +28,7 @@ export const ADAValueLabel = styled(Typography)`
 
 export const ADAValueSubLabel = styled("span")`
   font-size: 12px;
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
   display: inline-flex;
   gap: 4px;
   align-items: center;

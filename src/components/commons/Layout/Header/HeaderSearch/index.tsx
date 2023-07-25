@@ -164,7 +164,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const handleSearchAll = async (query: string) => {
     try {
       setLoading(true);
-      const res = await defaultAxios.get(API.SEARCH_ALL(query.trim()));
+      const res = await defaultAxios.get(API.SEARCH_ALL(query));
       setDataSearchAll(res?.data);
       setShowOption(true);
       setLoading(false);
@@ -272,6 +272,17 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
 
     if (option?.value === "tokens" || option?.value === "delegations/pool-detail-header") {
       FetchSearchTokensAndPools(search, filter);
+      return;
+    }
+
+    if (option?.value === "blocks") {
+      history.push(details.block(search.trim()));
+      callback?.();
+      return;
+    }
+    if (option?.value === "epochs") {
+      history.push(details.epoch(search.trim()));
+      callback?.();
       return;
     }
 
@@ -446,23 +457,25 @@ export const OptionsSearch = ({
             case "epoch":
               return {
                 suggestText: "Search for an Epoch",
-                cb: () => history.push(details.epoch(value)),
+                cb: () => history.push(details.epoch((value || "").toLocaleLowerCase())),
                 formatter: formatLongText
               };
             case "block":
               return {
                 suggestText: "Search for a Block by number",
-                cb: () => history.push(details.block(value)),
+                cb: () => history.push(details.block((value || "").toLocaleLowerCase())),
                 formatter: formatLongText
               };
             case "tx":
               return {
                 suggestText: "Search for a Transaction by",
-                cb: () => history.push(details.transaction(value)),
+                cb: () => history.push(details.transaction((value || "").toLocaleLowerCase())),
                 formatter: getShortHash
               };
             case "address":
-              const addressLink = objValue?.stakeAddress ? details.stake(value) : details.address(value);
+              const addressLink = objValue?.stakeAddress
+                ? details.stake((value || "").toLocaleLowerCase())
+                : details.address((value || "").toLocaleLowerCase());
               return {
                 suggestText: "Search for a Address by",
                 cb: () => history.push(addressLink),
@@ -471,14 +484,17 @@ export const OptionsSearch = ({
             case "token":
               return {
                 suggestText: "Search for a Token by",
-                cb: () => history.push(details.token(encodeURIComponent(value))),
+                cb: () => history.push(details.token(encodeURIComponent((value || "").toLocaleLowerCase()))),
                 formatter: getShortWallet
               };
             case "validTokenName":
               if (data.validTokenName) {
                 return {
                   suggestText: "Search for a Token by",
-                  cb: () => history.push(`${routers.TOKEN_LIST}?tokenName=${encodeURIComponent(value)}`),
+                  cb: () =>
+                    history.push(
+                      `${routers.TOKEN_LIST}?tokenName=${encodeURIComponent((value || "").toLocaleLowerCase())}`
+                    ),
                   formatter: formatLongText
                 };
               }
@@ -486,7 +502,7 @@ export const OptionsSearch = ({
             case "pool":
               return {
                 suggestText: "Search for a Pool by",
-                cb: () => history.push(details.delegation(encodeURIComponent(value))),
+                cb: () => history.push(details.delegation(encodeURIComponent((value || "").toLocaleLowerCase()))),
                 formatter: getShortWallet
               };
             case "validPoolName":
@@ -495,7 +511,7 @@ export const OptionsSearch = ({
                   suggestText: "Search for a Pool by",
                   cb: () =>
                     history.push(routers.DELEGATION_POOLS, {
-                      tickerNameSearch: encodeURIComponent(value)
+                      tickerNameSearch: encodeURIComponent((value || "").toLocaleLowerCase())
                     }),
                   formatter: formatLongText
                 };
@@ -504,7 +520,7 @@ export const OptionsSearch = ({
             case "policy":
               return {
                 suggestText: "Search for a Policy by",
-                cb: () => history.push(details.policyDetail(encodeURIComponent(value))),
+                cb: () => history.push(details.policyDetail(encodeURIComponent((value || "").toLocaleLowerCase()))),
                 formatter: formatLongText
               };
           }
@@ -541,9 +557,9 @@ export const OptionsSearch = ({
                 onClick={() => {
                   setShowOption(false);
                   filter === "tokens"
-                    ? history.push(`${routers.TOKEN_LIST}?tokenName=${value}`)
+                    ? history.push(`${routers.TOKEN_LIST}?tokenName=${(value || "").toLocaleLowerCase()}`)
                     : history.push(routers.DELEGATION_POOLS, {
-                        tickerNameSearch: value
+                        tickerNameSearch: (value || "").toLocaleLowerCase()
                       });
                 }}
               >
@@ -588,7 +604,7 @@ export const OptionsSearch = ({
       )}
 
       {!!error && (
-        <Box component={Option} color={({ palette }) => palette.red[100]} justifyContent={"center"}>
+        <Box component={Option} color={({ palette }) => palette.error[700]} justifyContent={"center"}>
           <Box>{error}</Box>
         </Box>
       )}

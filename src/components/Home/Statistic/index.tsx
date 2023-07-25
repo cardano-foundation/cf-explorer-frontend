@@ -5,20 +5,18 @@ import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
-import { AdaPriceIcon, LiveStakeIcon, MarketCapIcon } from "src/commons/resources";
+import { AdaPriceIcon, CurrentEpochHome, HomeUpIcon, LiveStakeIcon, MarketCapIcon } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { EXT_ADA_PRICE_URL, MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
 import { formatADA, formatADAFull, formatDateTimeLocal, numberWithCommas } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import ProgressCircle from "src/components/commons/ProgressCircle";
 import RateWithIcon from "src/components/commons/RateWithIcon";
 import { RootState } from "src/stores/types";
 
 import {
   AdaPrice,
   Content,
-  EpochProgress,
   Item,
   ItemIcon,
   ItemSkeleton,
@@ -27,13 +25,9 @@ import {
   ProcessActive,
   Progress,
   ProgressPending,
-  Small,
-  SmallValue,
   StatisticContainer,
   TimeDuration,
-  Title,
-  XSmall,
-  XValue
+  Title
 } from "./style";
 
 const SkeletonBox = () => (
@@ -68,7 +62,13 @@ const HomeStatistic = () => {
   const progress = moment(currentEpoch?.endTime).isAfter(moment())
     ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
     : 100;
-  const { isMobile, isGalaxyFoldSmall } = useScreen();
+  const slot = (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH;
+  const countdown = MAX_SLOT_EPOCH - slot;
+  const duration = moment.duration(countdown ? countdown : 0, "second");
+  const days = duration.days();
+  const hours = duration.hours();
+
+  const { isGalaxyFoldSmall } = useScreen();
 
   return (
     <StatisticContainer
@@ -81,26 +81,32 @@ const HomeStatistic = () => {
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
         {usdMarket && btcMarket?.[0] ? (
           <Link href={EXT_ADA_PRICE_URL} target="_blank">
-            <Item data-testid="ada-price-box" onClick={() => window.open(EXT_ADA_PRICE_URL, "_blank")}>
-              <ItemIcon
-                style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
-                data-testid="ada-price-icon"
-                src={AdaPriceIcon}
-                alt="Ada Price"
-              />
-              <Content>
-                <Name data-testid="ada-price-box-title">Ada Price</Name>
-                <Title data-testid="ada-current-price">${usdMarket.current_price}</Title>
-                <br />
-                <RateWithIcon
-                  data-testid="ada-twenty-four-hr-price-change"
-                  value={usdMarket.price_change_percentage_24h}
-                />
-                <AdaPrice data-testid="ada-price-in-btc">{btcMarket[0]?.current_price} BTC</AdaPrice>
-                <TimeDuration marginTop="8px" data-testid="last-update-btc">
-                  Last updated {moment(btcMarket[0]?.last_updated).fromNow()}
-                </TimeDuration>
-              </Content>
+            <Item data-testid="ada-price-box">
+              <Box display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
+                <Box display={"flex"} alignItems={"center"} height={"40px"}>
+                  <ItemIcon
+                    style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
+                    data-testid="ada-price-icon"
+                    src={AdaPriceIcon}
+                    alt="Ada Price"
+                  />
+                  <Name data-testid="ada-price-box-title">Ada Price</Name>
+                </Box>
+                <Box display={"flex"} alignItems={"center"}>
+                  <ItemIcon src={HomeUpIcon} alt="Home up icon" />
+                  <Box ml={2}>
+                    <Title data-testid="ada-current-price">${usdMarket.current_price}</Title>
+                  </Box>
+                </Box>
+                <Content display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
+                  <RateWithIcon
+                    data-testid="ada-twenty-four-hr-price-change"
+                    value={usdMarket.price_change_percentage_24h}
+                    showIcon={false}
+                  />
+                  <AdaPrice data-testid="ada-price-in-btc">{btcMarket[0]?.current_price} BTC</AdaPrice>
+                </Content>
+              </Box>
             </Item>
           </Link>
         ) : (
@@ -111,19 +117,18 @@ const HomeStatistic = () => {
         {usdMarket ? (
           <Link href={EXT_ADA_PRICE_URL} target="_blank">
             <Item data-testid="market-cap-box">
-              <ItemIcon
-                style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
-                data-testid="market-cap-icon"
-                src={MarketCapIcon}
-                alt="Market cap"
-              />
-              <Content>
-                <Name data-testid="market-cap-box-title">Market cap</Name>
+              <Box display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
+                <Box display={"flex"} alignItems={"center"} height={"40px"}>
+                  <ItemIcon data-testid="market-cap-icon" src={MarketCapIcon} alt="Market cap" />
+                  <Name data-testid="market-cap-box-title">Market cap</Name>
+                </Box>
                 <Title data-testid="market-cap-value">${numberWithCommas(usdMarket.market_cap)}</Title>
-                <TimeDuration data-testid="last-update-market-cap">
-                  Last updated {moment(usdMarket.last_updated).fromNow()}
-                </TimeDuration>
-              </Content>
+                <Content>
+                  <TimeDuration data-testid="last-update-market-cap">
+                    Last updated {moment(usdMarket.last_updated).fromNow()}
+                  </TimeDuration>
+                </Content>
+              </Box>
             </Item>
           </Link>
         ) : (
@@ -132,54 +137,48 @@ const HomeStatistic = () => {
       </Grid>
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
         {currentEpoch ? (
-          <Link href={details.epoch(currentEpoch?.no)} target="_blank">
+          <Link href={details.epoch(currentEpoch?.no)}>
             <Item data-testid="current-epoch-box">
-              <Content>
-                <Box display={"flex"} alignItems="center" position={"absolute"} right={10} top={15}>
-                  <ProgressCircle
-                    size={50}
-                    pathLineCap="butt"
-                    pathWidth={6}
-                    trailWidth={6}
-                    percent={Number(progress)}
-                    trailOpacity={1}
-                  >
-                    <EpochProgress sx={{ fontSize: "15px" }}>{`${progress}%`}</EpochProgress>
-                  </ProgressCircle>
+              <Content display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
+                <Box display={"flex"} alignItems={"center"} height={"40px"}>
+                  <ItemIcon
+                    style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
+                    data-testid="market-cap-icon"
+                    src={CurrentEpochHome}
+                    alt="Market cap"
+                  />
+                  <Name data-testid="current-epoch-box-title" style={isGalaxyFoldSmall ? { maxWidth: "30px" } : {}}>
+                    Current Epoch
+                  </Name>
                 </Box>
-                <Name data-testid="current-epoch-box-title" style={isGalaxyFoldSmall ? { maxWidth: "30px" } : {}}>
-                  Current Epoch
-                </Name>
-                <XSmall data-testid="epoch-label">Epoch: </XSmall>
-                {isMobile ? <br /> : null}
-                <XValue data-testid="current-epoch-number">
-                  <b>{numberWithCommas(currentEpoch?.no)}</b>
-                </XValue>
-                <br />
-                <XSmall data-testid="slot-label">Slot: </XSmall>
-                {isMobile ? <br /> : null}
-                <XValue data-testid="current-slot-number">
-                  <b>{numberWithCommas(currentEpoch?.slot % MAX_SLOT_EPOCH)}</b>
-                </XValue>
-                <XSmall> / {numberWithCommas(MAX_SLOT_EPOCH)}</XSmall>
-                <br />
-                <XSmall>Unique accounts: </XSmall>
-                {isMobile ? <br /> : null}
-                <XValue>
-                  <b data-testid="curent-epoch-account">{numberWithCommas(currentEpoch?.account)}</b>
-                </XValue>
-                <br />
-                <XSmall>End timestamp: </XSmall>
-                {isMobile ? <br /> : null}
-                <XValue>
-                  <b
-                    style={{
-                      whiteSpace: isGalaxyFoldSmall ? "normal" : "nowrap"
-                    }}
-                  >
-                    {formatDateTimeLocal(currentEpoch?.endTime)}
-                  </b>
-                </XValue>
+                <Box>
+                  <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
+                    <Title data-testid="current-epoch-number">{numberWithCommas(currentEpoch?.no)}</Title>
+                    <Box color={({ palette }) => palette.secondary.light}>
+                      Slot: {numberWithCommas(currentEpoch?.slot % MAX_SLOT_EPOCH)}/ {numberWithCommas(MAX_SLOT_EPOCH)}
+                    </Box>
+                  </Box>
+                  <Progress>
+                    <CustomTooltip title={+progress || 0}>
+                      <ProcessActive data-testid="live-stake-progress-active" rate={+progress || 0}>
+                        {+progress || 0}%
+                      </ProcessActive>
+                    </CustomTooltip>
+                    <ProgressPending data-testid="live-stake-progress-pending" rate={100 - (+progress || 0)}>
+                      <Box color={({ palette }) => palette.secondary.light}>
+                        {days}d {hours}h
+                      </Box>
+                    </ProgressPending>
+                  </Progress>
+                </Box>
+                <Box>
+                  <Box color={({ palette }) => palette.secondary.light}>
+                    Unique accounts: {numberWithCommas(currentEpoch?.account)}
+                  </Box>
+                  <Box color={({ palette }) => palette.secondary.light} fontSize={"12px"}>
+                    End timestamp: {formatDateTimeLocal(currentEpoch?.endTime)}
+                  </Box>
+                </Box>
               </Content>
             </Item>
           </Link>
@@ -189,58 +188,59 @@ const HomeStatistic = () => {
       </Grid>
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
         {data && usdMarket ? (
-          <Link href={routers.DELEGATION_POOLS} target="_blank">
-            <Item data-testid="live-stake-box" onClick={() => window.open(routers.DELEGATION_POOLS)}>
-              <Content>
-                <ItemIcon
-                  style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
-                  data-testid="live-stake-icon"
-                  src={LiveStakeIcon}
-                  alt="Total ADA Stake"
-                />
-                <Name data-testid="live-stake-box-title">Live Stake (ADA)</Name>
-                <CustomTooltip title={formatADAFull(liveStake)}>
-                  <Title data-testid="live-stake-value">{formatADA(liveStake)}</Title>
-                </CustomTooltip>
-                <Progress>
-                  <CustomTooltip title={liveRate.toFixed(5)}>
-                    <ProcessActive data-testid="live-stake-progress-active" rate={liveRate.toNumber()}>
-                      {liveRate.toFixed(0, BigNumber.ROUND_DOWN)}%
-                    </ProcessActive>
+          <Link href={routers.DELEGATION_POOLS}>
+            <Item data-testid="live-stake-box">
+              <Content display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
+                <Box>
+                  <Box display={"flex"} alignItems={"center"} height={"40px"}>
+                    <ItemIcon
+                      style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
+                      data-testid="live-stake-icon"
+                      src={LiveStakeIcon}
+                      alt="Total ADA Stake"
+                    />
+                    <Name data-testid="live-stake-box-title">Live Stake (ADA)</Name>
+                  </Box>
+                </Box>
+                <Box>
+                  <CustomTooltip title={formatADAFull(liveStake)}>
+                    <Title data-testid="live-stake-value">{formatADA(liveStake)}</Title>
                   </CustomTooltip>
-                  <CustomTooltip title={liveRate.div(-1).plus(100).toFixed(5)}>
-                    <ProgressPending
-                      data-testid="live-stake-progress-pending"
-                      rate={liveRate.div(-1).plus(100).toNumber()}
-                    >
-                      {liveRate.div(-1).plus(100).toFixed(0)}%
-                    </ProgressPending>
-                  </CustomTooltip>
-                </Progress>
-                <XSmall data-testid="active-stake-label">Active Stake (ADA): </XSmall>
-                {isMobile ? <br /> : null}
-                <SmallValue>
-                  <CustomTooltip title={formatADAFull(activeStake)}>
-                    <XValue data-testid="active-stake-value">
-                      <b>{formatADA(activeStake)} </b>
-                    </XValue>
-                  </CustomTooltip>
-                </SmallValue>
-                <br />
-                <XSmall data-testid="circulating-supply-label">Circulating supply (ADA): </XSmall>
-                {isMobile ? <br /> : null}
-                <SmallValue>
-                  <XValue data-testid="circulating-supply-value">
-                    <CustomTooltip title={numberWithCommas(supply)}>
-                      <b>{formatADA(circulatingSupply.toString())} </b>
+                  <Progress>
+                    <CustomTooltip title={liveRate.toFixed(5)}>
+                      <ProcessActive data-testid="live-stake-progress-active" rate={liveRate.toNumber()}>
+                        {liveRate.toFixed(0, BigNumber.ROUND_DOWN)}%
+                      </ProcessActive>
                     </CustomTooltip>
-                  </XValue>
-                  <CustomTooltip title={`${circulatingRate.toFixed(5)}%`}>
-                    <Small data-testid="circulating-supply-percentage">
-                      ({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)
-                    </Small>
-                  </CustomTooltip>
-                </SmallValue>
+                    <CustomTooltip title={liveRate.div(-1).plus(100).toFixed(5)}>
+                      <ProgressPending
+                        data-testid="live-stake-progress-pending"
+                        rate={liveRate.div(-1).plus(100).toNumber()}
+                      >
+                        <Box color={({ palette }) => palette.secondary.light}>
+                          {liveRate.div(-1).plus(100).toFixed(0)}%
+                        </Box>
+                      </ProgressPending>
+                    </CustomTooltip>
+                  </Progress>
+                </Box>
+                <Box>
+                  <Box color={({ palette }) => palette.secondary.light}>
+                    Active Stake (ADA):{" "}
+                    <CustomTooltip title={formatADAFull(activeStake)}>
+                      <>{formatADA(activeStake)}</>
+                    </CustomTooltip>
+                  </Box>
+                  <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
+                    Circulating supply (ADA):{" "}
+                    <CustomTooltip title={numberWithCommas(supply)}>
+                      <>{formatADA(circulatingSupply.toString())}</>
+                    </CustomTooltip>
+                    <CustomTooltip title={`${circulatingRate.toFixed(5)}%`}>
+                      <>({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)</>
+                    </CustomTooltip>
+                  </Box>
+                </Box>
               </Content>
             </Item>
           </Link>

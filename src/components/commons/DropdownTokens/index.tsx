@@ -71,10 +71,10 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
             },
             "&:hover": {
               "&::-webkit-scrollbar-thumb": {
-                background: theme.palette.grey[300]
+                background: theme.palette.secondary.light
               },
               "&::-webkit-scrollbar-track": {
-                background: theme.palette.grey[100]
+                background: theme.palette.secondary[600]
               }
             }
           }
@@ -92,7 +92,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
         const isTokenNameLong = tokenName.length > 20;
         return (
           <OptionSelect key={idx} onClick={() => handleClickItem(details.token(token?.assetId))}>
-            <Box>
+            <Box color={({ palette }) => palette.secondary.main}>
               {isTokenNameLong ? (
                 <CustomTooltip title={tokenName} placement="top">
                   <Box>{shortTokenName}</Box>
@@ -101,7 +101,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
                 tokenName
               )}
             </Box>
-            <Box fontWeight={"bold"} fontSize={"14px"}>
+            <Box fontWeight={"bold"} fontSize={"14px"} color={({ palette }) => palette.secondary.main}>
               {isNegative || hideMathChar ? "" : "+"}
               {formatNumberDivByDecimals(token?.assetQuantity || 0, token?.metadata?.decimals || 0)}
             </Box>
@@ -131,17 +131,17 @@ export const TokenLink: React.FC<{ token: Token }> = ({ token }) => {
         width={"100%"}
         height={38}
       >
-        <Box mr={2} color={({ palette }) => palette.grey[300]}>
+        <Box mr={2} color={({ palette }) => palette.secondary.light}>
           {isTokenNameLong ? (
             <CustomTooltip title={tokenName} placement="top">
-              <Box>{shortTokenName}</Box>
+              <Box color={({ palette }) => palette.secondary.main}>{shortTokenName}</Box>
             </CustomTooltip>
           ) : (
             tokenName
           )}
         </Box>
         <Box display={"flex"} alignItems={"center"}>
-          <Box fontWeight={"bold"} fontSize={"14px"} color={({ palette }) => palette.grey[400]}>
+          <Box fontWeight={"bold"} fontSize={"14px"} color={({ palette }) => palette.secondary.main}>
             {formatNumberDivByDecimals(token?.assetQuantity || 0, token?.metadata?.decimals || 0)}
           </Box>
           <Box mr={1} mt={"2px"}>

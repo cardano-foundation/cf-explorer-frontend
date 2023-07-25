@@ -5,9 +5,9 @@ import HoldBox from "../HoldBox";
 export const HoldBoxSPO = styled(HoldBox)(({ theme }) => ({
   "::after": {
     content: '"POOL HOLD"',
-    background: theme.palette.green[200]
+    background: theme.palette.success[800]
   },
-  border: `2px solid ${theme.palette.green[200]}`,
+  border: `2px solid ${theme.palette.primary[200]}`,
   [theme.breakpoints.down("lg")]: {
     width: 151
   },

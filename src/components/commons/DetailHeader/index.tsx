@@ -163,7 +163,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
         <Box width="100%">
           {isHideButtonBack === true ? null : (
             <BackButton onClick={history.goBack}>
-              <HiArrowLongLeft />
+              <HiArrowLongLeft color={theme.palette.secondary.light} />
               <BackText>Back</BackText>
             </BackButton>
           )}
@@ -244,7 +244,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                       setOpenBackdrop((prev: any) => ({ ...prev, [keyItem]: true }));
                     }}
                   >
-                    <SearchIcon stroke={theme.palette.grey[300]} />
+                    <SearchIcon stroke={theme.palette.secondary.light} />
                   </AllowSearchButton>
                 )}
                 {item.allowSearch && keyItem && openBackdrop[keyItem] && (
@@ -269,10 +269,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                           },
                           "&:hover": {
                             "&::-webkit-scrollbar-thumb": {
-                              background: theme.palette.grey[300]
-                            },
-                            "&::-webkit-scrollbar-track": {
-                              background: theme.palette.grey[100]
+                              background: theme.palette.secondary.light
                             }
                           }
                         }
@@ -291,11 +288,15 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                           key={index}
                         >
                           <CustomTooltip title={item.assetName}>
-                            <Box mr={2} sx={{ maxWidth: "120px", textOverflow: "ellipsis", overflow: "hidden" }}>
+                            <Box
+                              color={({ palette }) => palette.secondary.main}
+                              mr={2}
+                              sx={{ maxWidth: "120px", textOverflow: "ellipsis", overflow: "hidden" }}
+                            >
                               {item.assetName}
                             </Box>
                           </CustomTooltip>
-                          <Box fontWeight={500}>
+                          <Box color={({ palette }) => palette.secondary.main} fontWeight={500}>
                             {formatNumberDivByDecimals(item?.assetQuantity || 0, item?.metadata?.decimals || 0)}
                           </Box>
                         </StyledMenuItem>

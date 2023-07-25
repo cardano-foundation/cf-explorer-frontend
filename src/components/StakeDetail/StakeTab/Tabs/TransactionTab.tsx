@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 
@@ -48,6 +48,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
   const history = useHistory();
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<Transactions>(url, pageInfo);
+  const theme = useTheme();
 
   const onClickRow = (e: any, r: Transactions, index: number) => {
     let parent: Element | null = e.target as Element;
@@ -123,7 +124,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
           </Box>
           <Box mt={1}>
             <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{" "}
-            <Box component={"span"} color={({ palette }) => palette.grey[300]}>
+            <Box component={"span"} color={({ palette }) => palette.secondary.light}>
               {r.epochSlotNo}
             </Box>
           </Box>
@@ -151,7 +152,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
           <Box display="inline-flex" alignItems="center">
             {transaction?.balance ? (
               <>
-                <Box mr={1} color={isUp ? "success.main" : "error.main"}>
+                <Box mr={1} color={isUp ? theme.palette.success[800] : theme.palette.error[700]}>
                   {!isUp ? `` : `+`}
                   {formatADAFull(transaction.balance)}
                 </Box>
@@ -180,7 +181,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
           <Box display={"flex"} alignItems={"center"}>
             {transaction.tokens && transaction.tokens.length === 1 && <TokenLink token={tokens[0]} />}
             {transaction.tokens && transaction.tokens.length > 1 && (
-              <DropdownTokens tokens={tokens} type={type} hideInputLabel />
+              <DropdownTokens tokens={tokens} type={type} hideInputLabel hideMathChar />
             )}
           </Box>
         );

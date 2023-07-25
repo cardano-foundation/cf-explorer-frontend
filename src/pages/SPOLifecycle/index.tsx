@@ -131,10 +131,14 @@ const SPOLifecycle = () => {
               <LabelSwitch>Switch to {validMode === "timeline" ? "tabular" : "timeline"} view</LabelSwitch>
               <SwitchGroup>
                 <ButtonSwitch active={+(validMode === "timeline")} onClick={() => changeMode("timeline")}>
-                  <TableMode fill={validMode === "timeline" ? theme.palette.common.white : theme.palette.grey[300]} />
+                  <TableMode
+                    fill={validMode === "timeline" ? theme.palette.common.white : theme.palette.secondary.light}
+                  />
                 </ButtonSwitch>
                 <ButtonSwitch active={+(validMode === "tabular")} onClick={() => changeMode("tabular")}>
-                  <ChartMode fill={validMode === "tabular" ? theme.palette.common.white : theme.palette.grey[300]} />
+                  <ChartMode
+                    fill={validMode === "tabular" ? theme.palette.common.white : theme.palette.secondary.light}
+                  />
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>
@@ -142,9 +146,9 @@ const SPOLifecycle = () => {
               title={
                 !isLoggedIn
                   ? "Please sign in to use this feature"
-                  : `Please note that you can only compose ${
+                  : `Please note that you can only create ${
                       dataReportLimit?.limitPer24hours || 0
-                    } reports within the 24 hours period`
+                    } reports within 24 hours`
               }
             >
               <ReportButtonContainer>

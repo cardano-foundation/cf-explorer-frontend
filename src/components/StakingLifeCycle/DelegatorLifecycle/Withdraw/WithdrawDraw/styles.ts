@@ -20,7 +20,7 @@ export const Info = styled(Box)(({ theme }) => ({
 export const InfoText = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   marginLeft: theme.spacing(1),
   fontWeight: 600,
   fontSize: "14px",
@@ -86,7 +86,7 @@ export const AccountContainer = styled(Box)(({ theme }) => ({
   height: 238,
   padding: "30px 20px",
   border: `1.5px dashed ${theme.palette.border.hint}`,
-  background: alpha(theme.palette.grey[300], 0.03),
+  background: alpha(theme.palette.secondary.light, 0.03),
   borderRadius: 25,
   [theme.breakpoints.down(1440)]: {
     marginTop: 33
@@ -118,7 +118,7 @@ export const PaymentWalletTitle = styled(Box)(({ theme }) => ({
   fontWeight: 700,
   fontSize: 16,
   lineHeight: "19px",
-  color: theme.palette.common.black,
+  color: theme.palette.secondary.main,
   marginBottom: 5
 }));
 
@@ -140,7 +140,7 @@ export const PaymentWalleValue = styled("span")(({ theme }) => ({
   marginRight: 5,
   fontWeight: 400,
   fontSize: "14px",
-  color: theme.palette.common.black
+  color: theme.palette.secondary.main
 }));
 
 export const AmountGroup = styled(Box)(({ theme }) => ({
@@ -190,13 +190,13 @@ export const NetAmountBox = styled(HoldBox)(({ theme }) => ({
   boxSizing: "border-box",
   minHeight: 70,
   height: "max-content",
-  borderColor: theme.palette.green[200],
+  borderColor: theme.palette.success[800],
   width: "100%",
   maxWidth: 200,
   minWidth: 180,
   "::after": {
     content: '"NET AMOUNT"',
-    background: theme.palette.green[200]
+    background: theme.palette.success[800]
   },
   [theme.breakpoints.down(1440)]: {
     width: 180,

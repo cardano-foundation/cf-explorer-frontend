@@ -10,7 +10,7 @@ const ADAicon = ({ ...props }) => {
       {...props}
       lineHeight={1}
       fontWeight={"regular"}
-      color={({ palette }) => palette.grey[400]}
+      color={({ palette }) => palette.secondary.main}
     >
       ₳
     </Box>

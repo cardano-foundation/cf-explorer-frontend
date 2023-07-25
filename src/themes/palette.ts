@@ -6,43 +6,12 @@ export const createGradient = (deg: number, startColor: string, endColor: string
   return `linear-gradient(${deg}deg, ${startColor} ${start}%, ${endColor} ${end}%)`;
 };
 
-const GREEN = {
-  100: "#53A57B",
-  200: "#146635",
-  300: "#184c78",
-  400: "#65B98E",
-  400_10: "#D6E2FF",
-  450: "#5A9C56",
-  500: "#53A57B",
-  600: "#438F68",
-  600_10: alpha("#438F68", 0.1),
-  600_20: alpha("#438F68", 0.2),
-  600_30: alpha("#438F68", 0.3),
-  650: "#434656",
-  700: "#29744D",
-  700_10: alpha("#29744D", 0.1),
-  700_20: alpha("#29744D", 0.2),
-  800: "#184c78",
-  800_10: alpha("#184c78", 0.1),
-  800_20: alpha("#184c78", 0.2),
-  100_10: "#D6E2FF",
-  200_10: alpha("#146635", 0.1),
-  200_15: alpha("#146635", 0.15),
-  200_30: alpha("#146635", 0.3),
-  300_10: alpha("#184c78", 0.1),
-  300_20: alpha("#184c78", 0.2)
-};
-
 const COMMON = {
   black: "#000000",
   white: "#FFFFFF"
 };
 
 const GREY = {
-  50: "#F7F7F7",
-  40: "#F6F6F6",
-  80: "#F4F4F4",
-  100: "#F2F2F2",
   200: "#E3E5E9",
   300: "#50596D",
   400: "#141520",
@@ -84,20 +53,26 @@ const BLUE = {
 
 const PURPLE = {
   100: "#E3E2FC",
-  200: "#6866D4"
+  200: "#6866D4",
+  600: "#D6E2FF"
 };
 
 const primary = {
-  light: GREEN[100],
-  main: GREEN[200],
-  dark: GREEN[200],
-  contrastText: COMMON.white
+  100: "#F6F9FF",
+  200: "#D6E2FF",
+  500: "#5C8DFF",
+  main: "#0033AD",
+  dark: "#001F66",
+  contrastText: "#fff"
 };
 
 const secondary = {
-  light: BLUE[100_7],
-  main: BLUE[100],
   dark: GREY[300],
+
+  0: "#FFFFFF",
+  600: "#6C6F89",
+  light: "#434656",
+  main: "#24262E",
   contrastText: COMMON.white
 };
 
@@ -111,7 +86,6 @@ const text = {
 
 const border = {
   primary: "#E3E5E9",
-  secondary: GREEN[300_10],
   main: GREY[200],
   disabled: GREY[300],
   hint: "#C8CDD8",
@@ -120,21 +94,28 @@ const border = {
 };
 const background = {
   paper: COMMON.white,
-  default: GREY[50],
+  default: "#F7F7F7",
   neutral: GREY["A200"]
 };
 
 const error = {
+  100: "#FFEBEE",
+  700: "#C20024",
+  contrastText: COMMON.white,
+
   light: RED[100_15],
   main: RED[100],
-  dark: RED[100],
-  contrastText: COMMON.white
+  dark: RED[100]
 };
 const warning = {
+  100: "#FEF8EC",
+  700: "#F6C667",
+  800: "#744F07",
+  contrastText: COMMON.white,
+
   light: YELLOW[100_15],
   main: YELLOW[100],
-  dark: YELLOW[100],
-  contrastText: COMMON.white
+  dark: YELLOW[100]
 };
 
 const info = {
@@ -145,10 +126,11 @@ const info = {
 };
 
 const success = {
-  light: GREEN[200_15],
-  main: GREEN[200],
-  dark: GREEN[200],
-  contrastText: COMMON.white
+  100: "#EDFCF8",
+  700: "#1EC198",
+  800: "#116A54",
+  contrastText: COMMON.white,
+  main: "#116A54"
 };
 
 const GRADIENTS = {
@@ -175,7 +157,6 @@ const customPalette = {
   grey: GREY,
   text,
   background,
-  green: GREEN,
   blue: BLUE,
   red: RED,
   yellow: YELLOW,

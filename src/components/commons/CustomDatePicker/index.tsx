@@ -197,7 +197,7 @@ export const SingleDatePicker = (props: SingleDatePickerProps) => {
       document.addEventListener("mousedown", handleClickOutside);
       const timeout = setTimeout(() => {
         activeYearRef.current?.scrollIntoView({
-          behavior: "auto",
+          behavior: "smooth",
           block: "center"
         });
       }, 200);

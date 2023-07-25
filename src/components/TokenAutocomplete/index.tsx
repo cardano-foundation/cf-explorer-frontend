@@ -62,10 +62,10 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
               },
               "&:hover": {
                 "&::-webkit-scrollbar-thumb": {
-                  background: theme.palette.grey[300]
+                  background: theme.palette.secondary.light
                 },
                 "&::-webkit-scrollbar-track": {
-                  background: theme.palette.grey[100]
+                  background: theme.palette.primary[100]
                 }
               }
             };
@@ -122,16 +122,16 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
                   <CustomTooltip title={`${option.displayName || ""} #${option.name || option.fingerprint}`}>
                     <Box
                       textAlign={"left"}
+                      color={({ palette }) => palette.secondary.light}
                       overflow={"hidden"}
                       textOverflow={"ellipsis"}
                       maxWidth="150px"
-                      color={({ palette }) => palette.grey[300]}
                     >
                       {option.displayName || ""}
                     </Box>
                   </CustomTooltip>
                 </Box>
-                <Box fontWeight={"bold"} color={({ palette }) => palette.grey[400]} flex={1} textAlign="right">
+                <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main} flex={1} textAlign="right">
                   {formatNumberDivByDecimals(option.quantity || 0, option.metadata?.decimals || 0)}
                 </Box>
               </Box>

@@ -49,8 +49,8 @@ export const StyledCertificateShape = styled(CertificateShape)(({ theme }) => ({
   width: 220,
   height: 220,
   margin: "auto",
-  border: `2px solid ${theme.palette.blue[100]}`,
-  color: theme.palette.grey[400],
+  border: `2px solid ${theme.palette.primary.main}`,
+  color: theme.palette.secondary.main,
   [theme.breakpoints.down("lg")]: {
     height: 199,
     width: 180
@@ -94,12 +94,12 @@ export const StyledFreeBox = styled(FeeBox)(({ theme }) => ({
 }));
 
 export const StyledWithHoldBox = styled(HoldBox)(({ theme }) => ({
-  border: `2px solid ${theme.palette.green[200]} `,
+  border: `2px solid ${theme.palette.success[800]} `,
   boxSizing: "border-box",
   height: 70,
   width: 180,
   "&:after": {
-    backgroundColor: theme.palette.green[200]
+    backgroundColor: theme.palette.success[800]
   },
   [theme.breakpoints.down("lg")]: {
     alignSelf: "flex-end"

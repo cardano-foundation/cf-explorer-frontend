@@ -102,7 +102,7 @@ export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false
         )}
         <InfoGroup>
           <Info>
-            <AddressIcon fill={theme.palette.green[200]} />
+            <AddressIcon fill={theme.palette.secondary.light} />
             <CustomTooltip title={txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(txHash)}>{getShortHash(txHash || "")}</StyledLink>
@@ -111,11 +111,11 @@ export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false
             <StyledCopyButton text={txHash} />
           </Info>
           <Info>
-            <ADAGreen fill={theme.palette.green[200]} />
+            <ADAGreen fill={theme.palette.secondary.light} />
             <InfoText>{formatADAFull(deposit + fee || 0)}</InfoText>
           </Info>
           <Info>
-            <TimeIcon fill={theme.palette.green[200]} />
+            <TimeIcon fill={theme.palette.secondary.light} />
             <InfoText>{formatDateTimeLocal(time)}</InfoText>
           </Info>
         </InfoGroup>
