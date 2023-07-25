@@ -51,11 +51,13 @@ const OverViews: React.FC = () => {
       </Grid>
     );
   }
-
-  const duration = moment.duration(data?.countDownEndTime ? data.countDownEndTime : 0, "millisecond");
+  const slot = (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH;
+  const countdown = MAX_SLOT_EPOCH - slot;
+  const duration = moment.duration(countdown ? countdown : 0, "second");
   const days = duration.days();
   const hours = duration.hours();
   const minutes = duration.minutes();
+  const seconds = duration.seconds();
   return (
     <Card title="Stake Pool">
       <TimeDuration>
@@ -67,12 +69,13 @@ const OverViews: React.FC = () => {
             <StyledCard.Content>
               <StyledCard.Title>Epoch</StyledCard.Title>
               <StyledCard.Link to={details.epoch(data?.epochNo)}>{data?.epochNo}</StyledCard.Link>
-              <Box component="span" sx={{ color: (theme) => theme.palette.grey[300], textAlign: "left" }}>
+              <Box component="span" sx={{ color: (theme) => theme.palette.secondary.light, textAlign: "left" }}>
                 End in:{" "}
                 <StyledCard.Comment>
                   {`${days} day${days > 1 ? "s" : ""} `}
                   {`${hours} hour${hours > 1 ? "s" : ""} `}
-                  {`${minutes} minute${minutes > 1 ? "s" : ""}`}
+                  {`${minutes} minute${minutes > 1 ? "s" : ""} `}
+                  {`${seconds} second${seconds > 1 ? "s" : ""}`}
                 </StyledCard.Comment>
               </Box>
             </StyledCard.Content>
@@ -92,7 +95,7 @@ const OverViews: React.FC = () => {
                   <StyledCard.Title>Slot</StyledCard.Title>
                   <StyledCard.Value>
                     {(currentEpoch?.slot || 0) % MAX_SLOT_EPOCH}
-                    <Box component="span" sx={{ color: (theme) => theme.palette.text.hint, fontWeight: "400" }}>
+                    <Box component="span" sx={{ color: (theme) => theme.palette.secondary.light, fontWeight: "400" }}>
                       / {MAX_SLOT_EPOCH}
                     </Box>
                   </StyledCard.Value>
@@ -134,7 +137,7 @@ const OverViews: React.FC = () => {
               </StyledCard.Value>
               <Box
                 component="span"
-                sx={{ color: (theme) => theme.palette.grey[300], textAlign: "left" }}
+                sx={{ color: (theme) => theme.palette.secondary.light, textAlign: "left" }}
                 display={"flex"}
                 alignItems={"center"}
                 width={"100%"}

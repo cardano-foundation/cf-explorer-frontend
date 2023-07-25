@@ -17,7 +17,7 @@ export const BackButton = styled(Box)`
 `;
 
 export const BackText = styled("small")`
-  color: ${(props) => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.secondary.light};
   font-weight: var(--font-weight-bold);
 `;
 
@@ -27,7 +27,7 @@ export const HeaderContainer = styled(Box)`
 `;
 
 export const HeaderTitle = styled("h2")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.main};
   font-size: 2.25rem;
   margin: 0.5rem 0;
   max-width: 75%;
@@ -58,13 +58,13 @@ export const PoolIdSkeleton = styled(Skeleton)`
 
 export const PoolIdLabel = styled("small")`
   font-family: var(--font-family-text);
-  color: ${(props) => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.secondary.light};
 `;
 
 export const PoolIdValue = styled("small")`
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-bold);
-  color: ${(props) => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.primary.main};
   white-space: pre-wrap;
   display: inline-block;
   word-break: break-word;
@@ -138,7 +138,7 @@ export const StyledTitle = styled("span")`
   display: flex;
   align-items: center;
   gap: 7px;
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
 `;
 
 export const InfoValue = styled(Box)(({ theme }) => ({
@@ -147,7 +147,7 @@ export const InfoValue = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     fontSize: 16
   },
-  color: theme.palette.grey[400]
+  color: theme.palette.secondary.main
 }));
 
 export const StyledLinearProgress = styled(LinearProgress)<{ saturation: number }>`
@@ -155,11 +155,12 @@ export const StyledLinearProgress = styled(LinearProgress)<{ saturation: number 
   width: 100%;
   height: 10px;
   border-radius: 34px;
-  background: ${(props) => alpha(props.theme.palette.grey[400], 0.1)};
+  background: ${(props) => props.theme.palette.primary[200]};
 
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
-    background: ${({ theme, saturation }) => (saturation > 100 ? theme.palette.red[100] : theme.palette.green[200])};
+    background: ${({ theme, saturation }) =>
+      saturation > 100 ? theme.palette.error[700] : theme.palette.primary.main};
   }
 `;
 
@@ -186,7 +187,7 @@ export const ButtonViewAll = styled(Button)(({ theme }) => ({
   border: `1px solid ${theme.palette.common.black}`,
   padding: `0 ${theme.spacing(1)}`,
   textTransform: "capitalize",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   fontWeight: "bold",
   [theme.breakpoints.down("sm")]: {
     position: "absolute",

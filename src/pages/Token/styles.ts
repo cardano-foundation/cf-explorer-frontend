@@ -2,6 +2,7 @@ import { styled, Container, Select, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
+  maxWidth: "95vw !important",
   paddingTop: "20px",
   [theme.breakpoints.down("sm")]: {
     padding: "10px 0 40px",
@@ -18,7 +19,7 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
 }));
 
 export const AssetName = styled(Link)`
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
   font-family: var(--font-family-text) !important;
 `;
 
@@ -51,7 +52,7 @@ export const StyledSelect = styled(Select)`
 `;
 
 export const TimeDuration = styled(Box)(({ theme }) => ({
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   display: "block",
   marginTop: "0.5rem",
   textAlign: "left"

@@ -25,6 +25,7 @@ import { Actions, StyledContainer, StyledLink, TimeDuration } from "./styles";
 const StakeDelegations = () => {
   const { search } = useLocation();
   const history = useHistory();
+  const fromPath = history.location.pathname as SpecialPath;
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<Contracts>(
     API.STAKE.STAKE_DELEGATIONS,
@@ -70,7 +71,7 @@ const StakeDelegations = () => {
           <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
           <Box mt={1}>
             <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
-            <Box color={({ palette }) => palette.grey[300]} component={"span"}>
+            <Box color={({ palette }) => palette.secondary.light} component={"span"}>
               {r.epochSlotNo}
             </Box>
           </Box>
@@ -84,7 +85,9 @@ const StakeDelegations = () => {
         const stakeKey = r.stakeKeys[0];
         return (
           <CustomTooltip title={stakeKey}>
-            <StyledLink to={details.stake(stakeKey)}>{getShortWallet(stakeKey)}</StyledLink>
+            <StyledLink to={{ pathname: details.stake(stakeKey), state: { fromPath } }}>
+              {getShortWallet(stakeKey)}
+            </StyledLink>
           </CustomTooltip>
         );
       }

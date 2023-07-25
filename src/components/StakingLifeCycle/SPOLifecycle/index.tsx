@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import { Box, IconButton, alpha, useTheme } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
 import { useHistory, useParams } from "react-router";
 
 import { useScreen } from "src/commons/hooks/useScreen";
-import { ListTabResponseSPO } from "src/pages/SPOLifecycle";
 import {
   DeredistrationIcon,
   InfoIcon,
@@ -84,7 +83,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
         <RegistrationIcon
           width={"25px"}
           height={"25px"}
-          fill={renderTabsSPO["isRegistration"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)}
+          fill={renderTabsSPO["isRegistration"] ? theme.palette.secondary[0] : theme.palette.secondary[600]}
         />
       ),
       title: "Registration",
@@ -103,7 +102,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
         <PoolUpdateIcon
           width={"25px"}
           height={"25px"}
-          fill={renderTabsSPO["isUpdate"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)}
+          fill={renderTabsSPO["isUpdate"] ? theme.palette.secondary[0] : theme.palette.secondary[600]}
         />
       ),
       title: "Pool Updates",
@@ -122,7 +121,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
         <OperatorRewardIcon
           width={"25px"}
           height={"25px"}
-          fill={renderTabsSPO["isReward"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)}
+          fill={renderTabsSPO["isReward"] ? theme.palette.secondary[0] : theme.palette.secondary[600]}
         />
       ),
       title: "Operator Rewards",
@@ -138,7 +137,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
         <DeredistrationIcon
           width={"25px"}
           height={"25px"}
-          fill={renderTabsSPO["isDeRegistration"] ? theme.palette.common.white : alpha(theme.palette.grey[300], 0.5)}
+          fill={renderTabsSPO["isDeRegistration"] ? theme.palette.secondary[0] : theme.palette.secondary[600]}
         />
       ),
       title: "Deregistration",
@@ -162,12 +161,12 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
 
   const renderBackground = (isActive: boolean, hasData: boolean) => {
     if (isActive) {
-      return `${palette.green[200]} !important`;
+      return `${palette.primary.main} !important`;
     }
     if (hasData) {
-      return `${palette.grey[400]} !important`;
+      return `${palette.secondary.main} !important`;
     }
-    return `${palette.grey[200]} !important`;
+    return `${palette.primary[100]} !important`;
   };
 
   const handleChangeTab = (step: StepperProps, idx: number) => {
@@ -193,8 +192,11 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
               <StepButton
                 component={IconButton}
                 active={+(currentStep === idx)}
+                border={({ palette }) => `1px solid ${palette.primary[200]}`}
                 bgcolor={renderBackground(currentStep === idx, renderTabsSPO[step.keyCheckShow])}
-                color={({ palette }) => (renderTabsSPO[step.keyCheckShow] ? palette.common.white : palette.grey[300])}
+                color={({ palette }) =>
+                  renderTabsSPO[step.keyCheckShow] ? palette.common.white : palette.secondary.light
+                }
               >
                 {step.icon}
               </StepButton>

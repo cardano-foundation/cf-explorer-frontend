@@ -22,7 +22,7 @@ const RewardAccountBox: React.FC<IRewardAccountBoxProps> = forwardRef(({ value, 
   return (
     <RewardAccountCcontainer ref={boxRef} onClick={toggleRewardModal}>
       <RewardBoxImg src={RewardAccountIconUrl} />
-      <Typography fontWeight={700} fontSize={20} width="100% !important" color={({ palette }) => palette.grey[400]}>
+      <Typography fontWeight={700} fontSize={20} width="100% !important" color={({ palette }) => palette.secondary.main}>
         Reward Account
       </Typography>
       <RewardValueLabel>

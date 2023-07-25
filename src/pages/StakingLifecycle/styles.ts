@@ -1,10 +1,10 @@
 import { TabPanel } from "@mui/lab";
-import { Box, Tab, Tabs, Typography, styled } from "@mui/material";
+import { Box, Tab, Tabs, Typography, styled, Container } from "@mui/material";
 
 export const TextHeadline = styled("span")`
   font-weight: 700;
   font-size: 36px;
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.main};
   margin-bottom: 14px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 24px;
@@ -44,7 +44,7 @@ export const StyledTabLabel = styled(Typography)<{ active: number }>(
   font-size: 18px;
     font-weight: 700;
     text-transform: capitalize;
-    color: ${props.active ? props.theme.palette.grey[400] : props.theme.palette.grey[300]};
+    color: ${props.active ? props.theme.palette.primary.main : props.theme.palette.secondary[600]};
 `
 );
 
@@ -75,7 +75,7 @@ export const StyledTabs = styled(Tabs)`
 `;
 
 export const StyledTab = styled(Tab)`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.main};
   padding: 0;
   &.Mui-selected {
     color: ${(props) => props.theme.palette.text.primary};
@@ -84,8 +84,11 @@ export const StyledTab = styled(Tab)`
 export const WrapFilterDescription = styled("span")(({ theme }) => ({
   fontSize: 14,
   fontWeight: 400,
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   [theme.breakpoints.down("sm")]: {
     fontSize: 12
   }
 }));
+export const StyledContainer = styled(Container)`
+  max-width: 95vw !important;
+`;

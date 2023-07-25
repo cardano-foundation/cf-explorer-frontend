@@ -40,11 +40,11 @@ export const ADAOperator = styled(Box)(({ theme }) => ({
 }));
 export const ADATitle = styled(Box)(({ theme }) => ({
   height: "30px",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   display: "flex",
   alignItems: "flex-end",
   fontWeight: 700
 }));
 export const ADAAmount = styled(Box)`
-  color: ${(props) => props.theme.palette.green[200]} !important;
+  color: ${(props) => props.theme.palette.success[800]} !important;
 `;

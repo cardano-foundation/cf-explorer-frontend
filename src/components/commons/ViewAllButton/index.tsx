@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, LinkProps } from "react-router-dom";
-import { alpha, styled, TooltipProps } from "@mui/material";
+import { styled, TooltipProps } from "@mui/material";
 
 import { SeeMoreIcon } from "src/commons/resources";
 
@@ -13,9 +13,9 @@ const StyledLink = styled(Link)`
   width: 35px;
   height: 35px;
   border-radius: 5px;
-  background: ${(props) => alpha(props.theme.palette.primary.main, 0.15)};
+  background: ${(props) => props.theme.palette.primary[100]};
   &:hover {
-    background: ${(props) => alpha(props.theme.palette.primary.main, 0.3)};
+    background: ${(props) => props.theme.palette.primary[100]};
   }
 `;
 

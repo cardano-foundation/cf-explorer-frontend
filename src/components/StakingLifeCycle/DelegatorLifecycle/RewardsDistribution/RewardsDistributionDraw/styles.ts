@@ -54,7 +54,7 @@ export const RectBox = styled(Box)<{ disabled?: number }>(({ disabled, theme }) 
 export const DisableAbleLabel = styled(Typography)<{ disabled?: number }>(({ theme, disabled }) => ({
   fontSize: "1ren",
   fontWeight: 700,
-  color: disabled ? alpha(theme.palette.grey[400], 0.3) : theme.palette.grey[400],
+  color: disabled ? alpha(theme.palette.secondary.main, 0.3) : theme.palette.secondary.main,
   textAlign: "left",
   flex: 1,
   [theme.breakpoints.down("lg")]: {
@@ -80,7 +80,7 @@ export const RewardAccountCcontainer = styled(RectBox)(({ theme }) => ({
 export const HolderWrapper = styled(Box)(({ theme }) => ({
   padding: "20px 35px",
   border: `1.5px dashed ${theme.palette.border.hint}`,
-  background: alpha(theme.palette.grey[300], 0.03),
+  background: alpha(theme.palette.secondary.light, 0.03),
   borderRadius: 25,
   width: "100%",
   maxWidth: 340,
@@ -139,7 +139,7 @@ export const RewardValue = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   gap: 5,
-  color: theme.palette.grey[400]
+  color: theme.palette.secondary.main
 }));
 
 export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({

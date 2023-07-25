@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import { CONFIRMATION_STATUS } from "../../../commons/utils/constants";
 
 export const TitleCard = styled(Box)(({ theme }) => ({
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   fontSize: "0.875rem",
   minHeight: 20
 }));
 
 export const MaxSlot = styled("span")(({ theme }) => ({
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   fontWeight: "400"
 }));
 
@@ -18,21 +18,21 @@ export const ConfirmStatus = styled("small")<{ status?: keyof typeof CONFIRMATIO
   color: ${({ status, theme }) => {
     switch (status) {
       case CONFIRMATION_STATUS.HIGH:
-        return theme.palette.success.main;
+        return theme.palette.success[800];
       case CONFIRMATION_STATUS.MEDIUM:
-        return theme.palette.warning.main;
+        return theme.palette.warning[800];
       default:
-        return theme.palette.error.main;
+        return theme.palette.error[700];
     }
   }};
   background-color: ${({ status, theme }) => {
     switch (status) {
       case CONFIRMATION_STATUS.HIGH:
-        return theme.palette.success.light;
+        return theme.palette.success[100];
       case CONFIRMATION_STATUS.MEDIUM:
-        return theme.palette.warning.light;
+        return theme.palette.warning[100];
       default:
-        return theme.palette.error.light;
+        return theme.palette.error[100];
     }
   }};
   margin-left: 5px;

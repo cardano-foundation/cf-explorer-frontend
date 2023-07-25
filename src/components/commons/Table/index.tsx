@@ -9,8 +9,6 @@ import {
   useScrollTrigger
 } from "@mui/material";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useUpdateEffect } from "react-use";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
@@ -104,7 +102,7 @@ const TableHeader = <T extends ColumnType>({
     if (key === columnKey)
       switch (sort) {
         case "DESC":
-          return <SortTableDown />;
+          return <SortTableDown fill="#fff" />;
         case "ASC":
           return <SortTableUp />;
         default: {
@@ -266,11 +264,6 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
   const [size, setSize] = useState(pagination?.size || 50);
   const [open, setOpen] = useState(false);
   const trigger = useScrollTrigger();
-  const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
-
-  useUpdateEffect(() => {
-    setPage(1);
-  }, [poolType]);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
     pagination && pagination.onChange && pagination.onChange(page, size);
@@ -373,7 +366,7 @@ const Table: React.FC<TableProps> = ({
   });
   const tableRef = useRef(null);
   const wrapperRef = useRef<HTMLElement>(null);
-  const heightTable = Math.min((tableRef?.current as any)?.clientHeight || 0, 800);
+  const heightTable = Math.min((tableRef?.current as any)?.clientHeight || 0, window.innerHeight * 0.5);
   const toggleSelectAll = (isChecked: boolean) => {
     if (data && isChecked) {
       selectAll(data);
@@ -486,10 +479,6 @@ const PaginationCustom = ({
   handleChangePage: (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => void;
 }) => {
   const [inputPage, setInputPage] = useState(page);
-  const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
-  useUpdateEffect(() => {
-    setInputPage(1);
-  }, [poolType, size]);
 
   useEffect(() => {
     if (pagination?.page) {
@@ -584,7 +573,7 @@ const PaginationCustom = ({
                 }
               }}
             />
-            <Box component={"span"} color={(theme) => theme.palette.grey[400]} fontSize="0.875rem">
+            <Box component={"span"} color={(theme) => theme.palette.secondary.main} fontSize="0.875rem">
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}
               {numberWithCommas((page > 0 ? page : 1) * size > total ? total : (page > 0 ? page : 1) * size)} of{" "}
               {numberWithCommas(pagination?.total || 0)}
@@ -606,16 +595,16 @@ const PaginationCustom = ({
 };
 
 const StartPageIcon = styled(StartPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[300]
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.secondary.light
 }));
 const EndPageIcon = styled(EndPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[300]
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.secondary.light
 }));
 const NextPageIcon = styled(NextPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[300]
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.secondary.light
 }));
 const PrevPageIcon = styled(PrevPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.grey[300]
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.secondary.light
 }));
 
 function useSelection<T>({ onSelectionChange }: { onSelectionChange?: (items: T[]) => void }) {

@@ -9,27 +9,6 @@ export const Status = styled("span")`
   border-radius: 2px;
 `;
 
-export const Active = styled(Status)`
-  background: ${(props) => props.theme.palette.success.light};
-  color: ${(props) => props.theme.palette.success.main};
-`;
-
-export const Deactive = styled(Status)`
-  background: ${(props) => props.theme.palette.green[300_10]};
-  color: ${(props) => props.theme.palette.grey[300]};
-`;
-
-export const Title = styled("div")`
-  display: flex;
-  align-items: center;
-`;
-
-export const Flex = styled("div")`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 export const StyledLink = styled(Link)`
   width: 100%;
   text-overflow: ellipsis;
@@ -40,7 +19,7 @@ export const StyledLink = styled(Link)`
 `;
 
 export const StyledLinkTo = styled(StyledLink)<{ isTo: boolean }>(({ theme, isTo }) => ({
-  color: isTo ? "inherit" : `${theme.palette.red[100]} !important`
+  color: isTo ? `${theme.palette.secondary.main} !important` : `${theme.palette.error[700]} !important`
 }));
 
 export const BackButton = styled(Link)`
@@ -127,11 +106,11 @@ export const CardItem = styled(Box)(({ theme }) => ({
 }));
 
 export const TitleCard = styled(Box)(({ theme }) => ({
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   fontSize: "0.875rem"
 }));
 export const ValueCard = styled(Box)(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   fontSize: "var(--font-size-text-small)",
   fontWeight: "bold",
   marginTop: theme.spacing(1)
@@ -148,7 +127,7 @@ export const ButtonModal = styled(Button)(({ theme }) => ({
   textTransform: "capitalize",
   padding: 0,
   textDecoration: "underline",
-  color: theme.palette.blue[100],
+  color: theme.palette.primary.main,
   ":hover": {
     textDecoration: "underline"
   }

@@ -16,7 +16,7 @@ interface DelegationProps {
 const Delegations: React.FC<DelegationProps> = ({ data }) => {
   return (
     <Wrapper>
-      <Header>Address Stake Address</Header>
+      <Header>Stake Address</Header>
       {data?.map((item) => (
         <StyledItem key={item.address}>
           <ItemContainer>
@@ -26,7 +26,7 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
               </Box>
               <Box width={"100%"}>
                 <Box>
-                  <Box component={"span"} color={({ palette }) => palette.grey[400]}>
+                  <Box component={"span"} color={({ palette }) => palette.secondary.light}>
                     From:
                   </Box>
                   <CustomTooltip title={item.address}>
@@ -34,7 +34,7 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
                   </CustomTooltip>
                   <CopyButton text={item.address || ""} />
                 </Box>
-                <Box color={({ palette }) => palette.grey[400]}>
+                <Box color={({ palette }) => palette.secondary.light}>
                   Pool ID:
                   <CustomTooltip title={item.poolId}>
                     <AddressLink to={details.delegation(item.poolId)}>{getShortWallet(item.poolId || "")}</AddressLink>

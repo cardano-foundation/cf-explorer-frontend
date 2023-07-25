@@ -1,4 +1,4 @@
-import { alpha, Box, LinearProgress, Skeleton, styled } from "@mui/material";
+import { Box, LinearProgress, Skeleton, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import CustomIcon from "src/components/commons/CustomIcon";
@@ -13,11 +13,11 @@ export const StyledLinearProgress = styled(LinearProgress)`
   width: 100%;
   height: 10px;
   border-radius: 34px;
-  background: ${(props) => alpha(props.theme.palette.grey[400], 0.1)};
+  background: ${(props) => props.theme.palette.primary[200]};
 
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
-    background: ${(props) => props.theme.palette.green[200]};
+    background: ${(props) => props.theme.palette.primary.main};
   }
 `;
 
@@ -54,7 +54,7 @@ export const StyledCard = {
     align-items: flex-start;
   `,
   Title: styled("span")`
-    color: ${(props) => props.theme.palette.text.secondary};
+    color: ${(props) => props.theme.palette.secondary.light};
     font-weight: var(--font-weight-bold);
     margin-bottom: 15px;
   `,
@@ -62,23 +62,23 @@ export const StyledCard = {
     font-weight: var(--font-weight-bold);
     font-size: var(--font-size-title);
     margin-bottom: 8px;
-    color: ${(props) => props.theme.palette.grey[400]};
+    color: ${(props) => props.theme.palette.secondary.main};
   `,
   Link: styled(Link)`
     font-weight: var(--font-weight-bold);
     font-size: var(--font-size-title);
     margin-bottom: 8px;
     font-family: var(--font-family-text) !important;
-    color: ${(props) => props.theme.palette.grey[400]} !important;
+    color: ${(props) => props.theme.palette.secondary.main} !important;
   `,
   Comment: styled("span")`
     font-weight: var(--font-weight-bold);
-    color: ${(props) => props.theme.palette.primary.main};
+    color: ${(props) => props.theme.palette.secondary.main};
   `
 };
 
 export const TimeDuration = styled("small")<{ mobile?: number }>(({ theme, mobile }) => ({
-  color: theme.palette.grey[300],
+  color: theme.palette.secondary.light,
   display: mobile ? "none" : "block",
   textAlign: "left",
   padding: `${theme.spacing(2)} 0`,
@@ -90,10 +90,10 @@ export const TimeDuration = styled("small")<{ mobile?: number }>(({ theme, mobil
 }));
 export const PoolTitle = styled(Box)(({ theme }) => ({
   fontSize: "12px",
-  color: theme.palette.grey[300]
+  color: theme.palette.secondary.light
 }));
 export const PoolValue = styled(Box)(({ theme }) => ({
   fontSize: "14px",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   fontWeight: "bold"
 }));

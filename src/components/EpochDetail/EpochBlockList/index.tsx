@@ -71,7 +71,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       render: (r) => (
         <>
           <EpochNo>{r.slotNo}</EpochNo>
-          <Box color={({ palette }) => palette.grey[300]}>
+          <Box color={({ palette }) => palette.secondary.light}>
             {r.epochNo}/{r.epochSlotNo || 0}
           </Box>
         </>

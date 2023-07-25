@@ -5,7 +5,7 @@ export const TextLabel = styled("div")`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
   width: 130px;
 `;
 
@@ -14,5 +14,5 @@ export const TextValue = styled(Box)`
   font-weight: 700;
   font-size: 14px;
   line-height: 16px;
-  color: ${({ theme }) => theme.palette.blue[100]};
+  color: ${({ theme }) => theme.palette.primary.main};
 `;
