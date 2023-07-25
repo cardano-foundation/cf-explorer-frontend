@@ -27,8 +27,8 @@ export const CustomButton = styled("button")<{ active: number }>(({ theme, activ
   borderRadius: "5px",
   padding: "6px 0",
   fontWeight: "var(--font-weight-bold)",
-  color: active ? `${theme.palette.secondary[0]} !important` : theme.palette.secondary.light,
-  backgroundColor: active ? theme.palette.primary.main : "none",
+  color: active ? `${theme.palette.secondary.light} !important` : theme.palette.secondary.main,
+  backgroundColor: active ? theme.palette.primary[200] : "transparent",
   border: `2px solid ${theme.palette.primary[200]}`,
   cursor: "pointer",
   fontFamily: "var(--font-family-title)",
@@ -138,11 +138,12 @@ export const ButtonTitle = styled("button")<{ active: boolean }>(({ theme, activ
   padding: "8px 30px",
   fontWeight: "bold",
   fontSize: "1rem",
-  color: active ? `${theme.palette.secondary[0]} !important` : theme.palette.secondary.light,
-  backgroundColor: active ? theme.palette.primary.main : "none",
+  color: active ? `${theme.palette.secondary.light} !important` : theme.palette.secondary.main,
+  backgroundColor: active ? theme.palette.primary[200] : "transparent",
   border: `2px solid ${theme.palette.primary[200]}`,
   fontFamily: "var(--font-family-title)",
   cursor: "pointer",
+  marginRight: theme.spacing(1),
   [theme.breakpoints.down("sm")]: {
     width: "95px",
     textAlign: "center",
@@ -174,12 +175,12 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   textTransform: "lowercase",
   borderRadius: 10,
   fontWeight: "bold",
-  color: active ? `${theme.palette.secondary[0]} !important` : theme.palette.secondary.light,
-  backgroundColor: active ? theme.palette.primary.main : "none",
   border: `2px solid ${theme.palette.primary[200]}`,
+  color: active ? `${theme.palette.secondary[0]} !important` : theme.palette.secondary.main,
+  backgroundColor: active ? theme.palette.secondary.light : "none",
   "&:hover": {
-    color: active ? `${theme.palette.secondary[0]} !important` : theme.palette.secondary.light,
-    backgroundColor: active ? theme.palette.primary.main : "none"
+    color: active ? `${theme.palette.secondary[0]} !important` : theme.palette.secondary.main,
+    backgroundColor: active ? theme.palette.secondary.light : "none"
   },
   [theme.breakpoints.down("sm")]: {
     minWidth: `40px !important`,

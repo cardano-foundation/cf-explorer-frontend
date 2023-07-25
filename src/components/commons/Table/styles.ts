@@ -105,7 +105,7 @@ export const TFooter = styled(Box)(({ theme }) => ({
 export const Total = styled(Box)``;
 
 export const TotalNumber = styled("span")`
-  color: ${(props) => props.theme.palette.text.primary};
+  color: ${(props) => props.theme.palette.secondary.main};
   font-weight: 500;
 `;
 

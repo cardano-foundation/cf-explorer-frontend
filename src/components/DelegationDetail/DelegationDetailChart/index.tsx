@@ -67,13 +67,14 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
       <GridWrapper container columns={24} spacing="35px">
         <Grid item xs={24} lg={18}>
           <Box>
-            <Button
+            <Box
+              component={Button}
+              mr={1}
               active={selected === "epochChart" ? 1 : 0}
-              style={{ marginRight: "2px" }}
               onClick={() => setSelected("epochChart")}
             >
               Stake
-            </Button>
+            </Box>
             <Button active={selected === "delegatorChart" ? 1 : 0} onClick={() => setSelected("delegatorChart")}>
               Delegator
             </Button>
@@ -91,7 +92,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                 >
                   <defs>
                     <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.5} />
+                      <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
                       <stop offset="100%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
                     </linearGradient>
                   </defs>

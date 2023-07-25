@@ -18,7 +18,8 @@ import {
   Tab,
   Tabs,
   Title,
-  TransactionContainer
+  TransactionContainer,
+  ValueChart
 } from "./styles";
 
 export interface TransactionChartIF {
@@ -92,19 +93,21 @@ const TransactionChart: React.FC = () => {
           <Title>Transactions {optionsTime[rangeTime].displayName}</Title>
         </Grid>
         <Grid item xs={12} sm={4} md={4} lg={3}>
-          <Tabs display="flex" justifyContent="space-between" width={isMobile ? "100%" : "auto"}>
-            {Object.keys(optionsTime).map((option) => {
-              return (
-                <Tab
-                  key={optionsTime[option as Time].label}
-                  active={+(rangeTime === option)}
-                  onClick={() => setRangeTime(option as Time)}
-                >
-                  {optionsTime[option as Time].label}
-                </Tab>
-              );
-            })}
-          </Tabs>
+          <Box maxWidth={"260px"}>
+            <Tabs display="flex" justifyContent="space-between" width={isMobile ? "100%" : "auto"}>
+              {Object.keys(optionsTime).map((option) => {
+                return (
+                  <Tab
+                    key={optionsTime[option as Time].label}
+                    active={+(rangeTime === option)}
+                    onClick={() => setRangeTime(option as Time)}
+                  >
+                    {optionsTime[option as Time].label}
+                  </Tab>
+                );
+              })}
+            </Tabs>
+          </Box>
         </Grid>
       </Grid>
       {loading && renderLoading()}
@@ -118,25 +121,12 @@ const TransactionChart: React.FC = () => {
               <StyledTransactionTypes>Transaction Types</StyledTransactionTypes>
               {dataOverview.map((item) => (
                 <InfoItem key={item.key}>
-                  <ColorChart type={item.key as TypeChart} />
-                  <Box>
+                  <Box display={"flex"} alignItems={"center"} mb={1}>
+                    <ColorChart type={item.key as TypeChart} />
                     <StyledTransactionTypeItem>{item.title}</StyledTransactionTypeItem>
-                    <Box
-                      data-testid={item.key}
-                      textAlign={"left"}
-                      color={({ palette }) =>
-                        item.key === "trx"
-                          ? palette.success[700]
-                          : item.key === "simple"
-                          ? palette.primary[500]
-                          : palette.warning[700]
-                      }
-                      fontWeight={"bold"}
-                      fontSize={"1.6rem"}
-                    >
-                      {numberWithCommas(item.value)}
-                    </Box>
                   </Box>
+
+                  <ValueChart data-testid={item.key}>{numberWithCommas(item.value)}</ValueChart>
                 </InfoItem>
               ))}
             </BoxInfo>

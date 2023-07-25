@@ -5,7 +5,14 @@ import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
-import { AdaPriceIcon, CurrentEpochHome, HomeUpIcon, LiveStakeIcon, MarketCapIcon } from "src/commons/resources";
+import {
+  AdaPriceIcon,
+  CurrentEpochHome,
+  HomeDownIcon,
+  HomeUpIcon,
+  LiveStakeIcon,
+  MarketCapIcon
+} from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { EXT_ADA_PRICE_URL, MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
@@ -69,7 +76,7 @@ const HomeStatistic = () => {
   const hours = duration.hours();
 
   const { isGalaxyFoldSmall } = useScreen();
-
+  const sign = Math.sign(BigNumber(usdMarket?.price_change_percentage_24h || 0).toNumber());
   return (
     <StatisticContainer
       container
@@ -93,7 +100,7 @@ const HomeStatistic = () => {
                   <Name data-testid="ada-price-box-title">Ada Price</Name>
                 </Box>
                 <Box display={"flex"} alignItems={"center"}>
-                  <ItemIcon src={HomeUpIcon} alt="Home up icon" />
+                  <ItemIcon src={sign > 0 ? HomeUpIcon : HomeDownIcon} alt="Home up icon" />
                   <Box ml={2}>
                     <Title data-testid="ada-current-price">${usdMarket.current_price}</Title>
                   </Box>
@@ -217,7 +224,7 @@ const HomeStatistic = () => {
                         data-testid="live-stake-progress-pending"
                         rate={liveRate.div(-1).plus(100).toNumber()}
                       >
-                        <Box color={({ palette }) => palette.secondary.light}>
+                        <Box color={({ palette }) => palette.secondary.main}>
                           {liveRate.div(-1).plus(100).toFixed(0)}%
                         </Box>
                       </ProgressPending>
