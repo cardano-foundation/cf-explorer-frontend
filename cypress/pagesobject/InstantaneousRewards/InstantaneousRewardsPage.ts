@@ -54,6 +54,11 @@ export default class InstantaneousRewardsPage extends WebApi{
         return this;
     }
 
+    checkTxHashIsDisplay(){
+        cy.verifyElementDisplay(listItemFollowColumn2+'/a', InstantaneousConstants.COLUMN_NAME[0])
+        return this;
+    }
+
     checkFormatTxHash(){
         const xpath = util.format(listItemFollowColumn, InstantaneousConstants.COLUMN_NAME[0], InstantaneousConstants.COLUMN_NAME[0])
         cy.xpath(xpath).each((element)=>{
