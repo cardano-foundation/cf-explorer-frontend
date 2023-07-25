@@ -28,7 +28,6 @@ import {
   WrapHeader,
   CustomGrid
 } from "./style";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 
 const defaultNumberOfItems = 4;
 
