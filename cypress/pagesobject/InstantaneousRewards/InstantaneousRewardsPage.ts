@@ -11,12 +11,19 @@ const numberOfPage = "//ul//input"
 const selectPerPage = "//span[text()='Per page']/parent::div"
 const listNumberPerPage = "//ul[@role='listbox']//li"
 const txbNumberPageCurrentOfLastPage = "//ul//li//input/following-sibling::span"
+const labelTransactionDetail = "//div[text()='Transaction details']"
+const btnBack = "//small[text()='Back']"
 
 export default class InstantaneousRewardsPage extends WebApi{
     gotoInstantaneousRewards(){
         this.openAnyUrl("/instantaneous-rewards");
         return this;
     } 
+
+    clickOnButtonBack(){
+        cy.clickElement(btnBack)
+        return this;
+    }
 
     verifyHyperLinkIsEnable(){
         cy.xpath(util.format(listItemFollowColumn, InstantaneousConstants.COLUMN_NAME[0], InstantaneousConstants.COLUMN_NAME[0]) + '/a').should("not.be", 'disable')      
@@ -38,6 +45,12 @@ export default class InstantaneousRewardsPage extends WebApi{
           expect(numberPage).to.equal(parseInt(value));
         });
         cy.reload()
+        return this;
+    }
+
+    checkClickOnTxHash(){
+        cy.clickElementRandomly(listItemFollowColumn2+'/a', InstantaneousConstants.COLUMN_NAME[0])
+        cy.verifyElementDisplay(labelTransactionDetail)
         return this;
     }
 
@@ -82,6 +95,20 @@ export default class InstantaneousRewardsPage extends WebApi{
 
     checkRewardPaidIsDisplay(){
         cy.verifyAllElementDisplay(listItemFollowColumn2, InstantaneousConstants.COLUMN_NAME[4])
+        return this;
+    }
+
+    checkRewardPaid(){
+        const xpath = util.format(listItemFollowColumn, InstantaneousConstants.COLUMN_NAME[4], InstantaneousConstants.COLUMN_NAME[4]);
+        cy.xpath(xpath).each((element)=>{
+            cy.wrap(element).invoke('text').then(text=>{
+                const characterEnd = text.slice(-1);
+                const numberOfReward = text.slice(-text.length, -1);
+                expect(characterEnd).to.equal('₳')
+                const isNumber = !isNaN(parseFloat(numberOfReward))
+                cy.wrap(isNumber).should('be.true')
+            })
+        })
         return this;
     }
 
