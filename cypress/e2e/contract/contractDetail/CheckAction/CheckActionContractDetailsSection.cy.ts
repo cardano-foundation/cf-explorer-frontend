@@ -16,9 +16,10 @@ it("Check action of hyperlink [Delegated To]", () => {
                 .verifyNavigatedToPoolPage()
 })
 
-it.only("Check when hover [Copy] button ", () => {
+it("Check when hover [Copy] button ", () => {
     contractPage.hoverOnCopyIcon()
                 .verifyTooltipPopupDisplayed()
 })
+
 
 })

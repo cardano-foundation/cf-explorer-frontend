@@ -496,6 +496,11 @@ export default class ContractPage extends WebApi {
     return this;
   }
 
+  clickOnCopyIcon(){
+    cy.clickElement(copyIcon)
+    return this;
+  }
+
   hoverOnCopyIcon(){
     cy.hoverToElement(copyIcon)
     return this;
