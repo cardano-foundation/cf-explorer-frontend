@@ -72,7 +72,7 @@ describe("SignUp page", () => {
     const confirmEmailInput = screen.getByPlaceholderText("Re-enter Your email address");
     fireEvent.change(emailInput, { target: { value: "abc@gmail.com" } });
     fireEvent.change(confirmEmailInput, { target: { value: "xyz@gmail.com" } });
-    const errorMessage = screen.getByText("Confirm Email does not match");
+    const errorMessage = screen.getByText("Email address does not match");
     expect(errorMessage).toBeInTheDocument();
   });
 
@@ -90,7 +90,7 @@ describe("SignUp page", () => {
     const confirmPasswordInput = screen.getByPlaceholderText("Confirm Password");
     fireEvent.change(passwordInput, { target: { value: "abc" } });
     fireEvent.change(confirmPasswordInput, { target: { value: "xyz" } });
-    const errorMessage = screen.getByText("Confirm Password does not match");
+    const errorMessage = screen.getByText("Password does not match");
     expect(errorMessage).toBeInTheDocument();
   });
 });

@@ -193,7 +193,7 @@ const Bookmark = () => {
       minWidth: 120,
       render: (data) => (
         <Box display="flex" justifyContent={"flex-end"}>
-          <IconButton data-testid="action-button" onClick={() => setSelected(data.keyword || "")}>
+          <IconButton data-testid="action-button" onClick={() => deleteBookMark(data.keyword)}>
             <DeleteBookmark fontSize={10} />
           </IconButton>
         </Box>
