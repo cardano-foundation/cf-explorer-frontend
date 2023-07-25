@@ -1,26 +1,29 @@
-import React, { useEffect, useState } from "react";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Dialog, DialogActions, DialogContentText, IconButton } from "@mui/material";
 import moment from "moment";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { useLocalStorage } from "react-use";
 
+import useAuth from "src/commons/hooks/useAuth";
 import useFetchList from "src/commons/hooks/useFetchList";
-import { Column } from "src/types/table";
+import useToast from "src/commons/hooks/useToast";
+import { CloseIcon } from "src/commons/resources";
 import { ReactComponent as DeleteBookmark } from "src/commons/resources/icons/deleteBookmark.svg";
 import { ReactComponent as QuestionConfirm } from "src/commons/resources/icons/questionConfirm.svg";
-import { details } from "src/commons/routers";
+import { details, routers } from "src/commons/routers";
+import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
 import { formatBlockHashById, getShortHash, getShortWallet } from "src/commons/utils/helper";
 import { deleteBookmark } from "src/commons/utils/userRequest";
-import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
-import useToast from "src/commons/hooks/useToast";
 import { ButtonClose } from "src/components/ScriptModal/styles";
-import { CloseIcon } from "src/commons/resources";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import { Column } from "src/types/table";
 
 import { CancelButton, DeleteButton, StyledTable, TitleTab, WrapTab } from "./Styles";
 
 const Bookmark = () => {
+  const { isLoggedIn } = useAuth();
+  const history = useHistory();
   const [bookmarks, setBookmarks] = useLocalStorage<Bookmark[]>("bookmark", []);
   const [activeTab, setActiveTab] = useState("ADDRESS");
   const [loadingDelete, setLoadingDelete] = useState(false);
@@ -71,6 +74,12 @@ const Bookmark = () => {
   useEffect(() => {
     document.title = `Bookmarks | Iris - Cardano Blockchain Explorer`;
   }, []);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      history.replace(routers.HOME);
+    }
+  }, [isLoggedIn]);
 
   const colDynamic: Record<string, Column<Bookmark>> = {
     ADDRESS: {
@@ -150,7 +159,7 @@ const Bookmark = () => {
       )
     },
     STAKE_KEY: {
-      title: "Stake Key",
+      title: "Stake Address",
       key: "StakeKey",
       minWidth: 120,
       render: (data) => (
@@ -308,7 +317,7 @@ const Bookmark = () => {
       )
     },
     {
-      label: "Stake Key",
+      label: "Stake Address",
       key: "STAKE_KEY",
       component: (
         <StyledTable

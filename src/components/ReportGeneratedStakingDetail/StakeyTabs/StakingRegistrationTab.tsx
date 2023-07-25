@@ -54,7 +54,7 @@ const StakingRegistrationTab = () => {
       )
     },
     {
-      title: "Timestamp",
+      title: "Created At",
       key: "time",
       minWidth: "120px",
       sort: ({ columnKey, sortValue }) => {

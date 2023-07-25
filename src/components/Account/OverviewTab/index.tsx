@@ -262,6 +262,30 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
     );
   };
 
+  const renderConfirm = () => {
+    return (
+      <Box mt={3}>
+        <Box textAlign={"center"} mb={3}>
+          <Box component={"img"} src={questionConfirm} />
+        </Box>
+        <Box textAlign={"center"} color={({ palette }) => palette.grey[700]} fontWeight={"bold"} fontSize={"20px"}>
+          Confirmation Required
+        </Box>
+        <Box textAlign={"center"} color={({ palette }) => palette.grey[700]} fontWeight={"bold"} fontSize={"18px"}>
+          This is your stake address {getShortWallet(stakeKey || "")}, are you sure to continue?
+        </Box>
+        <Box display={"flex"} justifyContent={"center"} mt={2}>
+          <StyledButton disabled={loading} onClick={() => setStakeKey(null)}>
+            Close
+          </StyledButton>
+          <StyledDarkLoadingButton loading={loading} onClick={handleSubmitWallet}>
+            Continue
+          </StyledDarkLoadingButton>
+        </Box>
+      </Box>
+    );
+  };
+
   return (
     <StyledModal open={open} handleCloseModal={onClose}>
       <>

@@ -65,7 +65,7 @@ const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
   },
   {
     key: "stake-key",
-    label: "Stake Key History",
+    label: "Stake Address History",
     icon: (
       <StakeKeyHistoryIcon fill="#438F68" width={"20px"} height={"20px"} style={{ padding: "2px" }} display={"block"} />
     )
