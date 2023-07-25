@@ -207,10 +207,10 @@ const Card = ({
       <ItemFooter>
         <Box fontWeight={"bold"}>Total {type === "down" ? "Input" : "Output"}</Box>
         <div>
-          <Box fontWeight={"bold"} component="span" pr={1}>
+          <Box fontWeight={"bold"} component="span" pr={1} sx={isFailed ? { color: (theme) => theme.palette.text.disabled } : {}}>
             {isFailed ? 0 : type === "down" ? `-${formatADAFull(totalADA)}` : `${formatADAFull(totalADA)}`}
           </Box>
-          <ADAicon />
+          <ADAicon sx={isFailed ? { color: (theme: any) => theme.palette.text.disabled } : {}} />
         </div>
       </ItemFooter>
     </Box>
