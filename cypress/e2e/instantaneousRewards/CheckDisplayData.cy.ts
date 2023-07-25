@@ -4,8 +4,14 @@ const instantaneousRewardsPage =  new InstantaneousRewardsPage()
 describe("Instantaneous Rewards screen", ()=>{
     it("Check display data of the Instantaneous Rewards", ()=>{
         instantaneousRewardsPage    .gotoInstantaneousRewards()
-                                    .verifyHyperLinkIsEnable()
-                                    .verifyButtonNextAndPreviousIsEnable()
-                                    .verifyPaging(2)  
+
+        .checkFormatTxHash()
+        .checkCreatedAtIsDisplay()
+        // // .checkFormatCreatedAt()
+        .checkBlockIsDisplay()
+        .checkStakeKeyIsDisplay()
+        .checkFormatStakeKey()
+        .verifyPagingOfStakeList()
+        .checkValidationOfPaging()
     })
 })
