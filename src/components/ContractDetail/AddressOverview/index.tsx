@@ -78,23 +78,20 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
     },
     {
       title: "Delegated To",
-      value: (
-        <span>
-          {dataStake?.pool?.poolName || dataStake?.pool?.poolId ? (
-            <Pool to={details.delegation(dataStake?.pool ? dataStake?.pool?.poolId : "")}>
-              {dataStake?.pool?.poolName ? (
-                dataStake?.pool?.poolName
-              ) : (
-                <CustomTooltip title={dataStake?.pool?.poolId || ""} arrow>
-                  <span>{getShortWallet(dataStake?.pool?.poolId || "")}</span>
-                </CustomTooltip>
-              )}
-            </Pool>
-          ) : (
-            "Not delegated to any pool"
-          )}
-        </span>
-      )
+      value:
+        dataStake?.pool?.poolName || dataStake?.pool?.poolId ? (
+          <Pool to={details.delegation(dataStake?.pool ? dataStake?.pool?.poolId : "")}>
+            {dataStake?.pool?.poolName ? (
+              dataStake?.pool?.poolName
+            ) : (
+              <CustomTooltip title={dataStake?.pool?.poolId || ""} arrow>
+                <span>{getShortWallet(dataStake?.pool?.poolId || "")}</span>
+              </CustomTooltip>
+            )}
+          </Pool>
+        ) : (
+          <span>Not delegated to any pool</span>
+        )
     }
   ];
 
