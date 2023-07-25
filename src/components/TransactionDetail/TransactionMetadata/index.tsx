@@ -177,6 +177,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
               <Tab
                 key={key}
                 value={key}
+                data-testid={`tab-${key}`}
                 style={{ padding: "12px 0px", marginRight: 40 }}
                 label={
                   <Box display={"flex"} alignItems="center">

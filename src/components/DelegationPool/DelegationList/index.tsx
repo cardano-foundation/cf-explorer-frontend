@@ -122,7 +122,7 @@ const DelegationLists: React.FC = () => {
     },
     {
       title: "Fixed Cost (A)",
-      key: "fixedCost",
+      key: "pu.fixedCost",
       minWidth: "120px",
       render: (r) => `${formatADAFull(r.feeAmount)} A`,
       sort: ({ columnKey, sortValue }) => {

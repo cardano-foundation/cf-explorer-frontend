@@ -156,7 +156,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
   return (
     <Card
       data-testid="transactions-card"
-      title={pathname === "/transactions" ? "Transactions" : ""}
+      title={pathname?.includes("/transactions") ? "Transactions" : ""}
       underline={underline}
     >
       <Table
