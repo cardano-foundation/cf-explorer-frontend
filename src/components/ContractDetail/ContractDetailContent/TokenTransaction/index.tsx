@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
 
@@ -16,6 +16,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
+import DetailViewContractHash from "src/components/commons/DetailView/DetailViewContractHash";
 
 import { Flex, Label, SmallText, StyledLink, PriceValue } from "./styles";
 
@@ -40,7 +41,7 @@ const columns: Column<Transactions>[] = [
     )
   },
   {
-    title: "Time",
+    title: "Created At",
     key: "time",
     minWidth: "180px",
 
@@ -121,19 +122,36 @@ const TokenTransaction: React.FC = () => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<Transactions>(`${API.ADDRESS.DETAIL}/${params.address}/txs`, pageInfo);
+  const [txHashSelected, setTxHashSelected] = useState<string>("");
+  const [selected, setSelected] = useState<number | null>(null);
+
+  const openDetail = (_: any, r: Transactions, index: number) => {
+    setTxHashSelected(r.hash);
+    setSelected(index);
+  };
 
   return (
-    <Table
-      {...fetchData}
-      columns={columns}
-      total={{ count: fetchData.total, title: "Total Transactions" }}
-      onClickRow={(_, r: Transactions) => history.push(details.transaction(r.hash))}
-      pagination={{
-        ...pageInfo,
-        total: fetchData.total,
-        onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
-      }}
-    />
+    <>
+      <Table
+        {...fetchData}
+        columns={columns}
+        total={{ count: fetchData.total, title: "Total Transactions" }}
+        onClickRow={openDetail}
+        selected={selected}
+        pagination={{
+          ...pageInfo,
+          total: fetchData.total,
+          onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
+        }}
+      />
+      {txHashSelected && (
+        <DetailViewContractHash
+          txHash={txHashSelected}
+          address={params.address}
+          handleClose={() => setTxHashSelected("")}
+        />
+      )}
+    </>
   );
 };
 

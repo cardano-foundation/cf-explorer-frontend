@@ -12,7 +12,7 @@ const ReportGeneratedPoolDetail = () => {
   const history = useHistory();
 
   useEffect(() => {
-    document.title = "Pool Report Detail | Cardano Explorer";
+    document.title = "Pool Report Detail | Iris - Cardano Blockchain Explorer";
   }, []);
 
   return (

@@ -10,7 +10,7 @@ import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { details } from "src/commons/routers";
 import { RootState } from "src/stores/types";
 import { EmptyIcon, SearchIcon } from "src/commons/resources";
-import { formatDateTimeLocal, getShortHash, numberWithCommas } from "src/commons/utils/helper";
+import { formatDateTimeLocal, formatNumberDivByDecimals, getShortHash } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
 
 import ProgressCircle from "../ProgressCircle";
@@ -43,17 +43,18 @@ import {
   StyledMenuItem,
   WrapHeader,
   EpochDetail,
-  TimeDuration
+  TimeDuration,
+  WrapLeaderValue
 } from "./styles";
 
-interface DetailHeaderProps {
+export interface DetailHeaderProps {
   type: Bookmark["type"];
   bookmarkData?: string;
   loading: boolean;
   title: number | string;
   lastUpdated?: number;
   hash?: string;
-  transactionStatus?: keyof typeof TransactionStatus;
+  transactionStatus?: TransactionStatus;
   stakeKeyStatus?: StakeStatus;
   epoch?: DetailHeaderBlock | null;
   listItem: {
@@ -94,7 +95,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
 
   const getHashLabel = () => {
     if (type === "BLOCK") return "Block Id";
-    if (type === "STAKE_KEY") return "Stake key";
+    if (type === "STAKE_KEY") return "Stake address";
     if (type === "POOL") return "Pool Id";
     if (type === "TOKEN") return "Token ID";
   };
@@ -103,10 +104,12 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
   const hashLabel = getHashLabel();
 
   const numberOfItems = listItem.length;
+  const itemOnRow = isDetailToken ? 5 : 4;
 
   const handleClickItem = (link: string) => {
     history.push(link);
   };
+
   if (loading) {
     return (
       <HeaderDetailContainer>
@@ -128,10 +131,11 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                 item
                 xs={isDetailToken && index === 0 ? 12 : 6}
                 md={4}
-                lg={numberOfItems > 6 ? 3 : true}
+                lg={numberOfItems > 6 ? 12 / itemOnRow : true}
                 length={numberOfItems}
                 key={index}
                 wide={+isDetailToken}
+                itemOnRow={itemOnRow}
               >
                 <IconSkeleton variant="circular" />
                 <DetailValueSkeleton variant="rectangular" />
@@ -141,7 +145,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               </CardItem>
             );
           })}
-          <BufferList numberOfItems={numberOfItems} wide={+isDetailToken}>
+          <BufferList numberOfItems={numberOfItems} wide={+isDetailToken} itemOnRow={itemOnRow}>
             <IconSkeleton variant="circular" />
             <DetailValueSkeleton variant="rectangular" />
             <ValueCard>
@@ -173,14 +177,16 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           {hash && (
             <SlotLeader>
               {hashLabel ? <SlotLeaderTitle>{hashLabel}: </SlotLeaderTitle> : ""}
-              {isMobile ? (
-                <CustomTooltip title={hash}>
-                  <SlotLeaderValue>{getShortHash(hash)}</SlotLeaderValue>
-                </CustomTooltip>
-              ) : (
-                <SlotLeaderValue>{hash}</SlotLeaderValue>
-              )}
-              <SlotLeaderCopy text={hash} />
+              <WrapLeaderValue>
+                {isMobile ? (
+                  <CustomTooltip title={hash}>
+                    <SlotLeaderValue>{getShortHash(hash)}</SlotLeaderValue>
+                  </CustomTooltip>
+                ) : (
+                  <SlotLeaderValue>{hash}</SlotLeaderValue>
+                )}
+                <SlotLeaderCopy text={hash} />
+              </WrapLeaderValue>
             </SlotLeader>
           )}
           <TimeDuration>
@@ -224,10 +230,11 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               xs={isDetailToken && index === 0 ? 12 : 6}
               sm={isDetailToken && index === 0 ? 12 : 6}
               md={numberOfItems === 4 ? 3 : 4}
-              lg={numberOfItems > 6 ? 3 : true}
+              lg={numberOfItems > 6 ? 12 / itemOnRow : true}
               length={numberOfItems}
               key={index}
               wide={+isDetailToken}
+              itemOnRow={itemOnRow}
             >
               <Box position="relative" display={item.hideHeader ? "none" : ""}>
                 {item.icon ? <img src={item.icon} alt="" height={20} /> : null}
@@ -288,7 +295,9 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                               {item.assetName}
                             </Box>
                           </CustomTooltip>
-                          <Box fontWeight={500}>{numberWithCommas(item.assetQuantity)}</Box>
+                          <Box fontWeight={500}>
+                            {formatNumberDivByDecimals(item?.assetQuantity || 0, item?.metadata?.decimals || 0)}
+                          </Box>
                         </StyledMenuItem>
                       ))}
                   </StyledSelect>
@@ -308,10 +317,10 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
             </CardItem>
           );
         })}
-        <BufferList numberOfItems={numberOfItems} wide={+isDetailToken} />
+        <BufferList numberOfItems={numberOfItems} wide={+isDetailToken} itemOnRow={itemOnRow} />
       </DetailsInfo>
       <Backdrop
-        sx={{ zIndex: 100 }}
+        sx={{ zIndex: 100, touchAction: "none" }}
         onClick={() => setOpenBackdrop({ input: false, output: false })}
         open={openBackdrop.input || openBackdrop.output}
       />
@@ -321,12 +330,13 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
 interface BufferListProps {
   numberOfItems: number;
   wide: number;
+  itemOnRow: number;
   children?: React.ReactNode;
 }
 
-const BufferList = memo(({ numberOfItems, wide, children }: BufferListProps) => {
+const BufferList = memo(({ numberOfItems, wide, children, itemOnRow }: BufferListProps) => {
   const { isTablet, isLaptop } = useScreen();
-  const numberOfRow = isTablet ? 2 : isLaptop ? 3 : 4;
+  const numberOfRow = isTablet ? 2 : isLaptop ? 3 : itemOnRow;
   // get number of buffer items. Ex: if numberOfItems = 8, first item token detail 2 slot (bufferWide = 1);
   const bufferWide = isTablet ? wide : 0;
   // numberOfRow in tablet screen is 2, numberOfBuffer is 1;
@@ -341,10 +351,11 @@ const BufferList = memo(({ numberOfItems, wide, children }: BufferListProps) => 
               item
               xs={6}
               md={numberOfItems === 4 ? 3 : 4}
-              lg={numberOfItems > 6 ? 3 : true}
+              lg={numberOfItems > 6 ? 12 / itemOnRow : true}
               length={numberOfItems + numberOfBuffer}
               key={index}
               wide={wide}
+              itemOnRow={itemOnRow}
             >
               {children}
             </CardItem>

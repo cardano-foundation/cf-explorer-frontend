@@ -1,10 +1,11 @@
 import { screen, cleanup, fireEvent } from "@testing-library/react";
+import { createMemoryHistory } from "history";
+import { Router } from "react-router";
+
 import { render } from "src/test-utils";
 import Table from "src/components/commons/Table";
 import useFetchList from "src/commons/hooks/useFetchList";
 import DelegationLists from "src/components/DelegationPool/DelegationList";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router";
 
 const mockData = {
   data: [

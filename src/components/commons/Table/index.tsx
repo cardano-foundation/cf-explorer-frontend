@@ -1,9 +1,30 @@
+import {
+  Box,
+  CircularProgress,
+  IconButton,
+  MenuItem,
+  PaginationRenderItemParams,
+  alpha,
+  styled,
+  useScrollTrigger
+} from "@mui/material";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Box, PaginationRenderItemParams, IconButton, MenuItem, styled, CircularProgress, alpha } from "@mui/material";
-import { useUpdateEffect } from "react-use";
 import { useParams } from "react-router-dom";
-import { useScrollTrigger } from "@mui/material";
+import { useUpdateEffect } from "react-use";
 
+import { useScreen } from "src/commons/hooks/useScreen";
+import {
+  DownIcon,
+  EmptyIcon,
+  EndPage,
+  EyeIcon,
+  NextPage,
+  PrevPage,
+  SortTableDown,
+  SortTableUp,
+  SortTableUpDown,
+  StartPage
+} from "src/commons/resources";
 import { handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
 import {
   ColumnType,
@@ -13,44 +34,31 @@ import {
   TableRowProps,
   TableTopHeaderProps
 } from "src/types/table";
-import { useScreen } from "src/commons/hooks/useScreen";
-import {
-  DownIcon,
-  EmptyIcon,
-  EndPage,
-  EyeIcon,
-  NextPage,
-  PrevPage,
-  StartPage,
-  SortTableDown,
-  SortTableUp,
-  SortTableUpDown
-} from "src/commons/resources";
 
+import CustomIcon from "../CustomIcon";
+import Filter from "../Filter";
 import {
   Empty,
   EmtyImage,
+  InputNumber,
+  LoadingWrapper,
+  SelectMui,
+  ShowedResults,
+  StyledPagination,
   TBody,
   TCol,
   TFooter,
   THead,
   THeader,
   TRow,
-  TotalNumber,
-  Wrapper,
-  TableFullWidth,
-  InputNumber,
-  SelectMui,
-  LoadingWrapper,
   TableCheckBox,
+  TableCustomTitle,
+  TableFullWidth,
   TableHeaderContainer,
   TableTitle,
-  ShowedResults,
-  TableCustomTitle,
-  StyledPagination
+  TotalNumber,
+  Wrapper
 } from "./styles";
-import Filter from "../Filter";
-import CustomIcon from "../CustomIcon";
 
 type TEmptyRecord = {
   className?: string;
@@ -292,6 +300,11 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
               }}
               value={size}
               IconComponent={DownIcon}
+              MenuProps={{
+                sx: {
+                  zIndex: 1305
+                }
+              }}
             >
               <MenuItem value={10}>10</MenuItem>
               <MenuItem value={20}>20</MenuItem>
@@ -397,7 +410,7 @@ const Table: React.FC<TableProps> = ({
         maxHeight={maxHeight}
         minHeight={(!data || data.length === 0) && !loading ? 360 : loading ? 400 : 150}
         height={heightTable}
-        className={data && data.length !== 0 ? "table-wrapper" : ""}
+        className={data && data.length !== 0 ? "table-wrapper" : "hide-scroll"}
         loading={loading ? 1 : 0}
       >
         <TableFullWidth ref={tableRef}>

@@ -16,7 +16,8 @@ import {
   SummaryIcon,
   UtxoIcon,
   WithdrawalIcon,
-  InstantaneousHistoryIcon
+  InstantaneousHistoryIcon,
+  MetadataIconTx
 } from "src/commons/resources";
 
 import "./index.css";
@@ -32,6 +33,7 @@ import PoolCertificate from "./PoolCertificate";
 import ProtocolUpdate from "./ProtocolUpdate";
 import StakeCertificate from "./StakeCertificate";
 import InstantaneousRewards from "./InstantaneousRewards";
+import Metadata from "./Metadata";
 
 interface TransactionMetadataProps {
   data: Transaction | null;
@@ -147,6 +149,12 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
       icon: InstantaneousHistoryIcon,
       label: `Instantaneous Rewards (${data?.instantaneousRewards?.length || 0})`,
       children: <InstantaneousRewards data={data?.instantaneousRewards} />
+    },
+    {
+      key: "metadata",
+      icon: MetadataIconTx,
+      label: `Metadata`,
+      children: <Metadata data={data?.metadata} hash={data?.metadataHash} />
     }
   ];
 
@@ -168,6 +176,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
               <Tab
                 key={key}
                 value={key}
+                data-testid={`tab-${key}`}
                 style={{ padding: "12px 0px", marginRight: 40 }}
                 label={
                   <Box display={"flex"} alignItems="center">

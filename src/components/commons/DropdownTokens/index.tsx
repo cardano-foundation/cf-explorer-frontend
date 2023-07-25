@@ -6,12 +6,12 @@ import { RiArrowRightSLine } from "react-icons/ri";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { details } from "src/commons/routers";
-import { getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import { formatNumberDivByDecimals, getShortWallet } from "src/commons/utils/helper";
 
 import CustomTooltip from "../CustomTooltip";
 import { CustomSelect, OptionSelect, TokenButton } from "./styles";
 
-interface IDropdownTokens {
+export interface IDropdownTokens {
   tokens: Token[];
   type?: "up" | "down" | undefined;
   hideInputLabel?: boolean;
@@ -103,7 +103,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
             </Box>
             <Box fontWeight={"bold"} fontSize={"14px"}>
               {isNegative || hideMathChar ? "" : "+"}
-              {`${numberWithCommas(token.assetQuantity) || ""}`}
+              {formatNumberDivByDecimals(token?.assetQuantity || 0, token?.metadata?.decimals || 0)}
             </Box>
           </OptionSelect>
         );
@@ -115,7 +115,6 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
 export default DropdownTokens;
 
 export const TokenLink: React.FC<{ token: Token }> = ({ token }) => {
-  const isNegative = token.assetQuantity <= 0;
   const tokenName = token.assetName || token.assetId;
   const shortTokenName = getShortWallet(tokenName);
   const isTokenNameLong = tokenName.length > 20;
@@ -143,8 +142,7 @@ export const TokenLink: React.FC<{ token: Token }> = ({ token }) => {
         </Box>
         <Box display={"flex"} alignItems={"center"}>
           <Box fontWeight={"bold"} fontSize={"14px"}>
-            {isNegative ? "" : "+"}
-            {`${numberWithCommas(token.assetQuantity) || ""}`}
+            {formatNumberDivByDecimals(token?.assetQuantity || 0, token?.metadata?.decimals || 0)}
           </Box>
           <Box mr={1} mt={"2px"}>
             <RiArrowRightSLine />

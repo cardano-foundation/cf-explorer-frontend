@@ -18,7 +18,7 @@ const InstantaneousRewards: React.FC<InstantaneousRewardsProps> = ({ data }) => 
   return (
     <Wrapper>
       <Header>
-        <Box>Address Stake Key</Box>
+        <Box>Stake Address</Box>
         <Box>Rewards Paid</Box>
       </Header>
       <ItemBox>
@@ -38,7 +38,7 @@ const ItemInstantaneousRewards = ({ data }: { data: Transaction["instantaneousRe
         <Item key={item.stakeAddress}>
           <ItemContent>
             <Content>
-              <Link to={details.stake(item.stakeAddress)}>
+              <Link data-testid={`stake-item-${item.stakeAddress}`} to={details.stake(item.stakeAddress)}>
                 <CustomTooltip title={item.stakeAddress}>
                   <Title>{isTablet ? getShortWallet(item.stakeAddress) : item.stakeAddress}</Title>
                 </CustomTooltip>

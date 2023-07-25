@@ -190,7 +190,7 @@ const StackingFilter: React.FC<StackingFilterProps> = ({
               textTransform={"capitalize"}
               display={"flex"}
               alignItems={"center"}
-              color={`#108AEF !important`}
+              color={`#0052CC !important`}
               onClick={() => {
                 onFilterValueChange?.({ fromDate: undefined, sort: undefined, toDate: undefined, txHash: undefined });
                 setOpen(false);

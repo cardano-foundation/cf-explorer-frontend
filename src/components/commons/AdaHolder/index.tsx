@@ -7,7 +7,7 @@ import { formatADAFull } from "src/commons/utils/helper";
 import { AdaHolderImage, AdaHolderValue, StyledAdaLogoIcon } from "./styles";
 import PolygonShape from "../PolygonShape";
 
-const StyledPolygonShape = styled(PolygonShape)(() => ({ 
+const StyledPolygonShape = styled(PolygonShape)(() => ({
   margin: "0px -13px"
 }));
 

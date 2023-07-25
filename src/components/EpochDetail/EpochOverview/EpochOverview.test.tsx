@@ -1,7 +1,7 @@
 import { render, screen } from "src/test-utils";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
 
 import EpochOverview from "./index";
-import { formatDateTimeLocal } from "src/commons/utils/helper";
 
 const mockedData: IDataEpoch = {
   blkCount: 20947,
@@ -13,7 +13,8 @@ const mockedData: IDataEpoch = {
   startTime: "2023/06/09 21:47:26",
   status: "REWARDING",
   txCount: 375738,
-  epochSlotNo: 0
+  epochSlotNo: 0,
+  account: 100
 };
 
 describe("EpochOverview", () => {

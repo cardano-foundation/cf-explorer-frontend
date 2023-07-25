@@ -69,7 +69,7 @@ type TSignIn = {
 
 type TSignOut = {
   refreshJwt: string;
-  username: string;
+  accountId: string;
 };
 
 type TSignUp = {
@@ -89,6 +89,10 @@ type TResetPassword = {
   code: string;
   password: string;
 };
+
+type TVerifyCodeResetPassword = {
+  code: string;
+}
 
 interface NonceObject {
   message: "SS_0" | "SS_1";

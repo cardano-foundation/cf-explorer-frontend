@@ -1,14 +1,12 @@
 import { screen, cleanup, fireEvent } from "@testing-library/react";
-
-import { render } from "src/test-utils";
-
-import Tokens from ".";
-
-import Table from "src/components/commons/Table";
-
-import useFetchList from "src/commons/hooks/useFetchList";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
+
+import { render } from "src/test-utils";
+import Table from "src/components/commons/Table";
+import useFetchList from "src/commons/hooks/useFetchList";
+
+import Tokens from ".";
 
 const mockData = {
   data: [

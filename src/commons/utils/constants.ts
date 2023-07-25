@@ -1,6 +1,7 @@
+import { get } from "lodash";
+
 import { Wallet } from "../../types/user";
 import { EternlIcon, FlintIcon, NamiIcon, TyphonIcon, YoroiIcon } from "../resources";
-
 export const STORAGE_KEYS = {
   THEME: "dark",
   USER_INFO: "user_info",
@@ -10,8 +11,7 @@ export const STORAGE_KEYS = {
 export enum NETWORKS {
   mainnet = "mainnet",
   preprod = "preprod",
-  preview = "preview",
-  testnet = "testnet"
+  preview = "preview"
 }
 
 export const SUPPORTED_WALLETS: Wallet[] = [
@@ -25,13 +25,13 @@ export const SUPPORTED_WALLETS: Wallet[] = [
     name: "Nami",
     icon: NamiIcon,
     link: "https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo",
-    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview, NETWORKS.testnet]
+    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview]
   },
   {
     name: "Eternl",
     icon: EternlIcon,
     link: "https://chrome.google.com/webstore/detail/eternl/kmhcihpebfmpgmihbkipmjlmmioameka",
-    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview, NETWORKS.testnet]
+    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview]
   },
   {
     name: "Yoroi",
@@ -43,13 +43,13 @@ export const SUPPORTED_WALLETS: Wallet[] = [
     name: "Yoroi",
     icon: YoroiIcon,
     link: "https://chrome.google.com/webstore/detail/yoroi-nightly/poonlenmfdfbjfeeballhiibknlknepo",
-    networks: [NETWORKS.testnet, NETWORKS.preprod]
+    networks: [NETWORKS.preprod]
   },
   {
     name: "Typhon",
     icon: TyphonIcon,
     link: "https://chrome.google.com/webstore/detail/typhon-wallet/kfdniefadaanbjodldohaedphafoffoh",
-    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview, NETWORKS.testnet]
+    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview]
   }
 ];
 
@@ -62,30 +62,26 @@ export enum EPOCH_STATUS {
 
 export const MAX_SLOT_EPOCH = 432000;
 
-export enum NETWORK_NAMES {
-  mainnet = "Mainnet",
-  preprod = "Preprod",
-  preview = "Preview",
-  testnet = "Testnet"
-}
+export const NETWORK_NAMES = JSON.parse(
+  String(process.env.REACT_APP_NETWORK_NAMES || get(window, "env.REACT_APP_NETWORK_NAMES"))
+);
 
 export enum NETWORK_TYPES {
   mainnet = "MAIN_NET",
   preprod = "PRE_PROD",
-  preview = "PREVIEW",
-  testnet = "TEST_NET"
+  preview = "PREVIEW"
 }
 export const FRONT_END_NETWORK = {
-  mainnet: process.env.REACT_APP_MAINNET_APP_URL,
-  preprod: process.env.REACT_APP_PREPROD_APP_URL,
-  preview: process.env.REACT_APP_PREVIEW_APP_URL,
-  testnet: process.env.REACT_APP_TESTNET_APP_URL
+  mainnet: process.env.REACT_APP_MAINNET_APP_URL || get(window, "env.REACT_APP_MAINNET_APP_URL"),
+  preprod: process.env.REACT_APP_PREPROD_APP_URL || get(window, "env.REACT_APP_PREPROD_APP_URL"),
+  preview: process.env.REACT_APP_PREVIEW_APP_URL || get(window, "env.REACT_APP_PREVIEW_APP_URL")
 };
 
-export const NETWORK: NETWORKS = (process.env.REACT_APP_NETWORK as NETWORKS) || NETWORKS.mainnet;
+export const NETWORK: NETWORKS =
+  (process.env.REACT_APP_NETWORK as NETWORKS) || get(window, "env.REACT_APP_NETWORK") || NETWORKS.mainnet;
 
 export enum TRANSACTION_STATUS {
-  FAIL = "FAIL",
+  FAILED = "FAILED",
   SUCCESS = "SUCCESS",
   PENDDING = "PENDDING"
 }
@@ -99,10 +95,18 @@ export enum STAKE_KEY_STATUS {
   ACTIVE = "ACTIVE",
   DEACTIVATED = "DEACTIVATED"
 }
-export const APP_VERSION = process.env.REACT_APP_VERSION;
-export const EXT_ADA_PRICE_URL = process.env.REACT_APP_EXT_ADA_PRICE_URL;
-export const AUTH_API_URL = process.env.REACT_APP_AUTH_API_URL;
-export const API_URL = process.env.REACT_APP_API_URL;
+
+export enum RECEIVED_REWARDS {
+  LEADER = "LEADER",
+  MEMBER = "MEMBER",
+  ALL = ""
+}
+
+export const AUTH_API_URL = process.env.REACT_APP_AUTH_API_URL || get(window, "env.REACT_APP_AUTH_API_URL");
+export const API_URL = process.env.REACT_APP_API_URL || get(window, "env.REACT_APP_API_URL");
+export const APP_VERSION = process.env.REACT_APP_VERSION || get(window, "env.REACT_APP_VERSION");
+export const EXT_ADA_PRICE_URL =
+  process.env.REACT_APP_EXT_ADA_PRICE_URL || get(window, "env.REACT_APP_EXT_ADA_PRICE_URL");
 
 export enum ACCOUNT_ERROR {
   UNKNOWN_ERROR = "CC_1",

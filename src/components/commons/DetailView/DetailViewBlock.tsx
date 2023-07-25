@@ -3,7 +3,7 @@ import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { useSelector } from "react-redux";
 import { BiChevronRight } from "react-icons/bi";
 
-import { CONFIRMATION_STATUS, MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
 import { CubeIcon, RocketIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
@@ -39,7 +39,6 @@ import {
   StyledLink,
   DetailLinkName,
   ViewDetailHeader,
-  ConfirmStatus,
   ViewDetailScroll,
   TimeDuration
 } from "./styles";
@@ -64,19 +63,6 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
     REFRESH_TIMES.BLOCK_DETAIL
   );
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
-
-  const renderConfirmationTag = () => {
-    if (data?.confirmation) {
-      if (data.confirmation <= 2) {
-        return CONFIRMATION_STATUS.LOW;
-      }
-      if (data.confirmation <= 8) {
-        return CONFIRMATION_STATUS.MEDIUM;
-      }
-      return CONFIRMATION_STATUS.HIGH;
-    }
-    return CONFIRMATION_STATUS.LOW;
-  };
 
   useEffect(() => {
     document.body.style.overflowY = "hidden";
@@ -177,10 +163,10 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
               pathLineCap="butt"
               pathWidth={4}
               trailWidth={2}
-              percent={data.epochNo === currentEpoch?.no ? ((data.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100 : 100}
+              percent={data?.epochNo === currentEpoch?.no ? ((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100 : 100}
               trailOpacity={1}
             >
-              <EpochNumber>{data.epochNo !== null ? data.epochNo : "_"}</EpochNumber>
+              <EpochNumber>{data?.epochNo !== null ? data?.epochNo : "_"}</EpochNumber>
               <EpochText>Epoch</EpochText>
             </ProgressCircle>
           </HeaderContainer>
@@ -188,14 +174,14 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
             <Item>
               <Icon src={CubeIcon} alt="socket" />
               <ItemName>Block</ItemName>
-              <ItemValue>{data.blockNo !== null ? data.blockNo : "_"}</ItemValue>
+              <ItemValue>{data?.blockNo !== null ? data.blockNo : "_"}</ItemValue>
             </Item>
             <Item>
               <Icon src={RocketIcon} alt="socket" />
               <ItemName>slot</ItemName>
               <ItemValue>
-                {data.epochSlotNo || 0}
-                <BlockDefault>/{data.totalSlot || MAX_SLOT_EPOCH}</BlockDefault>
+                {data?.epochSlotNo || 0}
+                <BlockDefault>/{data?.totalSlot || MAX_SLOT_EPOCH}</BlockDefault>
               </ItemValue>
             </Item>
           </ListItem>
@@ -203,10 +189,10 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
             <DetailsInfoItem>
               <DetailLabel>Block Id</DetailLabel>
               <DetailValue>
-                <CustomTooltip title={data.hash}>
-                  <StyledLink to={details.block(blockNo)}>{getShortHash(data.hash)}</StyledLink>
+                <CustomTooltip title={data?.hash}>
+                  <StyledLink to={details.block(blockNo)}>{getShortHash(data?.hash)}</StyledLink>
                 </CustomTooltip>
-                <CopyButton text={data.hash} />
+                <CopyButton text={data?.hash} />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
@@ -214,23 +200,20 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
               <DetailValue>{formatDateTimeLocal(data.time || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Confirmation</DetailLabel>
-              <DetailValue>
-                {data.confirmation}
-                <ConfirmStatus status={renderConfirmationTag()}>{renderConfirmationTag()}</ConfirmStatus>
-              </DetailValue>
+              <DetailLabel>{data?.confirmation > 1 ? "Confirmations" : "Confirmation"}</DetailLabel>
+              <DetailValue>{data?.confirmation}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Transaction Fees</DetailLabel>
               <DetailValue>
-                {formatADAFull(data.totalFees)}
+                {formatADAFull(data?.totalFees)}
                 <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Total Output in ADA</DetailLabel>
               <DetailValue>
-                {formatADAFull(data.totalOutput)}
+                {formatADAFull(data?.totalOutput)}
                 <ADAicon />
               </DetailValue>
             </DetailsInfoItem>

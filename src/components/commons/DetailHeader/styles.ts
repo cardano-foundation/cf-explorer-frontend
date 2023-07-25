@@ -6,6 +6,11 @@ import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "src/commons/utils/const
 import breakpoints from "src/themes/breakpoints";
 
 import CopyButton from "../CopyButton";
+interface CardItemProps {
+  length: number;
+  wide?: number;
+  itemOnRow: number;
+}
 
 export const HeaderDetailContainer = styled(Box)`
   text-align: left;
@@ -54,11 +59,13 @@ export const HeaderContainer = styled(Box)`
   align-items: center;
   flex-wrap: wrap;
   ${(props) => props.theme.breakpoints.down("sm")} {
-    justify-content: space-between;
+    justify-content: flex-start;
   }
 `;
 
-export const HeaderTitle = styled("h2")`
+export const HeaderTitle = styled(Box)`
+  overflow-wrap: anywhere;
+  font-weight: var(--font-weight-bold);
   color: ${(props) => props.theme.palette.common.black};
   font-size: 2.25rem;
   margin: 0.5rem 0;
@@ -74,10 +81,10 @@ export const HeaderTitleSkeleton = styled(Skeleton)`
   border-radius: 4px;
 `;
 
-export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionStatus | IDataEpoch["status"] }>`
+export const HeaderStatus = styled("small")<{ status?: TransactionStatus | IDataEpoch["status"] }>`
   color: ${({ status, theme }) => {
     switch (status) {
-      case TRANSACTION_STATUS.FAIL:
+      case TRANSACTION_STATUS.FAILED:
         return theme.palette.error.main;
       case TRANSACTION_STATUS.SUCCESS:
         return theme.palette.success.main;
@@ -93,7 +100,7 @@ export const HeaderStatus = styled("small")<{ status?: keyof typeof TransactionS
   }};
   background-color: ${({ status, theme }) => {
     switch (status) {
-      case TRANSACTION_STATUS.FAIL:
+      case TRANSACTION_STATUS.FAILED:
         return theme.palette.error.light;
       case TRANSACTION_STATUS.SUCCESS:
         return theme.palette.success.light;
@@ -142,6 +149,10 @@ export const SlotLeader = styled("p")`
   margin-top: 0px;
 `;
 
+export const WrapLeaderValue = styled(Box)`
+  display: inline-block;
+`;
+
 export const SlotLeaderValue = styled("span")`
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.secondary.main};
@@ -150,6 +161,7 @@ export const SlotLeaderValue = styled("span")`
   line-height: 1.5;
   font-weight: bold;
 `;
+
 export const SlotLeaderTitle = styled("small")`
   font-family: var(--font-family-text);
 `;
@@ -286,7 +298,7 @@ export const ProgressPercent = styled("h4")`
   margin: 0;
 `;
 
-export const CardItem = styled(Grid)<{ length: number; wide?: number }>(({ theme, length, wide }) => ({
+export const CardItem = styled(Grid)<CardItemProps>(({ theme, length, wide, itemOnRow }) => ({
   width: "max-content",
   padding: length > 6 ? "20px 25px" : "0px 15px",
   borderLeft: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
@@ -298,13 +310,13 @@ export const CardItem = styled(Grid)<{ length: number; wide?: number }>(({ theme
     ? {
         borderBottomWidth: 1,
         [theme.breakpoints.up("lg")]: {
-          ":nth-of-type(4n+1)": {
+          [`:nth-of-type(${itemOnRow}n+1)`]: {
             borderLeftWidth: 0,
             paddingLeft: 0
           },
-          ":nth-last-of-type(-n + 4)": {
-            ":nth-of-type(4n + 1)": {
-              borderBottomWidth: 0,
+          [`:nth-last-of-type(-n + ${itemOnRow})`]: {
+            borderBottom: "none !important",
+            [`:nth-of-type(${itemOnRow}n + 1)`]: {
               "&~div": {
                 borderBottomWidth: 0,
                 paddingTop: 20,
@@ -319,6 +331,12 @@ export const CardItem = styled(Grid)<{ length: number; wide?: number }>(({ theme
         [theme.breakpoints.down("lg")]: {
           padding: "20px 25px"
         },
+        [theme.breakpoints.down("sm")]: {
+          padding: "20px 15px",
+          ":nth-of-type(even)": {
+            paddingRight: "0 !important"
+          }
+        }
       }),
   [theme.breakpoints.between("md", "lg")]: {
     paddingTop: 20,

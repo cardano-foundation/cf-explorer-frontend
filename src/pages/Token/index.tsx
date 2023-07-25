@@ -43,7 +43,7 @@ const Tokens = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Tokens List | Cardano Explorer`;
+    document.title = `Tokens List | Iris - Cardano Blockchain Explorer`;
   }, []);
 
   const columns: Column<IToken>[] = [
@@ -67,6 +67,16 @@ const Tokens = () => {
             {r.displayName || getShortWallet(r.fingerprint || "")}
           </AssetName>
         )
+    },
+    {
+      title: "Policy ID",
+      key: "policy",
+      minWidth: "100px",
+      render: (r) => (
+        <CustomTooltip title={r.policy}>
+          <AssetName to={details.policyDetail(r.policy)}>{getShortWallet(r.policy)}</AssetName>
+        </CustomTooltip>
+      )
     },
     {
       title: "Total Transactions",
@@ -108,7 +118,7 @@ const Tokens = () => {
       }
     },
     {
-      title: "Created",
+      title: "Created At",
       key: "time",
       minWidth: "150px",
       render: (r) => (
@@ -154,7 +164,7 @@ const Tokens = () => {
             ...pageInfo,
             total: fetchData.total,
             onChange: (page, size) => {
-              mainRef.current?.scrollTo(0, 0);
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
               history.replace({ search: stringify({ page, size }) });
             },
             handleCloseDetailView: handleClose
@@ -164,7 +174,9 @@ const Tokens = () => {
           showTabView
         />
       </Card>
-      {token && onDetailView && <DetailViewToken tokenId={token.fingerprint || ""} token={token} handleClose={handleClose} />}
+      {token && onDetailView && (
+        <DetailViewToken tokenId={token.fingerprint || ""} token={token} handleClose={handleClose} />
+      )}
     </StyledContainer>
   );
 };

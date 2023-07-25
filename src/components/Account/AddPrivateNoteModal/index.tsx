@@ -124,7 +124,10 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
           <br />
           <StyledInput
             value={privateNote?.value}
-            onChange={(e) => setPrivateNote((prev) => ({ ...prev, value: e.target.value }))}
+            onChange={(e) => {
+              if (e.target.value.length > 300) return;
+              setPrivateNote((prev) => ({ ...prev, value: e.target.value }));
+            }}
             fullWidth={true}
             multiline={true}
             rows={5}

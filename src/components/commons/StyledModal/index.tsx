@@ -25,12 +25,18 @@ const StyledModal: React.FC<IProps> = ({
   paddingX,
   paddingY,
   contentStyle = {},
-  modalStyle = {}
+  modalStyle = {},
 }) => {
   const { isMobile } = useScreen();
 
   return (
-    <Modal open={open} onClose={handleCloseModal}>
+    <Modal
+      open={open}
+      onClose={handleCloseModal}
+      sx={{
+        zIndex: 1305
+      }}
+    >
       <ModalContainer
         width={width}
         height={height}

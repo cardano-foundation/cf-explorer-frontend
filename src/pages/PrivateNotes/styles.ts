@@ -71,6 +71,9 @@ export const StyledTable = styled(Table)(({ theme }) => ({
   "& .table-wrapper": {
     minHeight: "75px"
   },
+  "& .hide-scroll": {
+    overflow: "hidden"
+  },
   "& thead tr th": {
     fontSize: "var(--font-size-text-x-small)",
     padding: "10px 20px"
@@ -107,7 +110,7 @@ export const ActionButton = styled("button")<{ typeButton: string }>`
 `;
 
 export const StyledLink = styled(Link)`
-  display: block;
+  display: inline;
   text-decoration: none;
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.secondary.main} !important;

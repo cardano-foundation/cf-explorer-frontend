@@ -29,47 +29,37 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, params, setParams, set
 
   const { data, total, loading, initialized, error } = useFetchList<SPORegistration>(
     poolId ? API.SPO_LIFECYCLE.SPO_REGISTRATION(poolId) : "",
-    {
-      ...pageInfo,
-      ...params
-    }
+    { ...pageInfo, ...params }
   );
 
   useEffect(() => {
-    if (initialized) {
-      setShowBackButton?.(data.length > 1);
-    }
-  }, [initialized]);
+    if (initialized) setShowBackButton?.(data.length > 1);
 
-  useEffect(() => {
-    const isNoFilter = !params?.fromDate && !params?.toDate && !params?.txHash && !params?.sort;
-    if (initialized && data.length === 1 && isNoFilter) {
-      history.replace(details.staking(poolId, "timeline", "registration", data?.[0]?.txHash));
-    }
-  }, [params, poolId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialized]);
 
   useEffect(() => {
     const currentItem = data.find((item) => item.txHash === txHash);
     onSelect(currentItem || null);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txHash, data]);
 
   const handleSelect = (registration: SPORegistration) => {
-    history.replace(details.spo(poolId, "timeline", "registration", registration.txHash));
+    history.push(details.spo(poolId, "timeline", "registration", registration.txHash));
   };
-  useUpdateEffect(() => {
-    if (
-      data &&
-      data.length &&
-      data.length === 1 &&
-      params?.txHash === undefined &&
-      params?.fromDate === undefined &&
-      params?.toDate === undefined
-    ) {
-      handleSelect(data[0]);
-    }
-  }, [JSON.stringify(data)]);
 
-  if (txHash) return null;
+  const { txHash: txHashParms, fromDate, toDate } = params || {};
+  const isNoFilter = txHashParms === undefined && fromDate === undefined && toDate === undefined;
+  const isOneItemOnly = data.length === 1 && isNoFilter;
+
+  useUpdateEffect(() => {
+    if (isOneItemOnly) history.replace(details.spo(poolId, "timeline", "registration", data[0].txHash));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
+  if (txHash || isOneItemOnly) return null;
 
   return (
     <StyledContainer>

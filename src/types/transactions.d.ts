@@ -1,8 +1,4 @@
-enum TransactionStatus {
-  FAIL = "FAIL",
-  SUCCESS = "SUCCESS",
-  PENDDING = "PENDDING"
-}
+type TransactionStatus = import("src/commons/utils/constants").TRANSACTION_STATUS;
 
 interface Transactions {
   hash: string;
@@ -38,6 +34,13 @@ interface Token {
     policyId: string;
     totalToken: number;
     policyScript: string;
+  };
+  metadata?: {
+    decimals: number;
+    description: string;
+    logo: string;
+    ticker: string;
+    url: string;
   };
 }
 interface CurrentTransactions {
@@ -111,6 +114,21 @@ type TStakeCertificated = {
   type: "STAKE_REGISTRATION" | "STAKE_DEREGISTRATION";
 };
 
+interface IContractItemTx {
+  contract: string;
+  address: string;
+  datumBytesIn: string;
+  datumBytesOut: string;
+  datumHashIn: string;
+  datumHashOut: string;
+  purpose: string;
+  redeemerBytes: string;
+  redeemerMem: number;
+  redeemerSteps: number;
+  scriptBytes: string;
+  scriptHash: string;
+}
+
 interface Transaction {
   tx: {
     hash: string;
@@ -118,7 +136,7 @@ interface Transaction {
     blockNo: number;
     epochSlot: number;
     epochNo: number;
-    status: keyof typeof TransactionStatus;
+    status: TransactionStatus;
     confirmation: number;
     fee: number;
     totalOutput: number;
@@ -132,9 +150,7 @@ interface Transaction {
       tokens: Token[];
     }[];
   };
-  contracts?: {
-    contract: string;
-  }[];
+  contracts?: IContractItemTx[];
   collaterals?: {
     collateralInputResponses: CollateralResponses[];
 
@@ -190,6 +206,11 @@ interface Transaction {
   instantaneousRewards?: {
     amount: string;
     stakeAddress: string;
+  }[];
+  metadataHash: string;
+  metadata: {
+    label: number;
+    value: string;
   }[];
 }
 

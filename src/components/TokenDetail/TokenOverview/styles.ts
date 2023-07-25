@@ -300,15 +300,18 @@ export const ViewJson = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const ButtonLink = styled(Link)(({ theme }) => ({
+export const ButtonLink = styled("a")(({ theme }) => ({
   fontWeight: "bold",
   color: `${theme.palette.secondary.main} !important`,
   fontFamily: "Roboto, sans-serif !important",
   textAlign: "left",
   wordBreak: "break-all",
-  marginTop: theme.spacing(2),
-  display: "inline-block"
+  marginTop: theme.spacing(1),
+  fontSize: "14px",
+  display: "inline-block",
+  textDecoration: "underline !important"
 }));
+
 export const LogoEmpty = styled(Box)`
   width: 20px;
   height: 20px;
@@ -331,16 +334,24 @@ export const TokenDescription = styled(Box)(({ theme }) => ({
   alignItems: "left",
   fontSize: "0.75rem",
   color: alpha(theme.palette.common.black, 0.5),
-  flexDirection: "column",
+  flexDirection: "column"
 }));
 
 export const TokenUrl = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(1),
   cursor: "pointer",
+  fontWeight: "bold",
+  color: `${theme.palette.secondary.main} !important`,
+  fontFamily: "Roboto, sans-serif !important",
+  textAlign: "left",
+  wordBreak: "break-all",
+  fontSize: "12px",
+  display: "inline-block",
+  textDecoration: "underline !important"
 }));
 
 export const PolicyScriptBtn = styled(Button)(({ theme }) => ({
-  color: theme.palette.primary.main,
+  color: `${theme.palette.secondary.main} !important`,
   fontFamily: '"Roboto", sans-serif',
   fontSize: "14px",
   border: "none",
@@ -350,5 +361,9 @@ export const PolicyScriptBtn = styled(Button)(({ theme }) => ({
   marginTop: theme.spacing(1),
   justifyContent: "flex-start",
   textAlign: "left",
-  cursor: "pointer"
+  cursor: "pointer",
+  fontWeight: "bold",
+  wordBreak: "break-all",
+  display: "inline-block",
+  textDecoration: "underline !important"
 }));

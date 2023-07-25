@@ -35,7 +35,7 @@ const TopAddressesByAmountStaked = () => {
       render: (r, idx) => numberWithCommas(idx + 1)
     },
     {
-      title: "Stake key Addresses",
+      title: "Stake Address Addresses",
       minWidth: 120,
       key: "addresses",
       render: (r) => (
@@ -49,9 +49,7 @@ const TopAddressesByAmountStaked = () => {
       key: "pool",
       render: (r) => (
         <CustomTooltip title={r.poolName || r.poolId}>
-          <StyledLink to={details.delegation(r.poolId)}>
-            {r.poolName || `Pool [${getShortWallet(r.poolId)}]`}
-          </StyledLink>
+          <StyledLink to={details.delegation(r.poolId)}>{r.poolName || getShortWallet(r.poolId)}</StyledLink>
         </CustomTooltip>
       )
     },
@@ -85,7 +83,7 @@ const TopAddressesByAmountStaked = () => {
               </MenuItem>
             ))}
           </Select>
-          <PerPage>Addresses</PerPage>
+          <PerPage>Delegators</PerPage>
         </PageSize>
       </Actions>
       <Table

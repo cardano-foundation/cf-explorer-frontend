@@ -3,13 +3,21 @@ import BigNumber from "bignumber.js";
 import React, { useContext, useState } from "react";
 
 import { RewardIcon, USDIcon, exchageIconUrl, fileGuardUrl, slotIconUrl, timeIconUrl } from "src/commons/resources";
-import { formatDateTimeLocal, formatNumberDivByDecimals, numberWithCommas } from "src/commons/utils/helper";
+import {
+  formatDateTimeLocal,
+  formatNumberDivByDecimals,
+  getShortWallet,
+  numberWithCommas,
+  tokenRegistry
+} from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import DetailHeader from "src/components/commons/DetailHeader";
 import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import ScriptModal from "../../ScriptModal";
-import { PolicyId, PolicyScriptBtn, TokenDescription, TokenHeader, TokenUrl, WrapTitle } from "./styles";
+import { ButtonLink, PolicyId, PolicyScriptBtn, TokenDescription, TokenHeader, TokenUrl, WrapTitle } from "./styles";
+
 BigNumber.config({ DECIMAL_PLACES: 40 });
 
 interface ITokenOverview {
@@ -26,7 +34,9 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
     {
       title: (
         <TokenHeader>
-          {data?.displayName || ""}
+          <CustomTooltip title={data?.displayName || data?.fingerprint || ""}>
+            <span>{data?.displayName || getShortWallet(data?.fingerprint) || ""}</span>
+          </CustomTooltip>
           {data?.metadata && data?.metadata?.logo ? (
             <Box
               component={"img"}
@@ -43,6 +53,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       ),
       value: (
         <TokenDescription>
+          <Box mb={1}>Hex Format: #{data?.name || data?.fingerprint}</Box>
           {data?.metadata?.description || ""}
           {data?.metadata?.url ? (
             <TokenUrl onClick={() => window.open(data?.metadata?.url, "_blank")}>{data?.metadata?.url}</TokenUrl>
@@ -89,6 +100,22 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       value: numberWithCommas(txCountRealtime || data?.txCount)
     },
     {
+      title: <WrapTitle>Token Type</WrapTitle>,
+      icon: USDIcon,
+      value: (
+        <>
+          <Box>{data?.tokenType}</Box>
+          {!data?.metadata ? (
+            ""
+          ) : (
+            <ButtonLink target="_blank" href={tokenRegistry(data?.policy, data?.name)}>
+              Token Registry
+            </ButtonLink>
+          )}
+        </>
+      )
+    },
+    {
       title: (
         <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
@@ -125,12 +152,23 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
-            <WrapTitle>Created</WrapTitle>
+            <WrapTitle>Created At</WrapTitle>
           </Box>
         </Box>
       ),
       icon: timeIconUrl,
       value: formatDateTimeLocal(data?.createdOn || "")
+    },
+    {
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <Box component={"span"} mr={1}>
+            <WrapTitle>Token Last Activity</WrapTitle>
+          </Box>
+        </Box>
+      ),
+      icon: timeIconUrl,
+      value: formatDateTimeLocal(data?.tokenLastActivity || "")
     }
   ];
 

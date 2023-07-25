@@ -1,5 +1,4 @@
-import { Container } from "@mui/material";
-import { styled } from "@mui/material";
+import { Container, styled } from "@mui/material";
 
 export const StyledContainer = styled(Container)`
   margin-top: 18px;

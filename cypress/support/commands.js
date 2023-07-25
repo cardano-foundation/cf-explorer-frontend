@@ -80,9 +80,9 @@ Cypress.Commands.add("hoverToElementRandomly", (selector, ...value) => {
 });
 Cypress.Commands.add("hoverToElement", (selector) => {
   if (selector.startsWith("/") || selector.startsWith("(")) {
-    cy.xpath(selector).trigger();
+    cy.xpath(selector).trigger('mouseover');
   } else {
-    cy.get(selector).trigger();
+    cy.get(selector).trigger('mouseover');
   }
 });
 Cypress.Commands.add("getTextContent", { prevSubject: true }, (subject) => {
@@ -281,4 +281,31 @@ Cypress.Commands.add('compareArrayAttribute', (selector, attribute, expectedValu
   cy.get(selector).each((element, index) => {
     cy.wrap(element).should('have.attr', attribute, expectedValues[index]);
   });
+});
+
+Cypress.Commands.add('verifyFieldIsConsecutive', (selector, ...value) => {
+  let ele = format(selector, value)
+  if (ele.startsWith("/") || ele.startsWith("(")) {
+    cy.xpath(ele).invoke('text').then((list)=>{
+      const numbers = list.split('\n').map((itemText) => parseInt(itemText.trim()));
+      const areConsecutive = numbers.every((number, index) => {
+        if (index === 0) {
+          return true;
+        }
+        return number === numbers[index - 1] + 1;
+      });
+      expect(areConsecutive).to.be.true;
+    });
+  } else {
+    cy.get(ele).invoke('text').then((list)=>{
+      const numbers = list.split('\n').map((itemText) => parseInt(itemText.trim()));
+      const areConsecutive = numbers.every((number, index) => {
+        if (index === 0) {
+          return true; 
+        }
+        return number === numbers[index - 1] + 1;
+      });
+      expect(areConsecutive).to.be.true;
+    });
+  }
 });

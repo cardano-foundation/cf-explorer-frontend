@@ -11,11 +11,12 @@ export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
     zIndex: 1302,
     background: `${theme.palette.background.neutral}`,
     border: "none",
-    height: "100vh",
+    height: "100%",
+    boxShadow: theme.shadow.rightDraw,
     [theme.breakpoints.down("md")]: {
       display: "flex",
-      height: "calc(100% - 75px)",
-      top: "75px"
+      height: "calc(100% - 76px)",
+      top: "76px"
     },
     [theme.breakpoints.down("sm")]: {
       right: "auto",
@@ -172,12 +173,12 @@ export const TokenInfoValue = styled("span")`
 `;
 
 export const EpochNumber = styled("h1")`
-  color: ${(props) => props.theme.palette.primary.main};
+  color: ${(props) => props.theme.palette.green[700]};
   margin: 0;
 `;
 
 export const EpochText = styled("span")`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.grey[500]};
   text-transform: uppercase;
 `;
 
@@ -248,7 +249,7 @@ export const DetailLabel = styled("small")`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  color: ${(props) => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.grey[700]};
   line-height: 26px;
 `;
 export const InfoIcon = styled(FiInfo)`
@@ -258,7 +259,7 @@ export const InfoIcon = styled(FiInfo)`
 `;
 
 export const DetailValue = styled("small")`
-  color: ${(props) => props.theme.palette.common.black};
+  color: ${(props) => props.theme.palette.grey[700]};
   font-weight: var(--font-weight-bold);
   display: flex;
   justify-content: flex-end;
@@ -356,10 +357,10 @@ export const DetailLinkRight = styled("span")`
   color: ${(props) => props.theme.palette.grey[400]};
 `;
 
-export const TxStatus = styled("small")<{ status?: keyof typeof TransactionStatus }>`
+export const TxStatus = styled("small")<{ status?: TransactionStatus }>`
   color: ${({ status, theme }) => {
     switch (status) {
-      case TRANSACTION_STATUS.FAIL:
+      case TRANSACTION_STATUS.FAILED:
         return theme.palette.error.main;
       case TRANSACTION_STATUS.PENDDING:
         return theme.palette.warning.main;
@@ -369,7 +370,7 @@ export const TxStatus = styled("small")<{ status?: keyof typeof TransactionStatu
   }};
   background-color: ${({ status, theme }) => {
     switch (status) {
-      case TRANSACTION_STATUS.FAIL:
+      case TRANSACTION_STATUS.FAILED:
         return theme.palette.error.light;
       case TRANSACTION_STATUS.PENDDING:
         return theme.palette.warning.light;
@@ -524,9 +525,21 @@ export const ButtonModal = styled(Button)(() => ({
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.grey[500],
   display: "block",
   textAlign: "left",
   flex: 1,
   padding: 10
 }));
+
+export const ViewDetailDrawerContractHash = styled(ViewDetailDrawer)`
+  width: 100%;
+`;
+
+export const ViewDetailContainerContractHash = styled(ViewDetailContainer)`
+  margin-left: 0;
+`;
+export const ViewDetailScrollContractHash = styled(ViewDetailScroll)`
+  padding-top: 0;
+  margin-right: 0;
+`;

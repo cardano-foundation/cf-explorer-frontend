@@ -1,4 +1,4 @@
-# Cardano Blockchain Explorer
+# Iris Frontend
 
 <p align="left">
 <img alt="Tests" src="https://github.com/cardano-foundation/cf-explorer-frontend/actions/workflows/tests.yaml/badge.svg" />
@@ -7,7 +7,9 @@
 <a href="https://conventionalcommits.org"><img alt="conventionalcommits" src="https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits" /></a>
 </p>
 
-Cardano Blockchain Explorer showcases the utility of Cardano by providing descriptive and visual representation of the ledger. It presents the information both in a web application as well as through API services
+This repository houses the frontend component of Iris. Developed with TypeScript, React.js, and mui, it showcases a user-friendly interface that presents the Cardano blockchain data collected and aggregated by LedgerSync.
+
+👉 Check the [Iris repository](https://github.com/cardano-foundation/cf-explorer) to understand how the microservices work together
 
 ## Prerequisites
 
@@ -20,40 +22,43 @@ In order to compile and run everything you will need:
 
 Install the app with npm (it's work well with `yarn` but we using npm in here):
 
-**Step 1**: install packages
+**Step 1**: Install packages
 Open terminal and run commad: `npm install`
 
-Then copy file env.example and rename it to .env:
-
-### Update Environment
-
-Update `REACT_APP_API_URL` with your api url.
-
-Update `REACT_APP_AUTH_API_URL` with your auth api url to support sign in and sign up feature.
-
-Update `REACT_APP_JSD_WIDGET_KEY` with Jira Embedded Key to Add Jira Support Widget to Explorer.
-
-**Step 2**: create .env file
+**Step 2**: Create .env file from .env.example
 In the terminal run command: `cp .env.example .env`
 
-**Step 3** update env variables
-> Update value to **your** API
+**Step 3** Update env variables:
+- Update port for application. 
+    >Example: `PORT=3000`
 
-For example: 
-`REACT_APP_API_URL=http://localhost:3001`
+- Update API URL for explorer service. 
+    >Example: `REACT_APP_API_URL=http://localhost:8080`
 
-> Update Application URL reference
+- Update API URL for authentication service.
+    >Example: `REACT_APP_AUTH_API_URL=http://localhost:8081`
 
-> Update Application network reference
+- Update APP URL for other network. Example: 
+    ```
+    REACT_APP_TESTNET_APP_URL=http://localhost:3000
+    REACT_APP_PREVIEW_APP_URL=http://localhost:3001
+    REACT_APP_PREPROD_APP_URL=http://localhost:3002
+    REACT_APP_MAINNET_APP_URL=http://localhost:3003
+    ```
 
-`REACT_APP_NETWORK = mainnet`
+- Update Jira Embedded Key to Add Jira Support Widget to explorer
+    >Example: `REACT_APP_JSD_WIDGET_KEY=xxx`
 
-> Update API URL for authentication service
+- Update link to the cardano price
+    >Example: `REACT_APP_EXT_ADA_PRICE_URL=https://www.coingecko.com/en/coins/cardano`
 
-`REACT_APP_AUTH_API_URL=http://localhost:3005`
+- Update application network (`mainnet`, `preprod` or `preview`)
+    >Example: `REACT_APP_NETWORK=mainnet`
 
+- Configure supported network names (`mainnet`, `preprod` or `preview`)
+    >Example: `REACT_APP_NETWORK_NAMES="{"mainnet":"Mainnet","preprod":"Preprod", ...}"`
 
-**Step 4** run on localhost
+**Step 4** Run on localhost
 
 Runs the app in the development mode.
 Open terminal and run command: `npm start`

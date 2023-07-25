@@ -1,13 +1,9 @@
-import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { MenuItem, Select, SelectChangeEvent, styled } from "@mui/material";
 import React, { useEffect } from "react";
 import { BiChevronDown } from "react-icons/bi";
-import { useLocalStorage } from "react-use";
-import { useSelector } from "react-redux";
 
 import { FRONT_END_NETWORK, NETWORK, NETWORKS, NETWORK_NAMES, STORAGE_KEYS } from "src/commons/utils/constants";
-import { removeAuthInfo } from "src/commons/utils/helper";
-import { signOut } from "src/commons/utils/userRequest";
+import { setOnDetailView } from "src/stores/user";
 
 const StyledSelect = styled(Select)(({ theme }) => ({
   fontFamily: "var(--font-family-title)",
@@ -34,26 +30,7 @@ const StyledSelect = styled(Select)(({ theme }) => ({
 }));
 
 const SelectNetwork: React.FC = () => {
-  const { userData } = useSelector(({ user }: RootState) => user);
-  const { disconnect } = useCardano({
-    limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
-  });
-  const [, , clearBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
-
   const handleChange = async (e?: SelectChangeEvent<unknown>) => {
-    try {
-      if (userData) {
-        await signOut({
-          refreshJwt: localStorage.getItem("refreshToken") || "",
-          username: localStorage.getItem("username") || ""
-        });
-        clearBookmark();
-        disconnect();
-        removeAuthInfo();
-      }
-    } catch (error) {
-      //To do
-    }
     if (e) {
       if (FRONT_END_NETWORK[e.target.value as NETWORKS]) {
         window.open(FRONT_END_NETWORK[e.target.value as NETWORKS], "_blank", "noopener,noreferrer");
@@ -69,6 +46,9 @@ const SelectNetwork: React.FC = () => {
     return () => window.removeEventListener("storage", listener);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const handleOpen = () => {
+    setOnDetailView(false);
+  };
 
   return (
     <StyledSelect
@@ -77,10 +57,11 @@ const SelectNetwork: React.FC = () => {
       value={NETWORK}
       IconComponent={BiChevronDown}
       MenuProps={{ style: { zIndex: 1303 } }}
+      onOpen={handleOpen}
     >
-      {Object.entries(NETWORK_NAMES).map(([value, name]) => (
-        <MenuItem data-testid="network-options" key={value} value={value}>
-          {name}
+      {Object.entries(NETWORK_NAMES).map(([key, value]) => (
+        <MenuItem data-testid="network-options" key={key} value={key}>
+          {String(value)}
         </MenuItem>
       ))}
     </StyledSelect>

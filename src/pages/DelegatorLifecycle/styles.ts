@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)`
   padding-top: 20px;
-  padding-bottom: 40px;
   position: relative;
   min-height: calc(100vh - 170px);
 `;
@@ -55,16 +54,16 @@ export const StakeId = styled(Link)(({ theme }) => ({
   fontSize: "0.875rem"
 }));
 
-export const BoxItemStyled = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const BoxItemStyled = styled(Box)<{ sidebar?: number }>(({ theme }) => ({
   display: "flex",
   justifyContent: "flex-end",
   alignItems: "center",
   gap: 20,
   [theme.breakpoints.down("lg")]: {
-    flexDirection: sidebar ? "column" : "row",
-    width: sidebar ? "100%" : "auto"
+    flexDirection: "row",
+    width: "100%"
   },
-  [theme.breakpoints.down("md")]: {
+  [theme.breakpoints.down("sm")]: {
     flexDirection: "column",
     width: "100%"
   }
@@ -76,10 +75,13 @@ export const BoxSwitchContainer = styled(Box)<{ sidebar?: number }>(({ theme, si
   justifyContent: "flex-end",
   gap: 15,
   [theme.breakpoints.down("lg")]: {
-    width: sidebar ? "100%" : "auto"
+    width: sidebar ? "100%" : "auto",
+    flex: 1,
+    justifyContent: "flex-start"
   },
-  [theme.breakpoints.down("md")]: {
-    width: "100%"
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+    justifyContent: "space-between"
   }
 }));
 
@@ -108,7 +110,7 @@ export const ButtonSwitch = styled(IconButton)<{ active: number }>(({ theme, act
   }
 }));
 
-export const ButtonReport = styled(Button)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+export const ButtonReport = styled(Button)<{ sidebar?: number }>(({ theme }) => ({
   color: theme.palette.common.white,
   background: theme.palette.text.primary,
   height: "44px",
@@ -125,9 +127,13 @@ export const ButtonReport = styled(Button)<{ sidebar?: number }>(({ theme, sideb
     color: theme.palette.common.white
   },
   [theme.breakpoints.down("lg")]: {
-    width: sidebar ? "100%" : "auto"
+    width: "auto"
   },
-  [theme.breakpoints.down("md")]: {
+  [theme.breakpoints.down("sm")]: {
     width: "100%"
   }
+}));
+
+export const ReportButtonContainer = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: { width: "100%" }
 }));
