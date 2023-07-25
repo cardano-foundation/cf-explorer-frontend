@@ -18,7 +18,6 @@ describe("StakingLifeCycleSearch", () => {
   });
   it("should component renders", () => {
     render(<StakingLifeCycleSearch />);
-    screen.logTestingPlaygroundURL();
     expect(
       screen.getByText(/search to explore the staking lifecycle events of a delegator or pool\./i)
     ).toBeInTheDocument();

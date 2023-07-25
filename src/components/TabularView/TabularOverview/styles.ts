@@ -86,11 +86,11 @@ export const CardValue = styled(Typography)(({ theme }) => ({
   color: theme.palette.grey[700],
   whiteSpace: "nowrap",
   wordBreak: "break-all",
+  width: "100%",
+  display: "flex",
   [theme.breakpoints.down("sm")]: {
     fontSize: 20,
-    lineHeight: "23px",
-    whiteSpace: "wrap",
-    wordBreak: "break-all"
+    lineHeight: "23px"
   }
 }));
 export const CardValueDelegating = styled(CardValue)(() => ({
@@ -108,6 +108,14 @@ export const BoxStyled = styled(CardValue)(({ theme }) => ({
     whiteSpace: "nowrap"
   }
 }));
+export const BoxValue = styled(CardValue)(() => ({
+  display: "block",
+  textOverflow: "ellipsis",
+  overflow: "hidden",
+  textAlign: "left",
+  width: "max-content"
+}));
+
 export const StyledBoxDelegating = styled(Link)(() => ({
   width: "100%",
   display: "flex",
@@ -123,6 +131,7 @@ export const NoDelegatedStakePool = styled(Box)(({ theme }) => ({
 export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
   fontSize: 18,
   marginLeft: 8,
+  paddingTop: 2,
   [theme.breakpoints.down("sm")]: {
     marginLeft: 5,
     fontSize: 16

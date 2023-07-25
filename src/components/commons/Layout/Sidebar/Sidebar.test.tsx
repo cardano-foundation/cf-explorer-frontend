@@ -1,0 +1,28 @@
+import { createBrowserHistory } from "history";
+import { Router } from "react-router-dom";
+
+import { fireEvent, render, screen } from "src/test-utils";
+
+import Sidebar from ".";
+
+describe("Sidebar component", () => {
+  it("should component render", () => {
+    render(<Sidebar />);
+
+    expect(screen.getByRole("img", { name: /logo cardano/i })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /logo cardano/i })).toBeInTheDocument();
+    expect(screen.getByText(/protocol parameters/i)).toBeInTheDocument();
+  });
+
+  it("should component route to dashboard route", () => {
+    const history = createBrowserHistory();
+    render(
+      <Router history={history}>
+        <Sidebar />
+      </Router>
+    );
+
+    fireEvent.click(screen.getByRole("img", { name: /logo cardano/i }));
+    expect(history.location.pathname).toBe("/");
+  });
+});

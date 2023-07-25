@@ -1,4 +1,4 @@
-import { Box, Checkbox, alpha, Typography, styled, Pagination } from "@mui/material";
+import { Box, Checkbox, Typography, styled, Pagination } from "@mui/material";
 
 import CustomSelect from "../CustomSelect";
 
@@ -38,7 +38,6 @@ export const THeader = styled("th")`
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-text-small);
-  border-bottom: 1px solid ${(props) => props.theme.palette.border.main};
   padding: 20px;
   color: ${(props) => props.theme.palette.grey[300]};
   position: sticky;
@@ -68,7 +67,6 @@ export const TCol = styled("td")<{
   hiddenBorder?: boolean;
   selected?: number;
 }>`
-  border-bottom: ${({ hiddenBorder, theme }) => (hiddenBorder ? "none" : `1px solid ${theme.palette.grey[200]}`)};
   width: ${({ width }) => (typeof width === "number" ? `${width}px` : width || "max-content")};
   min-width: ${({ minWidth }) => (typeof minWidth === "number" ? `${minWidth}px` : minWidth || "80px")};
   max-width: ${({ maxWidth }) => (typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth || "unset")};
@@ -139,13 +137,12 @@ export const WrappModalScrollBar = styled(Box)(
 
 export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number; loading?: number }>(
   ({ maxHeight, height, theme, loading }) => `
-  overflow-x: auto;
+  overflow: scroll;
   height: ${height || 800}px;
   background: ${theme.palette.common.white};
   padding: ${theme.spacing(1)};
   padding-top: 0;
   border-radius: ${theme.spacing(1.5)};
-  border: 1px solid ${alpha(theme.palette.common.black, 0.1)};
   ${loading ? "overflow-y: hidden;" : ""}
   ${maxHeight ? "max-height:" + (typeof maxHeight === "number" ? maxHeight + "px" : maxHeight) : ""};
 

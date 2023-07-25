@@ -108,9 +108,10 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const ChartContainer = styled("div")`
-  padding-top: 20px;
-`;
+export const ChartContainer = styled(Box)(({ theme }) => ({
+  paddingTop: theme.spacing(3),
+  fontSize: 12
+}));
 
 export const GridRight = styled(Grid)<{ space: number }>(({ theme, space }) => ({
   flex: 1,
@@ -178,3 +179,20 @@ export const Horizon = styled("div")`
   opacity: 0.07;
   border: 1px solid ${(props) => props.theme.palette.common.white};
 `;
+
+export const TooltipBody = styled(Box)(({ theme }) => ({
+  backgroundColor: alpha(theme.palette.common.white, 0.8),
+  borderRadius: 2,
+  padding: 8,
+  border: "1px solid #146635",
+  fontSize: 12,
+  color: theme.palette.grey[500]
+}));
+
+export const TooltipLabel = styled(Box)(() => ({
+  marginBottom: 3
+}));
+
+export const TooltipValue = styled(Box)(() => ({
+  fontWeight: 700
+}));

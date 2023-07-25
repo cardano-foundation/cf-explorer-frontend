@@ -23,7 +23,7 @@ const EpochDetail: React.FC = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Epoch ${epochId} | Cardano Explorer`;
+    document.title = `Epoch ${epochId} | Iris - Cardano Blockchain Explorer`;
   }, [epochId]);
   if (!initialized) {
     return null;

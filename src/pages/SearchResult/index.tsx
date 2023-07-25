@@ -80,15 +80,13 @@ const SearchResult = () => {
   const { filter, search: value }: SearchParams = parse(search.split("?")[1]);
 
   useEffect(() => {
-    document.title = loading ? `Search For ${value}...` : `No Record Found: ${value} | Cardano Explorer`;
+    document.title = loading ? `Search For ${value}...` : `No Record Found: ${value} | Iris - Cardano Blockchain Explorer`;
   }, [loading, value]);
 
   const handleFilterByPool = (data: any) => {
-    if (data?.totalItems === 0) {
-      setLoading(false);
-    } else if (data?.totalItems === 1) {
+    if (data?.totalItems === 1) {
       history.replace(details.delegation(data?.data?.[0]?.poolId));
-    } else {
+    } else if (data?.totalItems > 1) {
       history.replace(routers.DELEGATION_POOLS, { tickerNameSearch: value });
     }
   };

@@ -17,7 +17,7 @@ const Header = styled(Box)`
   }
 `;
 
-export const Title = styled("h2") <{ underline: number; }>`
+export const Title = styled("h2")<{ underline: number }>`
   text-align: left;
   padding-bottom: 8px;
   position: relative;
@@ -35,7 +35,6 @@ export const Title = styled("h2") <{ underline: number; }>`
     font-size: 24px !important;
     padding-top: 10px;
   }
-},
 `;
 
 interface CardProps extends Omit<BoxProps, "title"> {
@@ -51,10 +50,7 @@ const Card: React.FC<CardProps> = ({ title, children, underline = false, extra, 
     <CardContainer {...props}>
       <Header>
         {title ? (
-          <Title
-            underline={underline ? 1 : 0}
-            sx={titleSx}
-          >
+          <Title underline={underline ? 1 : 0} sx={titleSx}>
             {title}
           </Title>
         ) : null}

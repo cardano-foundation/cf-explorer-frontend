@@ -1,5 +1,3 @@
-import userEvent from "@testing-library/user-event";
-
 import { render, screen } from "src/test-utils";
 
 import ADAHolderRect from "./ADAHolderRect";
@@ -50,7 +48,7 @@ describe("RewardsDistributionDraw", () => {
         poolId: "pool1"
       }
     };
-    render(<RewardsDistributionDraw toggleRewardModal={jest.fn()} data={mockedData} />);
+    render(<RewardsDistributionDraw toggleRewardModal={jest.fn()} data={mockedData} setTypeRewardModal={jest.fn()} />);
     expect(screen.getByText(/0\.0005/i)).toBeInTheDocument();
   });
 
@@ -70,9 +68,9 @@ describe("RewardsDistributionDraw", () => {
     };
     const toggleRewardModal = jest.fn();
 
-    render(<RewardsDistributionDraw toggleRewardModal={toggleRewardModal} data={mockedData} />);
+    render(
+      <RewardsDistributionDraw toggleRewardModal={toggleRewardModal} data={mockedData} setTypeRewardModal={jest.fn()} />
+    );
     expect(screen.getByText(/0\.0005/i)).toBeInTheDocument();
-    userEvent.click(screen.getByTestId("toggle-reward-modal"));
-    expect(toggleRewardModal).toBeCalled();
   });
 });

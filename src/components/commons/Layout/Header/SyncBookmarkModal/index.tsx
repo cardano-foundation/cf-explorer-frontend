@@ -16,7 +16,7 @@ const SyncBookmarkModal = () => {
   const [data, setData] = useState<{ passNumber: number; failNumber: number }>();
   const [message, setMessage] = useState("");
   const [, setBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
-  const bookmarks = ((JSON.parse(localStorage.getItem("bookmark") || "") as Bookmark[]) || [])?.filter((r) => !r.id);
+  const bookmarks = ((JSON.parse(localStorage.getItem("bookmark") || "[]") as Bookmark[]) || [])?.filter((r) => !r.id);
   const bookmarkLengthRef = useRef(0);
   const { openSyncBookmarkModal = false } = useSelector(({ user }: RootState) => user);
   useEffect(() => {

@@ -7,7 +7,7 @@ import { Horizon, StyledContainer } from "./styles";
 
 const Delegations = () => {
   useEffect(() => {
-    document.title = `Delegation Pools | Cardano Explorer`;
+    document.title = `Delegation Pools | Iris - Cardano Blockchain Explorer`;
   }, []);
 
   return (

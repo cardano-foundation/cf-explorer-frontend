@@ -44,6 +44,6 @@ export const StatusIcon = styled("img")`
 export const AddressLink = styled(Link)`
   font-weight: var(--font-weight-bold);
   font-family: var(--font-size-text);
-  color: ${(props) => props.theme.palette.blue[900]} !important;
+  color: ${(props) => props.theme.palette.blue[800]} !important;
   margin-right: 8px;
 `;

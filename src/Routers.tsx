@@ -54,7 +54,7 @@ const Routes: React.FC = () => {
   useAsync(async () => {
     if (isLoggedIn) {
       if (
-        (((JSON.parse(localStorage.getItem("bookmark") || "") as Bookmark[]) || [])?.filter((r) => !r.id) || [])
+        (((JSON.parse(localStorage.getItem("bookmark") || "[]") as Bookmark[]) || [])?.filter((r) => !r.id) || [])
           .length > 0
       ) {
         setOpenSyncBookmarkModal(true);

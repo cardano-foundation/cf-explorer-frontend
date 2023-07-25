@@ -39,10 +39,9 @@ export const WrapGridItem = styled(Box)`
   ${({ theme }) => theme.breakpoints.down("sm")} {
     min-width: 160px;
   }
-
 `;
 
-export const Status = styled("span") <{ status: string }>`
+export const Status = styled("span")<{ status: string }>`
   font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
   padding: 7.5px 11.5px;
@@ -91,7 +90,10 @@ export const TitleHead = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  margin-top: 50px;
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    margin-top: 0;
+  }
   ${({ theme }) => theme.breakpoints.down("sm")} {
     display: flex;
     flex-direction: column;

@@ -70,7 +70,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
                   {data?.policyScript ? (
                     <JsonViewer
                       data-testid="JsonViewer"
-                      value={JSON.parse(data.policyScript || "")}
+                      value={data.policyScript ? JSON.parse(data.policyScript) : {}}
                       displayObjectSize={false}
                       displayDataTypes={false}
                       enableClipboard={false}

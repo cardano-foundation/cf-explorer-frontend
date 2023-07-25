@@ -63,7 +63,7 @@ type DeregistrationTimelineProps = {
   showBackButton?: boolean;
 };
 
-const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: DeregistrationTimelineProps) => {
+export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: DeregistrationTimelineProps) => {
   const history = useHistory();
 
   const SPOHolderRef = useRef(null);

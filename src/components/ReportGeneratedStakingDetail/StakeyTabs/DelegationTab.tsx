@@ -49,7 +49,7 @@ const DelegationTab = () => {
       )
     },
     {
-      title: "Timestamp",
+      title: "Created At",
       key: "time",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
@@ -90,7 +90,7 @@ const DelegationTab = () => {
         total={{ title: "Total", count: fetchData.total }}
         pagination={{
           ...pageInfo,
-          page: pageInfo.page + 1,
+          page: pageInfo.page,
           total: fetchData.total,
           onChange: (page, size) => setPageInfo((pre) => ({ ...pre, page: page - 1, size }))
         }}

@@ -62,9 +62,14 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
           <CustomTooltip title={r.hash}>
             <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
           </CustomTooltip>
-          <Box mt={1}>{formatDateTimeLocal(r.time || "")}</Box>
         </div>
       )
+    },
+    {
+      title: "Created At",
+      key: "createdat",
+      minWidth: 120,
+      render: (r) => formatDateTimeLocal(r.time || "")
     },
     {
       title: "Block",
@@ -168,7 +173,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
             total: fetchData.total,
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
-              mainRef.current?.scrollTo(0, 0);
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
           onClickRow={onClickRow}

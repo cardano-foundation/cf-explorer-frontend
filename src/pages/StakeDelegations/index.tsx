@@ -36,7 +36,7 @@ const StakeDelegations = () => {
   const mainRef = useRef(document.querySelector("#main"));
 
   useEffect(() => {
-    document.title = `Stake Delegations | Cardano Explorer`;
+    document.title = `Stake Delegations | Iris - Cardano Blockchain Explorer`;
   }, []);
 
   const columns: Column<StakeDelegations>[] = [
@@ -44,7 +44,7 @@ const StakeDelegations = () => {
       title: "#",
       minWidth: 30,
       key: "index",
-      render: (r, idx) => numberWithCommas(idx + 1)
+      render: (r, idx) => numberWithCommas(pageInfo?.page * pageInfo?.size + idx + 1 || 0)
     },
     {
       title: "Tx Hash",
@@ -57,8 +57,8 @@ const StakeDelegations = () => {
       )
     },
     {
-      title: "Time",
-      key: "time",
+      title: "Created At",
+      key: "createdat",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time)
     },
@@ -75,8 +75,8 @@ const StakeDelegations = () => {
       )
     },
     {
-      title: "Stake Key",
-      key: "stakeKeys",
+      title: "Stake Address",
+      key: "stakeAddress",
       render: (r) => {
         const stakeKey = r.stakeKeys[0];
         return (
@@ -125,7 +125,7 @@ const StakeDelegations = () => {
             total: fetchData.total,
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
-              mainRef.current?.scrollTo(0, 0);
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
         />

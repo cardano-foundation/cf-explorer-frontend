@@ -122,7 +122,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       key: "addressesInput",
       minWidth: 120,
       render: (r) => (
-        <>
+        <Box key={r.hash + "input"}>
           {r?.addressesInput?.slice(0, 2).map((address) => (
             <Box key={address}>
               <CustomTooltip title={address}>
@@ -131,7 +131,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
             </Box>
           ))}
           {r?.addressesInput?.length > 2 ? <StyledLink to={details.transaction(r.hash)}>...</StyledLink> : ""}
-        </>
+        </Box>
       )
     },
     {
@@ -139,7 +139,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       key: "addressesOutput",
       minWidth: 120,
       render: (r) => (
-        <>
+        <Box key={r.hash + "output"}>
           {r?.addressesOutput?.slice(0, 2).map((address) => (
             <Box key={address}>
               <CustomTooltip title={address}>
@@ -148,7 +148,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
             </Box>
           ))}
           {r?.addressesOutput?.length > 2 ? <StyledLink to={details.transaction(r.hash)}>...</StyledLink> : ""}
-        </>
+        </Box>
       )
     }
   ];
@@ -156,7 +156,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
   return (
     <Card
       data-testid="transactions-card"
-      title={pathname === "/transactions" ? "Transactions" : ""}
+      title={pathname?.includes("/transactions") ? "Transactions" : ""}
       underline={underline}
     >
       <Table
@@ -167,7 +167,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
           ...pageInfo,
           total: fetchData.total,
           onChange: (page, size) => {
-            mainRef.current?.scrollTo(0, 0);
+            mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             history.replace({ search: stringify({ page, size }) });
           },
           handleCloseDetailView: handleClose

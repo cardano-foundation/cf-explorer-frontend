@@ -65,7 +65,7 @@ const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
   },
   {
     key: "stake-key",
-    label: "Stake Key History",
+    label: "Stake Address History",
     icon: (
       <StakeKeyHistoryIcon fill="#438F68" width={"20px"} height={"20px"} style={{ padding: "2px" }} display={"block"} />
     )
@@ -168,6 +168,10 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
     ? getShortWallet(data.pool.poolId)
     : "-";
 
+  const poolNameToolTip = data.pool?.poolName
+    ? `${data.pool.tickerName || ""} - ${data.pool.poolName}`
+    : data.pool?.poolId || "-";
+
   return (
     <ViewDetailDrawer anchor="right" open={!!stakeId} hideBackdrop variant="permanent">
       <ViewDetailHeader>
@@ -215,7 +219,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
               <WrapDetailInfo>
                 <DetailLabel>Delegated to</DetailLabel>
               </WrapDetailInfo>
-              <CustomTooltip title={poolName}>
+              <CustomTooltip title={poolNameToolTip}>
                 <Box component={Link} display="inline-block" to={details.delegation(data.pool?.poolId)}>
                   <DelegatedDetail>{poolName}</DelegatedDetail>
                 </Box>

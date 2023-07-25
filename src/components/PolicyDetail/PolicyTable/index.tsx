@@ -11,8 +11,7 @@ import {
   formatDateTimeLocal,
   formatNumberDivByDecimals,
   getPageInfo,
-  getShortWallet,
-  numberWithCommas
+  getShortWallet
 } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
@@ -44,7 +43,7 @@ const columnsToken: Column<TokenPolicys>[] = [
     )
   },
   {
-    title: "Created Date",
+    title: "Created At",
     key: "date",
     minWidth: "150px",
     render: (r) => formatDateTimeLocal(r.createdOn || "")
@@ -97,7 +96,7 @@ const columnsAssetHolders: Column<PolicyHolder>[] = [
     title: "Balance",
     key: "Balance",
     minWidth: "150px",
-    render: (r) => <Box component={"span"}>{numberWithCommas(r.quantity)}</Box>
+    render: (r) => <Box component={"span"}>{formatNumberDivByDecimals(r.quantity, r?.metadata?.decimals || 0)}</Box>
   }
 ];
 

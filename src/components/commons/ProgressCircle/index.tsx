@@ -3,7 +3,7 @@ import React from "react";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
-interface Props {
+export interface Props {
   percent: number;
   children?: React.ReactNode;
   size?: number;
@@ -35,8 +35,8 @@ const ProgressCircle: React.FC<Props> = (props) => {
       <svg style={{ height: 0, width: 0 }}>
         <defs>
           <linearGradient id={"progress"} gradientTransform={gradientTransform}>
-            <stop offset="0%" stopColor={strokeColor || theme.palette.green[600]} />
-            <stop offset="100%" stopColor={strokeColor || theme.palette.green[600]} />
+            <stop offset="0%" stopColor={strokeColor || theme.palette.green[700]} />
+            <stop offset="100%" stopColor={strokeColor || theme.palette.green[700]} />
           </linearGradient>
         </defs>
       </svg>

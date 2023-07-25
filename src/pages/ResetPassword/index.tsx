@@ -4,7 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 
 import { FailIcon, HideIcon, LockIcon, ShowIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
-import { resetPassword } from "src/commons/utils/userRequest";
+import { resetPassword, verifyCodeResetPassword } from "src/commons/utils/userRequest";
 
 import {
   Container,
@@ -49,6 +49,7 @@ export default function ResetPassword() {
   const [code, setCode] = useState("");
   const [success, setSuccess] = useState(false);
   const [hasErrorForm, setHasErrorForm] = useState(false);
+  const [initing, setIniting] = useState(true);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useReducer(formReducer, {
@@ -61,7 +62,7 @@ export default function ResetPassword() {
   });
 
   useEffect(() => {
-    document.title = "Reset Password | Cardano Explorer";
+    document.title = "Reset Password | Iris - Cardano Blockchain Explorer";
   }, []);
 
   const handleTogglePassword = () => {
@@ -72,11 +73,7 @@ export default function ResetPassword() {
   };
 
   useEffect(() => {
-    setHasErrorForm(
-      Boolean(
-        formData.password.error || formData.confirmPassword.error
-      )
-    );
+    setHasErrorForm(Boolean(formData.password.error || formData.confirmPassword.error));
   }, [formData]);
 
   const getError = (name: string, value: string) => {
@@ -116,6 +113,20 @@ export default function ResetPassword() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path.search]);
 
+  useEffect(() => {
+    if (!code) return;
+    verifyCode();
+  }, [code]);
+
+  async function verifyCode() {
+    setIniting(true);
+    const { data } = await verifyCodeResetPassword({ code });
+    if (!data) {
+      setError(true);
+    }
+    setIniting(false);
+  }
+
   const handleChange = (event: any) => {
     setFormData({
       name: event.target.name,
@@ -146,11 +157,12 @@ export default function ResetPassword() {
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-    }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enableButton, formData, success, error]);
 
   const handleKeyDown = (event: any) => {
-    if (event.key === "Enter" && !success && !error ) {
+    if (event.key === "Enter" && !success && !error) {
       event.preventDefault();
       handleSubmit(event);
     }
@@ -182,6 +194,9 @@ export default function ResetPassword() {
       handleResetPassword(formData.password.value);
     }
   };
+
+  if (initing) return null;
+
   return (
     <Container>
       <WrapContent>
@@ -197,6 +212,7 @@ export default function ResetPassword() {
                       <LockIcon />
                     </Box>
                   }
+                  value={formData.password.value}
                   name="password"
                   endAdornment={
                     <InputAdornment position="end">
@@ -205,7 +221,15 @@ export default function ResetPassword() {
                       </IconButton>
                     </InputAdornment>
                   }
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setFormData({
+                      name: "confirmPassword",
+                      value: "",
+                      touched: false,
+                      error: ""
+                    });
+                  }}
                   fullWidth
                   type={showPassword ? "text" : "password"}
                   placeholder="New Password"
@@ -224,6 +248,7 @@ export default function ResetPassword() {
                     </Box>
                   }
                   fullWidth
+                  value={formData.confirmPassword.value}
                   name="confirmPassword"
                   onChange={handleChange}
                   type={showConfirmPassword ? "text" : "password"}

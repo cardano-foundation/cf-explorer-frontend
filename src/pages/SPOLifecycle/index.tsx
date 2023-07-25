@@ -2,8 +2,7 @@
 import { useHistory, useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { useTheme } from "@emotion/react";
-import { Box, CircularProgress } from "@mui/material";
+import { CircularProgress, useTheme } from "@mui/material";
 
 import { getShortWallet } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
@@ -32,7 +31,8 @@ import {
   StakeId,
   AddressLine,
   StyledContainer,
-  Label
+  Label,
+  ReportButtonContainer
 } from "./styles";
 
 interface Params {
@@ -49,13 +49,19 @@ export interface ListTabResponseSPO {
   isDeRegistration: boolean;
 }
 
+export interface IReportLimit {
+  isLimitReached: boolean;
+  limitPer24hours: number;
+}
+
 const MODES: ViewMode[] = ["timeline", "tabular"];
 
 const SPOLifecycle = () => {
   const { poolId = "", mode = "timeline", tab = "registration" } = useParams<Params>();
+  const { data: dataReportLimit } = useFetch<IReportLimit>(API.REPORT.REPORT_LIMIT);
 
   useEffect(() => {
-    document.title = `Staking Delegation Lifecycle ${poolId} | Cardano Explorer`;
+    document.title = `Staking Delegation Lifecycle ${poolId} | Iris - Cardano Blockchain Explorer`;
   }, [poolId]);
 
   const tabList = {
@@ -133,13 +139,25 @@ const SPOLifecycle = () => {
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>
-            <CustomTooltip title={!isLoggedIn ? "Please log in to use this feature" : ""}>
-                <Box>
-                  <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
-                    Compose report
-                  </ButtonReport>
-                </Box>
-              </CustomTooltip>
+            <CustomTooltip
+              title={
+                !isLoggedIn
+                  ? "Please sign in to use this feature"
+                  : `Please note that you can only create ${
+                      dataReportLimit?.limitPer24hours || 0
+                    } reports within 24 hours`
+              }
+            >
+              <ReportButtonContainer>
+                <ButtonReport
+                  disabled={!isLoggedIn || dataReportLimit?.isLimitReached}
+                  onClick={() => setOpen(true)}
+                  sidebar={+sidebar}
+                >
+                  Compose report
+                </ButtonReport>
+              </ReportButtonContainer>
+            </CustomTooltip>
           </BoxItemStyled>
         </BoxContainerStyled>
         {loadingListTabs && <CircularProgress color="success" />}

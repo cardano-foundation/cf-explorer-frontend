@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
 import { getShortWallet } from "src/commons/utils/helper";
-import { useScreen } from "src/commons/hooks/useScreen";
 import useToast from "src/commons/hooks/useToast";
 import editAva from "src/commons/resources/icons/editAva.svg";
 import { ReactComponent as ReportDiscord } from "src/commons/resources/icons/reportDiscord.svg";
@@ -19,12 +18,10 @@ import { setUserData } from "src/stores/user";
 
 import {
   ContentBox,
-  MissingItemWrapper,
   ModalTitle,
   NavItem,
   NavItemMobile,
   SideBar,
-  StyledButton,
   StyledButtonClose,
   StyledButtonReport,
   StyledUsername,
@@ -40,7 +37,6 @@ interface Props {
 const AccountLayout: React.FC<Props> = ({ children }) => {
   const { pathname } = useLocation();
   const { userData } = useSelector(({ user }: RootState) => user);
-  const { isMobile, isTablet } = useScreen();
   const theme = useTheme();
   const [openReportModal, setOpenReportModal] = useState(false);
   const [isUploadAvatar, setIsUploadAvatar] = useState(false);
@@ -89,20 +85,6 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
     }
   }, [fetchUserInfo]);
 
-  const MissingData = () => (
-    <MissingItemWrapper px={3} pb={4} fontSize="0.75rem">
-      Missing any data? click{" "}
-      <StyledButton
-        sx={{
-          color: theme.palette.blue[800]
-        }}
-        onClick={() => setOpenReportModal(true)}
-      >
-        here
-      </StyledButton>{" "}
-      to report
-    </MissingItemWrapper>
-  );
   const renderListTabs = () => (
     <SideBar>
       <Box>
@@ -139,6 +121,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
               >
                 <Box component={"img"} src={editAva} alt="editava" />
                 <input
+                  data-testid="upload-input"
                   accept="image/*"
                   type="file"
                   ref={uploadImgRef}
@@ -200,7 +183,6 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
           </WrapItemMobile>
         </Box>
       </Box>
-      <MissingData />
     </SideBar>
   );
   return (
@@ -214,11 +196,6 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
           {children}
         </Box>
       </ContentBox>
-      {isMobile || isTablet ? (
-        <Box mt={3}>
-          <MissingData />
-        </Box>
-      ) : null}
       <StyledModal open={openReportModal} handleCloseModal={() => setOpenReportModal(false)}>
         <Box textAlign="center">
           <ModalTitle>
@@ -252,7 +229,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
 
 export default AccountLayout;
 
-const router = [
+export const router = [
   { title: "My Profile", to: routers.MY_PROFILE },
   { title: "Bookmark", to: routers.BOOKMARK },
   { title: "Private Notes", to: routers.PRIVATE_NOTES }

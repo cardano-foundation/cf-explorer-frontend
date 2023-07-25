@@ -1,7 +1,7 @@
 import { Box, Typography, styled } from "@mui/material";
 
 export const ClickAbleLink = styled(Typography)`
-  color: #108aef;
+  color: #0052cc;
   font-size: 14px;
 `;
 

@@ -1,4 +1,4 @@
-import { Box, CircularProgress, useTheme } from "@mui/material";
+import { CircularProgress, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
@@ -30,8 +30,10 @@ import {
   StakeId,
   AddressLine,
   StyledContainer,
-  Label
+  Label,
+  ReportButtonContainer
 } from "./styles";
+import { IReportLimit } from "../SPOLifecycle";
 
 interface Params {
   stakeId: string;
@@ -83,6 +85,7 @@ const DelegatorLifecycle = () => {
   const { data: listTabs, loading: loadingListTabs } = useFetch<ListStakeKeyResponse>(
     API.STAKE_LIFECYCLE.TABS(stakeId)
   );
+  const { data: dataReportLimit } = useFetch<IReportLimit>(API.REPORT.REPORT_LIMIT);
 
   useEffect(() => {
     if (listTabs && listTabs[tabsValid[tab]]) {
@@ -96,7 +99,7 @@ const DelegatorLifecycle = () => {
   }, [listTabs]);
 
   useEffect(() => {
-    document.title = `Staking Delegation Lifecycle ${stakeId} | Cardano Explorer`;
+    document.title = `Staking Delegation Lifecycle ${stakeId} | Iris - Cardano Blockchain Explorer`;
   }, [stakeId]);
 
   const changeMode = (mode: ViewMode) => {
@@ -132,12 +135,24 @@ const DelegatorLifecycle = () => {
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>
-            <CustomTooltip title={!isLoggedIn ? "Please log in to use this feature" : ""}>
-              <Box>
-                <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
+            <CustomTooltip
+              title={
+                !isLoggedIn
+                  ? "Please sign in to use this feature"
+                  : `Please note that you can only create ${
+                      dataReportLimit?.limitPer24hours || 0
+                    } reports within 24 hours`
+              }
+            >
+              <ReportButtonContainer>
+                <ButtonReport
+                  disabled={!isLoggedIn || dataReportLimit?.isLimitReached}
+                  onClick={() => setOpen(true)}
+                  sidebar={+sidebar}
+                >
                   Compose report
                 </ButtonReport>
-              </Box>
+              </ReportButtonContainer>
             </CustomTooltip>
           </BoxItemStyled>
         </BoxContainerStyled>

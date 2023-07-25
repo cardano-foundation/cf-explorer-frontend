@@ -52,7 +52,7 @@ const Card = ({
           {type === "down" ? "Input" : "Output"}
         </Box>
         <Box color={(theme) => theme.palette.grey[500]} display="flex" justifyContent="space-between">
-          <Box>Wallet Addresses</Box>
+          <Box>Addresses</Box>
           <Box>Amount</Box>
         </Box>
       </Header>
@@ -78,7 +78,7 @@ const Card = ({
                                 component={"span"}
                                 fontWeight="bold"
                                 fontFamily={"var(--font-family-text)"}
-                                color={(theme) => theme.palette.blue[900]}
+                                color={(theme) => theme.palette.blue[800]}
                                 mr={1}
                               >
                                 {getShortHash(item.txHash)}
@@ -114,7 +114,7 @@ const Card = ({
                         <Link to={details.address(item.address)}>
                           <CustomTooltip title={item.address}>
                             <Box
-                              color={(theme) => theme.palette.blue[900]}
+                              color={(theme) => theme.palette.blue[800]}
                               fontWeight="bold"
                               fontFamily={"var(--font-family-text)"}
                               mr={1}
@@ -150,7 +150,7 @@ const Card = ({
                                   component={"span"}
                                   fontWeight="bold"
                                   fontFamily={"var(--font-family-text)"}
-                                  color={(theme) => theme.palette.blue[900]}
+                                  color={(theme) => theme.palette.blue[800]}
                                   mr={1}
                                 >
                                   {getShortWallet(item?.stakeAddress)}

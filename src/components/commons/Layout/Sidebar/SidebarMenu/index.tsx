@@ -10,6 +10,7 @@ import { isExtenalLink } from "src/commons/utils/helper";
 import { setSidebar } from "src/stores/user";
 import { RootState } from "src/stores/types";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import { routers } from "src/commons/routers";
 
 import FooterMenu from "../FooterMenu";
 import {
@@ -51,8 +52,23 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   }, [sidebar]);
 
   useEffect(() => {
-    if (pathname === "/") setActive(null);
-  }, [pathname]);
+    if (pathname === "/" || !sidebar) {
+      setActive(null);
+    } else if (
+      sidebar &&
+      (pathname.startsWith("/stake/") ||
+        pathname.startsWith("/transaction/") ||
+        pathname.startsWith("/stake-key/") ||
+        pathname.startsWith("/block/") ||
+        pathname.startsWith("/epoch/") ||
+        pathname.startsWith("/token/") ||
+        pathname.startsWith("/contracts/") ||
+        pathname.startsWith("/delegation-pool/") ||
+        pathname.startsWith("/policy/"))
+    ) {
+      setActive("menu-0");
+    }
+  }, [pathname, sidebar]);
 
   useEffect(() => {
     if (!sidebar && width >= theme.breakpoints.values.md) setSidebar(true);
@@ -68,6 +84,33 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const handleOpen = (item: string) => {
     setActive(item !== active ? item : null);
     if (!sidebar) setSidebar(true);
+  };
+
+  const isActiveSubMenu = (href: string, categoryName?: string): boolean => {
+    if (categoryName === "Operational Certificates") return pathname === href;
+
+    if (pathname.startsWith("/stake/") && href === routers.ADDRESS_LIST) return true;
+    if (pathname.startsWith("/stake-key/") && href === routers.ADDRESS_LIST) return true;
+    if (pathname.startsWith("/policy/") && href === routers.TOKEN_LIST) return true;
+
+    return (
+      pathname === href ||
+      (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1])) ||
+      (href === "/timeline" && (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
+    );
+  };
+
+  const isActiveMenu = (href: string): boolean => {
+    if (
+      href === routers.STAKING_LIFECYCLE.replace(":tab", "stake-key") &&
+      (pathname.startsWith("/delegator-lifecycle/") ||
+        pathname.startsWith("/spo-lifecycle/") ||
+        pathname.startsWith("/report-generated/") ||
+        pathname === routers.STAKING_LIFECYCLE.replace(":tab", "pools"))
+    )
+      return true;
+
+    return pathname === href;
   };
 
   return (
@@ -96,10 +139,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                       component={Link}
                       to={href}
-                      selected={pathname === href}
+                      selected={isActiveMenu(href)}
                       sx={(theme) => ({
                         ...itemStyle(theme, sidebar),
-                        ...(pathname === href ? { backgroundColor: `${theme.palette.success.dark} !important` } : {})
+                        ...(isActiveMenu(href) ? { backgroundColor: `${theme.palette.success.dark} !important` } : {})
                       })}
                     >
                       {icon ? (
@@ -107,10 +150,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                           src={icon}
                           alt={title}
                           iconOnly={!sidebar ? 1 : 0}
-                          active={pathname === href ? 1 : 0}
+                          active={isActiveMenu(href) ? 1 : 0}
                         />
                       ) : null}
-                      <MenuText primary={title} open={sidebar ? 1 : 0} active={pathname === href ? 1 : 0} />
+                      <MenuText primary={title} open={sidebar ? 1 : 0} active={isActiveMenu(href) ? 1 : 0} />
                     </ListItem>
                   )
                 ) : (
@@ -122,9 +165,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`menu-${index}` === active
                         ? {
-                          backgroundColor: (theme) => `${theme.palette.green[700_10]} !important`,
-                          color: (theme) => theme.palette.grey[500]
-                        }
+                            backgroundColor: (theme) => `${theme.palette.green[700_10]} !important`,
+                            color: (theme) => theme.palette.grey[500]
+                          }
                         : { color: (theme) => theme.palette.grey[500] })
                     })}
                   >
@@ -187,10 +230,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             selected={pathname === href}
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
-                              ...(pathname === href ||
-                                pathname.includes(href) ||
-                                (href === "/timeline" &&
-                                  (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
+                              ...(isActiveSubMenu(href, item.title)
                                 ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
                                 : {}),
                               paddingLeft: "70px",
@@ -210,13 +250,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             <SubMenuText
                               primary={title}
                               open={sidebar ? 1 : 0}
-                              active={
-                                pathname.includes(href) ||
-                                  (href === "/timeline" &&
-                                    (pathname.includes("delegator-lifecycle") || pathname.includes("spo-lifecycle")))
-                                  ? 1
-                                  : 0
-                              }
+                              active={+isActiveSubMenu(href, item.title)}
                             />
                           </ListItem>
                         )
@@ -286,9 +320,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`footer-${index}` === active
                         ? {
-                          backgroundColor: (theme) => `${theme.palette.green[700_10]} !important`,
-                          color: (theme) => theme.palette.grey[500]
-                        }
+                            backgroundColor: (theme) => `${theme.palette.green[700_10]} !important`,
+                            color: (theme) => theme.palette.grey[500]
+                          }
                         : { color: (theme) => theme.palette.grey[500] })
                     })}
                   >

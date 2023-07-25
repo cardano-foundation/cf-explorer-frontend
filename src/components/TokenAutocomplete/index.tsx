@@ -4,7 +4,7 @@ import { useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 
 import useFetchList from "src/commons/hooks/useFetchList";
-import { EmptyIcon, HeaderSearchIcon } from "src/commons/resources";
+import { HeaderSearchIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatNumberDivByDecimals, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
@@ -39,6 +39,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
   return (
     <Box>
       <Autocomplete
+        freeSolo={!data?.length}
         options={total > 10 ? [...data, "more"] : data}
         componentsProps={{ paper: { elevation: 2 } }}
         loading={loading}
@@ -47,11 +48,6 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
         }
         onInputChange={debounce((e, value) => setSearch(value), 500)}
         onChange={(e, value) => typeof value !== "string" && setSelected(value?.fingerprint || "")}
-        noOptionsText={
-          <Box>
-            <Box maxHeight="200px" component={"img"} src={EmptyIcon}></Box>
-          </Box>
-        }
         ListboxProps={{
           sx(theme) {
             return {
@@ -125,7 +121,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
                   </Box>
                   <CustomTooltip title={`${option.displayName || ""} #${option.name || option.fingerprint}`}>
                     <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="150px">
-                      {option.displayName || ""} #{option.name || option.fingerprint}
+                      {option.displayName || ""}
                     </Box>
                   </CustomTooltip>
                 </Box>
