@@ -80,6 +80,11 @@ export default class InstantaneousRewardsPage extends WebApi{
         return this;
     }
 
+    checkRewardPaidIsDisplay(){
+        cy.verifyAllElementDisplay(listItemFollowColumn2, InstantaneousConstants.COLUMN_NAME[4])
+        return this;
+    }
+
     checkFormatStakeKey(){
         const xpath = util.format(listItemFollowColumn, InstantaneousConstants.COLUMN_NAME[3], InstantaneousConstants.COLUMN_NAME[3])
         cy.xpath(xpath).each((element)=>{
