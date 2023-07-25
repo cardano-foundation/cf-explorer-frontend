@@ -338,7 +338,7 @@ export const DetailLinkIcon = styled("h3")(({ theme }) => ({
   lineHeight: 1,
   marginRight: 10,
   "svg path": {
-    fill: theme.palette.primary.main
+    fill: theme.palette.secondary.light
   }
 }));
 

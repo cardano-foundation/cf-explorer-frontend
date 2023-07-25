@@ -340,7 +340,7 @@ export const TokenDescription = styled(Box)(({ theme }) => ({
 export const TokenUrl = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(1),
   cursor: "pointer",
-  color: theme.palette.secondary.light
+  color: theme.palette.primary.main
 }));
 
 export const PolicyScriptBtn = styled(Button)(({ theme }) => ({

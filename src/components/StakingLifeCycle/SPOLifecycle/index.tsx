@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Box, IconButton, useTheme } from "@mui/material";
+import { Box, IconButton, alpha, useTheme } from "@mui/material";
 import { useHistory, useParams } from "react-router";
 
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -165,7 +165,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       return `${palette.primary.main} !important`;
     }
     if (hasData) {
-      return `${palette.secondary.main} !important`;
+      return `${alpha(palette.secondary.main, 0.7)} !important`;
     }
     return `${palette.primary[100]} !important`;
   };

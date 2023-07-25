@@ -92,10 +92,10 @@ export const Title = styled("h3")`
 `;
 
 export const BoxInfo = styled(Box)(({ theme }) => ({
-  height: `calc(88% - ${theme.spacing(3)} - ${theme.spacing(3)})`,
+  height: "calc(100% - 12px)",
   minHeight: "200px",
   borderRadius: "12px",
-  padding: theme.spacing(3),
+  padding: "6px 0",
   [theme.breakpoints.up("lg")]: {
     paddingLeft: 0,
     paddingRight: 0
@@ -110,7 +110,14 @@ export const BoxInfo = styled(Box)(({ theme }) => ({
     gap: 20
   }
 }));
-export const InfoItem = styled(Box)(() => ({}));
+export const InfoItem = styled(Box)(({ theme }) => ({
+  borderBottom: `1px solid ${theme.palette.primary[200]}`,
+  paddingBottom: theme.spacing(1),
+  ":last-child": {
+    paddingBottom: 0,
+    borderBottom: "none"
+  }
+}));
 export const Skeleton = styled(SkeletonMUI)(() => ({
   height: 300,
   borderRadius: 12
@@ -142,7 +149,7 @@ export const ColorChart = styled(Box)<{ type: TypeChart }>(({ theme, type }) => 
 
 export const StyledTransactionTypes = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
-  fontSize: "1.5rem",
+  fontSize: "20px",
   textAlign: "left",
   color: theme.palette.secondary.main,
   [theme.breakpoints.between("lg", "xl")]: {

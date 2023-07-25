@@ -47,7 +47,7 @@ const AddressAnalytics: FC = () => {
   const theme = useTheme();
   const { data, loading } = useFetch<AnalyticsData[]>(`${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`);
 
-  const values = data?.map((item) => item.value || 0) || [];
+  const values = (data || [])?.map((item) => item.value || 0) || [];
 
   const maxBalance = BigNumber.max(0, ...values).toString();
   const minBalance = BigNumber.min(maxBalance, ...values).toString();

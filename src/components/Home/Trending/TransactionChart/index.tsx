@@ -93,19 +93,21 @@ const TransactionChart: React.FC = () => {
           <Title>Transactions {optionsTime[rangeTime].displayName}</Title>
         </Grid>
         <Grid item xs={12} sm={4} md={4} lg={3}>
-          <Tabs display="flex" justifyContent="space-between" width={isMobile ? "100%" : "auto"}>
-            {Object.keys(optionsTime).map((option) => {
-              return (
-                <Tab
-                  key={optionsTime[option as Time].label}
-                  active={+(rangeTime === option)}
-                  onClick={() => setRangeTime(option as Time)}
-                >
-                  {optionsTime[option as Time].label}
-                </Tab>
-              );
-            })}
-          </Tabs>
+          <Box maxWidth={"260px"}>
+            <Tabs display="flex" justifyContent="space-between" width={isMobile ? "100%" : "auto"}>
+              {Object.keys(optionsTime).map((option) => {
+                return (
+                  <Tab
+                    key={optionsTime[option as Time].label}
+                    active={+(rangeTime === option)}
+                    onClick={() => setRangeTime(option as Time)}
+                  >
+                    {optionsTime[option as Time].label}
+                  </Tab>
+                );
+              })}
+            </Tabs>
+          </Box>
         </Grid>
       </Grid>
       {loading && renderLoading()}
