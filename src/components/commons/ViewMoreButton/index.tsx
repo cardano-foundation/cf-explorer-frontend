@@ -7,7 +7,7 @@ const StyledLink = styled(Link)`
   text-align: center;
   padding: 10px 20px;
   margin: 20px 30px;
-  background: ${(props) => props.theme.palette.secondary.main};
+  background: ${(props) => props.theme.palette.primary.main};
   color: ${(props) => props.theme.palette.primary[100]}!important;
   border-radius: 6px;
   font-weight: var(--font-weight-bold);

@@ -341,7 +341,7 @@ export const TokenUrl = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(1),
   cursor: "pointer",
   fontWeight: "bold",
-  color: `${theme.palette.secondary.light} !important`,
+  color: theme.palette.primary.main,
   fontFamily: "Roboto, sans-serif !important",
   textAlign: "left",
   wordBreak: "break-all",

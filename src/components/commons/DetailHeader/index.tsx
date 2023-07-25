@@ -269,7 +269,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                           },
                           "&:hover": {
                             "&::-webkit-scrollbar-thumb": {
-                              background: theme.palette.secondary.light
+                              background: theme.palette.primary[200]
                             }
                           }
                         }

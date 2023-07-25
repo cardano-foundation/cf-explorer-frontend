@@ -30,7 +30,7 @@ export const AddressLink = styled(Link)`
 export const AddressGroup = styled(Box)(({ theme }) => ({
   marginTop: "15px",
   marginBottom: "24px",
-  background: theme.palette.blue[100_10],
+  background: theme.palette.primary[200],
   borderRadius: "8px",
   padding: "12px 20px",
   display: "flex",
@@ -56,7 +56,7 @@ export const ValueItem = styled(Box)`
   color: black;
   font-weight: var(--font-weight-bold);
   font-size: 14px;
-  color: ${(props) => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.secondary.light};
 `;
 
 export const RowItem = styled(Box)`

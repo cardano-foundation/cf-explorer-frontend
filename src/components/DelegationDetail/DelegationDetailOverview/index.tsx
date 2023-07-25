@@ -80,8 +80,7 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
                 </CustomTooltip>
                 <Value
                   sx={{
-                    color: (theme) =>
-                      item.title === "Reward" ? theme.palette.primary.main : theme.palette.secondary.main
+                    color: (theme) => theme.palette.secondary.main
                   }}
                 >
                   {item.value}

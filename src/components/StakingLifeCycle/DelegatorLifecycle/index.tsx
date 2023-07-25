@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { Box, IconButton, useTheme } from "@mui/material";
+import { Box, IconButton, alpha, useTheme } from "@mui/material";
 
 import {
   DelegationIcon,
@@ -202,7 +202,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       return `${palette.primary.main} !important`;
     }
     if (hasData) {
-      return `${palette.secondary.main} !important`;
+      return `${alpha(palette.secondary.main, 0.7)} !important`;
     }
     return `${palette.primary[100]} !important`;
   };
