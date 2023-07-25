@@ -108,7 +108,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
       )
     },
     {
-      label: isPoolReport ? "Pool ID" : "Stake key details",
+      label: isPoolReport ? "Pool ID" : "Stake address details",
       value: (
         <CustomTooltip title={params.address}>
           <TextOverFlow>{params.address}</TextOverFlow>
