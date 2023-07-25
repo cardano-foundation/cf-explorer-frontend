@@ -80,9 +80,9 @@ Cypress.Commands.add("hoverToElementRandomly", (selector, ...value) => {
 });
 Cypress.Commands.add("hoverToElement", (selector) => {
   if (selector.startsWith("/") || selector.startsWith("(")) {
-    cy.xpath(selector).trigger();
+    cy.xpath(selector).trigger('mouseover');
   } else {
-    cy.get(selector).trigger();
+    cy.get(selector).trigger('mouseover');
   }
 });
 Cypress.Commands.add("getTextContent", { prevSubject: true }, (subject) => {
