@@ -4,11 +4,12 @@ import {TransactionConstants} from "../../fixtures/constants/TransactionConstant
 //locators
 const blockChainLocator = "//img[@alt='Blockchain']//parent::div";
 const transactionMenu = "//a[@data-testid='submenu-button-transactions']";
-const txnColumnName = "//th[contains(text(),'{0}')]";
-const txHashHyperLink = "tbody tr[class] td:nth-of-type(2) a";
-const blockHyperLink = "tbody tr[class] td:nth-of-type(3) a";
-const inputAddressHyperLink = "tbody tr[class] td:nth-of-type(6) a";
-const outputAddressHyperLink = "tbody tr[class] td:nth-of-type(7) a";
+const titleTransactionListPage = "//h2[text()='Transactions']";
+const txnColumnName = "//th[contains(text(),'%s')]";
+const txHashHyperLink = "tr[class] td:nth-of-type(2) a";
+const blockHyperLink = "tr[class] td:nth-of-type(3) a";
+const inputAddressHyperLink = "tr[class] td:nth-of-type(6) a";
+const outputAddressHyperLink = "tr[class] td:nth-of-type(7) a";
 const currentPage = "nav[aria-label='pagination navigation'] input";
 const totalResults = "//div[text()='Results']/span";
 const pagingNavigator = "nav[aria-label='pagination navigation']";
@@ -54,6 +55,12 @@ const backPagingBtn = "//ul//li[2]//button";
 const lastestPageBtn = "//ul//li[11]//button";
 const firstPageBtn = "//ul//li[1]//button";
 const inputPageNumber = "//li/div/input";
+const lastestTxHash = "tr[class]:nth-of-type(1) td:nth-of-type(2) a";
+const epochOfLastestTxn = "//table//tbody//tr[1]//td[count(//th[contains(text(),'Block')]//preceding-sibling::th) + boolean(//th[contains(text(),'Block')])]//div[2]/a";
+const blockOfLastestTxn = "//table//tbody//tr[1]//td[count(//th[contains(text(),'Block')]//preceding-sibling::th) + boolean(//th[contains(text(),'Block')])]//div[1]/a";
+const slotOfLastestTxn = "//table//tbody//tr[1]//td[count(//th[contains(text(),'Block')]//preceding-sibling::th) + boolean(//th[contains(text(),'Block')])]//span";
+const feesOfLastestTxn = "//table//tbody//tr[1]//td[count(//th[contains(text(),'Fees')]//preceding-sibling::th) + boolean(//th[contains(text(),'Fees')])]//preceding-sibling::div";
+const totalOutputOfLastestTxn = "//table//tbody//tr[1]//td[count(//th[contains(text(),'Output in ADA')]//preceding-sibling::th) + boolean(//th[contains(text(),'Output in ADA')])]//preceding-sibling::div";
 
 export default class TransactionListPage extends WebApi {
   goToHomePage() {
@@ -72,13 +79,14 @@ export default class TransactionListPage extends WebApi {
   }
 
   verifyTransactionListTable() {
-    cy.verifyElementDisplay(txnColumnName, "#");
-    cy.verifyElementDisplay(txnColumnName, "Tx Hash");
-    cy.verifyElementDisplay(txnColumnName, "Block");
-    cy.verifyElementDisplay(txnColumnName, "Output in ADA");
-    cy.verifyElementDisplay(txnColumnName, "Fees");
-    cy.verifyElementDisplay(txnColumnName, "Input address");
-    cy.verifyElementDisplay(txnColumnName, "Output address");
+    this.isElementVisibleByXpath(titleTransactionListPage);
+    this.isElementVisibleByXpath(txnColumnName, "#");
+    this.isElementVisibleByXpath(txnColumnName, "Tx Hash");
+    this.isElementVisibleByXpath(txnColumnName, "Block");
+    this.isElementVisibleByXpath(txnColumnName, "Output in ADA");
+    this.isElementVisibleByXpath(txnColumnName, "Fees");
+    this.isElementVisibleByXpath(txnColumnName, "Input address");
+    this.isElementVisibleByXpath(txnColumnName, "Output address");
     this.verifyListElementAttribute(txHashHyperLink,'href');
     this.verifyListElementAttribute(blockHyperLink,'href');
     this.verifyListElementAttribute(inputAddressHyperLink,'href');
@@ -92,16 +100,14 @@ export default class TransactionListPage extends WebApi {
   }
 
   verifyPagingNavigatorDisplay(){
-    cy.xpath(totalResults)
-    .invoke('text')
-    .then((text) => {
-      let number = parseInt(text); 
+    cy.xpath(totalResults).getAttributeValue('value').then((value:string)=>{
+      const number = Number(value);
       if(number>10){
         cy.verifyElementDisplay(pagingNavigator);
       }else{
         cy.verifyElementNotVisible(pagingNavigator);
       }
-    });
+    })
   return this;
   }
 
@@ -276,6 +282,7 @@ export default class TransactionListPage extends WebApi {
     cy.verifyElementDisplay(status);
     cy.xpath(summaryBtnOnQuickView).verifyElementEnabled();
     cy.xpath(utxosBtnOnQuickView).verifyElementEnabled();
+    cy.xpath(metadataBtnOnQuickView).verifyElementEnabled();
     cy.xpath(txHahOnQuickModel).invoke("text").then(text => {
       expect(this.isFormatStringRight(text, 10, 7, 3)).be.true;
     })
@@ -407,5 +414,34 @@ export default class TransactionListPage extends WebApi {
     cy.xpath(inputPageNumber).setInputValue(numberPage);
     cy.xpath(inputPageNumber).type('{enter}');
     return this;
+  }
+
+  clickOnLastestTxHash() {
+    cy.clickElement(lastestTxHash);
+    return this;
+  }
+
+  getValueOfLastestTxHash() {
+    return cy.get(lastestTxHash).getAttributeValue('aria-label'); 
+  }
+
+  getEpochOfLastestTxn() {
+    return this.getTextElement(epochOfLastestTxn); 
+  }
+
+  getBlockOfLastestTxn() {
+    return this.getTextElement(blockOfLastestTxn); 
+  }
+
+  getSlotOfLastestTxn() {
+    return this.getTextElement(slotOfLastestTxn); 
+  }
+
+  getFeesOfLastestTxn() {
+    return this.getTextElement(feesOfLastestTxn); 
+  }
+
+  getTotalOutputOfLastestTxn() {
+    return this.getTextElement(totalOutputOfLastestTxn); 
   }
 }
