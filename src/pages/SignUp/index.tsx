@@ -14,7 +14,7 @@ import {
   BackText,
   CloseButton,
   Container,
-  ForgotPassword,
+  HighlightLink,
   FormHelperTextCustom,
   InputCustom,
   Label,
@@ -426,11 +426,11 @@ export default function SignUp() {
                     >
                       I agree to the
                       <Link to={routers.TERMS_AND_CONDITIONS} target="_blank">
-                        <ForgotPassword>Terms & Conditions</ForgotPassword>
+                        <HighlightLink>Terms & Conditions</HighlightLink>
                       </Link>
                       and
                       <Link to={routers.POLICY} target="_blank">
-                        <ForgotPassword>Privacy Policy</ForgotPassword>
+                        <HighlightLink>Privacy Policy</HighlightLink>
                       </Link>
                     </Box>
                   }

@@ -82,7 +82,7 @@ export const Label = styled(Box)`
   color: ${(props) => props.theme.palette.secondary.main};
 `;
 
-export const ForgotPassword = styled("span")`
+export const HighlightLink = styled("span")`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
