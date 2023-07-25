@@ -5,5 +5,8 @@ describe("Instantaneous Rewards screen", ()=>{
     it("Check action of all items in the screen", ()=>{
         instantaneousRewardsPage    .gotoInstantaneousRewards()
                                     .checkClickOnTxHash()
+                                    .clickOnButtonBack()
+                                    .checkHoverOnTxHash()
+
     })
 })

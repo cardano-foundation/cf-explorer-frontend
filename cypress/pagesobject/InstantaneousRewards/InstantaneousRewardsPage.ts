@@ -13,6 +13,7 @@ const listNumberPerPage = "//ul[@role='listbox']//li"
 const txbNumberPageCurrentOfLastPage = "//ul//li//input/following-sibling::span"
 const labelTransactionDetail = "//div[text()='Transaction details']"
 const btnBack = "//small[text()='Back']"
+const labelFullWhenHoverOn = "//div[@role='tooltip']"
 
 export default class InstantaneousRewardsPage extends WebApi{
     gotoInstantaneousRewards(){
@@ -148,6 +149,12 @@ export default class InstantaneousRewardsPage extends WebApi{
         cy.clickElement(listbtnNextAndPre+"[4]")
         cy.xpath(listbtnNextAndPre+"[3]").should('be.disabled')
         cy.xpath(listbtnNextAndPre+"[4]").should('be.disabled')
+        return this;
+    }
+
+    checkHoverOnTxHash(){
+        cy.hoverToElementRandomly(listItemFollowColumn2, InstantaneousConstants.COLUMN_NAME[0])
+        cy.verifyElementDisplay(labelFullWhenHoverOn)
         return this;
     }
 }
