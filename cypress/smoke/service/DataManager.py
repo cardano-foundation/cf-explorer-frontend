@@ -92,7 +92,7 @@ class DataManager():
     self.client.setUrl('https://api.koios.rest/api/v0/block_info')
     result = self.client.post(json)
     testScript = '';
-    f2 = open('../e2e/zblockDyn.cy.ts', 'a')
+    f2 = open('../e2e/Dynamic/blockDyn.cy.ts', 'a')
     f = open('templates/blockDyn.cy.ts', 'r')
 
     src = Template(f.read())
@@ -136,7 +136,7 @@ class DataManager():
     result = self.client.post(jsons)
     testScript = '';
 
-    f2 = open('../e2e/ztransactionDyn.cy.ts', 'a')
+    f2 = open('../e2e/Dynamic/transactionDyn.cy.ts', 'a')
     f = open('templates/transactionDyn.cy.ts', 'r')
     src = Template(f.read())
 
@@ -180,7 +180,7 @@ class DataManager():
   def getEpochDetail(self, json):
 
     testScript = '';
-    f2 = open('../e2e/zepochDyn.cy.ts', 'a')
+    f2 = open('../e2e/Dynamic/epochDyn.cy.ts', 'a')
     f = open('templates/epochDyn.cy.ts', 'r')
 
     src = Template(f.read())
