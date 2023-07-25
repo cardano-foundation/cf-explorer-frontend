@@ -27,7 +27,7 @@ describe("template spec", () => {
     cy.get('.css-1dz0v3k > tr > :nth-child(6)').contains("Fees");
     cy.get('.css-1dz0v3k > tr > :nth-child(7)').contains("Output");
   });
-  it.only("should have block search bar", () => {
+  it("should have block search bar", () => {
     cy.visit("/blocks");
     cy.get('[data-testid="header-search"]').should("be.visible");
   });
