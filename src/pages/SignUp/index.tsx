@@ -2,7 +2,7 @@ import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment 
 import { useEffect, useReducer, useRef, useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { IoMdClose } from "react-icons/io";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import useAuth from "src/commons/hooks/useAuth";
 import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessIcon } from "src/commons/resources";
@@ -14,7 +14,7 @@ import {
   BackText,
   CloseButton,
   Container,
-  ForgotPassword,
+  HighlightLink,
   FormHelperTextCustom,
   InputCustom,
   Label,
@@ -143,7 +143,7 @@ export default function SignUp() {
             name: "confirmPassword",
             value: formData.confirmPassword.value,
             touched: true,
-            error: "Confirm Password does not match"
+            error: "Password does not match"
           });
         }
         break;
@@ -151,7 +151,7 @@ export default function SignUp() {
         if (!value) {
           error = "Please enter your Confirm Password";
         } else if (value !== formData.password.value) {
-          error = "Confirm Password does not match";
+          error = "Password does not match";
         }
         break;
       case "email":
@@ -172,7 +172,7 @@ export default function SignUp() {
             name: "confirmEmail",
             value: formData.confirmEmail.value,
             touched: true,
-            error: "Confirm Email does not match"
+            error: "Email address does not match"
           });
         }
         break;
@@ -180,7 +180,7 @@ export default function SignUp() {
         if (!value) {
           error = "Please enter your Confirm Email";
         } else if (value !== formData.email.value) {
-          error = "Confirm Email does not match";
+          error = "Email address does not match";
         }
         break;
       default:
@@ -417,7 +417,14 @@ export default function SignUp() {
                   }
                   label={
                     <Box fontSize={"14px"} fontWeight={400} display={"flex"} alignItems={"baseline"} gap={"5px"}>
-                      I agree to the <ForgotPassword>Terms of Service</ForgotPassword>
+                      I agree to the
+                      <Link to={routers.TERMS_AND_CONDITIONS} target="_blank">
+                        <HighlightLink>Terms & Conditions</HighlightLink>
+                      </Link>
+                      and
+                      <Link to={routers.POLICY} target="_blank">
+                        <HighlightLink>Privacy Policy</HighlightLink>
+                      </Link>
                     </Box>
                   }
                 />

@@ -36,7 +36,7 @@ export default function ProtocolHistoryModal({ open, protocolType, handleCloseMo
             <TableHead>
               <TableRow>
                 <StyledTableHeadCell>Transaction Hash</StyledTableHeadCell>
-                <StyledTableHeadCell>Timestamp</StyledTableHeadCell>
+                <StyledTableHeadCell>Created At</StyledTableHeadCell>
               </TableRow>
             </TableHead>
             <TableBody>

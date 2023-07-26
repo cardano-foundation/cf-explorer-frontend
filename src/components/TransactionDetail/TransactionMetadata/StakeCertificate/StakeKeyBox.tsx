@@ -14,7 +14,7 @@ type TProps = {
 const StakeKeyBox = ({ data }: TProps) => {
   const leftRow = [
     {
-      label: "Address Stake Key",
+      label: "Address Stake Address",
       value: data.stakeAddress,
       originValue: data.stakeAddress
     }

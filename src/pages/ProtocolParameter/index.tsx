@@ -196,7 +196,7 @@ const ProtocolParameter: React.FC = () => {
       render: (r: any) => <Box>{r?.epochNo}</Box>
     },
     {
-      title: "Timestamp",
+      title: "Created At",
       key: "timestamp",
       render: (r: any) => (r?.time ? formatDateTimeLocal(r.time) : "")
     }
