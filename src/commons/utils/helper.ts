@@ -192,6 +192,24 @@ export const cleanObject = (obj: { [key: string]: string | number | Date | strin
   return cleaned;
 };
 
+export const formatLongText = (text: string): string => {
+  if (text?.length > 10) {
+    return `${text.slice(0, 5)}...${text.slice(-5)}`;
+  }
+  return text;
+};
+export const getHostname = (url: string): string => {
+  let hostname = "";
+  try {
+    hostname = new URL(url).hostname;
+  } catch (error) {
+    console.warn(error);
+  }
+  return hostname;
+};
+
 export const toFixedBigNumber = (value: string | number, dp = 0, rm = BigNumber.ROUND_DOWN): number => {
   return +new BigNumber(value).toFixed(dp, rm);
 };
+
+export const isValidEmail = (email: string) => regexEmail.test(email);
