@@ -4,6 +4,7 @@ import { createBrowserHistory } from "history";
 import { fireEvent, render, screen } from "src/test-utils";
 
 import SidebarMenu from ".";
+import { lists, routers } from "src/commons/routers";
 
 describe("SidebarMenu", () => {
   it("should component render", () => {
@@ -26,9 +27,9 @@ describe("SidebarMenu", () => {
     expect(protocolParamsPagep).toBeInTheDocument();
 
     fireEvent.click(stakingPage);
-    expect(history.location.pathname).toBe("/stacking-lifecycle/stake-key");
+    expect(history.location.pathname).toBe(lists.dashboard());
 
     fireEvent.click(protocolParamsPagep);
-    expect(history.location.pathname).toBe("/protocol-parameters");
+    expect(history.location.pathname).toBe(routers.PROTOCOL_PARAMETER);
   });
 });

@@ -48,7 +48,7 @@ const Dashboard: React.FC = () => {
   };
 
   useEffect(() => {
-    document.title = "Saved Reports | Iris - Cardano Blockchain Explorer";
+    document.title = "Saved Reports | Cardano Explorer";
   }, []);
   const handleSort = (sort: string = "") => setSort(sort);
 
@@ -89,7 +89,7 @@ const Dashboard: React.FC = () => {
         <StakingLifeCycleSearch />
       </Container>
     );
-    
+
   return (
     <Container>
       <StakingLifeCycleSearch />
@@ -117,7 +117,7 @@ const Dashboard: React.FC = () => {
               >
                 <StyledTab
                   value={"stake-key"}
-                  label={<StyledTabLabel active={+(tab === "stake-key")}>Stake Address Reports</StyledTabLabel>}
+                  label={<StyledTabLabel active={+(tab === "stake-key")}>Stake Key Reports</StyledTabLabel>}
                 />
                 <StyledTab
                   value={"pools"}

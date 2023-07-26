@@ -1,4 +1,4 @@
-import { styled, Stack, Box, Button, TextField, Slider, FormLabel, alpha } from "@mui/material";
+import { styled, Stack, Box, Button, TextField, Slider, FormLabel } from "@mui/material";
 
 import CustomSelect from "src/components/commons/CustomSelect";
 
@@ -16,17 +16,17 @@ export const Container = styled(Box)(({ theme }) => ({
 
 export const StyledLabel = styled("div")`
   font-weight: 400;
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.main};
   font-size: 14px;
   line-height: 16px;
   margin: 6px 0px;
 `;
 
-export const StyledSelect = styled(CustomSelect)(() => ({
+export const StyledSelect = styled(CustomSelect)(({ theme }) => ({
   borderRadius: "4px",
   fontSize: 14,
   minWidth: 50,
-  border: "1px solid #E3E5E9",
+  border: `1px solid ${theme.palette.border.primary}`,
   width: 200,
   textAlign: "left",
   paddingLeft: 14,
@@ -43,7 +43,7 @@ export const StyledSelect = styled(CustomSelect)(() => ({
   ".MuiOutlinedInput-notchedOutline": {
     border: 0,
     borderRadius: 0,
-    borderRight: "1px solid #E3E5E9"
+    borderRight: `1px solid ${theme.palette.border.primary}`
   }
 }));
 
@@ -65,7 +65,7 @@ export const TextError = styled(TextWarning)`
 `;
 
 export const StyledAddressSelect = styled(Box)`
-  border: 1.5px solid #e3e5e9;
+  border: 1.5px solid ${({ theme }) => theme.palette.border.primary};
   border-radius: 8px;
   padding: 4px 0px;
   .MuiInputBase-root {
@@ -75,13 +75,13 @@ export const StyledAddressSelect = styled(Box)`
 `;
 
 export const StyledButton = styled(Button)`
-  background: ${(props) => props.theme.palette.grey[400]};
+  background: ${(props) => props.theme.palette.secondary.main};
   width: 100%;
   border-radius: 8px;
   height: 44px;
   padding: 10px 20px;
   text-align: center;
-  color: #fff;
+  color: ${(props) => props.theme.palette.common.white};
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
@@ -91,12 +91,12 @@ export const StyledButton = styled(Button)`
   gap: 10px;
   text-transform: none;
   &:disabled {
-    background: ${(props) => props.theme.palette.grey[400]};
+    background: ${(props) => props.theme.palette.secondary.main};
     opacity: 0.3;
-    color: #fff;
+    color: ${(props) => props.theme.palette.common.white};
   }
   &:hover {
-    background: ${(props) => props.theme.palette.grey[400]};
+    background: ${(props) => props.theme.palette.secondary.main};
     opacity: 0.8;
   }
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -109,11 +109,11 @@ export const StyledBackButton = styled(Button)<{ width?: number | string }>(({ w
   borderRadius: "8px",
   height: "44px",
   textAlign: "center",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.main,
   fontSize: 16,
   lineHeight: "19px",
   fontWeight: 700,
-  border: "2px solid #c8cdd8",
+  border: `2px solid ${theme.palette.border.hint}`,
   textTransform: "none",
   ":hover": {
     opacity: 0.8
@@ -125,7 +125,7 @@ export const StyledBackButton = styled(Button)<{ width?: number | string }>(({ w
 }));
 
 export const SubText = styled("div")`
-  color: ${({ theme }) => theme.palette.grey[400]};
+  color: ${({ theme }) => theme.palette.secondary.main};
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
@@ -136,13 +136,13 @@ export const TextRequired = styled("div")`
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
   line-height: 22px;
 `;
 
 export const ButtonEvent = styled(Button)<{ active: number }>(({ theme, active }) => ({
-  background: active ? theme.palette.grey[300] : alpha(theme.palette.grey[400], 0.05),
-  color: active ? theme.palette.common.white : theme.palette.grey[300],
+  background: active ? theme.palette.secondary.light : theme.palette.primary[200],
+  color: active ? theme.palette.common.white : theme.palette.secondary.light,
   borderRadius: "6px",
   height: "44px",
   alignItems: "center",
@@ -153,8 +153,8 @@ export const ButtonEvent = styled(Button)<{ active: number }>(({ theme, active }
   lineHeight: "19px",
   fontWeight: 400,
   "&:hover": {
-    background: active ? theme.palette.grey[300] : alpha(theme.palette.grey[400], 0.05),
-    color: active ? "#fff" : theme.palette.grey[300]
+    background: active ? theme.palette.secondary.light : theme.palette.primary[200],
+    color: active ? theme.palette.common.white : theme.palette.secondary.light
   },
   [theme.breakpoints.down("sm")]: {
     fontSize: 14,
@@ -162,13 +162,13 @@ export const ButtonEvent = styled(Button)<{ active: number }>(({ theme, active }
   }
 }));
 
-export const OverViewItem = styled(Box)(() => ({
+export const OverViewItem = styled(Box)(({ theme }) => ({
   display: "flex",
   padding: "10px 0px",
   justifyContent: "space-between",
   alignItems: "center",
   width: "100%",
-  borderBottom: "1px solid #000000",
+  borderBottom: `1px solid ${theme.palette.common.black}`,
   "&:last-of-type": {
     borderBottom: "none"
   }
@@ -192,7 +192,7 @@ export const TextLabelReview = styled("div")`
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.main};
   opacity: 0.6;
   white-space: nowrap;
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -206,7 +206,7 @@ export const TextValueReview = styled("div")`
   font-size: 16px;
   line-height: 19px;
   max-width: 250px;
-  color: #000000;
+  color: ${({ theme }) => theme.palette.common.black};
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 14px;
     line-height: 16px;
@@ -219,7 +219,7 @@ export const TextOverFlow = styled(Box)`
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.main};
   width: max-content;
   text-align: right;
   margin-left: auto;
@@ -259,9 +259,9 @@ export const StyledSlider = styled(Slider)`
 `;
 
 export const StyledFormLabel = styled(FormLabel)`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.main};
   &.Mui-focused {
-    color: ${(props) => props.theme.palette.grey[400]};
+    color: ${(props) => props.theme.palette.secondary.main};
   }
 `;
 
@@ -271,6 +271,7 @@ export const StyledTextField = styled(TextField)`
     height: 40px;
     border: 1.5px solid ${(props) => props.theme.palette.border.main};
     border-radius: 8px;
+    background-color: ${(props) => props.theme.palette.secondary[0]};
   }
   .MuiFormControl-root {
   }

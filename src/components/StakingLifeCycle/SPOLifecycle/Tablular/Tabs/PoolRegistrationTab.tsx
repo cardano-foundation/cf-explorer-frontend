@@ -64,9 +64,9 @@ const PoolRegistrationTab = () => {
             <AdaValue value={data.totalFee} />
             <TableSubTitle>
               <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-                <AdaValue color={theme.palette.grey[400]} value={data.deposit} gap="3px" fontSize="12px" />
+                <AdaValue color={theme.palette.secondary.light} value={data.deposit} gap="3px" fontSize="12px" />
                 <Box mx="3px">/</Box>
-                <AdaValue color={theme.palette.grey[400]} value={data.fee} gap="3px" fontSize="12px" />
+                <AdaValue color={theme.palette.secondary.light} value={data.fee} gap="3px" fontSize="12px" />
               </Box>
             </TableSubTitle>
           </Box>
@@ -78,7 +78,7 @@ const PoolRegistrationTab = () => {
       title: "Certificate",
       render: (data) => (
         <IconButton onClick={() => setSelected(data?.poolUpdateId || 0)}>
-          <EyeIcon style={{ transform: "scale(.8)" }} />
+          <EyeIcon />
         </IconButton>
       )
     }
