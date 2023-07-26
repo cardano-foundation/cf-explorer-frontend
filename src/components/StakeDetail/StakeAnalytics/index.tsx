@@ -17,7 +17,7 @@ import { BigNumber } from "bignumber.js";
 
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
-import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/helper";
+import { formatADAFull, formatPrice } from "src/commons/utils/helper";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -83,7 +83,8 @@ const StakeAnalytics: React.FC = () => {
   }));
 
   const formatPriceValue = (value: string) => {
-    return formatPrice(value);
+    const bigValue = BigNumber(value).div(10 ** 6);
+    return formatPrice(bigValue.toString());
   };
 
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
@@ -94,7 +95,7 @@ const StakeAnalytics: React.FC = () => {
             ? moment(content.label).format("DD MMM YYYY HH:mm:ss") + " (UTC time zone)"
             : content.label}
         </TooltipLabel>
-        <TooltipValue>{numberWithCommas(content.payload?.[0]?.value) || 0}</TooltipValue>
+        <TooltipValue>{formatADAFull(content.payload?.[0]?.value) || 0}</TooltipValue>
       </TooltipBody>
     );
   };
@@ -156,7 +157,7 @@ const StakeAnalytics: React.FC = () => {
                 >
                   <defs>
                     <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.5} />
+                      <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
                       <stop offset="100%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
                     </linearGradient>
                   </defs>

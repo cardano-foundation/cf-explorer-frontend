@@ -1,4 +1,4 @@
-import { styled, Stack, Box, Button, TextField, Slider, FormLabel, alpha } from "@mui/material";
+import { styled, Stack, Box, Button, TextField, Slider, FormLabel } from "@mui/material";
 
 import CustomSelect from "src/components/commons/CustomSelect";
 
@@ -141,7 +141,7 @@ export const TextRequired = styled("div")`
 `;
 
 export const ButtonEvent = styled(Button)<{ active: number }>(({ theme, active }) => ({
-  background: active ? theme.palette.secondary.light : alpha(theme.palette.secondary.main, 0.05),
+  background: active ? theme.palette.secondary.light : theme.palette.primary[200],
   color: active ? theme.palette.common.white : theme.palette.secondary.light,
   borderRadius: "6px",
   height: "44px",
@@ -153,7 +153,7 @@ export const ButtonEvent = styled(Button)<{ active: number }>(({ theme, active }
   lineHeight: "19px",
   fontWeight: 400,
   "&:hover": {
-    background: active ? theme.palette.secondary.light : alpha(theme.palette.secondary.main, 0.05),
+    background: active ? theme.palette.secondary.light : theme.palette.primary[200],
     color: active ? theme.palette.common.white : theme.palette.secondary.light
   },
   [theme.breakpoints.down("sm")]: {
@@ -271,6 +271,7 @@ export const StyledTextField = styled(TextField)`
     height: 40px;
     border: 1.5px solid ${(props) => props.theme.palette.border.main};
     border-radius: 8px;
+    background-color: ${(props) => props.theme.palette.secondary[0]};
   }
   .MuiFormControl-root {
   }

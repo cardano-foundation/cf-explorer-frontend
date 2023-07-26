@@ -6,7 +6,7 @@ export const StatisticContainer = styled(Grid)`
 
 export const Item = styled(Card)`
   height: 100%;
-  min-height: 150px;
+  min-height: 164px;
   font-family: var(--font-family-text);
   box-shadow: ${(props) => props.theme.shadow.card};
   padding: 20px;
@@ -21,6 +21,7 @@ export const Item = styled(Card)`
   ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 15px;
   }
+  cursor: pointer;
 `;
 
 export const EpochProgress = styled("h3")(({ theme }) => ({
@@ -58,10 +59,6 @@ export const Name = styled("h4")`
   color: ${(props) => props.theme.palette.secondary.light};
   font-family: var(--font-family-text);
   font-size: 14px;
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    margin-top: 0.5rem;
-    width: max-content;
-  }
 `;
 
 export const Title = styled("h3")`
@@ -73,7 +70,6 @@ export const Title = styled("h3")`
   font-size: 28px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 16px;
-    max-width: 87px;
     word-break: break-all;
   }
 `;
@@ -142,4 +138,8 @@ export const ProcessActive = styled("div")<{ rate: number }>`
 export const ProgressPending = styled(ProcessActive)<{ rate: number }>`
   width: ${(props) => props.rate}%;
   background-color: ${(props) => props.theme.palette.primary[200]};
+`;
+
+export const Link = styled("a")`
+  display: contents;
 `;

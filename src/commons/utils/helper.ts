@@ -186,7 +186,7 @@ export const tokenRegistry = (policy?: string, name?: string): string => {
     case NETWORKS.mainnet:
       return `https://raw.githubusercontent.com/cardano-foundation/cardano-token-registry/master/mappings/${policy}${name}.json`;
     default:
-      return `https://github.com/input-output-hk/metadata-registry-testnet/blob/master/registry/${policy}${name}.json`;
+      return `https://raw.githubusercontent.com/input-output-hk/metadata-registry-testnet/master/registry/${policy}${name}.json`;
   }
 };
 
@@ -203,11 +203,13 @@ export const formatLongText = (text: string): string => {
   return text;
 };
 export const getHostname = (url: string): string => {
+  let hostname = "";
   try {
-    return new URL(url).hostname;
-  } catch {
-    return "";
+    hostname = new URL(url).hostname;
+  } catch (error) {
+    console.warn(error);
   }
+  return hostname;
 };
 
 export const toFixedBigNumber = (value: string | number, dp = 0, rm = BigNumber.ROUND_DOWN): number => {

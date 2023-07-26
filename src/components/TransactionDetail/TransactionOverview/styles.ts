@@ -44,5 +44,5 @@ export const ConfirmStatus = styled("small")<{ status?: keyof typeof CONFIRMATIO
 `;
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
 `;

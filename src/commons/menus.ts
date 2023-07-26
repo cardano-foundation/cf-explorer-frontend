@@ -4,6 +4,7 @@ import { IconType } from "react-icons/lib";
 import {
   BlockChainMenuIcon,
   BrowseIcon,
+  DashboardIcon,
   OperationalIcon,
   ProtocolIcon,
   ResourcesIcon,
@@ -26,6 +27,11 @@ interface Social {
   icon: IconType | string;
 }
 export const menus: Menu[] = [
+  {
+    title: "Dashboard",
+    icon: DashboardIcon,
+    href: routers.HOME
+  },
   {
     title: "Blockchain",
     icon: BlockChainMenuIcon,

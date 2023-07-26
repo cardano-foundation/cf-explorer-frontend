@@ -13,10 +13,13 @@ const MyProfile: React.FC = () => {
   const history = useHistory();
   useEffect(() => {
     document.title = `My Profile | Iris - Cardano Blockchain Explorer`;
+  }, []);
+
+  useEffect(() => {
     if (!isLoggedIn) {
       history.replace(routers.HOME);
     }
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <Box>

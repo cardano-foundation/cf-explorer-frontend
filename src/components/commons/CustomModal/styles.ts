@@ -7,7 +7,7 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   transform: "translate(-50%, -51%)",
   width: "max-content",
   height: "max-content",
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: theme.palette.primary[100],
   borderRadius: 20,
   textAlign: "left",
   outline: "none",

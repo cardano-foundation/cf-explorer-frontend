@@ -128,7 +128,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                           component={Link}
                           to={details.stake(data?.rewardAccounts[0] || "")}
                           style={{ fontFamily: "var(--font-family-text)" }}
-                          color={(theme) => `${theme.palette.secondary.main} !important`}
+                          color={(theme) => `${theme.palette.primary.main} !important`}
                         >
                           {getShortWallet(data?.rewardAccounts[0] || "")}
                         </Box>
@@ -188,7 +188,11 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               </Box>
               {data?.ownerAccounts && data.ownerAccounts.length > 1 && (
                 <ButtonViewAll
-                  sx={{ color: (theme) => theme.palette.common.black }}
+                  sx={{
+                    color: (theme) => theme.palette.secondary[0],
+                    background: (theme) => theme.palette.primary.main,
+                    border: (theme) => `1px solid ${theme.palette.primary[200]}`
+                  }}
                   onClick={() => {
                     setOpenOwner(!isOpenOwner);
                     setOpenReward(false);

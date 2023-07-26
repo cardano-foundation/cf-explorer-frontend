@@ -86,6 +86,9 @@ import MetadataIconUrl from "./icons/metadataIcon2.svg";
 import ADALogoUrl from "./icons/ada-logo.svg";
 import CurrentEpochHome from "./icons/currentEpochHome.svg";
 import HomeUpIcon from "./icons/HomeUpIcon.svg";
+import HomeDownIcon from "./icons/HomeDownIcon.svg";
+import DashboardIcon from "./icons/menus/Dashboard.svg";
+import LogoCardano from "./icons/LogoCardano.svg";
 
 export {
   LogoFullIcon,
@@ -175,7 +178,10 @@ export {
   OperationalIcon,
   ProtocolIcon,
   CurrentEpochHome,
-  HomeUpIcon
+  HomeUpIcon,
+  DashboardIcon,
+  HomeDownIcon,
+  LogoCardano
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";

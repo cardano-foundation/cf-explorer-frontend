@@ -84,6 +84,7 @@ export const MenuText = styled(ListItemText)<{ open?: number; active?: number; t
 export const SubMenuText = styled(MenuText)`
   * {
     color: ${({ active, theme }) => (active ? theme.palette.secondary.main : theme.palette.secondary.light)};
+    font-weight: ${({ active }) => (active ? "bold !important" : "var(--font-weight-normal) !important")};
   }
 `;
 // font-weight: var(--font-weight-normal) !important;

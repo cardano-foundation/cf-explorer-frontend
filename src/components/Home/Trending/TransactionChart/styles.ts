@@ -29,10 +29,7 @@ export const Tab = styled("button")<{ active: number }>(({ theme, active }) => (
   color: active ? `${theme.palette.secondary[0]} !important` : theme.palette.secondary.main,
   fontWeight: "bold",
   backgroundColor: active ? theme.palette.secondary.light : theme.palette.secondary[0],
-  // ":hover": {
-  //   color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.secondary.light,
-  //   backgroundColor: active ? theme.palette.primary.main : "none"
-  // },
+  marginLeft: theme.spacing(1),
   [theme.breakpoints.down("sm")]: {
     border: `1.5px solid ${theme.palette.primary[200]}`,
     borderRadius: 5,
@@ -79,10 +76,10 @@ export const Title = styled("h3")`
 `;
 
 export const BoxInfo = styled(Box)(({ theme }) => ({
-  height: `calc(88% - ${theme.spacing(3)} - ${theme.spacing(3)})`,
+  height: "calc(100% - 12px)",
   minHeight: "200px",
   borderRadius: "12px",
-  padding: theme.spacing(3),
+  padding: "6px 0",
   [theme.breakpoints.up("lg")]: {
     paddingLeft: 0,
     paddingRight: 0
@@ -97,9 +94,13 @@ export const BoxInfo = styled(Box)(({ theme }) => ({
     gap: 20
   }
 }));
-export const InfoItem = styled(Box)(() => ({
-  display: "flex",
-  alignItems: "center"
+export const InfoItem = styled(Box)(({ theme }) => ({
+  borderBottom: `1px solid ${theme.palette.primary[200]}`,
+  paddingBottom: theme.spacing(1),
+  ":last-child": {
+    paddingBottom: 0,
+    borderBottom: "none"
+  }
 }));
 export const Skeleton = styled(SkeletonMUI)(() => ({
   height: 300,
@@ -122,17 +123,17 @@ export const ColorChart = styled(Box)<{ type: TypeChart }>(({ theme, type }) => 
   };
 
   return {
-    width: "38px",
-    height: "38px",
-    borderRadius: "5px",
+    width: "16px",
+    height: "16px",
+    borderRadius: "4px",
     background: bgColor(type),
-    marginRight: theme.spacing(3)
+    marginRight: theme.spacing(1)
   };
 });
 
 export const StyledTransactionTypes = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
-  fontSize: "1.5rem",
+  fontSize: "20px",
   textAlign: "left",
   color: theme.palette.secondary.main,
   [theme.breakpoints.between("lg", "xl")]: {
@@ -143,4 +144,11 @@ export const StyledTransactionTypes = styled(Box)(({ theme }) => ({
 export const StyledTransactionTypeItem = styled(Box)(({ theme }) => ({
   color: theme.palette.secondary.light,
   fontSize: "0.8125rem"
+}));
+
+export const ValueChart = styled(Box)(({ theme }) => ({
+  textAlign: "left",
+  color: theme.palette.secondary.light,
+  fontWeight: "bold",
+  fontSize: "20px"
 }));

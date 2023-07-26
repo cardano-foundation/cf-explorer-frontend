@@ -40,7 +40,7 @@ export const RectBox = styled(Box)<{ disabled?: number }>(({ disabled, theme }) 
   borderRadius: 12,
   gap: 12,
   padding: "15px 20px",
-  backgroundColor: disabled ? theme.palette.grey[200] : theme.palette.common.white,
+  backgroundColor: disabled ? theme.palette.secondary[600] : theme.palette.common.white,
   boxSizing: "border-box",
   position: "relative",
   "& > image": {
@@ -54,7 +54,7 @@ export const RectBox = styled(Box)<{ disabled?: number }>(({ disabled, theme }) 
 export const DisableAbleLabel = styled(Typography)<{ disabled?: number }>(({ theme, disabled }) => ({
   fontSize: "1ren",
   fontWeight: 700,
-  color: disabled ? alpha(theme.palette.secondary.main, 0.3) : theme.palette.secondary.main,
+  color: disabled ? theme.palette.common.white : theme.palette.secondary[600],
   textAlign: "left",
   flex: 1,
   [theme.breakpoints.down("lg")]: {

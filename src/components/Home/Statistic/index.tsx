@@ -2,11 +2,17 @@ import { Box, Grid } from "@mui/material";
 import BigNumber from "bignumber.js";
 import moment from "moment";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
-import { AdaPriceIcon, CurrentEpochHome, HomeUpIcon, LiveStakeIcon, MarketCapIcon } from "src/commons/resources";
+import {
+  AdaPriceIcon,
+  CurrentEpochHome,
+  HomeDownIcon,
+  HomeUpIcon,
+  LiveStakeIcon,
+  MarketCapIcon
+} from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { EXT_ADA_PRICE_URL, MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
@@ -21,6 +27,7 @@ import {
   Item,
   ItemIcon,
   ItemSkeleton,
+  Link,
   Name,
   ProcessActive,
   Progress,
@@ -69,7 +76,7 @@ const HomeStatistic = () => {
   const hours = duration.hours();
 
   const { isGalaxyFoldSmall } = useScreen();
-
+  const sign = Math.sign(BigNumber(usdMarket?.price_change_percentage_24h || 0).toNumber());
   return (
     <StatisticContainer
       container
@@ -78,10 +85,10 @@ const HomeStatistic = () => {
       alignItems="stretch"
       data-testid="home-statistic"
     >
-      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
+      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
         {usdMarket && btcMarket?.[0] ? (
-          <Item data-testid="ada-price-box">
-            <Link to={{ pathname: EXT_ADA_PRICE_URL }} target="_blank">
+          <Link href={EXT_ADA_PRICE_URL} target="_blank">
+            <Item data-testid="ada-price-box">
               <Box display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon
@@ -93,7 +100,7 @@ const HomeStatistic = () => {
                   <Name data-testid="ada-price-box-title">Ada Price</Name>
                 </Box>
                 <Box display={"flex"} alignItems={"center"}>
-                  <ItemIcon src={HomeUpIcon} alt="Home up icon" />
+                  <ItemIcon src={sign > 0 ? HomeUpIcon : HomeDownIcon} alt="Home up icon" />
                   <Box ml={2}>
                     <Title data-testid="ada-current-price">${usdMarket.current_price}</Title>
                   </Box>
@@ -107,16 +114,16 @@ const HomeStatistic = () => {
                   <AdaPrice data-testid="ada-price-in-btc">{btcMarket[0]?.current_price} BTC</AdaPrice>
                 </Content>
               </Box>
-            </Link>
-          </Item>
+            </Item>
+          </Link>
         ) : (
           <SkeletonBox />
         )}
       </Grid>
-      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
+      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
         {usdMarket ? (
-          <Item data-testid="market-cap-box">
-            <Link to={{ pathname: EXT_ADA_PRICE_URL }} target="_blank">
+          <Link href={EXT_ADA_PRICE_URL} target="_blank">
+            <Item data-testid="market-cap-box">
               <Box display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon data-testid="market-cap-icon" src={MarketCapIcon} alt="Market cap" />
@@ -129,16 +136,16 @@ const HomeStatistic = () => {
                   </TimeDuration>
                 </Content>
               </Box>
-            </Link>
-          </Item>
+            </Item>
+          </Link>
         ) : (
           <SkeletonBox />
         )}
       </Grid>
-      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
+      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
         {currentEpoch ? (
-          <Item data-testid="current-epoch-box">
-            <Link to={details.epoch(currentEpoch?.no)}>
+          <Link href={details.epoch(currentEpoch?.no)}>
+            <Item data-testid="current-epoch-box">
               <Content display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon
@@ -180,16 +187,16 @@ const HomeStatistic = () => {
                   </Box>
                 </Box>
               </Content>
-            </Link>
-          </Item>
+            </Item>
+          </Link>
         ) : (
           <SkeletonBox />
         )}
       </Grid>
-      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
+      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
         {data && usdMarket ? (
-          <Item data-testid="live-stake-box">
-            <Link to={routers.DELEGATION_POOLS}>
+          <Link href={routers.DELEGATION_POOLS}>
+            <Item data-testid="live-stake-box">
               <Content display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
                 <Box>
                   <Box display={"flex"} alignItems={"center"} height={"40px"}>
@@ -217,7 +224,7 @@ const HomeStatistic = () => {
                         data-testid="live-stake-progress-pending"
                         rate={liveRate.div(-1).plus(100).toNumber()}
                       >
-                        <Box color={({ palette }) => palette.secondary.light}>
+                        <Box color={({ palette }) => palette.secondary.main}>
                           {liveRate.div(-1).plus(100).toFixed(0)}%
                         </Box>
                       </ProgressPending>
@@ -242,8 +249,8 @@ const HomeStatistic = () => {
                   </Box>
                 </Box>
               </Content>
-            </Link>
-          </Item>
+            </Item>
+          </Link>
         ) : (
           <SkeletonBox />
         )}

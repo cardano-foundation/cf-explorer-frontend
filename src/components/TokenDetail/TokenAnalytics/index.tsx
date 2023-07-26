@@ -47,7 +47,7 @@ const AddressAnalytics: FC = () => {
   const theme = useTheme();
   const { data, loading } = useFetch<AnalyticsData[]>(`${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`);
 
-  const values = data?.map((item) => item.value || 0) || [];
+  const values = (data || [])?.map((item) => item.value || 0) || [];
 
   const maxBalance = BigNumber.max(0, ...values).toString();
   const minBalance = BigNumber.min(maxBalance, ...values).toString();
@@ -102,7 +102,7 @@ const AddressAnalytics: FC = () => {
                   >
                     <defs>
                       <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.5} />
+                        <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
                         <stop offset="100%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
                       </linearGradient>
                     </defs>
@@ -112,16 +112,16 @@ const AddressAnalytics: FC = () => {
                       tickLine={false}
                       tickMargin={5}
                       dx={-15}
-                      color={theme.palette.secondary.main}
+                      color={theme.palette.secondary.light}
                     />
-                    <YAxis tickFormatter={formatPriceValue} tickLine={false} color={theme.palette.secondary.main} />
+                    <YAxis tickFormatter={formatPriceValue} tickLine={false} color={theme.palette.secondary.light} />
                     <Tooltip content={renderTooltip} cursor={false} />
                     <CartesianGrid vertical={false} strokeWidth={0.33} />
                     <Area
                       stackId="1"
                       type="monotone"
                       dataKey="value"
-                      stroke={theme.palette.secondary.light}
+                      stroke={theme.palette.primary.main}
                       strokeWidth={4}
                       fill="url(#colorUv)"
                       dot={{ r: 2 }}

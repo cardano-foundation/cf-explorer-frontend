@@ -69,14 +69,14 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
         await generateStakeKeyReport(paramsStakeKeyReport);
       }
 
-      toast.success("Generated report successfully");
+      toast.success("Report generated successfully");
       handleCloseModal();
       setTimeout(() => {
         history.push(lists.dashboard(isPoolReport ? "pool-reports" : "stake-key-reports"));
       }, 2000);
     } catch (err: any) {
       console.error(err);
-      toast.error("Fail to generate report");
+      toast.error("Failed to generate report. Please try again.");
     }
     setLoading(false);
   };

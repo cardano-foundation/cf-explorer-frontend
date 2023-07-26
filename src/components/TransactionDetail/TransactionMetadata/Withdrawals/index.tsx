@@ -63,7 +63,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                 </Box>
               </Box>
               <Box display={"flex"} flexDirection={isMobile ? "column" : "row"}>
-                <Box minWidth="1.75rem" color={({ palette }) => palette.secondary.main}>
+                <Box minWidth="1.75rem" color={({ palette }) => palette.secondary.light}>
                   To:
                 </Box>
                 <Box flex={1}>

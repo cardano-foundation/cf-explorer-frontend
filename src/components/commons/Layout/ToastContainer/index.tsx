@@ -36,7 +36,7 @@ const ToastContainer: React.FC = () => {
       }
       case "success": {
         return {
-          title: getTitle(title, "Successfully"),
+          title: getTitle(title, "Success"),
           color: theme.palette.success[800],
           background: theme.palette.success[100]
         };
@@ -49,7 +49,11 @@ const ToastContainer: React.FC = () => {
         };
       }
       default: {
-        return { title: getTitle(title, "Info"), color: theme.palette.info.main, background: theme.palette.info.dark };
+        return {
+          title: getTitle(title, "Information"),
+          color: theme.palette.info.main,
+          background: theme.palette.info.dark
+        };
       }
     }
   };

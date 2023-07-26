@@ -32,7 +32,7 @@ export const WrapPaperDropdown = styled(Paper)`
 export const Pool = styled(Link)`
   max-width: 200px;
   text-overflow: hidden;
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
   font-weight: bold;
   &:hover {
     cursor: pointer;
