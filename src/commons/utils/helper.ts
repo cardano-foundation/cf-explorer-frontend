@@ -186,7 +186,7 @@ export const tokenRegistry = (policy?: string, name?: string): string => {
     case NETWORKS.mainnet:
       return `https://raw.githubusercontent.com/cardano-foundation/cardano-token-registry/master/mappings/${policy}${name}.json`;
     default:
-      return `https://github.com/input-output-hk/metadata-registry-testnet/blob/master/registry/${policy}${name}.json`;
+      return `https://raw.githubusercontent.com/input-output-hk/metadata-registry-testnet/master/registry/${policy}${name}.json`;
   }
 };
 
