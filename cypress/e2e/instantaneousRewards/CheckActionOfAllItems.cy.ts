@@ -7,6 +7,9 @@ describe("Instantaneous Rewards screen", ()=>{
                                     .checkClickOnTxHash()
                                     .clickOnButtonBack()
                                     .checkHoverOnTxHash()
-
+                                    .checkClickOnBlock()
+                                    .clickOnButtonBack()
+                                    .checkClickOnEpoch()
+                                    .clickOnButtonBack()
     })
 })

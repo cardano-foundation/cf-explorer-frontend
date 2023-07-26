@@ -12,8 +12,10 @@ const selectPerPage = "//span[text()='Per page']/parent::div"
 const listNumberPerPage = "//ul[@role='listbox']//li"
 const txbNumberPageCurrentOfLastPage = "//ul//li//input/following-sibling::span"
 const labelTransactionDetail = "//div[text()='Transaction details']"
+const labelBlock = "//div[text()='Block details']"
+const labelEpoch = "//div[text()='Epoch details']"
 const btnBack = "//small[text()='Back']"
-const labelFullWhenHoverOn = "//div[@role='tooltip']"
+const labelFullWhenHoverOn = "//div[@role='tooltip']//div"
 
 export default class InstantaneousRewardsPage extends WebApi{
     gotoInstantaneousRewards(){
@@ -153,8 +155,20 @@ export default class InstantaneousRewardsPage extends WebApi{
     }
 
     checkHoverOnTxHash(){
-        cy.hoverToElementRandomly(listItemFollowColumn2, InstantaneousConstants.COLUMN_NAME[0])
+        cy.hoverToElementRandomly(listItemFollowColumn2+'/a', InstantaneousConstants.COLUMN_NAME[0])
         cy.verifyElementDisplay(labelFullWhenHoverOn)
+        return this;
+    }
+
+    checkClickOnBlock(){
+        cy.clickElementRandomly(listItemFollowColumn2+'/a', InstantaneousConstants.COLUMN_NAME[2])
+        cy.verifyElementDisplay(labelBlock)
+        return this;
+    }
+
+    checkClickOnEpoch(){
+        cy.clickElementRandomly(listItemFollowColumn2+'/div/a', InstantaneousConstants.COLUMN_NAME[2])
+        cy.verifyElementDisplay(labelEpoch)
         return this;
     }
 }
