@@ -18,12 +18,15 @@ const AppContainer: React.FC<Props> = (props) => {
   const { theme } = useSelector(({ user }: RootState) => user);
   const { children } = props;
   const location = useLocation();
-  const excludedRoutes: any = [
+  const excludedRoutes: string[] = [
     routers.SIGN_IN,
     routers.SIGN_UP,
     routers.FORGOT_PASSWORD,
     routers.RESET_PASSWORD,
-    routers.VERIFY_EMAIL
+    routers.VERIFY_EMAIL,
+    routers.FAQ,
+    routers.TERMS_AND_CONDITIONS,
+    routers.POLICY
   ];
   return (
     <ThemeProvider theme={themes[theme]}>
