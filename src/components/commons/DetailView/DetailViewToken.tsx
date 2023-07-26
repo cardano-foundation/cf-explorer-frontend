@@ -175,11 +175,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                       </CustomTooltip>
                     )}
                   </TokenDetailName>
-                  {data.metadata?.logo ? (
-                    <TokenDetailIcon src={`data:/image/png;base64,${data.metadata?.logo}`} alt="token logo" />
-                  ) : (
-                    ""
-                  )}
+                  {data.metadata?.logo ? <TokenDetailIcon src={`${data.metadata?.logo}`} alt="token logo" /> : ""}
                 </TokenDetailInfo>
               </DetailValue>
             </DetailsInfoItem>
