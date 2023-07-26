@@ -29,11 +29,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
         return (
           <AssetName>
             <>
-              {r?.metadata?.logo ? (
-                <Logo src={`data:/image/png;base64,${r?.metadata?.logo}`} alt="icon" />
-              ) : (
-                <LogoEmpty />
-              )}
+              {r?.metadata?.logo ? <Logo src={`${r?.metadata?.logo}`} alt="icon" /> : <LogoEmpty />}
               <Box
                 component={Link}
                 color={({ palette }) => `${palette.primary.main} !important`}
