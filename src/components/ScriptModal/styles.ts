@@ -32,7 +32,7 @@ export const ButtonClose = styled(Button)(({ theme }) => ({
 export const ViewJson = styled(Box)(({ theme }) => ({
   overflowY: "auto",
   textAlign: "left",
-  backgroundColor: `${alpha(theme.palette.grey[300], 0.1)}`,
+  backgroundColor: `${alpha(theme.palette.secondary.light, 0.1)}`,
   borderRadius: 10,
   padding: theme.spacing(2),
   maxHeight: "50vh",
@@ -51,10 +51,10 @@ export const ViewJson = styled(Box)(({ theme }) => ({
     },
     "&:hover": {
       "&::-webkit-scrollbar-thumb": {
-        background: theme.palette.grey[300]
+        background: theme.palette.secondary.light
       },
       "&::-webkit-scrollbar-track": {
-        background: theme.palette.grey[100]
+        background: theme.palette.primary[100]
       }
     }
   }
@@ -62,7 +62,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
 
 export const ButtonLink = styled(Link)(({ theme }) => ({
   fontWeight: "bold",
-  color: `${theme.palette.secondary.main} !important`,
+  color: `${theme.palette.primary.main} !important`,
   fontFamily: "Roboto, sans-serif !important",
   textAlign: "left",
   wordBreak: "break-all",

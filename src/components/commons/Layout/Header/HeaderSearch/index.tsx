@@ -79,7 +79,9 @@ const options: Option[] = [
       routers.ADDRESS_LIST,
       routers.CONTRACT_LIST,
       routers.ADDRESS_DETAIL,
-      routers.STAKE_LIST,
+      routers.STAKE_ADDRESS_REGISTRATION,
+      routers.STAKE_ADDRESS_DEREGISTRATION,
+      routers.STAKE_ADDRESS_DELEGATIONS,
       routers.TOP_DELEGATOR,
       routers.STAKE_DETAIL
     ],
@@ -88,7 +90,12 @@ const options: Option[] = [
   {
     value: "delegations/pool-detail-header",
     label: "Pools",
-    paths: [routers.DELEGATION_POOLS, routers.DELEGATION_POOL_DETAIL],
+    paths: [
+      routers.DELEGATION_POOLS,
+      routers.DELEGATION_POOL_DETAIL,
+      routers.POOL_CERTIFICATE,
+      routers.POOL_DEREGISTRATION
+    ],
     detail: details.delegation
   },
   {
@@ -580,7 +587,7 @@ export const OptionsSearch = ({
             )}
           </>
         ) : (
-          <Box component={Option} color={({ palette }) => palette.red[700]} justifyContent={"center"}>
+          <Box component={Option} color={({ palette }) => palette.red[100]} justifyContent={"center"}>
             <Box>{error}</Box>
           </Box>
         )}
@@ -589,7 +596,7 @@ export const OptionsSearch = ({
   }
   return (
     <OptionsWrapper display={show ? "block" : "none"} home={+home}>
-      {!error ? (
+      {!error && (
         <>
           {listOptions.map((item, i: number) => {
             return (
@@ -602,8 +609,10 @@ export const OptionsSearch = ({
             );
           })}
         </>
-      ) : (
-        <Box component={Option} color={({ palette }) => palette.red[700]} justifyContent={"center"}>
+      )}
+
+      {!!error && (
+        <Box component={Option} color={({ palette }) => palette.error[700]} justifyContent={"center"}>
           <Box>{error}</Box>
         </Box>
       )}

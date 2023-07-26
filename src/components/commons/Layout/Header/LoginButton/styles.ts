@@ -6,7 +6,7 @@ export const StyledButton = styled(ButtonBase)`
   align-items: center;
   padding: 12px 20px;
   gap: 8px;
-  background: ${(props) => props.theme.palette.text.primary};
+  background: ${(props) => props.theme.palette.secondary.main};
   border-radius: 8px;
   cursor: pointer;
   height: auto;

@@ -2,7 +2,6 @@ import Router from "react-router";
 import { cleanup, screen } from "@testing-library/react";
 
 import { render } from "src/test-utils";
-import { ListTabResponseSPO } from "src/pages/SPOLifecycle";
 
 import SPOLifecycle from ".";
 

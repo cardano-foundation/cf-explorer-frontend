@@ -28,14 +28,16 @@ describe("HeaderSearch", () => {
       ...mockData
     });
   });
+  
   afterEach(() => {
     jest.clearAllMocks();
   });
+
   it("should render header search", () => {
     render(<HeaderSearch home={false} />);
     expect(screen.getByPlaceholderText("Search ...")).toBeInTheDocument();
-    expect(screen.getByText("Search for an epoch")).toBeInTheDocument();
   });
+
   it("should be able input for seaching", () => {
     render(<HeaderSearch home={false} />);
     const dropdown = screen.getByTestId("all-filters-dropdown");

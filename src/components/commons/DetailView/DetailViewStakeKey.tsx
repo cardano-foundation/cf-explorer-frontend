@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { BiChevronRight } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Box } from "@mui/material";
 import { useTheme } from "@emotion/react";
 
@@ -57,33 +57,46 @@ type DetailViewStakeKeyProps = {
   stakeId: string;
   handleClose: () => void;
 };
-const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
-  {
-    key: "delegation",
-    label: "Delegation History",
-    icon: <DelegationHistoryMainIcon style={{ padding: "2px 4px 2px 2px" }} />
-  },
-  {
-    key: "stake-key",
-    label: "Stake Address History",
-    icon: (
-      <StakeKeyHistoryIcon fill="#438F68" width={"20px"} height={"20px"} style={{ padding: "2px" }} display={"block"} />
-    )
-  },
-  { key: "withdrawal", label: "Withdrawal History", icon: <DetailLinkImage src={FileEditIcon} alt="withdrawal" /> },
-  { key: "instantaneous", label: "Instantaneous Rewards", icon: <DetailLinkImage src={LightningIcon} alt="rewards" /> },
-  {
-    key: "transactions",
-    label: "Transactions",
-    icon: <TransactionIcon width={"20px"} height={"20px"} style={{ padding: "2px" }} display={"block"} />
-  }
-];
 
 const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
   const { stakeId, handleClose } = props;
   const { data } = useFetch<IStakeKeyDetail>(stakeId ? `${API.STAKE.DETAIL}/${stakeId}` : ``);
   const [open, setOpen] = useState(false);
   const theme = useTheme();
+  const history = useHistory();
+  const fromPath = history.location.pathname as SpecialPath;
+
+  const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
+    {
+      key: "delegation",
+      label: "Delegation History",
+      icon: <DelegationHistoryMainIcon style={{ padding: "2px 4px 2px 2px" }} />
+    },
+    {
+      key: "stake-address",
+      label: "Stake Address History",
+      icon: (
+        <StakeKeyHistoryIcon
+          fill={theme.palette.border.block}
+          width={"20px"}
+          height={"20px"}
+          style={{ padding: "2px" }}
+          display={"block"}
+        />
+      )
+    },
+    { key: "withdrawal", label: "Withdrawal History", icon: <DetailLinkImage src={FileEditIcon} alt="withdrawal" /> },
+    {
+      key: "instantaneous",
+      label: "Instantaneous Rewards",
+      icon: <DetailLinkImage src={LightningIcon} alt="rewards" />
+    },
+    {
+      key: "transactions",
+      label: "Transactions",
+      icon: <TransactionIcon width={"20px"} height={"20px"} style={{ padding: "2px" }} display={"block"} />
+    }
+  ];
 
   useEffect(() => {
     document.body.style.overflowY = "hidden";
@@ -235,12 +248,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
               </DetailValue>
             </DetailsInfoItem>
             <Box textAlign={"right"}>
-              <ButtonModal
-                sx={{
-                  color: theme.palette.secondary.main
-                }}
-                onClick={() => setOpen(true)}
-              >
+              <ButtonModal sx={{ color: theme.palette.primary.main }} onClick={() => setOpen(true)}>
                 View all addresses
               </ButtonModal>
             </Box>
@@ -249,7 +257,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
           {tabs.map(({ key, label, icon }) => {
             return (
               <Group key={key}>
-                <DetailLink to={details.stake(stakeId, key)}>
+                <DetailLink to={{ pathname: details.stake(stakeId, key), state: { fromPath } }}>
                   <DetailLabel>
                     <DetailLinkIcon>{icon}</DetailLinkIcon>
                     <DetailLinkName>{label}</DetailLinkName>
@@ -265,7 +273,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
           })}
         </ViewDetailScroll>
       </ViewDetailContainer>
-      <ViewMoreButton to={details.stake(stakeId)} />
+      <ViewMoreButton to={{ pathname: details.stake(stakeId), state: { fromPath } }} />
     </ViewDetailDrawer>
   );
 };

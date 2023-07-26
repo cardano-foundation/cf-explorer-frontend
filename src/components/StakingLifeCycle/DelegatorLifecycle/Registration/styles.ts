@@ -1,4 +1,4 @@
-import { Box, styled, IconButton as IconButtonMui, alpha } from "@mui/material";
+import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import { AdaLogoIcon } from "src/components/commons/ADAIcon";
@@ -31,7 +31,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.red[600]}`,
+  border: `2px solid ${theme.palette.error[700]}`,
   borderRadius: "10px",
   marginRight: theme.spacing(2.5),
   marginLeft: theme.spacing(2.5),
@@ -51,7 +51,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
     position: "absolute",
     top: "-50%",
     left: theme.spacing(2),
-    background: theme.palette.red[600],
+    background: theme.palette.error[700],
     transform: " translate(0, 60%)"
   }
 }));
@@ -103,7 +103,7 @@ export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
 }));
 
 export const IconButton = styled(IconButtonMui)(({ theme }) => ({
-  background: theme.palette.grey[100]
+  background: theme.palette.primary[100]
 }));
 
 export const IconButtonBack = styled(IconButtonMui)(() => ({
@@ -124,7 +124,7 @@ export const InfoText = styled(Box)(({ theme }) => ({
 }));
 export const StakeLink = styled(Link)`
   font-size: 0.875rem;
-  color: ${({ theme }) => theme.palette.blue[800]} !important;
+  color: ${({ theme }) => theme.palette.primary.main} !important;
   margin-right: 6px;
   ${({ theme }) => theme.breakpoints.down(theme.breakpoints.values.sm)} {
     overflow-wrap: break-word;
@@ -163,7 +163,6 @@ export const CertificateShapeMobile = styled(CertificateShape)(() => ({
 }));
 
 export const StyledContainerModal = styled(Box)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.grey[300], 0.1),
   padding: 24,
   [theme.breakpoints.down("md")]: {
     padding: 15
