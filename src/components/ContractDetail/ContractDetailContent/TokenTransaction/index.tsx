@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
+import { Box } from "@mui/material";
 
 import {
   formatADAFull,
@@ -55,7 +56,10 @@ const columns: Column<Transactions>[] = [
       <>
         <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
         <br />
-        <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/<SmallText>{r.epochSlotNo} </SmallText>
+        <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
+        <Box component={"span"} color={({ palette }) => palette.secondary.light}>
+          {r.epochSlotNo}{" "}
+        </Box>
       </>
     )
   },
