@@ -10,8 +10,9 @@ import { API } from "src/commons/utils/api";
 import CustomFilter, { FilterParams } from "src/components/commons/CustomFilter";
 import PoolLifecycle from "src/components/PoolLifecycle";
 import StakekeySummary from "src/components/StakekeySummary";
+import NoRecord from "src/components/commons/NoRecord";
 
-import StakingLifeCycleSearch from "../StakingLifeCycleSearch";
+import StakingLifeCycleSearch from "../../components/StakingLifeCycleSearch";
 import {
   FilterHead,
   StyledTabLabel,
@@ -33,6 +34,7 @@ export interface SavedReport {
 }
 
 const DEFAULT_PAGINING = { page: 0, size: 50 };
+const validTabs: LifecycleReportType[] = ["stake-key-reports", "pool-reports"];
 
 const StakingLifecycle: React.FC = () => {
   const history = useHistory();
@@ -64,14 +66,18 @@ const StakingLifecycle: React.FC = () => {
   const handlePaginationChange = ({ page, size }: { page: number; size: number }) => setPagi({ page, size });
 
   const fetchDataPool = useFetchList<IPoolReportList>(
-    tab === "pool-reports" ? API.REPORT.POOL_REPORT_SUMMARY : "",
+    validTab === "pool-reports" ? API.REPORT.POOL_REPORT_SUMMARY : "",
     query
   );
   const fetchDataStake = useFetchList<IStakeKeySummary>(
-    tab === "stake-key-reports" ? API.REPORT.STAKE_KEY_SUMMARY : "",
+    validTab === "stake-key-reports" ? API.REPORT.STAKE_KEY_SUMMARY : "",
     query
   );
-  const totalResult = tab === "pool-reports" ? fetchDataPool.total : fetchDataStake.total;
+
+  const totalResult = validTab === "pool-reports" ? fetchDataPool.total : fetchDataStake.total;
+
+  if (!validTabs.includes(validTab)) return <NoRecord />;
+
   if (!userData)
     return (
       <Container>
