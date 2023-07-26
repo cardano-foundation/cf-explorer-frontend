@@ -5,6 +5,7 @@ import * as util from 'util';
 
 const listItemFollowColumn = "(//table//tbody//tr//td[count(//th[contains(text(),'%s')]//preceding-sibling::th) + boolean(//th[contains(text(),'%s')])])";
 const listItemFollowColumn2 = "(//table//tbody//tr//td[count(//th[contains(text(),'{0}')]//preceding-sibling::th) + boolean(//th[contains(text(),'{0}')])])";
+const listItemOfPage = "//tbody//tr"
 
 const listbtnNextAndPre = "(//ul//button)"
 const numberOfPage = "//ul//input"
@@ -16,6 +17,11 @@ const labelBlock = "//div[text()='Block details']"
 const labelEpoch = "//div[text()='Epoch details']"
 const btnBack = "//small[text()='Back']"
 const labelFullWhenHoverOn = "//div[@role='tooltip']//div"
+const perPage = "//span[text()='Per page']/preceding-sibling::div/div";
+const displayRowSelect = "ul[role='listbox'] li";
+const perPageSelect = "//div[@id='menu-']/div[@class]/ul/li";
+
+
 
 export default class InstantaneousRewardsPage extends WebApi{
     gotoInstantaneousRewards(){
@@ -169,6 +175,39 @@ export default class InstantaneousRewardsPage extends WebApi{
     checkClickOnEpoch(){
         cy.clickElementRandomly(listItemFollowColumn2+'/div/a', InstantaneousConstants.COLUMN_NAME[2])
         cy.verifyElementDisplay(labelEpoch)
+        return this;
+    }
+
+    clickOnPerPageDropdown() {
+        cy.xpath(perPage).scrollIntoView().click();
+        return this;
+    }
+
+    checkActionNumberItemPullDown(listNumberPage : string[]){
+        cy.compareArrayText(displayRowSelect,listNumberPage)
+        return this;
+    }
+
+    changePerPageValue(value:string) {
+        switch (value){
+          case '10':
+            cy.xpath(perPageSelect).eq(0).click();
+            break;
+          case '20':
+            cy.xpath(perPageSelect).eq(1).click();
+            break;
+          case '50':
+            cy.xpath(perPageSelect).eq(2).click();
+            break;
+          case '100':
+            cy.xpath(perPageSelect).eq(3).click();
+            break;
+        }
+        return this;
+    }
+
+    verifyNumberOfBlockDisplayRow(expectedCount:string){
+        cy.xpath(listItemOfPage).should('have.length.lte', parseInt(expectedCount));
         return this;
     }
 }
