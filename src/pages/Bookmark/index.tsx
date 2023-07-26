@@ -68,7 +68,7 @@ const Bookmark = () => {
   const handleChange = (event: React.SyntheticEvent, tab: Bookmark["type"]) => {
     setActiveTab(tab);
     setPage(0);
-    setSize(10);
+    setSize(50);
   };
 
   useEffect(() => {
