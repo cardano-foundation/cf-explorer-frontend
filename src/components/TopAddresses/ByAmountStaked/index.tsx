@@ -35,7 +35,7 @@ const TopAddressesByAmountStaked = () => {
       render: (r, idx) => numberWithCommas(idx + 1)
     },
     {
-      title: "Stake Address Addresses",
+      title: "Stake Address",
       minWidth: 120,
       key: "addresses",
       render: (r) => (

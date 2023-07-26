@@ -28,7 +28,7 @@ export const Disconnect = styled(Box)`
   align-items: center;
   margin-top: 26px;
   h4 {
-    color: ${(props) => props.theme.palette.red[700]};
+    color: ${(props) => props.theme.palette.error[700]};
   }
 `;
 
@@ -48,7 +48,7 @@ export const StyledButton = styled(ButtonBase)`
   align-items: center;
   padding: 12px 20px;
   gap: 8px;
-  background: ${(props) => props.theme.palette.grey[700]};
+  background: ${(props) => props.theme.palette.secondary.main};
   border-radius: 8px;
   cursor: pointer;
   height: auto;

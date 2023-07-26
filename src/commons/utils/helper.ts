@@ -13,11 +13,11 @@ export const alphaNumeric = /[^0-9a-zA-Z]/;
 export const regexEmail = /^[\w\.\+\-]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 export const getShortWallet = (address = "") => {
-  return `${address.slice(0, 5)}...${address.slice(-5)}`;
+  return address ? `${address.slice(0, 5)}...${address.slice(-5)}` : "";
 };
 
 export const getShortHash = (address = "") => {
-  return `${address.slice(0, 10)}...${address.slice(-7)}`;
+  return address ? `${address.slice(0, 10)}...${address.slice(-7)}` : "";
 };
 
 export const LARGE_NUMBER_ABBREVIATIONS = ["", "K", "M", "B", "T", "q", "Q", "s", "S"];
@@ -106,7 +106,7 @@ export const handleClicktWithoutAnchor = (e: React.MouseEvent, fn: (e: React.Mou
   fn(e);
 };
 
-export const isExtenalLink = (href?: string) => href && (href.search("http://") >= 0 || href.search("https://") >= 0);
+export const isExternalLink = (href?: string) => href && (href.search("http://") >= 0 || href.search("https://") >= 0);
 export const formatPercent = (percent?: number) => `${Math.round((percent || 0) * 100 * 100) / 100}%`;
 
 export const getPageInfo = (search: string): { page: number; size: number } => {

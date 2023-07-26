@@ -6,7 +6,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatDateTimeLocal, getPageInfo } from "src/commons/utils/helper";
-import { FilterParams } from "src/components/StackingFilter";
+import { FilterParams } from "src/components/commons/CustomFilter";
 import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import { AdaValue } from "src/components/commons/ADAValue";
 import Table, { Column } from "src/components/commons/Table";
@@ -18,15 +18,11 @@ const RewardsDistributionTab = () => {
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
   const [sort, setSort] = useState<string>("");
-  const [params] = useState<FilterParams>({
-    fromDate: undefined,
-    sort: undefined,
-    toDate: undefined,
-    txHash: undefined
-  });
+  const [params] = useState<FilterParams>({});
   const fetchData = useFetchList<RewardDistributionItem>(reportId ? API.REPORT.SREPORT_DETAIL_REWARDS(reportId) : "", {
     ...pageInfo,
     ...params,
+    txHash: params.search,
     sort: sort || params.sort
   });
   const { total } = fetchData;

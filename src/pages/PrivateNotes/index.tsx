@@ -202,6 +202,7 @@ const PrivateNotes = () => {
           emptyClassName="empty-content-table"
           columns={columns}
           data={data ?? []}
+          total={{ title: "Total", count: total }}
           pagination={{
             ...pageInfo,
             total: total,

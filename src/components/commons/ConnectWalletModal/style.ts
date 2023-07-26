@@ -55,7 +55,7 @@ export const WalletItem = styled(Box)<{ active: number; connecting: number }>`
   cursor: ${(props) => (props.connecting ? `wait` : `pointer`)};
   box-shadow: ${(props) => (props.active ? props.theme.shadow.card : "none")};
   background-color: ${(props) =>
-    props.active ? props.theme.palette.background.default : alpha(props.theme.palette.grey[300], 0.1)};
+    props.active ? props.theme.palette.background.default : alpha(props.theme.palette.secondary.light, 0.1)};
   &:hover {
     background-color: ${(props) => props.theme.palette.background.default};
   }
@@ -72,7 +72,7 @@ export const GroupFlex = styled(Box)`
 
 export const WalletName = styled("h4")`
   margin: 0px;
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.light};
 `;
 
 export const InstallButton = styled(Button)`
@@ -80,11 +80,11 @@ export const InstallButton = styled(Button)`
   justify-content: space-between;
   align-items: center;
   gap: 5px;
-  background: ${(props) => props.theme.palette.purple[200]};
+  background: ${(props) => props.theme.palette.purple[100]};
   border-radius: 5px;
   padding: 4px 10px;
   height: 29px;
-  color: ${(props) => props.theme.palette.purple[500]};
+  color: ${(props) => props.theme.palette.purple[200]};
   text-transform: none;
   font-size: var(--font-size-text-x-small);
   font-weight: var(--font-weight-bold);

@@ -14,7 +14,7 @@ import Table, { Column } from "src/components/commons/Table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import UserInfo from "./UserInfo";
-import { Amount, Status, StyledBoxTransaction, StyledLink } from "./styles";
+import { Amount, Status, StyledLink } from "./styles";
 
 const WalletActivity: React.FC = () => {
   const { stakeId = "" } = useParams<{ stakeId: string }>();
@@ -24,20 +24,6 @@ const WalletActivity: React.FC = () => {
   const { isMobile, isGalaxyFoldSmall, isTablet } = useScreen();
 
   const fetchData = useFetchList<WalletActivityIF>(API.STAKE_LIFECYCLE.WALLET_ACTIVITY(stakeId), { ...pageInfo, sort });
-
-  const trxType = {
-    SENT: "ADA sent from wallet",
-    RECEIVED: "ADA received",
-    FEE_PAID: "Transaction fee paid",
-    CERTIFICATE_FEE_PAID: "Certificate fee paid",
-    CERTIFICATE_DEPOSIT_PAID: "Certificate deposit paid",
-    CERTIFICATE_HOLD_PAID: "Certificate hold paid",
-    CERTIFICATE_HOLD_DEPOSIT_REFUNDED: "Certificate hold deposit refunded",
-    REWARD_WITHDRAWN: "Reward withdrawn",
-    REWARD_WITHDRAWN_AND_CERTIFICATE_HOLD_PAID: "Reward withdrawn and certificate hold paid",
-    REWARD_WITHDRAWN_AND_CERTIFICATE_HOLD_DEPOSIT_REFUNDED: "Reward withrawn and cetificate hod deposit refunded",
-    UNKNOWN: "Unknown"
-  };
 
   const columns: Column<WalletActivityIF>[] = [
     {
@@ -71,13 +57,6 @@ const WalletActivity: React.FC = () => {
           <StyledLink to={details.transaction(r.txHash || "")}>{getShortHash(r.txHash)}</StyledLink>
         </CustomTooltip>
       )
-    },
-
-    {
-      title: "Transaction Type",
-      key: "transactionCount",
-      minWidth: "100px",
-      render: (r) => <StyledBoxTransaction>{trxType[r.type]}</StyledBoxTransaction>
     },
     {
       title: "Status",
