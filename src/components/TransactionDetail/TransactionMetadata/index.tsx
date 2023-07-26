@@ -1,39 +1,40 @@
-import React, { useMemo, useRef } from "react";
-import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { Box, Tab, useTheme } from "@mui/material";
+import React, { useMemo, useRef } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
-import { details } from "src/commons/routers";
 import {
   CollateralIcon,
   ContractIcon,
-  TransactionDelegationIcon,
+  InstantaneousHistoryIcon,
+  MetadataIconTx,
   MintingIcon,
   NoteIcon,
   ProtocolUpdateIcon,
   RewardsDistributionIcon,
   StakeCertificates,
   SummaryIcon,
+  TransactionDelegationIcon,
   UtxoIcon,
-  WithdrawalIcon,
-  InstantaneousHistoryIcon,
-  MetadataIconTx
+  WithdrawalIcon
 } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 
-import "./index.css";
-import UTXO from "./UTXOs";
-import Summary from "./Summary";
-import Contracts from "./Contracts";
 import Collaterals from "./Collaterals";
-import Withdrawals from "./Withdrawals";
+import Contracts from "./Contracts";
 import Delegations from "./Delegations";
+import InstantaneousRewards from "./InstantaneousRewards";
+import Metadata from "./Metadata";
 import Minting from "./Minting";
-import { TitleTab } from "./styles";
 import PoolCertificate from "./PoolCertificate";
 import ProtocolUpdate from "./ProtocolUpdate";
 import StakeCertificate from "./StakeCertificate";
-import InstantaneousRewards from "./InstantaneousRewards";
-import Metadata from "./Metadata";
+import Summary from "./Summary";
+import UTXO from "./UTXOs";
+import Withdrawals from "./Withdrawals";
+import "./index.css";
+import { TitleTab } from "./styles";
 
 interface TransactionMetadataProps {
   data: Transaction | null;
@@ -84,7 +85,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
       key: "utxOs",
       icon: UtxoIcon,
       label: "UTXOs",
-      children: <UTXO data={data?.utxOs} fee={data?.tx.fee || 0} />
+      children: <UTXO data={data?.utxOs} fee={data?.tx.fee || 0} isFailed={data?.tx.status === TRANSACTION_STATUS.FAILED} />
     },
     {
       key: "contracts",
@@ -176,6 +177,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
               <Tab
                 key={key}
                 value={key}
+                data-testid={`tab-${key}`}
                 style={{ padding: "12px 0px", marginRight: 40 }}
                 label={
                   <Box display={"flex"} alignItems="center">
