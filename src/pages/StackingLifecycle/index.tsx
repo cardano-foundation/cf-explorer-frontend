@@ -14,9 +14,10 @@ import { TabContext } from "@mui/lab";
 import PoolLifecycle from "src/components/PoolLifecycle";
 import StakekeySummary from "src/components/StakekeySummary";
 import { StyledTab, StyledTabs } from "../RegistrationPools/styles";
-import StakingLifeCycleSearch from "../StakingLifeCycleSearch";
+import StakingLifeCycleSearch from "../../components/StakingLifeCycleSearch";
 import { TabContent, TabHeader, FilterHead, StyledTabLabel, TextHeadline, TitleHead } from "./styles";
 import { useSelector } from "react-redux";
+import NoRecord from "src/components/commons/NoRecord";
 
 export interface SavedReport {
   timestamp: Date | string;
@@ -31,6 +32,8 @@ const DEFAULT_PARAMS = {
   reportName: undefined
 };
 const DEFAULT_PAGINING = { page: 0, size: 50 };
+const validTabs: LifecycleReportType[] = ["stake-key-reports", "pool-reports"];
+
 const Dashboard: React.FC = () => {
   const history = useHistory();
   const { userData } = useSelector(({ user }: RootState) => user);
@@ -90,6 +93,9 @@ const Dashboard: React.FC = () => {
   );
   const { isMobile } = useScreen();
   const totalResult = validTab === "pool-reports" ? fetchDataPool.total : fetchDataStake.total;
+
+  if (!validTabs.includes(validTab)) return <NoRecord />;
+
   if (!userData)
     return (
       <Container>
