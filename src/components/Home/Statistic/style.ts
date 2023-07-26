@@ -59,10 +59,6 @@ export const Name = styled("h4")`
   color: ${(props) => props.theme.palette.secondary.light};
   font-family: var(--font-family-text);
   font-size: 14px;
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    margin-top: 0.5rem;
-    width: max-content;
-  }
 `;
 
 export const Title = styled("h3")`
@@ -74,7 +70,6 @@ export const Title = styled("h3")`
   font-size: 28px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 16px;
-    max-width: 87px;
     word-break: break-all;
   }
 `;

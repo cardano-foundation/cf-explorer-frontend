@@ -1,10 +1,10 @@
-import { Box, styled, alpha } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import CustomModal from "src/components/commons/CustomModal";
 import { AdaLogoIcon } from "src/components/commons/ADAIcon";
 
-export const StyledModal = styled(CustomModal)(() => ({}));
+export const StyledModal = styled(CustomModal)(({ theme }) => ({ backgroundColor: theme.palette.primary[100] }));
 
 export const ItemList = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -18,7 +18,7 @@ export const ItemList = styled(Box)(({ theme }) => ({
 }));
 
 export const Item = styled(Box)(({ theme, flexDirection }) => ({
-  backgroundColor: alpha(theme.palette.secondary.light, 0.1),
+  backgroundColor: theme.palette.secondary[0],
   padding: 20,
   flex: 1,
   display: "flex",
