@@ -1,5 +1,7 @@
+import { log } from "console";
 import WebApi from "cypress/core/WebApi";
 import { InstantaneousConstants } from "cypress/fixtures/constants/Instantaneous";
+import { max } from "lodash";
 import * as util from 'util';
 
 
@@ -17,10 +19,11 @@ const labelBlock = "//div[text()='Block details']"
 const labelEpoch = "//div[text()='Epoch details']"
 const btnBack = "//small[text()='Back']"
 const labelFullWhenHoverOn = "//div[@role='tooltip']//div"
-const perPage = "//span[text()='Per page']/preceding-sibling::div/div";
+const perPageXpath = "//span[text()='Per page']/preceding-sibling::div/div";
 const displayRowSelect = "ul[role='listbox'] li";
 const perPageSelect = "//div[@id='menu-']/div[@class]/ul/li";
-
+const rangeOfPage = "//li//input/following-sibling::span"
+const totalItemOfPage = "//div[text()='Results']/span"
 
 
 export default class InstantaneousRewardsPage extends WebApi{
@@ -179,7 +182,7 @@ export default class InstantaneousRewardsPage extends WebApi{
     }
 
     clickOnPerPageDropdown() {
-        cy.xpath(perPage).scrollIntoView().click();
+        cy.xpath(perPageXpath).scrollIntoView().click();
         return this;
     }
 
@@ -208,6 +211,56 @@ export default class InstantaneousRewardsPage extends WebApi{
 
     verifyNumberOfBlockDisplayRow(expectedCount:string){
         cy.xpath(listItemOfPage).should('have.length.lte', parseInt(expectedCount));
+        return this;
+    }
+
+    checkButtonNextIsEnable(number:string){
+        cy.xpath(numberOfPage).clear().type(number).type('{enter}')
+        cy.xpath(listbtnNextAndPre+'[3]').should('be.enabled')
+        cy.xpath(listbtnNextAndPre+'[4]').should('be.enabled')
+        return this;
+    }
+
+    checkInputTxbPageTo1FromMax(numberPage:any){        
+        cy.xpath(perPageXpath).getTextContent().then(text=>{
+            const perPage = parseInt(text)
+            cy.xpath(numberOfPage).clear().type(""+numberPage+"").type('{enter}')
+            cy.xpath(rangeOfPage, {timeout:5000}).then(($element) =>{
+                const numbers = $element.text().split(' ');
+                const firstNumber = parseInt(numbers[0].replace(',', ''))
+                const secondNumber = parseInt(numbers[2].replace(',', ''))
+                expect(secondNumber).to.equal(perPage*numberPage)                
+            })
+        }) 
+        return this;
+    }
+
+    checkInputTxbPageMax(){
+        cy.xpath(totalItemOfPage).then(($element)=>{
+            const totalItem = parseInt($element.text().replace(',', ''))
+            cy.xpath(perPageXpath).invoke('text').then(text=>{
+                const temp = parseInt(text)
+                if((totalItem/temp).toString().includes('.')){
+                    this.checkInputTxbPageTo1FromMax(Math.floor(totalItem/temp) + 1)
+                }else{
+                    this.checkInputTxbPageTo1FromMax(totalItem/temp)
+                }
+            })
+        }) 
+        return this;
+    }
+
+    checkButtonNextIsDisable(){
+        cy.clickElement(listbtnNextAndPre+'[4]')
+        cy.xpath(listbtnNextAndPre+'[3]').should('be.disabled')
+        cy.xpath(listbtnNextAndPre+'[4]').should('be.disabled')
+        return this;
+    }
+
+    checkButtonPreStatus(number:string, status:string){
+        cy.xpath(numberOfPage).clear().type(number).type('{enter}')
+        cy.xpath(listbtnNextAndPre+'[1]').should(status)
+        cy.xpath(listbtnNextAndPre+'[2]').should(status)
         return this;
     }
 }
