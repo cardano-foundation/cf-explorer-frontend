@@ -13,7 +13,7 @@ import { API } from "../../../../commons/utils/api";
 import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import Table, { Column } from "../../../commons/Table";
-import StackingFilter, { FilterParams } from "../../../StackingFilter";
+import CustomFilter, { FilterParams } from "../../../commons/CustomFilter";
 import { DelegationCertificateModal } from "../../../StakingLifeCycle/DelegatorLifecycle/Delegation";
 import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import { StyledLink, WrapperDelegationTab, WrapWalletLabel } from "../styles";
@@ -26,12 +26,7 @@ const DelegationTab = () => {
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
   const [sort, setSort] = useState<string>("");
   const [selected, setSelected] = useState<string>("");
-  const [params, setParams] = useState<FilterParams>({
-    fromDate: undefined,
-    sort: undefined,
-    toDate: undefined,
-    txHash: undefined
-  });
+  const [params, setParams] = useState<FilterParams>({});
   const fetchData = useFetchList<DelegationItem>(stakeId ? API.STAKE_LIFECYCLE.DELEGATION(stakeId) : "", {
     ...pageInfo,
     ...params,
@@ -50,7 +45,7 @@ const DelegationTab = () => {
       )
     },
     {
-      title: "Timestamp",
+      title: "Created At",
       key: "id",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
@@ -83,25 +78,22 @@ const DelegationTab = () => {
       <WrapperDelegationTab>
         <WrapWalletLabel>
           <GreenWalletIcon mr={1} />
-          <Box mr={1}>Wallet balance:</Box>
-          <AdaValue value={detailData?.totalStake ?? 0} />
+          <Box color={({ palette }) => palette.secondary.light} mr={1}>
+            Wallet balance:
+          </Box>
+          <AdaValue color={({ palette }) => palette.secondary.light} value={detailData?.totalStake ?? 0} />
         </WrapWalletLabel>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
             Showing {Math.min(total, pageInfo.size)} {Math.min(total, pageInfo.size) > 1 ? "results" : "result"}
           </WrapFilterDescription>
-          <StackingFilter
+          <CustomFilter
             filterValue={params}
-            onFilterValueChange={(params) => {
-              setParams(() => ({
-                fromDate: undefined,
-                sort: undefined,
-                toDate: undefined,
-                txHash: undefined,
-                ...params
-              }));
+            onChange={(params) => {
+              setParams(params);
               setPageInfo((pre) => ({ ...pre, page: 0 }));
             }}
+            searchLabel="Search transaction"
           />
         </Box>
       </WrapperDelegationTab>

@@ -23,6 +23,7 @@ const Result = styled(Box)`
 const StyledBox = styled(Box)`
   text-align: left;
   margin-top: 20px;
+  margin-bottom: 20px;
 `;
 
 const ScriptType = styled(Box)`

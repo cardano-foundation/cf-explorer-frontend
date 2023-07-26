@@ -50,7 +50,9 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
           ) : null}
         </ContractText>
         <Link to={linkToPage()}>
-          <ContractAddress>{txHash || item.address || item.scriptHash}</ContractAddress>
+          <ContractAddress data-testid={`contract-hash-${txHash || item.address || item.scriptHash}`}>
+            {txHash || item.address || item.scriptHash}
+          </ContractAddress>
         </Link>
       </ContractHeader>
       <ContractRedeemer item={item} txHash={txHash} />
@@ -59,7 +61,7 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
           <IconContainer>
             <RedeemerPlusIcon />
           </IconContainer>
-          <ContractDatumn key="in" item={item} type="in" txHash={txHash} />
+          <ContractDatumn txHash={txHash} key="in" item={item} type="in" />
         </>
       )}
       <IconContainer>
@@ -83,22 +85,22 @@ export const ContractRedeemer = ({ item, txHash }: IContractDiagramProps) => {
   return (
     <CardDiagram>
       <TabLabel>Redeemer</TabLabel>
-      <TabElement flexDirection={!txHash ? "row" : "column"}>
+      <TabElement flexDirection={!txHash ? "row" : "column"} isContractPage={+!!txHash}>
         <TabItem>
           <TitleText>Tag</TitleText>
-          <DataTitle>{item.purpose}</DataTitle>
+          <DataTitle data-testid={`contract-redeemer-tag-${item.address}`}>{item.purpose}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Data</TitleText>
-          <DataTitle>{item.redeemerBytes}</DataTitle>
+          <DataTitle data-testid={`contract-redeemer-data-${item.address}`}>{item.redeemerBytes}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Mem</TitleText>
-          <DataTitle>{item.redeemerMem}</DataTitle>
+          <DataTitle data-testid={`contract-redeemer-mem-${item.address}`}>{item.redeemerMem}</DataTitle>
         </TabItem>
         <TabItem>
           <TitleText>Steps</TitleText>
-          <DataTitle>{item.redeemerSteps}</DataTitle>
+          <DataTitle data-testid={`contract-redeemer-steps-${item.address}`}>{item.redeemerSteps}</DataTitle>
         </TabItem>
       </TabElement>
     </CardDiagram>
@@ -117,7 +119,9 @@ export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) =>
         }}
       >
         <DatumnText>Datum Hash</DatumnText>
-        <DataTitle>{isTypeIn ? item.datumHashIn : item.datumHashOut}</DataTitle>
+        <DataTitle data-testid={`contract-datum-hash-${item.address}`}>
+          {isTypeIn ? item.datumHashIn : item.datumHashOut}
+        </DataTitle>
       </DatumnItem>
       <DatumnItem
         isTxHash={!!txHash}
@@ -126,7 +130,9 @@ export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) =>
         }}
       >
         <DatumnText>Datum</DatumnText>
-        <DataTitle>{isTypeIn ? item.datumBytesIn : item.datumBytesOut}</DataTitle>
+        <DataTitle data-testid={`contract-datum-bytes-${item.address}`}>
+          {isTypeIn ? item.datumBytesIn : item.datumBytesOut}
+        </DataTitle>
       </DatumnItem>
     </DatumnElement>
   );

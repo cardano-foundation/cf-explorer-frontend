@@ -33,20 +33,12 @@ import {
   Label,
   ReportButtonContainer
 } from "./styles";
+import { IReportLimit } from "../SPOLifecycle";
 
 interface Params {
   stakeId: string;
   mode: ViewMode;
   tab: DelegationStep;
-}
-
-export interface ListStakeKeyResponse {
-  [key: string]: boolean;
-  hasDeRegistration: boolean;
-  hasDelegation: boolean;
-  hasRegistration: boolean;
-  hasWithdrawal: boolean;
-  hashRewards: boolean;
 }
 
 const MODES: ViewMode[] = ["timeline", "tabular"];
@@ -84,6 +76,7 @@ const DelegatorLifecycle = () => {
   const { data: listTabs, loading: loadingListTabs } = useFetch<ListStakeKeyResponse>(
     API.STAKE_LIFECYCLE.TABS(stakeId)
   );
+  const { data: dataReportLimit } = useFetch<IReportLimit>(API.REPORT.REPORT_LIMIT);
 
   useEffect(() => {
     if (listTabs && listTabs[tabsValid[tab]]) {
@@ -137,9 +130,21 @@ const DelegatorLifecycle = () => {
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>
-            <CustomTooltip title={!isLoggedIn ? "Please sign in to use this feature" : ""}>
+            <CustomTooltip
+              title={
+                !isLoggedIn
+                  ? "Please sign in to use this feature"
+                  : `Please note that you can only create ${
+                      dataReportLimit?.limitPer24hours || 0
+                    } reports within 24 hours`
+              }
+            >
               <ReportButtonContainer>
-                <ButtonReport disabled={!isLoggedIn} onClick={() => setOpen(true)} sidebar={+sidebar}>
+                <ButtonReport
+                  disabled={!isLoggedIn || dataReportLimit?.isLimitReached}
+                  onClick={() => setOpen(true)}
+                  sidebar={+sidebar}
+                >
                   Compose report
                 </ButtonReport>
               </ReportButtonContainer>

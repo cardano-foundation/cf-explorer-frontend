@@ -48,7 +48,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
       {(data || [])?.map((metadata, idx) => (
         <Wrapper mt={2} key={idx}>
           <RowMetadata>
-            <Title>Publish Label</Title>
+            <Title>Metadatum Label</Title>
             <TitleValue>{metadata.label || ""}</TitleValue>
           </RowMetadata>
           <RowMetadata>

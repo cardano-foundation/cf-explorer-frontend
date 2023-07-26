@@ -10,16 +10,17 @@ import {
   ResourcesIcon,
   StakingLifecycleIcon
 } from "./resources";
-import { routers } from "./routers";
+import { lists, routers } from "./routers";
 
 interface Menu {
   title: string;
   href?: string;
-  mega?: boolean;
   children?: Menu[];
   icon?: string;
   tooltip?: string;
+  isSpecialPath?: boolean;
 }
+
 interface Social {
   title: string;
   href: string;
@@ -40,7 +41,7 @@ export const menus: Menu[] = [
       { title: "Transactions", href: routers.TRANSACTION_LIST },
       { title: "Native Tokens", href: routers.TOKEN_LIST },
       { title: "Smart Contracts", href: routers.CONTRACT_LIST },
-      { title: "Pools", href: routers.DELEGATION_POOLS },
+      { title: "Pools", href: routers.DELEGATION_POOLS, isSpecialPath: true },
       { title: "Top ADA Holders", href: routers.ADDRESS_LIST }
     ]
   },
@@ -48,18 +49,18 @@ export const menus: Menu[] = [
     title: "Operational Certificates",
     icon: OperationalIcon,
     children: [
-      { title: "Stake Key Registration", href: routers.STAKE_LIST.replace(":poolType?", "registration") },
-      { title: "Stake Key Deregistration", href: routers.STAKE_LIST.replace(":poolType?", "de-registration") },
-      { title: "Stake Delegation(s)", href: routers.STAKE_DELEGATIONS },
-      { title: "Pool Certificate", href: routers.REGISTRATION_POOLS.replace(":poolType?", "registration") },
-      { title: "Pool Deregistration", href: routers.REGISTRATION_POOLS.replace(":poolType?", "de-registration") },
-      { title: "Instantaneous Rewards ", href: routers.INSTANTANEOUS_REWARDS }
+      { title: "Stake Address Registration", href: routers.STAKE_ADDRESS_REGISTRATION, isSpecialPath: true },
+      { title: "Stake Address Deregistration", href: routers.STAKE_ADDRESS_DEREGISTRATION, isSpecialPath: true },
+      { title: "Stake Delegation(s)", href: routers.STAKE_ADDRESS_DELEGATIONS, isSpecialPath: true },
+      { title: "Pool Certificate", href: routers.POOL_CERTIFICATE, isSpecialPath: true },
+      { title: "Pool Deregistration", href: routers.POOL_DEREGISTRATION, isSpecialPath: true },
+      { title: "Instantaneous Rewards ", href: routers.INSTANTANEOUS_REWARDS, isSpecialPath: true }
     ]
   },
   {
     title: "Staking Lifecycle",
     icon: StakingLifecycleIcon,
-    href: routers.STAKING_LIFECYCLE.replace(":tab", "stake-key")
+    href: lists.dashboard()
   },
   {
     title: "Protocol Parameters",

@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { useHistory } from "react-router-dom";
-import { Container } from "@mui/material";
 
 import ReportGeneratedPoolDetailTabs from "src/components/ReportGeneratedPoolDetail";
 import { BackButton, BackText } from "src/components/commons/DetailHeader/styles";
 
-import { TopHeader } from "./styles";
+import { StyledContainer, TopHeader } from "./styles";
 
 const ReportGeneratedPoolDetail = () => {
   const history = useHistory();
@@ -16,7 +15,7 @@ const ReportGeneratedPoolDetail = () => {
   }, []);
 
   return (
-    <Container>
+    <StyledContainer>
       <TopHeader>
         <BackButton onClick={history.goBack}>
           <HiArrowLongLeft />
@@ -24,7 +23,7 @@ const ReportGeneratedPoolDetail = () => {
         </BackButton>
       </TopHeader>
       <ReportGeneratedPoolDetailTabs />
-    </Container>
+    </StyledContainer>
   );
 };
 

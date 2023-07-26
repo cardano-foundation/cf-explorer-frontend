@@ -1,4 +1,4 @@
-import { styled, Box } from "@mui/material";
+import { styled, Box, Container } from "@mui/material";
 
 export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => ({
   fontWeight: "bold",
@@ -17,3 +17,7 @@ export const DelegationData = styled(Box)`
 export const TabsContainer = styled(Box)(({ theme }) => ({
   borderBottom: `1px solid ${theme.palette.primary[200]}`
 }));
+
+export const StyledContainer = styled(Container)`
+  max-width: 95vw !important;
+`;

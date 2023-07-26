@@ -1,7 +1,9 @@
 import React from "react";
-import { styled, Container } from "@mui/material";
+import { styled, Container, Box } from "@mui/material";
+import { Link } from "react-router-dom";
 
 import { APP_VERSION } from "src/commons/utils/constants";
+import { routers } from "src/commons/routers";
 
 import FooterMenu from "../Sidebar/FooterMenu";
 
@@ -41,6 +43,34 @@ const Copyright = styled("small")`
   }
 `;
 
+const RefContainer = styled(Box)`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justiy-content: center;
+  margin-right: 30px;
+  ${(props) => props.theme.breakpoints.down("md")} {
+    width: 100%;
+    justify-content: center;
+    margin: 10px 0px;
+  }
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    flex-direction: column;
+    margin: 20px 0 40px 0;
+  }
+`;
+
+const DotDivide = styled(Box)`
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: ${(props) => props.theme.palette.primary.main};
+`;
+
+const LinkTo = styled(Link)`
+  color: ${(props) => `${props.theme.palette.blue[850]} !important`};
+`;
+
 const Footer: React.FC = () => {
   return (
     <StyledFooter data-testid="footer">
@@ -49,6 +79,19 @@ const Footer: React.FC = () => {
         <Copyright data-testid="footer-text">
           &copy; {new Date().getFullYear()} Cardano Foundation. All rights reserved. Version: {APP_VERSION}
         </Copyright>
+        <RefContainer>
+          <LinkTo to={routers.FAQ} target="_blank" rel="noopener noreferrer">
+            FAQ
+          </LinkTo>
+          <DotDivide />
+          <LinkTo to={routers.TERMS_AND_CONDITIONS} target="_blank" rel="noopener noreferrer">
+            Terms and Conditions
+          </LinkTo>
+          <DotDivide />
+          <LinkTo to={routers.POLICY} target="_blank" rel="noopener noreferrer">
+            Privacy Policy
+          </LinkTo>
+        </RefContainer>
       </FooterContainer>
     </StyledFooter>
   );

@@ -13,7 +13,6 @@ import {
   InfoIcon,
   TranferIcon
 } from "src/commons/resources";
-import { ListStakeKeyResponse } from "src/pages/DelegatorLifecycle";
 import { details } from "src/commons/routers";
 import { useScreen } from "src/commons/hooks/useScreen";
 import CustomTooltip from "src/components/commons/CustomTooltip";

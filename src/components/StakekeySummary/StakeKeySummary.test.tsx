@@ -28,7 +28,8 @@ const mockFetchData: FetchReturnType<IStakeKeySummary> = {
   currentPage: 1,
   refresh: jest.fn(),
   update: jest.fn(),
-  lastUpdated: 1626088800
+  lastUpdated: 1626088800,
+  query: {}
 };
 
 const mockProps = {

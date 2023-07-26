@@ -11,7 +11,7 @@ describe("InstantaneousRewards component", () => {
   it("should component render", () => {
     const { getAllByTestId, getAllByText } = render(<InstantaneousRewards data={[mockProps]} />);
     screen.logTestingPlaygroundURL();
-    expect(getAllByText("Address Stake Key").length).toBeGreaterThan(0);
+    expect(getAllByText("Stake Address").length).toBeGreaterThan(0);
     const addressStakeKeys = getAllByTestId(`stake-item-${mockProps.stakeAddress}`);
     expect(addressStakeKeys.length).toBeGreaterThan(0);
   });
