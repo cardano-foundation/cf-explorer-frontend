@@ -12,7 +12,7 @@ it("Check action click on [Verify script] button ", () => {
                 .verifyVerifyScriptPopupCloseButtonEnable()
 })
 
-it.only("Check action click on [X] button ", () => {
+it("Check action click on [X] button ", () => {
     contractPage.clickVerifyScriptButton()
                 .verifyInputNativeScriptDisplay()
                 .verifyVerifyScriptPopupCloseButtonEnable()

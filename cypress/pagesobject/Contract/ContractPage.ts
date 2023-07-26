@@ -9,6 +9,11 @@ const listItemHyperLink1 ="//table//tbody//tr//td[count(//th[contains(text(),'%s
 const listItemBalance ="//table//tbody//tr//td[count(//th[contains(text(),'{0}')]//preceding-sibling::th) + boolean(//th[contains(text(),'{0}')])]/div/div"
 const listItemWithText ="//table//tbody//tr//td[count(//th[contains(text(),'{0}')]//preceding-sibling::th) + boolean(//th[contains(text(),'{0}')])]/div"
 const listItemTransaction ="//table//tbody//tr//td[count(//th[contains(text(),'{0}')]//preceding-sibling::th) + boolean(//th[contains(text(),'{0}')])]//small"
+const listItemTransaction1 ="//table//tbody//tr//td[count(//th[contains(text(),'%s')]//preceding-sibling::th) + boolean(//th[contains(text(),'%s')])]//small"
+const listAddressInput ="//table//tbody//tr//td[count(//th[contains(text(),'Addresses')]//preceding-sibling::th) + boolean(//th[contains(text(),'Addresses')])]//small[text()='Input: ']/following-sibling::div/a"
+const listAddressOutput ="//table//tbody//tr//td[count(//th[contains(text(),'Addresses')]//preceding-sibling::th) + boolean(//th[contains(text(),'Addresses')])]//small[text()='Output: ']/following-sibling::div/a"
+const listBlock ="//table//tbody//tr//td[count(//th[contains(text(),'Block')]//preceding-sibling::th) + boolean(//th[contains(text(),'Block')])]//a[contains(@href,'block')]"
+const listEpoch ="//table//tbody//tr//td[count(//th[contains(text(),'Block')]//preceding-sibling::th) + boolean(//th[contains(text(),'Block')])]//a[contains(@href,'epoch')]";
 const listItemNo ="//table//tbody//tr//td[count(//th[contains(text(),'#')]//preceding-sibling::th) + boolean(//th[contains(text(),'#')])]"
 const balanceSortButton ="//th[text()='Balance']/button";
 const transactionSortButton ="//th[text()='Transaction Count']/button";
@@ -36,6 +41,7 @@ const stakeAddrDetailPage ="//div[@id='main']//div[text()='Stake Address Details
 const poolDetailPage = "//small[contains(text(),'Pool Id')]";
 const copyIcon ="//div[text()='Stake Address']/following-sibling::div//button[@aria-label='Copy']";
 const toolTipCopy ="//div[@role='tooltip']/div[text()='Copy']";
+const navigatedPage ="//div[text()='{0}']";
 
 
 export default class ContractPage extends WebApi {
@@ -172,7 +178,7 @@ export default class ContractPage extends WebApi {
 
   clickOnContractRecordRandomly(){
     cy.verifyElementInvisible(waitingIcon);
-    cy.clickElementRandomly(listItemHyperLink,ContractConstants.COLUMN_NAME[1])
+    cy.clickElementRandomly(listItemHyperLink,ContractConstants.COLUMN_NAME[1]);
     return this;
   }
 
@@ -240,6 +246,12 @@ export default class ContractPage extends WebApi {
 
   verifyNumberOfDisplayRow(expectedCount:string){
     cy.xpath(util.format(listItemHyperLink1,ContractConstants.COLUMN_NAME[1],ContractConstants.COLUMN_NAME[1])).should('have.length', parseInt(expectedCount));
+    return this;
+  }
+
+  verifyNumberOfDisplayRowDetailsContract(expectedCount:string){
+    cy.verifyElementInvisible(waitingIcon);
+    cy.xpath(util.format(listItemHyperLink1,ContractConstants.TRANSACTION_TABLE[0],ContractConstants.TRANSACTION_TABLE[0])).should('have.length.lte', parseInt(expectedCount));
     return this;
   }
 
@@ -508,6 +520,104 @@ export default class ContractPage extends WebApi {
 
   verifyTooltipPopupDisplayed(){
     cy.verifyElementDisplay(toolTipCopy)
+    return this;
+  }
+
+  verifyDisplayTransactionHashLabel(){
+    cy.getAllTextContent(listItemHyperLink,(text:string)=>{
+      expect((text.substring(10, text.length - 7))).to.equal('...')},ContractConstants.TRANSACTION_TABLE[0])
+
+    return this;
+  }
+
+  verifyDisplayTimeLabel(){
+    cy.checkDateTimeFormat(listItemTransaction,ContractConstants.DATE_TIME[0],ContractConstants.TRANSACTION_TABLE[1])
+    return this;
+  }
+
+  verifyDisplayOfBlockLabel(){
+    cy.verifyElementInvisible(waitingIcon);
+    cy.xpath(contractListRecord)
+      .its('length')
+      .then((length) => {
+        cy.xpath(util.format(listItemHyperLink1,ContractConstants.TRANSACTION_TABLE[2],ContractConstants.TRANSACTION_TABLE[2])).should('have.length', length*2);
+      })
+    return this;
+  }
+
+  verifyDisplayOfAddressLabel(){
+    cy.verifyElementInvisible(waitingIcon);
+    cy.xpath(contractListRecord)
+      .its('length')
+      .then((length) => {
+        cy.xpath(util.format(listItemTransaction1,ContractConstants.TRANSACTION_TABLE[3],ContractConstants.TRANSACTION_TABLE[3])).should('have.length', length*2);
+      })
+    return this;
+  }
+
+  verifyDisplayInputAddressLabel(){
+    cy.getAllTextContent(listAddressInput,(text:string)=>{
+      expect((text.substring(5, text.length - 5))).to.equal('...')},'')
+    return this;
+  }
+
+  verifyDisplayOutputAddressLabel(){
+    cy.getAllTextContent(listAddressOutput,(text:string)=>{
+      expect((text.substring(5, text.length - 5))).to.equal('...')},'')
+    return this;
+  }
+
+  verifyDisplayFeesLabel(){
+    cy.getAllTextContent(listItemTransaction,(text:string)=>{
+      const regex = /^\d+(?:\.\d{0,6})?$/;
+      expect(regex.test(text.replace(/,/g, '').replace(/₳/g, ""))).to.be.true;},ContractConstants.TRANSACTION_TABLE[4])
+
+    return this;
+  }
+
+  verifyDisplayOutputLabel(){
+    cy.getAllTextContent(listItemTransaction,(text:string)=>{
+      const regex = /^\d+(?:\.\d{0,6})?$/;
+      expect(regex.test(text.replace(/,/g, '').replace(/₳/g, ""))).to.be.true;},ContractConstants.TRANSACTION_TABLE[5])
+
+    return this;
+  }
+
+  clickOnTransactionTab(){
+    cy.clickElement(transactionTab)
+    return this;
+  }
+
+  verifyTransactionTableIsDisplayed(){
+    cy.verifyAllElementDisplay(listItemHyperLink,ContractConstants.TRANSACTION_TABLE[0])
+    return this;
+  }
+
+  clickOnTransactionHashRandomly(){
+    cy.clickElementRandomly(listItemHyperLink,ContractConstants.TRANSACTION_TABLE[0])
+    return this;
+  }
+  clickOnInputAddressRandomly(){
+    cy.clickElementRandomly(listAddressInput,'')
+    return this;
+  }
+
+  clickOnOutputAddressRandomly(){
+    cy.clickElementRandomly(listAddressOutput,'')
+    return this;
+  }
+  clickOnBlockRandomly(){
+    cy.clickElementRandomly(listBlock,'')
+    return this;
+  }
+  clickOnEpochRandomly(){
+    cy.clickElementRandomly(listEpoch,'')
+    return this;
+  }
+
+  verifyNavigatedToPage(pageNavigated:string){
+    cy.verifyElementInvisible(waitingIcon);
+    cy.verifyElementDisplay(navigatedPage,pageNavigated)
     return this;
   }
 }

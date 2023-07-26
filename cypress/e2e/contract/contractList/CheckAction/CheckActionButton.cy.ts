@@ -28,7 +28,7 @@ it("Check action click on [Value] ", () => {
                 .verifyFieldNotClickable()
 });
 
-it.only("Check action click on icon [Sort] of Transaction Count", () => {
+it("Check action click on icon [Sort] of Transaction Count", () => {
   contractPage.clickOnSortTransaction()
               .verifyTransactionIsSorted('desc')
               .clickOnSortTransaction()

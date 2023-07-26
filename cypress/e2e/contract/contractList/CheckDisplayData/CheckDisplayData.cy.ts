@@ -32,7 +32,7 @@ it('Check fomat of the " Value"', () => {
     contractPage.verifyValueFormat()
 });
 
-it.only('heck display data of the "Transaction Count" labe"', () => {
+it('heck display data of the "Transaction Count" labe"', () => {
     contractPage.verifyTransactionDisplay()
 });
 
