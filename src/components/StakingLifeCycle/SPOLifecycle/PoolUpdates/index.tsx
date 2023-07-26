@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Box } from "@mui/material";
 
 import { API } from "src/commons/utils/api";
 import useFetch from "src/commons/hooks/useFetch";
@@ -6,7 +7,6 @@ import useFetch from "src/commons/hooks/useFetch";
 import { PoolUpdatesDraw } from "./PoolUpdatesDraw";
 import PoolUpdateModal from "./PoolUpdateModal";
 import RecentPoolUpdates from "./RecentPoolUpdates";
-import { StyledContainer } from "./styles";
 
 const PoollUpdates = () => {
   const [selected, setSelected] = useState<PoolUpdateItem | null>(null);
@@ -23,7 +23,7 @@ const PoollUpdates = () => {
   const handleToggleModal = () => setOpenModal((state) => !state);
 
   return (
-    <StyledContainer>
+    <Box>
       <PoolUpdateModal data={data} onClose={handleToggleModal} open={openModal} />
       <RecentPoolUpdates onSelect={handleSelect} setShowBackButton={setShowBackButton} />
       {selected && (
@@ -34,7 +34,7 @@ const PoollUpdates = () => {
           showBackButton={showBackButton}
         />
       )}
-    </StyledContainer>
+    </Box>
   );
 };
 export default PoollUpdates;
