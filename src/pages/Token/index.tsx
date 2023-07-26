@@ -46,7 +46,7 @@ const Tokens = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Tokens List | Cardano Explorer`;
+    document.title = `Tokens List | Iris - Cardano Blockchain Explorer`;
   }, []);
 
   const columns: Column<IToken>[] = [
@@ -122,7 +122,7 @@ const Tokens = () => {
     },
     {
       title: "Created At",
-      key: "createdat",
+      key: "time",
       minWidth: "150px",
       render: (r) => (
         <>
@@ -167,8 +167,8 @@ const Tokens = () => {
             ...pageInfo,
             total: fetchData.total,
             onChange: (page, size) => {
-              mainRef.current?.scrollTo(0, 0);
-              history.replace({ search: stringify({ page, size, tokenName: queries.get("tokenName") || "" }) });
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+              history.replace({ search: stringify({ page, size }) });
             },
             handleCloseDetailView: handleClose
           }}

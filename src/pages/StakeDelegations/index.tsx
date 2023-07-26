@@ -36,7 +36,7 @@ const StakeDelegations = () => {
   const mainRef = useRef(document.querySelector("#main"));
 
   useEffect(() => {
-    document.title = `Stake Delegations | Cardano Explorer`;
+    document.title = `Stake Delegations | Iris - Cardano Blockchain Explorer`;
   }, []);
 
   const columns: Column<StakeDelegations>[] = [
@@ -125,7 +125,7 @@ const StakeDelegations = () => {
             total: fetchData.total,
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
-              mainRef.current?.scrollTo(0, 0);
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
         />

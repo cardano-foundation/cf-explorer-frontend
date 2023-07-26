@@ -62,11 +62,9 @@ export enum EPOCH_STATUS {
 
 export const MAX_SLOT_EPOCH = 432000;
 
-export enum NETWORK_NAMES {
-  mainnet = "Mainnet",
-  preprod = "Preprod",
-  preview = "Preview"
-}
+export const NETWORK_NAMES = JSON.parse(
+  String(process.env.REACT_APP_NETWORK_NAMES || get(window, "env.REACT_APP_NETWORK_NAMES"))
+);
 
 export enum NETWORK_TYPES {
   mainnet = "MAIN_NET",
@@ -83,7 +81,7 @@ export const NETWORK: NETWORKS =
   (process.env.REACT_APP_NETWORK as NETWORKS) || get(window, "env.REACT_APP_NETWORK") || NETWORKS.mainnet;
 
 export enum TRANSACTION_STATUS {
-  FAIL = "FAIL",
+  FAILED = "FAILED",
   SUCCESS = "SUCCESS",
   PENDDING = "PENDDING"
 }

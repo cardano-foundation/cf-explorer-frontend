@@ -23,15 +23,23 @@ export const PriceWrapper = styled(BlueText)`
 export const StyledContainer = styled(Container)(({ theme }) => ({
   paddingTop: "20px",
   [theme.breakpoints.down("sm")]: {
+    padding: "10px 0 40px",
     "& > div:nth-of-type(1)": {
       "& > div:nth-of-type(1)": {
         padding: "0 16px"
       },
       "& > div:nth-of-type(2)": {
-        padding: "0 16px"
+        "& > div:nth-of-type(2)": {
+          marginTop: "0px"
+        }
       }
     },
-    paddingTop: "10px",
+    "& > div > div:nth-of-type(2)": {
+      margin: "0 16px"
+    },
+    "& > div > div:nth-of-type(3)": {
+      padding: "0 16px"
+    },
     marginTop: "0px !important"
   }
 }));

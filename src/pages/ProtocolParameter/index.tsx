@@ -82,7 +82,7 @@ const ProtocolParameter: React.FC = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Protocol Parameters | Cardano Explorer`;
+    document.title = `Protocol Parameters | Iris - Cardano Blockchain Explorer`;
   }, []);
 
   const theme = useTheme();
@@ -205,7 +205,7 @@ const ProtocolParameter: React.FC = () => {
       render: (r: any) => <Box>{r?.epochNo}</Box>
     },
     {
-      title: "Timestamp",
+      title: "Created At",
       key: "timestamp",
       render: (r: any) => (r?.time ? formatDateTimeLocal(r.time) : "")
     }
@@ -294,7 +294,7 @@ export default ProtocolParameter;
 export const ProtocolParameterHistory = () => {
   const { PROTOCOL_PARAMETER } = API;
   const TOTAL_PARAMETER = 29;
-
+  const [initing, setIniting] = useState(true);
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
   const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
@@ -449,6 +449,7 @@ export const ProtocolParameterHistory = () => {
 
   useUpdateEffect(() => {
     setDataTable([...dataHistoryMapping].slice(1));
+    setIniting(false);
   }, [JSON.stringify(dataHistoryMapping)]);
 
   useUpdateEffect(() => {
@@ -511,6 +512,7 @@ export const ProtocolParameterHistory = () => {
       >
         {initialized && !!dataHistory ? (
           columnsTable?.length === 1 &&
+          !initing &&
           !loading && (
             <Box textAlign={"center"}>
               <Box component={"img"} src={EmptyIcon} mt={3} />

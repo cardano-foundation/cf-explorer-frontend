@@ -146,7 +146,6 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const [showOption, setShowOption] = useState(false);
   const [error, setError] = useState("");
   const { sidebar } = useSelector(({ user }: RootState) => user);
-
   const [dataSearchAll, setDataSearchAll] = useState<IResponseSearchAll | undefined>();
   const [dataSearchTokensAndPools, setDataSearchTokensAndPools] = useState<
     TokensSearch[] | DelegationPool[] | undefined
@@ -222,7 +221,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
 
   const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
-    const option = options.find((item) => item.value === filter || filterParams);
+    const option = options.find((item) => item.value === (filterParams || filter));
 
     if (!["all", "tokens", "delegations/pool-detail-header"].includes(option?.value || "")) {
       setLoading(true);
@@ -307,7 +306,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   };
 
   const handleChangeSearch = (e?: React.ChangeEvent) => {
-    setValues({ filter, search: (e?.target as HTMLInputElement)?.value });
+    setValues({ filter, search: (e?.target as HTMLInputElement)?.value || "" });
     setError("");
     setShowErrorMobile?.(false);
     onFocus((e?.target as HTMLInputElement)?.value);
@@ -352,14 +351,14 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           home && !isMobile
             ? "Search transactions, address, blocks, epochs, pools..."
             : isStakingLifecycle && !isMobile
-            ? "Search Stake key, Pools"
+            ? "Search Stake Address, Pools"
             : "Search ..."
         }
         title={
           home && !isMobile
             ? "Search transactions, address, blocks, epochs, pools..."
             : isStakingLifecycle && !isMobile
-            ? "Search Stake key, Pools"
+            ? "Search Stake Address, Pools"
             : "Search ..."
         }
         onChange={handleChangeSearch}
@@ -385,7 +384,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           <CircularProgress size={20} />
         </SubmitButton>
       ) : (
-        <SubmitButton type="submit" home={home ? 1 : 0} disabled={!search}>
+        <SubmitButton type="submit" home={home ? 1 : 0} disabled={!search.trim()}>
           <Image src={HeaderSearchIcon} alt="search" home={home ? 1 : 0} />
         </SubmitButton>
       )}
@@ -426,7 +425,7 @@ export const OptionsSearch = ({
     return {
       suggestText: (
         <Box>
-          Search for an {filter === "tokens" ? "token" : "pool"}{" "}
+          Search for a {filter === "tokens" ? "token" : "pool"}{" "}
           {filter === "tokens" ? (
             <ValueOption>
               {(i as TokensSearch)?.displayName.startsWith("asset") && (i as TokensSearch)?.displayName.length > 43
@@ -457,34 +456,34 @@ export const OptionsSearch = ({
             case "epoch":
               return {
                 suggestText: "Search for an Epoch",
-                cb: () => history.push(details.epoch((value || "").toLocaleLowerCase())),
+                cb: () => history.push(details.epoch((value || "").trim().toLocaleLowerCase())),
                 formatter: formatLongText
               };
             case "block":
               return {
                 suggestText: "Search for a Block by number",
-                cb: () => history.push(details.block((value || "").toLocaleLowerCase())),
+                cb: () => history.push(details.block((value || "").trim().toLocaleLowerCase())),
                 formatter: formatLongText
               };
             case "tx":
               return {
                 suggestText: "Search for a Transaction by",
-                cb: () => history.push(details.transaction((value || "").toLocaleLowerCase())),
+                cb: () => history.push(details.transaction((value || "").trim().toLocaleLowerCase())),
                 formatter: getShortHash
               };
             case "address":
               const addressLink = objValue?.stakeAddress
-                ? details.stake((value || "").toLocaleLowerCase())
-                : details.address((value || "").toLocaleLowerCase());
+                ? details.stake((value || "").trim().toLocaleLowerCase())
+                : details.address((value || "").trim().toLocaleLowerCase());
               return {
-                suggestText: "Search for a Address by",
+                suggestText: "Search for an Address by",
                 cb: () => history.push(addressLink),
                 formatter: getShortWallet
               };
             case "token":
               return {
                 suggestText: "Search for a Token by",
-                cb: () => history.push(details.token(encodeURIComponent((value || "").toLocaleLowerCase()))),
+                cb: () => history.push(details.token(encodeURIComponent((value || "").trim().toLocaleLowerCase()))),
                 formatter: getShortWallet
               };
             case "validTokenName":
@@ -493,7 +492,7 @@ export const OptionsSearch = ({
                   suggestText: "Search for a Token by",
                   cb: () =>
                     history.push(
-                      `${routers.TOKEN_LIST}?tokenName=${encodeURIComponent((value || "").toLocaleLowerCase())}`
+                      `${routers.TOKEN_LIST}?tokenName=${encodeURIComponent((value || "").trim().toLocaleLowerCase())}`
                     ),
                   formatter: formatLongText
                 };
@@ -502,7 +501,8 @@ export const OptionsSearch = ({
             case "pool":
               return {
                 suggestText: "Search for a Pool by",
-                cb: () => history.push(details.delegation(encodeURIComponent((value || "").toLocaleLowerCase()))),
+                cb: () =>
+                  history.push(details.delegation(encodeURIComponent((value || "").trim().toLocaleLowerCase()))),
                 formatter: getShortWallet
               };
             case "validPoolName":
@@ -511,7 +511,7 @@ export const OptionsSearch = ({
                   suggestText: "Search for a Pool by",
                   cb: () =>
                     history.push(routers.DELEGATION_POOLS, {
-                      tickerNameSearch: encodeURIComponent((value || "").toLocaleLowerCase())
+                      tickerNameSearch: encodeURIComponent((value || "").trim().toLocaleLowerCase())
                     }),
                   formatter: formatLongText
                 };
@@ -520,7 +520,8 @@ export const OptionsSearch = ({
             case "policy":
               return {
                 suggestText: "Search for a Policy by",
-                cb: () => history.push(details.policyDetail(encodeURIComponent((value || "").toLocaleLowerCase()))),
+                cb: () =>
+                  history.push(details.policyDetail(encodeURIComponent((value || "").trim().toLocaleLowerCase()))),
                 formatter: formatLongText
               };
           }

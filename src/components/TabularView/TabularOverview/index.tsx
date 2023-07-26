@@ -27,7 +27,8 @@ import {
   NoDelegatedStakePool,
   CardValueDelegating,
   BoxStyled,
-  StyledBoxDelegating
+  StyledBoxDelegating,
+  BoxValue
 } from "./styles";
 
 type TCardAmount = {
@@ -37,7 +38,9 @@ type TCardAmount = {
 const CardAmount = ({ amount }: TCardAmount) => {
   return (
     <CardValue>
-      {formatADAFull(amount)}
+      <CustomTooltip title={formatADAFull(amount)}>
+        <BoxValue>{formatADAFull(amount)}</BoxValue>
+      </CustomTooltip>
       <StyledAdaLogoIcon />
     </CardValue>
   );
@@ -73,8 +76,9 @@ const TabularOverview: React.FC = () => {
   const { tickerName, poolName, poolId, iconUrl } = pool ?? {};
   const delegatingToValue =
     tickerName || poolName ? `${tickerName && tickerName + " -"}  ${poolName && poolName}` : getShortHash(poolId || "");
+  const delegatingTovalueTooltip =
+    tickerName || poolName ? `${tickerName && tickerName + " -"}  ${poolName && poolName}` : poolId;
   const [open, setOpen] = useState(false);
-
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} sm={6}>
@@ -115,7 +119,7 @@ const TabularOverview: React.FC = () => {
             pool?.poolId ? (
               <StyledBoxDelegating to={details.delegation(pool?.poolId)}>
                 <CardValueDelegating>
-                  <CustomTooltip title={delegatingToValue}>
+                  <CustomTooltip title={delegatingTovalueTooltip}>
                     <BoxStyled>{delegatingToValue}</BoxStyled>
                   </CustomTooltip>
                 </CardValueDelegating>

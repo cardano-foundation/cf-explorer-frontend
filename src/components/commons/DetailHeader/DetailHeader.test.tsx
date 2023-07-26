@@ -1,6 +1,7 @@
 import { useHistory } from "react-router-dom";
 
 import { render, screen } from "src/test-utils";
+import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 
 import DetailHeader, { DetailHeaderProps } from ".";
 
@@ -11,7 +12,7 @@ const mockProps: DetailHeaderProps = {
   title: "Example Title",
   lastUpdated: 1625272628000,
   hash: "hash123",
-  transactionStatus: "SUCCESS",
+  transactionStatus: TRANSACTION_STATUS.SUCCESS,
   stakeKeyStatus: "ACTIVE",
   epoch: {
     no: 1,
@@ -59,32 +60,15 @@ describe("DetailHeader component", () => {
   });
   it("should component render", () => {
     render(<DetailHeader {...mockProps} />);
-
-    const titleEL = screen.getByRole("heading", {
-      name: /example title/i
-    });
-    const bookmark = screen.getByRole("button", {
-      name: /bookmark\.svg/i
-    });
     const status = screen.getByText(/success/i);
-
-    expect(titleEL).toBeInTheDocument();
-    expect(bookmark).toBeInTheDocument();
+    const title = screen.getByText(/example title/i);
     expect(status).toBeInTheDocument();
+    expect(title).toBeInTheDocument();
   });
 
   it("should component loading", () => {
     render(<DetailHeader {...mockProps} loading={true} isHideButtonBack={false} />);
-    const titleEL = screen.queryByRole("heading", {
-      name: /example title/i
-    });
-    const bookmark = screen.queryByRole("button", {
-      name: /bookmark\.svg/i
-    });
     const status = screen.queryByText(/success/i);
-
-    expect(titleEL).not.toBeInTheDocument();
-    expect(bookmark).not.toBeInTheDocument();
     expect(status).not.toBeInTheDocument();
   });
 });

@@ -22,6 +22,7 @@ const Result = styled(Box)`
 const StyledBox = styled(Box)`
   text-align: left;
   margin-top: 20px;
+  margin-bottom: 20px;
 `;
 
 const ScriptType = styled(Box)`
@@ -54,7 +55,11 @@ const ScriptTab = () => {
         </ScriptType>
       ) : null}
       <Result>
-        {data?.isVerified ? <pre>{JSON.stringify(JSON.parse(data?.data), null, " ")}</pre> : "No script found"}
+        {data?.isVerified ? (
+          <pre>{JSON.stringify(JSON.parse(data?.data), null, " ")}</pre>
+        ) : (
+          "Script has not been verified"
+        )}
       </Result>
     </StyledBox>
   );

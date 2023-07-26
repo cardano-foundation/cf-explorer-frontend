@@ -32,7 +32,7 @@ const BlockList = () => {
   const mainRef = useRef(document.querySelector("#main"));
 
   useEffect(() => {
-    document.title = `Blocks List | Cardano Explorer`;
+    document.title = `Blocks List | Iris - Cardano Blockchain Explorer`;
   }, []);
 
   const columns: Column<Block>[] = [
@@ -128,7 +128,7 @@ const BlockList = () => {
             total: fetchData.total,
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
-              mainRef.current?.scrollTo(0, 0);
+              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             },
             handleCloseDetailView: handleClose
           }}

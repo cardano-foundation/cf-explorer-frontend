@@ -1,5 +1,79 @@
 # Changelog
 
+## [0.4.10](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.9...v0.4.10) (2023-07-25)
+
+
+### Features
+
+* MET-1450-1451-1466 add faq, terms, policy ([d8f58a8](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d8f58a857caae67c11dbed7c7f3a5ea786363ce7))
+
+
+### Bug Fixes
+
+* hot-fix-resolve-conflict-OverviewTab-component ([3c016ab](https://github.com/cardano-foundation/cf-explorer-frontend/commit/3c016abd3592372dc008b07002024b7988b114a8))
+* MET-1373 grammar errors ([37067aa](https://github.com/cardano-foundation/cf-explorer-frontend/commit/37067aa14cc4066c6c8eb05fabaec2e19a1295e0))
+
+## [0.4.9](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.8...v0.4.9) (2023-07-24)
+
+
+### Bug Fixes
+
+* 1271 add field unique account reward accounts ([47568c3](https://github.com/cardano-foundation/cf-explorer-frontend/commit/47568c378c4ea82e0c2242de3b1d4852d58ae75c))
+* MET-1474 add limit compose report ([32d9868](https://github.com/cardano-foundation/cf-explorer-frontend/commit/32d98684aabad4fc578162b358b8f3e6122cb5f1))
+
+## [0.4.8](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.7...v0.4.8) (2023-07-20)
+
+
+### Features
+
+* dynamic supported networks from env file ([4491e38](https://github.com/cardano-foundation/cf-explorer-frontend/commit/4491e38cd4643b26641b402b4a5fbf82d94bb9f3))
+
+
+### Bug Fixes
+
+* 1470 remove search icon in tablet ([b200e0c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b200e0c5f7e4042de3350ad26ef97e677fee8ad4))
+* change text no script  found ([6ace812](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6ace812fdfec1eaca7528e4a9444f10f3e188e43))
+* MET-1249 update chart ([faed408](https://github.com/cardano-foundation/cf-explorer-frontend/commit/faed40821dcbaf1bb852076c995392090aa2c195))
+* MET-1465-All-tables-and-Epoch-table-UX-fix ([4eda6dc](https://github.com/cardano-foundation/cf-explorer-frontend/commit/4eda6dc1b20e542a37e855aeb918926a40cc414d))
+* MET-1465-All-tables-and-Epoch-table-UX-fix ([22658bb](https://github.com/cardano-foundation/cf-explorer-frontend/commit/22658bbc4017575ed286d4c8812dc43943b62c1c))
+* MET-615-account-overview-hide-scroll-when-empty-data ([671bb34](https://github.com/cardano-foundation/cf-explorer-frontend/commit/671bb347738b2fc03ef3b97da38a29c2e187c8e0))
+* MET-615-Epoch-list-bug-ui ([138b271](https://github.com/cardano-foundation/cf-explorer-frontend/commit/138b271a6af863a5a680d34b435b337be613413e))
+* MET-615-pool-list-can-not-sort-at-field-fixed-cost ([626d78f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/626d78ff105d08de7703245d12e2e0a70967b803))
+* MET-615-stake-address-detail-remove-space-at-bottom-page ([e08ea83](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e08ea836dc549062a9c7e2ca8912609b268b9a7d))
+* remove unvar use ([c8774e1](https://github.com/cardano-foundation/cf-explorer-frontend/commit/c8774e11ab2a511fafdd14375cc45dd8d7ff4800))
+
+## [0.4.7](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.6...v0.4.7) (2023-07-18)
+
+
+### Bug Fixes
+
+* logout user when switch network ([49cde6d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/49cde6d3206c180a5e9228280ecb83c1f46325f1))
+* MET-1453-Rename-fail-to-failed-in-transaction-detail ([52f4c45](https://github.com/cardano-foundation/cf-explorer-frontend/commit/52f4c4599658f67952815f63a7b2de38adb91f84))
+* MET-615 Hotfix Sign up then sign in met error ([1117d92](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1117d927208c273e388a288419820149fbc7e50b))
+* MET-615 Missing Skeletion Detail page (Degrade) ([1375bcd](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1375bcd3009d554d70ad5ce7cc2250460a421373))
+* MET-615--Contract-detail-have-wrong-design ([51293b7](https://github.com/cardano-foundation/cf-explorer-frontend/commit/51293b70df483c4b882e117f8a016d2ec2897c3d))
+* MET-615-Top-ada-holders-missing-icon-in-tabs ([fd6d57d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/fd6d57d8248b6cba4e1cd64b1e156f326eb28ea0))
+* MET-615-Top-ada-holders-missing-icon-in-tabs ([0547c93](https://github.com/cardano-foundation/cf-explorer-frontend/commit/0547c9313cd3dfd99e381b7af7285569f154e338))
+* text align left contract detail ([d1597de](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d1597de3d62680238041bc8c70cd20933043da80))
+
+## [0.4.6](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.5...v0.4.6) (2023-07-14)
+
+
+### Features
+
+* update new design protocol paramerter page ([9d6b33f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/9d6b33f59e0d67fd25d6cb3ac9bad350d3b92b6f))
+
+
+### Bug Fixes
+
+* Add code handle reset state of useFetchList hook ([eb14a7f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/eb14a7fa5ea5e1ac41cd2121761b9d9d0c687cb5))
+* amount word-break and add a new breakpoint ([5175a78](https://github.com/cardano-foundation/cf-explorer-frontend/commit/5175a78ea711f3a06234f6daa1099c5e4fbecb2a))
+* MET-1412-finding-3-replace-terminology ([0af878d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/0af878db5cccbbb3d23c04e52b416deca43c8989))
+* MET-1454 Finding 1 Format number on chart hover ([fe38362](https://github.com/cardano-foundation/cf-explorer-frontend/commit/fe38362d2a6ba08e0e647c706f83817b8bb7d681))
+* MET-1454 Finding 1 Format number on chart hover ([dcdce62](https://github.com/cardano-foundation/cf-explorer-frontend/commit/dcdce622aadfec9e37e36ffb48e9ed0f2ec96d76))
+* MET-265 Finding 2 Fix Position saturation col in pool table ([750fa15](https://github.com/cardano-foundation/cf-explorer-frontend/commit/750fa15bfa1582100cb03e5a1b95a833e1f1724c))
+* MET-615 Common Ui bugs ([f76630c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f76630c9d6bb8d7d58f027a528f617357d499e10))
+
 ## [0.4.5](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.4...v0.4.5) (2023-07-11)
 
 
