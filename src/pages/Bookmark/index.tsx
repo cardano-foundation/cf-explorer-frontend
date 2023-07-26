@@ -73,10 +73,13 @@ const Bookmark = () => {
 
   useEffect(() => {
     document.title = `Bookmarks | Iris - Cardano Blockchain Explorer`;
+  }, []);
+
+  useEffect(() => {
     if (!isLoggedIn) {
       history.replace(routers.HOME);
     }
-  }, []);
+  }, [isLoggedIn]);
 
   const colDynamic: Record<string, Column<Bookmark>> = {
     ADDRESS: {

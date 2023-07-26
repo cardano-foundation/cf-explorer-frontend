@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.4.10](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.9...v0.4.10) (2023-07-25)
+
+
+### Features
+
+* MET-1450-1451-1466 add faq, terms, policy ([d8f58a8](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d8f58a857caae67c11dbed7c7f3a5ea786363ce7))
+
+
+### Bug Fixes
+
+* hot-fix-resolve-conflict-OverviewTab-component ([3c016ab](https://github.com/cardano-foundation/cf-explorer-frontend/commit/3c016abd3592372dc008b07002024b7988b114a8))
+* MET-1373 grammar errors ([37067aa](https://github.com/cardano-foundation/cf-explorer-frontend/commit/37067aa14cc4066c6c8eb05fabaec2e19a1295e0))
+
 ## [0.4.9](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.8...v0.4.9) (2023-07-24)
 
 
