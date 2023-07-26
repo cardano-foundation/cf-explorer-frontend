@@ -117,11 +117,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
               >
                 <Box display="flex" alignItems={"center"} overflow="hidden" gap="10px">
                   <Box>
-                    {option?.metadata?.logo ? (
-                      <Logo src={`data:/image/png;base64,${option.metadata?.logo}`} alt="icon" />
-                    ) : (
-                      <LogoEmpty />
-                    )}
+                    {option?.metadata?.logo ? <Logo src={`${option.metadata?.logo}`} alt="icon" /> : <LogoEmpty />}
                   </Box>
                   <CustomTooltip title={`${option.displayName || ""} #${option.name || option.fingerprint}`}>
                     <Box
@@ -174,8 +170,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
       title: "Icon",
       key: "icon",
       minWidth: "50px",
-      render: (r) =>
-        r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" /> : <LogoEmpty />
+      render: (r) => (r?.metadata?.logo ? <Logo src={`${r.metadata?.logo}`} alt="icon" /> : <LogoEmpty />)
     },
     {
       title: "Name",

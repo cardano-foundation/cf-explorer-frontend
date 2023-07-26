@@ -38,14 +38,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
             <span>{data?.displayName || getShortWallet(data?.fingerprint) || ""}</span>
           </CustomTooltip>
           {data?.metadata && data?.metadata?.logo ? (
-            <Box
-              component={"img"}
-              width={"auto"}
-              height={36}
-              src={`data:image/png;base64,${data.metadata.logo}`}
-              alt="logo icon"
-              ml={1}
-            />
+            <Box component={"img"} width={"auto"} height={36} src={`${data.metadata.logo}`} alt="logo icon" ml={1} />
           ) : (
             ""
           )}
