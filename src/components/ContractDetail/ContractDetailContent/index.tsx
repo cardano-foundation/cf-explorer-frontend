@@ -29,7 +29,7 @@ const ContractDetailContent: React.FC = () => {
       label: (
         <TabTitle className={tabActive === "transaction" ? "active" : ""}>
           <Box display={"flex"} alignItems="center">
-            <UtxoIcon fill={tabActive === "transaction" ? theme.palette.primary.main : theme.palette.text.hint} />
+            <UtxoIcon fill={tabActive === "transaction" ? theme.palette.primary.main : theme.palette.secondary.light} />
             <TitleTab active={+(tabActive === "transaction")} pl={1}>
               Transaction
             </TitleTab>
@@ -47,7 +47,7 @@ const ContractDetailContent: React.FC = () => {
               icon={ScriptIcon}
               width={24}
               fill="currentColor"
-              color={tabActive === "transcript" ? theme.palette.primary.main : theme.palette.text.hint}
+              color={tabActive === "transcript" ? theme.palette.primary.main : theme.palette.secondary.light}
             />
             <TitleTab active={+(tabActive === "transcript")} pl={1}>
               Script

@@ -1,4 +1,4 @@
-import { Box, styled, IconButton as IconButtonMui, Grid, alpha } from "@mui/material";
+import { Box, styled, IconButton as IconButtonMui, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import CertificateShape from "src/components/commons/CertificateShape";
@@ -161,7 +161,7 @@ export const StyledCopyButton = styled(CopyButton)`
 `;
 export const StyledGridItem = styled(Grid)(({ theme }) => ({
   "& > div": {
-    background: `${alpha(theme.palette.secondary.light, 0.1)}`,
+    background: theme.palette.secondary[0],
     padding: 24
   },
   [theme.breakpoints.down("sm")]: {

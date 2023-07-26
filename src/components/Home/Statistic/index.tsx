@@ -85,7 +85,7 @@ const HomeStatistic = () => {
       alignItems="stretch"
       data-testid="home-statistic"
     >
-      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
+      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
         {usdMarket && btcMarket?.[0] ? (
           <Item data-testid="ada-price-box">
             <Link to={{ pathname: EXT_ADA_PRICE_URL }} target="_blank">
@@ -120,7 +120,7 @@ const HomeStatistic = () => {
           <SkeletonBox />
         )}
       </Grid>
-      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
+      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
         {usdMarket ? (
           <Item data-testid="market-cap-box">
             <Link to={{ pathname: EXT_ADA_PRICE_URL }} target="_blank">
@@ -142,7 +142,7 @@ const HomeStatistic = () => {
           <SkeletonBox />
         )}
       </Grid>
-      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
+      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
         {currentEpoch ? (
           <Item data-testid="current-epoch-box">
             <Link to={details.epoch(currentEpoch?.no)}>
@@ -193,7 +193,7 @@ const HomeStatistic = () => {
           <SkeletonBox />
         )}
       </Grid>
-      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
+      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
         {data && usdMarket ? (
           <Item data-testid="live-stake-box">
             <Link to={routers.DELEGATION_POOLS}>

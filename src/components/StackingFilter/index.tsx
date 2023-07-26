@@ -128,7 +128,7 @@ const StackingFilter: React.FC<StackingFilterProps> = ({
               <CustomIcon
                 icon={FilterIC}
                 width={18}
-                color={(theme) => theme.palette.primary.main}
+                color={(theme) => theme.palette.secondary.light}
                 fill="currentColor"
               />
             </FilterIconContainer>

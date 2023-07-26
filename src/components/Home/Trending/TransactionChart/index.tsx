@@ -93,7 +93,7 @@ const TransactionChart: React.FC = () => {
           <Title>Transactions {optionsTime[rangeTime].displayName}</Title>
         </Grid>
         <Grid item xs={12} sm={4} md={4} lg={3}>
-          <Box maxWidth={"260px"}>
+          <Box maxWidth={"260px"} mx={isMobile ? "auto" : "none"}>
             <Tabs display="flex" justifyContent="space-between" width={isMobile ? "100%" : "auto"}>
               {Object.keys(optionsTime).map((option) => {
                 return (

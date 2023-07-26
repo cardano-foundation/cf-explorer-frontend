@@ -3,7 +3,7 @@ import { Container, Box, styled } from "@mui/material";
 export const TabTitle = styled(Box)`
   margin-bottom: 0px;
   padding-left: 8px;
-  color: ${({ theme }) => theme.palette.secondary[600]};
+  color: ${({ theme }) => theme.palette.secondary.light};
   text-align: left;
   text-transform: capitalize !important;
   font-size: 18px;

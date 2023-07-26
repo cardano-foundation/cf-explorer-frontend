@@ -88,6 +88,7 @@ import CurrentEpochHome from "./icons/currentEpochHome.svg";
 import HomeUpIcon from "./icons/HomeUpIcon.svg";
 import HomeDownIcon from "./icons/HomeDownIcon.svg";
 import DashboardIcon from "./icons/menus/Dashboard.svg";
+import LogoCardano from "./icons/LogoCardano.svg";
 
 export {
   LogoFullIcon,
@@ -179,7 +180,8 @@ export {
   CurrentEpochHome,
   HomeUpIcon,
   DashboardIcon,
-  HomeDownIcon
+  HomeDownIcon,
+  LogoCardano
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";

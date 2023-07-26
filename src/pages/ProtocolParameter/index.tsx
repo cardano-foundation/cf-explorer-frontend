@@ -492,13 +492,13 @@ export const ProtocolParameterHistory = () => {
               component={Button}
               variant="text"
               textTransform={"capitalize"}
-              bgcolor={({ palette }) => palette.primary[100]}
+              bgcolor={({ palette }) => palette.primary[200]}
               border={({ palette }) => `1px solid ${palette.primary[200]}`}
               px={2}
               onClick={() => setShowFiter(!showFilter)}
             >
               <FilterIcon />
-              <Box ml={1} fontWeight={"bold"}>
+              <Box ml={1} fontWeight={"bold"} color={({ palette }) => palette.secondary.light}>
                 Filter
               </Box>
             </Box>

@@ -4,6 +4,7 @@ export const FilterButton = styled(Button)`
   border: none;
   outline: none;
   background-color: ${({ theme }) => theme.palette.primary[200]};
+  color: ${({ theme }) => theme.palette.secondary.light};
   display: flex;
   justify-content: center;
   align-items: center;

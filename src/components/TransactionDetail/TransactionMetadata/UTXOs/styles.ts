@@ -46,7 +46,7 @@ export const ItemFooter = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "center",
   padding: "12px 25px",
-  background: theme.palette.primary[100],
+  background: theme.palette.primary[200],
   [theme.breakpoints.down("sm")]: {
     padding: "12px 15px"
   }
