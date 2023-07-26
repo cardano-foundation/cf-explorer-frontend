@@ -1,4 +1,4 @@
-import { Box, styled, alpha, IconButton as IconButtonMui } from "@mui/material";
+import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
 
 export const IconButtonBack = styled(IconButtonMui)(() => ({
   padding: 0
@@ -64,7 +64,7 @@ export const ItemList = styled(Box)(({ theme }) => ({
 }));
 
 export const Item = styled(Box)(({ theme, flexDirection }) => ({
-  backgroundColor: alpha(theme.palette.secondary.light, 0.1),
+  backgroundColor: theme.palette.secondary[0],
   padding: 20,
   flex: 1,
   display: "flex",

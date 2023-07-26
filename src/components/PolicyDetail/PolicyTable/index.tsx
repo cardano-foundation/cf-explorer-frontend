@@ -149,7 +149,7 @@ const PolicyTable = () => {
                 label={
                   <Box>
                     <Box display={"flex"} alignItems="center">
-                      <Icon fill={activeTab === key ? theme.palette.primary.main : theme.palette.secondary[600]} />
+                      <Icon fill={activeTab === key ? theme.palette.primary.main : theme.palette.secondary.light} />
                       <TitleTab pl={1} active={+(activeTab === key)}>
                         {label}
                       </TitleTab>

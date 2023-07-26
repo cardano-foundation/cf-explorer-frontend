@@ -50,8 +50,8 @@ export const RegistrationCertificateModal = ({
       <StyledContainerModal>
         {loading && <Skeleton variant="rectangular" width={500} height={90} />}
         {!loading && (
-          <Box>
-            <Box fontWeight={"bold"} mb={1} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.main}>
+          <Box bgcolor={({ palette }) => palette.secondary[0]}>
+            <Box fontWeight={"bold"} mb={1} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
               Stake Address
             </Box>
             {data && (

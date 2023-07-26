@@ -19,6 +19,7 @@ export const RewardBalanceHeader = styled(Box)`
   display: flex;
   justify-content: flex-start;
   width: 100%;
+  color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
 export const RewardBalanceTitle = styled(Typography)`

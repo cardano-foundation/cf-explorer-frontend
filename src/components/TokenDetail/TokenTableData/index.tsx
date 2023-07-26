@@ -92,7 +92,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, meta
               <Box
                 display={"flex"}
                 alignItems="center"
-                color={tabActive === key ? theme.palette.primary.main : theme.palette.secondary[600]}
+                color={tabActive === key ? theme.palette.primary.main : theme.palette.secondary.light}
               >
                 {icon}
                 <TitleTab pl={1} active={key === tabActive}>

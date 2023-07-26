@@ -1,4 +1,4 @@
-import { Box, styled, alpha, Tab } from "@mui/material";
+import { Box, styled, Tab } from "@mui/material";
 import { TabPanel } from "@mui/lab";
 import { Link } from "react-router-dom";
 
@@ -47,7 +47,7 @@ export const ItemList = styled(Box)(({ theme }) => ({
 }));
 
 export const Item = styled(Box)(({ theme, flexDirection }) => ({
-  backgroundColor: alpha(theme.palette.secondary.light, 0.1),
+  backgroundColor: theme.palette.secondary[0],
   padding: 20,
   flex: 1,
   display: "flex",
