@@ -1,4 +1,4 @@
-import { alpha, Box, Button, Dialog, IconButton, Paper, styled } from "@mui/material";
+import { Box, Button, Dialog, IconButton, Paper, styled } from "@mui/material";
 
 export const ConnectDialog = styled(Dialog)<{ connecting: number }>`
   * {
@@ -52,12 +52,12 @@ export const WalletItem = styled(Box)<{ active: number; connecting: number }>`
   margin-top: 10px;
   box-sizing: border-box;
   border-radius: 10px;
+  border: 1px solid ${(props) => props.theme.palette.primary[200]};
   cursor: ${(props) => (props.connecting ? `wait` : `pointer`)};
   box-shadow: ${(props) => (props.active ? props.theme.shadow.card : "none")};
-  background-color: ${(props) =>
-    props.active ? props.theme.palette.background.default : alpha(props.theme.palette.secondary.light, 0.1)};
+  background-color: ${(props) => (props.active ? props.theme.palette.success[100] : props.theme.palette.primary[100])};
   &:hover {
-    background-color: ${(props) => props.theme.palette.background.default};
+    background-color: ${(props) => props.theme.palette.primary[200]};
   }
 `;
 

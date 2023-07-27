@@ -4,7 +4,7 @@ import { User2RC } from "src/commons/resources";
 
 export const Container = styled(Box)`
   display: flex;
-  background-color: ${({ theme }) => theme.palette.background.default};
+  background-color: ${({ theme }) => theme.palette.primary[100]};
   min-height: 100vh;
   min-width: 100vw;
   justify-content: center;
@@ -88,6 +88,7 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
 );
 
 export const Label = styled(Box)`
+  color: ${({ theme }) => theme.palette.secondary.light};
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
