@@ -37,7 +37,7 @@ export const StakingDetailContext = createContext({ stakeKey: "", reportName: ""
 const stackeTabs: ITab[] = [
   {
     icon: RegistrationIcon,
-    label: "Stake Key Registration",
+    label: "Stake Address Registration",
     key: "registration",
     mappingKey: "Registration",
     component: <StakingRegistrationTab />
