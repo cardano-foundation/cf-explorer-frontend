@@ -174,7 +174,7 @@ const LatestStories = () => {
                             <CustomTooltip title={authorName}>
                               <Author>{authorName}</Author>
                             </CustomTooltip>
-                            <ResourceHref>{getHostname(author)}</ResourceHref>
+                            <ResourceHref>{getHostname(resource_href)}</ResourceHref>
                           </WrapHeader>
                           <ItemTitle>{title} </ItemTitle>
                           <Description>{default_content}</Description>
