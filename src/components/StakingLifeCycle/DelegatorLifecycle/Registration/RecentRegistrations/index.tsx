@@ -16,11 +16,10 @@ import { GridBox, StyledContainer, StyledList, WrapFilterDescription } from "./s
 import { DescriptionText } from "../../styles";
 
 interface Props {
-  onSelect: (registration: RegistrationItem | null) => void;
   setShowBackButton: (status: boolean) => void;
 }
 
-const RecentRegistrations: React.FC<Props> = ({ onSelect, setShowBackButton }) => {
+const RecentRegistrations: React.FC<Props> = ({ setShowBackButton }) => {
   const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
   const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
   const [params, setParams] = useState<FilterParams>({});
@@ -39,13 +38,6 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, setShowBackButton }) =
     if (initialized) setShowBackButton(data.length > 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialized, setShowBackButton]);
-
-  useEffect(() => {
-    const currentItem = data.find((item) => item.txHash === txHash);
-    onSelect(currentItem || null);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [txHash, data]);
 
   const isOneItemOnly = data.length === 1 && Object.keys(query).length === 2;
 

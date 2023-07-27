@@ -1,5 +1,16 @@
 import { useMemo, useRef } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import { Box } from "@mui/material";
 
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import useFetch from "src/commons/hooks/useFetch";
+import NoRecord from "src/components/commons/NoRecord";
+import DrawSkeleton from "src/components/commons/DrawSkeleton";
+import { ADAGreen, AddressIcon, BackIcon, ExclamationTriangleIcon, TimeIcon } from "src/commons/resources";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
+import CustomIcon from "src/components/commons/CustomIcon";
 import AdaHolder from "src/components/commons/AdaHolder";
 import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import DrawPath from "src/components/commons/DrawPath";
@@ -8,23 +19,41 @@ import { LineArrowItem } from "src/components/commons/LineArrow";
 import {
   BoxGroup,
   DrawContainer,
+  IconButtonBack,
+  Info,
+  InfoGroup,
+  InfoText,
   MiddleGroup,
+  StepInfo,
   StyledCertificateShape,
-  StyledFreeBox,
+  StyledCopyButton,
+  StyledFeeBox,
+  StyledLink,
   StyledWithHoldBox
 } from "./styles";
 
-export interface IDeregistrationDrawProps {
-  data?: RegistrationItem;
-  toggleCertificateModal: () => void;
+interface Props {
+  toggleModal: () => void;
+  showBackButton: boolean;
 }
 
-const DeregistrationDraw: React.FC<IDeregistrationDrawProps> = ({ data, toggleCertificateModal }) => {
+const DeregistrationDraw: React.FC<Props> = ({ toggleModal, showBackButton }) => {
+  const history = useHistory();
+  const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
+
+  const { data, error, initialized } = useFetch<DeregistrationDetail>(
+    txHash && API.STAKE_LIFECYCLE.DEREGISTRATION_DETAIL(stakeId, txHash)
+  );
+
   const adaHolderRef = useRef(null);
   const holdRef = useRef(null);
   const feeRef = useRef(null);
   const certificateRef = useRef(null);
   const cardanoBlockchainRef = useRef(null);
+
+  const handleBack = () => {
+    history.push(details.staking(stakeId, "timeline", "deregistration"));
+  };
 
   const paths = useMemo((): LineArrowItem[] => {
     return [
@@ -87,26 +116,81 @@ const DeregistrationDraw: React.FC<IDeregistrationDrawProps> = ({ data, toggleCe
       }
     ];
   }, []);
+
+  if (!txHash) return null;
+
+  if (error) return <NoRecord />;
+
+  if (!data || !initialized) return <DrawSkeleton data-testid="delegator-deregistration-draw-skeleton" />;
+
+  const { deposit, fee, time, joinDepositPaid } = data;
+
   return (
-    <DrawContainer data-testid="deregistration-draw">
-      <AdaHolder ref={adaHolderRef} />
-      <MiddleGroup>
-        <BoxGroup>
-          <StyledWithHoldBox
-            roundingNumber={1}
-            ref={holdRef}
-            value={Math.abs(data?.deposit || 0)}
-            txHash={data?.txHash || ""}
-          />
-          <StyledFreeBox ref={feeRef} value={data?.fee} txHash={data?.txHash || ""} />
-        </BoxGroup>
-        <StyledCertificateShape onClick={toggleCertificateModal} ref={certificateRef}>
-          Deregistration Certificate
-        </StyledCertificateShape>
-      </MiddleGroup>
-      <CardanoBlockchain ref={cardanoBlockchainRef} />
-      <DrawPath paths={paths} />
-    </DrawContainer>
+    <Box>
+      <StepInfo>
+        {showBackButton ? (
+          <IconButtonBack data-testid="delegator-deregistration-back-button" onClick={handleBack}>
+            <BackIcon />
+          </IconButtonBack>
+        ) : (
+          <Box />
+        )}
+
+        <InfoGroup>
+          <Info>
+            <AddressIcon fill="#438F68" />
+            <CustomTooltip title={txHash}>
+              <InfoText>
+                <StyledLink to={details.transaction(txHash)}>{getShortHash(txHash)}</StyledLink>
+              </InfoText>
+            </CustomTooltip>
+            <StyledCopyButton data-testid="delegator-deregistration-copy-button" text={txHash} />
+          </Info>
+          <Info>
+            <ADAGreen />
+            <InfoText>{formatADAFull(Math.abs(deposit) - fee)}</InfoText>
+          </Info>
+          <Info>
+            <TimeIcon />
+            <InfoText>{formatDateTimeLocal(time)}</InfoText>
+          </Info>
+        </InfoGroup>
+      </StepInfo>
+      <DrawContainer>
+        <AdaHolder ref={adaHolderRef} />
+        <MiddleGroup>
+          <BoxGroup>
+            <StyledWithHoldBox
+              data-testid="delegator-deregistration-hold-box"
+              roundingNumber={1}
+              ref={holdRef}
+              value={Math.abs(deposit)}
+              txHash={txHash}
+            >
+              {!joinDepositPaid && (
+                <CustomTooltip title="Paid by different address">
+                  <CustomIcon
+                    data-testid="delegator-deregistration-join-deposit-paid"
+                    icon={ExclamationTriangleIcon}
+                    width={24}
+                  />
+                </CustomTooltip>
+              )}
+            </StyledWithHoldBox>
+            <StyledFeeBox data-testid="delegator-deregistration-fee-box" ref={feeRef} value={fee} txHash={txHash} />
+          </BoxGroup>
+          <StyledCertificateShape
+            data-testid="delegator-deregistration-certificate"
+            onClick={toggleModal}
+            ref={certificateRef}
+          >
+            Deregistration Certificate
+          </StyledCertificateShape>
+        </MiddleGroup>
+        <CardanoBlockchain data-testid="delegator-deregistration-cardano-blockchain" ref={cardanoBlockchainRef} />
+        <DrawPath paths={paths} />
+      </DrawContainer>
+    </Box>
   );
 };
 

@@ -283,3 +283,4 @@ export { ReactComponent as RedeemerPlusIcon } from "./icons/redeemer-plus.svg";
 export { ReactComponent as RedeemerArrowDownIcon } from "./icons/redeemer-arrow-down.svg";
 export { ReactComponent as SliderRight } from "./icons/swipper-right.svg";
 export { ReactComponent as IRisLogo } from "./icons/iris-logo.svg";
+export { ReactComponent as ExclamationTriangleIcon } from "./icons/exclamation-triangle.svg";

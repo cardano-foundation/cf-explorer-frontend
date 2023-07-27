@@ -1,61 +1,5 @@
-import { Box, styled, alpha, IconButton as IconButtonMui } from "@mui/material";
-
-import ADAicon from "src/components/commons/ADAIcon";
-
-export const IconButtonBack = styled(IconButtonMui)(() => ({
-  padding: 0
-}));
-
-export const Info = styled(Box)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  marginLeft: theme.spacing(2),
-  width: "max-content"
-}));
-
-export const InfoText = styled(Box)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  marginLeft: theme.spacing(1),
-  fontWeight: 600,
-  fontSize: "14px"
-}));
-
-export const StepInfo = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  gap: 20,
-  marginBottom: 36,
-  [theme.breakpoints.down("sm")]: {
-    alignItems: "flex-start",
-    marginBottom: 30
-  }
-}));
-
-export const InfoGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
-  display: "flex",
-  justifyContent: "flex-end",
-  alignItems: "center",
-  gap: 20,
-  [theme.breakpoints.down(sidebar ? "lg" : "md")]: {
-    gap: 12
-  },
-  [theme.breakpoints.down("sm")]: {
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    gap: 5
-  }
-}));
-
-export const ADATotalStakeContainer = styled(Box)`
-  position: relative;
-`;
-
-export const StyledADAicon = styled(ADAicon)`
-  color: #13152f;
-`;
+import { Box, styled, alpha } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const ItemList = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -101,4 +45,9 @@ export const LineData = styled(Box)(() => ({
   ":last-of-type": {
     marginBottom: 0
   }
+}));
+
+export const StyledLink = styled(Link)(({ theme }) => ({
+  fontSize: "0.875rem",
+  color: `${theme.palette.blue[800]} !important`
 }));
