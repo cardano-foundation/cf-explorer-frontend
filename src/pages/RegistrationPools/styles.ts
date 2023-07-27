@@ -11,6 +11,7 @@ export const StyledLink = styled(Link)`
 `;
 
 export const RegistrationContainer = styled(Container)(({ theme }) => ({
+  maxWidth: "95vw !important",
   paddingTop: "30px",
   textAlign: "left",
   position: "relative",

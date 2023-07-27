@@ -144,7 +144,7 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number
   padding-top: 0;
   border-radius: ${theme.spacing(1.5)};
   ${loading ? "overflow-y: hidden;" : ""}
-  ${maxHeight ? "max-height:" + (typeof maxHeight === "number" ? maxHeight + "px" : maxHeight) : ""};
+  max-height: ${maxHeight || "50vh"};
 
   ${theme.breakpoints.down("sm")} {
     padding: 0;

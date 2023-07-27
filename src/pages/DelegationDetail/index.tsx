@@ -1,4 +1,4 @@
-import { Box, Container, Tab, useTheme } from "@mui/material";
+import { Box, Tab, useTheme } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { parse, stringify } from "qs";
@@ -17,7 +17,7 @@ import NoRecord from "src/components/commons/NoRecord";
 import { API } from "src/commons/utils/api";
 import { StakingDelegators, StakeKeyHistoryIcon } from "src/commons/resources";
 
-import { TabsContainer, TitleTab } from "./styles";
+import { StyledContainer, TabsContainer, TitleTab } from "./styles";
 
 const DelegationDetail: React.FC = () => {
   const { poolId } = useParams<{ poolId: string }>();
@@ -106,7 +106,7 @@ const DelegationDetail: React.FC = () => {
   ];
 
   return (
-    <Container>
+    <StyledContainer>
       <DelegationDetailInfo data={data} loading={loading} poolId={poolId} />
       <DelegationDetailOverview data={data} loading={loading} />
       <DelegationDetailChart poolId={poolId} />
@@ -144,7 +144,7 @@ const DelegationDetail: React.FC = () => {
           ))}
         </TabContext>
       </Box>
-    </Container>
+    </StyledContainer>
   );
 };
 

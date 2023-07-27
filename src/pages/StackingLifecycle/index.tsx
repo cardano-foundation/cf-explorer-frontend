@@ -16,7 +16,7 @@ import { TabContent, TabHeader } from "src/components/ReportGeneratedTabs/styles
 import StakekeySummary from "src/components/StakekeySummary";
 import { StyledTab, StyledTabs } from "../RegistrationPools/styles";
 import StakingLifeCycleSearch from "../StakingLifeCycleSearch";
-import { FilterHead, StyledTabLabel, TextHeadline, TitleHead } from "./styles";
+import { FilterHead, StyledContainer, StyledTabLabel, TextHeadline, TitleHead } from "./styles";
 import { useSelector } from "react-redux";
 
 export interface SavedReport {
@@ -91,7 +91,7 @@ const Dashboard: React.FC = () => {
     );
     
   return (
-    <Container>
+    <StyledContainer>
       <StakingLifeCycleSearch />
       <TitleHead>
         <TextHeadline>Saved reports</TextHeadline>
@@ -144,7 +144,7 @@ const Dashboard: React.FC = () => {
           />
         </TabContent>
       </TabContext>
-    </Container>
+    </StyledContainer>
   );
 };
 

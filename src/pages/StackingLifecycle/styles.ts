@@ -127,3 +127,6 @@ export const WrapReportName = styled(Box)`
 export const StyledTabLabel = styled(TabLabel)`
   font-size: 18px;
 `;
+export const StyledContainer = styled(Container)`
+  max-width: 95vw !important;
+`;
