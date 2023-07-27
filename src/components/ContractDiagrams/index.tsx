@@ -85,7 +85,7 @@ export const ContractRedeemer = ({ item, txHash }: IContractDiagramProps) => {
   return (
     <CardDiagram>
       <TabLabel>Redeemer</TabLabel>
-      <TabElement flexDirection={!txHash ? "row" : "column"} isContractPage={+!!txHash}>
+      <TabElement flexDirection={!txHash ? "row" : "column"}>
         <TabItem>
           <TitleText>Tag</TitleText>
           <DataTitle data-testid={`contract-redeemer-tag-${item.address}`}>{item.purpose}</DataTitle>
@@ -110,7 +110,7 @@ export const ContractRedeemer = ({ item, txHash }: IContractDiagramProps) => {
 export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) => {
   const isTypeIn = type === "in";
   return (
-    <DatumnElement isContractPage={+!!txHash}>
+    <DatumnElement>
       <DatumnItem
         isTxHash={!!txHash}
         sx={{
@@ -138,11 +138,11 @@ export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) =>
   );
 };
 
-const ContractBytecode = ({ item, txHash }: IContractDiagramProps) => {
+const ContractBytecode = ({ item }: IContractDiagramProps) => {
   return (
     <CardDiagram>
       <TabLabel>Contract Bytecode</TabLabel>
-      <TabElement isContractPage={+!!txHash}>{item.scriptBytes}</TabElement>
+      <TabElement>{item.scriptBytes}</TabElement>
     </CardDiagram>
   );
 };

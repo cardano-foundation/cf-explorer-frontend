@@ -44,7 +44,7 @@ export const StyledTabLabel = styled(Typography)<{ active: number }>(
   font-size: 18px;
     font-weight: 700;
     text-transform: capitalize;
-    color: ${props.active ? props.theme.palette.primary.main : props.theme.palette.secondary[600]};
+    color: ${props.active ? props.theme.palette.primary.main : props.theme.palette.secondary.light};
 `
 );
 
@@ -84,7 +84,7 @@ export const StyledTab = styled(Tab)`
 export const WrapFilterDescription = styled("span")(({ theme }) => ({
   fontSize: 14,
   fontWeight: 400,
-  color: theme.palette.secondary.main,
+  color: theme.palette.secondary.light,
   [theme.breakpoints.down("sm")]: {
     fontSize: 12
   }

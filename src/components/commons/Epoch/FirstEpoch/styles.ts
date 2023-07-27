@@ -54,13 +54,13 @@ export const TitleCard = styled(Box)(({ theme }) => ({
   fontSize: "0.875rem"
 }));
 
-export const EpochProgress = styled("h3")<{ status: keyof typeof EPOCH_STATUS }>(({ theme, status }) => ({
-  color:
-    status === "REWARDING"
-      ? theme.palette.success[800]
-      : status === "FINISHED"
-      ? theme.palette.primary.main
-      : theme.palette.warning[800],
+export const EpochProgress = styled("h3")<{ status: keyof typeof EPOCH_STATUS }>(({ theme }) => ({
+  color: theme.palette.secondary.main,
+  // status === "REWARDING"
+  //   ? theme.palette.success[800]
+  //   : status === "FINISHED"
+  //   ? theme.palette.primary.main
+  //   : theme.palette.warning[800],
   margin: 0,
   [theme.breakpoints.down("lg")]: {
     fontSize: 14

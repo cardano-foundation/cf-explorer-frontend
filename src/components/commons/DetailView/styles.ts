@@ -172,7 +172,7 @@ export const TokenInfoValue = styled("span")`
 `;
 
 export const EpochNumber = styled("h1")`
-  color: ${(props) => props.theme.palette.primary.main};
+  color: ${(props) => props.theme.palette.secondary.main};
   margin: 0;
 `;
 
@@ -246,7 +246,7 @@ export const DetailLabel = styled("small")`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  color: ${(props) => props.theme.palette.secondary.light};
+  color: ${(props) => props.theme.palette.secondary.main};
   line-height: 26px;
 `;
 export const InfoIcon = styled(FiInfo)`

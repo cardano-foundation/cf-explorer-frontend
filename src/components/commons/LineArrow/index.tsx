@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import { Breakpoint, alpha, styled } from "@mui/material";
+import { Breakpoint, styled } from "@mui/material";
 import React, { MutableRefObject, useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useWindowSize } from "react-use";
@@ -7,7 +7,7 @@ import { useWindowSize } from "react-use";
 const StyledLine = styled("path")(({ theme }) => ({
   strokeWidth: 3,
   strokeLinecap: "round",
-  stroke: alpha(theme.palette.common.black, 0.08),
+  stroke: theme.palette.primary[200],
   fill: "none"
 }));
 
