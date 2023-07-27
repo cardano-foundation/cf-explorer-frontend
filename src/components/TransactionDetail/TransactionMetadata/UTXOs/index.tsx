@@ -178,7 +178,13 @@ const Card = ({
                     <Box
                       component={"span"}
                       whiteSpace="nowrap"
-                      color={(theme) => (type === "up" ? theme.palette.green[700] : theme.palette.red[800])}
+                      color={(theme) =>
+                        isFailed
+                          ? theme.palette.green[650]
+                          : type === "up"
+                          ? theme.palette.green[700]
+                          : theme.palette.red[800]
+                      }
                       fontWeight="bold"
                       mr={1}
                     >
@@ -207,10 +213,15 @@ const Card = ({
       <ItemFooter>
         <Box fontWeight={"bold"}>Total {type === "down" ? "Input" : "Output"}</Box>
         <div>
-          <Box fontWeight={"bold"} component="span" pr={1} sx={isFailed ? { color: (theme) => theme.palette.text.disabled } : {}}>
+          <Box
+            fontWeight={"bold"}
+            component="span"
+            pr={1}
+            sx={isFailed ? { color: (theme) => theme.palette.green[650] } : {}}
+          >
             {isFailed ? 0 : type === "down" ? `-${formatADAFull(totalADA)}` : `${formatADAFull(totalADA)}`}
           </Box>
-          <ADAicon sx={isFailed ? { color: (theme: any) => theme.palette.text.disabled } : {}} />
+          <ADAicon sx={isFailed ? { color: (theme: any) => theme.palette.green[650] } : {}} />
         </div>
       </ItemFooter>
     </Box>
