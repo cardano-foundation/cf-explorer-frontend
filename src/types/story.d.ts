@@ -1,12 +1,14 @@
 interface Story {
   title: string;
-  published_on: string;
-  entity: string;
-  blurb: string;
   resource_href: string;
-  featured: boolean;
-  main_image: string;
-  main_image_alt: string;
+  thumbnail_image: string;
+  meta_image: string;
+  news_item_content: {
+    date: string;
+    body: string;
+    author: string;
+    default_content: string;
+  };
 }
 
 type StoryDetail = Story & {
@@ -14,3 +16,10 @@ type StoryDetail = Story & {
   transactionFees: string;
   totalOutput: string;
 };
+
+interface Articles {
+  articles: Story[];
+  limit: number;
+  offset: number;
+  total: number;
+}
