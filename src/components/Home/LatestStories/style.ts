@@ -24,7 +24,7 @@ export const Title = styled("h3")`
   text-align: left;
   margin: 0px;
   font-size: 1.25rem;
-
+  color: ${({ theme }) => theme.palette.secondary.main};
   &::after {
     position: absolute;
     top: 100%;
@@ -32,7 +32,7 @@ export const Title = styled("h3")`
     content: "";
     width: 50px;
     height: 4px;
-    background: ${({ theme }) => theme.palette.primary.main};
+    background: ${({ theme }) => theme.palette.primary[200]};
   }
 `;
 
@@ -85,8 +85,8 @@ export const Author = styled("span")`
   overflow: hidden;
   text-overflow: ellipsis;
   font-family: var(--font-family-text);
-  color: ${(props) => props.theme.palette.green[700]};
-  background-color: ${(props) => props.theme.palette.green[700_10]};
+  color: ${(props) => props.theme.palette.success[800]};
+  background-color: ${(props) => props.theme.palette.success[100]};
   padding: 6px 2px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -100,6 +100,7 @@ export const ItemTitle = styled("h5")`
   max-height: 3.6em;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+  color: ${(props) => props.theme.palette.secondary.main};
   overflow: hidden;
   font-size: var(--font-size-text-x-small);
   line-height: 1.15;
@@ -116,7 +117,7 @@ export const Time = styled("h5")`
   gap: 6px;
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-normal);
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.light};
   margin: 0;
 `;
 export const TimeIcon = styled("img")`
@@ -127,8 +128,8 @@ export const TimeIcon = styled("img")`
 export const ResourceHref = styled("span")`
   margin: 5px 0px;
   width: max-content;
-  background-color: ${(props) => props.theme.palette.blue[100_15]};
-  color: ${(props) => props.theme.palette.blue[100]};
+  background-color: ${(props) => props.theme.palette.primary[100]};
+  color: ${(props) => props.theme.palette.primary.main};
   font-weight: 700;
   font-size: 10px;
   cursor: pointer;
@@ -153,7 +154,7 @@ export const FooterCard = styled(Box)`
 `;
 
 export const NextSwipper = styled(Box)`
-  background: ${(props) => props.theme.palette.purple[600]};
+  background: ${(props) => props.theme.palette.purple["100"]};
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -162,7 +163,7 @@ export const NextSwipper = styled(Box)`
   align-items: center;
   cursor: pointer;
   &:hover {
-    background: ${(props) => props.theme.palette.blue[200]};
+    background: ${(props) => props.theme.palette.primary.main};
   }
   position: absolute;
   right: -10px;

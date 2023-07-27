@@ -580,7 +580,7 @@ export const OptionsSearch = ({
             )}
           </>
         ) : (
-          <Box component={Option} color={({ palette }) => palette.red[700]} justifyContent={"center"}>
+          <Box component={Option} color={({ palette }) => palette.error[700]} justifyContent={"center"}>
             <Box>{error}</Box>
           </Box>
         )}
@@ -603,7 +603,7 @@ export const OptionsSearch = ({
           })}
         </>
       ) : (
-        <Box component={Option} color={({ palette }) => palette.red[700]} justifyContent={"center"}>
+        <Box component={Option} color={({ palette }) => palette.error[700]} justifyContent={"center"}>
           <Box>{error}</Box>
         </Box>
       )}

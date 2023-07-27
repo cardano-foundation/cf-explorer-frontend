@@ -39,10 +39,10 @@ export const THeader = styled("th")`
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-text-small);
   padding: 20px;
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.main};
   position: sticky;
   top: 0;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.palette.common.white};
   z-index: 2;
 `;
 
@@ -51,11 +51,11 @@ export const TRow = styled("tr")<{ selected?: number }>`
   padding: 10px 0;
   font-size: 14px;
   position: relative;
-  background-color: ${({ selected, theme }) => (selected ? theme.palette.background.neutral : "transparent")};
+  background-color: ${({ selected, theme }) => (selected ? theme.palette.primary[100] : "transparent")};
   &:hover {
     border-radius: 10px;
     > td {
-      background-color: ${({ theme }) => theme.palette.background.neutral} !important;
+      background-color: ${({ theme }) => theme.palette.primary[100]} !important;
     }
   }
 `;
@@ -74,10 +74,9 @@ export const TCol = styled("td")<{
   overflow: hidden;
   text-align: left;
   font-family: var(--font-family-text);
-  color: ${(props) => props.theme.palette.text.primary};
+  color: ${(props) => props.theme.palette.secondary.light};
   padding: 24px 20px;
-  background: ${(props) =>
-    props.selected ? props.theme.palette.background.neutral : props.theme.palette.common.white};
+  background: ${(props) => (props.selected ? props.theme.palette.primary[100] : props.theme.palette.secondary[0])};
 `;
 
 export const TBody = styled("tbody")`
@@ -95,7 +94,7 @@ export const TFooter = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "baseline",
   flexWrap: "wrap",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.light,
   [theme.breakpoints.down("sm")]: {
     justifyContent: "flex-start",
     flexDirection: "column"
@@ -105,7 +104,7 @@ export const TFooter = styled(Box)(({ theme }) => ({
 export const Total = styled(Box)``;
 
 export const TotalNumber = styled("span")`
-  color: ${(props) => props.theme.palette.text.primary};
+  color: ${(props) => props.theme.palette.secondary.main};
   font-weight: 500;
 `;
 
@@ -126,10 +125,10 @@ export const WrappModalScrollBar = styled(Box)(
   }
   &:hover {
     &::-webkit-scrollbar-thumb {
-      background: ${theme.palette.grey[300]};
+      background: ${theme.palette.secondary.light};
     }
     &::-webkit-scrollbar-track {
-      background: ${theme.palette.grey[100]};
+      background: ${theme.palette.primary[100]};
     }
   }
 `
@@ -161,10 +160,10 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number
   }
   &:hover {
     &::-webkit-scrollbar-thumb {
-      background: ${theme.palette.grey[300]};
+      background: ${theme.palette.secondary.light};
     }
     &::-webkit-scrollbar-track {
-      background: ${theme.palette.grey[100]};
+      background: ${theme.palette.primary[100]};
     }
   }
 `
@@ -186,6 +185,7 @@ export const InputNumber = styled("input")<{ length: number }>(({ theme, length 
   textAlign: "center",
   fontWeight: "bold",
   border: `1px solid ${theme.palette.border.main}`,
+  color: theme.palette.secondary.main,
   "::-webkit-inner-spin-button": {
     appearance: "none",
     margin: 0
@@ -193,11 +193,12 @@ export const InputNumber = styled("input")<{ length: number }>(({ theme, length 
   background: "transparent"
 }));
 
-export const SelectMui = styled(CustomSelect)(() => ({
+export const SelectMui = styled(CustomSelect)(({ theme }) => ({
   borderRadius: "4px",
   fontSize: 14,
   minWidth: 50,
-  border: "1px solid #E3E5E9",
+  border: `1px solid ${theme.palette.grey[200]}`,
+  color: theme.palette.secondary.main,
   "& > div": {
     padding: "2.45px 14px"
   },
@@ -226,7 +227,7 @@ export const TableTitle = styled(Typography)`
   font-weight: 700;
   font-size: 32px;
   line-height: 37px;
-  color: #000;
+  color: ${(props) => props.theme.palette.common.black};
   flex: 1;
   text-align: left;
   padding-top: 20px;

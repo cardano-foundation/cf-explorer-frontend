@@ -1,4 +1,4 @@
-import { Box, Select, alpha, styled } from "@mui/material";
+import { Box, Select, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledSelect = styled(Select)`
@@ -41,13 +41,13 @@ export const StyledLink = styled(Link)`
   display: inline-block;
   font-family: var(--font-family-text) !important;
   font-size: var(--font-size-text-small);
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
   margin-bottom: 5px;
 `;
 
 export const SmallText = styled("small")`
   display: inline-block;
-  color: ${(props) => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.secondary.light};
   margin-bottom: 5px;
 `;
 
@@ -98,13 +98,13 @@ export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => 
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? theme.palette.common.black : theme.palette.text.hint
+  color: active ? theme.palette.primary.main : theme.palette.secondary.light
 }));
 
 export const ViewJson = styled(Box)(({ theme }) => ({
   overflowY: "auto",
   textAlign: "left",
-  backgroundColor: `${alpha(theme.palette.grey[300], 0.1)}`,
+  backgroundColor: `${theme.palette.secondary[0]}`,
   borderRadius: 10,
   padding: theme.spacing(2),
   marginBottom: theme.spacing(3),
@@ -124,10 +124,10 @@ export const ViewJson = styled(Box)(({ theme }) => ({
     },
     "&:hover": {
       "&::-webkit-scrollbar-thumb": {
-        background: theme.palette.grey[300]
+        background: theme.palette.secondary.light
       },
       "&::-webkit-scrollbar-track": {
-        background: theme.palette.grey[100]
+        background: theme.palette.primary[100]
       }
     }
   }

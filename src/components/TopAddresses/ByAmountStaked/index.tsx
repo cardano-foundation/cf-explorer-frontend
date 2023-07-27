@@ -79,7 +79,7 @@ const TopAddressesByAmountStaked = () => {
           >
             {perPages.map((item) => (
               <MenuItem key={item} value={item}>
-                {item}
+                <Box color={({ palette }) => `${palette.secondary.main} !important`}>{item}</Box>
               </MenuItem>
             ))}
           </Select>
