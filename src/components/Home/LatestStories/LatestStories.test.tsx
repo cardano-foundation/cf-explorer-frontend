@@ -10,14 +10,18 @@ import LatestStories from ".";
 jest.mock("src/commons/hooks/useFetch");
 
 const mockItem: Story = {
-  blurb: "The Cardano Foundation launched its inaugural Annual Report. The report",
-  entity: "Cardano Foundation",
-  featured: true,
-  main_image: "https://ucarecdn.com/4e580ddd-e051-472e-8e9d-f70ba3265d92/",
-  main_image_alt: "Cardano Foundation Annual Report 2022",
-  published_on: "2023-04-18T11:35:58-07:00",
+  title: "Cardano Foundation Launches Inaugural Annual Report",
   resource_href: "https://cardanofoundation.org/en/news/cardano-foundation-launches-inaugural-annual-report/",
-  title: "Cardano Foundation Launches Inaugural Annual Report"
+  thumbnail_image: "https://ucarecdn.com/4e580ddd-e051-472e-8e9d-f70ba3265d92/",
+  meta_image: "https://ucarecdn.com/4e580ddd-e051-472e-8e9d-f70ba3265d92/",
+  news_item_content: {
+    date: "2023-04-18T11:35:58-07:00",
+    body: "body",
+    author:
+      "https://ucarecdn.com/6b3ced46-5e70-43fd-9272-bbb3e1bb9dea/-/crop/1242x772/0,45/-/preview/|Renagh Mooney~~~Global Communications Director",
+    default_content:
+      "The lacrosse jerseys feature a near-field communication (NFC) Epoch branded patch with a digital NFT version authenticated on the Cardano blockchain."
+  }
 };
 
 describe("LatestStories", () => {
@@ -37,9 +41,7 @@ describe("LatestStories", () => {
 
   it("renders data in the list LatestStories", async () => {
     render(<LatestStories />);
-    expect(screen.getByText(mockItem.entity)).toBeInTheDocument();
     expect(screen.getByText(mockItem.title)).toBeInTheDocument();
-    expect(screen.getByAltText(mockItem.main_image_alt)).toBeInTheDocument();
-    expect(screen.getByText(formatDateTime(mockItem.published_on))).toBeInTheDocument();
+    expect(screen.getByText(formatDateTime(mockItem.news_item_content.date))).toBeInTheDocument();
   });
 });
