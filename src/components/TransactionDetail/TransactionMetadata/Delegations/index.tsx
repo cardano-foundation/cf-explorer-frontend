@@ -16,7 +16,7 @@ interface DelegationProps {
 const Delegations: React.FC<DelegationProps> = ({ data }) => {
   return (
     <Wrapper>
-      <Header>Address Stake Key</Header>
+      <Header>Stake Address</Header>
       {data?.map((item) => (
         <StyledItem key={item.address}>
           <ItemContainer>

@@ -1,15 +1,5 @@
 import styled from "@emotion/styled";
-import {
-  AccordionDetails,
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  IconButton,
-  Skeleton,
-  alpha,
-  useTheme
-} from "@mui/material";
+import { AccordionDetails, Box, Button, Checkbox, IconButton, Skeleton, alpha, useTheme } from "@mui/material";
 import { isObject, isEmpty } from "lodash";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -43,7 +33,8 @@ import {
   BackButton,
   BackText,
   ButtonFilter,
-  FilterContainer
+  FilterContainer,
+  StyledContainer
 } from "./styles";
 
 interface IProtocolParamVertical {
@@ -205,14 +196,14 @@ const ProtocolParameter: React.FC = () => {
       render: (r: any) => <Box>{r?.epochNo}</Box>
     },
     {
-      title: "Timestamp",
+      title: "Created At",
       key: "timestamp",
       render: (r: any) => (r?.time ? formatDateTimeLocal(r.time) : "")
     }
   ];
 
   return (
-    <Container>
+    <StyledContainer>
       {showHistory && (
         <Box textAlign={"left"}>
           <BackButton onClick={() => setShowHistory(false)}>
@@ -285,7 +276,7 @@ const ProtocolParameter: React.FC = () => {
         handleCloseModal={() => setExplainerText(null)}
         explainerText={explainerText || { content: "", title: "" }}
       />
-    </Container>
+    </StyledContainer>
   );
 };
 

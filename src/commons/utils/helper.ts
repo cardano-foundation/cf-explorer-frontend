@@ -4,7 +4,7 @@ import { parse } from "qs";
 
 import { setUserData } from "../../stores/user";
 import { getInfo, signIn } from "./userRequest";
-import { MAX_SLOT_EPOCH, NETWORK, NETWORK_TYPES } from "./constants";
+import { MAX_SLOT_EPOCH, NETWORK, NETWORKS, NETWORK_TYPES } from "./constants";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
 export const alphaNumeric = /[^0-9a-zA-Z]/;
@@ -13,11 +13,11 @@ export const alphaNumeric = /[^0-9a-zA-Z]/;
 export const regexEmail = /^[\w\.\+\-]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 export const getShortWallet = (address = "") => {
-  return `${address.slice(0, 5)}...${address.slice(-5)}`;
+  return address ? `${address.slice(0, 5)}...${address.slice(-5)}` : "";
 };
 
 export const getShortHash = (address = "") => {
-  return `${address.slice(0, 10)}...${address.slice(-7)}`;
+  return address ? `${address.slice(0, 10)}...${address.slice(-7)}` : "";
 };
 
 export const LARGE_NUMBER_ABBREVIATIONS = ["", "K", "M", "B", "T", "q", "Q", "s", "S"];
@@ -181,9 +181,35 @@ export const formatBlockHashById = (hash: string): string => {
   return `${hash.slice(0, 20)}...`;
 };
 
-export const tokenRegistry = (policy: string | undefined, name: string | undefined) => {
-  const tokenRegitryLink = `https://raw.githubusercontent.com/cardano-foundation/cardano-token-registry/master/mappings/${policy}${name}.json`;
-  return tokenRegitryLink;
+export const tokenRegistry = (policy?: string, name?: string): string => {
+  switch (NETWORK) {
+    case NETWORKS.mainnet:
+      return `https://raw.githubusercontent.com/cardano-foundation/cardano-token-registry/master/mappings/${policy}${name}.json`;
+    default:
+      return `https://raw.githubusercontent.com/input-output-hk/metadata-registry-testnet/master/registry/${policy}${name}.json`;
+  }
+};
+
+export const cleanObject = (obj: { [key: string]: string | number | Date | string[] | undefined }) => {
+  const cleaned: Partial<typeof obj> = {};
+  Object.keys(obj).forEach((key) => obj[key] !== undefined && (cleaned[key] = obj[key]));
+  return cleaned;
+};
+
+export const formatLongText = (text: string): string => {
+  if (text?.length > 10) {
+    return `${text.slice(0, 5)}...${text.slice(-5)}`;
+  }
+  return text;
+};
+export const getHostname = (url: string): string => {
+  let hostname = "";
+  try {
+    hostname = new URL(url).hostname;
+  } catch (error) {
+    console.warn(error);
+  }
+  return hostname;
 };
 
 export const getHostname = (url: string): string => {
@@ -197,3 +223,5 @@ export const getHostname = (url: string): string => {
 export const toFixedBigNumber = (value: string | number, dp = 0, rm = BigNumber.ROUND_DOWN): number => {
   return +new BigNumber(value).toFixed(dp, rm);
 };
+
+export const isValidEmail = (email: string) => regexEmail.test(email);
