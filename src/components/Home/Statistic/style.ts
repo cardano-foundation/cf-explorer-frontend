@@ -21,6 +21,7 @@ export const Item = styled(Card)`
   ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 15px;
   }
+  cursor: pointer;
 `;
 
 export const EpochProgress = styled("h3")(({ theme }) => ({
@@ -137,4 +138,8 @@ export const ProcessActive = styled("div")<{ rate: number }>`
 export const ProgressPending = styled(ProcessActive)<{ rate: number }>`
   width: ${(props) => props.rate}%;
   background-color: ${(props) => props.theme.palette.primary[200]};
+`;
+
+export const Link = styled("a")`
+  display: contents;
 `;

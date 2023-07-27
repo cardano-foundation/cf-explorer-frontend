@@ -340,11 +340,18 @@ export const TokenDescription = styled(Box)(({ theme }) => ({
 export const TokenUrl = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(1),
   cursor: "pointer",
-  color: theme.palette.primary.main
+  fontWeight: "bold",
+  color: theme.palette.primary.main,
+  fontFamily: "Roboto, sans-serif !important",
+  textAlign: "left",
+  wordBreak: "break-all",
+  fontSize: "12px",
+  display: "inline-block",
+  textDecoration: "underline !important"
 }));
 
 export const PolicyScriptBtn = styled(Button)(({ theme }) => ({
-  color: theme.palette.primary.main,
+  color: `${theme.palette.secondary.main} !important`,
   fontFamily: '"Roboto", sans-serif',
   fontSize: "14px",
   border: "none",
@@ -354,5 +361,9 @@ export const PolicyScriptBtn = styled(Button)(({ theme }) => ({
   marginTop: theme.spacing(1),
   justifyContent: "flex-start",
   textAlign: "left",
-  cursor: "pointer"
+  cursor: "pointer",
+  fontWeight: "bold",
+  wordBreak: "break-all",
+  display: "inline-block",
+  textDecoration: "underline !important"
 }));

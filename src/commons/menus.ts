@@ -48,8 +48,8 @@ export const menus: Menu[] = [
     title: "Operational Certificates",
     icon: OperationalIcon,
     children: [
-      { title: "Stake Key Registration", href: routers.STAKE_LIST.replace(":poolType?", "registration") },
-      { title: "Stake Key Deregistration", href: routers.STAKE_LIST.replace(":poolType?", "de-registration") },
+      { title: "Stake Address Registration", href: routers.STAKE_LIST.replace(":poolType?", "registration") },
+      { title: "Stake Address Deregistration", href: routers.STAKE_LIST.replace(":poolType?", "de-registration") },
       { title: "Stake Delegation(s)", href: routers.STAKE_DELEGATIONS },
       { title: "Pool Certificate", href: routers.REGISTRATION_POOLS.replace(":poolType?", "registration") },
       { title: "Pool Deregistration", href: routers.REGISTRATION_POOLS.replace(":poolType?", "de-registration") },

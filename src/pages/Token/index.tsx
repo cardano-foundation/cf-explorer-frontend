@@ -33,10 +33,13 @@ const Tokens = () => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
+
+  const queries = new URLSearchParams(search);
+
   const mainRef = useRef(document.querySelector("#main"));
   const { data, lastUpdated, ...fetchData } = useFetchList<ITokenOverview>(
     API.TOKEN.LIST,
-    { ...pageInfo, sort },
+    { ...pageInfo, sort, query: queries.get("tokenName") || "" },
     false,
     REFRESH_TIMES.TOKEN_LIST
   );
@@ -119,7 +122,7 @@ const Tokens = () => {
     },
     {
       title: "Created At",
-      key: "createdat",
+      key: "time",
       minWidth: "150px",
       render: (r) => (
         <>

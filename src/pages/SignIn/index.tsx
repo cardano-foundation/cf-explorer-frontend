@@ -8,7 +8,7 @@ import useToast from "src/commons/hooks/useToast";
 import { HideIcon, LockIcon, ShowIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
 import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
-import { removeAuthInfo } from "src/commons/utils/helper";
+import { isValidEmail, removeAuthInfo } from "src/commons/utils/helper";
 import { getInfo, signIn } from "src/commons/utils/userRequest";
 import ConnectWallet from "src/components/commons/Layout/Header/ConnectWallet";
 import { setUserData } from "src/stores/user";
@@ -103,7 +103,7 @@ export default function SignIn() {
   };
 
   const handleLoginSuccess = () => {
-    toast.success("Login success");
+    toast.success("You are now signed in", false);
     handleRedirectBack();
   };
 
@@ -132,9 +132,12 @@ export default function SignIn() {
   const getError = (name: string, value: string) => {
     let error = "";
     switch (name) {
-      case "username":
+      case "email":
         if (!value) {
           error = "Please enter Email Address";
+        }
+        if (!isValidEmail(value)) {
+          error = "Please enter a valid email address";
         }
         break;
       case "password":
@@ -223,7 +226,9 @@ export default function SignIn() {
             </CloseButton>
             {invalidInfomation ? (
               <Box pt={"24px"}>
-                <AlertCustom severity="error">Incorrect email address or password</AlertCustom>
+                <AlertCustom severity="error">
+                  Unable to sign in. Please check your email address and password.
+                </AlertCustom>
               </Box>
             ) : null}
             <WrapInput>

@@ -36,7 +36,7 @@ const DeregistrationTab = () => {
       )
     },
     {
-      title: "Timestamp",
+      title: "Created At",
       key: "time",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
@@ -80,10 +80,7 @@ const DeregistrationTab = () => {
 
   const fetchData = useFetchList<DeregistrationItem>(
     reportId ? API.REPORT.SREPORT_DETAIL_DEGEGISTRATIONS(reportId) : "",
-    {
-      ...pageInfo,
-      sort
-    }
+    { ...pageInfo, sort }
   );
 
   return (

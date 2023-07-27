@@ -11,7 +11,7 @@ import useFetchList from "../../../../commons/hooks/useFetchList";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";
 import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
-import StackingFilter, { FilterParams } from "../../../StackingFilter";
+import CustomFilter, { FilterParams } from "../../../commons/CustomFilter";
 import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import Table, { Column } from "../../../commons/Table";
@@ -25,12 +25,12 @@ const WithdrawalHistoryTab = () => {
   const history = useHistory();
   const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
   const [sort, setSort] = useState<string>("");
-
-  const [params, setParams] = useState<FilterParams>({
-    fromDate: undefined,
-    sort: undefined,
-    toDate: undefined,
-    txHash: undefined
+  const [params, setParams] = useState<FilterParams>({});
+  const fetchData = useFetchList<WithdrawalHistoryItem>(stakeId ? API.STAKE_LIFECYCLE.WITHDRAW(stakeId) : "", {
+    ...pageInfo,
+    ...params,
+    txHash: params.search,
+    sort: sort || params?.sort
   });
 
   const columns: Column<WithdrawItem>[] = [
@@ -45,7 +45,7 @@ const WithdrawalHistoryTab = () => {
       )
     },
     {
-      title: "Timestamp",
+      title: "Created At",
       key: "time",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
@@ -77,11 +77,6 @@ const WithdrawalHistoryTab = () => {
     }
   ];
 
-  const fetchData = useFetchList<WithdrawalHistoryItem>(stakeId ? API.STAKE_LIFECYCLE.WITHDRAW(stakeId) : "", {
-    ...pageInfo,
-    ...params,
-    sort: sort || params?.sort
-  });
   const { total } = fetchData;
 
   return (
@@ -97,18 +92,14 @@ const WithdrawalHistoryTab = () => {
             Showing {Math.min(total, pageInfo.size)} {Math.min(total, pageInfo.size) > 1 ? "results" : "result"}
           </WrapFilterDescription>
 
-          <StackingFilter
+          <CustomFilter
+            sortKey="id"
             filterValue={params}
-            onFilterValueChange={(params) => {
-              setParams(() => ({
-                fromDate: undefined,
-                toDate: undefined,
-                txHash: undefined,
-                ...params,
-                sort: params?.sort ? params?.sort.replace("time", "id") : undefined
-              }));
+            onChange={(params) => {
+              setParams(params);
               setPageInfo((pre) => ({ ...pre, page: 0 }));
             }}
+            searchLabel="Search transaction"
           />
         </Box>
       </WrapperDelegationTab>

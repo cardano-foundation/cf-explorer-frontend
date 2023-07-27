@@ -2,7 +2,6 @@ import { Box, Grid } from "@mui/material";
 import BigNumber from "bignumber.js";
 import moment from "moment";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -28,6 +27,7 @@ import {
   Item,
   ItemIcon,
   ItemSkeleton,
+  Link,
   Name,
   ProcessActive,
   Progress,
@@ -87,8 +87,8 @@ const HomeStatistic = () => {
     >
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
         {usdMarket && btcMarket?.[0] ? (
-          <Item data-testid="ada-price-box">
-            <Link to={{ pathname: EXT_ADA_PRICE_URL }} target="_blank">
+          <Link href={EXT_ADA_PRICE_URL} target="_blank">
+            <Item data-testid="ada-price-box">
               <Box display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon
@@ -114,16 +114,16 @@ const HomeStatistic = () => {
                   <AdaPrice data-testid="ada-price-in-btc">{btcMarket[0]?.current_price} BTC</AdaPrice>
                 </Content>
               </Box>
-            </Link>
-          </Item>
+            </Item>
+          </Link>
         ) : (
           <SkeletonBox />
         )}
       </Grid>
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
         {usdMarket ? (
-          <Item data-testid="market-cap-box">
-            <Link to={{ pathname: EXT_ADA_PRICE_URL }} target="_blank">
+          <Link href={EXT_ADA_PRICE_URL} target="_blank">
+            <Item data-testid="market-cap-box">
               <Box display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon data-testid="market-cap-icon" src={MarketCapIcon} alt="Market cap" />
@@ -136,16 +136,16 @@ const HomeStatistic = () => {
                   </TimeDuration>
                 </Content>
               </Box>
-            </Link>
-          </Item>
+            </Item>
+          </Link>
         ) : (
           <SkeletonBox />
         )}
       </Grid>
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
         {currentEpoch ? (
-          <Item data-testid="current-epoch-box">
-            <Link to={details.epoch(currentEpoch?.no)}>
+          <Link href={details.epoch(currentEpoch?.no)} target="_blank">
+            <Item data-testid="current-epoch-box">
               <Content display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon
@@ -187,16 +187,16 @@ const HomeStatistic = () => {
                   </Box>
                 </Box>
               </Content>
-            </Link>
-          </Item>
+            </Item>
+          </Link>
         ) : (
           <SkeletonBox />
         )}
       </Grid>
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
         {data && usdMarket ? (
-          <Item data-testid="live-stake-box">
-            <Link to={routers.DELEGATION_POOLS}>
+          <Link href={routers.DELEGATION_POOLS} target="_blank">
+            <Item data-testid="live-stake-box">
               <Content display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
                 <Box>
                   <Box display={"flex"} alignItems={"center"} height={"40px"}>
@@ -249,8 +249,8 @@ const HomeStatistic = () => {
                   </Box>
                 </Box>
               </Content>
-            </Link>
-          </Item>
+            </Item>
+          </Link>
         ) : (
           <SkeletonBox />
         )}

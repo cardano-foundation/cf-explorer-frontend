@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  smoke-test-epoch-before-340:
     runs-on: ubuntu-latest
     steps:
       - name: ⬇️ Checkout repository
@@ -21,6 +21,7 @@ jobs:
           echo "REACT_APP_VERSION=$npm_package_version" >> .env
           echo "REACT_APP_API_URL=${EXPLORER_API_MAINNET_URL}" >> .env
           echo "REACT_APP_MAINNET_APP_URL=${EXPLORER_API_MAINNET_URL}" >> .env
+          echo "REACT_APP_NETWORK_NAMES=\"{\"mainnet\":\"Mainnet\",\"preprod\":\"Preprod\"}\"" >> .env
 
       - name: 🫡 Setup node
         uses: actions/setup-node@v1
@@ -29,6 +30,12 @@ jobs:
 
       - name: 🧘‍♀️ Download dependencies
         run: npm ci
+
+      - name: Generate test script
+        run: |
+          cd cypress/smoke
+          pip3 install numpy
+          python CypressDynamicScript.py --epochl=100 --epochs=1 --epoche=340 --blockl=1
 
       - name: 🎳 Run tests
         run: npm test
@@ -48,3 +55,101 @@ jobs:
           path: ./cypress/screenshots
     env:
       EXPLORER_API_MAINNET_URL: ${{ secrets.EXPLORER_API_MAINNET_URL }}
+
+  smoke-test-epoch-after-340:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🦾 Create .env file
+        run: |
+          echo "PORT=3000" > .env
+          echo "REACT_APP_VERSION=$npm_package_version" >> .env
+          echo "REACT_APP_API_URL=${EXPLORER_API_MAINNET_URL}" >> .env
+          echo "REACT_APP_MAINNET_APP_URL=${EXPLORER_API_MAINNET_URL}" >> .env
+          echo "REACT_APP_NETWORK_NAMES=\"{\"mainnet\":\"Mainnet\",\"preprod\":\"Preprod\"}\"" >> .env
+
+
+      - name: 🫡 Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+
+      - name: 🧘‍♀️ Download dependencies
+        run: npm ci
+
+      - name: Generate test script
+        run: |
+          cd cypress/smoke
+          pip3 install numpy
+          python CypressDynamicScript.py --epochl=100 --epochs=340 --epoche=424 --blockl=1
+
+      - name: 🎳 Run tests
+        run: npm test
+
+      - name: 📹 Archive test videos
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: videos
+          path: ./cypress/videos
+
+      - name: 🖼️ Archive test screenshots
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: screenshots
+          path: ./cypress/screenshots
+    env:
+      EXPLORER_API_MAINNET_URL: ${{ secrets.EXPLORER_API_MAINNET_URL }}
+
+  smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🦾 Create .env file
+        run: |
+          echo "PORT=3000" > .env
+          echo "REACT_APP_VERSION=$npm_package_version" >> .env
+          echo "REACT_APP_API_URL=${EXPLORER_API_MAINNET_URL}" >> .env
+          echo "REACT_APP_MAINNET_APP_URL=${EXPLORER_API_MAINNET_URL}" >> .env
+          echo "REACT_APP_NETWORK_NAMES=\"{\"mainnet\":\"Mainnet\",\"preprod\":\"Preprod\"}\"" >> .env
+
+
+      - name: 🫡 Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+
+      - name: 🧘‍♀️ Download dependencies
+        run: npm ci
+
+      - name: Generate test script
+        run: |
+          cd cypress/smoke
+          pip3 install numpy
+          python CypressDynamicScript.py
+
+      - name: 🎳 Run tests
+        run: npm test
+
+      - name: 📹 Archive test videos
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: videos
+          path: ./cypress/videos
+
+      - name: 🖼️ Archive test screenshots
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: screenshots
+          path: ./cypress/screenshots
+    env:
+      EXPLORER_API_MAINNET_URL: ${{ secrets.EXPLORER_API_MAINNET_URL }}
+
+

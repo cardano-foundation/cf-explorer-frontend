@@ -10,6 +10,6 @@ test("should render SPO RecentRegistrations call mock api", async () => {
     stakeId: "1"
   });
   const onSelect = jest.fn();
-  render(<RecentRegistrations onSelect={onSelect} />);
+  render(<RecentRegistrations onSelect={onSelect} setShowBackButton={jest.fn()} />);
   expect(screen.getByText("Registration List")).toBeInTheDocument();
 });
