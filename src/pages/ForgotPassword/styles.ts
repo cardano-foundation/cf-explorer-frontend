@@ -4,7 +4,7 @@ import { User2RC } from "src/commons/resources";
 
 export const Container = styled(Box)`
   display: flex;
-  background-color: ${({ theme }) => theme.palette.background.default};
+  background-color: ${({ theme }) => theme.palette.primary[100]};
   justify-content: center;
   align-items: center;
   min-height: 100vh;
@@ -23,7 +23,7 @@ export const WrapContent = styled(Box)`
 export const WrapTitle = styled(Box)`
   font-size: 36px;
   font-weight: 700;
-  color: ${({ theme }) => theme.palette.text.primary};
+  color: ${({ theme }) => theme.palette.secondary.main};
   line-height: 42px;
 `;
 
@@ -66,7 +66,7 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
     borderRadius: "8px",
     borderWidth: "1px",
     borderStyle: "solid",
-    borderColor: error ? theme.palette.error.main : theme.palette.secondary.light,
+    borderColor: error ? theme.palette.error[700] : theme.palette.secondary.light,
     "&::before": {
       display: "none"
     },
@@ -151,10 +151,10 @@ export const WrapSignUp = styled(Box)`
 `;
 
 export const AlertCustom = styled(Alert)`
-  border-color: ${({ theme }) => theme.palette.error.main};
+  border-color: ${({ theme }) => theme.palette.error[700]};
   border-style: solid;
   border-width: 1px;
-  color: ${({ theme }) => theme.palette.text.primary};
+  color: ${({ theme }) => theme.palette.secondary.main};
   padding: 0 16px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 12px;

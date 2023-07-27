@@ -4,7 +4,7 @@ import { User2RC } from "src/commons/resources";
 
 export const Container = styled(Box)`
   display: flex;
-  background-color: ${({ theme }) => theme.palette.background.default};
+  background-color: ${({ theme }) => theme.palette.primary[100]};
   justify-content: center;
   align-items: center;
   min-height: 100vh;
@@ -19,7 +19,7 @@ export const CloseButton = styled(IconButton)<{ saving: number }>`
   width: 30px;
   height: 30px;
   padding: 0;
-  border: 1px solid ${(props) => props.theme.palette.grey["A100"]};
+  border: 1px solid ${(props) => props.theme.palette.primary[200]};
   cursor: ${(props) => (props.saving ? `wait` : `pointer`)};
   &:hover {
     ${(props) => (props.saving ? `background: none;` : ``)}
