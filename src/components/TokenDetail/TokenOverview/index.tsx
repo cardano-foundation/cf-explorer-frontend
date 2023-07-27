@@ -38,14 +38,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
             <span>{data?.displayName || getShortWallet(data?.fingerprint) || ""}</span>
           </CustomTooltip>
           {data?.metadata && data?.metadata?.logo ? (
-            <Box
-              component={"img"}
-              width={"auto"}
-              height={36}
-              src={`data:image/png;base64,${data.metadata.logo}`}
-              alt="logo icon"
-              ml={1}
-            />
+            <Box component={"img"} width={"auto"} height={36} src={`${data.metadata.logo}`} alt="logo icon" ml={1} />
           ) : (
             ""
           )}
@@ -72,7 +65,9 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       value: (
         <>
           <Box position={"relative"}>
-            <PolicyId>{data?.policy || ""}</PolicyId>
+            <CustomTooltip title={data?.policy}>
+              <PolicyId>{data?.policy || ""}</PolicyId>
+            </CustomTooltip>
             <Box position={"absolute"} top={"-5px"} right={0}>
               <CopyButton text={data?.policy}></CopyButton>
             </Box>

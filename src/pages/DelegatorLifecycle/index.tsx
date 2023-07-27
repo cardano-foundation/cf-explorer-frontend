@@ -41,15 +41,6 @@ interface Params {
   tab: DelegationStep;
 }
 
-export interface ListStakeKeyResponse {
-  [key: string]: boolean;
-  hasDeRegistration: boolean;
-  hasDelegation: boolean;
-  hasRegistration: boolean;
-  hasWithdrawal: boolean;
-  hashRewards: boolean;
-}
-
 const MODES: ViewMode[] = ["timeline", "tabular"];
 
 const DelegatorLifecycle = () => {
@@ -128,10 +119,14 @@ const DelegatorLifecycle = () => {
               <LabelSwitch>Switch to {validMode === "timeline" ? "tabular" : "timeline"} view</LabelSwitch>
               <SwitchGroup>
                 <ButtonSwitch active={+(validMode === "timeline")} onClick={() => changeMode("timeline")}>
-                  <TableMode fill={validMode === "timeline" ? theme.palette.common.white : theme.palette.grey[500]} />
+                  <TableMode
+                    fill={validMode === "timeline" ? theme.palette.secondary[0] : theme.palette.secondary.light}
+                  />
                 </ButtonSwitch>
                 <ButtonSwitch active={+(validMode === "tabular")} onClick={() => changeMode("tabular")}>
-                  <ChartMode fill={validMode === "tabular" ? theme.palette.common.white : theme.palette.grey[500]} />
+                  <ChartMode
+                    fill={validMode === "tabular" ? theme.palette.secondary[0] : theme.palette.secondary.light}
+                  />
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>

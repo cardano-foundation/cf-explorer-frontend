@@ -29,5 +29,5 @@ export const ArrowCollapse = styled("span")`
   font-size: 14px;
   line-height: 14px;
   border-radius: 50%;
-  background-image: ${(props) => props.theme.palette.gradient[0]};
+  background-color: ${(props) => props.theme.palette.primary[200]};
 `;

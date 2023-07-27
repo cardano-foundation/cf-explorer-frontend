@@ -416,7 +416,14 @@ export default function SignUp() {
                     />
                   }
                   label={
-                    <Box fontSize={"14px"} fontWeight={400} display={"flex"} alignItems={"baseline"} gap={"5px"}>
+                    <Box
+                      fontSize={"14px"}
+                      color={({ palette }) => palette.secondary.main}
+                      fontWeight={400}
+                      display={"flex"}
+                      alignItems={"baseline"}
+                      gap={"5px"}
+                    >
                       I agree to the
                       <Link to={routers.TERMS_AND_CONDITIONS} target="_blank">
                         <HighlightLink>Terms & Conditions</HighlightLink>

@@ -6,7 +6,7 @@ export const Container = styled(Box);
 export const ModalTitle = styled(Typography)`
   font-size: 24px;
   font-weight: 700;
-  color: rgba(19, 21, 47, 1);
+  color: ${(props) => props.theme.palette.secondary.main};
 `;
 
 export const ModalContainer = styled(Box)`
@@ -19,6 +19,7 @@ export const RewardBalanceHeader = styled(Box)`
   display: flex;
   justify-content: flex-start;
   width: 100%;
+  color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
 export const RewardBalanceTitle = styled(Typography)`
@@ -51,7 +52,7 @@ export const AmountADARow = styled(Typography)`
 
 export const EpochRow = styled(Link)`
   font-size: 14px !important;
-  color: ${({ theme }) => theme.palette.blue[800]} !important;
+  color: ${({ theme }) => theme.palette.primary.main} !important;
 `;
 
 export const TableContainer = styled(Box)`

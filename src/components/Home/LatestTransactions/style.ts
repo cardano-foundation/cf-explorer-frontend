@@ -30,7 +30,7 @@ export const Title = styled("h3")`
   text-align: left;
   margin: 0px;
   font-size: 1.25rem;
-
+  color: ${(props) => props.theme.palette.secondary.main};
   &::after {
     position: absolute;
     top: 100%;
@@ -38,7 +38,7 @@ export const Title = styled("h3")`
     content: "";
     width: 50px;
     height: 4px;
-    background: ${({ theme }) => theme.palette.primary.main};
+    background: ${({ theme }) => theme.palette.primary[200]};
   }
 `;
 
@@ -51,7 +51,7 @@ export const Actions = styled(Box)(() => ({
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.light,
   display: "block",
   [theme.breakpoints.down("sm")]: {
     display: "none"
@@ -59,7 +59,7 @@ export const TimeDuration = styled("small")(({ theme }) => ({
 }));
 
 export const TimeDurationSm = styled("small")(({ theme }) => ({
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.light,
   display: "none",
   [theme.breakpoints.down("sm")]: {
     display: "block",
@@ -78,7 +78,7 @@ export const Item = styled(BoxRaised)`
   cursor: pointer;
   height: calc(100% - 56px);
   &:hover {
-    box-shadow: ${(props) => props.theme.shadow.card};
+    box-shadow: ${(props) => props.theme.shadow.cardHover};
   }
   ${({ theme }) => theme.breakpoints.down("md")} {
     padding: 20px 15px;
@@ -115,11 +115,12 @@ export const PriveValue = styled("span")`
   font-size: var(--font-size-text-x-large);
   font-weight: var(--font-weight-bold);
   line-height: 1;
+  color: ${(props) => props.theme.palette.secondary.main};
   text-align: end;
 `;
 
 export const ItemDetail = styled("div")`
-  color: ${({ theme }) => theme.palette.grey[400]};
+  color: ${({ theme }) => theme.palette.secondary.light};
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -128,7 +129,7 @@ export const ItemDetail = styled("div")`
 export const Hash = styled("small")`
   font-style: normal;
   font-weight: var(--font-weight-bold);
-  color: ${(props) => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.primary.main};
   font-family: var(--font-family-text);
 `;
 
@@ -136,11 +137,11 @@ export const BlockNo = styled("small")`
   font-style: normal;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text);
-  color: black;
+  color: ${(props) => props.theme.palette.primary.main};
 `;
 
 export const WalletAddress = styled("small")`
-  color: ${(props) => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.primary.main};
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-bold);
 `;
@@ -157,33 +158,33 @@ export const HeaderStatus = styled("small")<{ status?: TransactionStatus | IData
   color: ${({ status, theme }) => {
     switch (status) {
       case TRANSACTION_STATUS.FAILED:
-        return theme.palette.error.main;
+        return theme.palette.error[700];
       case TRANSACTION_STATUS.PENDDING:
-        return theme.palette.warning.main;
+        return theme.palette.warning[800];
       case TRANSACTION_STATUS.SUCCESS:
-        return theme.palette.green[700];
+        return theme.palette.success[800];
       case "IN_PROGRESS":
-        return theme.palette.warning.main;
+        return theme.palette.warning[800];
       case "FINISHED":
-        return theme.palette.info.main;
+        return theme.palette.success[800];
       default:
-        return theme.palette.success.main;
+        return theme.palette.success[800];
     }
   }};
   background-color: ${({ status, theme }) => {
     switch (status) {
       case TRANSACTION_STATUS.FAILED:
-        return theme.palette.error.light;
+        return theme.palette.error[100];
       case TRANSACTION_STATUS.PENDDING:
-        return theme.palette.warning.light;
+        return theme.palette.warning[100];
       case TRANSACTION_STATUS.SUCCESS:
-        return theme.palette.green[700_10];
+        return theme.palette.success[100];
       case "IN_PROGRESS":
-        return theme.palette.warning.light;
+        return theme.palette.warning[100];
       case "FINISHED":
-        return theme.palette.info.light;
+        return theme.palette.success[100];
       default:
-        return theme.palette.success.light;
+        return theme.palette.success[100];
     }
   }};
   font-weight: var(--font-weight-bold);

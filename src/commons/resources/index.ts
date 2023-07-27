@@ -8,7 +8,9 @@ import NotFoundIcon from "./images/icon-404.png";
 import AdaPriceIcon from "./icons/ada-price.svg";
 import MarketCapIcon from "./icons/market-cap.svg";
 import CurentEpochIcon from "./icons/curent-epoch.svg";
+import CurentEpochPool from "./icons/curent-epoch-pool.svg";
 import LiveStakeIcon from "./icons/live-stake.svg";
+import LiveStakePoolIcon from "./icons/live-stake-pool.svg";
 import ComingSoonIcon from "./icons/coming-soon.svg";
 import DownRedIcon from "./icons/down-red.svg";
 import UpGreenIcon from "./icons/up-green.svg";
@@ -18,10 +20,12 @@ import MenuIcon from "./icons/menus/hamburger.svg";
 import PolicyWhiteIcon from "./icons/policy-white.svg";
 import BlockChainMenuIcon from "./icons/menus/blockchain.svg";
 import DelegatePoolMenuIcon from "./icons/menus/delegate.svg";
+import OperationalIcon from "./icons/menus/Operational.svg";
 import ProtocolParameterIcon from "./icons/protocolParameter.svg";
 import BrowseIcon from "./icons/menus/browser.svg";
 import ResourcesIcon from "./icons/menus/resources.svg";
 import RocketIcon from "./icons/rocket.svg";
+import RocketPoolIcon from "./icons/rocket-pool.svg";
 import CubeIcon from "./icons/cube.svg";
 import ExchangeIcon from "./icons/exchange-alt.svg";
 import ADAIcon from "./icons/ADA.svg";
@@ -52,6 +56,7 @@ import YoroiIcon from "./icons/yoroi.svg";
 import TyphonIcon from "./icons/typhon.svg";
 import EmptyIcon from "./images/noData.png";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
+import ProtocolIcon from "./icons/menus/Protocol.svg";
 import PolygonWhiteIconUrl from "./icons/polygon-white.svg";
 import AdaHolderIconUrl from "./images/ada-holder.png";
 import PaymentWalletUrl from "./images/payment-wallet.png";
@@ -71,7 +76,6 @@ import txInputIconUrl from "./icons/txInput.svg";
 import txOutputIconUrl from "./icons/txOutput.svg";
 import totalOutputUrl from "./icons/totalOutput.svg";
 import CopyIconSquareUrl from "./images/copy.svg";
-import ADALogoUrl from "./icons/ada-logo.svg";
 import fileGuardUrl from "./icons/file-guard.svg";
 import DelegationIconUrl from "./icons/delegationIcon.svg";
 import RewardsDistributionIconUrl from "./icons/rewardsDistribution.svg";
@@ -79,6 +83,12 @@ import StakeCertificatesIconUrl from "./icons/stakeCertificateIcon.svg";
 import ProtocolUpdateIconUrl from "./icons/protocolUpdateIcon.svg";
 import InstantaneousHistoryIconUrl from "./icons/instantaneousHistoryIcon.svg";
 import MetadataIconUrl from "./icons/metadataIcon2.svg";
+import ADALogoUrl from "./icons/ada-logo.svg";
+import CurrentEpochHome from "./icons/currentEpochHome.svg";
+import HomeUpIcon from "./icons/HomeUpIcon.svg";
+import HomeDownIcon from "./icons/HomeDownIcon.svg";
+import DashboardIcon from "./icons/menus/Dashboard.svg";
+import LogoCardano from "./icons/LogoCardano.svg";
 
 export {
   LogoFullIcon,
@@ -98,8 +108,10 @@ export {
   MarketCapIcon,
   CurentEpochIcon,
   LiveStakeIcon,
+  LiveStakePoolIcon,
   ComingSoonIcon,
   UpGreenIcon,
+  CurentEpochPool,
   DownRedIcon,
   BlankBlueIcon,
   CalenderPaleIcon,
@@ -109,6 +121,7 @@ export {
   ProtocolParameterIcon,
   EmptyIcon,
   RocketIcon,
+  RocketPoolIcon,
   CubeIcon,
   ExchangeIcon,
   ADAIcon,
@@ -161,7 +174,14 @@ export {
   StakeCertificatesIconUrl,
   ProtocolUpdateIconUrl,
   InstantaneousHistoryIconUrl,
-  MetadataIconUrl
+  MetadataIconUrl,
+  OperationalIcon,
+  ProtocolIcon,
+  CurrentEpochHome,
+  HomeUpIcon,
+  DashboardIcon,
+  HomeDownIcon,
+  LogoCardano
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";

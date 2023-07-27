@@ -1,4 +1,4 @@
-import { Box, styled, alpha } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const ItemList = styled(Box)(({ theme }) => ({
@@ -13,7 +13,7 @@ export const ItemList = styled(Box)(({ theme }) => ({
 }));
 
 export const Item = styled(Box)(({ theme, flexDirection }) => ({
-  backgroundColor: alpha(theme.palette.grey[300], 0.1),
+  backgroundColor: theme.palette.secondary[0],
   padding: 20,
   flex: 1,
   display: "flex",
@@ -36,7 +36,7 @@ export const Label = styled(Box)(({ theme }) => ({
   fontWeight: 700,
   fontSize: 14,
   lineHeight: "16px",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.light,
   marginBottom: 8
 }));
 
@@ -49,5 +49,5 @@ export const LineData = styled(Box)(() => ({
 
 export const StyledLink = styled(Link)(({ theme }) => ({
   fontSize: "0.875rem",
-  color: `${theme.palette.blue[800]} !important`
+  color: `${theme.palette.primary.main} !important`
 }));

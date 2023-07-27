@@ -1,6 +1,6 @@
 import { useMemo, useRef } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
@@ -50,6 +50,7 @@ const DeregistrationDraw: React.FC<Props> = ({ toggleModal, showBackButton }) =>
   const feeRef = useRef(null);
   const certificateRef = useRef(null);
   const cardanoBlockchainRef = useRef(null);
+  const theme = useTheme();
 
   const handleBack = () => {
     history.push(details.staking(stakeId, "timeline", "deregistration"));
@@ -138,7 +139,7 @@ const DeregistrationDraw: React.FC<Props> = ({ toggleModal, showBackButton }) =>
 
         <InfoGroup>
           <Info>
-            <AddressIcon fill="#438F68" />
+            <AddressIcon fill={theme.palette.secondary.light} />
             <CustomTooltip title={txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(txHash)}>{getShortHash(txHash)}</StyledLink>
@@ -147,11 +148,11 @@ const DeregistrationDraw: React.FC<Props> = ({ toggleModal, showBackButton }) =>
             <StyledCopyButton data-testid="delegator-deregistration-copy-button" text={txHash} />
           </Info>
           <Info>
-            <ADAGreen />
+            <ADAGreen fill={theme.palette.secondary.light} />
             <InfoText>{formatADAFull(Math.abs(deposit) - fee)}</InfoText>
           </Info>
           <Info>
-            <TimeIcon />
+            <TimeIcon fill={theme.palette.secondary.light} />
             <InfoText>{formatDateTimeLocal(time)}</InfoText>
           </Info>
         </InfoGroup>

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Box, FormControl, FormControlLabel, RadioGroup, Stack, Radio } from "@mui/material";
 
@@ -97,12 +97,10 @@ type IEpochRange = [number, number];
 
 const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, saveParams, gotoStep, currentStep }) => {
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
-  const history = useHistory();
 
-  const isDelegatorPage = history.location.pathname.includes("/delegator-lifecycle/");
   const { poolId, stakeId } = useParams<{ poolId: string; stakeId: string }>();
 
-  const reportType: ReportType = isDelegatorPage ? ReportType.StakeKeyReport : ReportType.PoolReport;
+  const reportType: ReportType = stakeId ? ReportType.StakeKeyReport : ReportType.PoolReport;
   const address = poolId || stakeId;
 
   const [dateRange, setDateRange] = useState<IDateRange>([null, null]);
@@ -302,11 +300,13 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
                           value={RatioGroupValue.yes}
                           control={<Radio onClick={() => handleClickRadio(key)} />}
                           label="Yes"
+                          sx={{ color: (props) => props.palette.secondary.main }}
                         />
                         <FormControlLabel
                           value={RatioGroupValue.no}
                           control={<Radio onClick={() => handleClickRadio(key)} />}
                           label="No"
+                          sx={{ color: (props) => props.palette.secondary.main }}
                         />
                       </Stack>
                     </RadioGroup>

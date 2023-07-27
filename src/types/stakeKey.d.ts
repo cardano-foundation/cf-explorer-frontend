@@ -137,7 +137,11 @@ interface StakeDelegations {
   blockNo: number;
   epochNo: number;
   epochSlotNo: number;
-  pools: string[];
+  pools: {
+    poolId: string;
+    poolName: string;
+    tickerName: string;
+  }[];
   stakeKeys: string[];
   time: string;
   txHash: string;
