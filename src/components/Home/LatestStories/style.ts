@@ -24,7 +24,7 @@ export const Title = styled("h3")`
   text-align: left;
   margin: 0px;
   font-size: 1.25rem;
-
+  color: ${({ theme }) => theme.palette.secondary.main};
   &::after {
     position: absolute;
     top: 100%;
@@ -32,7 +32,7 @@ export const Title = styled("h3")`
     content: "";
     width: 50px;
     height: 4px;
-    background: ${({ theme }) => theme.palette.primary.main};
+    background: ${({ theme }) => theme.palette.primary[200]};
   }
 `;
 
@@ -85,8 +85,8 @@ export const Author = styled("span")`
   overflow: hidden;
   text-overflow: ellipsis;
   font-family: var(--font-family-text);
-  color: ${(props) => props.theme.palette.green[700]};
-  background-color: ${(props) => props.theme.palette.green[700_10]};
+  color: ${(props) => props.theme.palette.success[800]};
+  background-color: ${(props) => props.theme.palette.success[100]};
   padding: 2px 6px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -100,7 +100,9 @@ export const ItemTitle = styled("h5")`
   max-height: 3.6em;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+  color: ${(props) => props.theme.palette.secondary.main};
   overflow: hidden;
+  text-overflow: ellipsis;
   font-size: var(--font-size-text-x-small);
   line-height: 1.15;
   margin-top: 0;
@@ -116,7 +118,7 @@ export const Time = styled("h5")`
   gap: 6px;
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-normal);
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.light};
   margin: 0;
 `;
 export const TimeIcon = styled("img")`
@@ -144,7 +146,15 @@ export const Description = styled(Box)`
   text-overflow: ellipsis;
   font-size: 12px;
   font-weight: 400;
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
+
+  ${({ theme }) => theme.breakpoints.down("lg")} {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    display: none;
+  }
 `;
 
 export const FooterCard = styled(Box)`
@@ -179,5 +189,4 @@ export const PrevSwiper = styled(NextSwiper)`
 
 export const CustomGrid = styled(Grid)`
   width: 100%;
-
 `;

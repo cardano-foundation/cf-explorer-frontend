@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useRef, useMemo } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
@@ -68,6 +68,7 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
   const { data, loading } = useFetch<WithdrawDetail>(
     selected.txHash && stakeId && API.STAKE_LIFECYCLE.WITHDRAW_DETAIL(stakeId, selected.txHash)
   );
+  const theme = useTheme();
   const { amount, fee, stakeRewardAvailable, stakeTotalAmount, time, txHash } = data || {};
   const adaHolderRef = useRef(null);
   const paymentRef = useRef(null);
@@ -151,7 +152,7 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
 
         <InfoGroup>
           <Info>
-            <AddressIcon fill="#438F68" />
+            <AddressIcon fill={theme.palette.secondary.light} />
             <CustomTooltip title={txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(txHash)}>{getShortHash(txHash || "")}</StyledLink>
@@ -160,11 +161,11 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
             <StyledCopyButton text={txHash} />
           </Info>
           <Info>
-            <ADAGreen />
+            <ADAGreen fill={theme.palette.secondary.light} />
             <InfoText>{formatADAFull(amount || 0)}</InfoText>
           </Info>
           <Info>
-            <TimeIcon />
+            <TimeIcon fill={theme.palette.secondary.light} />
             <InfoText>{formatDateTimeLocal(time || "")}</InfoText>
           </Info>
         </InfoGroup>

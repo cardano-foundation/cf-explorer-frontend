@@ -67,7 +67,9 @@ const TransactionList: React.FC<TransactionListProps> = ({
           <CustomTooltip title={r.hash}>
             <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
           </CustomTooltip>
-          <Box mt={1}>{formatDateTimeLocal(r.time || "")}</Box>
+          <Box mt={1} color={({ palette }) => palette.secondary.light}>
+            {formatDateTimeLocal(r.time || "")}
+          </Box>
         </div>
       )
     },
@@ -83,7 +85,10 @@ const TransactionList: React.FC<TransactionListProps> = ({
             </StyledLink>
           </Box>
           <Box mt={1}>
-            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
+            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
+            <Box color={({ palette }) => palette.secondary.light} component={"span"}>
+              {r.epochSlotNo}
+            </Box>
           </Box>
         </Box>
       )
@@ -156,7 +161,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
   return (
     <Card
       data-testid="transactions-card"
-      title={pathname === "/transactions" ? "Transactions" : ""}
+      title={pathname?.includes("/transactions") ? "Transactions" : ""}
       underline={underline}
     >
       <Table

@@ -3,7 +3,7 @@ import { Box, Grid } from "@mui/material";
 import moment from "moment";
 import { useSelector } from "react-redux";
 
-import { CurentEpochIcon, LiveStakeIcon, RocketBackground, TotalPoolIcon } from "src/commons/resources";
+import { CurentEpochPool, LiveStakePoolIcon, RocketPoolIcon, TotalPoolIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
@@ -51,21 +51,16 @@ const OverViews: React.FC = () => {
       </Grid>
     );
   }
-
-  const duration = moment.duration(data?.countDownEndTime ? data.countDownEndTime : 0, "millisecond");
+  const slot = (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH;
+  const countdown = MAX_SLOT_EPOCH - slot;
+  const duration = moment.duration(countdown ? countdown : 0, "second");
   const days = duration.days();
   const hours = duration.hours();
   const minutes = duration.minutes();
+  const seconds = duration.seconds();
   return (
-    <Card
-      title="Stake Pools"
-      extra={
-        <TimeDuration>
-          <FormNowMessage time={lastUpdated} />
-        </TimeDuration>
-      }
-    >
-      <TimeDuration mobile={1}>
+    <Card title="Stake Pool">
+      <TimeDuration>
         <FormNowMessage time={lastUpdated} />
       </TimeDuration>
       <Grid container spacing={2}>
@@ -74,16 +69,17 @@ const OverViews: React.FC = () => {
             <StyledCard.Content>
               <StyledCard.Title>Epoch</StyledCard.Title>
               <StyledCard.Link to={details.epoch(data?.epochNo)}>{data?.epochNo}</StyledCard.Link>
-              <Box component="span" sx={{ color: (theme) => theme.palette.grey[400], textAlign: "left" }}>
+              <Box component="span" sx={{ color: (theme) => theme.palette.secondary.light, textAlign: "left" }}>
                 End in:{" "}
                 <StyledCard.Comment>
                   {`${days} day${days > 1 ? "s" : ""} `}
                   {`${hours} hour${hours > 1 ? "s" : ""} `}
-                  {`${minutes} minute${minutes > 1 ? "s" : ""}`}
+                  {`${minutes} minute${minutes > 1 ? "s" : ""} `}
+                  {`${seconds} second${seconds > 1 ? "s" : ""}`}
                 </StyledCard.Comment>
               </Box>
             </StyledCard.Content>
-            <StyledImg src={CurentEpochIcon} alt="Clock" />
+            <StyledImg src={CurentEpochPool} alt="Clock" />
           </StyledCard.Container>
         </Grid>
         <Grid item xl={3} md={6} xs={12}>
@@ -99,12 +95,12 @@ const OverViews: React.FC = () => {
                   <StyledCard.Title>Slot</StyledCard.Title>
                   <StyledCard.Value>
                     {(currentEpoch?.slot || 0) % MAX_SLOT_EPOCH}
-                    <Box component="span" sx={{ color: (theme) => theme.palette.text.hint, fontWeight: "400" }}>
+                    <Box component="span" sx={{ color: (theme) => theme.palette.secondary.light, fontWeight: "400" }}>
                       / {MAX_SLOT_EPOCH}
                     </Box>
                   </StyledCard.Value>
                 </StyledCard.Content>
-                <StyledImg src={RocketBackground} alt="Rocket" />
+                <StyledImg src={RocketPoolIcon} alt="Rocket" />
               </StyledCard.Container>
               <Box position={"relative"} top={-60} px={4}>
                 <StyledLinearProgress
@@ -128,7 +124,7 @@ const OverViews: React.FC = () => {
               <StyledCard.Value>{numberWithCommas(data?.delegators)}</StyledCard.Value>
             </StyledCard.Content>
             <Box>
-              <StyledImg src={LiveStakeIcon} alt="Rocket" />
+              <StyledImg src={LiveStakePoolIcon} alt="Rocket" />
             </Box>
           </StyledCard.Container>
         </Grid>
@@ -141,7 +137,7 @@ const OverViews: React.FC = () => {
               </StyledCard.Value>
               <Box
                 component="span"
-                sx={{ color: (theme) => theme.palette.grey[400], textAlign: "left" }}
+                sx={{ color: (theme) => theme.palette.secondary.light, textAlign: "left" }}
                 display={"flex"}
                 alignItems={"center"}
                 width={"100%"}

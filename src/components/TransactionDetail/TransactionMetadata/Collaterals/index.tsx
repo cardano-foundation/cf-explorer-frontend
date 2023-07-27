@@ -34,9 +34,11 @@ const Collaterals: React.FC<CollateralProps> = ({ data }) => {
       {isShowCardOutput && <Card type="output" items={data?.collateralOutputResponses} sx={{ mt: 1 }} />}
       {isShowCardOutput && (
         <ItemFooter>
-          <Box fontWeight={"bold"}>Total Output</Box>
+          <Box color={({ palette }) => palette.secondary.main} fontWeight={"bold"}>
+            Total Output
+          </Box>
           <div>
-            <Box fontWeight={"bold"} component="span" pr={1}>
+            <Box color={({ palette }) => palette.success[800]} fontWeight={"bold"} component="span" pr={1}>
               {formatADAFull(totalADA)}
             </Box>
             <ADAicon />
@@ -78,12 +80,21 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                 <Box width={50}>
                   <Img src={type === "input" ? receiveImg : sendImg} alt="send icon" />
                 </Box>
-                {isTablet ? <Box>{type === "input" ? "From" : "To"}:</Box> : null}
+                {isTablet ? (
+                  <Box color={({ palette }) => palette.secondary.light}>{type === "input" ? "From" : "To"}:</Box>
+                ) : null}
               </Box>
               <Box width={"100%"}>
                 <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
                   {!isTablet ? (
-                    <Box display={"flex"} alignItems="center" justifyContent={"flex-start"} pr={1} mr={1}>
+                    <Box
+                      color={({ palette }) => palette.secondary.light}
+                      display={"flex"}
+                      alignItems="center"
+                      justifyContent={"flex-start"}
+                      pr={1}
+                      mr={1}
+                    >
                       {type === "input" ? "From" : "To"}:
                     </Box>
                   ) : null}
@@ -98,9 +109,9 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                       <Link to={details.address(item.address)}>
                         <CustomTooltip title={item.address}>
                           <Box
-                            color={(theme) => theme.palette.blue[800]}
                             fontWeight="bold"
                             fontFamily={"var(--font-family-text)"}
+                            color={(theme) => theme.palette.primary.main}
                             mr={1}
                           >
                             {getShortWallet(item.address)}
@@ -119,7 +130,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                       <Box
                         component={"span"}
                         whiteSpace="nowrap"
-                        color={(theme) => (type === "output" ? theme.palette.primary.main : theme.palette.error.main)}
+                        color={(theme) => (type === "output" ? theme.palette.success[800] : theme.palette.error[700])}
                         fontWeight="bold"
                         mr={1}
                       >
@@ -139,7 +150,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                               component={"span"}
                               fontWeight="bold"
                               fontFamily={"var(--font-family-text)"}
-                              color={(theme) => theme.palette.blue[800]}
+                              color={(theme) => theme.palette.primary.main}
                               mr={1}
                             >
                               {getShortHash(item.txHash)}

@@ -73,7 +73,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       value: (
         <Link
           to={dataStake?.pool?.poolId ? details.delegation(dataStake.pool.poolId) : "#"}
-          style={{ fontFamily: "var(--font-family-text)", color: theme.palette.secondary.main }}
+          style={{ fontFamily: "var(--font-family-text)", color: theme.palette.primary.main }}
         >
           {dataStake?.pool?.poolName ? (
             dataStake?.pool?.poolName
@@ -137,7 +137,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
         <Grid item xs={12} md={6}>
           <StyledBoxCard>
             <CardAddress
-              title={"Stake Key"}
+              title={"Stake Address"}
               type="right"
               address={data?.stakeAddress || ""}
               item={itemRight}

@@ -17,7 +17,7 @@ import { BigNumber } from "bignumber.js";
 
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
-import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/helper";
+import { formatADAFull, formatPrice } from "src/commons/utils/helper";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -83,7 +83,8 @@ const StakeAnalytics: React.FC = () => {
   }));
 
   const formatPriceValue = (value: string) => {
-    return formatPrice(value);
+    const bigValue = BigNumber(value).div(10 ** 6);
+    return formatPrice(bigValue.toString());
   };
 
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
@@ -94,7 +95,7 @@ const StakeAnalytics: React.FC = () => {
             ? moment(content.label).format("DD MMM YYYY HH:mm:ss") + " (UTC time zone)"
             : content.label}
         </TooltipLabel>
-        <TooltipValue>{numberWithCommas(content.payload?.[0]?.value) || 0}</TooltipValue>
+        <TooltipValue>{formatADAFull(content.payload?.[0]?.value) || 0}</TooltipValue>
       </TooltipBody>
     );
   };
@@ -156,11 +157,12 @@ const StakeAnalytics: React.FC = () => {
                 >
                   <defs>
                     <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor={theme.palette.green[700]} stopOpacity={0.2} />
-                      <stop offset="100%" stopColor={theme.palette.green[700]} stopOpacity={0} />
+                      <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
+                      <stop offset="100%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
                     </linearGradient>
                   </defs>
                   <XAxis
+                    color={theme.palette.secondary.main}
                     dataKey={tab === "BALANCE" ? "date" : "epoch"}
                     tickFormatter={(value) =>
                       tab === "BALANCE" ? moment(value).format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM") : value
@@ -168,14 +170,14 @@ const StakeAnalytics: React.FC = () => {
                     tickLine={false}
                     {...xAxisProps}
                   />
-                  <YAxis tickFormatter={formatPriceValue} tickLine={false} interval={isMobile ? 3 : undefined} />
+                  <YAxis color={theme.palette.secondary.main} tickFormatter={formatPriceValue} tickLine={false} />
                   <Tooltip content={renderTooltip} cursor={false} />
                   <CartesianGrid vertical={false} strokeWidth={0.33} />
                   <Area
                     stackId="1"
                     type="monotone"
                     dataKey="value"
-                    stroke={theme.palette.green[700]}
+                    stroke={theme.palette.primary.main}
                     strokeWidth={4}
                     fill="url(#colorUv)"
                     dot={tab === "BALANCE" ? { r: 2 } : { r: 0 }}

@@ -152,7 +152,7 @@ const LatestTransactions: React.FC = () => {
                           );
                         })}
                         <RowItem>
-                          <small>Timestamp: </small>
+                          <small>Created At: </small>
                           <small>{formatDateTimeLocal(time)}</small>
                         </RowItem>
                       </ItemDetail>
