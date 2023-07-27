@@ -68,7 +68,7 @@ const DotDivide = styled(Box)`
 `;
 
 const LinkTo = styled(Link)`
-  color: ${(props) => `${props.theme.palette.blue[850]} !important`};
+  color: ${(props) => `${props.theme.palette.primary.main} !important`};
 `;
 
 const Footer: React.FC = () => {

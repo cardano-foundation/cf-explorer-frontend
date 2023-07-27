@@ -92,7 +92,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
         const isTokenNameLong = tokenName.length > 20;
         return (
           <OptionSelect key={idx} onClick={() => handleClickItem(details.token(token?.assetId))}>
-            <Box color={({ palette }) => palette.secondary.main}>
+            <Box color={({ palette }) => palette.secondary.light}>
               {isTokenNameLong ? (
                 <CustomTooltip title={tokenName} placement="top">
                   <Box>{shortTokenName}</Box>
@@ -134,7 +134,7 @@ export const TokenLink: React.FC<{ token: Token }> = ({ token }) => {
         <Box mr={2} color={({ palette }) => palette.secondary.light}>
           {isTokenNameLong ? (
             <CustomTooltip title={tokenName} placement="top">
-              <Box color={({ palette }) => palette.secondary.main}>{shortTokenName}</Box>
+              <Box color={({ palette }) => palette.secondary.light}>{shortTokenName}</Box>
             </CustomTooltip>
           ) : (
             tokenName

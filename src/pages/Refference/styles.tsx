@@ -25,7 +25,7 @@ export const Content = styled(Box)`
 
 export const TextReffer = styled(Box)`
   font-size: 16px;
-  color: ${(props) => props.theme.palette.blue[650]};
+  color: ${(props) => props.theme.palette.primary.main};
   margin: 20px 0px;
 `;
 

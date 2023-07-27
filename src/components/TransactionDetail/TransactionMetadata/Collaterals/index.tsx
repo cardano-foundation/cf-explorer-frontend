@@ -38,7 +38,7 @@ const Collaterals: React.FC<CollateralProps> = ({ data }) => {
             Total Output
           </Box>
           <div>
-            <Box color={({ palette }) => palette.success[800]} fontWeight={"bold"} component="span" pr={1}>
+            <Box color={({ palette }) => palette.secondary.main} fontWeight={"bold"} component="span" pr={1}>
               {formatADAFull(totalADA)}
             </Box>
             <ADAicon />

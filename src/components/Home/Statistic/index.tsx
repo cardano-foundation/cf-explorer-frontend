@@ -144,7 +144,7 @@ const HomeStatistic = () => {
       </Grid>
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
         {currentEpoch ? (
-          <Link href={details.epoch(currentEpoch?.no)}>
+          <Link href={details.epoch(currentEpoch?.no)} target="_blank">
             <Item data-testid="current-epoch-box">
               <Content display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
@@ -195,7 +195,7 @@ const HomeStatistic = () => {
       </Grid>
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
         {data && usdMarket ? (
-          <Link href={routers.DELEGATION_POOLS}>
+          <Link href={routers.DELEGATION_POOLS} target="_blank">
             <Item data-testid="live-stake-box">
               <Content display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
                 <Box>

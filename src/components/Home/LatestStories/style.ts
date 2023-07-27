@@ -87,7 +87,11 @@ export const Author = styled("span")`
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.success[800]};
   background-color: ${(props) => props.theme.palette.success[100]};
+<<<<<<< HEAD
+  padding: 6px 2px;
+=======
   padding: 2px 6px;
+>>>>>>> sota-test
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-size: 11px;
@@ -129,8 +133,8 @@ export const TimeIcon = styled("img")`
 export const ResourceHref = styled("span")`
   margin: 5px 0px;
   width: max-content;
-  background-color: ${(props) => props.theme.palette.blue[100_15]};
-  color: ${(props) => props.theme.palette.blue[100]};
+  background-color: ${(props) => props.theme.palette.primary[100]};
+  color: ${(props) => props.theme.palette.primary.main};
   font-weight: 700;
   font-size: 10px;
   cursor: pointer;
@@ -162,8 +166,8 @@ export const FooterCard = styled(Box)`
   bottom: 20px;
 `;
 
-export const NextSwiper = styled(Box)`
-  background: ${(props) => props.theme.palette.purple[600]};
+export const NextSwipper = styled(Box)`
+  background: ${(props) => props.theme.palette.purple["100"]};
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -172,7 +176,7 @@ export const NextSwiper = styled(Box)`
   align-items: center;
   cursor: pointer;
   &:hover {
-    background: ${(props) => props.theme.palette.blue[200]};
+    background: ${(props) => props.theme.palette.primary.main};
   }
   position: absolute;
   right: -10px;
@@ -182,7 +186,7 @@ export const NextSwiper = styled(Box)`
   }
 `;
 
-export const PrevSwiper = styled(NextSwiper)`
+export const PrevSwiper = styled(NextSwipper)`
   left: -10px;
   transform: rotate(180deg);
 `;

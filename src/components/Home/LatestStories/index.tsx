@@ -20,7 +20,7 @@ import {
   Item,
   ItemTitle,
   LatestStoriesContainer,
-  NextSwiper,
+  NextSwipper,
   ResourceHref,
   Time,
   TimeIcon,
@@ -199,9 +199,9 @@ const LatestStories = () => {
           </PrevSwiper>
         )}
         {isNextSwiper && (
-          <NextSwiper onClick={handleNextSwiper} className="news-swipper-button">
+          <NextSwipper onClick={handleNextSwiper} className="news-swipper-button">
             <SliderRight />
-          </NextSwiper>
+          </NextSwipper>
         )}
       </Box>
     </LatestStoriesContainer>

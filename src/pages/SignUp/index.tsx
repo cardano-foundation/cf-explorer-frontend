@@ -417,8 +417,8 @@ export default function SignUp() {
                   }
                   label={
                     <Box
-                      color={({ palette }) => palette.secondary.main}
                       fontSize={"14px"}
+                      color={({ palette }) => palette.secondary.main}
                       fontWeight={400}
                       display={"flex"}
                       alignItems={"baseline"}

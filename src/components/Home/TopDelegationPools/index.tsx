@@ -66,8 +66,8 @@ const TopDelegationPools = () => {
             {formatPercent(r.saturation / 100) || `0%`}
           </Box>
           <StyledLinearProgress
-            saturation={r.saturation}
             variant="determinate"
+            saturation={r.saturation}
             value={r.saturation > 100 ? 100 : get(r, "saturation", 0)}
           />
         </Box>

@@ -48,7 +48,6 @@ type DetailViewStakeKeyProps = {
   stakeId: string;
   handleClose: () => void;
 };
-
 const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
   const { stakeId, handleClose } = props;
   const { data } = useFetch<IStakeKeyDetail>(stakeId ? `${API.STAKE.DETAIL}/${stakeId}` : ``);

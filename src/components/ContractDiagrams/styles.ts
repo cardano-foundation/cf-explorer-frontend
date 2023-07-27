@@ -1,7 +1,7 @@
 import { styled, Box, Typography, IconButton } from "@mui/material";
 
 export const ContractDiagramsContainer = styled(Box)<{ isTxPageView?: boolean }>`
-  background: ${(props) => (props.isTxPageView ? "inherit" : props.theme.palette.background.paper)};
+  background: ${(props) => props.theme.palette.secondary[0]};
   padding: 25px;
   border-radius: 10px;
   margin-bottom: 30px;
@@ -32,7 +32,7 @@ export const TabLabel = styled(Typography)`
   display: inline-block;
   font-size: 14px;
   font-weight: 700;
-  color: ${(props) => props.theme.palette.common.white};
+  color: ${(props) => props.theme.palette.secondary[0]};
   padding: 7px 11px;
   border-radius: 5px;
   background: ${(props) => props.theme.palette.secondary.main};
@@ -59,8 +59,8 @@ export const TabElement = styled(Box)`
   padding: 18px 20px;
   border-radius: 5px;
   text-align: left;
-  background: ${({ theme }) => theme.palette.grey[500]};
-  color: ${(props) => props.theme.palette.common.black};
+  background: ${({ theme }) => theme.palette.primary[100]};
+  color: ${(props) => props.theme.palette.secondary.main};
   text-align: left;
   max-height: 150px;
   overflow: scroll;
@@ -85,8 +85,8 @@ export const DataTitle = styled(Typography)`
   color: ${(props) => props.theme.palette.secondary.main};
 `;
 export const DatumnElement = styled(Box)`
-  background: ${({ theme }) => theme.palette.grey[500]};
-  color: ${(props) => props.theme.palette.common.black};
+  background: ${({ theme }) => theme.palette.primary[100]};
+  color: ${(props) => props.theme.palette.secondary.main};
   word-break: break-word;
   text-align: left;
   padding: 18px 20px;
@@ -118,6 +118,6 @@ export const IconContainer = styled(Box)`
 `;
 
 export const CloseButton = styled(IconButton)`
-  color: ${(props) => props.theme.palette.text.hint};
+  color: ${(props) => props.theme.palette.secondary[600]};
   padding: 5.5px;
 `;

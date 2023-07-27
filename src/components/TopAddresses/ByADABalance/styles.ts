@@ -38,9 +38,9 @@ export const SelectMui = styled(CustomSelect)(({ theme }) => ({
   borderRadius: "4px",
   fontSize: 14,
   minWidth: 50,
-  border: `1px solid ${theme.palette.grey[200]}`,
+  border: `1px solid ${theme.palette.primary[200]}`,
   color: theme.palette.secondary.main,
   "& > li": {
-    color: theme.palette.secondary.main
+    color: `${theme.palette.secondary.main} !important`
   }
 }));
