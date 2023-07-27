@@ -33,8 +33,8 @@ export const MyGrid = styled(Box)(() => ({
 
 export const HiddenScroll = styled(Box)(({ theme }) => ({
   position: "absolute",
-  top: "50%",
-  left: "-10%",
+  top: "60%",
+  left: 0,
   width: "fit-content",
   height: "200px",
   overflow: "auto",
@@ -94,7 +94,7 @@ export const PickerPortalContainer = styled(Box)(({ theme }) => ({
 
 export const CloseButton = styled(IconButton)(({ theme }) => ({
   position: "absolute",
-  top: 30,
+  top: 24,
   right: -322,
   width: 24,
   height: 24,
@@ -110,7 +110,8 @@ export const DatePickerContainer = styled(Box)(({ theme }) => ({
   position: "relative",
   height: 1,
   "div[class=react-datepicker]": {
-    display: "flex"
+    display: "flex",
+    minHeight: 315
   },
   "&:first-of-type div[class=react-datepicker]": {
     borderRightWidth: 0,

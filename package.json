@@ -9,7 +9,6 @@
     "@mui/lab": "^5.0.0-alpha.111",
     "@mui/material": "^5.10.16",
     "@mui/styled-engine-sc": "^5.10.16",
-    "@mui/x-date-pickers": "^6.2.1",
     "@reduxjs/toolkit": "^1.9.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -91,6 +90,7 @@
     }
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@stdlib/string-format": "^0.0.3",
     "@types/lodash": "^4.14.195",
     "@types/mocha": "^10.0.1",

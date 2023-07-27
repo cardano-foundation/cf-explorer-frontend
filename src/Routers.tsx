@@ -37,7 +37,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
-import StackingLifecycle from "./pages/StackingLifecycle";
+import StakingLifecycle from "./pages/StakingLifecycle";
 import VerifyEmail from "./pages/VerifyEmail";
 import ReportGeneratedStakingDetail from "./pages/ReportGeneratedStakingDetail";
 import ReportGeneratedPoolDetail from "./pages/ReportGeneratedPoolDetail";
@@ -97,7 +97,7 @@ const Routes: React.FC = () => {
       <Route path={routers.POLICY_DETAIL} exact component={PolicyDetail} />
       <Route path={routers.ADDRESS_LIST} exact component={TopAddresses} />
       <Route path={routers.TOP_DELEGATOR} exact component={TopDelegators} />
-      <Route path={routers.STAKING_LIFECYCLE} exact component={StackingLifecycle} />
+      <Route path={routers.STAKING_LIFECYCLE} exact component={StakingLifecycle} />
       <Route
         path={routers.STAKING_LIFECYCLE.replace(":tab", "")}
         exact

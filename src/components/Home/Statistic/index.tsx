@@ -2,7 +2,6 @@ import { Box, Grid } from "@mui/material";
 import BigNumber from "bignumber.js";
 import moment from "moment";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -23,6 +22,7 @@ import {
   Item,
   ItemIcon,
   ItemSkeleton,
+  Link,
   Name,
   ProcessActive,
   Progress,
@@ -80,8 +80,8 @@ const HomeStatistic = () => {
     >
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
         {usdMarket && btcMarket?.[0] ? (
-          <Item data-testid="ada-price-box">
-            <Link to={{ pathname: EXT_ADA_PRICE_URL }} target="_blank">
+          <Link href={EXT_ADA_PRICE_URL} target="_blank">
+            <Item data-testid="ada-price-box">
               <ItemIcon
                 style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
                 data-testid="ada-price-icon"
@@ -101,16 +101,16 @@ const HomeStatistic = () => {
                   Last updated {moment(btcMarket[0]?.last_updated).fromNow()}
                 </TimeDuration>
               </Content>
-            </Link>
-          </Item>
+            </Item>
+          </Link>
         ) : (
           <SkeletonBox />
         )}
       </Grid>
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
         {usdMarket ? (
-          <Item data-testid="market-cap-box">
-            <Link to={{ pathname: EXT_ADA_PRICE_URL }} target="_blank">
+          <Link href={EXT_ADA_PRICE_URL} target="_blank">
+            <Item data-testid="market-cap-box">
               <ItemIcon
                 style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
                 data-testid="market-cap-icon"
@@ -124,16 +124,16 @@ const HomeStatistic = () => {
                   Last updated {moment(usdMarket.last_updated).fromNow()}
                 </TimeDuration>
               </Content>
-            </Link>
-          </Item>
+            </Item>
+          </Link>
         ) : (
           <SkeletonBox />
         )}
       </Grid>
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
         {currentEpoch ? (
-          <Item data-testid="current-epoch-box">
-            <Link to={details.epoch(currentEpoch?.no)}>
+          <Link href={details.epoch(currentEpoch?.no)} target="_blank">
+            <Item data-testid="current-epoch-box">
               <Content>
                 <Box display={"flex"} alignItems="center" position={"absolute"} right={10} top={15}>
                   <ProgressCircle
@@ -181,16 +181,16 @@ const HomeStatistic = () => {
                   </b>
                 </XValue>
               </Content>
-            </Link>
-          </Item>
+            </Item>
+          </Link>
         ) : (
           <SkeletonBox />
         )}
       </Grid>
       <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={6}>
         {data && usdMarket ? (
-          <Item data-testid="live-stake-box">
-            <Link to={routers.DELEGATION_POOLS}>
+          <Link href={routers.DELEGATION_POOLS} target="_blank">
+            <Item data-testid="live-stake-box">
               <Content>
                 <ItemIcon
                   style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
@@ -242,8 +242,8 @@ const HomeStatistic = () => {
                   </CustomTooltip>
                 </SmallValue>
               </Content>
-            </Link>
-          </Item>
+            </Item>
+          </Link>
         ) : (
           <SkeletonBox />
         )}

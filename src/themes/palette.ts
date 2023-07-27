@@ -73,7 +73,8 @@ const YELLOW = {
 };
 
 const BLUE = {
-  100: "#A3D5FF",
+  100: "#0048DB",
+  100_15: alpha("#0048DB", 0.15),
   200: "#78BBF2",
   300: "#5DA2DC",
   400: "#4084BD",
@@ -89,7 +90,8 @@ const BLUE = {
 
 const PURPLE = {
   200: "#E3E2FC",
-  500: "#6866D4"
+  500: "#6866D4",
+  600: "#D6E2FF"
 };
 
 const primary = {
