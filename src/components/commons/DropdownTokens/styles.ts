@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const CustomSelect = styled(Select)`
   font-family: var(--font-family-text);
   background: ${(props) => props.theme.palette.secondary[0]};
-  color: ${(props) => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.secondary.light};
   border-radius: 8px;
   border: 1px solid rgba(152, 162, 179, 0.5);
   height: 35px;

@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -48,6 +48,7 @@ const Card = ({
     }, 0);
 
   const { isMobile } = useScreen();
+  const theme = useTheme();
   return (
     <Box textAlign={"left"} mb={1} sx={{ background: (theme) => theme.palette.background.paper }}>
       <Header fontWeight="bold">
@@ -220,11 +221,11 @@ const Card = ({
             fontWeight={"bold"}
             component="span"
             pr={1}
-            sx={isFailed ? { color: (theme) => theme.palette.secondary.main } : {}}
+            sx={{ color: (theme) => (isFailed ? theme.palette.secondary.light : theme.palette.secondary.main) }}
           >
             {isFailed ? 0 : type === "down" ? `-${formatADAFull(totalADA)}` : `${formatADAFull(totalADA)}`}
           </Box>
-          <ADAicon sx={isFailed ? { color: (theme: any) => theme.palette.secondary.main } : {}} />
+          <ADAicon sx={{ color: isFailed ? theme.palette.secondary.light : theme.palette.secondary.main }} />
         </div>
       </ItemFooter>
     </Box>

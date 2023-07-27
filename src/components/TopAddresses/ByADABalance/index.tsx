@@ -1,4 +1,4 @@
-import { Box, MenuItem, useTheme } from "@mui/material";
+import { Box, MenuItem } from "@mui/material";
 import { useState } from "react";
 
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -17,7 +17,6 @@ const perPages = [10, 20, 50, 100];
 
 const TopAddressesByADABalance = () => {
   const [pageSize, setPageSize] = useState("50");
-  const theme = useTheme();
   const { error, data, initialized, loading, lastUpdated } = useFetchList<Contracts>(
     API.ADDRESS.TOP_ADDRESS,
     { page: 0, size: +pageSize },
@@ -83,8 +82,8 @@ const TopAddressesByADABalance = () => {
             sx={{ color: ({ palette }) => palette.secondary.main }}
           >
             {perPages.map((item) => (
-              <MenuItem style={{ color: `${theme.palette.secondary.main} !important` }} key={item} value={item}>
-                {item}
+              <MenuItem key={item} value={item}>
+                <Box color={({ palette }) => `${palette.secondary.main} !important`}>{item}</Box>
               </MenuItem>
             ))}
           </SelectMui>

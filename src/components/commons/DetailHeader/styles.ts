@@ -431,11 +431,14 @@ export const StyledSelect = styled(Select)(({ theme }) => ({
   }
 }));
 
-export const StyledMenuItem = styled(MenuItem)(() => ({
+export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   height: 40,
   display: "flex",
   alignItems: "center",
-  justifyContent: "space-between"
+  justifyContent: "space-between",
+  ":hover": {
+    background: theme.palette.primary[200]
+  }
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({
