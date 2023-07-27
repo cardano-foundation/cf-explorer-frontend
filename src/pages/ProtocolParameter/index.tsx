@@ -379,7 +379,7 @@ export const ProtocolParameterHistory = () => {
           bgcolor={({ palette }) =>
             r[t as ProtocolTypeKey] !== null
               ? ["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string)
-                ? palette.warning[100]
+                ? palette.success[100]
                 : "transparent"
               : "transparent"
           }

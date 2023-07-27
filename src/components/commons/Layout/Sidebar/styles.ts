@@ -13,8 +13,9 @@ export const NavbarContainer = styled("nav")<{ vh: number }>(({ theme, vh }) => 
   padding: "25px 0px 60px",
   textAlign: "left",
   boxSizing: "border-box",
+  background: theme.palette.primary[100],
   [theme.breakpoints.down("md")]: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.primary[100],
     padding: "16px 0px"
   }
 }));

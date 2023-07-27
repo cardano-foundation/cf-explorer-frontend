@@ -51,11 +51,11 @@ export const TRow = styled("tr")<{ selected?: number }>`
   padding: 10px 0;
   font-size: 14px;
   position: relative;
-  background-color: ${({ selected, theme }) => (selected ? theme.palette.background.neutral : "transparent")};
+  background-color: ${({ selected, theme }) => (selected ? theme.palette.primary[100] : "transparent")};
   &:hover {
     border-radius: 10px;
     > td {
-      background-color: ${({ theme }) => theme.palette.background.neutral} !important;
+      background-color: ${({ theme }) => theme.palette.primary[100]} !important;
     }
   }
 `;
@@ -76,8 +76,7 @@ export const TCol = styled("td")<{
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.secondary.light};
   padding: 24px 20px;
-  background: ${(props) =>
-    props.selected ? props.theme.palette.background.neutral : props.theme.palette.secondary[0]};
+  background: ${(props) => (props.selected ? props.theme.palette.primary[100] : props.theme.palette.secondary[0])};
 `;
 
 export const TBody = styled("tbody")`

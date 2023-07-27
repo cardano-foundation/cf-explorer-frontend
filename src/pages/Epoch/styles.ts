@@ -30,18 +30,18 @@ export const BlueText = styled("span")`
   color: ${(props) => props.theme.palette.secondary.light};
 `;
 
-export const Status = styled("span")<{ status: keyof typeof EPOCH_STATUS }>(({ theme, status }) => ({
+export const Status = styled("span")<{ status: keyof typeof EPOCH_STATUS }>(({ theme }) => ({
   fontFamily: "var(--font-family-title)",
   fontWeight: "var(--font-weight-bold)",
   borderRadius: "2px",
   textTransform: "uppercase",
   fontSize: "10px",
-  color:
-    status === "REWARDING"
-      ? theme.palette.success[800]
-      : status === "FINISHED"
-      ? theme.palette.primary.main
-      : theme.palette.warning[800],
+  color: theme.palette.secondary.light,
+  // status === "REWARDING"
+  //   ? theme.palette.success[800]
+  //   : status === "FINISHED"
+  //   ? theme.palette.primary.main
+  //   : theme.palette.warning[800],
   [theme.breakpoints.down("md")]: {
     fontSize: "7px"
   }

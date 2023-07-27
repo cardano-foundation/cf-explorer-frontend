@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 
 export const StyledAAmount = styled(Box)`
   display: flex;
+  color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
 export const StyledTextField = styled(TextField)`
   .MuiInputBase-root {
     padding: 0 9px;
     height: 40px;
-    border: 1.5px solid ${({ theme }) => theme.palette.border.main};
+    border: 1.5px solid ${({ theme }) => theme.palette.primary[200]};
     border-radius: 8px;
   }
   .MuiInputBase-input {

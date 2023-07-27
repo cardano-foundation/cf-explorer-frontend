@@ -108,7 +108,7 @@ export const ContractRedeemer = ({ item, txHash }: IContractDiagramProps) => {
 export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) => {
   const isTypeIn = type === "in";
   return (
-    <DatumnElement isContractPage={+!!txHash}>
+    <DatumnElement>
       <DatumnItem
         isTxHash={!!txHash}
         sx={{
@@ -132,11 +132,11 @@ export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) =>
   );
 };
 
-const ContractBytecode = ({ item, txHash }: IContractDiagramProps) => {
+const ContractBytecode = ({ item }: IContractDiagramProps) => {
   return (
     <CardDiagram>
       <TabLabel>Contract Bytecode</TabLabel>
-      <TabElement isContractPage={+!!txHash}>{item.scriptBytes}</TabElement>
+      <TabElement>{item.scriptBytes}</TabElement>
     </CardDiagram>
   );
 };

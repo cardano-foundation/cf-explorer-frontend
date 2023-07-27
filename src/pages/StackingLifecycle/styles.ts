@@ -124,6 +124,7 @@ export const WrapReportName = styled(Box)`
   text-overflow: ellipsis;
   max-width: 20ch;
 `;
-export const StyledTabLabel = styled(TabLabel)`
+export const StyledTabLabel = styled(TabLabel)<{ active: number }>`
+  color: ${({ active, theme }) => (active ? theme.palette.primary.main : theme.palette.secondary.light)};
   font-size: 18px;
 `;
