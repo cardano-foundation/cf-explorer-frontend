@@ -63,7 +63,7 @@ export const Value = styled(Box)(({ theme }) => ({
   wordBreak: "break-all",
   width: "100%",
   textAlign: "left",
-  background: theme.palette.primary[200],
+  background: theme.palette.primary[100],
   padding: `${theme.spacing(2)} 50px ${theme.spacing(2)} ${theme.spacing(1)}`,
   minHeight: 40,
   position: "relative",
