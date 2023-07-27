@@ -93,9 +93,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
     getPortalPosition();
 
     const getScrollParent = (node: HTMLElement | null): HTMLElement | null => {
-      if (node == null) {
-        return null;
-      }
+      if (!node) return null;
 
       if (!node.parentElement || node.scrollHeight > node.clientHeight) {
         return node;
@@ -111,6 +109,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
       parentScroll.removeEventListener("scroll", getPortalPosition);
       if (timeout) clearTimeout(timeout);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width, setOpen]);
 
   return (
@@ -178,16 +177,14 @@ declare interface SingleDatePickerProps extends ReactDatePickerProps<string> {
   itemKey: number | string;
 }
 
-const SingleDatePicker = (props: SingleDatePickerProps) => {
+export const SingleDatePicker = (props: SingleDatePickerProps) => {
   const { hideFuture, itemKey, ...datePickerProps } = props;
   const [yearModal, setYearModal] = useState(false);
   const yearModalRef = useRef<HTMLInputElement>();
   const toggleRef = useRef<HTMLButtonElement | null>();
   const activeYearRef = useRef<HTMLInputElement>();
 
-  const getYear = (date: Date) => date.getFullYear();
-  const getMonth = (date: Date) => date.getMonth();
-  const years = range(1990, hideFuture ? getYear(new Date()) : 2999);
+  const years = range(1990, hideFuture ? moment().year() + 1 : 2999);
 
   useEffect(() => {
     if (yearModal) {
@@ -200,7 +197,7 @@ const SingleDatePicker = (props: SingleDatePickerProps) => {
       document.addEventListener("mousedown", handleClickOutside);
       const timeout = setTimeout(() => {
         activeYearRef.current?.scrollIntoView({
-          behavior: "auto",
+          behavior: "smooth",
           block: "center"
         });
       }, 200);
@@ -231,7 +228,7 @@ const SingleDatePicker = (props: SingleDatePickerProps) => {
         }) => (
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <Box pl="12px" fontWeight={600} fontSize="16px" display="flex" alignItems="center">
-              {MONTHS[getMonth(date)]} {getYear(date)}
+              {MONTHS[moment(date).month()]} {moment(date).year()}
               <IconButton
                 ref={(ref) => (toggleRef.current = ref)}
                 onClick={() => setYearModal(!yearModal)}
@@ -244,7 +241,7 @@ const SingleDatePicker = (props: SingleDatePickerProps) => {
               <HiddenScroll ref={yearModalRef}>
                 <MyGrid>
                   {years.map((year) => {
-                    const isActive = year === getYear(date);
+                    const isActive = year === moment(date).year();
                     return (
                       <SelectYear
                         isActive={+isActive}
