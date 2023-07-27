@@ -56,7 +56,7 @@ export const ValueItem = styled(Box)`
   color: black;
   font-weight: var(--font-weight-bold);
   font-size: 14px;
-  color: ${(props) => props.theme.palette.secondary.light};
+  color: ${(props) => props.theme.palette.secondary.main};
 `;
 
 export const RowItem = styled(Box)`

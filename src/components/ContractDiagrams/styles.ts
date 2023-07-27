@@ -46,7 +46,7 @@ export const CardDiagram = styled(Box)`
   margin-top: 50px;
 `;
 
-export const TabElement = styled(Box)<{ isContractPage?: number }>`
+export const TabElement = styled(Box)`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -59,7 +59,7 @@ export const TabElement = styled(Box)<{ isContractPage?: number }>`
   padding: 18px 20px;
   border-radius: 5px;
   text-align: left;
-  background: ${({ isContractPage, theme }) => (isContractPage ? theme.palette.common.white : theme.palette.grey[500])};
+  background: ${({ theme }) => theme.palette.grey[500]};
   color: ${(props) => props.theme.palette.common.black};
   text-align: left;
   max-height: 150px;
@@ -84,8 +84,8 @@ export const DataTitle = styled(Typography)`
   font-size: 14px;
   color: ${(props) => props.theme.palette.secondary.main};
 `;
-export const DatumnElement = styled(Box)<{ isContractPage?: number }>`
-  background: ${({ isContractPage, theme }) => (isContractPage ? theme.palette.common.white : theme.palette.grey[500])};
+export const DatumnElement = styled(Box)`
+  background: ${({ theme }) => theme.palette.grey[500]};
   color: ${(props) => props.theme.palette.common.black};
   word-break: break-word;
   text-align: left;

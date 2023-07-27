@@ -8,7 +8,7 @@ const StyledLink = styled(Link)`
   padding: 10px 20px;
   margin: 20px 30px;
   background: ${(props) => props.theme.palette.primary.main};
-  color: ${(props) => props.theme.palette.primary[100]}!important;
+  color: ${(props) => props.theme.palette.secondary[0]}!important;
   border-radius: 6px;
   font-weight: var(--font-weight-bold);
   ${({ theme }) => theme.breakpoints.down("sm")} {

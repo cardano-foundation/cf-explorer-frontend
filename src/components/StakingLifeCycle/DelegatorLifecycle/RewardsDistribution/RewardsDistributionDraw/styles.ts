@@ -79,7 +79,7 @@ export const RewardAccountCcontainer = styled(RectBox)(({ theme }) => ({
 
 export const HolderWrapper = styled(Box)(({ theme }) => ({
   padding: "20px 35px",
-  border: `1.5px dashed ${theme.palette.border.hint}`,
+  border: `1.5px dashed ${theme.palette.primary[200]}`,
   background: alpha(theme.palette.secondary.light, 0.03),
   borderRadius: 25,
   width: "100%",

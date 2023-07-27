@@ -10,7 +10,7 @@ export const SelectDateButton = styled(Box)(() => ({
 
 export const WrapCustomDatePicker = styled(Box)(({ theme }) => ({
   position: "relative",
-  border: `1.5px solid ${theme.palette.border.main}`,
+  border: `1.5px solid ${theme.palette.primary[200]}`,
   borderRadius: "8px",
   backgroundColor: theme.palette.common.white,
   padding: "12px 14px",
@@ -98,7 +98,7 @@ export const CloseButton = styled(IconButton)(({ theme }) => ({
   right: -322,
   width: 24,
   height: 24,
-  border: `1px solid ${theme.palette.grey["A100"]}`,
+  border: `1px solid ${theme.palette.primary[200]}`,
   cursor: "pointer",
   padding: 0,
   margin: 8,

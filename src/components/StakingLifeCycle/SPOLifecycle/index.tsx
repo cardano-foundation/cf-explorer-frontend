@@ -166,7 +166,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
     if (hasData) {
       return `${alpha(palette.secondary.main, 0.7)} !important`;
     }
-    return `${palette.primary[100]} !important`;
+    return `${palette.primary[200]} !important`;
   };
 
   const handleChangeTab = (step: StepperProps, idx: number) => {

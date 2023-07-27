@@ -61,17 +61,17 @@ const TransactionChart: React.FC = () => {
   const sumSmartContract = (data || []).reduce((prev, item) => prev + item.smartContract, 0);
 
   const dataOverview = [
-    { key: "trx", title: "Simple transactions", value: sumSimple || 0 },
-    { key: "simple", title: <Box textAlign={"left"}>Smart contracts</Box>, value: sumSmartContract || 0 },
     {
-      key: "complex",
+      key: "trx",
       title: (
         <Box textAlign={"left"}>
           Metadata <Box fontSize={"0.6875rem"}>(Without smart contracts)</Box>
         </Box>
       ),
       value: sumMetadata || 0
-    }
+    },
+    { key: "simple", title: <Box textAlign={"left"}>Smart contracts</Box>, value: sumSmartContract || 0 },
+    { key: "complex", title: "Simple transactions", value: sumSimple || 0 }
   ];
 
   const renderLoading = () => {
@@ -183,13 +183,10 @@ const renderTooltipContent = (o: any, range: Time) => {
         )}`}</Box>
         {(payload || []).reverse().map((entry: any, index: number) => (
           <Box key={`item-${index}`} mt={1}>
-            <Box color={({ palette }) => alpha(palette.secondary.main, 0.7)} fontSize={"0.75rem"}>{`${
-              nameTooltips[entry.name as keyof typeof nameTooltips]
-            }`}</Box>
-            <Box fontWeight={"bold"} style={{ color: entry.fill }}>{`${numberWithCommas(entry.value)} (${getPercent(
-              entry.value,
-              total
-            )})`}</Box>
+            <Box fontSize={"0.75rem"}>{`${nameTooltips[entry.name as keyof typeof nameTooltips]}`}</Box>
+            <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.light}>{`${numberWithCommas(
+              entry.value
+            )} (${getPercent(entry.value, total)})`}</Box>
           </Box>
         ))}
       </Box>
