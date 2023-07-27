@@ -1,4 +1,4 @@
-import { Box, styled, Button, alpha } from "@mui/material";
+import { Box, styled, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const ModalContainer = styled(Box)(({ theme }) => ({

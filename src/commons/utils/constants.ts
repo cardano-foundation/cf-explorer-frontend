@@ -60,8 +60,6 @@ export enum EPOCH_STATUS {
   SYNCING = "Syncing"
 }
 
-export const MAX_SLOT_EPOCH = 432000;
-
 export const NETWORK_NAMES = JSON.parse(
   String(process.env.REACT_APP_NETWORK_NAMES || get(window, "env.REACT_APP_NETWORK_NAMES"))
 );
@@ -80,6 +78,8 @@ export const FRONT_END_NETWORK = {
 export const NETWORK: NETWORKS =
   (process.env.REACT_APP_NETWORK as NETWORKS) || get(window, "env.REACT_APP_NETWORK") || NETWORKS.mainnet;
 
+export const MAX_SLOT_EPOCH = NETWORK?.toLowerCase() === NETWORKS.preview ? 86400 : 432000;
+
 export enum TRANSACTION_STATUS {
   FAILED = "FAILED",
   SUCCESS = "SUCCESS",
@@ -95,7 +95,6 @@ export enum STAKE_KEY_STATUS {
   ACTIVE = "ACTIVE",
   DEACTIVATED = "DEACTIVATED"
 }
-
 export enum RECEIVED_REWARDS {
   LEADER = "LEADER",
   MEMBER = "MEMBER",
@@ -104,10 +103,10 @@ export enum RECEIVED_REWARDS {
 
 export const AUTH_API_URL = process.env.REACT_APP_AUTH_API_URL || get(window, "env.REACT_APP_AUTH_API_URL");
 export const API_URL = process.env.REACT_APP_API_URL || get(window, "env.REACT_APP_API_URL");
-export const CARDANO_NEWS_URL = process.env.REACT_APP_CARDANO_NEWS_URL || get(window, "env.REACT_APP_CARDANO_NEWS_URL");
-export const APP_VERSION = process.env.REACT_APP_VERSION || get(window, "env.REACT_APP_VERSION");
+export const APP_VERSION = process.env.REACT_APP_VERSION || get(window, "env.REACT_APP_VERSION") || "1.0.0";
 export const EXT_ADA_PRICE_URL =
   process.env.REACT_APP_EXT_ADA_PRICE_URL || get(window, "env.REACT_APP_EXT_ADA_PRICE_URL");
+export const CARDANO_NEWS_URL = process.env.REACT_APP_CARDANO_NEWS_URL || get(window, "env.REACT_APP_CARDANO_NEWS_URL");
 
 export enum ACCOUNT_ERROR {
   UNKNOWN_ERROR = "CC_1",

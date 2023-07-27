@@ -1,6 +1,5 @@
 import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
 
-
 export const IconButtonBack = styled(IconButtonMui)(() => ({
   padding: 0
 }));

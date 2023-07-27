@@ -87,7 +87,11 @@ export const Author = styled("span")`
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.success[800]};
   background-color: ${(props) => props.theme.palette.success[100]};
+<<<<<<< HEAD
   padding: 6px 2px;
+=======
+  padding: 2px 6px;
+>>>>>>> sota-test
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-size: 11px;
@@ -102,6 +106,7 @@ export const ItemTitle = styled("h5")`
   -webkit-line-clamp: 3;
   color: ${(props) => props.theme.palette.secondary.main};
   overflow: hidden;
+  text-overflow: ellipsis;
   font-size: var(--font-size-text-x-small);
   line-height: 1.15;
   margin-top: 0;
@@ -133,7 +138,7 @@ export const ResourceHref = styled("span")`
   font-weight: 700;
   font-size: 10px;
   cursor: pointer;
-  padding: 6px 2px;
+  padding: 2px 6px;
 `;
 
 export const Description = styled(Box)`
@@ -145,7 +150,15 @@ export const Description = styled(Box)`
   text-overflow: ellipsis;
   font-size: 12px;
   font-weight: 400;
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
+
+  ${({ theme }) => theme.breakpoints.down("lg")} {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    display: none;
+  }
 `;
 
 export const FooterCard = styled(Box)`
@@ -168,9 +181,14 @@ export const NextSwipper = styled(Box)`
   position: absolute;
   right: -10px;
   bottom: 46%;
-  ${({ theme }) => theme.breakpoints.up("sm")} {
+  ${({ theme }) => theme.breakpoints.down("lg")} {
     display: none;
   }
+`;
+
+export const PrevSwiper = styled(NextSwipper)`
+  left: -10px;
+  transform: rotate(180deg);
 `;
 
 export const CustomGrid = styled(Grid)`
