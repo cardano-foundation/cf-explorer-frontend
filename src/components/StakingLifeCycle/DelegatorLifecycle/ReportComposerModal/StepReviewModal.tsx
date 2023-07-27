@@ -68,14 +68,14 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
         await generateStakeKeyReport(paramsStakeKeyReport);
       }
 
-      toast.success("Generate report success");
+      toast.success("Report generated successfully");
       handleCloseModal();
       setTimeout(() => {
         history.push(details.dashboard(isPoolReport ? "pools" : "stake-key"));
       }, 2000);
     } catch (err: any) {
       console.error(err);
-      toast.error("This stake address has no transaction history");
+      toast.error("Failed to generate report. Please try again.");
     }
     setLoading(false);
   };
