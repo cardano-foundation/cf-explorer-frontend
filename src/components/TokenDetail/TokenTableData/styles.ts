@@ -1,4 +1,4 @@
-import { Box, Select, alpha, styled } from "@mui/material";
+import { Box, Select, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledSelect = styled(Select)`
@@ -104,7 +104,7 @@ export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => 
 export const ViewJson = styled(Box)(({ theme }) => ({
   overflowY: "auto",
   textAlign: "left",
-  backgroundColor: `${alpha(theme.palette.secondary.light, 0.1)}`,
+  backgroundColor: `${theme.palette.secondary[0]}`,
   borderRadius: 10,
   padding: theme.spacing(2),
   marginBottom: theme.spacing(3),
