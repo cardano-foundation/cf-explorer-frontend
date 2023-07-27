@@ -21,7 +21,8 @@ import {
   TabContent,
   TabHeader,
   StyledTab,
-  StyledTabs
+  StyledTabs,
+  StyledContainer
 } from "./styles";
 
 export interface SavedReport {
@@ -71,7 +72,7 @@ const StakingLifecycle: React.FC = () => {
     );
 
   return (
-    <Container>
+    <StyledContainer>
       <StakingLifeCycleSearch />
       <TitleHead>
         <TextHeadline>Saved reports</TextHeadline>
@@ -124,7 +125,7 @@ const StakingLifecycle: React.FC = () => {
           />
         </TabContent>
       </TabContext>
-    </Container>
+    </StyledContainer>
   );
 };
 
