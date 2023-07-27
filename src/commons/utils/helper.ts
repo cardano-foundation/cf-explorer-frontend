@@ -212,6 +212,14 @@ export const getHostname = (url: string): string => {
   return hostname;
 };
 
+export const getHostname = (url: string): string => {
+  try {
+    return new URL(url).hostname;
+  } catch {
+    return "";
+  }
+};
+
 export const toFixedBigNumber = (value: string | number, dp = 0, rm = BigNumber.ROUND_DOWN): number => {
   return +new BigNumber(value).toFixed(dp, rm);
 };
