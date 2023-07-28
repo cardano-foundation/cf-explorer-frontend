@@ -7,6 +7,7 @@ export const TitleDetail = styled(Box)`
   font-size: var(--font-size-title);
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-title);
+  color: ${(props) => props.theme.palette.secondary.main};
 `;
 
 export const TokenAddress = styled("small")`
@@ -14,7 +15,7 @@ export const TokenAddress = styled("small")`
   word-wrap: break-word;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text);
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
   line-height: 1.5;
 `;
 export const AddressLink = styled(Link)`
@@ -22,14 +23,14 @@ export const AddressLink = styled(Link)`
   word-wrap: break-word;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text);
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
   font-size: 14px;
 `;
 
 export const AddressGroup = styled(Box)(({ theme }) => ({
   marginTop: "15px",
   marginBottom: "24px",
-  background: theme.palette.secondary.light,
+  background: theme.palette.primary[200],
   borderRadius: "8px",
   padding: "12px 20px",
   display: "flex",
@@ -47,7 +48,7 @@ export const ItemDetail = styled(Box)`
 
 export const LabelItem = styled(Box)`
   margin-left: 10px;
-  color: ${(props) => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.secondary.light};
   font-size: 14px;
 `;
 
@@ -55,6 +56,7 @@ export const ValueItem = styled(Box)`
   color: black;
   font-weight: var(--font-weight-bold);
   font-size: 14px;
+  color: ${(props) => props.theme.palette.secondary.main};
 `;
 
 export const RowItem = styled(Box)`

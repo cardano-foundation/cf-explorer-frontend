@@ -1,10 +1,10 @@
-import { Box, Button, Divider, FormHelperText, Input, styled } from "@mui/material";
+import { Box, Button, Divider, Input, styled } from "@mui/material";
 
 import { User2RC } from "src/commons/resources";
 
 export const Container = styled(Box)`
   display: flex;
-  background-color: ${({ theme }) => theme.palette.background.default};
+  background-color: ${({ theme }) => theme.palette.primary[100]};
   min-height: 100vh;
   min-width: 100vw;
   justify-content: center;
@@ -15,7 +15,7 @@ export const Container = styled(Box)`
 export const Title = styled(Box)`
   font-weight: 700;
   font-size: 20px;
-  color: ${({ theme }) => theme.palette.grey[500]};
+  color: ${({ theme }) => theme.palette.secondary.light};
 `;
 
 export const WrapContent = styled(Box)`
@@ -38,7 +38,7 @@ export const WrapHintText = styled(Box)`
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  color: ${({ theme }) => theme.palette.grey[400]};
+  color: ${({ theme }) => theme.palette.secondary.light};
   display: flex;
   gap: 5px;
 `;
@@ -72,7 +72,7 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
     borderRadius: "8px",
     borderWidth: "1px",
     borderStyle: "solid",
-    borderColor: error ? theme.palette.error.main : theme.palette.grey[300],
+    borderColor: error ? theme.palette.error.main : theme.palette.secondary.light,
     "&::before": {
       display: "none"
     },
@@ -87,11 +87,8 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
   })
 );
 
-export const FormHelperTextCustom = styled(FormHelperText)`
-  font-size: 14px
-  line-height: 16px;
-`;
 export const Label = styled(Box)`
+  color: ${({ theme }) => theme.palette.secondary.light};
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
@@ -102,19 +99,19 @@ export const ForgotPassword = styled(Box)`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-  color: ${({ theme }) => theme.palette.blue[800]};
+  color: ${({ theme }) => theme.palette.primary.main};
   text-decoration: underline;
   cursor: pointer;
 `;
 
 export const UserCustomIcon = styled(User2RC)`
   path {
-    fill: ${({ theme }) => theme.palette.grey[400]};
+    fill: ${({ theme }) => theme.palette.secondary.light};
   }
 `;
 
 export const WrapButton = styled(Button)`
-  background: ${({ theme }) => theme.palette.grey[700]};
+  background: ${({ theme }) => theme.palette.secondary.main};
   padding: 15px 20px;
   border-radius: 8px;
   font-weight: 700;
@@ -137,14 +134,14 @@ export const WrapButtonConnectWallet = styled(Button)`
 
 export const WrapDivider = styled(Divider)`
   width: 45%;
-  background-color: ${({ theme }) => theme.palette.grey[300]};
+  background-color: ${({ theme }) => theme.palette.secondary.light};
 `;
 
 export const WrapOr = styled(Box)`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-  color: ${({ theme }) => theme.palette.grey[300]};
+  color: ${({ theme }) => theme.palette.secondary.light};
   text-transform: uppercase;
 `;
 
@@ -153,5 +150,5 @@ export const WrapSignUp = styled(Box)`
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  color: ${({ theme }) => theme.palette.blue[800]};
+  color: ${({ theme }) => theme.palette.primary.main};
 `;

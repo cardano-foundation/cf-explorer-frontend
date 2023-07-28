@@ -1,62 +1,6 @@
-import { Typography, Box, styled, alpha, IconButton as IconButtonMui } from "@mui/material";
+import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
 
-import ADAicon from "src/components/commons/ADAIcon";
 
-export const HoldBox = styled(Box)(({ theme }) => ({
-  width: "200px",
-  height: "35px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.red[600]}`,
-  borderRadius: "10px",
-  marginRight: theme.spacing(5),
-  position: "relative",
-  background: theme.palette.common.white,
-  "::after": {
-    content: '"HOLD"',
-    borderRadius: "4px",
-    fontWeight: "bold",
-    color: theme.palette.common.white,
-    padding: "6px 8px",
-    fontSize: "14px",
-    position: "absolute",
-    top: "-50%",
-    left: theme.spacing(2),
-    background: theme.palette.red[600],
-    transform: " translate(0, 60%)"
-  }
-}));
-export const FeeBox = styled(Box)(({ theme }) => ({
-  height: "35px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.red[600]}`,
-  borderRadius: "10px",
-  background: theme.palette.common.white,
-  position: "relative",
-  marginLeft: "10px",
-  "::after": {
-    content: '"FEES"',
-    borderRadius: "4px",
-    fontWeight: "bold",
-    color: theme.palette.common.white,
-    padding: "6px 8px",
-    fontSize: "14px",
-    position: "absolute",
-    top: "-50%",
-    left: theme.spacing(2),
-    background: theme.palette.red[600],
-    transform: " translate(0, 60%)"
-  }
-}));
-
-export const IconButton = styled(IconButtonMui)(({ theme }) => ({
-  background: theme.palette.grey[100]
-}));
 export const IconButtonBack = styled(IconButtonMui)(() => ({
   padding: 0
 }));
@@ -67,22 +11,14 @@ export const Info = styled(Box)(({ theme }) => ({
   marginLeft: theme.spacing(2),
   width: "max-content"
 }));
+
 export const InfoText = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   marginLeft: theme.spacing(1),
   fontWeight: 600,
-  fontSize: "14px"
-}));
-
-export const FilterDateLabel = styled("span")(({ theme }) => ({
-  fontSize: 14,
-  fontWeight: 400,
-  color: theme.palette.grey[400],
-  [theme.breakpoints.down("sm")]: {
-    display: "none",
-    fontSize: 12
-  }
+  fontSize: "14px",
+  color: theme.palette.secondary.main
 }));
 
 export const StepInfo = styled(Box)(({ theme }) => ({
@@ -113,21 +49,8 @@ export const InfoGroup = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) 
   }
 }));
 
-export const ADATotalStake = styled(Typography)`
-  font-size: 12px;
-  position: absolute;
-  left: 50%;
-  bottom: 36px;
-  transform: translateX(-50%);
-  color: #13152f;
-`;
-
 export const ADATotalStakeContainer = styled(Box)`
   position: relative;
-`;
-
-export const StyledADAicon = styled(ADAicon)`
-  color: #13152f;
 `;
 
 export const ItemList = styled(Box)(({ theme }) => ({
@@ -142,7 +65,7 @@ export const ItemList = styled(Box)(({ theme }) => ({
 }));
 
 export const Item = styled(Box)(({ theme, flexDirection }) => ({
-  backgroundColor: alpha(theme.palette.grey[300], 0.1),
+  backgroundColor: theme.palette.secondary[0],
   padding: 20,
   flex: 1,
   display: "flex",
@@ -165,7 +88,7 @@ export const Label = styled(Box)(({ theme }) => ({
   fontWeight: 700,
   fontSize: 14,
   lineHeight: "16px",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.light,
   marginBottom: 8
 }));
 

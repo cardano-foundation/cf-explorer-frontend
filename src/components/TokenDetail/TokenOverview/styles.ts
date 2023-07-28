@@ -10,7 +10,7 @@ export const HeaderDetailContainer = styled(Container)`
 `;
 
 export const WrapTitle = styled(Box)(({ theme }) => ({
-  opacity: 0.5,
+  color: theme.palette.secondary.light,
   [theme.breakpoints.down("md")]: {
     paddingBottom: "4px"
   }
@@ -99,7 +99,7 @@ export const Icon = styled("img")`
 `;
 
 export const PolicyId = styled(Box)(({ theme }) => ({
-  color: theme.palette.common.black,
+  color: theme.palette.secondary.main,
   fontSize: "1rem",
   fontWeight: "bold",
   wordBreak: "break-word",
@@ -270,7 +270,7 @@ export const ButtonClose = styled(Button)(({ theme }) => ({
 
 export const ViewJson = styled(Box)(({ theme }) => ({
   textAlign: "left",
-  backgroundColor: alpha(theme.palette.grey[300], 0.1),
+  backgroundColor: alpha(theme.palette.secondary.light, 0.1),
   borderRadius: 10,
   padding: theme.spacing(2),
   "& .object-contentw": {
@@ -325,7 +325,7 @@ export const TokenHeader = styled(Box)(({ theme }) => ({
   alignItems: "center",
   fontWeight: "bold",
   marginBottom: theme.spacing(2),
-  color: theme.palette.common.black,
+  color: theme.palette.secondary.main,
   overflowWrap: "anywhere"
 }));
 
@@ -333,17 +333,25 @@ export const TokenDescription = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "left",
   fontSize: "0.75rem",
-  color: alpha(theme.palette.common.black, 0.5),
+  color: theme.palette.secondary.light,
   flexDirection: "column"
 }));
 
 export const TokenUrl = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(1),
-  cursor: "pointer"
+  cursor: "pointer",
+  fontWeight: "bold",
+  color: theme.palette.primary.main,
+  fontFamily: "Roboto, sans-serif !important",
+  textAlign: "left",
+  wordBreak: "break-all",
+  fontSize: "12px",
+  display: "inline-block",
+  textDecoration: "underline !important"
 }));
 
 export const PolicyScriptBtn = styled(Button)(({ theme }) => ({
-  color: theme.palette.primary.main,
+  color: `${theme.palette.secondary.main} !important`,
   fontFamily: '"Roboto", sans-serif',
   fontSize: "14px",
   border: "none",
@@ -353,5 +361,9 @@ export const PolicyScriptBtn = styled(Button)(({ theme }) => ({
   marginTop: theme.spacing(1),
   justifyContent: "flex-start",
   textAlign: "left",
-  cursor: "pointer"
+  cursor: "pointer",
+  fontWeight: "bold",
+  wordBreak: "break-all",
+  display: "inline-block",
+  textDecoration: "underline !important"
 }));

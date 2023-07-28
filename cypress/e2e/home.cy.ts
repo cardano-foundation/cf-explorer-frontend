@@ -6,7 +6,7 @@ describe("Home page should display all elements", () => {
   });
 
   it("should navigate to the home page", () => {
-    cy.title().should("eq", "Cardano Blockchain Explorer");
+    cy.title().should("eq", "Iris - Cardano Blockchain Explorer");
     cy.getBySelector('home-title').should("have.text", "Cardano Blockchain Explorer");
   });
 

@@ -142,7 +142,18 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       selected={isActiveMenu(href)}
                       sx={(theme) => ({
                         ...itemStyle(theme, sidebar),
-                        ...(isActiveMenu(href) ? { backgroundColor: `${theme.palette.success.dark} !important` } : {})
+                        ...(isActiveMenu(href)
+                          ? {
+                              backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
+                              color: (theme) => theme.palette.secondary[0]
+                            }
+                          : { color: (theme) => theme.palette.secondary.light }),
+                        fontWeight: "bold !important",
+                        ":hover": isActiveMenu(href)
+                          ? {
+                              backgroundColor: `${theme.palette.primary.dark}  !important`
+                            }
+                          : { backgroundColor: `${theme.palette.primary[200]} !important` }
                       })}
                     >
                       {icon ? (
@@ -165,10 +176,17 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`menu-${index}` === active
                         ? {
-                            backgroundColor: (theme) => `${theme.palette.green[700_10]} !important`,
-                            color: (theme) => theme.palette.grey[500]
+                            backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
+                            color: (theme) => theme.palette.secondary[0]
                           }
-                        : { color: (theme) => theme.palette.grey[500] })
+                        : { color: (theme) => theme.palette.secondary.light }),
+                      fontWeight: "bold !important",
+                      ":hover":
+                        `menu-${index}` === active
+                          ? {
+                              backgroundColor: `${theme.palette.primary.dark} !important`
+                            }
+                          : { backgroundColor: `${theme.palette.primary[200]} !important` }
                     })}
                   >
                     {icon ? (
@@ -231,12 +249,22 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
                               ...(isActiveSubMenu(href, item.title)
-                                ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
-                                : {}),
+                                ? {
+                                    backgroundColor: (theme) => `${theme.palette.primary[200]} !important`,
+                                    color: (theme) => `${theme.palette.secondary.main} !important`
+                                  }
+                                : { color: (theme) => theme.palette.secondary.light }),
                               paddingLeft: "70px",
                               [theme.breakpoints.down("md")]: {
                                 paddingLeft: "60px"
-                              }
+                              },
+                              ":hover": isActiveSubMenu(href, item.title)
+                                ? {
+                                    color: `#fff !important`
+                                  }
+                                : {
+                                    backgroundColor: (theme) => `${theme.palette.primary[200]} !important`
+                                  }
                             })}
                           >
                             {icon ? (
@@ -266,6 +294,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
           sx={{
             margin: "10px 0px 10px 30px",
             width: sidebar ? 200 : 25,
+            borderColor: theme.palette.primary[200],
             transition: "width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms",
             [theme.breakpoints.down("md")]: {
               marginLeft: "20px"
@@ -297,8 +326,17 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       sx={(theme) => ({
                         ...itemStyle(theme, sidebar),
                         ...(pathname === href
-                          ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
-                          : {})
+                          ? {
+                              backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
+                              color: (theme) => `${theme.palette.secondary[0]} !important`
+                            }
+                          : { color: (theme) => theme.palette.secondary.light }),
+                        ":hover":
+                          pathname === href
+                            ? {
+                                backgroundColor: `${theme.palette.primary.dark} !important`
+                              }
+                            : { backgroundColor: `${theme.palette.primary[200]} !important` }
                       })}
                     >
                       {icon ? (
@@ -320,10 +358,17 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       ...itemStyle(theme, sidebar),
                       ...(`footer-${index}` === active
                         ? {
-                            backgroundColor: (theme) => `${theme.palette.green[700_10]} !important`,
-                            color: (theme) => theme.palette.grey[500]
+                            backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
+                            color: (theme) => theme.palette.secondary[0]
                           }
-                        : { color: (theme) => theme.palette.grey[500] })
+                        : { color: (theme) => theme.palette.secondary.light }),
+                      fontWeight: "bold !important",
+                      ":hover":
+                        `footer-${index}` === active
+                          ? {
+                              backgroundColor: `${theme.palette.primary.dark} !important`
+                            }
+                          : { backgroundColor: `${theme.palette.primary[200]} !important` }
                     })}
                   >
                     {icon ? (
@@ -366,6 +411,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                               paddingLeft: "70px",
                               [theme.breakpoints.down("md")]: {
                                 paddingLeft: "60px"
+                              },
+                              ":hover": {
+                                backgroundColor: (theme) => `${theme.palette.primary[200]} !important`
                               }
                             })}
                           >
@@ -382,7 +430,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             sx={(theme) => ({
                               ...itemStyle(theme, sidebar),
                               ...(pathname === href
-                                ? { backgroundColor: (theme) => `${theme.palette.success.dark} !important` }
+                                ? { backgroundColor: (theme) => `${theme.palette.primary[200]} !important` }
                                 : {}),
                               paddingLeft: "70px",
                               [theme.breakpoints.down("md")]: {

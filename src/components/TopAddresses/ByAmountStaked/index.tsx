@@ -35,7 +35,7 @@ const TopAddressesByAmountStaked = () => {
       render: (r, idx) => numberWithCommas(idx + 1)
     },
     {
-      title: "Stake key Addresses",
+      title: "Stake Address",
       minWidth: 120,
       key: "addresses",
       render: (r) => (
@@ -79,7 +79,7 @@ const TopAddressesByAmountStaked = () => {
           >
             {perPages.map((item) => (
               <MenuItem key={item} value={item}>
-                {item}
+                <Box color={({ palette }) => `${palette.secondary.main} !important`}>{item}</Box>
               </MenuItem>
             ))}
           </Select>
