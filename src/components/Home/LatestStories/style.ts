@@ -178,7 +178,6 @@ export const NextSwiper = styled(Box)`
   right: -10px;
   bottom: 46%;
   ${({ theme }) => theme.breakpoints.down("lg")} {
-  ${({ theme }) => theme.breakpoints.down("lg")} {
     display: none;
   }
 `;
