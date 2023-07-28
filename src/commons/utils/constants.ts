@@ -189,6 +189,7 @@ export const PROTOCOL_TYPE = {
   coinsPerUtxoSize: "COINS_PER_UTXO_SIZE"
 };
 
+export const LANGUAGE = "en";
 export enum REWARD_TYPES {
   MEMBER = "MEMBER",
   LEADER = "LEADER",
