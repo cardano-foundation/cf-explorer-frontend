@@ -39,7 +39,7 @@ describe("Stake adress view", () => {
     expect(screen.getByText("Stake Address Registration")).toBeInTheDocument();
   });
 
-  it("should render stake address de-registration page", () => {
+  it("should render stake adress de-registration page", () => {
     const mockUseFetch = useFetchList as jest.Mock;
     mockUseFetch.mockReturnValue({ data: [] });
     render(<Stake stakeAddressType={STAKE_ADDRESS_TYPE.DEREREGISTRATION} />);
@@ -62,6 +62,7 @@ describe("Stake adress view", () => {
     fireEvent.click(TxHashStakeItem);
     expect(history.location.pathname).toBe(details.transaction(mockData.data[0].txHash));
   });
+  
   it("should navigate to the correct route when block item is clicked", () => {
     const mockUseFetchList = useFetchList as jest.Mock;
     mockUseFetchList.mockReturnValue(mockData);
@@ -77,7 +78,8 @@ describe("Stake adress view", () => {
     fireEvent.click(BlockItem);
     expect(history.location.pathname).toBe(details.block(mockData.data[0].block.toString()));
   });
-  it("should navigate to the correct route when stake address item is clicked", () => {
+
+  it("should navigate to the correct route when stake adress item is clicked", () => {
     const mockUseFetchList = useFetchList as jest.Mock;
     mockUseFetchList.mockReturnValue(mockData);
     const history = createMemoryHistory();
