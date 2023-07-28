@@ -37,8 +37,8 @@ const TransactionChart: React.FC = () => {
   const { isMobile } = useScreen();
   const optionsTime: Record<Time, { label: string; displayName: string }> = {
     ONE_DAY: {
-      label: "1d",
-      displayName: "in the last day"
+      label: "24h",
+      displayName: "in the last 24 hours"
     },
     ONE_WEEK: {
       label: "1w",
@@ -153,6 +153,21 @@ const formatTimeX = (date: Time) => {
       break;
   }
 };
+
+const getLabel = (date: string, range: Time) => {
+  switch (range) {
+    case "ONE_DAY":
+      return `${moment(date).format("MM/DD HH:mm")} - ${moment(date).add(1, "hour").format("HH:mm")} (UTC)`;
+    case "ONE_WEEK":
+    case "TWO_WEEK":
+    case "ONE_MONTH":
+      return moment(date).format("MM/DD");
+
+    default:
+      break;
+  }
+};
+
 const formatX = (date: string, range: Time) => moment(date).format(formatTimeX(range));
 
 const getPercent = (value: number, total: number) => {
@@ -178,9 +193,7 @@ const renderTooltipContent = (o: any, range: Time) => {
         textAlign={"left"}
         boxShadow={(theme) => theme.shadow.dropdown}
       >
-        <Box color={({ palette }) => palette.secondary.main} textAlign={"center"}>{`${moment(label).format(
-          formatTimeX(range)
-        )}`}</Box>
+        <Box color={({ palette }) => palette.secondary.main} textAlign={"center"}>{getLabel(label, range)}</Box>
         {(payload || []).reverse().map((entry: any, index: number) => (
           <Box key={`item-${index}`} mt={1}>
             <Box fontSize={"0.75rem"}>{`${nameTooltips[entry.name as keyof typeof nameTooltips]}`}</Box>
