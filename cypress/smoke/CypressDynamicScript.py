@@ -25,7 +25,6 @@ def main(argv):
   epochStart = 1
   epochEnd = 425
   for opt, arg in opts:
-    print(opt)
     match opt:
       case '-h':
         print("--blockl block number of random blocks to test")
