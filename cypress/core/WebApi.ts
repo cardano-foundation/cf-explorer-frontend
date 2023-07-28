@@ -1,4 +1,4 @@
-var format = require("@stdlib/string-format");
+const format = require('string-format');
 export default class WebApi {
   openAnyUrl(url: string) {
     cy.visit(url);
