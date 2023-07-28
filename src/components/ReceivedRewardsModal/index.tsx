@@ -8,7 +8,7 @@ import { ReceidvedRewardsIC } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
-import { RECEIVED_REWARDS } from "src/commons/utils/constants";
+import { RECEIVED_REWARDS, REWARD_TYPES, REWARD_TYPES_LABEL } from "src/commons/utils/constants";
 
 import ADAicon from "../commons/ADAIcon";
 import StyledModal from "../commons/StyledModal";
@@ -52,19 +52,14 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
   const { isMobile, isGalaxyFoldSmall } = useScreen();
   const fetchData = useFetchList<RewardDistributionItem>(
     stakeId && open ? API.STAKE_LIFECYCLE.RECEIVED_REWARD(stakeId) + (type ? `?type=${type}` : "") : "",
-    {
-      ...params,
-      sort
-    }
+    { ...params, sort }
   );
 
   const mappingRewardType = (type: string): string => {
     return type
-      .replace("MEMBER", " Delegator")
-      .replace("LEADER", " Operator")
-      .replace("REFUND", " Refund")
-      .replace("RESERVES", " Reserves")
-      .replace("TREASURY", " Treasury");
+      ?.split(",")
+      .map((item) => REWARD_TYPES_LABEL[item as REWARD_TYPES])
+      .join(", ");
   };
 
   const columns: Column<ReceivedReward>[] = [
