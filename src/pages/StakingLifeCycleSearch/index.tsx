@@ -54,7 +54,7 @@ const StakingLifeCycleSearch = () => {
             <Image src={HeaderSearchIcon} alt="Search" />
           </SubmitButton>
         </SearchContainer>
-        <Box color={({ palette }) => palette.error[700]}>{error}</Box>
+        <Box color={({ palette }) => palette.red[100]}>{error}</Box>
       </Box>
       <InfoGraphicModal open={openInfoModal} onClose={() => setOpenInfoModal(false)} />
     </StyledContainer>
@@ -64,7 +64,7 @@ const StakingLifeCycleSearch = () => {
 export default StakingLifeCycleSearch;
 
 export const WrapButton = styled(Button)`
-  background: ${({ theme }) => theme.palette.secondary.main};
+  background: ${({ theme }) => theme.palette.grey[400]};
   padding: 12px 97px;
   border-radius: 8px;
   font-weight: 700;
@@ -89,12 +89,12 @@ const SearchContainer = styled(Box)(({ theme }) => ({
   justifyContent: "start",
   alignItems: "center",
   maxWidth: "min(800px,80vw)",
-  background: theme.palette.secondary[0],
+  background: theme.palette.background.paper,
   padding: "0 20px 0 30px",
   borderRadius: 100,
   marginBottom: 15,
   height: 58,
-  border: `1.5px solid ${theme.palette.primary[200]}`,
+  border: `1.5px solid ${theme.palette.grey[200]}`,
   [theme.breakpoints.down("sm")]: {
     width: "unset",
     maxWidth: "unset"
@@ -130,7 +130,6 @@ const SearchTitle = styled(Typography)(({ theme }) => ({
   fontSize: "18px",
   fontWeight: 700,
   margin: "30px 0px 20px 0px",
-  color: theme.palette.secondary.main,
   [theme.breakpoints.down("md")]: {
     margin: "60px 0px 20px 0px",
     padding: "0px 60px"
@@ -142,7 +141,7 @@ const SearchTitle = styled(Typography)(({ theme }) => ({
 }));
 
 const InfoLink = styled("span")`
-  color: ${(props) => props.theme.palette.primary.main};
+  color: ${(props) => props.theme.palette.blue[100]};
   text-decoration: underline;
   margin-left: 6px;
   cursor: pointer;

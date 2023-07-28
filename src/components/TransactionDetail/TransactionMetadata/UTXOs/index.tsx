@@ -144,7 +144,7 @@ const Card = ({
                       flexDirection={isMobile ? "column" : "row"}
                       paddingTop="5px"
                     >
-                      <Box mr={3} minWidth={180} pl={type === "down" ? 2 : 0}>
+                      <Box mr={3} minWidth={180}>
                         <Box
                           display={"flex"}
                           flexDirection={isMobile ? "column" : "row"}
@@ -186,7 +186,13 @@ const Card = ({
                     <Box
                       component={"span"}
                       whiteSpace="nowrap"
-                      color={(theme) => (type === "up" ? theme.palette.success[800] : theme.palette.error[700])}
+                      color={(theme) =>
+                        isFailed
+                          ? theme.palette.secondary.light
+                          : type === "up"
+                          ? theme.palette.success[800]
+                          : theme.palette.error[700]
+                      }
                       fontWeight="bold"
                       mr={1}
                     >

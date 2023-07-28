@@ -93,7 +93,7 @@ const StakeAnalytics: React.FC = () => {
         <TooltipLabel>
           {tab === "BALANCE"
             ? moment(content.label).format("DD MMM YYYY HH:mm:ss") + " (UTC time zone)"
-            : content.label}
+            : `Epoch ${content.label}`}
         </TooltipLabel>
         <TooltipValue>{formatADAFull(content.payload?.[0]?.value) || 0}</TooltipValue>
       </TooltipBody>
@@ -170,12 +170,7 @@ const StakeAnalytics: React.FC = () => {
                     tickLine={false}
                     {...xAxisProps}
                   />
-                  <YAxis
-                    color={theme.palette.secondary.main}
-                    tickFormatter={formatPriceValue}
-                    tickLine={false}
-                    interval={isMobile ? 3 : undefined}
-                  />
+                  <YAxis color={theme.palette.secondary.main} tickFormatter={formatPriceValue} tickLine={false} />
                   <Tooltip content={renderTooltip} cursor={false} />
                   <CartesianGrid vertical={false} strokeWidth={0.33} />
                   <Area

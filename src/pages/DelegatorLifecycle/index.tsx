@@ -41,15 +41,6 @@ interface Params {
   tab: DelegationStep;
 }
 
-export interface ListStakeKeyResponse {
-  [key: string]: boolean;
-  hasDeRegistration: boolean;
-  hasDelegation: boolean;
-  hasRegistration: boolean;
-  hasWithdrawal: boolean;
-  hashRewards: boolean;
-}
-
 const MODES: ViewMode[] = ["timeline", "tabular"];
 
 const DelegatorLifecycle = () => {

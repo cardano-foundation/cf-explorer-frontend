@@ -1,5 +1,5 @@
 import { defineConfig } from "cypress";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -10,8 +10,8 @@ export default defineConfig({
     hideXHRInCommandLog: true,
     viewportWidth: 1920,
     viewportHeight: 1080,
-    setupNodeEvents(on, config) {
+    setupNodeEvents() {
       // implement node event listeners here
-    },
-  },
+    }
+  }
 });
