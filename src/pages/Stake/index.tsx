@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { stringify } from "qs";
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -13,7 +13,6 @@ import DetailViewStakeKey from "src/components/commons/DetailView/DetailViewStak
 import Table, { Column } from "src/components/commons/Table";
 import { setOnDetailView } from "src/stores/user";
 import { API } from "src/commons/utils/api";
-import NoRecord from "src/components/commons/NoRecord";
 import SelectedIcon from "src/components/commons/SelectedIcon";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -21,25 +20,29 @@ import FormNowMessage from "src/components/commons/FormNowMessage";
 
 import { StyledContainer, StyledLink, TimeDuration } from "./styles";
 
-export enum POOL_TYPE {
+export enum STAKE_ADDRESS_TYPE {
   REGISTRATION = "registration",
   DEREREGISTRATION = "de-registration"
 }
 
-const Stake = () => {
+interface Props {
+  stakeAddressType: STAKE_ADDRESS_TYPE;
+}
+
+const Stake: React.FC<Props> = ({ stakeAddressType }) => {
   const mainRef = useRef(document.querySelector("#main"));
   const [stake, setStake] = useState<string | null>(null);
   const { onDetailView } = useSelector(({ user }: RootState) => user);
   const [selected, setSelected] = useState<number | null>(null);
-  const { poolType = POOL_TYPE.REGISTRATION } = useParams<{ poolType: POOL_TYPE }>();
   const { search } = useLocation();
   const history = useHistory();
+  const fromPath = history.location.pathname as SpecialPath;
 
   const pageInfo = getPageInfo(search);
   const { isMobile } = useScreen();
 
   const fetchData = useFetchList<IStakeKey>(
-    `${API.STAKE.DETAIL}/${poolType}`,
+    `${API.STAKE.DETAIL}/${stakeAddressType}`,
     pageInfo,
     false,
     REFRESH_TIMES.STAKE_REGISTRATION
@@ -50,9 +53,9 @@ const Stake = () => {
   }, [history.location.pathname]);
 
   useEffect(() => {
-    const title = poolType === POOL_TYPE.REGISTRATION ? "Registrations" : "Deregistrations";
+    const title = stakeAddressType === STAKE_ADDRESS_TYPE.REGISTRATION ? "Registrations" : "Deregistrations";
     document.title = `${title} Stake Addresses | Iris - Cardano Blockchain Explorer`;
-  }, [poolType]);
+  }, [stakeAddressType]);
 
   const openDetail = (_: any, r: IStakeKey, index: number) => {
     setOnDetailView(true);
@@ -103,7 +106,9 @@ const Stake = () => {
       render: (r, idx) => (
         <>
           <CustomTooltip title={r.stakeKey}>
-            <StyledLink to={details.stake(r.stakeKey)}>{getShortWallet(r.stakeKey)}</StyledLink>
+            <StyledLink to={{ pathname: details.stake(r.stakeKey), state: { fromPath } }}>
+              {getShortWallet(r.stakeKey)}
+            </StyledLink>
           </CustomTooltip>
 
           {selected === idx && <SelectedIcon />}
@@ -112,13 +117,15 @@ const Stake = () => {
     }
   ];
 
-  if (!Object.values(POOL_TYPE).includes(poolType)) return <NoRecord />;
-
   return (
     <StyledContainer>
       <Box className="stake-list">
         <Card
-          title={poolType === POOL_TYPE.REGISTRATION ? "Stake Address Registration" : "Stake Address Deregistration"}
+          title={
+            stakeAddressType === STAKE_ADDRESS_TYPE.REGISTRATION
+              ? "Stake Address Registration"
+              : "Stake Address Deregistration"
+          }
         >
           <TimeDuration>
             <FormNowMessage time={fetchData.lastUpdated} />
@@ -132,7 +139,7 @@ const Stake = () => {
               total: fetchData.total,
               onChange: (page, size) => {
                 mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-                history.push({ search: stringify({ page, size, poolType }) });
+                history.push({ search: stringify({ page, size, stakeAddressType }) });
               },
               handleCloseDetailView: handleClose
             }}

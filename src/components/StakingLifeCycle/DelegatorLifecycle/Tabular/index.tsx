@@ -16,7 +16,6 @@ import RewardsDistributionTab from "src/components/TabularView/StakeTab/Tabs/Rew
 import StakeRegistrationTab from "src/components/TabularView/StakeTab/Tabs/StakeRegistrationTab";
 import WithdrawalHistoryTab from "src/components/TabularView/StakeTab/Tabs/WithdrawalHistoryTab";
 import TabularOverview from "src/components/TabularView/TabularOverview";
-import { ListStakeKeyResponse } from "src/pages/DelegatorLifecycle";
 
 interface ITabularTab {
   icon: React.FC;

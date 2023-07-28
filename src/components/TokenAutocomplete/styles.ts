@@ -1,4 +1,5 @@
 import { alpha, Button, TextField, styled, Box } from "@mui/material";
+import { BiChevronDown } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 export const TitleDetail = styled(Box)`
@@ -56,13 +57,23 @@ export const StyledTextField = styled(TextField)`
   .MuiInputBase-root {
     padding: 0 9px;
     height: 40px;
-    border: 1.5px solid ${(props) => props.theme.palette.border.main};
+    border: 1.5px solid
+      ${(props) => (props.disabled ? props.theme.palette.secondary[600] : props.theme.palette.border.main)};
     border-radius: 8px;
   }
   .MuiFormControl-root {
   }
   .MuiInputBase-input {
     font-size: 14px;
+    &::-webkit-input-placeholder {
+      ${(props) =>
+        props.disabled
+          ? `color: ${props.theme.palette.secondary[600]};
+            opacity: 1;
+            -webkit-text-fill-color: ${props.theme.palette.secondary[600]};
+            `
+          : ""}
+    }
   }
   .MuiOutlinedInput-notchedOutline {
     border: none;
@@ -72,6 +83,10 @@ export const StyledTextField = styled(TextField)`
 export const Option = styled("li")<{ active: number }>(({ theme, active }) => ({
   background: active ? theme.palette.primary[200] : theme.palette.secondary[0]
 }));
+
+export const ArrowDownIconCustom = styled(BiChevronDown)<{ disabled?: number }>`
+  ${(props) => (props.disabled ? `color: ${props.theme.palette.secondary[600]}` : "")};
+`;
 
 export const Logo = styled("img")`
   width: 25px;

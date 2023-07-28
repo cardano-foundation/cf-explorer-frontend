@@ -5,12 +5,13 @@ import moment from "moment";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import useToast from "src/commons/hooks/useToast";
-import { details } from "src/commons/routers";
+import { lists } from "src/commons/routers";
 import { generateStakeKeyReport, generateStakePoolReport } from "src/commons/utils/userRequest";
 import { getPoolEventType } from "src/components/PoolLifecycle";
 import { getEventType } from "src/components/StakekeySummary";
 import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+
 
 import { EVENTS_NAME, ReportType } from "./FilledInfoModal";
 import {
@@ -71,7 +72,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
       toast.success("Report generated successfully");
       handleCloseModal();
       setTimeout(() => {
-        history.push(details.dashboard(isPoolReport ? "pools" : "stake-key"));
+        history.push(lists.dashboard(isPoolReport ? "pool-reports" : "stake-key-reports"));
       }, 2000);
     } catch (err: any) {
       console.error(err);
