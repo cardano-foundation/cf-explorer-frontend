@@ -103,12 +103,12 @@ const LatestStories = () => {
     if (isMobile) {
       newIndex = currentIndexData - 1;
     }
-    const isHasMore = newIndex > 0;
+    const isHasMore = newIndex >= 0;
 
     if (isHasMore) {
       setCurrentIndexData(newIndex);
     } else {
-      setCurrentIndexData(0);
+      setCurrentIndexData(LIMIT - amountNewsByDevice);
       setOffset(offset - LIMIT);
     }
   };

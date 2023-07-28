@@ -163,7 +163,7 @@ export const NextSwiper = styled(Box)`
   align-items: center;
   cursor: pointer;
   &:hover {
-    background: ${(props) => props.theme.palette.primary.main};
+    background: ${(props) => props.theme.palette.purple["200"]};
   }
   position: absolute;
   right: -10px;
