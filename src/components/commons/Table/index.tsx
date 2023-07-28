@@ -14,7 +14,6 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DownIcon,
   EmptyIcon,
-  EndPage,
   EyeIcon,
   NextPage,
   PrevPage,
@@ -504,20 +503,6 @@ const PaginationCustom = ({
         </IconButton>
       );
     }
-    if (item.type === "last") {
-      return (
-        <IconButton
-          disabled={page === totalPage || loading}
-          onClick={() => {
-            handleChangePage(null, totalPage || 1);
-            setInputPage(totalPage || 1);
-            pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
-          }}
-        >
-          <EndPageIcon disabled={page === totalPage || loading} />
-        </IconButton>
-      );
-    }
     if (item.type === "next") {
       return (
         <IconButton
@@ -562,7 +547,7 @@ const PaginationCustom = ({
               onBlur={() => {
                 setInputPage(page);
               }}
-              disabled={loading}
+              disabled={true}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   if (inputPage < 1) {
@@ -595,9 +580,6 @@ const PaginationCustom = ({
 };
 
 const StartPageIcon = styled(StartPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.secondary.light
-}));
-const EndPageIcon = styled(EndPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
   stroke: disabled ? theme.palette.text.disabled : theme.palette.secondary.light
 }));
 const NextPageIcon = styled(NextPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
