@@ -168,7 +168,8 @@ const Tokens = () => {
               mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
               history.replace({ search: stringify({ page, size, tokenName: queries.get("tokenName") || "" }) });
             },
-            handleCloseDetailView: handleClose
+            handleCloseDetailView: handleClose,
+            hideLastPage: true
           }}
           onClickRow={openDetail}
           selected={selected}
