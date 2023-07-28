@@ -87,7 +87,7 @@ export const Author = styled("span")`
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.success[800]};
   background-color: ${(props) => props.theme.palette.success[100]};
-  padding: 6px 2px;
+  padding: 2px 6px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-size: 11px;
@@ -133,7 +133,7 @@ export const ResourceHref = styled("span")`
   font-weight: 700;
   font-size: 10px;
   cursor: pointer;
-  padding: 6px 2px;
+  padding: 2px 6px;
 `;
 
 export const Description = styled(Box)`
@@ -153,7 +153,7 @@ export const FooterCard = styled(Box)`
   bottom: 20px;
 `;
 
-export const NextSwipper = styled(Box)`
+export const NextSwiper = styled(Box)`
   background: ${(props) => props.theme.palette.purple["100"]};
   width: 50px;
   height: 50px;
@@ -163,14 +163,19 @@ export const NextSwipper = styled(Box)`
   align-items: center;
   cursor: pointer;
   &:hover {
-    background: ${(props) => props.theme.palette.primary.main};
+    background: ${(props) => props.theme.palette.purple["200"]};
   }
   position: absolute;
   right: -10px;
   bottom: 46%;
-  ${({ theme }) => theme.breakpoints.up("sm")} {
+  ${({ theme }) => theme.breakpoints.down("lg")} {
     display: none;
   }
+`;
+
+export const PrevSwiper = styled(NextSwiper)`
+  left: -10px;
+  transform: rotate(180deg);
 `;
 
 export const CustomGrid = styled(Grid)`
