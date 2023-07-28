@@ -1,4 +1,4 @@
-var format = require("@stdlib/string-format");
+const format = require('string-format');
 export default class WebApi {
   openAnyUrl(url: string) {
     cy.visit(url);
@@ -52,7 +52,7 @@ export default class WebApi {
     let ele = format(locator, values);
     cy.xpath(ele).should("be.enabled");
   }
-  async getTextElement(locator: string, ...values: undefined[]) {
+  async getTextElement(locator: string, ...values: any) {
     let ele = format(locator, values);
     const text = await new Cypress.Promise<string>((resolve) => {
       if (ele.startsWith("/") || ele.startsWith("(")) {
