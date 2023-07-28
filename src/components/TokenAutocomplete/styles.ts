@@ -57,9 +57,9 @@ export const StyledTextField = styled(TextField)`
   .MuiInputBase-root {
     padding: 0 9px;
     height: 40px;
-    border: 1.5px solid
-      ${(props) => (props.disabled ? props.theme.palette.secondary[600] : props.theme.palette.border.main)};
+    border: 1.5px solid ${(props) => props.theme.palette.border.main};
     border-radius: 8px;
+    background: ${(props) => props.theme.palette.secondary[600]};
   }
   .MuiFormControl-root {
   }
@@ -68,9 +68,9 @@ export const StyledTextField = styled(TextField)`
     &::-webkit-input-placeholder {
       ${(props) =>
         props.disabled
-          ? `color: ${props.theme.palette.secondary[600]};
+          ? `color: ${props.theme.palette.background.paper};
             opacity: 1;
-            -webkit-text-fill-color: ${props.theme.palette.secondary[600]};
+            -webkit-text-fill-color: ${props.theme.palette.background.paper};
             `
           : ""}
     }
@@ -80,12 +80,12 @@ export const StyledTextField = styled(TextField)`
   }
 `;
 
-export const Option = styled("li")(({ theme }) => ({
-  background: theme.palette.secondary[0]
+export const Option = styled("li")<{ active: number }>(({ theme, active }) => ({
+  background: active ? theme.palette.primary[200] : theme.palette.secondary[0]
 }));
 
 export const ArrowDownIconCustom = styled(BiChevronDown)<{ disabled?: number }>`
-  ${(props) => (props.disabled ? `color: ${props.theme.palette.secondary[600]}` : "")};
+  ${(props) => (props.disabled ? `color: ${props.theme.palette.background.paper}` : "")};
 `;
 
 export const Logo = styled("img")`
