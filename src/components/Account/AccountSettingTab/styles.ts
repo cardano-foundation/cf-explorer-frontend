@@ -19,7 +19,7 @@ export const StyledHelper = styled(FormHelperText)`
   position: absolute;
   top: 60px;
   font-size: var(--font-size-text-small);
-  color: #ff0000;
+  color: ${({ theme }) => theme.palette.error[700]};
 `;
 
 export const StyledInput = styled(InputBase)`

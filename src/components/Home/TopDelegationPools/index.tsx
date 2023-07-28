@@ -4,7 +4,7 @@ import { get } from "lodash";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { details, routers } from "src/commons/routers";
-import { formatADAFull, formatPercent, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, formatPercent, getShortWallet, toFixedBigNumber } from "src/commons/utils/helper";
 import ViewAllButton from "src/components/commons/ViewAllButton";
 import { Column } from "src/components/commons/Table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -65,7 +65,11 @@ const TopDelegationPools = () => {
           <Box component={"span"} mr={1} flexGrow={1} textAlign={"right"} maxWidth={"55px"}>
             {formatPercent(r.saturation / 100) || `0%`}
           </Box>
-          <StyledLinearProgress variant="determinate" value={r.saturation > 100 ? 100 : get(r, "saturation", 0)} />
+          <StyledLinearProgress
+            variant="determinate"
+            saturation={r.saturation}
+            value={r.saturation > 100 ? 100 : get(r, "saturation", 0)}
+          />
         </Box>
       )
     },
@@ -86,7 +90,7 @@ const TopDelegationPools = () => {
         </CustomTooltip>
       ),
       key: "lifetimeRos",
-      render: (r) => r.lifetimeRos || 0
+      render: (r) => `${toFixedBigNumber(r.lifetimeRos || 0, 2)}%`
     }
   ];
   return (

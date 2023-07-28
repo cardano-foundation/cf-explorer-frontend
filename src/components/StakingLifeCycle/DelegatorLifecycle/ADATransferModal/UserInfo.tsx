@@ -46,7 +46,7 @@ const UserInfo = ({
         </Box>
         <Box display={"flex"} alignItems="center" mt={isTablet ? "5px" : "0px"}>
           <OverviewIcon marginRight={1}>
-            <BalanceIcon />
+            <BalanceIcon stroke="#0033AD"/>
           </OverviewIcon>
           <TextUserInfo>
             <Box component={"span"} mr={1}>

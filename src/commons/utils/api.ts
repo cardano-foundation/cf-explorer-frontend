@@ -1,3 +1,5 @@
+import { stringify } from "qs";
+
 export const API = {
   ADDRESS: {
     ANALYTICS: "addresses/analytics",
@@ -113,7 +115,8 @@ export const API = {
     VERIFY_SCRIPT: "contracts/verify/native",
     SCRIPT: (address: string) => `contracts/${address}/script`
   },
-  STORIES: "news"
+  STORIES: "news",
+  SEARCH_ALL: (query: string) => `/search?${stringify({ query })}`
 };
 
 export const USER_API = {
