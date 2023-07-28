@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
 
-import { ListStakeKeyResponse } from "src/pages/DelegatorLifecycle";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import { ListTabResponseSPO } from "src/pages/SPOLifecycle";
 
 import { StyledTabList, TabHead, TitleTab } from "./styles";
 import CustomIcon from "../../commons/CustomIcon";
