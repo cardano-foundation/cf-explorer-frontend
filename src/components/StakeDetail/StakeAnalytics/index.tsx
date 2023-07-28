@@ -93,7 +93,7 @@ const StakeAnalytics: React.FC = () => {
         <TooltipLabel>
           {tab === "BALANCE"
             ? moment(content.label).format("DD MMM YYYY HH:mm:ss") + " (UTC time zone)"
-            : content.label}
+            : `Epoch ${content.label}`}
         </TooltipLabel>
         <TooltipValue>{formatADAFull(content.payload?.[0]?.value) || 0}</TooltipValue>
       </TooltipBody>
