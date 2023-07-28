@@ -1,55 +1,46 @@
-import React, { useEffect, useState } from "react";
-import { CgClose } from "react-icons/cg";
-import { BiChevronRight } from "react-icons/bi";
-import { Link } from "react-router-dom";
-import { Box } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import { Box } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { BiChevronRight } from "react-icons/bi";
+import { CgClose } from "react-icons/cg";
+import { Link } from "react-router-dom";
 
-import { DelegationHistoryMainIcon, FileEditIcon, LightningIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
-import { details } from "src/commons/routers";
-import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
-import { ReactComponent as StakeKeyHistoryIcon } from "src/commons/resources/icons/stateKeyHistory.svg";
+import { DelegationHistoryMainIcon, FileEditIcon, LightningIcon } from "src/commons/resources";
 import { ReactComponent as TransactionIcon } from "src/commons/resources/icons/exchangeArrow.svg";
-import ModalAllAddress from "src/components/StakeDetail/ModalAllAddress";
+import { ReactComponent as StakeKeyHistoryIcon } from "src/commons/resources/icons/stateKeyHistory.svg";
+import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
+import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import ModalAllAddress from "src/components/StakeDetail/ModalAllAddress";
 
-import ViewMoreButton from "../ViewMoreButton";
-import CustomTooltip from "../CustomTooltip";
-import CopyButton from "../CopyButton";
-import ViewAllButton from "../ViewAllButton";
 import ADAicon from "../ADAIcon";
+import CopyButton from "../CopyButton";
+import CustomTooltip from "../CustomTooltip";
+import ViewAllButton from "../ViewAllButton";
+import ViewMoreButton from "../ViewMoreButton";
 import {
+  ButtonModal,
   CloseButton,
-  ViewDetailContainer,
-  DetailsInfoItem,
+  DelegatedDetail,
   DetailLabel,
-  DetailValue,
   DetailLabelSkeleton,
-  DetailValueSkeleton,
-  IconSkeleton,
-  ViewDetailDrawer,
-  Group,
   DetailLink,
   DetailLinkIcon,
-  DetailLinkRight,
-  DetailLinkName,
-  TokenContainer,
-  TokenHeaderContainer,
-  TokenMetaData,
-  TokenInfo,
-  MetaData,
-  TokenHeaderInfo,
-  TokenTotalSupply,
-  TokenDecimal,
-  ViewDetailScroll,
-  StakeKeyHeader,
-  StakeKeyStatus,
   DetailLinkImage,
+  DetailLinkName,
+  DetailLinkRight,
+  DetailValue,
+  DetailValueSkeleton,
+  DetailsInfoItem,
+  Group,
+  StakeKeyHeader,
   StakeKeyLink,
-  DelegatedDetail,
-  ButtonModal,
+  StakeKeyStatus,
+  ViewDetailContainer,
+  ViewDetailDrawer,
   ViewDetailHeader,
+  ViewDetailScroll,
   WrapDetailInfo
 } from "./styles";
 
@@ -116,29 +107,6 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
         </ViewDetailHeader>
         <ViewDetailContainer>
           <ViewDetailScroll>
-            <TokenContainer>
-              <TokenHeaderContainer>
-                <IconSkeleton variant="circular" />
-                <DetailValueSkeleton variant="rectangular" />
-              </TokenHeaderContainer>
-              <TokenMetaData>
-                <TokenInfo>
-                  <DetailValueSkeleton variant="rectangular" />
-                  <IconSkeleton variant="circular" />
-                </TokenInfo>
-                <MetaData />
-              </TokenMetaData>
-              <TokenHeaderInfo>
-                <TokenTotalSupply>
-                  <DetailValueSkeleton variant="rectangular" />
-                  <DetailValueSkeleton variant="rectangular" />
-                </TokenTotalSupply>
-                <TokenDecimal>
-                  <DetailValueSkeleton variant="rectangular" />
-                  <DetailValueSkeleton variant="rectangular" />
-                </TokenDecimal>
-              </TokenHeaderInfo>
-            </TokenContainer>
             <Group>
               {new Array(4).fill(0).map((_, index) => {
                 return (
