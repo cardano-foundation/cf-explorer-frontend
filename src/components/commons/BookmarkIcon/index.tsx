@@ -83,6 +83,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
   return (
     <Box>
       <IconButton
+        data-testid="bookmark-button"
         style={{ width: 45, height: 45, cursor: isLoggedIn ? "pointer" : "default" }}
         onClick={updateBookmark}
       >

@@ -62,7 +62,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
   };
 
   return (
-    <StyledContainer>
+    <StyledContainer data-testid="analytics-chart-group">
       <AnalyticsTitle>Analytics</AnalyticsTitle>
       <GridWrapper container columns={24} spacing="35px">
         <Grid item xs={24} lg={18}>
@@ -132,7 +132,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                 <Box>
                   <img src={HighestIcon} alt="heighest icon" />
                   <Title>{selected === "epochChart" ? "Highest stake" : "Highest number of delegators"}</Title>
-                  <Value>
+                  <Value data-testid="analytics-max-value">
                     {loading || !data?.[selected] ? (
                       <SkeletonUI variant="rectangular" />
                     ) : selected === "epochChart" ? (
@@ -149,7 +149,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                 <Box>
                   <img src={LowestIcon} alt="lowest icon" />
                   <Title>{selected === "epochChart" ? "Lowest stake" : "Lowest number of delegators"}</Title>
-                  <Value>
+                  <Value data-testid="analytics-min-value">
                     {loading || !data?.[selected] ? (
                       <SkeletonUI variant="rectangular" />
                     ) : selected === "epochChart" ? (

@@ -305,6 +305,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
                   zIndex: 1305
                 }
               }}
+              data-testid="table-selection-size"
             >
               <MenuItem value={10}>10</MenuItem>
               <MenuItem value={20}>20</MenuItem>

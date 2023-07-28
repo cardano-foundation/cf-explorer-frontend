@@ -79,6 +79,7 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
                   <Title>{item.title}</Title>
                 </CustomTooltip>
                 <Value
+                  data-testid={`overview-${item.title}`}
                   sx={{
                     color: (theme) => theme.palette.secondary.main
                   }}

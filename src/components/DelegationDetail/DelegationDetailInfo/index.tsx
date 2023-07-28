@@ -80,7 +80,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
 
   return (
     <HeaderDetailContainer>
-      <BackButton onClick={history.goBack}>
+      <BackButton data-testid="back-button" onClick={history.goBack}>
         <HiArrowLongLeft />
         <BackText>Back</BackText>
       </BackButton>
@@ -94,7 +94,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <CustomTooltip title={poolId}>
           <Link to={details.delegation(poolId)}>
             <PoolIdLabel>Pool Id: </PoolIdLabel>
-            <PoolIdValue>{isMobile ? getShortWallet(poolId) : poolId}</PoolIdValue>
+            <PoolIdValue data-testid="pool-id">{isMobile ? getShortWallet(poolId) : poolId}</PoolIdValue>
           </Link>
         </CustomTooltip>
         <CopyButton text={poolId} />
@@ -129,6 +129,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                           to={details.stake(data?.rewardAccounts[0] || "")}
                           style={{ fontFamily: "var(--font-family-text)" }}
                           color={(theme) => `${theme.palette.primary.main} !important`}
+                          data-testid="info-reward-account"
                         >
                           {getShortWallet(data?.rewardAccounts[0] || "")}
                         </Box>
@@ -175,6 +176,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                           color={(theme) => `${theme.palette.primary.main} !important`}
                           to={details.stake(data?.ownerAccounts[0] || "")}
                           style={{ fontFamily: "var(--font-family-text)" }}
+                          data-testid="info-owner-account"
                         >
                           {getShortWallet(data?.ownerAccounts[0] || "")}
                         </Box>
@@ -265,7 +267,9 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 >
                   Saturation
                 </Box>
-                <Box fontSize={16}>{formatPercent(data?.saturation ? data?.saturation / 100 : 0)}</Box>
+                <Box data-testid="info-saturation" fontSize={16}>
+                  {formatPercent(data?.saturation ? data?.saturation / 100 : 0)}
+                </Box>
               </Box>
             </InfoValue>
           </Item>
