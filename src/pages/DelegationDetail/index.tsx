@@ -16,12 +16,14 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import NoRecord from "src/components/commons/NoRecord";
 import { API } from "src/commons/utils/api";
 import { StakingDelegators, StakeKeyHistoryIcon } from "src/commons/resources";
+import { setSpecialPath } from "src/stores/system";
+import { routers } from "src/commons/routers";
 
 import { StyledContainer, TabsContainer, TitleTab } from "./styles";
 
 const DelegationDetail: React.FC = () => {
   const { poolId } = useParams<{ poolId: string }>();
-  const { search, state } = useLocation<{ data?: DelegationOverview }>();
+  const { search, state } = useLocation<{ fromPath?: SpecialPath }>();
   const history = useHistory();
   const query = parse(search.split("?")[1]);
   const tab = (query.tab as TabPoolDetail) || "epochs";
@@ -41,9 +43,10 @@ const DelegationDetail: React.FC = () => {
     history.replace({ search: stringify(query) });
   };
 
+  const status = useFetch<ListTabResponseSPO>(API.SPO_LIFECYCLE.TABS(poolId));
+
   const { data, loading, initialized, error } = useFetch<DelegationOverview>(
-    state?.data ? "" : `${API.DELEGATION.POOL_DETAIL_HEADER}/${poolId}`,
-    state?.data
+    `${API.DELEGATION.POOL_DETAIL_HEADER}/${poolId}`
   );
 
   const {
@@ -58,10 +61,16 @@ const DelegationDetail: React.FC = () => {
   );
 
   useEffect(() => {
-    window.history.replaceState({}, document.title);
     document.title = `Delegation Pool ${poolId} | Iris - Cardano Blockchain Explorer`;
     window.scrollTo(0, 0);
   }, [poolId]);
+
+  useEffect(() => {
+    if (state?.fromPath) return setSpecialPath(state.fromPath);
+    if (status.data?.isDeRegistration) return setSpecialPath(routers.POOL_DEREGISTRATION);
+    if (status.data?.isRegistration) return setSpecialPath(routers.POOL_CERTIFICATE);
+    if (status.data) setSpecialPath(routers.DELEGATION_POOLS);
+  }, [state, status]);
 
   if ((initialized && !data) || error) return <NoRecord />;
 
@@ -127,7 +136,7 @@ const DelegationDetail: React.FC = () => {
                   style={{ padding: "12px 0px", marginRight: 40 }}
                   label={
                     <Box display={"flex"} alignItems="center">
-                      <Icon fill={key === tab ? theme.palette.primary.main : theme.palette.text.hint} />
+                      <Icon fill={key === tab ? theme.palette.primary.main : theme.palette.secondary.light} />
                       <TitleTab pl={1} active={+(key === tab)}>
                         {label}
                       </TitleTab>

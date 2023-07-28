@@ -61,20 +61,20 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
           <IconContainer>
             <RedeemerPlusIcon />
           </IconContainer>
-          <ContractDatumn key="in" item={item} type="in" txHash={txHash} />
+          <ContractDatumn txHash={txHash} key="in" item={item} type="in" />
         </>
       )}
       <IconContainer>
         <RedeemerArrowDownIcon />
       </IconContainer>
-      <ContractBytecode item={item} />
+      <ContractBytecode item={item} txHash={txHash} />
 
       {item.datumHashOut && (
         <>
           <IconContainer>
             <RedeemerArrowDownIcon />
           </IconContainer>
-          <ContractDatumn key="out" item={item} type="out" />
+          <ContractDatumn key="out" item={item} type="out" txHash={txHash} />
         </>
       )}
     </ContractDiagramsContainer>

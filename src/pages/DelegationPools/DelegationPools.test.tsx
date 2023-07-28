@@ -6,6 +6,7 @@ import { render } from "src/test-utils";
 import Table from "src/components/commons/Table";
 import useFetchList from "src/commons/hooks/useFetchList";
 import DelegationLists from "src/components/DelegationPool/DelegationList";
+import { details } from "src/commons/routers";
 
 const mockData = {
   data: [
@@ -68,6 +69,8 @@ describe("Delegation pools view", () => {
 
     const DelegationItem = screen.getByText("StakeNuts");
     fireEvent.click(DelegationItem);
-    expect(history.location.pathname).toBe("/delegation-pool/pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy");
+    expect(history.location.pathname).toBe(
+      details.delegation("pool1pu5jlj4q9w9jlxeu370a3c9myx47md5j5m2str0naunn2q3lkdy")
+    );
   });
 });

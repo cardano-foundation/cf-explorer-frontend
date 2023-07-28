@@ -41,7 +41,7 @@ const MONTHS = [
   "December"
 ];
 
-export interface ICustomDatePicker {
+interface ICustomDatePicker {
   dateRange: IDateRange;
   setDateRange: (newDateRange: IDateRange) => void;
   hideFuture?: boolean;

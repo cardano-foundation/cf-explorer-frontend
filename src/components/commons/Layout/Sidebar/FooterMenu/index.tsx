@@ -22,7 +22,7 @@ export const Menu = styled(List)<{ open: number; bottom: number }>`
   flex-direction: row;
   padding: 0px 10px;
   z-index: 1305;
-  background: ${({ theme, bottom }) => (bottom ? "none" : theme.palette.common.white)};
+  background: ${({ theme, bottom }) => (bottom ? "none" : theme.palette.primary[100])};
   border-top: 1px solid ${(props) => props.theme.palette.border.main};
   ${({ theme }) => theme.breakpoints.down("md")} {
     border-top: 0px;
@@ -57,12 +57,13 @@ const itemStyle: CustomSX = (theme, sidebar, bottom) => ({
   borderRadius: 30,
   padding: 0,
   color: `${theme.palette.text.hint} !important`,
-  background: theme.palette.green[800_10],
+  background: theme.palette.primary[100],
+  border: `1px solid ${theme.palette.primary[200]}`,
   [theme.breakpoints.down("md")]: {
     display: bottom ? "flex" : sidebar ? "flex" : "none"
   },
   "&:hover": {
-    background: theme.palette.green[800_20],
+    background: theme.palette.primary[100],
     color: `${theme.palette.common.black} !important`,
     img: {
       filter: "brightness(0.75)"
