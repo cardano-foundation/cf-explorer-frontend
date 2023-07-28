@@ -207,7 +207,7 @@ export const getHostname = (url: string): string => {
   try {
     hostname = new URL(url).hostname;
   } catch (error) {
-    console.warn(error);
+    // Todo: handle error
   }
   return hostname;
 };

@@ -80,7 +80,9 @@ const SearchResult = () => {
   const { filter, search: value }: SearchParams = parse(search.split("?")[1]);
 
   useEffect(() => {
-    document.title = loading ? `Search For ${value}...` : `No Record Found: ${value} | Iris - Cardano Blockchain Explorer`;
+    document.title = loading
+      ? `Search For ${value}...`
+      : `No Record Found: ${value} | Iris - Cardano Blockchain Explorer`;
   }, [loading, value]);
 
   const handleFilterByPool = (data: any) => {
@@ -134,7 +136,7 @@ const SearchResult = () => {
 
         if (navigate) return history.replace(navigate(value), { data });
       } catch (error) {
-        console.log(error);
+        // Todo: handle error
       }
 
       setLoading(false);

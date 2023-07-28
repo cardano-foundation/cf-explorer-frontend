@@ -1,10 +1,9 @@
 import { fireEvent, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { useSelector } from "react-redux";
 
 import { render } from "src/test-utils";
 
-import HeaderSearch, { OptionsSearch } from ".";
+import HeaderSearch from ".";
 
 const mockData = {
   currentEpoch: {
