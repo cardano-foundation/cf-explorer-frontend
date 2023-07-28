@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.4.13](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.12...v0.4.13) (2023-07-28)
+
+
+### Features
+
+* MET-1356 change favicon and fix color login wallet form ([0268f26](https://github.com/cardano-foundation/cf-explorer-frontend/commit/0268f262e0a72a1a0727e3264d34ac2c737cf381))
+* MET-1356 resolve eslint ([bdfdab2](https://github.com/cardano-foundation/cf-explorer-frontend/commit/bdfdab2cbfa9a6d7fdd67e490e12bb1d77f72a8f))
+* MET-1356 update color ([9f02123](https://github.com/cardano-foundation/cf-explorer-frontend/commit/9f02123af99ef8e9a5c003dc20fb31f363368241))
+* MET-1356 update color ([4b1c47e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/4b1c47eaee4d4834efd0876bc6651e02653b75b8))
+* MET-1356 update color ([c17a998](https://github.com/cardano-foundation/cf-explorer-frontend/commit/c17a998b7e2ab794a93aac4d9b65af619be00c23))
+* MET-1407 finding 1 update style news ([5513caf](https://github.com/cardano-foundation/cf-explorer-frontend/commit/5513caf6ca23e3ba592a439565f31d533de3cefd))
+
+
+### Bug Fixes
+
+* MET-1249 stake analytics chart y axis mobile fix conflict ([a0bb9ae](https://github.com/cardano-foundation/cf-explorer-frontend/commit/a0bb9aea7af8b701060bc5c5cb193bf762eac52d))
+* MET-1407 color and conflict ([e9eeabc](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e9eeabce3170a0555ea5d4871a4bafbcc52cb1c3))
+* **style:** MET-1407 image not show in card and fix spelling words ([249cd3f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/249cd3fc948e01f10b317bd43314982206d9621c))
+
 ## [0.4.12](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.11...v0.4.12) (2023-07-27)
 
 
