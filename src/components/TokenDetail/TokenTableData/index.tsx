@@ -22,7 +22,11 @@ interface ITokenTableData {
 
 const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, metadataJson }) => {
   const history = useHistory();
-  const { tabActive = "transactions", tokenId } = useParams<{ tabActive: keyof Transaction; tokenId: string }>();
+  const { tabActive = "transactions", tokenId } = useParams<{
+    tabActive: keyof Transaction | "topHolders";
+    tokenId: string;
+  }>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const theme = useTheme();
   const { isTablet, isMobile } = useScreen();
   const tabs: {
@@ -35,25 +39,25 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, meta
       key: "transactions",
       label: "Transactions",
       children: <TokenTransaction tokenId={tokenId} />,
-      icon: <CustomIcon icon={TransactionIcon} width={20} fill={theme.palette.grey[300]} />
+      icon: <CustomIcon icon={TransactionIcon} width={20} fill="currentColor" />
     },
     {
       key: "topHolders",
       label: "Top Holders",
       children: <TokenTopHolder tokenId={tokenId} totalSupply={totalSupply} decimal={metadata?.decimals} />,
-      icon: <PeopleIcon />
+      icon: <CustomIcon icon={PeopleIcon} width={20} fill="currentColor" />
     },
     {
       key: "tokenMint",
       label: "Minting",
       children: <TokenMinting tokenId={tokenId} metadata={metadata} />,
-      icon: <UnionTokenIcon />
+      icon: <CustomIcon icon={UnionTokenIcon} width={20} fill="currentColor" />
     },
     {
       key: "metadata",
       label: "Metadata",
       children: <TokenMetaData metadataJson={metadataJson} />,
-      icon: <MetadataIcon />
+      icon: <CustomIcon icon={MetadataIcon} width={20} fill="currentColor" />
     }
   ];
 
@@ -72,17 +76,25 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, meta
             height: 3
           }
         }}
-        sx={isTablet ? { borderBottom: "1px solid #E0E0E0", width: isMobile ? "calc(100% - 30px)" : "auto" } : {}}
+        sx={({ palette }) =>
+          isTablet
+            ? { borderBottom: `1px solid ${palette.primary[200]}`, width: isMobile ? "calc(100% - 30px)" : "auto" }
+            : {}
+        }
       >
         {tabs?.map(({ key, label, icon }) => (
           <Tab
             key={key}
             value={key}
             style={{ padding: "12px 0px", marginRight: 40, minHeight: 50 }}
-            icon={icon}
             iconPosition="start"
             label={
-              <Box display={"flex"} alignItems="center">
+              <Box
+                display={"flex"}
+                alignItems="center"
+                color={tabActive === key ? theme.palette.primary.main : theme.palette.secondary.light}
+              >
+                {icon}
                 <TitleTab pl={1} active={key === tabActive}>
                   {label}
                 </TitleTab>

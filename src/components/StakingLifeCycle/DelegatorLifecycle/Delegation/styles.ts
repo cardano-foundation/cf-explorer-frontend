@@ -1,6 +1,5 @@
-import { Box, styled, alpha, IconButton as IconButtonMui } from "@mui/material";
+import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
 
-import ADAicon from "src/components/commons/ADAIcon";
 
 export const IconButtonBack = styled(IconButtonMui)(() => ({
   padding: 0
@@ -18,7 +17,8 @@ export const InfoText = styled(Box)(({ theme }) => ({
   alignItems: "center",
   marginLeft: theme.spacing(1),
   fontWeight: 600,
-  fontSize: "14px"
+  fontSize: "14px",
+  color: theme.palette.secondary.main
 }));
 
 export const StepInfo = styled(Box)(({ theme }) => ({
@@ -53,10 +53,6 @@ export const ADATotalStakeContainer = styled(Box)`
   position: relative;
 `;
 
-export const StyledADAicon = styled(ADAicon)`
-  color: #13152f;
-`;
-
 export const ItemList = styled(Box)(({ theme }) => ({
   display: "flex",
   gap: "5px 15px",
@@ -69,7 +65,7 @@ export const ItemList = styled(Box)(({ theme }) => ({
 }));
 
 export const Item = styled(Box)(({ theme, flexDirection }) => ({
-  backgroundColor: alpha(theme.palette.grey[300], 0.1),
+  backgroundColor: theme.palette.secondary[0],
   padding: 20,
   flex: 1,
   display: "flex",
@@ -92,7 +88,7 @@ export const Label = styled(Box)(({ theme }) => ({
   fontWeight: 700,
   fontSize: 14,
   lineHeight: "16px",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.light,
   marginBottom: 8
 }));
 

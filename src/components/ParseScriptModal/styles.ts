@@ -1,4 +1,4 @@
-import { Box, styled, Button, alpha } from "@mui/material";
+import { Box, styled, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const ModalContainer = styled(Box)(({ theme }) => ({
@@ -31,7 +31,7 @@ export const ButtonClose = styled(Button)(({ theme }) => ({
 export const ViewJson = styled(Box)(({ theme }) => ({
   overflowY: "auto",
   textAlign: "left",
-  backgroundColor: `${alpha(theme.palette.grey[300], 0.1)}`,
+  backgroundColor: theme.palette.primary[100],
   borderRadius: 10,
   padding: theme.spacing(2),
 

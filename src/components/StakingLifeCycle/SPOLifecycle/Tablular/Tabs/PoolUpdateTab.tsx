@@ -60,7 +60,7 @@ const PoolUpdateTab = () => {
       render(data) {
         return (
           <ClickAbleLink onClick={() => setSelectedValue(data)}>
-            <EyeIcon style={{ transform: "scale(.8)" }} />
+            <EyeIcon />
           </ClickAbleLink>
         );
       }

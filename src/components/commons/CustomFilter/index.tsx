@@ -134,7 +134,7 @@ const CustomFilter: React.FC<Props> = (props) => {
               <CustomIcon
                 icon={FilterIC}
                 width={18}
-                color={(theme) => theme.palette.primary.main}
+                color={(theme) => theme.palette.secondary.light}
                 fill="currentColor"
               />
             </FilterIconContainer>
@@ -193,7 +193,7 @@ const CustomFilter: React.FC<Props> = (props) => {
               textTransform={"capitalize"}
               display={"flex"}
               alignItems={"center"}
-              color={`#0052CC !important`}
+              color={({ palette }) => `${palette.primary.main} !important`}
               onClick={handleReset}
             >
               <Box mr={1}>Reset</Box>

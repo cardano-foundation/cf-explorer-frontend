@@ -5,7 +5,8 @@ import palette from "./palette";
 
 export const createShadow = (color: string) => {
   return {
-    card: `0px 10px 25px ${alpha(color, 0.03)}`,
+    card: `1px 2px 5px 0px rgba(67, 70, 86, 0.20)`,
+    cardHover: `1px 2px 15px 0px rgba(67, 70, 86, 0.25)`,
     dialog: `0px 2px 1px -1px ${alpha(color, 0.2)}, 0px 1px 1px ${alpha(color, 0.14)}, 0px 1px 3px ${alpha(
       color,
       0.12
