@@ -11,7 +11,7 @@ on:
 
 jobs:
   smoke-test-epoch-before-340:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
@@ -36,7 +36,7 @@ jobs:
         run: |
           cd cypress/smoke
           pip3 install numpy
-          python CypressDynamicScript.py --epochl=100 --epochs=1 --epoche=340 --blockl=1
+          python3 CypressDynamicScript.py --epochl=100 --epochs=1 --epoche=340 --blockl=1
 
       - name: 🎳 Run tests
         run: npm test cypress:run -- --spec cypress/e2e/Dynamic/
@@ -84,7 +84,8 @@ jobs:
         run: |
           cd cypress/smoke
           pip3 install numpy
-          python CypressDynamicScript.py --epochl=100 --epochs=340 --epoche=425 --blockl=1
+          python3 CypressDynamicScript.py --epochl=100 --epochs=340 --epoche=425 --blockl=1
+
 
       - name: 🎳 Run tests
         run: npm test cypress:run -- --spec cypress/e2e/Dynamic/
@@ -132,7 +133,7 @@ jobs:
         run: |
           cd cypress/smoke
           pip3 install numpy
-          python CypressDynamicScript.py
+          python3 CypressDynamicScript.py
 
       - name: 🎳 Run tests
         run: npm test
