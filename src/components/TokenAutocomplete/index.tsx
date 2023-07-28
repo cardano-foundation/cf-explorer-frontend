@@ -1,7 +1,6 @@
 import { Autocomplete, Box, Button } from "@mui/material";
 import { debounce } from "lodash";
 import { useState } from "react";
-import { BiChevronDown } from "react-icons/bi";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { HeaderSearchIcon } from "src/commons/resources";
@@ -14,6 +13,7 @@ import CustomTooltip from "../commons/CustomTooltip";
 import Table, { Column } from "../commons/Table";
 import { WrappModalScrollBar } from "../commons/Table/styles";
 import {
+  ArrowDownIconCustom,
   AssetName,
   Image,
   Logo,
@@ -36,10 +36,12 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
     size: 10
   });
 
+  const isDisabled = !data?.length;
+
   return (
     <Box>
       <Autocomplete
-        freeSolo={!data?.length}
+        disabled={isDisabled}
         options={total > 10 ? [...data, "more"] : data}
         componentsProps={{ paper: { elevation: 2 } }}
         loading={loading}
@@ -135,7 +137,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
           );
         }}
         renderInput={(params) => <StyledTextField {...params} placeholder="Search Token" />}
-        popupIcon={<BiChevronDown />}
+        popupIcon={<ArrowDownIconCustom disabled={isDisabled ? 1 : 0} />}
       />
       <ModalToken address={address} open={openModalToken} onClose={() => setOpenModalToken(false)} />
     </Box>
