@@ -59,7 +59,7 @@ export const StyledTextField = styled(TextField)`
     height: 40px;
     border: 1.5px solid ${(props) => props.theme.palette.border.main};
     border-radius: 8px;
-    background: ${(props) => props.theme.palette.secondary[600]};
+    ${(props) => props.disabled ? `background: ${props.theme.palette.secondary[600]}` : ""};
   }
   .MuiFormControl-root {
   }
