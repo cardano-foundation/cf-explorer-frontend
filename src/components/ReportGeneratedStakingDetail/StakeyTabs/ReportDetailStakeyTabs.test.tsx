@@ -75,7 +75,8 @@ describe("RewardsDistributionTab component", () => {
   const mockData: RewardDistributionItem = {
     epoch: 1234,
     time: "2023/07/13 12:00:00",
-    amount: 1000
+    amount: 1000,
+    type: "MEMBER"
   };
 
   beforeEach(() => {

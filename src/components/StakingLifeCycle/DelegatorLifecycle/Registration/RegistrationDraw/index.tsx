@@ -1,20 +1,22 @@
 import { Box, useTheme } from "@mui/material";
 import { useRef, useMemo } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import { BackIcon, AddressIcon, ADAGreen, TimeIcon } from "src/commons/resources";
+import { BackIcon, AddressIcon, ADAGreen, TimeIcon, ExclamationTriangleIcon } from "src/commons/resources";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import DrawPath from "src/components/commons/DrawPath";
 import AdaHolder from "src/components/commons/AdaHolder";
 import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
-import HoldBox from "src/components/commons/HoldBox";
 import FeeBox from "src/components/commons/FeeBox";
 import { details } from "src/commons/routers";
-import { StyledCopyButton } from "src/components/StakingLifeCycle/SPOLifecycle/Registration/styles";
+import CustomIcon from "src/components/commons/CustomIcon";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import NoRecord from "src/components/commons/NoRecord";
+import DrawSkeleton from "src/components/commons/DrawSkeleton";
 
-import { StyledLink } from "../styles";
 import {
   DrawContainer,
   BoxGroup,
@@ -24,28 +26,34 @@ import {
   InfoGroup,
   InfoText,
   MiddleGroup,
-  StepInfo
+  StepInfo,
+  StyledLink,
+  StyledCopyButton,
+  StyledHoldBox
 } from "./styles";
 
 interface Props {
-  selected: RegistrationItem;
   toggleModal: () => void;
-  showBackButton?: boolean;
+  showBackButton: boolean;
 }
 
-export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false }: Props) => {
-  const { deposit, fee, time, txHash } = selected;
+export const RegistrationDraw = ({ toggleModal, showBackButton = false }: Props) => {
+  const history = useHistory();
+  const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
+
+  const { data, error, initialized } = useFetch<RegistrationDetail>(
+    (txHash && API.STAKE_LIFECYCLE.REGISTRATION_DETAIL(stakeId, txHash)) || ""
+  );
 
   const adaHolderRef = useRef(null);
   const holdRef = useRef(null);
   const feeRef = useRef(null);
-  const registrationRef = useRef(null);
+  const certificateRef = useRef(null);
   const cardanoBlockchainRef = useRef(null);
-  const history = useHistory();
   const theme = useTheme();
 
   const handleBack = () => {
-    history.goBack();
+    history.push(details.staking(stakeId, "timeline", "registration"));
   };
 
   const paths = useMemo((): LineArrowItem[] => {
@@ -73,13 +81,13 @@ export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false
       {
         start: adaHolderRef,
         startPosition: { 0: ["left", "bottom"], sm: ["left", "middle"], lg: ["center", "middle"] },
-        end: registrationRef,
+        end: certificateRef,
         endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
         startOffset: { 0: [18, -50], sm: [10, 0], lg: [0] },
         fold: { sm: "horizontal", lg: "vertical" }
       },
       {
-        start: registrationRef,
+        start: certificateRef,
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
         end: cardanoBlockchainRef,
         endPosition: { 0: ["left", "top"], sm: ["left", "middle"], lg: ["center", "bottom"] },
@@ -90,11 +98,19 @@ export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false
     ];
   }, []);
 
+  if (!txHash) return null;
+
+  if (error) return <NoRecord />;
+
+  if (!data || !initialized) return <DrawSkeleton data-testid="delegator-registration-draw-skeleton" />;
+
+  const { deposit, fee, time, joinDepositPaid } = data;
+
   return (
-    <Box>
+    <Box data-testid="delegator-registration-container">
       <StepInfo>
         {showBackButton ? (
-          <IconButtonBack onClick={handleBack}>
+          <IconButtonBack data-testid="delegator-registration-back-button" onClick={handleBack}>
             <BackIcon />
           </IconButtonBack>
         ) : (
@@ -108,7 +124,7 @@ export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false
                 <StyledLink to={details.transaction(txHash)}>{getShortHash(txHash || "")}</StyledLink>
               </InfoText>
             </CustomTooltip>
-            <StyledCopyButton text={txHash} />
+            <StyledCopyButton data-testid="delegator-registration-copy-button" text={txHash} />
           </Info>
           <Info>
             <ADAGreen fill={theme.palette.secondary.light} />
@@ -124,14 +140,34 @@ export const RegistrationDraw = ({ selected, toggleModal, showBackButton = false
         <AdaHolder ref={adaHolderRef} />
         <MiddleGroup>
           <BoxGroup>
-            <HoldBox ref={holdRef} value={deposit} txHash={txHash} roundingNumber={1} />
-            <FeeBox ref={feeRef} value={fee} txHash={txHash} />
+            <StyledHoldBox
+              data-testid="delegator-registration-hold-box"
+              ref={holdRef}
+              value={deposit}
+              txHash={txHash}
+              roundingNumber={1}
+            >
+              {!joinDepositPaid && (
+                <CustomTooltip title="Paid by different address">
+                  <CustomIcon
+                    data-testid="delegator-registration-join-deposit-paid"
+                    icon={ExclamationTriangleIcon}
+                    width={24}
+                  />
+                </CustomTooltip>
+              )}
+            </StyledHoldBox>
+            <FeeBox data-testid="delegator-registration-fee-box" ref={feeRef} value={fee} txHash={txHash} />
           </BoxGroup>
-          <StyledCertificateShape onClick={toggleModal} ref={registrationRef}>
+          <StyledCertificateShape
+            data-testid="delegator-registration-certificate"
+            onClick={toggleModal}
+            ref={certificateRef}
+          >
             Registration Certificate
           </StyledCertificateShape>
         </MiddleGroup>
-        <CardanoBlockchain ref={cardanoBlockchainRef} />
+        <CardanoBlockchain data-testid="delegator-registration-cardano-blockchain" ref={cardanoBlockchainRef} />
         <DrawPath paths={paths} />
       </DrawContainer>
     </Box>

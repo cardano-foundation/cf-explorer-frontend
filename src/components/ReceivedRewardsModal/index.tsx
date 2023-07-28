@@ -8,7 +8,7 @@ import { ReceidvedRewardsIC } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
-import { RECEIVED_REWARDS } from "src/commons/utils/constants";
+import { RECEIVED_REWARDS, REWARD_TYPES, REWARD_TYPES_LABEL } from "src/commons/utils/constants";
 
 import ADAicon from "../commons/ADAIcon";
 import StyledModal from "../commons/StyledModal";
@@ -29,14 +29,13 @@ interface ReceivedReward {
   amount: string;
   epoch: number;
   time: string;
+  type: string;
 }
 
-export function getDumyData() {
-  return Array.from(Array(10)).map((item, i) => ({
-    amountADA: "234154851.36871",
-    epoch: 76543 + i,
-    date: "10/24/2022 14:09:02"
-  }));
+export enum ReceivedRewardsType {
+  LEADER = "LEADER",
+  MEMBER = "MEMBER",
+  ALL = ""
 }
 
 export interface ReceivedRewardsModalProps {
@@ -45,6 +44,7 @@ export interface ReceivedRewardsModalProps {
   reward: number;
   type?: RECEIVED_REWARDS;
 }
+
 const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = false, onClose, reward = 0, type }) => {
   const [params, setParams] = useState({ page: 0, size: 50 });
   const { stakeId = "" } = useParams<{ stakeId: string }>();
@@ -52,11 +52,15 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
   const { isMobile, isGalaxyFoldSmall } = useScreen();
   const fetchData = useFetchList<RewardDistributionItem>(
     stakeId && open ? API.STAKE_LIFECYCLE.RECEIVED_REWARD(stakeId) + (type ? `?type=${type}` : "") : "",
-    {
-      ...params,
-      sort
-    }
+    { ...params, sort }
   );
+
+  const mappingRewardType = (type: string): string => {
+    return type
+      ?.split(",")
+      .map((item) => REWARD_TYPES_LABEL[item as REWARD_TYPES])
+      .join(", ");
+  };
 
   const columns: Column<ReceivedReward>[] = [
     {
@@ -86,8 +90,16 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       render(data) {
         return <Box>{formatDateTimeLocal(data.time)}</Box>;
       }
+    },
+    {
+      key: "type",
+      title: "Reward Type",
+      render(data) {
+        return <Box>{mappingRewardType(data.type)}</Box>;
+      }
     }
   ];
+
   return (
     <StyledModal
       open={open}

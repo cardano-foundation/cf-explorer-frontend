@@ -1,5 +1,3 @@
-import userEvent from "@testing-library/user-event";
-
 import { render, screen } from "src/test-utils";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
