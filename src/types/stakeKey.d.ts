@@ -98,6 +98,7 @@ interface RewardDistributionItem {
   epoch: number;
   time: string;
   amount: number;
+  type: string;
 }
 
 interface WithdrawItem {

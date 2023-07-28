@@ -29,14 +29,7 @@ interface ReceivedReward {
   amount: string;
   epoch: number;
   time: string;
-}
-
-export function getDumyData() {
-  return Array.from(Array(10)).map((item, i) => ({
-    amountADA: "234154851.36871",
-    epoch: 76543 + i,
-    date: "10/24/2022 14:09:02"
-  }));
+  type: string;
 }
 
 export interface ReceivedRewardsModalProps {
@@ -45,6 +38,7 @@ export interface ReceivedRewardsModalProps {
   reward: number;
   type?: RECEIVED_REWARDS;
 }
+
 const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = false, onClose, reward = 0, type }) => {
   const [params, setParams] = useState({ page: 0, size: 50 });
   const { stakeId = "" } = useParams<{ stakeId: string }>();
@@ -57,6 +51,15 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       sort
     }
   );
+
+  const mappingRewardType = (type: string): string => {
+    return type
+      .replace("MEMBER", " Delegator")
+      .replace("LEADER", " Operator")
+      .replace("REFUND", " Refund")
+      .replace("RESERVES", " Reserves")
+      .replace("TREASURY", " Treasury");
+  };
 
   const columns: Column<ReceivedReward>[] = [
     {
@@ -86,8 +89,16 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       render(data) {
         return <Box>{formatDateTimeLocal(data.time)}</Box>;
       }
+    },
+    {
+      key: "type",
+      title: "Reward Type",
+      render(data) {
+        return <Box>{mappingRewardType(data.type)}</Box>;
+      }
     }
   ];
+
   return (
     <StyledModal
       open={open}
