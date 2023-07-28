@@ -75,7 +75,6 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
         history.push(lists.dashboard(isPoolReport ? "pool-reports" : "stake-key-reports"));
       }, 2000);
     } catch (err: any) {
-      console.error(err);
       toast.error("Failed to generate report. Please try again.");
     }
     setLoading(false);

@@ -67,8 +67,8 @@ const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort, p
         document.body.appendChild(link);
         link.click();
       })
-      .catch((e) => {
-        console.log(e);
+      .catch(() => {
+        // Todo: handle error
       })
       .finally(() => setDownloadingReport(undefined));
   };
