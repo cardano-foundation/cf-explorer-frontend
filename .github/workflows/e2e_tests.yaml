@@ -11,7 +11,7 @@ on:
 
 jobs:
   smoke-test-epoch-before-340:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
@@ -109,7 +109,7 @@ jobs:
       EXPLORER_API_MAINNET_URL: ${{ secrets.EXPLORER_API_MAINNET_URL }}
 
   smoke-test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
