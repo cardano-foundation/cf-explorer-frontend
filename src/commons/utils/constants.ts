@@ -189,3 +189,5 @@ export const PROTOCOL_TYPE = {
   maxCollateralInputs: "MAX_COLLATERAL_INPUTS",
   coinsPerUtxoSize: "COINS_PER_UTXO_SIZE"
 };
+
+export const LANGUAGE = "en";
