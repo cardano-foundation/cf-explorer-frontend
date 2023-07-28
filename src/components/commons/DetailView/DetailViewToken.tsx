@@ -1,17 +1,10 @@
-import { useTheme } from "@emotion/react";
-import { Box } from "@mui/material";
 import React, { useEffect } from "react";
 import { BiChevronRight } from "react-icons/bi";
 import { CgClose } from "react-icons/cg";
 
-import { PeopleIcon, PolicyWhiteIcon, TransactionIcon, UnionTokenIcon } from "src/commons/resources";
+import { PeopleIcon, TransactionIcon, UnionTokenIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import {
-  formatDateTimeLocal,
-  formatNumberDivByDecimals,
-  getShortWallet,
-  numberWithCommas
-} from "src/commons/utils/helper";
+import { formatDateTimeLocal, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
 
 import CopyButton from "../CopyButton";
 import CustomTooltip from "../CustomTooltip";
@@ -37,17 +30,10 @@ import {
   TokenDetailIcon,
   TokenDetailInfo,
   TokenDetailName,
-  TokenHeader,
   TokenHeaderContainer,
   TokenHeaderInfo,
-  TokenIcon,
   TokenInfo,
-  TokenInfoLabel,
-  TokenInfoValue,
   TokenMetaData,
-  TokenName,
-  TokenTitle,
-  TokenTitleIcon,
   TokenTotalSupply,
   ViewDetailContainer,
   ViewDetailDrawer,
@@ -63,8 +49,6 @@ type DetailViewTokenProps = {
 
 const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
   const { token: data, handleClose, tokenId } = props;
-  const theme = useTheme();
-
   useEffect(() => {
     document.body.style.overflowY = "hidden";
 
@@ -155,54 +139,6 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
       </ViewDetailHeader>
       <ViewDetailContainer>
         <ViewDetailScroll>
-          <TokenContainer>
-            <TokenHeaderContainer>
-              <TokenHeader>
-                <TokenTitleIcon src={PolicyWhiteIcon} alt="policy" />
-                <TokenTitle>Policy Script</TokenTitle>
-              </TokenHeader>
-            </TokenHeaderContainer>
-            {data.displayName || data?.metadata?.logo ? (
-              <TokenMetaData>
-                <TokenInfo>
-                  <TokenName>
-                    {data.displayName && data.displayName.length > 25 ? (
-                      <CustomTooltip title={data.displayName}>
-                        <div>{getShortWallet(data.displayName)}</div>
-                      </CustomTooltip>
-                    ) : (
-                      data.displayName
-                    )}
-                  </TokenName>
-                  {data?.metadata?.logo ? (
-                    <TokenIcon src={`data:/image/png;base64,${data.metadata?.logo}`} alt="token logo" />
-                  ) : (
-                    ""
-                  )}
-                </TokenInfo>
-                <Box pb={2}>
-                  <MetaData>
-                    {`Hex Format: #${data?.name || data?.fingerprint}`}
-                    <Box mt={1}>{data?.metadata?.description || ""}</Box>
-                  </MetaData>
-                </Box>
-              </TokenMetaData>
-            ) : (
-              ""
-            )}
-            <TokenHeaderInfo>
-              <TokenTotalSupply>
-                <TokenInfoLabel>Total Supply</TokenInfoLabel>
-                <TokenInfoValue>
-                  {formatNumberDivByDecimals(data?.supply, data?.decimals || data?.metadata?.decimals || 0)}
-                </TokenInfoValue>
-              </TokenTotalSupply>
-              <TokenDecimal>
-                <TokenInfoLabel>Decimal</TokenInfoLabel>
-                <TokenInfoValue>{data?.metadata?.decimals || 0}</TokenInfoValue>
-              </TokenDecimal>
-            </TokenHeaderInfo>
-          </TokenContainer>
           <Group>
             <DetailsInfoItem>
               <DetailLabel>Policy ID</DetailLabel>
@@ -231,15 +167,15 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                       <CustomTooltip title={data.displayName}>
                         <div>{getShortWallet(data.displayName)}</div>
                       </CustomTooltip>
-                    ) : (
+                    ) : data.displayName ? (
                       data.displayName
+                    ) : (
+                      <CustomTooltip title={data.fingerprint || ""}>
+                        <div>{getShortWallet(data.fingerprint || "")}</div>
+                      </CustomTooltip>
                     )}
                   </TokenDetailName>
-                  {data.metadata?.logo ? (
-                    <TokenDetailIcon src={`data:/image/png;base64,${data.metadata?.logo}`} alt="token logo" />
-                  ) : (
-                    ""
-                  )}
+                  {data.metadata?.logo ? <TokenDetailIcon src={`${data.metadata?.logo}`} alt="token logo" /> : ""}
                 </TokenDetailInfo>
               </DetailValue>
             </DetailsInfoItem>
@@ -268,7 +204,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
             <DetailLink to={details.token(tokenId)}>
               <DetailLabel>
                 <DetailLinkIcon>
-                  <TransactionIcon fill={theme.palette.green[600]} />
+                  <TransactionIcon />
                 </DetailLinkIcon>
                 <DetailLinkName>Transactions</DetailLinkName>
               </DetailLabel>
@@ -283,7 +219,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
             <DetailLink to={details.token(tokenId, "topHolders")}>
               <DetailLabel>
                 <DetailLinkIcon>
-                  <PeopleIcon fill={theme.palette.green[600]} />
+                  <PeopleIcon />
                 </DetailLinkIcon>
                 <DetailLinkName>Top Holders</DetailLinkName>
               </DetailLabel>
@@ -298,7 +234,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
             <DetailLink to={details.token(tokenId, "tokenMint")}>
               <DetailLabel>
                 <DetailLinkIcon>
-                  <UnionTokenIcon fill={theme.palette.green[600]} />
+                  <UnionTokenIcon />
                 </DetailLinkIcon>
                 <DetailLinkName>Token Mint</DetailLinkName>
               </DetailLabel>

@@ -10,8 +10,8 @@ export const Header = styled(Box)`
   justify-content: space-between;
   font-size: var(--font-size-text-small);
   font-weight: var(--font-weight-bold);
-  color: ${(props) => props.theme.palette.grey[500]};
-  border-bottom: 1px solid ${(props) => alpha(props.theme.palette.common.black, 0.1)};
+  color: ${(props) => props.theme.palette.secondary.light};
+  border-bottom: 1px solid ${(props) => props.theme.palette.primary[200]};
   padding-bottom: 8px;
 `;
 
@@ -40,14 +40,8 @@ export const StatusIcon = styled("img")`
 export const AddressLink = styled(Link)`
   font-weight: var(--font-weight-bold);
   font-family: var(--font-size-text);
-  color: ${(props) => props.theme.palette.blue[800]} !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
   margin-right: 8px;
-`;
-
-export const Amount = styled("span")`
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-size-text);
-  color: ${(props) => props.theme.palette.green[700]};
 `;
 
 export const RowMetadata = styled(Box)(({ theme }) => ({
@@ -55,32 +49,36 @@ export const RowMetadata = styled(Box)(({ theme }) => ({
   alignItems: "center",
   marginBottom: theme.spacing(1)
 }));
-export const Title = styled(Box)(() => ({ width: "200px", textAlign: "left" }));
-export const TitleValue = styled(Box)(() => ({ width: "100%", textAlign: "left" }));
+export const Title = styled(Box)(({ theme }) => ({
+  width: "200px",
+  textAlign: "left",
+  color: theme.palette.secondary.light
+}));
+export const TitleValue = styled(Box)(({ theme }) => ({
+  width: "100%",
+  textAlign: "left",
+  color: theme.palette.secondary.main
+}));
 export const Value = styled(Box)(({ theme }) => ({
   wordBreak: "break-all",
   width: "100%",
   textAlign: "left",
-  background: alpha("#50596D", 0.05),
+  background: theme.palette.primary[100],
   padding: `${theme.spacing(2)} 50px ${theme.spacing(2)} ${theme.spacing(1)}`,
   minHeight: 40,
   position: "relative",
   display: "flex",
   alignItems: "center"
 }));
-export const ValueText = styled(Box)(() => ({
-  // max-height: 4em; /* Điều chỉnh chiều cao tối đa, ví dụ 3 dòng */
-  // overflow: hidden; /* Ẩn phần dư thừa */
-  // text-overflow: ellipsis; /* Hiển thị dấu chấm ba chấm khi bị cắt */
-  // display: -webkit-box; /* Thêm tiền tố -webkit- để tương thích trên trình duyệt Safari */
-  // -webkit-line-clamp: 3; /* Số dòng tối đa */
-  // -webkit-box-orient: vertical; /* Hiển thị theo chiều dọc */
+export const ValueText = styled(Box)(({ theme }) => ({
   maxHeight: "4em",
   overflow: "hidden",
   textOverflow: "ellipsis",
   display: "-webkit-box",
   WebkitLineClamp: 3,
-  WebkitBoxOrient: "vertical"
+  WebkitBoxOrient: "vertical",
+  color: theme.palette.secondary.light,
+  paddingRight: theme.spacing(1)
 }));
 
 export const ViewAllImage = styled("img")`

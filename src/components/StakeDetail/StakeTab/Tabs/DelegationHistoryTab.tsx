@@ -43,7 +43,10 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
         <Box>
           <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
           <Box marginTop="5px">
-            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{r.epochSlotNo}
+            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
+            <Box color={({ palette }) => palette.secondary.light} component={"span"}>
+              {r.epochSlotNo}
+            </Box>
           </Box>
         </Box>
       )
@@ -73,7 +76,7 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
         const name = poolData.name?.length > 30 ? getShortWallet(poolData.name) : poolData.name;
         return (
           <CustomTooltip title={poolData.name || r.poolId}>
-            <StyledLink to={details.delegation(r.poolId)}>{name || `Pool [${getShortWallet(r.poolId)}]`}</StyledLink>
+            <StyledLink to={details.delegation(r.poolId)}>{name || getShortWallet(r.poolId)}</StyledLink>
           </CustomTooltip>
         );
       }

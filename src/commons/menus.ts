@@ -4,8 +4,9 @@ import { IconType } from "react-icons/lib";
 import {
   BlockChainMenuIcon,
   BrowseIcon,
-  DelegatePoolMenuIcon,
-  ProtocolParameterIcon,
+  DashboardIcon,
+  OperationalIcon,
+  ProtocolIcon,
   ResourcesIcon,
   StakingLifecycleIcon
 } from "./resources";
@@ -26,6 +27,11 @@ interface Social {
 }
 export const menus: Menu[] = [
   {
+    title: "Dashboard",
+    icon: DashboardIcon,
+    href: routers.HOME
+  },
+  {
     title: "Blockchain",
     icon: BlockChainMenuIcon,
     children: [
@@ -40,10 +46,10 @@ export const menus: Menu[] = [
   },
   {
     title: "Operational Certificates",
-    icon: DelegatePoolMenuIcon,
+    icon: OperationalIcon,
     children: [
-      { title: "Stake Key Registration", href: routers.STAKE_LIST.replace(":poolType?", "registration") },
-      { title: "Stake Key Deregistration", href: routers.STAKE_LIST.replace(":poolType?", "de-registration") },
+      { title: "Stake Address Registration", href: routers.STAKE_LIST.replace(":poolType?", "registration") },
+      { title: "Stake Address Deregistration", href: routers.STAKE_LIST.replace(":poolType?", "de-registration") },
       { title: "Stake Delegation(s)", href: routers.STAKE_DELEGATIONS },
       { title: "Pool Certificate", href: routers.REGISTRATION_POOLS.replace(":poolType?", "registration") },
       { title: "Pool Deregistration", href: routers.REGISTRATION_POOLS.replace(":poolType?", "de-registration") },
@@ -57,7 +63,7 @@ export const menus: Menu[] = [
   },
   {
     title: "Protocol Parameters",
-    icon: ProtocolParameterIcon,
+    icon: ProtocolIcon,
     href: "/protocol-parameters",
     children: []
   }

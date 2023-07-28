@@ -7,7 +7,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.red[600]}`,
+  border: `2px solid ${theme.palette.error[700]}`,
   borderRadius: "10px",
   marginRight: theme.spacing(5),
   position: "relative",
@@ -22,7 +22,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
     position: "absolute",
     top: "-50%",
     left: theme.spacing(2),
-    background: theme.palette.red[600],
+    background: theme.palette.error[700],
     transform: " translate(0, 60%)"
   }
 }));
@@ -32,7 +32,7 @@ export const FeeBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.red[600]}`,
+  border: `2px solid ${theme.palette.error[700]}`,
   borderRadius: "10px",
   background: theme.palette.common.white,
   marginRight: theme.spacing(1),
@@ -47,13 +47,13 @@ export const FeeBox = styled(Box)(({ theme }) => ({
     position: "absolute",
     top: "-50%",
     left: theme.spacing(2),
-    background: theme.palette.red[600],
+    background: theme.palette.error[700],
     transform: " translate(0, 60%)"
   }
 }));
 
 export const IconButton = styled(IconButtonMui)(({ theme }) => ({
-  background: theme.palette.grey[100]
+  background: theme.palette.primary[100]
 }));
 export const IconButtonBack = styled(IconButtonMui)(() => ({
   padding: 0
@@ -92,7 +92,7 @@ export const NetAmount = styled(Box)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.green[600]}`,
+  border: `2px solid ${theme.palette.success[800]}`,
   borderRadius: "10px",
   position: "relative",
   background: theme.palette.common.white,
@@ -106,7 +106,7 @@ export const NetAmount = styled(Box)(({ theme }) => ({
     position: "absolute",
     top: "-50%",
     left: theme.spacing(2),
-    background: theme.palette.green[600],
+    background: theme.palette.success[800],
     transform: " translate(0, 60%)"
   }
 }));
@@ -117,7 +117,7 @@ export const Withdrawn = styled(Box)(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.green[600]}`,
+  border: `2px solid ${theme.palette.success[800]}`,
   borderRadius: "10px",
   position: "relative",
   background: theme.palette.common.white,
@@ -131,21 +131,9 @@ export const Withdrawn = styled(Box)(({ theme }) => ({
     position: "absolute",
     top: "-50%",
     left: theme.spacing(2),
-    background: theme.palette.green[600],
+    background: theme.palette.success[800],
     transform: " translate(0, 60%)"
   }
-}));
-
-export const Payment = styled(Box)(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-between",
-  alignItems: "center",
-  height: "220px",
-  padding: `${theme.spacing(3)} 0`,
-  border: "2px dashed #D2D2D2",
-  background: alpha(theme.palette.grey[300], 0.1),
-  borderRadius: "25px"
 }));
 
 export const RoundBox = styled(Box)(({ theme }) => ({

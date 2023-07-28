@@ -1,4 +1,4 @@
-import { Box, Skeleton, styled } from "@mui/material";
+import { Box, Skeleton, styled, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
@@ -9,7 +9,6 @@ import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "src/commons/resources
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
-import { FilterParams } from "src/components/StackingFilter";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import StyledModal from "src/components/commons/StyledModal";
@@ -28,12 +27,6 @@ interface CertificateItemType {
 
 const Delegation = () => {
   const [selected, setSelected] = useState<DelegationItem | null>(null);
-  const [params, setParams] = useState<FilterParams>({
-    fromDate: undefined,
-    sort: undefined,
-    toDate: undefined,
-    txHash: undefined
-  });
   const handleSelect = (delegation: DelegationItem | null) => {
     setSelected(delegation);
   };
@@ -42,12 +35,7 @@ const Delegation = () => {
 
   return (
     <Box>
-      <RecentDelegations
-        onSelect={handleSelect}
-        params={params}
-        setParams={setParams}
-        setShowBackButton={setShowBackButton}
-      />
+      <RecentDelegations onSelect={handleSelect} setShowBackButton={setShowBackButton} />
       {selected && <DelegationTimeline selected={selected} showBackButton={showBackButton} />}
     </Box>
   );
@@ -76,6 +64,7 @@ export const DelegationTimeline = ({ selected, showBackButton = false }: Props) 
   const [openModal, setOpenModal] = useState(false);
   const history = useHistory();
   const { sidebar } = useSelector(({ user }: RootState) => user);
+  const theme = useTheme();
   const { data, loading } = useFetch<DelegationDetail>(
     (selected && selected.txHash && stakeId && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stakeId, selected.txHash)) || ""
   );
@@ -100,15 +89,15 @@ export const DelegationTimeline = ({ selected, showBackButton = false }: Props) 
 
           <InfoGroup sidebar={+sidebar}>
             <Info>
-              <AddressIcon fill="#438F68" />
+              <AddressIcon fill={theme.palette.secondary.light} />
               <Box component={Skeleton} variant="rectangular" width={145} height={18} />
             </Info>
             <Info>
-              <ADAGreen />
+              <ADAGreen fill={theme.palette.secondary.light} />
               <Box component={Skeleton} variant="rectangular" width={60} height={18} />
             </Info>
             <Info>
-              <TimeIcon />
+              <TimeIcon fill={theme.palette.secondary.light} />
               <Box component={Skeleton} variant="rectangular" width={130} height={18} />
             </Info>
           </InfoGroup>
@@ -130,7 +119,7 @@ export const DelegationTimeline = ({ selected, showBackButton = false }: Props) 
         )}
         <InfoGroup>
           <Info>
-            <AddressIcon fill="#438F68" />
+            <AddressIcon fill={theme.palette.secondary.light} />
             <CustomTooltip title={data?.txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(data?.txHash)}>{getShortHash(data?.txHash || "")}</StyledLink>
@@ -139,11 +128,11 @@ export const DelegationTimeline = ({ selected, showBackButton = false }: Props) 
             <StyledCopyButton text={data?.txHash} />
           </Info>
           <Info>
-            <ADAGreen />
+            <ADAGreen fill={theme.palette.secondary.light} />
             <InfoText>{formatADAFull(data?.fee || 0)}</InfoText>
           </Info>
           <Info>
-            <TimeIcon />
+            <TimeIcon fill={theme.palette.secondary.light} />
             <InfoText>{formatDateTimeLocal(data?.time || "")}</InfoText>
           </Info>
         </InfoGroup>
@@ -161,16 +150,14 @@ export const DelegationTimeline = ({ selected, showBackButton = false }: Props) 
   );
 };
 
-export const DelegationCertificateModal = ({
-  stake,
-  txHash,
-  ...props
-}: {
+interface DelegationCertificateModalProps {
   stake: string;
   open: boolean;
   txHash: string;
   handleCloseModal: () => void;
-}) => {
+}
+
+export const DelegationCertificateModal = ({ stake, txHash, ...props }: DelegationCertificateModalProps) => {
   const { data } = useFetch<DelegationDetail>((txHash && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stake, txHash)) || "");
 
   const list: CertificateItemType[] = [
@@ -188,9 +175,11 @@ export const DelegationCertificateModal = ({
     {
       label: "Pool Name",
       content: (
-        <LineData>
-          <Link to={details.delegation(data?.poolId || "")}>{data?.poolName || ""}</Link>{" "}
-        </LineData>
+        <CustomTooltip title={data?.poolName || data?.poolId}>
+          <LineData>
+            <Link to={details.delegation(data?.poolId || "")}>{data?.poolName || getShortWallet(data?.poolId)}</Link>{" "}
+          </LineData>
+        </CustomTooltip>
       )
     },
     {
@@ -234,5 +223,5 @@ export const DelegationCertificateModal = ({
 
 const Link = styled(LinkDom)(({ theme }) => ({
   fontSize: "0.875rem",
-  color: `${theme.palette.blue[800]} !important`
+  color: `${theme.palette.primary.main} !important`
 }));

@@ -7,7 +7,6 @@ import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import { details } from "src/commons/routers";
 import CopyButton from "src/components/commons/CopyButton";
-import { FilterParams } from "src/components/StackingFilter";
 
 import RecentRegistrations from "./RecentRegistrations";
 import { RegistrationDraw } from "./RegistrationDraw";
@@ -20,12 +19,6 @@ const Registration = () => {
   const handleSelect = (registration: RegistrationItem | null) => {
     setSelected(registration);
   };
-  const [params, setParams] = useState<FilterParams>({
-    fromDate: undefined,
-    sort: undefined,
-    toDate: undefined,
-    txHash: undefined
-  });
 
   const [showBackButton, setShowBackButton] = useState<boolean>(false);
 
@@ -34,12 +27,7 @@ const Registration = () => {
   return (
     <Box>
       <RegistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
-      <RecentRegistrations
-        onSelect={handleSelect}
-        params={params}
-        setParams={setParams}
-        setShowBackButton={setShowBackButton}
-      />
+      <RecentRegistrations onSelect={handleSelect} setShowBackButton={setShowBackButton} />
       {selected && (
         <RegistrationDraw selected={selected} toggleModal={handleToggleModal} showBackButton={showBackButton} />
       )}
@@ -62,12 +50,12 @@ export const RegistrationCertificateModal = ({
       <StyledContainerModal>
         {loading && <Skeleton variant="rectangular" width={500} height={90} />}
         {!loading && (
-          <Box>
-            <Box fontWeight={"bold"} mb={1} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
+          <Box bgcolor={({ palette }) => palette.secondary[0]} p={3}>
+            <Box fontWeight={"bold"} mb={1} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
               Stake Address
             </Box>
             {data && (
-              <Box>
+              <Box display={"flex"} alignItems={"center"}>
                 <StakeLink to={details.stake(stake)}>{stake || ""}</StakeLink>
                 <CopyButton text={stake} />
               </Box>

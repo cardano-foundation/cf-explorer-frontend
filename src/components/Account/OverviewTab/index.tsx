@@ -8,7 +8,7 @@ import { IoMdClose } from "react-icons/io";
 import { NetworkType, isWalletInstalled, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { MdOutlineFileDownload } from "react-icons/md";
 
-import { getShortWallet, regexEmail } from "src/commons/utils/helper";
+import { regexEmail } from "src/commons/utils/helper";
 import { editInfo, getInfo } from "src/commons/utils/userRequest";
 import { NETWORK, NETWORKS, NETWORK_TYPES, SUPPORTED_WALLETS } from "src/commons/utils/constants";
 import { setUserData } from "src/stores/user";
@@ -23,26 +23,15 @@ import {
 import StyledModal from "src/components/commons/StyledModal";
 import useToast from "src/commons/hooks/useToast";
 import { SupportedWallets, Wallet } from "src/types/user";
-import { StyledDarkLoadingButton } from "src/components/share/styled";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { ReactComponent as Edit } from "src/commons/resources/icons/pen.svg";
 import { ReactComponent as Search } from "src/commons/resources/icons/search.svg";
-import questionConfirm from "src/commons/resources/icons/questionConfirm.svg";
 import { RootState } from "src/stores/types";
 import { routers } from "src/commons/routers";
 import CopyButton from "src/components/commons/CopyButton";
 import { useScreen } from "src/commons/hooks/useScreen";
 
-import {
-  Label,
-  StyledAction,
-  StyledButton,
-  StyledRowItem,
-  TextNote,
-  Value,
-  WalletAddress,
-  WrapInfoItemMobile
-} from "./styles";
+import { Label, StyledAction, StyledRowItem, TextNote, Value, WalletAddress, WrapInfoItemMobile } from "./styles";
 
 export type TRowItem = {
   label: string;
@@ -144,13 +133,18 @@ const OverviewTab = () => {
                   <Box
                     component={IoMdClose}
                     size={"24px"}
-                    color={theme.palette.red[700]}
+                    color={theme.palette.error[700]}
                     onClick={() => setShowInput(false)}
                     mr={1}
                   />
                 )}
                 {!loading ? (
-                  <Box color={theme.palette.green[700]} component={GoCheck} size={"24px"} onClick={handleSubmitEmail} />
+                  <Box
+                    color={theme.palette.success[800]}
+                    component={GoCheck}
+                    size={"24px"}
+                    onClick={handleSubmitEmail}
+                  />
                 ) : (
                   <CircularProgress size={"24px"} />
                 )}
@@ -197,7 +191,7 @@ const OverviewTab = () => {
         value={moment(userData?.lastLogin).format("MM/DD/YYYY hh:mm:ss")}
         isTablet={isTablet}
       />
-      <ConnectWalletModal open={openModal} setOpen={setOpenModal} />
+      {openModal && <ConnectWalletModal open={openModal} setOpen={setOpenModal} />}
     </Box>
   );
 };
@@ -214,9 +208,7 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
   });
   const [stakeKey, setStakeKey] = useState<string | null>("");
-  const [loading, setLoading] = useState(false);
   const [selectedWallet, setSelectedWallet] = useState("");
-  const [loadingStake, setLoadingStake] = useState(false);
   const { userData } = useSelector(({ user }: RootState) => user);
 
   useEffect(() => {
@@ -226,12 +218,11 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stakeKey]);
 
-  const handleSubmitWallet = async () => {
-    if (!stakeKey) return;
+  const handleSubmitWallet = async (stakeAddress: string) => {
+    if (!stakeAddress) return;
 
     try {
-      setLoading(true);
-      await editInfo({ address: stakeKey || "" });
+      await editInfo({ address: stakeAddress || "" });
       const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
       setUserData({ ...response.data, loginType: userData?.loginType || "" });
       disconnect();
@@ -242,8 +233,6 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
         ((error as any)?.response && (error as any)?.response?.data && (error as any)?.response?.data?.errorMessage) ||
           "Something went wrong!"
       );
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -257,16 +246,13 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
     setStakeKey(null);
   };
   const handleClick = (name: SupportedWallets, loading = true) => {
-    loading && setLoadingStake(true);
-
     connect(
       name,
       () => {
         setStakeKey(stakeAddress);
-        loading && setLoadingStake(false);
+        handleSubmitWallet(stakeAddress as string);
       },
       (e) => {
-        loading && setLoadingStake(false);
         if (e.name === "EnablementFailedError") {
           loading &&
             toast.error(
@@ -280,72 +266,46 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
       }
     );
   };
-  const renderConfirm = () => {
-    return (
-      <Box mt={3}>
-        <Box textAlign={"center"} mb={3}>
-          <Box component={"img"} src={questionConfirm} />
-        </Box>
-        <Box textAlign={"center"} color={({ palette }) => palette.grey[700]} fontWeight={"bold"} fontSize={"20px"}>
-          Confirmation Required
-        </Box>
-        <Box textAlign={"center"} color={({ palette }) => palette.grey[700]} fontWeight={"bold"} fontSize={"18px"}>
-          This is your stake key {getShortWallet(stakeKey || "")}, are you sure to continue?
-        </Box>
-        <Box display={"flex"} justifyContent={"center"} mt={2}>
-          <StyledButton disabled={loading} onClick={() => setStakeKey(null)}>
-            Close
-          </StyledButton>
-          <StyledDarkLoadingButton loading={loading} onClick={handleSubmitWallet}>
-            Continue
-          </StyledDarkLoadingButton>
-        </Box>
-      </Box>
-    );
-  };
 
   return (
     <StyledModal open={open} handleCloseModal={onClose}>
       <>
-        {stakeKey && renderConfirm()}
-        {!stakeKey && (
+        <>
+          <Title>Link wallet to your account</Title>
+          <Box color={({ palette }) => palette.grey[300]} fontWeight={"bold"} fontSize={"14px"}>
+            You can only link wallet once per account
+          </Box>
           <>
-            <Title>Link wallet to your account</Title>
-            <Box color={({ palette }) => palette.grey[300]} fontWeight={"bold"} fontSize={"14px"}>
-              You can only link wallet once per account
-            </Box>
-            <>
-              {SUPPORTED_WALLETS.filter((wallet) => wallet.networks.includes(NETWORK)).map((wallet) => {
-                return (
-                  <WalletItem
-                    key={wallet.name}
-                    active={0}
-                    connecting={0}
-                    onClick={() => {
-                      setSelectedWallet(wallet.name);
-                      handleClick(wallet.name);
-                    }}
-                  >
-                    <GroupFlex>
-                      <WalletName>{wallet.name}</WalletName>
-                      {wallet.name === selectedWallet && loadingStake ? <CircularProgress size={30} /> : ""}
-                    </GroupFlex>
-                    <GroupFlex>
-                      {!isWalletInstalled(wallet.name.toLocaleLowerCase()) ? (
-                        <InstallButton onClick={() => handleOpenLink(wallet)}>
-                          Not Installed <MdOutlineFileDownload size={18} />
-                        </InstallButton>
-                      ) : (
-                        <i />
-                      )}
-                      <WalletIcon src={wallet.icon} alt={wallet.name} />
-                    </GroupFlex>
-                  </WalletItem>
-                );
-              })}
-            </>
+            {SUPPORTED_WALLETS.filter((wallet) => wallet.networks.includes(NETWORK)).map((wallet) => {
+              return (
+                <WalletItem
+                  key={wallet.name}
+                  active={0}
+                  connecting={0}
+                  onClick={() => {
+                    setSelectedWallet(wallet.name);
+                    handleClick(wallet.name);
+                  }}
+                >
+                  <GroupFlex>
+                    <WalletName>{wallet.name}</WalletName>
+                    {wallet.name === selectedWallet ? <CircularProgress size={30} /> : ""}
+                  </GroupFlex>
+                  <GroupFlex>
+                    {!isWalletInstalled(wallet.name.toLocaleLowerCase()) ? (
+                      <InstallButton onClick={() => handleOpenLink(wallet)}>
+                        Not Installed <MdOutlineFileDownload size={18} />
+                      </InstallButton>
+                    ) : (
+                      <i />
+                    )}
+                    <WalletIcon src={wallet.icon} alt={wallet.name} />
+                  </GroupFlex>
+                </WalletItem>
+              );
+            })}
           </>
-        )}
+        </>
       </>
     </StyledModal>
   );

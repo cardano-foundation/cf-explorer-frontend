@@ -1,24 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
-import { Box, Button, alpha } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box } from "@mui/material";
 
-import sendImg from "src/commons/resources/images/sendImg.svg";
-import { formatADAFull, getShortHash, getShortWallet } from "src/commons/utils/helper";
-import { details } from "src/commons/routers";
+import { getShortHash } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
 import CopyButton from "src/components/commons/CopyButton";
-import CustomTooltip from "src/components/commons/CustomTooltip";
-import ADAicon from "src/components/commons/ADAIcon";
 import ParseScriptModal from "src/components/ParseScriptModal";
 import { SeeMoreIcon } from "src/commons/resources";
 
 import {
-  AddressLink,
-  Amount,
-  ItemContainer,
-  StatusIcon,
-  StyledItem,
   Wrapper,
   Header,
   RowMetadata,
@@ -50,7 +39,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
           fontWeight={"bold"}
           display={"block"}
           pt={2}
-          color={({ palette }) => `${palette.grey[700]}  !important`}
+          color={({ palette }) => `${palette.secondary.main}  !important`}
         >
           {isTablet ? getShortHash(hash || "") : hash}
           <CopyButton text={hash || ""} />
@@ -59,7 +48,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
       {(data || [])?.map((metadata, idx) => (
         <Wrapper mt={2} key={idx}>
           <RowMetadata>
-            <Title>Publish Label</Title>
+            <Title>Metadatum Label</Title>
             <TitleValue>{metadata.label || ""}</TitleValue>
           </RowMetadata>
           <RowMetadata>

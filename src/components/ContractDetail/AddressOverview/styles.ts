@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 
 export const StyledAAmount = styled(Box)`
   display: flex;
+  color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
 export const StyledTextField = styled(TextField)`
   .MuiInputBase-root {
     padding: 0 9px;
     height: 40px;
-    border: 1.5px solid ${({ theme }) => theme.palette.border.main};
+    border: 1.5px solid ${({ theme }) => theme.palette.primary[200]};
     border-radius: 8px;
   }
   .MuiInputBase-input {
@@ -32,7 +33,7 @@ export const WrapPaperDropdown = styled(Paper)`
 export const Pool = styled(Link)`
   max-width: 200px;
   text-overflow: hidden;
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
   font-weight: bold;
   &:hover {
     cursor: pointer;
@@ -57,11 +58,11 @@ export const GridItem = styled(Grid)``;
 
 export const RedirectButton = styled(Box)(({ theme }) => ({
   textTransform: "capitalize",
-  backgroundColor: theme.palette.common.black,
+  backgroundColor: theme.palette.secondary.main,
   color: theme.palette.common.white,
   padding: `${theme.spacing(1)} ${theme.spacing(2)} `,
   ":hover": {
-    backgroundColor: alpha(theme.palette.common.black, 0.8)
+    backgroundColor: alpha(theme.palette.secondary.main, 0.8)
   }
 }));
 
@@ -70,8 +71,9 @@ export const BannerSuccess = styled(Box)`
   font-size: 18px;
   line-height: 21px;
   text-align: center;
-  color: #ffffff;
-  background: #5a9c56;
+  color: ${(props) => props.theme.palette.success[800]};
+  background: ${(props) => props.theme.palette.success[100]};
+  border: ${(props) => props.theme.palette.primary[200]};
   border-radius: 10px;
   width: 100%;
   padding: 12px 0px;

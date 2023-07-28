@@ -10,13 +10,8 @@ export const Status = styled("span")`
 `;
 
 export const Active = styled(Status)`
-  background: ${(props) => props.theme.palette.success.light};
-  color: ${(props) => props.theme.palette.success.main};
-`;
-
-export const Deactive = styled(Status)`
-  background: ${(props) => props.theme.palette.green[800_10]};
-  color: ${(props) => props.theme.palette.grey[400]};
+  background: ${(props) => props.theme.palette.success[100]};
+  color: ${(props) => props.theme.palette.success[800]};
 `;
 
 export const Title = styled("div")`
@@ -47,12 +42,12 @@ export const BackButton = styled("button")`
   font-family: "Roboto", sans-serif;
   ${({ theme }) => theme.breakpoints.down("xl")} {
     svg {
-      fill: ${(props) => props.theme.palette.grey[500]} !important;
+      fill: ${(props) => props.theme.palette.secondary.light} !important;
     }
   }
 `;
 export const BackText = styled("small")`
-  color: ${(props) => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.secondary.light};
   font-weight: var(--font-weight-bold);
 `;
 
@@ -62,7 +57,7 @@ export const HeaderContainer = styled(Box)`
 `;
 
 export const HeaderTitle = styled("h2")`
-  color: ${(props) => props.theme.palette.common.black};
+  color: ${(props) => props.theme.palette.secondary.main};
   font-size: 2.25rem;
   margin: 0.5rem 0;
 `;
@@ -175,7 +170,7 @@ export const ButtonClose = styled(Button)(({ theme }) => ({
 export const ViewJson = styled(Box)(({ theme }) => ({
   textAlign: "left",
   overflowY: "auto",
-  backgroundColor: alpha(theme.palette.grey[300], 0.1),
+  backgroundColor: alpha(theme.palette.secondary.light, 0.1),
   borderRadius: 10,
   padding: theme.spacing(2),
   marginTop: theme.spacing(2),

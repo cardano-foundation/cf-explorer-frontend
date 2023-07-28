@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 
@@ -45,6 +45,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
   const history = useHistory();
   const pageInfo = getPageInfo(search);
   const url = `${API.ADDRESS.DETAIL}/${address}/txs`;
+  const theme = useTheme();
   const fetchData = useFetchList<Transactions>(url, { ...pageInfo });
   const onClickRow = (e: any, transaction: Transactions, index: number) => {
     let parent: Element | null = e.target as Element;
@@ -136,7 +137,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
         const isUp = transaction.balance >= 0;
         return (
           <Box display="inline-flex" alignItems="center">
-            <Box mr={1} color={isUp ? "success.main" : "error.main"}>
+            <Box mr={1} color={isUp ? theme.palette.success[800] : theme.palette.error[700]}>
               {!isUp ? `` : `+`}
               {formatADAFull(transaction.balance)}
             </Box>

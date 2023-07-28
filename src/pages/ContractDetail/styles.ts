@@ -1,6 +1,7 @@
 import { Box, Container, styled } from "@mui/material";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
+  maxWidth: "95vw !important",
   padding: "30px 16px 0px",
   [theme.breakpoints.down("md")]: {
     paddingTop: 0
@@ -23,6 +24,6 @@ export const BackButton = styled(Box)`
 `;
 
 export const BackText = styled("small")`
-  color: ${(props) => props.theme.palette.text.secondary};
+  color: ${(props) => props.theme.palette.secondary.light};
   font-weight: var(--font-weight-bold);
 `;

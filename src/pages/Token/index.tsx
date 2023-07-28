@@ -33,10 +33,13 @@ const Tokens = () => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
+
+  const queries = new URLSearchParams(search);
+
   const mainRef = useRef(document.querySelector("#main"));
   const { data, lastUpdated, ...fetchData } = useFetchList<ITokenOverview>(
     API.TOKEN.LIST,
-    { ...pageInfo, sort },
+    { ...pageInfo, sort, query: queries.get("tokenName") || "" },
     false,
     REFRESH_TIMES.TOKEN_LIST
   );
@@ -51,7 +54,7 @@ const Tokens = () => {
       title: "Icon",
       key: "icon",
       minWidth: "50px",
-      render: (r) => (r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" /> : "")
+      render: (r) => (r?.metadata?.logo ? <Logo src={`${r.metadata?.logo}`} alt="icon" /> : "")
     },
     {
       title: "Asset Name",
@@ -119,7 +122,7 @@ const Tokens = () => {
     },
     {
       title: "Created At",
-      key: "createdat",
+      key: "time",
       minWidth: "150px",
       render: (r) => (
         <>
@@ -146,14 +149,10 @@ const Tokens = () => {
 
   return (
     <StyledContainer>
-      <Card
-        title="Token List"
-        extra={
-          <TimeDuration>
-            <FormNowMessage time={lastUpdated} />
-          </TimeDuration>
-        }
-      >
+      <Card title="Token List">
+        <TimeDuration>
+          <FormNowMessage time={lastUpdated} />
+        </TimeDuration>
         <Table
           {...fetchData}
           data={data}

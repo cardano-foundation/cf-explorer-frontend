@@ -192,7 +192,6 @@ const mockProps = {
 describe("TransactionOverview component", () => {
   it("should component render", () => {
     render(<TransactionOverview {...mockProps} />);
-    expect(screen.getByRole("heading", { name: /transaction details/i })).toBeInTheDocument();
     expect(screen.getByText(/created at/i)).toBeInTheDocument();
     expect(screen.getByText(/confirmations/i)).toBeInTheDocument();
     expect(screen.getByText(/total output/i)).toBeInTheDocument();
