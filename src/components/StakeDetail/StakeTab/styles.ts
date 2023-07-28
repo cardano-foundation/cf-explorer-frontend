@@ -7,7 +7,7 @@ export const TitleTab = styled(Box)<{ active?: boolean }>(({ active, theme }) =>
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? theme.palette.common.black : theme.palette.text.hint
+  color: active ? theme.palette.primary.main : theme.palette.secondary.light
 }));
 
 export const LabelStatus = styled(Box)(({ theme }) => ({
@@ -23,7 +23,7 @@ export const LabelStatus = styled(Box)(({ theme }) => ({
 
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${(props) => props.theme.palette.secondary.main}!important;
+  color: ${(props) => props.theme.palette.primary.main}!important;
 `;
 
 export const StyledTabList = styled(TabList)(({ theme }) => ({
@@ -39,10 +39,10 @@ export const StyledTabList = styled(TabList)(({ theme }) => ({
     },
     "&:hover": {
       "&::-webkit-scrollbar-thumb": {
-        background: theme.palette.grey[300]
+        background: theme.palette.secondary.light
       },
       "&::-webkit-scrollbar-track": {
-        background: theme.palette.grey[100]
+        background: theme.palette.primary[100]
       }
     }
   },
@@ -62,5 +62,5 @@ export const StyledTabList = styled(TabList)(({ theme }) => ({
 }));
 
 export const WrapperTabList = styled(Box)(({ theme }) => ({
-  borderBottom: `1px solid ${theme.palette.border.secondary}`
+  borderBottom: `1px solid ${theme.palette.primary[200]}`
 }));

@@ -30,12 +30,20 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
               <Box width={50}>
                 <StatusIcon src={sendImg} alt="wallet icon" />
               </Box>
-              {isMobile ? <span>From: </span> : null}
+              {isMobile ? (
+                <Box component={"span"} color={({ palette }) => palette.secondary.light}>
+                  From:
+                </Box>
+              ) : null}
             </Box>
             <Box width="100%" sx={{ overflowX: "scroll", overflowY: "hidden" }}>
               <Box flex={1} display="flex" justifyContent="space-between">
                 <Box minWidth={120}>
-                  {!isMobile ? <span>From: </span> : null}
+                  {!isMobile ? (
+                    <Box component={"span"} color={({ palette }) => palette.secondary.light}>
+                      From:
+                    </Box>
+                  ) : null}
                   <CustomTooltip title={item.stakeAddressFrom}>
                     <AddressLink
                       to={
@@ -55,7 +63,9 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                 </Box>
               </Box>
               <Box display={"flex"} flexDirection={isMobile ? "column" : "row"}>
-                <Box minWidth="1.75rem">To:</Box>
+                <Box minWidth="1.75rem" color={({ palette }) => palette.secondary.light}>
+                  To:
+                </Box>
                 <Box flex={1}>
                   {item?.addressTo.map((address, idx) => {
                     return (

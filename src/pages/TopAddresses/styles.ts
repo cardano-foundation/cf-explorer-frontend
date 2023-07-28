@@ -3,7 +3,7 @@ import { Container, Box, styled } from "@mui/material";
 export const TabTitle = styled(Box)`
   margin-bottom: 0px;
   padding-left: 8px;
-  color: ${({ theme }) => theme.palette.text.hint};
+  color: ${({ theme }) => theme.palette.secondary.light};
   text-align: left;
   text-transform: capitalize !important;
   font-size: 18px;
@@ -13,7 +13,7 @@ export const TabTitle = styled(Box)`
     line-height: 16px;
   }
   &.active {
-    color: ${({ theme }) => theme.palette.common.black};
+    color: ${({ theme }) => theme.palette.primary.main};
   }
 `;
 

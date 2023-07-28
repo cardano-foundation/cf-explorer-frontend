@@ -1,4 +1,4 @@
-import { Box, MenuItem, Select } from "@mui/material";
+import { Box, MenuItem } from "@mui/material";
 import { useState } from "react";
 
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -11,13 +11,12 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import Table, { Column } from "src/components/commons/Table";
 
-import { Actions, PageSize, PerPage, StyledLink, TimeDuration } from "./styles";
+import { Actions, PageSize, PerPage, SelectMui, StyledLink, TimeDuration } from "./styles";
 
 const perPages = [10, 20, 50, 100];
 
 const TopAddressesByADABalance = () => {
   const [pageSize, setPageSize] = useState("50");
-
   const { error, data, initialized, loading, lastUpdated } = useFetchList<Contracts>(
     API.ADDRESS.TOP_ADDRESS,
     { page: 0, size: +pageSize },
@@ -75,18 +74,19 @@ const TopAddressesByADABalance = () => {
           <FormNowMessage time={lastUpdated} />
         </TimeDuration>
         <PageSize>
-          <Select
+          <SelectMui
             value={pageSize}
-            onChange={(event) => setPageSize(event.target.value)}
+            onChange={(event: any) => setPageSize(event.target.value)}
             displayEmpty
             inputProps={{ "aria-label": "Without label" }}
+            sx={{ color: ({ palette }) => palette.secondary.main }}
           >
             {perPages.map((item) => (
               <MenuItem key={item} value={item}>
-                {item}
+                <Box color={({ palette }) => `${palette.secondary.main} !important`}>{item}</Box>
               </MenuItem>
             ))}
-          </Select>
+          </SelectMui>
           <PerPage>Addresses</PerPage>
         </PageSize>
       </Actions>

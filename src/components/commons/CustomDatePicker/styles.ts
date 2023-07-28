@@ -1,4 +1,4 @@
-import { IconButton, Box, styled } from "@mui/material";
+import { IconButton, Box, styled, alpha } from "@mui/material";
 
 export const SelectDateButton = styled(Box)(() => ({
   position: "absolute",
@@ -10,7 +10,7 @@ export const SelectDateButton = styled(Box)(() => ({
 
 export const WrapCustomDatePicker = styled(Box)(({ theme }) => ({
   position: "relative",
-  border: `1.5px solid ${theme.palette.border.main}`,
+  border: `1.5px solid ${theme.palette.primary[200]}`,
   borderRadius: "8px",
   backgroundColor: theme.palette.common.white,
   padding: "12px 14px",
@@ -33,13 +33,13 @@ export const MyGrid = styled(Box)(() => ({
 
 export const HiddenScroll = styled(Box)(({ theme }) => ({
   position: "absolute",
-  top: "50%",
-  left: "-10%",
+  top: "60%",
+  left: 0,
   width: "fit-content",
   height: "200px",
   overflow: "auto",
-  backgroundColor: "#fff",
-  boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.12)",
+  backgroundColor: theme.palette.common.white,
+  boxShadow: `0px 4px 16px ${alpha(theme.palette.common.white, 0.12)}`,
   borderRadius: "8px",
   zIndex: 1,
   "&::-webkit-scrollbar": {
@@ -53,10 +53,10 @@ export const HiddenScroll = styled(Box)(({ theme }) => ({
   },
   "&:hover": {
     "&::-webkit-scrollbar-thumb": {
-      background: theme.palette.grey[300]
+      background: theme.palette.secondary.light
     },
     "&::-webkit-scrollbar-track": {
-      background: theme.palette.grey[100]
+      background: theme.palette.primary[100]
     }
   }
 }));
@@ -66,9 +66,9 @@ export const SelectYear = styled(Box)<{ isActive: number }>(({ theme, isActive }
   cursor: "pointer",
   borderRadius: "18px",
   backgroundColor: isActive ? theme.palette.primary.main : "transparent",
-  color: isActive ? "#fff" : theme.palette.text.primary,
+  color: isActive ? theme.palette.common.white : theme.palette.text.primary,
   "&:hover": {
-    backgroundColor: isActive ? theme.palette.primary.main : theme.palette.grey[100]
+    backgroundColor: isActive ? theme.palette.primary.main : theme.palette.primary[100]
   }
 }));
 
@@ -94,11 +94,11 @@ export const PickerPortalContainer = styled(Box)(({ theme }) => ({
 
 export const CloseButton = styled(IconButton)(({ theme }) => ({
   position: "absolute",
-  top: 30,
+  top: 24,
   right: -322,
   width: 24,
   height: 24,
-  border: `1px solid ${theme.palette.grey["A100"]}`,
+  border: `1px solid ${theme.palette.primary[200]}`,
   cursor: "pointer",
   padding: 0,
   margin: 8,
@@ -110,7 +110,8 @@ export const DatePickerContainer = styled(Box)(({ theme }) => ({
   position: "relative",
   height: 1,
   "div[class=react-datepicker]": {
-    display: "flex"
+    display: "flex",
+    minHeight: 315
   },
   "&:first-of-type div[class=react-datepicker]": {
     borderRightWidth: 0,

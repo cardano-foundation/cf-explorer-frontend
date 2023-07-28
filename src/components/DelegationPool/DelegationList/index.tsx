@@ -19,8 +19,8 @@ const DelegationLists: React.FC = () => {
   const history = useHistory<{ tickerNameSearch: string | undefined }>();
   const { tickerNameSearch = "" } = history.location.state || {};
 
-  const [value, setValue] = useState(tickerNameSearch);
-  const [search, setSearch] = useState(tickerNameSearch);
+  const [value, setValue] = useState(decodeURIComponent(tickerNameSearch));
+  const [search, setSearch] = useState(decodeURIComponent(tickerNameSearch));
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(50);
   const [sort, setSort] = useState<string>("");
@@ -80,7 +80,11 @@ const DelegationLists: React.FC = () => {
           <Box component={"span"} mr={1}>
             {formatPercent(r.saturation / 100) || `0%`}
           </Box>
-          <StyledLinearProgress variant="determinate" value={r.saturation > 100 ? 100 : get(r, "saturation", 0)} />
+          <StyledLinearProgress
+            variant="determinate"
+            saturation={r.saturation}
+            value={r.saturation > 100 ? 100 : get(r, "saturation", 0)}
+          />
         </Box>
       )
     },

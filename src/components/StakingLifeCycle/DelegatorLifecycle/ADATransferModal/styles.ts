@@ -1,4 +1,4 @@
-import { Tab, Tabs, styled, alpha } from "@mui/material";
+import { Tab, Tabs, styled } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
 
@@ -20,10 +20,10 @@ export const TextUserInfo = styled("span")(({ theme }) => ({
 export const TextTx = styled("span")`
   font-weight: 400;
   font-size: 14px;
-  color: #667085;
+  color: ${({ theme }) => theme.palette.secondary.light};
 `;
 
-export const CustomTab = styled("span")`
+export const CustomTab = styled(Box)`
   font-weight: 700;
   font-size: 18px;
   line-height: 21px;
@@ -45,7 +45,7 @@ export const StyledTabs = styled(Tabs)`
 `;
 
 export const StyledTab = styled(Tab)`
-  color: ${(props) => props.theme.palette.grey[400]};
+  color: ${(props) => props.theme.palette.secondary.light};
   padding: 0;
   &.Mui-selected {
     color: ${(props) => props.theme.palette.text.primary};
@@ -65,16 +65,16 @@ export const Status = styled("span")<{ status: WalletActivityIF["status"] }>`
   text-transform: uppercase;
   color: ${({ status, theme }) =>
     status === "SUCCESS"
-      ? theme.palette.success.main
+      ? theme.palette.success[700]
       : status === "FAIL"
-      ? theme.palette.error.main
-      : theme.palette.warning.main};
+      ? theme.palette.error[700]
+      : theme.palette.warning[800]};
   background-color: ${({ status, theme }) =>
     status === "SUCCESS"
-      ? alpha(theme.palette.success.main, 0.1)
+      ? theme.palette.success[100]
       : status === "FAIL"
-      ? alpha(theme.palette.error.main, 0.1)
-      : alpha(theme.palette.warning.main, 0.1)};
+      ? theme.palette.error[100]
+      : theme.palette.warning[100]};
 `;
 
 export const StyledLink = styled(Link)`
@@ -96,7 +96,7 @@ export const StyledLinkKey = styled(Link)`
 
 export const OverviewIcon = styled(Box)`
   border-radius: 49px;
-  background: ${(props) => props.theme.palette.green[600_10]};
+  background: ${(props) => props.theme.palette.primary[200]};
   width: 29px;
   height: 29px;
   display: flex;
@@ -105,7 +105,7 @@ export const OverviewIcon = styled(Box)`
 `;
 
 export const Amount = styled(Box)<{ type: "up" | "down" }>(({ type, theme }) => ({
-  color: type === "up" ? theme.palette.success.main : theme.palette.error.main,
+  color: type === "up" ? theme.palette.success[800] : theme.palette.error[700],
   display: "flex",
   alignItems: "center",
   gap: 5,

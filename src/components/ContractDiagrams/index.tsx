@@ -67,7 +67,7 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
       <IconContainer>
         <RedeemerArrowDownIcon />
       </IconContainer>
-      <ContractBytecode item={item} />
+      <ContractBytecode item={item} txHash={txHash} />
 
       {item.datumHashOut && (
         <>

@@ -62,10 +62,10 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
               },
               "&:hover": {
                 "&::-webkit-scrollbar-thumb": {
-                  background: theme.palette.grey[300]
+                  background: theme.palette.secondary.light
                 },
                 "&::-webkit-scrollbar-track": {
-                  background: theme.palette.grey[100]
+                  background: theme.palette.primary[100]
                 }
               }
             };
@@ -113,19 +113,21 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
               >
                 <Box display="flex" alignItems={"center"} overflow="hidden" gap="10px">
                   <Box>
-                    {option?.metadata?.logo ? (
-                      <Logo src={`data:/image/png;base64,${option.metadata?.logo}`} alt="icon" />
-                    ) : (
-                      <LogoEmpty />
-                    )}
+                    {option?.metadata?.logo ? <Logo src={`${option.metadata?.logo}`} alt="icon" /> : <LogoEmpty />}
                   </Box>
                   <CustomTooltip title={`${option.displayName || ""} #${option.name || option.fingerprint}`}>
-                    <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="150px">
+                    <Box
+                      textAlign={"left"}
+                      color={({ palette }) => palette.secondary.light}
+                      overflow={"hidden"}
+                      textOverflow={"ellipsis"}
+                      maxWidth="150px"
+                    >
                       {option.displayName || ""}
                     </Box>
                   </CustomTooltip>
                 </Box>
-                <Box fontWeight={"bold"} flex={1} textAlign="right">
+                <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main} flex={1} textAlign="right">
                   {formatNumberDivByDecimals(option.quantity || 0, option.metadata?.decimals || 0)}
                 </Box>
               </Box>
@@ -164,8 +166,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
       title: "Icon",
       key: "icon",
       minWidth: "50px",
-      render: (r) =>
-        r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" /> : <LogoEmpty />
+      render: (r) => (r?.metadata?.logo ? <Logo src={`${r.metadata?.logo}`} alt="icon" /> : <LogoEmpty />)
     },
     {
       title: "Name",
