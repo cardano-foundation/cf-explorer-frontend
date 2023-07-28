@@ -40,7 +40,7 @@ const StakingLifeCycleSearch = () => {
           <StyledInput
             placeholder="Type a stake address or pool id"
             onChange={(e) => {
-              setValue(e.target.value);
+              setValue(e.target.value.trim());
               setError("");
             }}
             value={value}
