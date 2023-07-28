@@ -179,5 +179,4 @@ export const PrevSwiper = styled(NextSwiper)`
 
 export const CustomGrid = styled(Grid)`
   width: 100%;
-
 `;
