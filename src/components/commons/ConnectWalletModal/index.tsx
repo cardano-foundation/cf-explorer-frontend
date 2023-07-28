@@ -47,7 +47,7 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
         }, please switch to  ${NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()}!`
       );
     } else if (error.name === "WalletExtensionNotFoundError") {
-      console.log(error);
+      // Todo: handle error
     } else {
       toast.error("Something went wrong!");
     }
