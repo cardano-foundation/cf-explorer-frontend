@@ -87,11 +87,7 @@ export const Author = styled("span")`
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.success[800]};
   background-color: ${(props) => props.theme.palette.success[100]};
-<<<<<<< HEAD
-  padding: 6px 2px;
-=======
   padding: 2px 6px;
->>>>>>> sota-test
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-size: 11px;
@@ -166,7 +162,7 @@ export const FooterCard = styled(Box)`
   bottom: 20px;
 `;
 
-export const NextSwipper = styled(Box)`
+export const NextSwiper = styled(Box)`
   background: ${(props) => props.theme.palette.purple["100"]};
   width: 50px;
   height: 50px;
@@ -176,7 +172,7 @@ export const NextSwipper = styled(Box)`
   align-items: center;
   cursor: pointer;
   &:hover {
-    background: ${(props) => props.theme.palette.primary.main};
+    background: ${(props) => props.theme.palette.purple["200"]};
   }
   position: absolute;
   right: -10px;
@@ -186,7 +182,7 @@ export const NextSwipper = styled(Box)`
   }
 `;
 
-export const PrevSwiper = styled(NextSwipper)`
+export const PrevSwiper = styled(NextSwiper)`
   left: -10px;
   transform: rotate(180deg);
 `;

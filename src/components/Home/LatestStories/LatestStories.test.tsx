@@ -14,6 +14,7 @@ const mockItem: Story = {
   resource_href: "https://cardanofoundation.org/en/news/cardano-foundation-launches-inaugural-annual-report/",
   thumbnail_image: "https://ucarecdn.com/4e580ddd-e051-472e-8e9d-f70ba3265d92/",
   meta_image: "https://ucarecdn.com/4e580ddd-e051-472e-8e9d-f70ba3265d92/",
+  banner_image: "https://ucarecdn.com/4e580ddd-e051-472e-8e9d-f70ba3265d92/",
   news_item_content: {
     date: "2023-04-18T11:35:58-07:00",
     body: "body",

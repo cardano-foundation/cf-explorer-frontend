@@ -20,7 +20,7 @@ import {
   Item,
   ItemTitle,
   LatestStoriesContainer,
-  NextSwipper,
+  NextSwiper,
   ResourceHref,
   Time,
   TimeIcon,
@@ -36,7 +36,7 @@ enum AMOUNT_OF_NEWS_SHOWING {
   MOBILE = 2
 }
 
-const defaultButtonSwipper = { left: false, right: false };
+const defaultButtonSwiper = { left: false, right: false };
 
 const LIMIT = 20;
 
@@ -48,7 +48,7 @@ const LatestStories = () => {
   const [currentIndexData, setCurrentIndexData] = useState<number>(0);
 
   const [amountNewsByDevice, setAmountNewsByDevice] = useState<number>(0);
-  const [showButtonSwipper, setShowButtonSwipper] = useState(defaultButtonSwipper);
+  const [showButtonSwiper, setShowButtonSwiper] = useState(defaultButtonSwiper);
 
   const { isLaptop, isMobile } = useScreen();
 
@@ -73,10 +73,10 @@ const LatestStories = () => {
     setCurrentIndexData(0);
     if (isMobile) {
       setAmountNewsByDevice(AMOUNT_OF_NEWS_SHOWING.MOBILE);
-      setShowButtonSwipper(defaultButtonSwipper);
+      setShowButtonSwiper(defaultButtonSwiper);
     } else if (isLaptop) {
       setAmountNewsByDevice(AMOUNT_OF_NEWS_SHOWING.TABLET);
-      setShowButtonSwipper(defaultButtonSwipper);
+      setShowButtonSwiper(defaultButtonSwiper);
     } else {
       setAmountNewsByDevice(AMOUNT_OF_NEWS_SHOWING.DESKTOP);
     }
@@ -103,12 +103,12 @@ const LatestStories = () => {
     if (isMobile) {
       newIndex = currentIndexData - 1;
     }
-    const isHasMore = newIndex > 0;
+    const isHasMore = newIndex >= 0;
 
     if (isHasMore) {
       setCurrentIndexData(newIndex);
     } else {
-      setCurrentIndexData(0);
+      setCurrentIndexData(LIMIT - amountNewsByDevice);
       setOffset(offset - LIMIT);
     }
   };
@@ -133,16 +133,16 @@ const LatestStories = () => {
 
   const onMouseEnter = () => {
     if (isLaptop || isMobile) return;
-    setShowButtonSwipper({ left: true, right: true });
+    setShowButtonSwiper({ left: true, right: true });
   };
 
   const onMouseLeave = () => {
     if (isLaptop || isMobile) return;
-    setShowButtonSwipper({ left: false, right: false });
+    setShowButtonSwiper({ left: false, right: false });
   };
 
-  const isNextSwiper = showButtonSwipper.right && Number(dataNews?.total) > data.length + Number(dataNews?.offset);
-  const isPrevSwiper = showButtonSwipper.left && Number(dataNews?.offset) > 0;
+  const isNextSwiper = showButtonSwiper.right && Number(dataNews?.total) > data.length + Number(dataNews?.offset);
+  const isPrevSwiper = showButtonSwiper.left && (Number(dataNews?.offset) > 0 || currentIndexData > 0);
 
   const getAuthorName = (name: string) => {
     const indexSymbol = name?.split("|")[1]?.split(" ")[1]?.indexOf("~~~");
@@ -158,8 +158,10 @@ const LatestStories = () => {
       <Box position={"relative"} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
         <Grid container spacing={2} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
           {(data?.slice(currentIndexData, currentIndexData + amountNewsByDevice) || []).map(
-            ({ meta_image, title, news_item_content, resource_href }, index) => {
+            ({ meta_image, banner_image, title, news_item_content, resource_href }, index) => {
               const { date, default_content, author } = news_item_content;
+              const imageCard = meta_image || banner_image;
+
               const authorName = getAuthorName(author);
 
               const isRelativeCardMobile = isMobile && index === 1;
@@ -168,7 +170,7 @@ const LatestStories = () => {
                   <Box sx={{ position: isRelativeCardMobile ? "absolute" : "unset", left: "300px" }}>
                     <a href={resource_href} target="_blank" rel="noreferrer">
                       <Item>
-                        <Image src={meta_image} alt={title} />
+                        <Image src={imageCard} alt={title} />
                         <Detail>
                           <WrapHeader>
                             <CustomTooltip title={authorName}>
@@ -194,14 +196,14 @@ const LatestStories = () => {
           )}
         </Grid>
         {isPrevSwiper && (
-          <PrevSwiper onClick={handlePrevSwiper} className="news-swipper-button">
+          <PrevSwiper onClick={handlePrevSwiper}>
             <SliderRight />
           </PrevSwiper>
         )}
         {isNextSwiper && (
-          <NextSwipper onClick={handleNextSwiper} className="news-swipper-button">
+          <NextSwiper onClick={handleNextSwiper}>
             <SliderRight />
-          </NextSwipper>
+          </NextSwiper>
         )}
       </Box>
     </LatestStoriesContainer>

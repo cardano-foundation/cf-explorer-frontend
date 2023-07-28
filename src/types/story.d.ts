@@ -2,6 +2,7 @@ interface Story {
   title: string;
   resource_href: string;
   thumbnail_image: string;
+  banner_image: string;
   meta_image: string;
   news_item_content: {
     date: string;
