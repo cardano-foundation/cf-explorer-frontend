@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.4.12](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.11...v0.4.12) (2023-07-27)
+
+
+### Features
+
+* MET-1124 update search bar ([f2fedfc](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f2fedfcd9f8f4b6bf7f5c932ef00766ce6378a23))
+
+
+### Bug Fixes
+
+* filter button UI and logic and cleancode + remove unused ([6a728ab](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6a728ab15add2ea394c57c0a66b1bfe50f25c07a))
+* filter button UI and logic and cleancode fix conflict ([cd08327](https://github.com/cardano-foundation/cf-explorer-frontend/commit/cd08327dc01aee7544d91b3af276544d15773c3f))
+* filter button UI and logic and cleancode fix-conflict ([278d189](https://github.com/cardano-foundation/cf-explorer-frontend/commit/278d189af8c2aaa460c116051f4b1cec3b19049c))
+* MET-1438 finding 2 decimal ROS column ([967af92](https://github.com/cardano-foundation/cf-explorer-frontend/commit/967af927292e0a0e4a5d9ff149f5b194bf74932b))
+* MET-615-bookmark-wrong-default-per-page ([6d57ad0](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6d57ad06032286b0f0a6e5202fe0101578bbf0da))
+* MET-615-Preprod-link-token-registry-not-found ([1266c17](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1266c17c79cc53c232a497d0d224950dc1e08345))
+
+## [0.4.11](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.10...v0.4.11) (2023-07-25)
+
+
+### Bug Fixes
+
+* update README.md trigger release ([3cc24a0](https://github.com/cardano-foundation/cf-explorer-frontend/commit/3cc24a00f2555de3278cef5b2f15203c93f28a11))
+
 ## [0.4.10](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.9...v0.4.10) (2023-07-25)
 
 
