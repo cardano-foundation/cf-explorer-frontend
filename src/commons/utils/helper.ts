@@ -106,7 +106,15 @@ export const handleClicktWithoutAnchor = (e: React.MouseEvent, fn: (e: React.Mou
   fn(e);
 };
 
-export const isExtenalLink = (href?: string) => href && (href.search("http://") >= 0 || href.search("https://") >= 0);
+export const isExternalLink = (href?: string) => {
+  try {
+    const url = new URL(href || "");
+    return !!url;
+  } catch {
+    return false;
+  }
+};
+
 export const formatPercent = (percent?: number) => `${Math.round((percent || 0) * 100 * 100) / 100}%`;
 
 export const getPageInfo = (search: string): { page: number; size: number } => {
@@ -207,7 +215,7 @@ export const getHostname = (url: string): string => {
   try {
     hostname = new URL(url).hostname;
   } catch (error) {
-    console.warn(error);
+    // Todo: handle error
   }
   return hostname;
 };

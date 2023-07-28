@@ -1,55 +1,46 @@
-import React, { useEffect, useState } from "react";
-import { CgClose } from "react-icons/cg";
-import { BiChevronRight } from "react-icons/bi";
-import { Link } from "react-router-dom";
-import { Box } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import { Box } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { BiChevronRight } from "react-icons/bi";
+import { CgClose } from "react-icons/cg";
+import { Link, useHistory } from "react-router-dom";
 
-import { DelegationHistoryMainIcon, FileEditIcon, LightningIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
-import { details } from "src/commons/routers";
-import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
-import { ReactComponent as StakeKeyHistoryIcon } from "src/commons/resources/icons/stateKeyHistory.svg";
+import { DelegationHistoryMainIcon, FileEditIcon, LightningIcon } from "src/commons/resources";
 import { ReactComponent as TransactionIcon } from "src/commons/resources/icons/exchangeArrow.svg";
-import ModalAllAddress from "src/components/StakeDetail/ModalAllAddress";
+import { ReactComponent as StakeKeyHistoryIcon } from "src/commons/resources/icons/stateKeyHistory.svg";
+import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
+import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import ModalAllAddress from "src/components/StakeDetail/ModalAllAddress";
 
-import ViewMoreButton from "../ViewMoreButton";
-import CustomTooltip from "../CustomTooltip";
-import CopyButton from "../CopyButton";
-import ViewAllButton from "../ViewAllButton";
 import ADAicon from "../ADAIcon";
+import CopyButton from "../CopyButton";
+import CustomTooltip from "../CustomTooltip";
+import ViewAllButton from "../ViewAllButton";
+import ViewMoreButton from "../ViewMoreButton";
 import {
+  ButtonModal,
   CloseButton,
-  ViewDetailContainer,
-  DetailsInfoItem,
+  DelegatedDetail,
   DetailLabel,
-  DetailValue,
   DetailLabelSkeleton,
-  DetailValueSkeleton,
-  IconSkeleton,
-  ViewDetailDrawer,
-  Group,
   DetailLink,
   DetailLinkIcon,
-  DetailLinkRight,
-  DetailLinkName,
-  TokenContainer,
-  TokenHeaderContainer,
-  TokenMetaData,
-  TokenInfo,
-  MetaData,
-  TokenHeaderInfo,
-  TokenTotalSupply,
-  TokenDecimal,
-  ViewDetailScroll,
-  StakeKeyHeader,
-  StakeKeyStatus,
   DetailLinkImage,
+  DetailLinkName,
+  DetailLinkRight,
+  DetailValue,
+  DetailValueSkeleton,
+  DetailsInfoItem,
+  Group,
+  StakeKeyHeader,
   StakeKeyLink,
-  DelegatedDetail,
-  ButtonModal,
+  StakeKeyStatus,
+  ViewDetailContainer,
+  ViewDetailDrawer,
   ViewDetailHeader,
+  ViewDetailScroll,
   WrapDetailInfo
 } from "./styles";
 
@@ -62,6 +53,8 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
   const { data } = useFetch<IStakeKeyDetail>(stakeId ? `${API.STAKE.DETAIL}/${stakeId}` : ``);
   const [open, setOpen] = useState(false);
   const theme = useTheme();
+  const history = useHistory();
+  const fromPath = history.location.pathname as SpecialPath;
 
   const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
     {
@@ -70,8 +63,8 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
       icon: <DelegationHistoryMainIcon style={{ padding: "2px 4px 2px 2px" }} />
     },
     {
-      key: "stake-key",
-      label: "Stake Key History",
+      key: "stake-address",
+      label: "Stake Address History",
       icon: (
         <StakeKeyHistoryIcon
           fill={theme.palette.border.block}
@@ -116,29 +109,6 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
         </ViewDetailHeader>
         <ViewDetailContainer>
           <ViewDetailScroll>
-            <TokenContainer>
-              <TokenHeaderContainer>
-                <IconSkeleton variant="circular" />
-                <DetailValueSkeleton variant="rectangular" />
-              </TokenHeaderContainer>
-              <TokenMetaData>
-                <TokenInfo>
-                  <DetailValueSkeleton variant="rectangular" />
-                  <IconSkeleton variant="circular" />
-                </TokenInfo>
-                <MetaData />
-              </TokenMetaData>
-              <TokenHeaderInfo>
-                <TokenTotalSupply>
-                  <DetailValueSkeleton variant="rectangular" />
-                  <DetailValueSkeleton variant="rectangular" />
-                </TokenTotalSupply>
-                <TokenDecimal>
-                  <DetailValueSkeleton variant="rectangular" />
-                  <DetailValueSkeleton variant="rectangular" />
-                </TokenDecimal>
-              </TokenHeaderInfo>
-            </TokenContainer>
             <Group>
               {new Array(4).fill(0).map((_, index) => {
                 return (
@@ -245,12 +215,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
               </DetailValue>
             </DetailsInfoItem>
             <Box textAlign={"right"}>
-              <ButtonModal
-                sx={{
-                  color: theme.palette.primary.main
-                }}
-                onClick={() => setOpen(true)}
-              >
+              <ButtonModal sx={{ color: theme.palette.primary.main }} onClick={() => setOpen(true)}>
                 View all addresses
               </ButtonModal>
             </Box>
@@ -259,7 +224,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
           {tabs.map(({ key, label, icon }) => {
             return (
               <Group key={key}>
-                <DetailLink to={details.stake(stakeId, key)}>
+                <DetailLink to={{ pathname: details.stake(stakeId, key), state: { fromPath } }}>
                   <DetailLabel>
                     <DetailLinkIcon>{icon}</DetailLinkIcon>
                     <DetailLinkName>{label}</DetailLinkName>
@@ -275,7 +240,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
           })}
         </ViewDetailScroll>
       </ViewDetailContainer>
-      <ViewMoreButton to={details.stake(stakeId)} />
+      <ViewMoreButton to={{ pathname: details.stake(stakeId), state: { fromPath } }} />
     </ViewDetailDrawer>
   );
 };

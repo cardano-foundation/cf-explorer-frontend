@@ -1,13 +1,12 @@
 import { screen, cleanup, fireEvent } from "@testing-library/react";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router";
-import { useParams } from "react-router-dom";
 
 import { render } from "src/test-utils";
 import { details } from "src/commons/routers";
 import useFetchList from "src/commons/hooks/useFetchList";
 
-import Stake, { POOL_TYPE } from ".";
+import Stake, { STAKE_ADDRESS_TYPE } from ".";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -33,35 +32,29 @@ describe("Stake adress view", () => {
   });
 
   it("should render stake adress registration page", () => {
-    const mockUseParams = useParams as jest.Mock;
-    mockUseParams.mockReturnValue({ poolType: POOL_TYPE.REGISTRATION });
     const mockUseFetch = useFetchList as jest.Mock;
     mockUseFetch.mockReturnValue({ data: [] });
-    render(<Stake />);
+    render(<Stake stakeAddressType={STAKE_ADDRESS_TYPE.REGISTRATION} />);
     expect(useFetchList).toBeCalled();
     expect(screen.getByText("Stake Address Registration")).toBeInTheDocument();
   });
 
-  it("should render stake address de-registration page", () => {
-    const mockUseParams = useParams as jest.Mock;
-    mockUseParams.mockReturnValue({ poolType: POOL_TYPE.DEREREGISTRATION });
+  it("should render stake adress de-registration page", () => {
     const mockUseFetch = useFetchList as jest.Mock;
     mockUseFetch.mockReturnValue({ data: [] });
-    render(<Stake />);
+    render(<Stake stakeAddressType={STAKE_ADDRESS_TYPE.DEREREGISTRATION} />);
     expect(useFetchList).toBeCalled();
     expect(screen.getByText("Stake Address Deregistration")).toBeInTheDocument();
   });
 
   it("should navigate to the correct route when txHash item is clicked", () => {
-    const mockUseParams = useParams as jest.Mock;
-    mockUseParams.mockReturnValue({ poolType: POOL_TYPE.REGISTRATION });
     const mockUseFetchList = useFetchList as jest.Mock;
     mockUseFetchList.mockReturnValue(mockData);
     const history = createMemoryHistory();
 
     render(
       <Router history={history}>
-        <Stake />
+        <Stake stakeAddressType={STAKE_ADDRESS_TYPE.REGISTRATION} />
       </Router>
     );
 
@@ -69,16 +62,15 @@ describe("Stake adress view", () => {
     fireEvent.click(TxHashStakeItem);
     expect(history.location.pathname).toBe(details.transaction(mockData.data[0].txHash));
   });
+  
   it("should navigate to the correct route when block item is clicked", () => {
-    const mockUseParams = useParams as jest.Mock;
-    mockUseParams.mockReturnValue({ poolType: POOL_TYPE.REGISTRATION });
     const mockUseFetchList = useFetchList as jest.Mock;
     mockUseFetchList.mockReturnValue(mockData);
     const history = createMemoryHistory();
 
     render(
       <Router history={history}>
-        <Stake />
+        <Stake stakeAddressType={STAKE_ADDRESS_TYPE.REGISTRATION} />
       </Router>
     );
 
@@ -86,16 +78,15 @@ describe("Stake adress view", () => {
     fireEvent.click(BlockItem);
     expect(history.location.pathname).toBe(details.block(mockData.data[0].block.toString()));
   });
-  it("should navigate to the correct route when stake address item is clicked", () => {
-    const mockUseParams = useParams as jest.Mock;
-    mockUseParams.mockReturnValue({ poolType: POOL_TYPE.REGISTRATION });
+
+  it("should navigate to the correct route when stake adress item is clicked", () => {
     const mockUseFetchList = useFetchList as jest.Mock;
     mockUseFetchList.mockReturnValue(mockData);
     const history = createMemoryHistory();
 
     render(
       <Router history={history}>
-        <Stake />
+        <Stake stakeAddressType={STAKE_ADDRESS_TYPE.REGISTRATION} />
       </Router>
     );
 

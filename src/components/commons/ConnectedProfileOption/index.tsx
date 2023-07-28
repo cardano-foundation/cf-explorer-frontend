@@ -45,7 +45,7 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
         accountId: localStorage.getItem("walletId") || ""
       });
     } catch (error) {
-      console.log(error);
+      // Todo: handle error
     } finally {
       disconnect();
       removeAuthInfo();

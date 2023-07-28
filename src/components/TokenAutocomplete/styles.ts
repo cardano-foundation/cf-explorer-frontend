@@ -57,7 +57,7 @@ export const StyledTextField = styled(TextField)`
   .MuiInputBase-root {
     padding: 0 9px;
     height: 40px;
-    border: 1.5px solid props.theme.palette.border.main;
+    border: 1.5px solid ${(props) => props.theme.palette.border.main};
     border-radius: 8px;
     background: ${(props) => props.theme.palette.secondary[600]};
   }
