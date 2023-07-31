@@ -199,11 +199,15 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
               <WrapDetailInfo>
                 <DetailLabel>Delegated to</DetailLabel>
               </WrapDetailInfo>
-              <CustomTooltip title={poolNameToolTip}>
-                <Box component={Link} display="inline-block" to={details.delegation(data.pool?.poolId)}>
-                  <DelegatedDetail>{poolName}</DelegatedDetail>
-                </Box>
-              </CustomTooltip>
+              {data.pool?.poolName || data.pool?.poolId ? (
+                <CustomTooltip title={poolNameToolTip}>
+                  <Box component={Link} display="inline-block" to={details.delegation(data.pool?.poolId)}>
+                    <DelegatedDetail>{poolName}</DelegatedDetail>
+                  </Box>
+                </CustomTooltip>
+              ) : (
+                "Not delegated to any pool"
+              )}
             </DetailsInfoItem>
             <DetailsInfoItem>
               <WrapDetailInfo>
