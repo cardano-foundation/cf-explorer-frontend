@@ -35,7 +35,6 @@ export const routers = {
   ACCOUNT: "/account",
   MY_PROFILE: "/account/profile",
   BOOKMARK: "/account/bookmark",
-  PRIVATE_NOTES: "/account/notes",
   PROTOCOL_PARAMETER: "/protocol-parameters",
   STAKING_LIFECYCLE: "/staking-lifecycle/:tab?",
   DELEGATOR_LIFECYCLE: "/staking-lifecycle/delegator/:stakeId/:mode?/:tab?/:txHash?",

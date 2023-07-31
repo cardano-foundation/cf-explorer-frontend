@@ -68,5 +68,5 @@ export const WrapTab = styled(Tab)`
   padding-left: 0;
   padding-right: 0;
   min-width: unset;
-  margin-right: 20px;
+  margin-right: 30px;
 `;

@@ -359,7 +359,7 @@ const Bookmark = () => {
         <Box sx={{ borderBottom: (theme) => `1px solid ${theme.palette.primary[200]}` }}>
           <TabList
             onChange={handleChange}
-            TabIndicatorProps={{ sx: { style: { background: (theme) => theme.palette.primary.main }, height: 3 } }}
+            TabIndicatorProps={{ sx: { display: "none" } }}
             variant="scrollable"
             scrollButtons={false}
           >
