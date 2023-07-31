@@ -199,7 +199,7 @@ export enum REWARD_TYPES {
 }
 
 export const REWARD_TYPES_LABEL = {
-  [REWARD_TYPES.MEMBER]: "Delegator",
+  [REWARD_TYPES.MEMBER]: "Delegators",
   [REWARD_TYPES.LEADER]: "Operator",
   [REWARD_TYPES.REFUND]: "Refund",
   [REWARD_TYPES.RESERVES]: "Reserves",
