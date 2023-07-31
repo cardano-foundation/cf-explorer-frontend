@@ -7,12 +7,12 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { ImArrowDown2, ImArrowUp2 } from "react-icons/im";
 import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { useList, useUpdateEffect } from "react-use";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { DateRangeIcon, EmptyIcon, FilterIcon, InfoIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
-import { details } from "src/commons/routers";
+import { details, lists } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { PROTOCOL_TYPE } from "src/commons/utils/constants";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
@@ -23,6 +23,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table from "src/components/commons/Table";
 import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "src/types/protocol";
 import { Column } from "src/types/table";
+import NoRecord from "src/components/commons/NoRecord";
 
 import { ExplainerTextModal } from "./ExplainerTextModal";
 import { explainerTextGlobalConstants, explainerTextProtocolHistory } from "./explainerText";
@@ -46,7 +47,8 @@ interface IProtocolParamVertical {
 
 const ProtocolParameter: React.FC = () => {
   const [costModelScript, setCostModelScript] = useState("");
-  const [showHistory, setShowHistory] = useState(false);
+  const { histories } = useParams<{ histories?: "histories" }>();
+  const history = useHistory();
   const { PROTOCOL_PARAMETER } = API;
   const { data: dataFixed, loading: loadingFixed } = useFetch<any>(PROTOCOL_PARAMETER.FIXED);
   const { data: dataLastest, loading: loadingLastest } = useFetch<any>(PROTOCOL_PARAMETER.LASTEST);
@@ -202,18 +204,21 @@ const ProtocolParameter: React.FC = () => {
     }
   ];
 
+  if (histories && histories !== "histories") return <NoRecord />;
+  
+
   return (
     <StyledContainer>
-      {showHistory && (
+      {histories && (
         <Box textAlign={"left"}>
-          <BackButton onClick={() => setShowHistory(false)}>
+          <BackButton onClick={() => history.push(lists.protocolParameters())}>
             <HiArrowLongLeft />
             <BackText>Back</BackText>
           </BackButton>
         </Box>
       )}
-      {showHistory && <ProtocolParameterHistory />}
-      {!showHistory && (
+      {histories && <ProtocolParameterHistory />}
+      {!histories && (
         <Card titleSx={{ margin: 0 }} title={"Protocol parameters"}>
           <Box pt={2}>
             <>
@@ -228,7 +233,7 @@ const ProtocolParameter: React.FC = () => {
                     textTransform={"capitalize"}
                     fontWeight={"bold"}
                     fontSize={"0.875rem"}
-                    onClick={() => setShowHistory(true)}
+                    onClick={() => history.push(lists.protocolParameters("histories"))}
                   >
                     View update history
                   </Box>
