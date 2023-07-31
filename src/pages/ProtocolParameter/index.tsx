@@ -48,8 +48,8 @@ const ProtocolParameter: React.FC = () => {
   const [costModelScript, setCostModelScript] = useState("");
   const [showHistory, setShowHistory] = useState(false);
   const { PROTOCOL_PARAMETER } = API;
-  const { data: dataFixed, loading: loadingFixed } = useFetch<any>(PROTOCOL_PARAMETER.FIXED);
-  const { data: dataLastest, loading: loadingLastest } = useFetch<any>(PROTOCOL_PARAMETER.LASTEST);
+  const { data: dataFixed, initialized: initialFixed } = useFetch<any>(PROTOCOL_PARAMETER.FIXED);
+  const { data: dataLastest, initialized: initialLastest } = useFetch<any>(PROTOCOL_PARAMETER.LASTEST);
 
   const dataFixedVertical =
     isObject(dataFixed) &&
@@ -233,7 +233,7 @@ const ProtocolParameter: React.FC = () => {
                     View update history
                   </Box>
                 </Box>
-                {loadingLastest && (
+                {!initialLastest && (
                   <Box
                     component={Skeleton}
                     mt={2}
@@ -242,7 +242,7 @@ const ProtocolParameter: React.FC = () => {
                     height={280}
                   />
                 )}
-                {!loadingLastest && <Table columns={columnsVerticalLatestTable} data={dataLatestVertical || []} />}
+                {initialLastest && <Table columns={columnsVerticalLatestTable} data={dataLatestVertical || []} />}
               </Box>
               <Box pt={"30px"}>
                 <Box>
@@ -254,7 +254,7 @@ const ProtocolParameter: React.FC = () => {
                   >
                     Global Constants
                   </Box>
-                  {loadingFixed && (
+                  {!initialFixed && (
                     <Box
                       component={Skeleton}
                       mt={2}
@@ -263,7 +263,7 @@ const ProtocolParameter: React.FC = () => {
                       height={280}
                     />
                   )}
-                  {!loadingFixed && <Table columns={columnsVerticalFixedTable} data={dataFixedVertical || []} />}
+                  {initialFixed && <Table columns={columnsVerticalFixedTable} data={dataFixedVertical || []} />}
                 </Box>
               </Box>
             </>
@@ -290,8 +290,8 @@ export default ProtocolParameter;
 export const ProtocolParameterHistory = () => {
   const { PROTOCOL_PARAMETER } = API;
   const TOTAL_PARAMETER = 29;
-  const theme = useTheme();
   const [initing, setIniting] = useState(true);
+  const theme = useTheme();
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
   const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);

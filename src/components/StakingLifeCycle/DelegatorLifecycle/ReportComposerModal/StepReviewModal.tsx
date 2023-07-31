@@ -12,6 +12,7 @@ import { getEventType } from "src/components/StakekeySummary";
 import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
+
 import { EVENTS_NAME, ReportType } from "./FilledInfoModal";
 import {
   Container,
@@ -74,7 +75,6 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
         history.push(lists.dashboard(isPoolReport ? "pool-reports" : "stake-key-reports"));
       }, 2000);
     } catch (err: any) {
-      console.error(err);
       toast.error("Failed to generate report. Please try again.");
     }
     setLoading(false);

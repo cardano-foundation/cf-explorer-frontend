@@ -1,22 +1,56 @@
 import { useMemo, useRef } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import { Box, useTheme } from "@mui/material";
 
+import { details } from "src/commons/routers";
+import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "src/commons/resources";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
+import { API } from "src/commons/utils/api";
+import useFetch from "src/commons/hooks/useFetch";
+import NoRecord from "src/components/commons/NoRecord";
+import DrawSkeleton from "src/components/commons/DrawSkeleton";
 import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 
-import { DelegationDetail } from "../index";
-import { DrawContainer, FeeBox, MiddleGroup, StyledAdaHolder, StyledCertificateShape } from "./styles";
+import {
+  IconButtonBack,
+  Info,
+  InfoGroup,
+  InfoText,
+  StepInfo,
+  DrawContainer,
+  FeeBox,
+  MiddleGroup,
+  StyledAdaHolder,
+  StyledCertificateShape,
+  StyledLink,
+  StyledCopyButton
+} from "./styles";
 
 export interface IDelegationDrawProps {
-  data?: DelegationDetail | null;
-  toggleCertificateModal: () => void;
+  toggleModal: () => void;
+  showBackButton: boolean;
 }
 
-const DelegationDraw: React.FC<IDelegationDrawProps> = ({ data, toggleCertificateModal }) => {
+const DelegationDraw: React.FC<IDelegationDrawProps> = ({ toggleModal, showBackButton }) => {
+  const history = useHistory();
+  const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
+
+  const { data, error, initialized } = useFetch<DelegationDetail>(
+    txHash && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stakeId, txHash)
+  );
+
   const adaHolderRef = useRef(null);
   const feeRef = useRef(null);
   const certificateRef = useRef(null);
   const cardanoBlockchainRef = useRef(null);
+  const theme = useTheme();
+
+  const handleBack = () => {
+    history.push(details.staking(stakeId, "timeline", "delegation"));
+  };
 
   const paths = useMemo((): LineArrowItem[] => {
     return [
@@ -64,18 +98,61 @@ const DelegationDraw: React.FC<IDelegationDrawProps> = ({ data, toggleCertificat
       }
     ];
   }, []);
+
+  if (!txHash) return null;
+
+  if (error) return <NoRecord />;
+
+  if (!data || !initialized) return <DrawSkeleton data-testid="delegator-delegation-draw-skeleton" />;
+
+  const { fee, stakeTotalAmount, time } = data;
+
   return (
-    <DrawContainer>
-      <StyledAdaHolder ref={adaHolderRef} value={data?.stakeTotalAmount} />
-      <MiddleGroup>
-        <FeeBox ref={feeRef} value={data?.fee || 0} txHash={data?.txHash || ""} />
-        <StyledCertificateShape onClick={toggleCertificateModal} ref={certificateRef}>
-          Delegation Certificate
-        </StyledCertificateShape>
-      </MiddleGroup>
-      <CardanoBlockchain ref={cardanoBlockchainRef} />
-      <DrawPath paths={paths} />
-    </DrawContainer>
+    <Box data-testid="delegator-delegation-container">
+      <StepInfo>
+        {showBackButton ? (
+          <IconButtonBack data-testid="delegator-delegation-back-button" onClick={handleBack}>
+            <BackIcon />
+          </IconButtonBack>
+        ) : (
+          <Box />
+        )}
+        <InfoGroup>
+          <Info>
+            <AddressIcon fill={theme.palette.secondary.light} />
+            <CustomTooltip title={txHash}>
+              <InfoText>
+                <StyledLink to={details.transaction(txHash)}>{getShortHash(txHash)}</StyledLink>
+              </InfoText>
+            </CustomTooltip>
+            <StyledCopyButton data-testid="delegator-delegation-copy-button" text={txHash} />
+          </Info>
+          <Info>
+            <ADAGreen fill={theme.palette.secondary.light} />
+            <InfoText data-testid="delegator-delegation-fee">{formatADAFull(fee)}</InfoText>
+          </Info>
+          <Info>
+            <TimeIcon fill={theme.palette.secondary.light} />
+            <InfoText>{formatDateTimeLocal(time)}</InfoText>
+          </Info>
+        </InfoGroup>
+      </StepInfo>
+      <DrawContainer>
+        <StyledAdaHolder data-testid="delegator-delegation-ada-holder" ref={adaHolderRef} value={stakeTotalAmount} />
+        <MiddleGroup>
+          <FeeBox data-testid="delegator-delegation-fee-box" ref={feeRef} value={fee} txHash={txHash} />
+          <StyledCertificateShape
+            data-testid="delegator-delegation-certificate"
+            onClick={toggleModal}
+            ref={certificateRef}
+          >
+            Delegation Certificate
+          </StyledCertificateShape>
+        </MiddleGroup>
+        <CardanoBlockchain data-testid="delegator-delegation-cardano-blockchain" ref={cardanoBlockchainRef} />
+        <DrawPath paths={paths} />
+      </DrawContainer>
+    </Box>
   );
 };
 
