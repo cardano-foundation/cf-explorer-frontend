@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import { get } from "lodash";
 
 import Table, { Column } from "src/components/commons/Table";
-import { formatADAFull, formatPercent, getPageInfo, getShortWallet, toFixedBigNumber } from "src/commons/utils/helper";
+import { formatADAFull, formatPercent, getPageInfo, getShortWallet } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import { HeaderSearchIcon } from "src/commons/resources";
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -116,16 +116,6 @@ const DelegationLists: React.FC = () => {
       key: "Reward",
       minWidth: "120px",
       render: (r) => <RateWithIcon value={r.reward} multiple={1} />
-    },
-    {
-      title: (
-        <CustomTooltip title="Gross average return during pool’s lifetime">
-          <span>Lifetime ROS</span>
-        </CustomTooltip>
-      ),
-      minWidth: "100px",
-      key: "lifetimeRos",
-      render: (r) => <Box component={"span"}>{toFixedBigNumber(r?.lifetimeRos || 0, 2)}%</Box>
     },
     {
       title: "Fixed Cost (A)",
