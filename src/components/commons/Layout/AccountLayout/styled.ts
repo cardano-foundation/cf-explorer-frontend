@@ -1,4 +1,4 @@
-import { styled, Box, Container, alpha, Button } from "@mui/material";
+import { Box, Button, Container, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const Wrapper = styled(Container)(() => ({}));
@@ -34,8 +34,8 @@ export const NavItem = styled(Link)<{ active: boolean }>(({ theme, active }) => 
   width: "100%",
   padding: "17px 0",
   margin: "auto",
-  backgroundColor: active ? alpha(theme.palette.primary.main, 0.1) : theme.palette.background.paper,
-  color: `${active ? theme.palette.primary.main : theme.palette.secondary.light} !important`,
+  backgroundColor: active ? theme.palette.primary[200] : theme.palette.background.paper,
+  color: `${active ? theme.palette.secondary.main : theme.palette.secondary.light} !important`,
   fontWeight: "bold",
   [theme.breakpoints.down("md")]: {
     display: "none"
@@ -134,16 +134,5 @@ export const MissingItemWrapper = styled(Box)(({ theme }) => ({
   display: "none",
   [theme.breakpoints.up("md")]: {
     display: "block"
-  }
-}));
-
-export const WrapDivider = styled(Box)(({ theme }) => ({
-  paddingLeft: theme.spacing(2),
-  paddingRight: theme.spacing(2),
-  marginTop: theme.spacing(4),
-  [theme.breakpoints.down("md")]: {
-    hr: {
-      borderColor: "transparent"
-    }
   }
 }));

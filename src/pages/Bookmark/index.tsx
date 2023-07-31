@@ -90,7 +90,7 @@ const Bookmark = () => {
         <Box
           component={Link}
           to={details.address(data.keyword)}
-          color={(theme) => `${theme.palette.secondary.main} !important`}
+          color={(theme) => `${theme.palette.primary.main} !important`}
         >
           <CustomTooltip title={data.keyword}>
             <Box component={"span"}>{getShortWallet(data.keyword)}</Box>
@@ -106,7 +106,7 @@ const Bookmark = () => {
         <Box
           component={Link}
           to={details.transaction(data.keyword)}
-          color={(theme) => `${theme.palette.secondary.main} !important`}
+          color={(theme) => `${theme.palette.primary.main} !important`}
         >
           <CustomTooltip title={data.keyword}>
             <Box component={"span"}>{getShortHash(data.keyword)}</Box>
@@ -122,7 +122,7 @@ const Bookmark = () => {
         <Box
           component={Link}
           to={details.block(data.keyword)}
-          color={(theme) => `${theme.palette.secondary.main} !important`}
+          color={(theme) => `${theme.palette.primary.main} !important`}
         >
           {formatBlockHashById(data.keyword)}
         </Box>
@@ -136,7 +136,7 @@ const Bookmark = () => {
         <Box
           component={Link}
           to={details.epoch(data.keyword)}
-          color={(theme) => `${theme.palette.secondary.main} !important`}
+          color={(theme) => `${theme.palette.primary.main} !important`}
         >
           {data.keyword}
         </Box>
@@ -150,7 +150,7 @@ const Bookmark = () => {
         <Box
           component={Link}
           to={details.delegation(data.keyword)}
-          color={(theme) => `${theme.palette.secondary.main} !important`}
+          color={(theme) => `${theme.palette.primary.main} !important`}
         >
           <CustomTooltip title={data.keyword}>
             <Box component={"span"}>{getShortWallet(data.keyword)}</Box>
@@ -166,7 +166,7 @@ const Bookmark = () => {
         <Box
           component={Link}
           to={details.stake(data.keyword)}
-          color={(theme) => `${theme.palette.secondary.main} !important`}
+          color={(theme) => `${theme.palette.primary.main} !important`}
         >
           <CustomTooltip title={data.keyword}>
             <Box component={"span"}>{getShortWallet(data.keyword)}</Box>
