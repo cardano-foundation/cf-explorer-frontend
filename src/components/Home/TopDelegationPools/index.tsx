@@ -4,7 +4,7 @@ import { get } from "lodash";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { details, routers } from "src/commons/routers";
-import { formatADAFull, formatPercent, getShortWallet, toFixedBigNumber } from "src/commons/utils/helper";
+import { formatADAFull, formatPercent, getShortWallet } from "src/commons/utils/helper";
 import ViewAllButton from "src/components/commons/ViewAllButton";
 import { Column } from "src/components/commons/Table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -82,15 +82,6 @@ const TopDelegationPools = () => {
       title: "Blocks Lifetime",
       key: "lifetimeBlock",
       render: (r) => r.lifetimeBlock || 0
-    },
-    {
-      title: (
-        <CustomTooltip title="Gross average return during pool’s lifetime">
-          <span>Lifetime ROS</span>
-        </CustomTooltip>
-      ),
-      key: "lifetimeRos",
-      render: (r) => `${toFixedBigNumber(r.lifetimeRos || 0, 2)}%`
     }
   ];
   return (

@@ -596,7 +596,7 @@ export const OptionsSearch = ({
   }
   return (
     <OptionsWrapper display={show ? "block" : "none"} home={+home}>
-      {!error ? (
+      {!error && (
         <>
           {listOptions.map((item, i: number) => {
             return (
@@ -609,7 +609,9 @@ export const OptionsSearch = ({
             );
           })}
         </>
-      ) : (
+      )}
+
+      {!!error && (
         <Box component={Option} color={({ palette }) => palette.error[700]} justifyContent={"center"}>
           <Box>{error}</Box>
         </Box>

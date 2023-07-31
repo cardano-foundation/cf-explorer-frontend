@@ -4,7 +4,7 @@ import { useAsync, useLocalStorage } from "react-use";
 
 import useAuth from "./commons/hooks/useAuth";
 import { routers } from "./commons/routers";
-import { NETWORK, NETWORK_TYPES } from "./commons/utils/constants";
+import { LANGUAGE, NETWORK, NETWORK_TYPES } from "./commons/utils/constants";
 import { getAllBookmarks } from "./commons/utils/userRequest";
 import AccountLayout from "./components/commons/Layout/AccountLayout";
 import AddressWalletDetail from "./pages/AddressWalletDetail";
@@ -58,6 +58,7 @@ const PoolsDeregistration = () => <RegistrationPools poolType={POOL_TYPE.DEREREG
 const Routes: React.FC = () => {
   const { isLoggedIn } = useAuth();
   const [, setBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
+  const { pathname } = window.location;
 
   useAsync(async () => {
     if (isLoggedIn) {
@@ -75,6 +76,9 @@ const Routes: React.FC = () => {
     }
   }, []);
 
+  if (!pathname.includes(`/${LANGUAGE}`)) {
+    return <Redirect to={pathname} />;
+  }
   return (
     <Switch>
       <Route path={routers.SIGN_IN} exact component={SignIn} />
