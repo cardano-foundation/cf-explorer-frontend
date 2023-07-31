@@ -2,7 +2,6 @@ import {
   Box,
   CircularProgress,
   IconButton,
-  MenuItem,
   PaginationRenderItemParams,
   alpha,
   styled,
@@ -36,6 +35,7 @@ import {
 import CustomIcon from "../CustomIcon";
 import Filter from "../Filter";
 import {
+  CustomMenuItem,
   Empty,
   EmtyImage,
   InputNumber,
@@ -299,10 +299,10 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
                 }
               }}
             >
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-              <MenuItem value={50}>50</MenuItem>
-              <MenuItem value={100}>100</MenuItem>
+              <CustomMenuItem value={10}>10</CustomMenuItem>
+              <CustomMenuItem value={20}>20</CustomMenuItem>
+              <CustomMenuItem value={50}>50</CustomMenuItem>
+              <CustomMenuItem value={100}>100</CustomMenuItem>
             </SelectMui>
             <Box component={"span"} ml={1} fontSize="0.875rem">
               Per page

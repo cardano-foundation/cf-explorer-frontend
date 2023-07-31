@@ -25,22 +25,32 @@ export const TabLabel = styled(Box)(({ theme }) => ({
 }));
 
 export const Header = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "end",
-  fontFamily: "var(--font-family-title)",
-  fontSize: "var(--font-size-text-x-large)",
-  fontWeight: "var(--font-weight-bold)",
   paddingBottom: "8px",
   borderBottom: `1px solid ${theme.palette.primary[200]}`,
-  [theme.breakpoints.down("sm")]: {
-    alignItems: "center"
-  }
+}));
+
+export const Divider = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  bottom: "-35%",
+  width: "100%",
+  height: 0,
+  borderBottom: `3px solid ${theme.palette.primary.main}`,
+}));
+
+export const WrapTitle = styled(Box)(() => ({
+  position: "relative",
+  display: "flex",
+  justifyContent: "start",
+  alignItems: "center",
+  width: "max-content",
 }));
 
 export const Title = styled("span")(({ theme }) => ({
   lineHeight: 1,
-  color: theme.palette.secondary.main,
+  color: theme.palette.primary.main,
+  fontFamily: "var(--font-family-title)",
+  fontSize: "var(--font-size-text-x-large)",
+  fontWeight: "var(--font-weight-bold)",
   [theme.breakpoints.down("sm")]: {
     fontSize: "14px"
   },
