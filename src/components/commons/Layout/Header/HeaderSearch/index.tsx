@@ -204,7 +204,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           res.data?.totalItems === 1
             ? history.push(details.delegation((res?.data?.data[0] as DelegationPool)?.poolId))
             : history.push(routers.DELEGATION_POOLS, {
-                tickerNameSearch: (search.query || "").toLocaleLowerCase()
+                tickerNameSearch: (search.search || "").toLocaleLowerCase()
               });
         }
       } else {
