@@ -3,13 +3,7 @@ import { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 
 import { details } from "src/commons/routers";
-import {
-  formatADAFull,
-  formatDateTimeLocal,
-  formatPercent,
-  getShortWallet,
-  numberWithCommas
-} from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
@@ -66,12 +60,6 @@ const DelegationEpochList = ({
       minWidth: "120px",
 
       render: (data) => <Box component={"span"}>{formatADAFull(data.fee)}</Box>
-    },
-    {
-      title: "ROS",
-      key: "ros",
-      minWidth: "120px",
-      render: (data) => formatPercent(data.ros ? data.ros / 100 : 0)
     }
   ];
 
