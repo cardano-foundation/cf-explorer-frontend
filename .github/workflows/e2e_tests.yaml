@@ -42,7 +42,9 @@ jobs:
 
       - name: 🎳 Run tests
         run: npm test
-
+        env:
+          DANGEROUSLY_DISABLE_HOST_CHECK: true
+          
       - name: 📹 Archive test videos
         uses: actions/upload-artifact@v3
         if: always()
