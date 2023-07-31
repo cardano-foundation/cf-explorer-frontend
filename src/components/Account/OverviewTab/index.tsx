@@ -162,12 +162,6 @@ const OverviewTab = () => {
         valueInput={email}
       />
       <RowItem
-        label="Private Notes"
-        value={`${userData?.sizeNote} out of 2000 available limit`}
-        action={<Search onClick={() => history.push(routers.PRIVATE_NOTES)} />}
-        isTablet={isTablet}
-      />
-      <RowItem
         label="Address Bookmark"
         value={`${userData?.sizeBookmark} out of 2000 available limit`}
         action={<Search onClick={() => history.push(routers.BOOKMARK)} />}
