@@ -9,8 +9,6 @@ import {
   useScrollTrigger
 } from "@mui/material";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useUpdateEffect } from "react-use";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
@@ -266,11 +264,6 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
   const [size, setSize] = useState(pagination?.size || 50);
   const [open, setOpen] = useState(false);
   const trigger = useScrollTrigger();
-  const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
-
-  useUpdateEffect(() => {
-    setPage(1);
-  }, [poolType]);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
     pagination && pagination.onChange && pagination.onChange(page, size);
@@ -383,7 +376,7 @@ const Table: React.FC<TableProps> = ({
   };
 
   useEffect(() => {
-    if (wrapperRef.current) {
+    if (wrapperRef.current && !loading) {
       wrapperRef.current.scrollTop = 0;
     }
   }, [loading]);
@@ -486,10 +479,6 @@ const PaginationCustom = ({
   handleChangePage: (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => void;
 }) => {
   const [inputPage, setInputPage] = useState(page);
-  const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
-  useUpdateEffect(() => {
-    setInputPage(1);
-  }, [poolType, size]);
 
   useEffect(() => {
     if (pagination?.page) {
@@ -515,7 +504,7 @@ const PaginationCustom = ({
         </IconButton>
       );
     }
-    if (item.type === "last") {
+    if (item.type === "last" && !pagination?.hideLastPage) {
       return (
         <IconButton
           disabled={page === totalPage || loading}
@@ -573,7 +562,7 @@ const PaginationCustom = ({
               onBlur={() => {
                 setInputPage(page);
               }}
-              disabled={loading}
+              disabled={true}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   if (inputPage < 1) {

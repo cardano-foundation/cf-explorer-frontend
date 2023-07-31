@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 
 import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
 import { CalenderPaleIcon, SliderRight } from "src/commons/resources";
-import { API } from "src/commons/utils/api";
 import useFetch from "src/commons/hooks/useFetch";
-import { formatDateTime, getHostname } from "src/commons/utils/helper";
+import { API } from "src/commons/utils/api";
 import { CARDANO_NEWS_URL } from "src/commons/utils/constants";
 import { useScreen } from "src/commons/hooks/useScreen";
+import { formatDateTime, getHostname } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import {
@@ -40,6 +40,8 @@ const defaultButtonSwiper = { left: false, right: false };
 
 const LIMIT = 20;
 
+const MIN_SWIPE_DISTANCE = 50;
+
 const LatestStories = () => {
   const [offset, setOffset] = useState<number>(0);
   const { data: dataNews, loading } = useFetch<Articles>(`${API.STORIES}?limit=${LIMIT}&offset=${offset}`);
@@ -53,18 +55,27 @@ const LatestStories = () => {
   const { isLaptop, isMobile } = useScreen();
 
   const [touchStartX, setTouchStartX] = useState<number>(0);
+  const [touchStartY, setTouchStartY] = useState<number>(0);
 
   const handleTouchStart = (event: React.TouchEvent): void => {
     setTouchStartX(event.touches[0].clientX);
+    setTouchStartY(event.touches[0].clientY);
   };
 
   const handleTouchEnd = (event: React.TouchEvent): void => {
     const touchEndX = event.changedTouches[0].clientX;
-    const touchDiff = touchEndX - touchStartX;
+    const touchDiffX = touchEndX - touchStartX;
 
-    if (touchDiff < 0) {
+    const touchEndY = event.changedTouches[0].clientY;
+    const touchDiffY = touchEndY - touchStartY;
+
+    if (touchDiffX < 0) {
       handleNextSwiper();
     } else {
+      const isScroll = Math.abs(touchDiffY) > MIN_SWIPE_DISTANCE || (offset === 0 && currentIndexData === 0);
+      if (isScroll) {
+        return window.scrollTo(window.scrollX, window.scrollY);
+      }
       handlePrevSwiper();
     }
   };
