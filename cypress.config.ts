@@ -5,7 +5,7 @@ dotenv.config();
 
 export default defineConfig({
   e2e: {
-    baseUrl: `http://localhost:${process.env.PORT || 3000}`,
+    baseUrl: `http://10.4.10.231:7276`,
     supportFile: "cypress/support/e2e.js",
     hideXHRInCommandLog: true,
     viewportWidth: 1920,
