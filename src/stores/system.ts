@@ -10,7 +10,8 @@ const initialState: SystemStoreType = {
   adaRate: 0,
   usdMarket: null,
   currentEpoch: null,
-  loadingCurrentEpoch: true
+  loadingCurrentEpoch: true,
+  specialPath: null
 };
 
 const store = createSlice({
@@ -26,6 +27,10 @@ const store = createSlice({
       ...state,
       currentEpoch: action.payload,
       loadingCurrentEpoch: false
+    }),
+    setSpecialPath: (state, action: PayloadAction<SpecialPath>) => ({
+      ...state,
+      specialPath: action.payload
     })
   }
 });
@@ -36,6 +41,9 @@ export const setUsdMarket = (usdMarket: CardanoMarket) => {
 
 export const setCurrentEpoch = (currentEpoch: EpochCurrentType) => {
   systemStore?.dispatch(store.actions.setCurrentEpoch(currentEpoch));
+};
+export const setSpecialPath = (specialPath: SpecialPath) => {
+  systemStore?.dispatch(store.actions.setSpecialPath(specialPath));
 };
 
 export default store.reducer;
