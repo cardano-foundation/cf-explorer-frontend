@@ -9,7 +9,7 @@ export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => (
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
   paddingLeft: 0,
-  color: active ? theme.palette.primary.main : theme.palette.secondary[600]
+  color: active ? theme.palette.primary.main : theme.palette.secondary.light
 }));
 export const StyledTable = styled(Table)(({ theme }) => ({
   "& .empty-content-table": {
