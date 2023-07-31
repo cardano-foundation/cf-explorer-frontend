@@ -99,10 +99,14 @@ const ReportGeneratedPoolDetailTabs = () => {
       ) : (
         <>
           <CustomTooltip title={`${reportDetail.data?.reportHistory.reportName}`.replaceAll("-", " ")}>
-            <Headline collapsed={1}>{`${reportDetail.data?.reportHistory.reportName}`.replaceAll("-", " ")} </Headline>
+            <Headline data-testid="pool-report-name" collapsed={1}>
+              {`${reportDetail.data?.reportHistory.reportName}`.replaceAll("-", " ")}{" "}
+            </Headline>
           </CustomTooltip>
           <CustomTooltip title={`${reportDetail.data?.reportHistory.reportName}`.replaceAll("-", " ")}>
-            <Headline>{`${reportDetail.data?.reportHistory.reportName}`.replaceAll("-", " ")} </Headline>
+            <Headline data-testid="pool-report-name">
+              {`${reportDetail.data?.reportHistory.reportName}`.replaceAll("-", " ")}{" "}
+            </Headline>
           </CustomTooltip>
           <StakeTab tabs={displayedTabs} initTab={initTab} />
         </>
