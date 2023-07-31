@@ -41,14 +41,14 @@ import StakingLifecycle from "./pages/StakingLifecycle";
 import VerifyEmail from "./pages/VerifyEmail";
 import ReportGeneratedStakingDetail from "./pages/ReportGeneratedStakingDetail";
 import ReportGeneratedPoolDetail from "./pages/ReportGeneratedPoolDetail";
-import StakeDelegations from "./pages/StakeDelegations";
-import InstantRewards from "./pages/InstantRewards";
 import { getAllBookmarks } from "./commons/utils/userRequest";
-import { NETWORK, NETWORK_TYPES } from "./commons/utils/constants";
+import { LANGUAGE, NETWORK, NETWORK_TYPES } from "./commons/utils/constants";
 import { setOpenSyncBookmarkModal } from "./stores/user";
 import FAQ from "./pages/Refference/FAQ";
 import Policy from "./pages/Refference/Policy";
 import TermOfServices from "./pages/Refference/TermOfServices";
+import StakeDelegations from "./pages/StakeDelegations";
+import InstantRewards from "./pages/InstantRewards";
 
 const StakeAddressRegistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.REGISTRATION} />;
 const StakeAddressDeregistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.DEREREGISTRATION} />;
@@ -59,6 +59,7 @@ const PoolsDeregistration = () => <RegistrationPools poolType={POOL_TYPE.DEREREG
 const Routes: React.FC = () => {
   const { isLoggedIn } = useAuth();
   const [, setBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
+  const { pathname } = window.location;
 
   useAsync(async () => {
     if (isLoggedIn) {
@@ -76,6 +77,9 @@ const Routes: React.FC = () => {
     }
   }, []);
 
+  if (!pathname.includes(`/${LANGUAGE}`)) {
+    return <Redirect to={pathname} />;
+  }
   return (
     <Switch>
       <Route path={routers.SIGN_IN} exact component={SignIn} />
