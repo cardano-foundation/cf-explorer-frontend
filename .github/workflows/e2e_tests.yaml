@@ -35,7 +35,7 @@ jobs:
       - name: Generate test script
         run: |
           cd cypress/smoke
-          pip3 install numpy
+          pip3 install numpy requests
           python CypressDynamicScript.py --epochl=100 --epochs=1 --epoche=340 --blockl=1
 
       - name: 🎳 Run tests
@@ -83,7 +83,7 @@ jobs:
       - name: Generate test script
         run: |
           cd cypress/smoke
-          pip3 install numpy
+          pip3 install numpy requests
           python CypressDynamicScript.py --epochl=100 --epochs=340 --epoche=424 --blockl=1
 
       - name: 🎳 Run tests
@@ -131,7 +131,7 @@ jobs:
       - name: Generate test script
         run: |
           cd cypress/smoke
-          pip3 install numpy
+          pip3 install numpy requests
           python CypressDynamicScript.py
 
       - name: 🎳 Run tests
