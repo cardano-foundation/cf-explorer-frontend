@@ -196,7 +196,15 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       const res = await defaultAxios.get(url);
       setTotalResult(res?.data && res.data?.totalItems ? res.data?.totalItems : 0);
       setDataSearchTokensAndPools(res?.data && res?.data?.data ? res?.data?.data : undefined);
-      setShowOption(true);
+      if (res?.data && res.data?.totalItems === 1) {
+        if (filter === "tokens") {
+          history.push(details.token(encodeURIComponent((res?.data?.data[0] as TokensSearch)?.fingerprint)));
+        } else {
+          history.push(details.delegation((res?.data?.data[0] as DelegationPool)?.poolId));
+        }
+      } else {
+        setShowOption(true);
+      }
       setLoading(false);
     } catch {
       showResultNotFound();
@@ -435,7 +443,7 @@ export const OptionsSearch = ({
           Search for a {filter === "tokens" ? "token" : "pool"}{" "}
           {filter === "tokens" ? (
             <ValueOption>
-              {(i as TokensSearch)?.displayName.startsWith("asset") && (i as TokensSearch)?.displayName.length > 43
+              {(i as TokensSearch)?.displayName?.startsWith("asset") && (i as TokensSearch)?.displayName.length > 43
                 ? getShortWallet((i as TokensSearch)?.fingerprint || "")
                 : (i as TokensSearch)?.displayName}
             </ValueOption>
