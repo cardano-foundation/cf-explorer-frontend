@@ -1,7 +1,6 @@
 import { Autocomplete, Box, Button } from "@mui/material";
 import { debounce } from "lodash";
 import { useState } from "react";
-import { BiChevronDown } from "react-icons/bi";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { HeaderSearchIcon } from "src/commons/resources";
@@ -14,6 +13,7 @@ import CustomTooltip from "../commons/CustomTooltip";
 import Table, { Column } from "../commons/Table";
 import { WrappModalScrollBar } from "../commons/Table/styles";
 import {
+  ArrowDownIconCustom,
   AssetName,
   Image,
   Logo,
@@ -36,10 +36,12 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
     size: 10
   });
 
+  const isDisabled = !data?.length;
+
   return (
     <Box>
       <Autocomplete
-        freeSolo={!data?.length}
+        disabled={isDisabled}
         options={total > 10 ? [...data, "more"] : data}
         componentsProps={{ paper: { elevation: 2 } }}
         loading={loading}
@@ -62,10 +64,10 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
               },
               "&:hover": {
                 "&::-webkit-scrollbar-thumb": {
-                  background: theme.palette.grey[300]
+                  background: theme.palette.secondary.light
                 },
                 "&::-webkit-scrollbar-track": {
-                  background: theme.palette.grey[100]
+                  background: theme.palette.primary[100]
                 }
               }
             };
@@ -113,19 +115,21 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
               >
                 <Box display="flex" alignItems={"center"} overflow="hidden" gap="10px">
                   <Box>
-                    {option?.metadata?.logo ? (
-                      <Logo src={`data:/image/png;base64,${option.metadata?.logo}`} alt="icon" />
-                    ) : (
-                      <LogoEmpty />
-                    )}
+                    {option?.metadata?.logo ? <Logo src={`${option.metadata?.logo}`} alt="icon" /> : <LogoEmpty />}
                   </Box>
                   <CustomTooltip title={`${option.displayName || ""} #${option.name || option.fingerprint}`}>
-                    <Box textAlign={"left"} overflow={"hidden"} textOverflow={"ellipsis"} maxWidth="150px">
+                    <Box
+                      textAlign={"left"}
+                      color={({ palette }) => palette.secondary.light}
+                      overflow={"hidden"}
+                      textOverflow={"ellipsis"}
+                      maxWidth="150px"
+                    >
                       {option.displayName || ""}
                     </Box>
                   </CustomTooltip>
                 </Box>
-                <Box fontWeight={"bold"} flex={1} textAlign="right">
+                <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main} flex={1} textAlign="right">
                   {formatNumberDivByDecimals(option.quantity || 0, option.metadata?.decimals || 0)}
                 </Box>
               </Box>
@@ -133,7 +137,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
           );
         }}
         renderInput={(params) => <StyledTextField {...params} placeholder="Search Token" />}
-        popupIcon={<BiChevronDown />}
+        popupIcon={<ArrowDownIconCustom disabled={isDisabled ? 1 : 0} />}
       />
       <ModalToken address={address} open={openModalToken} onClose={() => setOpenModalToken(false)} />
     </Box>
@@ -164,8 +168,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
       title: "Icon",
       key: "icon",
       minWidth: "50px",
-      render: (r) =>
-        r?.metadata?.logo ? <Logo src={`data:/image/png;base64,${r.metadata?.logo}`} alt="icon" /> : <LogoEmpty />
+      render: (r) => (r?.metadata?.logo ? <Logo src={`${r.metadata?.logo}`} alt="icon" /> : <LogoEmpty />)
     },
     {
       title: "Name",

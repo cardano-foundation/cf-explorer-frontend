@@ -47,7 +47,7 @@ const AddressAnalytics: FC = () => {
   const theme = useTheme();
   const { data, loading } = useFetch<AnalyticsData[]>(`${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`);
 
-  const values = data?.map((item) => item.value || 0) || [];
+  const values = (data || [])?.map((item) => item.value || 0) || [];
 
   const maxBalance = BigNumber.max(0, ...values).toString();
   const minBalance = BigNumber.min(maxBalance, ...values).toString();
@@ -61,10 +61,25 @@ const AddressAnalytics: FC = () => {
     date: item.date
   }));
 
+  const getLabelTimeTooltip = (label: string) => {
+    switch (rangeTime) {
+      case "ONE_DAY":
+        return `${moment(label).format("DD MMM HH:mm")} - ${moment(label).add(2, "hour").format("HH:mm")} (UTC)`;
+      case "ONE_WEEK":
+        return moment(label).format("DD MMM");
+      case "ONE_MONTH":
+        return `${moment(label).format("DD MMM")} - ${moment(label).add(1, "days").format("DD MMM")}`;
+      case "THREE_MONTH":
+        return `${moment(label).format("DD MMM")} - ${moment(label).add(6, "days").format("DD MMM")}`;
+      default:
+        return "";
+    }
+  };
+
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
     return (
       <TooltipBody>
-        <TooltipLabel>{moment(content.label).format("DD MMM YYYY HH:mm:ss")} (UTC time zone)</TooltipLabel>
+        <TooltipLabel>{getLabelTimeTooltip(content.label)}</TooltipLabel>
         <TooltipValue>{numberWithCommas(content.payload?.[0]?.value) || 0}</TooltipValue>
       </TooltipBody>
     );
@@ -102,8 +117,8 @@ const AddressAnalytics: FC = () => {
                   >
                     <defs>
                       <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor={theme.palette.green[700]} stopOpacity={0.2} />
-                        <stop offset="100%" stopColor={theme.palette.green[700]} stopOpacity={0} />
+                        <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
+                        <stop offset="100%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
                       </linearGradient>
                     </defs>
                     <XAxis
@@ -112,15 +127,16 @@ const AddressAnalytics: FC = () => {
                       tickLine={false}
                       tickMargin={5}
                       dx={-15}
+                      color={theme.palette.secondary.light}
                     />
-                    <YAxis tickFormatter={formatPriceValue} tickLine={false} />
+                    <YAxis tickFormatter={formatPriceValue} tickLine={false} color={theme.palette.secondary.light} />
                     <Tooltip content={renderTooltip} cursor={false} />
                     <CartesianGrid vertical={false} strokeWidth={0.33} />
                     <Area
                       stackId="1"
                       type="monotone"
                       dataKey="value"
-                      stroke={theme.palette.green[700]}
+                      stroke={theme.palette.primary.main}
                       strokeWidth={4}
                       fill="url(#colorUv)"
                       dot={{ r: 2 }}

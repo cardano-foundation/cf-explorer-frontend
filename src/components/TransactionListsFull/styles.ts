@@ -15,10 +15,11 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
 
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
 `;
 export const Label = styled(Box)`
   min-width: 50px;
+  color: ${({ theme }) => theme.palette.secondary.light};
 `;
 
 export const Img = styled("img")(() => ({

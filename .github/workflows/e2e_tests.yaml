@@ -1,11 +1,12 @@
-name: Run Explorer e2e Tests
+name: Run Smoke Tests
 on:
   push:
-    branches-ignore:
-      - "main"
+    branches:
+      - main
   pull_request:
-    branches-ignore:
-      - "main"
+      branches:
+        - main
+      types: [ opened, synchronize ]
   workflow_dispatch:
 
 jobs:

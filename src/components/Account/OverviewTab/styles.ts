@@ -1,20 +1,21 @@
 import { Box, Button, styled } from "@mui/material";
 
 export const TextNote = styled(Box)`
-  color: ${({ theme }) => theme.palette.common.black};
+  color: ${({ theme }) => theme.palette.secondary.light};
   opacity: 0.5;
   margin-bottom: 15px;
   font-size: 14px;
 `;
 
 export const Label = styled(Box)`
-  color: ${({ theme }) => theme.palette.common.black};
+  color: ${({ theme }) => theme.palette.secondary.light};
   opacity: 0.6;
   width: 190px;
 `;
 
 export const Value = styled(Box)`
   font-weight: bold;
+  color: ${({ theme }) => theme.palette.secondary.main};
   flex: 1;
 `;
 
