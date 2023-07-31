@@ -192,15 +192,20 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       const url = `${
         filter === "tokens" ? API.TOKEN.LIST : API.DELEGATION.POOL_LIST
       }?page=0&size=${RESULT_SIZE}&${stringify(search)}`;
-
       const res = await defaultAxios.get(url);
       setTotalResult(res?.data && res.data?.totalItems ? res.data?.totalItems : 0);
       setDataSearchTokensAndPools(res?.data && res?.data?.data ? res?.data?.data : undefined);
-      if (res?.data && res.data?.totalItems === 1) {
+      if (res?.data && res.data?.totalItems > 0) {
         if (filter === "tokens") {
-          history.push(details.token(encodeURIComponent((res?.data?.data[0] as TokensSearch)?.fingerprint)));
+          res.data?.totalItems === 1
+            ? history.push(details.token(encodeURIComponent((res?.data?.data[0] as TokensSearch)?.fingerprint)))
+            : history.push(`${routers.TOKEN_LIST}?tokenName=${(search.query || "").toLocaleLowerCase()}`);
         } else {
-          history.push(details.delegation((res?.data?.data[0] as DelegationPool)?.poolId));
+          res.data?.totalItems === 1
+            ? history.push(details.delegation((res?.data?.data[0] as DelegationPool)?.poolId))
+            : history.push(routers.DELEGATION_POOLS, {
+                tickerNameSearch: (search.query || "").toLocaleLowerCase()
+              });
         }
       } else {
         setShowOption(true);
