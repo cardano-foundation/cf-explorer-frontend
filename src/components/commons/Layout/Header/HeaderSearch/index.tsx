@@ -192,11 +192,24 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       const url = `${
         filter === "tokens" ? API.TOKEN.LIST : API.DELEGATION.POOL_LIST
       }?page=0&size=${RESULT_SIZE}&${stringify(search)}`;
-
       const res = await defaultAxios.get(url);
       setTotalResult(res?.data && res.data?.totalItems ? res.data?.totalItems : 0);
       setDataSearchTokensAndPools(res?.data && res?.data?.data ? res?.data?.data : undefined);
-      setShowOption(true);
+      if (res?.data && res.data?.totalItems > 0) {
+        if (filter === "tokens") {
+          res.data?.totalItems === 1
+            ? history.push(details.token(encodeURIComponent((res?.data?.data[0] as TokensSearch)?.fingerprint)))
+            : history.push(`${routers.TOKEN_LIST}?tokenName=${(search.query || "").toLocaleLowerCase()}`);
+        } else {
+          res.data?.totalItems === 1
+            ? history.push(details.delegation((res?.data?.data[0] as DelegationPool)?.poolId))
+            : history.push(routers.DELEGATION_POOLS, {
+                tickerNameSearch: (search.search || "").toLocaleLowerCase()
+              });
+        }
+      } else {
+        setShowOption(true);
+      }
       setLoading(false);
     } catch {
       showResultNotFound();
@@ -435,7 +448,7 @@ export const OptionsSearch = ({
           Search for a {filter === "tokens" ? "token" : "pool"}{" "}
           {filter === "tokens" ? (
             <ValueOption>
-              {(i as TokensSearch)?.displayName.startsWith("asset") && (i as TokensSearch)?.displayName.length > 43
+              {(i as TokensSearch)?.displayName?.startsWith("asset") && (i as TokensSearch)?.displayName.length > 43
                 ? getShortWallet((i as TokensSearch)?.fingerprint || "")
                 : (i as TokensSearch)?.displayName}
             </ValueOption>
@@ -596,7 +609,7 @@ export const OptionsSearch = ({
   }
   return (
     <OptionsWrapper display={show ? "block" : "none"} home={+home}>
-      {!error ? (
+      {!error && (
         <>
           {listOptions.map((item, i: number) => {
             return (
@@ -609,7 +622,9 @@ export const OptionsSearch = ({
             );
           })}
         </>
-      ) : (
+      )}
+
+      {!!error && (
         <Box component={Option} color={({ palette }) => palette.error[700]} justifyContent={"center"}>
           <Box>{error}</Box>
         </Box>
