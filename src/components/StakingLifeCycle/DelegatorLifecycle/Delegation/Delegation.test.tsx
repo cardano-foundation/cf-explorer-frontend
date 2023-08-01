@@ -1,37 +1,68 @@
-import { render, fireEvent } from "src/test-utils";
+import userEvent from "@testing-library/user-event";
 
-import Delegation, { DelegationTimeline } from "./index";
+import { render, screen } from "src/test-utils";
+import useFetch from "src/commons/hooks/useFetch";
+import { getShortWallet } from "src/commons/utils/helper";
+
+import Delegation, { DelegationCertificateModal } from "./index";
+
+jest.mock("src/commons/hooks/useFetch");
+
+const stakeId = "stake1u96el9cyxhwd7s7f7qmculdpp44f5mjrsvh9vh9nrlhdjlsgvfap6";
 
 describe("Delegation", () => {
-  it("should render the component", () => {
-    const { getByText } = render(<Delegation />);
-    expect(getByText("Recent Delegations")).toBeInTheDocument();
+  beforeEach(() => {
+    const mockedUseFetch = useFetch as jest.Mock;
+    mockedUseFetch.mockReturnValue({
+      data: null,
+      loading: false
+    });
+  });
+  it("render Delegation", () => {
+    render(<Delegation />);
+    expect(screen.getByText(/Recent Delegations/i)).toBeInTheDocument();
+    expect(screen.getByText(/showing 0 result/i)).toBeInTheDocument();
   });
 });
 
-describe("DelegationTimeline", () => {
-  const selectedDelegation = {
-    txHash: "1234567890",
-    outSum: 1000,
-    fee: 10,
-    time: "2023-06-13T10:00:00"
-  };
-  it("should render the component", () => {
-    const { getByText } = render(<DelegationTimeline selected={selectedDelegation} />);
-    expect(getByText(/delegation certificate/i)).toBeInTheDocument();
+describe("DelegationCertificateModal", () => {
+  beforeEach(() => {
+    const mockedUseFetch = useFetch as jest.Mock;
+    mockedUseFetch.mockReturnValue({
+      data: null,
+      loading: false
+    });
+  });
+  it("render DelegationCertificateModal", () => {
+    const onClose = jest.fn();
+    render(<DelegationCertificateModal handleCloseModal={onClose} open stake={stakeId} txHash="" />);
+    expect(screen.getByText(/delegation certificate/i)).toBeInTheDocument();
   });
 
-  it("should open and close the certificate modal", () => {
-    const { getByText, getByTestId, getAllByText } = render(<DelegationTimeline selected={selectedDelegation} />);
+  it("render DelegationCertificateModal with data", () => {
+    const mockedUseFetch = useFetch as jest.Mock;
+    mockedUseFetch.mockReturnValue({
+      data: {},
+      loading: false
+    });
+    const onClose = jest.fn();
+    const { getByText } = render(
+      <DelegationCertificateModal handleCloseModal={onClose} open stake={stakeId} txHash="" />
+    );
+    expect(getByText(getShortWallet(stakeId))).toBeInTheDocument();
+  });
 
-    const openModalButton = getByText(/delegation certificate/i);
-    fireEvent.click(openModalButton);
-    const modals = getAllByText(/delegation certificate/i);
-    expect(modals.length).toBeGreaterThanOrEqual(2);
-    const closeModalButton = getByTestId("close-modal-button");
-    fireEvent.click(closeModalButton);
-    const modalAfterClickings = getAllByText(/delegation certificate/i);
-
-    expect(modalAfterClickings.length).not.toBeGreaterThanOrEqual(2);
+  it("render DelegationCertificateModal close button was clicked", () => {
+    const mockedUseFetch = useFetch as jest.Mock;
+    mockedUseFetch.mockReturnValue({
+      data: {},
+      loading: false
+    });
+    const onClose = jest.fn();
+    const { getByTestId } = render(
+      <DelegationCertificateModal handleCloseModal={onClose} open stake={stakeId} txHash="" />
+    );
+    userEvent.click(getByTestId("close-modal-button"));
+    expect(onClose).toBeCalled();
   });
 });

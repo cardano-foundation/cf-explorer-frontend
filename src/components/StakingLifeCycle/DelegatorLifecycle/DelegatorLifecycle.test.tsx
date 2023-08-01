@@ -2,7 +2,6 @@ import { screen } from "@testing-library/react";
 import Router from "react-router";
 
 import { render } from "src/test-utils";
-import { ListStakeKeyResponse } from "src/pages/DelegatorLifecycle";
 
 import DelegatorLifecycle from ".";
 
