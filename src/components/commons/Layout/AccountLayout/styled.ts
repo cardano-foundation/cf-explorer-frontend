@@ -91,7 +91,7 @@ export const NavItemMobile = styled(Link)<{ active: boolean }>(({ theme, active 
 }));
 
 export const StyledUsername = styled(Box)`
-  max-width: 200px;
+  max-width: 100%;
   padding-left: ${({ theme }) => theme.spacing(1)};
   padding-right: ${({ theme }) => theme.spacing(1)};
   overflow: hidden;
