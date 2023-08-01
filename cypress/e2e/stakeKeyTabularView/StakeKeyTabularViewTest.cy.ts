@@ -1,4 +1,4 @@
-describe("Registration List screen", () => {
+describe("Stake Key Tabular view", () => {
     it("User go to Staking Lifecycle and input the Stake Address, switch to tabular view then verify the Staking Delegation Screen", () => {
       const stakeAddr = "stake1u98ujxfgzdm8yh6qsaar54nmmr50484t4ytphxjex3zxh7g4tuwna"
       cy.visit("/");
