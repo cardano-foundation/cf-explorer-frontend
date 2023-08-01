@@ -136,7 +136,7 @@ const LatestStories = () => {
     }
   };
 
-  if (!loading) {
+  if (loading) {
     const amountSkeleton = isMobile ? 1 : amountNewsByDevice;
     return (
       <Box>
