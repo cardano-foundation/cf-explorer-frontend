@@ -229,7 +229,11 @@ const Card = ({
             pr={1}
             sx={{ color: (theme) => (isFailed ? theme.palette.secondary.light : theme.palette.secondary.main) }}
           >
-            {isFailed ? 0 : type === "down" ? `-${formatADAFull(totalADA)}` : `${formatADAFull(totalADA)}`}
+            {isFailed || !totalADA
+              ? 0
+              : type === "down"
+              ? `-${formatADAFull(totalADA)}`
+              : `+${formatADAFull(totalADA)}`}
           </Box>
           <ADAicon sx={{ color: isFailed ? theme.palette.secondary.light : theme.palette.secondary.main }} />
         </div>
