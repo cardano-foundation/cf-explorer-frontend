@@ -4,21 +4,16 @@ import { Link } from "react-router-dom";
 export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
   width: "100%",
   padding: `0 0 ${theme.spacing(3)}`,
-  borderBottom: `3px solid ${active ? theme.palette.green[600] : theme.palette.grey[200]}`,
+  borderBottom: `3px solid ${active ? theme.palette.primary.main : theme.palette.primary[200]}`,
   [theme.breakpoints.down("sm")]: {
     padding: "16px 30px"
   },
   cursor: "pointer"
 }));
 
-export const StepButton = styled(Box)<{ active: number }>(({ theme, active }) => ({
-  background: active ? theme.palette.green[600] : theme.palette.grey[200],
-  ":hover": {
-    background: active ? theme.palette.green[600] : theme.palette.grey[200]
-  }
-}));
+export const StepButton = styled(Box)<{ active: number }>(() => ({}));
 export const TitleStep = styled(Box)<{ active: number }>(({ theme, active }) => ({
-  color: active ? theme.palette.grey[700] : theme.palette.grey[300],
+  color: active ? theme.palette.secondary.main : theme.palette.secondary.light,
   fontWeight: "bold",
   fontSize: "0.875rem",
   marginTop: theme.spacing(1),
@@ -42,26 +37,26 @@ export const StepHeader = styled(Typography)(({ theme }) => ({
 export const WrapTitle = styled(Box)(({ theme }) => ({
   fontSize: "1.5rem",
   fontWeight: "bold",
-  color: theme.palette.common.black
+  color: theme.palette.secondary.main
 }));
 
 export const NextButton = styled(Button)(({ theme }) => ({
   color: theme.palette.common.white,
-  background: theme.palette.grey[700],
+  background: theme.palette.secondary.main,
   textTransform: "capitalize",
   fontWeight: "bold",
   padding: "8px 20px",
   borderRadius: "8px",
   border: "2px solid transparent",
   ":hover": {
-    background: alpha(theme.palette.grey[700], 0.8)
+    background: alpha(theme.palette.secondary.main, 0.8)
   },
   display: "flex",
   gap: 12,
   alignItems: "center"
 }));
 export const PreviousButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.grey[500],
+  color: theme.palette.secondary.main,
   background: "transparent",
   textTransform: "capitalize",
   fontWeight: "bold",
@@ -69,7 +64,7 @@ export const PreviousButton = styled(Button)(({ theme }) => ({
   borderRadius: "8px",
   border: `2px solid ${theme.palette.border.hint}`,
   ":hover": {
-    background: alpha(theme.palette.grey[700], 0.1)
+    background: alpha(theme.palette.secondary.main, 0.1)
   },
   display: "flex",
   alignItems: "center"

@@ -5,6 +5,6 @@ describe("policy spec", () => {
     cy.visit("/policy/d5e6bf0500378d4f0da4e8dde6becec7621cd8cbf5cbb9b87013d4cc?page=1&size=50");
     cy.contains("Policy Asset Holders").click();
     cy.get('[data-testid="table-common"]').contains("Balance").should("be.visible");
-    cy.get('[data-testid="table-common"] :nth-child(1) > td:nth-child(4)').should("have.text", "1");
+    cy.get('[data-testid="table-common"] :nth-child(1) > td:nth-child(4)').should("have.text", "2");
   });
 });

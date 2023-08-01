@@ -1,10 +1,10 @@
-import { Box, styled, alpha } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import CustomModal from "src/components/commons/CustomModal";
 import { AdaLogoIcon } from "src/components/commons/ADAIcon";
 
-export const StyledModal = styled(CustomModal)(() => ({}));
+export const StyledModal = styled(CustomModal)(({ theme }) => ({ backgroundColor: theme.palette.primary[100] }));
 
 export const ItemList = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -18,7 +18,7 @@ export const ItemList = styled(Box)(({ theme }) => ({
 }));
 
 export const Item = styled(Box)(({ theme, flexDirection }) => ({
-  backgroundColor: alpha(theme.palette.grey[300], 0.1),
+  backgroundColor: theme.palette.secondary[0],
   padding: 20,
   flex: 1,
   display: "flex",
@@ -40,7 +40,7 @@ export const Label = styled(Box)(({ theme }) => ({
   fontWeight: 700,
   fontSize: 14,
   lineHeight: "16px",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.light,
   marginBottom: 8
 }));
 
@@ -54,7 +54,7 @@ export const LineData = styled(Box)(() => ({
 export const StyledLink = styled(Link)(({ theme }) => ({
   fontSize: 14,
   lineHeight: "22px",
-  color: `${theme.palette.blue[800]} !important`,
+  color: `${theme.palette.primary.main} !important`,
   wordBreak: "break-all",
   fontWeight: 500,
   marginRight: 5,
@@ -66,7 +66,7 @@ export const StyledLink = styled(Link)(({ theme }) => ({
 export const VRFKeyText = styled(Box)(({ theme }) => ({
   fontSize: 14,
   lineHeight: "22px",
-  color: theme.palette.blue[800],
+  color: theme.palette.primary.main,
   wordBreak: "break-all",
   fontWeight: 500,
   display: "inline",
@@ -77,7 +77,7 @@ export const VRFKeyText = styled(Box)(({ theme }) => ({
 }));
 
 export const Value = styled(VRFKeyText)(({ theme }) => ({
-  color: theme.palette.common.black,
+  color: theme.palette.secondary.main,
   display: "flex",
   alignItems: "center",
   gap: 8

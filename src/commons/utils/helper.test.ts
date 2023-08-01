@@ -1,4 +1,4 @@
-import { getShortWallet, formatAmount, numberWithCommas, toFixedBigNumber } from "./helper";
+import { getShortWallet, formatAmount, numberWithCommas, toFixedBigNumber, isExternalLink } from "./helper";
 
 describe("helper getShortWallet", () => {
   it("get short return correct value", () => {
@@ -32,6 +32,17 @@ describe("helper formatAmountToken", () => {
     expect(numberWithCommas(1.250255985)).toEqual("1.250255");
     // eslint-disable-next-line prettier/prettier
     expect(numberWithCommas(1.25)).toEqual("1.25");
+  });
+});
+
+describe("helper isExternalLink", () => {
+  it("helper isExternalLink test internal link", () => {
+    expect(isExternalLink("/")).toBeFalsy();
+    expect(isExternalLink("/block")).toBeFalsy();
+  });
+  it("helper isExternalLink test external link", () => {
+    expect(isExternalLink("http://abc.com")).toBeTruthy();
+    expect(isExternalLink("https://abc.com.vn")).toBeTruthy();
   });
 });
 

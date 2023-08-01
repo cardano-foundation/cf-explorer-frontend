@@ -14,17 +14,17 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
 }));
 
 export const BlueText = styled("span")`
-  color: ${(props) => props.theme.palette.text.primary};
+  color: ${(props) => props.theme.palette.secondary.light};
 `;
 
 export const EpochNo = styled("span")`
   font-family: var(--font-family-text);
-  color: ${(props) => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.primary.main};
 `;
 
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
 `;
 
 export const StyledOutput = styled("div")`

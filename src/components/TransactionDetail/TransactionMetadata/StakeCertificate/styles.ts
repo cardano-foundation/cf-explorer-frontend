@@ -5,7 +5,7 @@ export const TextLabel = styled("div")`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-  color: #667085;
+  color: ${(props) => props.theme.palette.secondary.light};
   width: 130px;
 `;
 
@@ -14,18 +14,5 @@ export const TextValue = styled(Box)`
   font-weight: 700;
   font-size: 14px;
   line-height: 16px;
-  color: ${({ theme }) => theme.palette.blue[800]};
-`;
-
-export const TextRightValue = styled("div")`
-  display: inline-block;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 16px;
-  color: #000000;
-`;
-
-export const TextNormal = styled(TextRightValue)`
-  font-weight: 400;
-  color: #667085;
+  color: ${({ theme }) => theme.palette.primary.main};
 `;
