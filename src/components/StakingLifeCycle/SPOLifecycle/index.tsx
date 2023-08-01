@@ -181,8 +181,8 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       <Box display={"flex"} justifyContent={"space-between"}>
         {stepper.map((step, idx) => (
           <Step
-            id={`step-${idx}`}
             key={idx}
+            id={`step-${idx}`}
             active={+(currentStep === idx)}
             component={renderTabsSPO[step.keyCheckShow] ? "span" : CustomTooltip}
             title={renderTabsSPO[step.keyCheckShow] ? undefined : "There is no record at this time"}

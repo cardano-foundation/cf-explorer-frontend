@@ -181,7 +181,8 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
         pagination={{
           ...pageInfo,
           total: fetchData.total,
-          onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
+          onChange: (page, size) => history.replace({ search: stringify({ page, size }) }),
+          hideLastPage: true
         }}
         onClickRow={onClickRow}
         selected={selected}
