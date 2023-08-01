@@ -2,8 +2,8 @@ import { Select, styled } from "@mui/material";
 
 const CustomSelect = styled(Select)`
   font-family: var(--font-family-text);
-  background: ${(props) => props.theme.palette.background.paper};
-  color: ${(props) => props.theme.palette.text.secondary};
+  background: ${(props) => props.theme.palette.secondary[0]};
+  color: ${(props) => props.theme.palette.secondary.main};
   border-radius: 8px;
   min-width: 250px;
   & > div {
@@ -17,7 +17,7 @@ const CustomSelect = styled(Select)`
     border: none !important;
   }
   & > svg {
-    color: ${(props) => props.theme.palette.text.secondary};
+    color: ${(props) => props.theme.palette.secondary.main};
     font-size: 20px;
   }
 `;

@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import { Box } from "@mui/material";
 
-import { LogoIcon, SearchIcon } from "src/commons/resources";
+import { LogoCardano, LogoIcon, SearchIcon } from "src/commons/resources";
 import { setOnDetailView, setSidebar } from "src/stores/user";
-import { routers } from "src/commons/routers";
+import { lists, routers } from "src/commons/routers";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import TopSearch from "../Sidebar/TopSearch";
 import HeaderSearch from "./HeaderSearch";
@@ -25,23 +27,17 @@ import {
   HeaderSearchContainer
 } from "./styles";
 
-const HIDDEN_HEADER_SEARCH_PATHS: string[] = [
-  routers.STAKING_LIFECYCLE.replace(":tab", "stake-key"),
-  routers.STAKING_LIFECYCLE.replace(":tab", "pools"),
-  `/${routers.STAKE_DETAIL.split("/")[1]}/`,
-  `/${routers.SPO_LIFECYCLE.split("/")[1]}/`
-];
+const HIDDEN_HEADER_SEARCH_PATHS: string[] = [lists.dashboard()];
 
 const Header: React.FC<RouteComponentProps> = (props) => {
   const { history } = props;
+  const { isMobile, isGalaxyFoldSmall } = useScreen();
   const home = history.location.pathname === "/";
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const [openSearch, setOpenSearch] = React.useState(false);
   const handleToggle = () => setSidebar(!sidebar);
 
-  const pathMatched = HIDDEN_HEADER_SEARCH_PATHS.find((subPath: string) =>
-    `${history.location.pathname}/`.includes(subPath)
-  );
+  const pathMatched = HIDDEN_HEADER_SEARCH_PATHS.find((subPath: string) => history.location.pathname.includes(subPath));
 
   const refElement = useRef<HTMLDivElement>(null);
 
@@ -65,7 +61,14 @@ const Header: React.FC<RouteComponentProps> = (props) => {
       <HeaderBox home={home ? 1 : 0}>
         <HeaderMain home={home ? 1 : 0}>
           <Title home={home ? 1 : 0} data-testid="home-title">
-            Cardano Blockchain Explorer
+            <Box display={"flex"} alignItems={"center"} justifyContent={"center"} flexWrap={"wrap"}>
+              <Box
+                component={"img"}
+                src={LogoCardano}
+                width={isGalaxyFoldSmall ? "30vw" : isMobile ? "20vw" : "auto"}
+              />
+              <Box fontSize={isGalaxyFoldSmall ? "24px" : "auto"}>, a Cardano explorer</Box>
+            </Box>
           </Title>
           <HeaderSearchContainer>{!pathMatched && <HeaderSearch home={home} />}</HeaderSearchContainer>
         </HeaderMain>

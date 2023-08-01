@@ -1,5 +1,3 @@
-import { useParams } from "react-router-dom";
-
 import { render, screen } from "src/test-utils";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { getShortHash, getShortWallet } from "src/commons/utils/helper";
@@ -45,17 +43,13 @@ describe("RegistrationPools component", () => {
     });
   });
   it("redering compoment on PC registration", () => {
-    const mockUseParams = useParams as jest.Mock;
-    mockUseParams.mockReturnValue({ poolType: POOL_TYPE.REGISTRATION });
-    render(<RegistrationPools />);
+    render(<RegistrationPools poolType={POOL_TYPE.REGISTRATION} />);
     expect(screen.getByText(/Pool Certificate/i)).toBeInTheDocument();
     expect(screen.getByText(/last updated/i)).toBeInTheDocument();
   });
 
   it("redering compoment on PC de-registration", () => {
-    const mockUseParams = useParams as jest.Mock;
-    mockUseParams.mockReturnValue({ poolType: POOL_TYPE.DEREREGISTRATION });
-    render(<RegistrationPools />);
+    render(<RegistrationPools poolType={POOL_TYPE.DEREREGISTRATION} />);
     expect(
       screen.getByRole("heading", {
         name: /pool deregistration/i
@@ -64,9 +58,7 @@ describe("RegistrationPools component", () => {
   });
 
   it("rendering table on PC with data", () => {
-    const mockUseParams = useParams as jest.Mock;
-    mockUseParams.mockReturnValue({ poolType: POOL_TYPE.REGISTRATION });
-    render(<RegistrationPools />);
+    render(<RegistrationPools poolType={POOL_TYPE.REGISTRATION} />);
     const data = mockedData[0];
     expect(screen.getByText(getShortHash(data.txHash))).toBeInTheDocument();
     expect(screen.getByText(data.poolName)).toBeInTheDocument();
@@ -76,8 +68,6 @@ describe("RegistrationPools component", () => {
   });
 
   it("rendering without any data", () => {
-    const mockUseParams = useParams as jest.Mock;
-    mockUseParams.mockReturnValue({ poolType: POOL_TYPE.REGISTRATION });
     const mockedUseFetchList = useFetchList as jest.Mock;
     mockedUseFetchList.mockReturnValue({
       data: [],
@@ -92,7 +82,7 @@ describe("RegistrationPools component", () => {
 
     const data = mockedData[0];
 
-    render(<RegistrationPools />);
+    render(<RegistrationPools poolType={POOL_TYPE.REGISTRATION} />);
     expect(screen.queryByText(getShortHash(data.txHash))).not.toBeInTheDocument();
     expect(screen.queryByText(data.poolName)).not.toBeInTheDocument();
     data.stakeKey.forEach((stakeKey: string) => {

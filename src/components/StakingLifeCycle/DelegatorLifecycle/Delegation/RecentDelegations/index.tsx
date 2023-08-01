@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
-import StackingFilter, { FilterParams } from "src/components/StackingFilter";
+import CustomFilter, { FilterParams } from "src/components/commons/CustomFilter";
 import OverviewStaking from "src/components/commons/OverviewStaking";
 import { EmptyRecord, FooterTable } from "src/components/commons/Table";
 import { details } from "src/commons/routers";
@@ -15,42 +15,31 @@ import { DescriptionText } from "../../styles";
 import { GridBox, StyledContainer, StyledList, WrapFilterDescription } from "./styles";
 
 interface Props {
-  onSelect: (delegation: DelegationItem | null) => void;
-  params?: FilterParams;
-  setParams?: (params: FilterParams) => void;
-  setShowBackButton?: (status: boolean) => void;
+  setShowBackButton: (status: boolean) => void;
 }
 
-const RecentDelegations: React.FC<Props> = ({ onSelect, params, setParams, setShowBackButton }) => {
+const RecentDelegations: React.FC<Props> = ({ setShowBackButton }) => {
   const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
   const history = useHistory();
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
+  const [params, setParams] = useState<FilterParams>({});
 
-  const { data, total, loading, initialized, error } = useFetchList<DelegationItem>(
+  const { data, total, loading, initialized, error, query } = useFetchList<DelegationItem>(
     stakeId ? API.STAKE_LIFECYCLE.DELEGATION(stakeId) : "",
-    { ...pageInfo, ...params }
+    { ...pageInfo, ...params, txHash: params.search }
   );
 
   useEffect(() => {
-    if (initialized) setShowBackButton?.(data.length > 1);
+    if (initialized) setShowBackButton(data.length > 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialized]);
-
-  useEffect(() => {
-    const currentItem = data.find((item) => item.txHash === txHash);
-    onSelect(currentItem || null);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [txHash, data]);
+  }, [initialized, setShowBackButton]);
 
   const handleSelect = (delegation: DelegationItem) => {
     history.push(details.staking(stakeId, "timeline", "delegation", delegation.txHash));
   };
 
-  const { txHash: txHashParms, fromDate, toDate } = params || {};
-  const isNoFilter = txHashParms === undefined && fromDate === undefined && toDate === undefined;
-  const isOneItemOnly = data.length === 1 && isNoFilter;
+  const isOneItemOnly = data.length === 1 && Object.keys(query).length === 2;
 
   useUpdateEffect(() => {
     if (isOneItemOnly) history.replace(details.staking(stakeId, "timeline", "delegation", data[0].txHash));
@@ -68,19 +57,13 @@ const RecentDelegations: React.FC<Props> = ({ onSelect, params, setParams, setSh
           <WrapFilterDescription>
             Showing {data.length} {data.length > 1 ? "results" : "result"}
           </WrapFilterDescription>
-          <StackingFilter
+          <CustomFilter
             filterValue={params}
-            onFilterValueChange={(params) => {
-              setParams &&
-                setParams({
-                  fromDate: undefined,
-                  sort: undefined,
-                  toDate: undefined,
-                  txHash: undefined,
-                  ...params
-                });
+            onChange={(params) => {
+              setParams(params);
               setPageInfo((pre) => ({ ...pre, page: 0 }));
             }}
+            searchLabel="Search transaction"
           />
         </Box>
       </StyledList>

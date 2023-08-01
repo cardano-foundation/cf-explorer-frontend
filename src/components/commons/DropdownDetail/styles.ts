@@ -36,6 +36,7 @@ export const ButtonClose = styled(Button)`
 
 export const DropdownTitle = styled("h4")(({ theme }) => ({
   margin: 20,
+  color: theme.palette.secondary.main,
   [theme.breakpoints.down("sm")]: {
     marginRight: 50
   }

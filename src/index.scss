@@ -38,7 +38,7 @@ html {
   font-size: var(--font-size-text);
   scroll-behavior: smooth;
 
-  &>body {
+  & > body {
     scroll-behavior: smooth;
     margin: 0;
     padding: 0;
@@ -51,10 +51,10 @@ html {
     font-weight: var(--font-weight-normal);
     font-size: var(--font-size-text);
     text-align: center;
-    background-color: #f7f7f7;
+    background-color: #f6f9ff;
     color: var(--text-color);
 
-    &>iframe {
+    & > iframe {
       pointer-events: none;
 
       &#jsd-widget {

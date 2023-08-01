@@ -41,6 +41,7 @@ const AddressWalletDetail = () => {
 export default AddressWalletDetail;
 
 const ContainerBox = styled(Container)`
+  max-width: 95vw !important;
   padding-top: 30px;
   display: flex;
   flex-direction: column;

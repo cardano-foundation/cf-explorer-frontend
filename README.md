@@ -13,7 +13,7 @@ This repository houses the frontend component of Iris. Developed with TypeScript
 
 ## Prerequisites
 
-In order to compile and run everything you will need:
+In order to build and run everything you will need:
 
 - Node version: ^v14.19.0  ([^v16.16.0](https://nodejs.org/en/blog/release/v16.16.0/) recommended)
 - npm: ^6.14.17
@@ -51,6 +51,9 @@ In the terminal run command: `cp .env.example .env`
 
 - Update link to the cardano price
     >Example: `REACT_APP_EXT_ADA_PRICE_URL=https://www.coingecko.com/en/coins/cardano`
+
+- Update link to the cardano news
+    >Example: `REACT_APP_CARDANO_NEWS_URL=https://cardanofoundation.org/en/news`
 
 - Update application network (`mainnet`, `preprod` or `preview`)
     >Example: `REACT_APP_NETWORK=mainnet`
