@@ -38,7 +38,6 @@ interface Props {
 }
 
 export const RegistrationDraw = ({ toggleModal, showBackButton = false }: Props) => {
-  const history = useHistory();
   const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
 
   const { data, error, initialized } = useFetch<RegistrationDetail>(
@@ -50,6 +49,7 @@ export const RegistrationDraw = ({ toggleModal, showBackButton = false }: Props)
   const feeRef = useRef(null);
   const certificateRef = useRef(null);
   const cardanoBlockchainRef = useRef(null);
+  const history = useHistory();
   const theme = useTheme();
 
   const handleBack = () => {
