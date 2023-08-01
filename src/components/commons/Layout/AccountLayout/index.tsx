@@ -1,15 +1,12 @@
-import { Box, IconButton, useTheme } from "@mui/material";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Box, useTheme } from "@mui/material";
+import React, { useCallback, useEffect, useState } from "react";
 import { MdChevronRight } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
-import useToast from "src/commons/hooks/useToast";
-import editAva from "src/commons/resources/icons/editAva.svg";
 import { ReactComponent as ReportDiscord } from "src/commons/resources/icons/reportDiscord.svg";
 import { ReactComponent as ReportMail } from "src/commons/resources/icons/reportMail.svg";
 import { routers } from "src/commons/routers";
-import { uploadAxios } from "src/commons/utils/axios";
 import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
 import { getShortWallet } from "src/commons/utils/helper";
 import { getInfo } from "src/commons/utils/userRequest";
@@ -51,31 +48,6 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const toast = useToast();
-
-  const uploadImgRef = useRef(null);
-
-  const hanldeUploadImage = async (e: any) => {
-    try {
-      if (e.target && e.target.files && e.target.files.length > 0) {
-        const formData = new FormData();
-        formData.append("avatar", e.target.files[0]);
-        const { data } = await uploadAxios.put("/user/edit-avatar", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        });
-
-        if (data && data.avatar) {
-          await fetchUserInfo();
-        }
-        toast.success("Your avatar has been changed.");
-      }
-    } catch (error) {
-      //To do
-    }
-  };
-
   useEffect(() => {
     if (localStorage.getItem("token")) {
       fetchUserInfo();
@@ -85,24 +57,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   const renderListTabs = () => (
     <SideBar>
       <Box>
-        <Box>
-          <Box pt={4} textAlign="center" display={"flex"} justifyContent="center">
-            <Box
-              component={IconButton}
-              p={0}
-              onClick={() => uploadImgRef.current && (uploadImgRef.current as any).click()}
-            >
-              <Box component={"img"} src={editAva} alt="editava" />
-              <input
-                data-testid="upload-input"
-                accept="image/*"
-                type="file"
-                ref={uploadImgRef}
-                onChange={hanldeUploadImage}
-                style={{ display: "none" }}
-              />
-            </Box>
-          </Box>
+        <Box pt={4}>
           {userData?.loginType === "connectWallet" ? (
             <CustomTooltip title={userData?.address || ""} placement="bottom">
               <StyledUsername component={"h4"} pt={1} m="auto">
