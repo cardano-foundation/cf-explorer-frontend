@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 import { MenuIcon } from "src/commons/resources";
 
 export const HeaderContainer = styled("header")`
-  color: ${(props) => props.theme.palette.text.primary};
+  color: ${(props) => props.theme.palette.secondary.main};
   position: relative;
 `;
 
 export const HeaderBox = styled(Container)<{ home: number }>`
+  max-width: 95vw !important;
   display: flex;
   gap: 10px;
   ${(props) =>

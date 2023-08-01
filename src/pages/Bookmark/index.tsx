@@ -68,7 +68,7 @@ const Bookmark = () => {
   const handleChange = (event: React.SyntheticEvent, tab: Bookmark["type"]) => {
     setActiveTab(tab);
     setPage(0);
-    setSize(10);
+    setSize(50);
   };
 
   useEffect(() => {
@@ -356,7 +356,7 @@ const Bookmark = () => {
   return (
     <Box>
       <TabContext value={activeTab}>
-        <Box sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.secondary}` }}>
+        <Box sx={{ borderBottom: (theme) => `1px solid ${theme.palette.primary[200]}` }}>
           <TabList
             onChange={handleChange}
             TabIndicatorProps={{ sx: { style: { background: (theme) => theme.palette.primary.main }, height: 3 } }}
