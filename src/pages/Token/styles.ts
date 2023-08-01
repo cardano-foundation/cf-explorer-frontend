@@ -55,7 +55,10 @@ export const TimeDuration = styled(Box)(({ theme }) => ({
   color: theme.palette.secondary.light,
   display: "block",
   marginTop: "0.5rem",
-  textAlign: "left"
+  textAlign: "left",
+  [theme.breakpoints.down("sm")]: {
+    paddingLeft: "16px !important"
+  }
 }));
 
 export const PolicyLabel = styled(AssetName)`
