@@ -21,8 +21,9 @@ export const InfoText = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   marginLeft: theme.spacing(1),
-  fontWeight: 600,
-  fontSize: "14px"
+  fontWeight: 600, 
+  fontSize: "14px",
+  color: theme.palette.secondary.main
 }));
 
 export const StepInfo = styled(Box)(({ theme }) => ({
