@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { useTheme } from "@mui/material";
 
 import { RootState } from "src/stores/types";
 
@@ -14,7 +15,7 @@ interface Props {
 const ToggleSidebar: React.FC<Props> = ({ handleToggle }) => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const [show, setShow] = useState(false);
-
+  const theme = useTheme();
   const handleClick = () => {
     handleToggle();
     setShow(false);
@@ -32,9 +33,9 @@ const ToggleSidebar: React.FC<Props> = ({ handleToggle }) => {
       <ToggleMenu onClick={handleClick} type="button" data-testid="toggle-sidebar-toggle-menu">
         <ArrowCollapse>
           {sidebar ? (
-            <FaArrowLeft data-testid="toggle-sidebar-arrow-left" />
+            <FaArrowLeft color={theme.palette.secondary.light} data-testid="toggle-sidebar-arrow-left" />
           ) : (
-            <FaArrowRight data-testid="toggle-sidebar-arrow-right" />
+            <FaArrowRight color={theme.palette.secondary.light} data-testid="toggle-sidebar-arrow-right" />
           )}
         </ArrowCollapse>
       </ToggleMenu>

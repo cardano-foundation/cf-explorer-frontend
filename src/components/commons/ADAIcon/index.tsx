@@ -4,7 +4,14 @@ import { OfficialAdaIcon } from "../../../commons/resources";
 
 const ADAicon = ({ ...props }) => {
   return (
-    <Box component={"span"} fontSize={"14px"} {...props} lineHeight={1} fontWeight={"regular"} color={"#344054"}>
+    <Box
+      component={"span"}
+      fontSize={"14px"}
+      {...props}
+      lineHeight={1}
+      fontWeight={"regular"}
+      color={({ palette }) => palette.secondary.main}
+    >
       ₳
     </Box>
   );

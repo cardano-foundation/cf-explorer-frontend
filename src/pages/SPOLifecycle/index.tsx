@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import { useHistory, useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
@@ -39,14 +38,6 @@ interface Params {
   poolId: string;
   mode: ViewMode;
   tab: SPOStep;
-}
-
-export interface ListTabResponseSPO {
-  [key: string]: boolean;
-  isRegistration: boolean;
-  isUpdate: boolean;
-  isReward: boolean;
-  isDeRegistration: boolean;
 }
 
 export interface IReportLimit {
@@ -132,10 +123,14 @@ const SPOLifecycle = () => {
               <LabelSwitch>Switch to {validMode === "timeline" ? "tabular" : "timeline"} view</LabelSwitch>
               <SwitchGroup>
                 <ButtonSwitch active={+(validMode === "timeline")} onClick={() => changeMode("timeline")}>
-                  <TableMode fill={validMode === "timeline" ? theme.palette.common.white : theme.palette.grey[500]} />
+                  <TableMode
+                    fill={validMode === "timeline" ? theme.palette.common.white : theme.palette.secondary.light}
+                  />
                 </ButtonSwitch>
                 <ButtonSwitch active={+(validMode === "tabular")} onClick={() => changeMode("tabular")}>
-                  <ChartMode fill={validMode === "tabular" ? theme.palette.common.white : theme.palette.grey[500]} />
+                  <ChartMode
+                    fill={validMode === "tabular" ? theme.palette.common.white : theme.palette.secondary.light}
+                  />
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const Wrapper = styled(Container)(() => ({}));
 export const ContentBox = styled(Box)(({ theme }) => ({
   display: "flex",
-  background: theme.palette.background.paper,
+  background: theme.palette.secondary[0],
   minHeight: "calc(100vh - 252px)",
   borderTopLeftRadius: 10,
   borderTopRightRadius: 10,
@@ -13,7 +13,7 @@ export const ContentBox = styled(Box)(({ theme }) => ({
   }
 }));
 export const SideBar = styled(Box)(({ theme }) => ({
-  borderRight: `1px solid ${theme.palette.grey[50]}`,
+  borderRight: `1px solid ${theme.palette.primary[200]}`,
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
@@ -33,7 +33,7 @@ export const NavItem = styled(Link)<{ active: boolean }>(({ theme, active }) => 
   padding: "10px 0",
   margin: "auto",
   backgroundColor: active ? alpha(theme.palette.primary.main, 0.1) : theme.palette.background.paper,
-  color: `${active ? theme.palette.primary.main : theme.palette.grey[400]} !important`,
+  color: `${active ? theme.palette.primary.main : theme.palette.secondary.light} !important`,
   fontWeight: "bold",
   [theme.breakpoints.down("md")]: {
     display: "none"
@@ -45,7 +45,7 @@ export const WrapItemMobile = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     display: "flex",
     width: "unset",
-    backgroundColor: "#E7E8EA",
+    backgroundColor: theme.palette.grey["A200"],
     borderRadius: "8px"
   },
   [theme.breakpoints.down("sm")]: {
@@ -64,8 +64,8 @@ export const NavItemMobile = styled(Link)<{ active: boolean }>(({ theme, active 
   fontSize: "14px",
   lineHeight: "16px",
   display: "none",
-  color: `${active ? theme.palette.common.white : theme.palette.grey[400]} !important`,
-  backgroundColor: active ? theme.palette.primary.main : "#E7E8EA",
+  color: `${active ? theme.palette.common.white : theme.palette.secondary.light} !important`,
+  backgroundColor: active ? theme.palette.primary.main : theme.palette.grey["A200"],
   padding: "10px 17px",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
@@ -82,6 +82,7 @@ export const StyledUsername = styled(Box)`
   padding-left: ${({ theme }) => theme.spacing(1)};
   padding-right: ${({ theme }) => theme.spacing(1)};
   overflow: hidden;
+  color: ${({ theme }) => theme.palette.secondary.main};
   text-overflow: ellipsis;
 `;
 
@@ -101,7 +102,7 @@ export const StyledButtonClose = styled(Button)(({ theme }) => ({
   border: `2px solid ${theme.palette.border.hint} `,
   textTransform: "capitalize",
   fontWeight: "bold",
-  color: "#344054",
+  color: theme.palette.secondary.main,
   fontSize: "1rem",
   width: "150px",
   height: "44px",

@@ -19,11 +19,6 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
       tooltip: "Last calculated gross return, as of the second last epoch"
     },
     {
-      title: "ROS",
-      value: formatPercent(data?.ros ? data?.ros / 100 : 0),
-      tooltip: "Gross average return during pool’s lifetime"
-    },
-    {
       title: "Fixed Cost(A)",
       value: formatADAFull(data?.cost),
       tooltip: ""
@@ -78,7 +73,11 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
                 <CustomTooltip title={item.tooltip}>
                   <Title>{item.title}</Title>
                 </CustomTooltip>
-                <Value sx={{ color: (theme) => (item.title === "Reward" ? theme.palette.green[700] : "initial") }}>
+                <Value
+                  sx={{
+                    color: (theme) => theme.palette.secondary.main
+                  }}
+                >
                   {item.value}
                 </Value>
               </Item>

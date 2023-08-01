@@ -128,7 +128,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                           component={Link}
                           to={details.stake(data?.rewardAccounts[0] || "")}
                           style={{ fontFamily: "var(--font-family-text)" }}
-                          color={(theme) => `${theme.palette.secondary.main} !important`}
+                          color={(theme) => `${theme.palette.primary.main} !important`}
                         >
                           {getShortWallet(data?.rewardAccounts[0] || "")}
                         </Box>
@@ -172,7 +172,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                       <CustomTooltip title={data?.ownerAccounts[0] || ""}>
                         <Box
                           component={Link}
-                          color={(theme) => `${theme.palette.blue[800]} !important`}
+                          color={(theme) => `${theme.palette.primary.main} !important`}
                           to={details.stake(data?.ownerAccounts[0] || "")}
                           style={{ fontFamily: "var(--font-family-text)" }}
                         >
@@ -188,7 +188,11 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               </Box>
               {data?.ownerAccounts && data.ownerAccounts.length > 1 && (
                 <ButtonViewAll
-                  sx={{ color: (theme) => theme.palette.common.black }}
+                  sx={{
+                    color: (theme) => theme.palette.secondary[0],
+                    background: (theme) => theme.palette.primary.main,
+                    border: (theme) => `1px solid ${theme.palette.primary[200]}`
+                  }}
                   onClick={() => {
                     setOpenOwner(!isOpenOwner);
                     setOpenReward(false);
@@ -243,6 +247,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <InfoValue>
               <StyledLinearProgress
                 variant="determinate"
+                saturation={data?.saturation || 0}
                 value={data?.saturation ? (data?.saturation > 100 ? 100 : data?.saturation) : 0}
               />
               <Box
@@ -252,7 +257,12 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 alignItems={isGalaxyFoldSmall ? "flex-start" : "flex-end"}
                 marginTop="9px"
               >
-                <Box component={"span"} mt={1} style={{ fontSize: "14px", fontWeight: "400", opacity: "0.5" }}>
+                <Box
+                  component={"span"}
+                  mt={1}
+                  color={({ palette }) => palette.secondary.light}
+                  style={{ fontSize: "14px", fontWeight: "400" }}
+                >
                   Saturation
                 </Box>
                 <Box fontSize={16}>{formatPercent(data?.saturation ? data?.saturation / 100 : 0)}</Box>

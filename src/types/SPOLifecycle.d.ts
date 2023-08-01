@@ -144,3 +144,11 @@ interface IDashboardResponse {
 }
 
 declare type SPOStep = "registration" | "pool-updates" | "operator-rewards" | "deregistration";
+
+declare interface ListTabResponseSPO {
+  [key: string]: boolean;
+  isRegistration: boolean;
+  isUpdate: boolean;
+  isReward: boolean;
+  isDeRegistration: boolean;
+}

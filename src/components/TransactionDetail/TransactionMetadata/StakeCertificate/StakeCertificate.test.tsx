@@ -13,7 +13,7 @@ const mockData: TStakeCertificated = {
 describe("StakeCertificate component", () => {
   it("should component render", () => {
     render(<StakeCertificate data={[mockData]} />);
-    expect(screen.getByText(/stake key registrations/i)).toBeInTheDocument();
+    expect(screen.getByText(/stake addresss registrations/i)).toBeInTheDocument();
     expect(screen.getByText(/address stake key:/i)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: mockData.stakeAddress })).toBeInTheDocument();
   });

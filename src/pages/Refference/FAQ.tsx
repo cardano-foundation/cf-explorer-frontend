@@ -57,7 +57,7 @@ const FAQ = () => {
 
         <TextReffer>
           <TitleSection> Navigating back to the landing page?</TitleSection>
-          If you ever want to return to the home page, it's as easy as a single click. Look for the Cardano icon at the
+          If you ever want to return to the home page, it's as easy as a single click. Look for the Iris icon at the
           webpage's top left corner. You will be instantly taken back to the familiar home page by clicking on the
           Cardano icon.
         </TextReffer>
@@ -93,7 +93,7 @@ const FAQ = () => {
         </TextReffer>
 
         <TextReffer>
-          <TextItalic>Transactions</TextItalic>: Lists the latest transactions and provides access to the individual
+          <TextItalic>Transactions</TextItalic>: Lists the transactions and provides access to the individual
           transaction details clustering the available information.
         </TextReffer>
 
@@ -120,13 +120,13 @@ const FAQ = () => {
           <TextSubHeader>Operational Certificates</TextSubHeader>
           Clustered view to facilitate browsing of operational certificates posted on the Cardano blockchain. While each
           certificate event will be displayed under the respective transaction details view, this section provides the
-          certificate events by type in reverse chronological order.
+          certificate events by type.
         </TextReffer>
 
         <TextReffer>
           <TextItalic>Stake Key Registration</TextItalic>: In this tab, you can explore details about stake key
           registration certificates. These certificates are used to register a stake key, which allows stakeholders to
-          participate in the consensus and governance of the Cardano network.
+          participate in the consensus and governance of the Cardano Protocol.
         </TextReffer>
 
         <TextReffer>
@@ -137,8 +137,8 @@ const FAQ = () => {
 
         <TextReffer>
           <TextItalic>Stake Delegation</TextItalic>: This tab provides insights into stake delegation certificates.
-          Stakeholders can use these certificates to delegate their stake to a specific pool, allowing them to
-          contribute to the consensus and earn rewards.
+          Stake holders can delegate to a stake pool, which will generate the certificate, allowing them to contribute
+          to the consensus and earn rewards.
         </TextReffer>
 
         <TextReffer>
