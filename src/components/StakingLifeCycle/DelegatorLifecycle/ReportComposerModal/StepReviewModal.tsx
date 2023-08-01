@@ -131,7 +131,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
           Before proceeding with your report creation, we just want to double-check and confirm that you’ve filled out
           all the details correctly?
         </TextRequired>
-        <Stack marginBottom="35px">
+        <Stack data-testid="checking-report-content" marginBottom="35px">
           {list.map(({ label, value }) => {
             return (
               <OverViewItem key={label}>
@@ -145,13 +145,19 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
         </Stack>
         <StyledStack direction={"row"} display={"flex"} alignContent={"space-between"} gap={"20px"}>
           <StyledBackButton
+            data-testid="double-check-button"
             sx={{ fontSize: isMobile ? 14 : 16 }}
             width={isMobile ? 120 : 100}
             onClick={() => gotoStep?.(STEPS.step1)}
           >
             I’d like to double-check
           </StyledBackButton>
-          <StyledButton disabled={loading} onClick={handleGenerateReport} sx={{ fontSize: isMobile ? 14 : 16 }}>
+          <StyledButton
+            data-testid="compose-button"
+            disabled={loading}
+            onClick={handleGenerateReport}
+            sx={{ fontSize: isMobile ? 14 : 16 }}
+          >
             {loading && <CircularProgress color="info" size={20} />}Generate report
           </StyledButton>
         </StyledStack>
