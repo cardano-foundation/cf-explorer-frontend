@@ -133,13 +133,18 @@ const OverviewTab = () => {
                   <Box
                     component={IoMdClose}
                     size={"24px"}
-                    color={theme.palette.red[700]}
+                    color={theme.palette.error[700]}
                     onClick={() => setShowInput(false)}
                     mr={1}
                   />
                 )}
                 {!loading ? (
-                  <Box color={theme.palette.green[700]} component={GoCheck} size={"24px"} onClick={handleSubmitEmail} />
+                  <Box
+                    color={theme.palette.success[800]}
+                    component={GoCheck}
+                    size={"24px"}
+                    onClick={handleSubmitEmail}
+                  />
                 ) : (
                   <CircularProgress size={"24px"} />
                 )}

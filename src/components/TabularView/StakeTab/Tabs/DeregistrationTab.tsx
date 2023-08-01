@@ -61,16 +61,16 @@ const DeregistrationTab = () => {
       render: (r) => (
         <Box>
           <TableSubTitle>
-            <AdaValue color={theme.palette.grey[700]} value={-r.deposit - r.fee} fontSize="14px" />
+            <AdaValue color={theme.palette.secondary.main} value={-r.deposit - r.fee} fontSize="14px" />
             <Box display="flex" mt={1} alignItems="center" lineHeight="1">
               <AdaValue
-                color={theme.palette.grey[400]}
+                color={theme.palette.secondary.light}
                 value={new BigNumber(r.deposit).times(-1).toString()}
                 gap="3px"
                 fontSize="12px"
               />
               <Box mx="3px">/</Box>
-              <AdaValue color={theme.palette.grey[400]} value={r.fee} gap="3px" fontSize="12px" />
+              <AdaValue color={theme.palette.secondary.light} value={r.fee} gap="3px" fontSize="12px" />
             </Box>
           </TableSubTitle>
         </Box>
@@ -82,7 +82,7 @@ const DeregistrationTab = () => {
       minWidth: "120px",
       render: () => (
         <IconButton onClick={() => setOpenModal(true)}>
-          <EyeIcon style={{ transform: "scale(.8)" }} />
+          <EyeIcon />
         </IconButton>
       )
     }

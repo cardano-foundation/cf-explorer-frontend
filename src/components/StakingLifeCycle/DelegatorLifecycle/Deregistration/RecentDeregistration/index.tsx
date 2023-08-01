@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
-import StackingFilter, { FilterParams } from "src/components/StackingFilter";
+import CustomFilter, { FilterParams } from "src/components/commons/CustomFilter";
 import OverviewStaking from "src/components/commons/OverviewStaking";
 import { EmptyRecord, FooterTable } from "src/components/commons/Table";
 import { details } from "src/commons/routers";
@@ -16,40 +16,31 @@ import { GridBox, StyledContainer, StyledList, WrapFilterDescription } from "./s
 import { DescriptionText } from "../../styles";
 
 interface Props {
-  onSelect: (deregistration: DeregistrationItem | null) => void;
-  params?: FilterParams;
-  setParams?: (params: FilterParams) => void;
-  setShowBackButton?: (status: boolean) => void;
+  setShowBackButton: (status: boolean) => void;
 }
 
-const RecentDeregistrations: React.FC<Props> = ({ onSelect, params, setParams, setShowBackButton }) => {
+const RecentDeregistrations: React.FC<Props> = ({ setShowBackButton }) => {
   const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
   const history = useHistory();
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
+  const [params, setParams] = useState<FilterParams>({});
 
-  const { data, total, loading, initialized, error } = useFetchList<DeregistrationItem>(
+  const { data, total, loading, initialized, error, query } = useFetchList<DeregistrationItem>(
     stakeId ? API.STAKE_LIFECYCLE.DEREGISTRATION(stakeId) : "",
-    { ...pageInfo, ...params }
+    { ...pageInfo, ...params, txHash: params.search }
   );
 
   useEffect(() => {
-    if (initialized) setShowBackButton?.(data.length > 1);
+    if (initialized) setShowBackButton(data.length > 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialized]);
-
-  useEffect(() => {
-    const currentItem = data.find((item) => item.txHash === txHash);
-    onSelect(currentItem || null);
-  }, [txHash, data]);
+  }, [initialized, setShowBackButton]);
 
   const handleSelect = (deregistration: DeregistrationItem) => {
     history.push(details.staking(stakeId, "timeline", "deregistration", deregistration.txHash));
   };
 
-  const { txHash: txHashParms, fromDate, toDate } = params || {};
-  const isNoFilter = txHashParms === undefined && fromDate === undefined && toDate === undefined;
-  const isOneItemOnly = data.length === 1 && isNoFilter;
+  const isOneItemOnly = data.length === 1 && Object.keys(query).length === 2;
 
   useUpdateEffect(() => {
     if (isOneItemOnly) history.replace(details.staking(stakeId, "timeline", "deregistration", data[0].txHash));
@@ -67,19 +58,13 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect, params, setParams, s
           <WrapFilterDescription>
             Showing {data.length} {data.length > 1 ? "results" : "result"}
           </WrapFilterDescription>
-          <StackingFilter
+          <CustomFilter
             filterValue={params}
-            onFilterValueChange={(params) => {
-              setParams &&
-                setParams({
-                  fromDate: undefined,
-                  sort: undefined,
-                  toDate: undefined,
-                  txHash: undefined,
-                  ...params
-                });
+            onChange={(params) => {
+              setParams(params);
               setPageInfo((pre) => ({ ...pre, page: 0 }));
             }}
+            searchLabel="Search transaction"
           />
         </Box>
       </StyledList>

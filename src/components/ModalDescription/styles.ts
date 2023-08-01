@@ -1,6 +1,7 @@
 import { Box, alpha, styled } from "@mui/material";
 
 export const NormalDescription = styled(Box)`
+  color: ${(props) => props.theme.palette.secondary.light};
   position: relative;
   font-weight: 400;
   line-height: 21px;
@@ -34,10 +35,10 @@ export const WrapContent = styled(Box)`
   }
   &:hover {
     &::-webkit-scrollbar-thumb {
-      background: ${(props) => props.theme.palette.grey[300]};
+      background: ${(props) => props.theme.palette.secondary.light};
     }
     &::-webkit-scrollbar-track {
-      background: ${(props) => props.theme.palette.grey[100]};
+      background: ${(props) => props.theme.palette.primary[100]};
     }
   }
 `;
@@ -49,38 +50,6 @@ export const ContentContainer = styled(Box)`
   overflow: hidden;
 `;
 
-export const Watermark = styled("span")`
-  position: absolute;
-  z-index: 1;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  aspect-ratio: 1;
-  max-height: 100%;
-  left: 0;
-  top: 70px;
-  bottom: 0;
-  &::after {
-    content: "FOR \\a ILLUSTRION \\a ONLY";
-    white-space: pre;
-    z-index: 1;
-    width: max-content;
-    font-weight: 900;
-    font-size: 80px;
-    line-height: 94px;
-    text-align: center;
-    text-transform: uppercase;
-    color: #e9eaec;
-    transform: rotate(45deg);
-    ${({ theme }) => theme.breakpoints.down("sm")} {
-      font-size: 50px;
-      line-height: 59px;
-    }
-  }
-`;
-
 export const BoxDescription = styled(Box)`
   display: flex;
   flex-direction: column;
@@ -88,7 +57,7 @@ export const BoxDescription = styled(Box)`
 `;
 
 export const BoxDetails = styled(BoxDescription)`
-  background: ${(props) => alpha(props.theme.palette.grey[300], 0.1)};
+  background: ${(props) => alpha(props.theme.palette.secondary.light, 0.1)};
   padding: 20px 25px;
   padding-left: 35px;
   margin: 15px 0px;

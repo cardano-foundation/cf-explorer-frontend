@@ -71,7 +71,7 @@ export const CardTitle = styled(Typography)(({ theme }) => ({
   fontWeight: 700,
   fontSize: 16,
   lineHeight: "19px",
-  color: theme.palette.grey[400],
+  color: theme.palette.secondary.light,
   [theme.breakpoints.down("sm")]: {
     fontSize: 14,
     lineHeight: "16px"
@@ -83,7 +83,7 @@ export const CardValue = styled(Typography)(({ theme }) => ({
   fontWeight: 700,
   fontSize: 24,
   lineHeight: "23px",
-  color: theme.palette.grey[700],
+  color: theme.palette.secondary.main,
   whiteSpace: "nowrap",
   wordBreak: "break-all",
   width: "100%",
@@ -117,13 +117,14 @@ export const BoxValue = styled(CardValue)(() => ({
 }));
 
 export const StyledBoxDelegating = styled(Link)(() => ({
-  width: "100%",
+  width:"max-content",
+  maxWidth: "100%",
   display: "flex",
   justifyContent: "flex-start",
   alignItems: "center"
 }));
 export const NoDelegatedStakePool = styled(Box)(({ theme }) => ({
-  color: theme.palette.red[700],
+  color: theme.palette.error[700],
   fontWeight: 500,
   fontSize: 16
 }));

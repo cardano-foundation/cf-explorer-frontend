@@ -1,22 +1,23 @@
-import { styled, Button, LinearProgress, alpha } from "@mui/material";
+import { styled, Button, LinearProgress } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export const StyledLinearProgress = styled(LinearProgress)`
+export const StyledLinearProgress = styled(LinearProgress)<{ saturation: number }>`
   display: inline-block;
   width: 150px;
   height: 8px;
   border-radius: 34px;
-  background: ${(props) => alpha(props.theme.palette.common.black, 0.1)};
+  background: ${(props) => props.theme.palette.primary[200]};
   margin-left: 8px;
   & > .MuiLinearProgress-barColorPrimary {
     border-radius: 34px;
-    background: ${(props) => props.theme.palette.gradient[0]};
+    background: ${({ theme, saturation }) =>
+      saturation > 100 ? theme.palette.error[700] : theme.palette.primary.main};
   }
 `;
 
 export const PoolName = styled(Link)`
   font-family: var(--font-family-text) !important;
-  color: ${({ theme }) => theme.palette.secondary.main} !important;
+  color: ${({ theme }) => theme.palette.primary.main} !important;
 `;
 
 export const SearchContainer = styled("div")(({ theme }) => ({
