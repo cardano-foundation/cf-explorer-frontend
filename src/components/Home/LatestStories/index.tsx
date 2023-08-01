@@ -137,6 +137,7 @@ const LatestStories = () => {
   };
 
   if (loading) {
+    const amountSkeleton = isMobile ? 1 : amountNewsByDevice;
     return (
       <Box>
         <Header>
@@ -144,9 +145,15 @@ const LatestStories = () => {
           <ViewAllButtonExternal to={CARDANO_NEWS_URL as string} />
         </Header>
         <Grid container spacing={2}>
-          {new Array(amountNewsByDevice).fill(0).map((_, index) => (
+          {new Array(amountSkeleton).fill(0).map((_, index) => (
             <Grid key={index} lg={3} xs={6} item>
-              <Box component={Skeleton} variant="rectangular" borderRadius={"12px"} height={280} />
+              <Box
+                component={Skeleton}
+                variant="rectangular"
+                borderRadius={"12px"}
+                height={280}
+                width={isMobile ? "75vw" : "auto"}
+              />
             </Grid>
           ))}
         </Grid>
