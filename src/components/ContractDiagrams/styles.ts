@@ -1,7 +1,7 @@
 import { styled, Box, Typography, IconButton } from "@mui/material";
 
 export const ContractDiagramsContainer = styled(Box)<{ isTxPageView?: boolean }>`
-  background: ${(props) => (props.isTxPageView ? "inherit" : props.theme.palette.background.paper)};
+  background: ${(props) => props.theme.palette.secondary[0]};
   padding: 25px;
   border-radius: 10px;
   margin-bottom: 30px;
@@ -16,11 +16,12 @@ export const ContractText = styled(Typography)`
   font-weight: 700;
   display: flex;
   justify-content: space-between;
+  color: ${({ theme }) => theme.palette.secondary.main};
   align-items: self-end;
 `;
 
 export const ContractAddress = styled(Box)`
-  color: ${(props) => props.theme.palette.blue[400]};
+  color: ${(props) => props.theme.palette.primary.main};
   font-size: 14px;
   font-weight: 400;
   padding-top: 10px;
@@ -31,10 +32,10 @@ export const TabLabel = styled(Typography)`
   display: inline-block;
   font-size: 14px;
   font-weight: 700;
-  color: ${(props) => props.theme.palette.common.white};
+  color: ${(props) => props.theme.palette.secondary[0]};
   padding: 7px 11px;
   border-radius: 5px;
-  background: ${(props) => props.theme.palette.common.black};
+  background: ${(props) => props.theme.palette.secondary.main};
   position: absolute;
   left: 20px;
   top: -25px;
@@ -50,6 +51,7 @@ export const TabElement = styled(Box)`
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 10px 50px;
+  color: ${(props) => props.theme.palette.secondary.main} !important;
   ${(props) => props.theme.breakpoints.down("sm")} {
     gap: 10px 20px;
   }
@@ -57,8 +59,8 @@ export const TabElement = styled(Box)`
   padding: 18px 20px;
   border-radius: 5px;
   text-align: left;
-  background: ${(props) => props.theme.palette.grey[80]};
-  color: ${(props) => props.theme.palette.common.black};
+  background: ${({ theme }) => theme.palette.primary[100]};
+  color: ${(props) => props.theme.palette.secondary.main};
   text-align: left;
   max-height: 150px;
   overflow: scroll;
@@ -72,7 +74,7 @@ export const TabItem = styled(Box)`
 
 export const TitleText = styled(Typography)`
   display: inline;
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
   margin-right: 10px;
   min-width: 36px;
   font-size: 14px;
@@ -80,10 +82,11 @@ export const TitleText = styled(Typography)`
 
 export const DataTitle = styled(Typography)`
   font-size: 14px;
+  color: ${(props) => props.theme.palette.secondary.main};
 `;
 export const DatumnElement = styled(Box)`
-  background: ${(props) => props.theme.palette.grey[80]};
-  color: ${(props) => props.theme.palette.common.black};
+  background: ${({ theme }) => theme.palette.primary[100]};
+  color: ${(props) => props.theme.palette.secondary.main};
   word-break: break-word;
   text-align: left;
   padding: 18px 20px;
@@ -115,6 +118,6 @@ export const IconContainer = styled(Box)`
 `;
 
 export const CloseButton = styled(IconButton)`
-  color: ${(props) => props.theme.palette.text.hint};
+  color: ${(props) => props.theme.palette.secondary[600]};
   padding: 5.5px;
 `;

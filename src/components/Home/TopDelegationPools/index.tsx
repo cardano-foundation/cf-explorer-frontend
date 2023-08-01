@@ -61,9 +61,15 @@ const TopDelegationPools = () => {
       key: "Saturation",
       minWidth: "200px",
       render: (r) => (
-        <Box display="flex" alignItems="center" justifyContent={"end"}>
-          <Box component={"span"} mr={1}>{formatPercent(r.saturation / 100) || `0%`}</Box>
-          <StyledLinearProgress variant="determinate" value={r.saturation > 100 ? 100 : get(r, "saturation", 0)} />
+        <Box display="flex" alignItems="center" justifyContent={"flex-start"}>
+          <Box component={"span"} mr={1} flexGrow={1} textAlign={"right"} maxWidth={"55px"}>
+            {formatPercent(r.saturation / 100) || `0%`}
+          </Box>
+          <StyledLinearProgress
+            variant="determinate"
+            saturation={r.saturation}
+            value={r.saturation > 100 ? 100 : get(r, "saturation", 0)}
+          />
         </Box>
       )
     },
@@ -76,15 +82,6 @@ const TopDelegationPools = () => {
       title: "Blocks Lifetime",
       key: "lifetimeBlock",
       render: (r) => r.lifetimeBlock || 0
-    },
-    {
-      title: (
-        <CustomTooltip title="Gross average return during pool’s lifetime">
-          <span>Lifetime ROS</span>
-        </CustomTooltip>
-      ),
-      key: "lifetimeRos",
-      render: (r) => r.lifetimeRos || 0
     }
   ];
   return (

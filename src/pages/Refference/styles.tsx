@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
 
 export const ContainerReffer = styled(Box)`
-  background: ${(props) => props.theme.palette.grey[40]};
+  background: ${(props) => props.theme.palette.primary[100]};
   text-align: left;
   padding: 30px 55px;
   ${({ theme }) => theme.breakpoints.down("lg")} {
@@ -25,7 +25,7 @@ export const Content = styled(Box)`
 
 export const TextReffer = styled(Box)`
   font-size: 16px;
-  color: ${(props) => props.theme.palette.blue[650]};
+  color: ${(props) => props.theme.palette.secondary.light};
   margin: 20px 0px;
 `;
 
@@ -36,10 +36,12 @@ export const TitleSection = styled(Box)`
 
 export const TextSubHeader = styled(Box)`
   font-size: 24px;
+  color: ${({ theme }) => theme.palette.secondary.main};
   margin: 30px 0px;
 `;
 
 export const TextHeader = styled(Box)`
+  color: ${({ theme }) => theme.palette.secondary.main};
   font-weight: 700;
   font-size: 36px;
 `;

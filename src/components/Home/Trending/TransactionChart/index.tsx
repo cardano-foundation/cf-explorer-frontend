@@ -18,7 +18,8 @@ import {
   Tab,
   Tabs,
   Title,
-  TransactionContainer
+  TransactionContainer,
+  ValueChart
 } from "./styles";
 
 export interface TransactionChartIF {
@@ -36,8 +37,8 @@ const TransactionChart: React.FC = () => {
   const { isMobile } = useScreen();
   const optionsTime: Record<Time, { label: string; displayName: string }> = {
     ONE_DAY: {
-      label: "1d",
-      displayName: "in the last day"
+      label: "24h",
+      displayName: "in the last 24 hours"
     },
     ONE_WEEK: {
       label: "1w",
@@ -60,27 +61,27 @@ const TransactionChart: React.FC = () => {
   const sumSmartContract = (data || []).reduce((prev, item) => prev + item.smartContract, 0);
 
   const dataOverview = [
-    { key: "trx", title: "Simple transactions", value: sumSimple || 0 },
-    { key: "simple", title: <Box textAlign={"left"}>Smart contracts</Box>, value: sumSmartContract || 0 },
     {
-      key: "complex",
+      key: "trx",
       title: (
         <Box textAlign={"left"}>
           Metadata <Box fontSize={"0.6875rem"}>(Without smart contracts)</Box>
         </Box>
       ),
       value: sumMetadata || 0
-    }
+    },
+    { key: "simple", title: <Box textAlign={"left"}>Smart contracts</Box>, value: sumSmartContract || 0 },
+    { key: "complex", title: "Simple transactions", value: sumSimple || 0 }
   ];
 
   const renderLoading = () => {
     return (
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={3} md={3} lg={9}>
-          <Skeleton variant="rectangular" height={"300px"} style={{ borderRadius: 10 }} />
+        <Grid item xs={12} lg={9}>
+          <Skeleton variant="rectangular" height={"250px"} style={{ borderRadius: 10 }} />
         </Grid>
-        <Grid item xs={12} sm={3} md={3}>
-          <Skeleton variant="rectangular" height={"300px"} />
+        <Grid item xs={12} lg={3}>
+          <Skeleton variant="rectangular" height={"250px"} />
         </Grid>
       </Grid>
     );
@@ -92,19 +93,21 @@ const TransactionChart: React.FC = () => {
           <Title>Transactions {optionsTime[rangeTime].displayName}</Title>
         </Grid>
         <Grid item xs={12} sm={4} md={4} lg={3}>
-          <Tabs display="flex" justifyContent="space-between" width={isMobile ? "100%" : "auto"}>
-            {Object.keys(optionsTime).map((option) => {
-              return (
-                <Tab
-                  key={optionsTime[option as Time].label}
-                  active={+(rangeTime === option)}
-                  onClick={() => setRangeTime(option as Time)}
-                >
-                  {optionsTime[option as Time].label}
-                </Tab>
-              );
-            })}
-          </Tabs>
+          <Box maxWidth={"260px"} mx={isMobile ? "auto" : "none"}>
+            <Tabs display="flex" justifyContent="space-between" width={isMobile ? "100%" : "auto"}>
+              {Object.keys(optionsTime).map((option) => {
+                return (
+                  <Tab
+                    key={optionsTime[option as Time].label}
+                    active={+(rangeTime === option)}
+                    onClick={() => setRangeTime(option as Time)}
+                  >
+                    {optionsTime[option as Time].label}
+                  </Tab>
+                );
+              })}
+            </Tabs>
+          </Box>
         </Grid>
       </Grid>
       {loading && renderLoading()}
@@ -118,19 +121,12 @@ const TransactionChart: React.FC = () => {
               <StyledTransactionTypes>Transaction Types</StyledTransactionTypes>
               {dataOverview.map((item) => (
                 <InfoItem key={item.key}>
-                  <ColorChart type={item.key as TypeChart} />
-                  <Box>
+                  <Box display={"flex"} alignItems={"center"} mb={1}>
+                    <ColorChart type={item.key as TypeChart} />
                     <StyledTransactionTypeItem>{item.title}</StyledTransactionTypeItem>
-                    <Box
-                      data-testid={item.key}
-                      textAlign={"left"}
-                      color={({ palette }) => palette.green[700]}
-                      fontWeight={"bold"}
-                      fontSize={"1.6rem"}
-                    >
-                      {numberWithCommas(item.value)}
-                    </Box>
                   </Box>
+
+                  <ValueChart data-testid={item.key}>{numberWithCommas(item.value)}</ValueChart>
                 </InfoItem>
               ))}
             </BoxInfo>
@@ -157,6 +153,21 @@ const formatTimeX = (date: Time) => {
       break;
   }
 };
+
+const getLabel = (date: string, range: Time) => {
+  switch (range) {
+    case "ONE_DAY":
+      return `${moment(date).format("MM/DD HH:mm")} - ${moment(date).add(1, "hour").format("HH:mm")} (UTC)`;
+    case "ONE_WEEK":
+    case "TWO_WEEK":
+    case "ONE_MONTH":
+      return moment(date).format("MM/DD");
+
+    default:
+      break;
+  }
+};
+
 const formatX = (date: string, range: Time) => moment(date).format(formatTimeX(range));
 
 const getPercent = (value: number, total: number) => {
@@ -175,19 +186,20 @@ const renderTooltipContent = (o: any, range: Time) => {
   const total = (payload || []).reduce((result: number, entry: any) => result + entry.value, 0);
   return (
     <Box>
-      <Box p={1} bgcolor={alpha("#000", 0.8)} borderRadius={"8px"} textAlign={"left"}>
-        <Box color={({ palette }) => palette.common.white} textAlign={"center"}>{`${moment(label).format(
-          formatTimeX(range)
-        )}`}</Box>
+      <Box
+        p={1}
+        bgcolor={({ palette }) => alpha(palette.common.white, 0.9)}
+        borderRadius={"8px"}
+        textAlign={"left"}
+        boxShadow={(theme) => theme.shadow.dropdown}
+      >
+        <Box color={({ palette }) => palette.secondary.main} textAlign={"center"}>{getLabel(label, range)}</Box>
         {(payload || []).reverse().map((entry: any, index: number) => (
           <Box key={`item-${index}`} mt={1}>
-            <Box color={({ palette }) => alpha(palette.common.white, 0.7)} fontSize={"0.75rem"}>{`${
-              nameTooltips[entry.name as keyof typeof nameTooltips]
-            }`}</Box>
-            <Box fontWeight={"bold"} style={{ color: entry.color }}>{`${numberWithCommas(entry.value)} (${getPercent(
-              entry.value,
-              total
-            )})`}</Box>
+            <Box fontSize={"0.75rem"}>{`${nameTooltips[entry.name as keyof typeof nameTooltips]}`}</Box>
+            <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.light}>{`${numberWithCommas(
+              entry.value
+            )} (${getPercent(entry.value, total)})`}</Box>
           </Box>
         ))}
       </Box>
@@ -214,29 +226,36 @@ const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" tickFormatter={(date: string) => formatX(date, range)} />
-          <YAxis tickFormatter={toPercent} />
+          <XAxis
+            color={theme.palette.secondary.light}
+            dataKey="date"
+            tickFormatter={(date: string) => formatX(date, range)}
+          />
+          <YAxis color={theme.palette.secondary.light} tickFormatter={toPercent} />
           <Tooltip content={(o: any) => renderTooltipContent(o, range)} />
           <Area
             type="monotone"
-            dataKey="metadata"
+            dataKey="simpleTransactions"
             stackId="1"
-            stroke={theme.palette.green[600]}
-            fill={theme.palette.green[600]}
+            strokeWidth={3}
+            stroke={theme.palette.secondary[0]}
+            fill={theme.palette.warning[700]}
           />
           <Area
             type="monotone"
             dataKey="smartContract"
             stackId="1"
-            stroke={theme.palette.blue[800]}
-            fill={theme.palette.blue[800]}
+            strokeWidth={3}
+            stroke={theme.palette.secondary[0]}
+            fill={theme.palette.primary[500]}
           />
           <Area
             type="monotone"
-            dataKey="simpleTransactions"
+            dataKey="metadata"
+            strokeWidth={3}
             stackId="1"
-            stroke={theme.palette.yellow[600]}
-            fill={theme.palette.yellow[600]}
+            stroke={theme.palette.secondary[0]}
+            fill={theme.palette.success[700]}
           />
         </AreaChart>
       </ResponsiveContainer>
