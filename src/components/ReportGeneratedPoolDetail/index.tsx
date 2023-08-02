@@ -51,7 +51,7 @@ const poolTabs: ITab[] = [
   },
   {
     icon: DeredistrationIcon,
-    label: "Deregsitration",
+    label: "Deregistration",
     key: "deregistration",
     mappingKey: "deregistration",
     component: <DeregsitrationTab />
