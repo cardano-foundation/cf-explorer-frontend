@@ -174,9 +174,15 @@ const LatestStories = () => {
   const isNextSwiper = showButtonSwiper.right && Number(dataNews?.total) > data.length + Number(dataNews?.offset);
   const isPrevSwiper = showButtonSwiper.left && (Number(dataNews?.offset) > 0 || currentIndexData > 0);
 
-  const getAuthorName = (name: string) => {
-    const indexSymbol = name?.split("|")[1]?.split(" ")[1]?.indexOf("~~~");
-    return name?.split("|")[1]?.split(" ")[0] + " " + name?.split("|")[1]?.split(" ")[1]?.slice(0, indexSymbol);
+  const getAuthorName = (urlAuthor: string) => {
+    const isExistAuthorName = urlAuthor.indexOf("|") !== -1;
+    if (!isExistAuthorName) return;
+    const [firstName = "", lastNameAndTitle = ""] = urlAuthor?.split("|")[1]?.split(" ") || [];
+    const indexSymbol = lastNameAndTitle.indexOf("~~~");
+    if (indexSymbol === -1) {
+      return `${firstName} ${lastNameAndTitle}`;
+    }
+    return `${firstName} ${lastNameAndTitle?.slice(0, indexSymbol)}`;
   };
 
   return (
