@@ -175,14 +175,8 @@ const LatestStories = () => {
   const isPrevSwiper = showButtonSwiper.left && (Number(dataNews?.offset) > 0 || currentIndexData > 0);
 
   const getAuthorName = (urlAuthor: string) => {
-    const isExistAuthorName = urlAuthor.indexOf("|") !== -1;
-    if (!isExistAuthorName) return;
-    const [firstName = "", lastNameAndTitle = ""] = urlAuthor?.split("|")[1]?.split(" ") || [];
-    const indexSymbol = lastNameAndTitle.indexOf("~~~");
-    if (indexSymbol === -1) {
-      return `${firstName} ${lastNameAndTitle}`;
-    }
-    return `${firstName} ${lastNameAndTitle?.slice(0, indexSymbol)}`;
+    const [authorName = ""] = urlAuthor.match(/\|.+~~~/) || [];
+    return authorName.match(/[\w\s.]+/)?.[0];
   };
 
   return (
