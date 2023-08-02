@@ -144,7 +144,7 @@ const Card = ({
                       flexDirection={isMobile ? "column" : "row"}
                       paddingTop="5px"
                     >
-                      <Box mr={3} minWidth={180} pl={type === "down" ? 2 : 0}>
+                      <Box mr={3} minWidth={180}>
                         <Box
                           display={"flex"}
                           flexDirection={isMobile ? "column" : "row"}
@@ -229,7 +229,11 @@ const Card = ({
             pr={1}
             sx={{ color: (theme) => (isFailed ? theme.palette.secondary.light : theme.palette.secondary.main) }}
           >
-            {isFailed ? 0 : type === "down" ? `-${formatADAFull(totalADA)}` : `${formatADAFull(totalADA)}`}
+            {isFailed || !totalADA
+              ? 0
+              : type === "down"
+              ? `-${formatADAFull(totalADA)}`
+              : `+${formatADAFull(totalADA)}`}
           </Box>
           <ADAicon sx={{ color: isFailed ? theme.palette.secondary.light : theme.palette.secondary.main }} />
         </div>
