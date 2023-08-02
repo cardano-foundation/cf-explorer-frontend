@@ -176,7 +176,7 @@ const LatestStories = () => {
 
   const getAuthorName = (urlAuthor: string) => {
     const [authorName = ""] = urlAuthor.match(/\|.+~~~/) || [];
-    return authorName.match(/[\w\s.]+/)?.[0];
+    return authorName.replace("|", "").replace("~~~", "");
   };
 
   return (
