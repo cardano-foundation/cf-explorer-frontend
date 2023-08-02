@@ -61,13 +61,20 @@ const Header: React.FC<RouteComponentProps> = (props) => {
       <HeaderBox home={home ? 1 : 0}>
         <HeaderMain home={home ? 1 : 0}>
           <Title home={home ? 1 : 0} data-testid="home-title">
-            <Box display={"flex"} alignItems={"center"} justifyContent={"center"} flexWrap={"wrap"}>
+            <Box
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              flexDirection={isMobile ? "column" : "row"}
+            >
               <Box
                 component={"img"}
                 src={LogoCardano}
                 width={isGalaxyFoldSmall ? "30vw" : isMobile ? "20vw" : "auto"}
               />
-              <Box fontSize={isGalaxyFoldSmall ? "24px" : "auto"}>, a Cardano explorer</Box>
+              <Box fontSize={isGalaxyFoldSmall ? "24px" : "auto"}>
+                {isMobile ? "a Cardano explorer" : ", a Cardano explorer"}
+              </Box>
             </Box>
           </Title>
           <HeaderSearchContainer>{!pathMatched && <HeaderSearch home={home} />}</HeaderSearchContainer>
