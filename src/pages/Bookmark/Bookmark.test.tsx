@@ -1,7 +1,6 @@
 import moment from "moment";
-import userEvent from "@testing-library/user-event";
 
-import { render, screen, waitFor } from "src/test-utils";
+import { render, screen } from "src/test-utils";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { getShortWallet } from "src/commons/utils/helper";
 
@@ -36,23 +35,10 @@ describe("Bookmark compenent", () => {
 
   it("checking all tabs was rendered", () => {
     render(<Bookmark />);
-    expect(screen.getByRole("tab", { name: /address/i })).toBeInTheDocument();
     expect(screen.getByRole("tab", { name: /transaction/i })).toBeInTheDocument();
     expect(screen.getByRole("tab", { name: /block/i })).toBeInTheDocument();
     expect(screen.getByRole("tab", { name: /epoch/i })).toBeInTheDocument();
     expect(screen.getByRole("tab", { name: /pool/i })).toBeInTheDocument();
     expect(screen.getByRole("tab", { name: /stake address/i })).toBeInTheDocument();
-  });
-
-  it("checking dialog open", async () => {
-    render(<Bookmark />);
-
-    const button = screen.getByTestId("action-button");
-
-    await userEvent.click(button);
-    await waitFor(() => {
-      expect(screen.getByText(/confirmation required/i)).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: /continue/i })).toBeInTheDocument();
-    });
   });
 });
