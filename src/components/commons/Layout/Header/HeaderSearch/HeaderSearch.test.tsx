@@ -27,7 +27,7 @@ describe("HeaderSearch", () => {
       ...mockData
     });
   });
-  
+
   afterEach(() => {
     jest.clearAllMocks();
   });

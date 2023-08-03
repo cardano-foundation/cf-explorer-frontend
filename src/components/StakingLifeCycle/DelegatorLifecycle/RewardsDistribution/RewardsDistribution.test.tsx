@@ -39,7 +39,6 @@ describe("RewardsDistribution", () => {
     const mockedUseSelector = useSelector as jest.Mock;
     const mockedUseTheme = useTheme as jest.Mock;
     mockedUseTheme.mockReturnValue(themes.light);
-    console.log(themes.light.palette.border);
     mockedUseParams.mockReturnValue({
       stakeId: "stake123"
     });

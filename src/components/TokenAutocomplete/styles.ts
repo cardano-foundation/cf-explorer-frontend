@@ -83,7 +83,6 @@ export const Option = styled("li")(({ theme }) => ({
   background: theme.palette.secondary[0]
 }));
 
-
 export const Logo = styled("img")`
   width: 25px;
   height: 25px;

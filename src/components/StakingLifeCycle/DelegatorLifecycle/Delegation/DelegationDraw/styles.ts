@@ -21,7 +21,7 @@ export const InfoText = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   marginLeft: theme.spacing(1),
-  fontWeight: 600, 
+  fontWeight: 600,
   fontSize: "14px",
   color: theme.palette.secondary.main
 }));
@@ -119,7 +119,6 @@ export const StyledAdaHolder = styled(AdaHolder)`
     margin-bottom: 12px;
   }
 `;
-
 
 export const StyledLink = styled(Link)`
   font-size: inherit;

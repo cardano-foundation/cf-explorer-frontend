@@ -102,15 +102,10 @@ const StakeAnalytics: React.FC = () => {
     }
   };
 
-
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
     return (
       <TooltipBody>
-        <TooltipLabel>
-          {tab === "BALANCE"
-            ? getLabelTimeTooltip(content.label)
-            : `Epoch ${content.label}`}
-        </TooltipLabel>
+        <TooltipLabel>{tab === "BALANCE" ? getLabelTimeTooltip(content.label) : `Epoch ${content.label}`}</TooltipLabel>
         <TooltipValue>{formatADAFull(content.payload?.[0]?.value) || 0}</TooltipValue>
       </TooltipBody>
     );

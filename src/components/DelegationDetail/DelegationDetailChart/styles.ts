@@ -181,12 +181,12 @@ export const Horizon = styled("div")`
 `;
 
 export const TooltipBody = styled(Box)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.common.white, 0.8),
+  backgroundColor: alpha(theme.palette.secondary[0], 0.8),
   borderRadius: 2,
   padding: 8,
-  border: `1px solid ${theme.palette.primary.main}`,
+  border: `1px solid ${theme.palette.primary[200]}`,
   fontSize: 12,
-  color: theme.palette.secondary.main
+  color: theme.palette.secondary.light
 }));
 
 export const TooltipLabel = styled(Box)(() => ({
