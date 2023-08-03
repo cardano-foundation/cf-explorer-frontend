@@ -41,7 +41,7 @@ const formReducer = (state: IForm, event: any) => {
     }
   };
 };
-export default function ResetPassword() {
+export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string }) {
   const history = useHistory();
   const path = useLocation();
   const [showPassword, setShowPassword] = useState(false);
@@ -105,8 +105,8 @@ export default function ResetPassword() {
   useEffect(() => {
     const params = new URLSearchParams(path.search);
     const code = params.get("code");
-    if (code) {
-      setCode(code);
+    if (code || codeVerify) {
+      setCode(code || codeVerify);
     } else {
       history.push(routers.SIGN_IN);
     }

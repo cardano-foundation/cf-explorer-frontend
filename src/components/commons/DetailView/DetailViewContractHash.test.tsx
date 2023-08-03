@@ -1,4 +1,4 @@
-import { render, screen } from "src/test-utils";
+import { render, screen, waitFor } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
 
 import DetailViewContractHash from "./DetailViewContractHash";
@@ -20,10 +20,11 @@ const mockedData = {
 jest.mock("src/commons/hooks/useFetch");
 
 describe("DetailViewContractHash component", () => {
-  it("rendering component loading", () => {
+  it("rendering component loading", async () => {
     const mockedUseFetch = useFetch as jest.Mock;
     mockedUseFetch.mockReturnValue({
-      data: [mockedData]
+      data: [mockedData],
+      initialized: true
     });
     render(<DetailViewContractHash txHash={"test-tx-hash"} address="test-address" handleClose={jest.fn()} />);
     expect(screen.getByTestId("view-detail-drawer-contract-hash")).toBeInTheDocument();
@@ -35,7 +36,8 @@ describe("DetailViewContractHash component", () => {
   it("rendering component on PC", () => {
     const mockedUseFetch = useFetch as jest.Mock;
     mockedUseFetch.mockReturnValue({
-      data: [mockedData]
+      data: [mockedData],
+      initialized: true
     });
     render(<DetailViewContractHash txHash={"test-tx-hash"} address="test-address" handleClose={jest.fn()} />);
     expect(screen.getByTestId("view-detail-drawer-contract-hash")).toBeInTheDocument();
