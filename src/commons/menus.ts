@@ -65,7 +65,7 @@ export const menus: Menu[] = [
   {
     title: "Protocol Parameters",
     icon: ProtocolIcon,
-    href: "/protocol-parameters",
+    href: lists.protocolParameters(),
     children: []
   }
 ];
