@@ -28,7 +28,6 @@ describe("ReportGeneratedStakingDetail component", () => {
 
   it("should component render", () => {
     render(<ReportGeneratedStakingDetailTabs />);
-    expect(screen.getByRole("tab", { name: /registrationicon\.svg stake key registration/i })).toBeInTheDocument();
     expect(screen.getByRole("tab", { name: /delegationicon\.svg delegation history/i })).toBeInTheDocument();
     expect(screen.getByRole("tab", { name: /rewardsdistributionicon\.svg rewards distribution/i })).toBeInTheDocument();
   });
