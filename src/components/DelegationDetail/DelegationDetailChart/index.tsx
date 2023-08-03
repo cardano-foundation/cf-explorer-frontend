@@ -51,7 +51,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
     return (
       <TooltipBody>
-        <TooltipLabel>{content.label}</TooltipLabel>
+        <TooltipLabel>Epoch {content.label}</TooltipLabel>
         <TooltipValue>
           {selected === "delegatorChart"
             ? content.payload?.[0]?.value || 0
