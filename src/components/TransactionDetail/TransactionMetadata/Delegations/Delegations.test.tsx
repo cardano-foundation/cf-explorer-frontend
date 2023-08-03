@@ -11,7 +11,7 @@ const mockProps = [{ address: "address-1", poolId: "pool-id-1" }];
 describe("Delegations component", () => {
   it("should component render", () => {
     render(<Delegations data={mockProps} />);
-    expect(screen.getByText(/address stake key/i)).toBeInTheDocument();
+    expect(screen.getByText(/stake address/i)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: mockProps[0].address })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: mockProps[0].poolId })).toBeInTheDocument();
   });
