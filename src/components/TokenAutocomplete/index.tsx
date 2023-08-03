@@ -197,6 +197,11 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
     setSearch("");
   };
 
+  const handleSearch = () => {
+    setSearch(value);
+    setPagination({ page: 0, size: 50 });
+  };
+
   return (
     <CustomModal title="Token List" open={open} onClose={handleClose} width={"min(80vw, 600px)"}>
       <>
@@ -206,19 +211,17 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             onChange={(e) => setValue(e.target.value)}
             value={value}
             onKeyUp={(e) => {
-              if (e.key === "Enter") {
-                setSearch(value);
-                setPagination({ page: 0, size: 50 });
-              }
+              if (e.key === "Enter") handleSearch();
             }}
           />
-          <SubmitButton onClick={() => setSearch(value)}>
+          <SubmitButton onClick={() => handleSearch()}>
             <Image src={HeaderSearchIcon} alt="Search" />
           </SubmitButton>
         </SearchContainer>
         <WrappModalScrollBar>
           <Table
             {...fetchData}
+            key={search}
             data={data || []}
             columns={columns}
             total={{ title: "Total", count: fetchData.total }}
