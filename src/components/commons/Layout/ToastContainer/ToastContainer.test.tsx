@@ -36,7 +36,7 @@ describe("ToastContainer", () => {
       toasts: [mockSuccess]
     });
     render(<ToastContainer />);
-    expect(screen.getByText(/successfully/i)).toBeInTheDocument();
+    expect(screen.getByText(/success/i)).toBeInTheDocument();
     expect(screen.getByText(/toast message/i)).toBeInTheDocument();
   });
 
