@@ -11,8 +11,7 @@ import {
   HomeDownIcon,
   HomeUpIcon,
   LiveStakeIcon,
-  MarketCapIcon,
-  OfficialAdaIcon
+  MarketCapIcon
 } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
@@ -34,6 +33,7 @@ import {
   Progress,
   ProgressPending,
   StatisticContainer,
+  StyledAdaLogoIcon,
   TimeDuration,
   Title
 } from "./style";
@@ -207,7 +207,9 @@ const HomeStatistic = () => {
                       src={LiveStakeIcon}
                       alt="Total ADA Stake"
                     />
-                    <Name data-testid="live-stake-box-title">Live Stake (ADA)</Name>
+                    <Name data-testid="live-stake-box-title">
+                      Live Stake <StyledAdaLogoIcon />
+                    </Name>
                   </Box>
                 </Box>
                 <Box>
@@ -234,13 +236,13 @@ const HomeStatistic = () => {
                 </Box>
                 <Box>
                   <Box color={({ palette }) => palette.secondary.light}>
-                    Active Stake <OfficialAdaIcon height={"14px"} width={"14px"} /> :{" "}
+                    Active Stake <StyledAdaLogoIcon />:{" "}
                     <CustomTooltip title={formatADAFull(activeStake)}>
                       <span data-testid="active-stake-value">{formatADA(activeStake)}</span>
                     </CustomTooltip>
                   </Box>
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
-                    Circulating supply <OfficialAdaIcon height={"12px"} width={"12px"} /> :{" "}
+                    Circulating supply <StyledAdaLogoIcon /> :{" "}
                     <CustomTooltip title={numberWithCommas(supply)}>
                       <span data-testid="circulating-supply-value">{formatADA(circulatingSupply.toString())}</span>
                     </CustomTooltip>
