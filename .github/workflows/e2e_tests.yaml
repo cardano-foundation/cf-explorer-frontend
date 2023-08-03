@@ -1,16 +1,17 @@
-name: Run Explorer e2e Tests
+name: Run Smoke Tests
 on:
   push:
-    branches-ignore:
-      - "main"
+    branches:
+      - main
   pull_request:
-    branches-ignore:
-      - "main"
+      branches:
+        - main
+      types: [ opened, synchronize ]
   workflow_dispatch:
 
 jobs:
   smoke-test-epoch-before-340:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
@@ -34,11 +35,13 @@ jobs:
       - name: Generate test script
         run: |
           cd cypress/smoke
-          pip3 install numpy
+          pip3 install numpy requests
           python CypressDynamicScript.py --epochl=100 --epochs=1 --epoche=340 --blockl=1
 
       - name: 🎳 Run tests
         run: npm test
+        env:
+          DANGEROUSLY_DISABLE_HOST_CHECK: true
 
       - name: 📹 Archive test videos
         uses: actions/upload-artifact@v3
@@ -57,7 +60,7 @@ jobs:
       EXPLORER_API_MAINNET_URL: ${{ secrets.EXPLORER_API_MAINNET_URL }}
 
   smoke-test-epoch-after-340:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
@@ -82,7 +85,7 @@ jobs:
       - name: Generate test script
         run: |
           cd cypress/smoke
-          pip3 install numpy
+          pip3 install numpy requests
           python CypressDynamicScript.py --epochl=100 --epochs=340 --epoche=424 --blockl=1
 
       - name: 🎳 Run tests
@@ -105,7 +108,7 @@ jobs:
       EXPLORER_API_MAINNET_URL: ${{ secrets.EXPLORER_API_MAINNET_URL }}
 
   smoke-test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
@@ -130,7 +133,7 @@ jobs:
       - name: Generate test script
         run: |
           cd cypress/smoke
-          pip3 install numpy
+          pip3 install numpy requests
           python CypressDynamicScript.py
 
       - name: 🎳 Run tests
