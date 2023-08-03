@@ -42,9 +42,9 @@ export const TotalTransaction = styled(Typography)`
   color: rgba(102, 112, 133, 1);
 `;
 
-export const AmountADARow = styled(Typography)`
+export const AmountADARow = styled(Typography)<{ amount: string }>`
   font-size: 14px;
-  color: ${(props) => props.theme.palette.primary.main};
+  color: ${({ amount, theme }) => (+amount > 0 ? theme.palette.success[800] : theme.palette.error[700])};
   display: flex;
   gap: 10px;
   align-items: center;

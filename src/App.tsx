@@ -7,11 +7,12 @@ import { Provider } from "react-redux";
 import store from "./stores";
 import Routers from "./Routers";
 import AppContainer from "./AppContainer";
+import { LANGUAGE } from "./commons/utils/constants";
 
 const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <Router basename="/en">
+      <Router basename={LANGUAGE}>
         <AppContainer>
           <Routers />
         </AppContainer>
