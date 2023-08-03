@@ -41,15 +41,15 @@ describe("StakingLifecycle page", () => {
 
   it("should component render after logining", async () => {
     const mockUseFetchList = useFetchList as jest.Mock;
-    mockUseFetchList.mockReturnValue(mockData);
+    mockUseFetchList.mockReturnValue(mockData.data);
     render(<Dashboard />);
-    expect(screen.getByText(/Showing 100 results/i)).toBeInTheDocument();
+    expect(screen.getByText(/Stake Address Reports/i)).toBeInTheDocument();
   });
 
   it("should show correct data in table", async () => {
     const mockUseFetchList = useFetchList as jest.Mock;
-    mockUseFetchList.mockReturnValue(mockData);
+    mockUseFetchList.mockReturnValue(mockData.data);
     render(<Dashboard />);
-    expect(screen.getByText(/EXPIRED/i)).toBeInTheDocument();
+    expect(screen.getByText(/Exporting Report/i)).toBeInTheDocument();
   });
 });
