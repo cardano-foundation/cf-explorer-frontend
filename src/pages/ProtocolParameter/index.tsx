@@ -34,6 +34,7 @@ import {
   BackButton,
   BackText,
   ButtonFilter,
+  ColumnProtocol,
   FilterContainer,
   StyledContainer
 } from "./styles";
@@ -193,12 +194,12 @@ const ProtocolParameter: React.FC = () => {
       }
     },
     {
-      title: "Last Updated Epoch",
+      title: "Last updated in epoch",
       key: "epochNo",
       render: (r: any) => <Box>{r?.epochNo}</Box>
     },
     {
-      title: "Created At",
+      title: "Timestamp",
       key: "timestamp",
       render: (r: any) => (r?.time ? formatDateTimeLocal(r.time) : "")
     }
@@ -362,22 +363,15 @@ export const ProtocolParameterHistory = () => {
     key: t,
     render: (r: any) => {
       return (
-        <Box
-          p={"24px 20px"}
-          maxWidth={200}
-          overflow={"hidden"}
-          whiteSpace={"nowrap"}
-          component={["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string) ? Link : Box}
-          minHeight={"16px"}
-          textOverflow={"ellipsis"}
-          display={"block"}
-          bgcolor={({ palette }) =>
+        <ColumnProtocol
+          isLink={
             r[t as ProtocolTypeKey] !== null
               ? ["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string)
-                ? palette.success[100]
-                : "transparent"
-              : "transparent"
+                ? 1
+                : 0
+              : 0
           }
+          component={["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string) ? Link : Box}
           to={
             r[t as ProtocolTypeKey]?.transactionHash
               ? details.transaction(r[t as ProtocolTypeKey]?.transactionHash, "protocols")
@@ -399,7 +393,7 @@ export const ProtocolParameterHistory = () => {
           ) : (
             ""
           )}
-        </Box>
+        </ColumnProtocol>
       );
     }
   }));

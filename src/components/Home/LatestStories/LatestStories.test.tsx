@@ -28,7 +28,7 @@ const mockItem: Story = {
 describe("LatestStories", () => {
   beforeEach(() => {
     const mockUseFetch = useFetch as jest.Mock;
-    mockUseFetch.mockReturnValue({ data: [mockItem], initialized: true });
+    mockUseFetch.mockReturnValue({ data: { articles: [mockItem] }, initialized: true });
   });
 
   afterEach(() => {

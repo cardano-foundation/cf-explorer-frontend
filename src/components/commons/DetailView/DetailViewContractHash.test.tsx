@@ -21,15 +21,7 @@ const mockedData: IContractItemTx = {
 jest.mock("src/commons/hooks/useFetch");
 
 describe("DetailViewContractHash component", () => {
-  beforeEach(() => {
-    const mockedUseFetch = useFetch as jest.Mock;
-    mockedUseFetch.mockReturnValue({
-      data: [mockedData],
-      loading: false,
-      initialized: true
-    });
-  });
-  it("rendering component loading", () => {
+  it("rendering component loading", async () => {
     const mockedUseFetch = useFetch as jest.Mock;
     mockedUseFetch.mockReturnValue({
       data: [mockedData],
@@ -37,13 +29,15 @@ describe("DetailViewContractHash component", () => {
       initialized: true
     });
     render(<DetailViewContractHash txHash={"test-tx-hash"} address="test-address" handleClose={jest.fn()} />);
-    expect(screen.queryByText(mockedData.purpose)).not.toBeInTheDocument();
-    expect(screen.queryByText(mockedData.redeemerBytes)).not.toBeInTheDocument();
-    expect(screen.queryByText(mockedData.redeemerMem)).not.toBeInTheDocument();
-    expect(screen.queryByText(mockedData.redeemerSteps)).not.toBeInTheDocument();
+    expect(screen.getByTestId("view-detail-drawer-loading")).toBeInTheDocument();
   });
 
   it("rendering component on PC", () => {
+    const mockedUseFetch = useFetch as jest.Mock;
+    mockedUseFetch.mockReturnValue({
+      data: [mockedData],
+      initialized: true
+    });
     render(<DetailViewContractHash txHash={"test-tx-hash"} address="test-address" handleClose={jest.fn()} />);
     expect(screen.getByText(mockedData.purpose)).toBeInTheDocument();
     expect(screen.getByText(mockedData.redeemerBytes)).toBeInTheDocument();

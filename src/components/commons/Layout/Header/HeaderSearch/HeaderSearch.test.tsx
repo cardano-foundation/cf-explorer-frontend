@@ -44,6 +44,6 @@ describe("HeaderSearch", () => {
     const input = screen.getByPlaceholderText("Search ...");
     fireEvent.click(input);
     fireEvent.change(input, { target: { value: "testing value" } });
-    expect(screen.getByText("testing value")).toBeInTheDocument();
+    expect(input).toHaveValue("testing value");
   });
 });

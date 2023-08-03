@@ -65,10 +65,8 @@ const WalletActivity: React.FC = () => {
       render: (r) => <Status status={r.status}>{r.status}</Status>
     }
   ];
-  const maxHeightCalc = `calc(70vh - ${
-    isTablet ? "290px" : isMobile ? (isGalaxyFoldSmall ? "270px" : "230px") : "208px"
-  })`;
-
+  const maxHeightCalc = `calc(70vh - ${isTablet ? "290px" : isMobile ? (isGalaxyFoldSmall ? "270px" : "230px") : "208px"
+    })`;
   return (
     <Box>
       <UserInfo acitve="wallet" total={fetchData.total} reward={data?.totalStake || 0} stake={stakeId} />

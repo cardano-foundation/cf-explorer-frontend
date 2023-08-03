@@ -61,7 +61,7 @@ export enum EPOCH_STATUS {
 }
 
 export const NETWORK_NAMES = JSON.parse(
-  String(process.env.REACT_APP_NETWORK_NAMES || get(window, "env.REACT_APP_NETWORK_NAMES"))
+  String(process.env.REACT_APP_NETWORK_NAMES || get(window, "env.REACT_APP_NETWORK_NAMES") || "{}")
 );
 
 export enum NETWORK_TYPES {
