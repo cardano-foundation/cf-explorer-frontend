@@ -48,6 +48,6 @@ describe("TokenTransaction component", () => {
   it("when user select a row", () => {
     render(<TokenTransaction />);
     fireEvent.click(screen.getByRole("cell", { name: /transaction-hash/i }));
-    expect(screen.getByRole("button", { name: /close/i })).toBeInTheDocument();
+    expect(screen.getByTestId(/view-detail-drawer/i)).toBeInTheDocument();
   });
 });
