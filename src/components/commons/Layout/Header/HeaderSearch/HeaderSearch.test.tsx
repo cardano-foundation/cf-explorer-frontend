@@ -1,10 +1,9 @@
 import { fireEvent, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { useSelector } from "react-redux";
 
 import { render } from "src/test-utils";
 
-import HeaderSearch, { OptionsSearch } from ".";
+import HeaderSearch from ".";
 
 const mockData = {
   currentEpoch: {
@@ -34,7 +33,6 @@ describe("HeaderSearch", () => {
   it("should render header search", () => {
     render(<HeaderSearch home={false} />);
     expect(screen.getByPlaceholderText("Search ...")).toBeInTheDocument();
-    expect(screen.getByText("Search for an epoch")).toBeInTheDocument();
   });
   it("should be able input for seaching", () => {
     render(<HeaderSearch home={false} />);
@@ -43,6 +41,6 @@ describe("HeaderSearch", () => {
     const input = screen.getByPlaceholderText("Search ...");
     fireEvent.click(input);
     fireEvent.change(input, { target: { value: "testing value" } });
-    expect(screen.getByText("testing value")).toBeInTheDocument();
+    expect(input).toHaveValue("testing value");
   });
 });

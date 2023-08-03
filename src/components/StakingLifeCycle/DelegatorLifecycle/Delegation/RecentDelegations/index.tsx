@@ -15,11 +15,10 @@ import { DescriptionText } from "../../styles";
 import { GridBox, StyledContainer, StyledList, WrapFilterDescription } from "./styles";
 
 interface Props {
-  onSelect: (delegation: DelegationItem | null) => void;
   setShowBackButton: (status: boolean) => void;
 }
 
-const RecentDelegations: React.FC<Props> = ({ onSelect, setShowBackButton }) => {
+const RecentDelegations: React.FC<Props> = ({ setShowBackButton }) => {
   const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
   const history = useHistory();
   const { sidebar } = useSelector(({ user }: RootState) => user);
@@ -35,13 +34,6 @@ const RecentDelegations: React.FC<Props> = ({ onSelect, setShowBackButton }) => 
     if (initialized) setShowBackButton(data.length > 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialized, setShowBackButton]);
-
-  useEffect(() => {
-    const currentItem = data.find((item) => item.txHash === txHash);
-    onSelect(currentItem || null);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [txHash, data]);
 
   const handleSelect = (delegation: DelegationItem) => {
     history.push(details.staking(stakeId, "timeline", "delegation", delegation.txHash));

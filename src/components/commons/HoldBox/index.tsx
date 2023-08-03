@@ -1,6 +1,5 @@
 import { forwardRef } from "react";
 import { BoxProps, IconButton, styled, Box, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
 
 import { ButtonListIcon } from "src/commons/resources";
 import { formatADAFull } from "src/commons/utils/helper";
@@ -9,7 +8,7 @@ import { AdaLogoIcon } from "../ADAIcon";
 import PopupStaking from "../PopupStaking";
 import PopperStyled from "../PopperStyled";
 
-const HoldContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => ({
+const HoldContainer = styled(Box)(({ theme }) => ({
   height: "35px",
   width: 184,
   display: "flex",
@@ -41,7 +40,7 @@ const HoldContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => 
     background: theme.palette.error[700],
     transform: " translate(0, 60%)"
   },
-  [theme.breakpoints.down(sidebar ? "lg" : "md")]: {
+  [theme.breakpoints.down("md")]: {
     fontSize: "16px",
     lineHeight: "19px",
     padding: "16px 15px",
@@ -58,6 +57,7 @@ const HoldContainer = styled(Box)<{ sidebar?: number }>(({ theme, sidebar }) => 
 const Value = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
+  flex: 1,
   gap: 10,
   [theme.breakpoints.down("sm")]: {
     gap: 5
@@ -75,9 +75,9 @@ const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
   }
 }));
 
-const Button = styled(IconButton)<{ over?: number; sidebar?: number }>(({ theme, over, sidebar }) => ({
+const Button = styled(IconButton)<{ over?: number }>(({ theme, over }) => ({
   background: theme.palette.primary[100],
-  [theme.breakpoints.down(over ? (sidebar ? "xl" : "lg") : "sm")]: {
+  [theme.breakpoints.down(over ? "lg" : "sm")]: {
     padding: 3
   }
 }));
@@ -99,25 +99,26 @@ const HolderValueLabel = styled(Typography)(({ theme }) => ({
   }
 }));
 
-export const HoldBox = forwardRef<HTMLElement, Props>(({ value, txHash, roundingNumber = 6, ...props }, feeRef) => {
-  const { sidebar } = useSelector(({ user }: RootState) => user);
+export const HoldBox = forwardRef<HTMLElement, Props>((props, feeRef) => {
+  const { value, txHash, roundingNumber = 6, children, ...boxProps } = props;
   const isOverText =
     typeof feeRef !== "function" &&
     !!feeRef?.current &&
     feeRef?.current?.getBoundingClientRect?.()?.width < 200 &&
     formatADAFull(value || 0).length > 8;
+
   return (
     <PopperStyled
       render={({ handleClick }) => (
-        <HoldContainer {...props} ref={feeRef} sidebar={+sidebar}>
+        <HoldContainer {...boxProps} ref={feeRef}>
           <Value>
             <HolderValueLabel>{formatADAFull(value || 0, roundingNumber)}</HolderValueLabel>
             <StyledAdaLogoIcon />
           </Value>
+          {children}
           <Button
             onClick={() => typeof feeRef !== "function" && feeRef?.current && handleClick(feeRef?.current)}
             over={+isOverText}
-            sidebar={+sidebar}
           >
             <ButtonListIcon />
           </Button>

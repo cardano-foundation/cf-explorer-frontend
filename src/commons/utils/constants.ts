@@ -61,7 +61,7 @@ export enum EPOCH_STATUS {
 }
 
 export const NETWORK_NAMES = JSON.parse(
-  String(process.env.REACT_APP_NETWORK_NAMES || get(window, "env.REACT_APP_NETWORK_NAMES"))
+  String(process.env.REACT_APP_NETWORK_NAMES || get(window, "env.REACT_APP_NETWORK_NAMES") || "{}")
 );
 
 export enum NETWORK_TYPES {
@@ -201,7 +201,7 @@ export enum REWARD_TYPES {
 }
 
 export const REWARD_TYPES_LABEL = {
-  [REWARD_TYPES.MEMBER]: "Delegator",
+  [REWARD_TYPES.MEMBER]: "Delegators",
   [REWARD_TYPES.LEADER]: "Operator",
   [REWARD_TYPES.REFUND]: "Refund",
   [REWARD_TYPES.RESERVES]: "Reserves",

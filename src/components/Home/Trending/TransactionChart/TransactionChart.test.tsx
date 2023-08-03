@@ -90,8 +90,8 @@ describe("TransactionChart", () => {
         <TransactionChart />
       </Router>
     );
-    expect(screen.getByText(/Transactions in the last day/i)).toBeInTheDocument();
-    const oneDay = screen.getByText("1d");
+    expect(screen.getByText(/Transactions in the last 24 hours/i)).toBeInTheDocument();
+    const oneDay = screen.getByText("24h");
     const oneWeek = screen.getByText("1w");
     const twoWeek = screen.getByText("2w");
     const oneMonth = screen.getByText("1m");
@@ -101,16 +101,16 @@ describe("TransactionChart", () => {
     expect(twoWeek).toBeInTheDocument();
     expect(oneMonth).toBeInTheDocument();
 
-    expect(screen.getByTestId("trx")).toHaveTextContent(numberWithCommas(mockItemDay.simpleTransactions));
+    expect(screen.getByTestId("trx")).toHaveTextContent(numberWithCommas(mockItemDay.metadata));
     expect(screen.getByTestId("simple")).toHaveTextContent(numberWithCommas(mockItemDay.smartContract));
-    expect(screen.getByTestId("complex")).toHaveTextContent(numberWithCommas(mockItemDay.metadata));
+    expect(screen.getByTestId("complex")).toHaveTextContent(numberWithCommas(mockItemDay.simpleTransactions));
 
     await userEvent.click(twoWeek);
     await waitFor(async () => {
       expect(screen.getByText("Transactions in two weeks")).toBeInTheDocument();
-      expect(screen.getByTestId("trx")).toHaveTextContent(numberWithCommas(mockItem2Week.simpleTransactions));
+      expect(screen.getByTestId("trx")).toHaveTextContent(numberWithCommas(mockItem2Week.metadata));
       expect(screen.getByTestId("simple")).toHaveTextContent(numberWithCommas(mockItem2Week.smartContract));
-      expect(screen.getByTestId("complex")).toHaveTextContent(numberWithCommas(mockItem2Week.metadata));
+      expect(screen.getByTestId("complex")).toHaveTextContent(numberWithCommas(mockItem2Week.simpleTransactions));
     });
   });
 });

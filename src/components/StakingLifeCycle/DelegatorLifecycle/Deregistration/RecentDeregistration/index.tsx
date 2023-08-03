@@ -16,11 +16,10 @@ import { GridBox, StyledContainer, StyledList, WrapFilterDescription } from "./s
 import { DescriptionText } from "../../styles";
 
 interface Props {
-  onSelect: (deregistration: DeregistrationItem | null) => void;
   setShowBackButton: (status: boolean) => void;
 }
 
-const RecentDeregistrations: React.FC<Props> = ({ onSelect, setShowBackButton }) => {
+const RecentDeregistrations: React.FC<Props> = ({ setShowBackButton }) => {
   const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
   const history = useHistory();
   const { sidebar } = useSelector(({ user }: RootState) => user);
@@ -36,11 +35,6 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect, setShowBackButton })
     if (initialized) setShowBackButton(data.length > 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialized, setShowBackButton]);
-
-  useEffect(() => {
-    const currentItem = data.find((item) => item.txHash === txHash);
-    onSelect(currentItem || null);
-  }, [txHash, data]);
 
   const handleSelect = (deregistration: DeregistrationItem) => {
     history.push(details.staking(stakeId, "timeline", "deregistration", deregistration.txHash));

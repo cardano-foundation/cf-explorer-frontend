@@ -13,38 +13,32 @@ import { RegistrationDraw } from "./RegistrationDraw";
 import { StakeLink, StyledContainerModal } from "./styles";
 
 const Registration = () => {
-  const [selected, setSelected] = useState<RegistrationItem | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const { stakeId = "" } = useParams<{ stakeId: string }>();
-  const handleSelect = (registration: RegistrationItem | null) => {
-    setSelected(registration);
-  };
 
   const [showBackButton, setShowBackButton] = useState<boolean>(false);
 
-  const handleToggleModal = () => setOpenModal((state) => !state);
+  const toggleModal = () => setOpenModal((state) => !state);
 
   return (
     <Box>
       <RegistrationCertificateModal open={openModal} handleCloseModal={() => setOpenModal(false)} stake={stakeId} />
-      <RecentRegistrations onSelect={handleSelect} setShowBackButton={setShowBackButton} />
-      {selected && (
-        <RegistrationDraw selected={selected} toggleModal={handleToggleModal} showBackButton={showBackButton} />
-      )}
+      <RecentRegistrations setShowBackButton={setShowBackButton} />
+      <RegistrationDraw toggleModal={toggleModal} showBackButton={showBackButton} />
     </Box>
   );
 };
 export default Registration;
 
-export const RegistrationCertificateModal = ({
-  stake,
-  ...props
-}: {
+interface RegistrationCertificateModalProps {
   stake: string;
   open: boolean;
   handleCloseModal: () => void;
-}) => {
-  const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`, undefined, false);
+}
+
+export const RegistrationCertificateModal = ({ stake, ...props }: RegistrationCertificateModalProps) => {
+  const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`);
+
   return (
     <StyledModal width={550} {...props} title="Registration certificate">
       <StyledContainerModal>
