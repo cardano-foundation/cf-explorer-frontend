@@ -45,8 +45,8 @@ describe("DetailViewToken component", () => {
 
   it("should component render", () => {
     render(<DetailViewToken handleClose={jest.fn()} token={mockToken} tokenId={mockTokenId} />);
-    expect(screen.getByText(/token metadata description/i)).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /policy script/i })).toBeInTheDocument();
+    expect(screen.getByText(/Token Display Name/i)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /Transactions/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /top holders/i })).toBeInTheDocument();
   });
 

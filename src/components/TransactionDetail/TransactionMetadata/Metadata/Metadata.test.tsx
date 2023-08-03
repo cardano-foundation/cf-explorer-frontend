@@ -9,6 +9,6 @@ describe("Metadata component", () => {
     render(<Metadata data={metaData} hash="tx0023131hash33x" />);
     expect(screen.getByText(/metadata hash/i)).toBeInTheDocument();
     expect(screen.getByText(/tx0023131hash33x/i)).toBeInTheDocument();
-    expect(screen.getByText(/publish label/i)).toBeInTheDocument();
+    expect(screen.getByText(/metadatum label/i)).toBeInTheDocument();
   });
 });
