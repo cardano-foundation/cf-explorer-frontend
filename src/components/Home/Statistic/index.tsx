@@ -33,6 +33,7 @@ import {
   Progress,
   ProgressPending,
   StatisticContainer,
+  StyledAdaLogoIcon,
   TimeDuration,
   Title
 } from "./style";
@@ -233,7 +234,7 @@ const HomeStatistic = () => {
                 </Box>
                 <Box>
                   <Box color={({ palette }) => palette.secondary.light}>
-                    Active Stake (ADA):{" "}
+                    Active Stake <StyledAdaLogoIcon />:{" "}
                     <CustomTooltip title={formatADAFull(activeStake)}>
                       <Box data-testid="active-stake-value" sx={{ display: "inline-block" }}>
                         {formatADA(activeStake)}
@@ -241,7 +242,7 @@ const HomeStatistic = () => {
                     </CustomTooltip>
                   </Box>
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
-                    Circulating supply (ADA):{" "}
+                    Circulating supply <StyledAdaLogoIcon /> :{" "}
                     <CustomTooltip title={numberWithCommas(supply)}>
                       <Box data-testid="circulating-supply-percentage" sx={{ display: "inline-block" }}>
                         {formatADA(circulatingSupply.toString())}
