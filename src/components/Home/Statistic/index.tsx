@@ -235,16 +235,16 @@ const HomeStatistic = () => {
                   <Box color={({ palette }) => palette.secondary.light}>
                     Active Stake (ADA):{" "}
                     <CustomTooltip title={formatADAFull(activeStake)}>
-                      <>{formatADA(activeStake)}</>
+                      <Box sx={{display: 'inline-block'}}>{formatADA(activeStake)}</Box>
                     </CustomTooltip>
                   </Box>
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
                     Circulating supply (ADA):{" "}
                     <CustomTooltip title={numberWithCommas(supply)}>
-                      <>{formatADA(circulatingSupply.toString())}</>
+                      <Box sx={{display: 'inline-block'}}>{formatADA(circulatingSupply.toString())}</Box>
                     </CustomTooltip>
                     <CustomTooltip title={`${circulatingRate.toFixed(5)}%`}>
-                      <>({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)</>
+                      <Box sx={{display: 'inline-block'}}>({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)</Box>
                     </CustomTooltip>
                   </Box>
                 </Box>
