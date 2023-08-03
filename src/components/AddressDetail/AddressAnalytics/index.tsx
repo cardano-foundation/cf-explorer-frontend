@@ -1,9 +1,20 @@
 import React, { useState } from "react";
 import { Box, Grid, useTheme } from "@mui/material";
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, TooltipProps } from "recharts";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+  TooltipProps,
+  Label
+} from "recharts";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 import { BigNumber } from "bignumber.js";
+import { isArray } from "lodash";
 
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
@@ -42,8 +53,10 @@ const AddressAnalytics: React.FC = () => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const { address } = useParams<{ address: string }>();
   const theme = useTheme();
-  const { data, loading } = useFetch<AnalyticsData[]>(`${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`);
-
+  const { data: dataAnalytics, loading } = useFetch<AnalyticsData[]>(
+    `${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`
+  );
+  const data = isArray(dataAnalytics) ? dataAnalytics : [];
   const values = data?.map((item) => item.value || 0) || [];
   const maxBalance = BigNumber.max(0, ...values).toString();
   const minBalance = BigNumber.min(maxBalance, ...values).toString();
@@ -57,10 +70,25 @@ const AddressAnalytics: React.FC = () => {
     return formatPrice(bigValue.toString());
   };
 
+  const getLabelTimeTooltip = (label: string) => {
+    switch (rangeTime) {
+      case "ONE_DAY":
+        return `${moment(label).format("DD MMM HH:mm")} - ${moment(label).add(2, "hour").format("HH:mm")}`;
+      case "ONE_WEEK":
+        return moment(label).format("DD MMM");
+      case "ONE_MONTH":
+        return `${moment(label).format("DD MMM")} - ${moment(label).add(1, "days").format("DD MMM")}`;
+      case "THREE_MONTH":
+        return `${moment(label).format("DD MMM")} - ${moment(label).add(6, "days").format("DD MMM")}`;
+      default:
+        return "";
+    }
+  };
+
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
     return (
       <TooltipBody>
-        <TooltipLabel>{moment(content.label).format("DD MMM YYYY HH:mm:ss")} (UTC time zone)</TooltipLabel>
+        <TooltipLabel>{getLabelTimeTooltip(content.label)}</TooltipLabel>
         <TooltipValue>{formatADAFull(content.payload?.[0]?.value) || 0}</TooltipValue>
       </TooltipBody>
     );
@@ -103,7 +131,9 @@ const AddressAnalytics: React.FC = () => {
                     tickMargin={5}
                     color={theme.palette.secondary.main}
                     dx={-15}
-                  />
+                  >
+                    <Label value="(UTC)" offset={-8} position="insideBottom" />
+                  </XAxis>
                   <YAxis tickFormatter={formatPriceValue} tickLine={false} color={theme.palette.secondary.main} />
                   <Tooltip content={renderTooltip} cursor={false} />
                   <CartesianGrid vertical={false} strokeWidth={0.33} />
