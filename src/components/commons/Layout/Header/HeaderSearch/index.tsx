@@ -124,25 +124,21 @@ interface IResponseSearchAll {
   epoch?: number;
   block?: "string";
   tx?: "string";
-  token?: [
-    {
-      name: "string";
-      fingerprint: "string";
-    }
-  ];
+  token?: {
+    name: "string";
+    fingerprint: "string";
+  };
   validTokenName?: boolean;
   address?: {
     address: "string";
     stakeAddress: true;
     paymentAddress: true;
   };
-  pools?: [
-    {
-      name: "string";
-      poolId: "string";
-      icon: "string";
-    }
-  ];
+  pool?: {
+    name: "string";
+    poolId: "string";
+    icon: "string";
+  };
   validPoolName?: true;
   policy?: "string";
 }
@@ -172,12 +168,60 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       setLoading(true);
       const res = await defaultAxios.get(API.SEARCH_ALL(query));
       setDataSearchAll(res?.data);
+      const keyDetail = getKeyIfOnlyOneNonNullResult(res?.data);
+      if (keyDetail) {
+        handleRedirectDetail(keyDetail, res?.data);
+      }
       setShowOption(true);
       setLoading(false);
     } catch {
       showResultNotFound();
       setLoading(false);
     }
+  };
+
+  const handleRedirectDetail = (key: string, data: IResponseSearchAll) => {
+    switch (key) {
+      case "epoch":
+        history.push(details.epoch(data.epoch as number));
+        return;
+      case "block":
+        history.push(details.block(data.block as string));
+        return;
+      case "address":
+        const address = data.address?.address as string;
+        if (address.startsWith("stake")) {
+          history.push(details.stake(address));
+          return;
+        }
+        history.push(details.address(address));
+        return;
+      case "token":
+        history.push(details.token(encodeURIComponent(data?.token?.fingerprint as string)));
+        return;
+      case "pool":
+        history.push(details.delegation(data?.pool?.poolId));
+        return;
+      case "tx":
+        history.push(details.transaction(data?.tx as string));
+        return;
+      case "policy":
+        history.push(details.policyDetail(data?.policy as string));
+        return;
+      default:
+    }
+  };
+
+  const getKeyIfOnlyOneNonNullResult = (data: IResponseSearchAll | undefined) => {
+    let count = 0;
+    let keyName = "";
+    for (const key in data) {
+      if (!["validTokenName", "validPoolName"].includes(key) && !!(data as any)[key]) {
+        count++;
+        keyName = key;
+      }
+    }
+    return count === 1 ? keyName : "";
   };
 
   const FetchSearchTokensAndPools = async (query: string, filter: FilterParams) => {
@@ -192,11 +236,24 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       const url = `${
         filter === "tokens" ? API.TOKEN.LIST : API.DELEGATION.POOL_LIST
       }?page=0&size=${RESULT_SIZE}&${stringify(search)}`;
-
       const res = await defaultAxios.get(url);
       setTotalResult(res?.data && res.data?.totalItems ? res.data?.totalItems : 0);
       setDataSearchTokensAndPools(res?.data && res?.data?.data ? res?.data?.data : undefined);
-      setShowOption(true);
+      if (res?.data && res.data?.totalItems > 0) {
+        if (filter === "tokens") {
+          res.data?.totalItems === 1
+            ? history.push(details.token(encodeURIComponent((res?.data?.data[0] as TokensSearch)?.fingerprint)))
+            : history.push(`${routers.TOKEN_LIST}?tokenName=${(search.query || "").toLocaleLowerCase()}`);
+        } else {
+          res.data?.totalItems === 1
+            ? history.push(details.delegation((res?.data?.data[0] as DelegationPool)?.poolId))
+            : history.push(routers.DELEGATION_POOLS, {
+                tickerNameSearch: (search.search || "").toLocaleLowerCase()
+              });
+        }
+      } else {
+        setShowOption(true);
+      }
       setLoading(false);
     } catch {
       showResultNotFound();
@@ -435,7 +492,7 @@ export const OptionsSearch = ({
           Search for a {filter === "tokens" ? "token" : "pool"}{" "}
           {filter === "tokens" ? (
             <ValueOption>
-              {(i as TokensSearch)?.displayName.startsWith("asset") && (i as TokensSearch)?.displayName.length > 43
+              {(i as TokensSearch)?.displayName?.startsWith("asset") && (i as TokensSearch)?.displayName.length > 43
                 ? getShortWallet((i as TokensSearch)?.fingerprint || "")
                 : (i as TokensSearch)?.displayName}
             </ValueOption>
@@ -596,7 +653,7 @@ export const OptionsSearch = ({
   }
   return (
     <OptionsWrapper display={show ? "block" : "none"} home={+home}>
-      {!error ? (
+      {!error && (
         <>
           {listOptions.map((item, i: number) => {
             return (
@@ -609,7 +666,9 @@ export const OptionsSearch = ({
             );
           })}
         </>
-      ) : (
+      )}
+
+      {!!error && (
         <Box component={Option} color={({ palette }) => palette.error[700]} justifyContent={"center"}>
           <Box>{error}</Box>
         </Box>

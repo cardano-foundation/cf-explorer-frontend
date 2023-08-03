@@ -87,14 +87,25 @@ const StakeAnalytics: React.FC = () => {
     return formatPrice(bigValue.toString());
   };
 
+  const getLabelTimeTooltip = (label: string) => {
+    switch (rangeTime) {
+      case "ONE_DAY":
+        return `${moment(label).format("DD MMM HH:mm")} - ${moment(label).add(2, "hour").format("HH:mm")} (UTC)`;
+      case "ONE_WEEK":
+        return moment(label).format("DD MMM");
+      case "ONE_MONTH":
+        return `${moment(label).format("DD MMM")} - ${moment(label).add(1, "days").format("DD MMM")}`;
+      case "THREE_MONTH":
+        return `${moment(label).format("DD MMM")} - ${moment(label).add(6, "days").format("DD MMM")}`;
+      default:
+        return "";
+    }
+  };
+
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
     return (
       <TooltipBody>
-        <TooltipLabel>
-          {tab === "BALANCE"
-            ? moment(content.label).format("DD MMM YYYY HH:mm:ss") + " (UTC time zone)"
-            : `Epoch ${content.label}`}
-        </TooltipLabel>
+        <TooltipLabel>{tab === "BALANCE" ? getLabelTimeTooltip(content.label) : `Epoch ${content.label}`}</TooltipLabel>
         <TooltipValue>{formatADAFull(content.payload?.[0]?.value) || 0}</TooltipValue>
       </TooltipBody>
     );

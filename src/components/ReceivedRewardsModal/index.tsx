@@ -32,6 +32,12 @@ interface ReceivedReward {
   type: string;
 }
 
+export enum ReceivedRewardsType {
+  LEADER = "LEADER",
+  MEMBER = "MEMBER",
+  ALL = ""
+}
+
 export interface ReceivedRewardsModalProps {
   open?: boolean;
   onClose?: () => void;
