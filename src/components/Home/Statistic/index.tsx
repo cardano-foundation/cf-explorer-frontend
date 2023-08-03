@@ -11,7 +11,8 @@ import {
   HomeDownIcon,
   HomeUpIcon,
   LiveStakeIcon,
-  MarketCapIcon
+  MarketCapIcon,
+  OfficialAdaIcon
 } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
@@ -233,13 +234,13 @@ const HomeStatistic = () => {
                 </Box>
                 <Box>
                   <Box color={({ palette }) => palette.secondary.light}>
-                    Active Stake (ADA):{" "}
+                    Active Stake <OfficialAdaIcon height={"14px"} width={"14px"} /> :{" "}
                     <CustomTooltip title={formatADAFull(activeStake)}>
                       <>{formatADA(activeStake)}</>
                     </CustomTooltip>
                   </Box>
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
-                    Circulating supply (ADA):{" "}
+                    Circulating supply <OfficialAdaIcon height={"12px"} width={"12px"} /> :{" "}
                     <CustomTooltip title={numberWithCommas(supply)}>
                       <>{formatADA(circulatingSupply.toString())}</>
                     </CustomTooltip>
