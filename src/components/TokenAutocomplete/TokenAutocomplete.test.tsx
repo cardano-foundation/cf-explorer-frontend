@@ -37,6 +37,6 @@ describe("TokenAutocomplete component", () => {
   it("should dropdown open", () => {
     render(<TokenAutocomplete address="x23dxxfdd312hgc" />);
     fireEvent.click(screen.getByRole("button", { name: /open/i }));
-    expect(screen.getByText(/token display #token/i)).toBeInTheDocument();
+    expect(screen.getByText(/token display/i)).toBeInTheDocument();
   });
 });

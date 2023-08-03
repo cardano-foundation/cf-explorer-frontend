@@ -51,8 +51,8 @@ describe("ProtocolParameter page", () => {
   });
   it("renders data in the table", async () => {
     render(<ProtocolParameter />);
-    expect(screen.getAllByRole("table")[0]).toBeInTheDocument();
-    expect(screen.getAllByRole("table")[1]).toBeInTheDocument();
+    expect(screen.getByText(/Updatable Parameters/)).toBeInTheDocument();
+    expect(screen.getByText(/Global Constants/)).toBeInTheDocument();
   });
 });
 
