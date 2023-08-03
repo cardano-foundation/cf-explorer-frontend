@@ -47,7 +47,7 @@ describe("SignUp page", () => {
     const confirmEmailInput = screen.getByPlaceholderText("Re-enter Your email address");
     const passwordInput = screen.getByPlaceholderText("Password");
     const confirmPasswordInput = screen.getByPlaceholderText("Confirm Password");
-    const check = screen.getByRole("checkbox", { name: /i agree to the terms and conditions/i });
+    const check = screen.getByRole("checkbox", { name: /I agree to the Terms & Conditions and Privacy Policy/i });
     const signUpButton = screen.getByText("Create an Account");
     fireEvent.change(emailInput, { target: { value: mockData.email } });
     fireEvent.change(confirmEmailInput, { target: { value: mockData.email } });
