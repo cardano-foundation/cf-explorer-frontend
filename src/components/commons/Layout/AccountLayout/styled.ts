@@ -27,7 +27,7 @@ export const SideBar = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const NavItem = styled(Link)<{ active: boolean }>(({ theme, active }) => ({
+export const NavItem = styled(Link)<{ active: number }>(({ theme, active }) => ({
   textAlign: "left",
   position: "relative",
   display: "block",
@@ -68,7 +68,7 @@ export const WrapItemMobile = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const NavItemMobile = styled(Link)<{ active: boolean }>(({ theme, active }) => ({
+export const NavItemMobile = styled(Link)<{ active: number }>(({ theme, active }) => ({
   [theme.breakpoints.down("md")]: {
     display: "block"
   },

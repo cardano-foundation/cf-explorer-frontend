@@ -19,7 +19,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: |
       "contains(github.event.head_commit.message, 'release-please--branches--main')" ||
       ${{ github.event_name == 'pull_request' }}
@@ -64,6 +64,9 @@ jobs:
           registry: ${{ env.PRIVATE_DOCKER_REGISTRY_URL }}
           username: ${{ env.PRIVATE_DOCKER_REGISTRY_USER }}
           password: ${{ env.PRIVATE_DOCKER_REGISTRY_PASS }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
       - name: 🔨 Build and Push docker image
         uses: docker/build-push-action@v4

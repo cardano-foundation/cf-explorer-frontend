@@ -75,7 +75,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
             {router.map((route, index) => {
               const active = route.to === pathname;
               return (
-                <>
+                <React.Fragment key={index}>
                   <NavItemMobile
                     sx={{
                       borderTopRightRadius: index === router.length - 1 ? "5px" : "0px",
@@ -85,13 +85,16 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
                       borderRadius: active ? "5px" : ""
                     }}
                     to={route.to}
-                    active={active}
-                    key={index}
+                    active={+active}
                   >
                     {route.title}
                   </NavItemMobile>
-                  <NavItem to={route.to} active={route.to === pathname} key={index}>
-                    <Box display="flex" alignItems={"center"} justifyContent="space-between">
+                  <NavItem to={route.to} active={+active}>
+                    <Box
+                      display="flex"
+                      alignItems={"center"}
+                      justifyContent="space-between"
+                    >
                       <Box pl={"20px"}>{route.title}</Box>
                       <MdChevronRight
                         size={25}
@@ -101,7 +104,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
                     </Box>
                     <Divider first={index === 0} />
                   </NavItem>
-                </>
+                </React.Fragment>
               );
             })}
           </WrapItemMobile>
