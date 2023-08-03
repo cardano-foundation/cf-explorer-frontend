@@ -9,7 +9,8 @@ import {
   XAxis,
   YAxis,
   TooltipProps,
-  XAxisProps
+  XAxisProps,
+  Label
 } from "recharts";
 import moment from "moment";
 import { useParams } from "react-router-dom";
@@ -90,7 +91,7 @@ const StakeAnalytics: React.FC = () => {
   const getLabelTimeTooltip = (label: string) => {
     switch (rangeTime) {
       case "ONE_DAY":
-        return `${moment(label).format("DD MMM HH:mm")} - ${moment(label).add(2, "hour").format("HH:mm")} (UTC)`;
+        return `${moment(label).format("DD MMM HH:mm")} - ${moment(label).add(2, "hour").format("HH:mm")}`;
       case "ONE_WEEK":
         return moment(label).format("DD MMM");
       case "ONE_MONTH":
@@ -180,7 +181,9 @@ const StakeAnalytics: React.FC = () => {
                     }
                     tickLine={false}
                     {...xAxisProps}
-                  />
+                  >
+                    <Label value="(UTC)" offset={-8} position="insideBottom" />
+                  </XAxis>
                   <YAxis color={theme.palette.secondary.main} tickFormatter={formatPriceValue} tickLine={false} />
                   <Tooltip content={renderTooltip} cursor={false} />
                   <CartesianGrid vertical={false} strokeWidth={0.33} />
