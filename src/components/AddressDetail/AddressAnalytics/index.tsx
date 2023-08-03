@@ -1,6 +1,16 @@
 import React, { useState } from "react";
 import { Box, Grid, useTheme } from "@mui/material";
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, TooltipProps, Label } from "recharts";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+  TooltipProps,
+  Label
+} from "recharts";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 import { BigNumber } from "bignumber.js";
@@ -60,13 +70,11 @@ const AddressAnalytics: React.FC = () => {
   const getLabelTimeTooltip = (label: string) => {
     switch (rangeTime) {
       case "ONE_DAY":
-        return `${moment(label).format("DD MMM HH:mm")} - ${moment(label).add(2, "hour").format("HH:mm")}`;
+        return `${moment(label).format("DD MMM YYYY HH:mm:ss")}`;
       case "ONE_WEEK":
-        return moment(label).format("DD MMM");
       case "ONE_MONTH":
-        return `${moment(label).format("DD MMM")} - ${moment(label).add(1, "days").format("DD MMM")}`;
       case "THREE_MONTH":
-        return `${moment(label).format("DD MMM")} - ${moment(label).add(6, "days").format("DD MMM")}`;
+        return moment(label).format("DD MMM YYYY");
       default:
         return "";
     }
