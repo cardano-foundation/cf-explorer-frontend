@@ -7,6 +7,8 @@ import Registration, { RegistrationCertificateModal } from "./index";
 
 jest.mock("src/commons/hooks/useFetch");
 
+const stakeId = "stake1u96el9cyxhwd7s7f7qmculdpp44f5mjrsvh9vh9nrlhdjlsgvfap6";
+
 describe("Registration", () => {
   beforeEach(() => {
     const mockedUseFetch = useFetch as jest.Mock;
@@ -15,7 +17,7 @@ describe("Registration", () => {
       loading: false
     });
   });
-  it("should component renders", () => {
+  it("render Registration ", () => {
     render(<Registration />);
     expect(screen.getByText(/registration list/i)).toBeInTheDocument();
     expect(screen.getByText(/showing 0 result/i)).toBeInTheDocument();
@@ -30,35 +32,31 @@ describe("RegistrationCertificateModal", () => {
       loading: false
     });
   });
-  it("should component renders", () => {
+  it("render RegistrationCertificateModal", () => {
     const onClose = jest.fn();
-    render(<RegistrationCertificateModal handleCloseModal={onClose} open={true} stake="stake123" />);
+    render(<RegistrationCertificateModal handleCloseModal={onClose} open stake={stakeId} />);
     expect(screen.getByText(/registration certificate/i)).toBeInTheDocument();
   });
 
-  it("should component render with data", () => {
+  it("render RegistrationCertificateModal with data", () => {
     const mockedUseFetch = useFetch as jest.Mock;
     mockedUseFetch.mockReturnValue({
       data: {},
       loading: false
     });
     const onClose = jest.fn();
-    const { getByText } = render(
-      <RegistrationCertificateModal handleCloseModal={onClose} open={true} stake="stake123" />
-    );
-    expect(getByText("stake123")).toBeInTheDocument();
+    const { getByText } = render(<RegistrationCertificateModal handleCloseModal={onClose} open stake={stakeId} />);
+    expect(getByText(stakeId)).toBeInTheDocument();
   });
 
-  it("should component close button was clicked", () => {
+  it("render RegistrationCertificateModal close button was clicked", () => {
     const mockedUseFetch = useFetch as jest.Mock;
     mockedUseFetch.mockReturnValue({
       data: {},
       loading: false
     });
     const onClose = jest.fn();
-    const { getByTestId } = render(
-      <RegistrationCertificateModal handleCloseModal={onClose} open={true} stake="stake123" />
-    );
+    const { getByTestId } = render(<RegistrationCertificateModal handleCloseModal={onClose} open stake={stakeId} />);
     userEvent.click(getByTestId("close-modal-button"));
     expect(onClose).toBeCalled();
   });
