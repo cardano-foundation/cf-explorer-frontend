@@ -1,19 +1,20 @@
 import { Autocomplete, Box, Button } from "@mui/material";
 import { debounce } from "lodash";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { BiChevronDown } from "react-icons/bi";
 
 import useFetchList from "src/commons/hooks/useFetchList";
+import { useScreen } from "src/commons/hooks/useScreen";
 import { HeaderSearchIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatNumberDivByDecimals, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
-import { useScreen } from "src/commons/hooks/useScreen";
 
+import CustomModal from "../commons/CustomModal";
 import CustomTooltip from "../commons/CustomTooltip";
 import Table, { Column } from "../commons/Table";
 import { WrappModalScrollBar } from "../commons/Table/styles";
 import {
-  ArrowDownIconCustom,
   AssetName,
   Image,
   Logo,
@@ -24,30 +25,35 @@ import {
   StyledTextField,
   SubmitButton
 } from "./styles";
-import CustomModal from "../commons/CustomModal";
 
 const TokenAutocomplete = ({ address }: { address: string }) => {
   const [openModalToken, setOpenModalToken] = useState(false);
   const [search, setSearch] = useState("");
   const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
-  const { data, loading, total } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
+  const [initialized, setInitialized] = useState(false);
+  const { data, total } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
     page: 0,
     size: 10
   });
 
-  const isDisabled = !data?.length;
+  useEffect(() => {
+    if (data.length) {
+      setInitialized(true);
+    }
+  }, [data]);
+
+  if (!data.length && !search && !initialized) return null;
 
   return (
     <Box>
       <Autocomplete
-        disabled={isDisabled}
         options={total > 10 ? [...data, "more"] : data}
         componentsProps={{ paper: { elevation: 2 } }}
-        loading={loading}
         getOptionLabel={(option) =>
-          typeof option === "string" ? "more" : option.displayName || option.name || option.fingerprint
+          typeof option === "string" ? "" : option.displayName || option.name || option.fingerprint
         }
-        onInputChange={debounce((e, value) => setSearch(value), 500)}
+        noOptionsText="No records"
+        onInputChange={debounce((e, value) => setSearch(value), 1000)}
         ListboxProps={{
           sx(theme) {
             return {
@@ -135,7 +141,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
           );
         }}
         renderInput={(params) => <StyledTextField {...params} placeholder="Search Token" />}
-        popupIcon={<ArrowDownIconCustom disabled={isDisabled ? 1 : 0} />}
+        popupIcon={<BiChevronDown />}
       />
       <ModalToken address={address} open={openModalToken} onClose={() => setOpenModalToken(false)} />
     </Box>
@@ -197,6 +203,11 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
     setSearch("");
   };
 
+  const handleSearch = () => {
+    setSearch(value);
+    setPagination({ page: 0, size: 50 });
+  };
+
   return (
     <CustomModal title="Token List" open={open} onClose={handleClose} width={"min(80vw, 600px)"}>
       <>
@@ -206,19 +217,17 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             onChange={(e) => setValue(e.target.value)}
             value={value}
             onKeyUp={(e) => {
-              if (e.key === "Enter") {
-                setSearch(value);
-                setPagination({ page: 0, size: 50 });
-              }
+              if (e.key === "Enter") handleSearch();
             }}
           />
-          <SubmitButton onClick={() => setSearch(value)}>
+          <SubmitButton onClick={() => handleSearch()}>
             <Image src={HeaderSearchIcon} alt="Search" />
           </SubmitButton>
         </SearchContainer>
         <WrappModalScrollBar>
           <Table
             {...fetchData}
+            key={search}
             data={data || []}
             columns={columns}
             total={{ title: "Total", count: fetchData.total }}

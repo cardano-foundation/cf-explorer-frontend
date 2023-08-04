@@ -5,7 +5,7 @@ import { fireEvent, render, screen } from "src/test-utils";
 import ConnectWallet from ".";
 const mockProps = {
   onSuccess: jest.fn().mockImplementation(() => {
-    console.log("ok");
+    // Todo: mock implementation
   })
 };
 

@@ -35,11 +35,11 @@ const Collaterals: React.FC<CollateralProps> = ({ data }) => {
       {isShowCardOutput && (
         <ItemFooter>
           <Box color={({ palette }) => palette.secondary.main} fontWeight={"bold"}>
-            Total Output
+            Total Collateral Spent
           </Box>
           <div>
             <Box color={({ palette }) => palette.secondary.main} fontWeight={"bold"} component="span" pr={1}>
-              {formatADAFull(totalADA)}
+              {`+${formatADAFull(totalADA)}`}
             </Box>
             <ADAicon />
           </div>

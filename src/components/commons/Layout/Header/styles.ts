@@ -83,7 +83,7 @@ export const HeaderLogo = styled("img")(({ theme }) => ({
   }
 }));
 
-export const SearchButton = styled(Button)<{ home?: boolean }>(({ theme, home }) => ({
+export const SearchButton = styled(Button)<{ home?: number }>(({ theme, home }) => ({
   padding: 0,
   minWidth: 24,
   height: 24,

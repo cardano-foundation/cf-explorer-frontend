@@ -344,6 +344,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             paddingLeft: "70px",
                             [theme.breakpoints.down("md")]: {
                               paddingLeft: "60px"
+                            },
+                            ":hover": {
+                              backgroundColor: `${theme.palette.primary[200]} !important`
                             }
                           })}
                         >
