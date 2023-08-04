@@ -302,7 +302,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
 
 export const ButtonLink = styled("a")(({ theme }) => ({
   fontWeight: "bold",
-  color: `${theme.palette.secondary.main} !important`,
+  color: `${theme.palette.primary.main} !important`,
   fontFamily: "Roboto, sans-serif !important",
   textAlign: "left",
   wordBreak: "break-all",
@@ -351,7 +351,7 @@ export const TokenUrl = styled(Box)(({ theme }) => ({
 }));
 
 export const PolicyScriptBtn = styled(Button)(({ theme }) => ({
-  color: `${theme.palette.secondary.main} !important`,
+  color: `${theme.palette.primary.main} !important`,
   fontFamily: '"Roboto", sans-serif',
   fontSize: "14px",
   border: "none",

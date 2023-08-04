@@ -33,6 +33,7 @@ import {
   Progress,
   ProgressPending,
   StatisticContainer,
+  StyledAdaLogoIcon,
   TimeDuration,
   Title
 } from "./style";
@@ -233,20 +234,22 @@ const HomeStatistic = () => {
                 </Box>
                 <Box>
                   <Box color={({ palette }) => palette.secondary.light}>
-                    Active Stake (ADA):{" "}
+                    Active Stake <StyledAdaLogoIcon />:{" "}
                     <CustomTooltip title={formatADAFull(activeStake)}>
-                      <span data-testid="active-stake-value">{formatADA(activeStake)}</span>
+                      <Box data-testid="active-stake-value" sx={{ display: "inline-block" }}>
+                        {formatADA(activeStake)}
+                      </Box>
                     </CustomTooltip>
                   </Box>
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
-                    Circulating supply (ADA):{" "}
+                    Circulating supply <StyledAdaLogoIcon /> :{" "}
                     <CustomTooltip title={numberWithCommas(supply)}>
-                      <span data-testid="circulating-supply-value">{formatADA(circulatingSupply.toString())}</span>
+                      <Box data-testid="circulating-supply-percentage" sx={{ display: "inline-block" }}>
+                        {formatADA(circulatingSupply.toString())}
+                      </Box>
                     </CustomTooltip>
                     <CustomTooltip title={`${circulatingRate.toFixed(5)}%`}>
-                      <span data-testid="circulating-supply-percentage">
-                        ({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)
-                      </span>
+                      <Box sx={{ display: "inline-block" }}>({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)</Box>
                     </CustomTooltip>
                   </Box>
                 </Box>

@@ -2,17 +2,23 @@ import { styled, Box, Typography, IconButton } from "@mui/material";
 
 export const ContractDiagramsContainer = styled(Box)<{ isTxPageView?: boolean }>`
   background: ${(props) => props.theme.palette.secondary[0]};
-  padding: 25px;
+  padding: 25px 0 25px 25px;
   border-radius: 10px;
   margin-bottom: 30px;
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    padding: 0 25px 25px 0;
+  }
 `;
 
-export const ContractHeader = styled(Box)`
+export const TxHash = styled(Box)`
   text-align: left;
+  background-color: ${({ theme }) => theme.palette.primary[200]};
+  border-radius: 8px;
+  padding: 16px 20px;
 `;
 
 export const ContractText = styled(Typography)`
-  font-size: 14px;
+  font-size: var(--font-size-text-lager);
   font-weight: 700;
   display: flex;
   justify-content: space-between;
@@ -24,7 +30,6 @@ export const ContractAddress = styled(Box)`
   color: ${(props) => props.theme.palette.primary.main};
   font-size: 14px;
   font-weight: 400;
-  padding-top: 10px;
   word-break: break-all;
 `;
 
@@ -121,4 +126,10 @@ export const IconContainer = styled(Box)`
 export const CloseButton = styled(IconButton)`
   color: ${(props) => props.theme.palette.secondary[600]};
   padding: 5.5px;
+`;
+
+export const ContractHeader = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
