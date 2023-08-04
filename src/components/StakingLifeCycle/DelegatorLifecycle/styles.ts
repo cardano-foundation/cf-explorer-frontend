@@ -1,9 +1,10 @@
 import { Box, Button, Typography, alpha, styled } from "@mui/material";
 
-export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
+export const Step = styled(Box)(({ theme }) => ({
   width: "100%",
   padding: `0 0 ${theme.spacing(3)}`,
-  borderBottom: `3px solid ${active ? theme.palette.primary.main : theme.palette.primary[200]}`,
+  borderBottomWidth: "3px",
+  borderBottomStyle: "solid",
   [theme.breakpoints.down("lg")]: {
     minWidth: "190px"
   },
@@ -14,8 +15,7 @@ export const Step = styled(Box)<{ active: number }>(({ theme, active }) => ({
 }));
 
 export const StepButton = styled(Box)<{ active: number }>(() => ({}));
-export const TitleStep = styled(Box)<{ active: number }>(({ theme, active }) => ({
-  color: active ? theme.palette.secondary.main : theme.palette.secondary.light,
+export const TitleStep = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "0.875rem",
   marginTop: theme.spacing(1)

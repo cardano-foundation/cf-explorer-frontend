@@ -52,7 +52,7 @@ export const VerifyScript = ({ verified, setShowBanner }: IVerifyScript) => {
         throw Error("");
       }
     } catch (err) {
-      console.error(err);
+      // Todo: handle error
       setErrorMessage("Invalid script, please try again");
     } finally {
       setLoading(false);
