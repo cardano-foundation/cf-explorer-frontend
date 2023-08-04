@@ -21,6 +21,7 @@ import EpochDetail from "./pages/EpochDetail";
 import ForgotPassword from "./pages/ForgotPassword";
 import Home from "./pages/Home";
 import InstantRewards from "./pages/InstantRewards";
+import { setOpenSyncBookmarkModal } from "./stores/user";
 import MyProfile from "./pages/MyProfile";
 import NotFound from "./pages/NotFound";
 import PolicyDetail from "./pages/PolicyDetail";
@@ -47,7 +48,6 @@ import TopDelegators from "./pages/TopDelegators";
 import TransactionDetail from "./pages/TransactionDetail";
 import TransactionList from "./pages/TransactionList";
 import VerifyEmail from "./pages/VerifyEmail";
-import { setOpenSyncBookmarkModal } from "./stores/user";
 
 const StakeAddressRegistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.REGISTRATION} />;
 const StakeAddressDeregistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.DEREREGISTRATION} />;
