@@ -1,6 +1,16 @@
 import React, { useState } from "react";
 import { Box, Grid, useTheme } from "@mui/material";
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, TooltipProps } from "recharts";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+  TooltipProps,
+  Label
+} from "recharts";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 import { BigNumber } from "bignumber.js";
@@ -60,10 +70,23 @@ const AddressAnalytics: React.FC = () => {
     return formatPrice(bigValue.toString());
   };
 
+  const getLabelTimeTooltip = (label: string) => {
+    switch (rangeTime) {
+      case "ONE_DAY":
+        return `${moment(label).format("DD MMM YYYY HH:mm:ss")}`;
+      case "ONE_WEEK":
+      case "ONE_MONTH":
+      case "THREE_MONTH":
+        return moment(label).format("DD MMM YYYY");
+      default:
+        return "";
+    }
+  };
+
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
     return (
       <TooltipBody>
-        <TooltipLabel>{moment(content.label).format("DD MMM YYYY HH:mm:ss")} (UTC time zone)</TooltipLabel>
+        <TooltipLabel>{getLabelTimeTooltip(content.label)}</TooltipLabel>
         <TooltipValue>{formatADAFull(content.payload?.[0]?.value) || 0}</TooltipValue>
       </TooltipBody>
     );
@@ -107,7 +130,9 @@ const AddressAnalytics: React.FC = () => {
                     color={theme.palette.secondary.light}
                     stroke={theme.palette.secondary.light}
                     dx={-15}
-                  />
+                  >
+                    <Label value="(UTC)" offset={-8} position="insideBottom" />
+                  </XAxis>
                   <YAxis
                     tickFormatter={formatPriceValue}
                     tickLine={false}

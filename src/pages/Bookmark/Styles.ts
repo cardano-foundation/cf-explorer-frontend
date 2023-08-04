@@ -9,7 +9,7 @@ export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => (
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
   paddingLeft: 0,
-  color: active ? theme.palette.primary.main : theme.palette.secondary[600]
+  color: active ? theme.palette.primary.main : theme.palette.secondary.light
 }));
 export const StyledTable = styled(Table)(({ theme }) => ({
   "& .empty-content-table": {
@@ -68,5 +68,5 @@ export const WrapTab = styled(Tab)`
   padding-left: 0;
   padding-right: 0;
   min-width: unset;
-  margin-right: 20px;
+  margin-right: 30px;
 `;

@@ -1,5 +1,4 @@
-import { alpha, Button, TextField, styled, Box } from "@mui/material";
-import { BiChevronDown } from "react-icons/bi";
+import { Box, Button, TextField, alpha, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const TitleDetail = styled(Box)`
@@ -87,9 +86,6 @@ export const Option = styled("li")(({ theme }) => ({
   }
 }));
 
-export const ArrowDownIconCustom = styled(BiChevronDown)<{ disabled?: number }>`
-  ${(props) => (props.disabled ? `color: ${props.theme.palette.background.paper}` : "")};
-`;
 
 export const Logo = styled("img")`
   width: 25px;

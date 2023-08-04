@@ -9,7 +9,8 @@ import {
   XAxis,
   YAxis,
   TooltipProps,
-  XAxisProps
+  XAxisProps,
+  Label
 } from "recharts";
 import moment from "moment";
 import { useParams } from "react-router-dom";
@@ -87,14 +88,23 @@ const StakeAnalytics: React.FC = () => {
     return formatPrice(bigValue.toString());
   };
 
+  const getLabelTimeTooltip = (label: string) => {
+    switch (rangeTime) {
+      case "ONE_DAY":
+        return `${moment(label).format("DD MMM YYYY HH:mm:ss")}`;
+      case "ONE_WEEK":
+      case "ONE_MONTH":
+      case "THREE_MONTH":
+        return moment(label).format("DD MMM YYYY");
+      default:
+        return "";
+    }
+  };
+
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
     return (
       <TooltipBody>
-        <TooltipLabel>
-          {tab === "BALANCE"
-            ? moment(content.label).format("DD MMM YYYY HH:mm:ss") + " (UTC time zone)"
-            : `Epoch ${content.label}`}
-        </TooltipLabel>
+        <TooltipLabel>{tab === "BALANCE" ? getLabelTimeTooltip(content.label) : `Epoch ${content.label}`}</TooltipLabel>
         <TooltipValue>{formatADAFull(content.payload?.[0]?.value) || 0}</TooltipValue>
       </TooltipBody>
     );
@@ -170,7 +180,9 @@ const StakeAnalytics: React.FC = () => {
                     }
                     tickLine={false}
                     {...xAxisProps}
-                  />
+                  >
+                    <Label value="(UTC)" offset={-8} position="insideBottom" />
+                  </XAxis>
                   <YAxis
                     color={theme.palette.secondary.light}
                     stroke={theme.palette.secondary.light}
