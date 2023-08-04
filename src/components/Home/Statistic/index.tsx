@@ -248,7 +248,6 @@ const HomeStatistic = () => {
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
                     <CustomTooltip title={"Of the max supply"}>
                       <span>
-                        {" "}
                         Circulating supply <StyledAdaLogoIcon /> :
                       </span>
                     </CustomTooltip>
