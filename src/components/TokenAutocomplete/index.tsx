@@ -1,19 +1,20 @@
 import { Autocomplete, Box, Button } from "@mui/material";
 import { debounce } from "lodash";
+import { BiChevronDown } from "react-icons/bi";
 import { useState } from "react";
 
 import useFetchList from "src/commons/hooks/useFetchList";
+import { useScreen } from "src/commons/hooks/useScreen";
 import { HeaderSearchIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatNumberDivByDecimals, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
-import { useScreen } from "src/commons/hooks/useScreen";
 
+import CustomModal from "../commons/CustomModal";
 import CustomTooltip from "../commons/CustomTooltip";
 import Table, { Column } from "../commons/Table";
 import { WrappModalScrollBar } from "../commons/Table/styles";
 import {
-  ArrowDownIconCustom,
   AssetName,
   Image,
   Logo,
@@ -24,7 +25,6 @@ import {
   StyledTextField,
   SubmitButton
 } from "./styles";
-import CustomModal from "../commons/CustomModal";
 
 const TokenAutocomplete = ({ address }: { address: string }) => {
   const [openModalToken, setOpenModalToken] = useState(false);
@@ -35,12 +35,12 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
     size: 10
   });
 
-  const isDisabled = !data?.length;
+  if (!data?.length && !search) return null;
 
   return (
     <Box>
       <Autocomplete
-        disabled={isDisabled}
+        freeSolo={true}
         options={total > 10 ? [...data, "more"] : data}
         componentsProps={{ paper: { elevation: 2 } }}
         loading={loading}
@@ -135,7 +135,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
           );
         }}
         renderInput={(params) => <StyledTextField {...params} placeholder="Search Token" />}
-        popupIcon={<ArrowDownIconCustom disabled={isDisabled ? 1 : 0} />}
+        popupIcon={<BiChevronDown />}
       />
       <ModalToken address={address} open={openModalToken} onClose={() => setOpenModalToken(false)} />
     </Box>

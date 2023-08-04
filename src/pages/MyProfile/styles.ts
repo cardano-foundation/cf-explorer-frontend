@@ -42,7 +42,7 @@ export const WrapTitle = styled(Box)(() => ({
   display: "flex",
   justifyContent: "start",
   alignItems: "center",
-  width: "max-content",
+  width: "max-content"
 }));
 
 export const Title = styled("span")(({ theme }) => ({
