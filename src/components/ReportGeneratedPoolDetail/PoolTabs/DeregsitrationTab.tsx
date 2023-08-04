@@ -27,7 +27,7 @@ const DeregsitrationTab = () => {
   const columns: Column<SPODeregistrationTabpular>[] = [
     {
       key: "txHash",
-      title: "Transaction hash",
+      title: "Transaction Hash",
       render(data) {
         return (
           <CustomTooltip title={data.txHash}>

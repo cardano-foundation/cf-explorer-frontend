@@ -84,8 +84,9 @@ export const StyledList = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const AditionalLabel = styled(Typography)(() => ({
+export const AditionalLabel = styled(Typography)(({ theme }) => ({
   fontSize: 18,
   fontWeight: 700,
-  marginTop: 24
+  marginTop: 24,
+  color: theme.palette.secondary.main
 }));

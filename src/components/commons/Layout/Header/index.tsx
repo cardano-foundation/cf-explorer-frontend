@@ -89,7 +89,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
             </NetworkContainer>
             <LoginButton />
             {history.location.pathname !== routers.STAKING_LIFECYCLE && (
-              <SearchButton onClick={handleOpenSearch} home={home}>
+              <SearchButton onClick={handleOpenSearch} home={+home}>
                 <SearchIcon fontSize={24} />
               </SearchButton>
             )}

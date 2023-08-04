@@ -7,12 +7,12 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { ImArrowDown2, ImArrowUp2 } from "react-icons/im";
 import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { useList, useUpdateEffect } from "react-use";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { DateRangeIcon, EmptyIcon, FilterIcon, InfoIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
-import { details } from "src/commons/routers";
+import { details, lists } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { PROTOCOL_TYPE } from "src/commons/utils/constants";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
@@ -23,6 +23,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table from "src/components/commons/Table";
 import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "src/types/protocol";
 import { Column } from "src/types/table";
+import NoRecord from "src/components/commons/NoRecord";
 
 import { ExplainerTextModal } from "./ExplainerTextModal";
 import { explainerTextGlobalConstants, explainerTextProtocolHistory } from "./explainerText";
@@ -33,8 +34,10 @@ import {
   BackButton,
   BackText,
   ButtonFilter,
+  ColumnProtocol,
   FilterContainer,
-  StyledContainer
+  StyledContainer,
+  StyledDropdownItem
 } from "./styles";
 
 interface IProtocolParamVertical {
@@ -46,7 +49,8 @@ interface IProtocolParamVertical {
 
 const ProtocolParameter: React.FC = () => {
   const [costModelScript, setCostModelScript] = useState("");
-  const [showHistory, setShowHistory] = useState(false);
+  const { histories } = useParams<{ histories?: "histories" }>();
+  const history = useHistory();
   const { PROTOCOL_PARAMETER } = API;
   const { data: dataFixed, initialized: initialFixed } = useFetch<any>(PROTOCOL_PARAMETER.FIXED);
   const { data: dataLastest, initialized: initialLastest } = useFetch<any>(PROTOCOL_PARAMETER.LASTEST);
@@ -191,29 +195,31 @@ const ProtocolParameter: React.FC = () => {
       }
     },
     {
-      title: "Last Updated Epoch",
+      title: "Last updated in epoch",
       key: "epochNo",
       render: (r: any) => <Box>{r?.epochNo}</Box>
     },
     {
-      title: "Created At",
+      title: "Timestamp",
       key: "timestamp",
       render: (r: any) => (r?.time ? formatDateTimeLocal(r.time) : "")
     }
   ];
 
+  if (histories && histories !== "histories") return <NoRecord />;
+
   return (
     <StyledContainer>
-      {showHistory && (
+      {histories && (
         <Box textAlign={"left"}>
-          <BackButton onClick={() => setShowHistory(false)}>
+          <BackButton onClick={() => history.push(lists.protocolParameters())}>
             <HiArrowLongLeft />
             <BackText>Back</BackText>
           </BackButton>
         </Box>
       )}
-      {showHistory && <ProtocolParameterHistory />}
-      {!showHistory && (
+      {histories && <ProtocolParameterHistory />}
+      {!histories && (
         <Card titleSx={{ margin: 0 }} title={"Protocol parameters"}>
           <Box pt={2}>
             <>
@@ -228,7 +234,7 @@ const ProtocolParameter: React.FC = () => {
                     textTransform={"capitalize"}
                     fontWeight={"bold"}
                     fontSize={"0.875rem"}
-                    onClick={() => setShowHistory(true)}
+                    onClick={() => history.push(lists.protocolParameters("histories"))}
                   >
                     View update history
                   </Box>
@@ -290,8 +296,8 @@ export default ProtocolParameter;
 export const ProtocolParameterHistory = () => {
   const { PROTOCOL_PARAMETER } = API;
   const TOTAL_PARAMETER = 29;
-  const theme = useTheme();
   const [initing, setIniting] = useState(true);
+  const theme = useTheme();
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
   const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
@@ -358,22 +364,15 @@ export const ProtocolParameterHistory = () => {
     key: t,
     render: (r: any) => {
       return (
-        <Box
-          p={"24px 20px"}
-          maxWidth={200}
-          overflow={"hidden"}
-          whiteSpace={"nowrap"}
-          component={["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string) ? Link : Box}
-          minHeight={"16px"}
-          textOverflow={"ellipsis"}
-          display={"block"}
-          bgcolor={({ palette }) =>
+        <ColumnProtocol
+          isLink={
             r[t as ProtocolTypeKey] !== null
               ? ["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string)
-                ? palette.success[100]
-                : "transparent"
-              : "transparent"
+                ? 1
+                : 0
+              : 0
           }
+          component={["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string) ? Link : Box}
           to={
             r[t as ProtocolTypeKey]?.transactionHash
               ? details.transaction(r[t as ProtocolTypeKey]?.transactionHash, "protocols")
@@ -395,7 +394,7 @@ export const ProtocolParameterHistory = () => {
           ) : (
             ""
           )}
-        </Box>
+        </ColumnProtocol>
       );
     }
   }));
@@ -686,9 +685,9 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                     }
                   }}
                 />
-                <Box component={"label"} htmlFor={"all"} style={{ cursor: "pointer" }}>
+                <StyledDropdownItem htmlFor={"all"} style={{ cursor: "pointer" }}>
                   All parameters
-                </Box>
+                </StyledDropdownItem>
               </Box>
 
               {Object.keys(PROTOCOL_TYPE).map((k, idx) => (
@@ -708,9 +707,9 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                       }
                     }}
                   />
-                  <Box component={"label"} htmlFor={k} style={{ cursor: "pointer" }}>
+                  <StyledDropdownItem htmlFor={k} style={{ cursor: "pointer" }}>
                     {k}
-                  </Box>
+                  </StyledDropdownItem>
                 </Box>
               ))}
             </Box>

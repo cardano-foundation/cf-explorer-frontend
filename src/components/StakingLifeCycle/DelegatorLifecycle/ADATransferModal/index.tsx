@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { TabContext, TabPanel } from "@mui/lab";
-import { Box, useTheme } from "@mui/material";
 
 import { BalanceIcon, RewardsIcon } from "src/commons/resources";
-import CustomIcon from "src/components/commons/CustomIcon";
 import { useScreen } from "src/commons/hooks/useScreen";
 import CustomModal from "src/components/commons/CustomModal";
+import CustomTabTitle from "src/components/commons/CustomTabTitle";
 
 import WalletActivity from "./WalletActivity";
 import RewardActivity from "./RewardActivity";
-import { CustomTab, StyledBox, StyledTab, StyledTabs } from "./styles";
+import { StyledBox, StyledTab, StyledTabs } from "./styles";
 
 interface IProps {
   open: boolean;
@@ -24,7 +23,7 @@ enum ActivityType {
 const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
   const [activityType, setActivityType] = useState<ActivityType>(ActivityType.WALLET);
   const { isGalaxyFoldSmall } = useScreen();
-  const theme = useTheme();
+
   useEffect(() => {
     if (!open) setActivityType(ActivityType.WALLET);
   }, [open]);
@@ -52,45 +51,17 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
             <StyledTab
               value={ActivityType.WALLET}
               label={
-                <Box display="flex" alignItems="center" justifyContent={"center"}>
-                  <CustomIcon
-                    icon={BalanceIcon}
-                    width={23}
-                    color={(theme) =>
-                      activityType === ActivityType.WALLET ? theme.palette.primary.main : theme.palette.secondary[600]
-                    }
-                    stroke="currentColor"
-                  />
-                  <CustomTab
-                    color={
-                      activityType === ActivityType.WALLET ? theme.palette.primary.main : theme.palette.secondary[600]
-                    }
-                  >
-                    Wallet Activity
-                  </CustomTab>
-                </Box>
+                <CustomTabTitle icon={BalanceIcon} active={activityType === ActivityType.WALLET}>
+                  Wallet Activity
+                </CustomTabTitle>
               }
             />
             <StyledTab
               value={ActivityType.REWARDS}
               label={
-                <Box display="flex" alignItems="center" justifyContent={"center"}>
-                  <CustomIcon
-                    icon={RewardsIcon}
-                    width={23}
-                    color={(theme) =>
-                      activityType === ActivityType.REWARDS ? theme.palette.primary.main : theme.palette.secondary[600]
-                    }
-                    fill="currentColor"
-                  />
-                  <CustomTab
-                    color={
-                      activityType === ActivityType.REWARDS ? theme.palette.primary.main : theme.palette.secondary[600]
-                    }
-                  >
-                    Rewards Activity
-                  </CustomTab>
-                </Box>
+                <CustomTabTitle icon={RewardsIcon} active={activityType === ActivityType.REWARDS}>
+                  Rewards Activity
+                </CustomTabTitle>
               }
             />
           </StyledTabs>

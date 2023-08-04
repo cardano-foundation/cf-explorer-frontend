@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import BigNumber from "bignumber.js";
 import moment from "moment";
 import { useSelector } from "react-redux";
@@ -33,8 +33,11 @@ import {
   Progress,
   ProgressPending,
   StatisticContainer,
+  StyledAdaLogoIcon,
   TimeDuration,
-  Title
+  Title,
+  WrapCardContent,
+  WrapGrid
 } from "./style";
 
 const SkeletonBox = () => (
@@ -85,11 +88,11 @@ const HomeStatistic = () => {
       alignItems="stretch"
       data-testid="home-statistic"
     >
-      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
+      <WrapGrid item xl lg={3} sm={6} xs={12}>
         {usdMarket && btcMarket?.[0] ? (
           <Link href={EXT_ADA_PRICE_URL} target="_blank">
-            <Item data-testid="ada-price-box">
-              <Box display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
+            <Item data-testid="ada-price-box" smallItem>
+              <WrapCardContent>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon
                     style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
@@ -113,18 +116,18 @@ const HomeStatistic = () => {
                   />
                   <AdaPrice data-testid="ada-price-in-btc">{btcMarket[0]?.current_price} BTC</AdaPrice>
                 </Content>
-              </Box>
+              </WrapCardContent>
             </Item>
           </Link>
         ) : (
           <SkeletonBox />
         )}
-      </Grid>
-      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
+      </WrapGrid>
+      <WrapGrid item xl lg={3} sm={6} xs={12}>
         {usdMarket ? (
           <Link href={EXT_ADA_PRICE_URL} target="_blank">
-            <Item data-testid="market-cap-box">
-              <Box display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
+            <Item data-testid="market-cap-box" smallItem>
+              <WrapCardContent>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon data-testid="market-cap-icon" src={MarketCapIcon} alt="Market cap" />
                   <Name data-testid="market-cap-box-title">Market cap</Name>
@@ -135,14 +138,14 @@ const HomeStatistic = () => {
                     Last updated {moment(usdMarket.last_updated).fromNow()}
                   </TimeDuration>
                 </Content>
-              </Box>
+              </WrapCardContent>
             </Item>
           </Link>
         ) : (
           <SkeletonBox />
         )}
-      </Grid>
-      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
+      </WrapGrid>
+      <WrapGrid item xl lg={3} sm={6} xs={12}>
         {currentEpoch ? (
           <Link href={details.epoch(currentEpoch?.no)} target="_blank">
             <Item data-testid="current-epoch-box">
@@ -167,11 +170,11 @@ const HomeStatistic = () => {
                   </Box>
                   <Progress>
                     <CustomTooltip title={+progress || 0}>
-                      <ProcessActive data-testid="live-stake-progress-active" rate={+progress || 0}>
+                      <ProcessActive data-testid="current-epoch-progress-active" rate={+progress || 0}>
                         {+progress || 0}%
                       </ProcessActive>
                     </CustomTooltip>
-                    <ProgressPending data-testid="live-stake-progress-pending" rate={100 - (+progress || 0)}>
+                    <ProgressPending data-testid="current-epoch-progress-pending" rate={100 - (+progress || 0)}>
                       <Box color={({ palette }) => palette.secondary.light}>
                         {days}d {hours}h
                       </Box>
@@ -192,8 +195,8 @@ const HomeStatistic = () => {
         ) : (
           <SkeletonBox />
         )}
-      </Grid>
-      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
+      </WrapGrid>
+      <WrapGrid item xl lg={3} sm={6} xs={12}>
         {data && usdMarket ? (
           <Link href={routers.DELEGATION_POOLS} target="_blank">
             <Item data-testid="live-stake-box">
@@ -206,7 +209,9 @@ const HomeStatistic = () => {
                       src={LiveStakeIcon}
                       alt="Total ADA Stake"
                     />
-                    <Name data-testid="live-stake-box-title">Live Stake (ADA)</Name>
+                    <Name data-testid="live-stake-box-title">
+                      Live Stake <StyledAdaLogoIcon />
+                    </Name>
                   </Box>
                 </Box>
                 <Box>
@@ -233,18 +238,22 @@ const HomeStatistic = () => {
                 </Box>
                 <Box>
                   <Box color={({ palette }) => palette.secondary.light}>
-                    Active Stake (ADA):{" "}
+                    Active Stake <StyledAdaLogoIcon />:{" "}
                     <CustomTooltip title={formatADAFull(activeStake)}>
-                      <>{formatADA(activeStake)}</>
+                      <Box data-testid="active-stake-value" sx={{ display: "inline-block" }}>
+                        {formatADA(activeStake)}
+                      </Box>
                     </CustomTooltip>
                   </Box>
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
-                    Circulating supply (ADA):{" "}
+                    Circulating supply <StyledAdaLogoIcon /> :{" "}
                     <CustomTooltip title={numberWithCommas(supply)}>
-                      <>{formatADA(circulatingSupply.toString())}</>
+                      <Box data-testid="circulating-supply-percentage" sx={{ display: "inline-block" }}>
+                        {formatADA(circulatingSupply.toString())}
+                      </Box>
                     </CustomTooltip>
                     <CustomTooltip title={`${circulatingRate.toFixed(5)}%`}>
-                      <>({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)</>
+                      <Box sx={{ display: "inline-block" }}>({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)</Box>
                     </CustomTooltip>
                   </Box>
                 </Box>
@@ -254,7 +263,7 @@ const HomeStatistic = () => {
         ) : (
           <SkeletonBox />
         )}
-      </Grid>
+      </WrapGrid>
     </StatisticContainer>
   );
 };
