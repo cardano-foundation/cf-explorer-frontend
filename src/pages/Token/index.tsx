@@ -149,6 +149,10 @@ const Tokens = () => {
     setSelected(null);
   };
 
+  useEffect(() => {
+    if (!onDetailView) handleClose();
+  }, [onDetailView]);
+
   return (
     <StyledContainer>
       <Card title="Token List">

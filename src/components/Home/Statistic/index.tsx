@@ -240,24 +240,18 @@ const HomeStatistic = () => {
                   <Box color={({ palette }) => palette.secondary.light}>
                     Active Stake <StyledAdaLogoIcon />:{" "}
                     <CustomTooltip title={formatADAFull(activeStake)}>
-                      <Box data-testid="active-stake-value" sx={{ display: "inline-block" }}>
-                        {formatADA(activeStake)}
-                      </Box>
+                      <span data-testid="active-stake-value">{formatADA(activeStake)}</span>
                     </CustomTooltip>
                   </Box>
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
-                    <CustomTooltip title={"Of the max supply"}>
-                      <span>
-                        Circulating supply <StyledAdaLogoIcon /> :
-                      </span>
-                    </CustomTooltip>
+                    Circulating supply (ADA):{" "}
                     <CustomTooltip title={numberWithCommas(supply)}>
-                      <Box data-testid="circulating-supply-percentage" sx={{ display: "inline-block" }}>
-                        {formatADA(circulatingSupply.toString())}
-                      </Box>
+                      <span data-testid="circulating-supply-value">{formatADA(circulatingSupply.toString())}</span>
                     </CustomTooltip>
                     <CustomTooltip title={`${circulatingRate.toFixed(5)}%`}>
-                      <Box sx={{ display: "inline-block" }}>({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)</Box>
+                      <span data-testid="circulating-supply-percentage">
+                        ({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)
+                      </span>
                     </CustomTooltip>
                   </Box>
                 </Box>
