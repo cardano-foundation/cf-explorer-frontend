@@ -246,7 +246,7 @@ export const DetailLabel = styled("small")`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  color: ${(props) => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.secondary.light};
   line-height: 26px;
 `;
 export const InfoIcon = styled(FiInfo)`

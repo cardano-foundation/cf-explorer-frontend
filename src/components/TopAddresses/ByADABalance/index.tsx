@@ -1,4 +1,4 @@
-import { Box, MenuItem } from "@mui/material";
+import { Box } from "@mui/material";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -12,7 +12,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import Table, { Column } from "src/components/commons/Table";
 
-import { Actions, PageSize, PerPage, SelectMui, StyledLink, TimeDuration } from "./styles";
+import { Actions, PageSize, PerPage, SelectMui, StyledLink, StyledMenuItem, TimeDuration } from "./styles";
 
 const perPages = [10, 20, 50, 100];
 
@@ -84,9 +84,9 @@ const TopAddressesByADABalance = () => {
             sx={{ color: ({ palette }) => palette.secondary.main }}
           >
             {perPages.map((item) => (
-              <MenuItem key={item} value={item}>
+              <StyledMenuItem key={item} value={item}>
                 <Box color={({ palette }) => `${palette.secondary.main} !important`}>{item}</Box>
-              </MenuItem>
+              </StyledMenuItem>
             ))}
           </SelectMui>
           <PerPage>Addresses</PerPage>

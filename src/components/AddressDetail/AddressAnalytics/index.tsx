@@ -133,7 +133,12 @@ const AddressAnalytics: React.FC = () => {
                   >
                     <Label value="(UTC)" offset={-8} position="insideBottom" />
                   </XAxis>
-                  <YAxis tickFormatter={formatPriceValue} tickLine={false} color={theme.palette.secondary.main} />
+                  <YAxis
+                    tickFormatter={formatPriceValue}
+                    tickLine={false}
+                    color={theme.palette.secondary.light}
+                    stroke={theme.palette.secondary.light}
+                  />
                   <Tooltip content={renderTooltip} cursor={false} />
                   <CartesianGrid vertical={false} strokeWidth={0.33} />
                   <Area
