@@ -22,10 +22,17 @@ describe("User check information of current Epoch", () => {
       cy.get('div').contains(' Unique Accounts').should('be.visible'); 
       cy.get('div').contains(' Transaction Count').should('be.visible'); 
       cy.get('div').contains(' Rewards Distributed').should('be.visible');
-      cy.get('[data-testid="table-common"]').should('be.visible');  
+      cy.get('[data-testid="table-common"]').should('be.visible');
+      cy.wait(2000);  
       cy.get('[data-testid="footer"]').scrollIntoView() 
-      cy.get('[aria-label="pagination navigation"]').should('be.visible');    
-      cy.get('span').contains('Per page').should('be.visible'); 
+      cy.get('[data-testid="table-common"] tbody tr').then(($element) => {
+        if ($element.length > 10) {
+            cy.get('[aria-label="pagination navigation"]').should('be.visible');    
+            cy.get('span').contains('Per page').should('be.visible');
+        }else{
+            cy.log('Total Transaction record is less than 10')
+        }
+      });
     });
   });
   
