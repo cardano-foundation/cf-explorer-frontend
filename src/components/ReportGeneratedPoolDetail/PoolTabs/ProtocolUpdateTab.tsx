@@ -27,7 +27,7 @@ const ProtocolUpdateTab = () => {
   const columns: Column<PoolUpdateDetail>[] = [
     {
       key: "txHash",
-      title: "Transaction hash",
+      title: "Transaction Hash",
       render(data) {
         return (
           <CustomTooltip title={data.txHash}>
