@@ -114,7 +114,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
 
   return (
     <>
-      <WrapCustomDatePicker onClick={handleToggle} ref={ref}>
+      <WrapCustomDatePicker data-testid="date-range-picker" onClick={handleToggle} ref={ref}>
         {startDate || endDate ? (
           <Box
             sx={{
@@ -138,7 +138,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
       </WrapCustomDatePicker>
 
       {createPortal(
-        <PickerPortalContainer ref={portalRef} sx={position}>
+        <PickerPortalContainer data-testid="custom-picker-calender" ref={portalRef} sx={position}>
           <SingleDatePicker
             itemKey={1}
             open={open}
@@ -260,10 +260,10 @@ export const SingleDatePicker = (props: SingleDatePickerProps) => {
               </HiddenScroll>
             )}
             <Box position="relative">
-              <IconButton onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+              <IconButton data-testid="decrease-month" onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
                 <IoIosArrowBack size="18px" />
               </IconButton>
-              <IconButton onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+              <IconButton data-testid="increase-month" onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
                 <IoIosArrowForward size="18px" />
               </IconButton>
             </Box>

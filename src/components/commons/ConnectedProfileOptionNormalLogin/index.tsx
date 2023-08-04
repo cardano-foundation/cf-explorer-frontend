@@ -43,7 +43,7 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
       });
       toast.success("You are now signed out");
     } catch (error) {
-      console.log(error);
+      // Todo: handle error
     } finally {
       removeAuthInfo();
       setBookmark([]);
