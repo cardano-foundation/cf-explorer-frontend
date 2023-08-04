@@ -35,11 +35,12 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
     size: 10
   });
 
-  if (!data?.length) return null;
+  if (!data?.length && !search) return null;
 
   return (
     <Box>
       <Autocomplete
+        freeSolo={true}
         options={total > 10 ? [...data, "more"] : data}
         componentsProps={{ paper: { elevation: 2 } }}
         loading={loading}
