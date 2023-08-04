@@ -63,7 +63,17 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "test": "start-server-and-test start localhost:3000 cypress:run",
-    "test:jest:ci": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watchAll=false --ci --coverage"
+    "test:jest:ci": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --watchAll=false --ci --coverage",
+    "setup:git-hooks": "git config core.hooksPath .husky",
+    "prepare": "husky install && npm run setup:git-hooks"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ],
+    "*.{css,scss,ts,tsx,js,jsx}": [
+      "prettier --write"
+    ]
   },
   "eslintConfig": {
     "extends": [
@@ -105,8 +115,10 @@
     "eslint-import-resolver-typescript": "^3.5.5",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react": "^7.33.0",
+    "husky": "^8.0.3",
     "kill-port": "^2.0.1",
+    "lint-staged": "^13.2.3",
     "prettier": "^2.8.8",
     "start-server-and-test": "^2.0.0",
     "string-format": "^2.0.0",

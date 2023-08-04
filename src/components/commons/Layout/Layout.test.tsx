@@ -13,6 +13,6 @@ describe("Layout component", () => {
     );
     expect(screen.getByText(/contents/i)).toBeInTheDocument();
     expect(screen.getByText(/header-search\.svg/i)).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /cardano blockchain explorer/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /cardano explorer/i })).toBeInTheDocument();
   });
 });
