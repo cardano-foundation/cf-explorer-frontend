@@ -42,7 +42,7 @@ export const RegistrationCertificateModal = ({ stake, open, handleCloseModal }: 
     <StyledCustomModal open={open} onClose={handleCloseModal} title="Registration certificate">
       {loading && <Skeleton variant="rectangular" width={500} height={90} />}
       {!loading && (
-        <Box p={3} width="max-content">
+        <Box p={3}>
           <Box fontWeight={"bold"} mb={1} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
             Stake Address
           </Box>
