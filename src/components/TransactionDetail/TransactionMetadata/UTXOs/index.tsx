@@ -74,9 +74,7 @@ const Card = ({
           <Item key={index}>
             <ItemContent sx={{ overflowX: "auto", overflowY: "hidden" }}>
               <Box display="flex" alignItems="center">
-                <Box width={50}>
-                  {renderIcon(type)}
-                </Box>
+                <Box width={50}>{renderIcon(type)}</Box>
               </Box>
               <WrapInfo>
                 <Box width={"100%"} display="flex" flexDirection="column" justifyContent="center" paddingTop="5px">
@@ -161,7 +159,7 @@ const Card = ({
                       flexDirection={isMobile ? "column" : "row"}
                       paddingTop="5px"
                     >
-                      <Box mr={3} minWidth={180} pl={type === "down" ? 2 : 0}>
+                      <Box mr={3} minWidth={180}>
                         <Box
                           display={"flex"}
                           flexDirection={isMobile ? "column" : "row"}

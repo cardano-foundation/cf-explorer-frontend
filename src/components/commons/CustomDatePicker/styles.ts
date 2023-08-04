@@ -39,7 +39,7 @@ export const HiddenScroll = styled(Box)(({ theme }) => ({
   height: "200px",
   overflow: "auto",
   backgroundColor: theme.palette.common.white,
-  boxShadow: `0px 4px 16px ${alpha(theme.palette.common.white, 0.12)}`,
+  boxShadow: `0px 4px 16px ${alpha(theme.palette.common.black, 0.12)}`,
   borderRadius: "8px",
   zIndex: 1,
   "&::-webkit-scrollbar": {

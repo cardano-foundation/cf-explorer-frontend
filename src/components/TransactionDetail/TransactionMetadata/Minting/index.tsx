@@ -48,7 +48,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       key: "Amount",
       minWidth: "40px",
       render: (r) => {
-        return <Amount>{formatAmount(r.assetQuantity)}</Amount>;
+        return <Amount>{formatAmount(r.assetQuantity, r.metadata?.decimals)}</Amount>;
       }
     },
     {

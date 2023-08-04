@@ -175,7 +175,8 @@ const TransactionList: React.FC<TransactionListProps> = ({
             mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             history.replace({ search: stringify({ page, size }) });
           },
-          handleCloseDetailView: handleClose
+          handleCloseDetailView: handleClose,
+          hideLastPage: true
         }}
         onClickRow={onClickRow}
         selected={selected}
