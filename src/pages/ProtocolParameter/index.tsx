@@ -205,7 +205,6 @@ const ProtocolParameter: React.FC = () => {
   ];
 
   if (histories && histories !== "histories") return <NoRecord />;
-  
 
   return (
     <StyledContainer>

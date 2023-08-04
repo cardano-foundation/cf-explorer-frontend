@@ -2,9 +2,9 @@ import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 import { fireEvent, render, screen } from "src/test-utils";
+import { lists } from "src/commons/routers";
 
 import SidebarMenu from ".";
-import { lists } from "src/commons/routers";
 
 describe("SidebarMenu", () => {
   it("should component render", () => {
