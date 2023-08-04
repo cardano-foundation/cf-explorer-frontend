@@ -257,5 +257,5 @@ export const StyledPagination = styled(Pagination)(() => ({
 }));
 
 export const CustomMenuItem = styled(MenuItem)(({ theme }) => ({
-  color: theme.palette.secondary.main,
+  color: theme.palette.secondary.main
 }));

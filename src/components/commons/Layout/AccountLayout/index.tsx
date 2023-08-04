@@ -90,11 +90,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
                     {route.title}
                   </NavItemMobile>
                   <NavItem to={route.to} active={+active}>
-                    <Box
-                      display="flex"
-                      alignItems={"center"}
-                      justifyContent="space-between"
-                    >
+                    <Box display="flex" alignItems={"center"} justifyContent="space-between">
                       <Box pl={"20px"}>{route.title}</Box>
                       <MdChevronRight
                         size={25}

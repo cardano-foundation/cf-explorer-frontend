@@ -1,8 +1,6 @@
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { useTheme } from "@mui/material";
-import userEvent from "@testing-library/user-event";
-import { waitFor } from "@testing-library/react";
 
 import themes from "src/themes";
 import { fireEvent, render, screen } from "src/test-utils";
