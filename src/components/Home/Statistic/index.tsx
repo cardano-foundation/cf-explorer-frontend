@@ -207,7 +207,9 @@ const HomeStatistic = () => {
                       src={LiveStakeIcon}
                       alt="Total ADA Stake"
                     />
-                    <Name data-testid="live-stake-box-title">Live Stake (ADA)</Name>
+                    <Name data-testid="live-stake-box-title">
+                      Live Stake <StyledAdaLogoIcon />
+                    </Name>
                   </Box>
                 </Box>
                 <Box>
