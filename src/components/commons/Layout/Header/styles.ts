@@ -9,7 +9,6 @@ export const HeaderContainer = styled("header")`
 `;
 
 export const HeaderBox = styled(Container)<{ home: number }>`
-  max-width: 95vw !important;
   display: flex;
   gap: 10px;
   ${(props) =>

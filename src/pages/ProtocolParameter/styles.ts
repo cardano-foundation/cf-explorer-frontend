@@ -102,5 +102,4 @@ export const UpdatableParameters = styled(Box)(({ theme }) => ({
 }));
 
 export const StyledContainer = styled(Container)`
-  max-width: 95vw !important;
 `;
