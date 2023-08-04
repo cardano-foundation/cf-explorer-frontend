@@ -26,7 +26,7 @@ export const TabLabel = styled(Box)(({ theme }) => ({
 
 export const Header = styled(Box)(({ theme }) => ({
   paddingBottom: "8px",
-  borderBottom: `1px solid ${theme.palette.primary[200]}`,
+  borderBottom: `1px solid ${theme.palette.primary[200]}`
 }));
 
 export const Divider = styled(Box)(({ theme }) => ({
@@ -34,7 +34,7 @@ export const Divider = styled(Box)(({ theme }) => ({
   bottom: "-35%",
   width: "100%",
   height: 0,
-  borderBottom: `3px solid ${theme.palette.primary.main}`,
+  borderBottom: `3px solid ${theme.palette.primary.main}`
 }));
 
 export const WrapTitle = styled(Box)(() => ({

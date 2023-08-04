@@ -188,7 +188,9 @@ export const PROTOCOL_TYPE = {
   maxCollateralInputs: "MAX_COLLATERAL_INPUTS",
   coinsPerUtxoSize: "COINS_PER_UTXO_SIZE"
 };
+
 export const LANGUAGE = "en";
+
 export enum REWARD_TYPES {
   MEMBER = "MEMBER",
   LEADER = "LEADER",
@@ -203,4 +205,4 @@ export const REWARD_TYPES_LABEL = {
   [REWARD_TYPES.REFUND]: "Refund",
   [REWARD_TYPES.RESERVES]: "Reserves",
   [REWARD_TYPES.TREASURY]: "Treasury"
-}; 
+};

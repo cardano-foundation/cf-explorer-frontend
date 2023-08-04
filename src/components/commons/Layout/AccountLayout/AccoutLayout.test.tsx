@@ -18,7 +18,6 @@ describe("AccountLayout component", () => {
     expect(screen.getByText(/contents/i)).toBeInTheDocument();
   });
 
-
   it("should the router works well", () => {
     const history = createMemoryHistory();
     render(
