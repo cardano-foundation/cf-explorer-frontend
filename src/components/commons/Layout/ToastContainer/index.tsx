@@ -65,6 +65,7 @@ const ToastContainer: React.FC = () => {
           const { title, color, background } = getProps(severity, item.title);
           return (
             <StyledAlert
+              data-testid="toast-container"
               key={idx}
               iconMapping={{
                 error: <MdOutlineErrorOutline color={theme.palette.error[700]} />,
