@@ -105,6 +105,9 @@ export const StyledContainer = styled(Container)`
   max-width: 95vw !important;
 `;
 
+export const StyledDropdownItem = styled("label")`
+  color: ${({ theme }) => theme.palette.secondary.main};
+`;
 export const ColumnProtocol = styled(Box)<{ isLink: number; to: string }>(({ isLink, theme }) => ({
   padding: "24px 20px",
   maxWidth: 200,

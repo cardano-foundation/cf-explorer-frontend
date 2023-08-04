@@ -102,6 +102,7 @@ export const BoxStyled = styled(CardValue)(({ theme }) => ({
   textOverflow: "ellipsis",
   overflow: "hidden",
   textAlign: "left",
+  color: theme.palette.primary.main,
   [theme.breakpoints.down("sm")]: {
     fontSize: 20,
     lineHeight: "23px",
@@ -117,7 +118,7 @@ export const BoxValue = styled(CardValue)(() => ({
 }));
 
 export const StyledBoxDelegating = styled(Link)(() => ({
-  width:"max-content",
+  width: "max-content",
   maxWidth: "100%",
   display: "flex",
   justifyContent: "flex-start",

@@ -80,7 +80,10 @@ export const StyledTextField = styled(TextField)`
 `;
 
 export const Option = styled("li")(({ theme }) => ({
-  background: theme.palette.secondary[0]
+  background: theme.palette.secondary[0],
+  "&:hover": {
+    background: theme.palette.primary[200] + " !important"
+  }
 }));
 
 export const Logo = styled("img")`

@@ -23,6 +23,7 @@ import {
   ButtonModal,
   CloseButton,
   DelegatedDetail,
+  DelegatedEmptyPool,
   DetailLabel,
   DetailLabelSkeleton,
   DetailLink,
@@ -206,7 +207,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
                   </Box>
                 </CustomTooltip>
               ) : (
-                "Not delegated to any pool"
+                <DelegatedEmptyPool>Not delegated to any pool</DelegatedEmptyPool>
               )}
             </DetailsInfoItem>
             <DetailsInfoItem>

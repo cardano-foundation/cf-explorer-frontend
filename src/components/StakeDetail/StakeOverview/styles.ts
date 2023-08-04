@@ -19,7 +19,7 @@ export const StyledLink = styled(Link)`
 `;
 
 export const StyledLinkTo = styled(StyledLink)<{ isTo: boolean }>(({ theme, isTo }) => ({
-  color: isTo ? `${theme.palette.secondary.main} !important` : `${theme.palette.error[700]} !important`
+  color: isTo ? `${theme.palette.primary.main} !important` : `${theme.palette.error[700]} !important`
 }));
 
 export const BackButton = styled(Link)`

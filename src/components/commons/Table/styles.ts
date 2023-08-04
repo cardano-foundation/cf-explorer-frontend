@@ -256,6 +256,8 @@ export const StyledPagination = styled(Pagination)(() => ({
   }
 }));
 
-export const CustomMenuItem = styled(MenuItem)(({ theme }) => ({
-  color: theme.palette.secondary.main
+export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  "&:hover, &.Mui-selected": {
+    background: theme.palette.primary[200] + " !important"
+  }
 }));

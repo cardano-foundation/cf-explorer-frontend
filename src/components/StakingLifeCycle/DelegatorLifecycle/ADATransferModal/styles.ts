@@ -12,7 +12,7 @@ export const ModalTitle = styled("div")(({ theme }) => ({
 export const TextUserInfo = styled("span")(({ theme }) => ({
   fontWeight: 600,
   fontSize: "var(--font-size-text)",
-  color: theme.palette.text.primary,
+  color: theme.palette.secondary.main,
   margin: "0px 3px",
   display: "inline-block"
 }));
@@ -80,11 +80,11 @@ export const Status = styled("span")<{ status: WalletActivityIF["status"] }>`
 export const StyledLink = styled(Link)`
   text-decoration: none;
   font-family: var(--font-family-text);
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  color: ${({ theme }) => theme.palette.primary.main} !important;
   font-weight: var(--font-weight-normal);
   &:hover {
     font-family: var(--font-family-text);
-    color: ${(props) => props.theme.palette.secondary.main};
+    color: ${({ theme }) => theme.palette.primary.main};
   }
 `;
 
