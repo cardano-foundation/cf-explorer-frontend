@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "src/test-utils";
+import { render, screen } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
 
 import DetailViewContractHash from "./DetailViewContractHash";

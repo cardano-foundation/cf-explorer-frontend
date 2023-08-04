@@ -74,9 +74,7 @@ const Card = ({
           <Item key={index}>
             <ItemContent sx={{ overflowX: "auto", overflowY: "hidden" }}>
               <Box display="flex" alignItems="center">
-                <Box width={50}>
-                  {renderIcon(type)}
-                </Box>
+                <Box width={50}>{renderIcon(type)}</Box>
               </Box>
               <WrapInfo>
                 <Box width={"100%"} display="flex" flexDirection="column" justifyContent="center" paddingTop="5px">
