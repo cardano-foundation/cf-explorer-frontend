@@ -106,6 +106,7 @@ const Transactions: React.FC = () => {
           {...fetchData}
           columns={columns}
           total={{ title: "Total Contracts", count: fetchData.total }}
+          onClickRow={(_, r) => history.push(details.contract(r.address))}
           pagination={{
             ...pageInfo,
             total: fetchData.total,
