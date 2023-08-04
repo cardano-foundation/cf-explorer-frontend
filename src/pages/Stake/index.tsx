@@ -146,6 +146,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
             onClickRow={openDetail}
             selected={selected}
             showTabView
+            tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
           />
         </Card>
       </Box>

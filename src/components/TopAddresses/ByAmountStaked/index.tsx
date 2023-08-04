@@ -93,6 +93,7 @@ const TopAddressesByAmountStaked = () => {
         loading={loading}
         initialized={initialized}
         columns={columns}
+        tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "55vh" } }) }}
       />
     </Box>
   );

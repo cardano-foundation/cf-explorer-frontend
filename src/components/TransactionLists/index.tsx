@@ -180,6 +180,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
         onClickRow={onClickRow}
         selected={selected}
         showTabView={showTabView}
+        tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
       />
     </Card>
   );
