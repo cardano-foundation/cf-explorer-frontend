@@ -1,4 +1,4 @@
-import { Box, styled, IconButton as IconButtonMui, Typography, alpha } from "@mui/material";
+import { Box, styled, IconButton as IconButtonMui, Typography } from "@mui/material";
 
 export const HoldBox = styled(Box)(({ theme }) => ({
   width: "200px",

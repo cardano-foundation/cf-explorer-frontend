@@ -28,7 +28,6 @@ import CustomModal from "../commons/CustomModal";
 
 const TokenAutocomplete = ({ address }: { address: string }) => {
   const [openModalToken, setOpenModalToken] = useState(false);
-  const [selected, setSelected] = useState("");
   const [search, setSearch] = useState("");
   const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
   const { data, loading, total } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
@@ -49,7 +48,6 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
           typeof option === "string" ? "more" : option.displayName || option.name || option.fingerprint
         }
         onInputChange={debounce((e, value) => setSearch(value), 500)}
-        onChange={(e, value) => typeof value !== "string" && setSelected(value?.fingerprint || "")}
         ListboxProps={{
           sx(theme) {
             return {
@@ -76,7 +74,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
         renderOption={(propss, option: WalletAddress["tokens"][number] | string) => {
           if (typeof option === "string") {
             return (
-              <Option key={"more"} {...propss} onClick={() => null} active={0}>
+              <Option key={"more"} {...propss} onClick={() => null}>
                 <Box
                   display="flex"
                   alignItems={"center"}
@@ -102,7 +100,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
             );
           }
           return (
-            <Option key={option.fingerprint} {...propss} active={selected === option.fingerprint ? 1 : 0}>
+            <Option key={option.fingerprint} {...propss} onClick={() => null}>
               <Box
                 display="flex"
                 alignItems={"center"}
@@ -199,6 +197,11 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
     setSearch("");
   };
 
+  const handleSearch = () => {
+    setSearch(value);
+    setPagination({ page: 0, size: 50 });
+  };
+
   return (
     <CustomModal title="Token List" open={open} onClose={handleClose} width={"min(80vw, 600px)"}>
       <>
@@ -208,19 +211,17 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             onChange={(e) => setValue(e.target.value)}
             value={value}
             onKeyUp={(e) => {
-              if (e.key === "Enter") {
-                setSearch(value);
-                setPagination({ page: 0, size: 50 });
-              }
+              if (e.key === "Enter") handleSearch();
             }}
           />
-          <SubmitButton onClick={() => setSearch(value)}>
+          <SubmitButton onClick={() => handleSearch()}>
             <Image src={HeaderSearchIcon} alt="Search" />
           </SubmitButton>
         </SearchContainer>
         <WrappModalScrollBar>
           <Table
             {...fetchData}
+            key={search}
             data={data || []}
             columns={columns}
             total={{ title: "Total", count: fetchData.total }}

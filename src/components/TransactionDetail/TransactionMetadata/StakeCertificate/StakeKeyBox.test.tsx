@@ -13,7 +13,7 @@ const mockData: TStakeCertificated = {
 describe("StakeKeyBox component", () => {
   it("should component render", () => {
     render(<StakeKeyBox data={mockData} />);
-    expect(screen.getByText(/address stake key:/i)).toBeInTheDocument();
+    expect(screen.getByText(/stake address:/i)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: mockData.stakeAddress })).toBeInTheDocument();
   });
 
