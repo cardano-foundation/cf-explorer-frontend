@@ -244,7 +244,11 @@ const HomeStatistic = () => {
                     </CustomTooltip>
                   </Box>
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
-                    Circulating supply (ADA):{" "}
+                    <CustomTooltip title={"Of the max supply"}>
+                      <span>
+                        Circulating supply <StyledAdaLogoIcon />:{" "}
+                      </span>
+                    </CustomTooltip>
                     <CustomTooltip title={numberWithCommas(supply)}>
                       <span data-testid="circulating-supply-value">{formatADA(circulatingSupply.toString())}</span>
                     </CustomTooltip>
