@@ -376,7 +376,7 @@ const Table: React.FC<TableProps> = ({
   };
 
   useEffect(() => {
-    if (wrapperRef.current) {
+    if (wrapperRef.current && !loading) {
       wrapperRef.current.scrollTop = 0;
     }
   }, [loading]);
@@ -504,7 +504,7 @@ const PaginationCustom = ({
         </IconButton>
       );
     }
-    if (item.type === "last") {
+    if (item.type === "last" && !pagination?.hideLastPage) {
       return (
         <IconButton
           disabled={page === totalPage || loading}
@@ -562,7 +562,7 @@ const PaginationCustom = ({
               onBlur={() => {
                 setInputPage(page);
               }}
-              disabled={loading}
+              disabled={true}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   if (inputPage < 1) {

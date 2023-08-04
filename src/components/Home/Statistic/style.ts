@@ -1,5 +1,7 @@
 import { Box, Card, Grid, Skeleton, styled } from "@mui/material";
 
+import { AdaLogoIcon } from "src/components/commons/ADAIcon";
+
 export const StatisticContainer = styled(Grid)`
   margin-bottom: 24px;
 `;
@@ -143,3 +145,8 @@ export const ProgressPending = styled(ProcessActive)<{ rate: number }>`
 export const Link = styled("a")`
   display: contents;
 `;
+
+export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
+  fontSize: 12,
+  color: theme.palette.text.secondary
+}));
