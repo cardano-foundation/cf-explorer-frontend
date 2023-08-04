@@ -308,6 +308,10 @@ Cypress.Commands.add("verifyFieldIsConsecutive", (selector, ...value) => {
   }
 });
 
+Cypress.Commands.add("getBySelector", (selector, ...args) => {
+  return cy.get(`[data-testid=${selector}]`, ...args)
+})
+
 Cypress.Commands.add("withLogin", () => {
   const user = {
     email: "ngan.vu@sotatek.com",
