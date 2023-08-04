@@ -3,9 +3,9 @@ FROM node:16 as build
 WORKDIR /app
 
 COPY package*.json /app/
-RUN npm ci
+RUN npm ci --ignore-scripts
 COPY . .
-RUN npm run build
+RUN npm run build --ignore-scripts
 
 FROM nginx:1.19.6-alpine
 WORKDIR /app
