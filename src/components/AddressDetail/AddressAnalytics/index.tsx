@@ -127,12 +127,18 @@ const AddressAnalytics: React.FC = () => {
                     tickFormatter={(value) => moment(value).format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM")}
                     tickLine={false}
                     tickMargin={5}
-                    color={theme.palette.secondary.main}
+                    color={theme.palette.secondary.light}
+                    stroke={theme.palette.secondary.light}
                     dx={-15}
                   >
                     <Label value="(UTC)" offset={-8} position="insideBottom" />
                   </XAxis>
-                  <YAxis tickFormatter={formatPriceValue} tickLine={false} color={theme.palette.secondary.main} />
+                  <YAxis
+                    tickFormatter={formatPriceValue}
+                    tickLine={false}
+                    color={theme.palette.secondary.light}
+                    stroke={theme.palette.secondary.light}
+                  />
                   <Tooltip content={renderTooltip} cursor={false} />
                   <CartesianGrid vertical={false} strokeWidth={0.33} />
                   <Area

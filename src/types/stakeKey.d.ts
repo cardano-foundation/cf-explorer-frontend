@@ -138,7 +138,11 @@ interface StakeDelegations {
   blockNo: number;
   epochNo: number;
   epochSlotNo: number;
-  pools: string[];
+  pools: {
+    poolId: string;
+    poolName: string;
+    tickerName: string;
+  }[];
   stakeKeys: string[];
   time: string;
   txHash: string;
@@ -152,4 +156,11 @@ interface InstantRewards {
   time: string;
   txHash: string;
   rewards: number;
+}
+
+interface RewardDistributionStaking {
+  stakeAddress: string;
+  rewardAvailable: number;
+  hasMemberReward: boolean;
+  hasLeaderReward: boolean;
 }

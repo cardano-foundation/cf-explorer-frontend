@@ -101,13 +101,12 @@ export const RowItem = styled(Box)`
     margin-top: 0;
     margin-right: 10px;
   }
-}
 `;
 
 export const PriceImage = styled("img")`
-  height: 45px;
+  height: 25px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    height: 30px;
+    height: 20px;
   }
 `;
 
@@ -117,6 +116,8 @@ export const PriveValue = styled("span")`
   line-height: 1;
   color: ${(props) => props.theme.palette.secondary.main};
   text-align: end;
+  margin-right: 5px;
+  word-break: break-all;
 `;
 
 export const ItemDetail = styled("div")`

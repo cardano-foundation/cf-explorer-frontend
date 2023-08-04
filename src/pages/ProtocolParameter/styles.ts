@@ -103,3 +103,19 @@ export const UpdatableParameters = styled(Box)(({ theme }) => ({
 
 export const StyledContainer = styled(Container)`
 `;
+
+export const StyledDropdownItem = styled("label")`
+  color: ${({ theme }) => theme.palette.secondary.main};
+`;
+export const ColumnProtocol = styled(Box)<{ isLink: number; to: string }>(({ isLink, theme }) => ({
+  padding: "24px 20px",
+  maxWidth: 200,
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  minHeight: "16px",
+  textOverflow: "ellipsis",
+  display: "block",
+  background: isLink ? theme.palette.success[100] : "transparent",
+  color: isLink ? `${theme.palette.success[800]} !important` : `${theme.palette.secondary.light} !important`,
+  fontWeight: isLink ? "bold" : "normal"
+}));

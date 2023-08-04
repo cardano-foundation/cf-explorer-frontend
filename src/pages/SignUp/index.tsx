@@ -421,6 +421,7 @@ export default function SignUp() {
                       color={({ palette }) => palette.secondary.main}
                       fontWeight={400}
                       display={"flex"}
+                      flexWrap={"wrap"}
                       alignItems={"baseline"}
                       gap={"5px"}
                     >

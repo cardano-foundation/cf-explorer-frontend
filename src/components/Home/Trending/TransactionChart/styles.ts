@@ -25,7 +25,7 @@ export const Tab = styled("button")<{ active: number }>(({ theme, active }) => (
   cursor: "pointer",
   textTransform: "lowercase",
   borderRadius: 5,
-  border: `2px solid ${theme.palette.primary[200]}`,
+  border: active ? "none" : `2px solid ${theme.palette.primary[200]}`,
   color: active ? `${theme.palette.secondary[0]} !important` : theme.palette.secondary.main,
   fontWeight: "bold",
   backgroundColor: active ? theme.palette.secondary.light : theme.palette.secondary[0],
@@ -41,19 +41,6 @@ export const TransactionContainer = styled(BoxRaised)`
   margin-bottom: 24px;
   padding: 20px;
   height: calc(100% - 56px);
-  [class*="highcharts-container"] {
-    height: 230px;
-    max-height: 300px;
-    width: 100%;
-    [class*="highcharts-xaxis-labels"] {
-      background: red;
-      text {
-        &:last-child {
-          text-anchor: end !important;
-        }
-      }
-    }
-  }
   ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 25px 15px;
     height: auto;

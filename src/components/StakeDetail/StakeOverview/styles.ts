@@ -19,7 +19,7 @@ export const StyledLink = styled(Link)`
 `;
 
 export const StyledLinkTo = styled(StyledLink)<{ isTo: boolean }>(({ theme, isTo }) => ({
-  color: isTo ? `${theme.palette.secondary.main} !important` : `${theme.palette.error[700]} !important`
+  color: isTo ? `${theme.palette.primary.main} !important` : `${theme.palette.error[700]} !important`
 }));
 
 export const BackButton = styled(Link)`
@@ -134,10 +134,9 @@ export const ButtonModal = styled(Button)(({ theme }) => ({
 }));
 
 export const TitleValue = styled(Box)`
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
   text-wrap: balance;
+  word-break: break-word;
 `;
 
 export const TitleNoPool = styled(Box)`

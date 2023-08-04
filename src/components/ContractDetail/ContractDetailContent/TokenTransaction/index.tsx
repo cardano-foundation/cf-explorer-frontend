@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
 
@@ -17,6 +18,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
+import { setOnDetailView } from "src/stores/user";
 import DetailViewContractHash from "src/components/commons/DetailView/DetailViewContractHash";
 
 import { Flex, Label, SmallText, StyledLink, PriceValue } from "./styles";
@@ -124,6 +126,7 @@ const TokenTransaction: React.FC = () => {
   const params = useParams<{ address: string }>();
   const { search } = useLocation();
   const history = useHistory();
+  const { onDetailView } = useSelector(({ user }: RootState) => user);
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<Transactions>(`${API.ADDRESS.DETAIL}/${params.address}/txs`, pageInfo);
   const [txHashSelected, setTxHashSelected] = useState<string>("");
@@ -132,7 +135,18 @@ const TokenTransaction: React.FC = () => {
   const openDetail = (_: any, r: Transactions, index: number) => {
     setTxHashSelected(r.hash);
     setSelected(index);
+    setOnDetailView(true);
   };
+
+  const handleClose = () => {
+    setOnDetailView(false);
+    setSelected(null);
+    setTxHashSelected("")
+  };
+
+  useEffect(() => {
+    if (!onDetailView) handleClose();
+  }, [onDetailView]);
 
   return (
     <>
@@ -145,14 +159,15 @@ const TokenTransaction: React.FC = () => {
         pagination={{
           ...pageInfo,
           total: fetchData.total,
-          onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
+          onChange: (page, size) => history.replace({ search: stringify({ page, size }) }),
+          hideLastPage: true
         }}
       />
       {txHashSelected && (
         <DetailViewContractHash
           txHash={txHashSelected}
           address={params.address}
-          handleClose={() => setTxHashSelected("")}
+          handleClose={handleClose}
         />
       )}
     </>

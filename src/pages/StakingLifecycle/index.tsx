@@ -11,11 +11,11 @@ import CustomFilter, { FilterParams } from "src/components/commons/CustomFilter"
 import PoolLifecycle from "src/components/PoolLifecycle";
 import StakekeySummary from "src/components/StakekeySummary";
 import NoRecord from "src/components/commons/NoRecord";
+import CustomTabTitle from "src/components/commons/CustomTabTitle";
 
 import StakingLifeCycleSearch from "../../components/StakingLifeCycleSearch";
 import {
   FilterHead,
-  StyledTabLabel,
   TextHeadline,
   TitleHead,
   WrapFilterDescription,
@@ -110,13 +110,11 @@ const StakingLifecycle: React.FC = () => {
           >
             <StyledTab
               value={"stake-key-reports"}
-              label={
-                <StyledTabLabel active={+(validTab === "stake-key-reports")}>Stake Address Reports</StyledTabLabel>
-              }
+              label={<CustomTabTitle active={validTab === "stake-key-reports"}>Stake Address Reports</CustomTabTitle>}
             />
             <StyledTab
               value={"pool-reports"}
-              label={<StyledTabLabel active={+(validTab === "pool-reports")}>Pool Reports</StyledTabLabel>}
+              label={<CustomTabTitle active={validTab === "pool-reports"}>Pool Reports</CustomTabTitle>}
             />
           </StyledTabs>
         </TabHeader>

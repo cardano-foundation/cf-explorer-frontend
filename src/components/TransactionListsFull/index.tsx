@@ -70,7 +70,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       key: "createdat",
       minWidth: 120,
       render: (r) => (
-        <Box mt={1} color={({ palette }) => palette.secondary.light}>
+        <Box color={({ palette }) => palette.secondary.light}>
           {formatDateTimeLocal(r.time || "")}
         </Box>
       )
@@ -181,7 +181,8 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
               mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-            }
+            },
+            hideLastPage: true
           }}
           onClickRow={onClickRow}
           selected={selected}
