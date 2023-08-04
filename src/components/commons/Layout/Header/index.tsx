@@ -72,7 +72,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
                 src={LogoCardano}
                 width={isGalaxyFoldSmall ? "30vw" : isMobile ? "20vw" : "auto"}
               />
-              <Box fontSize={isGalaxyFoldSmall ? "24px" : "auto"}>
+              <Box fontSize={isMobile ? "24px" : "48px"} whiteSpace={"nowrap"}>
                 {isMobile ? "a Cardano explorer" : ", a Cardano explorer"}
               </Box>
             </Box>
