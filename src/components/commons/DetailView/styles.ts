@@ -246,7 +246,7 @@ export const DetailLabel = styled("small")`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  color: ${(props) => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.secondary.light};
   line-height: 26px;
 `;
 export const InfoIcon = styled(FiInfo)`
@@ -273,6 +273,9 @@ export const DelegatedDetail = styled("small")`
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: right;
+`;
+export const DelegatedEmptyPool = styled("span")`
+  color: ${(props) => props.theme.palette.secondary.main};
 `;
 export const DetailLabelSkeleton = styled(Skeleton)`
   height: 1em;

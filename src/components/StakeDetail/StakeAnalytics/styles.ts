@@ -175,7 +175,7 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   textTransform: "lowercase",
   borderRadius: 10,
   fontWeight: "bold",
-  border: `2px solid ${theme.palette.primary[200]}`,
+  border: active ? "none" : `2px solid ${theme.palette.primary[200]}`,
   color: active ? `${theme.palette.secondary[0]} !important` : theme.palette.secondary.main,
   backgroundColor: active ? theme.palette.secondary.light : "none",
   "&:hover": {
@@ -193,7 +193,7 @@ export const TooltipBody = styled(Box)(({ theme }) => ({
   backgroundColor: alpha(theme.palette.secondary[0], 0.8),
   borderRadius: 2,
   padding: 8,
-  border: "1px solid #146635",
+  border: `1px solid ${theme.palette.primary.main}`,
   fontSize: 12,
   color: theme.palette.secondary.main
 }));
