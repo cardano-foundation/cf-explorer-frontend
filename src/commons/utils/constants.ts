@@ -95,7 +95,6 @@ export enum STAKE_KEY_STATUS {
   ACTIVE = "ACTIVE",
   DEACTIVATED = "DEACTIVATED"
 }
-
 export enum RECEIVED_REWARDS {
   LEADER = "LEADER",
   MEMBER = "MEMBER",
@@ -104,10 +103,10 @@ export enum RECEIVED_REWARDS {
 
 export const AUTH_API_URL = process.env.REACT_APP_AUTH_API_URL || get(window, "env.REACT_APP_AUTH_API_URL");
 export const API_URL = process.env.REACT_APP_API_URL || get(window, "env.REACT_APP_API_URL");
-export const CARDANO_NEWS_URL = process.env.REACT_APP_CARDANO_NEWS_URL || get(window, "env.REACT_APP_CARDANO_NEWS_URL");
-export const APP_VERSION = process.env.REACT_APP_VERSION || get(window, "env.REACT_APP_VERSION");
+export const APP_VERSION = process.env.REACT_APP_VERSION || get(window, "env.REACT_APP_VERSION") || "1.0.0";
 export const EXT_ADA_PRICE_URL =
   process.env.REACT_APP_EXT_ADA_PRICE_URL || get(window, "env.REACT_APP_EXT_ADA_PRICE_URL");
+export const CARDANO_NEWS_URL = process.env.REACT_APP_CARDANO_NEWS_URL || get(window, "env.REACT_APP_CARDANO_NEWS_URL");
 
 export enum ACCOUNT_ERROR {
   UNKNOWN_ERROR = "CC_1",
@@ -189,9 +188,7 @@ export const PROTOCOL_TYPE = {
   maxCollateralInputs: "MAX_COLLATERAL_INPUTS",
   coinsPerUtxoSize: "COINS_PER_UTXO_SIZE"
 };
- 
 export const LANGUAGE = "en";
- 
 export enum REWARD_TYPES {
   MEMBER = "MEMBER",
   LEADER = "LEADER",

@@ -1,5 +1,5 @@
 import { Box, Grid, useTheme } from "@mui/material";
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, Label, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import moment from "moment";
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -64,7 +64,7 @@ const AddressAnalytics: FC = () => {
   const getLabelTimeTooltip = (label: string) => {
     switch (rangeTime) {
       case "ONE_DAY":
-        return `${moment(label).format("DD MMM HH:mm")} - ${moment(label).add(2, "hour").format("HH:mm")} (UTC)`;
+        return `${moment(label).format("DD MMM HH:mm")} - ${moment(label).add(2, "hour").format("HH:mm")}`;
       case "ONE_WEEK":
         return moment(label).format("DD MMM");
       case "ONE_MONTH":
@@ -128,7 +128,9 @@ const AddressAnalytics: FC = () => {
                       tickMargin={5}
                       dx={-15}
                       color={theme.palette.secondary.light}
-                    />
+                    >
+                      <Label value="(UTC)" offset={-8} position="insideBottom" />
+                    </XAxis>
                     <YAxis tickFormatter={formatPriceValue} tickLine={false} color={theme.palette.secondary.light} />
                     <Tooltip content={renderTooltip} cursor={false} />
                     <CartesianGrid vertical={false} strokeWidth={0.33} />

@@ -1,23 +1,23 @@
-import { alpha, Avatar, Box, CircularProgress, IconButton, useTheme } from "@mui/material";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Box, useTheme } from "@mui/material";
+import React, { useCallback, useEffect, useState } from "react";
 import { MdChevronRight } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
-import { getShortWallet } from "src/commons/utils/helper";
-import useToast from "src/commons/hooks/useToast";
-import editAva from "src/commons/resources/icons/editAva.svg";
 import { ReactComponent as ReportDiscord } from "src/commons/resources/icons/reportDiscord.svg";
 import { ReactComponent as ReportMail } from "src/commons/resources/icons/reportMail.svg";
 import { routers } from "src/commons/routers";
-import { uploadAxios } from "src/commons/utils/axios";
 import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
+import { getShortWallet } from "src/commons/utils/helper";
 import { getInfo } from "src/commons/utils/userRequest";
 import { RootState } from "src/stores/types";
 import { setUserData } from "src/stores/user";
 
+import CustomTooltip from "../../CustomTooltip";
+import StyledModal from "../../StyledModal";
 import {
   ContentBox,
+  Divider,
   ModalTitle,
   NavItem,
   NavItemMobile,
@@ -28,8 +28,6 @@ import {
   WrapItemMobile,
   Wrapper
 } from "./styled";
-import StyledModal from "../../StyledModal";
-import CustomTooltip from "../../CustomTooltip";
 interface Props {
   children: React.ReactNode;
 }
@@ -39,7 +37,6 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   const { userData } = useSelector(({ user }: RootState) => user);
   const theme = useTheme();
   const [openReportModal, setOpenReportModal] = useState(false);
-  const [isUploadAvatar, setIsUploadAvatar] = useState(false);
 
   const fetchUserInfo = useCallback(async () => {
     try {
@@ -51,34 +48,6 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const toast = useToast();
-
-  const uploadImgRef = useRef(null);
-
-  const hanldeUploadImage = async (e: any) => {
-    try {
-      if (e.target && e.target.files && e.target.files.length > 0) {
-        setIsUploadAvatar(true);
-        const formData = new FormData();
-        formData.append("avatar", e.target.files[0]);
-        const { data } = await uploadAxios.put("/user/edit-avatar", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        });
-
-        if (data && data.avatar) {
-          await fetchUserInfo();
-        }
-        toast.success("Your avatar has been changed.");
-      }
-    } catch (error) {
-      //To do
-    } finally {
-      setIsUploadAvatar(false);
-    }
-  };
-
   useEffect(() => {
     if (localStorage.getItem("token")) {
       fetchUserInfo();
@@ -88,49 +57,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   const renderListTabs = () => (
     <SideBar>
       <Box>
-        <Box>
-          <Box pt={4} textAlign="center" display={"flex"} justifyContent="center">
-            <Box position={"relative"}>
-              {!isUploadAvatar && (
-                <Avatar
-                  src={userData?.avatar}
-                  alt="avatar"
-                  sx={{ height: "100px", width: "100px", textAlign: "center" }}
-                />
-              )}
-              {isUploadAvatar && (
-                <Box
-                  height={"100px"}
-                  width={"100px"}
-                  bgcolor={alpha(theme.palette.common.black, 0.1)}
-                  borderRadius={"50%"}
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <CircularProgress />
-                </Box>
-              )}
-              <Box
-                component={IconButton}
-                position="absolute"
-                bottom="0"
-                right="0"
-                p={0}
-                onClick={() => uploadImgRef.current && (uploadImgRef.current as any).click()}
-              >
-                <Box component={"img"} src={editAva} alt="editava" />
-                <input
-                  data-testid="upload-input"
-                  accept="image/*"
-                  type="file"
-                  ref={uploadImgRef}
-                  onChange={hanldeUploadImage}
-                  style={{ display: "none" }}
-                />
-              </Box>
-            </Box>
-          </Box>
+        <Box pt={4}>
           {userData?.loginType === "connectWallet" ? (
             <CustomTooltip title={userData?.address || ""} placement="bottom">
               <StyledUsername component={"h4"} pt={1} m="auto">
@@ -162,19 +89,16 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
                   >
                     {route.title}
                   </NavItemMobile>
-                  <NavItem to={route.to} active={+active}>
-                    <Box
-                      display="flex"
-                      alignItems={"center"}
-                      justifyContent="space-between"
-                      borderBottom={`1px solid${alpha(theme.palette.common.black, 0.07)}`}
-                    >
+                  <NavItem to={route.to} active={+(route.to === pathname)} key={index}>
+                    <Box display="flex" alignItems={"center"} justifyContent="space-between">
                       <Box pl={"20px"}>{route.title}</Box>
                       <MdChevronRight
                         size={25}
                         color={route.to === pathname ? theme.palette.primary.main : theme.palette.text.hint}
+                        display={active ? "none" : "block"}
                       />
                     </Box>
+                    <Divider first={index === 0} />
                   </NavItem>
                 </React.Fragment>
               );
@@ -230,6 +154,5 @@ export default AccountLayout;
 
 export const router = [
   { title: "My Profile", to: routers.MY_PROFILE },
-  { title: "Bookmark", to: routers.BOOKMARK },
-  { title: "Private Notes", to: routers.PRIVATE_NOTES }
+  { title: "Bookmark", to: routers.BOOKMARK }
 ];
