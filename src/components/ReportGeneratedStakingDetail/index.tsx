@@ -110,10 +110,14 @@ const ReportGeneratedStakingDetailTabs = () => {
       ) : (
         <>
           <CustomTooltip title={`${reportDetail.data?.reportName}`.replaceAll("-", " ")}>
-            <Headline collapsed={1}>{`${reportDetail.data?.reportName}`.replaceAll("-", " ")}</Headline>
+            <Headline data-tesid="staking-report-name" collapsed={1}>
+              {`${reportDetail.data?.reportName}`.replaceAll("-", " ")}
+            </Headline>
           </CustomTooltip>
           <CustomTooltip title={`${reportDetail.data?.reportName}`.replaceAll("-", " ")}>
-            <Headline>{`${reportDetail.data?.reportName}`.replaceAll("-", " ")} </Headline>
+            <Headline data-tesid="staking-report-name">
+              {`${reportDetail.data?.reportName}`.replaceAll("-", " ")}{" "}
+            </Headline>
           </CustomTooltip>
           <StakeTab tabs={displayedTabs} initTab={initTab} />
         </>

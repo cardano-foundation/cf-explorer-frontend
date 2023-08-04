@@ -36,7 +36,7 @@ export const routers = {
   MY_PROFILE: "/account/profile",
   BOOKMARK: "/account/bookmark",
   PRIVATE_NOTES: "/account/notes",
-  PROTOCOL_PARAMETER: "/protocol-parameters",
+  PROTOCOL_PARAMETER: "/protocol-parameters/:histories?",
   STAKING_LIFECYCLE: "/staking-lifecycle/:tab?",
   DELEGATOR_LIFECYCLE: "/staking-lifecycle/delegator/:stakeId/:mode?/:tab?/:txHash?",
   SPO_LIFECYCLE: "/staking-lifecycle/spo/:poolId/:mode?/:tab?/:txHash?",
@@ -49,7 +49,8 @@ export const routers = {
 } as const;
 
 export const lists = {
-  dashboard: (tab?: LifecycleReportType) => routers.STAKING_LIFECYCLE.replace(":tab?", tab || "")
+  dashboard: (tab?: LifecycleReportType) => routers.STAKING_LIFECYCLE.replace(":tab?", tab || ""),
+  protocolParameters: (histories?: "histories") => routers.PROTOCOL_PARAMETER.replace(":histories?", histories || "")
 };
 
 export const details = {
