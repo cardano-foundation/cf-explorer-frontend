@@ -33,6 +33,7 @@ import {
   Progress,
   ProgressPending,
   StatisticContainer,
+  StyledAdaLogoIcon,
   TimeDuration,
   Title
 } from "./style";
@@ -206,7 +207,9 @@ const HomeStatistic = () => {
                       src={LiveStakeIcon}
                       alt="Total ADA Stake"
                     />
-                    <Name data-testid="live-stake-box-title">Live Stake (ADA)</Name>
+                    <Name data-testid="live-stake-box-title">
+                      Live Stake <StyledAdaLogoIcon />
+                    </Name>
                   </Box>
                 </Box>
                 <Box>
@@ -233,7 +236,7 @@ const HomeStatistic = () => {
                 </Box>
                 <Box>
                   <Box color={({ palette }) => palette.secondary.light}>
-                    Active Stake (ADA):{" "}
+                    Active Stake <StyledAdaLogoIcon />:{" "}
                     <CustomTooltip title={formatADAFull(activeStake)}>
                       <span data-testid="active-stake-value">{formatADA(activeStake)}</span>
                     </CustomTooltip>
