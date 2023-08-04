@@ -4,7 +4,7 @@ import { createBrowserHistory } from "history";
 import { fireEvent, render, screen } from "src/test-utils";
 
 import SidebarMenu from ".";
-import { lists, routers } from "src/commons/routers";
+import { lists } from "src/commons/routers";
 
 describe("SidebarMenu", () => {
   it("should component render", () => {
@@ -30,6 +30,6 @@ describe("SidebarMenu", () => {
     expect(history.location.pathname).toBe(lists.dashboard());
 
     fireEvent.click(protocolParamsPagep);
-    expect(history.location.pathname).toBe(routers.PROTOCOL_PARAMETER);
+    expect(history.location.pathname).toBe(lists.protocolParameters());
   });
 });
