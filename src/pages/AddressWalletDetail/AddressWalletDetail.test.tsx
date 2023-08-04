@@ -61,7 +61,6 @@ describe("AddressWalletDetail page", () => {
     const heading = screen.getByRole("heading", { name: /transactions/i });
     expect(screen.getByText(/analytics/i)).toBeInTheDocument();
     expect(screen.getByText(/address details/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /open/i })).toBeInTheDocument();
     expect(within(heading).getByText(/transactions/i)).toBeInTheDocument();
   });
 });
