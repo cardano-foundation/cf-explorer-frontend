@@ -47,7 +47,7 @@ describe("Epoch component", () => {
       update: jest.fn()
     });
 
-    mockedUseFetchList.mockReturnValueOnce({
+    mockedUseFetchList.mockReturnValue({
       data: mockDataLatestEpoch,
       currentPage: 0,
       total: mockDataLatestEpoch.length,
