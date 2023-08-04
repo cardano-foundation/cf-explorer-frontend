@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import BigNumber from "bignumber.js";
 import moment from "moment";
 import { useSelector } from "react-redux";
@@ -34,7 +34,9 @@ import {
   ProgressPending,
   StatisticContainer,
   TimeDuration,
-  Title
+  Title,
+  WrapCardContent,
+  WrapGrid
 } from "./style";
 
 const SkeletonBox = () => (
@@ -85,11 +87,11 @@ const HomeStatistic = () => {
       alignItems="stretch"
       data-testid="home-statistic"
     >
-      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
+      <WrapGrid item xl lg={3} sm={6} xs={12}>
         {usdMarket && btcMarket?.[0] ? (
           <Link href={EXT_ADA_PRICE_URL} target="_blank">
-            <Item data-testid="ada-price-box">
-              <Box display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
+            <Item data-testid="ada-price-box" smallItem>
+              <WrapCardContent>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon
                     style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
@@ -113,18 +115,18 @@ const HomeStatistic = () => {
                   />
                   <AdaPrice data-testid="ada-price-in-btc">{btcMarket[0]?.current_price} BTC</AdaPrice>
                 </Content>
-              </Box>
+              </WrapCardContent>
             </Item>
           </Link>
         ) : (
           <SkeletonBox />
         )}
-      </Grid>
-      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
+      </WrapGrid>
+      <WrapGrid item xl lg={3} sm={6} xs={12}>
         {usdMarket ? (
           <Link href={EXT_ADA_PRICE_URL} target="_blank">
-            <Item data-testid="market-cap-box">
-              <Box display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
+            <Item data-testid="market-cap-box" smallItem>
+              <WrapCardContent>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon data-testid="market-cap-icon" src={MarketCapIcon} alt="Market cap" />
                   <Name data-testid="market-cap-box-title">Market cap</Name>
@@ -135,14 +137,14 @@ const HomeStatistic = () => {
                     Last updated {moment(usdMarket.last_updated).fromNow()}
                   </TimeDuration>
                 </Content>
-              </Box>
+              </WrapCardContent>
             </Item>
           </Link>
         ) : (
           <SkeletonBox />
         )}
-      </Grid>
-      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
+      </WrapGrid>
+      <WrapGrid item xl lg={3} sm={6} xs={12}>
         {currentEpoch ? (
           <Link href={details.epoch(currentEpoch?.no)} target="_blank">
             <Item data-testid="current-epoch-box">
@@ -192,8 +194,8 @@ const HomeStatistic = () => {
         ) : (
           <SkeletonBox />
         )}
-      </Grid>
-      <Grid sx={{ display: "flex", flexDirection: "column" }} item xl lg={3} sm={6} xs={12}>
+      </WrapGrid>
+      <WrapGrid item xl lg={3} sm={6} xs={12}>
         {data && usdMarket ? (
           <Link href={routers.DELEGATION_POOLS} target="_blank">
             <Item data-testid="live-stake-box">
@@ -256,7 +258,7 @@ const HomeStatistic = () => {
         ) : (
           <SkeletonBox />
         )}
-      </Grid>
+      </WrapGrid>
     </StatisticContainer>
   );
 };
