@@ -16,7 +16,7 @@ import {
   ViewAllImage,
   StyledButton,
   TitleValue,
-  ValueText
+  MetaDataValue
 } from "./styles";
 
 interface MetadataProps {
@@ -54,7 +54,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
           <RowMetadata>
             <Title>Value</Title>
             <Value>
-              <ValueText>{metadata.value || ""}</ValueText>
+              <MetaDataValue>{metadata.value || ""}</MetaDataValue>
               <StyledButton onClick={() => setSelectedText(metadata)}>
                 <ViewAllImage src={SeeMoreIcon} alt="view all" />
               </StyledButton>

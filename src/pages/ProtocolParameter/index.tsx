@@ -34,8 +34,10 @@ import {
   BackButton,
   BackText,
   ButtonFilter,
+  ColumnProtocol,
   FilterContainer,
-  StyledContainer
+  StyledContainer,
+  StyledDropdownItem
 } from "./styles";
 
 interface IProtocolParamVertical {
@@ -193,19 +195,18 @@ const ProtocolParameter: React.FC = () => {
       }
     },
     {
-      title: "Last Updated Epoch",
+      title: "Last updated in epoch",
       key: "epochNo",
       render: (r: any) => <Box>{r?.epochNo}</Box>
     },
     {
-      title: "Created At",
+      title: "Timestamp",
       key: "timestamp",
       render: (r: any) => (r?.time ? formatDateTimeLocal(r.time) : "")
     }
   ];
 
   if (histories && histories !== "histories") return <NoRecord />;
-  
 
   return (
     <StyledContainer>
@@ -295,8 +296,8 @@ export default ProtocolParameter;
 export const ProtocolParameterHistory = () => {
   const { PROTOCOL_PARAMETER } = API;
   const TOTAL_PARAMETER = 29;
-  const theme = useTheme();
   const [initing, setIniting] = useState(true);
+  const theme = useTheme();
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
   const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
@@ -363,22 +364,15 @@ export const ProtocolParameterHistory = () => {
     key: t,
     render: (r: any) => {
       return (
-        <Box
-          p={"24px 20px"}
-          maxWidth={200}
-          overflow={"hidden"}
-          whiteSpace={"nowrap"}
-          component={["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string) ? Link : Box}
-          minHeight={"16px"}
-          textOverflow={"ellipsis"}
-          display={"block"}
-          bgcolor={({ palette }) =>
+        <ColumnProtocol
+          isLink={
             r[t as ProtocolTypeKey] !== null
               ? ["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string)
-                ? palette.success[100]
-                : "transparent"
-              : "transparent"
+                ? 1
+                : 0
+              : 0
           }
+          component={["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string) ? Link : Box}
           to={
             r[t as ProtocolTypeKey]?.transactionHash
               ? details.transaction(r[t as ProtocolTypeKey]?.transactionHash, "protocols")
@@ -400,7 +394,7 @@ export const ProtocolParameterHistory = () => {
           ) : (
             ""
           )}
-        </Box>
+        </ColumnProtocol>
       );
     }
   }));
@@ -691,9 +685,9 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                     }
                   }}
                 />
-                <Box component={"label"} htmlFor={"all"} style={{ cursor: "pointer" }}>
+                <StyledDropdownItem htmlFor={"all"} style={{ cursor: "pointer" }}>
                   All parameters
-                </Box>
+                </StyledDropdownItem>
               </Box>
 
               {Object.keys(PROTOCOL_TYPE).map((k, idx) => (
@@ -713,9 +707,9 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                       }
                     }}
                   />
-                  <Box component={"label"} htmlFor={k} style={{ cursor: "pointer" }}>
+                  <StyledDropdownItem htmlFor={k} style={{ cursor: "pointer" }}>
                     {k}
-                  </Box>
+                  </StyledDropdownItem>
                 </Box>
               ))}
             </Box>
