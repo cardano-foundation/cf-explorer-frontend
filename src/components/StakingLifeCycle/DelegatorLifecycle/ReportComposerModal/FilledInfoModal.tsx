@@ -316,7 +316,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
             );
           })}
         </Box>
-        <Box marginBottom={"20px"}>
+        <Box data-testid="report-events" marginBottom={"20px"}>
           <SubText>{isPoolReport ? "Pool Report by event" : "Staking lifecycle events"}</SubText>
           <TextRequired>Select as required</TextRequired>
           <Box display={"flex"} flexWrap={"wrap"} gap="10px" marginTop="20px" marginBottom="40px">
@@ -335,7 +335,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
         </Box>
         {errorReportField && <TextError>{errorReportField}</TextError>}
         <StyledStack>
-          <StyledButton disabled={isDisabledButton} onClick={handleSubmit}>
+          <StyledButton data-testid="next-step" disabled={isDisabledButton} onClick={handleSubmit}>
             Next
           </StyledButton>
         </StyledStack>
