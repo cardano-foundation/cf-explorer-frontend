@@ -1,7 +1,7 @@
 import { Autocomplete, Box, Button } from "@mui/material";
 import { debounce } from "lodash";
+import { useEffect, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
-import { useState } from "react";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -30,24 +30,30 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
   const [openModalToken, setOpenModalToken] = useState(false);
   const [search, setSearch] = useState("");
   const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
-  const { data, loading, total } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
+  const [initialized, setInitialized] = useState(false);
+  const { data, total } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
     page: 0,
     size: 10
   });
 
-  if (!data?.length && !search) return null;
+  useEffect(() => {
+    if (data.length) {
+      setInitialized(true);
+    }
+  }, [data]);
+
+  if (!data.length && !search && !initialized) return null;
 
   return (
     <Box>
       <Autocomplete
-        freeSolo={!data?.length}
         options={total > 10 ? [...data, "more"] : data}
         componentsProps={{ paper: { elevation: 2 } }}
-        loading={loading}
         getOptionLabel={(option) =>
-          typeof option === "string" ? "more" : option.displayName || option.name || option.fingerprint
+          typeof option === "string" ? "" : option.displayName || option.name || option.fingerprint
         }
-        onInputChange={debounce((e, value) => setSearch(value), 500)}
+        noOptionsText="No records"
+        onInputChange={debounce((e, value) => setSearch(value), 1000)}
         ListboxProps={{
           sx(theme) {
             return {
