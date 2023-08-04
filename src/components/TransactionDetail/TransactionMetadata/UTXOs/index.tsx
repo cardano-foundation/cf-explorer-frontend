@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import receiveImg from "src/commons/resources/images/receiveImg.svg";
+import receiveImgFail from "src/commons/resources/images/receiveImgFail.svg";
 import sendImg from "src/commons/resources/images/sendImg.svg";
+import sendImgFail from "src/commons/resources/images/sendImgFail.svg";
 import { details } from "src/commons/routers";
 import { formatADAFull, getShortHash, getShortWallet } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
@@ -49,6 +51,13 @@ const Card = ({
 
   const { isMobile } = useScreen();
   const theme = useTheme();
+  const ADAIconAmount = () => (
+    <ADAicon sx={{ color: isFailed ? theme.palette.secondary[600] : theme.palette.secondary.main }} />
+  );
+  const renderIcon = (type: "up" | "down") => {
+    const srcImg = isFailed ? (type === "down" ? receiveImgFail : sendImgFail) : type === "down" ? receiveImg : sendImg;
+    return <Img src={srcImg} alt="send icon" />;
+  };
   return (
     <Box textAlign={"left"} mb={1} sx={{ background: (theme) => theme.palette.background.paper }}>
       <Header fontWeight="bold">
@@ -66,7 +75,7 @@ const Card = ({
             <ItemContent sx={{ overflowX: "auto", overflowY: "hidden" }}>
               <Box display="flex" alignItems="center">
                 <Box width={50}>
-                  <Img src={type === "down" ? receiveImg : sendImg} alt="send icon" />
+                  {renderIcon(type)}
                 </Box>
               </Box>
               <WrapInfo>
@@ -75,7 +84,10 @@ const Card = ({
                     <WrapUTXOs>
                       <Box mr={3} minWidth={200}>
                         <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
-                          <Box color={(theme) => theme.palette.secondary.light} pr={1}>
+                          <Box
+                            color={(theme) => (isFailed ? theme.palette.secondary[600] : theme.palette.secondary.light)}
+                            pr={1}
+                          >
                             UTXO:
                           </Box>
                           <Link to={details.transaction(item.txHash)}>
@@ -84,14 +96,19 @@ const Card = ({
                                 component={"span"}
                                 fontWeight="bold"
                                 fontFamily={"var(--font-family-text)"}
-                                color={(theme) => theme.palette.primary.main}
+                                color={(theme) =>
+                                  isFailed ? theme.palette.secondary[600] : theme.palette.primary.main
+                                }
                                 mr={1}
                               >
                                 {getShortHash(item.txHash)}
                               </Box>
                             </CustomTooltip>
                           </Link>
-                          <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
+                          <Box
+                            fontWeight={"bold"}
+                            color={({ palette }) => (isFailed ? theme.palette.secondary[600] : palette.secondary.main)}
+                          >
                             #{item?.index}
                           </Box>
                           <CopyButton text={item.txHash} />
@@ -108,7 +125,7 @@ const Card = ({
                       justifyContent={"flex-start"}
                       pr={1}
                       pl={type === "down" ? 2 : 0}
-                      color={(theme) => theme.palette.secondary.light}
+                      color={(theme) => (isFailed ? theme.palette.secondary[600] : theme.palette.secondary.light)}
                     >
                       {type === "down" ? "From" : "To"}:
                     </Box>
@@ -123,7 +140,7 @@ const Card = ({
                         <Link to={details.address(item.address)}>
                           <CustomTooltip title={item.address}>
                             <Box
-                              color={(theme) => theme.palette.primary.main}
+                              color={(theme) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)}
                               fontWeight="bold"
                               fontFamily={"var(--font-family-text)"}
                               mr={1}
@@ -151,7 +168,10 @@ const Card = ({
                           justifyContent="flex-start"
                           alignItems={isMobile ? "flex-start" : "center"}
                         >
-                          <Box pr={1} color={({ palette }) => palette.secondary.light}>
+                          <Box
+                            pr={1}
+                            color={({ palette }) => (isFailed ? theme.palette.secondary[600] : palette.secondary.light)}
+                          >
                             Stake Address:{" "}
                           </Box>
                           <Box>
@@ -161,7 +181,9 @@ const Card = ({
                                   component={"span"}
                                   fontWeight="bold"
                                   fontFamily={"var(--font-family-text)"}
-                                  color={(theme) => theme.palette.primary.main}
+                                  color={(theme) =>
+                                    isFailed ? theme.palette.secondary[600] : theme.palette.primary.main
+                                  }
                                   mr={1}
                                 >
                                   {getShortWallet(item?.stakeAddress)}
@@ -188,7 +210,7 @@ const Card = ({
                       whiteSpace="nowrap"
                       color={(theme) =>
                         isFailed
-                          ? theme.palette.secondary.light
+                          ? theme.palette.secondary[600]
                           : type === "up"
                           ? theme.palette.success[800]
                           : theme.palette.error[700]
@@ -198,7 +220,7 @@ const Card = ({
                     >
                       {type === "down" ? `-${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
                     </Box>
-                    <ADAicon />
+                    <ADAIconAmount />
                   </Box>
                   <Box display={"flex"} alignItems={"center"}>
                     {item.tokens && item.tokens.length === 1 && (
@@ -219,7 +241,10 @@ const Card = ({
         ))}
       </Box>
       <ItemFooter>
-        <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
+        <Box
+          fontWeight={"bold"}
+          color={({ palette }) => (isFailed ? theme.palette.secondary[600] : palette.secondary.main)}
+        >
           Total {type === "down" ? "Input" : "Output"}
         </Box>
         <div>
@@ -227,7 +252,7 @@ const Card = ({
             fontWeight={"bold"}
             component="span"
             pr={1}
-            sx={{ color: (theme) => (isFailed ? theme.palette.secondary.light : theme.palette.secondary.main) }}
+            sx={{ color: (theme) => (isFailed ? theme.palette.secondary[600] : theme.palette.secondary.main) }}
           >
             {isFailed || !totalADA
               ? 0
@@ -235,7 +260,7 @@ const Card = ({
               ? `-${formatADAFull(totalADA)}`
               : `+${formatADAFull(totalADA)}`}
           </Box>
-          <ADAicon sx={{ color: isFailed ? theme.palette.secondary.light : theme.palette.secondary.main }} />
+          <ADAIconAmount />
         </div>
       </ItemFooter>
     </Box>
