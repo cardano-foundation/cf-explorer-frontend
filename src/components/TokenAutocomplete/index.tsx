@@ -40,7 +40,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
   return (
     <Box>
       <Autocomplete
-        freeSolo={true}
+        freeSolo={!data?.length}
         options={total > 10 ? [...data, "more"] : data}
         componentsProps={{ paper: { elevation: 2 } }}
         loading={loading}
