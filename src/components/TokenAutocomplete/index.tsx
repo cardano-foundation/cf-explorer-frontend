@@ -1,6 +1,6 @@
 import { Autocomplete, Box, Button } from "@mui/material";
 import { debounce } from "lodash";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -30,10 +30,17 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
   const [openModalToken, setOpenModalToken] = useState(false);
   const [search, setSearch] = useState("");
   const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
-  const { data, total, initialized } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
+  const [initialized, setInitialized] = useState(false);
+  const { data, total } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
     page: 0,
     size: 10
   });
+
+  useEffect(() => {
+    if (data.length) {
+      setInitialized(true);
+    }
+  }, [data]);
 
   if (!data.length && !search && !initialized) return null;
 
