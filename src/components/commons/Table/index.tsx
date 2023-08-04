@@ -14,7 +14,6 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DownIcon,
   EmptyIcon,
-  EndPage,
   EyeIcon,
   NextPage,
   PrevPage,
@@ -514,7 +513,7 @@ const PaginationCustom = ({
             pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
           }}
         >
-          <EndPageIcon disabled={page === totalPage || loading} />
+
         </IconButton>
       );
     }
@@ -554,24 +553,10 @@ const PaginationCustom = ({
               type={"string"}
               value={inputPage}
               length={inputPage.toString().length || 1}
-              onChange={(e) => {
-                if (+e.target.value <= totalPage) {
-                  setInputPage(+e.target.value);
-                }
-              }}
               onBlur={() => {
                 setInputPage(page);
               }}
-              disabled={loading}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  if (inputPage < 1) {
-                    setInputPage(1);
-                  }
-                  pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
-                  handleChangePage(null, inputPage);
-                }
-              }}
+              disabled={true}
             />
             <Box component={"span"} color={(theme) => theme.palette.secondary.main} fontSize="0.875rem">
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}
@@ -597,9 +582,7 @@ const PaginationCustom = ({
 const StartPageIcon = styled(StartPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
   stroke: disabled ? theme.palette.text.disabled : theme.palette.secondary.light
 }));
-const EndPageIcon = styled(EndPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.secondary.light
-}));
+
 const NextPageIcon = styled(NextPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
   stroke: disabled ? theme.palette.text.disabled : theme.palette.secondary.light
 }));
