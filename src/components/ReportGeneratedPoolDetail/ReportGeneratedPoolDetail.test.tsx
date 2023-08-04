@@ -33,8 +33,8 @@ jest.mock("src/commons/hooks/useFetch");
 jest.mock("../TabularView/StakeTab");
 describe("ReportGeneratedPoolDetail component", () => {
   beforeEach(() => {
-    (useFetch as jest.Mock).mockImplementation((url: string, params: any) => {
-      console.log(url, params);
+    (useFetch as jest.Mock).mockImplementation(() => {
+      // Todo: mock implementation
       return { data: mockData };
     });
   });
