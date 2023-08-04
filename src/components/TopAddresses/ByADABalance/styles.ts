@@ -1,4 +1,4 @@
-import { styled, Box } from "@mui/material";
+import { styled, Box, MenuItem } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import CustomSelect from "src/components/commons/CustomSelect";
@@ -42,5 +42,11 @@ export const SelectMui = styled(CustomSelect)(({ theme }) => ({
   color: theme.palette.secondary.main,
   "& > li": {
     color: `${theme.palette.secondary.main} !important`
+  }
+}));
+
+export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  "&:hover, &.Mui-selected": {
+    backgroundColor: theme.palette.primary[200] + " !important"
   }
 }));
