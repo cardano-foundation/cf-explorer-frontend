@@ -32,6 +32,7 @@ module.exports = {
     node: true
   },
   rules: {
+    "no-console": "error",
     "react/react-in-jsx-scope": "off",
     "react/jsx-no-target-blank": "warn",
     "react/prop-types": "off",

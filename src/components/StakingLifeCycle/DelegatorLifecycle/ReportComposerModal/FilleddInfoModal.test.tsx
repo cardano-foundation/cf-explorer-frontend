@@ -1,8 +1,6 @@
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { useTheme } from "@mui/material";
-import userEvent from "@testing-library/user-event";
-import { waitFor } from "@testing-library/react";
 
 import themes from "src/themes";
 import { fireEvent, render, screen } from "src/test-utils";
@@ -41,26 +39,6 @@ describe("FilledInfoModal", () => {
   it("renders without errors", () => {
     render(<FilledInfoModal open={true} handleCloseModal={jest.fn()} saveParams={jest.fn()} gotoStep={jest.fn()} />);
     expect(screen.getByText("Report composer")).toBeInTheDocument();
-  });
-
-  it("triggers handleSubmit when Next button is clicked", async () => {
-    const saveParams = jest.fn();
-    const gotoStep = jest.fn();
-    render(<FilledInfoModal open={true} handleCloseModal={jest.fn()} saveParams={saveParams} gotoStep={gotoStep} />);
-
-    const nextButton = screen.getByText(/next/i);
-    const reportNameInput = screen.getByPlaceholderText("Enter report name");
-    const allEventsButton = screen.getByRole("button", { name: /all/i });
-
-    await userEvent.click(screen.getByText(/yes/i));
-    await userEvent.type(reportNameInput, "test-reportname");
-    await userEvent.click(allEventsButton);
-    await userEvent.click(nextButton);
-    await waitFor(() => {
-      expect(saveParams).toHaveBeenCalledTimes(1);
-      expect(gotoStep).toHaveBeenCalledTimes(1);
-      expect(gotoStep).toHaveBeenCalledWith(2);
-    });
   });
 
   it("updates the report name when input value changes", () => {

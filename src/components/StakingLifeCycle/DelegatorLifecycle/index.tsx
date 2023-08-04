@@ -1,22 +1,35 @@
+import { Box, IconButton, alpha, useTheme } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { Box, IconButton, alpha, useTheme } from "@mui/material";
 
+import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DelegationIcon,
   DeredistrationIcon,
+  InfoIcon,
+  NextIcon,
+  PreviousIcon,
   RegistrationIcon,
   RewardsDistributionIcon,
   RewardsWithdrawalIcon,
-  NextIcon,
-  PreviousIcon,
-  InfoIcon,
   TranferIcon
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { useScreen } from "src/commons/hooks/useScreen";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
+import {
+  DelegationProcessDescription,
+  DeregistrationDelegatorProcessDescription,
+  RegistrationDelegatorProcessDescription,
+  RewardDistributionProcessDescription,
+  WithdrawingFundProcessDescription
+} from "../../ModalDescription";
+import ADATransferModal from "./ADATransferModal";
+import Delegation from "./Delegation";
+import Deregistration from "./Deregistration";
+import Registration from "./Registration";
+import RewardsDistribution from "./RewardsDistribution";
+import RewardsWithdrawal from "./Withdraw";
 import {
   ADATransfersButton,
   ButtonText,
@@ -26,23 +39,10 @@ import {
   StepButton,
   StepHeader,
   StyledBox,
+  StyledGroupButton,
   TabTitle,
-  TitleStep,
-  StyledGroupButton
+  TitleStep
 } from "./styles";
-import Registration from "./Registration";
-import Delegation from "./Delegation";
-import RewardsDistribution from "./RewardsDistribution";
-import Deregistration from "./Deregistration";
-import RewardsWithdrawal from "./Withdraw";
-import ADATransferModal from "./ADATransferModal";
-import {
-  DelegationProcessDescription,
-  DeregistrationDelegatorProcessDescription,
-  RegistrationDelegatorProcessDescription,
-  RewardDistributionProcessDescription,
-  WithdrawingFundProcessDescription
-} from "../../ModalDescription";
 
 interface StepperProps {
   icon: React.ReactNode;
@@ -66,7 +66,6 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
   const { stakeId = "" } = useParams<{
     stakeId: string;
   }>();
-  const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
   const [tabsValid, setTabValid] = useState([
@@ -95,13 +94,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
 
   const stepper: StepperProps[] = [
     {
-      icon: (
-        <RegistrationIcon
-          width={"25px"}
-          height={"25px"}
-          fill={tabsRenderConfig["hasRegistration"] ? theme.palette.secondary[0] : theme.palette.secondary[600]}
-        />
-      ),
+      icon: <RegistrationIcon width={"25px"} height={"25px"} />,
       title: "Registration",
       component: <Registration />,
       description: (
@@ -114,13 +107,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       keyCheckShow: "hasRegistration"
     },
     {
-      icon: (
-        <DelegationIcon
-          width={"25px"}
-          height={"25px"}
-          fill={tabsRenderConfig["hasDelegation"] ? theme.palette.secondary[0] : theme.palette.secondary[600]}
-        />
-      ),
+      icon: <DelegationIcon width={"25px"} height={"25px"} />,
       title: "Delegation",
       component: <Delegation />,
       description: (
@@ -133,13 +120,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       keyCheckShow: "hasDelegation"
     },
     {
-      icon: (
-        <RewardsDistributionIcon
-          width={"25px"}
-          height={"25px"}
-          fill={tabsRenderConfig["hashRewards"] ? theme.palette.secondary[0] : theme.palette.secondary[600]}
-        />
-      ),
+      icon: <RewardsDistributionIcon width={"25px"} height={"25px"} />,
       title: "Rewards Distribution",
       component: <RewardsDistribution />,
       description: (
@@ -152,13 +133,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       keyCheckShow: "hashRewards"
     },
     {
-      icon: (
-        <RewardsWithdrawalIcon
-          width={"25px"}
-          height={"25px"}
-          fill={tabsRenderConfig["hasWithdrawal"] ? theme.palette.secondary[0] : theme.palette.secondary[600]}
-        />
-      ),
+      icon: <RewardsWithdrawalIcon width={"25px"} height={"25px"} />,
       title: "Rewards Withdrawal",
       component: <RewardsWithdrawal />,
       description: (
@@ -171,13 +146,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       keyCheckShow: "hasWithdrawal"
     },
     {
-      icon: (
-        <DeredistrationIcon
-          width={"25px"}
-          height={"25px"}
-          fill={tabsRenderConfig["hasDeRegistration"] ? theme.palette.secondary[0] : theme.palette.secondary[600]}
-        />
-      ),
+      icon: <DeredistrationIcon width={"25px"} height={"25px"} />,
       title: "Deregistration",
       component: <Deregistration />,
       description: (
@@ -197,14 +166,26 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentStep, tabsValid]);
 
-  const renderBackground = (isActive: boolean, hasData: boolean) => {
+  const getColorInfo = (isActive: boolean, hasData: boolean) => {
     if (isActive) {
-      return `${palette.primary.main} !important`;
+      return {
+        background: `${palette.primary.main} !important`,
+        color: `${palette.secondary[0]} !important`,
+        textColor: `${palette.secondary.light} !important`
+      };
     }
     if (hasData) {
-      return `${alpha(palette.secondary.main, 0.7)} !important`;
+      return {
+        background: `${palette.primary[200]} !important`,
+        color: `${palette.secondary.light} !important`,
+        textColor: `${palette.secondary.light} !important`
+      };
     }
-    return `${palette.primary[200]} !important`;
+    return {
+      background: `${alpha(palette.secondary[600], 0.7)} !important`,
+      color: `${palette.primary[100]} !important`,
+      textColor: `${alpha(palette.secondary[600], 0.7)} !important`
+    };
   };
 
   const handleChangeTab = (step: StepperProps, idx: number) => {
@@ -217,28 +198,41 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} sx={{ overflowX: "auto" }}>
         {stepper.map((step, idx) => {
+          const colorProps = getColorInfo(currentStep === idx, tabsRenderConfig[step.keyCheckShow]);
           return (
             <Step
               id={`step-${idx}`}
               key={idx}
               component={tabsRenderConfig[step.keyCheckShow] ? "span" : CustomTooltip}
-              active={+(currentStep === idx)}
               title={tabsRenderConfig[step.keyCheckShow] ? undefined : "There is no record at this time"}
               onClick={() => handleChangeTab(step, idx)}
+              sx={{
+                borderColor: colorProps.background
+              }}
             >
               <Box>
                 <StepButton
                   component={IconButton}
                   active={+(currentStep === idx)}
                   border={({ palette }) => `1px solid ${palette.primary[200]}`}
-                  bgcolor={renderBackground(currentStep === idx, tabsRenderConfig[step.keyCheckShow])}
+                  bgcolor={colorProps.background}
                   color={({ palette }) =>
                     tabsRenderConfig[step.keyCheckShow] ? palette.common.white : palette.secondary.light
                   }
+                  sx={{
+                    "& svg": {
+                      fill: colorProps.color
+                    }
+                  }}
                 >
                   {step.icon}
                 </StepButton>
-                <TitleStep active={+tabsRenderConfig[step.keyCheckShow]} px={2}>
+                <TitleStep
+                  px={2}
+                  sx={{
+                    color: colorProps.textColor
+                  }}
+                >
                   {step.title}
                 </TitleStep>
               </Box>

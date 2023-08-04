@@ -20,22 +20,22 @@ const mockedData = {
 jest.mock("src/commons/hooks/useFetch");
 
 describe("DetailViewContractHash component", () => {
-  it("rendering component loading", () => {
+  it("rendering component loading", async () => {
     const mockedUseFetch = useFetch as jest.Mock;
     mockedUseFetch.mockReturnValue({
-      data: [mockedData]
+      data: [mockedData],
+      loading: true,
+      initialized: true
     });
     render(<DetailViewContractHash txHash={"test-tx-hash"} address="test-address" handleClose={jest.fn()} />);
-    expect(screen.getByTestId("view-detail-drawer-contract-hash")).toBeInTheDocument();
-    expect(screen.getByText("Transactions")).toBeInTheDocument();
-    expect(screen.getByText(mockedData.purpose)).toBeInTheDocument();
-    expect(screen.getByText(mockedData.redeemerMem)).toBeInTheDocument();
+    expect(screen.getByTestId("view-detail-drawer-loading")).toBeInTheDocument();
   });
 
   it("rendering component on PC", () => {
     const mockedUseFetch = useFetch as jest.Mock;
     mockedUseFetch.mockReturnValue({
-      data: [mockedData]
+      data: [mockedData],
+      initialized: true
     });
     render(<DetailViewContractHash txHash={"test-tx-hash"} address="test-address" handleClose={jest.fn()} />);
     expect(screen.getByTestId("view-detail-drawer-contract-hash")).toBeInTheDocument();

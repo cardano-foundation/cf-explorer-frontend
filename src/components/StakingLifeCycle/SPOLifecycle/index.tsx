@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
 import { Box, IconButton, alpha, useTheme } from "@mui/material";
+import { useEffect, useMemo, useState } from "react";
 import { useHistory, useParams } from "react-router";
 
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -17,15 +17,15 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import {
   DeregistrationSPOProcessDescription,
+  OperatorRewards,
   RegistrationSPOProcessDescription,
-  SPOInvolvementInDelegationDescription,
-  OperatorRewards
+  SPOInvolvementInDelegationDescription
 } from "../../ModalDescription";
 import { ButtonText } from "../DelegatorLifecycle/styles";
 import Deregistration from "./Deregistration";
 import OperatorReward from "./OperatorRewards";
-import Registration from "./Registration";
 import PoollUpdates from "./PoolUpdates";
+import Registration from "./Registration";
 import {
   NextButton,
   PreviousButton,
@@ -59,7 +59,6 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
   const history = useHistory();
   const { isMobile } = useScreen();
   const { palette } = useTheme();
-  const theme = useTheme();
   const [tabsValid, setTabValid] = useState(["isRegistration", "isUpdate", "isReward", "isDeRegistration"]);
   useEffect(() => {
     const element = document.getElementById(`step-${currentStep}`);
@@ -79,13 +78,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
 
   const stepper: StepperProps[] = [
     {
-      icon: (
-        <RegistrationIcon
-          width={"25px"}
-          height={"25px"}
-          fill={renderTabsSPO["isRegistration"] ? theme.palette.secondary[0] : theme.palette.secondary[600]}
-        />
-      ),
+      icon: <RegistrationIcon width={"25px"} height={"25px"} />,
       title: "Registration",
       component: <Registration />,
       description: (
@@ -98,13 +91,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       keyCheckShow: "isRegistration"
     },
     {
-      icon: (
-        <PoolUpdateIcon
-          width={"25px"}
-          height={"25px"}
-          fill={renderTabsSPO["isUpdate"] ? theme.palette.secondary[0] : theme.palette.secondary[600]}
-        />
-      ),
+      icon: <PoolUpdateIcon width={"25px"} height={"25px"} />,
       title: "Pool Updates",
       component: <PoollUpdates />,
       description: (
@@ -117,13 +104,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       keyCheckShow: "isUpdate"
     },
     {
-      icon: (
-        <OperatorRewardIcon
-          width={"25px"}
-          height={"25px"}
-          fill={renderTabsSPO["isReward"] ? theme.palette.secondary[0] : theme.palette.secondary[600]}
-        />
-      ),
+      icon: <OperatorRewardIcon width={"25px"} height={"25px"} />,
       title: "Operator Rewards",
       component: <OperatorReward />,
       description: (
@@ -133,13 +114,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       keyCheckShow: "isReward"
     },
     {
-      icon: (
-        <DeredistrationIcon
-          width={"25px"}
-          height={"25px"}
-          fill={renderTabsSPO["isDeRegistration"] ? theme.palette.secondary[0] : theme.palette.secondary[600]}
-        />
-      ),
+      icon: <DeredistrationIcon width={"25px"} height={"25px"} />,
       title: "Deregistration",
       component: <Deregistration />,
       description: (
@@ -159,14 +134,26 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentStep, tabsValid]);
 
-  const renderBackground = (isActive: boolean, hasData: boolean) => {
+  const getColorInfo = (isActive: boolean, hasData: boolean) => {
     if (isActive) {
-      return `${palette.primary.main} !important`;
+      return {
+        background: `${palette.primary.main} !important`,
+        color: `${palette.secondary[0]} !important`,
+        textColor: `${palette.secondary.light} !important`
+      };
     }
     if (hasData) {
-      return `${alpha(palette.secondary.main, 0.7)} !important`;
+      return {
+        background: `${palette.primary[200]} !important`,
+        color: `${palette.secondary.light} !important`,
+        textColor: `${palette.secondary.light} !important`
+      };
     }
-    return `${palette.primary[200]} !important`;
+    return {
+      background: `${alpha(palette.secondary[600], 0.7)} !important`,
+      color: `${palette.primary[100]} !important`,
+      textColor: `${alpha(palette.secondary[600], 0.7)} !important`
+    };
   };
 
   const handleChangeTab = (step: StepperProps, idx: number) => {
@@ -179,31 +166,47 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
   return (
     <StyledComponent>
       <Box display={"flex"} justifyContent={"space-between"}>
-        {stepper.map((step, idx) => (
-          <Step
-            id={`step-${idx}`}
-            key={idx}
-            active={+(currentStep === idx)}
-            component={renderTabsSPO[step.keyCheckShow] ? "span" : CustomTooltip}
-            title={renderTabsSPO[step.keyCheckShow] ? undefined : "There is no record at this time"}
-            onClick={() => handleChangeTab(step, idx)}
-          >
-            <Box>
-              <StepButton
-                component={IconButton}
-                active={+(currentStep === idx)}
-                border={({ palette }) => `1px solid ${palette.primary[200]}`}
-                bgcolor={renderBackground(currentStep === idx, renderTabsSPO[step.keyCheckShow])}
-                color={({ palette }) =>
-                  renderTabsSPO[step.keyCheckShow] ? palette.common.white : palette.secondary.light
-                }
-              >
-                {step.icon}
-              </StepButton>
-              <TitleStep active={+renderTabsSPO[step.keyCheckShow]}>{step.title}</TitleStep>
-            </Box>
-          </Step>
-        ))}
+        {stepper.map((step, idx) => {
+          const colorProps = getColorInfo(currentStep === idx, renderTabsSPO[step.keyCheckShow]);
+          return (
+            <Step
+              id={`step-${idx}`}
+              key={idx}
+              component={renderTabsSPO[step.keyCheckShow] ? "span" : CustomTooltip}
+              title={renderTabsSPO[step.keyCheckShow] ? undefined : "There is no record at this time"}
+              onClick={() => handleChangeTab(step, idx)}
+              sx={{
+                borderColor: colorProps.background
+              }}
+            >
+              <Box>
+                <StepButton
+                  component={IconButton}
+                  active={+(currentStep === idx)}
+                  border={({ palette }) => `1px solid ${palette.primary[200]}`}
+                  bgcolor={colorProps.background}
+                  color={({ palette }) =>
+                    renderTabsSPO[step.keyCheckShow] ? palette.common.white : palette.secondary.light
+                  }
+                  sx={{
+                    "& svg": {
+                      fill: colorProps.color
+                    }
+                  }}
+                >
+                  {step.icon}
+                </StepButton>
+                <TitleStep
+                  sx={{
+                    color: colorProps.textColor
+                  }}
+                >
+                  {step.title}
+                </TitleStep>
+              </Box>
+            </Step>
+          );
+        })}
       </Box>
       <StepHeader>
         <WrapTitle>
