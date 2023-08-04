@@ -3,9 +3,9 @@ import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
 
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import CustomTabTitle from "src/components/commons/CustomTabTitle";
 
-import { StyledTabList, TabHead, TitleTab } from "./styles";
-import CustomIcon from "../../commons/CustomIcon";
+import { StyledTabList } from "./styles";
 
 export interface StakeTabItem {
   icon: React.FC;
@@ -62,17 +62,19 @@ const StakeTab: React.FC<StackTabProps> = ({
                         : "There is no record at this time"
                     }
                   >
-                    <TabHead active={+(key === tabActive)} display={"flex"} alignItems="center">
-                      <CustomIcon
-                        icon={Icon}
-                        fill={key === "poolSize" ? "none" : "currentColor"}
-                        stroke={key === "poolSize" ? "currentColor" : "none"}
-                        width={25}
-                      />
-                      <TitleTab pl={1} active={+(key === tabActive)}>
-                        {label}
-                      </TitleTab>
-                    </TabHead>
+                    <CustomTabTitle
+                      disabled={!(!checkshow || (tabsRenderConfig && tabsRenderConfig[keyCheckShow || ""]))}
+                      labelProps={{ fontSize: "1.125rem !important" }}
+                      iconProps={{
+                        fill: key === "poolSize" ? "none" : "currentColor",
+                        stroke: key === "poolSize" ? "currentColor" : "none",
+                        width: 25
+                      }}
+                      active={key === tabActive}
+                      icon={Icon}
+                    >
+                      {label}
+                    </CustomTabTitle>
                   </CustomTooltip>
                 }
               />

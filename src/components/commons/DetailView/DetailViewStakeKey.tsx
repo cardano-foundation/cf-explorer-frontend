@@ -23,6 +23,7 @@ import {
   ButtonModal,
   CloseButton,
   DelegatedDetail,
+  DelegatedEmptyPool,
   DetailLabel,
   DetailLabelSkeleton,
   DetailLink,
@@ -63,8 +64,8 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
       icon: <DelegationHistoryMainIcon style={{ padding: "2px 4px 2px 2px" }} />
     },
     {
-      key: "stake-key",
-      label: "Stake Key History",
+      key: "stake-address",
+      label: "Stake Address History",
       icon: (
         <StakeKeyHistoryIcon
           fill={theme.palette.border.block}
@@ -206,7 +207,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
                   </Box>
                 </CustomTooltip>
               ) : (
-                "Not delegated to any pool"
+                <DelegatedEmptyPool>Not delegated to any pool</DelegatedEmptyPool>
               )}
             </DetailsInfoItem>
             <DetailsInfoItem>

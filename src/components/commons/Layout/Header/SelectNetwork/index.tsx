@@ -29,6 +29,15 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   }
 }));
 
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  "&.Mui-selected": {
+    backgroundColor: theme.palette.primary[200]
+  },
+  "&:hover": {
+    backgroundColor: theme.palette.primary[200] + " !important"
+  }
+}));
+
 const SelectNetwork: React.FC = () => {
   const handleChange = async (e?: SelectChangeEvent<unknown>) => {
     if (e) {
@@ -60,9 +69,9 @@ const SelectNetwork: React.FC = () => {
       onOpen={handleOpen}
     >
       {Object.entries(NETWORK_NAMES).map(([key, value]) => (
-        <MenuItem data-testid="network-options" key={key} value={key}>
+        <StyledMenuItem data-testid="network-options" key={key} value={key}>
           {String(value)}
-        </MenuItem>
+        </StyledMenuItem>
       ))}
     </StyledSelect>
   );

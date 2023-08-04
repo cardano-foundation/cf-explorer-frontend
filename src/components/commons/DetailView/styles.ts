@@ -274,6 +274,9 @@ export const DelegatedDetail = styled("small")`
   white-space: nowrap;
   text-align: right;
 `;
+export const DelegatedEmptyPool = styled("span")`
+  color: ${(props) => props.theme.palette.secondary.main};
+`;
 export const DetailLabelSkeleton = styled(Skeleton)`
   height: 1em;
   width: 50%;
