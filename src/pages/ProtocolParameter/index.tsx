@@ -35,7 +35,8 @@ import {
   BackText,
   ButtonFilter,
   FilterContainer,
-  StyledContainer
+  StyledContainer,
+  StyledDropdownItem
 } from "./styles";
 
 interface IProtocolParamVertical {
@@ -691,9 +692,9 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                     }
                   }}
                 />
-                <Box component={"label"} htmlFor={"all"} style={{ cursor: "pointer" }}>
+                <StyledDropdownItem htmlFor={"all"} style={{ cursor: "pointer" }}>
                   All parameters
-                </Box>
+                </StyledDropdownItem>
               </Box>
 
               {Object.keys(PROTOCOL_TYPE).map((k, idx) => (
@@ -713,9 +714,9 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                       }
                     }}
                   />
-                  <Box component={"label"} htmlFor={k} style={{ cursor: "pointer" }}>
+                  <StyledDropdownItem htmlFor={k} style={{ cursor: "pointer" }}>
                     {k}
-                  </Box>
+                  </StyledDropdownItem>
                 </Box>
               ))}
             </Box>

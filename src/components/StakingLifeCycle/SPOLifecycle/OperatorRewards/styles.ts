@@ -6,7 +6,7 @@ export const StyledEpoch = styled(Link)`
   font-family: var(--font-family-text) !important;
 `;
 export const StyledLink = styled(Link)`
-  color: ${(props) => props.theme.palette.secondary.main} !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
   font-family: var(--font-family-text) !important;
   text-decoration: underline !important;
 `;
