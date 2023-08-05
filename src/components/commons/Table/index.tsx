@@ -503,20 +503,6 @@ const PaginationCustom = ({
         </IconButton>
       );
     }
-    if (item.type === "last") {
-      return (
-        <IconButton
-          disabled={page === totalPage || loading}
-          onClick={() => {
-            handleChangePage(null, totalPage || 1);
-            setInputPage(totalPage || 1);
-            pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
-          }}
-        >
-
-        </IconButton>
-      );
-    }
     if (item.type === "next") {
       return (
         <IconButton
