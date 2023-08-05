@@ -11,7 +11,7 @@ import ADAHolderRect from "./ADAHolderRect";
 import ADAOperatorRewardRect from "./ADAOperatorRewardRect";
 import RewardAccountBox from "./RewardAccountBox";
 export interface IRewarsDistributionDrawProps {
-  data?: IStakeKeyDetail | null;
+  data?: RewardDistributionStaking | null;
   toggleRewardModal: () => void;
   setTypeRewardModal: (type: RECEIVED_REWARDS) => void;
 }
@@ -29,7 +29,8 @@ const RewardsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({
   const operatorRewardRef = useRef(null);
   const rewardAccountRef = useRef(null);
 
-  const isRewardPool = data?.rewardPools?.length || 0 > 0;
+  const isRewardPool = data?.hasLeaderReward;
+  const isADAHolder = data?.hasMemberReward;
 
   const paths = useMemo((): LineArrowItem[] => {
     return [
@@ -39,7 +40,8 @@ const RewardsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({
         end: adaAmountFirstRef,
         endPosition: { 0: ["center", "middle"] },
         startOffset: { 0: [0, -50], sm: [0, 0] },
-        autoAlign: { 0: "end-vertical", lg: "end-horizontal" }
+        autoAlign: { 0: "end-vertical", lg: "end-horizontal" },
+        dashed: !isADAHolder
       },
       {
         start: cardanoBlockchainRef,
@@ -56,7 +58,8 @@ const RewardsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({
         startPosition: { 0: ["center", "middle"] },
         endPosition: { 0: ["right", "top"], lg: ["left", "middle"] },
         arrow: { 0: "top", lg: "left" },
-        autoAlign: { 0: "start-vertical", lg: "start-horizontal" }
+        autoAlign: { 0: "start-vertical", lg: "start-horizontal" },
+        dashed: !isADAHolder
       },
       {
         start: adaAmountSecondRef,
@@ -87,15 +90,15 @@ const RewardsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({
     <DrawContainer>
       <StyledCardanoBlockchain ref={cardanoBlockchainRef} />
       <AdaAmountWrapper>
-        <AdaBox ref={adaAmountFirstRef} onClick={() => handleToggleModal(RECEIVED_REWARDS.MEMBER)}>
-          <CustomIcon icon={ADAOrangeIcon} height={70} />
+        <AdaBox ref={adaAmountFirstRef} onClick={() => isADAHolder && handleToggleModal(RECEIVED_REWARDS.MEMBER)}>
+          <CustomIcon icon={isADAHolder ? ADAOrangeIcon : ADADisnableIcon} height={70} />
         </AdaBox>
         <AdaBox ref={adaAmountSecondRef} onClick={() => isRewardPool && handleToggleModal(RECEIVED_REWARDS.LEADER)}>
           <CustomIcon icon={isRewardPool ? ADAOrangeIcon : ADADisnableIcon} height={70} />
         </AdaBox>
       </AdaAmountWrapper>
       <HolderWrapper ref={holderGroupRef}>
-        <ADAHolderRect ref={adaHolderRef} />
+        <ADAHolderRect ref={adaHolderRef} disabled={!isADAHolder} />
         <ADAOperatorRewardRect ref={operatorRewardRef} disabled={!isRewardPool} />
       </HolderWrapper>
       <RewardAccountBox
