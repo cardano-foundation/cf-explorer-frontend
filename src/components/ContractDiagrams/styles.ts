@@ -44,6 +44,7 @@ export const TabLabel = styled(Typography)`
   position: absolute;
   left: 20px;
   top: -25px;
+  z-index: 10;
 `;
 
 export const CardDiagram = styled(Box)`
