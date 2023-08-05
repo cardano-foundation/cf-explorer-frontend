@@ -47,7 +47,8 @@ export const API = {
     REGISTRATION: "stakes/registration",
     MIN_MAX_BALANCE: "stakes/min-max-balance",
     STAKE_DELEGATIONS: "delegations",
-    INSTANT_REWARDS: "instantaneous-rewards"
+    INSTANT_REWARDS: "instantaneous-rewards",
+    REWARDS_DISTRIBUTION: "stakes/reward-distribution"
   },
   STAKE_LIFECYCLE: {
     REGISTRATION: (stakeKey: string) => `stake-lifecycle/${stakeKey}/registrations`,
