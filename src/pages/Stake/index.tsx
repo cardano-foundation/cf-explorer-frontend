@@ -69,6 +69,10 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
     setSelected(null);
   };
 
+  useEffect(() => {
+    if (!onDetailView) handleClose();
+  }, [onDetailView]);
+
   const columns: Column<IStakeKey>[] = [
     {
       title: "Tx Hash",

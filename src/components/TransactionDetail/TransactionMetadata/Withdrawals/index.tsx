@@ -40,7 +40,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
               <Box flex={1} display="flex" justifyContent="space-between">
                 <Box minWidth={120}>
                   {!isMobile ? (
-                    <Box component={"span"} color={({ palette }) => palette.secondary.light}>
+                    <Box component={"span"} mr={1} color={({ palette }) => palette.secondary.light}>
                       From:
                     </Box>
                   ) : null}
