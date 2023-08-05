@@ -129,6 +129,10 @@ const Epoch: React.FC = () => {
     setSelected(null);
   };
 
+  useEffect(() => {
+    if (!onDetailView) handleClose();
+  }, [onDetailView]);
+
   const latestEpoch = fetchDataLatestEpoch.data[0];
 
   return (

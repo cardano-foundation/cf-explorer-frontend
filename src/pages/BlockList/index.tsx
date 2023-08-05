@@ -120,6 +120,10 @@ const BlockList = () => {
     setSelected(null);
   };
 
+  useEffect(() => {
+    if (!onDetailView) handleClose();
+  }, [onDetailView]);
+
   return (
     <StyledContainer>
       <Card data-testid="blocks-card" title={"Blocks"}>

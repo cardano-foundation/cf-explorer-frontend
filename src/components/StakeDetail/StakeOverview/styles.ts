@@ -134,10 +134,9 @@ export const ButtonModal = styled(Button)(({ theme }) => ({
 }));
 
 export const TitleValue = styled(Box)`
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
   text-wrap: balance;
+  word-break: break-word;
 `;
 
 export const TitleNoPool = styled(Box)`
