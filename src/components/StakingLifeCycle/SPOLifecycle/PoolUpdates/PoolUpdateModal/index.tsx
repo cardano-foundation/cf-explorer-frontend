@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Skeleton, useTheme } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { TabContext, TabList } from "@mui/lab";
 import { useHistory } from "react-router-dom";
 
@@ -10,6 +10,7 @@ import CopyButton from "src/components/commons/CopyButton";
 import { details } from "src/commons/routers";
 import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
 import { CertUpdate, ChangeIcon, PoolCert } from "src/commons/resources";
+import CustomTabTitle from "src/components/commons/CustomTabTitle";
 
 import {
   CardBox,
@@ -29,8 +30,6 @@ import {
   StyledTabPanel,
   SupperMinimumText,
   TabContainer,
-  TabItem,
-  TitleTab,
   UpdateItem,
   UpdateList,
   Value
@@ -56,7 +55,6 @@ interface Props {
 }
 export const PoolUpdateModal = ({ data, open, ...props }: Props) => {
   const [tabActive, setTabActive] = useState("poolCertificate");
-  const theme = useTheme();
 
   useEffect(() => {
     setTabActive("poolCertificate");
@@ -104,12 +102,9 @@ export const PoolUpdateModal = ({ data, open, ...props }: Props) => {
                   key={key}
                   value={key}
                   label={
-                    <TabItem>
-                      <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.secondary[600]} />
-                      <TitleTab pl={1} active={+(key === tabActive)}>
-                        {label}
-                      </TitleTab>
-                    </TabItem>
+                    <CustomTabTitle iconProps={{ stroke: "none" }} active={key === tabActive} icon={Icon}>
+                      {label}
+                    </CustomTabTitle>
                   }
                 />
               ))}

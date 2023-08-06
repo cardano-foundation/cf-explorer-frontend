@@ -19,13 +19,12 @@ from service.DataManager import DataManager
 def main(argv):
   opts, args = getopt.getopt(argv, "h", ["blockl=", "epochl=", "blocks=", "blocke=", "epochs=", "epoche="])
   blockLimit = 5
-  epochLimit = 50
+  epochLimit = 5
   blockStart = 1
   blockEnd = 6015246
   epochStart = 1
-  epochEnd = 500
+  epochEnd = 425
   for opt, arg in opts:
-    print(opt)
     match opt:
       case '-h':
         print("--blockl block number of random blocks to test")

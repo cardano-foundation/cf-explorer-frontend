@@ -117,3 +117,7 @@ export const ColumnProtocol = styled(Box)<{ isLink: number; to: string }>(({ isL
   color: isLink ? `${theme.palette.success[800]} !important` : `${theme.palette.secondary.light} !important`,
   fontWeight: isLink ? "bold" : "normal"
 }));
+
+export const StyledDropdownItem = styled("label")`
+  color: ${({ theme }) => theme.palette.secondary.main};
+`;
