@@ -195,6 +195,7 @@ export const ButtonViewAll = styled(Button)(({ theme }) => ({
     left: 50
   },
   "&:hover": {
-    background: theme.palette.primary.main
+    background: theme.palette.primary.dark,
+    borderColor: theme.palette.primary[200]
   }
 }));
