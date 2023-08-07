@@ -106,6 +106,7 @@ const Transactions: React.FC = () => {
           {...fetchData}
           columns={columns}
           total={{ title: "Total Contracts", count: fetchData.total }}
+          onClickRow={(_, r) => history.push(details.contract(r.address))}
           pagination={{
             ...pageInfo,
             total: fetchData.total,
@@ -114,6 +115,7 @@ const Transactions: React.FC = () => {
               mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
+          tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
         />
       </Card>
     </StyledContainer>

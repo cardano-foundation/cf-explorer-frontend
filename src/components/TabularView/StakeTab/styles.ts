@@ -112,7 +112,7 @@ export const Headline = styled(Typography)<{ collapsed?: number }>`
 export const WrapperDelegationTab = styled(Box)`
   display: flex;
   justify-content: space-between;
-  align-items: center,
+  align-items: center;
   margin-top: 12px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     flex-direction: column;
@@ -120,9 +120,9 @@ export const WrapperDelegationTab = styled(Box)`
   }
 `;
 
-export const AmountADARow = styled(Box)`
+export const AmountADARow = styled(Box)<{ amount: number }>`
   font-size: 14px;
-  color: ${(props) => props.theme.palette.primary.main};
+  color: ${({ amount, theme }) => (+amount > 0 ? theme.palette.success[800] : theme.palette.error[700])};
   display: flex;
   gap: 10px;
   align-items: center;
