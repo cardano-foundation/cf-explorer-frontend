@@ -1,11 +1,9 @@
 name: Run Explorer e2e Tests
 on:
   push:
-    branches-ignore:
-      - "main"
+  
   pull_request:
-    branches-ignore:
-      - "main"
+  
   workflow_dispatch:
 
 jobs:
