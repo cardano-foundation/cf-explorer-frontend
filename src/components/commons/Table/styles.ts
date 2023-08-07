@@ -1,4 +1,4 @@
-import { Box, Checkbox, Typography, styled, Pagination } from "@mui/material";
+import { Box, Checkbox, Typography, styled, Pagination, MenuItem } from "@mui/material";
 
 import CustomSelect from "../CustomSelect";
 
@@ -158,6 +158,10 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number
   &::-webkit-scrollbar-thumb {
     background: transparent;
   }
+  &::-webkit-scrollbar-button:vertical:start:decrement {
+    height: 72px; 
+    display: block;
+  } 
   &:hover {
     &::-webkit-scrollbar-thumb {
       background: ${theme.palette.secondary.light};
@@ -251,3 +255,11 @@ export const StyledPagination = styled(Pagination)(() => ({
     padding: 0
   }
 }));
+
+export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  color: theme.palette.secondary.main,
+  "&:hover, &.Mui-selected": {
+    background: theme.palette.primary[200] + " !important"
+  }
+}));
+

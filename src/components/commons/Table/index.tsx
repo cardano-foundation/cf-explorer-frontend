@@ -2,15 +2,12 @@ import {
   Box,
   CircularProgress,
   IconButton,
-  MenuItem,
   PaginationRenderItemParams,
   alpha,
   styled,
   useScrollTrigger
 } from "@mui/material";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useUpdateEffect } from "react-use";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
@@ -57,7 +54,8 @@ import {
   TableHeaderContainer,
   TableTitle,
   TotalNumber,
-  Wrapper
+  Wrapper,
+  StyledMenuItem
 } from "./styles";
 
 type TEmptyRecord = {
@@ -266,11 +264,6 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
   const [size, setSize] = useState(pagination?.size || 50);
   const [open, setOpen] = useState(false);
   const trigger = useScrollTrigger();
-  const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
-
-  useUpdateEffect(() => {
-    setPage(1);
-  }, [poolType]);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
     pagination && pagination.onChange && pagination.onChange(page, size);
@@ -306,10 +299,10 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
                 }
               }}
             >
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-              <MenuItem value={50}>50</MenuItem>
-              <MenuItem value={100}>100</MenuItem>
+              <StyledMenuItem value={10}>10</StyledMenuItem>
+              <StyledMenuItem value={20}>20</StyledMenuItem>
+              <StyledMenuItem value={50}>50</StyledMenuItem>
+              <StyledMenuItem value={100}>100</StyledMenuItem>
             </SelectMui>
             <Box component={"span"} ml={1} fontSize="0.875rem">
               Per page
@@ -486,10 +479,6 @@ const PaginationCustom = ({
   handleChangePage: (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => void;
 }) => {
   const [inputPage, setInputPage] = useState(page);
-  const { poolType } = useParams<{ poolType: "registration" | "de-registration" }>();
-  useUpdateEffect(() => {
-    setInputPage(1);
-  }, [poolType, size]);
 
   useEffect(() => {
     if (pagination?.page) {
@@ -515,7 +504,7 @@ const PaginationCustom = ({
         </IconButton>
       );
     }
-    if (item.type === "last") {
+    if (!pagination?.hideLastPage && item.type === "last") {
       return (
         <IconButton
           disabled={page === totalPage || loading}
@@ -573,7 +562,7 @@ const PaginationCustom = ({
               onBlur={() => {
                 setInputPage(page);
               }}
-              disabled={loading}
+              disabled={pagination?.hideLastPage || loading}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   if (inputPage < 1) {

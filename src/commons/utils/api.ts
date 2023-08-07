@@ -47,15 +47,18 @@ export const API = {
     REGISTRATION: "stakes/registration",
     MIN_MAX_BALANCE: "stakes/min-max-balance",
     STAKE_DELEGATIONS: "delegations",
-    INSTANT_REWARDS: "instantaneous-rewards"
+    INSTANT_REWARDS: "instantaneous-rewards",
+    REWARDS_DISTRIBUTION: "stakes/reward-distribution"
   },
   STAKE_LIFECYCLE: {
     REGISTRATION: (stakeKey: string) => `stake-lifecycle/${stakeKey}/registrations`,
+    REGISTRATION_DETAIL: (stakeKey: string, hash: string) => `stake-lifecycle/${stakeKey}/registrations/${hash}`,
     DELEGATION: (stakeKey: string) => `stake-lifecycle/${stakeKey}/delegations`,
-    WITHDRAW: (stakeKey: string) => `stake-lifecycle/${stakeKey}/withdrawals`,
     DELEGATION_DETAIL: (stakeKey: string, hash: string) => `stake-lifecycle/${stakeKey}/delegations/${hash}`,
+    WITHDRAW: (stakeKey: string) => `stake-lifecycle/${stakeKey}/withdrawals`,
     WITHDRAW_DETAIL: (stakeKey: string, hash: string) => `stake-lifecycle/${stakeKey}/withdrawals/${hash}`,
     DEREGISTRATION: (stakeKey: string) => `stake-lifecycle/${stakeKey}/de-registrations`,
+    DEREGISTRATION_DETAIL: (stakeKey: string, hash: string) => `stake-lifecycle/${stakeKey}/de-registrations/${hash}`,
     RECEIVED_REWARD: (stakeKey: string) => `stake-lifecycle/${stakeKey}/rewards`,
     WALLET_ACTIVITY: (stakeKey: string) => `stake-lifecycle/${stakeKey}/wallet-activity`,
     REWARDS_ACTIVITY: (stakeKey: string) => `stake-lifecycle/${stakeKey}/reward-activity`,

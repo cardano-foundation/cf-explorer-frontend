@@ -37,7 +37,7 @@ interface DefaultProps extends BoxProps {
    */
   stroke?: "currentColor" | string;
 }
-type Props = DefaultProps & Required<{ width: number } | { height: number }>;
+export type Props = DefaultProps & Required<{ width: number } | { height: number }>;
 
 const CustomIcon: React.FC<Props> = React.forwardRef((props: Props, boxRef) => {
   const { icon, width, height, originWidth, originHeight, fill, stroke, ...otherProps } = props;

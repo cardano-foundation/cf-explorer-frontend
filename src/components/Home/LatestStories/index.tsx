@@ -32,7 +32,7 @@ import {
 
 enum AMOUNT_OF_NEWS_SHOWING {
   DESKTOP = 4,
-  TABLET = 4,
+  TABLET = 2,
   MOBILE = 2
 }
 
@@ -40,9 +40,11 @@ const defaultButtonSwiper = { left: false, right: false };
 
 const LIMIT = 20;
 
+const MIN_SWIPE_DISTANCE = 50;
+
 const LatestStories = () => {
   const [offset, setOffset] = useState<number>(0);
-  const { data: dataNews, loading } = useFetch<Articles>(`${API.STORIES}?limit=${LIMIT}&offset=${offset}`);
+  const { data: dataNews, loading, error } = useFetch<Articles>(`${API.STORIES}?limit=${LIMIT}&offset=${offset}`);
   const data = dataNews?.articles || [];
 
   const [currentIndexData, setCurrentIndexData] = useState<number>(0);
@@ -53,18 +55,34 @@ const LatestStories = () => {
   const { isLaptop, isMobile } = useScreen();
 
   const [touchStartX, setTouchStartX] = useState<number>(0);
+  const [touchStartY, setTouchStartY] = useState<number>(0);
+
+  useEffect(() => {
+    if (error && offset !== 0) {
+      setOffset(0);
+      setCurrentIndexData(0);
+    }
+  }, [error, offset]);
 
   const handleTouchStart = (event: React.TouchEvent): void => {
     setTouchStartX(event.touches[0].clientX);
+    setTouchStartY(event.touches[0].clientY);
   };
 
   const handleTouchEnd = (event: React.TouchEvent): void => {
     const touchEndX = event.changedTouches[0].clientX;
-    const touchDiff = touchEndX - touchStartX;
+    const touchDiffX = touchEndX - touchStartX;
 
-    if (touchDiff < 0) {
+    const touchEndY = event.changedTouches[0].clientY;
+    const touchDiffY = touchEndY - touchStartY;
+
+    if (touchDiffX < 0) {
       handleNextSwiper();
     } else {
+      const isScroll = Math.abs(touchDiffY) > MIN_SWIPE_DISTANCE || (offset === 0 && currentIndexData === 0);
+      if (isScroll) {
+        return window.scrollTo(window.scrollX, window.scrollY);
+      }
       handlePrevSwiper();
     }
   };
@@ -93,6 +111,11 @@ const LatestStories = () => {
     if (isHasMore) {
       setCurrentIndexData(newIndex);
     } else {
+      if (offset + LIMIT >= Number(dataNews?.total)) {
+        setCurrentIndexData(0);
+        setOffset(0);
+        return;
+      }
       setCurrentIndexData(0);
       setOffset(offset + LIMIT);
     }
@@ -114,6 +137,7 @@ const LatestStories = () => {
   };
 
   if (loading) {
+    const amountSkeleton = isMobile ? 1 : amountNewsByDevice;
     return (
       <Box>
         <Header>
@@ -121,9 +145,15 @@ const LatestStories = () => {
           <ViewAllButtonExternal to={CARDANO_NEWS_URL as string} />
         </Header>
         <Grid container spacing={2}>
-          {new Array(4).fill(0).map((_, index) => (
-            <Grid key={index} lg={3} sm={6} xs={12} item>
-              <Box component={Skeleton} variant="rectangular" borderRadius={"12px"} height={280} />
+          {new Array(amountSkeleton).fill(0).map((_, index) => (
+            <Grid key={index} lg={3} xs={6} item>
+              <Box
+                component={Skeleton}
+                variant="rectangular"
+                borderRadius={"12px"}
+                height={280}
+                width={isMobile ? "75vw" : "auto"}
+              />
             </Grid>
           ))}
         </Grid>
@@ -144,9 +174,9 @@ const LatestStories = () => {
   const isNextSwiper = showButtonSwiper.right && Number(dataNews?.total) > data.length + Number(dataNews?.offset);
   const isPrevSwiper = showButtonSwiper.left && (Number(dataNews?.offset) > 0 || currentIndexData > 0);
 
-  const getAuthorName = (name: string) => {
-    const indexSymbol = name?.split("|")[1]?.split(" ")[1]?.indexOf("~~~");
-    return name?.split("|")[1]?.split(" ")[0] + " " + name?.split("|")[1]?.split(" ")[1]?.slice(0, indexSymbol);
+  const getAuthorName = (urlAuthor: string) => {
+    const [authorName = ""] = urlAuthor.match(/\|.+~~~/) || [];
+    return authorName.replace("|", "").replace("~~~", "");
   };
 
   return (
@@ -166,7 +196,7 @@ const LatestStories = () => {
 
               const isRelativeCardMobile = isMobile && index === 1;
               return (
-                <CustomGrid key={date} lg={3} sm={6} xs={6} item>
+                <CustomGrid key={date} lg={3} xs={6} item>
                   <Box sx={{ position: isRelativeCardMobile ? "absolute" : "unset", left: "300px" }}>
                     <a href={resource_href} target="_blank" rel="noreferrer">
                       <Item>

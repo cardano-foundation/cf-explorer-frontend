@@ -9,7 +9,8 @@ import {
   XAxis,
   YAxis,
   TooltipProps,
-  XAxisProps
+  XAxisProps,
+  Label
 } from "recharts";
 import moment from "moment";
 import { useParams } from "react-router-dom";
@@ -87,14 +88,23 @@ const StakeAnalytics: React.FC = () => {
     return formatPrice(bigValue.toString());
   };
 
+  const getLabelTimeTooltip = (label: string) => {
+    switch (rangeTime) {
+      case "ONE_DAY":
+        return `${moment(label).format("DD MMM YYYY HH:mm:ss")}`;
+      case "ONE_WEEK":
+      case "ONE_MONTH":
+      case "THREE_MONTH":
+        return moment(label).format("DD MMM YYYY");
+      default:
+        return "";
+    }
+  };
+
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
     return (
       <TooltipBody>
-        <TooltipLabel>
-          {tab === "BALANCE"
-            ? moment(content.label).format("DD MMM YYYY HH:mm:ss") + " (UTC time zone)"
-            : content.label}
-        </TooltipLabel>
+        <TooltipLabel>{tab === "BALANCE" ? getLabelTimeTooltip(content.label) : `Epoch ${content.label}`}</TooltipLabel>
         <TooltipValue>{formatADAFull(content.payload?.[0]?.value) || 0}</TooltipValue>
       </TooltipBody>
     );
@@ -162,15 +172,23 @@ const StakeAnalytics: React.FC = () => {
                     </linearGradient>
                   </defs>
                   <XAxis
-                    color={theme.palette.secondary.main}
+                    color={theme.palette.secondary.light}
+                    stroke={theme.palette.secondary.light}
                     dataKey={tab === "BALANCE" ? "date" : "epoch"}
                     tickFormatter={(value) =>
                       tab === "BALANCE" ? moment(value).format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM") : value
                     }
                     tickLine={false}
                     {...xAxisProps}
+                  >
+                    <Label value="(UTC)" offset={-8} position="insideBottom" />
+                  </XAxis>
+                  <YAxis
+                    color={theme.palette.secondary.light}
+                    stroke={theme.palette.secondary.light}
+                    tickFormatter={formatPriceValue}
+                    tickLine={false}
                   />
-                  <YAxis color={theme.palette.secondary.main} tickFormatter={formatPriceValue} tickLine={false} />
                   <Tooltip content={renderTooltip} cursor={false} />
                   <CartesianGrid vertical={false} strokeWidth={0.33} />
                   <Area

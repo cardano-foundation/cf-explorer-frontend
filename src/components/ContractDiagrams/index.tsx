@@ -19,7 +19,8 @@ import {
   DatumnItem,
   IconContainer,
   CloseButton,
-  DataTitle
+  DataTitle,
+  TxHash
 } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 
@@ -39,22 +40,22 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
   return (
     <ContractDiagramsContainer isTxPageView={!!txHash}>
       <ContractHeader>
-        <ContractText>
-          {txHash ? "Transactions" : "Contract"}
-          {handleClose ? (
-            <CustomTooltip title="Close">
-              <CloseButton onClick={handleClose}>
-                <CgClose />
-              </CloseButton>
-            </CustomTooltip>
-          ) : null}
-        </ContractText>
+        <ContractText>{txHash ? "Transactions" : "Contract"}</ContractText>
+        {handleClose ? (
+          <CustomTooltip title="Close">
+            <CloseButton onClick={handleClose}>
+              <CgClose />
+            </CloseButton>
+          </CustomTooltip>
+        ) : null}
+      </ContractHeader>
+      <TxHash>
         <Link to={linkToPage()}>
           <ContractAddress data-testid={`contract-hash-${txHash || item.address || item.scriptHash}`}>
             {txHash || item.address || item.scriptHash}
           </ContractAddress>
         </Link>
-      </ContractHeader>
+      </TxHash>
       <ContractRedeemer item={item} txHash={txHash} />
       {item.datumHashIn && (
         <>
@@ -74,7 +75,7 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
           <IconContainer>
             <RedeemerArrowDownIcon />
           </IconContainer>
-          <ContractDatumn key="out" item={item} type="out" />
+          <ContractDatumn key="out" item={item} type="out" txHash={txHash} />
         </>
       )}
     </ContractDiagramsContainer>

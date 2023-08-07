@@ -87,17 +87,29 @@ interface RegistrationItem {
   time: string;
 }
 
+interface RegistrationDetail extends RegistrationItem {
+  joinDepositPaid: boolean;
+}
+
 interface DelegationItem {
   txHash: string;
   outSum: number;
   fee: number;
   time: string;
 }
+interface DelegationDetail extends DelegationItem {
+  blockNo: number;
+  epoch: number;
+  poolId: string;
+  poolName: string;
+  stakeTotalAmount: number;
+}
 
 interface RewardDistributionItem {
   epoch: number;
   time: string;
   amount: number;
+  type: string;
 }
 
 interface WithdrawItem {
@@ -120,6 +132,8 @@ interface WithdrawalHistoryItem {
 
 type DeregistrationItem = RegistrationItem;
 
+type DeregistrationDetail = RegistrationDetail;
+
 interface StakeDelegations {
   blockNo: number;
   epochNo: number;
@@ -138,4 +152,11 @@ interface InstantRewards {
   time: string;
   txHash: string;
   rewards: number;
+}
+
+interface RewardDistributionStaking {
+  stakeAddress: string;
+  rewardAvailable: number;
+  hasMemberReward: boolean;
+  hasLeaderReward: boolean;
 }

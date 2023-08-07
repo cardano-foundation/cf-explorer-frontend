@@ -1,4 +1,4 @@
-import { alpha, Button, TextField, styled, Box } from "@mui/material";
+import { Box, Button, TextField, alpha, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const TitleDetail = styled(Box)`
@@ -58,20 +58,34 @@ export const StyledTextField = styled(TextField)`
     height: 40px;
     border: 1.5px solid ${(props) => props.theme.palette.border.main};
     border-radius: 8px;
+    ${(props) => (props.disabled ? `background: ${props.theme.palette.secondary[600]}` : "")};
   }
   .MuiFormControl-root {
   }
   .MuiInputBase-input {
     font-size: 14px;
+    &::-webkit-input-placeholder {
+      ${(props) =>
+        props.disabled
+          ? `color: ${props.theme.palette.background.paper};
+            opacity: 1;
+            -webkit-text-fill-color: ${props.theme.palette.background.paper};
+            `
+          : ""}
+    }
   }
   .MuiOutlinedInput-notchedOutline {
     border: none;
   }
 `;
 
-export const Option = styled("li")<{ active: number }>(({ theme, active }) => ({
-  background: active ? theme.palette.primary[200] : theme.palette.secondary[0]
+export const Option = styled("li")(({ theme }) => ({
+  background: theme.palette.secondary[0],
+  "&:hover": {
+    background: theme.palette.primary[200] + " !important"
+  }
 }));
+
 
 export const Logo = styled("img")`
   width: 25px;

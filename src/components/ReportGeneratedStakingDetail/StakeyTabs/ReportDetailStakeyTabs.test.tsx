@@ -27,7 +27,7 @@ describe("DelegationTab component", () => {
   it("should component render", () => {
     render(<DelegationTab />);
     expect(screen.getByRole("columnheader", { name: /transaction hash/i })).toBeInTheDocument();
-    expect(screen.getByRole("columnheader", { name: /timestamp sorttableupdown\.svg/i })).toBeInTheDocument();
+    expect(screen.getByText(/Created At/i)).toBeInTheDocument();
     expect(screen.getByText(/showing 1 result/i)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: mockData.txHash })).toBeInTheDocument();
   });
@@ -75,7 +75,8 @@ describe("RewardsDistributionTab component", () => {
   const mockData: RewardDistributionItem = {
     epoch: 1234,
     time: "2023/07/13 12:00:00",
-    amount: 1000
+    amount: 1000,
+    type: "MEMBER"
   };
 
   beforeEach(() => {

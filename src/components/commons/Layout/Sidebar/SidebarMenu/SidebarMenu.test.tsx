@@ -2,6 +2,7 @@ import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 import { fireEvent, render, screen } from "src/test-utils";
+import { lists } from "src/commons/routers";
 
 import SidebarMenu from ".";
 
@@ -26,9 +27,9 @@ describe("SidebarMenu", () => {
     expect(protocolParamsPagep).toBeInTheDocument();
 
     fireEvent.click(stakingPage);
-    expect(history.location.pathname).toBe("/stacking-lifecycle/stake-key");
+    expect(history.location.pathname).toBe(lists.dashboard());
 
     fireEvent.click(protocolParamsPagep);
-    expect(history.location.pathname).toBe("/protocol-parameters");
+    expect(history.location.pathname).toBe(lists.protocolParameters());
   });
 });

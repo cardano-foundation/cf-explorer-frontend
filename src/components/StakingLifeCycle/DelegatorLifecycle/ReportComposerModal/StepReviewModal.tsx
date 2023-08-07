@@ -5,7 +5,7 @@ import moment from "moment";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import useToast from "src/commons/hooks/useToast";
-import { details } from "src/commons/routers";
+import { lists } from "src/commons/routers";
 import { generateStakeKeyReport, generateStakePoolReport } from "src/commons/utils/userRequest";
 import { getPoolEventType } from "src/components/PoolLifecycle";
 import { getEventType } from "src/components/StakekeySummary";
@@ -71,10 +71,9 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
       toast.success("Report generated successfully");
       handleCloseModal();
       setTimeout(() => {
-        history.push(details.dashboard(isPoolReport ? "pools" : "stake-key"));
+        history.push(lists.dashboard(isPoolReport ? "pool-reports" : "stake-key-reports"));
       }, 2000);
     } catch (err: any) {
-      console.error(err);
       toast.error("Failed to generate report. Please try again.");
     }
     setLoading(false);
@@ -131,7 +130,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
           Before proceeding with your report creation, we just want to double-check and confirm that you’ve filled out
           all the details correctly?
         </TextRequired>
-        <Stack marginBottom="35px">
+        <Stack data-testid="checking-report-content" marginBottom="35px">
           {list.map(({ label, value }) => {
             return (
               <OverViewItem key={label}>
@@ -145,13 +144,19 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
         </Stack>
         <StyledStack direction={"row"} display={"flex"} alignContent={"space-between"} gap={"20px"}>
           <StyledBackButton
+            data-testid="double-check-button"
             sx={{ fontSize: isMobile ? 14 : 16 }}
             width={isMobile ? 120 : 100}
             onClick={() => gotoStep?.(STEPS.step1)}
           >
             I’d like to double-check
           </StyledBackButton>
-          <StyledButton disabled={loading} onClick={handleGenerateReport} sx={{ fontSize: isMobile ? 14 : 16 }}>
+          <StyledButton
+            data-testid="compose-button"
+            disabled={loading}
+            onClick={handleGenerateReport}
+            sx={{ fontSize: isMobile ? 14 : 16 }}
+          >
             {loading && <CircularProgress color="info" size={20} />}Generate report
           </StyledButton>
         </StyledStack>

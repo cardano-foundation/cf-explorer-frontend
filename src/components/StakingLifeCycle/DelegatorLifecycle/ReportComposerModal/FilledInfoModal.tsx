@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Box, FormControl, FormControlLabel, RadioGroup, Stack, Radio } from "@mui/material";
 
@@ -97,12 +97,10 @@ type IEpochRange = [number, number];
 
 const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, saveParams, gotoStep, currentStep }) => {
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
-  const history = useHistory();
 
-  const isDelegatorPage = history.location.pathname.includes("/delegator-lifecycle/");
   const { poolId, stakeId } = useParams<{ poolId: string; stakeId: string }>();
 
-  const reportType: ReportType = isDelegatorPage ? ReportType.StakeKeyReport : ReportType.PoolReport;
+  const reportType: ReportType = stakeId ? ReportType.StakeKeyReport : ReportType.PoolReport;
   const address = poolId || stakeId;
 
   const [dateRange, setDateRange] = useState<IDateRange>([null, null]);
@@ -318,7 +316,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
             );
           })}
         </Box>
-        <Box marginBottom={"20px"}>
+        <Box data-testid="report-events" marginBottom={"20px"}>
           <SubText>{isPoolReport ? "Pool Report by event" : "Staking lifecycle events"}</SubText>
           <TextRequired>Select as required</TextRequired>
           <Box display={"flex"} flexWrap={"wrap"} gap="10px" marginTop="20px" marginBottom="40px">
@@ -337,7 +335,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
         </Box>
         {errorReportField && <TextError>{errorReportField}</TextError>}
         <StyledStack>
-          <StyledButton disabled={isDisabledButton} onClick={handleSubmit}>
+          <StyledButton data-testid="next-step" disabled={isDisabledButton} onClick={handleSubmit}>
             Next
           </StyledButton>
         </StyledStack>

@@ -35,36 +35,22 @@ describe("RewardAccountBox", () => {
 
 describe("RewardsDistributionDraw", () => {
   it("should component renders", () => {
-    const mockedData: IStakeKeyDetail = {
-      status: "ACTIVE",
-      stakeAddress: "0xabc123",
-      totalStake: 1000,
+    const mockedData: RewardDistributionStaking = {
+      hasLeaderReward: true,
+      hasMemberReward: true,
       rewardAvailable: 500,
-      rewardWithdrawn: 200,
-      rewardPools: ["pool1", "pool2"],
-      pool: {
-        tickerName: "TICK",
-        poolName: "Example Pool",
-        poolId: "pool1"
-      }
+      stakeAddress: "stake1uxrkez465cmpdrragd3rhcgrc6lllnasxd7qtl735l489egx9yfxe"
     };
     render(<RewardsDistributionDraw toggleRewardModal={jest.fn()} data={mockedData} setTypeRewardModal={jest.fn()} />);
     expect(screen.getByText(/0\.0005/i)).toBeInTheDocument();
   });
 
   it("should component renders", () => {
-    const mockedData: IStakeKeyDetail = {
-      status: "ACTIVE",
-      stakeAddress: "0xabc123",
-      totalStake: 1000,
+    const mockedData: RewardDistributionStaking = {
+      hasLeaderReward: true,
+      hasMemberReward: true,
       rewardAvailable: 500,
-      rewardWithdrawn: 200,
-      rewardPools: ["pool1", "pool2"],
-      pool: {
-        tickerName: "TICK",
-        poolName: "Example Pool",
-        poolId: "pool1"
-      }
+      stakeAddress: "stake1uxrkez465cmpdrragd3rhcgrc6lllnasxd7qtl735l489egx9yfxe"
     };
     const toggleRewardModal = jest.fn();
 

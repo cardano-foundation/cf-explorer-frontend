@@ -1,4 +1,4 @@
-import { styled, Box, Container, alpha, Button } from "@mui/material";
+import { Box, Button, Container, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const Wrapper = styled(Container)(() => ({}));
@@ -22,22 +22,35 @@ export const SideBar = styled(Box)(({ theme }) => ({
     width: "100%"
   },
   [theme.breakpoints.down("md")]: {
-    width: "100%"
+    width: "100%",
+    borderRight: "none"
   }
 }));
 
-export const NavItem = styled(Link)<{ active: boolean }>(({ theme, active }) => ({
+export const NavItem = styled(Link)<{ active: number }>(({ theme, active }) => ({
   textAlign: "left",
+  position: "relative",
   display: "block",
   width: "100%",
-  padding: "10px 0",
+  padding: "17px 0",
   margin: "auto",
-  backgroundColor: active ? alpha(theme.palette.primary.main, 0.1) : theme.palette.background.paper,
-  color: `${active ? theme.palette.primary.main : theme.palette.secondary.light} !important`,
+  backgroundColor: active ? theme.palette.primary[200] : theme.palette.background.paper,
+  color: `${active ? theme.palette.secondary.main : theme.palette.secondary.light} !important`,
   fontWeight: "bold",
   [theme.breakpoints.down("md")]: {
     display: "none"
   }
+}));
+
+export const Divider = styled(Box)<{ first: boolean }>(({ theme, first }) => ({
+  position: "absolute",
+  bottom: first ? "unset" : "0",
+  top: first ? "0" : "unset",
+  left: "10%",
+  width: "80%",
+  height: 0,
+  borderBottom: `1px solid ${theme.palette.secondary.main}`,
+  opacity: 0.07000000029802322
 }));
 
 export const WrapItemMobile = styled(Box)(({ theme }) => ({
@@ -55,7 +68,7 @@ export const WrapItemMobile = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const NavItemMobile = styled(Link)<{ active: boolean }>(({ theme, active }) => ({
+export const NavItemMobile = styled(Link)<{ active: number }>(({ theme, active }) => ({
   [theme.breakpoints.down("md")]: {
     display: "block"
   },
@@ -78,7 +91,7 @@ export const NavItemMobile = styled(Link)<{ active: boolean }>(({ theme, active 
 }));
 
 export const StyledUsername = styled(Box)`
-  max-width: 200px;
+  max-width: 100%;
   padding-left: ${({ theme }) => theme.spacing(1)};
   padding-right: ${({ theme }) => theme.spacing(1)};
   overflow: hidden;

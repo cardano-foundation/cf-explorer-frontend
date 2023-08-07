@@ -40,14 +40,6 @@ interface Params {
   tab: SPOStep;
 }
 
-export interface ListTabResponseSPO {
-  [key: string]: boolean;
-  isRegistration: boolean;
-  isUpdate: boolean;
-  isReward: boolean;
-  isDeRegistration: boolean;
-}
-
 export interface IReportLimit {
   isLimitReached: boolean;
   limitPer24hours: number;
