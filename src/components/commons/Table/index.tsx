@@ -504,6 +504,7 @@ const PaginationCustom = ({
         </IconButton>
       );
     }
+
     if (!pagination?.hideLastPage && item.type === "last") {
       return (
         <IconButton
