@@ -153,3 +153,10 @@ interface InstantRewards {
   txHash: string;
   rewards: number;
 }
+
+interface RewardDistributionStaking {
+  stakeAddress: string;
+  rewardAvailable: number;
+  hasMemberReward: boolean;
+  hasLeaderReward: boolean;
+}
