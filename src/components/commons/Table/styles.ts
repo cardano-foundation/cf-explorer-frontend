@@ -134,16 +134,14 @@ export const WrappModalScrollBar = styled(Box)(
 `
 );
 
-export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number; loading?: number }>(
-  ({ maxHeight, height, theme, loading }) => `
-  overflow: scroll;
-  height: ${height || 800}px;
+export const Wrapper = styled(Box)<{ loading?: number }>(
+  ({ theme, loading }) => `
+  overflow: scroll; 
   background: ${theme.palette.common.white};
   padding: ${theme.spacing(1)};
   padding-top: 0;
   border-radius: ${theme.spacing(1.5)};
-  ${loading ? "overflow-y: hidden;" : ""}
-  max-height: ${maxHeight || "50vh"};
+  ${loading ? "overflow-y: hidden;" : ""} 
 
   ${theme.breakpoints.down("sm")} {
     padding: 0;
@@ -159,9 +157,9 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number
     background: transparent;
   }
   &::-webkit-scrollbar-button:vertical:start:decrement {
-    height: 72px; 
+    height: 72px;
     display: block;
-  } 
+  }
   &:hover {
     &::-webkit-scrollbar-thumb {
       background: ${theme.palette.secondary.light};

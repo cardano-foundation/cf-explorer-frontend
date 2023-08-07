@@ -343,6 +343,7 @@ const Table: React.FC<TableProps> = ({
   className,
   emptyClassName,
   style,
+  tableWrapperProps,
   loading,
   initialized = true,
   error,
@@ -376,7 +377,7 @@ const Table: React.FC<TableProps> = ({
   };
 
   useEffect(() => {
-    if (wrapperRef.current) {
+    if (wrapperRef.current && !loading) {
       wrapperRef.current.scrollTop = 0;
     }
   }, [loading]);
@@ -405,6 +406,7 @@ const Table: React.FC<TableProps> = ({
         height={heightTable}
         className={data && data.length !== 0 ? "table-wrapper" : "hide-scroll"}
         loading={loading ? 1 : 0}
+        {...tableWrapperProps}
       >
         <TableFullWidth ref={tableRef}>
           <TableHeader

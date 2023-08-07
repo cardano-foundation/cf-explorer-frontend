@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import { BiChevronDown, BiChevronRight } from "react-icons/bi";
 import { useWindowSize } from "react-use";
 import { useSelector } from "react-redux";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
@@ -166,7 +166,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     {sidebar &&
                       (children?.length ? (
                         <IconMenu component={"span"}>
-                          {`menu-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
+                          {`menu-${index}` === active ? <BiChevronRight size={18} /> : <BiChevronDown size={18} />}
                         </IconMenu>
                       ) : null)}
                   </ListItem>
@@ -317,7 +317,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     {sidebar &&
                       (children?.length ? (
                         <IconMenu component={"span"}>
-                          {`footer-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
+                          {`footer-${index}` === active ? <BiChevronRight size={18} /> : <BiChevronDown size={18} />}
                         </IconMenu>
                       ) : null)}
                   </ListItem>

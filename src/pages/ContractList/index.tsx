@@ -115,6 +115,7 @@ const Transactions: React.FC = () => {
               mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
+          tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
         />
       </Card>
     </StyledContainer>
