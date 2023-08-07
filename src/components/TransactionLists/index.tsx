@@ -31,14 +31,14 @@ interface TransactionListProps {
 }
 
 const TransactionList: React.FC<TransactionListProps> = ({
-                                                           underline = false,
-                                                           url,
-                                                           openDetail,
-                                                           selected,
-                                                           showTabView,
-                                                           hash,
-                                                           handleClose
-                                                         }) => {
+  underline = false,
+  url,
+  openDetail,
+  selected,
+  showTabView,
+  hash,
+  handleClose
+}) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
