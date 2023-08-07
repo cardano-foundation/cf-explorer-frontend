@@ -13,6 +13,7 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DownIcon,
   EmptyIcon,
+  EndPage,
   EyeIcon,
   NextPage,
   PrevPage,
@@ -503,6 +504,20 @@ const PaginationCustom = ({
         </IconButton>
       );
     }
+    if (!pagination?.hideLastPage && item.type === "last") {
+      return (
+        <IconButton
+          disabled={page === totalPage || loading}
+          onClick={() => {
+            handleChangePage(null, totalPage || 1);
+            setInputPage(totalPage || 1);
+            pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
+          }}
+        >
+          <EndPageIcon disabled={page === totalPage || loading} />
+        </IconButton>
+      );
+    }
     if (item.type === "next") {
       return (
         <IconButton
@@ -539,10 +554,24 @@ const PaginationCustom = ({
               type={"string"}
               value={inputPage}
               length={inputPage.toString().length || 1}
+              onChange={(e) => {
+                if (+e.target.value <= totalPage) {
+                  setInputPage(+e.target.value);
+                }
+              }}
               onBlur={() => {
                 setInputPage(page);
               }}
-              disabled={true}
+              disabled={pagination?.hideLastPage || loading}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  if (inputPage < 1) {
+                    setInputPage(1);
+                  }
+                  pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
+                  handleChangePage(null, inputPage);
+                }
+              }}
             />
             <Box component={"span"} color={(theme) => theme.palette.secondary.main} fontSize="0.875rem">
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}
@@ -568,7 +597,9 @@ const PaginationCustom = ({
 const StartPageIcon = styled(StartPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
   stroke: disabled ? theme.palette.text.disabled : theme.palette.secondary.light
 }));
-
+const EndPageIcon = styled(EndPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.secondary.light
+}));
 const NextPageIcon = styled(NextPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
   stroke: disabled ? theme.palette.text.disabled : theme.palette.secondary.light
 }));
