@@ -154,7 +154,6 @@ const AddressAnalytics: React.FC = () => {
                 </AreaChart>
               </ResponsiveContainer>
             )}
-            <Box sx={{ marginTop: "-10px", paddingRight: "13px", width: "100%", boxSizing: "border-box", textAlign: "right", color: theme.palette.secondary.main }}>(UTC)</Box>
           </ChartBox>
         </Grid>
         <Grid item xs={24} lg={6}>
