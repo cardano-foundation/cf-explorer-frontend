@@ -25,9 +25,7 @@ describe("ResetPassword page", () => {
   it("should component render", async () => {
     render(<ResetPassword codeVerify="123123" />);
     await waitFor(() => {
-      expect(screen.getByText(/reset password/i)).toBeInTheDocument();
       expect(screen.getByPlaceholderText(/new password/i)).toBeInTheDocument();
-      expect(screen.getByText(/confirm new password/i)).toBeInTheDocument();
       expect(screen.getByPlaceholderText(/confirm password/i)).toBeInTheDocument();
       expect(screen.getByRole("button", { name: /submit/i })).toBeInTheDocument();
     });

@@ -294,7 +294,7 @@ export default function SignUp() {
     <Container>
       {!success ? (
         <WrapContent>
-          <WrapTitle>Sign Up</WrapTitle>
+          <WrapTitle data-testid="signup-title">Sign Up</WrapTitle>
           <WrapHintText>
             Already have an account? <WrapSignUp onClick={() => handleRedirect()}>Sign in here</WrapSignUp>
           </WrapHintText>
@@ -432,7 +432,7 @@ export default function SignUp() {
                   }
                 />
               </Box>
-              <WrapButton variant="contained" fullWidth onClick={handleSubmit} disabled={!enableButton}>
+              <WrapButton data-testid="signup-button" variant="contained" fullWidth onClick={handleSubmit} disabled={!enableButton}>
                 Sign Up
               </WrapButton>
             </WrapForm>
