@@ -266,7 +266,7 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
       <>
         <>
           <Title>Link wallet to your account</Title>
-          <Box color={({ palette }) => palette.grey[300]} fontWeight={"bold"} fontSize={"14px"}>
+          <Box color={({ palette }) => palette.secondary.light} fontWeight={"bold"} fontSize={"14px"}>
             You can only link wallet once per account
           </Box>
           <>

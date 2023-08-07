@@ -375,7 +375,7 @@ const Table: React.FC<TableProps> = ({
   };
 
   useEffect(() => {
-    if (wrapperRef.current) {
+    if (wrapperRef.current && !loading) {
       wrapperRef.current.scrollTop = 0;
     }
   }, [loading]);
@@ -503,6 +503,20 @@ const PaginationCustom = ({
         </IconButton>
       );
     }
+    if (item.type === "last" && !pagination?.hideLastPage) {
+      return (
+        <IconButton
+          disabled={page === totalPage || loading}
+          onClick={() => {
+            handleChangePage(null, totalPage || 1);
+            setInputPage(totalPage || 1);
+            pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
+          }}
+        >
+          <EndPageIcon disabled={page === totalPage || loading} />
+        </IconButton>
+      );
+    }
     if (item.type === "next") {
       return (
         <IconButton
@@ -543,6 +557,15 @@ const PaginationCustom = ({
                 setInputPage(page);
               }}
               disabled={true}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  if (inputPage < 1) {
+                    setInputPage(1);
+                  }
+                  pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
+                  handleChangePage(null, inputPage);
+                }
+              }}
             />
             <Box component={"span"} color={(theme) => theme.palette.secondary.main} fontSize="0.875rem">
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}
