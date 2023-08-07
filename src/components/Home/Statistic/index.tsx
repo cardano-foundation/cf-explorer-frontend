@@ -207,9 +207,7 @@ const HomeStatistic = () => {
                       src={LiveStakeIcon}
                       alt="Total ADA Stake"
                     />
-                    <Name data-testid="live-stake-box-title">
-                      Live Stake <StyledAdaLogoIcon />
-                    </Name>
+                    <Name data-testid="live-stake-box-title">Live Stake</Name>
                   </Box>
                 </Box>
                 <Box>
@@ -243,7 +241,9 @@ const HomeStatistic = () => {
                   </Box>
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
                     <CustomTooltip title={"Of the max supply"}>
-                      <span>Circulating supply (ADA): </span>
+                      <span>
+                        Circulating supply <StyledAdaLogoIcon />:{" "}
+                      </span>
                     </CustomTooltip>
                     <CustomTooltip title={numberWithCommas(supply)}>
                       <span data-testid="circulating-supply-value">{formatADA(circulatingSupply.toString())}</span>
