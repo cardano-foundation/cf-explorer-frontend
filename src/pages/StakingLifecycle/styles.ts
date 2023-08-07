@@ -1,5 +1,7 @@
 import { TabPanel } from "@mui/lab";
-import { Box, Tab, Tabs, Typography, styled, Container } from "@mui/material";
+import { Box, Container, Tab, Tabs, Typography, styled } from "@mui/material";
+
+export const StyledContainer = styled(Container)``;
 
 export const TextHeadline = styled("span")`
   font-weight: 700;
@@ -89,6 +91,3 @@ export const WrapFilterDescription = styled("span")(({ theme }) => ({
     fontSize: 12
   }
 }));
-export const StyledContainer = styled(Container)`
-  max-width: 95vw !important;
-`;
