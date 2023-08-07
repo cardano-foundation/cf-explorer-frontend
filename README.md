@@ -94,8 +94,6 @@ On opening Cypress, your testing journey begins with the Launchpad. Its job is t
 To run e2e test with all specs, try this command:
 `npm run cypress:run`
 
-
-
 ## Build into production
 
 Execute  `npm run build`
