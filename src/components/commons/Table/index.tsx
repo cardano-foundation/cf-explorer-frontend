@@ -2,6 +2,7 @@ import {
   Box,
   CircularProgress,
   IconButton,
+  MenuItem,
   PaginationRenderItemParams,
   alpha,
   styled,
@@ -13,6 +14,7 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DownIcon,
   EmptyIcon,
+  EndPage,
   EyeIcon,
   NextPage,
   PrevPage,
@@ -40,7 +42,6 @@ import {
   LoadingWrapper,
   SelectMui,
   ShowedResults,
-  StyledMenuItem,
   StyledPagination,
   TBody,
   TCol,
@@ -67,14 +68,14 @@ export const EmptyRecord: React.FC<TEmptyRecord> = ({ className }) => (
 );
 
 const TableHeader = <T extends ColumnType>({
-  columns,
-  loading,
-  defaultSort,
-  showTabView,
-  selectable,
-  toggleSelectAll,
-  isSelectAll
-}: TableHeaderProps<T>) => {
+                                             columns,
+                                             loading,
+                                             defaultSort,
+                                             showTabView,
+                                             selectable,
+                                             toggleSelectAll,
+                                             isSelectAll
+                                           }: TableHeaderProps<T>) => {
   const [{ columnKey, sort }, setSort] = useState<{ columnKey: string; sort: "" | "DESC" | "ASC" }>({
     columnKey: defaultSort ? defaultSort.split(",")[0] : "",
     sort: defaultSort ? (defaultSort.split(",")[1] as "" | "DESC" | "ASC") : ""
@@ -143,18 +144,18 @@ const TableHeader = <T extends ColumnType>({
 };
 
 const TableRow = <T extends ColumnType>({
-  row,
-  columns,
-  index,
-  onClickRow,
-  showTabView,
-  selectedProps,
-  selected = null,
-  dataLength,
-  selectable,
-  toggleSelection,
-  isSelected
-}: TableRowProps<T>) => {
+                                          row,
+                                          columns,
+                                          index,
+                                          onClickRow,
+                                          showTabView,
+                                          selectedProps,
+                                          selected = null,
+                                          dataLength,
+                                          selectable,
+                                          toggleSelection,
+                                          isSelected
+                                        }: TableRowProps<T>) => {
   const colRef = useRef(null);
   const isClickRow = selected === index ? 1 : 0;
 
@@ -193,18 +194,18 @@ const TableRow = <T extends ColumnType>({
 };
 
 const TableBody = <T extends ColumnType>({
-  data,
-  columns,
-  onClickRow,
-  showTabView,
-  selected,
-  selectedProps,
-  loading,
-  initialized,
-  selectable,
-  toggleSelection,
-  isSelected
-}: TableProps<T>) => {
+                                           data,
+                                           columns,
+                                           onClickRow,
+                                           showTabView,
+                                           selected,
+                                           selectedProps,
+                                           loading,
+                                           initialized,
+                                           selectable,
+                                           toggleSelection,
+                                           isSelected
+                                         }: TableProps<T>) => {
   return (
     <TBody>
       {loading && initialized && (
@@ -298,10 +299,10 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
                 }
               }}
             >
-              <StyledMenuItem value={10}>10</StyledMenuItem>
-              <StyledMenuItem value={20}>20</StyledMenuItem>
-              <StyledMenuItem value={50}>50</StyledMenuItem>
-              <StyledMenuItem value={100}>100</StyledMenuItem>
+              <MenuItem value={10}>10</MenuItem>
+              <MenuItem value={20}>20</MenuItem>
+              <MenuItem value={50}>50</MenuItem>
+              <MenuItem value={100}>100</MenuItem>
             </SelectMui>
             <Box component={"span"} ml={1} fontSize="0.875rem">
               Per page
@@ -335,31 +336,31 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
 };
 
 const Table: React.FC<TableProps> = ({
-  columns,
-  data,
-  total,
-  pagination,
-  className,
-  emptyClassName,
-  style,
-  loading,
-  initialized = true,
-  error,
-  onClickRow,
-  showTabView,
-  selected,
-  selectedProps,
-  defaultSort,
-  showPagination = true,
-  selectable,
-  onSelectionChange,
-  tableTitle,
-  renderAction,
-  fliterOptions,
-  onFilterChange,
-  isShowingResult,
-  maxHeight
-}) => {
+                                       columns,
+                                       data,
+                                       total,
+                                       pagination,
+                                       className,
+                                       emptyClassName,
+                                       style,
+                                       loading,
+                                       initialized = true,
+                                       error,
+                                       onClickRow,
+                                       showTabView,
+                                       selected,
+                                       selectedProps,
+                                       defaultSort,
+                                       showPagination = true,
+                                       selectable,
+                                       onSelectionChange,
+                                       tableTitle,
+                                       renderAction,
+                                       fliterOptions,
+                                       onFilterChange,
+                                       isShowingResult,
+                                       maxHeight
+                                     }) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange
   });
@@ -441,14 +442,14 @@ const Table: React.FC<TableProps> = ({
 };
 
 const TableTopHeader: React.FC<TableTopHeaderProps> = ({
-  fliterOptions,
-  renderAction,
-  selectedItems,
-  title,
-  isSelectAll,
-  totalShowingResult = 0,
-  onFilterChange
-}) => (
+                                                         fliterOptions,
+                                                         renderAction,
+                                                         selectedItems,
+                                                         title,
+                                                         isSelectAll,
+                                                         totalShowingResult = 0,
+                                                         onFilterChange
+                                                       }) => (
   <TableHeaderContainer>
     {typeof title === "string" ? <TableTitle>{title}</TableTitle> : <TableCustomTitle>{title}</TableCustomTitle>}
     {Boolean(totalShowingResult) && <ShowedResults>Showing {totalShowingResult} results</ShowedResults>}
@@ -463,13 +464,13 @@ export * from "../../../types/table.d";
 export default Table;
 
 const PaginationCustom = ({
-  pagination,
-  total,
-  page,
-  size,
-  handleChangePage,
-  loading
-}: {
+                            pagination,
+                            total,
+                            page,
+                            size,
+                            handleChangePage,
+                            loading
+                          }: {
   pagination: TableProps["pagination"];
   total: number;
   page: number;
@@ -500,6 +501,20 @@ const PaginationCustom = ({
           }}
         >
           <StartPageIcon disabled={page === 1 || loading} />
+        </IconButton>
+      );
+    }
+    if (!pagination?.hideLastPage && item.type === "last") {
+      return (
+        <IconButton
+          disabled={page === totalPage || loading}
+          onClick={() => {
+            handleChangePage(null, totalPage || 1);
+            setInputPage(totalPage || 1);
+            pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
+          }}
+        >
+          <EndPageIcon disabled={page === totalPage || loading} />
         </IconButton>
       );
     }
@@ -539,10 +554,24 @@ const PaginationCustom = ({
               type={"string"}
               value={inputPage}
               length={inputPage.toString().length || 1}
+              onChange={(e) => {
+                if (+e.target.value <= totalPage) {
+                  setInputPage(+e.target.value);
+                }
+              }}
               onBlur={() => {
                 setInputPage(page);
               }}
-              disabled={true}
+              disabled={pagination?.hideLastPage || loading}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  if (inputPage < 1) {
+                    setInputPage(1);
+                  }
+                  pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
+                  handleChangePage(null, inputPage);
+                }
+              }}
             />
             <Box component={"span"} color={(theme) => theme.palette.secondary.main} fontSize="0.875rem">
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}
@@ -568,7 +597,9 @@ const PaginationCustom = ({
 const StartPageIcon = styled(StartPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
   stroke: disabled ? theme.palette.text.disabled : theme.palette.secondary.light
 }));
-
+const EndPageIcon = styled(EndPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
+  stroke: disabled ? theme.palette.text.disabled : theme.palette.secondary.light
+}));
 const NextPageIcon = styled(NextPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
   stroke: disabled ? theme.palette.text.disabled : theme.palette.secondary.light
 }));
