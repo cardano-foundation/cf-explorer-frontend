@@ -165,7 +165,11 @@ const HomeStatistic = () => {
                   <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
                     <Title data-testid="current-epoch-number">{numberWithCommas(currentEpoch?.no)}</Title>
                     <Box color={({ palette }) => palette.secondary.light}>
-                      Slot: {numberWithCommas(currentEpoch?.slot % MAX_SLOT_EPOCH)}/ {numberWithCommas(MAX_SLOT_EPOCH)}
+                      Slot:{" "}
+                      {moment(currentEpoch?.endTime).isAfter(moment())
+                        ? numberWithCommas(currentEpoch?.slot)
+                        : numberWithCommas(MAX_SLOT_EPOCH)}
+                      / {numberWithCommas(MAX_SLOT_EPOCH)}
                     </Box>
                   </Box>
                   <Progress>
@@ -209,9 +213,7 @@ const HomeStatistic = () => {
                       src={LiveStakeIcon}
                       alt="Total ADA Stake"
                     />
-                    <Name data-testid="live-stake-box-title">
-                      Live Stake <StyledAdaLogoIcon />
-                    </Name>
+                    <Name data-testid="live-stake-box-title">Live Stake</Name>
                   </Box>
                 </Box>
                 <Box>
