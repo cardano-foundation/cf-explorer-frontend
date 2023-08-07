@@ -137,6 +137,7 @@ export const WrapButton = styled(Button)`
   &:hover {
     background: ${({ theme }) => theme.palette.secondary.main};
   }
+  text-transform: none;
 `;
 
 export const WrapButtonConnectWallet = styled(Button)`
@@ -148,6 +149,7 @@ export const WrapButtonConnectWallet = styled(Button)`
   line-height: 19px;
   text-align: center;
   padding: 14px 20px;
+  text-transform: none;
 `;
 
 export const WrapDivider = styled(Divider)`
