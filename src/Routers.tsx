@@ -4,7 +4,6 @@ import { useAsync, useLocalStorage } from "react-use";
 
 import useAuth from "./commons/hooks/useAuth";
 import { routers } from "./commons/routers";
-import { LANGUAGE, NETWORK, NETWORK_TYPES } from "./commons/utils/constants";
 import { getAllBookmarks } from "./commons/utils/userRequest";
 import AccountLayout from "./components/commons/Layout/AccountLayout";
 import AddressWalletDetail from "./pages/AddressWalletDetail";
@@ -21,11 +20,11 @@ import EpochDetail from "./pages/EpochDetail";
 import ForgotPassword from "./pages/ForgotPassword";
 import Home from "./pages/Home";
 import InstantRewards from "./pages/InstantRewards";
-import { setOpenSyncBookmarkModal } from "./stores/user";
 import MyProfile from "./pages/MyProfile";
 import NotFound from "./pages/NotFound";
 import PolicyDetail from "./pages/PolicyDetail";
 import ProtocolParameter from "./pages/ProtocolParameter";
+import { LANGUAGE, NETWORK, NETWORK_TYPES } from "./commons/utils/constants";
 import FAQ from "./pages/Refference/FAQ";
 import Policy from "./pages/Refference/Policy";
 import TermOfServices from "./pages/Refference/TermOfServices";
@@ -48,6 +47,7 @@ import TopDelegators from "./pages/TopDelegators";
 import TransactionDetail from "./pages/TransactionDetail";
 import TransactionList from "./pages/TransactionList";
 import VerifyEmail from "./pages/VerifyEmail";
+import { setOpenSyncBookmarkModal } from "./stores/user";
 
 const StakeAddressRegistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.REGISTRATION} />;
 const StakeAddressDeregistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.DEREREGISTRATION} />;

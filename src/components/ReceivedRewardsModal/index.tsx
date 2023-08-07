@@ -32,12 +32,6 @@ interface ReceivedReward {
   type: string;
 }
 
-export enum ReceivedRewardsType {
-  LEADER = "LEADER",
-  MEMBER = "MEMBER",
-  ALL = ""
-}
-
 export interface ReceivedRewardsModalProps {
   open?: boolean;
   onClose?: () => void;
@@ -68,7 +62,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       title: "Amount ADA",
       render(data) {
         return (
-          <AmountADARow amount={data.amount}>
+          <AmountADARow>
             +{formatADAFull(data.amount)} <ADAicon />
           </AmountADARow>
         );

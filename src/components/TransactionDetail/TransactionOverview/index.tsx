@@ -155,7 +155,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Created At </TitleCard>
+          <TitleCard mr={1}>Created At</TitleCard>
         </Box>
       ),
       value: formatDateTimeLocal(data?.tx?.time || "")

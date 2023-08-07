@@ -117,7 +117,6 @@ export const StyledBoxTransaction = styled("div")(({ theme }) => ({
     maxWidth: "195px"
   }
 }));
-
 export const StyledBox = styled(Box)(({ theme }) => ({
   maxHeight: "70vh",
   "&::-webkit-scrollbar": {

@@ -21,11 +21,6 @@ interface IAction {
   payload: any;
 }
 
-interface IAction {
-  type: string;
-  payload: any;
-}
-
 export enum CONTRACT_ADDRESS_TYPE {
   SET_REFRESH_SCRIPT_TAB = "SET_REFRESH_SCRIPT_TAB"
 }
