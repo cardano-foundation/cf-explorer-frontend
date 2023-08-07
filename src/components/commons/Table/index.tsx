@@ -342,6 +342,7 @@ const Table: React.FC<TableProps> = ({
   className,
   emptyClassName,
   style,
+  tableWrapperProps,
   loading,
   initialized = true,
   error,
@@ -375,7 +376,7 @@ const Table: React.FC<TableProps> = ({
   };
 
   useEffect(() => {
-    if (wrapperRef.current) {
+    if (wrapperRef.current && !loading) {
       wrapperRef.current.scrollTop = 0;
     }
   }, [loading]);
@@ -404,6 +405,7 @@ const Table: React.FC<TableProps> = ({
         height={heightTable}
         className={data && data.length !== 0 ? "table-wrapper" : "hide-scroll"}
         loading={loading ? 1 : 0}
+        {...tableWrapperProps}
       >
         <TableFullWidth ref={tableRef}>
           <TableHeader
@@ -543,6 +545,15 @@ const PaginationCustom = ({
                 setInputPage(page);
               }}
               disabled={true}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  if (inputPage < 1) {
+                    setInputPage(1);
+                  }
+                  pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
+                  handleChangePage(null, inputPage);
+                }
+              }}
             />
             <Box component={"span"} color={(theme) => theme.palette.secondary.main} fontSize="0.875rem">
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}

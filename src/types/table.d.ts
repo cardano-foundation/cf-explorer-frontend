@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import React from "react";
+import { BoxProps } from "@mui/material";
 
 import { Option } from "src/components/commons/Filter";
 
@@ -66,6 +67,7 @@ export interface TableProps<T extends ColumnType = any> {
     size?: number;
     total?: number;
     handleCloseDetailView?: () => void;
+    hideLastPage?: boolean;
   };
   allowSelect?: boolean;
   onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
@@ -86,7 +88,11 @@ export interface TableProps<T extends ColumnType = any> {
   renderAction?: (items, clearSelection: () => void) => React.ReactElement;
   onFilterChange?: (value: any, option?: Option) => void;
   isShowingResult?: boolean;
+  /**
+   * @deprecated: This props is deprecated. Please pass maxHeight attribute to tableWrapperProps.
+   */
   maxHeight?: number | string;
+  tableWrapperProps?: BoxProps;
 }
 
 export interface FooterTableProps {

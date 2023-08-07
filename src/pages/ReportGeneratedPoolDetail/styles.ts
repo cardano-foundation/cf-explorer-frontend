@@ -7,5 +7,4 @@ export const TopHeader = styled(Box)`
 `;
 
 export const StyledContainer = styled(Container)`
-  max-width: 95vw !important;
 `;

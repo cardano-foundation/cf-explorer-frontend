@@ -163,6 +163,7 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
             },
             total: fetchData.total
           }}
+          tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
         />
       </Box>
     </RegistrationContainer>
