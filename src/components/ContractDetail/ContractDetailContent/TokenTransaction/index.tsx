@@ -162,7 +162,7 @@ const TokenTransaction: React.FC = () => {
           onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
         }}
       />
-      {txHashSelected && (
+      {txHashSelected && onDetailView &&(
         <DetailViewContractHash
           txHash={txHashSelected}
           address={params.address}
