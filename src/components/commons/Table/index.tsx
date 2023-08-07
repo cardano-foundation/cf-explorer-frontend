@@ -2,7 +2,6 @@ import {
   Box,
   CircularProgress,
   IconButton,
-  MenuItem,
   PaginationRenderItemParams,
   alpha,
   styled,
@@ -14,7 +13,6 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DownIcon,
   EmptyIcon,
-  EndPage,
   EyeIcon,
   NextPage,
   PrevPage,
@@ -42,6 +40,7 @@ import {
   LoadingWrapper,
   SelectMui,
   ShowedResults,
+  StyledMenuItem,
   StyledPagination,
   TBody,
   TCol,
@@ -299,10 +298,10 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
                 }
               }}
             >
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-              <MenuItem value={50}>50</MenuItem>
-              <MenuItem value={100}>100</MenuItem>
+              <StyledMenuItem value={10}>10</StyledMenuItem>
+              <StyledMenuItem value={20}>20</StyledMenuItem>
+              <StyledMenuItem value={50}>50</StyledMenuItem>
+              <StyledMenuItem value={100}>100</StyledMenuItem>
             </SelectMui>
             <Box component={"span"} ml={1} fontSize="0.875rem">
               Per page
@@ -504,20 +503,6 @@ const PaginationCustom = ({
         </IconButton>
       );
     }
-    if (item.type === "last") {
-      return (
-        <IconButton
-          disabled={page === totalPage || loading}
-          onClick={() => {
-            handleChangePage(null, totalPage || 1);
-            setInputPage(totalPage || 1);
-            pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
-          }}
-        >
-          <EndPageIcon disabled={page === totalPage || loading} />
-        </IconButton>
-      );
-    }
     if (item.type === "next") {
       return (
         <IconButton
@@ -554,24 +539,10 @@ const PaginationCustom = ({
               type={"string"}
               value={inputPage}
               length={inputPage.toString().length || 1}
-              onChange={(e) => {
-                if (+e.target.value <= totalPage) {
-                  setInputPage(+e.target.value);
-                }
-              }}
               onBlur={() => {
                 setInputPage(page);
               }}
-              disabled={loading}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  if (inputPage < 1) {
-                    setInputPage(1);
-                  }
-                  pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
-                  handleChangePage(null, inputPage);
-                }
-              }}
+              disabled={true}
             />
             <Box component={"span"} color={(theme) => theme.palette.secondary.main} fontSize="0.875rem">
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}
@@ -597,9 +568,7 @@ const PaginationCustom = ({
 const StartPageIcon = styled(StartPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
   stroke: disabled ? theme.palette.text.disabled : theme.palette.secondary.light
 }));
-const EndPageIcon = styled(EndPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
-  stroke: disabled ? theme.palette.text.disabled : theme.palette.secondary.light
-}));
+
 const NextPageIcon = styled(NextPage)<{ disabled: boolean }>(({ disabled, theme }) => ({
   stroke: disabled ? theme.palette.text.disabled : theme.palette.secondary.light
 }));

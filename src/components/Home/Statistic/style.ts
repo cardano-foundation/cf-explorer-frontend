@@ -1,5 +1,7 @@
 import { Box, Card, Grid, Skeleton, styled } from "@mui/material";
 
+import { AdaLogoIcon } from "src/components/commons/ADAIcon";
+
 export const StatisticContainer = styled(Grid)`
   margin-bottom: 24px;
 `;
@@ -77,7 +79,7 @@ export const Title = styled("h3")`
   margin-top: 0;
   margin-bottom: 0;
   color: ${({ theme }) => theme.palette.secondary.main};
-  font-size: 28px;
+  font-size: 28px !important;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 16px;
     word-break: break-all;
@@ -160,3 +162,8 @@ export const WrapCardContent = styled(Box)`
   justify-content: space-between;
   height: 100%;
 `;
+
+export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
+  fontSize: 12,
+  color: theme.palette.text.secondary
+}));

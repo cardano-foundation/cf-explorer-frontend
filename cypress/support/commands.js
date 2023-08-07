@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable no-undef */
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -24,6 +27,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import moment from "moment";
+
 const format = require("string-format");
 
 Cypress.Commands.add("clickElement", (selector, ...value) => {
@@ -306,6 +310,10 @@ Cypress.Commands.add("verifyFieldIsConsecutive", (selector, ...value) => {
         expect(areConsecutive).to.be.true;
       });
   }
+});
+
+Cypress.Commands.add("getBySelector", (selector, ...args) => {
+  return cy.get(`[data-testid=${selector}]`, ...args);
 });
 
 Cypress.Commands.add("withLogin", () => {

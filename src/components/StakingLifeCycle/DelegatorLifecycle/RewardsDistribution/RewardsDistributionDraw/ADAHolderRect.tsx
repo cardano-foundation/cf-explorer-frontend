@@ -4,12 +4,14 @@ import { BoxProps } from "@mui/material";
 import { AdaHolderIconUrl } from "src/commons/resources";
 
 import { DisableAbleLabel, FacingImg, RectBox } from "./styles";
-
-const ADAHolderRect: React.FC<BoxProps> = forwardRef((props, boxRef) => {
+export interface Props extends BoxProps {
+  disabled?: boolean;
+}
+const ADAHolderRect: React.FC<Props> = forwardRef(({ disabled, ...props }, boxRef) => {
   return (
-    <RectBox {...props} ref={boxRef}>
+    <RectBox disabled={+!!disabled} {...props} ref={boxRef}>
       <FacingImg src={AdaHolderIconUrl} />
-      <DisableAbleLabel>ADA Holder</DisableAbleLabel>
+      <DisableAbleLabel disabled={+!!disabled}>ADA Holder</DisableAbleLabel>
     </RectBox>
   );
 });

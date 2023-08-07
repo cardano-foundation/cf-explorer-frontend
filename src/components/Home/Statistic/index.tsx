@@ -33,6 +33,7 @@ import {
   Progress,
   ProgressPending,
   StatisticContainer,
+  StyledAdaLogoIcon,
   TimeDuration,
   Title,
   WrapCardContent,
@@ -208,7 +209,9 @@ const HomeStatistic = () => {
                       src={LiveStakeIcon}
                       alt="Total ADA Stake"
                     />
-                    <Name data-testid="live-stake-box-title">Live Stake (ADA)</Name>
+                    <Name data-testid="live-stake-box-title">
+                      Live Stake <StyledAdaLogoIcon />
+                    </Name>
                   </Box>
                 </Box>
                 <Box>
@@ -235,13 +238,15 @@ const HomeStatistic = () => {
                 </Box>
                 <Box>
                   <Box color={({ palette }) => palette.secondary.light}>
-                    Active Stake (ADA):{" "}
+                    Active Stake <StyledAdaLogoIcon />:{" "}
                     <CustomTooltip title={formatADAFull(activeStake)}>
                       <span data-testid="active-stake-value">{formatADA(activeStake)}</span>
                     </CustomTooltip>
                   </Box>
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
-                    Circulating supply (ADA):{" "}
+                    <CustomTooltip title={"Of the max supply"}>
+                      <span>Circulating supply (ADA): </span>
+                    </CustomTooltip>
                     <CustomTooltip title={numberWithCommas(supply)}>
                       <span data-testid="circulating-supply-value">{formatADA(circulatingSupply.toString())}</span>
                     </CustomTooltip>

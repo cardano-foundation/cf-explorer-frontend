@@ -1,4 +1,4 @@
-import { Box, Checkbox, Typography, styled, Pagination } from "@mui/material";
+import { Box, Checkbox, Typography, styled, Pagination, MenuItem } from "@mui/material";
 
 import CustomSelect from "../CustomSelect";
 
@@ -253,5 +253,11 @@ export const StyledPagination = styled(Pagination)(() => ({
     width: 24,
     height: 24,
     padding: 0
+  }
+}));
+
+export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  "&:hover, &.Mui-selected": {
+    background: theme.palette.primary[200] + " !important"
   }
 }));
