@@ -30,7 +30,7 @@ describe("DelegationOverview component", () => {
   });
   it("should component render", () => {
     render(<OverViews />);
-    expect(screen.getByRole("heading", { name: /stake pools/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /stake pool/i })).toBeInTheDocument();
     expect(screen.getByText(/delegators/i)).toBeInTheDocument();
     expect(screen.getByText(/active pools/i)).toBeInTheDocument();
   });

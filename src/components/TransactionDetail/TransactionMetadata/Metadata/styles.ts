@@ -81,6 +81,10 @@ export const ValueText = styled(Box)(({ theme }) => ({
   paddingRight: theme.spacing(1)
 }));
 
+export const MetaDataValue = styled(ValueText)(({ theme }) => ({
+  color: theme.palette.secondary.main
+}));
+
 export const ViewAllImage = styled("img")`
   width: 16px;
   height: 16px;

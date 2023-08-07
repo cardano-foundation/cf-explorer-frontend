@@ -43,7 +43,7 @@ export const Item = styled(BoxRaised)`
   cursor: pointer;
   overflow: hidden;
   &:hover {
-    box-shadow: ${(props) => props.theme.shadow.card};
+    box-shadow: ${(props) => props.theme.shadow.cardHover};
   }
   display: flex;
   flex-direction: column;
@@ -163,7 +163,7 @@ export const NextSwiper = styled(Box)`
   align-items: center;
   cursor: pointer;
   &:hover {
-    background: ${(props) => props.theme.palette.purple["200"]};
+    transform: scale(1.1);
   }
   position: absolute;
   right: -10px;
@@ -176,6 +176,9 @@ export const NextSwiper = styled(Box)`
 export const PrevSwiper = styled(NextSwiper)`
   left: -10px;
   transform: rotate(180deg);
+  &:hover {
+    transform: rotate(180deg) scale(1.1) !important;
+  }
 `;
 
 export const CustomGrid = styled(Grid)`

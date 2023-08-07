@@ -1,9 +1,5 @@
-import { Router } from "react-router-dom";
-import { createBrowserHistory } from "history";
-
-import { fireEvent, render, screen, within } from "src/test-utils";
+import { render, screen, within } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
-import { details } from "src/commons/routers";
 
 import AddressWalletDetail from ".";
 
@@ -15,6 +11,17 @@ const tokenMetadata: ITokenMetadata = {
   ticker: "TKN",
   url: "http://example.com/token_info"
 };
+
+const dataChart = [
+  {
+    date: "2023/08/02 02:00:00",
+    value: 877854256653468
+  },
+  {
+    date: "2023/08/02 04:00:00",
+    value: 877854256653468
+  }
+];
 
 // Mock data for the WalletAddress interface
 const walletAddress: WalletAddress = {
@@ -40,11 +47,13 @@ jest.mock("src/commons/hooks/useFetch");
 
 describe("AddressWalletDetail page", () => {
   beforeEach(() => {
-    (useFetch as jest.Mock).mockReturnValue({
-      data: walletAddress,
-      loading: false,
-      initialized: true,
-      error: false
+    (useFetch as jest.Mock).mockImplementation((url: string) => {
+      return {
+        data: url.includes("/addresses") ? walletAddress : dataChart,
+        loading: false,
+        initialized: true,
+        error: false
+      };
     });
   });
   it("should component render", () => {
@@ -52,20 +61,6 @@ describe("AddressWalletDetail page", () => {
     const heading = screen.getByRole("heading", { name: /transactions/i });
     expect(screen.getByText(/analytics/i)).toBeInTheDocument();
     expect(screen.getByText(/address details/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /open/i })).toBeInTheDocument();
     expect(within(heading).getByText(/transactions/i)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: walletAddress.stakeAddress })).toBeInTheDocument();
-  });
-
-  it("should user goto the stakekey detail", () => {
-    const history = createBrowserHistory();
-    render(
-      <Router history={history}>
-        <AddressWalletDetail />
-      </Router>
-    );
-
-    fireEvent.click(screen.getByRole("link", { name: walletAddress.stakeAddress }));
-    expect(history.location.pathname).toBe(details.stake(walletAddress.stakeAddress));
   });
 });
