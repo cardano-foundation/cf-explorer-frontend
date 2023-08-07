@@ -2,7 +2,6 @@ import {
   Box,
   CircularProgress,
   IconButton,
-  MenuItem,
   PaginationRenderItemParams,
   alpha,
   styled,
@@ -55,7 +54,8 @@ import {
   TableHeaderContainer,
   TableTitle,
   TotalNumber,
-  Wrapper
+  Wrapper,
+  StyledMenuItem
 } from "./styles";
 
 type TEmptyRecord = {
@@ -68,14 +68,14 @@ export const EmptyRecord: React.FC<TEmptyRecord> = ({ className }) => (
 );
 
 const TableHeader = <T extends ColumnType>({
-                                             columns,
-                                             loading,
-                                             defaultSort,
-                                             showTabView,
-                                             selectable,
-                                             toggleSelectAll,
-                                             isSelectAll
-                                           }: TableHeaderProps<T>) => {
+  columns,
+  loading,
+  defaultSort,
+  showTabView,
+  selectable,
+  toggleSelectAll,
+  isSelectAll
+}: TableHeaderProps<T>) => {
   const [{ columnKey, sort }, setSort] = useState<{ columnKey: string; sort: "" | "DESC" | "ASC" }>({
     columnKey: defaultSort ? defaultSort.split(",")[0] : "",
     sort: defaultSort ? (defaultSort.split(",")[1] as "" | "DESC" | "ASC") : ""
@@ -144,18 +144,18 @@ const TableHeader = <T extends ColumnType>({
 };
 
 const TableRow = <T extends ColumnType>({
-                                          row,
-                                          columns,
-                                          index,
-                                          onClickRow,
-                                          showTabView,
-                                          selectedProps,
-                                          selected = null,
-                                          dataLength,
-                                          selectable,
-                                          toggleSelection,
-                                          isSelected
-                                        }: TableRowProps<T>) => {
+  row,
+  columns,
+  index,
+  onClickRow,
+  showTabView,
+  selectedProps,
+  selected = null,
+  dataLength,
+  selectable,
+  toggleSelection,
+  isSelected
+}: TableRowProps<T>) => {
   const colRef = useRef(null);
   const isClickRow = selected === index ? 1 : 0;
 
@@ -194,18 +194,18 @@ const TableRow = <T extends ColumnType>({
 };
 
 const TableBody = <T extends ColumnType>({
-                                           data,
-                                           columns,
-                                           onClickRow,
-                                           showTabView,
-                                           selected,
-                                           selectedProps,
-                                           loading,
-                                           initialized,
-                                           selectable,
-                                           toggleSelection,
-                                           isSelected
-                                         }: TableProps<T>) => {
+  data,
+  columns,
+  onClickRow,
+  showTabView,
+  selected,
+  selectedProps,
+  loading,
+  initialized,
+  selectable,
+  toggleSelection,
+  isSelected
+}: TableProps<T>) => {
   return (
     <TBody>
       {loading && initialized && (
@@ -299,10 +299,10 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
                 }
               }}
             >
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-              <MenuItem value={50}>50</MenuItem>
-              <MenuItem value={100}>100</MenuItem>
+              <StyledMenuItem value={10}>10</StyledMenuItem>
+              <StyledMenuItem value={20}>20</StyledMenuItem>
+              <StyledMenuItem value={50}>50</StyledMenuItem>
+              <StyledMenuItem value={100}>100</StyledMenuItem>
             </SelectMui>
             <Box component={"span"} ml={1} fontSize="0.875rem">
               Per page
@@ -336,31 +336,31 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
 };
 
 const Table: React.FC<TableProps> = ({
-                                       columns,
-                                       data,
-                                       total,
-                                       pagination,
-                                       className,
-                                       emptyClassName,
-                                       style,
-                                       loading,
-                                       initialized = true,
-                                       error,
-                                       onClickRow,
-                                       showTabView,
-                                       selected,
-                                       selectedProps,
-                                       defaultSort,
-                                       showPagination = true,
-                                       selectable,
-                                       onSelectionChange,
-                                       tableTitle,
-                                       renderAction,
-                                       fliterOptions,
-                                       onFilterChange,
-                                       isShowingResult,
-                                       maxHeight
-                                     }) => {
+  columns,
+  data,
+  total,
+  pagination,
+  className,
+  emptyClassName,
+  style,
+  loading,
+  initialized = true,
+  error,
+  onClickRow,
+  showTabView,
+  selected,
+  selectedProps,
+  defaultSort,
+  showPagination = true,
+  selectable,
+  onSelectionChange,
+  tableTitle,
+  renderAction,
+  fliterOptions,
+  onFilterChange,
+  isShowingResult,
+  maxHeight
+}) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange
   });
@@ -442,14 +442,14 @@ const Table: React.FC<TableProps> = ({
 };
 
 const TableTopHeader: React.FC<TableTopHeaderProps> = ({
-                                                         fliterOptions,
-                                                         renderAction,
-                                                         selectedItems,
-                                                         title,
-                                                         isSelectAll,
-                                                         totalShowingResult = 0,
-                                                         onFilterChange
-                                                       }) => (
+  fliterOptions,
+  renderAction,
+  selectedItems,
+  title,
+  isSelectAll,
+  totalShowingResult = 0,
+  onFilterChange
+}) => (
   <TableHeaderContainer>
     {typeof title === "string" ? <TableTitle>{title}</TableTitle> : <TableCustomTitle>{title}</TableCustomTitle>}
     {Boolean(totalShowingResult) && <ShowedResults>Showing {totalShowingResult} results</ShowedResults>}
@@ -464,13 +464,13 @@ export * from "../../../types/table.d";
 export default Table;
 
 const PaginationCustom = ({
-                            pagination,
-                            total,
-                            page,
-                            size,
-                            handleChangePage,
-                            loading
-                          }: {
+  pagination,
+  total,
+  page,
+  size,
+  handleChangePage,
+  loading
+}: {
   pagination: TableProps["pagination"];
   total: number;
   page: number;
