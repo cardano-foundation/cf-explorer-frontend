@@ -165,5 +165,5 @@ export const WrapCardContent = styled(Box)`
 
 export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
   fontSize: 12,
-  color: theme.palette.text.secondary
+  color: theme.palette.secondary.main
 }));
