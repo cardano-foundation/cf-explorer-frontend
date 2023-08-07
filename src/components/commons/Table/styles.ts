@@ -159,9 +159,9 @@ export const Wrapper = styled(Box)<{ maxHeight?: number | string; height: number
     background: transparent;
   }
   &::-webkit-scrollbar-button:vertical:start:decrement {
-    height: 72px; 
+    height: 72px;
     display: block;
-  } 
+  }
   &:hover {
     &::-webkit-scrollbar-thumb {
       background: ${theme.palette.secondary.light};

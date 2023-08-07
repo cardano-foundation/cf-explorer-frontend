@@ -1,4 +1,4 @@
-import { render, screen } from "src/test-utils";
+import { render, screen, waitFor } from "src/test-utils";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
 
@@ -40,14 +40,14 @@ describe("Epoch component", () => {
     jest.clearAllMocks();
     const mockedUseFetchList = useFetchList as jest.Mock;
 
-    mockedUseFetchList.mockReturnValueOnce({
+    mockedUseFetchList.mockReturnValue({
       data: mockData,
       currentPage: 0,
       total: mockData.length,
       update: jest.fn()
     });
 
-    mockedUseFetchList.mockReturnValueOnce({
+    mockedUseFetchList.mockReturnValue({
       data: mockDataLatestEpoch,
       currentPage: 0,
       total: mockDataLatestEpoch.length,
@@ -55,7 +55,7 @@ describe("Epoch component", () => {
     });
   });
 
-  it("should latest epoch component render on PC", () => {
+  it("should latest epoch component render on PC", async () => {
     render(<Epoch />);
     expect(screen.getByText(formatDateTimeLocal(mockDataLatestEpoch[0].startTime))).toBeInTheDocument();
     expect(screen.getByText(mockDataLatestEpoch[0].blkCount)).toBeInTheDocument();
