@@ -1,17 +1,18 @@
-import { ReactElement, useEffect, useState } from "react";
+import { NetworkType, isWalletInstalled, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { Box, CircularProgress, Input, useTheme } from "@mui/material";
-import { useSelector } from "react-redux";
 import moment from "moment";
-import { useHistory } from "react-router-dom";
+import { ReactElement, useEffect, useState } from "react";
 import { GoCheck } from "react-icons/go";
 import { IoMdClose } from "react-icons/io";
-import { NetworkType, isWalletInstalled, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { MdOutlineFileDownload } from "react-icons/md";
+import { useSelector } from "react-redux";
 
+import { useScreen } from "src/commons/hooks/useScreen";
+import useToast from "src/commons/hooks/useToast";
+import { ReactComponent as Edit } from "src/commons/resources/icons/pen.svg";
+import { NETWORK, NETWORKS, NETWORK_TYPES, SUPPORTED_WALLETS } from "src/commons/utils/constants";
 import { regexEmail } from "src/commons/utils/helper";
 import { editInfo, getInfo } from "src/commons/utils/userRequest";
-import { NETWORK, NETWORKS, NETWORK_TYPES, SUPPORTED_WALLETS } from "src/commons/utils/constants";
-import { setUserData } from "src/stores/user";
 import {
   GroupFlex,
   InstallButton,
@@ -21,17 +22,11 @@ import {
   WalletName
 } from "src/components/commons/ConnectWalletModal/style";
 import StyledModal from "src/components/commons/StyledModal";
-import useToast from "src/commons/hooks/useToast";
-import { SupportedWallets, Wallet } from "src/types/user";
-import CustomTooltip from "src/components/commons/CustomTooltip";
-import { ReactComponent as Edit } from "src/commons/resources/icons/pen.svg";
-import { ReactComponent as Search } from "src/commons/resources/icons/search.svg";
 import { RootState } from "src/stores/types";
-import { routers } from "src/commons/routers";
-import CopyButton from "src/components/commons/CopyButton";
-import { useScreen } from "src/commons/hooks/useScreen";
+import { setUserData } from "src/stores/user";
+import { SupportedWallets, Wallet } from "src/types/user";
 
-import { Label, StyledAction, StyledRowItem, TextNote, Value, WalletAddress, WrapInfoItemMobile } from "./styles";
+import { Label, StyledAction, StyledRowItem, Value, WrapInfoItemMobile } from "./styles";
 
 export type TRowItem = {
   label: string;
@@ -83,7 +78,6 @@ export const RowItem: React.FC<TRowItem> = ({
 };
 
 const OverviewTab = () => {
-  const history = useHistory();
   const { userData } = useSelector(({ user }: RootState) => user);
   const { isTablet } = useScreen();
   const [showInput, setShowInput] = useState(false);
@@ -120,9 +114,8 @@ const OverviewTab = () => {
 
   return (
     <Box textAlign="left">
-      <TextNote>Below are the username, email and overview information for your account</TextNote>
       <RowItem
-        label="Your email address"
+        label="You are logged in as"
         value={userData?.email}
         isTablet={isTablet}
         action={
@@ -160,25 +153,6 @@ const OverviewTab = () => {
         placeholder="Enter your email"
         setvalueInput={setEmail}
         valueInput={email}
-      />
-      <RowItem
-        label="Address Bookmark"
-        value={`${userData?.sizeBookmark} out of 2000 available limit`}
-        action={<Search onClick={() => history.push(routers.BOOKMARK)} />}
-        isTablet={isTablet}
-      />
-      <RowItem
-        label="Wallet"
-        value={
-          <Box display="inline-flex" alignItems="center">
-            <CustomTooltip title={userData?.wallet || userData?.address}>
-              <WalletAddress>{userData?.wallet || userData?.address}</WalletAddress>
-            </CustomTooltip>
-            {userData?.wallet || userData?.address ? <CopyButton text={userData?.wallet || userData?.address} /> : null}
-          </Box>
-        }
-        isTablet={isTablet}
-        action={!userData?.wallet && !userData?.address ? <Edit onClick={() => setOpenModal(true)} /> : <></>}
       />
       <RowItem
         label="Last Login"
