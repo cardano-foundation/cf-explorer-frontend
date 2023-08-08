@@ -95,7 +95,7 @@ describe("SignIn page", () => {
     mockUseCardano.mockReturnValueOnce(mockedReturnValue);
 
     render(<SignIn />);
-    expect(screen.getByText("Sign In")).toBeInTheDocument();
+    expect(screen.getByTestId("signin-title")).toBeInTheDocument();
   });
 });
 

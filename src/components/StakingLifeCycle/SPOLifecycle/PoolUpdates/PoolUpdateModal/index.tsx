@@ -81,7 +81,7 @@ export const PoolUpdateModal = ({ data, open, ...props }: Props) => {
   const isUpdated = data?.previousMargin !== data?.margin || data?.previousPledge !== data?.pledge;
 
   return (
-    <StyledModal open={open} {...props} title="Pool certificate" sx={{ maxHeight: "min(70vh, 800px)" }}>
+    <StyledModal {...props} open={open} title="Pool certificate" sx={{ maxHeight: "min(70vh, 800px)" }}>
       {isUpdated ? (
         <TabContext value={tabActive}>
           <TabContainer>

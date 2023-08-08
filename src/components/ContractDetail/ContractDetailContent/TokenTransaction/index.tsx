@@ -141,7 +141,7 @@ const TokenTransaction: React.FC = () => {
   const handleClose = () => {
     setOnDetailView(false);
     setSelected(null);
-    setTxHashSelected("")
+    setTxHashSelected("");
   };
 
   useEffect(() => {
@@ -159,15 +159,12 @@ const TokenTransaction: React.FC = () => {
         pagination={{
           ...pageInfo,
           total: fetchData.total,
-          onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
+          onChange: (page, size) => history.replace({ search: stringify({ page, size }) }),
+          hideLastPage: true
         }}
       />
       {txHashSelected && (
-        <DetailViewContractHash
-          txHash={txHashSelected}
-          address={params.address}
-          handleClose={handleClose}
-        />
+        <DetailViewContractHash txHash={txHashSelected} address={params.address} handleClose={handleClose} />
       )}
     </>
   );

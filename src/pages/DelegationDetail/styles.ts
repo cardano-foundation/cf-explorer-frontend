@@ -18,6 +18,4 @@ export const TabsContainer = styled(Box)(({ theme }) => ({
   borderBottom: `1px solid ${theme.palette.primary[200]}`
 }));
 
-export const StyledContainer = styled(Container)`
-  max-width: 95vw !important;
-`;
+export const StyledContainer = styled(Container)``;

@@ -14,10 +14,9 @@ import {
   BackText,
   CloseButton,
   Container,
-  HighlightLink,
   FormHelperTextCustom,
+  HighlightLink,
   InputCustom,
-  Label,
   LabelInfo,
   Title,
   WrapButton,
@@ -295,9 +294,9 @@ export default function SignUp() {
     <Container>
       {!success ? (
         <WrapContent>
-          <WrapTitle>Sign Up</WrapTitle>
+          <WrapTitle data-testid="signup-title">Sign Up</WrapTitle>
           <WrapHintText>
-            Already have an account? <WrapSignUp onClick={() => handleRedirect()}>Sign In</WrapSignUp>
+            Already have an account? <WrapSignUp onClick={() => handleRedirect()}>Sign in here</WrapSignUp>
           </WrapHintText>
           <FormGroup>
             <WrapForm>
@@ -309,7 +308,6 @@ export default function SignUp() {
                 <IoMdClose />
               </CloseButton>
               <WrapInput>
-                <Label>Email Address</Label>
                 <InputCustom
                   inputRef={emailTextField}
                   startAdornment={
@@ -322,7 +320,7 @@ export default function SignUp() {
                   name="email"
                   onChange={handleChange}
                   error={Boolean(formData.email.error && formData.email.touched)}
-                  placeholder="A confirmation code will be sent to this address"
+                  placeholder="Email address"
                   onKeyDown={handleKeyDown}
                 />
                 {formData.email.error && formData.email.touched ? (
@@ -330,7 +328,6 @@ export default function SignUp() {
                 ) : null}
               </WrapInput>
               <WrapInput>
-                <Label>Confirm Email Address</Label>
                 <InputCustom
                   startAdornment={
                     <Box paddingRight={"10px"} paddingTop={"7px"} paddingBottom={"2px"}>
@@ -342,14 +339,13 @@ export default function SignUp() {
                   name="confirmEmail"
                   onChange={handleChange}
                   error={Boolean(formData.confirmEmail.error && formData.confirmEmail.touched)}
-                  placeholder="Re-enter Your email address"
+                  placeholder="Confirm email address"
                 />
                 {formData.confirmEmail.error && formData.confirmEmail.touched ? (
                   <FormHelperTextCustom error>{formData.confirmEmail.error}</FormHelperTextCustom>
                 ) : null}
               </WrapInput>
               <WrapInput>
-                <Label>Password</Label>
                 <InputCustom
                   startAdornment={
                     <Box paddingRight={"10px"} paddingTop={"5px"} paddingBottom={"2px"}>
@@ -375,7 +371,6 @@ export default function SignUp() {
                 ) : null}
               </WrapInput>
               <WrapInput>
-                <Label>Confirm Password</Label>
                 <InputCustom
                   startAdornment={
                     <Box paddingRight={"10px"} paddingTop={"5px"} paddingBottom={"2px"}>
@@ -394,7 +389,7 @@ export default function SignUp() {
                   name="confirmPassword"
                   onChange={handleChange}
                   error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
-                  placeholder="Confirm Password"
+                  placeholder="Confirm password"
                 />
                 {formData.confirmPassword.error && formData.confirmPassword.touched ? (
                   <FormHelperTextCustom error>{formData.confirmPassword.error}</FormHelperTextCustom>
@@ -437,8 +432,14 @@ export default function SignUp() {
                   }
                 />
               </Box>
-              <WrapButton variant="contained" fullWidth onClick={handleSubmit} disabled={!enableButton}>
-                Create an Account
+              <WrapButton
+                data-testid="signup-button"
+                variant="contained"
+                fullWidth
+                onClick={handleSubmit}
+                disabled={!enableButton}
+              >
+                Sign Up
               </WrapButton>
             </WrapForm>
           </FormGroup>
