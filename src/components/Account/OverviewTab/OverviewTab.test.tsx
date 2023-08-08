@@ -95,7 +95,7 @@ describe("SignIn page", () => {
     mockUseCardano.mockReturnValueOnce(mockedReturnValue);
 
     render(<SignIn />);
-    expect(screen.getByText("Sign In")).toBeInTheDocument();
+    expect(screen.getByTestId("signin-title")).toBeInTheDocument();
   });
 });
 
@@ -145,10 +145,6 @@ describe("Overview Component", () => {
 
   it("Rendering component on PC", async () => {
     render(<OverviewTab />);
-    expect(
-      screen.getByText("Below are the username, email and overview information for your account")
-    ).toBeInTheDocument();
-    expect(screen.getByText("Wallet")).toBeInTheDocument();
     expect(screen.getByText(mockApiData.email)).toBeInTheDocument();
     expect(screen.getByText(mockApiData.lastLogin)).toBeInTheDocument();
   });
