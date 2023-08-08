@@ -107,7 +107,7 @@ class DataManager():
           totalOutputInAda = "{:,}".format(totalOutputInAda)
 
         if estecha['tx_count']:
-          testScript = "\ncy.get('.css-8at8rn').should(\"contain\", \"{}\");".format(
+          testScript = "\ncy.get('.MuiGrid-container > :nth-child(3)').should(\"contain\", \"{}\");".format(
             estecha['tx_count']
           )
 

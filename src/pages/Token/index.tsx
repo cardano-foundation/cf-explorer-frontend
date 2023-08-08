@@ -147,6 +147,10 @@ const Tokens = () => {
     setSelected(null);
   };
 
+  useEffect(() => {
+    if (!onDetailView) handleClose();
+  }, [onDetailView]);
+
   return (
     <StyledContainer>
       <Card title="Token List">
@@ -166,7 +170,8 @@ const Tokens = () => {
               mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
               history.replace({ search: stringify({ page, size }) });
             },
-            handleCloseDetailView: handleClose
+            handleCloseDetailView: handleClose,
+            hideLastPage: true
           }}
           onClickRow={openDetail}
           selected={selected}

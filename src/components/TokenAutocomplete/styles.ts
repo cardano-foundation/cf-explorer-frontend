@@ -1,5 +1,4 @@
-import { alpha, Button, TextField, styled, Box } from "@mui/material";
-import { BiChevronDown } from "react-icons/bi";
+import { Box, Button, TextField, alpha, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const TitleDetail = styled(Box)`
@@ -59,7 +58,7 @@ export const StyledTextField = styled(TextField)`
     height: 40px;
     border: 1.5px solid ${(props) => props.theme.palette.border.main};
     border-radius: 8px;
-    ${(props) => props.disabled ? `background: ${props.theme.palette.secondary[600]}` : ""};
+    ${(props) => (props.disabled ? `background: ${props.theme.palette.secondary[600]}` : "")};
   }
   .MuiFormControl-root {
   }
@@ -81,12 +80,12 @@ export const StyledTextField = styled(TextField)`
 `;
 
 export const Option = styled("li")(({ theme }) => ({
-  background: theme.palette.secondary[0]
+  background: theme.palette.secondary[0],
+  "&:hover": {
+    background: theme.palette.primary[200] + " !important"
+  }
 }));
 
-export const ArrowDownIconCustom = styled(BiChevronDown)<{ disabled?: number }>`
-  ${(props) => (props.disabled ? `color: ${props.theme.palette.background.paper}` : "")};
-`;
 
 export const Logo = styled("img")`
   width: 25px;

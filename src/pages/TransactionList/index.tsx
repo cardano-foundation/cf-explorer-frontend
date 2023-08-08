@@ -38,6 +38,11 @@ const Transactions = () => {
     setHash(null);
     setSelected(null);
   };
+
+  useEffect(() => {
+    if (!onDetailView) handleClose();
+  }, [onDetailView]);
+
   return (
     <>
       <StyledContainer>
