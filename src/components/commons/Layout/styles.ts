@@ -166,7 +166,7 @@ export const Main = styled(Box)<{ open: number }>(({ theme, open }) => ({
     minHeight: "calc(100vh - 136px)",
     height: "auto"
   },
-  [theme.breakpoints.down("sm")]: { 
-    minHeight: "calc(100vh - 263px)", 
+  [theme.breakpoints.down("sm")]: {
+    minHeight: "calc(100vh - 263px)"
   }
 }));

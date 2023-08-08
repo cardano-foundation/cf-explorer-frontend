@@ -6,5 +6,4 @@ export const TopHeader = styled(Box)`
   align-items: center;
 `;
 
-export const StyledContainer = styled(Container)`
-`;
+export const StyledContainer = styled(Container)``;

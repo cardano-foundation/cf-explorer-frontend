@@ -18,5 +18,4 @@ export const TabsContainer = styled(Box)(({ theme }) => ({
   borderBottom: `1px solid ${theme.palette.primary[200]}`
 }));
 
-export const StyledContainer = styled(Container)`
-`;
+export const StyledContainer = styled(Container)``;
