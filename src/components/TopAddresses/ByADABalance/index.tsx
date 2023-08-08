@@ -98,7 +98,7 @@ const TopAddressesByADABalance = () => {
         loading={loading}
         initialized={initialized}
         columns={columns}
-        onClickRow={(_, r) => history.push(details.address(r.address))}
+        tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "55vh" } }) }}
       />
     </Box>
   );
