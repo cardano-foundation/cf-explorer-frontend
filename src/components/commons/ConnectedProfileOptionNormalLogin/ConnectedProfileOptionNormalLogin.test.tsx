@@ -30,7 +30,7 @@ test("Render username", async () => {
 test("normal click username button", async () => {
   render(<ConnectedProfileOptionNormalLogin userData={userData} />);
   await userEvent.click(screen.getByText(/useremail/i));
-  expect(screen.getByText(/User Profile/i)).toBeInTheDocument();
+  expect(screen.getByText(/Account/i)).toBeInTheDocument();
 });
 
 test("login click user profile button", async () => {
@@ -41,7 +41,7 @@ test("login click user profile button", async () => {
     </Router>
   );
   await userEvent.click(screen.getByText(/useremail/i));
-  const aboutItem = screen.getByText(/User Profile/i);
+  const aboutItem = screen.getByText(/Account/i);
   await userEvent.click(aboutItem);
   expect(history.length).toBe(2);
   expect(history.location.pathname).toBe(routers.ACCOUNT);

@@ -105,6 +105,7 @@ export const WrapButton = styled(Button)`
   font-size: 16px;
   line-height: 19px;
   text-align: center;
+  text-transform: none;
 `;
 
 export const WrapButtonConnectWallet = styled(Button)`
