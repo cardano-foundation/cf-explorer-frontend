@@ -5,12 +5,12 @@ describe("User check Bookmark - Address in My Profile", () => {
 
       cy.visit("/");
       cy.get('button').contains('Sign In').click();
-      cy.get("input[placeholder='Email Address']").type(email);
-      cy.get("input[placeholder='Password']").type(password);
+      cy.get("input[name='email']").type(email);
+      cy.get("input[name='password']").type(password);
       cy.get('[data-testid="login-btn"]').click();
       
       cy.get('[data-testid="header-top"] >div>div>button').click();
-      cy.get('h4').contains('User Profile').click();
+      cy.get('h4').contains('Account').click();
 
       cy.get('a').contains('Bookmark').click();
       cy.get('button').contains('Address').click();
