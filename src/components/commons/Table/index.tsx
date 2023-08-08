@@ -554,24 +554,10 @@ const PaginationCustom = ({
               type={"string"}
               value={inputPage}
               length={inputPage.toString().length || 1}
-              onChange={(e) => {
-                if (+e.target.value <= totalPage) {
-                  setInputPage(+e.target.value);
-                }
-              }}
               onBlur={() => {
                 setInputPage(page);
               }}
-              disabled={pagination?.hideLastPage || loading}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  if (inputPage < 1) {
-                    setInputPage(1);
-                  }
-                  pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
-                  handleChangePage(null, inputPage);
-                }
-              }}
+              disabled={false}
             />
             <Box component={"span"} color={(theme) => theme.palette.secondary.main} fontSize="0.875rem">
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}
