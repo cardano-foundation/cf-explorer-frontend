@@ -112,7 +112,7 @@ export const Headline = styled(Typography)<{ collapsed?: number }>`
 export const WrapperDelegationTab = styled(Box)`
   display: flex;
   justify-content: space-between;
-  align-items: center,
+  align-items: center;
   margin-top: 12px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     flex-direction: column;
