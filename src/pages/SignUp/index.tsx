@@ -158,7 +158,7 @@ export default function SignUp() {
           error = "Please enter your Email";
           // eslint-disable-next-line no-useless-escape
         } else if (!/^[\w-\.+!#$%&'*/=?^_`{|]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
-          error = "Invalid Email";
+          error = "Please enter a valid email address";
         } else if (value === formData.confirmEmail.value) {
           setFormData({
             name: "confirmEmail",
@@ -432,7 +432,13 @@ export default function SignUp() {
                   }
                 />
               </Box>
-              <WrapButton data-testid="signup-button" variant="contained" fullWidth onClick={handleSubmit} disabled={!enableButton}>
+              <WrapButton
+                data-testid="signup-button"
+                variant="contained"
+                fullWidth
+                onClick={handleSubmit}
+                disabled={!enableButton}
+              >
                 Sign Up
               </WrapButton>
             </WrapForm>

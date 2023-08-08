@@ -58,7 +58,7 @@ describe("SignUp page", () => {
   it("should be able to return error message for invalid email", async () => {
     const emailInput = screen.getByPlaceholderText("Email address");
     fireEvent.change(emailInput, { target: { value: "test" } });
-    const errorMessage = screen.getByText("Invalid Email");
+    const errorMessage = screen.getByText("Please enter a valid email address");
     expect(errorMessage).toBeInTheDocument();
   });
 
