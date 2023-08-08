@@ -557,7 +557,7 @@ const PaginationCustom = ({
               onBlur={() => {
                 setInputPage(page);
               }}
-              disabled={false}
+              disabled={true}
             />
             <Box component={"span"} color={(theme) => theme.palette.secondary.main} fontSize="0.875rem">
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}
