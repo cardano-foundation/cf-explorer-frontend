@@ -6,6 +6,4 @@ export const TopHeader = styled(Box)`
   align-items: center;
 `;
 
-export const StyledContainer = styled(Container)`
-  max-width: 95vw !important;
-`;
+export const StyledContainer = styled(Container)``;
