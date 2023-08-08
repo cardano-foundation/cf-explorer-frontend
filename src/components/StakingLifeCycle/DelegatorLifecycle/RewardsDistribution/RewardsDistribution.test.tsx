@@ -54,7 +54,6 @@ describe("RewardsDistribution", () => {
   });
   it("renders component and triggers modal", () => {
     render(<RewardsDistribution />);
-    screen.logTestingPlaygroundURL();
     expect(screen.getByText(/cardano blockchain/i)).toBeInTheDocument();
   });
 });

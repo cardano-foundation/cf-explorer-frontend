@@ -59,12 +59,3 @@ export const TimeDuration = styled(Box)(({ theme }) => ({
     paddingLeft: "16px !important"
   }
 }));
-
-export const PolicyLabel = styled(AssetName)`
-  display: inline-block;
-  max-width: 100px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  cursor: pointer;
-`;
