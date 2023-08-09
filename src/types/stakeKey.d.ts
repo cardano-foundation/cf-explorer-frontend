@@ -144,6 +144,10 @@ interface StakeDelegations {
   txHash: string;
 }
 
+interface StakeDelegationItem extends Omit<StakeDelegations, "pools"> {
+  pools: Delegators[];
+}
+
 interface InstantRewards {
   blockNo: number;
   epochNo: number;
