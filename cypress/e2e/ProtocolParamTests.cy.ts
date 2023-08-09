@@ -9,8 +9,8 @@ describe("template spec", () => {
     //Updateable Parameters table
     cy.get('[data-testid="table-common"] th:nth-child(1)').first().contains("Parameter Name");
     cy.get('[data-testid="table-common"] th:nth-child(2)').first().contains("Value");
-    cy.get('[data-testid="table-common"] th:nth-child(3)').contains("Last Updated Epoch");
-    cy.get('[data-testid="table-common"] th:nth-child(4)').contains("Created At");
+    cy.get('[data-testid="table-common"] th:nth-child(3)').contains("Last updated in epoch");
+    cy.get('[data-testid="table-common"] th:nth-child(4)').contains("Timestamp");
     // global constants table
     cy.get('[data-testid="table-common"] th:nth-child(1)').last().contains("Parameter Name");
     cy.get('[data-testid="table-common"] th:nth-child(2)').last().contains("Value");
