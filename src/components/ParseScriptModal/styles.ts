@@ -1,5 +1,13 @@
 import { Box, styled } from "@mui/material";
 
+import CustomModal from "../commons/CustomModal";
+
+export const StyledCustomModal = styled(CustomModal)(() => ({
+  boxSizing: "border-box",
+  maxHeight: "70vh",
+  overflow: "hidden"
+}));
+
 export const SubTitle = styled(Box)(({ theme }) => ({
   color: theme.palette.secondary.main,
   marginBottom: 8
@@ -13,7 +21,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
   padding: theme.spacing(2),
   boxSizing: "border-box",
   overflow: "auto",
-  width: "min(80vw, 800px)",
+  width: "min(90vw, 800px)",
 
   "& .MuiSvgIcon-root": {
     display: "none !important"

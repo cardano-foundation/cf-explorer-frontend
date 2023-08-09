@@ -37,13 +37,14 @@ describe("ParseScriptModal component", () => {
   });
   it("should component render", () => {
     render(<ParseScriptModal {...mockProps} />);
+    expect(screen.getByTestId(/parse-script-modal/i)).toBeInTheDocument();
     expect(screen.getByText(/parse script/i)).toBeInTheDocument();
     expect(screen.getByText(/enter your script below:/i)).toBeInTheDocument();
   });
 
   it("should modal closed", () => {
     render(<ParseScriptModal {...mockProps} />);
-    fireEvent.click(screen.getByRole("button", { name: /icon close/i }));
+    fireEvent.click(screen.getByTestId("close-modal-button"));
     expect(mockProps.onClose).toBeCalled();
   });
 });
