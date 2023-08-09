@@ -22,18 +22,14 @@ jest.mock("src/commons/utils/userRequest", () => ({
 
 describe("SignUp page", () => {
   it("should render sign up page", () => {
-    expect(screen.getByText("Sign Up")).toBeInTheDocument();
-    expect(screen.getByText("Email Address")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("A confirmation code will be sent to this address")).toBeInTheDocument();
-    expect(screen.getByText("Confirm Email Address")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Re-enter Your email address")).toBeInTheDocument();
-    expect(screen.getByText("Password")).toBeInTheDocument();
+    expect(screen.getByTestId("signup-title")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Email address")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Confirm email address")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Password")).toBeInTheDocument();
-    expect(screen.getByText("Confirm Password")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Confirm Password")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Confirm password")).toBeInTheDocument();
   });
   it("should able to type in email and password", () => {
-    const emailInput = screen.getByPlaceholderText("A confirmation code will be sent to this address");
+    const emailInput = screen.getByPlaceholderText("Email address");
     const passwordInput = screen.getByPlaceholderText("Password");
     fireEvent.change(emailInput, { target: { value: mockData.email } });
     fireEvent.change(passwordInput, { target: { value: mockData.password } });
@@ -42,12 +38,12 @@ describe("SignUp page", () => {
   });
 
   it("should be able to click on create an account and call api", async () => {
-    const emailInput = screen.getByPlaceholderText("A confirmation code will be sent to this address");
-    const confirmEmailInput = screen.getByPlaceholderText("Re-enter Your email address");
+    const emailInput = screen.getByPlaceholderText("Email address");
+    const confirmEmailInput = screen.getByPlaceholderText("Confirm email address");
     const passwordInput = screen.getByPlaceholderText("Password");
-    const confirmPasswordInput = screen.getByPlaceholderText("Confirm Password");
+    const confirmPasswordInput = screen.getByPlaceholderText("Confirm password");
     const check = screen.getByRole("checkbox", { name: /I agree to the Terms & Conditions and Privacy Policy/i });
-    const signUpButton = screen.getByText("Create an Account");
+    const signUpButton = screen.getByTestId("signup-button");
     fireEvent.change(emailInput, { target: { value: mockData.email } });
     fireEvent.change(confirmEmailInput, { target: { value: mockData.email } });
     fireEvent.change(passwordInput, { target: { value: mockData.password } });
@@ -60,15 +56,15 @@ describe("SignUp page", () => {
   });
 
   it("should be able to return error message for invalid email", async () => {
-    const emailInput = screen.getByPlaceholderText("A confirmation code will be sent to this address");
+    const emailInput = screen.getByPlaceholderText("Email address");
     fireEvent.change(emailInput, { target: { value: "test" } });
-    const errorMessage = screen.getByText("Invalid Email");
+    const errorMessage = screen.getByText("Please enter a valid email address");
     expect(errorMessage).toBeInTheDocument();
   });
 
   it("should be able to return error message for invalid confirm email", async () => {
-    const emailInput = screen.getByPlaceholderText("A confirmation code will be sent to this address");
-    const confirmEmailInput = screen.getByPlaceholderText("Re-enter Your email address");
+    const emailInput = screen.getByPlaceholderText("Email address");
+    const confirmEmailInput = screen.getByPlaceholderText("Confirm email address");
     fireEvent.change(emailInput, { target: { value: "abc@gmail.com" } });
     fireEvent.change(confirmEmailInput, { target: { value: "xyz@gmail.com" } });
     const errorMessage = screen.getByText("Email address does not match");
@@ -86,7 +82,7 @@ describe("SignUp page", () => {
 
   it("should be able to return error message for invalid confirm password", async () => {
     const passwordInput = screen.getByPlaceholderText("Password");
-    const confirmPasswordInput = screen.getByPlaceholderText("Confirm Password");
+    const confirmPasswordInput = screen.getByPlaceholderText("Confirm password");
     fireEvent.change(passwordInput, { target: { value: "abc" } });
     fireEvent.change(confirmPasswordInput, { target: { value: "xyz" } });
     const errorMessage = screen.getByText("Password does not match");

@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -16,6 +17,7 @@ import { Actions, PageSize, PerPage, SelectMui, StyledLink, StyledMenuItem, Time
 const perPages = [10, 20, 50, 100];
 
 const TopAddressesByADABalance = () => {
+  const history = useHistory();
   const [pageSize, setPageSize] = useState("50");
   const { error, data, initialized, loading, lastUpdated } = useFetchList<Contracts>(
     API.ADDRESS.TOP_ADDRESS,
@@ -90,7 +92,14 @@ const TopAddressesByADABalance = () => {
           <PerPage>Addresses</PerPage>
         </PageSize>
       </Actions>
-      <Table data={data} error={error} loading={loading} initialized={initialized} columns={columns} />
+      <Table
+        data={data}
+        error={error}
+        loading={loading}
+        initialized={initialized}
+        columns={columns}
+        onClickRow={(_, r) => history.push(details.address(r.address))}
+      />
     </Box>
   );
 };
