@@ -1,8 +1,7 @@
 import { useTheme } from "@mui/material";
 import { JsonViewer } from "@textea/json-viewer";
 
-import CustomModal from "../commons/CustomModal";
-import { SubTitle, ViewJson } from "./styles";
+import { StyledCustomModal, SubTitle, ViewJson } from "./styles";
 
 interface ParseScriptModalProps {
   open: boolean;
@@ -24,7 +23,7 @@ const ParseScriptModal: React.FC<ParseScriptModalProps> = ({ script, subTitle, .
   };
 
   return (
-    <CustomModal {...props}>
+    <StyledCustomModal {...props} data-testid="parse-script-modal">
       {subTitle && <SubTitle>{subTitle}</SubTitle>}
       <ViewJson maxHeight={subTitle ? "60vh" : "70vh"}>
         <JsonViewer
@@ -37,7 +36,7 @@ const ParseScriptModal: React.FC<ParseScriptModalProps> = ({ script, subTitle, .
           rootName={false}
         />
       </ViewJson>
-    </CustomModal>
+    </StyledCustomModal>
   );
 };
 
