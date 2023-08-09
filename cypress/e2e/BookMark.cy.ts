@@ -10,7 +10,8 @@ describe("Bookmark", () => {
   });
   it("should navigate to the bookmark page", () => {
     cy.visit("/account/bookmark");
-    cy.get(".css-zflkrh")
+    cy.get('[href="/en/account/bookmark"]')
+      .first()
       .invoke("text")
       .then((text) => {
         expect(text).to.be.equal("Bookmark");
