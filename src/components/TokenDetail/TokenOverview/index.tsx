@@ -128,7 +128,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
         </Box>
       ),
       icon: exchageIconUrl,
-      value: numberWithCommas(data?.totalVolume || "")
+      value: formatNumberDivByDecimals(data?.totalVolume || "", data?.metadata?.decimals || 0)
     },
     {
       title: (
@@ -139,7 +139,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
         </Box>
       ),
       icon: USDIcon,
-      value: numberWithCommas(data?.volumeIn24h || "")
+      value: formatNumberDivByDecimals(data?.volumeIn24h || "", data?.metadata?.decimals || 0)
     },
     {
       title: (
