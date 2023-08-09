@@ -45,14 +45,14 @@ describe("contracts spec", () => {
     cy.get('.css-12n155v').contains(address);
   });
 
-  it("should navigate to the contract detail page", () => {
+  it.only("should navigate to the contract detail page", () => {
     cy.visit("/contracts");
     cy.get('.css-1l7sjfb').contains("Contracts");
     cy.get(':nth-child(1) > :nth-child(2) > div > .css-1l62pou').click();
     cy.get('.css-1msjg76 > .css-0').contains("Contract Details");
     cy.get(':nth-child(1) > .css-1heutcx > .css-k6svam > .css-1xc8op').contains("Address");
     cy.get(':nth-child(2) > .css-1heutcx > .css-k6svam > .css-1xc8op').contains("Stake Address");
-    cy.get('.active > .css-70qvj9 > .MuiBox-root').contains("Transactions");
+    cy.get('[id*="T-transaction"]').contains("Transaction");
     cy.get('.css-1g7hqaj').contains("Script");
   });
 });

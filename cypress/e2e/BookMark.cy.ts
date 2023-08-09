@@ -16,11 +16,8 @@ describe("Bookmark", () => {
       .then((text) => {
         expect(text).to.be.equal("Bookmark");
       });
-  });
-  it("should navigate to the bookmark page", () => {
-    cy.visit("/account/bookmark");
-    cy.get("tr > :nth-child(1)").should("be.visible");
-    cy.get("tr > :nth-child(2)").should("be.visible");
-    cy.get("tr > :nth-child(3)").should("be.visible");
+      cy.get("tr > :nth-child(1)").should("be.visible");
+      cy.get("tr > :nth-child(2)").should("be.visible");
+      cy.get("tr > :nth-child(3)").should("be.visible");
   });
 });
