@@ -12,7 +12,7 @@ export const ADAValueFieldContainer = styled(Box)`
 
 export const AmountADARow = styled(Box)`
   font-size: 14px;
-  color: ${(props) => props.theme.palette.primary.main};
+  color: ${(props) => props.theme.palette.success.main};
   display: flex;
   gap: 10px;
   align-items: center;
