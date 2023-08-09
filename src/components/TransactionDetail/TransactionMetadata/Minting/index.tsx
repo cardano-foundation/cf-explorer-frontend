@@ -7,7 +7,8 @@ import ScriptModal from "src/components/ScriptModal";
 import { PolicyScriptIcon } from "src/commons/resources";
 import { Logo } from "src/pages/Token/styles";
 import { details } from "src/commons/routers";
-import { formatAmount } from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { formatAmount, getShortWallet } from "src/commons/utils/helper";
 
 import { Amount, AssetName, LogoEmpty, TableMinting } from "./styles";
 
@@ -35,7 +36,13 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
                 color={({ palette }) => `${palette.primary.main} !important`}
                 to={details.token(r.assetId)}
               >
-                {r.assetName}
+                {r.assetName ? (
+                  r.assetName
+                ) : (
+                  <CustomTooltip title={r.assetId}>
+                    <Box component={"span"}>{getShortWallet(r.assetId)}</Box>
+                  </CustomTooltip>
+                )}
               </Box>
             </>
           </AssetName>
@@ -48,7 +55,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       key: "Amount",
       minWidth: "40px",
       render: (r) => {
-        return <Amount>{formatAmount(r.assetQuantity)}</Amount>;
+        return <Amount>{formatAmount(r.assetQuantity, r.metadata?.decimals)}</Amount>;
       }
     },
     {

@@ -1,10 +1,17 @@
 import { Box, Card, Grid, Skeleton, styled } from "@mui/material";
 
+import { AdaLogoIcon } from "src/components/commons/ADAIcon";
+
 export const StatisticContainer = styled(Grid)`
   margin-bottom: 24px;
 `;
 
-export const Item = styled(Card)`
+export const WrapGrid = styled(Grid)`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Item = styled(Card)<{ smallItem?: boolean }>`
   height: 100%;
   min-height: 164px;
   font-family: var(--font-family-text);
@@ -20,6 +27,7 @@ export const Item = styled(Card)`
   }
   ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 15px;
+    ${({ smallItem }) => smallItem && "height: max-content; min-height: 120px;"}
   }
   cursor: pointer;
 `;
@@ -59,6 +67,10 @@ export const Name = styled("h4")`
   color: ${(props) => props.theme.palette.secondary.light};
   font-family: var(--font-family-text);
   font-size: 14px;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    font-size: 16px;
+    margin-top: 16px;
+  }
 `;
 
 export const Title = styled("h3")`
@@ -67,7 +79,7 @@ export const Title = styled("h3")`
   margin-top: 0;
   margin-bottom: 0;
   color: ${({ theme }) => theme.palette.secondary.main};
-  font-size: 28px;
+  font-size: 28px !important;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 16px;
     word-break: break-all;
@@ -143,3 +155,15 @@ export const ProgressPending = styled(ProcessActive)<{ rate: number }>`
 export const Link = styled("a")`
   display: contents;
 `;
+
+export const WrapCardContent = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+`;
+
+export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
+  fontSize: 12,
+  color: theme.palette.secondary.main
+}));

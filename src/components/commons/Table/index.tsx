@@ -35,7 +35,6 @@ import {
 import CustomIcon from "../CustomIcon";
 import Filter from "../Filter";
 import {
-  CustomMenuItem,
   Empty,
   EmtyImage,
   InputNumber,
@@ -55,7 +54,8 @@ import {
   TableHeaderContainer,
   TableTitle,
   TotalNumber,
-  Wrapper
+  Wrapper,
+  StyledMenuItem
 } from "./styles";
 
 type TEmptyRecord = {
@@ -299,10 +299,10 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
                 }
               }}
             >
-              <CustomMenuItem value={10}>10</CustomMenuItem>
-              <CustomMenuItem value={20}>20</CustomMenuItem>
-              <CustomMenuItem value={50}>50</CustomMenuItem>
-              <CustomMenuItem value={100}>100</CustomMenuItem>
+              <StyledMenuItem value={10}>10</StyledMenuItem>
+              <StyledMenuItem value={20}>20</StyledMenuItem>
+              <StyledMenuItem value={50}>50</StyledMenuItem>
+              <StyledMenuItem value={100}>100</StyledMenuItem>
             </SelectMui>
             <Box component={"span"} ml={1} fontSize="0.875rem">
               Per page
@@ -506,7 +506,7 @@ const PaginationCustom = ({
         </IconButton>
       );
     }
-    if (item.type === "last") {
+    if (!pagination?.hideLastPage && item.type === "last") {
       return (
         <IconButton
           disabled={page === totalPage || loading}
@@ -556,24 +556,10 @@ const PaginationCustom = ({
               type={"string"}
               value={inputPage}
               length={inputPage.toString().length || 1}
-              onChange={(e) => {
-                if (+e.target.value <= totalPage) {
-                  setInputPage(+e.target.value);
-                }
-              }}
               onBlur={() => {
                 setInputPage(page);
               }}
-              disabled={loading}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  if (inputPage < 1) {
-                    setInputPage(1);
-                  }
-                  pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
-                  handleChangePage(null, inputPage);
-                }
-              }}
+              disabled={true}
             />
             <Box component={"span"} color={(theme) => theme.palette.secondary.main} fontSize="0.875rem">
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}

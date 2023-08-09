@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import { AdaLogoIcon } from "src/components/commons/ADAIcon";
 import CertificateShape from "src/components/commons/CertificateShape";
+import CustomModal from "src/components/commons/CustomModal";
 
 export const MiddleGroup = styled(Box)(() => ({
   display: "flex",
@@ -162,7 +163,11 @@ export const CertificateShapeMobile = styled(CertificateShape)(() => ({
   margin: "auto"
 }));
 
-export const StyledContainerModal = styled(Box)(() => ({}));
+export const StyledCustomModal = styled(CustomModal)(({ theme }) => ({
+  backgroundColor: theme.palette.secondary[0],
+  wordBreak: "break-all"
+}));
+
 export const StyledLink = styled(Link)`
   font-size: inherit;
   font-weight: inherit;

@@ -1,4 +1,4 @@
-import { Box, MenuItem, Select } from "@mui/material";
+import { Box } from "@mui/material";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -13,7 +13,7 @@ import FormNowMessage from "src/components/commons/FormNowMessage";
 import Table from "src/components/commons/Table";
 import { Column } from "src/types/table";
 
-import { Actions, PageSize, PerPage, StyledLink, TimeDuration } from "./styles";
+import { Actions, PageSize, PerPage, SelectMui, StyledLink, StyledMenuItem, TimeDuration } from "./styles";
 
 const perPages = [10, 20, 50, 100];
 
@@ -71,18 +71,18 @@ const TopAddressesByAmountStaked = () => {
           <FormNowMessage time={lastUpdated} />
         </TimeDuration>
         <PageSize>
-          <Select
+          <SelectMui
             value={pageSize}
-            onChange={(event) => setPageSize(event.target.value)}
+            onChange={(event: any) => setPageSize(event.target.value)}
             displayEmpty
             inputProps={{ "aria-label": "Without label" }}
           >
             {perPages.map((item) => (
-              <MenuItem key={item} value={item}>
+              <StyledMenuItem key={item} value={item}>
                 <Box color={({ palette }) => `${palette.secondary.main} !important`}>{item}</Box>
-              </MenuItem>
+              </StyledMenuItem>
             ))}
-          </Select>
+          </SelectMui>
           <PerPage>Delegators</PerPage>
         </PageSize>
       </Actions>
