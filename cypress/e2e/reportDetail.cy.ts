@@ -11,7 +11,9 @@ const SPOderegistration = ["Transaction Hash", "Created At", "ADA Value", "Certi
 describe("Report Staking Detail", () => {
   beforeEach(() => {
     cy.withLogin();
-    cy.visit("en/staking-lifecycle/staking-report-generated/126");
+    cy.wait(1000)
+    cy.visit("en/staking-lifecycle/");
+    cy.get("[data-testid='table-common'] tr").eq(1).click()
   });
   it("should the page staking report detail render", () => {
     cy.get("[data-tesid='staking-report-name']").invoke("text").should("not.be.empty");
@@ -67,7 +69,10 @@ describe("Report Staking Detail", () => {
 describe("Report SPO Detail", () => {
   beforeEach(() => {
     cy.withLogin();
-    cy.visit("en/staking-lifecycle/pool-report-generated/52");
+    cy.wait(1000)
+    cy.visit("en/staking-lifecycle/");
+    cy.get('button').contains('Pool Reports').click();
+    cy.get("[data-testid='table-common'] tr").eq(1).click()
   });
   it("should the page staking report detail render", () => {
     cy.get("[data-testid='pool-report-name']").invoke("text").should("not.be.empty");
@@ -78,7 +83,7 @@ describe("Report SPO Detail", () => {
       cy.get("button div[active]").contains("Pool Registration");
       cy.get("button div[active]").contains("Pool Update");
       cy.get("button div[active]").contains("Operator Rewards");
-      cy.get("button div[active]").contains("Deregsitration");
+      cy.get("button div[active]").contains("Deregistration");
       cy.get("button div[active]").contains("Pool size");
     });
   });
