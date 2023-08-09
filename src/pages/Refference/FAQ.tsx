@@ -1,4 +1,10 @@
+import { Link, styled } from "@mui/material";
+
 import { ContainerReffer, TextReffer, Content, TextHeader, TitleSection, TextSubHeader, TextItalic } from "./styles";
+
+const LinkTo = styled(Link)`
+  color: ${(props) => `${props.theme.palette.primary.main} !important`};
+`;
 
 const FAQ = () => {
   return (
@@ -8,7 +14,7 @@ const FAQ = () => {
         <br />
         <TextSubHeader>General</TextSubHeader>
         <TextReffer>
-          <TitleSection>Is iris open source?</TitleSection> <br />
+          <TitleSection>Is iris open source?</TitleSection>
           Absolutely. Transparency is a key principle of iris. You will find a link to our GitHub repositories on our
           landing page. Look for the GitHub icon!
         </TextReffer>
@@ -228,6 +234,11 @@ const FAQ = () => {
           Yes! We would love to hear from you. You can create a feature request in the support widget at the bottom
           right-hand side of Iris. Please select the option &ldquo;Feature Request&rdquo; when submitting your idea.{" "}
           <br />
+        </TextReffer>
+
+        <TextReffer>
+          <TitleSection>Known Bugs and Issues</TitleSection>
+          Please see a list of our known bugs <LinkTo href="https://github.com/cardano-foundation/iris" target="_blank" rel="noopener noreferrer">here</LinkTo>
         </TextReffer>
       </Content>
     </ContainerReffer>

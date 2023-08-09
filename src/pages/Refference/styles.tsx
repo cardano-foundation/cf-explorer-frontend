@@ -25,6 +25,7 @@ export const TextReffer = styled(Box)`
 export const TitleSection = styled(Box)`
   font-weight: 700;
   font-size: 16px;
+  padding-bottom: 8px;
 `;
 
 export const TextSubHeader = styled(Box)`
@@ -37,7 +38,7 @@ export const TextHeader = styled(Box)`
   color: ${({ theme }) => theme.palette.secondary.main};
   font-weight: 700;
   font-size: 2rem;
-  padding-botton: 20px;
+  padding-bottom: 10px;
 `;
 
 export const TextItalic = styled("span")`
