@@ -1,8 +1,5 @@
 import { TabPanel } from "@mui/lab";
-import { Box, Container, Tab, Tabs, Typography, styled } from "@mui/material";
-
-export const StyledContainer = styled(Container)`
-`;
+import { Box, Tab, Tabs, Typography, styled } from "@mui/material";
 
 export const TextHeadline = styled("span")`
   font-weight: 700;

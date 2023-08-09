@@ -1,5 +1,15 @@
 import styled from "@emotion/styled";
-import { AccordionDetails, Box, Button, Checkbox, IconButton, Skeleton, alpha, useTheme } from "@mui/material";
+import {
+  AccordionDetails,
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  IconButton,
+  Skeleton,
+  alpha,
+  useTheme
+} from "@mui/material";
 import { isObject, isEmpty } from "lodash";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -36,7 +46,6 @@ import {
   ButtonFilter,
   ColumnProtocol,
   FilterContainer,
-  StyledContainer,
   StyledDropdownItem
 } from "./styles";
 
@@ -209,7 +218,7 @@ const ProtocolParameter: React.FC = () => {
   if (histories && histories !== "histories") return <NoRecord />;
 
   return (
-    <StyledContainer>
+    <Container>
       {histories && (
         <Box textAlign={"left"}>
           <BackButton onClick={() => history.push(lists.protocolParameters())}>
@@ -287,7 +296,7 @@ const ProtocolParameter: React.FC = () => {
         handleCloseModal={() => setExplainerText(null)}
         explainerText={explainerText || { content: "", title: "" }}
       />
-    </StyledContainer>
+    </Container>
   );
 };
 

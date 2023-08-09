@@ -1,12 +1,4 @@
-import {
-  styled,
-  Box,
-  Button,
-  Accordion,
-  AccordionSummary as AccordionSummaryMUI,
-  alpha,
-  Container
-} from "@mui/material";
+import { styled, Box, Button, Accordion, AccordionSummary as AccordionSummaryMUI, alpha } from "@mui/material";
 
 export const BackButton = styled(Box)`
   display: inline-flex;
@@ -100,9 +92,6 @@ export const UpdatableParameters = styled(Box)(({ theme }) => ({
     }
   }
 }));
-
-export const StyledContainer = styled(Container)`
-`;
 
 export const ColumnProtocol = styled(Box)<{ isLink: number; to: string }>(({ isLink, theme }) => ({
   padding: "24px 20px",
