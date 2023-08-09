@@ -28,6 +28,7 @@ interface IToken extends ITokenOverview, ITokenMetadata {}
 
 interface ITokenTopHolderTable {
   address: string;
+  type: "STAKE_ADDRESS" | "PAYMENT_ADDRESS";
   name: string;
   displayName: string;
   fingerprint: string;
