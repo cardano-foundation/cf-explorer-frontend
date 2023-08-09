@@ -151,6 +151,7 @@ export const Main = styled(Box)<{ open: number }>(({ theme, open }) => ({
   overflowY: "auto",
   width: `calc(100vw - ${drawerCollaspWidth}px)`,
   minHeight: "calc(100vh - 61px)",
+  boxSizing: "border-box",
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen
@@ -165,6 +166,10 @@ export const Main = styled(Box)<{ open: number }>(({ theme, open }) => ({
   [theme.breakpoints.down("md")]: {
     paddingTop: 80,
     width: "100vw",
+    minHeight: "calc(100vh - 136px)",
     height: "auto"
+  },
+  [theme.breakpoints.down("sm")]: { 
+    minHeight: "calc(100vh - 263px)", 
   }
 }));
