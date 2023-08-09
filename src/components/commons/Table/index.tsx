@@ -343,6 +343,7 @@ const Table: React.FC<TableProps> = ({
   className,
   emptyClassName,
   style,
+  tableWrapperProps,
   loading,
   initialized = true,
   error,
@@ -405,6 +406,7 @@ const Table: React.FC<TableProps> = ({
         height={heightTable}
         className={data && data.length !== 0 ? "table-wrapper" : "hide-scroll"}
         loading={loading ? 1 : 0}
+        {...tableWrapperProps}
       >
         <TableFullWidth ref={tableRef}>
           <TableHeader
@@ -554,24 +556,10 @@ const PaginationCustom = ({
               type={"string"}
               value={inputPage}
               length={inputPage.toString().length || 1}
-              onChange={(e) => {
-                if (+e.target.value <= totalPage) {
-                  setInputPage(+e.target.value);
-                }
-              }}
               onBlur={() => {
                 setInputPage(page);
               }}
-              disabled={pagination?.hideLastPage || loading}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  if (inputPage < 1) {
-                    setInputPage(1);
-                  }
-                  pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
-                  handleChangePage(null, inputPage);
-                }
-              }}
+              disabled={true}
             />
             <Box component={"span"} color={(theme) => theme.palette.secondary.main} fontSize="0.875rem">
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}

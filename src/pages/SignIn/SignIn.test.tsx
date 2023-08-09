@@ -16,16 +16,16 @@ jest.mock("src/commons/utils/userRequest", () => ({
 
 describe("SignIn page", () => {
   it("should render the page and availble to use", () => {
-    expect(screen.getByText("Sign In")).toBeInTheDocument();
+    expect(screen.getByTestId("signin-title")).toBeInTheDocument();
     expect(screen.getByText("Sign Up")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Email Address")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Email address")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Password")).toBeInTheDocument();
-    expect(screen.getByText("Log in")).toBeInTheDocument();
+    expect(screen.getByTestId("login-btn")).toBeInTheDocument();
     expect(screen.getByTestId("connect-wallet")).toBeInTheDocument();
     expect(screen.getByTestId("forgot-password-link")).toBeInTheDocument();
   });
   it("should able to type in email and password", () => {
-    const emailInput = screen.getByPlaceholderText("Email Address");
+    const emailInput = screen.getByPlaceholderText("Email address");
     const passwordInput = screen.getByPlaceholderText("Password");
     fireEvent.change(emailInput, { target: { value: "abcxyz@gmail.com" } });
     fireEvent.change(passwordInput, { target: { value: "123456A@" } });
@@ -39,7 +39,7 @@ describe("SignIn page", () => {
       password: "123456A@",
       type: 0
     };
-    const emailInput = screen.getByPlaceholderText("Email Address");
+    const emailInput = screen.getByPlaceholderText("Email address");
     const passwordInput = screen.getByPlaceholderText("Password");
     fireEvent.change(emailInput, { target: { value: mockData.email } });
     fireEvent.change(passwordInput, { target: { value: mockData.password } });
