@@ -6,7 +6,7 @@ describe("Bookmark", () => {
     cy.get('[data-testid="login-btn"]').click();
     cy.get('[data-testid="home-title"]').should("exist");
     cy.get('[data-testid="header-signin"]').should("not.exist");
-    cy.visit("/account/profile");
+    cy.visit("/account/profile") ;
   });
   it("should navigate to the bookmark page", () => {
     cy.visit("/account/bookmark");
