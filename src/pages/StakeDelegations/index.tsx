@@ -81,16 +81,20 @@ const StakeDelegations = () => {
     {
       title: "Stake Address",
       key: "stakeAddress",
-      render: (r) => {
-        const stakeKey = r.stakeKeys[0];
-        return (
-          <CustomTooltip title={stakeKey}>
-            <StyledLink to={{ pathname: details.stake(stakeKey), state: { fromPath } }}>
-              {getShortWallet(stakeKey)}
-            </StyledLink>
-          </CustomTooltip>
-        );
-      }
+      render: (r) => (
+        <>
+          {r.stakeKeys.slice(0, 2).map((stakeKey: string, idx: number) => (
+            <Box key={idx}>
+              <CustomTooltip title={stakeKey}>
+                <StyledLink to={{ pathname: details.stake(stakeKey), state: { fromPath } }}>
+                  {getShortWallet(stakeKey)}
+                </StyledLink>
+              </CustomTooltip>
+            </Box>
+          ))}
+          {r.pools?.length > 2 ? <StyledLink to={details.transaction(r.txHash)}>...</StyledLink> : ""}
+        </>
+      )
     },
     {
       title: "Pool",
