@@ -1,8 +1,9 @@
 import { Box, styled, Theme, CSSObject, alpha, Drawer as MuiDrawer } from "@mui/material";
 
-const drawerWidth = 260;
-const drawerWidthMobile = 240;
-const drawerCollaspWidth = 85;
+export const drawerWidth = 260;
+export const drawerWidthTablet = 360;
+export const drawerWidthMobile = 240;
+export const drawerCollaspWidth = 85;
 
 export const Layout = styled(Box)<{ sidebar: number }>`
   display: flex;
@@ -75,7 +76,8 @@ export const openedMixin = (theme: Theme): CSSObject => ({
     zIndex: 1302,
     minWidth: 0,
     height: "100vh",
-    maxHeight: "fill-available"
+    maxHeight: "fill-available",
+    width: drawerWidthTablet
   },
   [theme.breakpoints.down("sm")]: {
     width: drawerWidthMobile
@@ -113,7 +115,8 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
     "& .MuiDrawer-paper": closedMixin(theme)
   }),
   [theme.breakpoints.down("md")]: {
-    height: 0
+    height: 0,
+    width: drawerWidthTablet
   },
   [theme.breakpoints.down("sm")]: {
     width: drawerWidthMobile
