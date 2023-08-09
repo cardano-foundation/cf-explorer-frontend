@@ -34,6 +34,7 @@ import {
   ProgressPending,
   StatisticContainer,
   StyledAdaLogoIcon,
+  TextPending,
   TimeDuration,
   Title,
   WrapCardContent,
@@ -174,11 +175,13 @@ const HomeStatistic = () => {
                         {+progress || 0}%
                       </ProcessActive>
                     </CustomTooltip>
-                    <ProgressPending data-testid="current-epoch-progress-pending" rate={100 - (+progress || 0)}>
-                      <Box color={({ palette }) => palette.secondary.light}>
-                        {days}d {hours}h
-                      </Box>
-                    </ProgressPending>
+                    <CustomTooltip title={`${days}d ${hours}h`}>
+                      <ProgressPending data-testid="current-epoch-progress-pending" rate={100 - (+progress || 0)}>
+                        <TextPending>
+                          {days}d {hours}h
+                        </TextPending>
+                      </ProgressPending>
+                    </CustomTooltip>
                   </Progress>
                 </Box>
                 <Box>
