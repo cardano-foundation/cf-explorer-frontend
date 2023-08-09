@@ -18,6 +18,7 @@ import { Image, PoolName, SearchContainer, StyledInput, StyledLinearProgress, Su
 const DelegationLists: React.FC = () => {
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const { tickerNameSearch = "" } = history.location.state || {};
+  // eslint-disable-next-line no-console
 
   const [value, setValue] = useState(decodeURIComponent(tickerNameSearch));
   const [search, setSearch] = useState(decodeURIComponent(tickerNameSearch));
@@ -25,6 +26,14 @@ const DelegationLists: React.FC = () => {
   const [size, setSize] = useState(50);
   const [sort, setSort] = useState<string>("");
   const tableRef = useRef(null);
+
+  useEffect(() => {
+    if (tickerNameSearch) {
+      setSearch(decodeURIComponent(tickerNameSearch));
+      setValue(decodeURIComponent(tickerNameSearch));
+    }
+  }, [tickerNameSearch]);
+
   const fetchData = useFetchList<Delegators>(
     API.DELEGATION.POOL_LIST,
     { page: page - 1, size, search, sort },
