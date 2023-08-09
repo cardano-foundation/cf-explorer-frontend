@@ -36,6 +36,7 @@ const enterStakeReport = () => {
 describe("Pool report composer", () => {
   beforeEach(() => {
     cy.withLogin();
+    cy.wait(1000)
     cy.visit(
       `/en/staking-lifecycle/spo/${pool}/timeline/registration/87725730dbb989e0043705e39d40cffb94c1c1b0e766788a3a4b9906682fe7c6`
     );
@@ -87,6 +88,7 @@ describe("Pool report composer", () => {
 describe("Stake report composer", () => {
   beforeEach(() => {
     cy.withLogin();
+    cy.wait(1000)
     cy.visit(
       `/en/staking-lifecycle/delegator/${stake}/timeline/registration/122e536c2a63732c2200ad58ae68b507c9b28d25dfdaf97ea3fd209d7a54728a`
     );
