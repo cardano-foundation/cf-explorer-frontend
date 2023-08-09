@@ -1,13 +1,10 @@
-import { IRisLogo } from "src/commons/resources";
-
 import { ContainerReffer, TextReffer, Content, TextHeader } from "./styles";
 
 const Policy = () => {
   return (
     <ContainerReffer>
-      <IRisLogo />
       <Content>
-        <TextHeader>Privacy Policy - Iris.cardano.org</TextHeader>
+        <TextHeader>Privacy Policy - iris.cardano.org</TextHeader>
 
         <TextReffer>PLEASE READ THE PRIVACY POLICY CAREFULLY.</TextReffer>
 

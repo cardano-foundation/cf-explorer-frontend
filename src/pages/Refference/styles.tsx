@@ -14,13 +14,6 @@ export const ContainerReffer = styled(Box)`
 
 export const Content = styled(Box)`
   line-height: normal;
-  padding: 30px 60px;
-  ${({ theme }) => theme.breakpoints.down("lg")} {
-    padding: 30px 40px;
-  }
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    padding: 10px;
-  }
 `;
 
 export const TextReffer = styled(Box)`
@@ -43,7 +36,8 @@ export const TextSubHeader = styled(Box)`
 export const TextHeader = styled(Box)`
   color: ${({ theme }) => theme.palette.secondary.main};
   font-weight: 700;
-  font-size: 36px;
+  font-size: 2rem;
+  padding-botton: 20px;
 `;
 
 export const TextItalic = styled("span")`

@@ -1,13 +1,10 @@
-import { IRisLogo } from "src/commons/resources";
-
 import { ContainerReffer, TextReffer, Content, TextHeader, TitleSection, TextSubHeader, TextItalic } from "./styles";
 
 const FAQ = () => {
   return (
     <ContainerReffer>
-      <IRisLogo />
       <Content>
-        <TextHeader>Iris FAQ</TextHeader>
+        <TextHeader>Frequently Asked Questions</TextHeader>
         <br />
         <TextSubHeader>General</TextSubHeader>
         <TextReffer>
