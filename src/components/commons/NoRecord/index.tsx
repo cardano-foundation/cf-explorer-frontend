@@ -8,6 +8,7 @@ const NoRecordContainer = styled(Box)`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 120px 0px;
 `;
 
 const Image = styled("img")`
