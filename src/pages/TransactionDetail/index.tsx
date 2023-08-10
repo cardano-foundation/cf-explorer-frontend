@@ -11,7 +11,6 @@ import { API } from "src/commons/utils/api";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
 
 const StyledContainer = styled(Container)`
-  max-width: 95vw !important;
   padding: 30px 16px 40px;
 
   @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {

@@ -40,7 +40,7 @@ const StakeDelegations = () => {
     document.title = `Stake Delegations | Iris - Cardano Blockchain Explorer`;
   }, []);
 
-  const columns: Column<StakeDelegations>[] = [
+  const columns: Column<StakeDelegationItem>[] = [
     {
       title: "#",
       minWidth: 30,
@@ -81,24 +81,28 @@ const StakeDelegations = () => {
     {
       title: "Stake Address",
       key: "stakeAddress",
-      render: (r) => {
-        const stakeKey = r.stakeKeys[0];
-        return (
-          <CustomTooltip title={stakeKey}>
-            <StyledLink to={{ pathname: details.stake(stakeKey), state: { fromPath } }}>
-              {getShortWallet(stakeKey)}
-            </StyledLink>
-          </CustomTooltip>
-        );
-      }
+      render: (r) => (
+        <>
+          {r.stakeKeys.slice(0, 2).map((stakeKey, idx) => (
+            <Box key={idx}>
+              <CustomTooltip title={stakeKey}>
+                <StyledLink to={{ pathname: details.stake(stakeKey), state: { fromPath } }}>
+                  {getShortWallet(stakeKey)}
+                </StyledLink>
+              </CustomTooltip>
+            </Box>
+          ))}
+          {r.pools?.length > 2 ? <StyledLink to={details.transaction(r.txHash)}>...</StyledLink> : ""}
+        </>
+      )
     },
     {
       title: "Pool",
       key: "pool",
       render: (r) => (
         <>
-          {r.pools.slice(0, 2).map((pool: any) => (
-            <Box key={pool.poolId}>
+          {r.pools.slice(0, 2).map((pool, idx) => (
+            <Box key={idx}>
               <CustomTooltip title={pool.poolName || pool.poolId}>
                 <StyledLink to={details.delegation(pool.poolId)}>
                   <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
@@ -134,6 +138,7 @@ const StakeDelegations = () => {
               mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
+          tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
         />
       </Card>
     </StyledContainer>

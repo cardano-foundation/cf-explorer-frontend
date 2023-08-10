@@ -141,7 +141,7 @@ const TokenTransaction: React.FC = () => {
   const handleClose = () => {
     setOnDetailView(false);
     setSelected(null);
-    setTxHashSelected("")
+    setTxHashSelected("");
   };
 
   useEffect(() => {
@@ -162,12 +162,8 @@ const TokenTransaction: React.FC = () => {
           onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
         }}
       />
-      {txHashSelected && (
-        <DetailViewContractHash
-          txHash={txHashSelected}
-          address={params.address}
-          handleClose={handleClose}
-        />
+      {txHashSelected && onDetailView && (
+        <DetailViewContractHash txHash={txHashSelected} address={params.address} handleClose={handleClose} />
       )}
     </>
   );
