@@ -481,7 +481,7 @@ export const ProtocolParameterHistory = () => {
       <Card
         titleSx={{
           margin: 0,
-          width: "max-content"
+          width: "100%"
         }}
         title={
           <Box>
