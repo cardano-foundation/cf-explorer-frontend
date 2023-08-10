@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import { useWindowSize } from "react-use";
 import { useSelector } from "react-redux";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 import { Collapse, Divider, ListItem, useTheme } from "@mui/material";
@@ -10,6 +9,7 @@ import { isExternalLink } from "src/commons/utils/helper";
 import { setSidebar } from "src/stores/user";
 import { RootState } from "src/stores/types";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import FooterMenu from "../FooterMenu";
 import {
@@ -28,7 +28,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const pathname = history.location.pathname;
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const specialPath = useSelector(({ system }: RootState) => system.specialPath);
-  const { width } = useWindowSize(0);
+  const { isTablet } = useScreen();
   const theme = useTheme();
 
   const isActiveMenu = (href: string, isSpecialPath?: boolean): boolean => {
@@ -73,14 +73,14 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   }, [pathname, setActive]);
 
   useEffect(() => {
-    if (!sidebar && width >= theme.breakpoints.values.md) setSidebar(true);
-    else if (sidebar && width < theme.breakpoints.values.md) setSidebar(false);
+    if (!sidebar && !isTablet) setSidebar(true);
+    else if (sidebar && isTablet) setSidebar(false);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width >= theme.breakpoints.values.md]);
+  }, [isTablet]);
 
   useEffect(() => {
-    if (width <= theme.breakpoints.values.md) setSidebar(false);
+    if (isTablet) setSidebar(false);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
@@ -135,7 +135,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     onClick={() => children?.length && handleOpen(`menu-${index}`)}
                     sx={(theme) => ({
                       ...itemStyle(theme, sidebar),
-                      ...(`menu-${index}` === active || (sidebar && `menu-${index}` === currentActive)
+                      ...(`menu-${index}` === active || `menu-${index}` === currentActive
                         ? {
                             backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
                             color: (theme) => theme.palette.secondary[0]
@@ -143,7 +143,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                         : { color: (theme) => theme.palette.secondary.light }),
                       fontWeight: "bold !important",
                       ":hover":
-                        `menu-${index}` === active || (sidebar && `menu-${index}` === currentActive)
+                        `menu-${index}` === active || `menu-${index}` === currentActive
                           ? {
                               backgroundColor: `${theme.palette.primary.dark} !important`
                             }
@@ -155,13 +155,13 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                         src={icon}
                         alt={title}
                         iconOnly={+!sidebar}
-                        active={+(`menu-${index}` === active || (sidebar && `menu-${index}` === currentActive))}
+                        active={+(`menu-${index}` === active || `menu-${index}` === currentActive)}
                       />
                     ) : null}
                     <MenuText
                       primary={title}
                       open={+sidebar}
-                      active={+(`menu-${index}` === active || (sidebar && `menu-${index}` === currentActive))}
+                      active={+(`menu-${index}` === active || `menu-${index}` === currentActive)}
                       disable={+!!tooltipTitle}
                     />
 
