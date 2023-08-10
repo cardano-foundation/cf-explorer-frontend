@@ -1,7 +1,7 @@
 import { Box, Skeleton } from "@mui/material";
 import React from "react";
 
-import { EmptyIcon } from "src/commons/resources";
+import NoRecord from "src/components/commons/NoRecord";
 import { details } from "src/commons/routers";
 import CopyButton from "src/components/commons/CopyButton";
 
@@ -37,9 +37,7 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
     return (
       <CardItemStyled>
         <TitleDetail paddingBottom={(props) => props.spacing(2)}>{title}</TitleDetail>
-        <Box width={"100%"} display="flex" alignItems="center" justifyContent="center">
-          <img alt="icon" src={EmptyIcon} />
-        </Box>
+        <NoRecord />
       </CardItemStyled>
     );
   }
