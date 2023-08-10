@@ -81,7 +81,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
         </HeaderMain>
         <HeaderTop data-testid="header-top" ref={refElement}>
           <HeaderLogoLink to="/" data-testid="header-logo">
-            <HeaderLogo src={LogoIcon} alt="logo desktop" />
+            {!sidebar && <HeaderLogo src={LogoIcon} alt="logo desktop" />}
           </HeaderLogoLink>
           <SideBarRight>
             <NetworkContainer>
