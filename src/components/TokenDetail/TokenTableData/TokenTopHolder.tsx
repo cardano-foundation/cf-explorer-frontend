@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 
@@ -19,9 +19,10 @@ interface ITokenTopHolder {
   tokenId: string;
   totalSupply?: number;
   decimal?: number;
+  setCurrentHolder?: (holders: number) => void;
 }
 
-const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decimal }) => {
+const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decimal, setCurrentHolder }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -30,6 +31,12 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decim
     ...pageInfo,
     tokenId
   });
+
+  useEffect(() => {
+    if (fetchData.total && setCurrentHolder) {
+      setCurrentHolder(fetchData.total || 0);
+    }
+  }, [fetchData.total]);
 
   const columns: Column<ITokenTopHolderTable>[] = [
     {
