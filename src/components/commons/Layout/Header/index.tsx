@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Box } from "@mui/material";
 
-import { LogoCardano, LogoIcon, SearchIcon } from "src/commons/resources";
+import { CardanoBlueLogo, LogoIcon, SearchIcon } from "src/commons/resources";
 import { setOnDetailView, setSidebar } from "src/stores/user";
 import { lists, routers } from "src/commons/routers";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -69,11 +69,12 @@ const Header: React.FC<RouteComponentProps> = (props) => {
             >
               <Box
                 component={"img"}
-                src={LogoCardano}
+                src={CardanoBlueLogo}
                 width={isGalaxyFoldSmall ? "30vw" : isMobile ? "20vw" : "auto"}
               />
+              &nbsp;
               <Box fontSize={isMobile ? "24px" : "48px"} whiteSpace={"nowrap"}>
-                {isMobile ? "a Cardano explorer" : ", a Cardano explorer"}
+                Cardano Explorer
               </Box>
             </Box>
           </Title>
