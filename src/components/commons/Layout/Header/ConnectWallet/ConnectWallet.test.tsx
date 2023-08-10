@@ -1,4 +1,5 @@
-import { isWalletInstalled, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet-core";
 
 import { fireEvent, render, screen } from "src/test-utils";
 
