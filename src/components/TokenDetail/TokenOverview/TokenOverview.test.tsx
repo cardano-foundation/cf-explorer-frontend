@@ -33,7 +33,8 @@ const mockToken: IToken = {
 
 const mockTokenOverview = {
   data: mockToken,
-  loading: false
+  loading: false,
+  currentHolders: 100
 };
 
 describe("TokenOverview component", () => {
