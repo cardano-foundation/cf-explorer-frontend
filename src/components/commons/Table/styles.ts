@@ -260,4 +260,3 @@ export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
     background: theme.palette.primary[200] + " !important"
   }
 }));
-

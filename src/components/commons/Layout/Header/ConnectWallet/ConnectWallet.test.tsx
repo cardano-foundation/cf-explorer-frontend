@@ -1,9 +1,9 @@
 import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet-core";
 
 import { fireEvent, render, screen } from "src/test-utils";
 
 import ConnectWallet from ".";
-import { isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet-core";
 const mockProps = {
   onSuccess: jest.fn().mockImplementation(() => {
     // Todo: mock implementation

@@ -238,7 +238,10 @@ const FAQ = () => {
 
         <TextReffer>
           <TitleSection>Known Bugs and Issues</TitleSection>
-          Please see a list of our known bugs <LinkTo href="https://github.com/cardano-foundation/iris" target="_blank" rel="noopener noreferrer">here</LinkTo>
+          Please see a list of our known bugs{" "}
+          <LinkTo href="https://github.com/cardano-foundation/iris" target="_blank" rel="noopener noreferrer">
+            here
+          </LinkTo>
         </TextReffer>
       </Content>
     </ContainerReffer>
