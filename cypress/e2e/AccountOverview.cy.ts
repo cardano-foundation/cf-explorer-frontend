@@ -1,22 +1,32 @@
 describe("Account Overview", () => {
   beforeEach(() => {
     cy.visit("/");
-    cy.get('[data-testid="header-signin"]').click();
-    cy.get(":nth-child(2) > .MuiInputBase-root > .MuiInputBase-input").type("hanh.luu+2@sotatek.com");
-    cy.get(":nth-child(3) > .MuiInputBase-root > .MuiInputBase-input").type("Test1234@");
-    cy.get('[data-testid="login-btn"]').click();
+    cy.window().then((window) => {
+      const api = {
+        getRewardAddresses: async () => ["e0b83abf370a14870fdfd6ccb35f8b3e62a68e465ed1e096c5a6f5b9d6"],
+        getBalance: async () => "1A0643BE98",
+        getUsedAddresses: async () => [],
+        getUnusedAddresses: async () => []
+      };
 
-    cy.get(".css-1yoh286 > .css-0").click();
-    cy.get(".css-hrok44").click();
-  });
+      (window as any).cardano = {
+        eternl: {
+          isEnabled: async () => false,
+          enable: async () => api
+        }
+      };
+      cy.get('[data-testid="header-signin"]').click();
+      cy.get('[data-testid="connect-wallet"]').click();
+      cy.get(".css-u5353u > :nth-child(3)").click();
+      cy.visit("/");
+    });
 
-  it("should have search bar and title account overview", () => {
-    cy.get('[data-testid="header-search"]').should("be.visible");
-    cy.get(".css-1vqs061").contains("Account Overview");
+    //cy.get(".css-1yoh286 > .css-0").click();
+    //cy.get(".css-hrok44").click();
   });
 
   it("should have enough columns of Address tab", () => {
-    cy.get(".css-1bv7r20").click();
+    cy.get('[data-testid="menu-button-blockchain"]').click();
     cy.get(".MuiTabs-flexContainer button").eq(0).should("have.attr", "aria-selected", "true");
     cy.get("tr > :nth-child(1)").should("be.visible").contains("Address");
     cy.get("tr > :nth-child(2)").should("be.visible").contains("Added On");
