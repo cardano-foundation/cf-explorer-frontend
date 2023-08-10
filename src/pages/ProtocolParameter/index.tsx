@@ -21,7 +21,7 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import { useList, useUpdateEffect } from "react-use";
 
 import useFetch from "src/commons/hooks/useFetch";
-import { DateRangeIcon, EmptyIcon, FilterIcon, InfoIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
+import { DateRangeIcon, FilterIcon, InfoIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
 import { details, lists } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { PROTOCOL_TYPE } from "src/commons/utils/constants";
@@ -483,7 +483,31 @@ export const ProtocolParameterHistory = () => {
           margin: 0,
           width: "max-content"
         }}
-        title={"Protocol parameters update history"}
+        title={
+          <Box>
+            Protocol parameters update history{" "}
+            <CustomTooltip
+              title={
+                <Box>
+                  Please be aware that we just display the protocol parameters from Shelley Era onwards (from Epoch
+                  208). For further information, please visit
+                  <Box
+                    ml={1}
+                    color={({ palette }) => `${palette.primary.main} !important`}
+                    component={"a"}
+                    href="https://github.com/cardano-foundation/CIPs/tree/master/CIP-0009"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    https://github.com/cardano-foundation/CIPs/tree/master/CIP-0009
+                  </Box>
+                </Box>
+              }
+            >
+              <InfoIcon style={{ cursor: "pointer" }} />
+            </CustomTooltip>
+          </Box>
+        }
         textAlign={"left"}
         extra={
           <Box position={"relative"}>
@@ -521,7 +545,7 @@ export const ProtocolParameterHistory = () => {
           !initing &&
           !loading && (
             <Box textAlign={"center"}>
-              <Box component={"img"} src={EmptyIcon} mt={3} />
+              <NoRecord />
               <Box
                 component={Button}
                 width={"200px"}

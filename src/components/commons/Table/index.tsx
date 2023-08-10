@@ -12,7 +12,6 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DownIcon,
-  EmptyIcon,
   EndPage,
   EyeIcon,
   NextPage,
@@ -36,7 +35,6 @@ import CustomIcon from "../CustomIcon";
 import Filter from "../Filter";
 import {
   Empty,
-  EmtyImage,
   InputNumber,
   LoadingWrapper,
   SelectMui,
@@ -57,13 +55,14 @@ import {
   Wrapper,
   StyledMenuItem
 } from "./styles";
+import NoRecord from "../NoRecord";
 
 type TEmptyRecord = {
   className?: string;
 };
 export const EmptyRecord: React.FC<TEmptyRecord> = ({ className }) => (
   <Empty className={className}>
-    <EmtyImage src={EmptyIcon} alt="no data" />
+    <NoRecord />
   </Empty>
 );
 

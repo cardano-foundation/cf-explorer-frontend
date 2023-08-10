@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 
@@ -19,9 +19,10 @@ interface ITokenTopHolder {
   tokenId: string;
   totalSupply?: number;
   decimal?: number;
+  setCurrentHolder?: (holders: number) => void;
 }
 
-const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decimal }) => {
+const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decimal, setCurrentHolder }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -30,6 +31,12 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decim
     ...pageInfo,
     tokenId
   });
+
+  useEffect(() => {
+    if (fetchData.total && setCurrentHolder) {
+      setCurrentHolder(fetchData.total || 0);
+    }
+  }, [fetchData.total]);
 
   const columns: Column<ITokenTopHolderTable>[] = [
     {
@@ -44,7 +51,9 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decim
       minWidth: "200px",
       render: (r) => (
         <CustomTooltip title={r.address}>
-          <StyledLink to={details.address(r.address)}>{getShortWallet(r.address)}</StyledLink>
+          <StyledLink to={r.addressType === "PAYMENT_ADDRESS" ? details.address(r.address) : details.stake(r.address)}>
+            {getShortWallet(r.address)}
+          </StyledLink>
         </CustomTooltip>
       )
     },
