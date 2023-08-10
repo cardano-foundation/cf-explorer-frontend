@@ -64,7 +64,8 @@ describe("TokenMinting component", () => {
     name: "Token Holder",
     displayName: "Token Holder",
     fingerprint: "token-fingerprint",
-    quantity: 1000
+    quantity: 1000,
+    type: "PAYMENT_ADDRESS"
   };
 
   beforeEach(() => {

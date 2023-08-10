@@ -28,14 +28,17 @@ export const CustomSelect = styled(Select)`
   }
 `;
 
-export const OptionSelect = styled(MenuItem)(() => ({
+export const OptionSelect = styled(MenuItem)(({ theme }) => ({
   textAlign: "center",
   alignItems: "center",
   display: "flex",
   padding: "12px 16px",
   justifyContent: "space-between",
   height: "40px",
-  cursor: "pointer"
+  cursor: "pointer",
+  "&:hover": {
+    background: theme.palette.primary[200]
+  }
 }));
 
 export const CustomLink = styled(Link)(() => ({
