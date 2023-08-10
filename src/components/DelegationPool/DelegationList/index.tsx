@@ -18,7 +18,6 @@ import { Image, PoolName, SearchContainer, StyledInput, StyledLinearProgress, Su
 const DelegationLists: React.FC = () => {
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const { tickerNameSearch = "" } = history.location.state || {};
-  // eslint-disable-next-line no-console
 
   const [value, setValue] = useState(decodeURIComponent(tickerNameSearch));
   const [search, setSearch] = useState(decodeURIComponent(tickerNameSearch));

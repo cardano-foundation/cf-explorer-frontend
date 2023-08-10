@@ -42,9 +42,9 @@ export const routers = {
   SPO_LIFECYCLE: "/staking-lifecycle/spo/:poolId/:mode?/:tab?/:txHash?",
   REPORT_GENERATED_STAKING_DETAIL: "/staking-lifecycle/staking-report-generated/:reportId",
   REPORT_GENERATED_POOL_DETAIL: "/staking-lifecycle/pool-report-generated/:reportId",
-  POLICY: "/policy",
+  POLICY: "/privacy-policy",
   FAQ: "/faq",
-  TERMS_AND_CONDITIONS: "/terms-and-conditions",
+  TERMS_OF_SERVICE: "/terms-of-service",
   NOT_FOUND: "/*"
 } as const;
 
