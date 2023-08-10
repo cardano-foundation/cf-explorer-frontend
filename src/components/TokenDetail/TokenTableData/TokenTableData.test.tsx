@@ -65,7 +65,7 @@ describe("TokenMinting component", () => {
     displayName: "Token Holder",
     fingerprint: "token-fingerprint",
     quantity: 1000,
-    type: "PAYMENT_ADDRESS"
+    addressType: "PAYMENT_ADDRESS"
   };
 
   beforeEach(() => {
@@ -93,6 +93,7 @@ describe("TokenTopHolder component", () => {
     name: "Token Holder",
     displayName: "Token Holder",
     fingerprint: "token-fingerprint",
+    addressType: "PAYMENT_ADDRESS",
     quantity: 1000
   };
 
@@ -116,7 +117,9 @@ describe("TokenTopHolder component", () => {
       </Router>
     );
     fireEvent.click(screen.getByRole("link", { name: mockData.address }));
-    expect(history.location.pathname).toBe(details.address(mockData.address));
+    expect(history.location.pathname).toBe(
+      mockData.addressType === "PAYMENT_ADDRESS" ? details.address(mockData.address) : details.stake(mockData.address)
+    );
   });
 });
 
