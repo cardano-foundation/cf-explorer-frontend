@@ -1,6 +1,6 @@
 {
   "name": "iris",
-  "version": "0.4.14",
+  "version": "0.4.15",
   "private": true,
   "dependencies": {
     "@cardano-foundation/cardano-connect-with-wallet": "^0.1.57",

@@ -70,7 +70,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     },
     {
       title: "Pool Name",
-      value: (
+      value: dataStake?.pool?.poolId ? (
         <Link
           to={dataStake?.pool?.poolId ? details.delegation(dataStake.pool.poolId) : "#"}
           style={{ fontFamily: "var(--font-family-text)", color: theme.palette.primary.main }}
@@ -83,6 +83,8 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
             </CustomTooltip>
           )}
         </Link>
+      ) : (
+        <span>Not delegated to any pool</span>
       )
     },
     {

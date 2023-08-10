@@ -421,7 +421,7 @@ export default function SignUp() {
                       gap={"5px"}
                     >
                       I agree to the
-                      <Link to={routers.TERMS_AND_CONDITIONS} target="_blank">
+                      <Link to={routers.TERMS_OF_SERVICE} target="_blank">
                         <HighlightLink>Terms & Conditions</HighlightLink>
                       </Link>
                       and
