@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
-import { Collapse, Divider, ListItem, useTheme } from "@mui/material";
+import { Collapse, ListItem, useTheme } from "@mui/material";
 
 import { footerMenus, menus } from "src/commons/menus";
 import { isExternalLink } from "src/commons/utils/helper";
@@ -21,7 +21,8 @@ import {
   itemStyle,
   IconMenu,
   SidebarMenuContainer,
-  FooterMenuContainer
+  FooterMenuContainer,
+  StyledDivider
 } from "./styles";
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
@@ -226,17 +227,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
             </React.Fragment>
           );
         })}
-        <Divider
-          sx={{
-            margin: "10px 0px 10px 30px",
-            width: sidebar ? 200 : 25,
-            borderColor: theme.palette.primary[200],
-            transition: "width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms",
-            [theme.breakpoints.down("md")]: {
-              marginLeft: "20px"
-            }
-          }}
-        />
+        <StyledDivider sidebar={+sidebar} />
         {footerMenus.map((item, index) => {
           const { href, title, children, icon, tooltip } = item;
           const tooltipTitle = `${!sidebar ? `${title}${title && tooltip ? `: ` : ``}` : ``}${tooltip || ``}`;

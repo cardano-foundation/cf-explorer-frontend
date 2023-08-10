@@ -34,6 +34,7 @@ import {
   ProgressPending,
   StatisticContainer,
   StyledAdaLogoIcon,
+  TextPending,
   TimeDuration,
   Title,
   WrapCardContent,
@@ -165,7 +166,11 @@ const HomeStatistic = () => {
                   <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
                     <Title data-testid="current-epoch-number">{numberWithCommas(currentEpoch?.no)}</Title>
                     <Box color={({ palette }) => palette.secondary.light}>
-                      Slot: {numberWithCommas(currentEpoch?.slot % MAX_SLOT_EPOCH)}/ {numberWithCommas(MAX_SLOT_EPOCH)}
+                      Slot:{" "}
+                      {moment(currentEpoch?.endTime).isAfter(moment())
+                        ? numberWithCommas(currentEpoch?.slot)
+                        : numberWithCommas(MAX_SLOT_EPOCH)}
+                      / {numberWithCommas(MAX_SLOT_EPOCH)}
                     </Box>
                   </Box>
                   <Progress>
@@ -174,11 +179,13 @@ const HomeStatistic = () => {
                         {+progress || 0}%
                       </ProcessActive>
                     </CustomTooltip>
-                    <ProgressPending data-testid="current-epoch-progress-pending" rate={100 - (+progress || 0)}>
-                      <Box color={({ palette }) => palette.secondary.light}>
-                        {days}d {hours}h
-                      </Box>
-                    </ProgressPending>
+                    <CustomTooltip title={`${days}d ${hours}h`}>
+                      <ProgressPending data-testid="current-epoch-progress-pending" rate={100 - (+progress || 0)}>
+                        <TextPending>
+                          {days}d {hours}h
+                        </TextPending>
+                      </ProgressPending>
+                    </CustomTooltip>
                   </Progress>
                 </Box>
                 <Box>

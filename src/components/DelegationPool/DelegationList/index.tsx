@@ -25,6 +25,14 @@ const DelegationLists: React.FC = () => {
   const [size, setSize] = useState(50);
   const [sort, setSort] = useState<string>("");
   const tableRef = useRef(null);
+
+  useEffect(() => {
+    if (tickerNameSearch) {
+      setSearch(decodeURIComponent(tickerNameSearch));
+      setValue(decodeURIComponent(tickerNameSearch));
+    }
+  }, [tickerNameSearch]);
+
   const fetchData = useFetchList<Delegators>(
     API.DELEGATION.POOL_LIST,
     { page: page - 1, size, search, sort },

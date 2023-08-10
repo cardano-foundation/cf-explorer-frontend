@@ -1,5 +1,7 @@
-import { Box, List, ListItemText, styled, Theme } from "@mui/material";
+import { Box, Divider, List, ListItemText, styled, Theme } from "@mui/material";
 import { SystemStyleObject } from "@mui/system";
+
+import { drawerWidth, drawerWidthMobile, drawerWidthTablet } from "../../styles";
 
 export const SidebarMenuContainer = styled(Box)(({ theme }) => ({
   height: "calc(100% - 60px)",
@@ -66,8 +68,17 @@ export const MenuText = styled(ListItemText)<{ open?: number; active?: number; d
     color: ${({ active, disable, theme }) =>
       active ? theme.palette.secondary[0] : disable ? theme.palette.secondary[600] : theme.palette.secondary.light};
     white-space: break-spaces;
-    width: 165px;
+    width: ${drawerWidth - 100}px;
+
+    ${({ theme }) => theme.breakpoints.down("md")} {
+      width: ${drawerWidthTablet - 90}px;
+    }
+
+    ${({ theme }) => theme.breakpoints.down("sm")} {
+      width: ${drawerWidthMobile - 90}px;
+    }
   }
+
   ${({ theme }) => theme.breakpoints.down("md")} {
     opacity: 1;
     width: unset;
@@ -80,11 +91,7 @@ export const SubMenuText = styled(MenuText)`
     font-weight: ${({ active }) => (active ? "bold !important" : "var(--font-weight-normal) !important")};
   }
 `;
-// font-weight: var(--font-weight-normal) !important;
 
-// &:hover {
-//   font-weight: ${({ active }) => (active ? "var(--font-weight-normal) !important" : "bold !important")};
-// }
 export const FooterMenuContainer = styled(Box)(({ theme }) => ({
   display: "block",
   [theme.breakpoints.down("md")]: {
@@ -92,10 +99,34 @@ export const FooterMenuContainer = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const IconMenu = styled(Box)(() => ({
+export const IconMenu = styled(Box)(({ theme }) => ({
   position: "absolute",
   zIndex: 10,
   top: "55%",
-  left: "210px",
-  transform: "translate(0, -50%)"
+  left: drawerWidth - 30,
+  transform: "translate(0, -50%)",
+
+  [theme.breakpoints.down("md")]: {
+    left: drawerWidthTablet - 30
+  },
+
+  [theme.breakpoints.down("sm")]: {
+    left: drawerWidthMobile - 30
+  }
+}));
+
+export const StyledDivider = styled(Divider)<{ sidebar: number }>(({ theme, sidebar }) => ({
+  margin: "10px 0px 10px 30px",
+  width: sidebar ? drawerWidth - 60 : 25,
+  borderColor: theme.palette.primary[200],
+  transition: "width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms",
+
+  [theme.breakpoints.down("md")]: {
+    marginLeft: "20px",
+    width: sidebar ? drawerWidthTablet - 40 : 25
+  },
+
+  [theme.breakpoints.down("sm")]: {
+    width: sidebar ? drawerWidthMobile - 40 : 25
+  }
 }));

@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { Components, Theme, createTheme } from "@mui/material";
 
 import { ThemeType } from "../types/user";
 import breakpoints from "./breakpoints";
@@ -13,7 +13,17 @@ type CustomTheme = {
   breakpoints: typeof breakpoints;
   mode: ThemeType;
   isDark: boolean;
+  components: Components<Omit<Theme, "components">>;
 };
+
+const theme = createTheme({
+  palette: palette.light,
+  shadow: shadows.light,
+  typography: typography,
+  breakpoints: breakpoints,
+  mode: "light",
+  isDark: false
+});
 
 const lightTheme: CustomTheme = {
   palette: palette.light,
@@ -21,14 +31,22 @@ const lightTheme: CustomTheme = {
   typography: typography,
   breakpoints: breakpoints,
   mode: "light",
-  isDark: false
+  isDark: false,
+  components: {
+    MuiContainer: {
+      styleOverrides: {
+        maxWidthLg: {
+          [theme.breakpoints.up("xl")]: {
+            maxWidth: 2030
+          } 
+        }
+      }
+    }
+  }
 };
 
 const darkTheme: CustomTheme = {
-  palette: palette.light,
-  shadow: shadows.light,
-  typography: typography,
-  breakpoints: breakpoints,
+  ...lightTheme,
   mode: "dark",
   isDark: false
 };
