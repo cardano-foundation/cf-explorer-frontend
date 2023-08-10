@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { FormHelperText } from "@mui/material";
-import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { NetworkType } from "@cardano-foundation/cardano-connect-with-wallet-core";
 
 import { authAxios } from "src/commons/utils/axios";
 import { NETWORK, NETWORKS, NETWORK_TYPES } from "src/commons/utils/constants";
@@ -14,6 +15,7 @@ import { StyledInput, StyledDarkLoadingButton } from "src/components/share/style
 import StyledModal from "src/components/commons/StyledModal";
 
 import { Label, StyledTitle, TextError, TextNote, WrapButton } from "./styles";
+
 export interface IProps {
   nonce: NonceObject | null;
   signature: string;
