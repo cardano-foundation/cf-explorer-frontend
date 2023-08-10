@@ -55,6 +55,9 @@ const SkeletonBox = () => (
 
 const MILION = 10 ** 6;
 
+const MAX_PERCENT_SHOW_PENDING_TIME = 90;
+const MIN_PERCENT_SHOW_ACTIVE_TIME = 5;
+
 const HomeStatistic = () => {
   const { currentEpoch, usdMarket } = useSelector(({ system }: RootState) => system);
   const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS);
@@ -73,6 +76,10 @@ const HomeStatistic = () => {
   const progress = moment(currentEpoch?.endTime).isAfter(moment())
     ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
     : 100;
+
+  const isShowProgressPendingText = +progress < MAX_PERCENT_SHOW_PENDING_TIME;
+  const isShowProgressActiveText = +progress > MIN_PERCENT_SHOW_ACTIVE_TIME;
+
   const slot = (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH;
   const countdown = MAX_SLOT_EPOCH - slot;
   const duration = moment.duration(countdown ? countdown : 0, "second");
@@ -172,14 +179,16 @@ const HomeStatistic = () => {
                   <Progress>
                     <CustomTooltip title={+progress || 0}>
                       <ProcessActive data-testid="current-epoch-progress-active" rate={+progress || 0}>
-                        {+progress || 0}%
+                        {isShowProgressActiveText && `${+progress || 0}%`}
                       </ProcessActive>
                     </CustomTooltip>
                     <CustomTooltip title={`${days}d ${hours}h`}>
                       <ProgressPending data-testid="current-epoch-progress-pending" rate={100 - (+progress || 0)}>
-                        <TextPending>
-                          {days}d {hours}h
-                        </TextPending>
+                        {isShowProgressPendingText && (
+                          <TextPending>
+                            {days}d {hours}h
+                          </TextPending>
+                        )}
                       </ProgressPending>
                     </CustomTooltip>
                   </Progress>
