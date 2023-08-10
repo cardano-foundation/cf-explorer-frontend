@@ -143,6 +143,7 @@ const BlockList = () => {
           onClickRow={openDetail}
           selected={selected}
           showTabView
+          tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
         />
       </Card>
       {block && onDetailView && <DetailViewBlock blockNo={block} handleClose={handleClose} />}

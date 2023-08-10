@@ -78,6 +78,7 @@ export const Title = styled("h3")`
   font-family: var(--font-family-text);
   margin-top: 0;
   margin-bottom: 0;
+  overflow-wrap: break-word;
   color: ${({ theme }) => theme.palette.secondary.main};
   font-size: 28px !important;
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -152,6 +153,13 @@ export const ProgressPending = styled(ProcessActive)<{ rate: number }>`
   background-color: ${(props) => props.theme.palette.primary[200]};
 `;
 
+export const TextPending = styled("span")`
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  color: ${(props) => props.theme.palette.secondary.light};
+`;
+
 export const Link = styled("a")`
   display: contents;
 `;
@@ -165,5 +173,5 @@ export const WrapCardContent = styled(Box)`
 
 export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
   fontSize: 12,
-  color: theme.palette.text.secondary
+  color: theme.palette.secondary.main
 }));

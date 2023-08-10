@@ -32,7 +32,7 @@ module.exports = {
     node: true
   },
   rules: {
-    "no-console": "error",
+    "no-console": process.env.NODE_ENV === "development" ? "warn" : "error",
     "react/react-in-jsx-scope": "off",
     "react/jsx-no-target-blank": "warn",
     "react/prop-types": "off",

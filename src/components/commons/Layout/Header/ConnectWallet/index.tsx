@@ -1,6 +1,7 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { Backdrop, Box } from "@mui/material";
-import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { NetworkType } from "@cardano-foundation/cardano-connect-with-wallet-core";
 import { useSelector } from "react-redux";
 
 import { WalletIcon } from "src/commons/resources";
@@ -23,6 +24,7 @@ import ConnectWalletModal from "src/components/commons/ConnectWalletModal";
 import { Image, Span, Spin, StyledButton } from "./styles";
 import RegisterUsernameModal from "../RegisterUsernameModal";
 import SignMessageModal from "../SignMessageModal";
+
 interface Props {
   customButton?: ({ handleClick }: { handleClick: () => void }) => React.ReactNode;
   onSuccess?: () => void;
