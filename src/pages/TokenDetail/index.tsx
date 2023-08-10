@@ -48,7 +48,7 @@ const TokenDetail: React.FC = () => {
     >
       <StyledContainer>
         <TokenOverview data={data} loading={loading} />
-        <TokenAnalytics />
+        <TokenAnalytics dataToken={data} />
         <TokenTableData totalSupply={data?.supply} metadata={data?.metadata} metadataJson={data?.metadataJson} />
       </StyledContainer>
     </OverviewMetadataTokenContext.Provider>
