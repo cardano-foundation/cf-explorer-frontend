@@ -1,5 +1,36 @@
 # Changelog
 
+## [0.4.16](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.15...v0.4.16) (2023-08-10)
+
+
+### Features
+
+* adding hotjar to app and event tracking ([c8b9f15](https://github.com/cardano-foundation/cf-explorer-frontend/commit/c8b9f15c96cd3d6d9f40d810163cd17008fe11a1))
+
+
+### Bug Fixes
+
+* downgrading hotjar to 5.5.0 ([8034b55](https://github.com/cardano-foundation/cf-explorer-frontend/commit/8034b55dcb2a72365fce9a105afe2a0f2be53d7c))
+* finding-1-hide-the-main-logo-when-mobile-menu-open(MET-1553) ([a44b2d9](https://github.com/cardano-foundation/cf-explorer-frontend/commit/a44b2d9aa7fe5e2233b831fd02e1b301b2c10326))
+* Merge branch 'develop' of github.com-fe-explorer-cardano:cardano-foundation/cf-explorer-frontend into bugfix/MET-1551-finding-1-change-logo-and-title-dashboard ([1b2847e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1b2847ea3ccad2ed573cd7a99beffb2ad03dee83))
+* Merge branch 'develop' of github.com-fe-explorer-cardano:cardano-foundation/cf-explorer-frontend into bugfix/MET-1556-finding-1-card-current-epoch-ui-issue ([5dd3670](https://github.com/cardano-foundation/cf-explorer-frontend/commit/5dd367083f04c68bc249480ec38b43c9872595c2))
+* Merge branch 'develop' of github.com-fe-explorer-cardano:cardano-foundation/cf-explorer-frontend into bugfix/MET-1562-finding-1-fix-decimal-value-token-detail ([a0bc354](https://github.com/cardano-foundation/cf-explorer-frontend/commit/a0bc35428209d09a3d33335e849e67d68ab7b81d))
+* Merge branch 'develop' of github.com-fe-explorer-cardano:cardano-foundation/cf-explorer-frontend into bugfix/MET-615-color-text-report-detail-and-common ([b7e2b37](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b7e2b375b73635029b4163047d0f1bdbe7fa1487))
+* Merge branch 'develop' of github.com-fe-explorer-cardano:cardano-foundation/cf-explorer-frontend into bugfix/MET-615-icon-no-data-found ([1aa7860](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1aa7860233cd084fdcc970004f4a2e4efebae1d4))
+* Merge branch 'develop' of github.com-fe-explorer-cardano:cardano-foundation/cf-explorer-frontend into bugfix/MET-615-icon-no-data-found ([ada401a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/ada401a02b0483a077ddb954ef5fe01f2e1eb57e))
+* MET-1551 change logo blue ([248b9e7](https://github.com/cardano-foundation/cf-explorer-frontend/commit/248b9e77519a52603c952780d4af0abf611905ee))
+* MET-1551 finding 1 change logo and title dashboard ([1e4717a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1e4717a0d94bd679f9f862b857e8084bc1768e20))
+* MET-1551-finding-1 fix unit test ([b61c251](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b61c2517bb376f45100bf780a1e5c25b04c0363b))
+* MET-1556 finding 1 card current epoch ui issue ([fd0fc73](https://github.com/cardano-foundation/cf-explorer-frontend/commit/fd0fc738a991a679ef6e5b5373a3ff6d6e9bddbd))
+* MET-1563 fix unit test ([220c598](https://github.com/cardano-foundation/cf-explorer-frontend/commit/220c598634c630fdd3983e755bc867c03a3d77ee))
+* MET-1563 update total holder in overview ([ef71dc0](https://github.com/cardano-foundation/cf-explorer-frontend/commit/ef71dc0fbf7d1b9940d934648808942cacb3eb11))
+* MET-1563 update type feild ([7245bc4](https://github.com/cardano-foundation/cf-explorer-frontend/commit/7245bc4ae9e4a2765c93d0ba0fa191868bf5d449))
+* MET-615 color text report detail and common ([180984c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/180984c0952957719ccbce96f61742d6c1af559b))
+* MET-615 icon no data found ([19e3da5](https://github.com/cardano-foundation/cf-explorer-frontend/commit/19e3da5ba7efaa4391362aed2fba5ccf042a7e9b))
+* replaced favicon ([559645a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/559645a6e8a2a9fc1ea74cc5cfe696227c303f61))
+* unit test failed ([9fc71b6](https://github.com/cardano-foundation/cf-explorer-frontend/commit/9fc71b6e2b2c6139a6c8626bc912d2b4d6fbaf0a))
+* upgrading hotjar to 6.1.0 latest ([5bd5945](https://github.com/cardano-foundation/cf-explorer-frontend/commit/5bd5945af14a147aa5d65c681aa4d1de9bf32375))
+
 ## [0.4.15](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.14...v0.4.15) (2023-08-09)
 
 
