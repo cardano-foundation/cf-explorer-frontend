@@ -3,7 +3,8 @@
   "version": "0.4.15",
   "private": true,
   "dependencies": {
-    "@cardano-foundation/cardano-connect-with-wallet": "^0.1.57",
+    "@cardano-foundation/cardano-connect-with-wallet": "^0.2.4",
+    "@cardano-foundation/cardano-connect-with-wallet-core": "^0.2.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/lab": "^5.0.0-alpha.111",

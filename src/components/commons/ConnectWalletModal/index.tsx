@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet-core";
 import { CircularProgress } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
-import { isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet";
 import { MdOutlineFileDownload } from "react-icons/md";
 
 import { setOpenModal, setWallet } from "src/stores/user";
