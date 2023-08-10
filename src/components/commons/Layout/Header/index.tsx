@@ -74,7 +74,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
               />
               &nbsp;
               <Box fontSize={isMobile ? "24px" : "48px"} whiteSpace={"nowrap"}>
-                Cardano explorer
+                Cardano Explorer
               </Box>
             </Box>
           </Title>
