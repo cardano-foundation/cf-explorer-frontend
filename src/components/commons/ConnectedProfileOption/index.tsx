@@ -90,11 +90,11 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
             }}
           >
             <Icon src={User2} />
-            <Name>User Profile</Name>
+            <Name>Account</Name>
           </Profile>
           <Disconnect onClick={handleDisconnect}>
             <Icon src={LinkOff} />
-            <Name>Disconnect</Name>
+            <Name>Sign Out</Name>
           </Disconnect>
         </Content>
       </WrapContent>

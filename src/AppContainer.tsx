@@ -23,10 +23,7 @@ const AppContainer: React.FC<Props> = (props) => {
     routers.SIGN_UP,
     routers.FORGOT_PASSWORD,
     routers.RESET_PASSWORD,
-    routers.VERIFY_EMAIL,
-    routers.FAQ,
-    routers.TERMS_AND_CONDITIONS,
-    routers.POLICY
+    routers.VERIFY_EMAIL
   ];
   return (
     <ThemeProvider theme={themes[theme]}>

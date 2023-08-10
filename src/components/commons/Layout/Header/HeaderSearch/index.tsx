@@ -111,6 +111,7 @@ const URL_FETCH_DETAIL = {
   blocks: (block: number) => `${API.BLOCK.DETAIL}/${block}`,
   txs: (trx: string) => `${API.TRANSACTION.DETAIL}/${trx}`,
   addresses: (address: string) => `${API.ADDRESS.DETAIL}/${address}`,
+  stake: (stake: string) => `${API.STAKE.DETAIL}/${stake}`,
   policies: (policy: string) => `${API.POLICY}/${policy}`
 };
 
@@ -289,9 +290,20 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
 
     if (!["all", "tokens", "delegations/pool-detail-header"].includes(option?.value || "")) {
       setLoading(true);
-      const url = URL_FETCH_DETAIL[option?.value as keyof typeof URL_FETCH_DETAIL]
-        ? URL_FETCH_DETAIL[option?.value as keyof typeof URL_FETCH_DETAIL](search as never)
-        : "";
+      let url = "";
+
+      if (option?.value === "addresses") {
+        if (search.trim().startsWith("stake")) {
+          url = URL_FETCH_DETAIL["stake"](search);
+        } else {
+          url = URL_FETCH_DETAIL["addresses"](search);
+        }
+      } else {
+        url = URL_FETCH_DETAIL[option?.value as keyof typeof URL_FETCH_DETAIL]
+          ? URL_FETCH_DETAIL[option?.value as keyof typeof URL_FETCH_DETAIL](search as never)
+          : "";
+      }
+
       try {
         await defaultAxios.get(url);
       } catch (error) {

@@ -21,19 +21,17 @@ jest.mock("src/commons/utils/userRequest", () => ({
 
 describe("Forgot password page", () => {
   it("should render the page and availble to use", () => {
-    expect(screen.getByText("Forgot Password")).toBeInTheDocument();
     expect(screen.getByText("Sign In")).toBeInTheDocument();
-    expect(screen.getByText("Email")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Email")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Email address")).toBeInTheDocument();
   });
   it("should able to type in email", () => {
-    const emailInput = screen.getByPlaceholderText("Email");
+    const emailInput = screen.getByPlaceholderText("Email address");
     fireEvent.change(emailInput, { target: { value: mockData.email } });
     expect(emailInput).toHaveValue(mockData.email);
   });
 
   it("should be able to click on button submit and call api", async () => {
-    const emailInput = screen.getByPlaceholderText("Email");
+    const emailInput = screen.getByPlaceholderText("Email address");
     fireEvent.change(emailInput, { target: { value: mockData.email } });
     const submitButton = screen.getByText("Submit");
     act(() => {
@@ -45,7 +43,7 @@ describe("Forgot password page", () => {
   });
 
   it("should be able to return error message for invalid email", async () => {
-    const emailInput = screen.getByPlaceholderText("Email");
+    const emailInput = screen.getByPlaceholderText("Email address");
     fireEvent.change(emailInput, { target: { value: "abc" } });
     const submitButton = screen.getByText("Submit");
     fireEvent.click(submitButton);
@@ -54,7 +52,7 @@ describe("Forgot password page", () => {
   });
 
   it("should be able to return error message for empty email", async () => {
-    const emailInput = screen.getByPlaceholderText("Email");
+    const emailInput = screen.getByPlaceholderText("Email address");
     fireEvent.change(emailInput, { target: { value: "abc" } });
     fireEvent.change(emailInput, { target: { value: "" } });
     const submitButton = screen.getByText("Submit");

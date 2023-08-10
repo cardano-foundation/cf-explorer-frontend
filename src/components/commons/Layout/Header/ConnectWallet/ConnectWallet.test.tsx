@@ -1,8 +1,9 @@
-import { isWalletInstalled, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 
 import { fireEvent, render, screen } from "src/test-utils";
 
 import ConnectWallet from ".";
+import { isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet-core";
 const mockProps = {
   onSuccess: jest.fn().mockImplementation(() => {
     // Todo: mock implementation
@@ -46,7 +47,7 @@ describe("ConnectWallet component", () => {
   it("should component open the modal", async () => {
     render(<ConnectWallet {...mockProps} />);
     await fireEvent.click(screen.getByRole("button", { name: /examp\.\.\.dress/i }));
-    expect(screen.getByRole("heading", { name: /user profile/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /disconnect/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /account/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /sign out/i })).toBeInTheDocument();
   });
 });
