@@ -37,7 +37,7 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
     return (
       <CardItemStyled>
         <TitleDetail paddingBottom={(props) => props.spacing(2)}>{title}</TitleDetail>
-        <NoRecord />
+        <NoRecord sx={{ padding: 0 }} />
       </CardItemStyled>
     );
   }

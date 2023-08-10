@@ -31,7 +31,7 @@ describe("Table", () => {
     jest.spyOn(Router, "useParams").mockReturnValue({ poolType: "registration" });
     render(<Table loading={false} initialized={true} data={[]} columns={columnsMock} />);
 
-    const tableSkeleton = screen.getByAltText("no data");
+    const tableSkeleton = screen.getByAltText("empty icon");
     expect(tableSkeleton).toBeInTheDocument();
   });
 
