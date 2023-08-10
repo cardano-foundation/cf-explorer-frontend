@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
-import { Collapse, ListItem, useTheme } from "@mui/material";
+import { Collapse, ListItem } from "@mui/material";
 
 import { footerMenus, menus } from "src/commons/menus";
 import { isExternalLink } from "src/commons/utils/helper";
@@ -30,7 +30,6 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const specialPath = useSelector(({ system }: RootState) => system.specialPath);
   const { isTablet } = useScreen();
-  const theme = useTheme();
 
   const isActiveMenu = (href: string, isSpecialPath?: boolean): boolean => {
     if (href === pathname) return true;
