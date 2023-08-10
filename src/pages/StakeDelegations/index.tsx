@@ -40,7 +40,7 @@ const StakeDelegations = () => {
     document.title = `Stake Delegations | Iris - Cardano Blockchain Explorer`;
   }, []);
 
-  const columns: Column<StakeDelegations>[] = [
+  const columns: Column<StakeDelegationItem>[] = [
     {
       title: "#",
       minWidth: 30,
@@ -83,7 +83,7 @@ const StakeDelegations = () => {
       key: "stakeAddress",
       render: (r) => (
         <>
-          {r.stakeKeys.slice(0, 2).map((stakeKey: string, idx: number) => (
+          {r.stakeKeys.slice(0, 2).map((stakeKey, idx) => (
             <Box key={idx}>
               <CustomTooltip title={stakeKey}>
                 <StyledLink to={{ pathname: details.stake(stakeKey), state: { fromPath } }}>
@@ -101,8 +101,8 @@ const StakeDelegations = () => {
       key: "pool",
       render: (r) => (
         <>
-          {r.pools.slice(0, 2).map((pool: any) => (
-            <Box key={pool.poolId}>
+          {r.pools.slice(0, 2).map((pool, idx) => (
+            <Box key={idx}>
               <CustomTooltip title={pool.poolName || pool.poolId}>
                 <StyledLink to={details.delegation(pool.poolId)}>
                   <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
