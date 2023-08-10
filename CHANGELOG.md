@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.4.15](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.14...v0.4.15) (2023-08-09)
+
+
+### Features
+
+* MET-1373 finding 1 edit text on sign in sign up overview account screen ([#1635](https://github.com/cardano-foundation/cf-explorer-frontend/issues/1635)) ([18b3962](https://github.com/cardano-foundation/cf-explorer-frontend/commit/18b396297ee32d4ba505f39fac30b717b442b9c4))
+
+
+### Bug Fixes
+
+* added new section on faq ([e6df2b6](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e6df2b676b6ab4def6cb6b6babdd629c403c8330))
+* adding new no data image ([3f3bed5](https://github.com/cardano-foundation/cf-explorer-frontend/commit/3f3bed5c613980cba9eb15e58863965e037a39a0))
+* disable page input in all tables ([#1643](https://github.com/cardano-foundation/cf-explorer-frontend/issues/1643)) ([07098a2](https://github.com/cardano-foundation/cf-explorer-frontend/commit/07098a225d33072d5fc6d68abd9b512658721d64))
+* icon-ADA-too-thin-and-remove-ADA-after-live-stake( MET-1413) ([#1620](https://github.com/cardano-foundation/cf-explorer-frontend/issues/1620)) ([2d193f6](https://github.com/cardano-foundation/cf-explorer-frontend/commit/2d193f6807f80e536450ac27f8da10a216ad4d7e))
+* legal pages and links updated. ([4e3a723](https://github.com/cardano-foundation/cf-explorer-frontend/commit/4e3a723da35ea0347b9a97a125159ea55436ef03))
+* MET-1437 finding 1, 2 update container max width and table height fix conflict ([166a14b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/166a14b41a213467c66bc82f26694cf64acfc72e))
+* MET-1437 finding 1, 2 update container max width and table height remove unstyled ([f344429](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f344429af758581163bb4c42760d312396436ee3))
+* MET-1559 clear eslint rule ([607b0fc](https://github.com/cardano-foundation/cf-explorer-frontend/commit/607b0fc537dfae5869d6d5024a34e221ca085029))
+* MET-1559 search address and pool wrong ([67081d7](https://github.com/cardano-foundation/cf-explorer-frontend/commit/67081d7b12028253159a34b2669790f818f2d84b))
+* MET-615 fix degrade ui ([6a9a961](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6a9a961249d18b3294e2d5c948dad5d947225d88))
+* MET-615 handle no asset name in minting tab of transaction detail ([#1615](https://github.com/cardano-foundation/cf-explorer-frontend/issues/1615)) ([be59ba5](https://github.com/cardano-foundation/cf-explorer-frontend/commit/be59ba513d8bbf41ffe74b4dcee20e3095f21230))
+* unit test ([ffd4eaa](https://github.com/cardano-foundation/cf-explorer-frontend/commit/ffd4eaaefc0e60a1dd8a4bea81606a3b025008bb))
+* update eslint config ([174e27a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/174e27aa9ba4f738315a06972499894ee4a090b5))
+
 ## [0.4.14](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.13...v0.4.14) (2023-08-07)
 
 
