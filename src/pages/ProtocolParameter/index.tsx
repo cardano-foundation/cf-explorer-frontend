@@ -21,7 +21,7 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import { useList, useUpdateEffect } from "react-use";
 
 import useFetch from "src/commons/hooks/useFetch";
-import { DateRangeIcon, EmptyIcon, FilterIcon, InfoIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
+import { DateRangeIcon, FilterIcon, InfoIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
 import { details, lists } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { PROTOCOL_TYPE } from "src/commons/utils/constants";
@@ -521,7 +521,7 @@ export const ProtocolParameterHistory = () => {
           !initing &&
           !loading && (
             <Box textAlign={"center"}>
-              <Box component={"img"} src={EmptyIcon} mt={3} />
+              <NoRecord />
               <Box
                 component={Button}
                 width={"200px"}

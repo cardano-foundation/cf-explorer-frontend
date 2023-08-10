@@ -22,3 +22,11 @@ jest.mock("@cardano-foundation/cardano-connect-with-wallet", () => ({
     TESTNET: "testnet"
   }
 }));
+
+jest.mock("@cardano-foundation/cardano-connect-with-wallet-core", () => ({
+  NetworkType: {
+    MAINNET: "mainnet",
+    TESTNET: "testnet"
+  },
+  isWalletInstalled: jest.fn()
+}));

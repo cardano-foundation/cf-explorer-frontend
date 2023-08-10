@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { CgClose } from "react-icons/cg";
 import { Box } from "@mui/material";
 
-import { EmptyIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import ContractDiagrams from "src/components/ContractDiagrams";
@@ -26,6 +25,7 @@ import {
   ViewDetailContainerContractHash,
   ViewDetailScrollContractHash
 } from "./styles";
+import NoRecord from "../NoRecord";
 
 type DetailViewEpochProps = {
   handleClose: () => void;
@@ -110,7 +110,7 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
                   <CgClose />
                 </CloseButton>
               </CustomTooltip>
-              <Box sx={{ paddingTop: 10 }} width={"200px"} component={"img"} src={EmptyIcon} />
+              <NoRecord sx={{ paddingTop: 10 }} width={"200px"} />
             </Box>
           )}
         </ViewDetailScrollContractHash>

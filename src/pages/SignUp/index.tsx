@@ -1,5 +1,6 @@
 import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment } from "@mui/material";
 import { useEffect, useReducer, useRef, useState } from "react";
+import { hotjar } from "react-hotjar";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { IoMdClose } from "react-icons/io";
 import { Link, useHistory } from "react-router-dom";
@@ -266,6 +267,7 @@ export default function SignUp() {
       const response = await signUp(payload);
       if (response.status === 200) {
         setSuccess(true);
+        hotjar.event("User sign up successfully!");
         return;
       }
     } catch (error: any) {
@@ -276,7 +278,9 @@ export default function SignUp() {
           error: error.response.data.errorMessage,
           value: formData.email.value
         });
+        hotjar.event("User email already exists!");
       }
+      hotjar.event("User sign up unsuccessful!");
     } finally {
       setLoading(false);
     }
@@ -285,6 +289,7 @@ export default function SignUp() {
   const handleRedirect = (forceGoHome?: boolean) => {
     if (forceGoHome) {
       history.replace(routers.HOME);
+      hotjar.event("User clicked back or close button!");
     } else {
       history.replace(routers.SIGN_IN);
     }

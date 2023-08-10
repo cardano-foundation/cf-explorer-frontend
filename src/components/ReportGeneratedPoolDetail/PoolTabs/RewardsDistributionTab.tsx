@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useParams } from "react-router-dom";
 
 import Table, { Column } from "src/components/commons/Table";
@@ -21,6 +21,8 @@ const RewardsDistributionTab = () => {
   });
 
   const [sort, setSort] = useState<string>("");
+
+  const theme = useTheme();
 
   const columns: Column<SPO_REWARD>[] = [
     {
@@ -44,9 +46,13 @@ const RewardsDistributionTab = () => {
       key: "amount",
       title: "Operator Reward ADA",
       render(data) {
+        const isPositiveNumber = data.amount > 0;
         return (
           <ADAValueLabel>
-            {formatADAFull(data.amount)} <CustomIcon icon={ADAsigntIC} width={12} />
+            <Box component={"span"} color={isPositiveNumber ? theme.palette.success[800] : theme.palette.error[700]}>
+              {isPositiveNumber ? "+" : "-"} {formatADAFull(data.amount)}
+            </Box>
+            <CustomIcon icon={ADAsigntIC} width={12} />
           </ADAValueLabel>
         );
       }
