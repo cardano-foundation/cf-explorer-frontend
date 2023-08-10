@@ -38,7 +38,7 @@ const lightTheme: CustomTheme = {
         maxWidthLg: {
           [theme.breakpoints.up("xl")]: {
             maxWidth: 2030
-          } 
+          }
         }
       }
     }
