@@ -50,7 +50,7 @@ const TokenDetail: React.FC = () => {
     >
       <StyledContainer>
         <TokenOverview currentHolders={currentHolders} data={data} loading={loading} />
-        <TokenAnalytics />
+        <TokenAnalytics dataToken={data} />
         <TokenTableData
           setCurrentHolder={setCurrentHolder}
           totalSupply={data?.supply}
