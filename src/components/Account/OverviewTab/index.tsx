@@ -1,4 +1,5 @@
-import { NetworkType, isWalletInstalled, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { NetworkType, isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet-core";
 import { Box, CircularProgress, Input, useTheme } from "@mui/material";
 import moment from "moment";
 import { ReactElement, useEffect, useState } from "react";
