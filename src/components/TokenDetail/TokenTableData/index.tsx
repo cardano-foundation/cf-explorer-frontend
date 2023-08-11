@@ -18,9 +18,10 @@ interface ITokenTableData {
   totalSupply?: number;
   metadata?: ITokenMetadata;
   metadataJson?: string;
+  setCurrentHolder?: (holders: number) => void;
 }
 
-const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, metadataJson }) => {
+const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, metadataJson, setCurrentHolder }) => {
   const history = useHistory();
   const { tabActive = "transactions", tokenId } = useParams<{
     tabActive: keyof Transaction | "topHolders";
@@ -44,7 +45,14 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, meta
     {
       key: "topHolders",
       label: "Top Holders",
-      children: <TokenTopHolder tokenId={tokenId} totalSupply={totalSupply} decimal={metadata?.decimals} />,
+      children: (
+        <TokenTopHolder
+          tokenId={tokenId}
+          totalSupply={totalSupply}
+          decimal={metadata?.decimals}
+          setCurrentHolder={setCurrentHolder}
+        />
+      ),
       icon: <CustomIcon icon={PeopleIcon} width={20} fill="currentColor" />
     },
     {

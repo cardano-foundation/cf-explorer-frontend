@@ -4,7 +4,12 @@ import { CgClose } from "react-icons/cg";
 
 import { PeopleIcon, TransactionIcon, UnionTokenIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { formatDateTimeLocal, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import {
+  formatDateTimeLocal,
+  formatNumberDivByDecimals,
+  getShortWallet,
+  numberWithCommas
+} from "src/commons/utils/helper";
 
 import CopyButton from "../CopyButton";
 import CustomTooltip from "../CustomTooltip";
@@ -189,11 +194,15 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Total Volume</DetailLabel>
-              <DetailValue>{numberWithCommas(data.totalVolume || 0)}</DetailValue>
+              <DetailValue>
+                {formatNumberDivByDecimals(data.totalVolume || 0, data?.metadata?.decimals || 0)}
+              </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Volume 24H</DetailLabel>
-              <DetailValue>{numberWithCommas(data.volumeIn24h || 0)}</DetailValue>
+              <DetailValue>
+                {formatNumberDivByDecimals(data.volumeIn24h || 0, data?.metadata?.decimals || 0)}
+              </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>Created At</DetailLabel>

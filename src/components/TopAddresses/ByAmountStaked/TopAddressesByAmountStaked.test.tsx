@@ -61,6 +61,6 @@ describe("TopAddressesByAmountStaked Component", () => {
     });
 
     render(<TopAddressesByAmountStaked />);
-    expect(screen.getByAltText(/no data/i)).toBeInTheDocument();
+    expect(screen.getByAltText(/empty icon/i)).toBeInTheDocument();
   });
 });

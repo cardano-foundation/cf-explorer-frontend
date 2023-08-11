@@ -8,3 +8,11 @@ export const TableTittle = styled(Typography)`
   font-size: 36px;
   font-weight: 700;
 `;
+
+export const ADAValueLabel = styled(Typography)`
+  font-size: 14px;
+  color: ${(props) => props.theme.palette.text.primary};
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+`;
