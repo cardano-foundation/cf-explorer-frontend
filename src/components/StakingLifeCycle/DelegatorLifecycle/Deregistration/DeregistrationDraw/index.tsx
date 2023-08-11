@@ -16,6 +16,7 @@ import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import ADAicon from "src/components/commons/ADAIcon";
+import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
 
 import {
   BoxGroup,
@@ -149,7 +150,9 @@ const DeregistrationDraw: React.FC<Props> = ({ toggleModal, showBackButton }) =>
             <StyledCopyButton data-testid="delegator-deregistration-copy-button" text={txHash} />
           </Info>
           <Info>
-            <ADAicon />
+            <StyledADASymbol>
+              <ADAicon />
+            </StyledADASymbol>
             <InfoText>{formatADAFull(Math.abs(deposit) - fee)}</InfoText>
           </Info>
           <Info>

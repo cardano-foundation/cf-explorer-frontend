@@ -37,7 +37,7 @@ const OverviewStaking: React.FC<Props> = ({ item, ...props }) => {
       </Box>
       <Box display={"flex"}>
         <OverviewIcon>
-          <CustomIcon icon={AIconGreen} height={17} fill="currentColor" color={(theme) => theme.palette.primary.main} />
+          <CustomIcon icon={AIconGreen} height={14} fill="currentColor" color={(theme) => theme.palette.primary.main} />
         </OverviewIcon>
         <Box marginLeft={"10px"}>
           <OverviewTitle data-testid="overview-staking-amount">{formatADAFull(amount)}</OverviewTitle>

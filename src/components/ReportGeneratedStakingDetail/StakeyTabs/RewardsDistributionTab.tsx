@@ -10,8 +10,7 @@ import { FilterParams } from "src/components/commons/CustomFilter";
 import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
-import { ADAsymbol } from "src/commons/resources";
-import CustomIcon from "src/components/commons/CustomIcon";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import { ADAValueLabel } from "../styles";
 
@@ -40,9 +39,9 @@ const RewardsDistributionTab = () => {
         return (
           <ADAValueLabel>
             <Box component={"span"} color={isPositiveNumber ? theme.palette.success[800] : theme.palette.error[700]}>
-              {isPositiveNumber ? "+" : "-"} {formatADAFull(r.amount)}
+              {isPositiveNumber ? "+" : "-"} {formatADAFull(r.amount)}&nbsp;
+              <ADAicon />
             </Box>
-            <CustomIcon icon={ADAsymbol} width={12} />
           </ADAValueLabel>
         );
       }

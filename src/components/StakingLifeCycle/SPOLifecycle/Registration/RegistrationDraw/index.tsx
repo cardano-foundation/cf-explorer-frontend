@@ -11,6 +11,7 @@ import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import { details } from "src/commons/routers";
 import SPOHolder from "src/components/commons/SPOHolder";
 import ADAicon from "src/components/commons/ADAIcon";
+import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
 
 import { StyledCopyButton } from "../../../SPOLifecycle/Registration/styles";
 import { StyledLink } from "../../styles";
@@ -124,7 +125,9 @@ export const RegistrationDraw = ({ selected, toggleModal, data, showBackButton }
             <StyledCopyButton text={txHash} />
           </Info>
           <Info>
-            <ADAicon />
+            <StyledADASymbol>
+              <ADAicon />
+            </StyledADASymbol>
             <InfoText>{formatADAFull(poolHold + fee || 0)}</InfoText>
           </Info>
           <Info>
