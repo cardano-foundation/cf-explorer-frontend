@@ -129,7 +129,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
         </Box>
       ),
       icon: exchageIconUrl,
-      value: formatNumberDivByDecimals(data?.totalVolume || "", data?.metadata?.decimals || 0)
+      value: formatNumberDivByDecimals(data?.totalVolume || "", decimalToken || 0)
     },
     {
       title: (
