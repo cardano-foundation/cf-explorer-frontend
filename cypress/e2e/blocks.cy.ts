@@ -19,7 +19,7 @@ describe("block spec", () => {
 
   it("should have enough column", () => {
     cy.visit("/blocks");
-    cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("Block No");
+    cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("Block");
     cy.get(".css-1dz0v3k > tr > :nth-child(2)").contains("Block ID");
     cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Epoch/Slot");
     cy.get(".css-1dz0v3k > tr > :nth-child(4)").contains("Created At");

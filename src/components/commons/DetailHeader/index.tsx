@@ -9,7 +9,7 @@ import { BiChevronDown } from "react-icons/bi";
 import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { details } from "src/commons/routers";
 import { RootState } from "src/stores/types";
-import { EmptyIcon, SearchIcon } from "src/commons/resources";
+import { SearchIcon } from "src/commons/resources";
 import { formatDateTimeLocal, formatNumberDivByDecimals, getShortHash } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
 
@@ -46,6 +46,7 @@ import {
   TimeDuration,
   WrapLeaderValue
 } from "./styles";
+import NoRecord from "../NoRecord";
 
 export interface DetailHeaderProps {
   type: Bookmark["type"];
@@ -276,8 +277,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                       }
                     }}
                   >
-                    {!item?.dataSearch ||
-                      (item?.dataSearch?.length === 0 && <Box height={"200px"} component={"img"} src={EmptyIcon} />)}
+                    {!item?.dataSearch || (item?.dataSearch?.length === 0 && <NoRecord />)}
                     {item?.dataSearch &&
                       item?.dataSearch?.length > 0 &&
                       item?.dataSearch?.map((item, index) => (

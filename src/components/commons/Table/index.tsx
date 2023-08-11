@@ -12,7 +12,6 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DownIcon,
-  EmptyIcon,
   EndPage,
   EyeIcon,
   NextPage,
@@ -36,7 +35,6 @@ import CustomIcon from "../CustomIcon";
 import Filter from "../Filter";
 import {
   Empty,
-  EmtyImage,
   InputNumber,
   LoadingWrapper,
   SelectMui,
@@ -57,13 +55,14 @@ import {
   Wrapper,
   StyledMenuItem
 } from "./styles";
+import NoRecord from "../NoRecord";
 
 type TEmptyRecord = {
   className?: string;
 };
 export const EmptyRecord: React.FC<TEmptyRecord> = ({ className }) => (
   <Empty className={className}>
-    <EmtyImage src={EmptyIcon} alt="no data" />
+    <NoRecord />
   </Empty>
 );
 
@@ -209,23 +208,19 @@ const TableBody = <T extends ColumnType>({
   return (
     <TBody>
       {loading && initialized && (
-        <tr>
-          <td>
-            <LoadingWrapper
-              bgcolor={(theme) => alpha(theme.palette.common.black, 0.05)}
-              width={"100%"}
-              height={"100%"}
-              zIndex={1000}
-              display="flex"
-              justifyContent="center"
-              alignItems="self-start"
-            >
-              <Box pt={"20%"}>
-                <CircularProgress />
-              </Box>
-            </LoadingWrapper>
-          </td>
-        </tr>
+        <LoadingWrapper
+          bgcolor={(theme) => alpha(theme.palette.common.black, 0.05)}
+          width={"100%"}
+          height={"100%"}
+          zIndex={1000}
+          display="flex"
+          justifyContent="center"
+          alignItems="self-start"
+        >
+          <Box pt={"20%"}>
+            <CircularProgress />
+          </Box>
+        </LoadingWrapper>
       )}
       {data &&
         data.map((row, index) => (

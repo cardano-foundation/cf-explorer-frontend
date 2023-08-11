@@ -123,7 +123,7 @@ const DelegationDetail: React.FC = () => {
         <TabContext value={tab}>
           <TabsContainer>
             <TabList
-              onChange={(e, value) => {
+              onChange={(e: any, value: any) => {
                 setQuery({ tab: value, page: 1, size: 50 });
                 scrollEffect();
               }}

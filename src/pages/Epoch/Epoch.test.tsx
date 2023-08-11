@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "src/test-utils";
+import { render, screen } from "src/test-utils";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
 
@@ -86,6 +86,6 @@ describe("Epoch component", () => {
     });
 
     render(<Epoch />);
-    expect(screen.getByAltText("no data")).toBeInTheDocument();
+    expect(screen.getByAltText("empty icon")).toBeInTheDocument();
   });
 });
