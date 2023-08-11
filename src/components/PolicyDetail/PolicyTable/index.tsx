@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { TabContext, TabPanel } from "@mui/lab";
 import { Box, Tab, useTheme } from "@mui/material";
 import { stringify } from "qs";
@@ -127,10 +127,18 @@ const PolicyTable = () => {
   const history = useHistory();
   const pageInfo = getPageInfo(search);
 
-  const handleChange = (event: React.SyntheticEvent, tab: TABS) => {
-    setActiveTab(tab);
+  const resetFilter = () => {
     history.replace({ search: stringify({ page: 1, size: 50 }) });
   };
+
+  const handleChange = (event: React.SyntheticEvent, tab: TABS) => {
+    setActiveTab(tab);
+    resetFilter();
+  };
+
+  useEffect(() => {
+    resetFilter();
+  }, []);
 
   const fetchData = useFetchList<PolicyHolder | TokenPolicys>(`${API.POLICY}/${policyId}/${activeTab}`, pageInfo);
 
