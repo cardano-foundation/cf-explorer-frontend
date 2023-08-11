@@ -9,7 +9,7 @@ import DrawPath from "src/components/commons/DrawPath";
 import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import FeeBox from "src/components/commons/FeeBox";
 import { details } from "src/commons/routers";
-import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "src/commons/resources";
+import { ADAsymbol, AddressIcon, BackIcon, TimeIcon } from "src/commons/resources";
 import SPOHolder from "src/components/commons/SPOHolder";
 import CopyButton from "src/components/commons/CopyButton";
 
@@ -116,7 +116,7 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
             <CopyButton text={txHash} sx={{ marginLeft: "5px" }} />
           </Info>
           <Info>
-            <ADAGreen fill={theme.palette.secondary.light} />
+            <ADAsymbol />
             <InfoText>{formatADAFull(fee || 0)}</InfoText>
           </Info>
           <Info>

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Box, IconButton } from "@mui/material";
 
 import useFetchList from "src/commons/hooks/useFetchList";
-import { ADAsigntIC, EyeIcon } from "src/commons/resources";
+import { ADAsymbol, EyeIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
@@ -59,11 +59,11 @@ const PoolRegistrationTab = () => {
         return (
           <ADAValueFieldContainer>
             <ADAValueLabel>
-              {formatADAFull(data.totalFee)} <CustomIcon icon={ADAsigntIC} width={12} />{" "}
+              {formatADAFull(data.totalFee)} <CustomIcon icon={ADAsymbol} width={12} />{" "}
             </ADAValueLabel>
             <ADAValueSubLabel>
-              {formatADAFull(data.deposit)} <CustomIcon icon={ADAsigntIC} width={11} /> / {formatADAFull(data.fee)}
-              <CustomIcon icon={ADAsigntIC} width={11} />{" "}
+              {formatADAFull(data.deposit)} <CustomIcon icon={ADAsymbol} width={11} /> / {formatADAFull(data.fee)}
+              <CustomIcon icon={ADAsymbol} width={11} />{" "}
             </ADAValueSubLabel>
           </ADAValueFieldContainer>
         );

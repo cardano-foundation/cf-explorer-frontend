@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import { BackIcon, AddressIcon, ADAGreen, TimeIcon } from "src/commons/resources";
+import { BackIcon, AddressIcon, ADAsymbol, TimeIcon } from "src/commons/resources";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import DrawPath from "src/components/commons/DrawPath";
 import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
@@ -123,7 +123,7 @@ export const RegistrationDraw = ({ selected, toggleModal, data, showBackButton }
             <StyledCopyButton text={txHash} />
           </Info>
           <Info>
-            <ADAGreen fill={theme.palette.secondary.light} />
+            <ADAsymbol />
             <InfoText>{formatADAFull(poolHold + fee || 0)}</InfoText>
           </Info>
           <Info>

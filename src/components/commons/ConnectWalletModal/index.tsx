@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet-core";
+import { capitalize, isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet-core";
 import { CircularProgress } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
 import { MdOutlineFileDownload } from "react-icons/md";
@@ -39,24 +39,32 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
     setOpenModal(false);
     onTriggerSignMessage();
   };
-  const onError = (error: Error) => {
-    if (error.name === "EnablementFailedError") {
+  const onError = (error: Error, walletName: string) => {
+    if (error.name === "WrongNetworkTypeError") {
       toast.error(
         `You are currently connect to ${
           NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()
         }, please switch to  ${NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()}!`
       );
     } else if (error.name === "WalletExtensionNotFoundError") {
-      // Todo: handle error
+      toast.error(`${capitalize(walletName)} was not found. Please check if it is installed correctly.`);
     } else {
-      toast.error("Something went wrong!");
+      toast.error(
+        `An error has occurred! Please review your setup, such as checking whether you have already created a wallet in your ${capitalize(
+          walletName
+        )} wallet application.`
+      );
     }
     setWalletConnecting(null);
   };
   const handleConnect = (walletName: SupportedWallets) => {
     setWalletConnecting(walletName);
     setWallet(walletName);
-    connect(walletName, () => onSuccess(), onError);
+    connect(
+      walletName,
+      () => onSuccess(),
+      (error: Error) => onError(error, walletName)
+    );
   };
   const WrapContainer: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return isModal ? (
