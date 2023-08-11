@@ -3,7 +3,7 @@ import { styled } from "@mui/material";
 import { ADAsymbol } from "../../../commons/resources";
 
 const ADAicon = ({ ...props }) => {
-  return <ADAsymbol width={10} {...props} />;
+  return <ADAsymbol data-testid="ada-icon" width={10} {...props} />;
 };
 
 export const AdaLogoIcon = styled(ADAsymbol)(() => ({
