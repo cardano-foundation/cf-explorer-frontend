@@ -107,7 +107,7 @@
 * Contract-click-record-no-navigate-to-detail(MET-615) ([1e1e67d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1e1e67da4fecfbea7408be8a25bc28646ddb695d))
 * Contract-detail-modal-transaction(MET-1517) ([#1539](https://github.com/cardano-foundation/cf-explorer-frontend/issues/1539)) ([a26f8d9](https://github.com/cardano-foundation/cf-explorer-frontend/commit/a26f8d9bf5bdb809a4acf0cd2b96a730ffb25414))
 * environment varialbe for koios ([6d31e15](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6d31e152f50f5a75c7a30c964987a9627a82e7f8))
-* Logo-iris-and-text-cardano-explorer-display-2-line( MET-1517) ([#1534](https://github.com/cardano-foundation/cf-explorer-frontend/issues/1534)) ([c02cfc1](https://github.com/cardano-foundation/cf-explorer-frontend/commit/c02cfc14262222083017ce056d5546cc9a622bff))
+* Logo-explorer-and-text-cardano-explorer-display-2-line( MET-1517) ([#1534](https://github.com/cardano-foundation/cf-explorer-frontend/issues/1534)) ([c02cfc1](https://github.com/cardano-foundation/cf-explorer-frontend/commit/c02cfc14262222083017ce056d5546cc9a622bff))
 * MET-1128 merge develop ([356f7e3](https://github.com/cardano-foundation/cf-explorer-frontend/commit/356f7e3f30d45ce69995c7ee564e7f1b4ec47913))
 * MET-1128 update color tabular ([8046d3d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/8046d3d233b1df253d38d83a18a6daafbb916f79))
 * MET-1128 update reward type delegators ([0079292](https://github.com/cardano-foundation/cf-explorer-frontend/commit/0079292bd21f71762552888ca357653501480634))
