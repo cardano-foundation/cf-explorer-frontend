@@ -17,7 +17,8 @@ const mockedCurrentEpoch: EpochCurrentType = {
   totalSlot: 432000,
   account: 0,
   startTime: new Date().toString(),
-  endTime: new Date(Date.now() + FIVE_DAY).toString()
+  endTime: new Date(Date.now() + FIVE_DAY).toString(),
+  circulatingSupply: 33999888
 };
 const mockedEpochData: IDataEpoch = {
   blkCount: 1197,
