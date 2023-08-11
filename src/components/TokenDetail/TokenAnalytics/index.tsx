@@ -85,7 +85,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
       <TooltipBody>
         <TooltipLabel>{getLabelTimeTooltip(content.label)}</TooltipLabel>
         <TooltipValue>
-          {formatNumberDivByDecimals(content.payload?.[0]?.value, dataToken?.metadata?.decimals) || 0}
+          {formatNumberDivByDecimals(content.payload?.[0]?.value, dataToken?.metadata?.decimals || 0) || 0}
         </TooltipValue>
       </TooltipBody>
     );
@@ -168,7 +168,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                       {loading ? (
                         <SkeletonUI variant="rectangular" />
                       ) : (
-                        formatNumberDivByDecimals(maxBalance, dataToken?.metadata?.decimals)
+                        formatNumberDivByDecimals(maxBalance, dataToken?.metadata?.decimals || 0)
                       )}
                     </ValueInfo>
                   </Box>
@@ -185,7 +185,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                       {loading ? (
                         <SkeletonUI variant="rectangular" />
                       ) : (
-                        formatNumberDivByDecimals(minBalance, dataToken?.metadata?.decimals)
+                        formatNumberDivByDecimals(minBalance, dataToken?.metadata?.decimals || 0)
                       )}
                     </ValueInfo>
                   </Box>

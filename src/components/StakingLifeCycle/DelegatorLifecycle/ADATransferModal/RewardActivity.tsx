@@ -7,10 +7,9 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import Table, { Column } from "src/components/commons/Table";
 import { details } from "src/commons/routers";
-import CustomIcon from "src/components/commons/CustomIcon";
-import { AIconGreen } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import UserInfo from "./UserInfo";
 import { Amount, StyledLink } from "./styles";
@@ -23,10 +22,6 @@ const RewardActivity: React.FC = () => {
   const { isMobile, isGalaxyFoldSmall, isTablet } = useScreen();
 
   const fetchData = useFetchList<RewardActivityIF>(API.STAKE_LIFECYCLE.REWARDS_ACTIVITY(stakeId), { page, size, sort });
-  const rewardType = {
-    REWARD_RECEIVED: "Reward received",
-    REWARD_WITHDRAWN: "Reward withdrawn"
-  };
   const columns: Column<RewardActivityIF>[] = [
     {
       title: "Amount ADA",
@@ -39,7 +34,7 @@ const RewardActivity: React.FC = () => {
               ? `+${formatADAFull(r.amount)}`
               : `-${formatADAFull(r.amount)}`
             : 0}
-          <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={(theme) => theme.palette.text.primary} />
+          <ADAicon />
         </Amount>
       )
     },
@@ -57,13 +52,6 @@ const RewardActivity: React.FC = () => {
       key: "Epoch",
       minWidth: "100px",
       render: (r) => <StyledLink to={details.epoch(r.epochNo || 0)}>{r.epochNo}</StyledLink>
-    },
-
-    {
-      title: "Transaction Type",
-      key: "transactionCount",
-      minWidth: "100px",
-      render: (r) => <Box>{rewardType[r.type]}</Box>
     }
   ];
   const maxHeightCalc = `calc(70vh - ${

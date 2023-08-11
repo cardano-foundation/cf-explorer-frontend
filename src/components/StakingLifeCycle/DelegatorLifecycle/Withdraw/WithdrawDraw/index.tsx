@@ -6,7 +6,6 @@ import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/ut
 import {
   BackIcon,
   AddressIcon,
-  ADAGreen,
   TimeIcon,
   PaymentWalletUrl,
   WalletIconRewardGreen,
@@ -21,6 +20,8 @@ import { API } from "src/commons/utils/api";
 import { details } from "src/commons/routers";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { StyledCopyButton } from "src/components/StakingLifeCycle/SPOLifecycle/Registration/styles";
+import ADAicon from "src/components/commons/ADAIcon";
+import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
 
 import { StyledLink } from "../../Registration/styles";
 import {
@@ -161,7 +162,9 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
             <StyledCopyButton text={txHash} />
           </Info>
           <Info>
-            <ADAGreen fill={theme.palette.secondary.light} />
+            <StyledADASymbol>
+              <ADAicon />
+            </StyledADASymbol>
             <InfoText>{formatADAFull(amount || 0)}</InfoText>
           </Info>
           <Info>

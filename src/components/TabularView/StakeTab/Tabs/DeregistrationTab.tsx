@@ -6,11 +6,12 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import { EyeIcon } from "src/commons/resources";
 import { DeregistrationCertificateModal } from "src/components/commons/DeregistrationCertificateModal";
 import { AdaValue } from "src/components/commons/ADAValue";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";
-import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import Table, { Column } from "../../../commons/Table";
 import { StyledLink, TableSubTitle } from "../styles";
@@ -63,14 +64,9 @@ const DeregistrationTab = () => {
           <TableSubTitle>
             <AdaValue color={theme.palette.secondary.main} value={-r.deposit - r.fee} fontSize="14px" />
             <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-              <AdaValue
-                color={theme.palette.secondary.light}
-                value={new BigNumber(r.deposit).times(-1).toString()}
-                gap="3px"
-                fontSize="12px"
-              />
-              <Box mx="3px">/</Box>
-              <AdaValue color={theme.palette.secondary.light} value={r.fee} gap="3px" fontSize="12px" />
+              {formatADAFull(new BigNumber(r.deposit).times(-1).toString())}&nbsp;
+              <ADAicon width={9} />/{formatADAFull(r.fee)}
+              <ADAicon width={9} />
             </Box>
           </TableSubTitle>
         </Box>

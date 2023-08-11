@@ -20,6 +20,7 @@ import { API } from "src/commons/utils/api";
 import NoRecord from "src/components/commons/NoRecord";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
 import FormNowMessage from "src/components/commons/FormNowMessage";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import { RegistrationContainer, StakeKey, StyledLink, TimeDuration } from "./styles";
 
@@ -101,7 +102,11 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
       )
     },
     {
-      title: "Pledge (A)",
+      title: (
+        <Box component="span">
+          Pledge (<ADAicon />)
+        </Box>
+      ),
       key: poolType === POOL_TYPE.REGISTRATION ? "pledge" : "pu.pledge",
       render: (pool) => <>{formatADAFull(pool.pledge)}</>,
       sort: ({ columnKey, sortValue }) => {
@@ -109,7 +114,11 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
       }
     },
     {
-      title: "Fixed Cost (A)",
+      title: (
+        <Box component="span">
+          Fixed Cost (<ADAicon />)
+        </Box>
+      ),
       key: poolType === POOL_TYPE.REGISTRATION ? "fixedCost" : "pu.fixedCost",
       render: (pool) => <>{formatADAFull(pool.cost)}</>,
       sort: ({ columnKey, sortValue }) => {

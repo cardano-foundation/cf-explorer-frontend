@@ -86,7 +86,6 @@ export const Option = styled("li")(({ theme }) => ({
   }
 }));
 
-
 export const Logo = styled("img")`
   width: 25px;
   height: 25px;
