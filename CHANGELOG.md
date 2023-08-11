@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.17](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.16...v0.4.17) (2023-08-10)
+
+
+### Bug Fixes
+
+* upgrade connect-with-wallet version and add proper error messages ([ec5fe37](https://github.com/cardano-foundation/cf-explorer-frontend/commit/ec5fe374ab55269256209a690ab1d21838acc803))
+
 ## [0.4.16](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.15...v0.4.16) (2023-08-10)
 
 
