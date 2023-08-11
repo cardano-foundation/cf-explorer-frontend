@@ -9,7 +9,8 @@ export const SidebarMenuContainer = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   justifyContent: "space-between",
   [theme.breakpoints.down("sm")]: {
-    height: "fit-content"
+    height: "fit-content",
+    maxHeight: "calc(100% - 180px)"
   }
 }));
 
