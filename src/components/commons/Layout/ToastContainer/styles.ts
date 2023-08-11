@@ -19,7 +19,7 @@ export const StyledAlert = styled(Alert)<{ background: string; borderColor: stri
     backgroundColor: theme.palette.background.paper,
     backgroundImage: `linear-gradient(0deg, ${background} 0%, ${background} 100%)`,
     border: "1px solid " + borderColor,
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       width: "80%"
     }
   })
