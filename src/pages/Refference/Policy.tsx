@@ -4,7 +4,7 @@ const Policy = () => {
   return (
     <ContainerReffer>
       <Content>
-        <TextHeader>Privacy Policy - iris.cardano.org</TextHeader>
+        <TextHeader>Privacy Policy - explorer.cardano.org</TextHeader>
 
         <TextReffer>PLEASE READ THE PRIVACY POLICY CAREFULLY.</TextReffer>
 
@@ -25,8 +25,8 @@ const Policy = () => {
           personal identification numbers; (b) contact information, e.g., address, phone number and email address; (c)
           technical information, e.g., IP address for API services and login; (d) statistical data, e.g., hits to
           website. This Privacy Policy covers the information we collect about you when you use our products or
-          services, or otherwise interact with iris.cardano.org/, unless a different privacy policy is displayed. This
-          policy also explains your choices about how we use information about you.
+          services, or otherwise interact with explorer.cardano.org/, unless a different privacy policy is displayed.
+          This policy also explains your choices about how we use information about you.
         </TextReffer>
 
         <TextReffer>
@@ -123,7 +123,7 @@ const Policy = () => {
 
         <TextReffer>
           (e) Web Server site visits logging The following is how we store the web server site visit logs (applicable to
-          https://iris.cardano.org/):
+          https://beta.explorer.cardano.org/):
         </TextReffer>
 
         <TextReffer>
