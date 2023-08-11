@@ -118,7 +118,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
         {startDate || endDate ? (
           <Box
             sx={{
-              color: theme.palette.text.primary,
+              color: theme.palette.secondary.light,
               display: "flex",
               flexDirection: "row",
               gap: "5px",
@@ -130,7 +130,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
             <span> {endDate ? moment(endDate).format("MM/DD/YYYY") : ""}</span>
           </Box>
         ) : (
-          <Box sx={{ opacity: 0.42 }}>dd/mm/yyyy</Box>
+          <Box sx={{ opacity: 0.42, color: ({ palette }) => palette.secondary.light }}>dd/mm/yyyy</Box>
         )}
         <SelectDateButton>
           <DateRangeIcon />
