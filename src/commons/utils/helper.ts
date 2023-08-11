@@ -1,6 +1,7 @@
 import BigNumber from "bignumber.js";
 import moment from "moment";
 import { parse } from "qs";
+import jwtDecode from "jwt-decode";
 
 import { setUserData } from "../../stores/user";
 import { getInfo, signIn } from "./userRequest";
@@ -225,3 +226,12 @@ export const toFixedBigNumber = (value: string | number, dp = 0, rm = BigNumber.
 };
 
 export const isValidEmail = (email: string) => regexEmail.test(email);
+
+export const validateTokenExpired = () => {
+  const token = localStorage.getItem("token");
+  if (!token) return false;
+  const decoded: any = jwtDecode(token);
+  const now = moment();
+  const exp = moment(decoded.exp * 1000);
+  return now.isBefore(exp);
+};
