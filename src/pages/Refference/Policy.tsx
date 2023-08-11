@@ -25,8 +25,8 @@ const Policy = () => {
           personal identification numbers; (b) contact information, e.g., address, phone number and email address; (c)
           technical information, e.g., IP address for API services and login; (d) statistical data, e.g., hits to
           website. This Privacy Policy covers the information we collect about you when you use our products or
-          services, or otherwise interact with explorer.cardano.org/, unless a different privacy policy is displayed.
-          This policy also explains your choices about how we use information about you.
+          services, or otherwise interact with beta.explorer.cardano.org/, unless a different privacy policy is
+          displayed. This policy also explains your choices about how we use information about you.
         </TextReffer>
 
         <TextReffer>
