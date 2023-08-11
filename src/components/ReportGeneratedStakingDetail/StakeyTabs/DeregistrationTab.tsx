@@ -6,12 +6,13 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { EyeIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
 import { DeregistrationCertificateModal } from "src/components/commons/DeregistrationCertificateModal";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import { AdaValue } from "./StakingRegistrationTab";
 import { StakingDetailContext } from "..";
@@ -57,10 +58,10 @@ const DeregistrationTab = () => {
         <Box>
           <AdaValue value={-r.deposit - r.fee} />
           <TableSubTitle>
-            <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-              <AdaValue value={-r.deposit} gap="3px" fontSize="12px" />
-              <Box mx="3px">/</Box>
-              <AdaValue value={r.fee} gap="3px" fontSize="12px" />
+            <Box display="flex" mt={1} alignItems="center" lineHeight="1" fontSize="12px">
+              {formatADAFull(-r.deposit)}&nbsp;
+              <ADAicon width={9} />/{formatADAFull(r.fee)}&nbsp;
+              <ADAicon width={9} />
             </Box>
           </TableSubTitle>
         </Box>

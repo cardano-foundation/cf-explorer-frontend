@@ -18,6 +18,7 @@ import { details } from "src/commons/routers";
 import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
 import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import PoolDetailContext from "../../PoolDetailContext";
 import {
@@ -105,7 +106,9 @@ const TabularOverview: React.FC = () => {
           mainIcon={<PoolSizeIcon />}
           value={
             <Box display="flex" alignItems="center">
-              <CardValue>{formatADAFull(poolSize)} ₳</CardValue>
+              <CardValue>
+                {formatADAFull(poolSize)} <ADAicon />
+              </CardValue>
             </Box>
           }
         />
@@ -133,7 +136,9 @@ const TabularOverview: React.FC = () => {
           mainIcon={<RewardsAvailableIcon />}
           value={
             <Box display="flex" alignItems="center">
-              <CardValue>{formatADAFull(rewardAvailable)} ₳</CardValue>
+              <CardValue>
+                {formatADAFull(rewardAvailable)} <ADAicon />
+              </CardValue>
             </Box>
           }
         />

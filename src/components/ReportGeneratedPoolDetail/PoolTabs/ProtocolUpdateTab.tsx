@@ -7,12 +7,12 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import { StyledLink } from "src/components/share/styled";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { ADAValueLabel, ClickAbleLink } from "src/components/StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
-import CustomIcon from "src/components/commons/CustomIcon";
-import { ADAsigntIC, EyeIcon } from "src/commons/resources";
+import { EyeIcon } from "src/commons/resources";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { PoolUpdateModal } from "src/components/StakingLifeCycle/SPOLifecycle/PoolUpdates/PoolUpdateModal";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
+import ADAicon from "src/components/commons/ADAIcon";
 
 const ProtocolUpdateTab = () => {
   const { reportId = "" } = useParams<{ reportId: string }>();
@@ -52,7 +52,8 @@ const ProtocolUpdateTab = () => {
       render(data) {
         return (
           <ADAValueLabel>
-            {formatADAFull(data.fee)} <CustomIcon icon={ADAsigntIC} width={12} />
+            {formatADAFull(data.fee)}
+            <ADAicon />
           </ADAValueLabel>
         );
       }

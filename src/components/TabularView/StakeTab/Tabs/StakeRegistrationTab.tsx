@@ -1,22 +1,22 @@
-import { Box, IconButton, useTheme } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import BigNumber from "bignumber.js";
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 
 import { AdaValue } from "src/components/commons/ADAValue";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { EyeIcon } from "../../../../commons/resources";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";
-import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
 import { RegistrationCertificateModal } from "../../../StakingLifeCycle/DelegatorLifecycle/Registration";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import Table, { Column } from "../../../commons/Table";
 import { StyledLink, TableSubTitle } from "../styles";
 
 const StakeRegistrationTab = () => {
-  const theme = useTheme();
   const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
   const history = useHistory();
@@ -62,9 +62,9 @@ const StakeRegistrationTab = () => {
           <AdaValue value={new BigNumber(r.deposit).plus(new BigNumber(r.fee)).toString()} />
           <TableSubTitle>
             <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-              <AdaValue value={r.deposit} color={theme.palette.secondary.light} gap="3px" fontSize="12px" />
-              <Box mx={1}>/</Box>
-              <AdaValue value={r.fee} color={theme.palette.secondary.light} gap="3px" fontSize="12px" />
+              {formatADAFull(r.deposit)}&nbsp;
+              <ADAicon width={9} />/{formatADAFull(r.fee)}&nbsp;
+              <ADAicon width={9} />
             </Box>
           </TableSubTitle>
         </Box>

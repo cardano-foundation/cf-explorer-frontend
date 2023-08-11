@@ -316,6 +316,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
       </Box>
       {pagination?.total && pagination.total > 10 ? (
         <PaginationCustom
+          key={page}
           pagination={pagination}
           total={pagination.total || 0}
           page={page}

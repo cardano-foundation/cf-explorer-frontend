@@ -208,7 +208,7 @@ const renderTooltipContent = (o: any, range: Time) => {
               </Box>
             </Box>
           );
-        })} 
+        })}
       </Box>
     </Box>
   );
