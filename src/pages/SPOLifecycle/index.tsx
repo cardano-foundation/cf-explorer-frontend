@@ -52,7 +52,7 @@ const SPOLifecycle = () => {
   const { data: dataReportLimit } = useFetch<IReportLimit>(API.REPORT.REPORT_LIMIT);
 
   useEffect(() => {
-    document.title = `Staking Delegation Lifecycle ${poolId} | Iris - Cardano Blockchain Explorer`;
+    document.title = `Staking Delegation Lifecycle ${poolId} | Cardano Blockchain Explorer`;
   }, [poolId]);
 
   const tabList = {

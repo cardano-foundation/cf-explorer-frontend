@@ -163,8 +163,8 @@ const Policy = () => {
 
         <TextReffer>
           6. WITHDRAWING CONSENT Please note that it is obligatory for the Company to process your Personal Data for the
-          Core Purpose as stated above, without which some services or features provided by Iris.cardano.org may be
-          affected.
+          Core Purpose as stated above, without which some services or features provided by beta.explorer.cardano.org
+          may be affected.
         </TextReffer>
 
         <TextReffer>

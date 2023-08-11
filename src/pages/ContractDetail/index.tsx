@@ -44,7 +44,7 @@ const ContractDetail: React.FC = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Contract ${address} | Iris - Cardano Blockchain Explorer`;
+    document.title = `Contract ${address} | Cardano Blockchain Explorer`;
   }, [address]);
 
   if (!initialized) {
