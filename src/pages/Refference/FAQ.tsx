@@ -12,16 +12,9 @@ const FAQ = () => {
       <Content>
         <TextHeader>Frequently Asked Questions</TextHeader>
         <br />
-        <TextSubHeader>General</TextSubHeader>
-        <TextReffer>
-          <TitleSection>Is iris open source?</TitleSection>
-          Absolutely. Transparency is a key principle of iris. You will find a link to our GitHub repositories on our
-          landing page. Look for the GitHub icon!
-        </TextReffer>
-
         <TextReffer>
           <TextSubHeader>Getting Started</TextSubHeader>
-          <TitleSection>Do I need to sign up to access iris?</TitleSection>
+          <TitleSection>Do I need to sign up to access Explorer?</TitleSection>
           Iris is publicly accessible, signing up is optional
         </TextReffer>
 
@@ -239,7 +232,7 @@ const FAQ = () => {
         <TextReffer>
           <TitleSection>Known Bugs and Issues</TitleSection>
           Please see a list of our known bugs{" "}
-          <LinkTo href="https://github.com/cardano-foundation/iris" target="_blank" rel="noopener noreferrer">
+          <LinkTo href="https://github.com/cardano-foundation/cf-explorer" target="_blank" rel="noopener noreferrer">
             here
           </LinkTo>
         </TextReffer>

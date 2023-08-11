@@ -10,18 +10,9 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import CopyButton from "src/components/commons/CopyButton";
 import { details } from "src/commons/routers";
 import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import ADAicon from "src/components/commons/ADAIcon";
 
-import {
-  VRFKeyText,
-  Item,
-  ItemList,
-  Label,
-  LineData,
-  StyledAdaLogoIcon,
-  StyledLink,
-  StyledModal,
-  Value
-} from "./styles";
+import { VRFKeyText, Item, ItemList, Label, LineData, StyledLink, StyledModal, Value } from "./styles";
 
 interface CertificateItemType {
   label: React.ReactNode;
@@ -115,7 +106,7 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
       content: (
         <Value>
           {formatADAFull(data?.pledge)}
-          <StyledAdaLogoIcon />
+          <ADAicon />
         </Value>
       )
     },
@@ -124,7 +115,7 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
       content: (
         <Value>
           {formatADAFull(data?.cost)}
-          <StyledAdaLogoIcon />
+          <ADAicon />
         </Value>
       )
     }

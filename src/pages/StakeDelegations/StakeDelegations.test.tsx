@@ -30,7 +30,7 @@ describe("StakeDelegations page", () => {
 
   it("should component render", () => {
     render(<StakeDelegations />);
-    expect(screen.getByRole("heading", { name: /stake delegations/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Stake Delegation(s)" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: mockData.txHash })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: mockData.stakeKeys[0] })).toBeInTheDocument();
   });

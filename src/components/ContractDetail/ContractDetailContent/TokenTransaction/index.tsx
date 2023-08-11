@@ -97,8 +97,9 @@ const columns: Column<Transactions>[] = [
     minWidth: "120px",
     render: (r) => (
       <PriceValue>
-        <SmallText>{formatADAFull(r.fee)}</SmallText>
-        <ADAicon mb={"5px"} pl={"8px"} />
+        <SmallText>
+          {formatADAFull(r.fee)}&nbsp; <ADAicon />
+        </SmallText>
       </PriceValue>
     )
   },
@@ -108,8 +109,9 @@ const columns: Column<Transactions>[] = [
     key: "ouput",
     render: (r) => (
       <PriceValue>
-        <SmallText>{formatADAFull(r.totalOutput)}</SmallText>
-        <ADAicon mb={"5px"} pl={"8px"} />
+        <SmallText>
+          {formatADAFull(r.totalOutput)}&nbsp; <ADAicon />
+        </SmallText>
       </PriceValue>
     )
   }

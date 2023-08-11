@@ -223,12 +223,18 @@ const Card = ({
                   <Box display={"flex"} alignItems={"center"}>
                     {item.tokens && item.tokens.length === 1 && (
                       <Box mt={2}>
-                        <TokenLink token={item.tokens[0]} />
+                        <TokenLink isSuccess={!isFailed} token={item.tokens[0]} />
                       </Box>
                     )}
                     {item.tokens && item.tokens.length > 1 && (
                       <Box mt={2}>
-                        <DropdownTokens tokens={item.tokens} type={type} hideInputLabel hideMathChar />
+                        <DropdownTokens
+                          isSuccess={!isFailed}
+                          tokens={item.tokens}
+                          type={type}
+                          hideInputLabel
+                          hideMathChar
+                        />
                       </Box>
                     )}
                   </Box>

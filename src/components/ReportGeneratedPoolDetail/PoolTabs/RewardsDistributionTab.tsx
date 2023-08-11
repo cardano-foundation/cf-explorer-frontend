@@ -7,11 +7,10 @@ import { StyledLink } from "src/components/share/styled";
 import { details } from "src/commons/routers";
 import { formatADAFull, formatDateTimeLocal, getShortWallet } from "src/commons/utils/helper";
 import { ADAValueLabel } from "src/components/StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
-import CustomIcon from "src/components/commons/CustomIcon";
-import { ADAsigntIC } from "src/commons/resources";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
+import ADAicon from "src/components/commons/ADAIcon";
 
 const RewardsDistributionTab = () => {
   const { reportId = "" } = useParams<{ reportId: string }>();
@@ -50,9 +49,8 @@ const RewardsDistributionTab = () => {
         return (
           <ADAValueLabel>
             <Box component={"span"} color={isPositiveNumber ? theme.palette.success[800] : theme.palette.error[700]}>
-              {isPositiveNumber ? "+" : "-"} {formatADAFull(data.amount)}
+              {isPositiveNumber ? "+" : "-"} {formatADAFull(data.amount)} <ADAicon />
             </Box>
-            <CustomIcon icon={ADAsigntIC} width={12} />
           </ADAValueLabel>
         );
       }
