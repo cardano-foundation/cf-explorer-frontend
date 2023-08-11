@@ -208,23 +208,19 @@ const TableBody = <T extends ColumnType>({
   return (
     <TBody>
       {loading && initialized && (
-        <tr>
-          <td>
-            <LoadingWrapper
-              bgcolor={(theme) => alpha(theme.palette.common.black, 0.05)}
-              width={"100%"}
-              height={"100%"}
-              zIndex={1000}
-              display="flex"
-              justifyContent="center"
-              alignItems="self-start"
-            >
-              <Box pt={"20%"}>
-                <CircularProgress />
-              </Box>
-            </LoadingWrapper>
-          </td>
-        </tr>
+        <LoadingWrapper
+          bgcolor={(theme) => alpha(theme.palette.common.black, 0.05)}
+          width={"100%"}
+          height={"100%"}
+          zIndex={1000}
+          display="flex"
+          justifyContent="center"
+          alignItems="self-start"
+        >
+          <Box pt={"20%"}>
+            <CircularProgress />
+          </Box>
+        </LoadingWrapper>
       )}
       {data &&
         data.map((row, index) => (
@@ -320,6 +316,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
       </Box>
       {pagination?.total && pagination.total > 10 ? (
         <PaginationCustom
+          key={page}
           pagination={pagination}
           total={pagination.total || 0}
           page={page}

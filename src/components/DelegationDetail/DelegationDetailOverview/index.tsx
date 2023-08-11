@@ -1,7 +1,7 @@
 import { Box, Grid, Skeleton } from "@mui/material";
 import React from "react";
 
-import { formatADAFull, formatPercent, numberWithCommas, toFixedBigNumber } from "src/commons/utils/helper";
+import { formatADAFull, formatPercent, numberWithCommas } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
 
@@ -14,11 +14,6 @@ interface IDelegationDetailOverview {
 
 const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, loading }) => {
   const overviewData = [
-    {
-      title: "Reward",
-      value: `${toFixedBigNumber(data?.reward || 0, 2)}%`,
-      tooltip: "Last calculated gross return, as of the second last epoch"
-    },
     {
       title: (
         <Box component="span">

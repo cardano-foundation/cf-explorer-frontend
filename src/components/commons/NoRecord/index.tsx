@@ -17,7 +17,7 @@ const Image = styled("img")`
 `;
 
 const NoRecord: React.FC<BoxProps> = React.forwardRef((props, ref) => (
-  <NoRecordContainer component={Container} ref={ref} {...props}>
+  <NoRecordContainer component={Container} className="no-record" ref={ref} {...props}>
     <Image src={EmptyIcon} alt="empty icon" />
   </NoRecordContainer>
 ));

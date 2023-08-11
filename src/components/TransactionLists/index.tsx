@@ -10,8 +10,7 @@ import {
   formatDateTimeLocal,
   getPageInfo,
   getShortHash,
-  getShortWallet,
-  numberWithCommas
+  getShortWallet
 } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { StyledLink } from "./styles";
@@ -51,12 +50,6 @@ const TransactionList: React.FC<TransactionListProps> = ({
   };
 
   const columns: Column<Transactions>[] = [
-    {
-      title: "#",
-      key: "id",
-      minWidth: 30,
-      render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)
-    },
     {
       title: "Tx Hash",
       key: "txhash",

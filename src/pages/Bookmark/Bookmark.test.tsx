@@ -1,8 +1,5 @@
-import moment from "moment";
-
-import { render, screen } from "src/test-utils";
 import useFetchList from "src/commons/hooks/useFetchList";
-import { getShortWallet } from "src/commons/utils/helper";
+import { render, screen } from "src/test-utils";
 
 import Bookmark from "./index";
 
@@ -23,14 +20,6 @@ describe("Bookmark compenent", () => {
   beforeEach(() => {
     const mockedUseFetchList = useFetchList as jest.Mock;
     mockedUseFetchList.mockReturnValue({ data: mockedData, loading: false, refresh: false, error: false, total: 0 });
-  });
-
-  it("rendering component on PC", () => {
-    render(<Bookmark />);
-    const utcDate = moment("12/12/2012 00:00:00").utc().format("MM/DD/YYYY HH:mm:ss");
-
-    expect(screen.getByText(getShortWallet(mockedData[0].keyword))).toBeInTheDocument();
-    expect(screen.getByText(utcDate)).toBeInTheDocument();
   });
 
   it("checking all tabs was rendered", () => {

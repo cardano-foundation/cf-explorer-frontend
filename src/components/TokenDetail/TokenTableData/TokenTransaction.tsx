@@ -11,8 +11,7 @@ import {
   formatDateTimeLocal,
   getPageInfo,
   getShortHash,
-  getShortWallet,
-  numberWithCommas
+  getShortWallet
 } from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
 import { Flex, Label, SmallText, StyledLink, PriceValue } from "./styles";
@@ -32,12 +31,6 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
   const fetchData = useFetchList<Transactions>(API.TOKEN.TOKEN_TRX.replace(":tokenId", tokenId), { ...pageInfo });
 
   const columns: Column<Transactions>[] = [
-    {
-      title: "#",
-      key: "id",
-      minWidth: "40px",
-      render: (data, index) => <SmallText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</SmallText>
-    },
     {
       title: "Tx Hash",
       key: "trxhash",
