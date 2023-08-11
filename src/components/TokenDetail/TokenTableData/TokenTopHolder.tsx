@@ -4,12 +4,7 @@ import { stringify } from "qs";
 
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
-import {
-  formatNumberDivByDecimals,
-  getPageInfo,
-  getShortWallet,
-  numberWithCommas
-} from "../../../commons/utils/helper";
+import { formatNumberDivByDecimals, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
 import { PriceValue, SmallText, StyledLink } from "./styles";
@@ -39,12 +34,6 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decim
   }, [fetchData.total]);
 
   const columns: Column<ITokenTopHolderTable>[] = [
-    {
-      title: "#",
-      key: "id",
-      minWidth: "40px",
-      render: (data, index) => <SmallText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</SmallText>
-    },
     {
       title: "Address",
       key: "address",

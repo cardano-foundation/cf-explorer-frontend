@@ -28,12 +28,6 @@ const TopAddressesByADABalance = () => {
 
   const columns: Column<Address>[] = [
     {
-      title: "#",
-      key: "id",
-      minWidth: 30,
-      render: (_, index) => numberWithCommas(index + 1)
-    },
-    {
       title: "Addresses",
       key: "address",
       minWidth: 120,

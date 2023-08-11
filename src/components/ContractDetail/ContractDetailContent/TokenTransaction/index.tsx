@@ -9,8 +9,7 @@ import {
   formatDateTimeLocal,
   getPageInfo,
   getShortHash,
-  getShortWallet,
-  numberWithCommas
+  getShortWallet
 } from "src/commons/utils/helper";
 import Table, { Column } from "src/components/commons/Table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -24,12 +23,6 @@ import DetailViewContractHash from "src/components/commons/DetailView/DetailView
 import { Flex, Label, SmallText, StyledLink, PriceValue } from "./styles";
 
 const columns: Column<Transactions>[] = [
-  {
-    title: "#",
-    key: "id",
-    minWidth: "40px",
-    render: (data, index) => <SmallText>{numberWithCommas(index + 1)}</SmallText>
-  },
   {
     title: "Tx Hash",
     key: "trxhash",

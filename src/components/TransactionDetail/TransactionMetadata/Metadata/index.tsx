@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
 
-import { getShortHash } from "src/commons/utils/helper";
+import { getShortHash, isJson } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
 import CopyButton from "src/components/commons/CopyButton";
 import ParseScriptModal from "src/components/ParseScriptModal";
@@ -65,7 +65,9 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
       <ParseScriptModal
         open={!!selectedText}
         onClose={() => setSelectedText(null)}
-        script={selectedText?.value ? JSON.parse(selectedText?.value) : ""}
+        script={
+          selectedText?.value && isJson(selectedText?.value) ? JSON.parse(selectedText?.value) : selectedText?.value
+        }
         title={`Key: ${selectedText?.label || 0}`}
         subTitle={"Value"}
       />

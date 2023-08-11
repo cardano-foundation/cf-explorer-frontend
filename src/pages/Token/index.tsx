@@ -46,7 +46,7 @@ const Tokens = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Tokens List | Iris - Cardano Blockchain Explorer`;
+    document.title = `Native Tokens | Iris - Cardano Blockchain Explorer`;
   }, []);
 
   const columns: Column<IToken>[] = [
@@ -153,7 +153,7 @@ const Tokens = () => {
 
   return (
     <StyledContainer>
-      <Card title="Token List">
+      <Card title="Native Tokens">
         <TimeDuration>
           <FormNowMessage time={lastUpdated} />
         </TimeDuration>
@@ -168,7 +168,7 @@ const Tokens = () => {
             total: fetchData.total,
             onChange: (page, size) => {
               mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-              history.replace({ search: stringify({ page, size }) });
+              history.replace({ search: stringify({ page, size, tokenName: queries.get("tokenName") || "" }) });
             },
             handleCloseDetailView: handleClose,
             hideLastPage: true
