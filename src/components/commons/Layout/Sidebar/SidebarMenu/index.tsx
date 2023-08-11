@@ -1,28 +1,28 @@
-import React, { useState, useEffect, useMemo } from "react";
+import { Collapse, ListItem } from "@mui/material";
+import React, { useEffect, useMemo, useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
-import { Collapse, ListItem } from "@mui/material";
 
+import { useScreen } from "src/commons/hooks/useScreen";
 import { footerMenus, menus } from "src/commons/menus";
 import { isExternalLink } from "src/commons/utils/helper";
-import { setSidebar } from "src/stores/user";
-import { RootState } from "src/stores/types";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import { useScreen } from "src/commons/hooks/useScreen";
+import { RootState } from "src/stores/types";
+import { setSidebar } from "src/stores/user";
 
 import FooterMenu from "../FooterMenu";
 import {
+  FooterMenuContainer,
+  IconMenu,
   Menu,
   MenuIcon,
   MenuText,
+  SidebarMenuContainer,
+  StyledDivider,
   SubMenu,
   SubMenuText,
-  itemStyle,
-  IconMenu,
-  SidebarMenuContainer,
-  FooterMenuContainer,
-  StyledDivider
+  itemStyle
 } from "./styles";
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {

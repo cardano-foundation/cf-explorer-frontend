@@ -78,11 +78,12 @@ export const TextResult = styled(Box)(({ theme }) => ({
   fontSize: "0.875rem"
 }));
 
-export const WrapWalletLabel = styled(Box)(() => ({
+export const WrapWalletLabel = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   fontSize: "0.875rem",
-  fontWeight: 500
+  fontWeight: 500,
+  color: theme.palette.secondary.light
 }));
 
 export const TabHead = styled(Box)<{ active?: number }>(

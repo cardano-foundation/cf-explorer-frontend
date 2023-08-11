@@ -81,7 +81,7 @@ const DelegationTab = () => {
           <Box color={({ palette }) => palette.secondary.light} mr={1}>
             Wallet balance:
           </Box>
-          <AdaValue color={({ palette }) => palette.secondary.light} value={detailData?.totalStake ?? 0} />
+          <AdaValue color={({ palette }) => palette.secondary.main} value={detailData?.totalStake ?? 0} />
         </WrapWalletLabel>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>

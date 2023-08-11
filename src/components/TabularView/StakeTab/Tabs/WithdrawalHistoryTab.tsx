@@ -85,7 +85,7 @@ const WithdrawalHistoryTab = () => {
         <WrapWalletLabel>
           <GreenWalletIcon mr={1} />
           <Box mr={1}>Rewards withdrawn:</Box>
-          <AdaValue value={detailData?.rewardWithdrawn ?? 0} />
+          <AdaValue color={({ palette }) => palette.secondary.main} value={detailData?.rewardWithdrawn ?? 0} />
         </WrapWalletLabel>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
