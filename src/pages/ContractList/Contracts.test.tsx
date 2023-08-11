@@ -38,7 +38,7 @@ describe("Contracts list view", () => {
     mockUseFetchList.mockReturnValue(mockData);
     render(<Transactions />);
     expect(screen.getByText("addr1...xmsha")).toBeInTheDocument();
-    expect(screen.getByText("Contracts")).toBeInTheDocument();
+    expect(screen.getByText("Smart Contracts")).toBeInTheDocument();
   });
 
   it("renders the table with given column and data", () => {

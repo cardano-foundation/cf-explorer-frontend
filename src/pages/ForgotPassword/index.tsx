@@ -1,4 +1,4 @@
-  import { Box, FormGroup } from "@mui/material";
+import { Box, FormGroup } from "@mui/material";
 import { useEffect, useReducer, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { HiArrowLongLeft } from "react-icons/hi2";
@@ -67,7 +67,7 @@ export default function ForgotPassword() {
           error = "Please enter your Email";
           // eslint-disable-next-line no-useless-escape
         } else if (!/^[\w-\.+!#$%&'*/=?^_`{|]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
-          error = "Invalid Email";
+          error = "Please enter a valid email address";
         }
         break;
       default:

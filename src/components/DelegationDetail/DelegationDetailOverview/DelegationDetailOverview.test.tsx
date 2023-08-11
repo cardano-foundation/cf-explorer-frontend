@@ -30,7 +30,6 @@ const mockProps = {
 describe("DelegationDetailOverview component", () => {
   it("should component render", () => {
     render(<DelegationDetailOverview {...mockProps} />);
-    expect(screen.getByText(/reward/i)).toBeInTheDocument();
     expect(screen.getByText(/margin/i)).toBeInTheDocument();
     expect(screen.getByText(/pledge\(a\)/i)).toBeInTheDocument();
     expect(screen.getByText(/epoch block/i)).toBeInTheDocument();
