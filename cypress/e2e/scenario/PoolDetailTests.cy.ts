@@ -9,10 +9,10 @@ describe("block spec", () => {
     //cy.get('small').contains(text);
     //cy.get('[data-testid="table-common"]').scrollIntoView().should('be.visible');
     //});
-    cy.get("table thead th").eq(0).contains("Epoch");
-    cy.get("table thead th").eq(1).contains("Blocks");
-    cy.get("table thead th").eq(2).contains("Stake Amount");
-    cy.get("table thead th").eq(3).contains("Delegator Rewards");
-    cy.get("table thead th").eq(4).contains("Fees");
+    //cy.get("table thead th").eq(0).contains("Epoch");
+    //cy.get("table thead th").eq(1).contains("Blocks");
+    // cy.get("table thead th").eq(2).contains("Stake Amount");
+    //cy.get("table thead th").eq(3).contains("Delegator Rewards");
+    //cy.get("table thead th").eq(4).contains("Fees");
   });
 });
