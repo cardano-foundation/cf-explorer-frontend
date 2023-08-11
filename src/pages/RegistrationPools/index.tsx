@@ -49,7 +49,7 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
 
   useEffect(() => {
     const title = poolType === POOL_TYPE.REGISTRATION ? "Registration" : "Deregistration";
-    document.title = `${title} Pools | Iris - Cardano Blockchain Explorer`;
+    document.title = `${title} Pools | Cardano Blockchain Explorer`;
   }, [poolType]);
 
   const columns: Column<Registration>[] = [

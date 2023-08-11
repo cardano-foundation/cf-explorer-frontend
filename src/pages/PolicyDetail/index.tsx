@@ -15,7 +15,7 @@ const PolicyDetail = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Policy ${policyId} | Iris - Cardano Blockchain Explorer`;
+    document.title = `Policy ${policyId} | Cardano Blockchain Explorer`;
   }, [policyId]);
 
   if (!initialized) {

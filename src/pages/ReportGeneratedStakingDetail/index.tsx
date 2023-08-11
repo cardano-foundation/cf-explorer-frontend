@@ -11,7 +11,7 @@ const ReportGeneratedStakingDetail = () => {
   const history = useHistory();
 
   useEffect(() => {
-    document.title = "Stake Address Report Detail | Iris - Cardano Blockchain Explorer";
+    document.title = "Stake Address Report Detail | Cardano Blockchain Explorer";
   }, []);
 
   return (

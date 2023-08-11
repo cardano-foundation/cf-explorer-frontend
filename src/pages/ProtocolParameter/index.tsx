@@ -86,7 +86,7 @@ const ProtocolParameter: React.FC = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Protocol Parameters | Iris - Cardano Blockchain Explorer`;
+    document.title = `Protocol Parameters | Cardano Blockchain Explorer`;
   }, []);
 
   const theme = useTheme();
