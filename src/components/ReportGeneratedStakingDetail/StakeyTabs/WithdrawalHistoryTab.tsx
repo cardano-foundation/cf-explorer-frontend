@@ -5,7 +5,7 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import { FilterParams } from "src/components/commons/CustomFilter";
 import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
@@ -13,6 +13,7 @@ import { AdaValue } from "src/components/commons/ADAValue";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
+import ADAicon from "src/components/commons/ADAIcon";
 
 const WithdrawalHistoryTab = () => {
   const { reportId } = useParams<{ reportId: string }>();
@@ -65,9 +66,9 @@ const WithdrawalHistoryTab = () => {
           <AdaValue value={r.value + r.fee} />
           <TableSubTitle>
             <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-              <AdaValue value={r.value} gap="3px" fontSize="12px" />
-              <Box mx="3px">/</Box>
-              <AdaValue value={r.fee} gap="3px" fontSize="12px" />
+              {formatADAFull(r.value)}&nbsp;
+              <ADAicon width={9} />/{formatADAFull(r.fee)}&nbsp;
+              <ADAicon width={9} />
             </Box>
           </TableSubTitle>
         </Box>

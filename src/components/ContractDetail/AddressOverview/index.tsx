@@ -38,8 +38,8 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       title: "ADA Balance",
       value: (
         <StyledAAmount>
-          <Box>{formatADAFull(data?.balance)}</Box>
-          <ADAicon pl={"8px"} />
+          <Box>{formatADAFull(data?.balance)}</Box>&nbsp;
+          <ADAicon />
         </StyledAAmount>
       )
     },
@@ -53,8 +53,8 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       title: "Controlled Total Stake",
       value: (
         <StyledAAmount>
-          {formatADAFull(dataStake?.totalStake)}
-          <ADAicon pl={"8px"} />
+          {formatADAFull(dataStake?.totalStake)}&nbsp;
+          <ADAicon />
         </StyledAAmount>
       )
     },
@@ -62,8 +62,8 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       title: "Reward Available",
       value: (
         <StyledAAmount>
-          {formatADAFull(dataStake?.rewardAvailable)}
-          <ADAicon pl={"8px"} />
+          {formatADAFull(dataStake?.rewardAvailable)}&nbsp;
+          <ADAicon />
         </StyledAAmount>
       )
     },
@@ -71,8 +71,8 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       title: "Reward Withdrawn",
       value: (
         <StyledAAmount>
-          {formatADAFull(dataStake?.rewardWithdrawn)}
-          <ADAicon pl={"8px"} />
+          {formatADAFull(dataStake?.rewardWithdrawn)}&nbsp;
+          <ADAicon />
         </StyledAAmount>
       )
     },

@@ -51,8 +51,8 @@ const columns: Column<Instantaneous>[] = [
     minWidth: "120px",
     render: (r) => (
       <>
-        <Box component={"span"}> {formatADAFull(r.amount)}</Box>
-        <ADAicon pl={"3px"} />
+        <Box component={"span"}> {formatADAFull(r.amount)}</Box>&nbsp;
+        <ADAicon />
       </>
     )
   }

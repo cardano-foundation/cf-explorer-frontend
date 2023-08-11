@@ -5,6 +5,6 @@ import ADAIcon from ".";
 describe("ADAIcon component", () => {
   it("should component render", () => {
     render(<ADAIcon />);
-    expect(screen.getByText(/₳/i)).toBeInTheDocument();
+    expect(screen.getByTestId("ada-icon")).toBeInTheDocument();
   });
 });
