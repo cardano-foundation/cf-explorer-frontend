@@ -19,7 +19,7 @@ const AddressWalletDetail = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Address ${address} | Iris - Cardano Blockchain Explorer`;
+    document.title = `Address ${address} | Cardano Blockchain Explorer`;
     document.documentElement.scrollTop = 0;
   }, [address]);
 
