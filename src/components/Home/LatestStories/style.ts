@@ -102,6 +102,7 @@ export const ItemTitle = styled("h5")`
   -webkit-line-clamp: 3;
   color: ${(props) => props.theme.palette.secondary.main};
   overflow: hidden;
+  text-overflow: ellipsis;
   font-size: var(--font-size-text-x-small);
   line-height: 1.15;
   margin-top: 0;
@@ -146,6 +147,14 @@ export const Description = styled(Box)`
   font-size: 12px;
   font-weight: 400;
   color: ${(props) => props.theme.palette.secondary.light};
+
+  ${({ theme }) => theme.breakpoints.down("lg")} {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    display: none;
+  }
 `;
 
 export const FooterCard = styled(Box)`

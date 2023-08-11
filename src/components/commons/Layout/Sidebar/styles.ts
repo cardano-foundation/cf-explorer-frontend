@@ -95,6 +95,7 @@ export const NavbarMenuBottom = styled(Box)<{ sidebar: number }>(({ theme, sideb
     boxSizing: "border-box",
     "& > div": {
       width: "100%"
-    }
+    },
+    position: "unset"
   }
 }));
