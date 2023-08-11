@@ -3,7 +3,7 @@ describe("Account Overview", () => {
     cy.visit("/");
     cy.window().then((window) => {
       const api = {
-        getRewardAddresses: async () => ["e0b83abf370a14870fdfd6ccb35f8b3e62a68e465ed1e096c5a6f5b9d6"],
+        getRewardAddresses: async () => ["e1820506cb0ce54ae755b2512b6cf31856d7265e8792cb86afc94e0872"],
         getBalance: async () => "1A0643BE98",
         getUsedAddresses: async () => [],
         getUnusedAddresses: async () => []
