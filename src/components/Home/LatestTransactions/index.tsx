@@ -2,7 +2,7 @@ import { Box, Grid, Skeleton } from "@mui/material";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 
-import { BlankBlueIcon, ADAIcon } from "src/commons/resources";
+import { BlankBlueIcon, ADAsymbolIcon } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { REFRESH_TIMES, TRANSACTION_STATUS } from "src/commons/utils/constants";
@@ -94,7 +94,7 @@ const LatestTransactions: React.FC = () => {
                           <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>
                           <Box display={"flex"} alignItems={"flex-start"}>
                             <PriveValue>{formatADAFull(amount)}</PriveValue>
-                            <PriceImage src={ADAIcon} alt="check green" />
+                            <PriceImage src={ADAsymbolIcon} alt="check green" />
                           </Box>
                         </LatestTransactionItemHeader>
                       </ItemHeader>

@@ -6,7 +6,7 @@ import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/ut
 import {
   BackIcon,
   AddressIcon,
-  ADAGreen,
+  ADAsymbol,
   TimeIcon,
   PaymentWalletUrl,
   WalletIconRewardGreen,
@@ -161,7 +161,7 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
             <StyledCopyButton text={txHash} />
           </Info>
           <Info>
-            <ADAGreen fill={theme.palette.secondary.light} />
+            <ADAsymbol />
             <InfoText>{formatADAFull(amount || 0)}</InfoText>
           </Info>
           <Info>

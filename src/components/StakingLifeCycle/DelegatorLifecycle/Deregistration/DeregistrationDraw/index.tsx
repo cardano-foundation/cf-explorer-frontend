@@ -7,7 +7,7 @@ import { API } from "src/commons/utils/api";
 import useFetch from "src/commons/hooks/useFetch";
 import NoRecord from "src/components/commons/NoRecord";
 import DrawSkeleton from "src/components/commons/DrawSkeleton";
-import { ADAGreen, AddressIcon, BackIcon, ExclamationTriangleIcon, TimeIcon } from "src/commons/resources";
+import { ADAsymbol, AddressIcon, BackIcon, ExclamationTriangleIcon, TimeIcon } from "src/commons/resources";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import CustomIcon from "src/components/commons/CustomIcon";
@@ -148,7 +148,7 @@ const DeregistrationDraw: React.FC<Props> = ({ toggleModal, showBackButton }) =>
             <StyledCopyButton data-testid="delegator-deregistration-copy-button" text={txHash} />
           </Info>
           <Info>
-            <ADAGreen fill={theme.palette.secondary.light} />
+            <ADAsymbol />
             <InfoText>{formatADAFull(Math.abs(deposit) - fee)}</InfoText>
           </Info>
           <Info>

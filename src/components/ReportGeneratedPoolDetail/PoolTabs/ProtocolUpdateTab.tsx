@@ -8,7 +8,7 @@ import { StyledLink } from "src/components/share/styled";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { ADAValueLabel, ClickAbleLink } from "src/components/StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
 import CustomIcon from "src/components/commons/CustomIcon";
-import { ADAsigntIC, EyeIcon } from "src/commons/resources";
+import { ADAsymbol, EyeIcon } from "src/commons/resources";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { PoolUpdateModal } from "src/components/StakingLifeCycle/SPOLifecycle/PoolUpdates/PoolUpdateModal";
 import { details } from "src/commons/routers";
@@ -52,7 +52,7 @@ const ProtocolUpdateTab = () => {
       render(data) {
         return (
           <ADAValueLabel>
-            {formatADAFull(data.fee)} <CustomIcon icon={ADAsigntIC} width={12} />
+            {formatADAFull(data.fee)} <CustomIcon icon={ADAsymbol} width={12} />
           </ADAValueLabel>
         );
       }
