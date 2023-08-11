@@ -225,3 +225,12 @@ export const toFixedBigNumber = (value: string | number, dp = 0, rm = BigNumber.
 };
 
 export const isValidEmail = (email: string) => regexEmail.test(email);
+
+export const isJson = (str: string) => {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+};
