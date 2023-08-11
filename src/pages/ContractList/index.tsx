@@ -34,7 +34,7 @@ const Transactions: React.FC = () => {
   const { adaRate } = useSelector(({ system }: RootState) => system);
 
   useEffect(() => {
-    document.title = `Contracts List | Iris - Cardano Blockchain Explorer`;
+    document.title = `Contracts List | Cardano Blockchain Explorer`;
   }, []);
 
   const columns: Column<Contracts>[] = [

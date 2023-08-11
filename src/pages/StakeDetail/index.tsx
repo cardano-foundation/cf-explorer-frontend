@@ -32,7 +32,7 @@ const StakeDetail: React.FC = () => {
   );
 
   useEffect(() => {
-    document.title = `Stake address ${stakeId} | Iris - Cardano Blockchain Explorer`;
+    document.title = `Stake address ${stakeId} | Cardano Blockchain Explorer`;
     mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   }, [stakeId]);
 

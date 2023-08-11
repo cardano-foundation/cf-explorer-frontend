@@ -10,7 +10,7 @@ const MyProfile: React.FC = () => {
   const { isLoggedIn } = useAuth();
   const history = useHistory();
   useEffect(() => {
-    document.title = `My Profile | Iris - Cardano Blockchain Explorer`;
+    document.title = `My Profile | Cardano Blockchain Explorer`;
   }, []);
 
   useEffect(() => {
