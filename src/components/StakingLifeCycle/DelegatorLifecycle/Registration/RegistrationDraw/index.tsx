@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import { BackIcon, AddressIcon, ADAGreen, TimeIcon, ExclamationTriangleIcon } from "src/commons/resources";
+import { BackIcon, AddressIcon, TimeIcon, ExclamationTriangleIcon } from "src/commons/resources";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import DrawPath from "src/components/commons/DrawPath";
 import AdaHolder from "src/components/commons/AdaHolder";
@@ -16,6 +16,8 @@ import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import NoRecord from "src/components/commons/NoRecord";
 import DrawSkeleton from "src/components/commons/DrawSkeleton";
+import ADAicon from "src/components/commons/ADAIcon";
+import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
 
 import {
   DrawContainer,
@@ -127,7 +129,9 @@ export const RegistrationDraw = ({ toggleModal, showBackButton = false }: Props)
             <StyledCopyButton data-testid="delegator-registration-copy-button" text={txHash} />
           </Info>
           <Info>
-            <ADAGreen fill={theme.palette.secondary.light} />
+            <StyledADASymbol>
+              <ADAicon width={12} />
+            </StyledADASymbol>
             <InfoText>{formatADAFull(deposit + fee || 0)}</InfoText>
           </Info>
           <Info>

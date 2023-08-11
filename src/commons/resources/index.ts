@@ -1,4 +1,4 @@
-import LogoFullIcon from "./icons/logo-mobile.svg";
+import LogoFullIcon from "./icons/explorer-logo.svg";
 import LogoIcon from "./icons/logo.svg";
 import WalletIcon from "./icons/wallet.svg";
 import HeaderSearchIcon from "./icons/header-search.svg";
@@ -28,7 +28,6 @@ import RocketIcon from "./icons/rocket.svg";
 import RocketPoolIcon from "./icons/rocket-pool.svg";
 import CubeIcon from "./icons/cube.svg";
 import ExchangeIcon from "./icons/exchange-alt.svg";
-import ADAIcon from "./icons/ADA.svg";
 import TokenADA from "./icons/tokenADA.svg";
 import MediumIcon from "./icons/medium.svg";
 import RocketBackground from "./icons/rocket-bg.svg";
@@ -76,7 +75,6 @@ import txInputIconUrl from "./icons/txInput.svg";
 import txOutputIconUrl from "./icons/txOutput.svg";
 import totalOutputUrl from "./icons/totalOutput.svg";
 import CopyIconSquareUrl from "./images/copy.svg";
-import ADALogoUrl from "./icons/ada-logo.svg";
 import fileGuardUrl from "./icons/file-guard.svg";
 import DelegationIconUrl from "./icons/delegationIcon.svg";
 import RewardsDistributionIconUrl from "./icons/rewardsDistribution.svg";
@@ -88,14 +86,13 @@ import CurrentEpochHome from "./icons/currentEpochHome.svg";
 import HomeUpIcon from "./icons/HomeUpIcon.svg";
 import HomeDownIcon from "./icons/HomeDownIcon.svg";
 import DashboardIcon from "./icons/menus/Dashboard.svg";
-import LogoCardano from "./icons/LogoCardano.svg";
+import LogoExplorer from "./icons/explorer-logo.svg";
 import CardanoBlueLogo from "./icons/cardanoBlue.svg";
 
 export {
   LogoFullIcon,
   LogoIcon,
   WalletIcon,
-  ADALogoUrl,
   FlintIcon,
   NamiIcon,
   EternlIcon,
@@ -125,7 +122,6 @@ export {
   RocketPoolIcon,
   CubeIcon,
   ExchangeIcon,
-  ADAIcon,
   TokenADA,
   MediumIcon,
   RocketBackground,
@@ -182,7 +178,7 @@ export {
   HomeUpIcon,
   DashboardIcon,
   HomeDownIcon,
-  LogoCardano,
+  LogoExplorer,
   CardanoBlueLogo
 };
 
@@ -198,7 +194,7 @@ export { ReactComponent as FilterIcon } from "./icons/filter.svg";
 export { ReactComponent as ListOfReportsIC } from "./icons/list-of-report.svg";
 export { ReactComponent as WatchlistIC } from "./icons/watchlist.svg";
 export { ReactComponent as ReceidvedRewardsIC } from "./icons/received-rewards-ic.svg";
-export { ReactComponent as ADAsigntIC } from "./icons/ada-sight-ic.svg";
+export { ReactComponent as ADAsymbol } from "./icons/ADAsymbol.svg";
 export { ReactComponent as ProtocolUpdateIcon } from "./icons/protocolUpdate.svg";
 export { ReactComponent as StakeCertificates } from "./icons/stakeCertificate.svg";
 export { ReactComponent as DelegationIcon } from "./icons/Staking/DelegationIcon.svg";
@@ -222,7 +218,6 @@ export { ReactComponent as InfoIcon } from "./icons/Staking/infoIcon.svg";
 export { ReactComponent as TranferIcon } from "./icons/Staking/tranfer.svg";
 export { ReactComponent as BackIcon } from "./icons/Staking/BackIcon.svg";
 export { ReactComponent as AddressIcon } from "./icons/Staking/AddressIcon.svg";
-export { ReactComponent as ADAGreen } from "./icons/Staking/ADAGreen.svg";
 export { ReactComponent as TimeIcon } from "./icons/Staking/TimeIcon.svg";
 export { ReactComponent as ADAOrangeIcon } from "./icons/Staking/ADAOrangeIcon.svg";
 export { ReactComponent as FilterIC } from "./icons/filter-ic.svg";
@@ -253,7 +248,6 @@ export { ReactComponent as ReewardAvalible } from "./images/reward-avalible.svg"
 export { ReactComponent as OwnerAccIC } from "./images/owner-acc-ic.svg";
 export { ReactComponent as HideIcon } from "./icons/hide.svg";
 export { ReactComponent as ShowIcon } from "./icons/show.svg";
-export { ReactComponent as OfficialAdaIcon } from "./icons/ada-logo.svg";
 export { ReactComponent as DelegationHistoryIcon } from "./icons/delegationHistory.svg";
 export { ReactComponent as StakeKeyHistoryIcon } from "./icons/stateKeyHistory.svg";
 export { ReactComponent as WithdrawHistoryIcon } from "./icons/withdrawHistory.svg";
@@ -305,5 +299,5 @@ export { ReactComponent as FileOverviewIcon } from "./icons/file-overview.svg";
 export { ReactComponent as RedeemerPlusIcon } from "./icons/redeemer-plus.svg";
 export { ReactComponent as RedeemerArrowDownIcon } from "./icons/redeemer-arrow-down.svg";
 export { ReactComponent as SliderRight } from "./icons/swipper-right.svg";
-export { ReactComponent as IRisLogo } from "./icons/iris-logo.svg";
+export { ReactComponent as ExplorerLogo } from "./icons/explorer-logo.svg";
 export { ReactComponent as ExclamationTriangleIcon } from "./icons/exclamation-triangle.svg";

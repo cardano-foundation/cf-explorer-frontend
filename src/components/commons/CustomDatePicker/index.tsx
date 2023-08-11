@@ -6,6 +6,7 @@ import moment from "moment";
 import { BsFillCaretDownFill } from "react-icons/bs";
 import { IoIosArrowBack, IoIosArrowForward, IoMdClose } from "react-icons/io";
 import DatePicker, { ReactDatePickerProps } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import { DateRangeIcon } from "src/commons/resources";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -16,30 +17,17 @@ import {
   HiddenScroll,
   MyGrid,
   PickerPortalContainer,
+  PlaceHolder,
   SelectDateButton,
   SelectYear,
+  SelectedDay,
+  StyledDay,
   WrapCustomDatePicker
 } from "./styles";
-import "react-datepicker/dist/react-datepicker.css";
 
 export type IDate = Date | null;
 
 export type IDateRange = [IDate, IDate];
-
-const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-];
 
 export interface ICustomDatePicker {
   dateRange: IDateRange;
@@ -112,13 +100,37 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width, setOpen]);
 
+  const renderDayContents = (dayOfMonth: number, date?: Date | undefined, selectedDate?: IDate) => {
+    if (!(date && startDate && endDate)) return dayOfMonth;
+    if (moment(date).isBefore(startDate) || moment(date).isAfter(endDate)) return dayOfMonth;
+
+    const mDate = moment(date),
+      isStartDate = mDate.isSame(startDate),
+      isEndDate = mDate.isSame(endDate),
+      isStartWeek = mDate.weekday() === 0,
+      isEndWeek = mDate.weekday() === 6,
+      isStartMonth = mDate.isSame(moment(date).startOf("month"), "date"),
+      isEndMonth = mDate.isSame(moment(date).endOf("month"), "date");
+
+    let borderRadius = "0%";
+    if (isStartDate || isStartWeek || isStartMonth) borderRadius = "50% 0% 0% 50%";
+    if (isEndDate || isEndWeek || isEndMonth) borderRadius = "0% 50% 50% 0%";
+    if ((isStartDate || isStartWeek || isStartMonth) && (isEndDate || isEndWeek || isEndMonth)) borderRadius = "50%";
+
+    return (
+      <StyledDay borderRadius={borderRadius}>
+        {!moment(date).isSame(selectedDate) ? dayOfMonth : <SelectedDay>{dayOfMonth}</SelectedDay>}
+      </StyledDay>
+    );
+  };
+
   return (
     <>
       <WrapCustomDatePicker data-testid="date-range-picker" onClick={handleToggle} ref={ref}>
         {startDate || endDate ? (
           <Box
             sx={{
-              color: theme.palette.text.primary,
+              color: theme.palette.secondary.light,
               display: "flex",
               flexDirection: "row",
               gap: "5px",
@@ -130,7 +142,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
             <span> {endDate ? moment(endDate).format("MM/DD/YYYY") : ""}</span>
           </Box>
         ) : (
-          <Box sx={{ opacity: 0.42 }}>dd/mm/yyyy</Box>
+          <PlaceHolder>dd/mm/yyyy</PlaceHolder>
         )}
         <SelectDateButton>
           <DateRangeIcon />
@@ -147,6 +159,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
             onChange={(value) => setDateRange([value, endDate])}
             hideFuture={hideFuture}
             maxDate={hideFuture ? endDate || lastDayOfCurrentMonth : endDate}
+            renderDayContents={(dayOfMonth, date) => renderDayContents(dayOfMonth, date, startDate)}
           />
           <SingleDatePicker
             itemKey={2}
@@ -161,6 +174,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
             hideFuture={hideFuture}
             minDate={startDate}
             maxDate={hideFuture ? lastDayOfCurrentMonth : null}
+            renderDayContents={(dayOfMonth, date) => renderDayContents(dayOfMonth, date, endDate)}
           />
           <CloseButton onClick={handleToggle} sx={{ display: open ? "inline-flex" : "none" }}>
             <IoMdClose size={20} />
@@ -228,7 +242,7 @@ export const SingleDatePicker = (props: SingleDatePickerProps) => {
         }) => (
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <Box pl="12px" fontWeight={600} fontSize="16px" display="flex" alignItems="center">
-              {MONTHS[moment(date).month()]} {moment(date).year()}
+              {moment(date).format("MMMM YYYY")}
               <IconButton
                 ref={(ref) => (toggleRef.current = ref)}
                 onClick={() => setYearModal(!yearModal)}

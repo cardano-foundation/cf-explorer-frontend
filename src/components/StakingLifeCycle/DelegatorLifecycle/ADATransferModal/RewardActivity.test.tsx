@@ -16,7 +16,7 @@ describe("RewardActivity component", () => {
     const mockedUseFetchList = useFetchList as jest.Mock;
     mockedUseFetchList.mockReturnValue({ data: [], total: 0, totalPage: 0 });
     const { getByAltText } = render(<RewardActivity />);
-    expect(getByAltText("no data")).toBeInTheDocument();
+    expect(getByAltText("empty icon")).toBeInTheDocument();
   });
 
   it("rendering component with data", () => {

@@ -9,9 +9,9 @@ import { details } from "src/commons/routers";
 import { HeaderSearchIcon } from "src/commons/resources";
 import useFetchList from "src/commons/hooks/useFetchList";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import RateWithIcon from "src/components/commons/RateWithIcon";
 import { API } from "src/commons/utils/api";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import { Image, PoolName, SearchContainer, StyledInput, StyledLinearProgress, SubmitButton } from "./styles";
 
@@ -19,7 +19,7 @@ const DelegationLists: React.FC = () => {
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const { tickerNameSearch = "" } = history.location.state || {};
 
-  const [value, setValue] = useState(decodeURIComponent(tickerNameSearch));
+  const [value, setValue] = useState("");
   const [search, setSearch] = useState(decodeURIComponent(tickerNameSearch));
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(50);
@@ -29,7 +29,6 @@ const DelegationLists: React.FC = () => {
   useEffect(() => {
     if (tickerNameSearch) {
       setSearch(decodeURIComponent(tickerNameSearch));
-      setValue(decodeURIComponent(tickerNameSearch));
     }
   }, [tickerNameSearch]);
 
@@ -66,13 +65,21 @@ const DelegationLists: React.FC = () => {
       )
     },
     {
-      title: "Pool size (A)",
+      title: (
+        <Box component={"span"}>
+          Pool size (<ADAicon />)
+        </Box>
+      ),
       key: "poolSize",
       minWidth: "120px",
       render: (r) => <Box component={"span"}>{formatADAFull(r.poolSize)}</Box>
     },
     {
-      title: "Declared Pledge (A)",
+      title: (
+        <Box component={"span"}>
+          Declared Pledge (<ADAicon />)
+        </Box>
+      ),
       key: "pu.pledge",
       minWidth: "120px",
       render: (r) => <Box component={"span"}>{formatADAFull(r.pledge)}</Box>,
@@ -117,19 +124,18 @@ const DelegationLists: React.FC = () => {
     },
     {
       title: (
-        <CustomTooltip title="Last calculated gross return, as of the second last epoch">
-          <span>Reward</span>
-        </CustomTooltip>
+        <Box component={"span"}>
+          Fixed Cost (<ADAicon />)
+        </Box>
       ),
-      key: "Reward",
-      minWidth: "120px",
-      render: (r) => <RateWithIcon value={r.reward} multiple={1} />
-    },
-    {
-      title: "Fixed Cost (A)",
       key: "pu.fixedCost",
       minWidth: "120px",
-      render: (r) => `${formatADAFull(r.feeAmount)} A`,
+      render: (r) => (
+        <Box component="span">
+          {formatADAFull(r.feeAmount)}&nbsp;
+          <ADAicon />
+        </Box>
+      ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
