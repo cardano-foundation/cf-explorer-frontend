@@ -19,7 +19,7 @@ const DelegationLists: React.FC = () => {
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const { tickerNameSearch = "" } = history.location.state || {};
 
-  const [value, setValue] = useState(decodeURIComponent(tickerNameSearch));
+  const [value, setValue] = useState("");
   const [search, setSearch] = useState(decodeURIComponent(tickerNameSearch));
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(50);
