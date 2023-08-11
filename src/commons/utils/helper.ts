@@ -235,3 +235,12 @@ export function validateTokenExpired() {
   const exp = moment(decoded.exp * 1000);
   return now.isBefore(exp);
 }
+
+export const isJson = (str: string) => {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+};
