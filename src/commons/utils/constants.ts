@@ -207,3 +207,6 @@ export const REWARD_TYPES_LABEL = {
   [REWARD_TYPES.RESERVES]: "Reserves",
   [REWARD_TYPES.TREASURY]: "Treasury"
 };
+
+export const HOTJAR_HJID = process.env.REACT_APP_HOTJAR_HJID;
+export const HOTJAR_HJSV = process.env.REACT_APP_HOTJAR_HJSV;
