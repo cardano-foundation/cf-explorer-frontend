@@ -102,13 +102,13 @@ const Tokens = () => {
       title: "Total Volume",
       key: "TotalVolume",
       minWidth: "150px",
-      render: (r) => numberWithCommas(r?.totalVolume)
+      render: (r) => formatNumberDivByDecimals(r?.totalVolume, r.metadata?.decimals || 0)
     },
     {
       title: "Volume 24H",
       key: "volumeIn24h",
       minWidth: "150px",
-      render: (r) => numberWithCommas(r?.volumeIn24h)
+      render: (r) => formatNumberDivByDecimals(r?.volumeIn24h, r.metadata?.decimals || 0)
     },
     {
       title: "Total Supply",
