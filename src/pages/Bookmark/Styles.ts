@@ -37,6 +37,9 @@ export const StyledTable = styled(Table)(({ theme }) => ({
       overflow: "hidden",
       width: "100% "
     }
+  },
+  ".no-record": {
+    padding: "50px 0"
   }
 }));
 
