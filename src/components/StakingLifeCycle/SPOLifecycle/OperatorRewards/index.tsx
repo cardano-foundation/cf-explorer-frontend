@@ -115,7 +115,7 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void 
     }
   ];
   return (
-    <CustomModal {...props} title="Operator rewards received">
+    <CustomModal {...props} title="Operator rewards">
       <StyledTable
         {...fetchData}
         columns={columns}

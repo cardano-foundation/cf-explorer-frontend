@@ -6,13 +6,7 @@ import { stringify } from "qs";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import {
-  formatDateTimeLocal,
-  getPageInfo,
-  getShortHash,
-  getShortWallet,
-  numberWithCommas
-} from "src/commons/utils/helper";
+import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table from "src/components/commons/Table";
@@ -41,12 +35,6 @@ const StakeDelegations = () => {
   }, []);
 
   const columns: Column<StakeDelegations>[] = [
-    {
-      title: "#",
-      minWidth: 30,
-      key: "index",
-      render: (r, idx) => numberWithCommas(pageInfo?.page * pageInfo?.size + idx + 1 || 0)
-    },
     {
       title: "Tx Hash",
       minWidth: 120,
@@ -116,7 +104,7 @@ const StakeDelegations = () => {
 
   return (
     <StyledContainer>
-      <Card title="Stake Delegations">
+      <Card title="Stake Delegation(s)">
         <Actions>
           <TimeDuration>
             <FormNowMessage time={fetchData.lastUpdated} />

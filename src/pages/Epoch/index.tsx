@@ -31,7 +31,7 @@ const Epoch: React.FC = () => {
   const mainRef = useRef(document.querySelector("#main"));
   const columns: Column<IDataEpoch>[] = [
     {
-      title: "Epoch Number",
+      title: "Epoch",
       key: "epochNumber",
       minWidth: "50px",
       render: (r) => (

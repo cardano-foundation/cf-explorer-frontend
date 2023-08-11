@@ -27,7 +27,7 @@ describe("EpochBlockList component", () => {
     });
     render(<EpochBlockList epochId="417" />);
     expect(screen.getByText("Transactions")).toBeInTheDocument();
-    expect(screen.getByText("Block No")).toBeInTheDocument();
+    expect(screen.getByText("Block")).toBeInTheDocument();
     expect(screen.getByText("Block ID")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: mockedData[0].hash })).toBeInTheDocument();
     expect(screen.getByText("Output")).toBeInTheDocument();

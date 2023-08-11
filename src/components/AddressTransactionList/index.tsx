@@ -8,13 +8,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import {
-  formatADAFull,
-  formatDateTimeLocal,
-  getPageInfo,
-  getShortHash,
-  numberWithCommas
-} from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -61,12 +55,6 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
   const { isMobile } = useScreen();
 
   const columns: Column<Transactions>[] = [
-    {
-      title: "#",
-      key: "id",
-      minWidth: 14,
-      render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1)
-    },
     {
       title: "Tx Hash",
       key: "trxhash",

@@ -50,7 +50,7 @@ describe("Token view", () => {
     const mockUseFetchList = useFetchList as jest.Mock;
     mockUseFetchList.mockReturnValue(mockData);
     render(<Tokens />);
-    expect(screen.getByText("Token List")).toBeInTheDocument();
+    expect(screen.getByText("Native Tokens")).toBeInTheDocument();
     expect(screen.getByText("HOSKY")).toBeInTheDocument();
   });
 

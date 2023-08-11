@@ -4,13 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
-import {
-  formatAmount,
-  formatDateTimeLocal,
-  getPageInfo,
-  getShortHash,
-  numberWithCommas
-} from "src/commons/utils/helper";
+import { formatAmount, formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import { API } from "src/commons/utils/api";
 
 import CustomTooltip from "../../commons/CustomTooltip";
@@ -30,12 +24,6 @@ const TokenMinting: React.FC<ITokenMinting> = ({ tokenId, metadata }) => {
   const fetchData = useFetchList<ITokenTopHolderTable>(`${API.TOKEN.LIST}/${tokenId}/mints`, { ...pageInfo, tokenId });
 
   const columns: Column<ITokenMintingTable>[] = [
-    {
-      title: "#",
-      key: "id",
-      minWidth: "40px",
-      render: (data, index) => <SmallText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</SmallText>
-    },
     {
       title: "Tx Hash",
       key: "trxHash",

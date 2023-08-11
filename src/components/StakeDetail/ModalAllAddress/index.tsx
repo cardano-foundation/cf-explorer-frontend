@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import Table, { Column } from "src/components/commons/Table";
-import { formatADAFull, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -27,12 +27,6 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
   const fetchData = useFetchList<Addresses>(`${API.STAKE.DETAIL}/${stake}/list-address`, { page: page - 1, size });
 
   const columns: Column<Addresses>[] = [
-    {
-      title: "#",
-      minWidth: 20,
-      render: (r, index) => numberWithCommas((page - 1) * size + index + 1 || 0),
-      key: "no"
-    },
     {
       title: "Addresses",
       minWidth: 120,

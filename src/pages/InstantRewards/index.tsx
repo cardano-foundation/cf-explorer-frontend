@@ -7,13 +7,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import {
-  formatADAFull,
-  formatDateTimeLocal,
-  getPageInfo,
-  getShortHash,
-  numberWithCommas
-} from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table from "src/components/commons/Table";
@@ -41,12 +35,6 @@ const InstantReards = () => {
   }, []);
 
   const columns: Column<InstantRewards>[] = [
-    {
-      title: "#",
-      minWidth: 30,
-      key: "index",
-      render: (r, idx) => numberWithCommas(pageInfo?.page * pageInfo?.size + idx + 1 || 0)
-    },
     {
       title: "Tx Hash",
       minWidth: 120,
