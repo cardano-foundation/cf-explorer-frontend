@@ -4,6 +4,8 @@ import { isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wall
 
 import { render, screen } from "src/test-utils";
 
+import ConnectWalletModal from ".";
+
 jest.mock("@cardano-foundation/cardano-connect-with-wallet", () => ({
   isWalletInstalled: jest.fn(),
   useCardano: jest.fn() as jest.Mock extends (...args: any) => infer R ? R : never,
@@ -12,7 +14,6 @@ jest.mock("@cardano-foundation/cardano-connect-with-wallet", () => ({
     TESTNET: "testnet"
   }
 }));
-import ConnectWalletModal from ".";
 
 describe("BookmarkButton component", () => {
   beforeEach(() => {
