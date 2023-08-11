@@ -39,13 +39,7 @@ const Transactions: React.FC = () => {
 
   const columns: Column<Contracts>[] = [
     {
-      title: "#",
-      key: "id",
-      minWidth: 30,
-      render: (_, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)
-    },
-    {
-      title: "Contract Addresses",
+      title: "Address",
       key: "trxhash",
       minWidth: 120,
 
@@ -98,7 +92,7 @@ const Transactions: React.FC = () => {
 
   return (
     <StyledContainer>
-      <Card title={"Contracts"} underline={false}>
+      <Card title={"Smart Contracts"} underline={false}>
         <TimeDuration>
           <FormNowMessage time={fetchData.lastUpdated} />
         </TimeDuration>

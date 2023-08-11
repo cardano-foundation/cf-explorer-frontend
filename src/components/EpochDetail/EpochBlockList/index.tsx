@@ -5,13 +5,7 @@ import { Box } from "@mui/material";
 
 import Card from "src/components/commons/Card";
 import Table, { Column } from "src/components/commons/Table";
-import {
-  formatADAFull,
-  formatDateTimeLocal,
-  getPageInfo,
-  getShortHash,
-  numberWithCommas
-} from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
@@ -39,15 +33,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
 
   const columns: Column<BlockDetail>[] = [
     {
-      title: "#",
-      key: "#",
-      minWidth: "50px",
-      render: (_, index) => {
-        return <BlueText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</BlueText>;
-      }
-    },
-    {
-      title: "Block No",
+      title: "Block",
       key: "block",
       minWidth: "100px",
       render: (r) => (

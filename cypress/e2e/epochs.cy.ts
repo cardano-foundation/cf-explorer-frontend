@@ -14,7 +14,7 @@ describe("epoch spec", () => {
 
   it("should have enough column", () => {
     cy.visit("/epochs");
-    cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("Epoch Number");
+    cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("Epoch");
     cy.get(".css-1dz0v3k > tr > :nth-child(2)").contains("Start Timestamp");
     cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("End Timestamp");
     cy.get(".css-1dz0v3k > tr > :nth-child(4)").contains("Blocks");
@@ -52,7 +52,7 @@ describe("epoch spec", () => {
     cy.get(":nth-child(8) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Rewards Distributed");
     cy.get('[data-testid="table-common"]').verifyElementDisplay;
     cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("#");
-    cy.get(".css-1dz0v3k > tr > :nth-child(2)").contains("Block No");
+    cy.get(".css-1dz0v3k > tr > :nth-child(2)").contains("Block");
     cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Block ID");
     cy.get(".css-1dz0v3k > tr > :nth-child(4)").contains("Epoch / Slot");
     cy.get(".css-1dz0v3k > tr > :nth-child(5)").contains("Created At");
