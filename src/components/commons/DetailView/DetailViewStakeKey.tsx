@@ -65,7 +65,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
     },
     {
       key: "stake-key",
-      label: "Stake Key History",
+      label: "Stake Address History",
       icon: (
         <StakeKeyHistoryIcon
           fill={theme.palette.border.block}
