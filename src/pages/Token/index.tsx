@@ -46,7 +46,7 @@ const Tokens = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Native Tokens | Iris - Cardano Blockchain Explorer`;
+    document.title = `Native Tokens | Cardano Blockchain Explorer`;
   }, []);
 
   const columns: Column<IToken>[] = [

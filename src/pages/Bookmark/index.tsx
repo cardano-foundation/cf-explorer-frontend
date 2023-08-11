@@ -88,7 +88,7 @@ const Bookmark = () => {
   };
 
   useEffect(() => {
-    document.title = `Bookmarks | Iris - Cardano Blockchain Explorer`;
+    document.title = `Bookmarks | Cardano Blockchain Explorer`;
   }, []);
 
   useEffect(() => {

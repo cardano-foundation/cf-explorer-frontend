@@ -264,9 +264,9 @@ const Policy = () => {
         <TextReffer>
           10. TRADEMARKS
           <br />
-          &ldquo;Cardano&rdquo;, Iris, Iris.cardano.org, the Cardano and Iris logo and any other Company product or
-          service names, logos or slogans that may appear on our Services are trademarks of Company and may not be
-          copied, imitated or used, in whole or in part, without our prior written permission.
+          &ldquo;Cardano&rdquo;, Explorer, beta.explorer.cardano.org, the Cardano and Explorer logo and any other
+          Company product or service names, logos or slogans that may appear on our Services are trademarks of Company
+          and may not be copied, imitated or used, in whole or in part, without our prior written permission.
         </TextReffer>
 
         <TextReffer>

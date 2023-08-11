@@ -15,7 +15,7 @@ const FAQ = () => {
         <TextReffer>
           <TextSubHeader>Getting Started</TextSubHeader>
           <TitleSection>Do I need to sign up to access Explorer?</TitleSection>
-          Iris is publicly accessible, signing up is optional
+          Explorer is publicly accessible, signing up is optional
         </TextReffer>
 
         <TextReffer>
@@ -53,7 +53,7 @@ const FAQ = () => {
 
         <TextReffer>
           <TitleSection> Navigating back to the landing page?</TitleSection>
-          If you ever want to return to the home page, it's as easy as a single click. Look for the Iris icon at the
+          If you ever want to return to the home page, it's as easy as a single click. Look for the Explorer icon at the
           webpage's top left corner. You will be instantly taken back to the familiar home page by clicking on the
           Cardano icon.
         </TextReffer>
@@ -210,22 +210,22 @@ const FAQ = () => {
 
         <TextReffer>
           <TitleSection> I'm experiencing technical issues. What should I do?</TitleSection>
-          If you are facing an issue in Iris, please let us know by capturing the details in the support widget at the
-          bottom right side of the page as a &ldquo;?&rdquo; icon.
+          If you are facing an issue in Explorer, please let us know by capturing the details in the support widget at
+          the bottom right side of the page as a &ldquo;?&rdquo; icon.
         </TextReffer>
 
         <TextReffer>
           <TitleSection> Do we handle all support issues? </TitleSection>
-          We are happy to help with Iris-related troubleshooting matters. Please note that we are not able to respond to
-          individual cases that are not directly related to Iris (e.g. &ldquo;I forgot my wallet seed phrase&rdquo;,
-          &ldquo;I transferred my ada to the wrong address&rdquo;, &ldquo;can you help me understand what this data
-          means?&rdquo;) at present.
+          We are happy to help with Explorer-related troubleshooting matters. Please note that we are not able to
+          respond to individual cases that are not directly related to Explorer (e.g. &ldquo;I forgot my wallet seed
+          phrase&rdquo;, &ldquo;I transferred my ada to the wrong address&rdquo;, &ldquo;can you help me understand what
+          this data means?&rdquo;) at present.
         </TextReffer>
 
         <TextReffer>
           <TitleSection>Can I suggest a feature or provide feedback?</TitleSection>
           Yes! We would love to hear from you. You can create a feature request in the support widget at the bottom
-          right-hand side of Iris. Please select the option &ldquo;Feature Request&rdquo; when submitting your idea.{" "}
+          right-hand side of Explorer. Please select the option &ldquo;Feature Request&rdquo; when submitting your idea.{" "}
           <br />
         </TextReffer>
 

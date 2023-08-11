@@ -35,7 +35,7 @@ const TokenDetail: React.FC = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Token ${tokenId} | Iris - Cardano Blockchain Explorer`;
+    document.title = `Token ${tokenId} | Cardano Blockchain Explorer`;
     mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   }, [tokenId]);
 

@@ -23,7 +23,7 @@ const Transactions = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Transactions List | Iris - Cardano Blockchain Explorer`;
+    document.title = `Transactions List | Cardano Blockchain Explorer`;
   }, []);
 
   const openDetail = (_: any, r: Transactions, index: number) => {

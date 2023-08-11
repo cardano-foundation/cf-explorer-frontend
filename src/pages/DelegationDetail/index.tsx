@@ -61,7 +61,7 @@ const DelegationDetail: React.FC = () => {
   );
 
   useEffect(() => {
-    document.title = `Delegation Pool ${poolId} | Iris - Cardano Blockchain Explorer`;
+    document.title = `Delegation Pool ${poolId} | Cardano Blockchain Explorer`;
     window.scrollTo(0, 0);
   }, [poolId]);
 
