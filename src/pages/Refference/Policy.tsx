@@ -4,7 +4,7 @@ const Policy = () => {
   return (
     <ContainerReffer>
       <Content>
-        <TextHeader>Privacy Policy - explorer.cardano.org</TextHeader>
+        <TextHeader>Privacy Policy - beta.explorer.cardano.org</TextHeader>
 
         <TextReffer>PLEASE READ THE PRIVACY POLICY CAREFULLY.</TextReffer>
 
