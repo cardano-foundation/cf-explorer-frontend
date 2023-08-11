@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.19](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.18...v0.4.19) (2023-08-11)
+
+
+### Bug Fixes
+
+* missing name changes ([2327a58](https://github.com/cardano-foundation/cf-explorer-frontend/commit/2327a585f664e6ba600b43275fb9055733f670c9))
+
 ## [0.4.18](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.17...v0.4.18) (2023-08-11)
 
 
