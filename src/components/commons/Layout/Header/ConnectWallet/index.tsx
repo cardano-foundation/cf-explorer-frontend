@@ -17,7 +17,7 @@ import {
 } from "src/stores/user";
 import { getInfo, getNonce, signIn } from "src/commons/utils/userRequest";
 import { NETWORK, NETWORKS, NETWORK_TYPES } from "src/commons/utils/constants";
-import { removeAuthInfo } from "src/commons/utils/helper";
+import { removeAuthInfo, validateTokenExpired } from "src/commons/utils/helper";
 import useToast from "src/commons/hooks/useToast";
 import ConnectedProfileOption from "src/components/commons/ConnectedProfileOption";
 import ConnectWalletModal from "src/components/commons/ConnectWalletModal";
@@ -36,9 +36,10 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
   const { isEnabled, stakeAddress, isConnected, connect, signMessage, disconnect, enabledWallet } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
   });
+  const isValidToken = validateTokenExpired();
   const [signature, setSignature] = React.useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [isSign, setIsSign] = useState(isConnected);
+  const [isSign, setIsSign] = useState(isValidToken);
   const toast = useToast();
 
   useEffect(() => {
@@ -110,7 +111,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         setNonce(nonceValue);
         await signMessage(
           nonceValue.nonce,
-          (signature) => handleSignIn(signature, nonceValue),
+          (signature: any) => handleSignIn(signature, nonceValue),
           () => {
             toast.error("User rejected the request!");
             setModalSignMessage(false);
@@ -126,7 +127,6 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
       setSubmitting(false);
     }
   };
-
   if (isEnabled && stakeAddress && isSign) {
     return (
       <>

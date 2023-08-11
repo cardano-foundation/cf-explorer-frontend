@@ -1,23 +1,12 @@
-import { Box, styled } from "@mui/material";
+import { styled } from "@mui/material";
 
-import { OfficialAdaIcon } from "../../../commons/resources";
+import { ADAsymbol } from "../../../commons/resources";
 
 const ADAicon = ({ ...props }) => {
-  return (
-    <Box
-      component={"span"}
-      fontSize={"14px"}
-      {...props}
-      lineHeight={1}
-      fontWeight={"regular"}
-      color={({ palette }) => palette.secondary.main}
-    >
-      ₳
-    </Box>
-  );
+  return <ADAsymbol data-testid="ada-icon" width={10} {...props} />;
 };
 
-export const AdaLogoIcon = styled(OfficialAdaIcon)(() => ({
+export const AdaLogoIcon = styled(ADAsymbol)(() => ({
   display: "inline-block",
   width: "auto",
   height: "1em",

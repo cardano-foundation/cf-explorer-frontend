@@ -11,6 +11,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import { API } from "src/commons/utils/api";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
 import FormNowMessage from "src/components/commons/FormNowMessage";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import {
   Actions,
@@ -51,7 +52,11 @@ const TopDelegationPools = () => {
       )
     },
     {
-      title: "Pool Size (A)",
+      title: (
+        <Box component="span">
+          Pool Size (<ADAicon />)
+        </Box>
+      ),
       key: "poolSize",
       minWidth: "120px",
       render: (r) => <Box component={"span"}>{formatADAFull(r.poolSize)}</Box>

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Box, IconButton } from "@mui/material";
 
 import useFetchList from "src/commons/hooks/useFetchList";
-import { ADAsigntIC, EyeIcon } from "src/commons/resources";
+import { EyeIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
@@ -12,11 +12,11 @@ import {
   ADAValueLabel,
   ADAValueSubLabel
 } from "src/components/StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
-import CustomIcon from "src/components/commons/CustomIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
 import RegistrationCertificateModal from "src/components/StakingLifeCycle/SPOLifecycle/Registration/RegistrationCertificateModal";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import { ReportGeneratedPoolDetailContext } from "..";
 
@@ -59,11 +59,11 @@ const PoolRegistrationTab = () => {
         return (
           <ADAValueFieldContainer>
             <ADAValueLabel>
-              {formatADAFull(data.totalFee)} <CustomIcon icon={ADAsigntIC} width={12} />{" "}
+              {formatADAFull(data.totalFee)} <ADAicon />
             </ADAValueLabel>
             <ADAValueSubLabel>
-              {formatADAFull(data.deposit)} <CustomIcon icon={ADAsigntIC} width={11} /> / {formatADAFull(data.fee)}
-              <CustomIcon icon={ADAsigntIC} width={11} />{" "}
+              {formatADAFull(data.deposit)} <ADAicon /> / {formatADAFull(data.fee)}
+              <ADAicon />
             </ADAValueSubLabel>
           </ADAValueFieldContainer>
         );

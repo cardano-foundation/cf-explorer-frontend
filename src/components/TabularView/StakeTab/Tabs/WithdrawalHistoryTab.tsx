@@ -1,4 +1,4 @@
-import { Box, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import BigNumber from "bignumber.js";
 import { useContext, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
@@ -6,11 +6,12 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 import { GreenWalletIcon } from "src/components/commons/GreenWalletIcon";
 import { AdaValue } from "src/components/commons/ADAValue";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { details } from "../../../../commons/routers";
 import { API } from "../../../../commons/utils/api";
-import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
 import CustomFilter, { FilterParams } from "../../../commons/CustomFilter";
 import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import CustomTooltip from "../../../commons/CustomTooltip";
@@ -19,7 +20,6 @@ import { StyledLink, TableSubTitle, WrapWalletLabel, WrapperDelegationTab } from
 
 const WithdrawalHistoryTab = () => {
   const detailData = useContext(DelegatorDetailContext);
-  const theme = useTheme();
   const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
   const history = useHistory();
@@ -67,9 +67,9 @@ const WithdrawalHistoryTab = () => {
           <AdaValue value={new BigNumber(r.value).minus(new BigNumber(r.fee)).toString()} />
           <TableSubTitle>
             <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-              <AdaValue color={theme.palette.secondary.light} value={r.value} gap="3px" fontSize="12px" />
-              <Box mx="3px">/</Box>
-              <AdaValue color={theme.palette.secondary.light} value={r.fee} gap="3px" fontSize="12px" />
+              {formatADAFull(r.value)}&nbsp;
+              <ADAicon width={9} />/{formatADAFull(r.fee)}&nbsp;
+              <ADAicon width={9} />
             </Box>
           </TableSubTitle>
         </Box>
@@ -85,7 +85,7 @@ const WithdrawalHistoryTab = () => {
         <WrapWalletLabel>
           <GreenWalletIcon mr={1} />
           <Box mr={1}>Rewards withdrawn:</Box>
-          <AdaValue value={detailData?.rewardWithdrawn ?? 0} />
+          <AdaValue color={({ palette }) => palette.secondary.main} value={detailData?.rewardWithdrawn ?? 0} />
         </WrapWalletLabel>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
