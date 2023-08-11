@@ -197,7 +197,7 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
       content: (
         <>
           <Value>{data?.margin ? numberWithCommas(data?.margin * 100, 2) : 0}%</Value>{" "}
-          {data?.previousMargin !== null && (
+          {data?.previousMargin !== null && data?.previousMargin !== data?.margin && (
             <SupperMinimumText>
               Previous: {data?.previousMargin ? numberWithCommas(data?.previousMargin * 100, 2) : 0} %
             </SupperMinimumText>
@@ -214,7 +214,7 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
             {formatADAFull(data?.pledge)}&nbsp;
             <ADAicon width={9} />
           </Value>
-          {data?.previousPledge !== null && (
+          {data?.previousPledge !== null && data?.previousPledge !== data?.pledge && (
             <MinimumText>
               Previous: {formatADAFull(data?.previousPledge || 0)} <ADAicon width={8} />
             </MinimumText>

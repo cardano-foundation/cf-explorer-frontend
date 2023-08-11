@@ -129,7 +129,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
                       textOverflow={"ellipsis"}
                       maxWidth="150px"
                     >
-                      {option.displayName || ""}
+                      {option.displayName || getShortWallet(option.fingerprint || "")}
                     </Box>
                   </CustomTooltip>
                 </Box>

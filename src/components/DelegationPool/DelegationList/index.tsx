@@ -9,7 +9,6 @@ import { details } from "src/commons/routers";
 import { HeaderSearchIcon } from "src/commons/resources";
 import useFetchList from "src/commons/hooks/useFetchList";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import RateWithIcon from "src/components/commons/RateWithIcon";
 import { API } from "src/commons/utils/api";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
 import ADAicon from "src/components/commons/ADAIcon";
@@ -20,7 +19,7 @@ const DelegationLists: React.FC = () => {
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const { tickerNameSearch = "" } = history.location.state || {};
 
-  const [value, setValue] = useState(decodeURIComponent(tickerNameSearch));
+  const [value, setValue] = useState("");
   const [search, setSearch] = useState(decodeURIComponent(tickerNameSearch));
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(50);
@@ -30,7 +29,6 @@ const DelegationLists: React.FC = () => {
   useEffect(() => {
     if (tickerNameSearch) {
       setSearch(decodeURIComponent(tickerNameSearch));
-      setValue(decodeURIComponent(tickerNameSearch));
     }
   }, [tickerNameSearch]);
 
@@ -123,16 +121,6 @@ const DelegationLists: React.FC = () => {
       minWidth: "100px",
       key: "lifetimeBlock",
       render: (r) => <Box component={"span"}>{r.lifetimeBlock || 0}</Box>
-    },
-    {
-      title: (
-        <CustomTooltip title="Last calculated gross return, as of the second last epoch">
-          <span>Reward</span>
-        </CustomTooltip>
-      ),
-      key: "Reward",
-      minWidth: "120px",
-      render: (r) => <RateWithIcon value={r.reward} multiple={1} />
     },
     {
       title: (

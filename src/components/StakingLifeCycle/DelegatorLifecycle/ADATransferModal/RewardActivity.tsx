@@ -22,10 +22,6 @@ const RewardActivity: React.FC = () => {
   const { isMobile, isGalaxyFoldSmall, isTablet } = useScreen();
 
   const fetchData = useFetchList<RewardActivityIF>(API.STAKE_LIFECYCLE.REWARDS_ACTIVITY(stakeId), { page, size, sort });
-  const rewardType = {
-    REWARD_RECEIVED: "Reward received",
-    REWARD_WITHDRAWN: "Reward withdrawn"
-  };
   const columns: Column<RewardActivityIF>[] = [
     {
       title: "Amount ADA",
@@ -56,13 +52,6 @@ const RewardActivity: React.FC = () => {
       key: "Epoch",
       minWidth: "100px",
       render: (r) => <StyledLink to={details.epoch(r.epochNo || 0)}>{r.epochNo}</StyledLink>
-    },
-
-    {
-      title: "Transaction Type",
-      key: "transactionCount",
-      minWidth: "100px",
-      render: (r) => <Box>{rewardType[r.type]}</Box>
     }
   ];
   const maxHeightCalc = `calc(70vh - ${
