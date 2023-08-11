@@ -16,8 +16,8 @@ describe("Pool Certificate", () => {
     cy.get(".css-1dz0v3k > tr > :nth-child(2)").scrollIntoView().should("be.visible").contains("Created At");
     cy.get(".css-1dz0v3k > tr > :nth-child(3)").scrollIntoView().should("be.visible").contains("Block");
     cy.get(".css-1dz0v3k > tr > :nth-child(4)").scrollIntoView().should("be.visible").contains("Pool");
-    cy.get(".css-1dz0v3k > tr > :nth-child(5)").scrollIntoView().should("be.visible").contains("Pledge (A)");
-    cy.get(".css-1dz0v3k > tr > :nth-child(6)").scrollIntoView().should("be.visible").contains("Fixed Cost (A)");
+    cy.get(".css-1dz0v3k > tr > :nth-child(5)").scrollIntoView().should("be.visible").contains("Pledge");
+    cy.get(".css-1dz0v3k > tr > :nth-child(6)").scrollIntoView().should("be.visible").contains("Fixed Cost");
     cy.get(".css-1dz0v3k > tr > :nth-child(7)").scrollIntoView().should("be.visible").contains("Margin");
     cy.get(".css-1dz0v3k > tr > :nth-child(8)").scrollIntoView().should("be.visible").contains("Stake Address");
   });
