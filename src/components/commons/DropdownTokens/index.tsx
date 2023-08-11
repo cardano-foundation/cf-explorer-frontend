@@ -16,9 +16,10 @@ export interface IDropdownTokens {
   type?: "up" | "down" | undefined;
   hideInputLabel?: boolean;
   hideMathChar?: boolean;
+  isSuccess?: boolean;
 }
 
-const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hideMathChar }) => {
+const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hideMathChar, isSuccess }) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const history = useHistory();
   const isSend = tokens[0].assetQuantity < 0;
@@ -101,7 +102,11 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
                 tokenName
               )}
             </Box>
-            <Box fontWeight={"bold"} fontSize={"14px"} color={({ palette }) => palette.secondary.main}>
+            <Box
+              fontWeight={"bold"}
+              fontSize={"14px"}
+              color={({ palette }) => (isSuccess ? palette.secondary.main : palette.secondary[600])}
+            >
               {isNegative || hideMathChar ? "" : "+"}
               {formatNumberDivByDecimals(token?.assetQuantity || 0, token?.metadata?.decimals || 0)}
             </Box>
@@ -114,7 +119,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
 
 export default DropdownTokens;
 
-export const TokenLink: React.FC<{ token: Token }> = ({ token }) => {
+export const TokenLink: React.FC<{ token: Token; isSuccess?: boolean }> = ({ token, isSuccess }) => {
   const tokenName = token.assetName || token.assetId;
   const shortTokenName = getShortWallet(tokenName);
   const isTokenNameLong = tokenName.length > 20;
@@ -141,7 +146,11 @@ export const TokenLink: React.FC<{ token: Token }> = ({ token }) => {
           )}
         </Box>
         <Box display={"flex"} alignItems={"center"}>
-          <Box fontWeight={"bold"} fontSize={"14px"} color={({ palette }) => palette.secondary.main}>
+          <Box
+            fontWeight={"bold"}
+            fontSize={"14px"}
+            color={({ palette }) => (isSuccess ? palette.secondary.main : palette.secondary[600])}
+          >
             {formatNumberDivByDecimals(token?.assetQuantity || 0, token?.metadata?.decimals || 0)}
           </Box>
           <Box mr={1} mt={"2px"}>

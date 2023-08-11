@@ -193,11 +193,13 @@ const renderTooltipContent = (o: any, range: Time) => {
         textAlign={"left"}
         boxShadow={(theme) => theme.shadow.dropdown}
       >
-        <Box color={({ palette }) => palette.secondary.main} textAlign={"center"}>{getLabel(label, range)}</Box>
+        <Box color={({ palette }) => palette.secondary.main} textAlign={"center"}>
+          {getLabel(label, range)}
+        </Box>
         {(payload || []).reverse().map((entry: any, index: number) => (
           <Box key={`item-${index}`} mt={1}>
             <Box fontSize={"0.75rem"}>{`${nameTooltips[entry.name as keyof typeof nameTooltips]}`}</Box>
-            <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.light}>{`${numberWithCommas(
+            <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>{`${numberWithCommas(
               entry.value
             )} (${getPercent(entry.value, total)})`}</Box>
           </Box>
