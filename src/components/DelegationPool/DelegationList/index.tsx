@@ -29,7 +29,6 @@ const DelegationLists: React.FC = () => {
   useEffect(() => {
     if (tickerNameSearch) {
       setSearch(decodeURIComponent(tickerNameSearch));
-      setValue(decodeURIComponent(tickerNameSearch));
     }
   }, [tickerNameSearch]);
 
