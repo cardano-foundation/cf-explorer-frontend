@@ -148,7 +148,7 @@ export const StyledTransactionTypeItem = styled(Box)(({ theme }) => ({
 
 export const ValueChart = styled(Box)(({ theme }) => ({
   textAlign: "left",
-  color: theme.palette.secondary.light,
+  color: theme.palette.secondary.main,
   fontWeight: "bold",
   fontSize: "20px"
 }));
