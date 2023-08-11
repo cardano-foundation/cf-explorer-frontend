@@ -2,7 +2,7 @@ import { Box, Grid, useTheme } from "@mui/material";
 import { useRef, useState, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 
-import { BackIcon, AddressIcon, ADAGreen, TimeIcon } from "src/commons/resources";
+import { BackIcon, AddressIcon, TimeIcon } from "src/commons/resources";
 import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
@@ -14,6 +14,7 @@ import FeeBoxSPO from "src/components/commons/FeeBoxSPO";
 import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import DrawPath from "src/components/commons/DrawPath";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import { StyledLink } from "../styles";
 import { AditionalLabel } from "./RecentDeregistrations/styles";
@@ -199,7 +200,7 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
             <StyledCopyButton text={selected?.txHash} />
           </Info>
           <Info>
-            <ADAGreen fill={theme.palette.secondary.light} />
+            <ADAicon />
             <InfoText>
               {formatADAFull(selected?.poolHold ? selected?.poolHold - selected?.fee : selected?.fee || 0)}
             </InfoText>

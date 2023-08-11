@@ -196,14 +196,19 @@ const renderTooltipContent = (o: any, range: Time) => {
         <Box color={({ palette }) => palette.secondary.main} textAlign={"center"}>
           {getLabel(label, range)}
         </Box>
-        {(payload || []).reverse().map((entry: any, index: number) => (
-          <Box key={`item-${index}`} mt={1}>
-            <Box fontSize={"0.75rem"}>{`${nameTooltips[entry.name as keyof typeof nameTooltips]}`}</Box>
-            <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>{`${numberWithCommas(
-              entry.value
-            )} (${getPercent(entry.value, total)})`}</Box>
-          </Box>
-        ))}
+        {(payload || []).reverse().map((entry: any, index: number) => {
+          return (
+            <Box key={`item-${index}`} mt={1}>
+              <Box fontSize={"0.75rem"}>{`${nameTooltips[entry.name as keyof typeof nameTooltips]}`}</Box>
+              <Box display={"flex"} alignItems={"center"} mt={1}>
+                <Box width={"20px"} height={"20px"} bgcolor={entry.fill} borderRadius={"4px"} mr={1} />
+                <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
+                  {`${numberWithCommas(entry.value)} (${getPercent(entry.value, total)})`}
+                </Box>
+              </Box>
+            </Box>
+          );
+        })}
       </Box>
     </Box>
   );

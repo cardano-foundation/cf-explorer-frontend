@@ -47,7 +47,7 @@ export const WrapForm = styled(Box)(({ theme }) => ({
   width: "min(80vw,420px)",
   padding: "35px 40px 40px",
   [theme.breakpoints.down("md")]: {
-    padding: "20px 15px",
+    padding: "40px 15px 20px 15px",
     gap: "15px"
   }
 }));
@@ -173,7 +173,6 @@ export const BackButton = styled(Box)(({ theme }) => ({
   top: "15px",
   left: "25px",
   [theme.breakpoints.down("md")]: {
-    top: "10px",
     left: "12px"
   }
 }));

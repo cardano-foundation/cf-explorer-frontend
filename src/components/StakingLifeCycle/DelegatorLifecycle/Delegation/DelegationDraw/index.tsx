@@ -3,7 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { Box, useTheme } from "@mui/material";
 
 import { details } from "src/commons/routers";
-import { ADAGreen, AddressIcon, BackIcon, TimeIcon } from "src/commons/resources";
+import { AddressIcon, BackIcon, TimeIcon } from "src/commons/resources";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { API } from "src/commons/utils/api";
@@ -13,6 +13,7 @@ import DrawSkeleton from "src/components/commons/DrawSkeleton";
 import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import {
   IconButtonBack,
@@ -128,7 +129,7 @@ const DelegationDraw: React.FC<IDelegationDrawProps> = ({ toggleModal, showBackB
             <StyledCopyButton data-testid="delegator-delegation-copy-button" text={txHash} />
           </Info>
           <Info>
-            <ADAGreen fill={theme.palette.secondary.light} />
+            <ADAicon />
             <InfoText data-testid="delegator-delegation-fee">{formatADAFull(fee)}</InfoText>
           </Info>
           <Info>
