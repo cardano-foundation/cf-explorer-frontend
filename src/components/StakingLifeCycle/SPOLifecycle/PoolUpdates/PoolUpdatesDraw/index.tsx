@@ -13,6 +13,7 @@ import { AddressIcon, BackIcon, TimeIcon } from "src/commons/resources";
 import SPOHolder from "src/components/commons/SPOHolder";
 import CopyButton from "src/components/commons/CopyButton";
 import ADAicon from "src/components/commons/ADAIcon";
+import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
 
 import {
   BoxGroup,
@@ -117,7 +118,9 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
             <CopyButton text={txHash} sx={{ marginLeft: "5px" }} />
           </Info>
           <Info>
-            <ADAicon />
+            <StyledADASymbol>
+              <ADAicon />
+            </StyledADASymbol>
             <InfoText>{formatADAFull(fee || 0)}</InfoText>
           </Info>
           <Info>

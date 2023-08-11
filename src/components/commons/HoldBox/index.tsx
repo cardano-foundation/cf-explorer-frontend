@@ -4,7 +4,7 @@ import { BoxProps, IconButton, styled, Box, Typography } from "@mui/material";
 import { ButtonListIcon } from "src/commons/resources";
 import { formatADAFull } from "src/commons/utils/helper";
 
-import { AdaLogoIcon } from "../ADAIcon";
+import ADAicon from "../ADAIcon";
 import PopupStaking from "../PopupStaking";
 import PopperStyled from "../PopperStyled";
 
@@ -64,17 +64,6 @@ const Value = styled(Box)(({ theme }) => ({
   }
 }));
 
-const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
-  fontSize: 14,
-  color: theme.palette.text.secondary,
-  marginBottom: ".125rem",
-  width: 11,
-  minWidth: 11,
-  [theme.breakpoints.down("md")]: {
-    fontSize: 12
-  }
-}));
-
 const Button = styled(IconButton)<{ over?: number }>(({ theme, over }) => ({
   background: theme.palette.primary[100],
   [theme.breakpoints.down(over ? "lg" : "sm")]: {
@@ -113,7 +102,7 @@ export const HoldBox = forwardRef<HTMLElement, Props>((props, feeRef) => {
         <HoldContainer {...boxProps} ref={feeRef}>
           <Value>
             <HolderValueLabel>{formatADAFull(value || 0, roundingNumber)}</HolderValueLabel>
-            <StyledAdaLogoIcon />
+            <ADAicon width={12} />
           </Value>
           {children}
           <Button

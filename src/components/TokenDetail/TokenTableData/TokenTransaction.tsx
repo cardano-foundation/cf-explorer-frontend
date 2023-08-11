@@ -106,8 +106,10 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       minWidth: "120px",
       render: (r) => (
         <PriceValue>
-          <SmallText>{formatADAFull(r.fee)}</SmallText>
-          <ADAicon mb={"5px"} ml={"8px"} />
+          <SmallText>
+            {formatADAFull(r.fee)}&nbsp;
+            <ADAicon />
+          </SmallText>
         </PriceValue>
       )
     },
@@ -117,8 +119,10 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       key: "outSum",
       render: (r) => (
         <PriceValue>
-          <SmallText>{formatADAFull(r.totalOutput)}</SmallText>
-          <ADAicon mb={"5px"} ml={"8px"} />
+          <SmallText>
+            {formatADAFull(r.totalOutput)}&nbsp;
+            <ADAicon />
+          </SmallText>
         </PriceValue>
       )
     }

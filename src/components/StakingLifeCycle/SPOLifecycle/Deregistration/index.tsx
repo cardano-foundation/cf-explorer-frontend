@@ -15,6 +15,7 @@ import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import DrawPath from "src/components/commons/DrawPath";
 import ADAicon from "src/components/commons/ADAIcon";
+import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
 
 import { StyledLink } from "../styles";
 import { AditionalLabel } from "./RecentDeregistrations/styles";
@@ -200,7 +201,9 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
             <StyledCopyButton text={selected?.txHash} />
           </Info>
           <Info>
-            <ADAicon />
+            <StyledADASymbol>
+              <ADAicon />
+            </StyledADASymbol>
             <InfoText>
               {formatADAFull(selected?.poolHold ? selected?.poolHold - selected?.fee : selected?.fee || 0)}
             </InfoText>

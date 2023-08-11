@@ -14,6 +14,7 @@ import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import ADAicon from "src/components/commons/ADAIcon";
+import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
 
 import {
   IconButtonBack,
@@ -129,7 +130,9 @@ const DelegationDraw: React.FC<IDelegationDrawProps> = ({ toggleModal, showBackB
             <StyledCopyButton data-testid="delegator-delegation-copy-button" text={txHash} />
           </Info>
           <Info>
-            <ADAicon />
+            <StyledADASymbol>
+              <ADAicon />
+            </StyledADASymbol>
             <InfoText data-testid="delegator-delegation-fee">{formatADAFull(fee)}</InfoText>
           </Info>
           <Info>

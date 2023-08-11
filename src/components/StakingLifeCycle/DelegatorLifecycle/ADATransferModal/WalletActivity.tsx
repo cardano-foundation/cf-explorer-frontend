@@ -5,13 +5,12 @@ import { useParams } from "react-router-dom";
 import { useScreen } from "src/commons/hooks/useScreen";
 import useFetch from "src/commons/hooks/useFetch";
 import useFetchList from "src/commons/hooks/useFetchList";
-import { AIconGreen } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
-import CustomIcon from "src/components/commons/CustomIcon";
 import Table, { Column } from "src/components/commons/Table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import UserInfo from "./UserInfo";
 import { Amount, Status, StyledLink } from "./styles";
@@ -33,9 +32,8 @@ const WalletActivity: React.FC = () => {
       render: (r) => (
         <Box display="flex" alignItems="center">
           <Amount type={r.amount > 0 ? "up" : "down"}>
-            {r.amount > 0 ? `+${formatADAFull(r.amount)}` : formatADAFull(r.amount)}
+            {r.amount > 0 ? `+${formatADAFull(r.amount)}` : formatADAFull(r.amount)} <ADAicon />
           </Amount>
-          <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={(theme) => theme.palette.text.primary} />
         </Box>
       )
     },
@@ -65,8 +63,9 @@ const WalletActivity: React.FC = () => {
       render: (r) => <Status status={r.status}>{r.status}</Status>
     }
   ];
-  const maxHeightCalc = `calc(70vh - ${isTablet ? "290px" : isMobile ? (isGalaxyFoldSmall ? "270px" : "230px") : "208px"
-    })`;
+  const maxHeightCalc = `calc(70vh - ${
+    isTablet ? "290px" : isMobile ? (isGalaxyFoldSmall ? "270px" : "230px") : "208px"
+  })`;
   return (
     <Box>
       <UserInfo acitve="wallet" total={fetchData.total} reward={data?.totalStake || 0} stake={stakeId} />

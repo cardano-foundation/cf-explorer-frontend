@@ -12,6 +12,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import RateWithIcon from "src/components/commons/RateWithIcon";
 import { API } from "src/commons/utils/api";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import { Image, PoolName, SearchContainer, StyledInput, StyledLinearProgress, SubmitButton } from "./styles";
 
@@ -66,13 +67,21 @@ const DelegationLists: React.FC = () => {
       )
     },
     {
-      title: "Pool size (A)",
+      title: (
+        <Box component={"span"}>
+          Pool size (<ADAicon />)
+        </Box>
+      ),
       key: "poolSize",
       minWidth: "120px",
       render: (r) => <Box component={"span"}>{formatADAFull(r.poolSize)}</Box>
     },
     {
-      title: "Declared Pledge (A)",
+      title: (
+        <Box component={"span"}>
+          Declared Pledge (<ADAicon />)
+        </Box>
+      ),
       key: "pu.pledge",
       minWidth: "120px",
       render: (r) => <Box component={"span"}>{formatADAFull(r.pledge)}</Box>,
@@ -126,10 +135,19 @@ const DelegationLists: React.FC = () => {
       render: (r) => <RateWithIcon value={r.reward} multiple={1} />
     },
     {
-      title: "Fixed Cost (A)",
+      title: (
+        <Box component={"span"}>
+          Fixed Cost (<ADAicon />)
+        </Box>
+      ),
       key: "pu.fixedCost",
       minWidth: "120px",
-      render: (r) => `${formatADAFull(r.feeAmount)} A`,
+      render: (r) => (
+        <Box component="span">
+          {formatADAFull(r.feeAmount)}&nbsp;
+          <ADAicon />
+        </Box>
+      ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }

@@ -17,6 +17,7 @@ import { API } from "src/commons/utils/api";
 import NoRecord from "src/components/commons/NoRecord";
 import DrawSkeleton from "src/components/commons/DrawSkeleton";
 import ADAicon from "src/components/commons/ADAIcon";
+import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
 
 import {
   DrawContainer,
@@ -128,7 +129,9 @@ export const RegistrationDraw = ({ toggleModal, showBackButton = false }: Props)
             <StyledCopyButton data-testid="delegator-registration-copy-button" text={txHash} />
           </Info>
           <Info>
-            <ADAicon />
+            <StyledADASymbol>
+              <ADAicon width={12} />
+            </StyledADASymbol>
             <InfoText>{formatADAFull(deposit + fee || 0)}</InfoText>
           </Info>
           <Info>

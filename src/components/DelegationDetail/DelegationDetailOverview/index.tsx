@@ -3,6 +3,7 @@ import React from "react";
 
 import { formatADAFull, formatPercent, numberWithCommas, toFixedBigNumber } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import { Item, StyledContainer, Title, Value } from "./styles";
 
@@ -19,7 +20,11 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
       tooltip: "Last calculated gross return, as of the second last epoch"
     },
     {
-      title: "Fixed Cost(A)",
+      title: (
+        <Box component="span">
+          Fixed Cost (<ADAicon />)
+        </Box>
+      ),
       value: formatADAFull(data?.cost),
       tooltip: ""
     },
@@ -30,7 +35,11 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
     },
 
     {
-      title: "Declared Pledge(A)",
+      title: (
+        <Box component="span">
+          Declared Pledge (<ADAicon />)
+        </Box>
+      ),
       value: formatADAFull(data?.pledge),
       tooltip: ""
     },
