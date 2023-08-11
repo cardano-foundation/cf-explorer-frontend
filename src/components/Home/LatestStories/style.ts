@@ -145,7 +145,7 @@ export const Description = styled(Box)`
   text-overflow: ellipsis;
   font-size: 12px;
   font-weight: 400;
-  color: ${(props) => props.theme.palette.grey[300]};
+  color: ${(props) => props.theme.palette.secondary.light};
 `;
 
 export const FooterCard = styled(Box)`

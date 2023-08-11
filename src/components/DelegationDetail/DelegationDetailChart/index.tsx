@@ -101,11 +101,11 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                     tickLine={false}
                     tickMargin={5}
                     dx={-5}
-                    color={theme.palette.secondary.main}
+                    color={theme.palette.secondary.light}
                   />
                   <YAxis
                     dataKey={selected === "epochChart" ? "totalStake" : "numberDelegator"}
-                    color={theme.palette.secondary.main}
+                    color={theme.palette.secondary.light}
                     tickFormatter={formatValue}
                     tickLine={false}
                   />
