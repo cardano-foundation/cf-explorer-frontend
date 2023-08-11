@@ -40,6 +40,6 @@ describe("EpochBlockList component", () => {
       error: true
     });
     render(<EpochBlockList epochId="417" />);
-    expect(screen.getByAltText("no data")).toBeInTheDocument();
+    expect(screen.getByAltText("empty icon")).toBeInTheDocument();
   });
 });
