@@ -168,7 +168,7 @@ const Tokens = () => {
             total: fetchData.total,
             onChange: (page, size) => {
               mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-              history.replace({ search: stringify({ page, size }) });
+              history.replace({ search: stringify({ page, size, tokenName: queries.get("tokenName") || "" }) });
             },
             handleCloseDetailView: handleClose,
             hideLastPage: true
