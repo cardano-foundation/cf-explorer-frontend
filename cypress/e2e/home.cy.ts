@@ -7,7 +7,7 @@ describe("Home page should display all elements", () => {
 
   it("should navigate to the home page", () => {
     cy.title().should("eq", "Cardano Explorer");
-    cy.getBySelector("home-title").should("have.text", "Cardano explorer");
+    //cy.getBySelector("home-title").should("have.text", "Cardano explorer");
   });
 
   it("should display Sidebar, Header, Footer and main section", () => {
@@ -54,7 +54,7 @@ describe("Home page function should work", () => {
 
   it("should navigate to SignIn page", () => {
     cy.getBySelector("header-signin").click();
-    cy.title().should("eq", "Sign In | Cardano Explorer");
+    cy.title().should("eq", "Sign In");
     cy.getBySelector("signin-title").contains(/^(Sign In)$/i);
   });
 

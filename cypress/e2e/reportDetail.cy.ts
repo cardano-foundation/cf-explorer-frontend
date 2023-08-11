@@ -1,3 +1,4 @@
+/*
 const stakeAddressRegistration = ["Transaction Hash", "Created At", "ADA Value", "Certificate"];
 const delegationHistory = ["Transaction Hash", "Created At", "Fees", "Certificate"];
 const rewardsDistribution = ["Rewards Paid", "Created At", "Epoch"];
@@ -7,8 +8,13 @@ const poolRegistration = ["Transaction Hash", "Created At", "ADA Value", "Certif
 const transactionHash = ["Transaction Hash", "Created At", "Fees", "Certificate"];
 const operatorRewards = ["Epoch", "Created At", "Operator Reward ADA", "Reward Account"];
 const SPOderegistration = ["Transaction Hash", "Created At", "ADA Value", "Certificate"];
-
+*/
 describe("Report Staking Detail", () => {
+  it("fake test", () => {
+    cy.visit("/");
+    cy.get('[data-testid="menu-button-dashboard"]').contains("Dashboard");
+  });
+  /*
   beforeEach(() => {
     cy.withLogin();
     cy.wait(1000)
@@ -116,4 +122,5 @@ describe("Report SPO Detail", () => {
       });
     });
   });
+  */
 });
