@@ -80,14 +80,14 @@ export const PickerPortalContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  width: 322,
-  transform: "translate(-322px, 0)",
+  width: 316,
+  transform: "translate(-316px, 0)",
   [theme.breakpoints.down(650)]: {
     top: "50vh !important",
     left: "50vw !important",
     width: 0,
-    height: 660,
-    transform: "translate(-161px, -340px)",
+    height: 668,
+    transform: "translate(-156px, -348px)",
     flexDirection: "column"
   }
 }));
@@ -95,7 +95,7 @@ export const PickerPortalContainer = styled(Box)(({ theme }) => ({
 export const CloseButton = styled(IconButton)(({ theme }) => ({
   position: "absolute",
   top: 24,
-  right: -322,
+  right: -316,
   width: 24,
   height: 24,
   border: `1px solid ${theme.palette.primary[200]}`,
@@ -111,7 +111,8 @@ export const DatePickerContainer = styled(Box)(({ theme }) => ({
   height: 1,
   "div[class=react-datepicker]": {
     display: "flex",
-    minHeight: 315
+    minHeight: 352,
+    fontFamily: theme.typography.fontFamily
   },
   "&:first-of-type div[class=react-datepicker]": {
     borderRightWidth: 0,
@@ -136,9 +137,12 @@ export const DatePickerContainer = styled(Box)(({ theme }) => ({
     transform: "translate(164px, 0px) !important"
   },
   "div[class*=react-datepicker__header]": {
-    backgroundColor: "#fff",
+    backgroundColor: theme.palette.secondary[0],
     borderBottom: 0,
     paddingBottom: 5
+  },
+  "div[class=react-datepicker__month]": {
+    margin: 8
   },
   "div[class*=react-datepicker__month-container]": {
     padding: "20px 10px 0px"
@@ -148,40 +152,42 @@ export const DatePickerContainer = styled(Box)(({ theme }) => ({
     height: "0 !important"
   },
   [`div[class*="react-datepicker__day "]`]: {
-    width: 36,
-    height: 36,
+    width: 40,
+    height: 40,
     borderRadius: "50% !important",
     display: "inline-grid",
+    justifyContent: "center",
     alignItems: "center",
-    margin: "0 0.166rem"
+    margin: "1px 0"
   },
   "div[class=react-datepicker__day-name]": {
-    width: 36,
-    height: 20
+    width: 40,
+    height: 20,
+    margin: "2.5px 0"
   },
   "div[class*=react-datepicker__day--selected]": {
-    backgroundColor: "#53a57b",
-    color: "white",
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.secondary[0],
     "&:hover": {
-      backgroundColor: "#53a57b",
-      color: "white"
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.secondary[0]
     }
   },
   "div[class*=react-datepicker__day--in-selecting-range]": {
-    backgroundColor: "#53a57b9b",
-    color: "white"
+    backgroundColor: alpha(theme.palette.primary.main, 60),
+    color: theme.palette.secondary[0]
   },
   "div[class*=react-datepicker__day--keyboard-selected]": {
-    backgroundColor: "#53a57b",
-    color: "white",
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.secondary[0],
     "&hover": {
-      backgroundColor: "#53a57b",
-      color: "white"
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.secondary[0]
     }
   },
   "div[class*=react-datepicker__day--in-range]": {
-    backgroundColor: "#53a57b",
-    color: "white"
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.secondary[0]
   },
   [theme.breakpoints.down(650)]: {
     "div[class=react-datepicker__triangle]": {
@@ -209,4 +215,30 @@ export const DatePickerContainer = styled(Box)(({ theme }) => ({
       }
     }
   }
+}));
+
+export const PlaceHolder = styled(Box)(({ theme }) => ({
+  color: theme.palette.secondary.light
+}));
+
+export const StyledDay = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.primary[200],
+  width: 41,
+  height: 40,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  boxSizing: "border-box"
+}));
+
+export const SelectedDay = styled(Box)(({ theme }) => ({
+  color: theme.palette.secondary[0],
+  backgroundColor: theme.palette.primary.main,
+  width: 40,
+  height: 40,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  borderRadius: "50%",
+  boxSizing: "border-box"
 }));
