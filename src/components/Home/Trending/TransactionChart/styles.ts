@@ -41,19 +41,6 @@ export const TransactionContainer = styled(BoxRaised)`
   margin-bottom: 24px;
   padding: 20px;
   height: calc(100% - 56px);
-  [class*="highcharts-container"] {
-    height: 230px;
-    max-height: 300px;
-    width: 100%;
-    [class*="highcharts-xaxis-labels"] {
-      background: red;
-      text {
-        &:last-child {
-          text-anchor: end !important;
-        }
-      }
-    }
-  }
   ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 25px 15px;
     height: auto;

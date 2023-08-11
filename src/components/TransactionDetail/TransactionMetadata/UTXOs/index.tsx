@@ -159,7 +159,7 @@ const Card = ({
                       flexDirection={isMobile ? "column" : "row"}
                       paddingTop="5px"
                     >
-                      <Box mr={3} minWidth={180} pl={type === "down" ? 2 : 0}>
+                      <Box mr={3} minWidth={180}>
                         <Box
                           display={"flex"}
                           flexDirection={isMobile ? "column" : "row"}
