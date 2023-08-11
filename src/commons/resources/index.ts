@@ -88,7 +88,6 @@ import HomeDownIcon from "./icons/HomeDownIcon.svg";
 import DashboardIcon from "./icons/menus/Dashboard.svg";
 import LogoCardano from "./icons/LogoCardano.svg";
 import CardanoBlueLogo from "./icons/cardanoBlue.svg";
-import ADAsymbolIcon from "./icons/ADAsymbol.svg";
 
 export {
   LogoFullIcon,
@@ -180,8 +179,7 @@ export {
   DashboardIcon,
   HomeDownIcon,
   LogoCardano,
-  CardanoBlueLogo,
-  ADAsymbolIcon
+  CardanoBlueLogo
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
