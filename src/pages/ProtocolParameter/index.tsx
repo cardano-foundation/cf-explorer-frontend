@@ -487,6 +487,14 @@ export const ProtocolParameterHistory = () => {
           <Box>
             Protocol parameters update history{" "}
             <CustomTooltip
+              componentsProps={{
+                tooltip: {
+                  sx: {
+                    backgroundColor: `${theme.palette.primary[200]} !important`,
+                    color: `${theme.palette.secondary.main} !important`
+                  }
+                }
+              }}
               title={
                 <Box>
                   Please be aware that we just display the protocol parameters from Shelley Era onwards (from Epoch

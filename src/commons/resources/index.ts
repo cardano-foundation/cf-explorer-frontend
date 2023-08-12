@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-duplicates
 import LogoFullIcon from "./icons/explorer-logo.svg";
 import LogoIcon from "./icons/logo.svg";
 import WalletIcon from "./icons/wallet.svg";
@@ -86,6 +87,7 @@ import CurrentEpochHome from "./icons/currentEpochHome.svg";
 import HomeUpIcon from "./icons/HomeUpIcon.svg";
 import HomeDownIcon from "./icons/HomeDownIcon.svg";
 import DashboardIcon from "./icons/menus/Dashboard.svg";
+// eslint-disable-next-line import/no-duplicates
 import LogoExplorer from "./icons/explorer-logo.svg";
 import CardanoBlueLogo from "./icons/cardanoBlue.svg";
 
