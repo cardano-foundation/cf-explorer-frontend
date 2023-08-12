@@ -86,7 +86,7 @@ const ProtocolParameter: React.FC = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Protocol Parameters | Iris - Cardano Blockchain Explorer`;
+    document.title = `Protocol Parameters | Cardano Blockchain Explorer`;
   }, []);
 
   const theme = useTheme();
@@ -487,6 +487,14 @@ export const ProtocolParameterHistory = () => {
           <Box>
             Protocol parameters update history{" "}
             <CustomTooltip
+              componentsProps={{
+                tooltip: {
+                  sx: {
+                    backgroundColor: `${theme.palette.primary[200]} !important`,
+                    color: `${theme.palette.secondary.main} !important`
+                  }
+                }
+              }}
               title={
                 <Box>
                   Please be aware that we just display the protocol parameters from Shelley Era onwards (from Epoch

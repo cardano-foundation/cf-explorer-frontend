@@ -4,7 +4,7 @@ const Policy = () => {
   return (
     <ContainerReffer>
       <Content>
-        <TextHeader>Terms Of Service - iris.cardano.org</TextHeader>
+        <TextHeader>Terms Of Service - beta.explorer.cardano.org</TextHeader>
 
         <TextReffer>PLEASE READ THESE TERMS OF SERVICE CAREFULLY.</TextReffer>
 
@@ -23,9 +23,9 @@ const Policy = () => {
           1. Your Acceptance of Terms
           <br />
           The following Terms of Service (&ldquo;TOS&rdquo;) are between you and the Company and constitute a legal
-          agreement that governs your use of iris.cardano.org Public Beta Service and Website (collectively referred to
-          as the &ldquo;Service&rdquo;). If you do not agree to any of the following terms, please do not use the
-          Service.
+          agreement that governs your use of beta.explorer.cardano.org Public Beta Service and Website (collectively
+          referred to as the &ldquo;Service&rdquo;). If you do not agree to any of the following terms, please do not
+          use the Service.
         </TextReffer>
 
         <TextReffer>
@@ -53,7 +53,7 @@ const Policy = () => {
 
         <TextReffer>
           &ensp;<TextBold>d. Feedback</TextBold>: We welcome your feedback and suggestions about how to improve the
-          Services. Feel free to submit any feedback or suggestions at iris.support@cardanofoundation.atlassian.net
+          Services. Feel free to submit any feedback or suggestions at explorer.support@cardanofoundation.atlassian.net
         </TextReffer>
 
         <TextReffer>
@@ -264,9 +264,9 @@ const Policy = () => {
         <TextReffer>
           10. TRADEMARKS
           <br />
-          &ldquo;Cardano&rdquo;, Iris, Iris.cardano.org, the Cardano and Iris logo and any other Company product or
-          service names, logos or slogans that may appear on our Services are trademarks of Company and may not be
-          copied, imitated or used, in whole or in part, without our prior written permission.
+          &ldquo;Cardano&rdquo;, Explorer, beta.explorer.cardano.org, the Cardano and Explorer logo and any other
+          Company product or service names, logos or slogans that may appear on our Services are trademarks of Company
+          and may not be copied, imitated or used, in whole or in part, without our prior written permission.
         </TextReffer>
 
         <TextReffer>

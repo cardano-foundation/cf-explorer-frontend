@@ -51,7 +51,7 @@ const StakingLifecycle: React.FC = () => {
   };
 
   useEffect(() => {
-    document.title = "Saved Reports | Iris - Cardano Blockchain Explorer";
+    document.title = "Saved Reports | Cardano Blockchain Explorer";
   }, []);
 
   const handleSort = (sort?: string) => setParams({ ...params, sort });

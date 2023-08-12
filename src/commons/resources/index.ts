@@ -1,4 +1,5 @@
-import LogoFullIcon from "./icons/logo-mobile.svg";
+// eslint-disable-next-line import/no-duplicates
+import LogoFullIcon from "./icons/explorer-logo.svg";
 import LogoIcon from "./icons/logo.svg";
 import WalletIcon from "./icons/wallet.svg";
 import HeaderSearchIcon from "./icons/header-search.svg";
@@ -86,7 +87,8 @@ import CurrentEpochHome from "./icons/currentEpochHome.svg";
 import HomeUpIcon from "./icons/HomeUpIcon.svg";
 import HomeDownIcon from "./icons/HomeDownIcon.svg";
 import DashboardIcon from "./icons/menus/Dashboard.svg";
-import LogoCardano from "./icons/LogoCardano.svg";
+// eslint-disable-next-line import/no-duplicates
+import LogoExplorer from "./icons/explorer-logo.svg";
 import CardanoBlueLogo from "./icons/cardanoBlue.svg";
 
 export {
@@ -178,7 +180,7 @@ export {
   HomeUpIcon,
   DashboardIcon,
   HomeDownIcon,
-  LogoCardano,
+  LogoExplorer,
   CardanoBlueLogo
 };
 
@@ -299,5 +301,5 @@ export { ReactComponent as FileOverviewIcon } from "./icons/file-overview.svg";
 export { ReactComponent as RedeemerPlusIcon } from "./icons/redeemer-plus.svg";
 export { ReactComponent as RedeemerArrowDownIcon } from "./icons/redeemer-arrow-down.svg";
 export { ReactComponent as SliderRight } from "./icons/swipper-right.svg";
-export { ReactComponent as IRisLogo } from "./icons/iris-logo.svg";
+export { ReactComponent as ExplorerLogo } from "./icons/explorer-logo.svg";
 export { ReactComponent as ExclamationTriangleIcon } from "./icons/exclamation-triangle.svg";
