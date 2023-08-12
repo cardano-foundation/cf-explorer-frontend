@@ -3,7 +3,7 @@ import { Box, Grid } from "@mui/material";
 import moment from "moment";
 import { useSelector } from "react-redux";
 
-import { CurentEpochPool, LiveStakePoolIcon, RocketPoolIcon, TotalPoolIcon } from "src/commons/resources";
+import { CurentEpochPool, LiveStakeIcon, RocketPoolIcon, TotalPoolIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
@@ -124,7 +124,7 @@ const OverViews: React.FC = () => {
               <StyledCard.Value>{numberWithCommas(data?.delegators)}</StyledCard.Value>
             </StyledCard.Content>
             <Box>
-              <StyledImg src={LiveStakePoolIcon} alt="Rocket" />
+              <StyledImg src={LiveStakeIcon} alt="Rocket" />
             </Box>
           </StyledCard.Container>
         </Grid>
