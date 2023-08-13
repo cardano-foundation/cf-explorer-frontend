@@ -5,7 +5,7 @@ import { get } from "lodash";
 
 import Table, { Column } from "src/components/commons/Table";
 import { formatADAFull, formatPercent, getPageInfo, getShortWallet } from "src/commons/utils/helper";
-import { details } from "src/commons/routers";
+import { details, routers } from "src/commons/routers";
 import { HeaderSearchIcon } from "src/commons/resources";
 import useFetchList from "src/commons/hooks/useFetchList";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -162,7 +162,13 @@ const DelegationLists: React.FC = () => {
             }
           }}
         />
-        <SubmitButton onClick={() => setSearch(value)}>
+        <SubmitButton
+          onClick={() =>
+            history.push(routers.DELEGATION_POOLS, {
+              tickerNameSearch: (value || "").toLocaleLowerCase()
+            })
+          }
+        >
           <Image src={HeaderSearchIcon} alt="Search" />
         </SubmitButton>
       </SearchContainer>
