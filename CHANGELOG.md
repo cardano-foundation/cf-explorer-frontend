@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.23](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.22...v0.4.23) (2023-08-14)
+
+
+### Bug Fixes
+
+* removing unused package ([d5ec224](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d5ec2244c10ad5593c257a618569c5a6b25989fb))
+
 ## [0.4.22](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.21...v0.4.22) (2023-08-14)
 
 
