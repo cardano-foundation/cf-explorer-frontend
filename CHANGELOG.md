@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.4.21](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.20...v0.4.21) (2023-08-14)
+
+
+### Bug Fixes
+
+* menu active invalid when change tab in stake and pool detail ([1c29d2c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1c29d2cd497d3d53ed2c26dce82b7a27f9f0c7ad))
+* MET-1373 show address in account overview ([b7ce3dc](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b7ce3dc0dd0a8bb42dd47de0374fee91fcd9b85b))
+* MET-1413 update icon in pool overview ([89c3841](https://github.com/cardano-foundation/cf-explorer-frontend/commit/89c3841141652ee8864a0119d1978efa5ffe7bbb))
+* MET-1413 update icon live stake ([019b946](https://github.com/cardano-foundation/cf-explorer-frontend/commit/019b946f0dc001fc26a84cbb26bba66e05570265))
+* MET-1556 update click card ([94e1298](https://github.com/cardano-foundation/cf-explorer-frontend/commit/94e1298fda031380e55a205247683e621836214e))
+* MET-1558 wrong color after selected date range ([82d2d57](https://github.com/cardano-foundation/cf-explorer-frontend/commit/82d2d57ed68159aa6a7dc5c3d8b1c9f16fa6625c))
+* MET-1559 fix search pool wrong ([987a2d0](https://github.com/cardano-foundation/cf-explorer-frontend/commit/987a2d09f48a187769e0f6bb70e66de82b19cc09))
+* MET-1564 update color tooltip ([56f938a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/56f938aa12a59e693be17bf828659b6db49b6dc1))
+* MET-615 fix icon not show in ipad pro m1 ([67c0829](https://github.com/cardano-foundation/cf-explorer-frontend/commit/67c0829a4be33694235b4756606671f0782be89e))
+* remove eslint disable ([e032602](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e032602d29bc955bb68cec6b5673ca92d307d2af))
+* removed home var not needed ([50e5b4d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/50e5b4da7f6a2817584c1f3194d9d3e6a39f52f3))
+* spacing and adding title change ([81ab97b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/81ab97bef28919ac968e0d3fc16c7427f62be59d))
+
 ## [0.4.20](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.19...v0.4.20) (2023-08-11)
 
 
