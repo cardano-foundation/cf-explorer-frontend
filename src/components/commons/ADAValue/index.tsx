@@ -8,9 +8,9 @@ interface IAdaValue extends BoxProps {
   value: number | string;
 }
 
-export const AdaValue = ({ value }: IAdaValue) => {
+export const AdaValue = ({ value, ...props }: IAdaValue) => {
   return (
-    <Box component="span">
+    <Box component="span" {...props}>
       {formatADAFull(value)}&nbsp;
       <ADAicon />
     </Box>
