@@ -86,7 +86,6 @@ import CurrentEpochHome from "./icons/currentEpochHome.svg";
 import HomeUpIcon from "./icons/HomeUpIcon.svg";
 import HomeDownIcon from "./icons/HomeDownIcon.svg";
 import DashboardIcon from "./icons/menus/Dashboard.svg";
-import LogoExplorer from "./icons/explorer-logo.svg";
 import CardanoBlueLogo from "./icons/cardanoBlue.svg";
 
 export {
@@ -178,7 +177,6 @@ export {
   HomeUpIcon,
   DashboardIcon,
   HomeDownIcon,
-  LogoExplorer,
   CardanoBlueLogo
 };
 
