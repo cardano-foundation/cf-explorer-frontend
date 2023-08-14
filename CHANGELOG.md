@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.4.22](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.21...v0.4.22) (2023-08-14)
+
+
+### Bug Fixes
+
+* replacing committed image ([be2293f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/be2293fbd00076ec2020c3f3e81457524e3e14bf))
+* Right-pane-and-dashboard-line-break (MET-615) ([293e4dc](https://github.com/cardano-foundation/cf-explorer-frontend/commit/293e4dc5fe658d8da6f7779a7e77a3c9fc8fcf16))
+* title alignment ([3afb64e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/3afb64ed3012d380f65cce073ed5e730d01eda47))
+
 ## [0.4.21](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.20...v0.4.21) (2023-08-14)
 
 
