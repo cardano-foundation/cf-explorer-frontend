@@ -12,7 +12,6 @@ const StakingLifeCycleSearch = () => {
   const history = useHistory();
   const { isMobile } = useScreen();
   const [openInfoModal, setOpenInfoModal] = useState(false);
-  const home = history.location.pathname === "/";
   const [value, setValue] = useState<string>("");
   const [error, setError] = useState<string>("");
 
@@ -34,7 +33,7 @@ const StakingLifeCycleSearch = () => {
 
   return (
     <StyledContainer>
-      <Title home={home ? 0 : 1} data-testid="staking-lifecycle-title">
+      <Title data-testid="staking-lifecycle-title">
         <Box
           display={"flex"}
           alignItems={"center"}
@@ -141,8 +140,7 @@ const Image = styled("img")`
   height: 20px;
 `;
 
-const Title = styled("h1")<{ home: number }>`
-  display: ${(props) => (props.home ? "block" : "none")};
+const Title = styled("h1")`
   text-align: center;
   ${({ theme }) => theme.breakpoints.down("md")} {
     font-size: 30px;
