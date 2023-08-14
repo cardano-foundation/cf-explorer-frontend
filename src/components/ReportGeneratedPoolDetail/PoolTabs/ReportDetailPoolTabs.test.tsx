@@ -118,7 +118,7 @@ describe("PoolSizeTab", () => {
     render(<PoolSizeTab />);
     expect(screen.getByRole("link", { name: mockData.epoch.toString() })).toBeInTheDocument();
     expect(screen.getByText(formatADAFull(mockData.size))).toBeInTheDocument();
-    expect(screen.getByText(/aicongreen\.svg/i)).toBeInTheDocument();
+    expect(screen.getByTestId("poolsize-ada-icon")).toBeInTheDocument();
   });
 
   it("should component goto epoch page", () => {

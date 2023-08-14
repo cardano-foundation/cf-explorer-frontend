@@ -86,7 +86,6 @@ import CurrentEpochHome from "./icons/currentEpochHome.svg";
 import HomeUpIcon from "./icons/HomeUpIcon.svg";
 import HomeDownIcon from "./icons/HomeDownIcon.svg";
 import DashboardIcon from "./icons/menus/Dashboard.svg";
-import LogoExplorer from "./icons/explorer-logo.svg";
 import CardanoBlueLogo from "./icons/cardanoBlue.svg";
 
 export {
@@ -178,7 +177,6 @@ export {
   HomeUpIcon,
   DashboardIcon,
   HomeDownIcon,
-  LogoExplorer,
   CardanoBlueLogo
 };
 
@@ -222,7 +220,6 @@ export { ReactComponent as TimeIcon } from "./icons/Staking/TimeIcon.svg";
 export { ReactComponent as ADAOrangeIcon } from "./icons/Staking/ADAOrangeIcon.svg";
 export { ReactComponent as FilterIC } from "./icons/filter-ic.svg";
 export { ReactComponent as CalenderIcon } from "./icons/calender-pale.svg";
-export { ReactComponent as AIconGreen } from "./icons/AIconGreen.svg";
 export { ReactComponent as ArrowFromTopIcon } from "./icons/arrow-from-top.svg";
 export { ReactComponent as ArrowFromBottomIcon } from "./icons/arrow-from-bottom.svg";
 export { ReactComponent as HashtagIcon } from "./icons/hashtag.svg";

@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import BigNumber from "bignumber.js";
 import moment from "moment";
 import { useSelector } from "react-redux";
+import { Link as LinkDom } from "react-router-dom";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -155,7 +156,7 @@ const HomeStatistic = () => {
       </WrapGrid>
       <WrapGrid item xl lg={3} sm={6} xs={12}>
         {currentEpoch ? (
-          <Link href={details.epoch(currentEpoch?.no)} target="_blank">
+          <Box component={LinkDom} display={"contents"} to={details.epoch(currentEpoch?.no)}>
             <Item data-testid="current-epoch-box">
               <Content display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
@@ -207,14 +208,14 @@ const HomeStatistic = () => {
                 </Box>
               </Content>
             </Item>
-          </Link>
+          </Box>
         ) : (
           <SkeletonBox />
         )}
       </WrapGrid>
       <WrapGrid item xl lg={3} sm={6} xs={12}>
         {data && usdMarket ? (
-          <Link href={routers.DELEGATION_POOLS} target="_blank">
+          <Box component={LinkDom} display={"contents"} to={routers.DELEGATION_POOLS}>
             <Item data-testid="live-stake-box">
               <Content display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
                 <Box>
@@ -275,7 +276,7 @@ const HomeStatistic = () => {
                 </Box>
               </Content>
             </Item>
-          </Link>
+          </Box>
         ) : (
           <SkeletonBox />
         )}
