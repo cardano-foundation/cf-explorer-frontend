@@ -71,7 +71,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
                 component={"img"}
                 src={CardanoBlueLogo}
                 width={isGalaxyFoldSmall ? "30vw" : isMobile ? "20vw" : "auto"}
-                sx={{ marginTop: "2rem", marginBottom: "1rem" }}
+                sx={{ margin: "2rem" }}
               />
               <Box fontSize={isMobile ? "32px" : "48px"} whiteSpace={"nowrap"}>
                 Cardano Explorer

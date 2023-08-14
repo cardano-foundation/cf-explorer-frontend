@@ -248,6 +248,7 @@ export const DetailLabel = styled("small")`
   align-items: center;
   color: ${(props) => props.theme.palette.secondary.main};
   line-height: 26px;
+  white-space: nowrap;
 `;
 export const InfoIcon = styled(FiInfo)`
   font-size: 1rem;
@@ -269,7 +270,7 @@ export const DelegatedDetail = styled("small")`
   overflow: hidden;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-family-text) !important;
-  max-width: 250px;
+  max-width: 200px;
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: right;
