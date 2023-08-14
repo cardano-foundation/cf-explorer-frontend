@@ -102,7 +102,7 @@ export const HoldBox = forwardRef<HTMLElement, Props>((props, feeRef) => {
         <HoldContainer {...boxProps} ref={feeRef}>
           <Value>
             <HolderValueLabel>{formatADAFull(value || 0, roundingNumber)}</HolderValueLabel>
-            <ADAicon width={12} />
+            <ADAicon width={12} data-testid="holdbox-ada-icon" />
           </Value>
           {children}
           <Button
