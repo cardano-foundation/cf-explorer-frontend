@@ -6,9 +6,11 @@ import { useKey } from "react-use";
 import { HeaderSearchIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import InfoGraphicModal from "src/components/InfoGraphicModal";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 const StakingLifeCycleSearch = () => {
   const history = useHistory();
+  const { isMobile } = useScreen();
   const [openInfoModal, setOpenInfoModal] = useState(false);
   const [value, setValue] = useState<string>("");
   const [error, setError] = useState<string>("");
@@ -31,6 +33,18 @@ const StakingLifeCycleSearch = () => {
 
   return (
     <StyledContainer>
+      <Title data-testid="staking-lifecycle-title">
+        <Box
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          flexDirection={isMobile ? "column" : "row"}
+        >
+          <Box fontSize={isMobile ? "32px" : "48px"} whiteSpace={"nowrap"}>
+            Staking Lifecycle
+          </Box>
+        </Box>
+      </Title>
       <SearchTitle>
         Search to explore the staking lifecycle events of a delegator or pool.
         <InfoLink onClick={() => setOpenInfoModal((pre) => !pre)}>What is staking on Cardano?</InfoLink>
@@ -124,6 +138,13 @@ const SubmitButton = styled(Button)`
 const Image = styled("img")`
   width: 20px;
   height: 20px;
+`;
+
+const Title = styled("h1")`
+  text-align: center;
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    font-size: 30px;
+  }
 `;
 
 const SearchTitle = styled(Typography)(({ theme }) => ({
