@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.20](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.19...v0.4.20) (2023-08-11)
+
+
+### Bug Fixes
+
+* attempting to force a release ([f543784](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f543784d2017d8b315c97c1b97f8063ddff1ee04))
+
 ## [0.4.19](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.18...v0.4.19) (2023-08-11)
 
 

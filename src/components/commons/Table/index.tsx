@@ -259,12 +259,17 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
   const [size, setSize] = useState(pagination?.size || 50);
   const [open, setOpen] = useState(false);
   const trigger = useScrollTrigger();
-
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
     pagination && pagination.onChange && pagination.onChange(page, size);
     setPage(page);
     clearSelection?.();
   };
+
+  useEffect(() => {
+    if (pagination?.page === 0) {
+      setPage(1);
+    }
+  }, [pagination?.page]);
 
   useEffect(() => {
     trigger && setOpen(false);
