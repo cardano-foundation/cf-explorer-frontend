@@ -77,7 +77,7 @@ const StakeHistoryTab = ({ isMobile = false }) => {
       pagination={{
         ...pageInfo,
         total: fetchData.total,
-        onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
+        onChange: (page, size) => history.replace({ search: stringify({ page, size }) }, history.location.state)
       }}
     />
   );
