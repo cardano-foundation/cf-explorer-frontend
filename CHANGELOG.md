@@ -81,7 +81,6 @@
 * unit test ([8f3360e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/8f3360e5b4a22a3597f1cb8821f5fdd3c4615817))
 * unit test ([83a4779](https://github.com/cardano-foundation/cf-explorer-frontend/commit/83a4779cf7b23e4a7813f7f348c6427cfea0a3a4))
 * unit test ([1b94b2f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1b94b2f5926fdb6a7b8ea83dc98496f6e83b0f39))
-* unit-test-failed-cuz-react-hotjar ([d12d345](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d12d3453e23cfaabb50139a6e6c2ab986875e053))
 * update color icon ([4f7c106](https://github.com/cardano-foundation/cf-explorer-frontend/commit/4f7c106b716a6f5d31c72a64ea4140a743a9dfb0))
 * url change ([6278770](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6278770d94522347da9d41c5cce20026bb720136))
 * url change ([bde7479](https://github.com/cardano-foundation/cf-explorer-frontend/commit/bde747980793285bb234e315e3918189ae4e9175))
@@ -95,15 +94,8 @@
 
 ## [0.4.16](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.15...v0.4.16) (2023-08-10)
 
-
-### Features
-
-* adding hotjar to app and event tracking ([c8b9f15](https://github.com/cardano-foundation/cf-explorer-frontend/commit/c8b9f15c96cd3d6d9f40d810163cd17008fe11a1))
-
-
 ### Bug Fixes
 
-* downgrading hotjar to 5.5.0 ([8034b55](https://github.com/cardano-foundation/cf-explorer-frontend/commit/8034b55dcb2a72365fce9a105afe2a0f2be53d7c))
 * finding-1-hide-the-main-logo-when-mobile-menu-open(MET-1553) ([a44b2d9](https://github.com/cardano-foundation/cf-explorer-frontend/commit/a44b2d9aa7fe5e2233b831fd02e1b301b2c10326))
 * Merge branch 'develop' of github.com-fe-explorer-cardano:cardano-foundation/cf-explorer-frontend into bugfix/MET-1551-finding-1-change-logo-and-title-dashboard ([1b2847e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1b2847ea3ccad2ed573cd7a99beffb2ad03dee83))
 * Merge branch 'develop' of github.com-fe-explorer-cardano:cardano-foundation/cf-explorer-frontend into bugfix/MET-1556-finding-1-card-current-epoch-ui-issue ([5dd3670](https://github.com/cardano-foundation/cf-explorer-frontend/commit/5dd367083f04c68bc249480ec38b43c9872595c2))
@@ -122,7 +114,6 @@
 * MET-615 icon no data found ([19e3da5](https://github.com/cardano-foundation/cf-explorer-frontend/commit/19e3da5ba7efaa4391362aed2fba5ccf042a7e9b))
 * replaced favicon ([559645a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/559645a6e8a2a9fc1ea74cc5cfe696227c303f61))
 * unit test failed ([9fc71b6](https://github.com/cardano-foundation/cf-explorer-frontend/commit/9fc71b6e2b2c6139a6c8626bc912d2b4d6fbaf0a))
-* upgrading hotjar to 6.1.0 latest ([5bd5945](https://github.com/cardano-foundation/cf-explorer-frontend/commit/5bd5945af14a147aa5d65c681aa4d1de9bf32375))
 
 ## [0.4.15](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.14...v0.4.15) (2023-08-09)
 
