@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.4.24](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.23...v0.4.24) (2023-08-15)
+
+
+### Bug Fixes
+
+* adding 24h cap on price change ([1c8bc84](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1c8bc84bf6d22c8df897324ad0bc8b7b92e42e53))
+* adding last updated text in ada price ([d96d031](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d96d03165f603ef054e956eab770358e04006fd7))
+* change margin left ([fd866a1](https://github.com/cardano-foundation/cf-explorer-frontend/commit/fd866a138313badd6b6319865b36b3c874f4983f))
+* test fix ([877e187](https://github.com/cardano-foundation/cf-explorer-frontend/commit/877e1876aa49eb9f6d5a15bff131c38ffd1daeb0))
+
 ## [0.4.23](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.22...v0.4.23) (2023-08-14)
 
 
