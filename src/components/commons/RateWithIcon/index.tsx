@@ -28,6 +28,11 @@ const PriceValue = styled("span")<{ sign: number }>`
   font-weight: var(--font-weight-bold);
 `;
 
+const PriceChange = styled("span")`
+  color: ${(props) => props.theme.palette.text.primary};
+  font-weight: var(--font-weight-bold);
+`;
+
 const PriceNoValue = styled("span")`
   color: ${(props) => props.theme.palette.text.primary};
   margin-left: 28px;
@@ -54,6 +59,7 @@ const RateWithIcon = ({ value, size, multiple = 1, showIcon = true }: Props) => 
           {sign > 0 ? "+" : ""}
           {multiplied.toFixed(2, BigNumber.ROUND_DOWN).toString().replace(".", ",")} %
         </PriceValue>
+        <PriceChange>(24h)</PriceChange>
       </PriceRate>
     </CustomTooltip>
   );
