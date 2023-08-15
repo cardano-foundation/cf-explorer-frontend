@@ -1,6 +1,6 @@
 {
   "name": "explorer",
-  "version": "0.4.20",
+  "version": "0.4.22",
   "private": true,
   "dependencies": {
     "@cardano-foundation/cardano-connect-with-wallet": "^0.2.5",
@@ -36,7 +36,6 @@
     "react-circular-progressbar": "^2.1.0",
     "react-datepicker": "^4.11.0",
     "react-dom": "^18.2.0",
-    "react-hotjar": "^6.1.0",
     "react-icons": "^4.6.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^5.3.0",
