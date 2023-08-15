@@ -30,6 +30,7 @@ const PriceValue = styled("span")<{ sign: number }>`
 
 const PriceChange = styled("span")`
   color: ${(props) => props.theme.palette.text.primary};
+  margin-left: -8px;
   font-weight: var(--font-weight-bold);
 `;
 
