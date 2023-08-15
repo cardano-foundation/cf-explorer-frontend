@@ -26,6 +26,7 @@ const DelegationLists: React.FC = () => {
   const tableRef = useRef(null);
 
   useEffect(() => {
+    if (tickerNameSearch !== search) setPage(1);
     if (tickerNameSearch) {
       setSearch(decodeURIComponent(tickerNameSearch));
     }
