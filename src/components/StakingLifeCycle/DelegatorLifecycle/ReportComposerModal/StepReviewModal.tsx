@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { CircularProgress, Stack } from "@mui/material";
 import moment from "moment";
-import { hotjar } from "react-hotjar";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import useToast from "src/commons/hooks/useToast";
@@ -37,7 +36,6 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
   const { isMobile } = useScreen();
   const handleGenerateReport = async () => {
     setLoading(true);
-    hotjar.event("Compose report: User initiated generating report!");
     try {
       const start = params?.dateRange ? params?.dateRange[0] : null;
       const end = params?.dateRange ? params?.dateRange[1] : null;
@@ -71,14 +69,12 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
       }
 
       toast.success("Report generated successfully");
-      hotjar.event("Compose report: User generated report successfully!");
       handleCloseModal();
       setTimeout(() => {
         history.push(lists.dashboard(isPoolReport ? "pool-reports" : "stake-key-reports"));
       }, 2000);
     } catch (err: any) {
       toast.error("Failed to generate report. Please try again.");
-      hotjar.event("Compose report: User unsuccessful generated report!");
     }
     setLoading(false);
   };

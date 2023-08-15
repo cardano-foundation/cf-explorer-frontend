@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
-import { hotjar } from "react-hotjar";
 
 import FilledInfoModal from "./FilledInfoModal";
 import StepReviewModal from "./StepReviewModal";
@@ -25,7 +24,6 @@ const ReportComposerModal = ({ open, handleCloseModal }: IPropsModal) => {
 
   const gotoStep = useCallback((step?: STEPS) => {
     setCurrentStep(step);
-    hotjar.event("Compose report: User currently on " + step + "!");
   }, []);
 
   useEffect(() => {
