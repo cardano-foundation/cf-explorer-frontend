@@ -126,7 +126,7 @@ const HomeStatistic = () => {
                   <AdaPrice data-testid="ada-price-in-btc">{btcMarket[0]?.current_price} BTC</AdaPrice>
                 </Content>
                 <Content display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
-                  <TimeDuration data-testid="last-update-market-cap">
+                  <TimeDuration data-testid="last-update-ada-price">
                     Last updated {moment(usdMarket.last_updated).fromNow()}
                   </TimeDuration>
                 </Content>
