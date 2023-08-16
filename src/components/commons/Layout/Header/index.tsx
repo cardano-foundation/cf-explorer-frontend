@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { CardanoBlueLogo, LogoIcon, SearchIcon } from "src/commons/resources";
 import { setOnDetailView, setSidebar } from "src/stores/user";
@@ -26,6 +27,7 @@ import {
   NetworkContainer,
   HeaderSearchContainer
 } from "./styles";
+import SelectLanguage from "./SelectLanguage";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [lists.dashboard()];
 
@@ -36,6 +38,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const [openSearch, setOpenSearch] = React.useState(false);
   const handleToggle = () => setSidebar(!sidebar);
+  const { t } = useTranslation();
 
   const pathMatched = HIDDEN_HEADER_SEARCH_PATHS.find((subPath: string) => history.location.pathname.includes(subPath));
 
@@ -74,7 +77,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
                 sx={{ margin: "2rem" }}
               />
               <Box fontSize={isMobile ? "32px" : "48px"} whiteSpace={"nowrap"}>
-                Cardano Explorer
+                {t("head.page.dashboard")}
               </Box>
             </Box>
           </Title>
@@ -87,6 +90,8 @@ const Header: React.FC<RouteComponentProps> = (props) => {
           <SideBarRight>
             <NetworkContainer>
               <SelectNetwork />
+              &nbsp;
+              <SelectLanguage />
             </NetworkContainer>
             <LoginButton />
             {history.location.pathname !== routers.STAKING_LIFECYCLE && (
@@ -98,6 +103,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
           </SideBarRight>
         </HeaderTop>
       </HeaderBox>
+
       <TopSearch open={openSearch} onClose={setOpenSearch} />
     </HeaderContainer>
   );

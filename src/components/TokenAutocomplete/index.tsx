@@ -140,7 +140,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
             </Option>
           );
         }}
-        renderInput={(params) => <StyledTextField {...params} placeholder="Search Token" />}
+        renderInput={(params: any) => <StyledTextField {...params} placeholder="Search Token" />}
         popupIcon={<BiChevronDown />}
       />
       <ModalToken address={address} open={openModalToken} onClose={() => setOpenModalToken(false)} />

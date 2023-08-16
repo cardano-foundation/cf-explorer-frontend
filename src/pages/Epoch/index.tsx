@@ -2,6 +2,7 @@ import { stringify } from "qs";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
@@ -18,6 +19,7 @@ import { setOnDetailView } from "src/stores/user";
 import { Blocks, BlueText, EpochNumber, Output, StatusTableRow, StyledBox, StyledContainer } from "./styles";
 
 const Epoch: React.FC = () => {
+  const { t } = useTranslation();
   const [epoch, setEpoch] = useState<number | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
   const { search } = useLocation();
@@ -114,8 +116,8 @@ const Epoch: React.FC = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Epochs List | Cardano Blockchain Explorer`;
-  }, []);
+    document.title = t("head.page.epochsList");
+  }, [t]);
 
   const openDetail = (_: any, r: IDataEpoch, index: number) => {
     setOnDetailView(true);

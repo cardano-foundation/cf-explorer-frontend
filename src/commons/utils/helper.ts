@@ -5,7 +5,7 @@ import jwtDecode from "jwt-decode";
 
 import { setUserData } from "../../stores/user";
 import { getInfo, signIn } from "./userRequest";
-import { MAX_SLOT_EPOCH, NETWORK, NETWORKS, NETWORK_TYPES } from "./constants";
+import { APP_LANGUAGES, MAX_SLOT_EPOCH, NETWORK, NETWORKS, NETWORK_TYPES } from "./constants";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
 export const alphaNumeric = /[^0-9a-zA-Z]/;
@@ -244,3 +244,6 @@ export const isJson = (str: string) => {
   }
   return true;
 };
+
+export const getLang = (): APP_LANGUAGES => (localStorage.getItem("lang") as APP_LANGUAGES) || APP_LANGUAGES.ENGLISH;
+export const setLang = (lang: APP_LANGUAGES) => localStorage.setItem("lang", lang);

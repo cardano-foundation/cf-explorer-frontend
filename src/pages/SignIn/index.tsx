@@ -2,6 +2,7 @@ import { Box, FormGroup, FormHelperText, IconButton, InputAdornment } from "@mui
 import { useEffect, useReducer, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import useAuth from "src/commons/hooks/useAuth";
 import useToast from "src/commons/hooks/useToast";
@@ -56,6 +57,8 @@ const formReducer = (state: IForm, event: any) => {
 };
 
 export default function SignIn() {
+  const { t } = useTranslation();
+
   const history = useHistory();
   const toast = useToast();
   const AUTHENTICATE_ROUTES = [
@@ -80,7 +83,7 @@ export default function SignIn() {
   });
 
   useEffect(() => {
-    document.title = "Sign In | Cardano Blockchain Explorer";
+    document.title = t("tabname.signIn");
   }, []);
 
   const enableButton = Object.values(formData).every((value) => value.touched) && !error && !loading;
@@ -136,7 +139,7 @@ export default function SignIn() {
           error = "Please enter Email Address";
         }
         if (!isValidEmail(value)) {
-          error = "Please enter a valid email address";
+          error = t("form.signIn.errorPassword");
         }
         break;
       case "password":

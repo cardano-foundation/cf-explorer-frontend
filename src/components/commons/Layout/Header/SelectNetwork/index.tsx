@@ -5,7 +5,7 @@ import { BiChevronDown } from "react-icons/bi";
 import { FRONT_END_NETWORK, NETWORK, NETWORKS, NETWORK_NAMES, STORAGE_KEYS } from "src/commons/utils/constants";
 import { setOnDetailView } from "src/stores/user";
 
-const StyledSelect = styled(Select)(({ theme }) => ({
+export const StyledSelect = styled(Select)(({ theme }) => ({
   fontFamily: "var(--font-family-title)",
   border: `2px solid ${theme.palette.primary[200]}`,
   background: "transparent",

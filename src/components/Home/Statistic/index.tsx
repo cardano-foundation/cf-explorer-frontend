@@ -3,6 +3,7 @@ import BigNumber from "bignumber.js";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import { Link as LinkDom } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -60,6 +61,8 @@ const MAX_PERCENT_SHOW_PENDING_TIME = 90;
 const MIN_PERCENT_SHOW_ACTIVE_TIME = 5;
 
 const HomeStatistic = () => {
+  const { t } = useTranslation();
+
   const { currentEpoch, usdMarket } = useSelector(({ system }: RootState) => system);
   const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS);
   const { data: btcMarket } = useFetch<CardanoMarket[]>(
@@ -107,9 +110,9 @@ const HomeStatistic = () => {
                     style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
                     data-testid="ada-price-icon"
                     src={AdaPriceIcon}
-                    alt="Ada Price"
+                    alt={t("stats.adaPrice")}
                   />
-                  <Name data-testid="ada-price-box-title">Ada Price</Name>
+                  <Name data-testid="ada-price-box-title">{t("stats.adaPrice")}</Name>
                 </Box>
                 <Box display={"flex"} alignItems={"center"}>
                   <ItemIcon src={sign > 0 ? HomeUpIcon : HomeDownIcon} alt="Home up icon" />
@@ -127,7 +130,7 @@ const HomeStatistic = () => {
                 </Content>
                 <Content display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
                   <TimeDuration data-testid="last-update-ada-price">
-                    Last updated {moment(usdMarket.last_updated).fromNow()}
+                    {t("info.lastUpdatedTime", { time: moment(usdMarket.last_updated).fromNow() })}
                   </TimeDuration>
                 </Content>
               </WrapCardContent>
