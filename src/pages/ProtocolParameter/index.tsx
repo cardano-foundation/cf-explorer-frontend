@@ -487,21 +487,13 @@ export const ProtocolParameterHistory = () => {
           <Box>
             Protocol parameters update history{" "}
             <CustomTooltip
-              componentsProps={{
-                tooltip: {
-                  sx: {
-                    backgroundColor: `${theme.palette.primary[200]} !important`,
-                    color: `${theme.palette.secondary.main} !important`
-                  }
-                }
-              }}
               title={
                 <Box>
                   Please be aware that we just display the protocol parameters from Shelley Era onwards (from Epoch
                   208). For further information, please visit
                   <Box
                     ml={1}
-                    color={({ palette }) => `${palette.primary.main} !important`}
+                    color={({ palette }) => `${palette.primary[200]} !important`}
                     component={"a"}
                     href="https://github.com/cardano-foundation/CIPs/tree/master/CIP-0009"
                     rel="noreferrer"
