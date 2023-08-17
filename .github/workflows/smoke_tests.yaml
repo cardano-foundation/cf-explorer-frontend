@@ -1,14 +1,17 @@
-name: Run Explorer e2e Tests
+name: Run Smoke Tests
 on:
   push:
-  
+    branches:
+      - main
   pull_request:
-  
+    branches:
+      - main
+    types: [opened, synchronize]
   workflow_dispatch:
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  smoke-test:
+    runs-on: self-hosted
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
@@ -19,7 +22,7 @@ jobs:
           echo "REACT_APP_VERSION=$npm_package_version" >> .env
           echo "REACT_APP_API_URL=${EXPLORER_API_MAINNET_URL}" >> .env
           echo "REACT_APP_MAINNET_APP_URL=${EXPLORER_API_MAINNET_URL}" >> .env
-          echo 'REACT_APP_NETWORK_NAMES="{"mainnet":"Mainnet","preprod":"Preprod"}"' >> .env
+          echo "REACT_APP_NETWORK_NAMES=\"{\"mainnet\":\"Mainnet\",\"preprod\":\"Preprod\"}\"" >> .env
 
       - name: 🫡 Setup node
         uses: actions/setup-node@v1
@@ -29,8 +32,17 @@ jobs:
       - name: 🧘‍♀️ Download dependencies
         run: npm ci
 
+      - name: Generate test script
+        run: |
+          cd cypress/smoke
+          which pip || ( sudo apt update -qq && sudo apt install -y python3-pip )
+          pip3 install numpy requests
+          python3 CypressDynamicScript.py
+
       - name: 🎳 Run tests
         run: npm test
+        env:
+          DANGEROUSLY_DISABLE_HOST_CHECK: true
 
       - name: 📹 Archive test videos
         uses: actions/upload-artifact@v3
