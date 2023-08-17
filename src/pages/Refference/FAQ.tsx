@@ -1,25 +1,21 @@
-import { IRisLogo } from "src/commons/resources";
+import { Link, styled } from "@mui/material";
 
 import { ContainerReffer, TextReffer, Content, TextHeader, TitleSection, TextSubHeader, TextItalic } from "./styles";
+
+const LinkTo = styled(Link)`
+  color: ${(props) => `${props.theme.palette.primary.main} !important`};
+`;
 
 const FAQ = () => {
   return (
     <ContainerReffer>
-      <IRisLogo />
       <Content>
-        <TextHeader>Iris FAQ</TextHeader>
+        <TextHeader>Frequently Asked Questions</TextHeader>
         <br />
-        <TextSubHeader>General</TextSubHeader>
-        <TextReffer>
-          <TitleSection>Is iris open source?</TitleSection> <br />
-          Absolutely. Transparency is a key principle of iris. You will find a link to our GitHub repositories on our
-          landing page. Look for the GitHub icon!
-        </TextReffer>
-
         <TextReffer>
           <TextSubHeader>Getting Started</TextSubHeader>
-          <TitleSection>Do I need to sign up to access iris?</TitleSection>
-          Iris is publicly accessible, signing up is optional
+          <TitleSection>Do I need to sign up to access Explorer?</TitleSection>
+          Explorer is publicly accessible, signing up is optional
         </TextReffer>
 
         <TextReffer>
@@ -57,7 +53,7 @@ const FAQ = () => {
 
         <TextReffer>
           <TitleSection> Navigating back to the landing page?</TitleSection>
-          If you ever want to return to the home page, it's as easy as a single click. Look for the Iris icon at the
+          If you ever want to return to the home page, it's as easy as a single click. Look for the Explorer icon at the
           webpage's top left corner. You will be instantly taken back to the familiar home page by clicking on the
           Cardano icon.
         </TextReffer>
@@ -214,23 +210,31 @@ const FAQ = () => {
 
         <TextReffer>
           <TitleSection> I'm experiencing technical issues. What should I do?</TitleSection>
-          If you are facing an issue in Iris, please let us know by capturing the details in the support widget at the
-          bottom right side of the page as a &ldquo;?&rdquo; icon.
+          If you are facing an issue in Explorer, please let us know by capturing the details in the support widget at
+          the bottom right side of the page as a &ldquo;?&rdquo; icon.
         </TextReffer>
 
         <TextReffer>
           <TitleSection> Do we handle all support issues? </TitleSection>
-          We are happy to help with Iris-related troubleshooting matters. Please note that we are not able to respond to
-          individual cases that are not directly related to Iris (e.g. &ldquo;I forgot my wallet seed phrase&rdquo;,
-          &ldquo;I transferred my ada to the wrong address&rdquo;, &ldquo;can you help me understand what this data
-          means?&rdquo;) at present.
+          We are happy to help with Explorer-related troubleshooting matters. Please note that we are not able to
+          respond to individual cases that are not directly related to Explorer (e.g. &ldquo;I forgot my wallet seed
+          phrase&rdquo;, &ldquo;I transferred my ada to the wrong address&rdquo;, &ldquo;can you help me understand what
+          this data means?&rdquo;) at present.
         </TextReffer>
 
         <TextReffer>
           <TitleSection>Can I suggest a feature or provide feedback?</TitleSection>
           Yes! We would love to hear from you. You can create a feature request in the support widget at the bottom
-          right-hand side of Iris. Please select the option &ldquo;Feature Request&rdquo; when submitting your idea.{" "}
+          right-hand side of Explorer. Please select the option &ldquo;Feature Request&rdquo; when submitting your idea.{" "}
           <br />
+        </TextReffer>
+
+        <TextReffer>
+          <TitleSection>Known Bugs and Issues</TitleSection>
+          Please see a list of our known bugs{" "}
+          <LinkTo href="https://github.com/cardano-foundation/cf-explorer" target="_blank" rel="noopener noreferrer">
+            here
+          </LinkTo>
         </TextReffer>
       </Content>
     </ContainerReffer>

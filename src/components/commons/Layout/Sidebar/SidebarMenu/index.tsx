@@ -1,35 +1,35 @@
-import React, { useState, useEffect } from "react";
+import { Collapse, ListItem } from "@mui/material";
+import React, { useEffect, useMemo, useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import { useWindowSize } from "react-use";
 import { useSelector } from "react-redux";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
-import { Collapse, Divider, ListItem, useTheme } from "@mui/material";
 
+import { useScreen } from "src/commons/hooks/useScreen";
 import { footerMenus, menus } from "src/commons/menus";
 import { isExternalLink } from "src/commons/utils/helper";
-import { setSidebar } from "src/stores/user";
-import { RootState } from "src/stores/types";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import { RootState } from "src/stores/types";
+import { setSidebar } from "src/stores/user";
 
 import FooterMenu from "../FooterMenu";
 import {
+  FooterMenuContainer,
+  IconMenu,
   Menu,
   MenuIcon,
   MenuText,
+  SidebarMenuContainer,
+  StyledDivider,
   SubMenu,
   SubMenuText,
-  itemStyle,
-  IconMenu,
-  SidebarMenuContainer,
-  FooterMenuContainer
+  itemStyle
 } from "./styles";
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const pathname = history.location.pathname;
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const specialPath = useSelector(({ system }: RootState) => system.specialPath);
-  const { width } = useWindowSize(0);
-  const theme = useTheme();
+  const { isTablet } = useScreen();
 
   const isActiveMenu = (href: string, isSpecialPath?: boolean): boolean => {
     if (href === pathname) return true;
@@ -40,7 +40,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     return false;
   };
 
-  const getActive = () => {
+  const currentActive = useMemo(() => {
     const active = menus.findIndex(
       ({ href, children }) =>
         (href && isActiveMenu(href)) ||
@@ -48,36 +48,45 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     );
     if (active + 1) return `menu-${active}`;
 
+    const footerActive = footerMenus.findIndex(
+      ({ href, children }) =>
+        (href && isActiveMenu(href)) ||
+        children?.find(({ href, isSpecialPath }) => href && isActiveMenu(href, isSpecialPath))
+    );
+    if (footerActive + 1) return `footer-${footerActive}`;
+
     return "";
-  };
-  const [active, setActive] = useState<string | null>(getActive());
-
-  useEffect(() => {
-    if (!sidebar) setActive(null);
-  }, [sidebar]);
-
-  useEffect(() => {
-    if (pathname === "/" || !sidebar) setActive(null);
-    else setActive(getActive());
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname, sidebar, specialPath]);
+  }, [pathname, specialPath]);
+
+  const [active, setActive] = useState<string | null>(currentActive);
 
   useEffect(() => {
-    if (!sidebar && width >= theme.breakpoints.values.md) setSidebar(true);
-    else if (sidebar && width < theme.breakpoints.values.md) setSidebar(false);
+    setActive(sidebar ? active || currentActive : null);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width >= theme.breakpoints.values.md]);
+  }, [sidebar, specialPath]);
 
   useEffect(() => {
-    if (width <= theme.breakpoints.values.md) setSidebar(false);
+    if (pathname === "/") setActive(null);
+  }, [pathname, setActive]);
+
+  useEffect(() => {
+    if (!sidebar && !isTablet) setSidebar(true);
+    else if (sidebar && isTablet) setSidebar(false);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isTablet]);
+
+  useEffect(() => {
+    if (isTablet) setSidebar(false);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const handleOpen = (item: string) => {
-    setActive(item !== active ? item : null);
+    setActive(!sidebar || item !== active ? item : currentActive);
     if (!sidebar) setSidebar(true);
   };
 
@@ -115,14 +124,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     })}
                   >
                     {icon ? (
-                      <MenuIcon
-                        src={icon}
-                        alt={title}
-                        iconOnly={!sidebar ? 1 : 0}
-                        active={isActiveMenu(href) ? 1 : 0}
-                      />
+                      <MenuIcon src={icon} alt={title} iconOnly={+!sidebar} active={+isActiveMenu(href)} />
                     ) : null}
-                    <MenuText primary={title} open={sidebar ? 1 : 0} active={isActiveMenu(href) ? 1 : 0} />
+                    <MenuText primary={title} open={+sidebar} active={+isActiveMenu(href)} />
                   </ListItem>
                 ) : (
                   <ListItem
@@ -131,7 +135,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     onClick={() => children?.length && handleOpen(`menu-${index}`)}
                     sx={(theme) => ({
                       ...itemStyle(theme, sidebar),
-                      ...(`menu-${index}` === active
+                      ...(`menu-${index}` === active || `menu-${index}` === currentActive
                         ? {
                             backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
                             color: (theme) => theme.palette.secondary[0]
@@ -139,7 +143,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                         : { color: (theme) => theme.palette.secondary.light }),
                       fontWeight: "bold !important",
                       ":hover":
-                        `menu-${index}` === active
+                        `menu-${index}` === active || `menu-${index}` === currentActive
                           ? {
                               backgroundColor: `${theme.palette.primary.dark} !important`
                             }
@@ -150,25 +154,22 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                       <MenuIcon
                         src={icon}
                         alt={title}
-                        iconOnly={!sidebar ? 1 : 0}
-                        text={children?.length ? 1 : 0}
-                        active={`menu-${index}` === active ? 1 : 0}
+                        iconOnly={+!sidebar}
+                        active={+(`menu-${index}` === active || `menu-${index}` === currentActive)}
                       />
                     ) : null}
                     <MenuText
                       primary={title}
-                      open={sidebar ? 1 : 0}
-                      active={`menu-${index}` === active ? 1 : 0}
-                      text={1}
-                      disable={tooltipTitle ? 1 : 0}
+                      open={+sidebar}
+                      active={+(`menu-${index}` === active || `menu-${index}` === currentActive)}
+                      disable={+!!tooltipTitle}
                     />
 
-                    {sidebar &&
-                      (children?.length ? (
-                        <IconMenu component={"span"}>
-                          {`menu-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
-                        </IconMenu>
-                      ) : null)}
+                    {sidebar && children?.length ? (
+                      <IconMenu component={"span"}>
+                        {`menu-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
+                      </IconMenu>
+                    ) : null}
                   </ListItem>
                 )}
               </CustomTooltip>
@@ -211,15 +212,11 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                             <MenuIcon
                               src={icon}
                               alt={title}
-                              iconOnly={!sidebar ? 1 : 0}
-                              active={isActiveMenu(href, isSpecialPath) ? 1 : 0}
+                              iconOnly={+!sidebar}
+                              active={+isActiveMenu(href, isSpecialPath)}
                             />
                           ) : null}
-                          <SubMenuText
-                            primary={title}
-                            open={sidebar ? 1 : 0}
-                            active={+isActiveMenu(href, isSpecialPath)}
-                          />
+                          <SubMenuText primary={title} open={+sidebar} active={+isActiveMenu(href, isSpecialPath)} />
                         </ListItem>
                       ) : null;
                     })}
@@ -229,17 +226,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
             </React.Fragment>
           );
         })}
-        <Divider
-          sx={{
-            margin: "10px 0px 10px 30px",
-            width: sidebar ? 200 : 25,
-            borderColor: theme.palette.primary[200],
-            transition: "width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms",
-            [theme.breakpoints.down("md")]: {
-              marginLeft: "20px"
-            }
-          }}
-        />
+        <StyledDivider sidebar={+sidebar} />
         {footerMenus.map((item, index) => {
           const { href, title, children, icon, tooltip } = item;
           const tooltipTitle = `${!sidebar ? `${title}${title && tooltip ? `: ` : ``}` : ``}${tooltip || ``}`;
@@ -269,14 +256,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     })}
                   >
                     {icon ? (
-                      <MenuIcon
-                        src={icon}
-                        alt={title}
-                        iconOnly={!sidebar ? 1 : 0}
-                        active={isActiveMenu(href) ? 1 : 0}
-                      />
+                      <MenuIcon src={icon} alt={title} iconOnly={+!sidebar} active={+isActiveMenu(href)} />
                     ) : null}
-                    <MenuText primary={title} open={sidebar ? 1 : 0} active={isActiveMenu(href) ? 1 : 0} />
+                    <MenuText primary={title} open={+sidebar} active={+isActiveMenu(href)} />
                   </ListItem>
                 ) : (
                   <ListItem
@@ -300,20 +282,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     })}
                   >
                     {icon ? (
-                      <MenuIcon
-                        src={icon}
-                        alt={title}
-                        iconOnly={!sidebar ? 1 : 0}
-                        text={children?.length ? 1 : 0}
-                        active={`footer-${index}` === active ? 1 : 0}
-                      />
+                      <MenuIcon src={icon} alt={title} iconOnly={+!sidebar} active={+(`footer-${index}` === active)} />
                     ) : null}
-                    <MenuText
-                      primary={title}
-                      open={sidebar ? 1 : 0}
-                      active={`footer-${index}` === active ? 1 : 0}
-                      text={1}
-                    />
+                    <MenuText primary={title} open={+sidebar} active={+(`footer-${index}` === active)} />
                     {sidebar &&
                       (children?.length ? (
                         <IconMenu component={"span"}>
@@ -351,14 +322,9 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                           })}
                         >
                           {icon ? (
-                            <MenuIcon
-                              src={icon}
-                              alt={title}
-                              iconOnly={!sidebar ? 1 : 0}
-                              active={isActiveMenu(href) ? 1 : 0}
-                            />
+                            <MenuIcon src={icon} alt={title} iconOnly={+!sidebar} active={+isActiveMenu(href)} />
                           ) : null}
-                          <SubMenuText primary={title} open={sidebar ? 1 : 0} active={isActiveMenu(href) ? 1 : 0} />
+                          <SubMenuText primary={title} open={+sidebar} active={+isActiveMenu(href)} />
                         </ListItem>
                       ) : null;
                     })}

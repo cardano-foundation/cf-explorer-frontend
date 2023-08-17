@@ -1,4 +1,4 @@
-import { Box, IconButton, useTheme } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import BigNumber from "bignumber.js";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -7,17 +7,17 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { EyeIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { getShortHash } from "src/commons/utils/helper";
+import { formatADAFull, getShortHash } from "src/commons/utils/helper";
 import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
 import { AdaValue } from "src/components/commons/ADAValue";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import { DeregistrationCertificateModal } from "../../Deregistration";
 
 const DeregsitrationTab = () => {
-  const theme = useTheme();
   const { poolId = "" } = useParams<{ poolId: string }>();
   const [params, setParams] = useState({
     page: 0,
@@ -65,9 +65,9 @@ const DeregsitrationTab = () => {
             <AdaValue value={data.poolHold ? new BigNumber(data.poolHold).minus(data.fee).toString() : 0} />
             <TableSubTitle>
               <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-                <AdaValue color={theme.palette.secondary.light} value={data.poolHold} gap="3px" fontSize="12px" />
-                <Box mx="3px">/</Box>
-                <AdaValue color={theme.palette.secondary.light} value={data.fee} gap="3px" fontSize="12px" />
+                {formatADAFull(data.poolHold)}&nbsp;
+                <ADAicon width={9} />/{formatADAFull(data.fee)}&nbsp;
+                <ADAicon width={9} />
               </Box>
             </TableSubTitle>
           </Box>

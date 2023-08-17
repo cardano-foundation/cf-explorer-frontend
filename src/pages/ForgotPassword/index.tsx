@@ -1,4 +1,4 @@
-  import { Box, FormGroup } from "@mui/material";
+import { Box, FormGroup } from "@mui/material";
 import { useEffect, useReducer, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { HiArrowLongLeft } from "react-icons/hi2";
@@ -67,7 +67,7 @@ export default function ForgotPassword() {
           error = "Please enter your Email";
           // eslint-disable-next-line no-useless-escape
         } else if (!/^[\w-\.+!#$%&'*/=?^_`{|]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
-          error = "Invalid Email";
+          error = "Please enter a valid email address";
         }
         break;
       default:
@@ -159,7 +159,7 @@ export default function ForgotPassword() {
   return (
     <Container>
       <WrapContent>
-        <WrapTitle>Forgot Password</WrapTitle>
+        <WrapTitle>Forgot password</WrapTitle>
         <WrapHintText>
           <WrapSignUp onClick={() => history.replace(routers.SIGN_IN)}>Sign In</WrapSignUp>
         </WrapHintText>
@@ -179,7 +179,6 @@ export default function ForgotPassword() {
                 <IoMdClose />
               </CloseButton>
               <WrapInput>
-                <Label>Email</Label>
                 <InputCustom
                   startAdornment={
                     <Box paddingRight={"10px"} paddingTop={"7px"} paddingBottom={"2px"}>
@@ -192,7 +191,7 @@ export default function ForgotPassword() {
                   onChange={handleChange}
                   onBlur={checkError}
                   fullWidth
-                  placeholder="Email"
+                  placeholder="Email address"
                   error={Boolean(formData.email.error && formData.email.touched)}
                 />
                 {formData.email.error && formData.email.touched ? (

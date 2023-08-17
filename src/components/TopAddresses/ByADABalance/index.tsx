@@ -28,12 +28,6 @@ const TopAddressesByADABalance = () => {
 
   const columns: Column<Address>[] = [
     {
-      title: "#",
-      key: "id",
-      minWidth: 30,
-      render: (_, index) => numberWithCommas(index + 1)
-    },
-    {
       title: "Addresses",
       key: "address",
       minWidth: 120,
@@ -98,6 +92,7 @@ const TopAddressesByADABalance = () => {
         loading={loading}
         initialized={initialized}
         columns={columns}
+        tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "55vh" } }) }}
         onClickRow={(_, r) => history.push(details.address(r.address))}
       />
     </Box>

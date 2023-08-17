@@ -22,8 +22,7 @@ import {
   TabContent,
   TabHeader,
   StyledTab,
-  StyledTabs,
-  StyledContainer
+  StyledTabs
 } from "./styles";
 
 export interface SavedReport {
@@ -52,7 +51,7 @@ const StakingLifecycle: React.FC = () => {
   };
 
   useEffect(() => {
-    document.title = "Saved Reports | Iris - Cardano Blockchain Explorer";
+    document.title = "Saved Reports | Cardano Blockchain Explorer";
   }, []);
 
   const handleSort = (sort?: string) => setParams({ ...params, sort });
@@ -86,7 +85,7 @@ const StakingLifecycle: React.FC = () => {
     );
 
   return (
-    <StyledContainer>
+    <Container>
       <StakingLifeCycleSearch />
       <TitleHead>
         <TextHeadline>Saved reports</TextHeadline>
@@ -135,7 +134,7 @@ const StakingLifecycle: React.FC = () => {
           />
         </TabContent>
       </TabContext>
-    </StyledContainer>
+    </Container>
   );
 };
 

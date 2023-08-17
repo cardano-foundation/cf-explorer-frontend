@@ -23,9 +23,10 @@ BigNumber.config({ DECIMAL_PLACES: 40 });
 interface ITokenOverview {
   data: IToken | null;
   loading: boolean;
+  currentHolders: number;
 }
 
-const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
+const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders }) => {
   const [openModal, setOpenModal] = useState(false);
   const [policyId, setPolicyId] = useState("");
   const decimalToken = data?.decimals || data?.metadata?.decimals || 0;
@@ -65,7 +66,9 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
       value: (
         <>
           <Box position={"relative"}>
-            <PolicyId>{data?.policy || ""}</PolicyId>
+            <CustomTooltip title={data?.policy}>
+              <PolicyId>{data?.policy || ""}</PolicyId>
+            </CustomTooltip>
             <Box position={"absolute"} top={"-5px"} right={0}>
               <CopyButton text={data?.policy}></CopyButton>
             </Box>
@@ -117,7 +120,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
         </Box>
       ),
       icon: RewardIcon,
-      value: numberWithCommas(data?.numberOfHolders || "")
+      value: numberWithCommas(currentHolders || data?.numberOfHolders || "")
     },
     {
       title: (
@@ -128,7 +131,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
         </Box>
       ),
       icon: exchageIconUrl,
-      value: numberWithCommas(data?.totalVolume || "")
+      value: formatNumberDivByDecimals(data?.totalVolume || "", decimalToken || 0)
     },
     {
       title: (
@@ -139,7 +142,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading }) => {
         </Box>
       ),
       icon: USDIcon,
-      value: numberWithCommas(data?.volumeIn24h || "")
+      value: formatNumberDivByDecimals(data?.volumeIn24h || "", data?.metadata?.decimals || 0)
     },
     {
       title: (

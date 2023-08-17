@@ -20,7 +20,6 @@ import {
   ForgotPassword,
   FormHelperTextCustom,
   InputCustom,
-  Label,
   UserCustomIcon,
   WrapButton,
   WrapButtonConnectWallet,
@@ -81,7 +80,7 @@ export default function SignIn() {
   });
 
   useEffect(() => {
-    document.title = "Sign In | Iris - Cardano Blockchain Explorer";
+    document.title = "Sign In | Cardano Blockchain Explorer";
   }, []);
 
   const enableButton = Object.values(formData).every((value) => value.touched) && !error && !loading;
@@ -232,7 +231,6 @@ export default function SignIn() {
               </Box>
             ) : null}
             <WrapInput>
-              <Label>Email Address</Label>
               <InputCustom
                 error={Boolean(formData.email.error && formData.email.touched)}
                 startAdornment={
@@ -244,14 +242,13 @@ export default function SignIn() {
                 value={formData.email.value}
                 onChange={handleChange}
                 fullWidth
-                placeholder="Email Address"
+                placeholder="Email address"
               />
               {formData.email.error && formData.email.touched ? (
                 <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom>
               ) : null}
             </WrapInput>
             <WrapInput>
-              <Label>Password</Label>
               <InputCustom
                 startAdornment={
                   <Box paddingRight={"10px"} paddingTop={"5px"} paddingBottom={"2px"}>
@@ -279,7 +276,7 @@ export default function SignIn() {
             </WrapInput>
             <ForgotPassword data-testid="forgot-password-link">
               <Box component={"span"} onClick={() => history.push(routers.FORGOT_PASSWORD)}>
-                Forgot your password?
+                Forgot password
               </Box>
             </ForgotPassword>
             <WrapButton
@@ -289,7 +286,7 @@ export default function SignIn() {
               onClick={handleSubmit}
               disabled={!enableButton}
             >
-              Log in
+              Sign In
             </WrapButton>
             <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
               <WrapDivider />

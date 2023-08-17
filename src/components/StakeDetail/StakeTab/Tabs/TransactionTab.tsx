@@ -8,13 +8,7 @@ import receiveImg from "src/commons/resources/images/receiveImg.svg";
 import sendImg from "src/commons/resources/images/sendImg.svg";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import {
-  formatADAFull,
-  formatDateTimeLocal,
-  getPageInfo,
-  getShortHash,
-  numberWithCommas
-} from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -67,12 +61,6 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
   };
 
   const columns: Column<Transactions>[] = [
-    {
-      title: "#",
-      key: "id",
-      minWidth: 30,
-      render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)
-    },
     {
       title: "Tx Hash",
       key: "txhash",
@@ -199,7 +187,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
           pagination={{
             ...pageInfo,
             total: fetchData.total,
-            onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
+            onChange: (page, size) => history.replace({ search: stringify({ page, size }) }, history.location.state)
           }}
           onClickRow={onClickRow}
           selected={selected}

@@ -1,6 +1,7 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { Backdrop, Box } from "@mui/material";
-import { NetworkType, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { NetworkType } from "@cardano-foundation/cardano-connect-with-wallet-core";
 import { useSelector } from "react-redux";
 
 import { WalletIcon } from "src/commons/resources";
@@ -15,7 +16,7 @@ import {
 } from "src/stores/user";
 import { getInfo, getNonce, signIn } from "src/commons/utils/userRequest";
 import { NETWORK, NETWORKS, NETWORK_TYPES } from "src/commons/utils/constants";
-import { removeAuthInfo } from "src/commons/utils/helper";
+import { removeAuthInfo, validateTokenExpired } from "src/commons/utils/helper";
 import useToast from "src/commons/hooks/useToast";
 import ConnectedProfileOption from "src/components/commons/ConnectedProfileOption";
 import ConnectWalletModal from "src/components/commons/ConnectWalletModal";
@@ -23,6 +24,7 @@ import ConnectWalletModal from "src/components/commons/ConnectWalletModal";
 import { Image, Span, Spin, StyledButton } from "./styles";
 import RegisterUsernameModal from "../RegisterUsernameModal";
 import SignMessageModal from "../SignMessageModal";
+
 interface Props {
   customButton?: ({ handleClick }: { handleClick: () => void }) => React.ReactNode;
   onSuccess?: () => void;
@@ -33,9 +35,10 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
   const { isEnabled, stakeAddress, isConnected, connect, signMessage, disconnect, enabledWallet } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
   });
+  const isValidToken = validateTokenExpired();
   const [signature, setSignature] = React.useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [isSign, setIsSign] = useState(isConnected);
+  const [isSign, setIsSign] = useState(isValidToken);
   const toast = useToast();
 
   useEffect(() => {
@@ -73,7 +76,6 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
           type: 1
         };
         const response = await signIn(payload);
-
         setIsSign(true);
         const data = response.data;
 
@@ -106,7 +108,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         setNonce(nonceValue);
         await signMessage(
           nonceValue.nonce,
-          (signature) => handleSignIn(signature, nonceValue),
+          (signature: any) => handleSignIn(signature, nonceValue),
           () => {
             toast.error("User rejected the request!");
             setModalSignMessage(false);
@@ -121,7 +123,6 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
       setSubmitting(false);
     }
   };
-
   if (isEnabled && stakeAddress && isSign) {
     return (
       <>
@@ -134,7 +135,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
     return (
       <StyledButton type="button">
         <Spin size={20} />
-        <Span>Re-Connecting</Span>
+        <Span>Reconnecting</Span>
       </StyledButton>
     );
   }

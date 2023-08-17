@@ -1,15 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 
 import useFetchList from "../../../commons/hooks/useFetchList";
 import { details } from "../../../commons/routers";
-import {
-  formatNumberDivByDecimals,
-  getPageInfo,
-  getShortWallet,
-  numberWithCommas
-} from "../../../commons/utils/helper";
+import { formatNumberDivByDecimals, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
 import { PriceValue, SmallText, StyledLink } from "./styles";
@@ -19,9 +14,10 @@ interface ITokenTopHolder {
   tokenId: string;
   totalSupply?: number;
   decimal?: number;
+  setCurrentHolder?: (holders: number) => void;
 }
 
-const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decimal }) => {
+const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decimal, setCurrentHolder }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -31,20 +27,22 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decim
     tokenId
   });
 
+  useEffect(() => {
+    if (fetchData.total && setCurrentHolder) {
+      setCurrentHolder(fetchData.total || 0);
+    }
+  }, [fetchData.total]);
+
   const columns: Column<ITokenTopHolderTable>[] = [
-    {
-      title: "#",
-      key: "id",
-      minWidth: "40px",
-      render: (data, index) => <SmallText>{numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)}</SmallText>
-    },
     {
       title: "Address",
       key: "address",
       minWidth: "200px",
       render: (r) => (
         <CustomTooltip title={r.address}>
-          <StyledLink to={details.address(r.address)}>{getShortWallet(r.address)}</StyledLink>
+          <StyledLink to={r.addressType === "PAYMENT_ADDRESS" ? details.address(r.address) : details.stake(r.address)}>
+            {getShortWallet(r.address)}
+          </StyledLink>
         </CustomTooltip>
       )
     },

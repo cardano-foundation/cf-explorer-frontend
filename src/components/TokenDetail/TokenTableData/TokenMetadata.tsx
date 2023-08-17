@@ -2,6 +2,8 @@ import React from "react";
 import { Box, useTheme } from "@mui/material";
 import { JsonViewer } from "@textea/json-viewer";
 
+import { isJson } from "src/commons/utils/helper";
+
 import { ViewJson } from "./styles";
 
 interface ITokenMetadataProps {
@@ -19,7 +21,7 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson }) => {
       ) : (
         <JsonViewer
           data-testid="JsonViewer"
-          value={metadataJson ? JSON.parse(metadataJson) : {}}
+          value={isJson(metadataJson) ? JSON.parse(metadataJson) : metadataJson}
           displayObjectSize={false}
           displayDataTypes={false}
           enableClipboard={false}

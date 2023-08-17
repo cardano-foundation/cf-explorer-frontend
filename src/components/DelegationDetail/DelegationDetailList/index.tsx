@@ -7,6 +7,7 @@ import { formatADAFull, formatDateTimeLocal, getShortWallet, numberWithCommas } 
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import { StyledLink } from "./styles";
 
@@ -26,7 +27,7 @@ const DelegationEpochList = ({
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
   const setQuery = (query: any) => {
-    history.replace({ search: stringify(query) });
+    history.replace({ search: stringify(query) }, history.location.state);
   };
   const columns: Column<DelegationEpoch>[] = [
     {
@@ -42,23 +43,34 @@ const DelegationEpochList = ({
       render: (data) => numberWithCommas(data.block)
     },
     {
-      title: "Stake Amount (A)",
+      title: (
+        <Box component={"span"}>
+          Stake Amount (<ADAicon />)
+        </Box>
+      ),
       key: "stakeAmount",
       minWidth: "120px",
 
       render: (data) => <Box component={"span"}>{formatADAFull(data.stakeAmount)}</Box>
     },
     {
-      title: "Delegator Rewards (A)",
+      title: (
+        <Box component={"span"}>
+          Delegator Rewards (<ADAicon />)
+        </Box>
+      ),
       key: "delegatorReward",
       minWidth: "120px",
       render: (data) => <Box component={"span"}>{formatADAFull(data.delegators)}</Box>
     },
     {
-      title: "Fees (A)",
+      title: (
+        <Box component={"span"}>
+          Fees (<ADAicon />)
+        </Box>
+      ),
       key: "fees",
       minWidth: "120px",
-
       render: (data) => <Box component={"span"}>{formatADAFull(data.fee)}</Box>
     }
   ];
@@ -97,7 +109,7 @@ const DelegationStakingDelegatorsList = ({
   const query = parse(search.split("?")[1]);
   const history = useHistory();
   const setQuery = (query: any) => {
-    history.replace({ search: stringify(query) });
+    history.replace({ search: stringify(query) }, history.location.state);
   };
   const columns: Column<StakingDelegators>[] = [
     {
@@ -120,7 +132,11 @@ const DelegationStakingDelegatorsList = ({
         )
     },
     {
-      title: "Total Value (A)",
+      title: (
+        <Box component="span">
+          Total Value (<ADAicon />)
+        </Box>
+      ),
       key: "value",
       minWidth: "120px",
       render: (data) => <Box component={"span"}>{formatADAFull(data.totalStake)}</Box>
@@ -132,7 +148,11 @@ const DelegationStakingDelegatorsList = ({
       render: (data) => formatDateTimeLocal(data.time || "")
     },
     {
-      title: "Fees (A)",
+      title: (
+        <Box component="span">
+          Fees (<ADAicon />)
+        </Box>
+      ),
       key: "fees",
       minWidth: "120px",
       render: (data) => <Box component={"span"}>{formatADAFull(data.fee)}</Box>

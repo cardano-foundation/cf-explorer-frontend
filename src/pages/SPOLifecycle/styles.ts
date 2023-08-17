@@ -2,7 +2,6 @@ import { Button, alpha, Box, Container, IconButton, styled } from "@mui/material
 import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)`
-  max-width: 95vw !important;
   padding-top: 20px;
   position: relative;
   min-height: calc(100vh - 170px);

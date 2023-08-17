@@ -1,17 +1,17 @@
 import { Box, Grid, useTheme } from "@mui/material";
-import { Area, AreaChart, CartesianGrid, Label, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import BigNumber from "bignumber.js";
 import moment from "moment";
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Area, AreaChart, CartesianGrid, Label, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { TooltipProps } from "recharts/types/component/Tooltip";
-import BigNumber from "bignumber.js";
 
-import { useScreen } from "src/commons/hooks/useScreen";
-import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
 import useFetch from "src/commons/hooks/useFetch";
+import { useScreen } from "src/commons/hooks/useScreen";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import { formatPrice, numberWithCommas } from "src/commons/utils/helper";
+import { formatNumberDivByDecimals, formatPrice } from "src/commons/utils/helper";
+import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
 
 import Card from "../../commons/Card";
 import {
@@ -24,15 +24,17 @@ import {
   Tab,
   Tabs,
   Title,
-  ValueInfo,
-  Wrapper,
   TooltipBody,
   TooltipLabel,
-  TooltipValue
+  TooltipValue,
+  ValueInfo,
+  Wrapper
 } from "./styles";
 
 type AnalyticsData = { date: string; value: number };
-
+interface ITokenAnalyticsProps {
+  dataToken?: IToken | null;
+}
 const options = [
   { value: "ONE_DAY", label: "1d" },
   { value: "ONE_WEEK", label: "1w" },
@@ -40,7 +42,7 @@ const options = [
   { value: "THREE_MONTH", label: "3m" }
 ];
 
-const AddressAnalytics: FC = () => {
+const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const { tokenId } = useParams<{ tokenId: string }>();
   const { isMobile } = useScreen();
@@ -53,7 +55,9 @@ const AddressAnalytics: FC = () => {
   const minBalance = BigNumber.min(maxBalance, ...values).toString();
 
   const formatPriceValue = (value: string) => {
-    return formatPrice(value);
+    return formatPrice(
+      new BigNumber(value).div(new BigNumber(10).exponentiatedBy(dataToken?.metadata?.decimals || 0)).toString()
+    );
   };
 
   const convertDataChart = data?.map((item) => ({
@@ -80,7 +84,9 @@ const AddressAnalytics: FC = () => {
     return (
       <TooltipBody>
         <TooltipLabel>{getLabelTimeTooltip(content.label)}</TooltipLabel>
-        <TooltipValue>{numberWithCommas(content.payload?.[0]?.value) || 0}</TooltipValue>
+        <TooltipValue>
+          {formatNumberDivByDecimals(content.payload?.[0]?.value, dataToken?.metadata?.decimals || 0) || 0}
+        </TooltipValue>
       </TooltipBody>
     );
   };
@@ -159,7 +165,11 @@ const AddressAnalytics: FC = () => {
                       <Title>Highest Volume</Title>
                     </Box>
                     <ValueInfo>
-                      {loading ? <SkeletonUI variant="rectangular" /> : numberWithCommas(maxBalance)}
+                      {loading ? (
+                        <SkeletonUI variant="rectangular" />
+                      ) : (
+                        formatNumberDivByDecimals(maxBalance, dataToken?.metadata?.decimals || 0)
+                      )}
                     </ValueInfo>
                   </Box>
                 </BoxInfoItemRight>
@@ -172,7 +182,11 @@ const AddressAnalytics: FC = () => {
                       <Title>Lowest Volume</Title>
                     </Box>
                     <ValueInfo>
-                      {loading ? <SkeletonUI variant="rectangular" /> : numberWithCommas(minBalance)}
+                      {loading ? (
+                        <SkeletonUI variant="rectangular" />
+                      ) : (
+                        formatNumberDivByDecimals(minBalance, dataToken?.metadata?.decimals || 0)
+                      )}
                     </ValueInfo>
                   </Box>
                 </BoxInfoItem>

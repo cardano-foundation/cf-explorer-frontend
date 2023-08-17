@@ -1,5 +1,15 @@
 import styled from "@emotion/styled";
-import { AccordionDetails, Box, Button, Checkbox, IconButton, Skeleton, alpha, useTheme } from "@mui/material";
+import {
+  AccordionDetails,
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  IconButton,
+  Skeleton,
+  alpha,
+  useTheme
+} from "@mui/material";
 import { isObject, isEmpty } from "lodash";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -11,7 +21,7 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import { useList, useUpdateEffect } from "react-use";
 
 import useFetch from "src/commons/hooks/useFetch";
-import { DateRangeIcon, EmptyIcon, FilterIcon, InfoIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
+import { DateRangeIcon, FilterIcon, InfoIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
 import { details, lists } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { PROTOCOL_TYPE } from "src/commons/utils/constants";
@@ -36,7 +46,6 @@ import {
   ButtonFilter,
   ColumnProtocol,
   FilterContainer,
-  StyledContainer,
   StyledDropdownItem
 } from "./styles";
 
@@ -77,7 +86,7 @@ const ProtocolParameter: React.FC = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Protocol Parameters | Iris - Cardano Blockchain Explorer`;
+    document.title = `Protocol Parameters | Cardano Blockchain Explorer`;
   }, []);
 
   const theme = useTheme();
@@ -209,7 +218,7 @@ const ProtocolParameter: React.FC = () => {
   if (histories && histories !== "histories") return <NoRecord />;
 
   return (
-    <StyledContainer>
+    <Container>
       {histories && (
         <Box textAlign={"left"}>
           <BackButton onClick={() => history.push(lists.protocolParameters())}>
@@ -220,7 +229,7 @@ const ProtocolParameter: React.FC = () => {
       )}
       {histories && <ProtocolParameterHistory />}
       {!histories && (
-        <Card titleSx={{ margin: 0 }} title={"Protocol parameters"}>
+        <Card titleSx={{ margin: 0 }} title={"Protocol Parameters"}>
           <Box pt={2}>
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
@@ -287,7 +296,7 @@ const ProtocolParameter: React.FC = () => {
         handleCloseModal={() => setExplainerText(null)}
         explainerText={explainerText || { content: "", title: "" }}
       />
-    </StyledContainer>
+    </Container>
   );
 };
 
@@ -472,9 +481,41 @@ export const ProtocolParameterHistory = () => {
       <Card
         titleSx={{
           margin: 0,
-          width: "max-content"
+          width: "100%"
         }}
-        title={"Protocol parameters update history"}
+        title={
+          <Box>
+            Protocol parameters update history{" "}
+            <CustomTooltip
+              componentsProps={{
+                tooltip: {
+                  sx: {
+                    backgroundColor: `${theme.palette.primary[200]} !important`,
+                    color: `${theme.palette.secondary.main} !important`
+                  }
+                }
+              }}
+              title={
+                <Box>
+                  Please be aware that we just display the protocol parameters from Shelley Era onwards (from Epoch
+                  208). For further information, please visit
+                  <Box
+                    ml={1}
+                    color={({ palette }) => `${palette.primary.main} !important`}
+                    component={"a"}
+                    href="https://github.com/cardano-foundation/CIPs/tree/master/CIP-0009"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    https://github.com/cardano-foundation/CIPs/tree/master/CIP-0009
+                  </Box>
+                </Box>
+              }
+            >
+              <InfoIcon style={{ cursor: "pointer" }} />
+            </CustomTooltip>
+          </Box>
+        }
         textAlign={"left"}
         extra={
           <Box position={"relative"}>
@@ -512,7 +553,7 @@ export const ProtocolParameterHistory = () => {
           !initing &&
           !loading && (
             <Box textAlign={"center"}>
-              <Box component={"img"} src={EmptyIcon} mt={3} />
+              <NoRecord />
               <Box
                 component={Button}
                 width={"200px"}

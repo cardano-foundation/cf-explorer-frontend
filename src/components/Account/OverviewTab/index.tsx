@@ -1,17 +1,16 @@
-import { ReactElement, useEffect, useState } from "react";
-import { Box, CircularProgress, Input, useTheme } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { NetworkType, isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet-core";
+import { Box, CircularProgress, Input } from "@mui/material";
 import moment from "moment";
-import { useHistory } from "react-router-dom";
-import { GoCheck } from "react-icons/go";
-import { IoMdClose } from "react-icons/io";
-import { NetworkType, isWalletInstalled, useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
+import { ReactElement, useEffect, useState } from "react";
 import { MdOutlineFileDownload } from "react-icons/md";
+import { useSelector } from "react-redux";
 
-import { regexEmail } from "src/commons/utils/helper";
-import { editInfo, getInfo } from "src/commons/utils/userRequest";
+import { useScreen } from "src/commons/hooks/useScreen";
+import useToast from "src/commons/hooks/useToast";
 import { NETWORK, NETWORKS, NETWORK_TYPES, SUPPORTED_WALLETS } from "src/commons/utils/constants";
-import { setUserData } from "src/stores/user";
+import { getShortWallet } from "src/commons/utils/helper";
+import { editInfo, getInfo } from "src/commons/utils/userRequest";
 import {
   GroupFlex,
   InstallButton,
@@ -21,17 +20,11 @@ import {
   WalletName
 } from "src/components/commons/ConnectWalletModal/style";
 import StyledModal from "src/components/commons/StyledModal";
-import useToast from "src/commons/hooks/useToast";
-import { SupportedWallets, Wallet } from "src/types/user";
-import CustomTooltip from "src/components/commons/CustomTooltip";
-import { ReactComponent as Edit } from "src/commons/resources/icons/pen.svg";
-import { ReactComponent as Search } from "src/commons/resources/icons/search.svg";
 import { RootState } from "src/stores/types";
-import { routers } from "src/commons/routers";
-import CopyButton from "src/components/commons/CopyButton";
-import { useScreen } from "src/commons/hooks/useScreen";
+import { setUserData } from "src/stores/user";
+import { SupportedWallets, Wallet } from "src/types/user";
 
-import { Label, StyledAction, StyledRowItem, TextNote, Value, WalletAddress, WrapInfoItemMobile } from "./styles";
+import { Label, StyledAction, StyledRowItem, Value, WrapInfoItemMobile } from "./styles";
 
 export type TRowItem = {
   label: string;
@@ -83,102 +76,22 @@ export const RowItem: React.FC<TRowItem> = ({
 };
 
 const OverviewTab = () => {
-  const history = useHistory();
   const { userData } = useSelector(({ user }: RootState) => user);
-  const { isTablet } = useScreen();
-  const [showInput, setShowInput] = useState(false);
-  const [email, setEmail] = useState("");
+  const { isTablet, isMobile } = useScreen();
   const [openModal, setOpenModal] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const theme = useTheme();
-  const toast = useToast();
-
-  const handleSubmitEmail = async () => {
-    if (!email) return;
-    if (!regexEmail.test(email)) {
-      toast.error("Invalid email!");
-    } else {
-      try {
-        setLoading(true);
-        await editInfo({ email });
-        const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-        setUserData({ ...response.data, loginType: userData?.loginType || "" });
-        toast.success("Change email successfully!");
-        setShowInput(false);
-      } catch (error) {
-        toast.error(
-          ((error as any)?.response &&
-            (error as any)?.response?.data &&
-            (error as any)?.response?.data?.errorMessage) ||
-            "Something went wrong!"
-        );
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
 
   return (
     <Box textAlign="left">
-      <TextNote>Below are the username, email and overview information for your account</TextNote>
       <RowItem
-        label="Your email address"
-        value={userData?.email}
-        isTablet={isTablet}
-        action={
-          !userData?.email ? (
-            showInput ? (
-              <Box display={"flex"} alignItems={"center"}>
-                {!loading && (
-                  <Box
-                    component={IoMdClose}
-                    size={"24px"}
-                    color={theme.palette.error[700]}
-                    onClick={() => setShowInput(false)}
-                    mr={1}
-                  />
-                )}
-                {!loading ? (
-                  <Box
-                    color={theme.palette.success[800]}
-                    component={GoCheck}
-                    size={"24px"}
-                    onClick={handleSubmitEmail}
-                  />
-                ) : (
-                  <CircularProgress size={"24px"} />
-                )}
-              </Box>
-            ) : (
-              <Edit onClick={() => setShowInput(true)} />
-            )
-          ) : (
-            <></>
-          )
-        }
-        isInput={showInput}
-        placeholder="Enter your email"
-        setvalueInput={setEmail}
-        valueInput={email}
-      />
-      <RowItem
-        label="Address Bookmark"
-        value={`${userData?.sizeBookmark} out of 2000 available limit`}
-        action={<Search onClick={() => history.push(routers.BOOKMARK)} />}
-        isTablet={isTablet}
-      />
-      <RowItem
-        label="Wallet"
+        label="You are logged in as"
         value={
-          <Box display="inline-flex" alignItems="center">
-            <CustomTooltip title={userData?.wallet || userData?.address}>
-              <WalletAddress>{userData?.wallet || userData?.address}</WalletAddress>
-            </CustomTooltip>
-            {userData?.wallet || userData?.address ? <CopyButton text={userData?.wallet || userData?.address} /> : null}
-          </Box>
+          userData?.loginType === "connectWallet"
+            ? isMobile
+              ? getShortWallet(userData.address || "")
+              : userData?.address
+            : userData?.email
         }
         isTablet={isTablet}
-        action={!userData?.wallet && !userData?.address ? <Edit onClick={() => setOpenModal(true)} /> : <></>}
       />
       <RowItem
         label="Last Login"
@@ -266,7 +179,7 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
       <>
         <>
           <Title>Link wallet to your account</Title>
-          <Box color={({ palette }) => palette.grey[300]} fontWeight={"bold"} fontSize={"14px"}>
+          <Box color={({ palette }) => palette.secondary.light} fontWeight={"bold"} fontSize={"14px"}>
             You can only link wallet once per account
           </Box>
           <>

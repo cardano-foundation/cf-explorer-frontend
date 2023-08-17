@@ -45,8 +45,8 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       title: "ADA Balance",
       value: (
         <Box display="flex" alignItems="center">
-          {formatADAFull(data?.balance)}
-          <ADAicon pl={"8px"} />
+          {formatADAFull(data?.balance)}&nbsp;
+          <ADAicon />
         </Box>
       )
     },
@@ -63,14 +63,14 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       title: "Total Stake",
       value: (
         <Box>
-          {formatADAFull(dataStake?.totalStake)}
-          <ADAicon pl={"8px"} />
+          {formatADAFull(dataStake?.totalStake)}&nbsp;
+          <ADAicon />
         </Box>
       )
     },
     {
       title: "Pool Name",
-      value: (
+      value: dataStake?.pool?.poolId ? (
         <Link
           to={dataStake?.pool?.poolId ? details.delegation(dataStake.pool.poolId) : "#"}
           style={{ fontFamily: "var(--font-family-text)", color: theme.palette.primary.main }}
@@ -83,14 +83,16 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
             </CustomTooltip>
           )}
         </Link>
+      ) : (
+        <span>Not delegated to any pool</span>
       )
     },
     {
       title: "Reward Balance",
       value: (
         <Box>
-          {formatADAFull(dataStake?.rewardAvailable)}
-          <ADAicon pl={"8px"} />
+          {formatADAFull(dataStake?.rewardAvailable)}&nbsp;
+          <ADAicon />
         </Box>
       )
     }

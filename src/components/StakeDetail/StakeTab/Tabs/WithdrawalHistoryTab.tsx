@@ -51,8 +51,8 @@ const columns: Column<WithdrawalHistory>[] = [
     minWidth: "120px",
     render: (r) => (
       <>
-        <Box component={"span"}> {formatADAFull(r.amount)}</Box>
-        <ADAicon pl={"3px"} />
+        <Box component={"span"}> {formatADAFull(r.amount)}</Box>&nbsp;
+        <ADAicon />
       </>
     )
   }
@@ -74,7 +74,7 @@ const WithdrawalHistoryTab = () => {
       pagination={{
         ...pageInfo,
         total: fetchData.total,
-        onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
+        onChange: (page, size) => history.replace({ search: stringify({ page, size }) }, history.location.state)
       }}
     />
   );

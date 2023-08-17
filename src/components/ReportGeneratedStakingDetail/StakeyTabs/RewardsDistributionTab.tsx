@@ -1,16 +1,18 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatDateTimeLocal, getPageInfo } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getPageInfo } from "src/commons/utils/helper";
 import { FilterParams } from "src/components/commons/CustomFilter";
 import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
-import { AdaValue } from "src/components/commons/ADAValue";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
+import ADAicon from "src/components/commons/ADAIcon";
+
+import { ADAValueLabel } from "../styles";
 
 const RewardsDistributionTab = () => {
   const { reportId } = useParams<{ reportId: string }>();
@@ -25,13 +27,24 @@ const RewardsDistributionTab = () => {
     txHash: params.search,
     sort: sort || params.sort
   });
+  const theme = useTheme();
   const { total } = fetchData;
   const columns: Column<RewardDistributionItem>[] = [
     {
       title: "Rewards Paid",
       key: "paid",
       minWidth: "120px",
-      render: (r) => <AdaValue value={r.amount} />
+      render: (r) => {
+        const isPositiveNumber = r.amount > 0;
+        return (
+          <ADAValueLabel>
+            <Box component={"span"} color={isPositiveNumber ? theme.palette.success[800] : theme.palette.error[700]}>
+              {isPositiveNumber ? "+" : "-"} {formatADAFull(r.amount)}&nbsp;
+              <ADAicon />
+            </Box>
+          </ADAValueLabel>
+        );
+      }
     },
     {
       title: "Created At",

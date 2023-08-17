@@ -1,9 +1,10 @@
 {
-  "name": "iris",
-  "version": "0.4.13",
+  "name": "explorer",
+  "version": "0.4.23",
   "private": true,
   "dependencies": {
-    "@cardano-foundation/cardano-connect-with-wallet": "^0.1.57",
+    "@cardano-foundation/cardano-connect-with-wallet": "^0.2.5",
+    "@cardano-foundation/cardano-connect-with-wallet-core": "^0.2.3",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/lab": "^5.0.0-alpha.111",
@@ -26,6 +27,7 @@
     "bignumber.js": "^9.1.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "json-bigint": "^1.0.0",
+    "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "number-to-bn": "^1.7.0",

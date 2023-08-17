@@ -12,7 +12,6 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DownIcon,
-  EmptyIcon,
   EndPage,
   EyeIcon,
   NextPage,
@@ -36,7 +35,6 @@ import CustomIcon from "../CustomIcon";
 import Filter from "../Filter";
 import {
   Empty,
-  EmtyImage,
   InputNumber,
   LoadingWrapper,
   SelectMui,
@@ -57,13 +55,14 @@ import {
   Wrapper,
   StyledMenuItem
 } from "./styles";
+import NoRecord from "../NoRecord";
 
 type TEmptyRecord = {
   className?: string;
 };
 export const EmptyRecord: React.FC<TEmptyRecord> = ({ className }) => (
   <Empty className={className}>
-    <EmtyImage src={EmptyIcon} alt="no data" />
+    <NoRecord />
   </Empty>
 );
 
@@ -209,23 +208,19 @@ const TableBody = <T extends ColumnType>({
   return (
     <TBody>
       {loading && initialized && (
-        <tr>
-          <td>
-            <LoadingWrapper
-              bgcolor={(theme) => alpha(theme.palette.common.black, 0.05)}
-              width={"100%"}
-              height={"100%"}
-              zIndex={1000}
-              display="flex"
-              justifyContent="center"
-              alignItems="self-start"
-            >
-              <Box pt={"20%"}>
-                <CircularProgress />
-              </Box>
-            </LoadingWrapper>
-          </td>
-        </tr>
+        <LoadingWrapper
+          bgcolor={(theme) => alpha(theme.palette.common.black, 0.05)}
+          width={"100%"}
+          height={"100%"}
+          zIndex={1000}
+          display="flex"
+          justifyContent="center"
+          alignItems="self-start"
+        >
+          <Box pt={"20%"}>
+            <CircularProgress />
+          </Box>
+        </LoadingWrapper>
       )}
       {data &&
         data.map((row, index) => (
@@ -321,6 +316,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
       </Box>
       {pagination?.total && pagination.total > 10 ? (
         <PaginationCustom
+          key={page}
           pagination={pagination}
           total={pagination.total || 0}
           page={page}
@@ -343,6 +339,7 @@ const Table: React.FC<TableProps> = ({
   className,
   emptyClassName,
   style,
+  tableWrapperProps,
   loading,
   initialized = true,
   error,
@@ -405,6 +402,7 @@ const Table: React.FC<TableProps> = ({
         height={heightTable}
         className={data && data.length !== 0 ? "table-wrapper" : "hide-scroll"}
         loading={loading ? 1 : 0}
+        {...tableWrapperProps}
       >
         <TableFullWidth ref={tableRef}>
           <TableHeader
@@ -554,24 +552,10 @@ const PaginationCustom = ({
               type={"string"}
               value={inputPage}
               length={inputPage.toString().length || 1}
-              onChange={(e) => {
-                if (+e.target.value <= totalPage) {
-                  setInputPage(+e.target.value);
-                }
-              }}
               onBlur={() => {
                 setInputPage(page);
               }}
-              disabled={pagination?.hideLastPage || loading}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  if (inputPage < 1) {
-                    setInputPage(1);
-                  }
-                  pagination?.handleCloseDetailView && pagination.handleCloseDetailView();
-                  handleChangePage(null, inputPage);
-                }
-              }}
+              disabled={true}
             />
             <Box component={"span"} color={(theme) => theme.palette.secondary.main} fontSize="0.875rem">
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}

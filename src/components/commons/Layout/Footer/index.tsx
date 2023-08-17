@@ -80,15 +80,15 @@ const Footer: React.FC = () => {
           &copy; {new Date().getFullYear()} Cardano Foundation. All rights reserved. Version: {APP_VERSION}
         </Copyright>
         <RefContainer>
-          <LinkTo to={routers.FAQ} target="_blank" rel="noopener noreferrer">
-            FAQ
+          <LinkTo to={routers.FAQ} rel="noopener noreferrer">
+            FAQs
           </LinkTo>
           <DotDivide />
-          <LinkTo to={routers.TERMS_AND_CONDITIONS} target="_blank" rel="noopener noreferrer">
-            Terms and Conditions
+          <LinkTo to={routers.TERMS_OF_SERVICE} rel="noopener noreferrer">
+            Terms Of Service
           </LinkTo>
           <DotDivide />
-          <LinkTo to={routers.POLICY} target="_blank" rel="noopener noreferrer">
+          <LinkTo to={routers.POLICY} rel="noopener noreferrer">
             Privacy Policy
           </LinkTo>
         </RefContainer>

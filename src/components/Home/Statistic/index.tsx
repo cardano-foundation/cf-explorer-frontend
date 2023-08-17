@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import BigNumber from "bignumber.js";
 import moment from "moment";
 import { useSelector } from "react-redux";
+import { Link as LinkDom } from "react-router-dom";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -34,6 +35,7 @@ import {
   ProgressPending,
   StatisticContainer,
   StyledAdaLogoIcon,
+  TextPending,
   TimeDuration,
   Title,
   WrapCardContent,
@@ -54,6 +56,9 @@ const SkeletonBox = () => (
 
 const MILION = 10 ** 6;
 
+const MAX_PERCENT_SHOW_PENDING_TIME = 90;
+const MIN_PERCENT_SHOW_ACTIVE_TIME = 5;
+
 const HomeStatistic = () => {
   const { currentEpoch, usdMarket } = useSelector(({ system }: RootState) => system);
   const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS);
@@ -72,6 +77,10 @@ const HomeStatistic = () => {
   const progress = moment(currentEpoch?.endTime).isAfter(moment())
     ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
     : 100;
+
+  const isShowProgressPendingText = +progress < MAX_PERCENT_SHOW_PENDING_TIME;
+  const isShowProgressActiveText = +progress > MIN_PERCENT_SHOW_ACTIVE_TIME;
+
   const slot = (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH;
   const countdown = MAX_SLOT_EPOCH - slot;
   const duration = moment.duration(countdown ? countdown : 0, "second");
@@ -116,6 +125,11 @@ const HomeStatistic = () => {
                   />
                   <AdaPrice data-testid="ada-price-in-btc">{btcMarket[0]?.current_price} BTC</AdaPrice>
                 </Content>
+                <Content display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
+                  <TimeDuration data-testid="last-update-ada-price">
+                    Last updated {moment(usdMarket.last_updated).fromNow()}
+                  </TimeDuration>
+                </Content>
               </WrapCardContent>
             </Item>
           </Link>
@@ -147,7 +161,7 @@ const HomeStatistic = () => {
       </WrapGrid>
       <WrapGrid item xl lg={3} sm={6} xs={12}>
         {currentEpoch ? (
-          <Link href={details.epoch(currentEpoch?.no)} target="_blank">
+          <Box component={LinkDom} display={"contents"} to={details.epoch(currentEpoch?.no)}>
             <Item data-testid="current-epoch-box">
               <Content display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
@@ -165,20 +179,28 @@ const HomeStatistic = () => {
                   <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
                     <Title data-testid="current-epoch-number">{numberWithCommas(currentEpoch?.no)}</Title>
                     <Box color={({ palette }) => palette.secondary.light}>
-                      Slot: {numberWithCommas(currentEpoch?.slot % MAX_SLOT_EPOCH)}/ {numberWithCommas(MAX_SLOT_EPOCH)}
+                      Slot:{" "}
+                      {moment(currentEpoch?.endTime).isAfter(moment())
+                        ? numberWithCommas(currentEpoch?.slot)
+                        : numberWithCommas(MAX_SLOT_EPOCH)}
+                      / {numberWithCommas(MAX_SLOT_EPOCH)}
                     </Box>
                   </Box>
                   <Progress>
                     <CustomTooltip title={+progress || 0}>
                       <ProcessActive data-testid="current-epoch-progress-active" rate={+progress || 0}>
-                        {+progress || 0}%
+                        {isShowProgressActiveText && `${+progress || 0}%`}
                       </ProcessActive>
                     </CustomTooltip>
-                    <ProgressPending data-testid="current-epoch-progress-pending" rate={100 - (+progress || 0)}>
-                      <Box color={({ palette }) => palette.secondary.light}>
-                        {days}d {hours}h
-                      </Box>
-                    </ProgressPending>
+                    <CustomTooltip title={`${days}d ${hours}h`}>
+                      <ProgressPending data-testid="current-epoch-progress-pending" rate={100 - (+progress || 0)}>
+                        {isShowProgressPendingText && (
+                          <TextPending>
+                            {days}d {hours}h
+                          </TextPending>
+                        )}
+                      </ProgressPending>
+                    </CustomTooltip>
                   </Progress>
                 </Box>
                 <Box>
@@ -191,14 +213,14 @@ const HomeStatistic = () => {
                 </Box>
               </Content>
             </Item>
-          </Link>
+          </Box>
         ) : (
           <SkeletonBox />
         )}
       </WrapGrid>
       <WrapGrid item xl lg={3} sm={6} xs={12}>
         {data && usdMarket ? (
-          <Link href={routers.DELEGATION_POOLS} target="_blank">
+          <Box component={LinkDom} display={"contents"} to={routers.DELEGATION_POOLS}>
             <Item data-testid="live-stake-box">
               <Content display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
                 <Box>
@@ -209,9 +231,7 @@ const HomeStatistic = () => {
                       src={LiveStakeIcon}
                       alt="Total ADA Stake"
                     />
-                    <Name data-testid="live-stake-box-title">
-                      Live Stake <StyledAdaLogoIcon />
-                    </Name>
+                    <Name data-testid="live-stake-box-title">Live Stake</Name>
                   </Box>
                 </Box>
                 <Box>
@@ -245,7 +265,9 @@ const HomeStatistic = () => {
                   </Box>
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
                     <CustomTooltip title={"Of the max supply"}>
-                      <span>Circulating supply (ADA): </span>
+                      <span>
+                        Circulating supply <StyledAdaLogoIcon />:{" "}
+                      </span>
                     </CustomTooltip>
                     <CustomTooltip title={numberWithCommas(supply)}>
                       <span data-testid="circulating-supply-value">{formatADA(circulatingSupply.toString())}</span>
@@ -259,7 +281,7 @@ const HomeStatistic = () => {
                 </Box>
               </Content>
             </Item>
-          </Link>
+          </Box>
         ) : (
           <SkeletonBox />
         )}

@@ -54,7 +54,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
 
   useEffect(() => {
     const title = stakeAddressType === STAKE_ADDRESS_TYPE.REGISTRATION ? "Registrations" : "Deregistrations";
-    document.title = `${title} Stake Addresses | Iris - Cardano Blockchain Explorer`;
+    document.title = `${title} Stake Addresses | Cardano Blockchain Explorer`;
   }, [stakeAddressType]);
 
   const openDetail = (_: any, r: IStakeKey, index: number) => {
@@ -150,6 +150,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
             onClickRow={openDetail}
             selected={selected}
             showTabView
+            tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
           />
         </Card>
       </Box>

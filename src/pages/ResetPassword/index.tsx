@@ -62,7 +62,7 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
   });
 
   useEffect(() => {
-    document.title = "Reset Password | Iris - Cardano Blockchain Explorer";
+    document.title = "Reset Password | Cardano Blockchain Explorer";
   }, []);
 
   const handleTogglePassword = () => {
@@ -205,7 +205,6 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
           {!success && !error ? (
             <WrapForm>
               <WrapInput>
-                <Label>New Password</Label>
                 <InputCustom
                   startAdornment={
                     <Box paddingRight={"10px"} paddingTop={"5px"} paddingBottom={"2px"}>
@@ -232,7 +231,7 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
                   }}
                   fullWidth
                   type={showPassword ? "text" : "password"}
-                  placeholder="New Password"
+                  placeholder="New password"
                   error={Boolean(formData.password.error && formData.password.touched)}
                 />
                 {formData.password.error && formData.password.touched ? (
@@ -240,7 +239,6 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
                 ) : null}
               </WrapInput>
               <WrapInput>
-                <Label>Confirm New Password</Label>
                 <InputCustom
                   startAdornment={
                     <Box paddingRight={"10px"} paddingTop={"5px"} paddingBottom={"2px"}>
@@ -259,7 +257,7 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
                       </IconButton>
                     </InputAdornment>
                   }
-                  placeholder="Confirm Password"
+                  placeholder="Confirm password"
                   error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
                 />
                 {formData.confirmPassword.error && formData.confirmPassword.touched ? (

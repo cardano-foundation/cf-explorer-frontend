@@ -185,7 +185,7 @@ const renderTooltipContent = (o: any, range: Time) => {
   };
   const total = (payload || []).reduce((result: number, entry: any) => result + entry.value, 0);
   return (
-    <Box>
+    <Box key={label}>
       <Box
         p={1}
         bgcolor={({ palette }) => alpha(palette.common.white, 0.9)}
@@ -193,15 +193,24 @@ const renderTooltipContent = (o: any, range: Time) => {
         textAlign={"left"}
         boxShadow={(theme) => theme.shadow.dropdown}
       >
-        <Box color={({ palette }) => palette.secondary.main} textAlign={"center"}>{getLabel(label, range)}</Box>
-        {(payload || []).reverse().map((entry: any, index: number) => (
-          <Box key={`item-${index}`} mt={1}>
-            <Box fontSize={"0.75rem"}>{`${nameTooltips[entry.name as keyof typeof nameTooltips]}`}</Box>
-            <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.light}>{`${numberWithCommas(
-              entry.value
-            )} (${getPercent(entry.value, total)})`}</Box>
-          </Box>
-        ))}
+        <Box color={({ palette }) => palette.secondary.main} textAlign={"center"}>
+          {getLabel(label, range)}
+        </Box>
+        {(payload || [])
+          .map((entry: any, index: number) => {
+            return (
+              <Box key={`item-${index}`} mt={1}>
+                <Box fontSize={"0.75rem"}>{`${nameTooltips[entry.name as keyof typeof nameTooltips]}`}</Box>
+                <Box display={"flex"} alignItems={"center"} mt={1}>
+                  <Box width={"20px"} height={"20px"} bgcolor={entry.fill} borderRadius={"4px"} mr={1} />
+                  <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
+                    {`${numberWithCommas(entry.value)} (${getPercent(entry.value, total)})`}
+                  </Box>
+                </Box>
+              </Box>
+            );
+          })
+          .reverse()}
       </Box>
     </Box>
   );

@@ -22,6 +22,8 @@ export const OverviewMetadataTokenContext = createContext<IOverviewMetadataConte
 
 const TokenDetail: React.FC = () => {
   const mainRef = useRef(document.querySelector("#main"));
+
+  const [currentHolders, setCurrentHolder] = useState(0);
   const { tokenId } = useParams<{ tokenId: string }>();
   const { state } = useLocation<{ data?: IToken }>();
   const { data, loading, initialized, error } = useFetch<IToken>(
@@ -33,7 +35,7 @@ const TokenDetail: React.FC = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Token ${tokenId} | Iris - Cardano Blockchain Explorer`;
+    document.title = `Token ${tokenId} | Cardano Blockchain Explorer`;
     mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   }, [tokenId]);
 
@@ -47,9 +49,14 @@ const TokenDetail: React.FC = () => {
       }}
     >
       <StyledContainer>
-        <TokenOverview data={data} loading={loading} />
-        <TokenAnalytics />
-        <TokenTableData totalSupply={data?.supply} metadata={data?.metadata} metadataJson={data?.metadataJson} />
+        <TokenOverview currentHolders={currentHolders} data={data} loading={loading} />
+        <TokenAnalytics dataToken={data} />
+        <TokenTableData
+          setCurrentHolder={setCurrentHolder}
+          totalSupply={data?.supply}
+          metadata={data?.metadata}
+          metadataJson={data?.metadataJson}
+        />
       </StyledContainer>
     </OverviewMetadataTokenContext.Provider>
   );
