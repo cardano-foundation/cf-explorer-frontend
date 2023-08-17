@@ -223,12 +223,15 @@ export const PlaceHolder = styled(Box)(({ theme }) => ({
 
 export const StyledDay = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.primary[200],
-  width: 41,
+  width: 40,
   height: 40,
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  boxSizing: "border-box"
+  boxSizing: "border-box",
+  [theme.breakpoints.down(650)]: {
+    width: 41
+  }
 }));
 
 export const SelectedDay = styled(Box)(({ theme }) => ({

@@ -31,7 +31,7 @@ describe("DelegationDetailOverview component", () => {
   it("should component render", () => {
     render(<DelegationDetailOverview {...mockProps} />);
     expect(screen.getByText(/margin/i)).toBeInTheDocument();
-    expect(screen.getByText(/pledge\(a\)/i)).toBeInTheDocument();
+    expect(screen.getByText(/declared pledge/i)).toBeInTheDocument();
     expect(screen.getByText(/epoch block/i)).toBeInTheDocument();
   });
 });
