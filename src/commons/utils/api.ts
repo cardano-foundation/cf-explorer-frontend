@@ -17,7 +17,7 @@ export const API = {
     HEADER: "delegations/header",
     POOL_ANALYTICS: "delegations/pool-detail-analytics",
     POOL_DETAIL_HEADER: "delegations/pool-detail-header",
-    POOL_DETAIL: "delegations/pool-detail",
+    POOL_DETAIL: (tab: "epochs" | "delegators") => `delegations/pool-detail-${tab}`,
     POOL_LIST: "delegations/pool-list",
     TOP: "delegations/top"
   },

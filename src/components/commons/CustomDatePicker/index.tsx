@@ -102,11 +102,11 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
 
   const renderDayContents = (dayOfMonth: number, date?: Date | undefined, selectedDate?: IDate) => {
     if (!(date && startDate && endDate)) return dayOfMonth;
-    if (moment(date).isBefore(startDate) || moment(date).isAfter(endDate)) return dayOfMonth;
+    if (moment(date).isBefore(startDate, "date") || moment(date).isAfter(endDate, "date")) return dayOfMonth;
 
     const mDate = moment(date),
-      isStartDate = mDate.isSame(startDate),
-      isEndDate = mDate.isSame(endDate),
+      isStartDate = mDate.isSame(startDate, "date"),
+      isEndDate = mDate.isSame(endDate, "date"),
       isStartWeek = mDate.weekday() === 0,
       isEndWeek = mDate.weekday() === 6,
       isStartMonth = mDate.isSame(moment(date).startOf("month"), "date"),
@@ -119,7 +119,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
 
     return (
       <StyledDay borderRadius={borderRadius}>
-        {!moment(date).isSame(selectedDate) ? dayOfMonth : <SelectedDay>{dayOfMonth}</SelectedDay>}
+        {!moment(date).isSame(selectedDate, "date") ? dayOfMonth : <SelectedDay>{dayOfMonth}</SelectedDay>}
       </StyledDay>
     );
   };

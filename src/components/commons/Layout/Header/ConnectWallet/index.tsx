@@ -3,7 +3,6 @@ import { Backdrop, Box } from "@mui/material";
 import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { NetworkType } from "@cardano-foundation/cardano-connect-with-wallet-core";
 import { useSelector } from "react-redux";
-import { hotjar } from "react-hotjar";
 
 import { WalletIcon } from "src/commons/resources";
 import { RootState } from "src/stores/types";
@@ -77,7 +76,6 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
           type: 1
         };
         const response = await signIn(payload);
-        hotjar.event("Wallet signed in successfully!");
         setIsSign(true);
         const data = response.data;
 
@@ -97,7 +95,6 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
     } catch (error) {
       disconnect();
       removeAuthInfo();
-      hotjar.event("Wallet signing unsuccessful!");
     } finally {
       setModalSignMessage(false);
     }
@@ -122,7 +119,6 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
       }
     } catch (error) {
       toast.error("Something went wrong!");
-      hotjar.event("Wallet signing message unsuccessful!");
     } finally {
       setSubmitting(false);
     }

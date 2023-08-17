@@ -30,7 +30,7 @@ const PoolSizeTab = () => {
       render: (r) => (
         <Box display="flex" alignItems="center">
           <TextAmountReward>{formatADAFull(r.size || 0)}</TextAmountReward>
-          <ADAicon />
+          <ADAicon data-testid="poolsize-ada-icon" />
         </Box>
       )
     },
