@@ -62,7 +62,7 @@ type TEmptyRecord = {
 };
 export const EmptyRecord: React.FC<TEmptyRecord> = ({ className }) => (
   <Empty className={className}>
-    <NoRecord />
+    <NoRecord p={`${0} !important`} />
   </Empty>
 );
 
