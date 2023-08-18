@@ -101,3 +101,16 @@ export const ItemFooter = styled(Box)(({ theme }) => ({
     padding: "12px 15px"
   }
 }));
+
+export const WrapUTXOs = styled(Box)(({ theme }) => ({
+  justifyContent: "space-between",
+  width: "100%",
+  display: "flex",
+  flexDirection: "row",
+  paddingBottom: "5px",
+  alignItems: "center",
+  [theme.breakpoints.down("md")]: {
+    flexDirection: "column",
+    alignItems: "flex-start"
+  }
+}));
