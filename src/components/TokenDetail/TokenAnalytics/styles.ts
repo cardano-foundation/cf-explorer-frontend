@@ -106,6 +106,7 @@ export const ButtonTitle = styled("button")(({ theme }) => ({
 
 export const ChartBox = styled(Box)(({ theme }) => ({
   paddingTop: theme.spacing(3),
+  paddingBottom: theme.spacing(1),
   fontSize: 12
 }));
 
