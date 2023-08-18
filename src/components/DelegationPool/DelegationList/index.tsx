@@ -1,24 +1,23 @@
-import { useState, useRef, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
 import { Box } from "@mui/material";
 import { get } from "lodash";
+import { useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 
-import Table, { Column } from "src/components/commons/Table";
-import { formatADAFull, formatPercent, getPageInfo, getShortWallet } from "src/commons/utils/helper";
-import { details, routers } from "src/commons/routers";
-import { HeaderSearchIcon } from "src/commons/resources";
 import useFetchList from "src/commons/hooks/useFetchList";
-import CustomTooltip from "src/components/commons/CustomTooltip";
+import { HeaderSearchIcon } from "src/commons/resources";
+import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
+import { formatADAFull, formatPercent, getShortWallet } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import Table, { Column } from "src/components/commons/Table";
 
 import { Image, PoolName, SearchContainer, StyledInput, StyledLinearProgress, SubmitButton } from "./styles";
 
 const DelegationLists: React.FC = () => {
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const { tickerNameSearch = "" } = history.location.state || {};
-
   const [value, setValue] = useState("");
   const [search, setSearch] = useState(decodeURIComponent(tickerNameSearch));
   const [page, setPage] = useState(1);
@@ -27,6 +26,7 @@ const DelegationLists: React.FC = () => {
   const tableRef = useRef(null);
 
   useEffect(() => {
+    if (tickerNameSearch !== search) setPage(1);
     if (tickerNameSearch) {
       setSearch(decodeURIComponent(tickerNameSearch));
     }
@@ -38,8 +38,6 @@ const DelegationLists: React.FC = () => {
     false,
     REFRESH_TIMES.POOLS
   );
-  const { search: locationSearch } = useLocation();
-  const pageInfo = getPageInfo(locationSearch);
   const fromPath = history.location.pathname as SpecialPath;
 
   useEffect(() => {
@@ -147,7 +145,6 @@ const DelegationLists: React.FC = () => {
       render: (r) => `${formatPercent(r.feePercent)}`
     }
   ];
-
   return (
     <>
       <SearchContainer ref={tableRef}>
@@ -163,11 +160,12 @@ const DelegationLists: React.FC = () => {
           }}
         />
         <SubmitButton
-          onClick={() =>
+          onClick={() => {
+            setPage(1);
             history.push(routers.DELEGATION_POOLS, {
               tickerNameSearch: (value || "").toLocaleLowerCase()
-            })
-          }
+            });
+          }}
         >
           <Image src={HeaderSearchIcon} alt="Search" />
         </SubmitButton>
@@ -178,7 +176,7 @@ const DelegationLists: React.FC = () => {
         total={{ count: fetchData.total, title: "Total" }}
         onClickRow={(_, r: Delegators) => history.push(details.delegation(r.poolId), { fromPath })}
         pagination={{
-          ...pageInfo,
+          page: page - 1,
           size,
           total: fetchData.total,
           onChange: (page, size) => {
