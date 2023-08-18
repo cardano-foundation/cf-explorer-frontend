@@ -6,13 +6,13 @@ describe("transactions spec", () => {
     cy.get('[data-testid="menu-button-blockchain"]').click();
     cy.get('[data-testid="submenu-button-transactions"]').click();
     cy.get('[data-testid="transactions-card"]').contains("Transactions");
-    cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("#");
-    cy.get(".css-1dz0v3k > tr > :nth-child(2)").contains("Tx Hash");
-    cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Block");
-    cy.get(".css-1dz0v3k > tr > :nth-child(4)").contains("Fees");
-    cy.get(".css-1dz0v3k > tr > :nth-child(5)").contains("Output in ADA");
-    cy.get(".css-1dz0v3k > tr > :nth-child(6)").contains("Input address");
-    cy.get(".css-1dz0v3k > tr > :nth-child(7)").contains("Output address");
+    //cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("#");
+    cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("Tx Hash");
+    cy.get(".css-1dz0v3k > tr > :nth-child(2)").contains("Block");
+    cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Fees");
+    cy.get(".css-1dz0v3k > tr > :nth-child(4)").contains("Output in ADA");
+    cy.get(".css-1dz0v3k > tr > :nth-child(5)").contains("Input address");
+    cy.get(".css-1dz0v3k > tr > :nth-child(6)").contains("Output address");
   });
 
   it("redirect to correct transaction detail page", () => {

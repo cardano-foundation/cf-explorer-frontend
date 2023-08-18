@@ -115,7 +115,7 @@ const AddressAnalytics: React.FC = () => {
               <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
             ) : (
               <ResponsiveContainer width="100%" height={400}>
-                <AreaChart width={900} height={400} data={convertDataChart} margin={{ top: 5, right: 5, bottom: 10 }}>
+                <AreaChart width={900} height={400} data={convertDataChart} margin={{ top: 5, right: 5, bottom: 14 }}>
                   <defs>
                     <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
@@ -131,7 +131,7 @@ const AddressAnalytics: React.FC = () => {
                     stroke={theme.palette.secondary.light}
                     dx={-15}
                   >
-                    <Label value="(UTC)" offset={-8} position="insideBottom" />
+                    <Label value="(UTC)" offset={-12} position="insideBottom" />
                   </XAxis>
                   <YAxis
                     tickFormatter={formatPriceValue}
