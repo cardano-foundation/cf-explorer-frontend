@@ -102,6 +102,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 {href ? (
                   <ListItem
                     button
+                    onClick={() => setActive(null)}
                     data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                     {...(isExternalLink(href)
                       ? { component: "a", href, target: "_blank" }
