@@ -102,6 +102,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 {href ? (
                   <ListItem
                     button
+                    onClick={() => setActive(null)}
                     data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                     {...(isExternalLink(href)
                       ? { component: "a", href, target: "_blank" }
@@ -135,7 +136,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     onClick={() => children?.length && handleOpen(`menu-${index}`)}
                     sx={(theme) => ({
                       ...itemStyle(theme, sidebar),
-                      ...(`menu-${index}` === active || `menu-${index}` === currentActive
+                      ...(`menu-${index}` === currentActive
                         ? {
                             backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
                             color: (theme) => theme.palette.secondary[0]
@@ -143,7 +144,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                         : { color: (theme) => theme.palette.secondary.light }),
                       fontWeight: "bold !important",
                       ":hover":
-                        `menu-${index}` === active || `menu-${index}` === currentActive
+                        `menu-${index}` === currentActive
                           ? {
                               backgroundColor: `${theme.palette.primary.dark} !important`
                             }
@@ -155,13 +156,13 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                         src={icon}
                         alt={title}
                         iconOnly={+!sidebar}
-                        active={+(`menu-${index}` === active || `menu-${index}` === currentActive)}
+                        active={+(`menu-${index}` === currentActive)}
                       />
                     ) : null}
                     <MenuText
                       primary={title}
                       open={+sidebar}
-                      active={+(`menu-${index}` === active || `menu-${index}` === currentActive)}
+                      active={+(`menu-${index}` === currentActive)}
                       disable={+!!tooltipTitle}
                     />
 
