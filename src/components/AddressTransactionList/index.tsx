@@ -150,9 +150,9 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
         }
         return (
           <Box display={"flex"} alignItems={"center"}>
-            {transaction.tokens && transaction.tokens.length === 1 && <TokenLink token={tokens[0]} />}
+            {transaction.tokens && transaction.tokens.length === 1 && <TokenLink isSuccess={true} token={tokens[0]} />}
             {transaction.tokens && transaction.tokens.length > 1 && (
-              <DropdownTokens tokens={tokens} type={type} hideInputLabel />
+              <DropdownTokens tokens={tokens} type={type} hideInputLabel isSuccess={true} />
             )}
           </Box>
         );

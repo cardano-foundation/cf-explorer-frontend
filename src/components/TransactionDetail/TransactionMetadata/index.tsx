@@ -79,13 +79,15 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
       key: "summary",
       icon: SummaryIcon,
       label: "Summary",
-      children: <Summary data={data?.summary || null} />
+      children: <Summary data={data?.summary || null} isFailed={data?.tx.status === TRANSACTION_STATUS.FAILED} />
     },
     {
       key: "utxOs",
       icon: UtxoIcon,
       label: "UTXOs",
-      children: <UTXO data={data?.utxOs} fee={data?.tx.fee || 0} isFailed={data?.tx.status === TRANSACTION_STATUS.FAILED} />
+      children: (
+        <UTXO data={data?.utxOs} fee={data?.tx.fee || 0} isFailed={data?.tx.status === TRANSACTION_STATUS.FAILED} />
+      )
     },
     {
       key: "contracts",
