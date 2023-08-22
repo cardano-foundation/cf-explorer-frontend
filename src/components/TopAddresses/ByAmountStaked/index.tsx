@@ -30,7 +30,7 @@ const TopAddressesByAmountStaked = () => {
   const columns: Column<TopDelegator>[] = [
     {
       title: "Stake Address",
-      minWidth: 120,
+      minWidth: 200,
       key: "addresses",
       render: (r) => (
         <CustomTooltip title={r.stakeKey}>
