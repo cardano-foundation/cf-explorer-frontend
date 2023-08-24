@@ -41,6 +41,7 @@ const TopAddressesByAmountStaked = () => {
     {
       title: "Pool",
       key: "pool",
+      maxWidth: 300,
       render: (r) => (
         <CustomTooltip title={r.poolName || r.poolId}>
           <StyledLink to={details.delegation(r.poolId)}>{r.poolName || getShortWallet(r.poolId)}</StyledLink>
