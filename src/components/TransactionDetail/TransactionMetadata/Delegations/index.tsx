@@ -26,7 +26,7 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
               </Box>
               <Box width={"100%"}>
                 <Box>
-                  <Box component={"span"} color={({ palette }) => palette.secondary.light}>
+                  <Box component={"span"} color={({ palette }) => palette.secondary.light} mr={1}>
                     From:
                   </Box>
                   <CustomTooltip title={item.address}>
@@ -34,8 +34,10 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
                   </CustomTooltip>
                   <CopyButton text={item.address || ""} />
                 </Box>
-                <Box color={({ palette }) => palette.secondary.light}>
-                  Pool ID:
+                <Box>
+                  <Box component={"span"} color={({ palette }) => palette.secondary.light} mr={1}>
+                    Pool ID:
+                  </Box>
                   <CustomTooltip title={item.poolId}>
                     <AddressLink to={details.delegation(item.poolId)}>{getShortWallet(item.poolId || "")}</AddressLink>
                   </CustomTooltip>
