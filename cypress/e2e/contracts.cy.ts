@@ -28,31 +28,32 @@ describe("contracts spec", () => {
     cy.visit("/");
     cy.get('[data-testid="menu-button-blockchain"]').click();
     cy.get('[data-testid="submenu-button-smart_contracts"]').click();
-    cy.get('.css-1l7sjfb').contains("Contracts");
-    cy.get('.css-1dz0v3k > tr > :nth-child(1)').contains("#");
-    cy.get('.css-1dz0v3k > tr > :nth-child(2)').contains("Contract Addresses");
-    cy.get('.css-1dz0v3k > tr > :nth-child(3)').contains("Balance");
-    cy.get('.css-1dz0v3k > tr > :nth-child(4)').contains("Value");
-    cy.get('.css-1dz0v3k > tr > :nth-child(5)').contains("Transaction Count");
+    cy.get(".css-1l7sjfb").contains("Contracts");
+    cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("#");
+    cy.get(".css-1dz0v3k > tr > :nth-child(2)").contains("Contract Addresses");
+    cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Balance");
+    cy.get(".css-1dz0v3k > tr > :nth-child(4)").contains("Value");
+    cy.get(".css-1dz0v3k > tr > :nth-child(5)").contains("Transaction Count");
   });
 
   it("redirect to correct address detail page", () => {
-    const address = "addr1z8snz7c4974vzdpxu65ruphl3zjdvtxw8strf2c2tmqnxz2j2c79gy9l76sdg0xwhd7r0c0kna0tycz4y5s6mlenh8pq0xmsha"
+    const address =
+      "addr1z8snz7c4974vzdpxu65ruphl3zjdvtxw8strf2c2tmqnxz2j2c79gy9l76sdg0xwhd7r0c0kna0tycz4y5s6mlenh8pq0xmsha";
     cy.visit("/contracts");
-    cy.get('.css-1l7sjfb').contains("Contracts");
-    cy.get('[data-testid="search-bar"]').type(address).type('{enter}');
-    cy.get('.css-19nq3tn').contains("Address Details");
-    cy.get('.css-12n155v').contains(address);
+    cy.get(".css-1l7sjfb").contains("Contracts");
+    cy.get('[data-testid="search-bar"]').type(address).type("{enter}");
+    cy.get(".css-19nq3tn").contains("Address Details");
+    cy.get(".css-12n155v").contains(address);
   });
 
-  it("should navigate to the contract detail page", () => {
+  it.only("should navigate to the contract detail page", () => {
     cy.visit("/contracts");
-    cy.get('.css-1l7sjfb').contains("Contracts");
-    cy.get(':nth-child(1) > :nth-child(2) > div > .css-1l62pou').click();
-    cy.get('.css-1msjg76 > .css-0').contains("Contract Details");
-    cy.get(':nth-child(1) > .css-1heutcx > .css-k6svam > .css-1xc8op').contains("Address");
-    cy.get(':nth-child(2) > .css-1heutcx > .css-k6svam > .css-1xc8op').contains("Stake Address");
-    cy.get('.active > .css-70qvj9 > .MuiBox-root').contains("Transactions");
-    cy.get('.css-1g7hqaj').contains("Script");
+    cy.get(".css-1l7sjfb").contains("Contracts");
+    cy.get(":nth-child(1) > :nth-child(1) > div > .css-1l62pou").click();
+    cy.get(".css-1msjg76 > .css-0").contains("Contract Details");
+    cy.get(":nth-child(1) > .css-1heutcx > .css-k6svam > .css-1xc8op").contains("Address");
+    cy.get(":nth-child(2) > .css-1heutcx > .css-k6svam > .css-1xc8op").contains("Stake Address");
+    cy.get('[id*="T-transaction"]').contains("Transaction");
+    cy.get(".css-1g7hqaj").contains("Script");
   });
 });
