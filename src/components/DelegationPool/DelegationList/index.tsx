@@ -50,8 +50,8 @@ const DelegationLists: React.FC = () => {
     {
       title: "Pool",
       key: "Pool",
-      minWidth: "40px",
-      maxWidth: "350px",
+      minWidth: "200px",
+      maxWidth: "200px",
       render: (r) => (
         <CustomTooltip title={r.poolName || r.poolId}>
           <PoolName to={{ pathname: details.delegation(r.poolId), state: { fromPath } }}>
