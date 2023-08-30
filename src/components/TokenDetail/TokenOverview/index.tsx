@@ -126,7 +126,9 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
       title: (
         <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
-            <WrapTitle>Total Volume</WrapTitle>
+            <CustomTooltip title="In units of the native token">
+              <WrapTitle>Total Volume</WrapTitle>
+            </CustomTooltip>
           </Box>
         </Box>
       ),
@@ -137,7 +139,9 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
       title: (
         <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
-            <WrapTitle>Volume 24H</WrapTitle>
+            <CustomTooltip title="In units of the native token">
+              <WrapTitle>Volume 24H</WrapTitle>
+            </CustomTooltip>
           </Box>
         </Box>
       ),
