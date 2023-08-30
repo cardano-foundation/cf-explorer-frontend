@@ -3,7 +3,6 @@ import { Box, styled } from "@mui/material";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 
-import { ADAOrangeBorderIcon } from "src/commons/resources";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
 import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
@@ -18,7 +17,15 @@ import SPOHolder from "src/components/commons/SPOHolder";
 import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 
-import { StyledLink, DrawContainer, ADAOperator, ADATitle, ADAAmount, StyledEpoch, OperatorRewardIcon } from "./styles";
+import {
+  StyledLink,
+  DrawContainer,
+  ADAOperator,
+  ADATitle,
+  ADAAmount,
+  StyledEpoch,
+  StyledADAOrangeBorderIcon
+} from "./styles";
 
 const OperatorReward = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -55,9 +62,7 @@ const OperatorReward = () => {
       <DrawContainer>
         <CardanoBlockchain ref={cardanoBlockchainRef} />
         <ADAOperator ref={operatorRef} onClick={() => setOpenModal(true)}>
-          <OperatorRewardIcon>
-            <ADAOrangeBorderIcon />
-          </OperatorRewardIcon>
+          <StyledADAOrangeBorderIcon />
           <ADATitle>Operator Rewards</ADATitle>
         </ADAOperator>
         <SPOHolder
