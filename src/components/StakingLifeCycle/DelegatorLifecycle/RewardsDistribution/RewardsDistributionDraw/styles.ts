@@ -1,5 +1,6 @@
 import { Box, Typography, alpha, styled } from "@mui/material";
 
+import { ADAOrangeIcon } from "src/commons/resources";
 import { AdaLogoIcon } from "src/components/commons/ADAIcon";
 import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 
@@ -155,4 +156,10 @@ export const AdaBox = styled(Box)(() => ({
   justifyItems: "center",
   alignItems: "center",
   cursor: "pointer"
+}));
+
+export const StyledADAOrangeIcon = styled(ADAOrangeIcon)(() => ({
+  "&:hover": {
+    opacity: 0.8
+  }
 }));
