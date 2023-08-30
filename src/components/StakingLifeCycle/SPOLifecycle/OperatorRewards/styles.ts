@@ -48,3 +48,9 @@ export const ADATitle = styled(Box)(({ theme }) => ({
 export const ADAAmount = styled(Box)`
   color: ${(props) => props.theme.palette.success[800]} !important;
 `;
+
+export const OperatorRewardIcon = styled(Box)`
+  &:hover {
+    opacity: 0.8;
+  }
+`;
