@@ -57,7 +57,6 @@ const RewardActivity: React.FC = () => {
       minWidth: "100px",
       render: (r) => <StyledLink to={details.epoch(r.epochNo || 0)}>{r.epochNo}</StyledLink>
     },
-
     {
       title: "Transaction Type",
       key: "transactionCount",
