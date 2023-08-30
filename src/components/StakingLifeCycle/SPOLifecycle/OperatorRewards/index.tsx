@@ -18,7 +18,7 @@ import SPOHolder from "src/components/commons/SPOHolder";
 import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 
-import { StyledLink, DrawContainer, ADAOperator, ADATitle, ADAAmount, StyledEpoch } from "./styles";
+import { StyledLink, DrawContainer, ADAOperator, ADATitle, ADAAmount, StyledEpoch, OperatorRewardIcon } from "./styles";
 
 const OperatorReward = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -55,7 +55,9 @@ const OperatorReward = () => {
       <DrawContainer>
         <CardanoBlockchain ref={cardanoBlockchainRef} />
         <ADAOperator ref={operatorRef} onClick={() => setOpenModal(true)}>
-          <ADAOrangeBorderIcon />
+          <OperatorRewardIcon>
+            <ADAOrangeBorderIcon />
+          </OperatorRewardIcon>
           <ADATitle>Operator Rewards</ADATitle>
         </ADAOperator>
         <SPOHolder
