@@ -56,7 +56,7 @@ const SkeletonBox = () => (
 
 const MILION = 10 ** 6;
 
-const MAX_PERCENT_SHOW_PENDING_TIME = 90;
+const MAX_PERCENT_SHOW_PENDING_TIME = 88;
 const MIN_PERCENT_SHOW_ACTIVE_TIME = 5;
 
 const HomeStatistic = () => {
@@ -77,7 +77,6 @@ const HomeStatistic = () => {
   const progress = moment(currentEpoch?.endTime).isAfter(moment())
     ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
     : 100;
-
   const isShowProgressPendingText = +progress < MAX_PERCENT_SHOW_PENDING_TIME;
   const isShowProgressActiveText = +progress > MIN_PERCENT_SHOW_ACTIVE_TIME;
 
@@ -187,7 +186,7 @@ const HomeStatistic = () => {
                     </Box>
                   </Box>
                   <Progress>
-                    <CustomTooltip title={+progress || 0}>
+                    <CustomTooltip title={`${+progress || 0}%`}>
                       <ProcessActive data-testid="current-epoch-progress-active" rate={+progress || 0}>
                         {isShowProgressActiveText && `${+progress || 0}%`}
                       </ProcessActive>
@@ -239,12 +238,12 @@ const HomeStatistic = () => {
                     <Title data-testid="live-stake-value">{formatADA(liveStake)}</Title>
                   </CustomTooltip>
                   <Progress>
-                    <CustomTooltip title={liveRate.toFixed(5)}>
+                    <CustomTooltip title={`${liveRate.toFixed(5)}%`}>
                       <ProcessActive data-testid="live-stake-progress-active" rate={liveRate.toNumber()}>
                         {liveRate.toFixed(0, BigNumber.ROUND_DOWN)}%
                       </ProcessActive>
                     </CustomTooltip>
-                    <CustomTooltip title={liveRate.div(-1).plus(100).toFixed(5)}>
+                    <CustomTooltip title={`${liveRate.div(-1).plus(100).toFixed(5)}%`}>
                       <ProgressPending
                         data-testid="live-stake-progress-pending"
                         rate={liveRate.div(-1).plus(100).toNumber()}
