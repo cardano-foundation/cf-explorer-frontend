@@ -10,6 +10,9 @@ export const Container = styled(Box)`
   min-height: 100vh;
   padding: 30px 0;
   min-width: 100vw;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    min-height: 80vh;
+  }
 `;
 
 export const WrapContent = styled(Box)`
