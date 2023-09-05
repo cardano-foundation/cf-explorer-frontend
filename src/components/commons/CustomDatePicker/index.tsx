@@ -126,7 +126,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
 
   return (
     <>
-      <WrapCustomDatePicker data-testid="date-range-picker" onClick={handleToggle} ref={ref}>
+      <WrapCustomDatePicker data-testid="date-range-picker" onClick={handleToggle} ref={ref} open={+open}>
         {startDate || endDate ? (
           <Box
             sx={{

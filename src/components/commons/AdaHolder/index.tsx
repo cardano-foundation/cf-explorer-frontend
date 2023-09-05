@@ -20,7 +20,7 @@ export const AdaHolder: React.FC<IAdaHolderProps> = forwardRef(({ value, ...prop
     <StyledPolygonShape {...props} ref={boxRef}>
       <AdaHolderImage src={AdaHolderIconUrl} alt="AdaHolderIconUrl" />
       ADA Holder
-      {value && (
+      {value !== undefined && (
         <AdaHolderValue>
           {formatADAFull(value)}
           <StyledAdaLogoIcon />
