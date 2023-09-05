@@ -10,6 +10,9 @@ export const Container = styled(Box)`
   padding: 30px 0;
   justify-content: center;
   align-items: center;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    min-height: 80vh;
+  }
 `;
 
 export const WrapContent = styled(Box)`
