@@ -37,4 +37,5 @@ interface EpochCurrentType {
   account: number;
   endTime: string;
   startTime: string;
+  circulatingSupply: number;
 }
