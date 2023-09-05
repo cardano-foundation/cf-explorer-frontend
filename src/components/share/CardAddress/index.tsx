@@ -1,7 +1,7 @@
 import { Box, Skeleton } from "@mui/material";
 import React from "react";
 
-import NoRecord from "src/components/commons/NoRecord";
+import NoStakeAddress from "src/components/commons/NoStakeAddress";
 import { details } from "src/commons/routers";
 import CopyButton from "src/components/commons/CopyButton";
 
@@ -37,7 +37,7 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
     return (
       <CardItemStyled>
         <TitleDetail paddingBottom={(props) => props.spacing(2)}>{title}</TitleDetail>
-        <NoRecord sx={{ padding: 0 }} />
+        <NoStakeAddress />
       </CardItemStyled>
     );
   }
