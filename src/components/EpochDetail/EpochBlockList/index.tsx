@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
 
 import Card from "src/components/commons/Card";
 import Table, { Column } from "src/components/commons/Table";
@@ -10,7 +11,6 @@ import { details } from "src/commons/routers";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import { EpochNo, StyledOutput, BlueText, StyledContainer, StyledLink, PriceWrapper } from "./styles";
@@ -20,6 +20,8 @@ interface IEpochBlockList {
 }
 
 const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -28,7 +30,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
     `${API.EPOCH.DETAIL}/${epochId}/blocks`,
     pageInfo,
     false,
-    pageInfo.page === 0 ? REFRESH_TIMES.EPOCH_DETAIL : 0
+    epochNo?.toString() === epochId && pageInfo.page === 0 ? blockNo : 0
   );
 
   const columns: Column<BlockDetail>[] = [

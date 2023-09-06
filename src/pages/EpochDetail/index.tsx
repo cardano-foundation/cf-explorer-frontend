@@ -1,16 +1,18 @@
 import React, { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import NoRecord from "src/components/commons/NoRecord";
 import EpochBlockList from "src/components/EpochDetail/EpochBlockList";
 import EpochOverview from "src/components/EpochDetail/EpochOverview";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 
 import { StyledContainer } from "./styles";
 
 const EpochDetail: React.FC = () => {
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
   const { epochId } = useParams<{ epochId: string }>();
   const { state } = useLocation<{ data?: IDataEpoch }>();
 
@@ -18,7 +20,7 @@ const EpochDetail: React.FC = () => {
     `${API.EPOCH.DETAIL}/${epochId}`,
     state?.data,
     false,
-    REFRESH_TIMES.EPOCH_DETAIL
+    epochNo?.toString() === epochId ? blockNo : 0
   );
 
   useEffect(() => {
