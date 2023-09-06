@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { useSelector } from "react-redux";
 import { BiChevronRight } from "react-icons/bi";
+import { useTranslation } from "react-i18next";
 
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
 import { CubeIcon, RocketIcon } from "src/commons/resources";
@@ -55,6 +56,7 @@ type DetailViewBlockProps = {
 };
 
 const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
+  const { t } = useTranslation();
   const { blockNo, handleClose } = props;
   const { data, lastUpdated } = useFetch<BlockDetail>(
     `${API.BLOCK.DETAIL}/${blockNo}`,
@@ -76,8 +78,8 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
     return (
       <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
         <ViewDetailHeader>
-          <ViewAllButton tooltipTitle="View Detail" to={details.block(blockNo)} />
-          <CustomTooltip title="Close">
+          <ViewAllButton tooltipTitle={t("common.viewDetail")} to={details.block(blockNo)} />
+          <CustomTooltip title={t("common.close")}>
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
@@ -145,11 +147,11 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
   return (
     <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
       <ViewDetailHeader>
-        <ViewAllButton tooltipTitle="View Detail" to={details.block(blockNo)} />
+        <ViewAllButton tooltipTitle={t("common.viewDetail")} to={details.block(blockNo)} />
         <TimeDuration>
           <FormNowMessage time={lastUpdated} />
         </TimeDuration>
-        <CustomTooltip title="Close">
+        <CustomTooltip title={t("common.close")}>
           <CloseButton onClick={handleClose}>
             <CgClose />
           </CloseButton>
@@ -167,18 +169,18 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
               trailOpacity={1}
             >
               <EpochNumber>{data?.epochNo !== null ? data?.epochNo : "_"}</EpochNumber>
-              <EpochText>Epoch</EpochText>
+              <EpochText>{t("glossary.epoch")}</EpochText>
             </ProgressCircle>
           </HeaderContainer>
           <ListItem>
             <Item>
               <Icon src={CubeIcon} alt="socket" />
-              <ItemName>Block</ItemName>
+              <ItemName>{t("glossary.block")}</ItemName>
               <ItemValue>{data?.blockNo !== null ? data.blockNo : "_"}</ItemValue>
             </Item>
             <Item>
               <Icon src={RocketIcon} alt="socket" />
-              <ItemName>slot</ItemName>
+              <ItemName>{t("common.slot")}</ItemName>
               <ItemValue>
                 {data?.epochSlotNo || 0}
                 <BlockDefault>/{data?.totalSlot || MAX_SLOT_EPOCH}</BlockDefault>
@@ -187,7 +189,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
           </ListItem>
           <Group>
             <DetailsInfoItem>
-              <DetailLabel>Block Id</DetailLabel>
+              <DetailLabel>{t("glossary.blockId")}</DetailLabel>
               <DetailValue>
                 <CustomTooltip title={data?.hash}>
                   <StyledLink to={details.block(blockNo)}>{getShortHash(data?.hash)}</StyledLink>
@@ -196,22 +198,24 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Created At</DetailLabel>
+              <DetailLabel>{t("createdAt")}</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.time || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>{data?.confirmation > 1 ? "Confirmations" : "Confirmation"}</DetailLabel>
+              <DetailLabel>
+                {data?.confirmation > 1 ? t("glossary.comfirmations") : t("glossary.comfirmation")}
+              </DetailLabel>
               <DetailValue>{data?.confirmation}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Transaction Fees</DetailLabel>
+              <DetailLabel>{t("glossary.transactionfees")}</DetailLabel>
               <DetailValue>
                 {formatADAFull(data?.totalFees)}
                 <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Total Output in ADA</DetailLabel>
+              <DetailLabel>{t("glossary.totalOutputInAda")}</DetailLabel>
               <DetailValue>
                 {formatADAFull(data?.totalOutput)}
                 <ADAicon />
@@ -236,7 +240,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
                 <DetailLinkIcon>
                   <CgArrowsExchange />
                 </DetailLinkIcon>
-                <DetailLinkName>Transactions</DetailLinkName>
+                <DetailLinkName>{t("glossary.transactions")}</DetailLinkName>
               </DetailLabel>
               <DetailValue>
                 <DetailLinkRight>
