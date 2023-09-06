@@ -30,10 +30,3 @@ jest.mock("@cardano-foundation/cardano-connect-with-wallet-core", () => ({
   },
   isWalletInstalled: jest.fn()
 }));
-
-jest.mock("react-hotjar", () => ({
-  hotjar: {
-    initialize: jest.fn(),
-    event: jest.fn()
-  }
-}));

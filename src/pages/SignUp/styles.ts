@@ -10,6 +10,9 @@ export const Container = styled(Box)`
   justify-content: center;
   align-items: center;
   padding: 30px 0;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    min-height: 80vh;
+  }
 `;
 
 export const CloseButton = styled(IconButton)<{ saving: number }>`
@@ -61,7 +64,7 @@ export const WrapForm = styled(Box)(({ theme }) => ({
   width: "min(74vw,420px)",
   padding: "35px 40px 40px",
   [theme.breakpoints.down("md")]: {
-    padding: "20px 15px",
+    padding: "40px 15px 20px 15px",
     gap: "15px"
   }
 }));
@@ -194,7 +197,6 @@ export const BackButton = styled(Box)(({ theme }) => ({
   top: "15px",
   left: "25px",
   [theme.breakpoints.down("md")]: {
-    top: "10px",
     left: "12px"
   }
 }));

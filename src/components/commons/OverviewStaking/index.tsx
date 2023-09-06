@@ -1,11 +1,12 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import React from "react";
 
-import { AIconGreen, HashtagIcon, TimerIcon } from "src/commons/resources";
+import { HashtagIcon, TimerIcon } from "src/commons/resources";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 
 import { OverviewIcon, OverviewTitle, Card } from "./styles";
 import CustomIcon from "../CustomIcon";
+import ADAicon from "../ADAIcon";
 
 interface Props {
   hash: string;
@@ -24,6 +25,7 @@ interface Props {
 
 const OverviewStaking: React.FC<Props> = ({ item, ...props }) => {
   const { hash, amount, time, onClick } = props;
+  const theme = useTheme();
 
   return (
     <Card onClick={() => onClick(item)} data-testid="overview-staking">
@@ -37,7 +39,7 @@ const OverviewStaking: React.FC<Props> = ({ item, ...props }) => {
       </Box>
       <Box display={"flex"}>
         <OverviewIcon>
-          <CustomIcon icon={AIconGreen} height={17} fill="currentColor" color={(theme) => theme.palette.primary.main} />
+          <ADAicon style={{ fill: theme.palette.primary.main }} />
         </OverviewIcon>
         <Box marginLeft={"10px"}>
           <OverviewTitle data-testid="overview-staking-amount">{formatADAFull(amount)}</OverviewTitle>

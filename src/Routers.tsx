@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import { useAsync, useLocalStorage } from "react-use";
 
 import useAuth from "./commons/hooks/useAuth";
@@ -59,6 +59,7 @@ const Routes: React.FC = () => {
   const { isLoggedIn } = useAuth();
   const [, setBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
   const { pathname } = window.location;
+  const { search } = useLocation();
 
   useAsync(async () => {
     if (isLoggedIn) {
@@ -77,7 +78,11 @@ const Routes: React.FC = () => {
   }, []);
 
   if (!pathname.includes(`/${LANGUAGE}`)) {
-    return <Redirect to={pathname} />;
+    if (!search) {
+      return <Redirect to={pathname} />;
+    } else {
+      return <Redirect to={pathname + search} />;
+    }
   }
   return (
     <Switch>

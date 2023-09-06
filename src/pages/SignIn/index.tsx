@@ -1,6 +1,5 @@
 import { Box, FormGroup, FormHelperText, IconButton, InputAdornment } from "@mui/material";
 import { useEffect, useReducer, useState } from "react";
-import { hotjar } from "react-hotjar";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
 
@@ -81,7 +80,7 @@ export default function SignIn() {
   });
 
   useEffect(() => {
-    document.title = "Sign In | Iris - Cardano Blockchain Explorer";
+    document.title = "Sign In | Cardano Blockchain Explorer";
   }, []);
 
   const enableButton = Object.values(formData).every((value) => value.touched) && !error && !loading;
@@ -104,7 +103,6 @@ export default function SignIn() {
 
   const handleLoginSuccess = () => {
     toast.success("You are now signed in", false);
-    hotjar.event("User signed in successfully!");
     handleRedirectBack();
   };
 
@@ -187,7 +185,6 @@ export default function SignIn() {
     handleSignIn(formData.email.value, formData.password.value);
   };
   const handleSignIn = async (email: string, password: string) => {
-    hotjar.event("User initiated sign in process!");
     try {
       setLoading(true);
       const payload = {

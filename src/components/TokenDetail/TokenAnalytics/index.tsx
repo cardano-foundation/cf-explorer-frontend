@@ -85,7 +85,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
       <TooltipBody>
         <TooltipLabel>{getLabelTimeTooltip(content.label)}</TooltipLabel>
         <TooltipValue>
-          {formatNumberDivByDecimals(content.payload?.[0]?.value, dataToken?.metadata?.decimals) || 0}
+          {formatNumberDivByDecimals(content.payload?.[0]?.value, dataToken?.metadata?.decimals || 0) || 0}
         </TooltipValue>
       </TooltipBody>
     );
@@ -119,7 +119,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                     width={900}
                     height={400}
                     data={convertDataChart || []}
-                    margin={{ top: 5, right: 5, bottom: 10 }}
+                    margin={{ top: 5, right: 5, bottom: 14 }}
                   >
                     <defs>
                       <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
@@ -135,7 +135,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                       dx={-15}
                       color={theme.palette.secondary.light}
                     >
-                      <Label value="(UTC)" offset={-8} position="insideBottom" />
+                      <Label value="(UTC)" offset={-12} position="insideBottom" />
                     </XAxis>
                     <YAxis tickFormatter={formatPriceValue} tickLine={false} color={theme.palette.secondary.light} />
                     <Tooltip content={renderTooltip} cursor={false} />
@@ -168,7 +168,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                       {loading ? (
                         <SkeletonUI variant="rectangular" />
                       ) : (
-                        formatNumberDivByDecimals(maxBalance, dataToken?.metadata?.decimals)
+                        formatNumberDivByDecimals(maxBalance, dataToken?.metadata?.decimals || 0)
                       )}
                     </ValueInfo>
                   </Box>
@@ -185,7 +185,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                       {loading ? (
                         <SkeletonUI variant="rectangular" />
                       ) : (
-                        formatNumberDivByDecimals(minBalance, dataToken?.metadata?.decimals)
+                        formatNumberDivByDecimals(minBalance, dataToken?.metadata?.decimals || 0)
                       )}
                     </ValueInfo>
                   </Box>

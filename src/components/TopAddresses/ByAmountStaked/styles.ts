@@ -6,6 +6,11 @@ import CustomSelect from "src/components/commons/CustomSelect";
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
   color: ${(props) => props.theme.palette.primary.main} !important;
+  display: inline-block;
+  width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const PerPage = styled("div")`

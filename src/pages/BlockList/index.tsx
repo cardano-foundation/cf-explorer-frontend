@@ -33,12 +33,12 @@ const BlockList = () => {
   const mainRef = useRef(document.querySelector("#main"));
 
   useEffect(() => {
-    document.title = `Blocks List | Iris - Cardano Blockchain Explorer`;
+    document.title = `Blocks List | Cardano Blockchain Explorer`;
   }, []);
 
   const columns: Column<Block>[] = [
     {
-      title: "Block No",
+      title: "Block",
       key: "blockNo",
       minWidth: "50px",
       render: (r) => <Link to={details.block(r.blockNo || r.hash)}>{r.blockNo !== null ? r.blockNo : "_"}</Link>

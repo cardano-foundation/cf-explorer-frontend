@@ -1,16 +1,108 @@
 # Changelog
 
-## [0.4.16](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.15...v0.4.16) (2023-08-10)
-
-
-### Features
-
-* adding hotjar to app and event tracking ([c8b9f15](https://github.com/cardano-foundation/cf-explorer-frontend/commit/c8b9f15c96cd3d6d9f40d810163cd17008fe11a1))
+## [0.4.23](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.22...v0.4.23) (2023-08-14)
 
 
 ### Bug Fixes
 
-* downgrading hotjar to 5.5.0 ([8034b55](https://github.com/cardano-foundation/cf-explorer-frontend/commit/8034b55dcb2a72365fce9a105afe2a0f2be53d7c))
+* removing unused package ([d5ec224](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d5ec2244c10ad5593c257a618569c5a6b25989fb))
+
+## [0.4.22](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.21...v0.4.22) (2023-08-14)
+
+
+### Bug Fixes
+
+* replacing committed image ([be2293f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/be2293fbd00076ec2020c3f3e81457524e3e14bf))
+* Right-pane-and-dashboard-line-break (MET-615) ([293e4dc](https://github.com/cardano-foundation/cf-explorer-frontend/commit/293e4dc5fe658d8da6f7779a7e77a3c9fc8fcf16))
+* title alignment ([3afb64e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/3afb64ed3012d380f65cce073ed5e730d01eda47))
+
+## [0.4.21](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.20...v0.4.21) (2023-08-14)
+
+
+### Bug Fixes
+
+* menu active invalid when change tab in stake and pool detail ([1c29d2c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1c29d2cd497d3d53ed2c26dce82b7a27f9f0c7ad))
+* MET-1373 show address in account overview ([b7ce3dc](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b7ce3dc0dd0a8bb42dd47de0374fee91fcd9b85b))
+* MET-1413 update icon in pool overview ([89c3841](https://github.com/cardano-foundation/cf-explorer-frontend/commit/89c3841141652ee8864a0119d1978efa5ffe7bbb))
+* MET-1413 update icon live stake ([019b946](https://github.com/cardano-foundation/cf-explorer-frontend/commit/019b946f0dc001fc26a84cbb26bba66e05570265))
+* MET-1556 update click card ([94e1298](https://github.com/cardano-foundation/cf-explorer-frontend/commit/94e1298fda031380e55a205247683e621836214e))
+* MET-1558 wrong color after selected date range ([82d2d57](https://github.com/cardano-foundation/cf-explorer-frontend/commit/82d2d57ed68159aa6a7dc5c3d8b1c9f16fa6625c))
+* MET-1559 fix search pool wrong ([987a2d0](https://github.com/cardano-foundation/cf-explorer-frontend/commit/987a2d09f48a187769e0f6bb70e66de82b19cc09))
+* MET-1564 update color tooltip ([56f938a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/56f938aa12a59e693be17bf828659b6db49b6dc1))
+* MET-615 fix icon not show in ipad pro m1 ([67c0829](https://github.com/cardano-foundation/cf-explorer-frontend/commit/67c0829a4be33694235b4756606671f0782be89e))
+* remove eslint disable ([e032602](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e032602d29bc955bb68cec6b5673ca92d307d2af))
+* removed home var not needed ([50e5b4d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/50e5b4da7f6a2817584c1f3194d9d3e6a39f52f3))
+* spacing and adding title change ([81ab97b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/81ab97bef28919ac968e0d3fc16c7427f62be59d))
+
+## [0.4.20](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.19...v0.4.20) (2023-08-11)
+
+
+### Bug Fixes
+
+* attempting to force a release ([f543784](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f543784d2017d8b315c97c1b97f8063ddff1ee04))
+
+## [0.4.19](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.18...v0.4.19) (2023-08-11)
+
+
+### Bug Fixes
+
+* missing name changes ([2327a58](https://github.com/cardano-foundation/cf-explorer-frontend/commit/2327a585f664e6ba600b43275fb9055733f670c9))
+
+## [0.4.18](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.17...v0.4.18) (2023-08-11)
+
+
+### Features
+
+* change of app name ([e139091](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e1390917b737e0a4921873a33daf801c3aa32d8d))
+
+
+### Bug Fixes
+
+* change all icon ada ([3a9076c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/3a9076c91439303dd427a161efa898cc83c70694))
+* change text icon ada to icon ([dc1c531](https://github.com/cardano-foundation/cf-explorer-frontend/commit/dc1c531440afb64b409bb1d5397bd31487128848))
+* clear data when change active tab ([d725b98](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d725b9835c8079fde7fb440f43fcab20e786c286))
+* color wrong ([108e179](https://github.com/cardano-foundation/cf-explorer-frontend/commit/108e179b0c643c2e0c9a460dee1b670d48f4d401))
+* color wrong ([9a81328](https://github.com/cardano-foundation/cf-explorer-frontend/commit/9a8132827249704aabc4c0bce937801f48d4ed0f))
+* degrade ui ([e8d8d2a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e8d8d2ab15b04ff41f11dcab03d10527676e15e3))
+* Merge branch 'develop' of github.com-fe-explorer-cardano:cardano-foundation/cf-explorer-frontend into bugfix/MET-1413-finding1-change-new-icon-ADA ([620c824](https://github.com/cardano-foundation/cf-explorer-frontend/commit/620c824c04f977da63449723769d3da28a7a2380))
+* Merge branch 'develop' of github.com-fe-explorer-cardano:cardano-foundation/cf-explorer-frontend into bugfix/MET-1554-finding-1-support-widget-in-mobile ([98355c5](https://github.com/cardano-foundation/cf-explorer-frontend/commit/98355c560c446844903bacdfd87dc6ae318dacfd))
+* merge conflict ([e2af9a4](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e2af9a4e0fb11611dedc17d5cf4752151101e4de))
+* MET-1413-finding1 change new icon ADA ([2bd967c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/2bd967c0e919c714372c952c6b78003b30748b5a))
+* MET-1489 update tooltip chart ([3d5e0ca](https://github.com/cardano-foundation/cf-explorer-frontend/commit/3d5e0ca89c2fc80196f98e53c4e2d77f714b0474))
+* MET-1558 calendar range color ([d4c2abe](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d4c2abe3c333cd4ef040ab2d2fce76b284a5d577))
+* MET-1558 calender range seems not to apply new branding colors ([0441f17](https://github.com/cardano-foundation/cf-explorer-frontend/commit/0441f1785ac085106d8306f85779d61263a0d9a5))
+* MET-1559 fix search pool ([d4da7bd](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d4da7bd4ba318d5df0d06e9fc3b47d1db0a059d8))
+* MET-1559 update search ([3adb52e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/3adb52ebb9f081a47bd0c4ea5a3a686cfedf1e5a))
+* MET-615 fix degrade ui ([b96f921](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b96f92187e4feafbb2671b3ad3fd9dc3e1b8af07))
+* MET-615 position loading in tables bookmark ([0f39719](https://github.com/cardano-foundation/cf-explorer-frontend/commit/0f39719d8b981c8e843e0a7e206e8b6fceece771))
+* order tooltip chart ([b963b2f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b963b2f2a0159e0d1ae31ef641a5d1d75946e6f7))
+* position of menu in mobile ([c0ca2e0](https://github.com/cardano-foundation/cf-explorer-frontend/commit/c0ca2e0b963d9401fe4f86cd3a64516dda305b17))
+* redirect localtion ([7763500](https://github.com/cardano-foundation/cf-explorer-frontend/commit/7763500db90b6046f297579ceacac2035e7a11e9))
+* remove unused variabe ([07e12d0](https://github.com/cardano-foundation/cf-explorer-frontend/commit/07e12d005b4b8fc254a6f1f1c21e47676fc76aa6))
+* removing unnecessary method not been used as es lint error ([dc83427](https://github.com/cardano-foundation/cf-explorer-frontend/commit/dc834270f57ea39d1e14df57b7d7ba86d2eaeb66))
+* rerender pagination table when page change ([43cea39](https://github.com/cardano-foundation/cf-explorer-frontend/commit/43cea399f98593151f8086b8b7ec33f9e50c0dc3))
+* resolve conflict ([2bc857b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/2bc857bd1c2cc588b13edc43d7b4a808401339fc))
+* tokens not div decimails ([2bb5ce7](https://github.com/cardano-foundation/cf-explorer-frontend/commit/2bb5ce707bbbd7eb10ad27e4032ad2aa4b9c43f0))
+* unable scroll in mobile ([569eb85](https://github.com/cardano-foundation/cf-explorer-frontend/commit/569eb85fc66f4d41b57eaa7d3a2a0f805a04dd56))
+* unit test ([506b615](https://github.com/cardano-foundation/cf-explorer-frontend/commit/506b615b8025df1d3294b4bf58b2ef5d9cf99667))
+* unit test ([8f3360e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/8f3360e5b4a22a3597f1cb8821f5fdd3c4615817))
+* unit test ([83a4779](https://github.com/cardano-foundation/cf-explorer-frontend/commit/83a4779cf7b23e4a7813f7f348c6427cfea0a3a4))
+* unit test ([1b94b2f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1b94b2f5926fdb6a7b8ea83dc98496f6e83b0f39))
+* update color icon ([4f7c106](https://github.com/cardano-foundation/cf-explorer-frontend/commit/4f7c106b716a6f5d31c72a64ea4140a743a9dfb0))
+* url change ([6278770](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6278770d94522347da9d41c5cce20026bb720136))
+* url change ([bde7479](https://github.com/cardano-foundation/cf-explorer-frontend/commit/bde747980793285bb234e315e3918189ae4e9175))
+
+## [0.4.17](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.16...v0.4.17) (2023-08-10)
+
+
+### Bug Fixes
+
+* upgrade connect-with-wallet version and add proper error messages ([ec5fe37](https://github.com/cardano-foundation/cf-explorer-frontend/commit/ec5fe374ab55269256209a690ab1d21838acc803))
+
+## [0.4.16](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.15...v0.4.16) (2023-08-10)
+
+### Bug Fixes
+
 * finding-1-hide-the-main-logo-when-mobile-menu-open(MET-1553) ([a44b2d9](https://github.com/cardano-foundation/cf-explorer-frontend/commit/a44b2d9aa7fe5e2233b831fd02e1b301b2c10326))
 * Merge branch 'develop' of github.com-fe-explorer-cardano:cardano-foundation/cf-explorer-frontend into bugfix/MET-1551-finding-1-change-logo-and-title-dashboard ([1b2847e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1b2847ea3ccad2ed573cd7a99beffb2ad03dee83))
 * Merge branch 'develop' of github.com-fe-explorer-cardano:cardano-foundation/cf-explorer-frontend into bugfix/MET-1556-finding-1-card-current-epoch-ui-issue ([5dd3670](https://github.com/cardano-foundation/cf-explorer-frontend/commit/5dd367083f04c68bc249480ec38b43c9872595c2))
@@ -29,7 +121,6 @@
 * MET-615 icon no data found ([19e3da5](https://github.com/cardano-foundation/cf-explorer-frontend/commit/19e3da5ba7efaa4391362aed2fba5ccf042a7e9b))
 * replaced favicon ([559645a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/559645a6e8a2a9fc1ea74cc5cfe696227c303f61))
 * unit test failed ([9fc71b6](https://github.com/cardano-foundation/cf-explorer-frontend/commit/9fc71b6e2b2c6139a6c8626bc912d2b4d6fbaf0a))
-* upgrading hotjar to 6.1.0 latest ([5bd5945](https://github.com/cardano-foundation/cf-explorer-frontend/commit/5bd5945af14a147aa5d65c681aa4d1de9bf32375))
 
 ## [0.4.15](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.14...v0.4.15) (2023-08-09)
 
@@ -100,7 +191,7 @@
 * Contract-click-record-no-navigate-to-detail(MET-615) ([1e1e67d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1e1e67da4fecfbea7408be8a25bc28646ddb695d))
 * Contract-detail-modal-transaction(MET-1517) ([#1539](https://github.com/cardano-foundation/cf-explorer-frontend/issues/1539)) ([a26f8d9](https://github.com/cardano-foundation/cf-explorer-frontend/commit/a26f8d9bf5bdb809a4acf0cd2b96a730ffb25414))
 * environment varialbe for koios ([6d31e15](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6d31e152f50f5a75c7a30c964987a9627a82e7f8))
-* Logo-iris-and-text-cardano-explorer-display-2-line( MET-1517) ([#1534](https://github.com/cardano-foundation/cf-explorer-frontend/issues/1534)) ([c02cfc1](https://github.com/cardano-foundation/cf-explorer-frontend/commit/c02cfc14262222083017ce056d5546cc9a622bff))
+* Logo-explorer-and-text-cardano-explorer-display-2-line( MET-1517) ([#1534](https://github.com/cardano-foundation/cf-explorer-frontend/issues/1534)) ([c02cfc1](https://github.com/cardano-foundation/cf-explorer-frontend/commit/c02cfc14262222083017ce056d5546cc9a622bff))
 * MET-1128 merge develop ([356f7e3](https://github.com/cardano-foundation/cf-explorer-frontend/commit/356f7e3f30d45ce69995c7ee564e7f1b4ec47913))
 * MET-1128 update color tabular ([8046d3d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/8046d3d233b1df253d38d83a18a6daafbb916f79))
 * MET-1128 update reward type delegators ([0079292](https://github.com/cardano-foundation/cf-explorer-frontend/commit/0079292bd21f71762552888ca357653501480634))

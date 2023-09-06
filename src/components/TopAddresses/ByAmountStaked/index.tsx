@@ -6,7 +6,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
-import { formatADAFull, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import FormNowMessage from "src/components/commons/FormNowMessage";
@@ -29,14 +29,8 @@ const TopAddressesByAmountStaked = () => {
 
   const columns: Column<TopDelegator>[] = [
     {
-      title: "#",
-      minWidth: 30,
-      key: "index",
-      render: (r, idx) => numberWithCommas(idx + 1)
-    },
-    {
       title: "Stake Address",
-      minWidth: 120,
+      minWidth: 200,
       key: "addresses",
       render: (r) => (
         <CustomTooltip title={r.stakeKey}>
@@ -47,6 +41,7 @@ const TopAddressesByAmountStaked = () => {
     {
       title: "Pool",
       key: "pool",
+      maxWidth: 300,
       render: (r) => (
         <CustomTooltip title={r.poolName || r.poolId}>
           <StyledLink to={details.delegation(r.poolId)}>{r.poolName || getShortWallet(r.poolId)}</StyledLink>

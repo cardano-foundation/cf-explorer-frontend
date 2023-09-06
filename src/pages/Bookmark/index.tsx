@@ -32,7 +32,13 @@ const Bookmark = () => {
   const [selected, setSelected] = useState<string | null>();
   const toast = useToast();
 
-  const { data, loading, refresh, error, total } = useFetchList<Bookmark>(
+  const {
+    data: dataTab,
+    loading,
+    refresh,
+    error,
+    total
+  } = useFetchList<Bookmark>(
     "/bookmark/find-all",
     {
       type: activeTab,
@@ -42,6 +48,16 @@ const Bookmark = () => {
     },
     true
   );
+
+  const [data, setData] = useState<Bookmark[]>([]);
+
+  useEffect(() => {
+    setData(dataTab);
+  }, [dataTab]);
+
+  useEffect(() => {
+    setData([]);
+  }, [activeTab]);
 
   const handleClose = () => {
     setSelected(null);
@@ -72,7 +88,7 @@ const Bookmark = () => {
   };
 
   useEffect(() => {
-    document.title = `Bookmarks | Iris - Cardano Blockchain Explorer`;
+    document.title = `Bookmarks | Cardano Blockchain Explorer`;
   }, []);
 
   useEffect(() => {

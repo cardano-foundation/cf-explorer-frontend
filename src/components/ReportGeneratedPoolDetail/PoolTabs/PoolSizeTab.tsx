@@ -4,14 +4,13 @@ import { useParams } from "react-router-dom";
 
 import Table, { Column } from "src/components/commons/Table";
 import { TextAmountReward } from "src/components/StakingLifeCycle/DelegatorLifecycle/ADATransferModal/styles";
-import CustomIcon from "src/components/commons/CustomIcon";
-import { AIconGreen } from "src/commons/resources";
 import { formatADAFull } from "src/commons/utils/helper";
 import { StyledLink } from "src/components/share/styled";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
+import ADAicon from "src/components/commons/ADAIcon";
 
 const PoolSizeTab = () => {
   const { reportId = "" } = useParams<{ reportId: string }>();
@@ -31,7 +30,7 @@ const PoolSizeTab = () => {
       render: (r) => (
         <Box display="flex" alignItems="center">
           <TextAmountReward>{formatADAFull(r.size || 0)}</TextAmountReward>
-          <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={(theme) => theme.palette.text.primary} />
+          <ADAicon data-testid="poolsize-ada-icon" />
         </Box>
       )
     },
@@ -42,7 +41,7 @@ const PoolSizeTab = () => {
       render: (r) => (
         <Box display="flex" alignItems="center">
           <TextAmountReward>{formatADAFull(r.fee)}</TextAmountReward>
-          <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={(theme) => theme.palette.text.primary} />
+          <ADAicon />
         </Box>
       )
     },

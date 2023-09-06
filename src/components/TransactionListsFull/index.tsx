@@ -10,8 +10,7 @@ import {
   formatDateTimeLocal,
   getPageInfo,
   getShortHash,
-  getShortWallet,
-  numberWithCommas
+  getShortWallet
 } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { Label, StyledLink, StyledContainer } from "./styles";
@@ -47,12 +46,6 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
 
   const columns: Column<Transactions>[] = [
     {
-      title: "#",
-      key: "id",
-      minWidth: 30,
-      render: (data, index) => numberWithCommas(pageInfo.page * pageInfo.size + index + 1 || 0)
-    },
-    {
       title: "Tx Hash",
       key: "txhash",
       minWidth: 120,
@@ -69,11 +62,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       title: "Created At",
       key: "createdat",
       minWidth: 120,
-      render: (r) => (
-        <Box color={({ palette }) => palette.secondary.light}>
-          {formatDateTimeLocal(r.time || "")}
-        </Box>
-      )
+      render: (r) => <Box color={({ palette }) => palette.secondary.light}>{formatDateTimeLocal(r.time || "")}</Box>
     },
     {
       title: "Block",

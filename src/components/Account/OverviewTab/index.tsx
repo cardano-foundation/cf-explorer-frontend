@@ -1,18 +1,15 @@
 import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { NetworkType, isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet-core";
-import { Box, CircularProgress, Input, useTheme } from "@mui/material";
+import { Box, CircularProgress, Input } from "@mui/material";
 import moment from "moment";
 import { ReactElement, useEffect, useState } from "react";
-import { GoCheck } from "react-icons/go";
-import { IoMdClose } from "react-icons/io";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { useSelector } from "react-redux";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import useToast from "src/commons/hooks/useToast";
-import { ReactComponent as Edit } from "src/commons/resources/icons/pen.svg";
 import { NETWORK, NETWORKS, NETWORK_TYPES, SUPPORTED_WALLETS } from "src/commons/utils/constants";
-import { regexEmail } from "src/commons/utils/helper";
+import { getShortWallet } from "src/commons/utils/helper";
 import { editInfo, getInfo } from "src/commons/utils/userRequest";
 import {
   GroupFlex,
@@ -80,80 +77,21 @@ export const RowItem: React.FC<TRowItem> = ({
 
 const OverviewTab = () => {
   const { userData } = useSelector(({ user }: RootState) => user);
-  const { isTablet } = useScreen();
-  const [showInput, setShowInput] = useState(false);
-  const [email, setEmail] = useState("");
+  const { isTablet, isMobile } = useScreen();
   const [openModal, setOpenModal] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const theme = useTheme();
-  const toast = useToast();
-
-  const handleSubmitEmail = async () => {
-    if (!email) return;
-    if (!regexEmail.test(email)) {
-      toast.error("Invalid email!");
-    } else {
-      try {
-        setLoading(true);
-        await editInfo({ email });
-        const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-        setUserData({ ...response.data, loginType: userData?.loginType || "" });
-        toast.success("Change email successfully!");
-        setShowInput(false);
-      } catch (error) {
-        toast.error(
-          ((error as any)?.response &&
-            (error as any)?.response?.data &&
-            (error as any)?.response?.data?.errorMessage) ||
-            "Something went wrong!"
-        );
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
 
   return (
     <Box textAlign="left">
       <RowItem
         label="You are logged in as"
-        value={userData?.email}
-        isTablet={isTablet}
-        action={
-          !userData?.email ? (
-            showInput ? (
-              <Box display={"flex"} alignItems={"center"}>
-                {!loading && (
-                  <Box
-                    component={IoMdClose}
-                    size={"24px"}
-                    color={theme.palette.error[700]}
-                    onClick={() => setShowInput(false)}
-                    mr={1}
-                  />
-                )}
-                {!loading ? (
-                  <Box
-                    color={theme.palette.success[800]}
-                    component={GoCheck}
-                    size={"24px"}
-                    onClick={handleSubmitEmail}
-                  />
-                ) : (
-                  <CircularProgress size={"24px"} />
-                )}
-              </Box>
-            ) : (
-              <Edit onClick={() => setShowInput(true)} />
-            )
-          ) : (
-            <></>
-          )
+        value={
+          userData?.loginType === "connectWallet"
+            ? isMobile
+              ? getShortWallet(userData.address || "")
+              : userData?.address
+            : userData?.email
         }
-        isInput={showInput}
-        placeholder="Enter your email"
-        setvalueInput={setEmail}
-        valueInput={email}
+        isTablet={isTablet}
       />
       <RowItem
         label="Last Login"
@@ -241,7 +179,7 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
       <>
         <>
           <Title>Link wallet to your account</Title>
-          <Box color={({ palette }) => palette.grey[300]} fontWeight={"bold"} fontSize={"14px"}>
+          <Box color={({ palette }) => palette.secondary.light} fontWeight={"bold"} fontSize={"14px"}>
             You can only link wallet once per account
           </Box>
           <>

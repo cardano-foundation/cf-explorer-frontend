@@ -40,7 +40,7 @@ const DelegationDetail: React.FC = () => {
   };
 
   const setQuery = (query: any) => {
-    history.replace({ search: stringify(query) });
+    history.replace({ search: stringify(query) }, state);
   };
 
   const status = useFetch<ListTabResponseSPO>(API.SPO_LIFECYCLE.TABS(poolId));
@@ -49,19 +49,20 @@ const DelegationDetail: React.FC = () => {
     `${API.DELEGATION.POOL_DETAIL_HEADER}/${poolId}`
   );
 
-  const {
-    data: dataTable,
-    loading: loadingTable,
-    total,
-    initialized: initalTable
-  } = useFetchList<DelegationEpoch | StakingDelegators>(
-    `${API.DELEGATION.POOL_DETAIL}-${tab}?poolView=${poolId}&page=${query.page ? +query.page - 1 : 0}&size=${
+  const fetchDataEpochs = useFetchList<DelegationEpoch>(
+    `${API.DELEGATION.POOL_DETAIL("epochs")}?poolView=${poolId}&page=${query.page ? +query.page - 1 : 0}&size=${
+      query.size || 50
+    }`
+  );
+
+  const fetchDataDelegators = useFetchList<StakingDelegators>(
+    `${API.DELEGATION.POOL_DETAIL("delegators")}?poolView=${poolId}&page=${query.page ? +query.page - 1 : 0}&size=${
       query.size || 50
     }`
   );
 
   useEffect(() => {
-    document.title = `Delegation Pool ${poolId} | Iris - Cardano Blockchain Explorer`;
+    document.title = `Delegation Pool ${poolId} | Cardano Blockchain Explorer`;
     window.scrollTo(0, 0);
   }, [poolId]);
 
@@ -86,13 +87,7 @@ const DelegationDetail: React.FC = () => {
       key: "epochs",
       component: (
         <div ref={tableRef}>
-          <DelegationEpochList
-            data={dataTable as DelegationEpoch[]}
-            loading={loadingTable}
-            initialized={initalTable}
-            total={total}
-            scrollEffect={scrollEffect}
-          />
+          <DelegationEpochList {...fetchDataEpochs} scrollEffect={scrollEffect} />
         </div>
       )
     },
@@ -102,13 +97,7 @@ const DelegationDetail: React.FC = () => {
       key: "delegators",
       component: (
         <div ref={tableRef}>
-          <DelegationStakingDelegatorsList
-            data={dataTable as StakingDelegators[]}
-            loading={loadingTable}
-            initialized={initalTable}
-            total={total}
-            scrollEffect={scrollEffect}
-          />
+          <DelegationStakingDelegatorsList {...fetchDataDelegators} scrollEffect={scrollEffect} />
         </div>
       )
     }
@@ -123,7 +112,7 @@ const DelegationDetail: React.FC = () => {
         <TabContext value={tab}>
           <TabsContainer>
             <TabList
-              onChange={(e, value) => {
+              onChange={(e: any, value: any) => {
                 setQuery({ tab: value, page: 1, size: 50 });
                 scrollEffect();
               }}

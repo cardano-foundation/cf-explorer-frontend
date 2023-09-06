@@ -66,7 +66,9 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
       value: (
         <>
           <Box position={"relative"}>
-            <PolicyId>{data?.policy || ""}</PolicyId>
+            <CustomTooltip title={data?.policy}>
+              <PolicyId>{data?.policy || ""}</PolicyId>
+            </CustomTooltip>
             <Box position={"absolute"} top={"-5px"} right={0}>
               <CopyButton text={data?.policy}></CopyButton>
             </Box>
@@ -124,18 +126,22 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
       title: (
         <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
-            <WrapTitle>Total Volume</WrapTitle>
+            <CustomTooltip title="In units of the native token">
+              <WrapTitle>Total Volume</WrapTitle>
+            </CustomTooltip>
           </Box>
         </Box>
       ),
       icon: exchageIconUrl,
-      value: formatNumberDivByDecimals(data?.totalVolume || "", data?.metadata?.decimals || 0)
+      value: formatNumberDivByDecimals(data?.totalVolume || "", decimalToken || 0)
     },
     {
       title: (
         <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
-            <WrapTitle>Volume 24H</WrapTitle>
+            <CustomTooltip title="In units of the native token">
+              <WrapTitle>Volume 24H</WrapTitle>
+            </CustomTooltip>
           </Box>
         </Box>
       ),

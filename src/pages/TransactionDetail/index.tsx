@@ -31,7 +31,7 @@ const Transaction: React.FC = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Transaction ${trxHash} | Iris - Cardano Blockchain Explorer`;
+    document.title = `Transaction ${trxHash} | Cardano Blockchain Explorer`;
   }, [trxHash]);
 
   if (!initialized) {

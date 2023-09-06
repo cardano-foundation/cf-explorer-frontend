@@ -6,13 +6,7 @@ import { stringify } from "qs";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import {
-  formatDateTimeLocal,
-  getPageInfo,
-  getShortHash,
-  getShortWallet,
-  numberWithCommas
-} from "src/commons/utils/helper";
+import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table from "src/components/commons/Table";
@@ -37,16 +31,10 @@ const StakeDelegations = () => {
   const mainRef = useRef(document.querySelector("#main"));
 
   useEffect(() => {
-    document.title = `Stake Delegations | Iris - Cardano Blockchain Explorer`;
+    document.title = `Stake Delegations | Cardano Blockchain Explorer`;
   }, []);
 
-  const columns: Column<StakeDelegations>[] = [
-    {
-      title: "#",
-      minWidth: 30,
-      key: "index",
-      render: (r, idx) => numberWithCommas(pageInfo?.page * pageInfo?.size + idx + 1 || 0)
-    },
+  const columns: Column<StakeDelegationItem>[] = [
     {
       title: "Tx Hash",
       minWidth: 120,
@@ -81,24 +69,28 @@ const StakeDelegations = () => {
     {
       title: "Stake Address",
       key: "stakeAddress",
-      render: (r) => {
-        const stakeKey = r.stakeKeys[0];
-        return (
-          <CustomTooltip title={stakeKey}>
-            <StyledLink to={{ pathname: details.stake(stakeKey), state: { fromPath } }}>
-              {getShortWallet(stakeKey)}
-            </StyledLink>
-          </CustomTooltip>
-        );
-      }
+      render: (r) => (
+        <>
+          {r.stakeKeys.slice(0, 2).map((stakeKey, idx) => (
+            <Box key={idx}>
+              <CustomTooltip title={stakeKey}>
+                <StyledLink to={{ pathname: details.stake(stakeKey), state: { fromPath } }}>
+                  {getShortWallet(stakeKey)}
+                </StyledLink>
+              </CustomTooltip>
+            </Box>
+          ))}
+          {r.pools?.length > 2 ? <StyledLink to={details.transaction(r.txHash)}>...</StyledLink> : ""}
+        </>
+      )
     },
     {
       title: "Pool",
       key: "pool",
       render: (r) => (
         <>
-          {r.pools.slice(0, 2).map((pool: any) => (
-            <Box key={pool.poolId}>
+          {r.pools.slice(0, 2).map((pool, idx) => (
+            <Box key={idx}>
               <CustomTooltip title={pool.poolName || pool.poolId}>
                 <StyledLink to={details.delegation(pool.poolId)}>
                   <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
@@ -116,7 +108,7 @@ const StakeDelegations = () => {
 
   return (
     <StyledContainer>
-      <Card title="Stake Delegations">
+      <Card title="Stake Delegation(s)">
         <Actions>
           <TimeDuration>
             <FormNowMessage time={fetchData.lastUpdated} />

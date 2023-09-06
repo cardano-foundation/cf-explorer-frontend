@@ -62,7 +62,7 @@ type TEmptyRecord = {
 };
 export const EmptyRecord: React.FC<TEmptyRecord> = ({ className }) => (
   <Empty className={className}>
-    <NoRecord />
+    <NoRecord p={`${0} !important`} />
   </Empty>
 );
 
@@ -208,23 +208,19 @@ const TableBody = <T extends ColumnType>({
   return (
     <TBody>
       {loading && initialized && (
-        <tr>
-          <td>
-            <LoadingWrapper
-              bgcolor={(theme) => alpha(theme.palette.common.black, 0.05)}
-              width={"100%"}
-              height={"100%"}
-              zIndex={1000}
-              display="flex"
-              justifyContent="center"
-              alignItems="self-start"
-            >
-              <Box pt={"20%"}>
-                <CircularProgress />
-              </Box>
-            </LoadingWrapper>
-          </td>
-        </tr>
+        <LoadingWrapper
+          bgcolor={(theme) => alpha(theme.palette.common.black, 0.05)}
+          width={"100%"}
+          height={"100%"}
+          zIndex={1000}
+          display="flex"
+          justifyContent="center"
+          alignItems="self-start"
+        >
+          <Box pt={"20%"}>
+            <CircularProgress />
+          </Box>
+        </LoadingWrapper>
       )}
       {data &&
         data.map((row, index) => (
@@ -263,12 +259,17 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
   const [size, setSize] = useState(pagination?.size || 50);
   const [open, setOpen] = useState(false);
   const trigger = useScrollTrigger();
-
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
     pagination && pagination.onChange && pagination.onChange(page, size);
     setPage(page);
     clearSelection?.();
   };
+
+  useEffect(() => {
+    if (pagination?.page === 0) {
+      setPage(1);
+    }
+  }, [pagination?.page]);
 
   useEffect(() => {
     trigger && setOpen(false);
@@ -320,6 +321,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
       </Box>
       {pagination?.total && pagination.total > 10 ? (
         <PaginationCustom
+          key={page}
           pagination={pagination}
           total={pagination.total || 0}
           page={page}

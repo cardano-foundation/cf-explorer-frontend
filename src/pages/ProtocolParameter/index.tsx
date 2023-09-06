@@ -86,7 +86,7 @@ const ProtocolParameter: React.FC = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Protocol Parameters | Iris - Cardano Blockchain Explorer`;
+    document.title = `Protocol Parameters | Cardano Blockchain Explorer`;
   }, []);
 
   const theme = useTheme();
@@ -229,7 +229,7 @@ const ProtocolParameter: React.FC = () => {
       )}
       {histories && <ProtocolParameterHistory />}
       {!histories && (
-        <Card titleSx={{ margin: 0 }} title={"Protocol parameters"}>
+        <Card titleSx={{ margin: 0 }} title={"Protocol Parameters"}>
           <Box pt={2}>
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
@@ -481,9 +481,33 @@ export const ProtocolParameterHistory = () => {
       <Card
         titleSx={{
           margin: 0,
-          width: "max-content"
+          width: "100%"
         }}
-        title={"Protocol parameters update history"}
+        title={
+          <Box>
+            Protocol parameters update history{" "}
+            <CustomTooltip
+              title={
+                <Box>
+                  Please be aware that we just display the protocol parameters from Shelley Era onwards (from Epoch
+                  208). For further information, please visit
+                  <Box
+                    ml={1}
+                    color={({ palette }) => `${palette.primary[200]} !important`}
+                    component={"a"}
+                    href="https://github.com/cardano-foundation/CIPs/tree/master/CIP-0009"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    https://github.com/cardano-foundation/CIPs/tree/master/CIP-0009
+                  </Box>
+                </Box>
+              }
+            >
+              <InfoIcon style={{ cursor: "pointer" }} />
+            </CustomTooltip>
+          </Box>
+        }
         textAlign={"left"}
         extra={
           <Box position={"relative"}>

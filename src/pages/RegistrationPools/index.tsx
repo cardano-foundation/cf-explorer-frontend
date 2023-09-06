@@ -20,8 +20,9 @@ import { API } from "src/commons/utils/api";
 import NoRecord from "src/components/commons/NoRecord";
 import { REFRESH_TIMES } from "src/commons/utils/constants";
 import FormNowMessage from "src/components/commons/FormNowMessage";
+import ADAicon from "src/components/commons/ADAIcon";
 
-import { RegistrationContainer, StakeKey, StyledLink, TimeDuration } from "./styles";
+import { RegistrationContainer, StakeKey, StyledLink, StyledPoolLink, TimeDuration } from "./styles";
 
 export enum POOL_TYPE {
   REGISTRATION = "registration",
@@ -48,7 +49,7 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
 
   useEffect(() => {
     const title = poolType === POOL_TYPE.REGISTRATION ? "Registration" : "Deregistration";
-    document.title = `${title} Pools | Iris - Cardano Blockchain Explorer`;
+    document.title = `${title} Pools | Cardano Blockchain Explorer`;
   }, [poolType]);
 
   const columns: Column<Registration>[] = [
@@ -90,18 +91,23 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
     {
       title: "Pool",
       key: "pool",
+      maxWidth: 200,
       render: (pool) => (
-        <StyledLink
+        <StyledPoolLink
           to={{ pathname: details.delegation(pool.poolView), state: { fromPath: history.location.pathname } }}
         >
           <CustomTooltip title={pool.poolName || pool.poolView || ""}>
             <Box component={"span"}>{pool.poolName || getShortHash(pool.poolView)}</Box>
           </CustomTooltip>
-        </StyledLink>
+        </StyledPoolLink>
       )
     },
     {
-      title: "Pledge (A)",
+      title: (
+        <Box component="span">
+          Pledge (<ADAicon />)
+        </Box>
+      ),
       key: poolType === POOL_TYPE.REGISTRATION ? "pledge" : "pu.pledge",
       render: (pool) => <>{formatADAFull(pool.pledge)}</>,
       sort: ({ columnKey, sortValue }) => {
@@ -109,7 +115,11 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
       }
     },
     {
-      title: "Fixed Cost (A)",
+      title: (
+        <Box component="span">
+          Fixed Cost (<ADAicon />)
+        </Box>
+      ),
       key: poolType === POOL_TYPE.REGISTRATION ? "fixedCost" : "pu.fixedCost",
       render: (pool) => <>{formatADAFull(pool.cost)}</>,
       sort: ({ columnKey, sortValue }) => {

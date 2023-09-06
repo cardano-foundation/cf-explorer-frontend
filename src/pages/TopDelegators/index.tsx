@@ -7,7 +7,7 @@ import { StyledContainer } from "./styles";
 
 const TopDelegators = () => {
   useEffect(() => {
-    document.title = `Top Delegators | Iris - Cardano Blockchain Explorer`;
+    document.title = `Top Delegators | Cardano Blockchain Explorer`;
   }, []);
 
   return (

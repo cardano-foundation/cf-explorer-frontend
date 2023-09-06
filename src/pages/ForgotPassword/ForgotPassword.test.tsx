@@ -47,7 +47,7 @@ describe("Forgot password page", () => {
     fireEvent.change(emailInput, { target: { value: "abc" } });
     const submitButton = screen.getByText("Submit");
     fireEvent.click(submitButton);
-    const errorMessage = screen.getByText("Invalid Email");
+    const errorMessage = screen.getByText("Please enter a valid email address");
     expect(errorMessage).toBeInTheDocument();
   });
 

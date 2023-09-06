@@ -227,7 +227,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
               <DetailValue>
                 {data?.rewardsDistributed ? (
                   <Box>
-                    {formatADAFull(data?.rewardsDistributed)}
+                    {formatADAFull(data?.rewardsDistributed)}&nbsp;
                     <ADAicon />
                   </Box>
                 ) : (

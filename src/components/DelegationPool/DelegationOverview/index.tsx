@@ -3,7 +3,7 @@ import { Box, Grid } from "@mui/material";
 import moment from "moment";
 import { useSelector } from "react-redux";
 
-import { CurentEpochPool, LiveStakePoolIcon, RocketPoolIcon, TotalPoolIcon } from "src/commons/resources";
+import { CurentEpochPool, LiveStakeIcon, RocketPoolIcon, TotalPoolIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
@@ -12,6 +12,7 @@ import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import {
   PoolTitle,
@@ -59,7 +60,7 @@ const OverViews: React.FC = () => {
   const minutes = duration.minutes();
   const seconds = duration.seconds();
   return (
-    <Card title="Stake Pool">
+    <Card title="Pools">
       <TimeDuration>
         <FormNowMessage time={lastUpdated} />
       </TimeDuration>
@@ -114,7 +115,9 @@ const OverViews: React.FC = () => {
         <Grid item xl={3} md={6} xs={12}>
           <StyledCard.Container sx={{ justifyContent: "space-between" }}>
             <StyledCard.Content style={{ padding: "30px 0 0 30px" }}>
-              <StyledCard.Title>Live Stake</StyledCard.Title>
+              <StyledCard.Title>
+                Live Stake (<ADAicon />)
+              </StyledCard.Title>
               <CustomTooltip title={formatADAFull(data?.liveStake)}>
                 <StyledCard.Value>{formatADA(data?.liveStake)}</StyledCard.Value>
               </CustomTooltip>
@@ -124,7 +127,7 @@ const OverViews: React.FC = () => {
               <StyledCard.Value>{numberWithCommas(data?.delegators)}</StyledCard.Value>
             </StyledCard.Content>
             <Box>
-              <StyledImg src={LiveStakePoolIcon} alt="Rocket" />
+              <StyledImg src={LiveStakeIcon} alt="Rocket" />
             </Box>
           </StyledCard.Container>
         </Grid>

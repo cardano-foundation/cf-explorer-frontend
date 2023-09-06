@@ -1,6 +1,7 @@
 import BigNumber from "bignumber.js";
 import moment from "moment";
 import { parse } from "qs";
+import jwtDecode from "jwt-decode";
 
 import { setUserData } from "../../stores/user";
 import { getInfo, signIn } from "./userRequest";
@@ -82,7 +83,7 @@ export const formatADAFull = (value?: string | number, limit = 6): string => {
 
 export const formatNumberDivByDecimals = (value?: string | number | BigNumber, decimals = 6) => {
   if (!value) return `0`;
-  return numberWithCommas(new BigNumber(value).div(new BigNumber(10).exponentiatedBy(decimals)).toString());
+  return numberWithCommas(new BigNumber(value).div(new BigNumber(10).exponentiatedBy(decimals)).toString(), decimals);
 };
 
 export const exchangeADAToUSD = (value: number | string, rate: number, isFull?: boolean) => {
@@ -225,3 +226,21 @@ export const toFixedBigNumber = (value: string | number, dp = 0, rm = BigNumber.
 };
 
 export const isValidEmail = (email: string) => regexEmail.test(email);
+
+export function validateTokenExpired() {
+  const token = localStorage.getItem("token");
+  if (!token) return false;
+  const decoded: any = jwtDecode(token);
+  const now = moment();
+  const exp = moment(decoded.exp * 1000);
+  return now.isBefore(exp);
+}
+
+export const isJson = (str: string) => {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+};

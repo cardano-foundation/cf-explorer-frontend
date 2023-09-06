@@ -9,7 +9,8 @@ export const SidebarMenuContainer = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   justifyContent: "space-between",
   [theme.breakpoints.down("sm")]: {
-    height: "calc(100% - 120px)"
+    height: "fit-content",
+    maxHeight: "calc(100% - 180px)"
   }
 }));
 
@@ -44,7 +45,7 @@ export const itemStyle = (theme: Theme, sidebar: boolean): SystemStyleObject<The
   }
 });
 
-export const MenuIcon = styled("img")<{ iconOnly?: number; active?: number; text?: number; disable?: number }>`
+export const MenuIcon = styled("img")<{ iconOnly?: number; active?: number; disable?: number }>`
   width: 24px;
   height: 24px;
   min-width: 24px;
@@ -54,26 +55,19 @@ export const MenuIcon = styled("img")<{ iconOnly?: number; active?: number; text
     margin-right: 15px;
   }
 `;
-// filter: ${(props) => (props.active ? (props.text ? `none` : `brightness(5)`) : `grayscale(1)`)};
 
 export const SubMenu = styled(List)<{ isActive?: number }>`
   margin-left: 0px;
 `;
 
-export const MenuText = styled(ListItemText)<{ open?: number; active?: number; text?: number; disable?: number }>`
+export const MenuText = styled(ListItemText)<{ open?: number; active?: number; disable?: number }>`
   opacity: ${(props) => (props.open ? 1 : 0)};
   width: ${(props) => (props.open ? "unset" : 0)};
   * {
     font-weight: inherit !important;
     font-family: var(--font-family-title) !important;
-    color: ${({ active, text, disable, theme }) =>
-      active
-        ? text
-          ? theme.palette.secondary[0]
-          : theme.palette.secondary[0]
-        : disable
-        ? theme.palette.secondary[600]
-        : theme.palette.secondary.light};
+    color: ${({ active, disable, theme }) =>
+      active ? theme.palette.secondary[0] : disable ? theme.palette.secondary[600] : theme.palette.secondary.light};
     white-space: break-spaces;
     width: ${drawerWidth - 100}px;
 

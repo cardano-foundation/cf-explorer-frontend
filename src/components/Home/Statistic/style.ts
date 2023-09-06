@@ -71,6 +71,7 @@ export const Name = styled("h4")`
     font-size: 16px;
     margin-top: 16px;
   }
+  white-space: nowrap;
 `;
 
 export const Title = styled("h3")`

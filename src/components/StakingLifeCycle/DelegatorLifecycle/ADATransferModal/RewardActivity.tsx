@@ -7,10 +7,9 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import Table, { Column } from "src/components/commons/Table";
 import { details } from "src/commons/routers";
-import CustomIcon from "src/components/commons/CustomIcon";
-import { AIconGreen } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import UserInfo from "./UserInfo";
 import { Amount, StyledLink } from "./styles";
@@ -39,7 +38,7 @@ const RewardActivity: React.FC = () => {
               ? `+${formatADAFull(r.amount)}`
               : `-${formatADAFull(r.amount)}`
             : 0}
-          <CustomIcon icon={AIconGreen} height={15} fill="currentColor" color={(theme) => theme.palette.text.primary} />
+          <ADAicon />
         </Amount>
       )
     },

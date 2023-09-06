@@ -3,7 +3,6 @@ import { Backdrop, Box } from "@mui/material";
 import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { NetworkType } from "@cardano-foundation/cardano-connect-with-wallet-core";
 import { useSelector } from "react-redux";
-import { hotjar } from "react-hotjar";
 
 import { WalletIcon } from "src/commons/resources";
 import { RootState } from "src/stores/types";
@@ -17,7 +16,7 @@ import {
 } from "src/stores/user";
 import { getInfo, getNonce, signIn } from "src/commons/utils/userRequest";
 import { NETWORK, NETWORKS, NETWORK_TYPES } from "src/commons/utils/constants";
-import { removeAuthInfo } from "src/commons/utils/helper";
+import { removeAuthInfo, validateTokenExpired } from "src/commons/utils/helper";
 import useToast from "src/commons/hooks/useToast";
 import ConnectedProfileOption from "src/components/commons/ConnectedProfileOption";
 import ConnectWalletModal from "src/components/commons/ConnectWalletModal";
@@ -36,9 +35,10 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
   const { isEnabled, stakeAddress, isConnected, connect, signMessage, disconnect, enabledWallet } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
   });
+  const isValidToken = validateTokenExpired();
   const [signature, setSignature] = React.useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [isSign, setIsSign] = useState(isConnected);
+  const [isSign, setIsSign] = useState(isValidToken);
   const toast = useToast();
 
   useEffect(() => {
@@ -76,7 +76,6 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
           type: 1
         };
         const response = await signIn(payload);
-        hotjar.event("Wallet signed in successfully!");
         setIsSign(true);
         const data = response.data;
 
@@ -96,7 +95,6 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
     } catch (error) {
       disconnect();
       removeAuthInfo();
-      hotjar.event("Wallet signing unsuccessful!");
     } finally {
       setModalSignMessage(false);
     }
@@ -110,7 +108,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         setNonce(nonceValue);
         await signMessage(
           nonceValue.nonce,
-          (signature) => handleSignIn(signature, nonceValue),
+          (signature: any) => handleSignIn(signature, nonceValue),
           () => {
             toast.error("User rejected the request!");
             setModalSignMessage(false);
@@ -121,12 +119,10 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
       }
     } catch (error) {
       toast.error("Something went wrong!");
-      hotjar.event("Wallet signing message unsuccessful!");
     } finally {
       setSubmitting(false);
     }
   };
-
   if (isEnabled && stakeAddress && isSign) {
     return (
       <>

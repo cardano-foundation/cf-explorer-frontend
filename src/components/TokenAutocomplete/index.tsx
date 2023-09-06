@@ -8,7 +8,7 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import { HeaderSearchIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatNumberDivByDecimals, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import { formatNumberDivByDecimals, getShortWallet } from "src/commons/utils/helper";
 
 import CustomModal from "../commons/CustomModal";
 import CustomTooltip from "../commons/CustomTooltip";
@@ -129,7 +129,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
                       textOverflow={"ellipsis"}
                       maxWidth="150px"
                     >
-                      {option.displayName || ""}
+                      {option.displayName || getShortWallet(option.fingerprint || "")}
                     </Box>
                   </CustomTooltip>
                 </Box>
@@ -162,12 +162,6 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
   const { isTablet } = useScreen();
 
   const columns: Column<WalletAddress["tokens"][number]>[] = [
-    {
-      title: "#",
-      key: "#",
-      minWidth: "50px",
-      render: (r, index) => numberWithCommas(page * size + index + 1)
-    },
     {
       title: "Icon",
       key: "icon",

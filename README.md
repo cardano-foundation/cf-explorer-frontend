@@ -1,4 +1,4 @@
-# Iris Frontend
+# Explorer Frontend
 
 <p align="left">
 <img alt="Tests" src="https://github.com/cardano-foundation/cf-explorer-frontend/actions/workflows/tests.yaml/badge.svg" />
@@ -7,9 +7,9 @@
 <a href="https://conventionalcommits.org"><img alt="conventionalcommits" src="https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits" /></a>
 </p>
 
-This repository houses the frontend component of Iris. Developed with TypeScript, React.js, and mui, it showcases a user-friendly interface that presents the Cardano blockchain data collected and aggregated by LedgerSync.
+This repository houses the frontend component of Explorer. Developed with TypeScript, React.js, and mui, it showcases a user-friendly interface that presents the Cardano blockchain data collected and aggregated by LedgerSync.
 
-👉 Check the [Iris repository](https://github.com/cardano-foundation/cf-explorer) to understand how the microservices work together
+👉 Check the [Explorer repository](https://github.com/cardano-foundation/cf-explorer) to understand how the microservices work together
 
 ## Prerequisites
 

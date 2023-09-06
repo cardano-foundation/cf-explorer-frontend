@@ -10,6 +10,16 @@ export const StyledLink = styled(Link)`
   color: ${(props) => props.theme.palette.primary.main} !important;
 `;
 
+export const StyledPoolLink = styled(Link)`
+  font-family: var(--font-family-text) !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
+  display: inline-block;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
 export const RegistrationContainer = styled(Container)(({ theme }) => ({
   paddingTop: "30px",
   textAlign: "left",

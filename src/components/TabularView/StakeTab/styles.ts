@@ -78,11 +78,12 @@ export const TextResult = styled(Box)(({ theme }) => ({
   fontSize: "0.875rem"
 }));
 
-export const WrapWalletLabel = styled(Box)(() => ({
+export const WrapWalletLabel = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   fontSize: "0.875rem",
-  fontWeight: 500
+  fontWeight: 500,
+  color: theme.palette.secondary.light
 }));
 
 export const TabHead = styled(Box)<{ active?: number }>(
@@ -112,7 +113,7 @@ export const Headline = styled(Typography)<{ collapsed?: number }>`
 export const WrapperDelegationTab = styled(Box)`
   display: flex;
   justify-content: space-between;
-  align-items: center,
+  align-items: center;
   margin-top: 12px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     flex-direction: column;
