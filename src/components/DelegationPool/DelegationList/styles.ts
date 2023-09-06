@@ -33,7 +33,7 @@ export const SearchContainer = styled("div")(({ theme }) => ({
   height: 35,
   border: `1.5px solid ${theme.palette.grey[200]}`,
   "&:focus-within": {
-    outline: `1.5px solid ${theme.palette.primary.main}`
+    borderColor: theme.palette.primary.main
   },
   [theme.breakpoints.down("sm")]: {
     width: "unset",
