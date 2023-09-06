@@ -10,6 +10,9 @@ export const Container = styled(Box)`
   justify-content: center;
   align-items: center;
   padding: 30px 0;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    min-height: 80vh;
+  }
 `;
 
 export const CloseButton = styled(IconButton)<{ saving: number }>`
