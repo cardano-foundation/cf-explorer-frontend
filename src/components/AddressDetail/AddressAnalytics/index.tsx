@@ -148,7 +148,6 @@ const AddressAnalytics: React.FC = () => {
                     stroke={theme.palette.primary.main}
                     strokeWidth={4}
                     fill="url(#colorUv)"
-                    dot={{ r: 2 }}
                     activeDot={{ r: 6 }}
                   />
                 </AreaChart>
