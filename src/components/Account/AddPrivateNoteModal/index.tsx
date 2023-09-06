@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Box } from "@mui/system";
+import { useTranslation } from "react-i18next";
 
 import useToast from "src/commons/hooks/useToast";
 import { ACCOUNT_ERROR, NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
@@ -22,6 +23,7 @@ type TInput = {
   error?: string;
 };
 const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseModal, refresh }) => {
+  const { t } = useTranslation();
   const [txHash, setTxHash] = useState<TInput>({ value: "" });
   const [privateNote, setPrivateNote] = useState<TInput>({ value: "" });
   const [loading, setLoading] = useState(false);
@@ -35,7 +37,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
 
   const handleSubmitData = async () => {
     if (txHash?.value && txHash.value?.length > 70) {
-      toast.error("Maximum reached!");
+      toast.error(t("message.common.maxReached"));
     } else
       try {
         setLoading(true);
@@ -50,14 +52,14 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
             try {
               await addPrivateNote(payload);
             } catch (error) {
-              toast.error("Private note is already exists");
+              toast.error(t("message.privateNote.exist"));
             }
           } else {
             const payload = { note: privateNote?.value || "", noteId: currentNote.id };
             try {
               await editPrivateNote(payload);
             } catch (error) {
-              toast.error("Something went wrong!");
+              toast.error(t("message.common.somethingWentWrong"));
             }
           }
           setTxHash({ value: "" });
@@ -66,7 +68,7 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
           handleCloseModal();
           refresh();
         } catch (error) {
-          toast.error("Transaction hash not found!");
+          toast.error(t("message.tx.txHashnotfound"));
         } finally {
           setLoading(false);
         }

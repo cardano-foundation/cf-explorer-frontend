@@ -143,8 +143,8 @@ const LatestStories = () => {
     return (
       <Box>
         <Header>
-          <Title>{t("pages.dashboard.news")}</Title>
-          <ViewAllButtonExternal to={CARDANO_NEWS_URL as string} />
+          <Title>{t("common.latestStories")}</Title>
+          <ViewAllButtonExternal to={CARDANO_NEWS_URL as string} tooltipTitle={t("common.viewAll")} />
         </Header>
         <Grid container spacing={2}>
           {new Array(amountSkeleton).fill(0).map((_, index) => (
@@ -184,8 +184,8 @@ const LatestStories = () => {
   return (
     <LatestStoriesContainer data-testid="home-latest-stories">
       <Header>
-        <Title>{t("pages.dashboard.news")}</Title>
-        <ViewAllButtonExternal to={CARDANO_NEWS_URL as string} />
+        <Title>{t("common.latestStories")}</Title>
+        <ViewAllButtonExternal to={CARDANO_NEWS_URL as string} tooltipTitle={t("common.viewAll")} />
       </Header>
       <Box position={"relative"} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
         <Grid container spacing={2} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>

@@ -45,21 +45,21 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
             network: NETWORK_TYPES[NETWORK]
           });
           setBookmarks([...(bookmarks || []), data]);
-          toast.success(t("message.bookmark.added") + ".");
+          toast.success(t("common.bookmarkHasBeenAdded"));
         } else {
-          toast.error(t("message.bookmark.maximum") + "!");
+          toast.error(t("message.bookmark.maximum", { value: 2000 }));
         }
       } else {
         try {
           deleteBookmark(bookmark?.id || 0);
           setBookmarks((bookmarks || []).filter((b) => b.keyword !== `${keyword}`));
-          toast.success(t("message.bookmark.removed") + ".");
+          toast.success(t("common.bookmarkHasBeenRemoved"));
         } catch (error) {
-          toast.error(`${t("message.common.somethingWentWrong")}! ${t("message.common.tryAgain")}`);
+          toast.error(`${t("message.common.somethingWentWrong")} ${t("message.common.tryAgain")}`);
         }
       }
     } catch (error) {
-      toast.error(`${t("message.common.somethingWentWrong")}! ${t("message.common.tryAgain")}`);
+      toast.error(`${t("message.common.somethingWentWrong")} ${t("message.common.tryAgain")}`);
     } finally {
       setLoading(false);
     }

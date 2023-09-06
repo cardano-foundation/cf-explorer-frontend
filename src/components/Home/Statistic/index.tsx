@@ -147,12 +147,12 @@ const HomeStatistic = () => {
               <WrapCardContent>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon data-testid="market-cap-icon" src={MarketCapIcon} alt="Market cap" />
-                  <Name data-testid="market-cap-box-title">Market cap</Name>
+                  <Name data-testid="market-cap-box-title">{t("glossary.marketCap")}</Name>
                 </Box>
                 <Title data-testid="market-cap-value">${numberWithCommas(usdMarket.market_cap)}</Title>
                 <Content>
                   <TimeDuration data-testid="last-update-market-cap">
-                    Last updated {moment(usdMarket.last_updated).fromNow()}
+                    {t("common.lastUpdated")} {moment(usdMarket.last_updated).fromNow()}
                   </TimeDuration>
                 </Content>
               </WrapCardContent>
@@ -175,14 +175,14 @@ const HomeStatistic = () => {
                     alt="Market cap"
                   />
                   <Name data-testid="current-epoch-box-title" style={isGalaxyFoldSmall ? { maxWidth: "30px" } : {}}>
-                    Current Epoch
+                    {t("glossary.currentEpoch")}
                   </Name>
                 </Box>
                 <Box>
                   <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
                     <Title data-testid="current-epoch-number">{numberWithCommas(currentEpoch?.no)}</Title>
                     <Box color={({ palette }) => palette.secondary.light}>
-                      Slot:{" "}
+                      {t("common.slot")}:{" "}
                       {moment(currentEpoch?.endTime).isAfter(moment())
                         ? numberWithCommas(currentEpoch?.slot)
                         : numberWithCommas(MAX_SLOT_EPOCH)}
@@ -208,10 +208,10 @@ const HomeStatistic = () => {
                 </Box>
                 <Box>
                   <Box color={({ palette }) => palette.secondary.light}>
-                    Unique accounts: {numberWithCommas(currentEpoch?.account)}
+                    {t("glossary.uniqueAccounts")}: {numberWithCommas(currentEpoch?.account)}
                   </Box>
                   <Box color={({ palette }) => palette.secondary.light} fontSize={"12px"}>
-                    End timestamp: {formatDateTimeLocal(currentEpoch?.endTime)}
+                    {t("glossary.endTimestamp")}: {formatDateTimeLocal(currentEpoch?.endTime)}
                   </Box>
                 </Box>
               </Content>
@@ -234,7 +234,7 @@ const HomeStatistic = () => {
                       src={LiveStakeIcon}
                       alt="Total ADA Stake"
                     />
-                    <Name data-testid="live-stake-box-title">Live Stake</Name>
+                    <Name data-testid="live-stake-box-title">{t("glossary.liveStake")}</Name>
                   </Box>
                 </Box>
                 <Box>
@@ -261,15 +261,15 @@ const HomeStatistic = () => {
                 </Box>
                 <Box>
                   <Box color={({ palette }) => palette.secondary.light}>
-                    Active Stake <StyledAdaLogoIcon />:{" "}
+                    {t("glossary.activeStake")} <StyledAdaLogoIcon />:{" "}
                     <CustomTooltip title={formatADAFull(activeStake)}>
                       <span data-testid="active-stake-value">{formatADA(activeStake)}</span>
                     </CustomTooltip>
                   </Box>
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
-                    <CustomTooltip title={"Of the max supply"}>
+                    <CustomTooltip title={t("glossary.offTheMaxSupply")}>
                       <span>
-                        Circulating supply <StyledAdaLogoIcon />:{" "}
+                        {t("glossary.circulatingSupply")} <StyledAdaLogoIcon />:{" "}
                       </span>
                     </CustomTooltip>
                     <CustomTooltip title={numberWithCommas(supply)}>

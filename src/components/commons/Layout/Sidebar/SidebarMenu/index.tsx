@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { footerMenus, menus } from "src/commons/menus";
@@ -26,6 +27,7 @@ import {
 } from "./styles";
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
+  const { t } = useTranslation();
   const pathname = history.location.pathname;
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const specialPath = useSelector(({ system }: RootState) => system.specialPath);
@@ -94,7 +96,8 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     <SidebarMenuContainer>
       <Menu>
         {menus.map((item, index) => {
-          const { href, title, children, icon, tooltip } = item;
+          const { href, key, children, icon, tooltip } = item;
+          const title = t(key);
           const tooltipTitle = `${!sidebar ? `${title}${title && tooltip ? `: ` : ``}` : ``}${tooltip || ``}`;
           return (
             <React.Fragment key={index}>
@@ -177,7 +180,8 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 <Collapse in={`menu-${index}` === active} timeout="auto" unmountOnExit>
                   <SubMenu disablePadding>
                     {children.map((subItem, subIndex) => {
-                      const { href, title, icon, isSpecialPath } = subItem;
+                      const { href, icon, isSpecialPath, key } = subItem;
+                      const title = t(key);
                       return href ? (
                         <ListItem
                           data-testid={`submenu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
@@ -228,7 +232,8 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
         })}
         <StyledDivider sidebar={+sidebar} />
         {footerMenus.map((item, index) => {
-          const { href, title, children, icon, tooltip } = item;
+          const { href, key, children, icon, tooltip } = item;
+          const title = t(key);
           const tooltipTitle = `${!sidebar ? `${title}${title && tooltip ? `: ` : ``}` : ``}${tooltip || ``}`;
           return (
             <React.Fragment key={index}>
@@ -298,7 +303,8 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 <Collapse in={`footer-${index}` === active} timeout="auto" unmountOnExit>
                   <SubMenu disablePadding>
                     {children.map((subItem, subIndex) => {
-                      const { href, title, icon } = subItem;
+                      const { href, key, icon } = subItem;
+                      const title = t(key);
                       return href ? (
                         <ListItem
                           key={subIndex}
