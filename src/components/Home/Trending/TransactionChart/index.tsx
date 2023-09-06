@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import moment from "moment";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { Box, Grid, alpha, useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -33,24 +34,25 @@ type Time = "ONE_DAY" | "ONE_WEEK" | "TWO_WEEK" | "ONE_MONTH";
 export type TypeChart = "trx" | "simple" | "complex";
 
 const TransactionChart: React.FC = () => {
+  const { t } = useTranslation();
   const [rangeTime, setRangeTime] = useState<Time>("ONE_DAY");
   const { isMobile } = useScreen();
   const optionsTime: Record<Time, { label: string; displayName: string }> = {
     ONE_DAY: {
-      label: "24h",
-      displayName: "in the last 24 hours"
+      label: t("time.24h"),
+      displayName: t("option.tx.in24h")
     },
     ONE_WEEK: {
-      label: "1w",
-      displayName: "in a week"
+      label: t("time.1w"),
+      displayName: t("option.tx.aWeek")
     },
     TWO_WEEK: {
-      label: "2w",
-      displayName: "in two weeks"
+      label: t("time.2w"),
+      displayName: t("option.tx.twoWeeks")
     },
     ONE_MONTH: {
-      label: "1m",
-      displayName: "in a month"
+      label: t("time.1m"),
+      displayName: t("option.tx.aMonth")
     }
   };
 
@@ -65,13 +67,17 @@ const TransactionChart: React.FC = () => {
       key: "trx",
       title: (
         <Box textAlign={"left"}>
-          Metadata <Box fontSize={"0.6875rem"}>(Without smart contracts)</Box>
+          {t("glossary.metadata")} <Box fontSize={"0.6875rem"}>({t("glossary.withoutSC")})</Box>;
         </Box>
       ),
       value: sumMetadata || 0
     },
-    { key: "simple", title: <Box textAlign={"left"}>Smart contracts</Box>, value: sumSmartContract || 0 },
-    { key: "complex", title: "Simple transactions", value: sumSimple || 0 }
+    {
+      key: "simple",
+      title: <Box textAlign={"left"}>{t("glossary.smartContracts")}</Box>,
+      value: sumSmartContract || 0
+    },
+    { key: "complex", title: t("glossary.simpleTxs"), value: sumSimple || 0 }
   ];
 
   const renderLoading = () => {
@@ -118,7 +124,7 @@ const TransactionChart: React.FC = () => {
           </Grid>
           <Grid item xs={12} lg={3}>
             <BoxInfo>
-              <StyledTransactionTypes>Transaction Types</StyledTransactionTypes>
+              <StyledTransactionTypes>{t("glossary.txTypes")}</StyledTransactionTypes>
               {dataOverview.map((item) => (
                 <InfoItem key={item.key}>
                   <Box display={"flex"} alignItems={"center"} mb={1}>
