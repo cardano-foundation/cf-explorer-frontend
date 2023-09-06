@@ -83,8 +83,8 @@ export default function SignIn() {
   });
 
   useEffect(() => {
-    document.title = t("tabname.signIn");
-  }, []);
+    document.title = t("head.page.signIn");
+  }, [t]);
 
   const enableButton = Object.values(formData).every((value) => value.touched) && !error && !loading;
 
@@ -105,7 +105,7 @@ export default function SignIn() {
   };
 
   const handleLoginSuccess = () => {
-    toast.success("You are now signed in", false);
+    toast.success(t("message.user.signedIn"), false);
     handleRedirectBack();
   };
 
@@ -136,15 +136,15 @@ export default function SignIn() {
     switch (name) {
       case "email":
         if (!value) {
-          error = "Please enter Email Address";
+          error = t("validation.emailAddress.required");
         }
         if (!isValidEmail(value)) {
-          error = t("form.signIn.errorPassword");
+          error = t("validation.emailAddress");
         }
         break;
       case "password":
         if (!value) {
-          error = "Please enter your Password";
+          error = t("validation.password");
         }
         break;
       default:
@@ -217,9 +217,10 @@ export default function SignIn() {
   return (
     <Container>
       <WrapContent>
-        <WrapTitle data-testid="signin-title">Sign In</WrapTitle>
+        <WrapTitle data-testid="signin-title">{t("common.signIn")}</WrapTitle>
         <WrapHintText>
-          Don't have an account? <WrapSignUp onClick={() => history.push(routers.SIGN_UP)}>Sign Up</WrapSignUp>
+          {t("account.noAccount")}{" "}
+          <WrapSignUp onClick={() => history.push(routers.SIGN_UP)}>{t("page.signUp")}</WrapSignUp>
         </WrapHintText>
         <FormGroup>
           <WrapForm>
@@ -228,9 +229,7 @@ export default function SignIn() {
             </CloseButton>
             {invalidInfomation ? (
               <Box pt={"24px"}>
-                <AlertCustom severity="error">
-                  Unable to sign in. Please check your email address and password.
-                </AlertCustom>
+                <AlertCustom severity="error">{t("message.unableSignIn")}</AlertCustom>
               </Box>
             ) : null}
             <WrapInput>
@@ -245,7 +244,7 @@ export default function SignIn() {
                 value={formData.email.value}
                 onChange={handleChange}
                 fullWidth
-                placeholder="Email address"
+                placeholder={t("account.emailAddress")}
               />
               {formData.email.error && formData.email.touched ? (
                 <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom>
@@ -270,7 +269,7 @@ export default function SignIn() {
                 }
                 onChange={handleChange}
                 type={showPassword ? "text" : "password"}
-                placeholder="Password"
+                placeholder={t("account.password")}
                 error={Boolean(formData.password.error && formData.password.touched)}
               />
               {formData.password.error && formData.password.touched ? (
@@ -279,7 +278,7 @@ export default function SignIn() {
             </WrapInput>
             <ForgotPassword data-testid="forgot-password-link">
               <Box component={"span"} onClick={() => history.push(routers.FORGOT_PASSWORD)}>
-                Forgot password
+                {t("account.forgotPassword")}
               </Box>
             </ForgotPassword>
             <WrapButton
@@ -289,11 +288,11 @@ export default function SignIn() {
               onClick={handleSubmit}
               disabled={!enableButton}
             >
-              Sign In
+              {t("common.signIn")}
             </WrapButton>
             <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
               <WrapDivider />
-              <WrapOr>or</WrapOr>
+              <WrapOr>{t("common.or")}</WrapOr>
               <WrapDivider />
             </Box>
             <ConnectWallet
@@ -305,7 +304,7 @@ export default function SignIn() {
                   fullWidth
                   onClick={handleClick}
                 >
-                  Connect Wallet
+                  {t("account.connectWallet")}
                 </WrapButtonConnectWallet>
               )}
             ></ConnectWallet>

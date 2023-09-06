@@ -14,6 +14,7 @@ import { lists, routers } from "./routers";
 
 interface Menu {
   title: string;
+  key?: string;
   href?: string;
   children?: Menu[];
   icon?: string;
@@ -29,41 +30,76 @@ interface Social {
 export const menus: Menu[] = [
   {
     title: "Dashboard",
+    key: "page.dashboard",
     icon: DashboardIcon,
     href: routers.HOME
   },
   {
     title: "Blockchain",
+    key: "glossary.blockchain",
     icon: BlockChainMenuIcon,
     children: [
-      { title: "Epochs", href: routers.EPOCH_LIST },
-      { title: "Blocks", href: routers.BLOCK_LIST },
-      { title: "Transactions", href: routers.TRANSACTION_LIST },
-      { title: "Native Tokens", href: routers.TOKEN_LIST },
-      { title: "Smart Contracts", href: routers.CONTRACT_LIST },
-      { title: "Pools", href: routers.DELEGATION_POOLS, isSpecialPath: true },
-      { title: "Top ADA Holders", href: routers.ADDRESS_LIST }
+      { title: "Epochs", key: "glossary.epochs", href: routers.EPOCH_LIST },
+      { title: "Blocks", key: "glossary.blocks", href: routers.BLOCK_LIST },
+      { title: "Transactions", key: "glossary.transactions", href: routers.TRANSACTION_LIST },
+      { title: "Native Tokens", key: "glossary.nativeTokens", href: routers.TOKEN_LIST },
+      { title: "Smart Contracts", key: "glossary.smartContracts", href: routers.CONTRACT_LIST },
+      { title: "Pools", key: "head.page.pool", href: routers.DELEGATION_POOLS, isSpecialPath: true },
+      { title: "Top ADA Holders", key: "glossary.topAdaHolder", href: routers.ADDRESS_LIST }
     ]
   },
   {
     title: "Operational Certificates",
+    key: "glossary.operationalCertificates",
     icon: OperationalIcon,
     children: [
-      { title: "Stake Address Registration", href: routers.STAKE_ADDRESS_REGISTRATION, isSpecialPath: true },
-      { title: "Stake Address Deregistration", href: routers.STAKE_ADDRESS_DEREGISTRATION, isSpecialPath: true },
-      { title: "Stake Delegation(s)", href: routers.STAKE_ADDRESS_DELEGATIONS, isSpecialPath: true },
-      { title: "Pool Certificate", href: routers.POOL_CERTIFICATE, isSpecialPath: true },
-      { title: "Pool Deregistration", href: routers.POOL_DEREGISTRATION, isSpecialPath: true },
-      { title: "Instantaneous Rewards ", href: routers.INSTANTANEOUS_REWARDS, isSpecialPath: true }
+      {
+        title: "Stake Address Registration",
+        key: "glossary.takeAddressRegistrations",
+        href: routers.STAKE_ADDRESS_REGISTRATION,
+        isSpecialPath: true
+      },
+      {
+        title: "Stake Address Deregistration",
+        key: "glossary.stakeAddressDeregistration",
+        href: routers.STAKE_ADDRESS_DEREGISTRATION,
+        isSpecialPath: true
+      },
+      {
+        title: "Stake Delegation(s)",
+        key: "glossary.stakeDelegations",
+        href: routers.STAKE_ADDRESS_DELEGATIONS,
+        isSpecialPath: true
+      },
+      {
+        title: "Pool Certificate",
+        key: "glossary.poolCertificate",
+        href: routers.POOL_CERTIFICATE,
+        isSpecialPath: true
+      },
+      {
+        title: "Pool Deregistration",
+        key: "glossary.poolDeregistration",
+        href: routers.POOL_DEREGISTRATION,
+        isSpecialPath: true
+      },
+      {
+        title: "Instantaneous Rewards",
+        key: "glossary.instantaneousRewards",
+        href: routers.INSTANTANEOUS_REWARDS,
+        isSpecialPath: true
+      }
     ]
   },
   {
     title: "Staking Lifecycle",
+    key: "glossary.stakingLifecycle",
     icon: StakingLifecycleIcon,
     href: lists.dashboard()
   },
   {
     title: "Protocol Parameters",
+    key: "glossary.protocolParameters",
     icon: ProtocolIcon,
     href: lists.protocolParameters(),
     children: []
@@ -80,20 +116,22 @@ export const socials: Social[] = [
 export const footerMenus: Menu[] = [
   {
     title: "Browse",
+    key: "glossary.browse",
     icon: BrowseIcon,
     children: [
-      { href: "https://cardanofoundation.org/en/about-us/", title: "About CF" },
-      { href: "https://docs.cardano.org/en/latest/", title: "Cardano Docs" },
-      { href: "https://cardanofoundation.org/en/news", title: "News and Blog" }
+      { href: "https://cardanofoundation.org/en/about-us/", title: "About CF", key: "site.aboutCF" },
+      { href: "https://docs.cardano.org/en/latest/", title: "Cardano Docs", key: "site.cardanoDocs" },
+      { href: "https://cardanofoundation.org/en/news", title: "News and Blog", key: "site.newsAndBlog" }
     ]
   },
   {
     title: "Resources",
+    key: "site.resources",
     icon: ResourcesIcon,
     children: [
-      { href: "https://education.cardanofoundation.org/", title: "Blockchain Course" },
-      { href: "https://developers.cardano.org/tools/", title: "Builder Tools" },
-      { href: "https://github.com/cardano-foundation/cf-explorer", title: "Github" }
+      { href: "https://education.cardanofoundation.org/", title: "Blockchain Course", key: "site.blockchainCourse" },
+      { href: "https://developers.cardano.org/tools/", title: "Builder Tools", key: "site.builderTools" },
+      { href: "https://github.com/cardano-foundation/cf-explorer", title: "Github", key: "site.github" }
     ]
   }
 ];

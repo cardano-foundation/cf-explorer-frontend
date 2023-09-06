@@ -5,6 +5,7 @@ import moment from "moment";
 import { ReactElement, useEffect, useState } from "react";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import useToast from "src/commons/hooks/useToast";
@@ -111,6 +112,7 @@ interface ConnectWalletModal {
 }
 
 export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen }) => {
+  const { t } = useTranslation();
   const { stakeAddress, connect, disconnect } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
   });
@@ -133,12 +135,12 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
       const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
       setUserData({ ...response.data, loginType: userData?.loginType || "" });
       disconnect();
-      toast.success("Change wallet successfully!");
+      toast.success(t("message.wallet.changeSuccess"));
       setOpen(false);
     } catch (error) {
       toast.error(
         ((error as any)?.response && (error as any)?.response?.data && (error as any)?.response?.data?.errorMessage) ||
-          "Something went wrong!"
+          t("message.common.somethingWentWrong")
       );
     }
   };
@@ -163,13 +165,14 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
         if (e.name === "EnablementFailedError") {
           loading &&
             toast.error(
-              `You are currently connect to ${
-                NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()
-              }, please switch to  ${NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()}!`
+              t("message.changeNetwork", {
+                wrongNetwork: NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase(),
+                correctNetwork: NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()
+              })
             );
           return;
         }
-        loading && toast.error("Something went wrong!");
+        loading && toast.error(t("message.common.somethingWentWrong"));
       }
     );
   };

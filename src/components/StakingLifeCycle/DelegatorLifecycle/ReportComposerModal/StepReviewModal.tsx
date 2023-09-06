@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { CircularProgress, Stack } from "@mui/material";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import useToast from "src/commons/hooks/useToast";
@@ -29,6 +30,7 @@ import {
 import { IPropsModal, STEPS } from ".";
 
 const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params, gotoStep }) => {
+  const { t } = useTranslation();
   const toast = useToast();
   const [loading, setLoading] = useState(false);
 
@@ -68,13 +70,13 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
         await generateStakeKeyReport(paramsStakeKeyReport);
       }
 
-      toast.success("Report generated successfully");
+      toast.success(t("message.report.generated"));
       handleCloseModal();
       setTimeout(() => {
         history.push(lists.dashboard(isPoolReport ? "pool-reports" : "stake-key-reports"));
       }, 2000);
     } catch (err: any) {
-      toast.error("Failed to generate report. Please try again.");
+      toast.error(t("message.report.failedGenerate"));
     }
     setLoading(false);
   };
