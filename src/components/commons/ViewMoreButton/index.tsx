@@ -1,6 +1,7 @@
 import React from "react";
 import { styled } from "@mui/material";
 import { Link, LinkProps } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const StyledLink = styled(Link)`
   display: block;
@@ -17,7 +18,8 @@ const StyledLink = styled(Link)`
 `;
 
 const ViewMoreButton: React.FC<LinkProps> = ({ children, ...props }) => {
-  return <StyledLink {...props}>{children || "View Details"}</StyledLink>;
+  const { t } = useTranslation();
+  return <StyledLink {...props}>{children || t("common.viewDetails")}</StyledLink>;
 };
 
 export default ViewMoreButton;

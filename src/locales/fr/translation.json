@@ -138,7 +138,7 @@
   "glossary.output": "Output",
   "head.page.blocks": "Blocks",
   "glossary.blockId": "Block Id",
-  "glossary.EpochSlot": "Epoch/Slot",
+  "glossary.EpochSlot": "Epoch / Slot",
   "glossary.transaction": "Transaction",
   "glossary.comfirmations": "Confirmations",
   "glossary.transactionfees": "Transaction Fees",
@@ -510,5 +510,12 @@
   "common.parameterChanges": "Parameter changes",
   "common.allParameters": "All parameters",
   "common.applyFilters": "Apply Filters",
-  "common.selectDateRange": "Select date range"
+  "common.selectDateRange": "Select date range",
+  "common.viewDetail": "View Detail",
+  "common.close": "Close",
+  "common.totalBlocks": "Total Blocks",
+  "common.epoch.finished": "Finished",
+  "common.epoch.inProgress": "In Progress",
+  "common.epoch.rewarding": "Rewarding",
+  "common.epoch.cyncing": "Syncing"
 }

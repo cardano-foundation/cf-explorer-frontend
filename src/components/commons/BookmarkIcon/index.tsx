@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocalStorage } from "react-use";
 import { Box, CircularProgress, IconButton, useTheme } from "@mui/material";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { addBookmark, deleteBookmark } from "src/commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
@@ -15,6 +16,7 @@ interface BookmarkButtonProps {
 }
 
 const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
+  const { t } = useTranslation();
   const { isLoggedIn } = useAuth();
   const { openSyncBookmarkModal = false } = useSelector(({ user }: RootState) => user);
 
@@ -43,21 +45,21 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
             network: NETWORK_TYPES[NETWORK]
           });
           setBookmarks([...(bookmarks || []), data]);
-          toast.success("Bookmark has been added.");
+          toast.success(t("message.bookmark.added") + ".");
         } else {
-          toast.error("Maximum bookmarks is 2000!");
+          toast.error(t("message.bookmark.maximum") + "!");
         }
       } else {
         try {
           deleteBookmark(bookmark?.id || 0);
           setBookmarks((bookmarks || []).filter((b) => b.keyword !== `${keyword}`));
-          toast.success("Bookmark has been removed.");
+          toast.success(t("message.bookmark.removed") + ".");
         } catch (error) {
-          toast.error("Something went wrong! Please try again!");
+          toast.error(`${t("message.common.somethingWentWrong")}! ${t("message.common.tryAgain")}`);
         }
       }
     } catch (error) {
-      toast.error("Something went wrong! Please try again!");
+      toast.error(`${t("message.common.somethingWentWrong")}! ${t("message.common.tryAgain")}`);
     } finally {
       setLoading(false);
     }
@@ -69,7 +71,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
     }
     if (!isLoggedIn) {
       return (
-        <CustomTooltip title="Please sign in to save your bookmark">
+        <CustomTooltip title={t("common.pleaseSignInToSaveYourBookmark")}>
           <BookmarkIcon fill={theme.palette.text.hint} />
         </CustomTooltip>
       );
