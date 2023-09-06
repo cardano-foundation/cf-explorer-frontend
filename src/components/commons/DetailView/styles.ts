@@ -249,6 +249,7 @@ export const DetailLabel = styled("small")`
   color: ${(props) => props.theme.palette.secondary.main};
   line-height: 26px;
   white-space: nowrap;
+  text-transform: capitalize;
 `;
 export const InfoIcon = styled(FiInfo)`
   font-size: 1rem;

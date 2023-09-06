@@ -5,6 +5,7 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { BiChevronDown } from "react-icons/bi";
+import { useTranslation } from "react-i18next";
 
 import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { details } from "src/commons/routers";
@@ -72,6 +73,7 @@ export interface DetailHeaderProps {
 }
 
 const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
+  const { t } = useTranslation();
   const {
     loading,
     listItem,
@@ -95,10 +97,10 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
   const { isMobile } = useScreen();
 
   const getHashLabel = () => {
-    if (type === "BLOCK") return "Block Id";
-    if (type === "STAKE_KEY") return "Stake address";
-    if (type === "POOL") return "Pool Id";
-    if (type === "TOKEN") return "Token ID";
+    if (type === "BLOCK") return t("glossary.blockId");
+    if (type === "STAKE_KEY") return t("glossary.stakeAddress");
+    if (type === "POOL") return t("glossary.poolId");
+    if (type === "TOKEN") return t("common.tokenID");
   };
   const isDetailToken = type === "TOKEN";
 
@@ -117,7 +119,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
         {isHideButtonBack === true ? null : (
           <BackButton onClick={history.goBack}>
             <HiArrowLongLeft />
-            <BackText>Back</BackText>
+            <BackText>{t("common.back")}</BackText>
           </BackButton>
         )}
         <HeaderContainer>
@@ -165,7 +167,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           {isHideButtonBack === true ? null : (
             <BackButton onClick={history.goBack}>
               <HiArrowLongLeft color={theme.palette.secondary.light} />
-              <BackText>Back</BackText>
+              <BackText>{t("common.back")}</BackText>
             </BackButton>
           )}
           <HeaderContainer>
@@ -215,7 +217,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               <EpochNumber is_epoch={+(type === "EPOCH")} to={details.epoch(epoch.no || 0)}>
                 {epoch?.no}
               </EpochNumber>
-              <EpochText>Epoch</EpochText>
+              <EpochText>{t("glossary.epoch")}</EpochText>
             </ProgressCircle>
           </EpochDetail>
         ) : (
