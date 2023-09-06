@@ -166,6 +166,7 @@
   "glossary.EpochSlot": "Epoch / Slot",
   "glossary.transaction": "Transaction",
   "glossary.comfirmations": "Confirmations",
+  "glossary.comfirmation": "Confirmation",
   "glossary.transactionfees": "Transaction Fees",
   "glossary.totalOutputInAda": "Total output in ADA",
   "head.page.blockDetails": "Block details",
