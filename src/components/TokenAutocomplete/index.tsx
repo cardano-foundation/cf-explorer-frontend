@@ -2,6 +2,7 @@ import { Autocomplete, Box, Button } from "@mui/material";
 import { debounce } from "lodash";
 import { useEffect, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
+import { useHistory } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -29,6 +30,7 @@ import {
 const TokenAutocomplete = ({ address }: { address: string }) => {
   const [openModalToken, setOpenModalToken] = useState(false);
   const [search, setSearch] = useState("");
+  const history = useHistory();
   const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
   const [initialized, setInitialized] = useState(false);
   const { data, total } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
@@ -41,6 +43,10 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
       setInitialized(true);
     }
   }, [data]);
+
+  const handleClickItem = (link: string) => {
+    history.push(link);
+  };
 
   if (!data.length && !search && !initialized) return null;
 
@@ -117,7 +123,13 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
                 gap="10px"
                 minHeight="34px"
               >
-                <Box display="flex" alignItems={"center"} overflow="hidden" gap="10px">
+                <Box
+                  display="flex"
+                  alignItems={"center"}
+                  overflow="hidden"
+                  gap="10px"
+                  onClick={() => handleClickItem(details.token(option?.fingerprint))}
+                >
                   <Box>
                     {option?.metadata?.logo ? <Logo src={`${option.metadata?.logo}`} alt="icon" /> : <LogoEmpty />}
                   </Box>
