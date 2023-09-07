@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { stringify } from "qs";
 
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -17,6 +18,7 @@ import FormNowMessage from "src/components/commons/FormNowMessage";
 import { Actions, StyledContainer, StyledLink, TimeDuration } from "./styles";
 
 const StakeDelegations = () => {
+  const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
   const fromPath = history.location.pathname as SpecialPath;
@@ -36,7 +38,7 @@ const StakeDelegations = () => {
 
   const columns: Column<StakeDelegationItem>[] = [
     {
-      title: "Tx Hash",
+      title: t("glossary.txHash"),
       minWidth: 120,
       key: "txHash",
       render: (r) => (
@@ -46,13 +48,13 @@ const StakeDelegations = () => {
       )
     },
     {
-      title: "Created At",
+      title: t("glossary.createdAt"),
       key: "createdat",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time)
     },
     {
-      title: "Block",
+      title: t("glossary.block"),
       key: "blockNo",
       render: (r) => (
         <>
@@ -67,7 +69,7 @@ const StakeDelegations = () => {
       )
     },
     {
-      title: "Stake Address",
+      title: t("glossary.stakeAddress"),
       key: "stakeAddress",
       render: (r) => (
         <>
@@ -85,7 +87,7 @@ const StakeDelegations = () => {
       )
     },
     {
-      title: "Pool",
+      title: t("glossary.pool"),
       key: "pool",
       render: (r) => (
         <>
@@ -108,7 +110,7 @@ const StakeDelegations = () => {
 
   return (
     <StyledContainer>
-      <Card title="Stake Delegation(s)">
+      <Card title={t("head.page.stakeDelegation")}>
         <Actions>
           <TimeDuration>
             <FormNowMessage time={fetchData.lastUpdated} />

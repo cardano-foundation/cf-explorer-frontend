@@ -262,6 +262,7 @@
   "perPage": "Per page",
   "results": "Result / Results",
   "head.page.stakeAddressRegistration": "Stake Address Registration",
+  "common.lastUpdated": "Last updated",
   "common.lastUpdatedAFew": "Last updated a few seconds ago | Last updated a few mimutes ago ",
   "glossary.createdAt": "Created At",
   "glossary.stakeAddress": "Stake Address\t",

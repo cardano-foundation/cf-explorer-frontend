@@ -175,7 +175,11 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
             {bookmarkData && <Bookmark type={type} keyword={bookmarkData} />}
             {transactionStatus && <HeaderStatus status={transactionStatus}>{transactionStatus}</HeaderStatus>}
             {epoch?.status && <HeaderStatus status={epoch.status}>{EPOCH_STATUS[epoch.status]}</HeaderStatus>}
-            {stakeKeyStatus && <StakeKeyStatus status={stakeKeyStatus}>{stakeKeyStatus}</StakeKeyStatus>}
+            {stakeKeyStatus && (
+              <StakeKeyStatus status={stakeKeyStatus}>
+                {stakeKeyStatus === "ACTIVE" ? t("status.active") : t("status.deActivated")}
+              </StakeKeyStatus>
+            )}
           </HeaderContainer>
           {hash && (
             <SlotLeader>
