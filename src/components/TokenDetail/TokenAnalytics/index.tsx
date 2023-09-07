@@ -5,6 +5,7 @@ import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Area, AreaChart, CartesianGrid, Label, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { TooltipProps } from "recharts/types/component/Tooltip";
+import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -43,6 +44,7 @@ const options = [
 ];
 
 const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
+  const { t } = useTranslation();
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const { tokenId } = useParams<{ tokenId: string }>();
   const { isMobile } = useScreen();
@@ -93,12 +95,12 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
 
   return (
     <Box pt={isMobile ? 0 : "20px"}>
-      <Card title={<TextCardHighlight>Analytics</TextCardHighlight>}>
+      <Card title={<TextCardHighlight>{t("analytics")}</TextCardHighlight>}>
         <Wrapper container columns={24} spacing="35px">
           <Grid item xs={24} lg={18}>
             <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
               <Grid item xs={4} sm={4}>
-                <ButtonTitle>Volume</ButtonTitle>
+                <ButtonTitle>{t("glossary.volumn")}</ButtonTitle>
               </Grid>
               <Grid item xs={8} sm={8}>
                 <Tabs>
@@ -162,7 +164,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                   <Box>
                     <Box minHeight={"90px"}>
                       <img src={HighestIcon} alt="heighest icon" />
-                      <Title>Highest Volume</Title>
+                      <Title>{t("glossary.highestVolume")}</Title>
                     </Box>
                     <ValueInfo>
                       {loading ? (
@@ -179,7 +181,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                   <Box>
                     <Box minHeight={"90px"}>
                       <img src={LowestIcon} alt="lowest icon" />
-                      <Title>Lowest Volume</Title>
+                      <Title>{t("glossary.lowestVolume")}</Title>
                     </Box>
                     <ValueInfo>
                       {loading ? (

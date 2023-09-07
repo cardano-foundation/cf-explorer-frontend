@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
+import { useTranslation } from "react-i18next";
 
 import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
 
@@ -24,6 +25,7 @@ interface ITokenTransaction {
 }
 
 const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
+  const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -32,7 +34,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
 
   const columns: Column<Transactions>[] = [
     {
-      title: "Tx Hash",
+      title: t("glossary.txhash"),
       key: "trxhash",
       minWidth: "200px",
 
@@ -47,7 +49,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       )
     },
     {
-      title: "Block/ Epoch/ Slot",
+      title: t("gloassary,blockEpochSlot"),
       key: "block",
       minWidth: "200px",
       render: (r) => (
@@ -59,14 +61,14 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       )
     },
     {
-      title: "Addresses",
+      title: t("glossary.address"),
       key: "addresses",
       minWidth: "200px",
       render(r) {
         return (
           <>
             <Flex>
-              <Label>Input: </Label>
+              <Label>${t("drawer.input")}: </Label>
               <div>
                 <CustomTooltip title={r.addressesInput[0]}>
                   <StyledLink to={details.address(r.addressesInput[0])}>
@@ -78,7 +80,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
               </div>
             </Flex>
             <Flex>
-              <Label>Output: </Label>
+              <Label>{t("drawer.ouput")}: </Label>
               <div>
                 <CustomTooltip title={r.addressesOutput[0]}>
                   <StyledLink to={details.address(r.addressesOutput[0])}>
@@ -94,7 +96,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       }
     },
     {
-      title: "Fees",
+      title: t("fees"),
       key: "fee",
       minWidth: "120px",
       render: (r) => (
@@ -107,7 +109,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       )
     },
     {
-      title: "Output",
+      title: t("drawer.ouput"),
       minWidth: "120px",
       key: "outSum",
       render: (r) => (

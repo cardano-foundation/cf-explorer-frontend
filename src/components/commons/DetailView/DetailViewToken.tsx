@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { BiChevronRight } from "react-icons/bi";
 import { CgClose } from "react-icons/cg";
+import { useTranslation } from "react-i18next";
 
 import { PeopleIcon, TransactionIcon, UnionTokenIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
@@ -53,6 +54,7 @@ type DetailViewTokenProps = {
 };
 
 const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
+  const { t } = useTranslation();
   const { token: data, handleClose, tokenId } = props;
   useEffect(() => {
     document.body.style.overflowY = "hidden";
@@ -66,8 +68,8 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
     return (
       <ViewDetailDrawer anchor="right" open={!!tokenId} hideBackdrop variant="permanent">
         <ViewDetailHeader>
-          <ViewAllButton tooltipTitle="View Detail" to={details.token(tokenId)} />
-          <CustomTooltip title="Close">
+          <ViewAllButton tooltipTitle={t("common.viewDetail")} to={details.token(tokenId)} />
+          <CustomTooltip title={t("common.close")}>
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
@@ -135,8 +137,8 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
   return (
     <ViewDetailDrawer anchor="right" open={!!tokenId} hideBackdrop variant="permanent">
       <ViewDetailHeader>
-        <ViewAllButton tooltipTitle="View Detail" to={details.token(tokenId)} />
-        <CustomTooltip title="Close">
+        <ViewAllButton tooltipTitle={t("common.viewDetail")} to={details.token(tokenId)} />
+        <CustomTooltip title={t("common.close")}>
           <CloseButton onClick={handleClose}>
             <CgClose />
           </CloseButton>
@@ -146,7 +148,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
         <ViewDetailScroll>
           <Group>
             <DetailsInfoItem>
-              <DetailLabel>Policy ID</DetailLabel>
+              <DetailLabel>{t("common.policyID")}</DetailLabel>
               <DetailValue>
                 <CustomTooltip title={data.policy}>
                   <StyledLink to={details.policyDetail(data.policy)}>{getShortWallet(data.policy || "")}</StyledLink>
@@ -155,7 +157,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Token ID</DetailLabel>
+              <DetailLabel>{t("common.tokenID")}</DetailLabel>
               <DetailValue>
                 <CustomTooltip title={tokenId}>
                   <StyledLink to={details.token(tokenId)}>{getShortWallet(tokenId || "")}</StyledLink>
@@ -164,7 +166,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Asset name</DetailLabel>
+              <DetailLabel>{t("glossary.assetName")}</DetailLabel>
               <DetailValue>
                 <TokenDetailInfo>
                   <TokenDetailName>
@@ -185,27 +187,27 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Total Transactions</DetailLabel>
+              <DetailLabel>{t("common.totalTxs")}</DetailLabel>
               <DetailValue>{data.txCount}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Number of Holders</DetailLabel>
+              <DetailLabel>{t("glossary.numberOfHolders")}</DetailLabel>
               <DetailValue>{numberWithCommas(data.numberOfHolders || 0)}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Total Volume</DetailLabel>
+              <DetailLabel>{t("glossary.totalVolumn")}</DetailLabel>
               <DetailValue>
                 {formatNumberDivByDecimals(data.totalVolume || 0, data?.metadata?.decimals || 0)}
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Volume 24H</DetailLabel>
+              <DetailLabel>{t("glossary.volume24h")}</DetailLabel>
               <DetailValue>
                 {formatNumberDivByDecimals(data.volumeIn24h || 0, data?.metadata?.decimals || 0)}
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Created At</DetailLabel>
+              <DetailLabel>{t("createdAt")}</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.createdOn || "")}</DetailValue>
             </DetailsInfoItem>
           </Group>
@@ -215,7 +217,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                 <DetailLinkIcon>
                   <TransactionIcon />
                 </DetailLinkIcon>
-                <DetailLinkName>Transactions</DetailLinkName>
+                <DetailLinkName>{t("drawer.transactions")}</DetailLinkName>
               </DetailLabel>
               <DetailValue>
                 <DetailLinkRight>
@@ -230,7 +232,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                 <DetailLinkIcon>
                   <PeopleIcon />
                 </DetailLinkIcon>
-                <DetailLinkName>Top Holders</DetailLinkName>
+                <DetailLinkName>{t("glossary.topHolders")}</DetailLinkName>
               </DetailLabel>
               <DetailValue>
                 <DetailLinkRight>
@@ -245,7 +247,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                 <DetailLinkIcon>
                   <UnionTokenIcon />
                 </DetailLinkIcon>
-                <DetailLinkName>Token Mint</DetailLinkName>
+                <DetailLinkName>{t("glossary.tokentMint")}</DetailLinkName>
               </DetailLabel>
               <DetailValue>
                 <DetailLinkRight>
