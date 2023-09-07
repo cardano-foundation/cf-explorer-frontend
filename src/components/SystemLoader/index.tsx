@@ -41,7 +41,7 @@ export const SystemLoader = () => {
   }, [usdMarket]);
 
   useEffect(() => {
-    if (btcMarket?.[0]) setUsdMarket(btcMarket[0]);
+    if (btcMarket?.[0]) setBtcMarket(btcMarket[0]);
   }, [btcMarket]);
 
   useEffect(() => {
