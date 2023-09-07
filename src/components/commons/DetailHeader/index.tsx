@@ -94,6 +94,12 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     input: false,
     output: false
   });
+  const EPOCH_STATUS_MAPPING = {
+    [EPOCH_STATUS.FINISHED]: t("common.epoch.finished"),
+    [EPOCH_STATUS.IN_PROGRESS]: t("common.epoch.inProgress"),
+    [EPOCH_STATUS.REWARDING]: t("common.epoch.rewarding"),
+    [EPOCH_STATUS.SYNCING]: t("common.epoch.cyncing")
+  };
   const { isMobile } = useScreen();
 
   const getHashLabel = () => {
@@ -174,7 +180,9 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
             <HeaderTitle>{title}</HeaderTitle>
             {bookmarkData && <Bookmark type={type} keyword={bookmarkData} />}
             {transactionStatus && <HeaderStatus status={transactionStatus}>{transactionStatus}</HeaderStatus>}
-            {epoch?.status && <HeaderStatus status={epoch.status}>{EPOCH_STATUS[epoch.status]}</HeaderStatus>}
+            {epoch?.status && (
+              <HeaderStatus status={epoch.status}>{EPOCH_STATUS_MAPPING[EPOCH_STATUS[epoch.status]]}</HeaderStatus>
+            )}
             {stakeKeyStatus && (
               <StakeKeyStatus status={stakeKeyStatus}>
                 {stakeKeyStatus === "ACTIVE" ? t("status.active") : t("status.deActivated")}
