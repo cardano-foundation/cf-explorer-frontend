@@ -9,7 +9,7 @@ import {
   ProtocolIcon,
   ResourcesIcon,
   StakingLifecycleIcon,
-  TwitterXIcon
+  TwitterX
 } from "./resources";
 import { lists, routers } from "./routers";
 
@@ -74,7 +74,7 @@ export const menus: Menu[] = [
 export const socials: Social[] = [
   { href: "https://www.linkedin.com/company/cardano-foundation/", title: "LinkedIn", icon: FaLinkedinIn },
   { href: "https://t.me/CardanoAnnouncements", title: "Telegram", icon: FaTelegramPlane },
-  { href: "https://twitter.com/Cardano_CF", title: "Twitter", icon: TwitterXIcon },
+  { href: "https://twitter.com/Cardano_CF", title: "Twitter", icon: TwitterX as IconType },
   { href: "https://www.youtube.com/c/cardanofoundation", title: "Youtube", icon: FaYoutube }
 ];
 
