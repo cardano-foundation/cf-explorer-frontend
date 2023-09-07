@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { BiChevronRight } from "react-icons/bi";
 import { useSelector } from "react-redux";
@@ -55,12 +55,21 @@ type DetailViewEpochProps = {
 
 const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose, callback }) => {
   const { currentEpoch, blockNo } = useSelector(({ system }: RootState) => system);
+  const [key, setKey] = useState(0);
+
   const { data, lastUpdated } = useFetch<IDataEpoch>(
     `${API.EPOCH.DETAIL}/${epochNo}`,
     undefined,
     false,
-    epochNo === currentEpoch?.no ? blockNo : 0
+    epochNo === currentEpoch?.no ? blockNo : key
   );
+
+  useEffect(() => {
+    // Update key if this epoch don't have rewards and when new epoch distributed for api callback
+    if (!data?.rewardsDistributed && epochNo !== undefined && data?.no !== undefined && epochNo !== data.no) {
+      setKey(epochNo);
+    }
+  }, [epochNo, data?.no, data?.rewardsDistributed]);
 
   useEffect(() => {
     if (data) {
