@@ -265,10 +265,8 @@ export { ReactComponent as CertificateIcon } from "./icons/certificate.svg";
 export { ReactComponent as CardanoSystemIcon } from "./icons/cardano-system.svg";
 export { ReactComponent as WalletIconRewardGreen } from "./icons/Staking/walletIconRewardGreen.svg";
 export { ReactComponent as TransferIcon } from "./icons/transfer.svg";
-export { ReactComponent as ADADisnableIcon } from "./icons/Staking/ADADisnableIcon.svg";
 export { ReactComponent as DelegationHistoryMainIcon } from "./icons/delegationHistoryGreen.svg";
 export { ReactComponent as BlockIcon } from "./icons/blockIcon.svg";
-export { ReactComponent as ADAOrangeBorderIcon } from "./icons/Staking/ADAOrangeBorderIcon.svg";
 export { ReactComponent as ChartMode } from "./icons/Staking/ChartMode.svg";
 export { ReactComponent as TableMode } from "./icons/Staking/TableMode.svg";
 export { ReactComponent as SummaryIcon } from "./images/summaryIcon.svg";
@@ -298,3 +296,5 @@ export { ReactComponent as RedeemerArrowDownIcon } from "./icons/redeemer-arrow-
 export { ReactComponent as SliderRight } from "./icons/swipper-right.svg";
 export { ReactComponent as ExplorerLogo } from "./icons/explorer-logo.svg";
 export { ReactComponent as ExclamationTriangleIcon } from "./icons/exclamation-triangle.svg";
+export { ReactComponent as ADAactive } from "./icons/Staking/ADAactive.svg";
+export { ReactComponent as ADAinactive } from "./icons/Staking/ADAinactive.svg";
