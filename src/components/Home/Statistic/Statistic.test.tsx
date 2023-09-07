@@ -38,7 +38,8 @@ const mockCurrentEpoch: EpochCurrentType = {
   totalSlot: 432000,
   account: 96433,
   startTime: "2023-01-31T07:02:46.115Z",
-  endTime: "2023-05-31T07:02:46.115Z"
+  endTime: "2023-05-31T07:02:46.115Z",
+  circulatingSupply: 33999888463776064
 };
 
 const mockUSDMarket: CardanoMarket = {
@@ -93,9 +94,9 @@ describe("HomeStatistic", () => {
     );
     expect(screen.getByTestId("live-stake-box-title")).toBeInTheDocument();
     expect(screen.getByTestId("live-stake-value")).toHaveTextContent("22.81B");
-    expect(screen.getByTestId("live-stake-progress-active")).toHaveTextContent("65%");
+    expect(screen.getByTestId("live-stake-progress-active")).toHaveTextContent("67%");
     expect(screen.getByTestId("active-stake-value")).toHaveTextContent("22.75B");
-    expect(screen.getByTestId("circulating-supply-value")).toHaveTextContent("35.04B");
-    expect(screen.getByTestId("circulating-supply-percentage")).toHaveTextContent("(77%)");
+    expect(screen.getByTestId("circulating-supply-value")).toHaveTextContent("33.99B");
+    expect(screen.getByTestId("circulating-supply-percentage")).toHaveTextContent("(75%)");
   });
 });

@@ -17,6 +17,9 @@ export const Form = styled("form")<{ home: number; sidebar?: number }>(({ theme,
   boxSizing: "border-box",
   marginTop: home ? 30 : 0,
   border: `1.5px solid ${theme.palette.primary[200]}`,
+  "&:focus-within": {
+    borderColor: theme.palette.primary.main
+  },
   [theme.breakpoints.down("lg")]: {
     minWidth: sidebar ? "unset" : home ? 785 : 400
   },
@@ -132,5 +135,5 @@ export const ValueOption = styled("span")(({ theme }) => ({
 export const WrapInput = styled(Box)(() => ({
   width: "100%",
   display: "flex",
-  justifyContent: "space-between",
+  justifyContent: "space-between"
 }));

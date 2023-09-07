@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import { Box } from "@mui/material";
 import { stringify } from "qs";
 
 import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
@@ -14,7 +15,7 @@ import {
   getShortWallet
 } from "../../../commons/utils/helper";
 import Table, { Column } from "../../commons/Table";
-import { Flex, Label, SmallText, StyledLink, PriceValue } from "./styles";
+import { Flex, Label, SmallText, StyledLink, PriceValue, DescriptionText } from "./styles";
 import CustomTooltip from "../../commons/CustomTooltip";
 import { API } from "../../../commons/utils/api";
 import ADAicon from "../../commons/ADAIcon";
@@ -128,17 +129,23 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
   }, [fetchData.total, setTxCountRealtime]);
 
   return (
-    <Table
-      {...fetchData}
-      columns={columns}
-      total={{ title: "Total", count: fetchData.total }}
-      pagination={{
-        ...pageInfo,
-        total: fetchData.total,
-        onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
-      }}
-      onClickRow={(_, r: Transactions) => history.push(details.transaction(r.hash))}
-    />
+    <Box>
+      <DescriptionText>
+        Included transactions in which the UTXO containing the tokens is used resulting in token movement, while the
+        tokens are unspent and returned to the address
+      </DescriptionText>
+      <Table
+        {...fetchData}
+        columns={columns}
+        total={{ title: "Total", count: fetchData.total }}
+        pagination={{
+          ...pageInfo,
+          total: fetchData.total,
+          onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
+        }}
+        onClickRow={(_, r: Transactions) => history.push(details.transaction(r.hash))}
+      />
+    </Box>
   );
 };
 

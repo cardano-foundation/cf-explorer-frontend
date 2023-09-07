@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -18,7 +17,6 @@ const perPages = [10, 20, 50, 100];
 
 const TopAddressesByADABalance = () => {
   const blockNo = useSelector(({ system }: RootState) => system.blockNo);
-  const history = useHistory();
   const [pageSize, setPageSize] = useState("50");
   const { error, data, initialized, loading, lastUpdated } = useFetchList<Contracts>(
     API.ADDRESS.TOP_ADDRESS,
@@ -94,7 +92,6 @@ const TopAddressesByADABalance = () => {
         initialized={initialized}
         columns={columns}
         tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "55vh" } }) }}
-        onClickRow={(_, r) => history.push(details.address(r.address))}
       />
     </Box>
   );
