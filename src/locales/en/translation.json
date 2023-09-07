@@ -574,7 +574,7 @@
   "title.poolDeregistrations": "Pool Deregistrations",
   "common.poolOperator": "Pool Operator",
   "glossary.stakeAddressRegistrations": "Stake Address Registrations",
-  "glossary.stakeAddressDeregistrations":"Stake Address Deregistrations",
+  "glossary.stakeAddressDeregistrations": "Stake Address Deregistrations",
   "common.previousValue": "Previous Value",
   "common.updatedValue": "Updated Value",
   "common.CostModel": "CostModel",
@@ -583,5 +583,12 @@
   "common.key": "Key",
   "glossary.highestVolume": "Highest Volume",
   "glossary.lowestVolume": "Lowest Volume",
-  "gloassary,blockEpochSlot": "Block/ Epoch/ Slot"
+  "glossary.blockEpochSlot": "Block/ Epoch/ Slot",
+  "glossary.totalContracts": "Total Contracts",
+  "glossary.controlledTotalStake": "Controlled Total Stake",
+  "common.noRecords": "No records",
+  "common.script": "Script",
+  "common.scriptType": "Script Type",
+  "common.nativeScript": "Native script",
+  "drawer.scriptNotVerified": "Script has not been verified"
 }

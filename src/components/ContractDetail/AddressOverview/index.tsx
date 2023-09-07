@@ -2,6 +2,7 @@ import { Box, Button } from "@mui/material";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import VerifyScript from "src/components/VerifyScript";
 import useFetch from "src/commons/hooks/useFetch";
@@ -24,6 +25,7 @@ interface Props {
 }
 
 const AddressOverview: React.FC<Props> = ({ data, loading }) => {
+  const { t } = useTranslation();
   const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(
     data?.stakeAddress ? `${API.STAKE.DETAIL}/${data?.stakeAddress}` : ""
   );
@@ -33,9 +35,9 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
   const [showBanner, setShowBanner] = useState<boolean>(false);
 
   const itemLeft = [
-    { title: "Transactions", value: data?.txCount },
+    { title: t("glossary.transactions"), value: data?.txCount },
     {
-      title: "ADA Balance",
+      title: t("glossary.adaBalance"),
       value: (
         <StyledAAmount>
           <Box>{formatADAFull(data?.balance)}</Box>&nbsp;
@@ -43,14 +45,14 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
         </StyledAAmount>
       )
     },
-    { title: "ADA Value", value: exchangeADAToUSD(data?.balance || 0, adaRate, true) },
+    { title: t("glossary.adaValue"), value: exchangeADAToUSD(data?.balance || 0, adaRate, true) },
     {
       value: <TokenAutocomplete address={data?.address || ""} />
     }
   ];
   const itemRight = [
     {
-      title: "Controlled Total Stake",
+      title: t("glossary.controlledTotalStake"),
       value: (
         <StyledAAmount>
           {formatADAFull(dataStake?.totalStake)}&nbsp;
@@ -59,7 +61,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       )
     },
     {
-      title: "Reward Available",
+      title: t("drawer.rewardAvailable"),
       value: (
         <StyledAAmount>
           {formatADAFull(dataStake?.rewardAvailable)}&nbsp;
@@ -68,7 +70,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       )
     },
     {
-      title: "Reward Withdrawn",
+      title: t("drawer.withDrawn"),
       value: (
         <StyledAAmount>
           {formatADAFull(dataStake?.rewardWithdrawn)}&nbsp;
@@ -77,7 +79,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       )
     },
     {
-      title: "Delegated To",
+      title: t("drawer.delegatedTo"),
       value:
         dataStake?.pool?.poolName || dataStake?.pool?.poolId ? (
           <Pool to={details.delegation(dataStake?.pool ? dataStake?.pool?.poolId : "")}>
@@ -90,7 +92,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
             )}
           </Pool>
         ) : (
-          <span>Not delegated to any pool</span>
+          <span>{t("drawer.notDelegatedToAnyPool")}</span>
         )
     }
   ];
@@ -104,16 +106,16 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
           component={Button}
           onClick={() => history.push(details.address(data?.address))}
         >
-          View Address Detail
+          {t("common.viewAddressDetail")}
         </RedirectButton>
       }
     >
-      {showBanner && <BannerSuccess>Success! Contract has been verified successfully.</BannerSuccess>}
+      {showBanner && <BannerSuccess>{t("message.contracctVarified")}</BannerSuccess>}
       <GridContainer container spacing={2} mt={2}>
         <GridItem item xs={12} md={6}>
           <Box overflow="hidden" borderRadius={3} height={"100%"}>
             <CardAddress
-              title={"Address"}
+              title={t("common.address")}
               type="left"
               address={data?.address || ""}
               item={itemLeft}
@@ -124,7 +126,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
         <GridItem item xs={12} md={6}>
           <Box overflow="hidden" borderRadius={3} height={"100%"}>
             <CardAddress
-              title={"Stake Address"}
+              title={t("common.stakeAddress")}
               type="right"
               address={dataStake?.stakeAddress || ""}
               item={itemRight}
