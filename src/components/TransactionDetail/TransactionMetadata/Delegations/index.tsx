@@ -1,5 +1,6 @@
 import React from "react";
 import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import sendImg from "src/commons/resources/images/sendImg.svg";
 import { getShortWallet } from "src/commons/utils/helper";
@@ -14,9 +15,10 @@ interface DelegationProps {
 }
 
 const Delegations: React.FC<DelegationProps> = ({ data }) => {
+  const { t } = useTranslation();
   return (
     <Wrapper>
-      <Header>Stake Address</Header>
+      <Header>{t("common.stakeAddress")}</Header>
       {data?.map((item) => (
         <StyledItem key={item.address}>
           <ItemContainer>
@@ -27,7 +29,7 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
               <Box width={"100%"}>
                 <Box>
                   <Box component={"span"} color={({ palette }) => palette.secondary.light}>
-                    From:
+                    {t("common.from")}:
                   </Box>
                   <CustomTooltip title={item.address}>
                     <AddressLink to={details.stake(item.address)}>{getShortWallet(item.address || "")}</AddressLink>
@@ -35,7 +37,7 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
                   <CopyButton text={item.address || ""} />
                 </Box>
                 <Box color={({ palette }) => palette.secondary.light}>
-                  Pool ID:
+                  {t("glossary.poolId")}:
                   <CustomTooltip title={item.poolId}>
                     <AddressLink to={details.delegation(item.poolId)}>{getShortWallet(item.poolId || "")}</AddressLink>
                   </CustomTooltip>

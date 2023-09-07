@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { SxProps } from "@mui/system";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import receiveImg from "src/commons/resources/images/receiveImg.svg";
@@ -19,6 +20,7 @@ interface CollateralProps {
 }
 
 const Collaterals: React.FC<CollateralProps> = ({ data }) => {
+  const { t } = useTranslation();
   const totalADAInput = (data?.collateralInputResponses || []).reduce((prv, item) => {
     return prv + item.value;
   }, 0);
@@ -35,7 +37,7 @@ const Collaterals: React.FC<CollateralProps> = ({ data }) => {
       {isShowCardOutput && (
         <ItemFooter>
           <Box color={({ palette }) => palette.secondary.main} fontWeight={"bold"}>
-            Total Collateral Spent
+            {t("glassary.totalCollateralSpent")}
           </Box>
           <div>
             <Box color={({ palette }) => palette.secondary.main} fontWeight={"bold"} component="span" pr={1}>
@@ -50,13 +52,14 @@ const Collaterals: React.FC<CollateralProps> = ({ data }) => {
 };
 
 const Card = ({ type, items, sx }: { type: "input" | "output"; items?: CollateralResponses[]; sx?: SxProps }) => {
+  const { t } = useTranslation();
   return (
     <Wrapper sx={sx}>
       <Header fontWeight="bold">
-        <BoxHeaderTop>{type === "input" ? "Input" : "Output"}</BoxHeaderTop>
+        <BoxHeaderTop>{type === "input" ? t("drawer.input") : t("drawer.ouput")}</BoxHeaderTop>
         <BoxHeaderBottom>
-          <Box>Addresses</Box>
-          <Box>Amount</Box>
+          <Box>{t("glossary.address")}</Box>
+          <Box>{t("glossary.amount")}</Box>
         </BoxHeaderBottom>
       </Header>
       <ItemBox>
@@ -69,6 +72,7 @@ const Card = ({ type, items, sx }: { type: "input" | "output"; items?: Collatera
 export default Collaterals;
 
 const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "input" | "output" }) => {
+  const { t } = useTranslation();
   const { isTablet } = useScreen();
   return (
     <Box>
@@ -81,7 +85,9 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                   <Img src={type === "input" ? receiveImg : sendImg} alt="send icon" />
                 </Box>
                 {isTablet ? (
-                  <Box color={({ palette }) => palette.secondary.light}>{type === "input" ? "From" : "To"}:</Box>
+                  <Box color={({ palette }) => palette.secondary.light}>
+                    {type === "input" ? t("common.from") : t("common.to")}:
+                  </Box>
                 ) : null}
               </Box>
               <Box width={"100%"}>
@@ -95,7 +101,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                       pr={1}
                       mr={1}
                     >
-                      {type === "input" ? "From" : "To"}:
+                      {type === "input" ? t("common.from") : t("common.to")}:
                     </Box>
                   ) : null}
                   <Box display={"flex"} justifyContent="space-between" flex={"1"} alignItems={"center"}>

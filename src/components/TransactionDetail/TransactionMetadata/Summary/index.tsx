@@ -1,6 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { TransferIcon } from "src/commons/resources";
 
@@ -25,7 +26,7 @@ const SummaryItems = ({
   const isTransferType = item?.tokens.some((t) => {
     return (t.assetQuantity < 0 && item?.value >= 0) || (t.assetQuantity >= 0 && item?.value < 0);
   });
-
+  const { t } = useTranslation();
   const theme = useTheme();
   const { isMobile } = useScreen();
 
@@ -57,7 +58,7 @@ const SummaryItems = ({
         <Box flex={1} pt="4px">
           <Box display={"flex"} alignItems="center" justifyContent={"flex-start"}>
             <Item>
-              <TitleText>{type === "down" ? "From" : "To"}: </TitleText>
+              <TitleText>{type === "down" ? t("common.from") : t("common.to")}: </TitleText>
               <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} flex={1} mb={1}>
                 <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} flexWrap={"nowrap"}>
                   <Link
@@ -88,7 +89,7 @@ const SummaryItems = ({
           >
             <Box display="flex" justifyContent={"space-between"} alignItems={"baseline"} pr={1} flexDirection={"row"}>
               <Box pr={1} whiteSpace={"nowrap"} color={({ palette }) => palette.secondary.light}>
-                {type === "down" ? "ADA sent:" : "ADA received:"}{" "}
+                {type === "down" ? `${t("ADA sent")}:` : `${t("tab.adaReceived")}:`}{" "}
               </Box>
               <Box display="flex" justifyContent={"space-between"} alignItems="center">
                 <Box

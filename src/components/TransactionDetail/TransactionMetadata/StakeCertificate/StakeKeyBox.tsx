@@ -1,5 +1,6 @@
 import { Box, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import CopyButton from "../../../commons/CopyButton";
 import { TextLabel, TextValue } from "./styles";
@@ -12,9 +13,10 @@ type TProps = {
 };
 
 const StakeKeyBox = ({ data }: TProps) => {
+  const { t } = useTranslation();
   const leftRow = [
     {
-      label: "Stake Address",
+      label: t("common.stakeAddress"),
       value: data.stakeAddress,
       originValue: data.stakeAddress
     }
