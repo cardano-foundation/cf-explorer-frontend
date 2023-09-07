@@ -87,6 +87,7 @@ import HomeUpIcon from "./icons/HomeUpIcon.svg";
 import HomeDownIcon from "./icons/HomeDownIcon.svg";
 import DashboardIcon from "./icons/menus/Dashboard.svg";
 import CardanoBlueLogo from "./icons/cardanoBlue.svg";
+import TwitterXIcon from "./icons/TwitterX.svg";
 
 export {
   LogoFullIcon,
@@ -177,7 +178,8 @@ export {
   HomeUpIcon,
   DashboardIcon,
   HomeDownIcon,
-  CardanoBlueLogo
+  CardanoBlueLogo,
+  TwitterXIcon
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
@@ -297,4 +299,5 @@ export { ReactComponent as RedeemerPlusIcon } from "./icons/redeemer-plus.svg";
 export { ReactComponent as RedeemerArrowDownIcon } from "./icons/redeemer-arrow-down.svg";
 export { ReactComponent as SliderRight } from "./icons/swipper-right.svg";
 export { ReactComponent as ExplorerLogo } from "./icons/explorer-logo.svg";
+export { ReactComponent as TwitterX } from "./icons/TwitterX.svg";
 export { ReactComponent as ExclamationTriangleIcon } from "./icons/exclamation-triangle.svg";
