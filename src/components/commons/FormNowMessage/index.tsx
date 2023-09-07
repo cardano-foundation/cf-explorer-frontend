@@ -2,14 +2,15 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 
 type Props = {
-  time: moment.MomentInput;
+  time?: moment.MomentInput;
 };
 
 const FormNowMessage = ({ time }: Props) => {
-  const [message, setMessage] = useState(`Last updated ${moment(time).fromNow()}`);
+  const [message, setMessage] = useState(time ? `Last updated ${moment(time).fromNow()}` : "");
 
   useEffect(() => {
     if (time) {
+      setMessage(`Last updated ${moment(time).fromNow()}`);
       const interval = setInterval(() => {
         setMessage(`Last updated ${moment(time).fromNow()}`);
       }, 1000);

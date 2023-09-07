@@ -9,16 +9,16 @@ interface FetchReturnType<T> {
   error: string | null;
   initialized: boolean;
   refresh: () => void;
-  lastUpdated: number;
+  lastUpdated?: number;
 }
 
-const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, timeout?: number): FetchReturnType<T> => {
+const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, key?: number): FetchReturnType<T> => {
   const [data, setData] = useState<T | null>(initial || null);
   const [initialized, setInitialized] = useState<boolean>(!!initial || false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [refreshLoading, setRefreshLoading] = useState(false);
-  const lastFetch = useRef<number>(Date.now());
+  const lastFetch = useRef<number>();
 
   const fetch = useCallback(
     async (needLoading?: boolean) => {
@@ -48,23 +48,10 @@ const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, timeout?: numbe
   );
 
   useEffect(() => {
-    if (timeout && !loading && !refreshLoading) {
-      const onFocus = async () => {
-        if (lastFetch.current + timeout * 1000 <= Date.now()) fetch();
-      };
-
-      window.addEventListener("focus", onFocus);
-
-      const timeoutId = setTimeout(() => {
-        if (!document.hidden) fetch();
-      }, timeout * 1000);
-
-      return () => {
-        clearTimeout(timeoutId);
-        window.removeEventListener("focus", onFocus);
-      };
-    }
-  }, [fetch, timeout, loading, refreshLoading]);
+    // Refresh without "loading" every time the "key" is updated
+    if (initialized && !loading && !refreshLoading) fetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
 
   useEffect(() => {
     fetch(true);

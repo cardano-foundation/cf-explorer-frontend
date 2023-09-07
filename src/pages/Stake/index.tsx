@@ -14,7 +14,6 @@ import Table, { Column } from "src/components/commons/Table";
 import { setOnDetailView } from "src/stores/user";
 import { API } from "src/commons/utils/api";
 import SelectedIcon from "src/components/commons/SelectedIcon";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 import { useScreen } from "src/commons/hooks/useScreen";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 
@@ -33,6 +32,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
   const mainRef = useRef(document.querySelector("#main"));
   const [stake, setStake] = useState<string | null>(null);
   const { onDetailView } = useSelector(({ user }: RootState) => user);
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const [selected, setSelected] = useState<number | null>(null);
   const { search } = useLocation();
   const history = useHistory();
@@ -41,12 +41,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
   const pageInfo = getPageInfo(search);
   const { isMobile } = useScreen();
 
-  const fetchData = useFetchList<IStakeKey>(
-    `${API.STAKE.DETAIL}/${stakeAddressType}`,
-    pageInfo,
-    false,
-    REFRESH_TIMES.STAKE_REGISTRATION
-  );
+  const fetchData = useFetchList<IStakeKey>(`${API.STAKE.DETAIL}/${stakeAddressType}`, pageInfo, false, blockNo);
 
   useEffect(() => {
     handleClose();
