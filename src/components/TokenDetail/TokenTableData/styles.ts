@@ -132,3 +132,10 @@ export const ViewJson = styled(Box)(({ theme }) => ({
     }
   }
 }));
+
+export const DescriptionText = styled(Box)(({ theme }) => ({
+  margin: `${theme.spacing(1)} 0`,
+  textAlign: "left",
+  fontSize: 14,
+  color: theme.palette.secondary[600]
+}));
