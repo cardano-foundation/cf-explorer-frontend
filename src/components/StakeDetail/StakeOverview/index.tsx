@@ -18,7 +18,7 @@ import { ButtonModal, StyledFlexValue, StyledLinkTo, TitleCard, TitleNoPool, Tit
 interface Props {
   data: IStakeKeyDetail | null;
   loading: boolean;
-  lastUpdated: number;
+  lastUpdated?: number;
 }
 const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
   const [open, setOpen] = useState(false);
