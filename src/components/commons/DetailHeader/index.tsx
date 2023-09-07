@@ -101,13 +101,19 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     [EPOCH_STATUS.SYNCING]: t("common.epoch.cyncing")
   };
   const { isMobile } = useScreen();
-
+  const EPOCH_STATUS_MAPPING = {
+    [EPOCH_STATUS.FINISHED]: t("common.epoch.finished"),
+    [EPOCH_STATUS.IN_PROGRESS]: t("common.epoch.inProgress"),
+    [EPOCH_STATUS.REWARDING]: t("common.epoch.rewarding"),
+    [EPOCH_STATUS.SYNCING]: t("common.epoch.cyncing")
+  };
   const getHashLabel = () => {
     if (type === "BLOCK") return t("glossary.blockId");
     if (type === "STAKE_KEY") return t("glossary.stakeAddress");
     if (type === "POOL") return t("glossary.poolId");
     if (type === "TOKEN") return t("common.tokenID");
   };
+
   const isDetailToken = type === "TOKEN";
 
   const hashLabel = getHashLabel();

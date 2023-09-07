@@ -1,4 +1,5 @@
 import { Box, Grid } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { details } from "src/commons/routers";
 import { getShortHash, getShortWallet } from "src/commons/utils/helper";
@@ -14,29 +15,30 @@ type TProps = {
 };
 
 const StakeKeyBox = ({ data }: TProps) => {
+  const { t } = useTranslation();
   const leftRow = [
     {
-      label: "Pool Id",
+      label: t("common.poolID"),
       value: getShortWallet(data.poolId),
       isHyperLink: true,
       originValue: data.poolId,
       linkTo: details.delegation(data.poolId)
     },
     {
-      label: "VRF Key",
+      label: t("common.vrfKey"),
       value: data?.vrfKey ? getShortHash(data?.vrfKey) : "",
       isHyperLink: false,
       originValue: data.vrfKey
     },
     {
-      label: "Reward Account",
+      label: t("common.rewardAccount"),
       value: data.rewardAccount ? getShortWallet(data.rewardAccount) : "",
       isHyperLink: true,
       originValue: data.rewardAccount,
       linkTo: details.stake(data.rewardAccount)
     },
     {
-      label: "Pool Operator",
+      label: t("common.poolOperator"),
       value: data.poolOwners || [],
       isHyperLink: true,
       originValue: data.poolOwners && data.poolOwners.length > 0 ? data.poolOwners[0] : "",
@@ -46,15 +48,15 @@ const StakeKeyBox = ({ data }: TProps) => {
 
   const rightRow = [
     {
-      label: "Margin",
+      label: t("margin"),
       value: data.margin ? `${data.margin * 100}%` : 0
     },
     {
-      label: "Cost",
+      label: t("glossary.cost"),
       value: <AdaValue value={data.cost} />
     },
     {
-      label: "Pledge",
+      label: t("glossary.pledge"),
       value: <AdaValue value={data.pledge} />
     }
   ];

@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
@@ -15,11 +16,12 @@ interface InstantaneousRewardsProps {
 }
 
 const InstantaneousRewards: React.FC<InstantaneousRewardsProps> = ({ data }) => {
+  const { t } = useTranslation();
   return (
     <Wrapper>
       <Header>
-        <Box>Stake Address</Box>
-        <Box>Rewards Paid</Box>
+        <Box>{t("common.stakeAddress")}</Box>
+        <Box>{t("common.rewardsPaid")}</Box>
       </Header>
       <ItemBox>
         <ItemInstantaneousRewards data={data || []} />

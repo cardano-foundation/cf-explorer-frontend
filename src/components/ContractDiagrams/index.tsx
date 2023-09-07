@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { CgClose } from "react-icons/cg";
+import { useTranslation } from "react-i18next";
 
 import { RedeemerArrowDownIcon, RedeemerPlusIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
@@ -32,6 +33,7 @@ interface IContractDiagramProps {
 }
 
 export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagramProps) => {
+  const { t } = useTranslation();
   const linkToPage = () => {
     if (txHash) return details.transaction(txHash);
     return item.address ? details.contract(item.address) : details.policyDetail(item.scriptHash);
@@ -40,9 +42,9 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
   return (
     <ContractDiagramsContainer isTxPageView={!!txHash}>
       <ContractHeader>
-        <ContractText>{txHash ? "Transactions" : "Contract"}</ContractText>
+        <ContractText>{txHash ? t("glossary.transactions") : t("glossary.contract")}</ContractText>
         {handleClose ? (
-          <CustomTooltip title="Close">
+          <CustomTooltip title={t("common.close")}>
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
@@ -83,24 +85,25 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
 };
 
 export const ContractRedeemer = ({ item, txHash }: IContractDiagramProps) => {
+  const { t } = useTranslation();
   return (
     <CardDiagram>
-      <TabLabel>Redeemer</TabLabel>
+      <TabLabel>{t("glossary.redeemer")}</TabLabel>
       <TabElement flexDirection={!txHash ? "row" : "column"}>
         <TabItem>
-          <TitleText>Tag</TitleText>
+          <TitleText>{t("common.tag")}</TitleText>
           <DataTitle data-testid={`contract-redeemer-tag-${item.address}`}>{item.purpose}</DataTitle>
         </TabItem>
         <TabItem>
-          <TitleText>Data</TitleText>
+          <TitleText>{t("common.data")}</TitleText>
           <DataTitle data-testid={`contract-redeemer-data-${item.address}`}>{item.redeemerBytes}</DataTitle>
         </TabItem>
         <TabItem>
-          <TitleText>Mem</TitleText>
+          <TitleText>{t("common.mem")}</TitleText>
           <DataTitle data-testid={`contract-redeemer-mem-${item.address}`}>{item.redeemerMem}</DataTitle>
         </TabItem>
         <TabItem>
-          <TitleText>Steps</TitleText>
+          <TitleText>{t("common.steps")}</TitleText>
           <DataTitle data-testid={`contract-redeemer-steps-${item.address}`}>{item.redeemerSteps}</DataTitle>
         </TabItem>
       </TabElement>
@@ -109,6 +112,7 @@ export const ContractRedeemer = ({ item, txHash }: IContractDiagramProps) => {
 };
 
 export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) => {
+  const { t } = useTranslation();
   const isTypeIn = type === "in";
   return (
     <DatumnElement>
@@ -119,7 +123,7 @@ export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) =>
           paddingBottom: "10px"
         }}
       >
-        <DatumnText>Datum Hash</DatumnText>
+        <DatumnText>{t("glossary.datumHash")}</DatumnText>
         <DataTitle data-testid={`contract-datum-hash-${item.address}`}>
           {isTypeIn ? item.datumHashIn : item.datumHashOut}
         </DataTitle>
@@ -130,7 +134,7 @@ export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) =>
           paddingTop: "10px"
         }}
       >
-        <DatumnText>Datum</DatumnText>
+        <DatumnText>{t("glossary.datum")}</DatumnText>
         <DataTitle data-testid={`contract-datum-bytes-${item.address}`}>
           {isTypeIn ? item.datumBytesIn : item.datumBytesOut}
         </DataTitle>
@@ -140,9 +144,10 @@ export const ContractDatumn = ({ item, type, txHash }: IContractDiagramProps) =>
 };
 
 const ContractBytecode = ({ item }: IContractDiagramProps) => {
+  const { t } = useTranslation();
   return (
     <CardDiagram>
-      <TabLabel>Contract Bytecode</TabLabel>
+      <TabLabel>{t("glassary.contractBytecode")}</TabLabel>
       <TabElement>{item.scriptBytes}</TabElement>
     </CardDiagram>
   );
