@@ -580,5 +580,8 @@
   "common.CostModel": "CostModel",
   "common.metadataHash": "Metadata Hash",
   "common.metadatumLabel": "Metadatum Label",
-  "common.key": "Key"
+  "common.key": "Key",
+  "glossary.highestVolume": "Highest Volume",
+  "glossary.lowestVolume": "Lowest Volume",
+  "gloassary,blockEpochSlot": "Block/ Epoch/ Slot"
 }

@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import BigNumber from "bignumber.js";
 import React, { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { RewardIcon, USDIcon, exchageIconUrl, fileGuardUrl, slotIconUrl, timeIconUrl } from "src/commons/resources";
 import {
@@ -27,6 +28,7 @@ interface ITokenOverview {
 }
 
 const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders }) => {
+  const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
   const [policyId, setPolicyId] = useState("");
   const decimalToken = data?.decimals || data?.metadata?.decimals || 0;
@@ -56,12 +58,12 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
       )
     },
     {
-      title: <WrapTitle>Total Supply</WrapTitle>,
+      title: <WrapTitle>{t("common.totalSupply")}</WrapTitle>,
       value: <Box component={"span"}>{formatNumberDivByDecimals(data?.supply, decimalToken)}</Box>,
       icon: slotIconUrl
     },
     {
-      title: <WrapTitle>Policy Id</WrapTitle>,
+      title: <WrapTitle>{t("glossary.policyId")}</WrapTitle>,
       icon: fileGuardUrl,
       value: (
         <>
@@ -79,7 +81,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
               setPolicyId(data?.policy || "");
             }}
           >
-            Policy Script
+            {t("common.policyScript")}
           </PolicyScriptBtn>
         </>
       )
@@ -88,7 +90,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
       title: (
         <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1} width={"max-content"}>
-            <WrapTitle>Total Transactions</WrapTitle>
+            <WrapTitle>{t("common.totalTxs")}</WrapTitle>
           </Box>
         </Box>
       ),
@@ -96,7 +98,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
       value: numberWithCommas(txCountRealtime || data?.txCount)
     },
     {
-      title: <WrapTitle>Token Type</WrapTitle>,
+      title: <WrapTitle>{t("glossary.tokenType")}</WrapTitle>,
       icon: USDIcon,
       value: (
         <>
@@ -105,7 +107,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
             ""
           ) : (
             <ButtonLink target="_blank" href={tokenRegistry(data?.policy, data?.name)}>
-              Token Registry
+              {t("glossary.registry")}
             </ButtonLink>
           )}
         </>
@@ -115,7 +117,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
       title: (
         <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
-            <WrapTitle>Number of Holders</WrapTitle>
+            <WrapTitle>{t("glossary.numberOfHolders")}</WrapTitle>
           </Box>
         </Box>
       ),
@@ -126,7 +128,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
       title: (
         <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
-            <WrapTitle>Total Volume</WrapTitle>
+            <WrapTitle>{t("glossary.totalVolumn")}</WrapTitle>
           </Box>
         </Box>
       ),
@@ -137,7 +139,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
       title: (
         <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
-            <WrapTitle>Volume 24H</WrapTitle>
+            <WrapTitle>{t("glossary.volume24h")}</WrapTitle>
           </Box>
         </Box>
       ),
@@ -148,7 +150,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
       title: (
         <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
-            <WrapTitle>Created At</WrapTitle>
+            <WrapTitle>{t("createdAt")}</WrapTitle>
           </Box>
         </Box>
       ),
@@ -159,7 +161,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
       title: (
         <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
-            <WrapTitle>Token Last Activity</WrapTitle>
+            <WrapTitle>{t("glossary.tokenLastActivity")}</WrapTitle>
           </Box>
         </Box>
       ),
