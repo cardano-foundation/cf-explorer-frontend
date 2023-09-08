@@ -1,34 +1,174 @@
-import { IconButton, Box, styled, alpha } from "@mui/material";
+import { Box, styled, alpha, IconButton } from "@mui/material";
+import ReactDatePicker from "react-datepicker";
 
-export const SelectDateButton = styled(Box)(() => ({
-  position: "absolute",
-  right: "10px",
-  top: "50%",
-  transform: "translateY(-50%)",
+import { DateRangeIcon } from "src/commons/resources";
+
+export const DatePickerContainer = styled(Box)<{ open: number }>(({ theme, open }) => ({
+  border: `1.5px solid ${open ? theme.palette.secondary.light : theme.palette.primary[200]}`,
+  borderRadius: 8,
+  backgroundColor: theme.palette.common.white,
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  "div[class=react-datepicker-wrapper]": {
+    flex: 1,
+    zIndex: 2
+  },
+  "div[class=react-datepicker]": {
+    fontFamily: theme.typography.fontFamily
+  },
+  "div[class*=react-datepicker__header]": {
+    backgroundColor: theme.palette.secondary[0],
+    borderBottom: 0
+  },
+  "div[class*=react-datepicker__month-container]": {
+    padding: "5px 10px 10px"
+  },
+  ['div[class*="react-datepicker__day "]']: {
+    width: 40,
+    height: 40,
+    margin: "1px 0",
+    borderRadius: "50%",
+    color: theme.palette.secondary.main,
+    "&:not([class*=selected]):not([class*=disabled]):hover": {
+      backgroundColor: theme.palette.primary[200]
+    },
+    div: {
+      width: "100%",
+      height: "100%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center"
+    }
+  },
+  "div[class*=react-datepicker__day--outside-month], div[class*=react-datepicker__day--disabled]": {
+    color: theme.palette.secondary[600]
+  },
+  "div[class=react-datepicker__day-name]": {
+    width: 40,
+    margin: "2.5px 0"
+  },
+  "div[class*=react-datepicker__day--keyboard-selected]": {
+    backgroundColor: "transparent"
+  },
+  "div[class*=react-datepicker__day--selected]": {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.secondary[0],
+    "&hover": {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.secondary[0]
+    }
+  },
+  "div[class*=react-datepicker__day--in-]": {
+    backgroundColor: theme.palette.primary[200],
+    color: "#000",
+    borderRadius: "0%"
+  },
+  "div[class*=react-datepicker__day--range-], div[class*=react-datepicker__day--selecting-range-]": {
+    color: theme.palette.secondary[0],
+    div: {
+      borderRadius: "50%",
+      backgroundColor: theme.palette.primary.main
+    }
+  },
+  "div[class*=react-datepicker__day--range-start], div[class*=react-datepicker__day--in-]:first-of-type": {
+    borderTopLeftRadius: "50%",
+    borderBottomLeftRadius: "50%"
+  },
+  "div[class*=react-datepicker__day--selecting-range-start]": {
+    borderTopLeftRadius: "50%",
+    borderBottomLeftRadius: "50%"
+  },
+  "div[class*=react-datepicker__day--range-end], div[class*=react-datepicker__day--in-]:last-of-type": {
+    borderTopRightRadius: "50%",
+    borderBottomRightRadius: "50%"
+  },
+  "div[class*=react-datepicker__day--selecting-range-end]": {
+    borderTopRightRadius: "50%",
+    borderBottomRightRadius: "50%"
+  },
+  "button[class=react-datepicker__close-icon]": {
+    right: 12,
+    padding: 0,
+    "&::after": {
+      backgroundColor: theme.palette.grey["A100"]
+    }
+  },
+  "div[class*=react-datepicker-popper]": {
+    zIndex: 2
+  },
+  [theme.breakpoints.down("sm")]: {
+    "div[class*=react-datepicker-popper]": {
+      top: "-100% !important"
+    },
+    "div[class=react-datepicker__triangle]": {
+      display: "none"
+    }
+  }
+}));
+
+export const PlaceHolder = styled(Box)(({ theme }) => ({
+  color: theme.palette.secondary.light
+}));
+
+export const Value = styled(Box)(({ theme }) => ({
+  color: theme.palette.secondary.main
+}));
+
+export const StyledDatePicker = styled(ReactDatePicker)(() => ({
+  width: "100%",
+  border: "none",
+  padding: "12px 14px",
+  boxSizing: "border-box",
+  borderRadius: 8,
+  fontSize: "16px",
+  fontWeight: 400,
+  background: "transparent",
   cursor: "pointer"
 }));
 
-export const WrapCustomDatePicker = styled(Box)<{ open: number }>(({ theme, open }) => ({
-  position: "relative",
-  border: `1.5px solid ${open ? theme.palette.secondary.light : theme.palette.primary[200]}`,
-  borderRadius: "8px",
-  backgroundColor: theme.palette.common.white,
-  padding: "12px 14px",
+export const HeaderContainer = styled(Box)(({ theme }) => ({
   display: "flex",
+  justifyContent: "space-between",
   alignItems: "center",
-  flexDirection: "row",
-  minHeight: "18px",
-  minWidth: "200px",
-  fontSize: "16px",
-  fontWeight: 400,
-  zIndex: 10
+  [theme.breakpoints.down("sm")]: {
+    paddingTop: 15
+  }
 }));
 
-export const MyGrid = styled(Box)(() => ({
-  display: "grid",
-  gridTemplateColumns: "repeat(4, 1fr)",
-  gridGap: "8px",
-  padding: "10px 6px"
+export const CloseButton = styled(IconButton)(({ theme }) => ({
+  position: "absolute",
+  top: 0,
+  right: -5,
+  width: 24,
+  height: 24,
+  border: `1px solid ${theme.palette.primary[200]}`,
+  cursor: "pointer",
+  padding: 0,
+  zIndex: 1306,
+  display: "none",
+  [theme.breakpoints.down("sm")]: {
+    display: "inline-flex"
+  }
+}));
+
+export const YearSelect = styled(Box)(() => ({
+  display: "flex",
+  alignItems: "center",
+  fontWeight: 600,
+  fontSize: 16,
+  paddingLeft: 12
+}));
+
+export const SelectYear = styled(Box)<{ isActive: number }>(({ theme, isActive }) => ({
+  padding: "8px 16px",
+  cursor: "pointer",
+  borderRadius: "18px",
+  backgroundColor: isActive ? theme.palette.primary.main : "transparent",
+  color: isActive ? theme.palette.common.white : theme.palette.text.primary,
+  "&:hover": {
+    backgroundColor: isActive ? theme.palette.primary.main : theme.palette.primary[100]
+  }
 }));
 
 export const HiddenScroll = styled(Box)(({ theme }) => ({
@@ -52,6 +192,7 @@ export const HiddenScroll = styled(Box)(({ theme }) => ({
     background: "transparent"
   },
   "&:hover": {
+    borderRadius: "8px 0px 0px 8px",
     "&::-webkit-scrollbar-thumb": {
       background: theme.palette.secondary.light
     },
@@ -61,187 +202,21 @@ export const HiddenScroll = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const SelectYear = styled(Box)<{ isActive: number }>(({ theme, isActive }) => ({
-  padding: "8px 16px",
-  cursor: "pointer",
-  borderRadius: "18px",
-  backgroundColor: isActive ? theme.palette.primary.main : "transparent",
-  color: isActive ? theme.palette.common.white : theme.palette.text.primary,
-  "&:hover": {
-    backgroundColor: isActive ? theme.palette.primary.main : theme.palette.primary[100]
-  }
+export const YearList = styled(Box)(() => ({
+  display: "grid",
+  gridTemplateColumns: "repeat(4, 1fr)",
+  gridGap: "8px",
+  padding: "10px 6px"
 }));
 
-export const PickerPortalContainer = styled(Box)(({ theme }) => ({
-  position: "fixed",
-  zIndex: 1301,
-  top: "50vh",
-  left: "50vw",
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  width: 316,
-  transform: "translate(-316px, 0)",
-  [theme.breakpoints.down(650)]: {
-    top: "50vh !important",
-    left: "50vw !important",
-    width: 0,
-    height: 668,
-    transform: "translate(-156px, -348px)",
-    flexDirection: "column"
-  }
-}));
-
-export const CloseButton = styled(IconButton)(({ theme }) => ({
-  position: "absolute",
-  top: 24,
-  right: -316,
-  width: 24,
-  height: 24,
-  border: `1px solid ${theme.palette.primary[200]}`,
-  cursor: "pointer",
-  padding: 0,
-  margin: 8,
-  zIndex: 1306
-}));
-
-export const DatePickerContainer = styled(Box)(({ theme }) => ({
-  width: 1,
+export const DateIconContainer = styled(Box)(() => ({
   position: "relative",
-  height: 1,
-  "div[class=react-datepicker]": {
-    display: "flex",
-    minHeight: 352,
-    fontFamily: theme.typography.fontFamily
-  },
-  "&:first-of-type div[class=react-datepicker]": {
-    borderRightWidth: 0,
-    borderRadius: "0.3rem 0 0 0.3rem"
-  },
-  "&:last-of-type div[class=react-datepicker]": {
-    borderLeftWidth: 0,
-    borderRadius: "0 0.3rem 0.3rem 0"
-  },
-  "div[class=react-datepicker-popper]": {
-    zIndex: 1
-  },
-  "div[class=react-datepicker__input-container]": {
-    display: "none"
-  },
-  "&:last-of-type": {
-    "div[class=react-datepicker__triangle]": {
-      display: "none"
-    }
-  },
-  "div[class=react-datepicker__triangle]": {
-    transform: "translate(164px, 0px) !important"
-  },
-  "div[class*=react-datepicker__header]": {
-    backgroundColor: theme.palette.secondary[0],
-    borderBottom: 0,
-    paddingBottom: 5
-  },
-  "div[class=react-datepicker__month]": {
-    margin: 8
-  },
-  "div[class*=react-datepicker__month-container]": {
-    padding: "20px 10px 0px"
-  },
-  "div[class*=react-datepicker__day--outside-month]": {
-    visibility: "hidden",
-    height: "0 !important"
-  },
-  [`div[class*="react-datepicker__day "]`]: {
-    width: 40,
-    height: 40,
-    borderRadius: "50% !important",
-    display: "inline-grid",
-    justifyContent: "center",
-    alignItems: "center",
-    margin: "1px 0"
-  },
-  "div[class=react-datepicker__day-name]": {
-    width: 40,
-    height: 20,
-    margin: "2.5px 0"
-  },
-  "div[class*=react-datepicker__day--selected]": {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.secondary[0],
-    "&:hover": {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.secondary[0]
-    }
-  },
-  "div[class*=react-datepicker__day--in-selecting-range]": {
-    backgroundColor: alpha(theme.palette.primary.main, 60),
-    color: theme.palette.secondary[0]
-  },
-  "div[class*=react-datepicker__day--keyboard-selected]": {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.secondary[0],
-    "&hover": {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.secondary[0]
-    }
-  },
-  "div[class*=react-datepicker__day--in-range]": {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.secondary[0]
-  },
-  [theme.breakpoints.down(650)]: {
-    "div[class=react-datepicker__triangle]": {
-      display: "none"
-    },
-    "div[class=react-datepicker__month]": {
-      margin: "0.2rem 0.4rem"
-    },
-    "&:first-of-type div[class=react-datepicker]": {
-      borderRightWidth: 1,
-      borderBottom: 0,
-      borderRadius: "0.3rem 0.3rem 0 0",
-      minHeight: 345
-    },
-    "&:last-of-type div[class=react-datepicker]": {
-      borderLeftWidth: 1,
-      borderTop: 0,
-      borderRadius: "0 0 0.3rem 0.3rem",
-      minHeight: 300,
-      "div[class*=react-datepicker__month-container]": {
-        padding: "0px 10px"
-      },
-      "div[class*=react-datepicker__header]": {
-        paddingTop: 0
-      }
-    }
-  }
+  width: 0,
+  height: 43
 }));
 
-export const PlaceHolder = styled(Box)(({ theme }) => ({
-  color: theme.palette.secondary.light
-}));
-
-export const StyledDay = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.primary[200],
-  width: 40,
-  height: 40,
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  boxSizing: "border-box",
-  [theme.breakpoints.down(650)]: {
-    width: 41
-  }
-}));
-
-export const SelectedDay = styled(Box)(({ theme }) => ({
-  color: theme.palette.secondary[0],
-  backgroundColor: theme.palette.primary.main,
-  width: 40,
-  height: 40,
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  borderRadius: "50%",
-  boxSizing: "border-box"
+export const DateIcon = styled(DateRangeIcon)(() => ({
+  position: "absolute",
+  top: 12,
+  right: 12
 }));
