@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -15,18 +15,27 @@ const EpochDetail: React.FC = () => {
   const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
   const { epochId } = useParams<{ epochId: string }>();
   const { state } = useLocation<{ data?: IDataEpoch }>();
+  const [key, setKey] = useState(0);
 
   const { data, loading, initialized, error, lastUpdated } = useFetch<IDataEpoch>(
     `${API.EPOCH.DETAIL}/${epochId}`,
     state?.data,
     false,
-    epochNo?.toString() === epochId ? blockNo : 0
+    epochNo?.toString() === epochId ? blockNo : key
   );
+
+  useEffect(() => {
+    // Update key if this epoch don't have rewards and when new epoch distributed for api callback
+    if (!data?.rewardsDistributed && epochNo !== undefined && data?.no !== undefined && epochNo !== data.no) {
+      setKey(epochNo);
+    }
+  }, [epochNo, data?.no, data?.rewardsDistributed]);
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `Epoch ${epochId} | Cardano Blockchain Explorer`;
   }, [epochId]);
+
   if (!initialized) {
     return null;
   }
