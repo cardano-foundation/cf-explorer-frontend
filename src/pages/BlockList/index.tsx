@@ -17,19 +17,21 @@ import SelectedIcon from "src/components/commons/SelectedIcon";
 import Link from "src/components/commons/Link";
 import ADAicon from "src/components/commons/ADAIcon";
 import useFetchList from "src/commons/hooks/useFetchList";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
-import { PriceWrapper, BlueText, StyledContainer, StyledLink } from "./styles";
+import { PriceWrapper, BlueText, StyledContainer, StyledLink, Actions, TimeDuration } from "./styles";
 
 const BlockList = () => {
   const { search } = useLocation();
   const history = useHistory();
   const { onDetailView } = useSelector(({ user }: RootState) => user);
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const [block, setBlock] = useState<number | string | null>(null);
   const [sort, setSort] = useState<string>("");
   const [selected, setSelected] = useState<number | null>(null);
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<Block>(API.BLOCK.LIST, { ...pageInfo, sort });
+  const fetchData = useFetchList<Block>(API.BLOCK.LIST, { ...pageInfo, sort }, false, blockNo);
   const mainRef = useRef(document.querySelector("#main"));
 
   useEffect(() => {
@@ -127,6 +129,11 @@ const BlockList = () => {
   return (
     <StyledContainer>
       <Card data-testid="blocks-card" title={"Blocks"}>
+        <Actions>
+          <TimeDuration>
+            <FormNowMessage time={fetchData.lastUpdated} />
+          </TimeDuration>
+        </Actions>
         <Table
           {...fetchData}
           columns={columns}

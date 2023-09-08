@@ -12,8 +12,18 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
-import { EpochNo, StyledOutput, BlueText, StyledContainer, StyledLink, PriceWrapper } from "./styles";
+import {
+  EpochNo,
+  StyledOutput,
+  BlueText,
+  StyledContainer,
+  StyledLink,
+  PriceWrapper,
+  Actions,
+  TimeDuration
+} from "./styles";
 
 interface IEpochBlockList {
   epochId: string;
@@ -103,6 +113,11 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
   return (
     <StyledContainer>
       <Card title={"Blocks"} underline>
+        <Actions>
+          <TimeDuration>
+            <FormNowMessage time={fetchData.lastUpdated} />
+          </TimeDuration>
+        </Actions>
         <Table
           {...fetchData}
           columns={columns}

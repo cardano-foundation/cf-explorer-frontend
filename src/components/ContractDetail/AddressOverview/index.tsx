@@ -15,17 +15,23 @@ import TokenAutocomplete from "src/components/TokenAutocomplete";
 import ADAicon from "src/components/commons/ADAIcon";
 import { useScreen } from "src/commons/hooks/useScreen";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
-import { GridContainer, GridItem, Pool, RedirectButton, StyledAAmount, BannerSuccess } from "./styles";
+import { GridContainer, GridItem, Pool, RedirectButton, StyledAAmount, BannerSuccess, TimeDuration } from "./styles";
 
 interface Props {
   data: WalletAddress | null;
   loading: boolean;
+  lastUpdated?: number;
 }
 
-const AddressOverview: React.FC<Props> = ({ data, loading }) => {
+const AddressOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(
-    data?.stakeAddress ? `${API.STAKE.DETAIL}/${data?.stakeAddress}` : ""
+    data?.stakeAddress ? `${API.STAKE.DETAIL}/${data?.stakeAddress}` : "",
+    undefined,
+    false,
+    blockNo
   );
   const history = useHistory();
   const { adaRate } = useSelector(({ system }: RootState) => system);
@@ -109,6 +115,9 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
       }
     >
       {showBanner && <BannerSuccess>Success! Contract has been verified successfully.</BannerSuccess>}
+      <TimeDuration>
+        <FormNowMessage time={lastUpdated} />
+      </TimeDuration>
       <GridContainer container spacing={2} mt={2}>
         <GridItem item xs={12} md={6}>
           <Box overflow="hidden" borderRadius={3} height={"100%"}>
