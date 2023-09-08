@@ -590,5 +590,17 @@
   "common.script": "Script",
   "common.scriptType": "Script Type",
   "common.nativeScript": "Native script",
-  "drawer.scriptNotVerified": "Script has not been verified"
+  "drawer.scriptNotVerified": "Script has not been verified",
+  "common.day": "day",
+  "common.days": "days",
+  "common.endIn": "End in",
+  "common.hour": "hour",
+  "common.hours": "hours",
+  "common.minute": "minute",
+  "common.minutes": "minutes",
+  "common.second": "second",
+  "common.seconds": "seconds",
+  "glossary.rewardAccountList": "Reward account list",
+  "glossary.ownerAddressList": "Owner address list",
+  "glossary.totalTokenList": "Total Token List"
 }

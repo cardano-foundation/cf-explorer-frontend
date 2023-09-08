@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { parse, stringify } from "qs";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
 import DelegationDetailInfo from "src/components/DelegationDetail/DelegationDetailInfo";
@@ -22,6 +23,7 @@ import { routers } from "src/commons/routers";
 import { TabsContainer, TitleTab } from "./styles";
 
 const DelegationDetail: React.FC = () => {
+  const { t } = useTranslation();
   const { poolId } = useParams<{ poolId: string }>();
   const { search, state } = useLocation<{ fromPath?: SpecialPath }>();
   const history = useHistory();
@@ -83,7 +85,7 @@ const DelegationDetail: React.FC = () => {
   }[] = [
     {
       icon: StakeKeyHistoryIcon,
-      label: "Epoch",
+      label: t("epoch"),
       key: "epochs",
       component: (
         <div ref={tableRef}>
@@ -93,7 +95,7 @@ const DelegationDetail: React.FC = () => {
     },
     {
       icon: StakingDelegators,
-      label: "Staking Delegators",
+      label: t("stakingDelegators"),
       key: "delegators",
       component: (
         <div ref={tableRef}>
