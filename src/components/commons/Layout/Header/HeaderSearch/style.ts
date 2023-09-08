@@ -18,7 +18,7 @@ export const Form = styled("form")<{ home: number; sidebar?: number }>(({ theme,
   marginTop: home ? 30 : 0,
   border: `1.5px solid ${theme.palette.primary[200]}`,
   "&:focus-within": {
-    borderColor: theme.palette.primary.main
+    borderColor: theme.palette.secondary.light
   },
   [theme.breakpoints.down("lg")]: {
     minWidth: sidebar ? "unset" : home ? 785 : 400

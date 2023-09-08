@@ -110,7 +110,7 @@ const SearchContainer = styled(Box)(({ theme }) => ({
   height: 58,
   border: `1.5px solid ${theme.palette.primary[200]}`,
   "&:focus-within": {
-    borderColor: theme.palette.primary.main
+    borderColor: theme.palette.secondary.light
   },
   [theme.breakpoints.down("sm")]: {
     width: "unset",

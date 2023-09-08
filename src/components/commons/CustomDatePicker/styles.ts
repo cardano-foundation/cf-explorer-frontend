@@ -10,7 +10,7 @@ export const SelectDateButton = styled(Box)(() => ({
 
 export const WrapCustomDatePicker = styled(Box)<{ open: number }>(({ theme, open }) => ({
   position: "relative",
-  border: `1.5px solid ${theme.palette.primary[open ? "main" : 200]}`,
+  border: `1.5px solid ${open ? theme.palette.secondary.light : theme.palette.primary[200]}`,
   borderRadius: "8px",
   backgroundColor: theme.palette.common.white,
   padding: "12px 14px",
