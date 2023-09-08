@@ -1,6 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import receiveImg from "src/commons/resources/images/receiveImg.svg";
 import sendImg from "src/commons/resources/images/sendImg.svg";
@@ -19,6 +20,7 @@ import { TransferIcon } from "src/commons/resources";
 
 import { Img, StyledLink } from "./styles";
 import { TextCardHighlight } from "../AddressDetail/AddressAnalytics/styles";
+import { Capitalize } from "../commons/CustomText/styles";
 
 interface AddressTransactionListProps {
   underline?: boolean;
@@ -35,6 +37,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
   selected,
   showTabView
 }) => {
+  const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -56,7 +59,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
 
   const columns: Column<Transactions>[] = [
     {
-      title: "Tx Hash",
+      title: <Capitalize>{t("glossary.txhash")}</Capitalize>,
       key: "trxhash",
       minWidth: isMobile ? 190 : 120,
 
@@ -84,7 +87,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       }
     },
     {
-      title: "Created At",
+      title: t("createdAt"),
       key: "created_at",
       minWidth: 120,
       render: (transaction) => (
@@ -94,7 +97,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       )
     },
     {
-      title: "Block",
+      title: t("glossary.block"),
       key: "block",
       minWidth: 120,
       render: (transaction) => (
@@ -107,7 +110,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       )
     },
     {
-      title: "Fees",
+      title: t("common.fees"),
       key: "fee",
       minWidth: 120,
       render: (transaction) => (
@@ -118,7 +121,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       )
     },
     {
-      title: "ADA amount",
+      title: t("glossary.adaAmount"),
       minWidth: 120,
       key: "totalOutput",
       render: (transaction) => {
@@ -135,7 +138,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       }
     },
     {
-      title: "Token",
+      title: t("glossary.Token"),
       minWidth: 120,
       key: "totalOutput",
       render: (transaction) => {
@@ -161,11 +164,11 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
   ];
 
   return (
-    <Card title={<TextCardHighlight>Transactions</TextCardHighlight>} underline={underline}>
+    <Card title={<TextCardHighlight>{t("tab.transactions")}</TextCardHighlight>} underline={underline}>
       <Table
         {...fetchData}
         columns={columns}
-        total={{ count: fetchData.total, title: "Total Transactions" }}
+        total={{ count: fetchData.total, title: t("common.totalTxs") }}
         pagination={{
           ...pageInfo,
           total: fetchData.total,

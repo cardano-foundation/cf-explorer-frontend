@@ -590,5 +590,9 @@
   "common.script": "Script",
   "common.scriptType": "Script Type",
   "common.nativeScript": "Native script",
-  "drawer.scriptNotVerified": "Script has not been verified"
+  "drawer.scriptNotVerified": "Script has not been verified",
+  "adrress.byAddressADABalance": "By Address ADA Balance",
+  "address.byAmountStaked": "By Amount Staked",
+  "address.title.addressDetail": "Address Details",
+  "address.viewContractDetail": "View Contract Detail"
 }
