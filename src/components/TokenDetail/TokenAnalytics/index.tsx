@@ -74,7 +74,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
       case "ONE_MONTH":
         return `${moment(label).format("DD MMM")} - ${moment(label).add(1, "days").format("DD MMM")}`;
       case "THREE_MONTH":
-        return `${moment(label).format("DD MMM")} - ${moment(label).add(6, "days").format("DD MMM")}`;
+        return `${moment(label).format("DD MMM")} - ${moment(label).add(1, "days").format("DD MMM")}`;
       default:
         return "";
     }
