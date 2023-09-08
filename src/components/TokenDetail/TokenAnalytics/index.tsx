@@ -5,6 +5,7 @@ import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Area, AreaChart, CartesianGrid, Label, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { TooltipProps } from "recharts/types/component/Tooltip";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -45,9 +46,15 @@ const options = [
 const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const { tokenId } = useParams<{ tokenId: string }>();
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const { isMobile } = useScreen();
   const theme = useTheme();
-  const { data, loading } = useFetch<AnalyticsData[]>(`${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`);
+  const { data, loading } = useFetch<AnalyticsData[]>(
+    `${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`,
+    undefined,
+    false,
+    blockNo
+  );
 
   const values = (data || [])?.map((item) => item.value || 0) || [];
 
@@ -147,7 +154,6 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                       stroke={theme.palette.primary.main}
                       strokeWidth={4}
                       fill="url(#colorUv)"
-                      dot={{ r: 2 }}
                       activeDot={{ r: 6 }}
                     />
                   </AreaChart>

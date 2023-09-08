@@ -2,6 +2,8 @@ import { Box, InputBase, ListItemIcon, styled } from "@mui/material";
 
 export const Container = styled(Box)`
   width: 100%;
+  box-sizing: border-box;
+  padding: 2px;
 `;
 
 export const DatePickerFooter = styled(Box)`

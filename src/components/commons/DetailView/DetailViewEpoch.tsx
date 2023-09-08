@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import { Box } from "@mui/material";
 
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { BlockIcon, CubeIcon, RocketIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
@@ -54,12 +54,12 @@ type DetailViewEpochProps = {
 };
 
 const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose, callback }) => {
-  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+  const { currentEpoch, blockNo } = useSelector(({ system }: RootState) => system);
   const { data, lastUpdated } = useFetch<IDataEpoch>(
     `${API.EPOCH.DETAIL}/${epochNo}`,
     undefined,
     false,
-    epochNo === currentEpoch?.no ? REFRESH_TIMES.EPOCH_DETAIL_VIEW : 0
+    epochNo === currentEpoch?.no ? blockNo : 0
   );
 
   useEffect(() => {
@@ -152,10 +152,10 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
 
   const slot =
     data.no === currentEpoch?.no
-      ? moment(formatDateTimeLocal(data?.endTime)).diff(moment()) >= 0
+      ? moment(formatDateTimeLocal(data.endTime)).diff(moment()) >= 0
         ? currentEpoch.slot
-        : MAX_SLOT_EPOCH
-      : MAX_SLOT_EPOCH;
+        : data.maxSlot || MAX_SLOT_EPOCH
+      : data.maxSlot || MAX_SLOT_EPOCH;
 
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
   return (
@@ -189,7 +189,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
           <ListItem>
             <Item>
               <Icon src={CubeIcon} alt="socket" />
-              <ItemName>Block</ItemName>
+              <ItemName>Blocks</ItemName>
               <ItemValue>{data.blkCount}</ItemValue>
             </Item>
             <Item>
