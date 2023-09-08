@@ -264,7 +264,7 @@ const HomeStatistic = () => {
                         Circulating supply <StyledAdaLogoIcon />:{" "}
                       </span>
                     </CustomTooltip>
-                    <CustomTooltip title={numberWithCommas(currentEpoch?.circulatingSupply || 0)}>
+                    <CustomTooltip title={formatADAFull(currentEpoch?.circulatingSupply || 0)}>
                       <span data-testid="circulating-supply-value">{formatADA(circulatingSupply.toString())}</span>
                     </CustomTooltip>
                     <CustomTooltip title={`${circulatingRate.toFixed(5)}%`}>
