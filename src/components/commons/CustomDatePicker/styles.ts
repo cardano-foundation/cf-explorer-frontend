@@ -4,7 +4,7 @@ import ReactDatePicker from "react-datepicker";
 import { DateRangeIcon } from "src/commons/resources";
 
 export const DatePickerContainer = styled(Box)<{ open: number }>(({ theme, open }) => ({
-  border: `1.5px solid ${theme.palette.primary[open ? "main" : 200]}`,
+  border: `1.5px solid ${open ? theme.palette.secondary.light : theme.palette.primary[200]}`,
   borderRadius: 8,
   backgroundColor: theme.palette.common.white,
   display: "flex",
