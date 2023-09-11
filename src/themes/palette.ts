@@ -55,7 +55,6 @@ const primary = {
 
 const secondary = {
   dark: GREY[300],
-
   0: "#FFFFFF",
   600: "#6C6F89",
   light: "#434656",
