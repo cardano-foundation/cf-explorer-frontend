@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
+import { isNil } from "lodash";
 
 import {
   timeIconUrl,
@@ -108,8 +109,8 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       ),
       value: (
         <>
-          {data?.epochSlotNo || 0}
-          <Subtext>/{MAX_SLOT_EPOCH}</Subtext>
+          {data?.epochSlotNo}
+          <Subtext>/{isNil(data?.epochSlotNo) ? null : MAX_SLOT_EPOCH}</Subtext>
         </>
       )
     }
