@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import {
   formatADAFull,
   formatDateTimeLocal,
+  formatNameBlockNo,
   getPageInfo,
   getShortHash,
   getShortWallet
@@ -75,21 +76,26 @@ const TransactionList: React.FC<TransactionListProps> = ({
       title: "Block",
       key: "block",
       minWidth: 60,
-      render: (r) => (
-        <Box>
+      render: (r) => {
+        const { blockName, tooltip } = formatNameBlockNo(r.blockNo, r.epochNo) || getShortHash(r.blockHash);
+        return (
           <Box>
-            <StyledLink to={details.block(r.blockNo || r.blockHash)}>
-              {r.blockNo || getShortHash(r.blockHash)}
-            </StyledLink>
-          </Box>
-          <Box mt={1}>
-            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
-            <Box color={({ palette }) => palette.secondary.light} component={"span"}>
-              {r.epochSlotNo}
+            <Box>
+              <StyledLink to={details.block(r.blockNo || r.blockHash)}>
+                <CustomTooltip title={tooltip}>
+                  <span>{blockName}</span>
+                </CustomTooltip>
+              </StyledLink>
+            </Box>
+            <Box mt={1}>
+              <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
+              <Box color={({ palette }) => palette.secondary.light} component={"span"}>
+                {r.epochSlotNo}
+              </Box>
             </Box>
           </Box>
-        </Box>
-      )
+        );
+      }
     },
     {
       title: "Fees",
