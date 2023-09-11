@@ -1,12 +1,12 @@
+import { Box } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { Box } from "@mui/material";
 
-import { CardanoBlueLogo, LogoIcon, SearchIcon } from "src/commons/resources";
-import { setOnDetailView, setSidebar } from "src/stores/user";
-import { lists, routers } from "src/commons/routers";
 import { useScreen } from "src/commons/hooks/useScreen";
+import { CardanoBlueLogo, LogoIcon, SearchIcon } from "src/commons/resources";
+import { lists, routers } from "src/commons/routers";
+import { setOnDetailView, setSidebar } from "src/stores/user";
 
 import TopSearch from "../Sidebar/TopSearch";
 import HeaderSearch from "./HeaderSearch";
@@ -15,23 +15,23 @@ import SelectNetwork from "./SelectNetwork";
 import {
   HeaderBox,
   HeaderContainer,
-  HeaderMain,
-  HeaderTop,
-  HeaderLogoLink,
   HeaderLogo,
-  Title,
-  SideBarRight,
-  SearchButton,
-  Toggle,
+  HeaderLogoLink,
+  HeaderMain,
+  HeaderSearchContainer,
+  HeaderTop,
   NetworkContainer,
-  HeaderSearchContainer
+  SearchButton,
+  SideBarRight,
+  Title,
+  Toggle
 } from "./styles";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [lists.dashboard()];
 
 const Header: React.FC<RouteComponentProps> = (props) => {
   const { history } = props;
-  const { isMobile, isGalaxyFoldSmall } = useScreen();
+  const { isMobile } = useScreen();
   const home = history.location.pathname === "/";
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const [openSearch, setOpenSearch] = React.useState(false);
@@ -67,15 +67,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
               justifyContent={"center"}
               flexDirection={isMobile ? "column" : "row"}
             >
-              <Box
-                component={"img"}
-                src={CardanoBlueLogo}
-                width={isGalaxyFoldSmall ? "30vw" : isMobile ? "20vw" : "auto"}
-                sx={{ margin: "2rem" }}
-              />
-              <Box fontSize={isMobile ? "32px" : "48px"} whiteSpace={"nowrap"}>
-                Cardano Explorer
-              </Box>
+              <Box component={"img"} src={CardanoBlueLogo} width={isMobile ? "80vw" : "auto"} sx={{ margin: "2rem" }} />
             </Box>
           </Title>
           <HeaderSearchContainer>{!pathMatched && <HeaderSearch home={home} />}</HeaderSearchContainer>
