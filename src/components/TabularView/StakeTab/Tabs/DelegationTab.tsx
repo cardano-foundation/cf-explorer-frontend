@@ -5,17 +5,17 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import { GreenWalletIcon } from "src/components/commons/GreenWalletIcon";
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 import { AdaValue } from "src/components/commons/ADAValue";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { EyeIcon } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import Table, { Column } from "src/components/commons/Table";
+import CustomFilter, { FilterParams } from "src/components/commons/CustomFilter";
+import { DelegationCertificateModal } from "src/components/StakingLifeCycle/DelegatorLifecycle/Delegation";
+import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 
-import useFetchList from "../../../../commons/hooks/useFetchList";
-import { EyeIcon } from "../../../../commons/resources";
-import { details } from "../../../../commons/routers";
-import { API } from "../../../../commons/utils/api";
-import { formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import Table, { Column } from "../../../commons/Table";
-import CustomFilter, { FilterParams } from "../../../commons/CustomFilter";
-import { DelegationCertificateModal } from "../../../StakingLifeCycle/DelegatorLifecycle/Delegation";
-import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import { StyledLink, WrapperDelegationTab, WrapWalletLabel } from "../styles";
 
 const DelegationTab = () => {
@@ -58,6 +58,16 @@ const DelegationTab = () => {
       key: "block",
       minWidth: "120px",
       render: (r) => <AdaValue value={r.fee} />
+    },
+    {
+      title: "Delegating to",
+      key: "poolId",
+      minWidth: "120px",
+      render: (r) => (
+        <CustomTooltip title={r.poolName || r.poolId}>
+          <StyledLink to={details.delegation(r.poolId)}>{r.poolName || getShortWallet(r.poolId)}</StyledLink>
+        </CustomTooltip>
+      )
     },
     {
       title: "Certificate",
