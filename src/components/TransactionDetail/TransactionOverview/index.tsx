@@ -13,7 +13,7 @@ import {
   txInputIconUrl,
   txOutputIconUrl
 } from "src/commons/resources";
-import { formatADAFull, formatDateTimeLocal, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatNameBlockNo, getShortWallet } from "src/commons/utils/helper";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { details } from "src/commons/routers";
 import { RootState } from "src/stores/types";
@@ -202,12 +202,20 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard height={24} mr={1}>
-            {" "}
             Block
           </TitleCard>
         </Box>
       ),
-      value: <StyledLink to={details.block(data?.tx?.blockNo || 0)}>{data?.tx?.blockNo || 0}</StyledLink>
+      value: (() => {
+        const { blockName, tooltip } = formatNameBlockNo(data?.tx?.blockNo, data?.tx?.epochNo);
+        return (
+          <StyledLink to={details.block(data?.tx?.blockNo || 0)}>
+            <CustomTooltip title={tooltip}>
+              <span>{blockName}</span>
+            </CustomTooltip>
+          </StyledLink>
+        );
+      })()
     },
     {
       icon: slotIconUrl,
