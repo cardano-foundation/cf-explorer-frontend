@@ -73,10 +73,8 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
           setLoading(false);
         }
       } catch (error: any) {
-        const errorData = error.response?.data;
-        if (errorData?.errorCode === ACCOUNT_ERROR.PRIVATE_NOTE_IS_EXIST) {
-          setPrivateNote((prev) => ({ ...prev, error: errorData.errorMessage }));
-        }
+        const message = t(error.response?.data?.errorCode || ACCOUNT_ERROR.INTERNAL_ERROR);
+        setPrivateNote((prev) => ({ ...prev, error: message }));
         setLoading(false);
       }
   };

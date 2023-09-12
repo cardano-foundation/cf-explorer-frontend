@@ -16,7 +16,7 @@ import {
   setUserData
 } from "src/stores/user";
 import { getInfo, getNonce, signIn } from "src/commons/utils/userRequest";
-import { NETWORK, NETWORKS, NETWORK_TYPES } from "src/commons/utils/constants";
+import { ACCOUNT_ERROR, NETWORK, NETWORKS, NETWORK_TYPES } from "src/commons/utils/constants";
 import { removeAuthInfo, validateTokenExpired } from "src/commons/utils/helper";
 import useToast from "src/commons/hooks/useToast";
 import ConnectedProfileOption from "src/components/commons/ConnectedProfileOption";
@@ -62,7 +62,8 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
       const response = await getNonce({ address: stakeAddress || "", walletName: enabledWallet?.toUpperCase() || "" });
       return response.data;
     } catch (error: any) {
-      toast.error(error.data?.errorMessage || t("message.common.somethingWentWrong"));
+      const message = t(error.data?.errorCode || ACCOUNT_ERROR.INTERNAL_ERROR);
+      toast.error(message);
       setModalSignMessage(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
