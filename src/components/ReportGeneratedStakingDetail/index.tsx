@@ -1,5 +1,6 @@
 import React, { useMemo, createContext } from "react";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import {
   DelegationIcon,
@@ -33,49 +34,47 @@ interface ITab {
 }
 
 export const StakingDetailContext = createContext({ stakeKey: "", reportName: "" });
-
-const stackeTabs: ITab[] = [
-  {
-    icon: RegistrationIcon,
-    label: "Stake Address Registration",
-    key: "registration",
-    mappingKey: "Registration",
-    component: <StakingRegistrationTab />
-  },
-  {
-    icon: DelegationIcon,
-    label: "Delegation History",
-    key: "delegation",
-    mappingKey: "Delegation",
-    component: <DelegationTab />
-  },
-  {
-    icon: RewardsDistributionIcon,
-    label: "Rewards Distribution",
-    key: "rewards",
-    mappingKey: "Rewards",
-    component: <RewardsDistributionTab />
-  },
-  {
-    icon: RewardsWithdrawalIcon,
-    label: "Withdrawal History",
-    key: "withdrawal-history",
-    mappingKey: "Withdrawal",
-    component: <WithdrawalHistoryTab />
-  },
-  {
-    icon: DeredistrationIcon,
-    label: "Deregistration",
-    key: "deregistration",
-    mappingKey: "Deregistration",
-    component: <DeregistrationTab />
-  }
-];
-
 const ReportGeneratedStakingDetailTabs = () => {
+  const { t } = useTranslation();
   const { reportId } = useParams<{ reportId: string }>();
   const reportDetail = useFetch<IReportStaking>(API.REPORT.STAKING_REPORTED_DETAIL(reportId));
-
+  const stackeTabs: ITab[] = [
+    {
+      icon: RegistrationIcon,
+      label: t("glossary.takeAddressRegistrations"),
+      key: "registration",
+      mappingKey: "Registration",
+      component: <StakingRegistrationTab />
+    },
+    {
+      icon: DelegationIcon,
+      label: t("drawer.delegationHIstory"),
+      key: "delegation",
+      mappingKey: "Delegation",
+      component: <DelegationTab />
+    },
+    {
+      icon: RewardsDistributionIcon,
+      label: t("slc.rewardsDisttribution"),
+      key: "rewards",
+      mappingKey: "Rewards",
+      component: <RewardsDistributionTab />
+    },
+    {
+      icon: RewardsWithdrawalIcon,
+      label: t("common.withdrawalHistory"),
+      key: "withdrawal-history",
+      mappingKey: "Withdrawal",
+      component: <WithdrawalHistoryTab />
+    },
+    {
+      icon: DeredistrationIcon,
+      label: t("slc.deregistration"),
+      key: "deregistration",
+      mappingKey: "Deregistration",
+      component: <DeregistrationTab />
+    }
+  ];
   const events = useMemo(() => {
     const { data } = reportDetail;
     if (!data) return [];
@@ -90,7 +89,7 @@ const ReportGeneratedStakingDetailTabs = () => {
         ...tabs,
         {
           icon: TranferIcon,
-          label: "ADA Transfers",
+          label: t("common.adaTransfers"),
           key: "walletActivity",
           mappingKey: "",
           component: <WalletActitityTab />

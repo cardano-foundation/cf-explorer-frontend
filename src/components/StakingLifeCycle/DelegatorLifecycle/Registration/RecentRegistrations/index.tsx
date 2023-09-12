@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { useUpdateEffect } from "react-use";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
@@ -20,6 +21,7 @@ interface Props {
 }
 
 const RecentRegistrations: React.FC<Props> = ({ setShowBackButton }) => {
+  const { t } = useTranslation();
   const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
   const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
   const [params, setParams] = useState<FilterParams>({});
@@ -52,10 +54,10 @@ const RecentRegistrations: React.FC<Props> = ({ setShowBackButton }) => {
   return (
     <StyledContainer data-testid="recent-registration">
       <StyledList>
-        <DescriptionText sx={{ mr: 0 }}>Registration List</DescriptionText>
+        <DescriptionText sx={{ mr: 0 }}>{t("common.registrationList")}</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
-            Showing {data.length} {data.length > 1 ? "results" : "result"}
+            {t("common.showing")} {data.length} {data.length > 1 ? t("common.result") : t("common.results")}
           </WrapFilterDescription>
           <CustomFilter
             filterValue={params}
@@ -63,7 +65,7 @@ const RecentRegistrations: React.FC<Props> = ({ setShowBackButton }) => {
               setParams(params);
               setPageInfo((pre) => ({ ...pre, page: 0 }));
             }}
-            searchLabel="Search transaction"
+            searchLabel={t("common.searchTx")}
           />
         </Box>
       </StyledList>

@@ -1,4 +1,5 @@
 import { Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import StyledModal from "../commons/StyledModal";
 import { ContentContainer, NormalDescription, WrapContent } from "./styles";
@@ -9,25 +10,19 @@ interface Props {
 }
 
 export function SPOInvolvementInDelegationDescription({ open, handleCloseModal }: Props) {
+  const { t } = useTranslation();
   return (
     <StyledModal
       contentStyle={{ paddingRight: "5px" }}
-      title="Pool updates"
+      title={t("slc.poolUpdates")}
       handleCloseModal={handleCloseModal}
       open={open}
     >
       <WrapContent>
         <ContentContainer>
           <NormalDescription>
-            <Typography>
-              At most, there can be one active stake pool registration certificate for each stake pool. An older
-              certificate will be overridden by a newer one.
-            </Typography>
-            <Typography mt={1}>
-              To adjust the costs and margin of the pool, a stake pool operator can replace the registration certificate
-              of the pool with a new one. This allows operators to respond to changes, e.g. in the pool's operational
-              costs.
-            </Typography>
+            <Typography>{t("desc.SPOInvolvementInDelegationDescription.1st")}</Typography>
+            <Typography mt={1}>{t("desc.SPOInvolvementInDelegationDescription.2st")}</Typography>
           </NormalDescription>
         </ContentContainer>
       </WrapContent>

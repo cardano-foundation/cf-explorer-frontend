@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from "react";
 import { Box, styled } from "@mui/material";
 import { useParams } from "react-router-dom";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
 import { ADAOrangeBorderIcon } from "src/commons/resources";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -21,6 +22,7 @@ import { LineArrowItem } from "src/components/commons/LineArrow";
 import { StyledLink, DrawContainer, ADAOperator, ADATitle, ADAAmount, StyledEpoch } from "./styles";
 
 const OperatorReward = () => {
+  const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
   const { poolId = "" } = useParams<{ poolId: string }>();
   const { data } = useFetch<PoolInfo>(API.SPO_LIFECYCLE.SPO_POOL_INFO(poolId));
@@ -56,7 +58,7 @@ const OperatorReward = () => {
         <CardanoBlockchain ref={cardanoBlockchainRef} />
         <ADAOperator ref={operatorRef} onClick={() => setOpenModal(true)}>
           <ADAOrangeBorderIcon />
-          <ADATitle>Operator Rewards</ADATitle>
+          <ADATitle>{t("common.operatorRewards")}</ADATitle>
         </ADAOperator>
         <SPOHolder
           ref={SPOHolderRef}
@@ -72,6 +74,7 @@ const OperatorReward = () => {
 export default OperatorReward;
 
 const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void }) => {
+  const { t } = useTranslation();
   const { poolId = "" } = useParams<{ poolId: string }>();
   const [sort, setSort] = useState<string>("");
   const [{ page, size }, setPagination] = useState<{ page: number; size: number }>({ page: 0, size: 50 });
@@ -79,13 +82,13 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void 
 
   const columns: Column<SPO_REWARD>[] = [
     {
-      title: "Epoch",
+      title: t("common.Epoch"),
       key: "Epoch",
       minWidth: "50px",
       render: (r) => <StyledEpoch to={details.epoch(r.epochNo)}>{r.epochNo}</StyledEpoch>
     },
     {
-      title: "Created At",
+      title: t("createdAt"),
       key: "time",
       minWidth: "50px",
       render: (r) => <Box>{moment(r?.time).format("MM/DD/yyyy HH:mm:ss")}</Box>,
@@ -94,7 +97,7 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void 
       }
     },
     {
-      title: "Amount ADA",
+      title: t("common.amouintADA"),
       key: "AmountADA",
       minWidth: "50px",
       render: (r) => (
@@ -104,7 +107,7 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void 
       )
     },
     {
-      title: "Reward Account",
+      title: t("rewardAccount"),
       key: "RewardAccount",
       minWidth: "50px",
       render: (r) => (
@@ -115,11 +118,11 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void 
     }
   ];
   return (
-    <CustomModal {...props} title="Operator rewards">
+    <CustomModal {...props} title={t("common.operatorRewards")}>
       <StyledTable
         {...fetchData}
         columns={columns}
-        total={{ title: "Total Epochs", count: fetchData.total }}
+        total={{ title: t("common.totalEpoch"), count: fetchData.total }}
         maxHeight={"60vh"}
         pagination={{
           page,

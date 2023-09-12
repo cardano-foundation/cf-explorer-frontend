@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import Table, { Column } from "src/components/commons/Table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -15,6 +16,7 @@ import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
 
 const ProtocolUpdateTab = () => {
+  const { t } = useTranslation();
   const { reportId = "" } = useParams<{ reportId: string }>();
   const [selectedValue, setSelectedValue] = useState<PoolUpdateDetail | null>(null);
   const [params, setParams] = useState({
@@ -27,7 +29,7 @@ const ProtocolUpdateTab = () => {
   const columns: Column<PoolUpdateDetail>[] = [
     {
       key: "txHash",
-      title: "Transaction Hash",
+      title: t("glossary.txHash"),
       render(data) {
         return (
           <CustomTooltip title={data.txHash}>
@@ -38,7 +40,7 @@ const ProtocolUpdateTab = () => {
     },
     {
       key: "time",
-      title: "Created At",
+      title: t("createdAt"),
       sort({ columnKey, sortValue }) {
         sortValue ? setSort(`bk.${columnKey},${sortValue}`) : setSort("");
       },
@@ -48,7 +50,7 @@ const ProtocolUpdateTab = () => {
     },
     {
       key: "fee",
-      title: "Fees",
+      title: t("common.fees"),
       render(data) {
         return (
           <ADAValueLabel>
@@ -60,7 +62,7 @@ const ProtocolUpdateTab = () => {
     },
     {
       key: "Certificate",
-      title: "Certificate",
+      title: t("common.certificate"),
       render(data) {
         return (
           <ClickAbleLink onClick={() => setSelectedValue(data)}>
@@ -83,7 +85,7 @@ const ProtocolUpdateTab = () => {
         {...fetchData}
         columns={columns}
         total={{
-          title: "Pool update",
+          title: t("common.poolUpdate"),
           count: fetchData.total
         }}
         pagination={{

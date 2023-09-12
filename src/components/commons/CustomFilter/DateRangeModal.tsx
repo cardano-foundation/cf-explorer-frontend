@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
 import CustomModal from "../CustomModal";
 import { DatePickerFooter, Container } from "./styles";
@@ -25,6 +26,7 @@ export interface DateRangeModalProps {
 }
 
 const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeChange, open, value }) => {
+  const { t } = useTranslation();
   const [dateRange, setDateRange] = useState<IDateRange>([null, null]);
 
   useEffect(() => {
@@ -39,15 +41,15 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
   };
 
   return (
-    <CustomModal open={open} onClose={() => onClose?.()} title="Select date range" width={500}>
+    <CustomModal open={open} onClose={() => onClose?.()} title={t("common.selectDateRange")} width={500}>
       <Container>
         <CustomDatePicker dateRange={dateRange} setDateRange={setDateRange} hideFuture />
         <DatePickerFooter>
           <Button disabled={!dateRange[0] || !dateRange[1]} variant="contained" onClick={onSubmit}>
-            OK
+            {t("common.ok")}
           </Button>
           <Button variant="outlined" onClick={() => onClose?.()}>
-            Cancel
+            {t("common.cancel")}
           </Button>
         </DatePickerFooter>
       </Container>

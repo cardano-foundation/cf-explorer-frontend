@@ -1,5 +1,6 @@
 import { Box, IconButton, useTheme } from "@mui/material";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -15,6 +16,7 @@ import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
 
 const DeregsitrationTab = () => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const { reportId = "" } = useParams<{ reportId: string }>();
   const [params, setParams] = useState({
@@ -27,7 +29,7 @@ const DeregsitrationTab = () => {
   const columns: Column<SPODeregistrationTabpular>[] = [
     {
       key: "txHash",
-      title: "Transaction Hash",
+      title: t("glossary.txHash"),
       render(data) {
         return (
           <CustomTooltip title={data.txHash}>
@@ -38,7 +40,7 @@ const DeregsitrationTab = () => {
     },
     {
       key: "time",
-      title: "Created At",
+      title: t("createdAt"),
       sort({ columnKey, sortValue }) {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       },
@@ -48,7 +50,7 @@ const DeregsitrationTab = () => {
     },
     {
       key: "fee",
-      title: "ADA Value",
+      title: t("common.adaValue"),
       render(data) {
         return (
           <TableSubTitle>
@@ -63,7 +65,7 @@ const DeregsitrationTab = () => {
     },
     {
       key: "Certificate",
-      title: "Certificate",
+      title: t("common.certificate"),
       render: (data) => (
         <IconButton onClick={() => setSelected(data)}>
           <EyeIcon />
@@ -86,7 +88,7 @@ const DeregsitrationTab = () => {
         {...fetchData}
         columns={columns}
         total={{
-          title: "Pool Registration",
+          title: t("common.poolRegistration"),
           count: fetchData.total
         }}
         pagination={{

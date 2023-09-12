@@ -1,6 +1,7 @@
 import { Box, IconButton } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { EyeIcon } from "src/commons/resources";
@@ -17,6 +18,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import { RegistrationCertificateModal } from "../../Registration/RegistrationCertificateModal";
 
 const PoolRegistrationTab = () => {
+  const { t } = useTranslation();
   const { poolId = "" } = useParams<{ poolId: string }>();
   const [params, setParams] = useState({
     page: 0,
@@ -29,7 +31,7 @@ const PoolRegistrationTab = () => {
   const columns: Column<SPORegistrationTabpular>[] = [
     {
       key: "txHash",
-      title: "Transaction hash",
+      title: t("glossary.transactionHash"),
       render(data) {
         return (
           <CustomTooltip title={data.txHash}>
@@ -40,7 +42,7 @@ const PoolRegistrationTab = () => {
     },
     {
       key: "time",
-      title: "Created At",
+      title: t("createdAt"),
       sort({ columnKey, sortValue }) {
         sortValue ? setSort(`bk.${columnKey},${sortValue}`) : setSort("");
       },
@@ -52,9 +54,9 @@ const PoolRegistrationTab = () => {
       key: "fee",
       title: (
         <Box>
-          ADA Value
+          {t("glossary.adaValue")}
           <Box fontSize={"0.75rem"} fontWeight={"normal"}>
-            Hold/Fees
+            {t("common.holdOrFees")}
           </Box>
         </Box>
       ),
@@ -75,7 +77,7 @@ const PoolRegistrationTab = () => {
     },
     {
       key: "Certificate",
-      title: "Certificate",
+      title: t("common.certificate"),
       render: (data) => (
         <IconButton onClick={() => setSelected(data?.poolUpdateId || 0)}>
           <EyeIcon />
@@ -98,7 +100,7 @@ const PoolRegistrationTab = () => {
         {...fetchData}
         columns={columns}
         total={{
-          title: "Pool Registration",
+          title: t("common.poolRegistration"),
           count: fetchData.total
         }}
         pagination={{
