@@ -3,6 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { Box } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -41,7 +42,14 @@ const ContractDetail: React.FC = () => {
   const { t } = useTranslation();
   const { address } = useParams<{ address: string }>();
   const history = useHistory();
-  const { data, loading, initialized, error, refresh } = useFetch<WalletAddress>(`${API.ADDRESS.DETAIL}/${address}`);
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+
+  const { data, loading, initialized, error, refresh, lastUpdated } = useFetch<WalletAddress>(
+    `${API.ADDRESS.DETAIL}/${address}`,
+    undefined,
+    false,
+    blockNo
+  );
   const [stateContext, dispatch] = React.useReducer(reducer, {});
 
   useEffect(() => {
@@ -71,7 +79,7 @@ const ContractDetail: React.FC = () => {
           </BackButton>
         </WrapHeader>
         <Box pt={1} pb={3}>
-          <AddressOverview data={data} loading={loading} />
+          <AddressOverview data={data} loading={loading} lastUpdated={lastUpdated} />
         </Box>
         <ContractDetailContent />
       </StyledContainer>

@@ -17,7 +17,7 @@ import {
 } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { EXT_ADA_PRICE_URL, MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { EXT_ADA_PRICE_URL, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { formatADA, formatADAFull, formatDateTimeLocal, numberWithCommas } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import RateWithIcon from "src/components/commons/RateWithIcon";
@@ -57,20 +57,15 @@ const SkeletonBox = () => (
 
 const MILION = 10 ** 6;
 
-const MAX_PERCENT_SHOW_PENDING_TIME = 90;
+const MAX_PERCENT_SHOW_PENDING_TIME = 88;
 const MIN_PERCENT_SHOW_ACTIVE_TIME = 5;
 
 const HomeStatistic = () => {
   const { t } = useTranslation();
+  const { currentEpoch, usdMarket, btcMarket } = useSelector(({ system }: RootState) => system);
 
-  const { currentEpoch, usdMarket } = useSelector(({ system }: RootState) => system);
   const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS);
-  const { data: btcMarket } = useFetch<CardanoMarket[]>(
-    `${API.MARKETS}?currency=btc`,
-    undefined,
-    false,
-    REFRESH_TIMES.CURRENT_PRICE_BTC
-  );
+
   const { total_supply: total = 1 } = usdMarket || {};
   const { liveStake = 0, activeStake = 1 } = data || {};
   const supply = BigNumber(currentEpoch?.circulatingSupply || 0).div(10 ** 6);
@@ -80,7 +75,6 @@ const HomeStatistic = () => {
   const progress = moment(currentEpoch?.endTime).isAfter(moment())
     ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
     : 100;
-
   const isShowProgressPendingText = +progress < MAX_PERCENT_SHOW_PENDING_TIME;
   const isShowProgressActiveText = +progress > MIN_PERCENT_SHOW_ACTIVE_TIME;
 
@@ -101,7 +95,7 @@ const HomeStatistic = () => {
       data-testid="home-statistic"
     >
       <WrapGrid item xl lg={3} sm={6} xs={12}>
-        {usdMarket && btcMarket?.[0] ? (
+        {usdMarket && btcMarket ? (
           <Link href={EXT_ADA_PRICE_URL} target="_blank">
             <Item data-testid="ada-price-box" smallItem>
               <WrapCardContent>
@@ -126,7 +120,7 @@ const HomeStatistic = () => {
                     value={usdMarket.price_change_percentage_24h}
                     showIcon={false}
                   />
-                  <AdaPrice data-testid="ada-price-in-btc">{btcMarket[0]?.current_price} BTC</AdaPrice>
+                  <AdaPrice data-testid="ada-price-in-btc">{btcMarket.current_price} BTC</AdaPrice>
                 </Content>
                 <Content display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
                   <TimeDuration data-testid="last-update-ada-price">
@@ -190,7 +184,7 @@ const HomeStatistic = () => {
                     </Box>
                   </Box>
                   <Progress>
-                    <CustomTooltip title={+progress || 0}>
+                    <CustomTooltip title={`${+progress || 0}%`}>
                       <ProcessActive data-testid="current-epoch-progress-active" rate={+progress || 0}>
                         {isShowProgressActiveText && `${+progress || 0}%`}
                       </ProcessActive>
@@ -242,12 +236,12 @@ const HomeStatistic = () => {
                     <Title data-testid="live-stake-value">{formatADA(liveStake)}</Title>
                   </CustomTooltip>
                   <Progress>
-                    <CustomTooltip title={liveRate.toFixed(5)}>
+                    <CustomTooltip title={`${liveRate.toFixed(5)}%`}>
                       <ProcessActive data-testid="live-stake-progress-active" rate={liveRate.toNumber()}>
                         {liveRate.toFixed(0, BigNumber.ROUND_DOWN)}%
                       </ProcessActive>
                     </CustomTooltip>
-                    <CustomTooltip title={liveRate.div(-1).plus(100).toFixed(5)}>
+                    <CustomTooltip title={`${liveRate.div(-1).plus(100).toFixed(5)}%`}>
                       <ProgressPending
                         data-testid="live-stake-progress-pending"
                         rate={liveRate.div(-1).plus(100).toNumber()}

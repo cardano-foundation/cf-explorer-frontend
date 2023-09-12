@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { BiChevronRight } from "react-icons/bi";
 import { useSelector } from "react-redux";
@@ -6,7 +6,7 @@ import moment from "moment";
 import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { BlockIcon, CubeIcon, RocketIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
@@ -55,14 +55,23 @@ type DetailViewEpochProps = {
 };
 
 const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose, callback }) => {
-  const { currentEpoch } = useSelector(({ system }: RootState) => system);
   const { t } = useTranslation();
+  const { currentEpoch, blockNo } = useSelector(({ system }: RootState) => system);
+  const [key, setKey] = useState(0);
+
   const { data, lastUpdated } = useFetch<IDataEpoch>(
     `${API.EPOCH.DETAIL}/${epochNo}`,
     undefined,
     false,
-    epochNo === currentEpoch?.no ? REFRESH_TIMES.EPOCH_DETAIL_VIEW : 0
+    epochNo === currentEpoch?.no ? blockNo : key
   );
+
+  useEffect(() => {
+    // Update key if this epoch don't have rewards and when new epoch distributed for api callback
+    if (!data?.rewardsDistributed && epochNo !== undefined && data?.no !== undefined && epochNo !== data.no) {
+      setKey(epochNo);
+    }
+  }, [epochNo, data?.no, data?.rewardsDistributed]);
 
   useEffect(() => {
     if (data) {
@@ -154,10 +163,10 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
 
   const slot =
     data.no === currentEpoch?.no
-      ? moment(formatDateTimeLocal(data?.endTime)).diff(moment()) >= 0
+      ? moment(formatDateTimeLocal(data.endTime)).diff(moment()) >= 0
         ? currentEpoch.slot
-        : MAX_SLOT_EPOCH
-      : MAX_SLOT_EPOCH;
+        : data.maxSlot || MAX_SLOT_EPOCH
+      : data.maxSlot || MAX_SLOT_EPOCH;
 
   const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
   return (

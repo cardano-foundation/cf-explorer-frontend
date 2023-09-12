@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import ADAicon from "src/components/commons/ADAIcon";
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -13,22 +14,17 @@ import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table from "src/components/commons/Table";
 import { Column } from "src/types/table";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 
 import { Actions, StyledContainer, StyledLink, TimeDuration } from "./styles";
 
 const InstantReards = () => {
   const { t } = useTranslation();
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<Contracts>(
-    API.STAKE.INSTANT_REWARDS,
-    { ...pageInfo },
-    false,
-    REFRESH_TIMES.INSTANT_REWARDS
-  );
+  const fetchData = useFetchList<Contracts>(API.STAKE.INSTANT_REWARDS, pageInfo, false, blockNo);
 
   const mainRef = useRef(document.querySelector("#main"));
 

@@ -3,9 +3,8 @@ import { stringify } from "qs";
 import { Box } from "@mui/material";
 import { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
-import Card from "../commons/Card";
-import Table, { Column } from "../commons/Table";
 import {
   formatADAFull,
   formatDateTimeLocal,
@@ -13,13 +12,17 @@ import {
   getPageInfo,
   getShortHash,
   getShortWallet
-} from "../../commons/utils/helper";
-import { details } from "../../commons/routers";
-import { StyledLink } from "./styles";
+} from "src/commons/utils/helper";
+import { details } from "src/commons/routers";
+import useFetchList from "src/commons/hooks/useFetchList";
+
 import CustomTooltip from "../commons/CustomTooltip";
-import useFetchList from "../../commons/hooks/useFetchList";
 import SelectedIcon from "../commons/SelectedIcon";
 import ADAicon from "../commons/ADAIcon";
+import FormNowMessage from "../commons/FormNowMessage";
+import Table, { Column } from "../commons/Table";
+import Card from "../commons/Card";
+import { Actions, StyledLink, TimeDuration } from "./styles";
 
 interface TransactionListProps {
   underline?: boolean;
@@ -45,7 +48,9 @@ const TransactionList: React.FC<TransactionListProps> = ({
   const history = useHistory();
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
-  const fetchData = useFetchList<Transactions>(url, { ...pageInfo, sort });
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+
+  const fetchData = useFetchList<Transactions>(url, { ...pageInfo, sort }, false, blockNo);
   const mainRef = useRef(document.querySelector("#main"));
   const onClickRow = (_: any, r: Transactions, index: number) => {
     if (openDetail) return openDetail(_, r, index);
@@ -165,6 +170,11 @@ const TransactionList: React.FC<TransactionListProps> = ({
       title={pathname?.includes("/transactions") ? "Transactions" : ""}
       underline={underline}
     >
+      <Actions>
+        <TimeDuration>
+          <FormNowMessage time={fetchData.lastUpdated} />
+        </TimeDuration>
+      </Actions>
       <Table
         {...fetchData}
         columns={columns}

@@ -16,6 +16,7 @@ import { useParams } from "react-router-dom";
 import { BigNumber } from "bignumber.js";
 import { isArray } from "lodash";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
@@ -54,9 +55,13 @@ const AddressAnalytics: React.FC = () => {
   const { t } = useTranslation();
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const { address } = useParams<{ address: string }>();
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const theme = useTheme();
   const { data: dataAnalytics, loading } = useFetch<AnalyticsData[]>(
-    `${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`
+    `${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`,
+    undefined,
+    false,
+    blockNo
   );
   const data = isArray(dataAnalytics) ? dataAnalytics : [];
   const values = data?.map((item) => item.value || 0) || [];
@@ -150,7 +155,6 @@ const AddressAnalytics: React.FC = () => {
                     stroke={theme.palette.primary.main}
                     strokeWidth={4}
                     fill="url(#colorUv)"
-                    dot={{ r: 2 }}
                     activeDot={{ r: 6 }}
                   />
                 </AreaChart>
