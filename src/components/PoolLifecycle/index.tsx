@@ -170,6 +170,7 @@ const PoolLifecycle: React.FC<IPoolLifecycleProps> = ({ onSort, fetchData, pagin
           total: fetchData.total,
           onChange: (page, size) => onPagination?.({ page: page - 1, size })
         }}
+        showTabView
       />
     </Box>
   );

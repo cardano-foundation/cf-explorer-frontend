@@ -11,11 +11,18 @@ const mockProps: ICustomDatePicker = {
 };
 
 describe("CustomDatePicker component", () => {
+  it("should component render placeholder", () => {
+    render(<CustomDatePicker {...mockProps} dateRange={[null, null]} />);
+    expect(screen.getByText("MM/DD/YYYY - MM/DD/YYYY")).toBeInTheDocument();
+    expect(screen.getByText(/daterange\.svg/i)).toBeInTheDocument();
+  });
+
   it("should component render", () => {
     render(<CustomDatePicker {...mockProps} />);
-    const [starDate, endDate] = mockProps.dateRange;
-    expect(screen.getByText(moment(starDate).format("MM/DD/YYYY"))).toBeInTheDocument();
-    expect(screen.getByText(moment(endDate).format("MM/DD/YYYY"))).toBeInTheDocument();
-    expect(screen.getByText(/daterange\.svg/i)).toBeInTheDocument();
+    const [startDate, endDate] = mockProps.dateRange;
+    expect(
+      screen.getByText(`${moment(startDate).format("MM/DD/YYYY")} - ${moment(endDate).format("MM/DD/YYYY")}`)
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText(/close/i)).toBeInTheDocument();
   });
 });

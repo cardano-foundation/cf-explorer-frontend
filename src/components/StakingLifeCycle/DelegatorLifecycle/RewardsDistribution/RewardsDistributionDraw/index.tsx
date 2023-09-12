@@ -1,10 +1,10 @@
 import { useMemo, useRef } from "react";
 
-import { ADADisnableIcon, ADAOrangeIcon } from "src/commons/resources";
+import { ADAinactive } from "src/commons/resources";
 import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
-import CustomIcon from "src/components/commons/CustomIcon";
 import { RECEIVED_REWARDS } from "src/commons/utils/constants";
+import { ADAactiveFlip } from "src/components/commons/AdaActiveFlip";
 
 import { AdaAmountWrapper, AdaBox, DrawContainer, HolderWrapper, StyledCardanoBlockchain } from "./styles";
 import ADAHolderRect from "./ADAHolderRect";
@@ -91,10 +91,10 @@ const RewardsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({
       <StyledCardanoBlockchain ref={cardanoBlockchainRef} />
       <AdaAmountWrapper>
         <AdaBox ref={adaAmountFirstRef} onClick={() => isADAHolder && handleToggleModal(RECEIVED_REWARDS.MEMBER)}>
-          <CustomIcon icon={isADAHolder ? ADAOrangeIcon : ADADisnableIcon} height={70} />
+          {isADAHolder ? <ADAactiveFlip /> : <ADAinactive />}
         </AdaBox>
         <AdaBox ref={adaAmountSecondRef} onClick={() => isRewardPool && handleToggleModal(RECEIVED_REWARDS.LEADER)}>
-          <CustomIcon icon={isRewardPool ? ADAOrangeIcon : ADADisnableIcon} height={70} />
+          {isRewardPool ? <ADAactiveFlip /> : <ADAinactive />}
         </AdaBox>
       </AdaAmountWrapper>
       <HolderWrapper ref={holderGroupRef}>

@@ -71,9 +71,9 @@ const HomeStatistic = () => {
     false,
     REFRESH_TIMES.CURRENT_PRICE_BTC
   );
-  const { circulating_supply, total_supply: total = 1 } = usdMarket || {};
+  const { total_supply: total = 1 } = usdMarket || {};
   const { liveStake = 0, activeStake = 1 } = data || {};
-  const supply = Number(circulating_supply);
+  const supply = BigNumber(currentEpoch?.circulatingSupply || 0).div(10 ** 6);
   const liveRate = new BigNumber(liveStake).div(MILION).div(supply).multipliedBy(100);
   const circulatingSupply = new BigNumber(supply).multipliedBy(MILION);
   const circulatingRate = circulatingSupply.div(total).div(MILION).multipliedBy(100);
@@ -272,7 +272,7 @@ const HomeStatistic = () => {
                         {t("glossary.circulatingSupply")} <StyledAdaLogoIcon />:{" "}
                       </span>
                     </CustomTooltip>
-                    <CustomTooltip title={numberWithCommas(supply)}>
+                    <CustomTooltip title={formatADAFull(currentEpoch?.circulatingSupply || 0)}>
                       <span data-testid="circulating-supply-value">{formatADA(circulatingSupply.toString())}</span>
                     </CustomTooltip>
                     <CustomTooltip title={`${circulatingRate.toFixed(5)}%`}>

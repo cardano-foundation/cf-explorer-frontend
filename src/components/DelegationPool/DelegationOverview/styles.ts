@@ -57,6 +57,7 @@ export const StyledCard = {
     color: ${(props) => props.theme.palette.secondary.light};
     font-weight: var(--font-weight-bold);
     margin-bottom: 15px;
+    white-space: nowrap;
   `,
   Value: styled("span")`
     font-weight: var(--font-weight-bold);

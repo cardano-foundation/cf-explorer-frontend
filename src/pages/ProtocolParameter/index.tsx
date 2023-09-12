@@ -490,14 +490,6 @@ export const ProtocolParameterHistory = () => {
           <Box>
             {t("common.ppUpdateHistory")}{" "}
             <CustomTooltip
-              componentsProps={{
-                tooltip: {
-                  sx: {
-                    backgroundColor: `${theme.palette.primary[200]} !important`,
-                    color: `${theme.palette.secondary.main} !important`
-                  }
-                }
-              }}
               title={
                 <Box>
                   {t("explain.shelleyEra", {
@@ -505,7 +497,7 @@ export const ProtocolParameterHistory = () => {
                   })}
                   <Box
                     ml={1}
-                    color={({ palette }) => `${palette.primary.main} !important`}
+                    color={({ palette }) => `${palette.primary[200]} !important`}
                     component={"a"}
                     href="https://github.com/cardano-foundation/CIPs/tree/master/CIP-0009"
                     rel="noreferrer"

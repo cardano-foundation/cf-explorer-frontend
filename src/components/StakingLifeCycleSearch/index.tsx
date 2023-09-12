@@ -106,11 +106,14 @@ const SearchContainer = styled(Box)(({ theme }) => ({
   alignItems: "center",
   maxWidth: "min(800px,80vw)",
   background: theme.palette.secondary[0],
-  padding: "0 20px 0 30px",
+  paddingLeft: 30,
   borderRadius: 100,
   marginBottom: 15,
   height: 58,
   border: `1.5px solid ${theme.palette.primary[200]}`,
+  "&:focus-within": {
+    borderColor: theme.palette.secondary.light
+  },
   [theme.breakpoints.down("sm")]: {
     width: "unset",
     maxWidth: "unset"
@@ -132,10 +135,10 @@ const SubmitButton = styled(Button)`
   align-items: center;
   border: none;
   box-shadow: none;
-  border-radius: 12.5%;
-  min-width: 35px;
-  width: 35px;
-  height: 35px;
+  border-radius: 50%;
+  min-width: 60px;
+  width: 60px;
+  height: 60px;
 `;
 const Image = styled("img")`
   width: 20px;

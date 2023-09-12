@@ -2,6 +2,7 @@ import BigNumber from "bignumber.js";
 import moment from "moment";
 import { parse } from "qs";
 import jwtDecode from "jwt-decode";
+import { isNil } from "lodash";
 
 import { setUserData } from "../../stores/user";
 import { getInfo, signIn } from "./userRequest";
@@ -247,3 +248,21 @@ export const isJson = (str: string) => {
 
 export const getLang = (): APP_LANGUAGES => (localStorage.getItem("lang") as APP_LANGUAGES) || APP_LANGUAGES.ENGLISH;
 export const setLang = (lang: APP_LANGUAGES) => localStorage.setItem("lang", lang);
+type blockEpochNoType = number | null | undefined;
+export const formatNameBlockNo = (blockNo: blockEpochNoType, epochNo: blockEpochNoType) => {
+  if (isNil(blockNo) && isNil(epochNo))
+    return {
+      blockName: "Genesis",
+      tooltip: ""
+    };
+  if (isNil(blockNo) && !isNil(epochNo)) {
+    return {
+      blockName: "N/A",
+      tooltip: "Epoch Boundary Block"
+    };
+  }
+  return {
+    blockName: blockNo,
+    tooltip: ""
+  };
+};

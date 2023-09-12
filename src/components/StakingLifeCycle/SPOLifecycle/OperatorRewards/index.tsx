@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 
-import { ADAOrangeBorderIcon } from "src/commons/resources";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
 import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
@@ -18,6 +17,7 @@ import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import SPOHolder from "src/components/commons/SPOHolder";
 import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
+import { ADAactiveFlip } from "src/components/commons/AdaActiveFlip";
 
 import { StyledLink, DrawContainer, ADAOperator, ADATitle, ADAAmount, StyledEpoch } from "./styles";
 
@@ -57,7 +57,7 @@ const OperatorReward = () => {
       <DrawContainer>
         <CardanoBlockchain ref={cardanoBlockchainRef} />
         <ADAOperator ref={operatorRef} onClick={() => setOpenModal(true)}>
-          <ADAOrangeBorderIcon />
+          <ADAactiveFlip />
           <ADATitle>{t("common.operatorRewards")}</ADATitle>
         </ADAOperator>
         <SPOHolder

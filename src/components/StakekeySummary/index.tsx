@@ -170,6 +170,7 @@ const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort, p
           total: fetchData.total,
           onChange: (page, size) => onPagination?.({ page: page - 1, size })
         }}
+        showTabView
       />
     </Box>
   );

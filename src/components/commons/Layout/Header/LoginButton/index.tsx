@@ -17,7 +17,7 @@ const LoginButton = () => {
   const history = useHistory();
 
   const handleClick = () => {
-    if (localStorage.getItem("token")) {
+    if (localStorage.getItem("token") && userData?.loginType) {
       window.location.reload();
     } else {
       history.push(routers.SIGN_IN);

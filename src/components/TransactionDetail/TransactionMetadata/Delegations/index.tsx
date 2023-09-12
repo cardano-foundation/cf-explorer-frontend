@@ -28,16 +28,18 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
               </Box>
               <Box width={"100%"}>
                 <Box>
-                  <Box component={"span"} color={({ palette }) => palette.secondary.light}>
-                    {t("common.from")}:
+                  <Box component={"span"} color={({ palette }) => palette.secondary.light} mr={1}>
+                    {t("glossary.from")}:
                   </Box>
                   <CustomTooltip title={item.address}>
                     <AddressLink to={details.stake(item.address)}>{getShortWallet(item.address || "")}</AddressLink>
                   </CustomTooltip>
                   <CopyButton text={item.address || ""} />
                 </Box>
-                <Box color={({ palette }) => palette.secondary.light}>
-                  {t("glossary.poolId")}:
+                <Box>
+                  <Box component={"span"} color={({ palette }) => palette.secondary.light} mr={1}>
+                    {t("common.poolID")}:
+                  </Box>
                   <CustomTooltip title={item.poolId}>
                     <AddressLink to={details.delegation(item.poolId)}>{getShortWallet(item.poolId || "")}</AddressLink>
                   </CustomTooltip>

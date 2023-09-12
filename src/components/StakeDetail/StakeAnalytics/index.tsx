@@ -165,7 +165,7 @@ const StakeAnalytics: React.FC = () => {
                   width={900}
                   height={400}
                   data={tab === "BALANCE" ? convertDataChart : convertRewardChart}
-                  margin={{ top: 5, right: 10, bottom: 10 }}
+                  margin={{ top: 5, right: 10, bottom: 14 }}
                 >
                   <defs>
                     <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
@@ -183,7 +183,7 @@ const StakeAnalytics: React.FC = () => {
                     tickLine={false}
                     {...xAxisProps}
                   >
-                    <Label value="(UTC)" offset={-8} position="insideBottom" />
+                    <Label value="(UTC)" offset={-12} position="insideBottom" />
                   </XAxis>
                   <YAxis
                     color={theme.palette.secondary.light}

@@ -696,5 +696,6 @@
   "404-PROTOCOL_FIELD_NOT_FOUND": "This field is not support",
   "404-SCRIPT_NOT_FOUND": "Script not found",
   "400-TIME_RANGE_ILLEGAL": "Time range is illegal",
-  "400-REPORT_LIMIT_REACHED": "Report limit reached"
+  "400-REPORT_LIMIT_REACHED": "Report limit reached",
+  "desc.InUnits4Native": "In units of the native token"
 }

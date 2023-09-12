@@ -32,7 +32,7 @@ const TopAddressesByAmountStaked = () => {
   const columns: Column<TopDelegator>[] = [
     {
       title: t("common.stakeAddress"),
-      minWidth: 120,
+      minWidth: 200,
       key: "addresses",
       render: (r) => (
         <CustomTooltip title={r.stakeKey}>
@@ -43,6 +43,7 @@ const TopAddressesByAmountStaked = () => {
     {
       title: t("glossary.pool"),
       key: "pool",
+      maxWidth: 300,
       render: (r) => (
         <CustomTooltip title={r.poolName || r.poolId}>
           <StyledLink to={details.delegation(r.poolId)}>{r.poolName || getShortWallet(r.poolId)}</StyledLink>

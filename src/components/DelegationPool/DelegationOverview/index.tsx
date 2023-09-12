@@ -13,6 +13,7 @@ import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import {
   PoolTitle,
@@ -116,7 +117,9 @@ const OverViews: React.FC = () => {
         <Grid item xl={3} md={6} xs={12}>
           <StyledCard.Container sx={{ justifyContent: "space-between" }}>
             <StyledCard.Content style={{ padding: "30px 0 0 30px" }}>
-              <StyledCard.Title>{t("glossary.liveStake")}</StyledCard.Title>
+              <StyledCard.Title>
+                {t("glossary.liveStake")} (<ADAicon />)
+              </StyledCard.Title>
               <CustomTooltip title={formatADAFull(data?.liveStake)}>
                 <StyledCard.Value>{formatADA(data?.liveStake)}</StyledCard.Value>
               </CustomTooltip>

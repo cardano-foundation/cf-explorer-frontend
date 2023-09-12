@@ -23,7 +23,7 @@ import { REFRESH_TIMES } from "src/commons/utils/constants";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import ADAicon from "src/components/commons/ADAIcon";
 
-import { RegistrationContainer, StakeKey, StyledLink, TimeDuration } from "./styles";
+import { RegistrationContainer, StakeKey, StyledLink, StyledPoolLink, TimeDuration } from "./styles";
 
 export enum POOL_TYPE {
   REGISTRATION = "registration",
@@ -93,14 +93,15 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
     {
       title: t("glossary.pool"),
       key: "pool",
+      maxWidth: 200,
       render: (pool) => (
-        <StyledLink
+        <StyledPoolLink
           to={{ pathname: details.delegation(pool.poolView), state: { fromPath: history.location.pathname } }}
         >
           <CustomTooltip title={pool.poolName || pool.poolView || ""}>
             <Box component={"span"}>{pool.poolName || getShortHash(pool.poolView)}</Box>
           </CustomTooltip>
-        </StyledLink>
+        </StyledPoolLink>
       )
     },
     {

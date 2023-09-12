@@ -18,10 +18,12 @@ import { useScreen } from "../../../../commons/hooks/useScreen";
 
 const SummaryItems = ({
   item,
-  type
+  type,
+  isFailed
 }: {
   item: Transaction["summary"]["stakeAddress"][number];
   type?: "up" | "down";
+  isFailed?: boolean;
 }) => {
   const isTransferType = item?.tokens.some((t) => {
     return (t.assetQuantity < 0 && item?.value >= 0) || (t.assetQuantity >= 0 && item?.value < 0);
@@ -109,12 +111,12 @@ const SummaryItems = ({
       </Box>
       {item.tokens && item.tokens.length === 1 && (
         <Box display={"flex"} alignItems={"center"} ml={isMobile ? "50px" : 0}>
-          <TokenLink token={item.tokens[0]} />
+          <TokenLink token={item.tokens[0]} isSuccess={!isFailed} />
         </Box>
       )}
       {item.tokens && item.tokens.length > 1 && (
         <Box display={"flex"} alignItems={"center"} ml={isMobile ? "50px" : 0}>
-          <DropdownTokens tokens={item.tokens} type={type} hideInputLabel />
+          <DropdownTokens tokens={item.tokens} type={type} hideInputLabel isSuccess={!isFailed} />
         </Box>
       )}
     </Box>
@@ -123,13 +125,14 @@ const SummaryItems = ({
 
 interface SummaryProps {
   data: Transaction["summary"] | null;
+  isFailed?: boolean;
 }
-const Summary: React.FC<SummaryProps> = ({ data }) => {
+const Summary: React.FC<SummaryProps> = ({ data, isFailed }) => {
   return (
     <Box>
       {data?.stakeAddress?.map((tx, key) => {
         const type = tx.value >= 0 ? "up" : "down";
-        return <SummaryItems key={key} item={tx} type={type} />;
+        return <SummaryItems key={key} item={tx} type={type} isFailed={isFailed} />;
       })}
     </Box>
   );
