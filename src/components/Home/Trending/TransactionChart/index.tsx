@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import moment from "moment";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { Box, Grid, alpha, useTheme } from "@mui/material";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -34,6 +35,7 @@ export type TypeChart = "trx" | "simple" | "complex";
 
 const TransactionChart: React.FC = () => {
   const [rangeTime, setRangeTime] = useState<Time>("ONE_DAY");
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const { isMobile } = useScreen();
   const optionsTime: Record<Time, { label: string; displayName: string }> = {
     ONE_DAY: {
@@ -54,7 +56,12 @@ const TransactionChart: React.FC = () => {
     }
   };
 
-  const { data, loading } = useFetch<TransactionChartIF[]>(`${API.TRANSACTION.GRAPH}/${rangeTime}`);
+  const { data, loading } = useFetch<TransactionChartIF[]>(
+    `${API.TRANSACTION.GRAPH}/${rangeTime}`,
+    undefined,
+    false,
+    blockNo
+  );
 
   const sumSimple = (data || []).reduce((prev, item) => prev + item.simpleTransactions, 0);
   const sumMetadata = (data || []).reduce((prev, item) => prev + item.metadata, 0);

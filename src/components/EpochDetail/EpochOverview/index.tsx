@@ -23,7 +23,7 @@ import { Output, Subtext } from "./styles";
 interface EpochOverviewProps {
   data: IDataEpoch | null;
   loading: boolean;
-  lastUpdated: number;
+  lastUpdated?: number;
 }
 
 const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdated }) => {

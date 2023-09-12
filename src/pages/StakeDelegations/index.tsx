@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
+import { useSelector } from "react-redux";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -11,22 +12,17 @@ import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table from "src/components/commons/Table";
 import { Column } from "src/types/table";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 
 import { Actions, StyledContainer, StyledLink, TimeDuration } from "./styles";
 
 const StakeDelegations = () => {
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const { search } = useLocation();
   const history = useHistory();
   const fromPath = history.location.pathname as SpecialPath;
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<Contracts>(
-    API.STAKE.STAKE_DELEGATIONS,
-    { ...pageInfo },
-    false,
-    REFRESH_TIMES.STAKE_DELEGATIONS
-  );
+  const fetchData = useFetchList<Contracts>(API.STAKE.STAKE_DELEGATIONS, { ...pageInfo }, false, blockNo);
 
   const mainRef = useRef(document.querySelector("#main"));
 

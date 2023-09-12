@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
+import { isNil } from "lodash";
 
 import {
   timeIconUrl,
@@ -10,17 +11,18 @@ import {
   txConfirmUrl,
   slotIconUrl
 } from "src/commons/resources";
-import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatNameBlockNo } from "src/commons/utils/helper";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import ADAicon from "src/components/commons/ADAIcon";
 import DetailHeader from "src/components/commons/DetailHeader";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import { Subtext, TitleCard, WrapConfirmation } from "./styles";
 
 interface BlockOverviewProps {
   data: BlockDetail | null;
   loading: boolean;
-  lastUpdated: number;
+  lastUpdated?: number;
 }
 
 const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdated }) => {
@@ -89,7 +91,14 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
           <TitleCard mr={1}> Block</TitleCard>
         </Box>
       ),
-      value: data?.blockNo || 0
+      value: (() => {
+        const { blockName, tooltip } = formatNameBlockNo(data?.blockNo, data?.epochNo);
+        return (
+          <CustomTooltip title={tooltip}>
+            <span>{blockName}</span>
+          </CustomTooltip>
+        );
+      })()
     },
     {
       icon: slotIconUrl,
@@ -100,8 +109,8 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       ),
       value: (
         <>
-          {data?.epochSlotNo || 0}
-          <Subtext>/{MAX_SLOT_EPOCH}</Subtext>
+          {data?.epochSlotNo}
+          <Subtext>/{isNil(data?.epochSlotNo) ? null : MAX_SLOT_EPOCH}</Subtext>
         </>
       )
     }

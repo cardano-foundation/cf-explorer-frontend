@@ -38,3 +38,17 @@ export const PriceWrapper = styled(BlueText)`
   align-items: center;
   gap: 10px;
 `;
+
+export const Actions = styled(Box)(() => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  flexWrap: "wrap",
+  marginTop: -10
+}));
+
+export const TimeDuration = styled("small")(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  display: "block",
+  margin: "12px 0px"
+}));

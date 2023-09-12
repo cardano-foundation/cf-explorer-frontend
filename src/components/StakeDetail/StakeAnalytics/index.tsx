@@ -15,6 +15,7 @@ import {
 import moment from "moment";
 import { useParams } from "react-router-dom";
 import { BigNumber } from "bignumber.js";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
@@ -59,11 +60,20 @@ const StakeAnalytics: React.FC = () => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const [tab, setTab] = useState<"BALANCE" | "REWARD">("BALANCE");
   const { stakeId } = useParams<{ stakeId: string }>();
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const theme = useTheme();
   const { isMobile } = useScreen();
-  const { data, loading } = useFetch<AnalyticsBalance[]>(`${API.STAKE.ANALYTICS_BALANCE}/${stakeId}/${rangeTime}`);
+  const { data, loading } = useFetch<AnalyticsBalance[]>(
+    `${API.STAKE.ANALYTICS_BALANCE}/${stakeId}/${rangeTime}`,
+    undefined,
+    false,
+    blockNo
+  );
   const { data: dataReward, loading: loadingReward } = useFetch<AnalyticsReward[]>(
-    `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`
+    `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`,
+    undefined,
+    false,
+    blockNo
   );
 
   const values = data?.map((item) => item.value || 0) || [];
@@ -198,7 +208,6 @@ const StakeAnalytics: React.FC = () => {
                     stroke={theme.palette.primary.main}
                     strokeWidth={4}
                     fill="url(#colorUv)"
-                    dot={tab === "BALANCE" ? { r: 2 } : { r: 0 }}
                     activeDot={{ r: 6 }}
                   />
                 </AreaChart>

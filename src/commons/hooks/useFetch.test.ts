@@ -10,7 +10,7 @@ interface FetchReturnType<T> {
   error: string | null;
   initialized: boolean;
   refresh: () => void;
-  lastUpdated: number;
+  lastUpdated?: number;
 }
 
 describe("useFetch", () => {
@@ -33,8 +33,7 @@ describe("useFetch", () => {
       error: null,
       initialized: false,
       loading: true,
-      refresh: expect.any(Function),
-      lastUpdated: expect.any(Number)
+      refresh: expect.any(Function)
     };
 
     expect(result.current).toEqual(expected);
