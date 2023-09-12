@@ -78,7 +78,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
   const excludeDateIntervals = hideFuture ? [{ start: moment().toDate(), end: moment().add(2, "month").toDate() }] : [];
 
   return (
-    <DatePickerContainer>
+    <DatePickerContainer open={+open}>
       <StyledDatePicker
         open={open}
         selectsRange

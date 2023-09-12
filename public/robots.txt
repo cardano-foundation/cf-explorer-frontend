@@ -1,3 +1,13 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /en/addresses*
+Disallow: /en/block*
+Disallow: /en/transaction*
+Disallow: /en/tokens*
+Disallow: /en/contracts*
+Disallow: /en/stake-address*
+Disallow: /en/pool-certificates*
+Disallow: /en/pool-certificates*
+Disallow: /en/pool-de-registrations*
+Disallow: /en/instantaneous-rewards*
+Disallow: /api/*
