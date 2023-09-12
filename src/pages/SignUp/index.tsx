@@ -9,6 +9,7 @@ import useAuth from "src/commons/hooks/useAuth";
 import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
 import { signUp } from "src/commons/utils/userRequest";
+import { ACCOUNT_ERROR } from "src/commons/utils/constants";
 
 import {
   BackButton,
@@ -270,11 +271,11 @@ export default function SignUp() {
         return;
       }
     } catch (error: any) {
-      if (error?.response?.data?.errorCode === "CC_23") {
+      if (error?.response?.data?.errorCode === ACCOUNT_ERROR.EMAIL_IS_ALREADY_EXIST) {
         setFormData({
           name: "email",
           touched: true,
-          error: error.response.data.errorMessage,
+          error: t(ACCOUNT_ERROR.EMAIL_IS_ALREADY_EXIST),
           value: formData.email.value
         });
       }

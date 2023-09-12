@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import useToast from "src/commons/hooks/useToast";
-import { NETWORK, NETWORKS, NETWORK_TYPES, SUPPORTED_WALLETS } from "src/commons/utils/constants";
+import { ACCOUNT_ERROR, NETWORK, NETWORKS, NETWORK_TYPES, SUPPORTED_WALLETS } from "src/commons/utils/constants";
 import { getShortWallet } from "src/commons/utils/helper";
 import { editInfo, getInfo } from "src/commons/utils/userRequest";
 import {
@@ -139,8 +139,8 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
       setOpen(false);
     } catch (error) {
       toast.error(
-        ((error as any)?.response && (error as any)?.response?.data && (error as any)?.response?.data?.errorMessage) ||
-          t("message.common.somethingWentWrong")
+        t((error as any)?.response && (error as any)?.response?.data && (error as any)?.response?.data?.errorCode) ||
+          ACCOUNT_ERROR.INTERNAL_ERROR
       );
     }
   };
