@@ -62,6 +62,16 @@ const DelegationTab = () => {
       render: (r) => <AdaValue value={r.fee} />
     },
     {
+      title: t("common.delegationTo"),
+      key: "poolId",
+      minWidth: "120px",
+      render: (r) => (
+        <CustomTooltip title={r.poolName || getShortHash(r.poolId)}>
+          <StyledLink to={details.delegation(r.poolId)}>{r.poolName || getShortHash(r.poolId)}</StyledLink>
+        </CustomTooltip>
+      )
+    },
+    {
       title: t("common.certificate"),
       key: "poolId",
       minWidth: "120px",
