@@ -1,4 +1,4 @@
-import { alpha, LinearProgress, styled } from "@mui/material";
+import { alpha, Box, LinearProgress, styled } from "@mui/material";
 
 export const StyledSpan = styled("span")`
   display: flex;
@@ -57,3 +57,9 @@ export const Subtext = styled("span")`
   color: ${(props) => props.theme.palette.secondary.light};
   font-weight: normal;
 `;
+
+export const TitleCard = styled(Box)(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  fontSize: "0.875rem",
+  textTransform: "capitalize"
+}));

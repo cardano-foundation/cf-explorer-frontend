@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Box, Tab, useTheme } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { useTranslation } from "react-i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 
@@ -22,6 +23,7 @@ interface ITokenTableData {
 }
 
 const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, metadataJson, setCurrentHolder }) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const { tabActive = "transactions", tokenId } = useParams<{
     tabActive: keyof Transaction | "topHolders";
@@ -38,13 +40,13 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, meta
   }[] = [
     {
       key: "transactions",
-      label: "Transactions",
+      label: t("glossary.transactions"),
       children: <TokenTransaction tokenId={tokenId} />,
       icon: <CustomIcon icon={TransactionIcon} width={20} fill="currentColor" />
     },
     {
       key: "topHolders",
-      label: "Top Holders",
+      label: t("glossary.topHolders"),
       children: (
         <TokenTopHolder
           tokenId={tokenId}
@@ -57,13 +59,13 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, meta
     },
     {
       key: "tokenMint",
-      label: "Minting",
+      label: t("tab.minting"),
       children: <TokenMinting tokenId={tokenId} metadata={metadata} />,
       icon: <CustomIcon icon={UnionTokenIcon} width={20} fill="currentColor" />
     },
     {
       key: "metadata",
-      label: "Metadata",
+      label: t("glossary.metadata"),
       children: <TokenMetaData metadataJson={metadataJson} />,
       icon: <CustomIcon icon={MetadataIcon} width={20} fill="currentColor" />
     }

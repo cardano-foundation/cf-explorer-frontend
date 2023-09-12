@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { getShortHash, isJson } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -25,6 +26,7 @@ interface MetadataProps {
 }
 
 const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
+  const { t } = useTranslation();
   const [selectedText, setSelectedText] = useState<{ label: number; value: string } | null>(null);
   const { isTablet } = useScreen();
 
@@ -32,7 +34,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
     <Box>
       <Wrapper>
         <Header>
-          <Box>Metadata Hash</Box>
+          <Box>{t("common.metadataHash")}</Box>
         </Header>
         <Box
           textAlign={"left"}
@@ -48,11 +50,11 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
       {(data || [])?.map((metadata, idx) => (
         <Wrapper mt={2} key={idx}>
           <RowMetadata>
-            <Title>Metadatum Label</Title>
+            <Title>{t("common.metadatumLabel")}</Title>
             <TitleValue>{metadata.label || ""}</TitleValue>
           </RowMetadata>
           <RowMetadata>
-            <Title>Value</Title>
+            <Title>{t("common.value")}</Title>
             <Value>
               <MetaDataValue>{metadata.value || ""}</MetaDataValue>
               <StyledButton onClick={() => setSelectedText(metadata)}>
@@ -68,8 +70,8 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
         script={
           selectedText?.value && isJson(selectedText?.value) ? JSON.parse(selectedText?.value) : selectedText?.value
         }
-        title={`Key: ${selectedText?.label || 0}`}
-        subTitle={"Value"}
+        title={`${t("common.key")}: ${selectedText?.label || 0}`}
+        subTitle={t("common.value")}
       />
     </Box>
   );

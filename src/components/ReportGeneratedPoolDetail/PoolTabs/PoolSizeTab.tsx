@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Box, styled } from "@mui/material";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import Table, { Column } from "src/components/commons/Table";
 import { TextAmountReward } from "src/components/StakingLifeCycle/DelegatorLifecycle/ADATransferModal/styles";
@@ -13,6 +14,7 @@ import { details } from "src/commons/routers";
 import ADAicon from "src/components/commons/ADAIcon";
 
 const PoolSizeTab = () => {
+  const { t } = useTranslation();
   const { reportId = "" } = useParams<{ reportId: string }>();
   const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
   const { loading, ...fetchData } = useFetchList<any>(API.REPORT.PREPORT_EPOCH_SIZE(reportId), {
@@ -24,7 +26,7 @@ const PoolSizeTab = () => {
 
   const columns: Column<any>[] = [
     {
-      title: "Pool size",
+      title: t("glossary.poolSize"),
       key: "size",
       minWidth: "100px",
       render: (r) => (
@@ -35,7 +37,7 @@ const PoolSizeTab = () => {
       )
     },
     {
-      title: "Fees paid",
+      title: t("common.feesPaid"),
       key: "fees",
       minWidth: "140px",
       render: (r) => (
@@ -46,7 +48,7 @@ const PoolSizeTab = () => {
       )
     },
     {
-      title: "Epoch",
+      title: t("epoch"),
       key: "epoch",
       minWidth: "70px",
       render: (r) => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>
@@ -67,7 +69,7 @@ const PoolSizeTab = () => {
         {...fetchData}
         columns={columnsTable}
         loading={loading || loadingDetail}
-        total={{ title: "Total Epochs", count: fetchData.total }}
+        total={{ title: t("common.totalEpoch"), count: fetchData.total }}
         pagination={{
           ...pageInfo,
           total: fetchData.total,

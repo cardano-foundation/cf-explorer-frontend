@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Box, Button } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { Column } from "src/components/commons/Table";
 import ParseScriptModal from "src/components/ParseScriptModal";
@@ -12,10 +13,11 @@ interface IProps {
 }
 
 const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
+  const { t } = useTranslation();
   const [costModelScript, setCostModelScript] = useState("");
   const columns: Column<TProtocolMerge>[] = [
     {
-      title: "Parameter Name",
+      title: t("common.parameterName"),
       isHiddenBorder: true,
       key: "paramName",
       minWidth: "40px",
@@ -24,7 +26,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
       }
     },
     {
-      title: "Previous Value",
+      title: t("common.previousValue"),
       isHiddenBorder: true,
       key: "previousValue",
       minWidth: "40px",
@@ -43,7 +45,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
       }
     },
     {
-      title: "Updated Value",
+      title: t("common.updatedValue"),
       key: "updatedValue",
       minWidth: "40px",
       isHiddenBorder: true,
@@ -70,7 +72,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
         open={!!costModelScript}
         onClose={() => setCostModelScript("")}
         script={costModelScript}
-        title="CostModel"
+        title={t("common.CostModel")}
       />
     </>
   );

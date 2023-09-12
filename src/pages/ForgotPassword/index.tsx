@@ -3,6 +3,7 @@ import { useEffect, useReducer, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { IoMdClose } from "react-icons/io";
+import { useTranslation } from "react-i18next";
 
 import { EmailIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
@@ -44,6 +45,7 @@ const formReducer = (state: IForm, event: any) => {
   };
 };
 export default function ForgotPassword() {
+  const { t } = useTranslation();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const emailInputRef = useRef<HTMLInputElement | null>(null);
@@ -56,18 +58,18 @@ export default function ForgotPassword() {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    document.title = "Forgot Password";
-  }, []);
+    document.title = t("account.forgotPassword");
+  }, [t]);
 
   const getError = (name: string, value: string) => {
     let error = "";
     switch (name) {
       case "email":
         if (!value) {
-          error = "Please enter your Email";
+          error = t("validation.email.required");
           // eslint-disable-next-line no-useless-escape
         } else if (!/^[\w-\.+!#$%&'*/=?^_`{|]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
-          error = "Please enter a valid email address";
+          error = t("validation.emailAddress");
         }
         break;
       default:
@@ -159,21 +161,21 @@ export default function ForgotPassword() {
   return (
     <Container>
       <WrapContent>
-        <WrapTitle>Forgot password</WrapTitle>
+        <WrapTitle>{t("account.forgotPassword")}</WrapTitle>
         <WrapHintText>
-          <WrapSignUp onClick={() => history.replace(routers.SIGN_IN)}>Sign In</WrapSignUp>
+          <WrapSignUp onClick={() => history.replace(routers.SIGN_IN)}>{t("common.signIn")}</WrapSignUp>
         </WrapHintText>
         <FormGroup>
           {!success ? (
             <WrapForm>
               {error ? (
                 <Box pt={"24px"}>
-                  <AlertCustom severity="error">Invalid email information.</AlertCustom>
+                  <AlertCustom severity="error">{t("validation.email.invalid")}.</AlertCustom>
                 </Box>
               ) : null}
               <BackButton onClick={() => handleRedirect()}>
                 <HiArrowLongLeft fontSize="16px" />
-                <BackText>Back</BackText>
+                <BackText>{t("common.back")}</BackText>
               </BackButton>
               <CloseButton saving={0} onClick={() => handleRedirect(true)}>
                 <IoMdClose />
@@ -191,7 +193,7 @@ export default function ForgotPassword() {
                   onChange={handleChange}
                   onBlur={checkError}
                   fullWidth
-                  placeholder="Email address"
+                  placeholder={t("account.emailAddress")}
                   error={Boolean(formData.email.error && formData.email.touched)}
                 />
                 {formData.email.error && formData.email.touched ? (
@@ -204,12 +206,12 @@ export default function ForgotPassword() {
                 onClick={handleSubmit}
                 disabled={loading || !!formData.email.error}
               >
-                Submit
+                {t("common.submit")}
               </WrapButton>
             </WrapForm>
           ) : (
             <WrapForm>
-              <Label>Submit successfully. Please check your email to reset password.</Label>
+              <Label>{t("message.submitResetPassword")}.</Label>
             </WrapForm>
           )}
         </FormGroup>

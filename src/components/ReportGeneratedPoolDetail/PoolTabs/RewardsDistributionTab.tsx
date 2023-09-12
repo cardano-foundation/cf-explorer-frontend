@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Box, useTheme } from "@mui/material";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
@@ -13,6 +14,7 @@ import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
 
 const RewardsDistributionTab = () => {
+  const { t } = useTranslation();
   const { reportId = "" } = useParams<{ reportId: string }>();
   const [params, setParams] = useState({
     page: 0,
@@ -26,14 +28,14 @@ const RewardsDistributionTab = () => {
   const columns: Column<SPO_REWARD>[] = [
     {
       key: "epochNo",
-      title: "Epoch",
+      title: t("glossary.epoch"),
       render(data) {
         return <StyledLink to={details.epoch(data.epochNo)}>{data.epochNo}</StyledLink>;
       }
     },
     {
       key: "time",
-      title: "Created At",
+      title: t("createdAt"),
       sort({ columnKey, sortValue }) {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       },
@@ -43,7 +45,7 @@ const RewardsDistributionTab = () => {
     },
     {
       key: "amount",
-      title: "Operator Reward ADA",
+      title: t("common.operatorRewardADA"),
       render(data) {
         const isPositiveNumber = data.amount > 0;
         return (
@@ -57,7 +59,7 @@ const RewardsDistributionTab = () => {
     },
     {
       key: "owner",
-      title: "Reward Account",
+      title: t("rewardAccount"),
       render(data) {
         return (
           <CustomTooltip title={data.rewardAccount}>
@@ -79,7 +81,7 @@ const RewardsDistributionTab = () => {
         {...fetchData}
         columns={columns}
         total={{
-          title: "Pool Registration",
+          title: t("common.poolRegistration"),
           count: fetchData.total
         }}
         pagination={{

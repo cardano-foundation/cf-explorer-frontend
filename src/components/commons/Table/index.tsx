@@ -7,6 +7,7 @@ import {
   styled,
   useScrollTrigger
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -33,12 +34,14 @@ import {
 
 import CustomIcon from "../CustomIcon";
 import Filter from "../Filter";
+import NoRecord from "../NoRecord";
 import {
   Empty,
   InputNumber,
   LoadingWrapper,
   SelectMui,
   ShowedResults,
+  StyledMenuItem,
   StyledPagination,
   TBody,
   TCol,
@@ -52,10 +55,8 @@ import {
   TableHeaderContainer,
   TableTitle,
   TotalNumber,
-  Wrapper,
-  StyledMenuItem
+  Wrapper
 } from "./styles";
-import NoRecord from "../NoRecord";
 
 type TEmptyRecord = {
   className?: string;
@@ -254,6 +255,7 @@ const TableSekeleton = () => {
 };
 
 export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, clearSelection }) => {
+  const { t } = useTranslation();
   const defaultPage = pagination?.page && (pagination?.page === 0 ? 1 : pagination?.page + 1);
   const [page, setPage] = useState(defaultPage || 1);
   const [size, setSize] = useState(pagination?.size || 50);
@@ -305,7 +307,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
               <StyledMenuItem value={100}>100</StyledMenuItem>
             </SelectMui>
             <Box component={"span"} ml={1} fontSize="0.875rem">
-              Per page
+              {t("perPage")}
             </Box>
           </Box>
         ) : (
@@ -313,7 +315,10 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
         )}
         {total && total.count ? (
           <Box ml={"20px"} fontSize="0.875rem">
-            <TotalNumber>{numberWithCommas(total.count)}</TotalNumber> {`Result${total.count > 1 ? "s" : ""}`}
+            <TotalNumber>{numberWithCommas(total.count)}</TotalNumber>{" "}
+            {t("common.result", {
+              suffix: total.count > 1 ? "s" : ""
+            })}
           </Box>
         ) : (
           ""

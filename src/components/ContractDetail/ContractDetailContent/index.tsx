@@ -2,6 +2,7 @@ import { TabContext, TabPanel } from "@mui/lab";
 import { Box, Tab, useTheme } from "@mui/material";
 import { useHistory, useParams } from "react-router-dom";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { ReactComponent as UtxoIcon } from "src/commons/resources/images/utxoIcon.svg";
 import { details } from "src/commons/routers";
@@ -13,6 +14,7 @@ import TokenTransaction from "./TokenTransaction";
 import { TabListStyled, TabTitle, TitleTab } from "./styles";
 
 const ContractDetailContent: React.FC = () => {
+  const { t } = useTranslation();
   const { tabActive = "transaction", address } = useParams<{
     tabActive: "transaction" | "transcript";
     address: string;
@@ -31,7 +33,7 @@ const ContractDetailContent: React.FC = () => {
           <Box display={"flex"} alignItems="center">
             <UtxoIcon fill={tabActive === "transaction" ? theme.palette.primary.main : theme.palette.secondary.light} />
             <TitleTab active={+(tabActive === "transaction")} pl={1}>
-              Transactions
+              {t("drawer.transactions")}
             </TitleTab>
           </Box>
         </TabTitle>
@@ -50,7 +52,7 @@ const ContractDetailContent: React.FC = () => {
               color={tabActive === "transcript" ? theme.palette.primary.main : theme.palette.secondary.light}
             />
             <TitleTab active={+(tabActive === "transcript")} pl={1}>
-              Script
+              {t("common.script")}
             </TitleTab>
           </Box>
         </TabTitle>

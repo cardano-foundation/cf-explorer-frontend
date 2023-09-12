@@ -2,6 +2,8 @@ import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import Card from "src/components/commons/Card";
 import Table, { Column } from "src/components/commons/Table";
@@ -10,16 +12,28 @@ import { details } from "src/commons/routers";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
-import { EpochNo, StyledOutput, BlueText, StyledContainer, StyledLink, PriceWrapper } from "./styles";
+import {
+  EpochNo,
+  StyledOutput,
+  BlueText,
+  StyledContainer,
+  StyledLink,
+  PriceWrapper,
+  Actions,
+  TimeDuration
+} from "./styles";
 
 interface IEpochBlockList {
   epochId: string;
 }
 
 const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
+  const { t } = useTranslation();
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -28,12 +42,12 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
     `${API.EPOCH.DETAIL}/${epochId}/blocks`,
     pageInfo,
     false,
-    pageInfo.page === 0 ? REFRESH_TIMES.EPOCH_DETAIL : 0
+    epochNo?.toString() === epochId && pageInfo.page === 0 ? blockNo : 0
   );
 
   const columns: Column<BlockDetail>[] = [
     {
-      title: "Block",
+      title: t("glossary.block"),
       key: "block",
       minWidth: "100px",
       render: (r) => (
@@ -41,7 +55,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       )
     },
     {
-      title: "Block ID",
+      title: t("glossary.blockID"),
       key: "blockId",
       minWidth: "150px",
       render: (r) => (
@@ -51,7 +65,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       )
     },
     {
-      title: "Epoch / Slot",
+      title: t("glossary.EpochSlot"),
       key: "slot",
       minWidth: "100px",
       render: (r) => (
@@ -64,19 +78,19 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       )
     },
     {
-      title: "Created At",
+      title: t("createdAt"),
       key: "time",
       minWidth: "100px",
       render: (r) => <PriceWrapper>{formatDateTimeLocal(r.time)}</PriceWrapper>
     },
     {
-      title: "Transactions",
+      title: t("drawer.transactions"),
       key: "blkCount",
       minWidth: "100px",
       render: (r) => <BlueText>{r.txCount || 0}</BlueText>
     },
     {
-      title: "Fees",
+      title: t("common.fees"),
       key: "fees",
       render: (r) => (
         <PriceWrapper>
@@ -86,7 +100,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       )
     },
     {
-      title: "Output",
+      title: t("glossary.output"),
       key: "outSum",
       minWidth: "100px",
       render: (r) => (
@@ -100,11 +114,16 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
 
   return (
     <StyledContainer>
-      <Card title={"Blocks"} underline>
+      <Card title={t("head.page.blocks")} underline>
+        <Actions>
+          <TimeDuration>
+            <FormNowMessage time={fetchData.lastUpdated} />
+          </TimeDuration>
+        </Actions>
         <Table
           {...fetchData}
           columns={columns}
-          total={{ title: "Total Blocks", count: fetchData.total }}
+          total={{ title: t("common.totalBlocks"), count: fetchData.total }}
           pagination={{
             ...pageInfo,
             total: fetchData.total,

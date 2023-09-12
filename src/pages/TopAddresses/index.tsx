@@ -1,6 +1,7 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Tab, useTheme } from "@mui/material";
 import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 import Card from "src/components/commons/Card";
 import TopAddressesByADABalance from "src/components/TopAddresses/ByADABalance";
@@ -10,6 +11,7 @@ import { DelegationHistoryIcon, StakeKeyHistoryIcon } from "src/commons/resource
 import { StyledContainer, TabTitle } from "./styles";
 
 const TopAddresses = () => {
+  const { t } = useTranslation();
   const [tabActive, setTabActive] = React.useState<"ada-balance" | "amount-staked">("ada-balance");
   const theme = useTheme();
   useEffect(() => {
@@ -26,13 +28,13 @@ const TopAddresses = () => {
     children: React.ReactNode;
   }[] = [
     {
-      label: "By Address ADA Balance",
+      label: t("adrress.byAddressADABalance"),
       key: "ada-balance",
       icon: DelegationHistoryIcon,
       children: <TopAddressesByADABalance />
     },
     {
-      label: "By Amount Staked",
+      label: t("address.byAmountStaked"),
       key: "amount-staked",
       icon: StakeKeyHistoryIcon,
       children: <TopAddressesByAmountStaked />
@@ -42,7 +44,7 @@ const TopAddresses = () => {
   return (
     <TabContext value={tabActive}>
       <StyledContainer>
-        <Card title={"Top ADA Holders"}>
+        <Card title={t("glossary.topAdaHolder")}>
           <Box>
             <TabList
               onChange={handleChange}

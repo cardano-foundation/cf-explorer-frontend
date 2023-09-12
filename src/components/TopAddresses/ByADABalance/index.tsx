@@ -1,11 +1,11 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 import { formatADAFull, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -17,18 +17,19 @@ import { Actions, PageSize, PerPage, SelectMui, StyledLink, StyledMenuItem, Time
 const perPages = [10, 20, 50, 100];
 
 const TopAddressesByADABalance = () => {
-  const history = useHistory();
+  const { t } = useTranslation();
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const [pageSize, setPageSize] = useState("50");
   const { error, data, initialized, loading, lastUpdated } = useFetchList<Contracts>(
     API.ADDRESS.TOP_ADDRESS,
     { page: 0, size: +pageSize },
     false,
-    REFRESH_TIMES.TOP_ADDRESS
+    blockNo
   );
 
   const columns: Column<Address>[] = [
     {
-      title: "Addresses",
+      title: t("glossary.address"),
       key: "address",
       minWidth: 120,
 
@@ -41,7 +42,7 @@ const TopAddressesByADABalance = () => {
       )
     },
     {
-      title: "Balance",
+      title: t("common.balance"),
       key: "balance",
       minWidth: 60,
       render: (r) => (
@@ -52,7 +53,7 @@ const TopAddressesByADABalance = () => {
       )
     },
     {
-      title: "Transaction Count",
+      title: t("glossary.transactionCount"),
       minWidth: 120,
       key: "transaction_count",
       render: (r) => (
@@ -83,7 +84,7 @@ const TopAddressesByADABalance = () => {
               </StyledMenuItem>
             ))}
           </SelectMui>
-          <PerPage>Addresses</PerPage>
+          <PerPage>{t("glossary.address")}</PerPage>
         </PageSize>
       </Actions>
       <Table
@@ -93,7 +94,6 @@ const TopAddressesByADABalance = () => {
         initialized={initialized}
         columns={columns}
         tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "55vh" } }) }}
-        onClickRow={(_, r) => history.push(details.address(r.address))}
       />
     </Box>
   );

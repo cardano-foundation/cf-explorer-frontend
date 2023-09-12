@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { BoxProps, IconButton, Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
@@ -30,6 +31,7 @@ export const AdaValue = ({ value, gap = "8px", fontSize, ...props }: IAdaValue) 
 };
 
 const StakingRegistrationTab = () => {
+  const { t } = useTranslation();
   const { reportId } = useParams<{ reportId: string }>();
   const [openModal, setOpenModal] = useState(false);
   const { search } = useLocation();
@@ -44,7 +46,7 @@ const StakingRegistrationTab = () => {
 
   const columns: Column<RegistrationItem>[] = [
     {
-      title: "Transaction Hash",
+      title: t("glossary.txHash"),
       key: "hash",
       minWidth: "120px",
       render: (r) => (
@@ -54,7 +56,7 @@ const StakingRegistrationTab = () => {
       )
     },
     {
-      title: "Created At",
+      title: t("createdAt"),
       key: "time",
       minWidth: "120px",
       sort: ({ columnKey, sortValue }) => {
@@ -65,8 +67,8 @@ const StakingRegistrationTab = () => {
     {
       title: (
         <>
-          <Box>ADA Value</Box>
-          <TableSubTitle>Hold/Fees</TableSubTitle>
+          <Box>{t("common.adaValue")}</Box>
+          <TableSubTitle>{t("common.holdOrFees")}</TableSubTitle>
         </>
       ),
       key: "block",
@@ -85,7 +87,7 @@ const StakingRegistrationTab = () => {
       )
     },
     {
-      title: "Certificate",
+      title: t("common.certificate"),
       key: "stakeId",
       minWidth: "120px",
       render: () => (
@@ -101,7 +103,7 @@ const StakingRegistrationTab = () => {
       <Table
         {...fetchData}
         columns={columns}
-        total={{ title: "Total", count: fetchData.total }}
+        total={{ title: t("common.total"), count: fetchData.total }}
         pagination={{
           ...pageInfo,
           total: fetchData.total,

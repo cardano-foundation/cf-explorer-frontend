@@ -1,6 +1,7 @@
 import { useRef, useMemo } from "react";
 import { Box, useTheme } from "@mui/material";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -43,6 +44,7 @@ interface Props {
 }
 
 export const RegistrationDraw = ({ selected, toggleModal, data, showBackButton }: Props) => {
+  const { t } = useTranslation();
   const { poolHold, fee, time, txHash } = selected;
   const { poolName, poolView, stakeKeys } = data ?? {};
 
@@ -144,7 +146,7 @@ export const RegistrationDraw = ({ selected, toggleModal, data, showBackButton }
             <StyledFeeBox ref={feeRef} value={fee} txHash={txHash} />
           </BoxGroup>
           <StyledCertificateShape onClick={toggleModal} ref={certificateRef}>
-            Pool Registration Certificate
+            {t("common.poolRegisCert")}
           </StyledCertificateShape>
         </MiddleGroup>
         <Box mt={2}>

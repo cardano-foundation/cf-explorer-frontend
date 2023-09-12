@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Grid, Skeleton, styled, Box, useTheme } from "@mui/material";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
 import BigNumber from "bignumber.js";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/helper";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
@@ -29,8 +31,15 @@ interface DelegationDetailChartProps {
 }
 
 const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId }) => {
+  const { t } = useTranslation();
   const [selected, setSelected] = useState<"epochChart" | "delegatorChart">("epochChart");
-  const { data, loading } = useFetch<AnalyticsDelegators>(`${API.DELEGATION.POOL_ANALYTICS}?poolView=${poolId}`);
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const { data, loading } = useFetch<AnalyticsDelegators>(
+    `${API.DELEGATION.POOL_ANALYTICS}?poolView=${poolId}`,
+    undefined,
+    false,
+    blockNo
+  );
   const theme = useTheme();
   const totalStakes =
     data?.epochChart?.dataByDays?.map((item) => item.totalStake).filter((item) => item !== null) || [];
@@ -51,7 +60,9 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
     return (
       <TooltipBody>
-        <TooltipLabel>Epoch {content.label}</TooltipLabel>
+        <TooltipLabel>
+          {t("epoch")} {content.label}
+        </TooltipLabel>
         <TooltipValue>
           {selected === "delegatorChart"
             ? content.payload?.[0]?.value || 0
@@ -63,7 +74,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
 
   return (
     <StyledContainer>
-      <AnalyticsTitle>Analytics</AnalyticsTitle>
+      <AnalyticsTitle>{t("common.analytics")}</AnalyticsTitle>
       <GridWrapper container columns={24} spacing="35px">
         <Grid item xs={24} lg={18}>
           <Box>
@@ -73,10 +84,10 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
               active={selected === "epochChart" ? 1 : 0}
               onClick={() => setSelected("epochChart")}
             >
-              Stake
+              {t("stake")}
             </Box>
             <Button active={selected === "delegatorChart" ? 1 : 0} onClick={() => setSelected("delegatorChart")}>
-              Delegator
+              {t("delegator")}
             </Button>
           </Box>
           <ChartContainer>
@@ -131,7 +142,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
               <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <img src={HighestIcon} alt="heighest icon" />
-                  <Title>{selected === "epochChart" ? "Highest stake" : "Highest number of delegators"}</Title>
+                  <Title>{selected === "epochChart" ? t("highestStake") : t("highestNumberOfDelegators")}</Title>
                   <Value>
                     {loading || !data?.[selected] ? (
                       <SkeletonUI variant="rectangular" />
@@ -148,7 +159,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
               <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <img src={LowestIcon} alt="lowest icon" />
-                  <Title>{selected === "epochChart" ? "Lowest stake" : "Lowest number of delegators"}</Title>
+                  <Title>{selected === "epochChart" ? t("lowestStake") : t("lowestNumberOfDelegators")}</Title>
                   <Value>
                     {loading || !data?.[selected] ? (
                       <SkeletonUI variant="rectangular" />

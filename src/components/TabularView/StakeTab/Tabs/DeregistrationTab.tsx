@@ -2,6 +2,7 @@ import { Box, IconButton, useTheme } from "@mui/material";
 import BigNumber from "bignumber.js";
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { EyeIcon } from "src/commons/resources";
 import { DeregistrationCertificateModal } from "src/components/commons/DeregistrationCertificateModal";
@@ -17,6 +18,7 @@ import Table, { Column } from "../../../commons/Table";
 import { StyledLink, TableSubTitle } from "../styles";
 
 const DeregistrationTab = () => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
@@ -32,7 +34,7 @@ const DeregistrationTab = () => {
 
   const columns: Column<DeregistrationItem>[] = [
     {
-      title: "Transaction Hash",
+      title: t("glossary.txHash"),
       key: "hash",
       minWidth: "120px",
       render: (r) => (
@@ -42,7 +44,7 @@ const DeregistrationTab = () => {
       )
     },
     {
-      title: "Created At",
+      title: t("createdAt"),
       key: "time",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
@@ -53,8 +55,8 @@ const DeregistrationTab = () => {
     {
       title: (
         <>
-          <Box>ADA Amount</Box>
-          <TableSubTitle>Hold/Fees</TableSubTitle>
+          <Box>{t("common.adaAmount")}</Box>
+          <TableSubTitle>{t("common.holdOrFees")}</TableSubTitle>
         </>
       ),
       key: "block",
@@ -73,7 +75,7 @@ const DeregistrationTab = () => {
       )
     },
     {
-      title: "Certificate",
+      title: t("common.certificate"),
       key: "txHash",
       minWidth: "120px",
       render: () => (
@@ -89,7 +91,7 @@ const DeregistrationTab = () => {
       <Table
         {...fetchData}
         columns={columns}
-        total={{ title: "Total", count: fetchData.total }}
+        total={{ title: t("common.total"), count: fetchData.total }}
         pagination={{
           ...pageInfo,
           total: fetchData.total,

@@ -1,6 +1,7 @@
 import { Box, IconButton, alpha, useTheme } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
@@ -60,6 +61,7 @@ interface Props {
 }
 
 const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: Props) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const { isMobile } = useScreen();
   const { palette } = useTheme();
@@ -95,7 +97,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
   const stepper: StepperProps[] = [
     {
       icon: <RegistrationIcon width={"25px"} height={"25px"} />,
-      title: "Registration",
+      title: t("slc.registrationCertificate"),
       component: <Registration />,
       description: (
         <RegistrationDelegatorProcessDescription
@@ -108,7 +110,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
     },
     {
       icon: <DelegationIcon width={"25px"} height={"25px"} />,
-      title: "Delegation",
+      title: t("slc.delegation"),
       component: <Delegation />,
       description: (
         <DelegationProcessDescription
@@ -121,7 +123,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
     },
     {
       icon: <RewardsDistributionIcon width={"25px"} height={"25px"} />,
-      title: "Rewards Distribution",
+      title: t("slc.rewardsDisttribution"),
       component: <RewardsDistribution />,
       description: (
         <RewardDistributionProcessDescription
@@ -134,7 +136,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
     },
     {
       icon: <RewardsWithdrawalIcon width={"25px"} height={"25px"} />,
-      title: "Rewards Withdrawal",
+      title: t("slc.rewardsWithdrawal"),
       component: <RewardsWithdrawal />,
       description: (
         <WithdrawingFundProcessDescription
@@ -147,7 +149,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
     },
     {
       icon: <DeredistrationIcon width={"25px"} height={"25px"} />,
-      title: "Deregistration",
+      title: t("common.deregistration"),
       component: <Deregistration />,
       description: (
         <DeregistrationDelegatorProcessDescription
@@ -204,7 +206,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
               id={`step-${idx}`}
               key={idx}
               component={tabsRenderConfig[step.keyCheckShow] ? "span" : CustomTooltip}
-              title={tabsRenderConfig[step.keyCheckShow] ? undefined : "There is no record at this time"}
+              title={tabsRenderConfig[step.keyCheckShow] ? undefined : t("common.noRecordAtTime")}
               onClick={() => handleChangeTab(step, idx)}
               sx={{
                 borderColor: colorProps.background
@@ -246,7 +248,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
           <InfoIcon style={{ cursor: "pointer" }} onClick={() => setOpenDescriptionModal(true)} />
         </StyledBox>
         <ADATransfersButton onClick={() => setOpen(true)}>
-          <TranferIcon /> ADA Transfers
+          <TranferIcon /> {t("common.adaTransfers")}
         </ADATransfersButton>
       </StepHeader>
       <Box>{stepper[currentStep].description}</Box>
@@ -273,7 +275,8 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
           >
             <PreviousIcon />
             <ButtonText>
-              Previous: {stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1])?.title}
+              {t("common.previous")}:{" "}
+              {stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1])?.title}
             </ButtonText>
           </PreviousButton>
         ) : (
@@ -297,9 +300,9 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
           variant="contained"
         >
           <ButtonText fontSize={isMobile ? 14 : 16}>
-            Next:{" "}
+            {t("common.next")}:{" "}
             {+indexTabsValid === tabsValid.length - 1
-              ? "View in tabular"
+              ? t("common.viewTabular")
               : stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid + 1])?.title}
           </ButtonText>
           <NextIcon />

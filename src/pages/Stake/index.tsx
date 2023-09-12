@@ -3,6 +3,7 @@ import { stringify } from "qs";
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
 import { useHistory, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -14,7 +15,6 @@ import Table, { Column } from "src/components/commons/Table";
 import { setOnDetailView } from "src/stores/user";
 import { API } from "src/commons/utils/api";
 import SelectedIcon from "src/components/commons/SelectedIcon";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 import { useScreen } from "src/commons/hooks/useScreen";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 
@@ -31,8 +31,10 @@ interface Props {
 
 const Stake: React.FC<Props> = ({ stakeAddressType }) => {
   const mainRef = useRef(document.querySelector("#main"));
+  const { t } = useTranslation();
   const [stake, setStake] = useState<string | null>(null);
   const { onDetailView } = useSelector(({ user }: RootState) => user);
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const [selected, setSelected] = useState<number | null>(null);
   const { search } = useLocation();
   const history = useHistory();
@@ -41,12 +43,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
   const pageInfo = getPageInfo(search);
   const { isMobile } = useScreen();
 
-  const fetchData = useFetchList<IStakeKey>(
-    `${API.STAKE.DETAIL}/${stakeAddressType}`,
-    pageInfo,
-    false,
-    REFRESH_TIMES.STAKE_REGISTRATION
-  );
+  const fetchData = useFetchList<IStakeKey>(`${API.STAKE.DETAIL}/${stakeAddressType}`, pageInfo, false, blockNo);
 
   useEffect(() => {
     handleClose();
@@ -75,7 +72,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
 
   const columns: Column<IStakeKey>[] = [
     {
-      title: "Tx Hash",
+      title: t("glossary.txHash"),
       key: "trxHash",
       minWidth: isMobile ? 245 : 80,
       render: (r) => (
@@ -85,12 +82,12 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
       )
     },
     {
-      title: "Created At",
+      title: t("glossary.createdAt"),
       key: "time",
       render: (r) => formatDateTimeLocal(r.txTime || "")
     },
     {
-      title: "Block",
+      title: t("glossary.block"),
       key: "block",
       render: (r) => (
         <>
@@ -105,7 +102,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
       )
     },
     {
-      title: "Stake Address",
+      title: t("glossary.stakeAddress"),
       key: "stakeAddress",
       render: (r, idx) => (
         <>
@@ -127,8 +124,8 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
         <Card
           title={
             stakeAddressType === STAKE_ADDRESS_TYPE.REGISTRATION
-              ? "Stake Address Registration"
-              : "Stake Address Deregistration"
+              ? t("head.page.stakeAddressRegistration")
+              : t("head.page.stakeAddressDeregistration")
           }
         >
           <TimeDuration>

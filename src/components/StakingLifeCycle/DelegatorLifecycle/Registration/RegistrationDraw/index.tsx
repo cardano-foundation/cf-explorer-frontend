@@ -1,6 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import { useRef, useMemo } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -18,6 +19,7 @@ import NoRecord from "src/components/commons/NoRecord";
 import DrawSkeleton from "src/components/commons/DrawSkeleton";
 import ADAicon from "src/components/commons/ADAIcon";
 import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
+import { Capitalize } from "src/components/commons/CustomText/styles";
 
 import {
   DrawContainer,
@@ -40,6 +42,7 @@ interface Props {
 }
 
 export const RegistrationDraw = ({ toggleModal, showBackButton = false }: Props) => {
+  const { t } = useTranslation();
   const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
 
   const { data, error, initialized } = useFetch<RegistrationDetail>(
@@ -168,7 +171,7 @@ export const RegistrationDraw = ({ toggleModal, showBackButton = false }: Props)
             onClick={toggleModal}
             ref={certificateRef}
           >
-            Registration Certificate
+            <Capitalize>{t("sklc.registrationCertificate")}</Capitalize>
           </StyledCertificateShape>
         </MiddleGroup>
         <CardanoBlockchain data-testid="delegator-registration-cardano-blockchain" ref={cardanoBlockchainRef} />

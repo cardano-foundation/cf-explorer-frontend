@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { useUpdateEffect } from "react-use";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { API } from "../../../../../commons/utils/api";
@@ -20,6 +21,7 @@ interface Props {
 }
 
 const RecentRegistrations: React.FC<Props> = ({ onSelect, setShowBackButton }) => {
+  const { t } = useTranslation();
   const { poolId = "", txHash = "" } = useParams<{ poolId: string; txHash?: string }>();
   const history = useHistory();
   const { sidebar } = useSelector(({ user }: RootState) => user);
@@ -61,18 +63,16 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, setShowBackButton }) =
   return (
     <StyledContainer>
       <StyledList>
-        <DescriptionText>Registration List</DescriptionText>
+        <DescriptionText>{t("common.registrationList")}</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
-          <WrapFilterDescription>
-            Showing {data.length} {data.length > 1 ? "results" : "result"}
-          </WrapFilterDescription>
+          <WrapFilterDescription>{t("common.showXResults", { value: data.length })}</WrapFilterDescription>
           <CustomFilter
             filterValue={params}
             onChange={(params) => {
               setParams(params);
               setPageInfo((pre) => ({ ...pre, page: 0 }));
             }}
-            searchLabel="Search transaction"
+            searchLabel={t("common.searchTx")}
           />
         </Box>
       </StyledList>

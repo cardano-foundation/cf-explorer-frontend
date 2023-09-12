@@ -2,9 +2,9 @@ import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
 import { useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
-import Card from "../commons/Card";
-import Table, { Column } from "../commons/Table";
 import {
   formatADAFull,
   formatDateTimeLocal,
@@ -12,13 +12,17 @@ import {
   getPageInfo,
   getShortHash,
   getShortWallet
-} from "../../commons/utils/helper";
-import { details } from "../../commons/routers";
-import { StyledLink } from "./styles";
+} from "src/commons/utils/helper";
+import { details } from "src/commons/routers";
+import useFetchList from "src/commons/hooks/useFetchList";
+
 import CustomTooltip from "../commons/CustomTooltip";
-import useFetchList from "../../commons/hooks/useFetchList";
 import SelectedIcon from "../commons/SelectedIcon";
 import ADAicon from "../commons/ADAIcon";
+import FormNowMessage from "../commons/FormNowMessage";
+import Table, { Column } from "../commons/Table";
+import Card from "../commons/Card";
+import { Actions, StyledLink, TimeDuration } from "./styles";
 
 interface TransactionListProps {
   underline?: boolean;
@@ -39,11 +43,14 @@ const TransactionList: React.FC<TransactionListProps> = ({
   hash,
   handleClose
 }) => {
+  const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
-  const fetchData = useFetchList<Transactions>(url, { ...pageInfo, sort });
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+
+  const fetchData = useFetchList<Transactions>(url, { ...pageInfo, sort }, false, blockNo);
   const mainRef = useRef(document.querySelector("#main"));
   const onClickRow = (_: any, r: Transactions, index: number) => {
     if (openDetail) return openDetail(_, r, index);
@@ -52,7 +59,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
 
   const columns: Column<Transactions>[] = [
     {
-      title: "Tx Hash",
+      title: t("glossary.txhash"),
       key: "txhash",
       minWidth: 120,
 
@@ -68,7 +75,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       )
     },
     {
-      title: "Block",
+      title: t("glossary.block"),
       key: "block",
       minWidth: 60,
       render: (r) => {
@@ -93,7 +100,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       }
     },
     {
-      title: "Fees",
+      title: t("common.fees"),
       key: "fee",
       minWidth: 120,
       render: (r) => (
@@ -107,7 +114,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       }
     },
     {
-      title: "Output in ADA",
+      title: t("glossary.outputInAda"),
       minWidth: 120,
       key: "outSum",
       render: (r) => (
@@ -122,7 +129,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       }
     },
     {
-      title: "Input address",
+      title: t("glossary.inputAddress"),
       key: "addressesInput",
       minWidth: 120,
       render: (r) => (
@@ -139,7 +146,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       )
     },
     {
-      title: "Output address",
+      title: t("glossary.outpuAddress"),
       key: "addressesOutput",
       minWidth: 120,
       render: (r) => (
@@ -163,10 +170,15 @@ const TransactionList: React.FC<TransactionListProps> = ({
       title={pathname?.includes("/transactions") ? "Transactions" : ""}
       underline={underline}
     >
+      <Actions>
+        <TimeDuration>
+          <FormNowMessage time={fetchData.lastUpdated} />
+        </TimeDuration>
+      </Actions>
       <Table
         {...fetchData}
         columns={columns}
-        total={{ count: fetchData.total, title: "Total Transactions" }}
+        total={{ count: fetchData.total, title: t("common.totalTxs") }}
         pagination={{
           ...pageInfo,
           total: fetchData.total,

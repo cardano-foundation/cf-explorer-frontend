@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Box, styled } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -15,6 +16,7 @@ import UserInfo from "./UserInfo";
 import { Amount, StyledLink } from "./styles";
 
 const RewardActivity: React.FC = () => {
+  const { t } = useTranslation();
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [{ page, size }, setPagi] = useState<{ page: number; size: number }>({ page: 0, size: 50 });
   const [sort, setSort] = useState<string>("");
@@ -28,7 +30,7 @@ const RewardActivity: React.FC = () => {
   };
   const columns: Column<RewardActivityIF>[] = [
     {
-      title: "Amount ADA",
+      title: t("common.amouintADA"),
       key: "outSum",
       minWidth: "100px",
       render: (r) => (
@@ -43,7 +45,7 @@ const RewardActivity: React.FC = () => {
       )
     },
     {
-      title: "Created At",
+      title: t("createdAt"),
       key: "time",
       minWidth: "100px",
       render: (r) => formatDateTimeLocal(r.time || ""),
@@ -52,14 +54,13 @@ const RewardActivity: React.FC = () => {
       }
     },
     {
-      title: "Epoch",
+      title: t("glossary.epoch"),
       key: "Epoch",
       minWidth: "100px",
       render: (r) => <StyledLink to={details.epoch(r.epochNo || 0)}>{r.epochNo}</StyledLink>
     },
-
     {
-      title: "Transaction Type",
+      title: t("glossary.txType"),
       key: "transactionCount",
       minWidth: "100px",
       render: (r) => <Box>{rewardType[r.type]}</Box>
@@ -76,7 +77,7 @@ const RewardActivity: React.FC = () => {
         {...fetchData}
         columns={columns}
         maxHeight={maxHeightCalc}
-        total={{ title: "Total Epochs", count: fetchData.total }}
+        total={{ title: t("common.totalEpoch"), count: fetchData.total }}
         pagination={{
           page,
           size,
