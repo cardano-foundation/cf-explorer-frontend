@@ -1,6 +1,7 @@
 import { Box, Skeleton } from "@mui/material";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
 import ViewMoreThreeDots from "src/components/commons/ViewMoreThreeDots";
@@ -27,6 +28,7 @@ interface Props {
   onClose: () => void;
 }
 export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }: Props) => {
+  const { t } = useTranslation();
   const { data } = useFetch<SPORegistrationDetail>(
     poolUpdateId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_DETAIl(poolId, poolUpdateId) : ""
   );
@@ -35,7 +37,7 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
 
   const list: CertificateItemType[] = [
     {
-      label: "Transaction ID",
+      label: t("common.txID"),
       content: (
         <LineData>
           <CustomTooltip title={data?.txHash || ""}>
@@ -46,7 +48,7 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
       )
     },
     {
-      label: "Pool ID",
+      label: t("common.poolId"),
       content: (
         <LineData>
           <CustomTooltip title={data?.poolView || ""}>
@@ -59,7 +61,7 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
       )
     },
     {
-      label: "VRF Key",
+      label: t("common.vrfKey"),
       content: (
         <LineData>
           <CustomTooltip title={data?.vrfKey}>
@@ -70,7 +72,7 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
       )
     },
     {
-      label: "Owners",
+      label: t("common.owners"),
       content: (
         <LineData>
           <CustomTooltip title={data?.stakeKeys[0] || ""}>
@@ -84,7 +86,7 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
       )
     },
     {
-      label: "Reward Account",
+      label: t("common.rewardAccount"),
       content: (
         <LineData>
           <CustomTooltip title={data?.rewardAccount || ""}>
@@ -97,12 +99,12 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
       )
     },
     {
-      label: "Margin",
+      label: t("margin"),
 
       content: <Value>{data?.margin ? numberWithCommas(data?.margin * 100, 2) : 0}%</Value>
     },
     {
-      label: "Pledge",
+      label: t("glossary.pledge"),
       content: (
         <Value>
           {formatADAFull(data?.pledge)}
@@ -111,7 +113,7 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
       )
     },
     {
-      label: "Cost",
+      label: t("glossary.cost"),
       content: (
         <Value>
           {formatADAFull(data?.cost)}
@@ -122,11 +124,11 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
   ];
 
   return (
-    <StyledModal {...props} title="Pool registration certificate" sx={{ maxHeight: "min(70vh, 800px)" }}>
+    <StyledModal {...props} title={t("common.poolRegisCert")} sx={{ maxHeight: "min(70vh, 800px)" }}>
       <ViewMoreAddressModal
         showFullHash={true}
         maxWidth={680}
-        title="Pool Owner"
+        title={t("common.poolOwner")}
         open={!!selectedOwner.length}
         onClose={() => setSelectedOwner([])}
         items={selectedOwner}

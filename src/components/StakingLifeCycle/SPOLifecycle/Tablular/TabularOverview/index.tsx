@@ -2,6 +2,7 @@ import { Box, BoxProps, Grid, Icon, useTheme } from "@mui/material";
 import { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import {
   BgBlue,
@@ -80,6 +81,8 @@ const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
 };
 
 const TabularOverview: React.FC = () => {
+  const { t } = useTranslation();
+
   const data = useContext(PoolDetailContext);
   const { stakeKeys, poolSize, epochNo, status, rewardAvailable } = data ?? {};
   const [open, setOpen] = useState(false);
@@ -101,7 +104,7 @@ const TabularOverview: React.FC = () => {
     <Box>
       <Grid container spacing={2}>
         <GridItem
-          title="Pool Size"
+          title={t("glossary.poolSize")}
           bgType="white"
           mainIcon={<PoolSizeIcon />}
           value={
@@ -131,7 +134,7 @@ const TabularOverview: React.FC = () => {
           }
         />
         <GridItem
-          title="Rewards Available"
+          title={t("glossary.rewardsAvailable")}
           bgType="white"
           mainIcon={<RewardsAvailableIcon />}
           value={
@@ -143,7 +146,7 @@ const TabularOverview: React.FC = () => {
           }
         />
         <GridItem
-          title="Owner Account"
+          title={t("common.ownerAccount")}
           bgType="white"
           mainIcon={<OwnerAccountIcon />}
           value={
@@ -168,7 +171,7 @@ const TabularOverview: React.FC = () => {
       <ViewMoreAddressModal
         showFullHash={true}
         onItemClick={onOwnerItemClick}
-        title="Owner Account"
+        title={t("common.ownerAccount")}
         open={open}
         items={stakeKeys}
         onClose={() => setOpen(false)}

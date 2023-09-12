@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Box, styled } from "@mui/material";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import useFetch from "src/commons/hooks/useFetch";
@@ -16,6 +17,7 @@ import UserInfo from "./UserInfo";
 import { Amount, Status, StyledLink } from "./styles";
 
 const WalletActivity: React.FC = () => {
+  const { t } = useTranslation();
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
   const [sort, setSort] = useState<string>("");
@@ -26,7 +28,7 @@ const WalletActivity: React.FC = () => {
 
   const columns: Column<WalletActivityIF>[] = [
     {
-      title: "Amount ADA",
+      title: t("common.amountADA"),
       key: "outSum",
       minWidth: "100px",
       render: (r) => (
@@ -38,7 +40,7 @@ const WalletActivity: React.FC = () => {
       )
     },
     {
-      title: "Created At",
+      title: t("createdAt"),
       key: "time",
       minWidth: "100px",
       render: (r) => formatDateTimeLocal(r.time || ""),
@@ -47,7 +49,7 @@ const WalletActivity: React.FC = () => {
       }
     },
     {
-      title: "Transaction Hash",
+      title: t("glossary.txHash"),
       key: "transactionHash",
       minWidth: "100px",
       render: (r) => (
@@ -57,7 +59,7 @@ const WalletActivity: React.FC = () => {
       )
     },
     {
-      title: "Status",
+      title: t("common.status"),
       key: "status",
       minWidth: "150px",
       render: (r) => <Status status={r.status}>{r.status}</Status>
@@ -73,7 +75,7 @@ const WalletActivity: React.FC = () => {
         {...fetchData}
         maxHeight={maxHeightCalc}
         columns={columns}
-        total={{ title: "Total Epochs", count: fetchData.total }}
+        total={{ title: t("common.totalEpoch"), count: fetchData.total }}
         pagination={{
           ...pageInfo,
           total: fetchData.total,

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { TabContext, TabPanel } from "@mui/lab";
+import { useTranslation } from "react-i18next";
 
 import { BalanceIcon, RewardsIcon } from "src/commons/resources";
 import { useScreen } from "src/commons/hooks/useScreen";
 import CustomModal from "src/components/commons/CustomModal";
 import CustomTabTitle from "src/components/commons/CustomTabTitle";
+import { Capitalize } from "src/components/commons/CustomText/styles";
 
 import WalletActivity from "./WalletActivity";
 import RewardActivity from "./RewardActivity";
@@ -21,6 +23,7 @@ enum ActivityType {
 }
 
 const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
+  const { t } = useTranslation();
   const [activityType, setActivityType] = useState<ActivityType>(ActivityType.WALLET);
   const { isGalaxyFoldSmall } = useScreen();
 
@@ -37,7 +40,7 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
   };
 
   return (
-    <CustomModal title={"ADA Transfers"} open={open} onClose={handleCloseModal} width={1200}>
+    <CustomModal title={t("common.adaTransfers")} open={open} onClose={handleCloseModal} width={1200}>
       <TabContext value={activityType}>
         <StyledBox overflow={!isGalaxyFoldSmall ? "auto" : "hidden"}>
           <StyledTabs
@@ -52,7 +55,7 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
               value={ActivityType.WALLET}
               label={
                 <CustomTabTitle icon={BalanceIcon} active={activityType === ActivityType.WALLET}>
-                  Wallet Activity
+                  <Capitalize>{t("common.walletActivity")}</Capitalize>
                 </CustomTabTitle>
               }
             />
@@ -60,7 +63,7 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
               value={ActivityType.REWARDS}
               label={
                 <CustomTabTitle icon={RewardsIcon} active={activityType === ActivityType.REWARDS}>
-                  Rewards Activity
+                  {t("common.rewardsActivity")}
                 </CustomTabTitle>
               }
             />

@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import { useTranslation } from "react-i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { details } from "src/commons/routers";
@@ -24,6 +25,7 @@ const UserInfo = ({
   reward: number;
   acitve: "wallet" | "reward";
 }) => {
+  const { t } = useTranslation();
   const { isTablet } = useScreen();
   const theme = useTheme();
 
@@ -53,7 +55,7 @@ const UserInfo = ({
           </OverviewIcon>
           <TextUserInfo>
             <Box component={"span"} mr={1}>
-              {acitve === "reward" ? "Reward balance" : "Total balance including reward"} :
+              {acitve === "reward" ? t("glossary.rewardBalance") : t("common.totalBalnceReward")} :
             </Box>
             <Box component={"span"} display={"inline-flex"} alignItems={"center"}>
               <Box lineHeight={1}>
@@ -64,7 +66,9 @@ const UserInfo = ({
           </TextUserInfo>
         </Box>
       </Box>
-      <TextTx sx={{ marginTop: isTablet ? "10px" : "0px" }}>{total} Transactions</TextTx>
+      <TextTx sx={{ marginTop: isTablet ? "10px" : "0px" }}>
+        {total} {t("glossary.transactions")}
+      </TextTx>
     </Box>
   );
 };

@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { EyeIcon } from "src/commons/resources";
@@ -16,6 +17,7 @@ import { PoolUpdateModal } from "../../PoolUpdates/PoolUpdateModal";
 import { ClickAbleLink } from "./styles";
 
 const PoolUpdateTab = () => {
+  const { t } = useTranslation();
   const { poolId = "" } = useParams<{ poolId: string }>();
   const [selectedValue, setSelectedValue] = useState<PoolUpdateDetail | null>(null);
   const [params, setParams] = useState({
@@ -28,7 +30,7 @@ const PoolUpdateTab = () => {
   const columns: Column<PoolUpdateDetail>[] = [
     {
       key: "txHash",
-      title: "Transaction hash",
+      title: t("glossary.transactionHash"),
       render(data) {
         return (
           <CustomTooltip title={data.txHash}>
@@ -39,7 +41,7 @@ const PoolUpdateTab = () => {
     },
     {
       key: "time",
-      title: "Created At",
+      title: t("createdAt"),
       sort({ columnKey, sortValue }) {
         sortValue ? setSort(`bk.${columnKey},${sortValue}`) : setSort("");
       },
@@ -49,14 +51,14 @@ const PoolUpdateTab = () => {
     },
     {
       key: "fee",
-      title: "Fees",
+      title: t("common.fees"),
       render(data) {
         return <AdaValue value={data.fee} />;
       }
     },
     {
       key: "Certificate",
-      title: "Certificate",
+      title: t("common.certificate"),
       render(data) {
         return (
           <ClickAbleLink onClick={() => setSelectedValue(data)}>
@@ -78,10 +80,7 @@ const PoolUpdateTab = () => {
       <Table
         {...fetchData}
         columns={columns}
-        total={{
-          title: "Pool update",
-          count: fetchData.total
-        }}
+        total={{ title: t("common.poolUpdate"), count: fetchData.total }}
         pagination={{
           ...params,
           total: fetchData.total,

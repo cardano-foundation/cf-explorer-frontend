@@ -1,5 +1,6 @@
 import React, { useMemo, createContext } from "react";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { DeredistrationIcon, OperatorRewardIcon, PoolUpdateIcon, RegistrationIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
@@ -27,41 +28,40 @@ interface ITab {
 
 export const ReportGeneratedPoolDetailContext = createContext({ reportName: "", poolId: "" });
 
-const poolTabs: ITab[] = [
-  {
-    icon: RegistrationIcon,
-    label: "Pool Registration",
-    key: "registration",
-    mappingKey: "registration",
-    component: <PoolRegistrationTab />
-  },
-  {
-    icon: PoolUpdateIcon,
-    label: "Pool Update",
-    key: "poolupdate",
-    mappingKey: "pool_update",
-    component: <ProtocolUpdateTab />
-  },
-  {
-    icon: OperatorRewardIcon,
-    label: "Operator Rewards",
-    key: "reward",
-    mappingKey: "reward",
-    component: <RewardsDistributionTab />
-  },
-  {
-    icon: DeredistrationIcon,
-    label: "Deregistration",
-    key: "deregistration",
-    mappingKey: "deregistration",
-    component: <DeregsitrationTab />
-  }
-];
-
 const ReportGeneratedPoolDetailTabs = () => {
+  const { t } = useTranslation();
   const { reportId } = useParams<{ reportId: string }>();
   const reportDetail = useFetch<IPoolReportList>(API.REPORT.POOL_REPORTED_DETAIL(reportId));
-
+  const poolTabs: ITab[] = [
+    {
+      icon: RegistrationIcon,
+      label: t("common.poolRegistration"),
+      key: "registration",
+      mappingKey: "registration",
+      component: <PoolRegistrationTab />
+    },
+    {
+      icon: PoolUpdateIcon,
+      label: t("common.poolUpdate"),
+      key: "poolupdate",
+      mappingKey: "pool_update",
+      component: <ProtocolUpdateTab />
+    },
+    {
+      icon: OperatorRewardIcon,
+      label: t("common.operatorRewards"),
+      key: "reward",
+      mappingKey: "reward",
+      component: <RewardsDistributionTab />
+    },
+    {
+      icon: DeredistrationIcon,
+      label: t("slc.deregistration"),
+      key: "deregistration",
+      mappingKey: "deregistration",
+      component: <DeregsitrationTab />
+    }
+  ];
   const events = useMemo(() => {
     const { data } = reportDetail;
     if (!data) return [];
@@ -74,7 +74,7 @@ const ReportGeneratedPoolDetailTabs = () => {
       ...poolTabs,
       {
         icon: WalletIcon,
-        label: "Pool size",
+        label: t("common.poolSize"),
         key: "poolSize",
         mappingKey: "poolSize",
         component: <PoolSizeTab />
