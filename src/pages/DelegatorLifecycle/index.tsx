@@ -81,9 +81,6 @@ const DelegatorLifecycle = () => {
     false
   );
 
-  // eslint-disable-next-line no-console
-  console.log("data", data);
-
   const { data: dataReportLimit } = useFetch<IReportLimit>(API.REPORT.REPORT_LIMIT);
 
   useEffect(() => {
