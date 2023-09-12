@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, useTheme } from "@mui/material";
 import { JsonViewer } from "@textea/json-viewer";
+import { useTranslation } from "react-i18next";
 
 import { isJson } from "src/commons/utils/helper";
 
@@ -11,12 +12,13 @@ interface ITokenMetadataProps {
 }
 
 const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson }) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   return (
     <ViewJson>
       {!metadataJson ? (
         <Box textAlign={"left"} color={({ palette }) => palette.secondary.light}>
-          No records found
+          {t("glossary.noRecordsFound")}
         </Box>
       ) : (
         <JsonViewer

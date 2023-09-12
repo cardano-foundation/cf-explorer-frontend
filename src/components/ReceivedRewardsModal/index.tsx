@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -40,6 +41,7 @@ export interface ReceivedRewardsModalProps {
 }
 
 const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = false, onClose, reward = 0, type }) => {
+  const { t } = useTranslation();
   const [params, setParams] = useState({ page: 0, size: 50 });
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [sort, setSort] = useState<string>("");
@@ -59,7 +61,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
   const columns: Column<ReceivedReward>[] = [
     {
       key: "amount",
-      title: "Amount ADA",
+      title: t("common.amountADA"),
       render(data) {
         return (
           <AmountADARow amount={data.amount}>
@@ -70,14 +72,14 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
     },
     {
       key: "epoch",
-      title: "Epoch",
+      title: t("common.Epoch"),
       render(data) {
         return <EpochRow to={details.epoch(data.epoch)}>{data.epoch}</EpochRow>;
       }
     },
     {
       key: "time",
-      title: "Date",
+      title: t("common.Date"),
       sort: ({ sortValue }) => {
         sortValue ? setSort(`id,${sortValue}`) : setSort("");
       },
@@ -87,7 +89,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
     },
     {
       key: "type",
-      title: "Reward Type",
+      title: t("glossary.rewardType"),
       render(data) {
         return <Box>{mappingRewardType(data.type)}</Box>;
       }
@@ -105,17 +107,19 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       <ModalContainer>
         <ModalTitle>
           {type === RECEIVED_REWARDS.LEADER
-            ? "Operator Reward"
+            ? t("glossary.operatorReward")
             : type === RECEIVED_REWARDS.MEMBER
-            ? "Delegator Reward"
-            : "Received Rewards"}
+            ? t("slc.delegator.reward")
+            : t("glossary.receivedRewared")}
         </ModalTitle>
         <ModalContent>
           {type == RECEIVED_REWARDS.ALL ? (
             <RewardBalanceHeader>
               <RewardBalance>
                 <ReceidvedRewardsIC />
-                <RewardBalanceTitle>Reward Balance: {formatADAFull(reward)}</RewardBalanceTitle>
+                <RewardBalanceTitle>
+                  {t("glossary.rewardBalance")}: {formatADAFull(reward)}
+                </RewardBalanceTitle>
                 <ADAicon />
               </RewardBalance>
             </RewardBalanceHeader>

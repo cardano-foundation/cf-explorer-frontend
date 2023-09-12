@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BiChevronRight } from "react-icons/bi";
 import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
 import {
@@ -22,7 +23,7 @@ import {
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
 import { RootState } from "src/stores/types";
 
@@ -70,43 +71,54 @@ type DetailViewTransactionProps = {
   hash: string;
   handleClose: () => void;
 };
-const tabs: { key: keyof Transaction; label: string; icon?: React.ReactNode }[] = [
-  { key: "summary", label: "Summary", icon: <DelegationHistoryMainIcon /> },
-  { key: "utxOs", label: "UTXOs", icon: <CgArrowsExchange /> },
-  { key: "contracts", label: "Contracts", icon: <DetailLinkImage src={FileEditIcon} alt="contact" /> },
-  { key: "collaterals", label: "Collateral", icon: <DetailLinkImage src={USDIcon} alt="contact" /> },
-  { key: "notes", label: "Notes", icon: <DetailLinkImage src={NoteEditIcon} alt="contact" /> },
-  { key: "withdrawals", label: "Withdrawal", icon: <DetailLinkImage src={WithdrawlIcon} alt="contact" /> },
-  { key: "delegations", label: "Delegations", icon: <DetailLinkImage src={DelegationIconUrl} alt="contact" /> },
-  { key: "mints", label: "Minting", icon: <DetailLinkImage src={MintingIconUrl} alt="contact" /> },
-  {
-    key: "poolCertificates",
-    label: "Pool certificates",
-    icon: <DetailLinkImage src={RewardsDistributionIconUrl} alt="contact" />
-  },
-  {
-    key: "stakeCertificates",
-    label: "Stake Certificates",
-    icon: <DetailLinkImage src={StakeCertificatesIconUrl} alt="contact" />
-  },
-  { key: "protocols", label: "Protocol Update", icon: <DetailLinkImage src={ProtocolUpdateIconUrl} alt="contact" /> },
-  {
-    key: "instantaneousRewards",
-    label: "Instantaneous Rewards",
-    icon: <DetailLinkImage src={InstantaneousHistoryIconUrl} alt="contact" />
-  },
-  { key: "metadata", label: "Metadata", icon: <DetailLinkImage src={MetadataIconUrl} alt="contact" /> }
-];
 
 const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
+  const { t } = useTranslation();
   const { hash, handleClose } = props;
-  const { data, lastUpdated } = useFetch<Transaction>(
-    hash ? `${API.TRANSACTION.DETAIL}/${hash}` : ``,
-    undefined,
-    false,
-    REFRESH_TIMES.TRANSACTION_DETAIL
-  );
-  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+  const { data } = useFetch<Transaction>(hash ? `${API.TRANSACTION.DETAIL}/${hash}` : ``);
+  const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const [lastUpdated, setLastUpdated] = useState<number>();
+
+  useEffect(() => {
+    if (data) setLastUpdated(Date.now());
+  }, [data, blockNo]);
+
+  const tabs: { key: keyof Transaction; label: string; icon?: React.ReactNode }[] = [
+    { key: "summary", label: t("drawer.summary"), icon: <DelegationHistoryMainIcon /> },
+    { key: "utxOs", label: t("tab.utxos"), icon: <CgArrowsExchange /> },
+    { key: "contracts", label: t("glossary.contracts"), icon: <DetailLinkImage src={FileEditIcon} alt="contact" /> },
+    { key: "collaterals", label: t("glossary.collateral"), icon: <DetailLinkImage src={USDIcon} alt="contact" /> },
+    { key: "notes", label: t("tab.notes"), icon: <DetailLinkImage src={NoteEditIcon} alt="contact" /> },
+    { key: "withdrawals", label: t("tab.withdrawal"), icon: <DetailLinkImage src={WithdrawlIcon} alt="contact" /> },
+    {
+      key: "delegations",
+      label: t("tab.delegations"),
+      icon: <DetailLinkImage src={DelegationIconUrl} alt="contact" />
+    },
+    { key: "mints", label: t("tab.minting"), icon: <DetailLinkImage src={MintingIconUrl} alt="contact" /> },
+    {
+      key: "poolCertificates",
+      label: t("tab.poolCertificates"),
+      icon: <DetailLinkImage src={RewardsDistributionIconUrl} alt="contact" />
+    },
+    {
+      key: "stakeCertificates",
+      label: t("tab.stakeCertificates"),
+      icon: <DetailLinkImage src={StakeCertificatesIconUrl} alt="contact" />
+    },
+    {
+      key: "protocols",
+      label: t("tab.protocolUpdate"),
+      icon: <DetailLinkImage src={ProtocolUpdateIconUrl} alt="contact" />
+    },
+    {
+      key: "instantaneousRewards",
+      label: t("glossary.instantaneousRewards"),
+      icon: <DetailLinkImage src={InstantaneousHistoryIconUrl} alt="contact" />
+    },
+    { key: "metadata", label: t("glossary.metadata"), icon: <DetailLinkImage src={MetadataIconUrl} alt="contact" /> }
+  ];
 
   useEffect(() => {
     document.body.style.overflowY = "hidden";
@@ -120,8 +132,8 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
     return (
       <ViewDetailDrawer anchor="right" open={!!hash} hideBackdrop variant="permanent">
         <ViewDetailHeader>
-          <ViewAllButton tooltipTitle="View Detail" to={details.transaction(hash)} />
-          <CustomTooltip title="Close">
+          <ViewAllButton tooltipTitle={t("common.viewDetail")} to={details.transaction(hash)} />
+          <CustomTooltip title={t("common.close")}>
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
@@ -186,17 +198,18 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
       </ViewDetailDrawer>
     );
 
-  const input = data?.utxOs?.inputs[0]?.address || "";
-  const output = data?.utxOs?.outputs[0]?.address || "";
+  const input = data.utxOs?.inputs[0]?.address || "";
+  const output = data.utxOs?.outputs[0]?.address || "";
+  const confirmation = blockNo ? blockNo - (data.tx?.blockNo || 0) : data.tx?.confirmation;
 
   return (
     <ViewDetailDrawer anchor="right" open={!!hash} hideBackdrop variant="permanent">
       <ViewDetailHeader>
-        <ViewAllButton tooltipTitle="View Detail" to={details.transaction(hash)} />
+        <ViewAllButton tooltipTitle={t("common.viewDetail")} to={details.transaction(hash)} />
         <TimeDuration>
           <FormNowMessage time={lastUpdated} />
         </TimeDuration>
-        <CustomTooltip title="Close">
+        <CustomTooltip title={t("common.close")}>
           <CloseButton onClick={handleClose}>
             <CgClose />
           </CloseButton>
@@ -211,7 +224,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
               pathWidth={4}
               trailWidth={2}
               percent={
-                data?.tx?.epochNo === currentEpoch?.no
+                data?.tx?.epochNo === epochNo
                   ? ((data?.tx?.epochSlot || 0) / (data?.tx?.maxEpochSlot || MAX_SLOT_EPOCH)) * 100
                   : 100
               }
@@ -224,12 +237,12 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
           <ListItem>
             <Item>
               <Icon src={CubeIcon} alt="socket" />
-              <ItemName>Block</ItemName>
+              <ItemName>{t("glossary.block")}</ItemName>
               <ItemValue>{data?.tx?.blockNo}</ItemValue>
             </Item>
             <Item>
               <Icon src={RocketIcon} alt="socket" />
-              <ItemName>slot</ItemName>
+              <ItemName>{t("common.slot")}</ItemName>
               <ItemValue>
                 {data?.tx?.epochSlot}
                 <BlockDefault>/{data?.tx?.maxEpochSlot || MAX_SLOT_EPOCH}</BlockDefault>
@@ -238,7 +251,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
           </ListItem>
           <Group>
             <DetailsInfoItem>
-              <DetailLabel>Transaction hash</DetailLabel>
+              <DetailLabel>{t("glossary.transactionHash")}</DetailLabel>
               <DetailValue>
                 <CustomTooltip title={hash} placement="top-start">
                   <StyledLink to={details.transaction(hash)}>{getShortHash(hash)}</StyledLink>
@@ -248,7 +261,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
             </DetailsInfoItem>
             {input && (
               <DetailsInfoItem>
-                <DetailLabel>Input</DetailLabel>
+                <DetailLabel>{t("glossary.input")}</DetailLabel>
                 <DetailValue>
                   <CustomTooltip title={input} placement="top-start">
                     <StyledLink to={details.address(input)}>{getShortWallet(input)}</StyledLink>
@@ -259,7 +272,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
             )}
             {output && (
               <DetailsInfoItem>
-                <DetailLabel>Output</DetailLabel>
+                <DetailLabel>{t("glossary.output")}</DetailLabel>
                 <DetailValue>
                   <CustomTooltip title={output} placement="top-start">
                     <StyledLink to={details.address(output)}>{getShortWallet(output)}</StyledLink>
@@ -269,28 +282,28 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
               </DetailsInfoItem>
             )}
             <DetailsInfoItem>
-              <DetailLabel>Created At</DetailLabel>
+              <DetailLabel>{t("createdAt")}</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data?.tx?.time || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Status</DetailLabel>
+              <DetailLabel>{t("common.status")}</DetailLabel>
               <DetailValue>
                 <TxStatus status={data?.tx?.status}>{data?.tx?.status}</TxStatus>
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>{data?.tx?.confirmation > 1 ? "Confirmations" : "Confirmation"}</DetailLabel>
-              <DetailValue>{data?.tx?.confirmation}</DetailValue>
+              <DetailLabel>{confirmation > 1 ? t("glossary.comfirmations") : t("glossary.comfirmation")}</DetailLabel>
+              <DetailValue>{confirmation}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Transaction Fees</DetailLabel>
+              <DetailLabel>{t("glossary.transactionfees")}</DetailLabel>
               <DetailValue>
                 {formatADAFull(data?.tx?.fee)}
                 <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Total Output</DetailLabel>
+              <DetailLabel>{t("glossary.totalOutput")}</DetailLabel>
               <DetailValue>
                 {formatADAFull(data?.tx?.totalOutput)}
                 <ADAicon />

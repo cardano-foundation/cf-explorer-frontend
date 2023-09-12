@@ -2,6 +2,7 @@ import { Box, BoxProps, styled, IconButton, useTheme, alpha } from "@mui/materia
 import { Link, useHistory } from "react-router-dom";
 import React, { forwardRef, useRef } from "react";
 import { isArray } from "lodash";
+import { useTranslation } from "react-i18next";
 
 import { SPOHolderIconUrl, SPOInfo, SPOKey, PolygonSPOUrl } from "src/commons/resources";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -21,6 +22,7 @@ interface ISPOProps extends BoxProps {
 }
 
 export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, boxRef) => {
+  const { t } = useTranslation();
   const { poolName, poolView, stakeKeys } = data;
   const SPOInfoRef = useRef(null);
   const SPOKeyRef = useRef(null);
@@ -31,7 +33,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
   return (
     <PolygonShapeSPO {...props} ref={boxRef}>
       <SPOImage src={SPOHolderIconUrl} alt="SPO image" />
-      <SPOTitle>SPO</SPOTitle>
+      <SPOTitle>{t("common.spo")}</SPOTitle>
       <Box>
         <CustomTooltip title={poolName}>
           <PoolName> {poolName}</PoolName>
@@ -52,14 +54,14 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
             <Box>
               <Box display={"flex"} alignItems={"center"}>
                 <Box fontSize="1.125rem" color={({ palette }) => palette.secondary.light}>
-                  Pool ID:
+                  {t("common.poolId")}:
                 </Box>
                 <PoolNamePopup to={details.delegation(poolView)}>{getShortWallet(poolView || "")}</PoolNamePopup>
                 <CopyButton text={poolView} />
               </Box>
               <Box display={"flex"} alignItems={"center"}>
                 <Box fontSize="1.125rem" color={({ palette }) => palette.secondary.light}>
-                  Pool name:
+                  {t("common.poolName")}:
                 </Box>
                 <PoolNamePopup to={details.delegation(poolView)}>{poolName}</PoolNamePopup>
               </Box>

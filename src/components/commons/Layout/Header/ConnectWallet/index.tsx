@@ -3,6 +3,7 @@ import { Backdrop, Box } from "@mui/material";
 import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { NetworkType } from "@cardano-foundation/cardano-connect-with-wallet-core";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { WalletIcon } from "src/commons/resources";
 import { RootState } from "src/stores/types";
@@ -15,7 +16,7 @@ import {
   setUserData
 } from "src/stores/user";
 import { getInfo, getNonce, signIn } from "src/commons/utils/userRequest";
-import { NETWORK, NETWORKS, NETWORK_TYPES } from "src/commons/utils/constants";
+import { ACCOUNT_ERROR, NETWORK, NETWORKS, NETWORK_TYPES } from "src/commons/utils/constants";
 import { removeAuthInfo, validateTokenExpired } from "src/commons/utils/helper";
 import useToast from "src/commons/hooks/useToast";
 import ConnectedProfileOption from "src/components/commons/ConnectedProfileOption";
@@ -31,6 +32,7 @@ interface Props {
 }
 
 const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
+  const { t } = useTranslation();
   const { openModal, modalRegister, modalSignMessage, nonce } = useSelector(({ user }: RootState) => user);
   const { isEnabled, stakeAddress, isConnected, connect, signMessage, disconnect, enabledWallet } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
@@ -60,7 +62,8 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
       const response = await getNonce({ address: stakeAddress || "", walletName: enabledWallet?.toUpperCase() || "" });
       return response.data;
     } catch (error: any) {
-      toast.error(error.data?.errorMessage || "Something went wrong!");
+      const message = t(error.data?.errorCode || ACCOUNT_ERROR.INTERNAL_ERROR);
+      toast.error(message);
       setModalSignMessage(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -110,7 +113,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
           nonceValue.nonce,
           (signature: any) => handleSignIn(signature, nonceValue),
           () => {
-            toast.error("User rejected the request!");
+            toast.error(t("message.user.rejected"));
             setModalSignMessage(false);
             disconnect();
             removeAuthInfo();
@@ -118,7 +121,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         );
       }
     } catch (error) {
-      toast.error("Something went wrong!");
+      toast.error(t("message.common.somethingWentWrong"));
     } finally {
       setSubmitting(false);
     }
@@ -135,7 +138,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
     return (
       <StyledButton type="button">
         <Spin size={20} />
-        <Span>Reconnecting</Span>
+        <Span>{t("common.reconnecting")}</Span>
       </StyledButton>
     );
   }

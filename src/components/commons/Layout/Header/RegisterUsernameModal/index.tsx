@@ -3,9 +3,10 @@ import { useSelector } from "react-redux";
 import { FormHelperText } from "@mui/material";
 import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { NetworkType } from "@cardano-foundation/cardano-connect-with-wallet-core";
+import { useTranslation } from "react-i18next";
 
 import { authAxios } from "src/commons/utils/axios";
-import { NETWORK, NETWORKS, NETWORK_TYPES } from "src/commons/utils/constants";
+import { ACCOUNT_ERROR, NETWORK, NETWORKS, NETWORK_TYPES } from "src/commons/utils/constants";
 import { alphaNumeric, removeAuthInfo } from "src/commons/utils/helper";
 import { existUserName } from "src/commons/utils/userRequest";
 import useToast from "src/commons/hooks/useToast";
@@ -23,6 +24,7 @@ export interface IProps {
   setIsSign: (isSign: boolean) => void;
 }
 const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setIsSign }) => {
+  const { t } = useTranslation();
   const { disconnect } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
   });
@@ -59,11 +61,12 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setIs
         setIsSign(true);
         setModalRegister(false);
       } else {
-        setErrorMessage("This username is already taken, please choose another name");
+        setErrorMessage(t("message.usernameTaken"));
       }
     } catch (error: any) {
-      setErrorMessage(error.response?.data.errorMessage);
-      toast.error(error.response?.data.errorMessage || "");
+      const message = t(error.response?.data?.errorCode || ACCOUNT_ERROR.INTERNAL_ERROR);
+      setErrorMessage(message);
+      toast.error(message || "");
       disconnect();
       removeAuthInfo();
     } finally {
@@ -92,7 +95,7 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setIs
           onChange={(e) => {
             const val = e.target.value;
             if (alphaNumeric.test(val) || val.length < 5 || val.length > 30) {
-              setErrorMessage("Please enter a valid username");
+              setErrorMessage(t("validatation.username.invalid"));
             } else {
               setErrorMessage("");
             }

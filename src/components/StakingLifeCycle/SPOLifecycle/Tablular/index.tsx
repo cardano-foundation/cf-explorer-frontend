@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { useHistory, useParams } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import StakeTab, { StakeTabItem } from "src/components/TabularView/StakeTab";
 import { DeredistrationIcon, OperatorRewardIcon, PoolUpdateIcon, RegistrationIcon } from "src/commons/resources";
@@ -15,42 +16,42 @@ interface SPOTabItem extends StakeTabItem {
   keyCheckShow: string;
 }
 
-const tabs: SPOTabItem[] = [
-  {
-    icon: RegistrationIcon,
-    label: "Registration",
-    key: "registration",
-    component: <PoolRegistrationTab />,
-    keyCheckShow: "isRegistration"
-  },
-  {
-    icon: PoolUpdateIcon,
-    label: "Pool Update",
-    key: "pool-updates",
-    component: <PoolUpdateTab />,
-    keyCheckShow: "isUpdate"
-  },
-  {
-    icon: OperatorRewardIcon,
-    label: "Operator Rewards",
-    key: "operator-rewards",
-    component: <OperatorRewardTab />,
-    keyCheckShow: "isReward"
-  },
-  {
-    icon: DeredistrationIcon,
-    label: "Deregistration",
-    key: "deregistration",
-    component: <DeregsitrationTab />,
-    keyCheckShow: "isDeRegistration"
-  }
-];
-
 interface ITabular {
   renderTabsSPO?: ListTabResponseSPO;
 }
 
 const Tabular = ({ renderTabsSPO }: ITabular) => {
+  const { t } = useTranslation();
+  const tabs: SPOTabItem[] = [
+    {
+      icon: RegistrationIcon,
+      label: t("common.registration"),
+      key: "registration",
+      component: <PoolRegistrationTab />,
+      keyCheckShow: "isRegistration"
+    },
+    {
+      icon: PoolUpdateIcon,
+      label: t("common.poolUpdate"),
+      key: "pool-updates",
+      component: <PoolUpdateTab />,
+      keyCheckShow: "isUpdate"
+    },
+    {
+      icon: OperatorRewardIcon,
+      label: t("common.operatorRewards"),
+      key: "operator-rewards",
+      component: <OperatorRewardTab />,
+      keyCheckShow: "isReward"
+    },
+    {
+      icon: DeredistrationIcon,
+      label: t("slc.deregistration"),
+      key: "deregistration",
+      component: <DeregsitrationTab />,
+      keyCheckShow: "isDeRegistration"
+    }
+  ];
   const { poolId = "", tab = "registration" } = useParams<{ poolId: string; tab: SPOStep }>();
   const history = useHistory();
 

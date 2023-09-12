@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -16,6 +17,7 @@ import { StyledLink } from "src/components/share/styled";
 import ADAicon from "src/components/commons/ADAIcon";
 
 const WithdrawalHistoryTab = () => {
+  const { t } = useTranslation();
   const { reportId } = useParams<{ reportId: string }>();
   const { search } = useLocation();
   const history = useHistory();
@@ -34,7 +36,7 @@ const WithdrawalHistoryTab = () => {
   const { total } = fetchData;
   const columns: Column<WithdrawItem>[] = [
     {
-      title: "Transaction Hash",
+      title: t("glossary.txHash"),
       key: "hash",
       minWidth: "120px",
       render: (r) => (
@@ -44,7 +46,7 @@ const WithdrawalHistoryTab = () => {
       )
     },
     {
-      title: "Created At",
+      title: t("createdAt"),
       key: "time",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
@@ -55,8 +57,8 @@ const WithdrawalHistoryTab = () => {
     {
       title: (
         <>
-          <Box>Net Amount</Box>
-          <TableSubTitle>Withdrawn/Fees</TableSubTitle>
+          <Box>{t("common.netAmount")}</Box>
+          <TableSubTitle>{t("common.withdrawnOrFees")}</TableSubTitle>
         </>
       ),
       key: "epoch",
@@ -89,7 +91,7 @@ const WithdrawalHistoryTab = () => {
       <Table
         {...fetchData}
         columns={columns}
-        total={{ title: "Total", count: fetchData.total }}
+        total={{ title: t("common.total"), count: fetchData.total }}
         pagination={{
           ...pageInfo,
           total: fetchData.total,

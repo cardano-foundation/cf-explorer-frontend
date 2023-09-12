@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
+import { useTranslation } from "react-i18next";
 
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import CustomTabTitle from "src/components/commons/CustomTabTitle";
@@ -29,6 +30,7 @@ const StakeTab: React.FC<StackTabProps> = ({
   tabsRenderConfig,
   checkshow
 }) => {
+  const { t } = useTranslation();
   const [tabActive, setTabActive] = useState<string>(initTab);
   const theme = useTheme();
 
@@ -59,7 +61,7 @@ const StakeTab: React.FC<StackTabProps> = ({
                     title={
                       !checkshow || (tabsRenderConfig && tabsRenderConfig[keyCheckShow || ""])
                         ? undefined
-                        : "There is no record at this time"
+                        : t("common.noRecordAtTime")
                     }
                   >
                     <CustomTabTitle

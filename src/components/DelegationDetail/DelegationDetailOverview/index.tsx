@@ -1,5 +1,6 @@
 import { Box, Grid, Skeleton } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { formatADAFull, formatPercent, numberWithCommas } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -13,18 +14,19 @@ interface IDelegationDetailOverview {
 }
 
 const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, loading }) => {
+  const { t } = useTranslation();
   const overviewData = [
     {
       title: (
         <Box component="span">
-          Fixed Cost (<ADAicon />)
+          {t("glossary.fixedCost")} (<ADAicon />)
         </Box>
       ),
       value: formatADAFull(data?.cost),
       tooltip: ""
     },
     {
-      title: "Margin",
+      title: t("margin"),
       value: formatPercent(data?.margin),
       tooltip: ""
     },
@@ -32,19 +34,19 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
     {
       title: (
         <Box component="span">
-          Declared Pledge (<ADAicon />)
+          {t("declaredPledge")} (<ADAicon />)
         </Box>
       ),
       value: formatADAFull(data?.pledge),
       tooltip: ""
     },
     {
-      title: "Epoch Blocks",
+      title: t("epochBlocks"),
       value: data?.epochBlock || 0,
       tooltip: ""
     },
     {
-      title: "Lifetime Blocks",
+      title: t("lifetimeBlocks"),
       value: numberWithCommas(data?.lifetimeBlock),
       tooltip: ""
     }

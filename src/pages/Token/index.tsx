@@ -2,6 +2,7 @@ import { stringify } from "qs";
 import { useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { details } from "src/commons/routers";
 import {
@@ -17,7 +18,6 @@ import { setOnDetailView } from "src/stores/user";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DetailViewToken from "src/components/commons/DetailView/DetailViewToken";
 import SelectedIcon from "src/components/commons/SelectedIcon";
@@ -25,9 +25,11 @@ import SelectedIcon from "src/components/commons/SelectedIcon";
 import { AssetName, Logo, StyledContainer, TimeDuration } from "./styles";
 
 const Tokens = () => {
+  const { t } = useTranslation();
   const [token, setToken] = useState<IToken | null>(null);
   const [sort, setSort] = useState<string>("txCount,DESC");
   const { onDetailView } = useSelector(({ user }: RootState) => user);
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
 
   const [selected, setSelected] = useState<number | null>(null);
   const { search } = useLocation();
@@ -41,7 +43,7 @@ const Tokens = () => {
     API.TOKEN.LIST,
     { ...pageInfo, sort, query: queries.get("tokenName") || "" },
     false,
-    REFRESH_TIMES.TOKEN_LIST
+    blockNo
   );
 
   useEffect(() => {
@@ -51,13 +53,13 @@ const Tokens = () => {
 
   const columns: Column<IToken>[] = [
     {
-      title: "Icon",
+      title: t("glossary.icon"),
       key: "icon",
       minWidth: "50px",
       render: (r) => (r?.metadata?.logo ? <Logo src={`${r.metadata?.logo}`} alt="icon" /> : "")
     },
     {
-      title: "Asset Name",
+      title: t("glossary.assetName"),
       key: "assetName",
       minWidth: "100px",
       render: (r) =>
@@ -72,7 +74,7 @@ const Tokens = () => {
         )
     },
     {
-      title: "Policy ID",
+      title: t("glossary.policyId"),
       key: "policy",
       minWidth: "100px",
       render: (r) => (
@@ -82,7 +84,7 @@ const Tokens = () => {
       )
     },
     {
-      title: "Total Transactions",
+      title: t("common.totalTxs"),
       key: "txCount",
       minWidth: "150px",
       render: (r) => numberWithCommas(r?.txCount),
@@ -91,25 +93,25 @@ const Tokens = () => {
       }
     },
     {
-      title: "Number of Holders",
+      title: t("glossary.numberOfHolders"),
       key: "numberOfHolders",
       minWidth: "150px",
       render: (r) => numberWithCommas(r?.numberOfHolders)
     },
     {
-      title: "Total Volume",
+      title: t("glossary.totalVolumn"),
       key: "TotalVolume",
       minWidth: "150px",
       render: (r) => formatNumberDivByDecimals(r?.totalVolume, r.metadata?.decimals || 0)
     },
     {
-      title: "Volume 24H",
+      title: t("glossary.volume24h"),
       key: "volumeIn24h",
       minWidth: "150px",
       render: (r) => formatNumberDivByDecimals(r?.volumeIn24h, r.metadata?.decimals || 0)
     },
     {
-      title: "Total Supply",
+      title: t("common.totalSupply"),
       key: "supply",
       minWidth: "150px",
       render: (r) => {
@@ -121,7 +123,7 @@ const Tokens = () => {
       }
     },
     {
-      title: "Created At",
+      title: t("createdAt"),
       key: "time",
       minWidth: "150px",
       render: (r) => (
@@ -153,7 +155,7 @@ const Tokens = () => {
 
   return (
     <StyledContainer>
-      <Card title="Native Tokens">
+      <Card title={t("glossary.nativeTokens")}>
         <TimeDuration>
           <FormNowMessage time={lastUpdated} />
         </TimeDuration>

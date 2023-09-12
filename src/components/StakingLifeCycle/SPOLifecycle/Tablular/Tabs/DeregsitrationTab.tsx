@@ -2,6 +2,7 @@ import { Box, IconButton } from "@mui/material";
 import BigNumber from "bignumber.js";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { EyeIcon } from "src/commons/resources";
@@ -18,6 +19,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import { DeregistrationCertificateModal } from "../../Deregistration";
 
 const DeregsitrationTab = () => {
+  const { t } = useTranslation();
   const { poolId = "" } = useParams<{ poolId: string }>();
   const [params, setParams] = useState({
     page: 0,
@@ -30,7 +32,7 @@ const DeregsitrationTab = () => {
   const columns: Column<SPODeregistrationTabpular>[] = [
     {
       key: "txHash",
-      title: "Transaction hash",
+      title: t("common.txhash"),
       render(data) {
         return (
           <CustomTooltip title={data.txHash}>
@@ -41,7 +43,7 @@ const DeregsitrationTab = () => {
     },
     {
       key: "time",
-      title: "Created At",
+      title: t("createdAt"),
       sort({ columnKey, sortValue }) {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       },
@@ -53,9 +55,9 @@ const DeregsitrationTab = () => {
       key: "fee",
       title: (
         <Box>
-          ADA Value
+          {t("glossary.adaValue")}
           <Box fontSize={"0.75rem"} fontWeight={"normal"}>
-            Hold/Fees
+            {t("common.holdOrFees")}
           </Box>
         </Box>
       ),
@@ -76,7 +78,7 @@ const DeregsitrationTab = () => {
     },
     {
       key: "Certificate",
-      title: "Certificate",
+      title: t("common.certificate"),
       render: (data) => (
         <IconButton onClick={() => setSelected(data)}>
           <EyeIcon />
@@ -99,7 +101,7 @@ const DeregsitrationTab = () => {
         {...fetchData}
         columns={columns}
         total={{
-          title: "Pool Registration",
+          title: t("common.poolRegistration"),
           count: fetchData.total
         }}
         pagination={{

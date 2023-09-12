@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Grid, Box, useTheme, Button } from "@mui/material";
 import { useSelector } from "react-redux";
 import { HiArrowLongLeft } from "react-icons/hi2";
+import { useTranslation } from "react-i18next";
 
 import { exchangeADAToUSD, formatADAFull, getShortWallet } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
@@ -25,6 +26,7 @@ interface Props {
   loading: boolean;
 }
 const AddressHeader: React.FC<Props> = ({ data, loading }) => {
+  const { t } = useTranslation();
   const [stakeKey, setStakeKey] = useState("");
   const {
     data: dataStake,
@@ -40,9 +42,9 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   }, [data]);
 
   const itemLeft = [
-    { title: "Transactions", value: data?.txCount || 0 },
+    { title: t("drawer.transactions"), value: data?.txCount || 0 },
     {
-      title: "ADA Balance",
+      title: t("glossary.adaBalance"),
       value: (
         <Box display="flex" alignItems="center">
           {formatADAFull(data?.balance)}&nbsp;
@@ -51,7 +53,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       )
     },
     {
-      title: "ADA Value",
+      title: t("glossary.adaValue"),
       value: <Box>$ {exchangeADAToUSD(data?.balance || 0, adaRate, true)}</Box>
     },
     {
@@ -60,7 +62,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   ];
   const itemRight = [
     {
-      title: "Total Stake",
+      title: t("drawer.totalStake"),
       value: (
         <Box>
           {formatADAFull(dataStake?.totalStake)}&nbsp;
@@ -69,7 +71,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       )
     },
     {
-      title: "Pool Name",
+      title: t("glossary.poolName"),
       value: dataStake?.pool?.poolId ? (
         <Link
           to={dataStake?.pool?.poolId ? details.delegation(dataStake.pool.poolId) : "#"}
@@ -84,11 +86,11 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           )}
         </Link>
       ) : (
-        <span>Not delegated to any pool</span>
+        <span>{t("drawer.notDelegatedToAnyPool")}</span>
       )
     },
     {
-      title: "Reward Balance",
+      title: t("glossary.rewardBalance"),
       value: (
         <Box>
           {formatADAFull(dataStake?.rewardAvailable)}&nbsp;
@@ -103,11 +105,11 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
       <WrapHeader>
         <BackButton onClick={history.goBack}>
           <HiArrowLongLeft fontSize="16px" />
-          <BackText>Back</BackText>
+          <BackText>{t("common.back")}</BackText>
         </BackButton>
         <Box width={"100%"} display={"flex"} flexWrap={"wrap"} alignItems={"center"} justifyContent={"space-between"}>
           <Box component={"h2"} lineHeight={1} mt={2} display={"flex"} alignItems={"center"}>
-            <TitleText>Address Details</TitleText>
+            <TitleText>{t("address.title.addressDetail")}</TitleText>
             <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
           </Box>
           {data?.isContract && (
@@ -116,7 +118,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
               component={Button}
               onClick={() => history.push(details.contract(data?.address))}
             >
-              View Contract Detail
+              {t("address.viewContractDetail")}
             </RedirectButton>
           )}
         </Box>
@@ -128,7 +130,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
         <Grid item xs={12} md={6}>
           <StyledBoxCard>
             <CardAddress
-              title={"Address"}
+              title={t("common.address")}
               type="left"
               address={data?.address || ""}
               item={itemLeft}
@@ -139,7 +141,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
         <Grid item xs={12} md={6}>
           <StyledBoxCard>
             <CardAddress
-              title={"Stake Address"}
+              title={t("common.stakeAddress")}
               type="right"
               address={data?.stakeAddress || ""}
               item={itemRight}

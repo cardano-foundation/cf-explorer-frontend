@@ -4,6 +4,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useLocalStorage } from "react-use";
+import { useTranslation } from "react-i18next";
 
 import useAuth from "src/commons/hooks/useAuth";
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -22,6 +23,7 @@ import { Column } from "src/types/table";
 import { CancelButton, DeleteButton, StyledTable, TitleTab, WrapTab } from "./Styles";
 
 const Bookmark = () => {
+  const { t } = useTranslation();
   const { isLoggedIn } = useAuth();
   const history = useHistory();
   const [bookmarks, setBookmarks] = useLocalStorage<Bookmark[]>("bookmark", []);
@@ -73,12 +75,12 @@ const Bookmark = () => {
         setLoadingDelete(false);
         setBookmarks(bookmarks?.filter((r) => r.keyword !== keyword));
         refresh();
-        toast.success("Delete bookmark successfully!");
+        toast.success(t("message.bookmark.deleted"));
       }
     } catch (error) {
       setSelected(null);
       setLoadingDelete(false);
-      toast.error("Something went wrong!");
+      toast.error(t("message.common.somethingWentWrong"));
     }
   };
   const handleChange = (event: React.SyntheticEvent, tab: Bookmark["type"]) => {

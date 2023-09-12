@@ -1,11 +1,12 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -18,18 +19,20 @@ import { Actions, PageSize, PerPage, SelectMui, StyledLink, StyledMenuItem, Time
 const perPages = [10, 20, 50, 100];
 
 const TopAddressesByAmountStaked = () => {
+  const { t } = useTranslation();
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const history = useHistory();
   const [pageSize, setPageSize] = useState("50");
   const { error, data, initialized, loading, lastUpdated } = useFetchList<Contracts>(
     API.STAKE.TOP_DELEGATOR,
     { page: 0, size: +pageSize },
     false,
-    REFRESH_TIMES.TOP_DELEGATORS
+    blockNo
   );
 
   const columns: Column<TopDelegator>[] = [
     {
-      title: "Stake Address",
+      title: t("common.stakeAddress"),
       minWidth: 200,
       key: "addresses",
       render: (r) => (
@@ -39,7 +42,7 @@ const TopAddressesByAmountStaked = () => {
       )
     },
     {
-      title: "Pool",
+      title: t("glossary.pool"),
       key: "pool",
       maxWidth: 300,
       render: (r) => (
@@ -49,7 +52,7 @@ const TopAddressesByAmountStaked = () => {
       )
     },
     {
-      title: "Stake amount",
+      title: t("stakeAmount"),
       key: "Stakeamount",
       render: (r) => (
         <Box component={"span"}>
@@ -78,7 +81,7 @@ const TopAddressesByAmountStaked = () => {
               </StyledMenuItem>
             ))}
           </SelectMui>
-          <PerPage>Delegators</PerPage>
+          <PerPage>{t("delegators")}</PerPage>
         </PageSize>
       </Actions>
       <Table

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { CircularProgress, Stack } from "@mui/material";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import useToast from "src/commons/hooks/useToast";
@@ -29,6 +30,7 @@ import {
 import { IPropsModal, STEPS } from ".";
 
 const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params, gotoStep }) => {
+  const { t } = useTranslation();
   const toast = useToast();
   const [loading, setLoading] = useState(false);
 
@@ -68,13 +70,13 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
         await generateStakeKeyReport(paramsStakeKeyReport);
       }
 
-      toast.success("Report generated successfully");
+      toast.success(t("message.report.generated"));
       handleCloseModal();
       setTimeout(() => {
         history.push(lists.dashboard(isPoolReport ? "pool-reports" : "stake-key-reports"));
       }, 2000);
     } catch (err: any) {
-      toast.error("Failed to generate report. Please try again.");
+      toast.error(t("message.report.failedGenerate"));
     }
     setLoading(false);
   };
@@ -89,7 +91,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
 
   const list = [
     {
-      label: "Report name",
+      label: t("report.name"),
       value: (
         <CustomTooltip title={`${params.reportName}`.replaceAll("-", " ")}>
           <TextOverFlow>{`${params.reportName}`.replaceAll("-", " ")}</TextOverFlow>
@@ -97,17 +99,17 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
       )
     },
     {
-      label: isPoolReport ? "Epoch range" : "Date range",
+      label: isPoolReport ? t("common.epochRange") : t("filter.daterange"),
       value: (
         <TextOverFlow>
           {isPoolReport
-            ? `Epoch ${epochStart} -  Epoch ${epochEnd}`
+            ? `${t("common.Epoch")} ${epochStart} -  ${t("common.Epoch")} ${epochEnd}`
             : `${moment(start).format("MM/DD/yyyy")} - ${moment(end).format("MM/DD/yyyy")}`}
         </TextOverFlow>
       )
     },
     {
-      label: isPoolReport ? "Pool ID" : "Stake address details",
+      label: isPoolReport ? t("common.poolID") : t("common.stakeAddressDetails"),
       value: (
         <CustomTooltip title={params.address}>
           <TextOverFlow>{params.address}</TextOverFlow>
@@ -115,21 +117,18 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
       )
     },
     {
-      label: isPoolReport ? "Pool size" : "ADA transfers",
+      label: isPoolReport ? t("glossary.poolSize") : t("common.adaTransfers"),
       value: <TextOverFlow>{isPoolReport ? params.poolSize : params.adaTransfers}</TextOverFlow>
     },
     {
-      label: isPoolReport ? "Pool Report by event" : "Staking lifecycle events",
+      label: isPoolReport ? t("common.poolReportByEvent") : t("common.stakingLCEvent"),
       value: <TextOverFlow sx={{ whiteSpace: "normal" }}>{events}</TextOverFlow>
     }
   ];
   return (
-    <CustomModal open={open} onClose={handleCloseModal} title="Report composer" width={500}>
+    <CustomModal open={open} onClose={handleCloseModal} title={t("report.composer")} width={500}>
       <Container>
-        <TextRequired>
-          Before proceeding with your report creation, we just want to double-check and confirm that you’ve filled out
-          all the details correctly?
-        </TextRequired>
+        <TextRequired>{t("slc.reportDoubleCheck")}</TextRequired>
         <Stack data-testid="checking-report-content" marginBottom="35px">
           {list.map(({ label, value }) => {
             return (
@@ -149,7 +148,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
             width={isMobile ? 120 : 100}
             onClick={() => gotoStep?.(STEPS.step1)}
           >
-            I’d like to double-check
+            {t("slc.btn.doubleCheck")}
           </StyledBackButton>
           <StyledButton
             data-testid="compose-button"
@@ -157,7 +156,8 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
             onClick={handleGenerateReport}
             sx={{ fontSize: isMobile ? 14 : 16 }}
           >
-            {loading && <CircularProgress color="info" size={20} />}Generate report
+            {loading && <CircularProgress color="info" size={20} />}
+            {t("common.generateReport")}
           </StyledButton>
         </StyledStack>
       </Container>

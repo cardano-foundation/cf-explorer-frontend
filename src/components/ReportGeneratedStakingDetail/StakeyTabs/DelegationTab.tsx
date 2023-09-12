@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { Box, IconButton } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { details } from "src/commons/routers";
 import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
@@ -18,6 +19,7 @@ import { AdaValue } from "./StakingRegistrationTab";
 import { StakingDetailContext } from "..";
 
 const DelegationTab = () => {
+  const { t } = useTranslation();
   const [selected, setSelected] = useState<string>("");
   const { stakeKey } = useContext(StakingDetailContext);
   const { reportId } = useParams<{ reportId: string }>();
@@ -35,7 +37,7 @@ const DelegationTab = () => {
   const { total } = fetchData;
   const columns: Column<DelegationItem>[] = [
     {
-      title: "Transaction Hash",
+      title: t("glossary.transactionHash"),
       key: "hash",
       minWidth: "120px",
       render: (r) => (
@@ -45,7 +47,7 @@ const DelegationTab = () => {
       )
     },
     {
-      title: "Created At",
+      title: t("createdAt"),
       key: "time",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
@@ -54,13 +56,13 @@ const DelegationTab = () => {
       }
     },
     {
-      title: "Fees",
+      title: t("common.fees"),
       key: "block",
       minWidth: "120px",
       render: (r) => <AdaValue value={r.fee} />
     },
     {
-      title: "Certificate",
+      title: t("common.certificate"),
       key: "poolId",
       minWidth: "120px",
       render: (r) => (
@@ -83,7 +85,7 @@ const DelegationTab = () => {
       <Table
         {...fetchData}
         columns={columns}
-        total={{ title: "Total", count: fetchData.total }}
+        total={{ title: t("common.total"), count: fetchData.total }}
         pagination={{
           ...pageInfo,
           page: pageInfo.page,

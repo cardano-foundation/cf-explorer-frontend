@@ -5,6 +5,8 @@ import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Area, AreaChart, CartesianGrid, Label, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { TooltipProps } from "recharts/types/component/Tooltip";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -43,11 +45,18 @@ const options = [
 ];
 
 const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
+  const { t } = useTranslation();
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const { tokenId } = useParams<{ tokenId: string }>();
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const { isMobile } = useScreen();
   const theme = useTheme();
-  const { data, loading } = useFetch<AnalyticsData[]>(`${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`);
+  const { data, loading } = useFetch<AnalyticsData[]>(
+    `${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`,
+    undefined,
+    false,
+    blockNo
+  );
 
   const values = (data || [])?.map((item) => item.value || 0) || [];
 
@@ -74,7 +83,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
       case "ONE_MONTH":
         return `${moment(label).format("DD MMM")} - ${moment(label).add(1, "days").format("DD MMM")}`;
       case "THREE_MONTH":
-        return `${moment(label).format("DD MMM")} - ${moment(label).add(6, "days").format("DD MMM")}`;
+        return `${moment(label).format("DD MMM")} - ${moment(label).add(1, "days").format("DD MMM")}`;
       default:
         return "";
     }
@@ -93,12 +102,12 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
 
   return (
     <Box pt={isMobile ? 0 : "20px"}>
-      <Card title={<TextCardHighlight>Analytics</TextCardHighlight>}>
+      <Card title={<TextCardHighlight>{t("analytics")}</TextCardHighlight>}>
         <Wrapper container columns={24} spacing="35px">
           <Grid item xs={24} lg={18}>
             <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
               <Grid item xs={4} sm={4}>
-                <ButtonTitle>Volume</ButtonTitle>
+                <ButtonTitle>{t("glossary.volumn")}</ButtonTitle>
               </Grid>
               <Grid item xs={8} sm={8}>
                 <Tabs>
@@ -147,7 +156,6 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                       stroke={theme.palette.primary.main}
                       strokeWidth={4}
                       fill="url(#colorUv)"
-                      dot={{ r: 2 }}
                       activeDot={{ r: 6 }}
                     />
                   </AreaChart>
@@ -162,7 +170,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                   <Box>
                     <Box minHeight={"90px"}>
                       <img src={HighestIcon} alt="heighest icon" />
-                      <Title>Highest Volume</Title>
+                      <Title>{t("glossary.highestVolume")}</Title>
                     </Box>
                     <ValueInfo>
                       {loading ? (
@@ -179,7 +187,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                   <Box>
                     <Box minHeight={"90px"}>
                       <img src={LowestIcon} alt="lowest icon" />
-                      <Title>Lowest Volume</Title>
+                      <Title>{t("glossary.lowestVolume")}</Title>
                     </Box>
                     <ValueInfo>
                       {loading ? (

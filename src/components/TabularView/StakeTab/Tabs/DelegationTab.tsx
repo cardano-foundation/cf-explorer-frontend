@@ -1,6 +1,7 @@
 import { Box, IconButton } from "@mui/material";
 import { useContext, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { GreenWalletIcon } from "src/components/commons/GreenWalletIcon";
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
@@ -19,6 +20,7 @@ import { WrapFilterDescription } from "src/components/StakingLifeCycle/Delegator
 import { StyledLink, WrapperDelegationTab, WrapWalletLabel } from "../styles";
 
 const DelegationTab = () => {
+  const { t } = useTranslation();
   const detailData = useContext(DelegatorDetailContext);
   const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
@@ -35,7 +37,7 @@ const DelegationTab = () => {
 
   const columns: Column<DelegationItem>[] = [
     {
-      title: "Transaction Hash",
+      title: t("glossary.txHash"),
       key: "hash",
       minWidth: "120px",
       render: (r) => (
@@ -45,7 +47,7 @@ const DelegationTab = () => {
       )
     },
     {
-      title: "Created At",
+      title: t("createdAt"),
       key: "id",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
@@ -54,13 +56,13 @@ const DelegationTab = () => {
       }
     },
     {
-      title: "Fees",
+      title: t("common.fees"),
       key: "block",
       minWidth: "120px",
       render: (r) => <AdaValue value={r.fee} />
     },
     {
-      title: "Delegating to",
+      title: t("slc.delegatingTo"),
       key: "poolId",
       minWidth: "120px",
       render: (r) => (
@@ -70,7 +72,7 @@ const DelegationTab = () => {
       )
     },
     {
-      title: "Certificate",
+      title: t("common.certificate"),
       key: "poolId",
       minWidth: "120px",
       render: (r) => (
@@ -89,13 +91,14 @@ const DelegationTab = () => {
         <WrapWalletLabel>
           <GreenWalletIcon mr={1} />
           <Box color={({ palette }) => palette.secondary.light} mr={1}>
-            Wallet balance:
+            {t("common.walletBalance")}:
           </Box>
           <AdaValue color={({ palette }) => palette.secondary.main} value={detailData?.totalStake ?? 0} />
         </WrapWalletLabel>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
-            Showing {Math.min(total, pageInfo.size)} {Math.min(total, pageInfo.size) > 1 ? "results" : "result"}
+            {t("common.showing")} {Math.min(total, pageInfo.size)}{" "}
+            {Math.min(total, pageInfo.size) > 1 ? t("common.result") : t("common.results")}
           </WrapFilterDescription>
           <CustomFilter
             filterValue={params}
@@ -103,14 +106,14 @@ const DelegationTab = () => {
               setParams(params);
               setPageInfo((pre) => ({ ...pre, page: 0 }));
             }}
-            searchLabel="Search transaction"
+            searchLabel={t("common.searchTx")}
           />
         </Box>
       </WrapperDelegationTab>
       <Table
         {...fetchData}
         columns={columns}
-        total={{ title: "Total", count: fetchData.total }}
+        total={{ title: t("common.total"), count: fetchData.total }}
         pagination={{
           ...pageInfo,
           page: pageInfo.page,
