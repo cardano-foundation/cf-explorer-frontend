@@ -1,15 +1,14 @@
-import { useState } from "react";
-import { Box, Skeleton } from "@mui/material";
+import { useContext, useState } from "react";
+import { Box } from "@mui/material";
 import { useParams } from "react-router-dom";
 
-import useFetch from "src/commons/hooks/useFetch";
-import { API } from "src/commons/utils/api";
 import { details } from "src/commons/routers";
 import CopyButton from "src/components/commons/CopyButton";
 
 import RecentRegistrations from "./RecentRegistrations";
 import { RegistrationDraw } from "./RegistrationDraw";
 import { StakeLink, StyledCustomModal } from "./styles";
+import DelegatorDetailContext from "../DelegatorDetailContext";
 
 const Registration = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -36,24 +35,21 @@ interface RegistrationCertificateModalProps {
 }
 
 export const RegistrationCertificateModal = ({ stake, open, handleCloseModal }: RegistrationCertificateModalProps) => {
-  const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`);
+  const data = useContext(DelegatorDetailContext);
 
   return (
     <StyledCustomModal open={open} onClose={handleCloseModal} title="Registration certificate">
-      {loading && <Skeleton variant="rectangular" width={500} height={90} />}
-      {!loading && (
-        <Box p={3}>
-          <Box fontWeight={"bold"} mb={1} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
-            Stake Address
-          </Box>
-          {data && (
-            <Box display={"flex"} alignItems={"center"}>
-              <StakeLink to={details.stake(stake)}>{stake || ""}</StakeLink>
-              <CopyButton text={stake} />
-            </Box>
-          )}
+      <Box p={3}>
+        <Box fontWeight={"bold"} mb={1} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
+          Stake Address
         </Box>
-      )}
+        {data && (
+          <Box display={"flex"} alignItems={"center"}>
+            <StakeLink to={details.stake(stake)}>{stake || ""}</StakeLink>
+            <CopyButton text={stake} />
+          </Box>
+        )}
+      </Box>
     </StyledCustomModal>
   );
 };

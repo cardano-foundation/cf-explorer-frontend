@@ -72,10 +72,18 @@ const DelegatorLifecycle = () => {
   const theme = useTheme();
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { isLoggedIn } = useAuth();
-  const { data, error, initialized } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}`, undefined, false);
   const { data: listTabs, loading: loadingListTabs } = useFetch<ListStakeKeyResponse>(
     API.STAKE_LIFECYCLE.TABS(stakeId)
   );
+  const { data, error, initialized } = useFetch<IStakeKeyDetail>(
+    listTabs ? `${API.STAKE.DETAIL}/${stakeId}` : "",
+    undefined,
+    false
+  );
+
+  // eslint-disable-next-line no-console
+  console.log("data", data);
+
   const { data: dataReportLimit } = useFetch<IReportLimit>(API.REPORT.REPORT_LIMIT);
 
   useEffect(() => {
