@@ -1,5 +1,6 @@
 import { MenuItem, Select, SelectChangeEvent, styled } from "@mui/material";
 import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { BiChevronDown } from "react-icons/bi";
 
 import { FRONT_END_NETWORK, NETWORK, NETWORKS, NETWORK_NAMES, STORAGE_KEYS } from "src/commons/utils/constants";
@@ -39,6 +40,7 @@ const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
 }));
 
 const SelectNetwork: React.FC = () => {
+  const { t } = useTranslation();
   const handleChange = async (e?: SelectChangeEvent<unknown>) => {
     if (e) {
       if (FRONT_END_NETWORK[e.target.value as NETWORKS]) {
@@ -70,7 +72,7 @@ const SelectNetwork: React.FC = () => {
     >
       {Object.entries(NETWORK_NAMES).map(([key, value]) => (
         <StyledMenuItem data-testid="network-options" key={key} value={key}>
-          {String(value)}
+          {t(`network.${String(value).toLowerCase()}`)}
         </StyledMenuItem>
       ))}
     </StyledSelect>

@@ -2,6 +2,7 @@ import { CircularProgress, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { getShortWallet } from "src/commons/utils/helper";
 import DelegatorLifecycleComponent from "src/components/StakingLifeCycle/DelegatorLifecycle";
@@ -44,6 +45,7 @@ interface Params {
 const MODES: ViewMode[] = ["timeline", "tabular"];
 
 const DelegatorLifecycle = () => {
+  const { t } = useTranslation();
   const { stakeId = "", mode = "timeline", tab = "registration" } = useParams<Params>();
 
   const tabList: { [key in DelegationStep]: number } & { tablular: null } = {
@@ -90,7 +92,7 @@ const DelegatorLifecycle = () => {
   }, [listTabs]);
 
   useEffect(() => {
-    document.title = `Staking Delegation Lifecycle ${stakeId} | Cardano Blockchain Explorer`;
+    document.title = `${t("slc.stakingDelegationLC")} ${stakeId} | ${t("head.page.dashboard")}`;
   }, [stakeId]);
 
   const changeMode = (mode: ViewMode) => {
@@ -105,9 +107,9 @@ const DelegatorLifecycle = () => {
       <StyledContainer>
         <BoxContainerStyled>
           <LifeCycleHeader sidebar={+sidebar}>
-            <LifeCycleTitle>Staking Delegation Lifecycle</LifeCycleTitle>
+            <LifeCycleTitle>{t("slc.stakingDelegationLC")}</LifeCycleTitle>
             <AddressLine>
-              <Label>Stake Address:</Label>
+              <Label>{t("common.stakeAddress")}:</Label>
               <CustomTooltip title={stakeId}>
                 <StakeId to={details.stake(stakeId)}>{getShortWallet(stakeId)}</StakeId>
               </CustomTooltip>
@@ -116,7 +118,9 @@ const DelegatorLifecycle = () => {
           </LifeCycleHeader>
           <BoxItemStyled sidebar={+sidebar}>
             <BoxSwitchContainer sidebar={+sidebar}>
-              <LabelSwitch>Switch to {validMode === "timeline" ? "tabular" : "timeline"} view</LabelSwitch>
+              <LabelSwitch>
+                {validMode !== "timeline" ? t("common.switchTablularView") : t("common.switchTimelineView")}
+              </LabelSwitch>
               <SwitchGroup>
                 <ButtonSwitch active={+(validMode === "timeline")} onClick={() => changeMode("timeline")}>
                   <TableMode
@@ -133,10 +137,8 @@ const DelegatorLifecycle = () => {
             <CustomTooltip
               title={
                 !isLoggedIn
-                  ? "Please sign in to use this feature"
-                  : `Please note that you can only create ${
-                      dataReportLimit?.limitPer24hours || 0
-                    } reports within 24 hours`
+                  ? t("common.pleaseSignIntoUseFeature")
+                  : t("message.report.limitGenerate", { time: dataReportLimit?.limitPer24hours || 0 })
               }
             >
               <ReportButtonContainer>
@@ -145,7 +147,7 @@ const DelegatorLifecycle = () => {
                   onClick={() => setOpen(true)}
                   sidebar={+sidebar}
                 >
-                  Compose report
+                  {t("common.composeReport")}
                 </ButtonReport>
               </ReportButtonContainer>
             </CustomTooltip>

@@ -10,6 +10,7 @@ import {
   alpha,
   useTheme
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { isObject, isEmpty } from "lodash";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -57,6 +58,7 @@ interface IProtocolParamVertical {
 }
 
 const ProtocolParameter: React.FC = () => {
+  const { t } = useTranslation();
   const [costModelScript, setCostModelScript] = useState("");
   const { histories } = useParams<{ histories?: "histories" }>();
   const history = useHistory();
@@ -86,14 +88,14 @@ const ProtocolParameter: React.FC = () => {
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
-    document.title = `Protocol Parameters | Cardano Blockchain Explorer`;
+    document.title = `${t("common.protocolParameters")} | ${t("head.page.dashboard")}`;
   }, []);
 
   const theme = useTheme();
 
   const columnsVerticalFixedTable: Column<any>[] = [
     {
-      title: "Parameter Name",
+      title: t("common.parameterName"),
       key: "name",
       render: (r: IProtocolParamVertical) => {
         const k = r.name;
@@ -106,7 +108,7 @@ const ProtocolParameter: React.FC = () => {
                 padding={"2px"}
                 onClick={() =>
                   setExplainerText({
-                    content: explainerTextGlobalConstants[k as keyof Omit<ProtocolHistory, "epochChanges">],
+                    content: t(`explain.${k}`),
                     title: k
                   })
                 }
@@ -119,7 +121,7 @@ const ProtocolParameter: React.FC = () => {
       }
     },
     {
-      title: "Value",
+      title: t("common.value"),
       key: "value",
       maxWidth: 400,
       render: (r: any) => {
@@ -150,7 +152,7 @@ const ProtocolParameter: React.FC = () => {
 
   const columnsVerticalLatestTable: Column<any>[] = [
     {
-      title: "Parameter Name",
+      title: t("common.parameterName"),
       key: "name",
       render: (r: IProtocolParamVertical) => {
         const k = r.name;
@@ -163,7 +165,7 @@ const ProtocolParameter: React.FC = () => {
                 padding={"2px"}
                 onClick={() =>
                   setExplainerText({
-                    content: explainerTextProtocolHistory[k as keyof Omit<ProtocolHistory, "epochChanges">],
+                    content: t(`explain.${k}`),
                     title: k
                   })
                 }
@@ -176,7 +178,7 @@ const ProtocolParameter: React.FC = () => {
       }
     },
     {
-      title: "Value",
+      title: t("common.value"),
       key: "value",
       maxWidth: 400,
       render: (r: any) => {
@@ -204,12 +206,12 @@ const ProtocolParameter: React.FC = () => {
       }
     },
     {
-      title: "Last updated in epoch",
+      title: t("common.lastUpdatedInEpoch"),
       key: "epochNo",
       render: (r: any) => <Box>{r?.epochNo}</Box>
     },
     {
-      title: "Timestamp",
+      title: t("common.timestamp"),
       key: "timestamp",
       render: (r: any) => (r?.time ? formatDateTimeLocal(r.time) : "")
     }
@@ -223,19 +225,19 @@ const ProtocolParameter: React.FC = () => {
         <Box textAlign={"left"}>
           <BackButton onClick={() => history.push(lists.protocolParameters())}>
             <HiArrowLongLeft />
-            <BackText>Back</BackText>
+            <BackText>{t("common.back")}</BackText>
           </BackButton>
         </Box>
       )}
       {histories && <ProtocolParameterHistory />}
       {!histories && (
-        <Card titleSx={{ margin: 0 }} title={"Protocol Parameters"}>
+        <Card titleSx={{ margin: 0 }} title={t("common.protocolParameters")}>
           <Box pt={2}>
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
                 <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                   <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main} fontSize={"1.25rem"}>
-                    Updatable Parameters
+                    {t("common.updatableParameters")}
                   </Box>
                   <Box
                     component={Button}
@@ -245,7 +247,7 @@ const ProtocolParameter: React.FC = () => {
                     fontSize={"0.875rem"}
                     onClick={() => history.push(lists.protocolParameters("histories"))}
                   >
-                    View update history
+                    {t("common.viewUpdateHistory")}
                   </Box>
                 </Box>
                 {!initialLastest && (
@@ -267,7 +269,7 @@ const ProtocolParameter: React.FC = () => {
                     fontWeight={"bold"}
                     fontSize={"1.25rem"}
                   >
-                    Global Constants
+                    {t("glossary.globalconstants")}
                   </Box>
                   {!initialFixed && (
                     <Box
@@ -303,6 +305,7 @@ const ProtocolParameter: React.FC = () => {
 export default ProtocolParameter;
 
 export const ProtocolParameterHistory = () => {
+  const { t } = useTranslation();
   const { PROTOCOL_PARAMETER } = API;
   const TOTAL_PARAMETER = 29;
   const theme = useTheme();
@@ -346,8 +349,8 @@ export const ProtocolParameterHistory = () => {
     data &&
       (data.epochChanges || [])?.map(({ endEpoch, startEpoch }) => {
         return endEpoch === startEpoch
-          ? pushColumnTitle(`Epoch ${startEpoch}`)
-          : pushColumnTitle(`Epoch ${endEpoch} - ${startEpoch}`);
+          ? pushColumnTitle(`${t("glossary.epoch")} ${startEpoch}`)
+          : pushColumnTitle(`${t("glossary.epoch")} ${endEpoch} - ${startEpoch}`);
       });
   };
 
@@ -410,7 +413,7 @@ export const ProtocolParameterHistory = () => {
 
   const columnsFull: Column<TProtocolParam & { params: string }>[] = [
     {
-      title: "Parameter Name",
+      title: t("common.parameterName"),
       key: "ParameterName",
       fixed: true,
       render: (r: TProtocolParam & { params: string }) => {
@@ -423,7 +426,7 @@ export const ProtocolParameterHistory = () => {
                 padding={"2px"}
                 onClick={() =>
                   setExplainerText({
-                    content: explainerTextProtocolHistory[r?.params as keyof Omit<ProtocolHistory, "epochChanges">],
+                    content: t(`explain.${r?.params}`),
                     title: r?.params
                   })
                 }
@@ -485,7 +488,7 @@ export const ProtocolParameterHistory = () => {
         }}
         title={
           <Box>
-            Protocol parameters update history{" "}
+            {t("common.ppUpdateHistory")}{" "}
             <CustomTooltip
               componentsProps={{
                 tooltip: {
@@ -497,8 +500,9 @@ export const ProtocolParameterHistory = () => {
               }}
               title={
                 <Box>
-                  Please be aware that we just display the protocol parameters from Shelley Era onwards (from Epoch
-                  208). For further information, please visit
+                  {t("explain.shelleyEra", {
+                    epoch: 208
+                  })}
                   <Box
                     ml={1}
                     color={({ palette }) => `${palette.primary.main} !important`}
@@ -530,7 +534,7 @@ export const ProtocolParameterHistory = () => {
             >
               <FilterIcon />
               <Box ml={1} fontWeight={"bold"} color={({ palette }) => palette.secondary.light}>
-                Filter
+                {t("common.filter")}
               </Box>
             </Box>
             {showFilter && (
@@ -628,7 +632,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
   const [filterOption, { push: pushFilterOption, removeAt: removeAtFilterOption, clear }] =
     useList<string>(filterParams);
   const theme = useTheme();
-
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState<string | false>("");
   const [showDaterange, setShowDaterange] = useState<boolean>(false);
   const [sort, setSort] = useState<"FirstLast" | "LastFirst" | "">(sortTimeFilter);
@@ -657,7 +661,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
             <Box display={"flex"} alignItems={"center"}>
               <ImArrowDown2 />
               <Box ml={1} color={({ palette }) => palette.secondary.main}>
-                Latest - First
+                {t("filter.latestFirst")}
               </Box>
             </Box>
             {sort === "LastFirst" && <BsFillCheckCircleFill size={16} />}
@@ -668,7 +672,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
             <Box display={"flex"} alignItems={"center"}>
               <ImArrowUp2 />
               <Box ml={1} color={({ palette }) => palette.secondary.main}>
-                First - Latest
+                {t("filter.firstLatest")}
               </Box>
             </Box>
             {sort === "FirstLast" && <BsFillCheckCircleFill size={16} />}
@@ -680,7 +684,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
               <DateRangeIcon />
               <Box ml={1} color={({ palette }) => palette.secondary.main}>
                 {" "}
-                Date range
+                {t("filter.daterange")}
               </Box>
             </Box>
             {!isEmpty(dateRange) && <BsFillCheckCircleFill size={16} />}
@@ -699,7 +703,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
               <Box display={"flex"} alignItems={"center"}>
                 <ProtocolParam />
                 <Box ml={1} color={({ palette }) => palette.secondary.main}>
-                  Parameter changes {filterOption.length > 0 ? `(${filterOption.length})` : ""}
+                  {t("common.parameterChanges")} {filterOption.length > 0 ? `(${filterOption.length})` : ""}
                 </Box>
               </Box>
               <Box>{expanded === "params" ? <IoIosArrowDown /> : <IoIosArrowUp />}</Box>
@@ -727,7 +731,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                   }}
                 />
                 <StyledDropdownItem htmlFor={"all"} style={{ cursor: "pointer" }}>
-                  All parameters
+                  {t("common.allParameters")}
                 </StyledDropdownItem>
               </Box>
 
@@ -763,7 +767,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
             onClick={handleApplyFilter}
             disabled={filterOption.length === 0 && !sort && isEmpty(dateRange)}
           >
-            Apply filters
+            {t("common.applyFilters")}
           </ApplyFilterButton>
         </Box>
         <Box
@@ -779,7 +783,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           mt={2}
           color={({ palette }) => `${palette.primary.main} !important`}
         >
-          <Box mr={1}>Reset</Box>
+          <Box mr={1}>{t("common.reset")}</Box>
           <ResetIcon />
         </Box>
       </Box>

@@ -95,9 +95,9 @@ const TabularOverview: React.FC = () => {
 
   const ownerAccountValue = getShortWallet(stakeKeys?.[0]);
   const STATUS = {
-    ACTIVE: ["Active", theme.palette.secondary.main],
-    INACTIVE: ["Inactive", "rgb(255,0,0)"],
-    RETIRING: ["Retiring", theme.palette.error[700]]
+    ACTIVE: [t("common.active"), theme.palette.secondary.main],
+    INACTIVE: [t("common.incactive"), "rgb(255,0,0)"],
+    RETIRING: [t("common.retiring"), theme.palette.error[700]]
   };
 
   return (
@@ -116,7 +116,7 @@ const TabularOverview: React.FC = () => {
           }
         />
         <GridItem
-          title="Status"
+          title={t("common.status")}
           bgType="white"
           mainIcon={<StatusIcon />}
           value={
@@ -129,7 +129,9 @@ const TabularOverview: React.FC = () => {
               >
                 {STATUS[status ?? "ACTIVE"][0] + ": "}
               </CardValue>
-              <ClickAbleLink to={details.epoch(epochNo)}>Epoch {epochNo}</ClickAbleLink>
+              <ClickAbleLink to={details.epoch(epochNo)}>
+                {t("epoch")} {epochNo}
+              </ClickAbleLink>
             </WrapStatus>
           }
         />

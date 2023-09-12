@@ -93,7 +93,9 @@ const LatestTransactions: React.FC = () => {
                     <Item onClick={(e) => handleClicktWithoutAnchor(e, () => history.push(details.transaction(hash)))}>
                       <ItemHeader>
                         <LatestTransactionItemHeader>
-                          <HeaderStatus status={status as TRANSACTION_STATUS}>{t(status)}</HeaderStatus>
+                          <HeaderStatus status={status as TRANSACTION_STATUS}>
+                            {t(`status.${String(status).toLowerCase()}`)}
+                          </HeaderStatus>
                           <Box display={"flex"} alignItems={"flex-start"}>
                             <PriveValue>{formatADAFull(amount)}</PriveValue>
                             <ADAicon width={14} />

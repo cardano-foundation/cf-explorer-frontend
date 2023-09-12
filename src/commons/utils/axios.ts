@@ -16,8 +16,10 @@ const defaultAxios = axios.create({
 defaultAxios.interceptors.request.use(
   (config) => {
     const token = getToken();
+    const lang = getLang();
     config.headers = config.headers ?? {};
     if (token) config.headers["Authorization"] = "Bearer " + token;
+    config.headers["Accept-Language"] = lang;
     return config;
   },
   (error) => {
@@ -57,7 +59,9 @@ const defaultAxiosDownload = axios.create({
 defaultAxiosDownload.interceptors.request.use(
   (config) => {
     const token = getToken();
+    const lang = getLang();
     config.headers = config.headers ?? {};
+    config.headers["Accept-Language"] = lang;
     if (token) config.headers["Authorization"] = "Bearer " + token;
     return config;
   },
@@ -96,6 +100,14 @@ const getToken = () => {
     return null;
   }
 };
+const getLang = () => {
+  try {
+    const lang = localStorage.getItem("lang");
+    return lang;
+  } catch {
+    return "en";
+  }
+};
 
 const authAxios = axios.create({
   baseURL: AUTH_API_URL,
@@ -108,7 +120,9 @@ const authAxios = axios.create({
 authAxios.interceptors.request.use(
   (config) => {
     const token = getToken();
+    const lang = getLang();
     config.headers = config.headers ?? {};
+    config.headers["Accept-Language"] = lang;
     if (token) config.headers["Authorization"] = "Bearer " + token;
     return config;
   },
@@ -147,8 +161,10 @@ const uploadAxios = axios.create({
 uploadAxios.interceptors.request.use(
   (config) => {
     const token = getToken();
+    const lang = getLang();
     config.headers = config.headers ?? {};
     if (token) config.headers["Authorization"] = "Bearer " + token;
+    config.headers["Accept-Language"] = lang;
     return config;
   },
   (error) => {

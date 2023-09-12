@@ -101,7 +101,7 @@ const Epoch: React.FC = () => {
               <ADAicon />
             </Output>
           ) : (
-            "Not available"
+            t("common.notAvailable")
           )}
         </>
       )

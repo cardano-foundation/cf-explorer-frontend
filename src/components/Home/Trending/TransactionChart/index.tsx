@@ -96,7 +96,9 @@ const TransactionChart: React.FC = () => {
     <TransactionContainer>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={8} md={8} lg={9}>
-          <Title>Transactions {optionsTime[rangeTime].displayName}</Title>
+          <Title>
+            {t("drawer.transactions")} {optionsTime[rangeTime].displayName}
+          </Title>
         </Grid>
         <Grid item xs={12} sm={4} md={4} lg={3}>
           <Box maxWidth={"260px"} mx={isMobile ? "auto" : "none"}>
