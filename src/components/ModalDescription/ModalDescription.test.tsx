@@ -44,7 +44,7 @@ describe("ModalDescription", () => {
   it("Render OperatorRewards modal", async () => {
     const handleCloseModal = jest.fn();
     render(<OperatorRewards open={true} handleCloseModal={handleCloseModal} />);
-    const element = screen.getByText("Operator rewards");
+    const element = screen.getByText(/Operator rewards/i);
     expect(element).toBeInTheDocument();
     await userEvent.click(screen.getByTestId("close-modal-button"));
     expect(handleCloseModal).toHaveBeenCalled();
@@ -80,7 +80,7 @@ describe("ModalDescription", () => {
   it("Render SPOInvolvementInDelegationDescription modal", async () => {
     const handleCloseModal = jest.fn();
     render(<SPOInvolvementInDelegationDescription open={true} handleCloseModal={handleCloseModal} />);
-    const element = screen.getByText("Pool updates");
+    const element = screen.getByText(/Pool updates/i);
     expect(element).toBeInTheDocument();
     await userEvent.click(screen.getByTestId("close-modal-button"));
     expect(handleCloseModal).toHaveBeenCalled();

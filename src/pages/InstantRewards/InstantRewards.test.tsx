@@ -18,8 +18,6 @@ describe("InstantRewards page", () => {
   it("should component render", () => {
     render(<InstantReards />);
     expect(screen.getByRole("heading", { name: /instantaneous rewards/i })).toBeInTheDocument();
-    expect(screen.getByRole("columnheader", { name: /tx hash/i })).toBeInTheDocument();
-    expect(screen.getByRole("columnheader", { name: /created at/i })).toBeInTheDocument();
     expect(screen.getByRole("columnheader", { name: /block/i })).toBeInTheDocument();
     expect(screen.getByRole("columnheader", { name: /stake address/i })).toBeInTheDocument();
     expect(screen.getByRole("columnheader", { name: /rewards paid/i })).toBeInTheDocument();

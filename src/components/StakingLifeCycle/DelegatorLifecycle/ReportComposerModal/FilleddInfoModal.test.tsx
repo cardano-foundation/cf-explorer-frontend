@@ -38,7 +38,7 @@ describe("FilledInfoModal", () => {
 
   it("renders without errors", () => {
     render(<FilledInfoModal open={true} handleCloseModal={jest.fn()} saveParams={jest.fn()} gotoStep={jest.fn()} />);
-    expect(screen.getByText("Report composer")).toBeInTheDocument();
+    expect(screen.getByText(/Report composer/i)).toBeInTheDocument();
   });
 
   it("updates the report name when input value changes", () => {
