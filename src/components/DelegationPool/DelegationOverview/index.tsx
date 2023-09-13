@@ -62,7 +62,7 @@ const OverViews: React.FC = () => {
       <TimeDuration>
         <FormNowMessage time={lastUpdated} />
       </TimeDuration>
-      <Grid container spacing={2}>
+      <Grid data-testid="pool-overview" container spacing={2}>
         <Grid item xl={3} md={6} xs={12}>
           <StyledCard.Container>
             <StyledCard.Content>
