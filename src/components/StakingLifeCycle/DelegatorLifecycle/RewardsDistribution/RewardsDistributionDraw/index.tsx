@@ -79,7 +79,7 @@ const RewardsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({
         arrow: { 0: "top", lg: "left" }
       }
     ];
-  }, [isRewardPool]);
+  }, [isRewardPool, isADAHolder]);
 
   const handleToggleModal = (type: RECEIVED_REWARDS) => {
     toggleRewardModal();

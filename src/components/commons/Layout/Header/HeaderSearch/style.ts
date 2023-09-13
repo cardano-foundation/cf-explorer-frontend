@@ -132,5 +132,5 @@ export const ValueOption = styled("span")(({ theme }) => ({
 export const WrapInput = styled(Box)(() => ({
   width: "100%",
   display: "flex",
-  justifyContent: "space-between",
+  justifyContent: "space-between"
 }));

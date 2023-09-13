@@ -132,3 +132,10 @@ export const ViewJson = styled(Box)(({ theme }) => ({
     }
   }
 }));
+
+export const TimeDuration = styled("small")(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  display: "block",
+  textAlign: "left",
+  marginTop: "5px"
+}));
