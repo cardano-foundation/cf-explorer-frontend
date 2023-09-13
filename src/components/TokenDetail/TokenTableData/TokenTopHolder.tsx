@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -21,6 +22,7 @@ interface ITokenTopHolder {
 }
 
 const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decimal, setCurrentHolder }) => {
+  const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -41,7 +43,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decim
 
   const columns: Column<ITokenTopHolderTable>[] = [
     {
-      title: "Address",
+      title: t("common.address"),
       key: "address",
       minWidth: "200px",
       render: (r) => (
@@ -53,7 +55,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decim
       )
     },
     {
-      title: "Balance",
+      title: t("common.balance"),
       key: "balance",
       minWidth: "200px",
       render: (r) => (
@@ -63,7 +65,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decim
       )
     },
     {
-      title: "Share",
+      title: t("glossary.share"),
       key: "share",
       minWidth: "200px",
       render: (r) => (

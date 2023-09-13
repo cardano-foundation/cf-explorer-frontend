@@ -4,6 +4,7 @@ import { useAsync, useLocalStorage } from "react-use";
 
 import useAuth from "./commons/hooks/useAuth";
 import { routers } from "./commons/routers";
+import { NETWORK, NETWORK_TYPES } from "./commons/utils/constants";
 import { getAllBookmarks } from "./commons/utils/userRequest";
 import AccountLayout from "./components/commons/Layout/AccountLayout";
 import AddressWalletDetail from "./pages/AddressWalletDetail";
@@ -24,7 +25,6 @@ import MyProfile from "./pages/MyProfile";
 import NotFound from "./pages/NotFound";
 import PolicyDetail from "./pages/PolicyDetail";
 import ProtocolParameter from "./pages/ProtocolParameter";
-import { LANGUAGE, NETWORK, NETWORK_TYPES } from "./commons/utils/constants";
 import FAQ from "./pages/Refference/FAQ";
 import Policy from "./pages/Refference/Policy";
 import TermOfServices from "./pages/Refference/TermOfServices";
@@ -60,6 +60,7 @@ const Routes: React.FC = () => {
   const [, setBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
   const { pathname } = window.location;
   const { search } = useLocation();
+  const lang = localStorage.getItem("lang") || "en";
 
   useAsync(async () => {
     if (isLoggedIn) {
@@ -77,7 +78,7 @@ const Routes: React.FC = () => {
     }
   }, []);
 
-  if (!pathname.includes(`/${LANGUAGE}`)) {
+  if (!pathname.includes(`/${lang}`)) {
     if (!search) {
       return <Redirect to={pathname} />;
     } else {

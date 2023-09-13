@@ -72,6 +72,7 @@ export const Name = styled("h4")`
     margin-top: 16px;
   }
   white-space: nowrap;
+  text-transform: capitalize;
 `;
 
 export const Title = styled("h3")`

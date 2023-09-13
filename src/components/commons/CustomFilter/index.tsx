@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box, Button, ClickAwayListener, IconButton, MenuList } from "@mui/material";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
 import {
   ArrowFromBottomIcon,
@@ -40,6 +41,7 @@ export interface Props {
 }
 
 const CustomFilter: React.FC<Props> = (props) => {
+  const { t } = useTranslation();
   const { onChange, filterValue, sortKey = "time", excludes = [], searchLabel } = props;
   const [open, setOpen] = useState(false);
   const [openDateRange, setOpenDateRange] = useState(false);
@@ -50,19 +52,19 @@ const CustomFilter: React.FC<Props> = (props) => {
 
   const options: Option[] = [
     {
-      label: "Latest - First",
+      label: t("filter.latestFirst"),
       icon: <CustomIcon icon={ArrowFromTopIcon} fill="currentColor" width={20} />,
       value: "latest",
       active: filterValue?.sort === `${sortKey},DESC`
     },
     {
-      label: "First - Latest",
+      label: t("filter.firstLatest"),
       icon: <CustomIcon icon={ArrowFromBottomIcon} fill="currentColor" width={20} />,
       value: "first",
       active: filterValue?.sort === `${sortKey},ASC`
     },
     {
-      label: "Date range",
+      label: t("filter.daterange"),
       icon: <CustomIcon icon={CalenderIcon} fill="currentColor" width={20} />,
       value: "dateRange",
       active: !!(filterValue?.toDate && filterValue?.fromDate)
@@ -196,7 +198,7 @@ const CustomFilter: React.FC<Props> = (props) => {
               color={({ palette }) => `${palette.primary.main} !important`}
               onClick={handleReset}
             >
-              <Box mr={1}>Reset</Box>
+              <Box mr={1}>{t("common.reset")}</Box>
               <ResetIcon />
             </Box>
           </FilterContent>

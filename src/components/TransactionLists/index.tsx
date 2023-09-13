@@ -2,11 +2,13 @@ import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
 import { useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
 import {
   formatADAFull,
   formatDateTimeLocal,
+  formatNameBlockNo,
   getPageInfo,
   getShortHash,
   getShortWallet
@@ -41,6 +43,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
   hash,
   handleClose
 }) => {
+  const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -56,7 +59,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
 
   const columns: Column<Transactions>[] = [
     {
-      title: "Tx Hash",
+      title: t("glossary.txhash"),
       key: "txhash",
       minWidth: 120,
 
@@ -72,27 +75,32 @@ const TransactionList: React.FC<TransactionListProps> = ({
       )
     },
     {
-      title: "Block",
+      title: t("glossary.block"),
       key: "block",
       minWidth: 60,
-      render: (r) => (
-        <Box>
+      render: (r) => {
+        const { blockName, tooltip } = formatNameBlockNo(r.blockNo, r.epochNo) || getShortHash(r.blockHash);
+        return (
           <Box>
-            <StyledLink to={details.block(r.blockNo || r.blockHash)}>
-              {r.blockNo || getShortHash(r.blockHash)}
-            </StyledLink>
-          </Box>
-          <Box mt={1}>
-            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
-            <Box color={({ palette }) => palette.secondary.light} component={"span"}>
-              {r.epochSlotNo}
+            <Box>
+              <StyledLink to={details.block(r.blockNo || r.blockHash)}>
+                <CustomTooltip title={tooltip}>
+                  <span>{blockName}</span>
+                </CustomTooltip>
+              </StyledLink>
+            </Box>
+            <Box mt={1}>
+              <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
+              <Box color={({ palette }) => palette.secondary.light} component={"span"}>
+                {r.epochSlotNo}
+              </Box>
             </Box>
           </Box>
-        </Box>
-      )
+        );
+      }
     },
     {
-      title: "Fees",
+      title: t("common.fees"),
       key: "fee",
       minWidth: 120,
       render: (r) => (
@@ -106,7 +114,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       }
     },
     {
-      title: "Output in ADA",
+      title: t("glossary.outputInAda"),
       minWidth: 120,
       key: "outSum",
       render: (r) => (
@@ -121,7 +129,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       }
     },
     {
-      title: "Input address",
+      title: t("glossary.inputAddress"),
       key: "addressesInput",
       minWidth: 120,
       render: (r) => (
@@ -138,7 +146,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       )
     },
     {
-      title: "Output address",
+      title: t("glossary.outpuAddress"),
       key: "addressesOutput",
       minWidth: 120,
       render: (r) => (
@@ -170,7 +178,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       <Table
         {...fetchData}
         columns={columns}
-        total={{ count: fetchData.total, title: "Total Transactions" }}
+        total={{ count: fetchData.total, title: t("common.totalTxs") }}
         pagination={{
           ...pageInfo,
           total: fetchData.total,

@@ -1,6 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import receiveImg from "src/commons/resources/images/receiveImg.svg";
@@ -43,6 +44,7 @@ const Card = ({
   fee?: number;
   isFailed?: boolean;
 }) => {
+  const { t } = useTranslation();
   const totalADA =
     items &&
     items.reduce((prv, item) => {
@@ -62,11 +64,11 @@ const Card = ({
     <Box textAlign={"left"} mb={1} sx={{ background: (theme) => theme.palette.background.paper }}>
       <Header fontWeight="bold">
         <Box color={(theme) => theme.palette.secondary.main} fontSize={"1rem"} lineHeight="19px" mb="2px">
-          {type === "down" ? "Input" : "Output"}
+          {type === "down" ? t("glossary.input") : t("glossary.output")}
         </Box>
         <Box color={(theme) => theme.palette.secondary.light} display="flex" justifyContent="space-between">
-          <Box>Addresses</Box>
-          <Box>Amount</Box>
+          <Box>{t("glossary.address")}</Box>
+          <Box>{t("glossary.amount")}</Box>
         </Box>
       </Header>
       <Box fontSize={14}>
@@ -86,7 +88,7 @@ const Card = ({
                             color={(theme) => (isFailed ? theme.palette.secondary[600] : theme.palette.secondary.light)}
                             pr={1}
                           >
-                            UTXO:
+                            {t("tab.utxo")}:
                           </Box>
                           <Link to={details.transaction(item.txHash)}>
                             <CustomTooltip title={item.txHash}>
@@ -125,7 +127,7 @@ const Card = ({
                       pl={type === "down" ? 2 : 0}
                       color={(theme) => (isFailed ? theme.palette.secondary[600] : theme.palette.secondary.light)}
                     >
-                      {type === "down" ? "From" : "To"}:
+                      {type === "down" ? t("glossary.from") : t("glossary.to")}:
                     </Box>
                     <Box display={"flex"} justifyContent="space-between" flex={"1"} alignItems={"center"}>
                       <Box
@@ -170,7 +172,7 @@ const Card = ({
                             pr={1}
                             color={({ palette }) => (isFailed ? theme.palette.secondary[600] : palette.secondary.light)}
                           >
-                            Stake Address:{" "}
+                            {t("common.stakeAddress")}:{" "}
                           </Box>
                           <Box>
                             <Link to={details.stake(item?.stakeAddress)}>
@@ -249,7 +251,7 @@ const Card = ({
           fontWeight={"bold"}
           color={({ palette }) => (isFailed ? theme.palette.secondary[600] : palette.secondary.main)}
         >
-          Total {type === "down" ? "Input" : "Output"}
+          Total {type === "down" ? t("drawer.input") : t("drawer.ouput")}
         </Box>
         <div>
           <Box

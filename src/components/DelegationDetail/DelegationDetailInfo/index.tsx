@@ -2,6 +2,7 @@ import { Box, Skeleton } from "@mui/material";
 import React, { useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { Link, useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import {
   CalendarIcon,
@@ -54,6 +55,7 @@ export interface IDelegationDetailInfo {
 }
 
 const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, poolId, lastUpdated }) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const [isOpenReward, setOpenReward] = useState<boolean>(false);
   const [isOpenOwner, setOpenOwner] = useState<boolean>(false);
@@ -64,7 +66,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       <HeaderDetailContainer>
         <BackButton onClick={history.goBack}>
           <HiArrowLongLeft />
-          <BackText>Back</BackText>
+          <BackText>{t("common.back")}</BackText>
         </BackButton>
         <HeaderContainer>
           <HeaderTitle>
@@ -85,7 +87,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
     <HeaderDetailContainer>
       <BackButton onClick={history.goBack}>
         <HiArrowLongLeft />
-        <BackText>Back</BackText>
+        <BackText>{t("common.back")}</BackText>
       </BackButton>
       <HeaderContainer>
         <CustomTooltip title={data?.poolName || poolId}>
@@ -96,7 +98,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       <PoolId>
         <CustomTooltip title={poolId}>
           <Link to={details.delegation(poolId)}>
-            <PoolIdLabel>Pool Id: </PoolIdLabel>
+            <PoolIdLabel>{t("common.poolId")}: </PoolIdLabel>
             <PoolIdValue>{isMobile ? getShortWallet(poolId) : poolId}</PoolIdValue>
           </Link>
         </CustomTooltip>
@@ -110,14 +112,14 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Item item xs={6} md={3} top={1}>
             <StyledImg src={TickerIcon} alt="Ticker Icon" />
             <InfoTitle>
-              <StyledTitle>Ticker</StyledTitle>
+              <StyledTitle>{t("Ticker")}</StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.tickerName || ""}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1}>
             <StyledImg src={CalendarIcon} alt="Calendar Icon" />
             <InfoTitle>
-              <StyledTitle>Created At</StyledTitle>
+              <StyledTitle>{t("createdAt")}</StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.createDate && formatDateTimeLocal(data.createDate || "")}</InfoValue>
           </Item>
@@ -125,7 +127,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <StyledImg src={RewardIcon} alt="Reward Icon" />
             <InfoTitle>
               <Box>
-                <StyledTitle>Reward Account</StyledTitle>
+                <StyledTitle>{t("rewardAccount")}</StyledTitle>
                 <InfoValue mt={"4px"}>
                   {data?.rewardAccounts ? (
                     <>
@@ -154,14 +156,14 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                     setOpenOwner(false);
                   }}
                 >
-                  View all
+                  {t("common.viewAll")}
                 </ButtonViewAll>
               )}
             </InfoTitle>
 
             {isOpenReward && (
               <DropdownDetail
-                title="Reward account list"
+                title={t("glossary.rewardAccountList")}
                 value={data?.rewardAccounts || []}
                 close={() => setOpenReward(false)}
               />
@@ -171,7 +173,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <StyledImg src={UserIcon} alt="User Icon" />
             <InfoTitle>
               <Box>
-                <StyledTitle>Owner Account</StyledTitle>{" "}
+                <StyledTitle>{t("ownerAccount")}</StyledTitle>{" "}
                 <InfoValue mt={"4px"}>
                   {data?.ownerAccounts ? (
                     <>
@@ -204,14 +206,14 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                     setOpenReward(false);
                   }}
                 >
-                  View all
+                  {t("common.viewAll")}
                 </ButtonViewAll>
               )}
             </InfoTitle>
 
             {isOpenOwner && (
               <DropdownDetail
-                title="Owner address list"
+                title={t("glossary.ownerAddressList")}
                 value={data?.ownerAccounts || []}
                 close={() => setOpenOwner(false)}
                 isStakeDetail={true}
@@ -221,7 +223,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Item item xs={6} md={3}>
             <StyledImg src={DropIcon} alt="Drop Icon" />
             <InfoTitle>
-              <StyledTitle>Pool size</StyledTitle>
+              <StyledTitle>{t("glossary.poolSize")}</StyledTitle>
             </InfoTitle>
             <InfoValue sx={{ wordBreak: "break-all" }}>
               <FlexGap10>
@@ -233,7 +235,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Item item xs={6} md={3}>
             <StyledImg src={HighestIcon} alt="Highest Icon" />
             <InfoTitle>
-              <StyledTitle>Stake limit</StyledTitle>
+              <StyledTitle>{t("stakeLimit")}</StyledTitle>
             </InfoTitle>
             <InfoValue>
               <FlexGap10>
@@ -245,7 +247,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Item item xs={6} md={3}>
             <StyledImg src={DelegatorIcon} alt="Delegator Icon" />
             <InfoTitle>
-              <StyledTitle>Delegators</StyledTitle>
+              <StyledTitle>{t("delegators")}</StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.delegators || ""}</InfoValue>
           </Item>
@@ -269,7 +271,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                   color={({ palette }) => palette.secondary.light}
                   style={{ fontSize: "14px", fontWeight: "400" }}
                 >
-                  Saturation
+                  {t("saturation")}
                 </Box>
                 <Box fontSize={16}>{formatPercent(data?.saturation ? data?.saturation / 100 : 0)}</Box>
               </Box>

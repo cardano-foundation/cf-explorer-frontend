@@ -1,6 +1,7 @@
 import { Box, IconButton, alpha, useTheme } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { useHistory, useParams } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
@@ -54,6 +55,7 @@ interface Props {
 }
 
 const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => {
+  const { t } = useTranslation();
   const { poolId = "" } = useParams<{ poolId: string }>();
   const [openDescriptionModal, setOpenDescriptionModal] = useState(false);
   const history = useHistory();
@@ -79,7 +81,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
   const stepper: StepperProps[] = [
     {
       icon: <RegistrationIcon width={"25px"} height={"25px"} />,
-      title: "Registration",
+      title: t("common.registration"),
       component: <Registration />,
       description: (
         <RegistrationSPOProcessDescription
@@ -92,7 +94,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
     },
     {
       icon: <PoolUpdateIcon width={"25px"} height={"25px"} />,
-      title: "Pool Updates",
+      title: t("slc.poolUpdates"),
       component: <PoollUpdates />,
       description: (
         <SPOInvolvementInDelegationDescription
@@ -105,7 +107,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
     },
     {
       icon: <OperatorRewardIcon width={"25px"} height={"25px"} />,
-      title: "Operator Rewards",
+      title: t("common.operatorRewards"),
       component: <OperatorReward />,
       description: (
         <OperatorRewards open={openDescriptionModal} handleCloseModal={() => setOpenDescriptionModal(false)} />
@@ -115,7 +117,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
     },
     {
       icon: <DeredistrationIcon width={"25px"} height={"25px"} />,
-      title: "Deregistration",
+      title: t("slc.deregistration"),
       component: <Deregistration />,
       description: (
         <DeregistrationSPOProcessDescription
@@ -173,7 +175,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
               id={`step-${idx}`}
               key={idx}
               component={renderTabsSPO[step.keyCheckShow] ? "span" : CustomTooltip}
-              title={renderTabsSPO[step.keyCheckShow] ? undefined : "There is no record at this time"}
+              title={renderTabsSPO[step.keyCheckShow] ? undefined : t("common.noRecordAtTime")}
               onClick={() => handleChangeTab(step, idx)}
               sx={{
                 borderColor: colorProps.background
@@ -232,7 +234,8 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
           >
             <PreviousIcon />
             <Box fontSize={isMobile ? 14 : 16} component={"span"}>
-              Previous: {stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1])?.title}
+              {t("common.Previous")}:{" "}
+              {stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1])?.title}
             </Box>
           </PreviousButton>
         )}
@@ -254,9 +257,9 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
           variant="contained"
         >
           <ButtonText>
-            Next:{" "}
+            {t("common.next")}:{" "}
             {+indexTabsValid === tabsValid.length - 1
-              ? "View in tabular"
+              ? t("common.viewTabular")
               : stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid + 1])?.title}
           </ButtonText>
           <NextIcon />

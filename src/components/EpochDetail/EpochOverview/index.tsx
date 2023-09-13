@@ -2,6 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
 import {
   timeIconUrl,
@@ -14,11 +15,10 @@ import {
 } from "src/commons/resources";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import DetailHeader from "src/components/commons/DetailHeader";
-import { TitleCard } from "src/components/BlockDetail/BlockOverview/styles";
 import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 
-import { Output, Subtext } from "./styles";
+import { Output, Subtext, TitleCard } from "./styles";
 
 interface EpochOverviewProps {
   data: IDataEpoch | null;
@@ -27,6 +27,7 @@ interface EpochOverviewProps {
 }
 
 const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdated }) => {
+  const { t } = useTranslation();
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   const slot = data && data?.no === currentEpoch?.no ? currentEpoch.slot : MAX_SLOT_EPOCH;
 
@@ -35,7 +36,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Start Timestamp </TitleCard>
+          <TitleCard mr={1}>{t("glossary.startTimestamp")} </TitleCard>
         </Box>
       ),
       value: formatDateTimeLocal(data?.startTime || "")
@@ -44,7 +45,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>End Timestamp </TitleCard>
+          <TitleCard mr={1}>{t("glossary.endTimestamp")} </TitleCard>
         </Box>
       ),
       value: formatDateTimeLocal(data?.endTime || "")
@@ -53,7 +54,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       icon: outputIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> Total Output</TitleCard>
+          <TitleCard mr={1}> {t("glossary.totalOutput")}</TitleCard>
         </Box>
       ),
       value: (
@@ -66,7 +67,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       icon: cubeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> Blocks</TitleCard>
+          <TitleCard mr={1}> {t("glossary.blocks")}</TitleCard>
         </Box>
       ),
       value: data?.blkCount || 0
@@ -75,7 +76,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       icon: slotIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> Slot</TitleCard>
+          <TitleCard mr={1}> {t("common.slot")}</TitleCard>
         </Box>
       ),
       value: (
@@ -89,7 +90,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       icon: User2,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> Unique Accounts</TitleCard>
+          <TitleCard mr={1}> {t("glossary.uniqueAccounts")}</TitleCard>
         </Box>
       ),
       value: data?.account
@@ -98,7 +99,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       icon: exchageIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> Transaction Count</TitleCard>
+          <TitleCard mr={1}> {t("glossary.transactionCount")}</TitleCard>
         </Box>
       ),
       value: data?.txCount
@@ -107,7 +108,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       icon: RewardIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> Rewards Distributed</TitleCard>
+          <TitleCard mr={1}> {t("glossary.rewardsDistributed")}</TitleCard>
         </Box>
       ),
       value: (
@@ -118,7 +119,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
               <ADAicon />
             </Output>
           ) : (
-            "Not available"
+            t("common.notAvailable")
           )}
         </>
       )
@@ -131,7 +132,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
         listItem={listOverview}
         type="EPOCH"
         bookmarkData={data?.no?.toString()}
-        title={"Epoch details"}
+        title={t("head.page.epochDetails")}
         lastUpdated={lastUpdated}
         epoch={
           data && {

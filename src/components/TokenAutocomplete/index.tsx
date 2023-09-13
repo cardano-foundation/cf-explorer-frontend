@@ -2,6 +2,7 @@ import { Autocomplete, Box, Button } from "@mui/material";
 import { debounce } from "lodash";
 import { useEffect, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -28,6 +29,7 @@ import {
 } from "./styles";
 
 const TokenAutocomplete = ({ address }: { address: string }) => {
+  const { t } = useTranslation();
   const [openModalToken, setOpenModalToken] = useState(false);
   const [search, setSearch] = useState("");
   const history = useHistory();
@@ -58,7 +60,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
         getOptionLabel={(option) =>
           typeof option === "string" ? "" : option.displayName || option.name || option.fingerprint
         }
-        noOptionsText="No records"
+        noOptionsText={t("common.noRecords")}
         onInputChange={debounce((e, value) => setSearch(value), 1000)}
         ListboxProps={{
           sx(theme) {
@@ -105,7 +107,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
                       setOpenModalToken(true);
                     }}
                   >
-                    See more
+                    {t("glossary.seeMore")}
                   </Box>
                 </Box>
               </Option>
@@ -152,7 +154,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
             </Option>
           );
         }}
-        renderInput={(params) => <StyledTextField {...params} placeholder="Search Token" />}
+        renderInput={(params: any) => <StyledTextField {...params} placeholder={t("glossary.searchToken")} />}
         popupIcon={<BiChevronDown />}
       />
       <ModalToken address={address} open={openModalToken} onClose={() => setOpenModalToken(false)} />
@@ -163,6 +165,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
 export default TokenAutocomplete;
 
 const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => void; address: string }) => {
+  const { t } = useTranslation();
   const [{ page, size }, setPagination] = useState({ page: 0, size: 50 });
   const [value, setValue] = useState("");
   const [search, setSearch] = useState("");
@@ -175,13 +178,13 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
 
   const columns: Column<WalletAddress["tokens"][number]>[] = [
     {
-      title: "Icon",
+      title: t("glossary.icon"),
       key: "icon",
       minWidth: "50px",
       render: (r) => (r?.metadata?.logo ? <Logo src={`${r.metadata?.logo}`} alt="icon" /> : <LogoEmpty />)
     },
     {
-      title: "Name",
+      title: t("glossary.name"),
       key: "name",
       minWidth: "50px",
       render: (r) =>
@@ -196,7 +199,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
         )
     },
     {
-      title: "Balance",
+      title: t("common.balance"),
       key: "balance",
       minWidth: "50px",
       render: (r) => formatNumberDivByDecimals(r.quantity || 0, r.metadata?.decimals || 0)
@@ -215,11 +218,11 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
   };
 
   return (
-    <CustomModal title="Token List" open={open} onClose={handleClose} width={"min(80vw, 600px)"}>
+    <CustomModal title={t("glossary.tokenList")} open={open} onClose={handleClose} width={"min(80vw, 600px)"}>
       <>
         <SearchContainer mt={2} mb={1}>
           <StyledInput
-            placeholder="Search tokens"
+            placeholder={t("glossary.searchTokens")}
             onChange={(e) => setValue(e.target.value)}
             value={value}
             onKeyUp={(e) => {

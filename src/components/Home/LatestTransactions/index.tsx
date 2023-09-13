@@ -1,6 +1,7 @@
 import { Box, Grid, Skeleton } from "@mui/material";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
 import { BlankBlueIcon } from "src/commons/resources";
@@ -41,6 +42,7 @@ import {
 } from "./style";
 
 const LatestTransactions: React.FC = () => {
+  const { t } = useTranslation();
   const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const { data, initialized, lastUpdated } = useFetch<CurrentTransactions[]>(
     API.TRANSACTION.CURRENT,
@@ -53,7 +55,7 @@ const LatestTransactions: React.FC = () => {
   return (
     <TransactionContainer data-testid="home-latest-transactions">
       <Header>
-        <Title>Latest Transactions</Title>
+        <Title>{t("common.latestTxs")}</Title>
         <Actions>
           <TimeDuration>
             <FormNowMessage time={lastUpdated} />
@@ -93,7 +95,9 @@ const LatestTransactions: React.FC = () => {
                     <Item onClick={(e) => handleClicktWithoutAnchor(e, () => history.push(details.transaction(hash)))}>
                       <ItemHeader>
                         <LatestTransactionItemHeader>
-                          <HeaderStatus status={status as TRANSACTION_STATUS}>{status}</HeaderStatus>
+                          <HeaderStatus status={status as TRANSACTION_STATUS}>
+                            {t(`status.${String(status).toLowerCase()}`)}
+                          </HeaderStatus>
                           <Box display={"flex"} alignItems={"flex-start"}>
                             <PriveValue>{formatADAFull(amount)}</PriveValue>
                             <ADAicon width={14} />
@@ -103,7 +107,7 @@ const LatestTransactions: React.FC = () => {
                       <ItemDetail>
                         <Box display="flex" alignItems="center">
                           <RowItem>
-                            <small>Transaction hash: </small>
+                            <small>{t("common.txhash")}: </small>
                             <CustomTooltip title={hash}>
                               <Link to={details.transaction(hash)}>
                                 <Hash>{getShortHash(hash)}</Hash>
@@ -112,25 +116,25 @@ const LatestTransactions: React.FC = () => {
                           </RowItem>
                         </Box>
                         <RowItem>
-                          <small>Block: </small>
+                          <small>{t("glossary.block")}: </small>
                           <Link to={details.block(blockNo)}>
                             <BlockNo>{blockNo}</BlockNo>
                           </Link>
                         </RowItem>
                         <RowItem>
-                          <small>Epoch: </small>
+                          <small>{t("glossary.epoch")}: </small>
                           <Link to={details.epoch(epochNo)}>
                             <BlockNo>{epochNo}</BlockNo>
                           </Link>
                         </RowItem>
                         <RowItem>
-                          <small>Slot: </small>
+                          <small>{t("glossary.slot")}: </small>
                           <small>{epochSlotNo}</small>
                         </RowItem>
                         {fromAddress?.slice(0, 1).map((add) => {
                           return (
                             <RowItem key={add}>
-                              <small>From: </small>
+                              <small>{t("common.from")}: </small>
                               <CustomTooltip title={add}>
                                 <Link to={details.address(add)}>
                                   <WalletAddress>{getShortWallet(add)}</WalletAddress>
@@ -144,7 +148,7 @@ const LatestTransactions: React.FC = () => {
                           return (
                             <RowItem key={add} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
                               <Box>
-                                <small>To: </small>
+                                <small>{t("common.to")}: </small>
                                 <CustomTooltip title={add}>
                                   <Link to={details.address(add)}>
                                     <WalletAddress>{getShortWallet(add)}</WalletAddress>
@@ -156,7 +160,7 @@ const LatestTransactions: React.FC = () => {
                           );
                         })}
                         <RowItem>
-                          <small>Created At: </small>
+                          <small>{t("common.createdAt")}: </small>
                           <small>{formatDateTimeLocal(time)}</small>
                         </RowItem>
                       </ItemDetail>

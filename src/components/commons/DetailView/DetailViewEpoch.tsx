@@ -4,6 +4,7 @@ import { BiChevronRight } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { BlockIcon, CubeIcon, RocketIcon } from "src/commons/resources";
@@ -54,6 +55,7 @@ type DetailViewEpochProps = {
 };
 
 const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose, callback }) => {
+  const { t } = useTranslation();
   const { currentEpoch, blockNo } = useSelector(({ system }: RootState) => system);
   const [key, setKey] = useState(0);
 
@@ -93,8 +95,8 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
     return (
       <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
         <ViewDetailHeader>
-          <ViewAllButton tooltipTitle="View Detail" to={details.epoch(epochNo)} />
-          <CustomTooltip title="Close">
+          <ViewAllButton tooltipTitle={t("common.viewDetail")} to={details.epoch(epochNo)} />
+          <CustomTooltip title={t("common.close")}>
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
@@ -170,11 +172,11 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
   return (
     <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
       <ViewDetailHeader>
-        <ViewAllButton tooltipTitle="View Detail" to={details.epoch(epochNo)} />
+        <ViewAllButton tooltipTitle={t("common.viewDetail")} to={details.epoch(epochNo)} />
         <TimeDuration>
           <FormNowMessage time={lastUpdated} />
         </TimeDuration>
-        <CustomTooltip title="Close">
+        <CustomTooltip title={t("common.close")}>
           <CloseButton onClick={handleClose}>
             <CgClose />
           </CloseButton>
@@ -192,18 +194,18 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
               trailOpacity={1}
             >
               <EpochNumber>{epochNo}</EpochNumber>
-              <EpochText>Epoch</EpochText>
+              <EpochText>{t("epoch")}</EpochText>
             </ProgressCircle>
           </HeaderContainer>
           <ListItem>
             <Item>
               <Icon src={CubeIcon} alt="socket" />
-              <ItemName>Blocks</ItemName>
+              <ItemName>{t("glossary.blocks")}</ItemName>
               <ItemValue>{data.blkCount}</ItemValue>
             </Item>
             <Item>
               <Icon src={RocketIcon} alt="socket" />
-              <ItemName>slot</ItemName>
+              <ItemName>{t("common.slot")}</ItemName>
               <ItemValue>
                 {slot}
                 <BlockDefault>/{MAX_SLOT_EPOCH}</BlockDefault>
@@ -212,27 +214,27 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
           </ListItem>
           <Group>
             <DetailsInfoItem>
-              <DetailLabel>Start Timestamp</DetailLabel>
+              <DetailLabel>{t("glossary.startTimestamp")}</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.startTime || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>End Timestamp</DetailLabel>
+              <DetailLabel>{t("glossary.endTimestamp")}</DetailLabel>
               <DetailValue>{formatDateTimeLocal(data.endTime || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Blocks</DetailLabel>
+              <DetailLabel>{t("glossary.blocks")}</DetailLabel>
               <DetailValue>{data.blkCount}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Unique Accounts</DetailLabel>
+              <DetailLabel>{t("glossary.uniqueAccounts")}</DetailLabel>
               <DetailValue>{data.account}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Tx Count</DetailLabel>
+              <DetailLabel>{t("drawer.txCount")}</DetailLabel>
               <DetailValue>{data.txCount}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Rewards Distributed</DetailLabel>
+              <DetailLabel>{t("glossary.rewardsDistributed")}</DetailLabel>
               <DetailValue>
                 {data?.rewardsDistributed ? (
                   <Box>
@@ -240,12 +242,12 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
                     <ADAicon />
                   </Box>
                 ) : (
-                  "Not available"
+                  t("common.notAvailable")
                 )}
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>Total Output</DetailLabel>
+              <DetailLabel>{t("glossary.totalOutput")}</DetailLabel>
               <DetailValue>
                 {formatADAFull(data.outSum)}
                 <ADAicon />
@@ -258,7 +260,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
                 <DetailLinkIcon>
                   <BlockIcon />
                 </DetailLinkIcon>
-                Blocks
+                {t("glossary.blocks")}
               </DetailLabel>
               <DetailValue>
                 <DetailLinkRight>

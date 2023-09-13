@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
 import Card from "src/components/commons/Card";
@@ -34,6 +35,7 @@ interface Props {
 }
 
 const RegistrationPools: React.FC<Props> = ({ poolType }) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const { search } = useLocation();
   const pageInfo = getPageInfo(search);
@@ -50,7 +52,7 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
 
   const columns: Column<Registration>[] = [
     {
-      title: "Tx Hash",
+      title: t("glossary.txHash"),
       key: "bk.time",
       render: (pool) => {
         return (
@@ -66,12 +68,12 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
       }
     },
     {
-      title: "Created At",
+      title: t("glossary.createdAt"),
       key: "created_at",
       render: (pool) => <>{formatDateTimeLocal(pool.txTime || "")}</>
     },
     {
-      title: "Block",
+      title: t("glossary.block"),
       key: "block",
       render: (pool) => (
         <>
@@ -85,7 +87,7 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
       )
     },
     {
-      title: "Pool",
+      title: t("glossary.pool"),
       key: "pool",
       maxWidth: 200,
       render: (pool) => (
@@ -101,7 +103,7 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
     {
       title: (
         <Box component="span">
-          Pledge (<ADAicon />)
+          {t("glossary.pledge")} (<ADAicon />)
         </Box>
       ),
       key: poolType === POOL_TYPE.REGISTRATION ? "pledge" : "pu.pledge",
@@ -113,7 +115,7 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
     {
       title: (
         <Box component="span">
-          Fixed Cost (<ADAicon />)
+          {t("glossary.fixedCost")} (<ADAicon />)
         </Box>
       ),
       key: poolType === POOL_TYPE.REGISTRATION ? "fixedCost" : "pu.fixedCost",
@@ -123,7 +125,7 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
       }
     },
     {
-      title: "Margin",
+      title: t("glossary.margin"),
       key: poolType === POOL_TYPE.REGISTRATION ? "margin" : "pu.margin",
       render: (pool) => formatPercent(pool.margin),
       sort: ({ columnKey, sortValue }) => {
@@ -131,7 +133,7 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
       }
     },
     {
-      title: "Stake Address",
+      title: t("glossary.stakeAddress"),
       key: "stakeAddress",
       render: (pool) => (
         <>
@@ -151,7 +153,9 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
 
   return (
     <RegistrationContainer>
-      <Card title={poolType === POOL_TYPE.REGISTRATION ? "Pool Certificate" : "Pool Deregistration"}>
+      <Card
+        title={poolType === POOL_TYPE.REGISTRATION ? t("glossary.poolCertificate") : t("glossary.poolDeregistration")}
+      >
         <TimeDuration>
           <FormNowMessage time={fetchData.lastUpdated} />
         </TimeDuration>

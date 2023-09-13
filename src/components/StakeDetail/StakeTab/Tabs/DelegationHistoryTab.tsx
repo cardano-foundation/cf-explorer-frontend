@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "src/commons/utils/helper";
@@ -12,6 +13,7 @@ import { API } from "src/commons/utils/api";
 import { StyledLink } from "../styles";
 
 const DelegationHistoryTab = ({ isMobile = false }) => {
+  const { t } = useTranslation();
   const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
   const history = useHistory();
@@ -20,7 +22,7 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
 
   const columns: Column<DelegationHistory>[] = [
     {
-      title: "Tx Hash",
+      title: t("glossary.txHash"),
       key: "hash",
       minWidth: isMobile ? "245px" : "120px",
       render: (r) => (
@@ -30,13 +32,13 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
       )
     },
     {
-      title: "Created At",
+      title: t("glossary.createdAt"),
       key: "time",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time || "")
     },
     {
-      title: "Block",
+      title: t("glossary.block"),
       key: "block",
       minWidth: "120px",
       render: (r) => (
@@ -52,7 +54,7 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
       )
     },
     {
-      title: "Pool ID",
+      title: t("glossary.poolId"),
       key: "poolId",
       minWidth: "120px",
       render: (r) => (
@@ -62,7 +64,7 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
       )
     },
     {
-      title: "Pool Name",
+      title: t("glossary.poolName"),
       key: "poolName",
       minWidth: "120px",
       maxWidth: "200px",

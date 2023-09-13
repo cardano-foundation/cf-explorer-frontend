@@ -1,18 +1,20 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   time?: moment.MomentInput;
 };
 
 const FormNowMessage = ({ time }: Props) => {
-  const [message, setMessage] = useState(time ? `Last updated ${moment(time).fromNow()}` : "");
+  const { t } = useTranslation();
+  const [message, setMessage] = useState(time ? `${t("common.lastUpdated")} ${moment(time).fromNow()}` : "");
 
   useEffect(() => {
     if (time) {
       setMessage(`Last updated ${moment(time).fromNow()}`);
       const interval = setInterval(() => {
-        setMessage(`Last updated ${moment(time).fromNow()}`);
+        setMessage(`${t("common.lastUpdated")}  ${moment(time).fromNow()}`);
       }, 1000);
 
       return () => clearInterval(interval);

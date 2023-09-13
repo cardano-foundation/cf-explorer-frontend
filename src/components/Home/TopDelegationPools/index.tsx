@@ -1,6 +1,7 @@
 import { useHistory } from "react-router-dom";
 import { Box } from "@mui/material";
 import { get } from "lodash";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
@@ -27,6 +28,7 @@ import {
 } from "./style";
 
 const TopDelegationPools = () => {
+  const { t } = useTranslation();
   const blockNo = useSelector(({ system }: RootState) => system.blockNo);
 
   const { data, loading, initialized, lastUpdated } = useFetch<DelegationPool[]>(
@@ -39,7 +41,7 @@ const TopDelegationPools = () => {
 
   const columns: Column<DelegationPool>[] = [
     {
-      title: "Pool",
+      title: t("glossary.pool"),
       key: "Pool",
       minWidth: "40px",
       maxWidth: "350px",
@@ -56,7 +58,7 @@ const TopDelegationPools = () => {
     {
       title: (
         <Box component="span">
-          Pool Size (<ADAicon />)
+          {t("glossary.poolSize")} (<ADAicon />)
         </Box>
       ),
       key: "poolSize",
@@ -64,7 +66,7 @@ const TopDelegationPools = () => {
       render: (r) => <Box component={"span"}>{formatADAFull(r.poolSize)}</Box>
     },
     {
-      title: "Saturation",
+      title: t("glossary.saturation"),
       key: "Saturation",
       minWidth: "200px",
       render: (r) => (
@@ -81,12 +83,12 @@ const TopDelegationPools = () => {
       )
     },
     {
-      title: "Blocks In Current Epoch",
+      title: t("glossary.blocksInCurrentEpoch"),
       key: "epochBlock",
       render: (r) => r.epochBlock || 0
     },
     {
-      title: "Blocks Lifetime",
+      title: t("glossary.blocksLifetime"),
       key: "lifetimeBlock",
       render: (r) => r.lifetimeBlock || 0
     }
@@ -95,8 +97,8 @@ const TopDelegationPools = () => {
     <TopDelegateContainer data-testid="home-top-delegation">
       <Header>
         <Title>
-          Pools
-          <SubHeader>Sorted by blocks produced in the current epoch</SubHeader>
+          {t("glossary.pools")}
+          <SubHeader>{t("info.sortedBlock")}</SubHeader>
         </Title>
         <Actions>
           <TimeDuration>

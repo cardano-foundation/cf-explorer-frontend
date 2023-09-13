@@ -1,5 +1,6 @@
 import { BoxProps, Typography } from "@mui/material";
 import { forwardRef } from "react";
+import { useTranslation } from "react-i18next";
 
 import { RewardAccountIconUrl, WalletIconRewardGreen } from "src/commons/resources";
 import { formatADAFull } from "src/commons/utils/helper";
@@ -19,6 +20,7 @@ export interface IRewardAccountBoxProps extends BoxProps {
 }
 
 const RewardAccountBox: React.FC<IRewardAccountBoxProps> = forwardRef(({ value, toggleRewardModal }, boxRef) => {
+  const { t } = useTranslation();
   return (
     <RewardAccountCcontainer ref={boxRef} onClick={toggleRewardModal}>
       <RewardBoxImg src={RewardAccountIconUrl} />
@@ -28,7 +30,7 @@ const RewardAccountBox: React.FC<IRewardAccountBoxProps> = forwardRef(({ value, 
         width="100% !important"
         color={({ palette }) => palette.secondary.main}
       >
-        Reward Account
+        {t("glossary.rewardAccount")}
       </Typography>
       <RewardValueLabel>
         <ClickAbleButton data-testid="toggle-reward-modal">

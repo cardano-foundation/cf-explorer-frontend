@@ -1,5 +1,6 @@
 import { Box, styled } from "@mui/material";
 import { useContext, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
 import useFetch from "src/commons/hooks/useFetch";
@@ -35,6 +36,7 @@ const ScriptType = styled(Box)`
 `;
 
 const ScriptTab = () => {
+  const { t } = useTranslation();
   const { address } = useParams<{ address: string }>();
   const { data, refresh } = useFetch<any>(API.CONTRACTS.SCRIPT(address));
   const { dispatch }: any = useContext(VerifyScriptContext);
@@ -53,14 +55,14 @@ const ScriptTab = () => {
       <Box color={({ palette }) => palette.secondary.main}>Contract</Box>
       {data?.isVerified ? (
         <ScriptType>
-          Script Type: <span>Native Script</span>
+          ${t("common.scriptType")}: <span>{t("common.nativeScript")}</span>
         </ScriptType>
       ) : null}
       <Result>
         {data?.isVerified ? (
           <pre>{JSON.stringify(JSON.parse(data?.data), null, " ")}</pre>
         ) : (
-          "Script has not been verified"
+          t("drawer.scriptNotVerified")
         )}
       </Result>
     </StyledBox>

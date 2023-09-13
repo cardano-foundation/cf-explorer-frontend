@@ -7,6 +7,7 @@ import { GoChevronRight } from "react-icons/go";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, useHistory, withRouter } from "react-router-dom";
 import { isNil, isObject, omitBy } from "lodash";
+import { useTranslation } from "react-i18next";
 
 import { HeaderSearchIcon } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
@@ -42,69 +43,6 @@ const intitalValue: FormValues = {
   filter: "all",
   search: ""
 };
-
-const options: Option[] = [
-  {
-    value: "all",
-    label: "All Filters"
-  },
-  {
-    value: "epochs",
-    label: "Epochs",
-    paths: [routers.EPOCH_LIST, routers.EPOCH_DETAIL],
-    detail: details.epoch
-  },
-  {
-    value: "blocks",
-    label: "Blocks",
-    paths: [routers.BLOCK_LIST, routers.BLOCK_DETAIL],
-    detail: details.block
-  },
-  {
-    value: "txs",
-    label: "Transactions",
-    paths: [routers.TRANSACTION_LIST, routers.TRANSACTION_DETAIL],
-    detail: details.transaction
-  },
-  {
-    value: "tokens",
-    label: "Tokens",
-    paths: [routers.TOKEN_LIST, routers.TOKEN_DETAIL],
-    detail: details.token
-  },
-  {
-    value: "addresses",
-    label: "Addresses",
-    paths: [
-      routers.ADDRESS_LIST,
-      routers.CONTRACT_LIST,
-      routers.ADDRESS_DETAIL,
-      routers.STAKE_ADDRESS_REGISTRATION,
-      routers.STAKE_ADDRESS_DEREGISTRATION,
-      routers.STAKE_ADDRESS_DELEGATIONS,
-      routers.TOP_DELEGATOR,
-      routers.STAKE_DETAIL
-    ],
-    detail: details.address
-  },
-  {
-    value: "delegations/pool-detail-header",
-    label: "Pools",
-    paths: [
-      routers.DELEGATION_POOLS,
-      routers.DELEGATION_POOL_DETAIL,
-      routers.POOL_CERTIFICATE,
-      routers.POOL_DEREGISTRATION
-    ],
-    detail: details.delegation
-  },
-  {
-    value: "policies",
-    label: "Policy Id",
-    paths: [routers.POLICY_DETAIL],
-    detail: details.policyDetail
-  }
-];
 
 const URL_FETCH_DETAIL = {
   epochs: (epoch: number) => `${API.EPOCH.DETAIL}/${epoch}`,
@@ -157,8 +95,73 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const [loading, setLoading] = useState<boolean>(false);
   const [totalResult, setTotalResult] = useState<number>(0);
 
+  const { t } = useTranslation();
+
+  const options: Option[] = [
+    {
+      value: "all",
+      label: t("filter.allFilters")
+    },
+    {
+      value: "epochs",
+      label: t("filter.epochs"),
+      paths: [routers.EPOCH_LIST, routers.EPOCH_DETAIL],
+      detail: details.epoch
+    },
+    {
+      value: "blocks",
+      label: t("filter.blocks"),
+      paths: [routers.BLOCK_LIST, routers.BLOCK_DETAIL],
+      detail: details.block
+    },
+    {
+      value: "txs",
+      label: t("filter.transactions"),
+      paths: [routers.TRANSACTION_LIST, routers.TRANSACTION_DETAIL],
+      detail: details.transaction
+    },
+    {
+      value: "tokens",
+      label: t("filter.tokens"),
+      paths: [routers.TOKEN_LIST, routers.TOKEN_DETAIL],
+      detail: details.token
+    },
+    {
+      value: "addresses",
+      label: t("filter.address"),
+      paths: [
+        routers.ADDRESS_LIST,
+        routers.CONTRACT_LIST,
+        routers.ADDRESS_DETAIL,
+        routers.STAKE_ADDRESS_REGISTRATION,
+        routers.STAKE_ADDRESS_DEREGISTRATION,
+        routers.STAKE_ADDRESS_DELEGATIONS,
+        routers.TOP_DELEGATOR,
+        routers.STAKE_DETAIL
+      ],
+      detail: details.address
+    },
+    {
+      value: "delegations/pool-detail-header",
+      label: t("filter.pools"),
+      paths: [
+        routers.DELEGATION_POOLS,
+        routers.DELEGATION_POOL_DETAIL,
+        routers.POOL_CERTIFICATE,
+        routers.POOL_DEREGISTRATION
+      ],
+      detail: details.delegation
+    },
+    {
+      value: "policies",
+      label: t("filter.policyId"),
+      paths: [routers.POLICY_DETAIL],
+      detail: details.policyDetail
+    }
+  ];
+
   const showResultNotFound = () => {
-    setError("No results found");
+    setError(t("message.noResultsFound"));
     setShowErrorMobile?.(true);
     setDataSearchAll(undefined);
     setShowOption(true);
@@ -282,6 +285,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     if ("/" + currentPath !== routers.SEARCH) setValues({ ...intitalValue, filter });
     setError("");
     setShowErrorMobile?.(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPath, checkIncludesPath, setError, setShowErrorMobile, setValues]);
 
   const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
@@ -425,17 +429,17 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
         spellCheck={false}
         placeholder={
           home && !isMobile
-            ? "Search transactions, address, blocks, epochs, pools..."
+            ? t("filter.placeholder.searchAll")
             : isStakingLifecycle && !isMobile
-            ? "Search Stake Address, Pools"
-            : "Search ..."
+            ? t("filter.placeholder.searchAddressPools")
+            : t("filter.placeholder.search")
         }
         title={
           home && !isMobile
-            ? "Search transactions, address, blocks, epochs, pools..."
+            ? t("filter.placeholder.searchAll")
             : isStakingLifecycle && !isMobile
-            ? "Search Stake Address, Pools"
-            : "Search ..."
+            ? t("filter.placeholder.searchAddressPools")
+            : t("filter.placeholder.search")
         }
         onChange={handleChangeSearch}
         disableUnderline

@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Grid } from "@mui/material";
 import moment from "moment";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { CurentEpochPool, LiveStakeIcon, RocketPoolIcon, TotalPoolIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
@@ -26,6 +27,7 @@ import {
 } from "./styles";
 
 const OverViews: React.FC = () => {
+  const { t } = useTranslation();
   const { currentEpoch, blockNo } = useSelector(({ system }: RootState) => system);
 
   const { data, loading, lastUpdated } = useFetch<OverViewDelegation>(API.DELEGATION.HEADER, undefined, false, blockNo);
@@ -56,7 +58,7 @@ const OverViews: React.FC = () => {
   const minutes = duration.minutes();
   const seconds = duration.seconds();
   return (
-    <Card title="Pools">
+    <Card title={t("head.page.pool")}>
       <TimeDuration>
         <FormNowMessage time={lastUpdated} />
       </TimeDuration>
@@ -64,15 +66,15 @@ const OverViews: React.FC = () => {
         <Grid item xl={3} md={6} xs={12}>
           <StyledCard.Container>
             <StyledCard.Content>
-              <StyledCard.Title>Epoch</StyledCard.Title>
+              <StyledCard.Title>{t("glossary.epoch")}</StyledCard.Title>
               <StyledCard.Link to={details.epoch(data?.epochNo)}>{data?.epochNo}</StyledCard.Link>
               <Box component="span" sx={{ color: (theme) => theme.palette.secondary.light, textAlign: "left" }}>
-                End in:{" "}
+                {t("common.endIn")}:{" "}
                 <StyledCard.Comment>
-                  {`${days} day${days > 1 ? "s" : ""} `}
-                  {`${hours} hour${hours > 1 ? "s" : ""} `}
-                  {`${minutes} minute${minutes > 1 ? "s" : ""} `}
-                  {`${seconds} second${seconds > 1 ? "s" : ""}`}
+                  {`${days} ${days > 1 ? t("common.days") : t("common.day")} `}
+                  {`${hours} ${hours > 1 ? t("common.hours") : t("common.hour")} `}
+                  {`${minutes} ${minutes > 1 ? t("common.minutes") : t("common.minute")} `}
+                  {`${seconds} ${seconds > 1 ? t("common.seconds") : t("common.second")}`}
                 </StyledCard.Comment>
               </Box>
             </StyledCard.Content>
@@ -89,7 +91,7 @@ const OverViews: React.FC = () => {
             >
               <StyledCard.Container style={{ boxShadow: "none" }}>
                 <StyledCard.Content>
-                  <StyledCard.Title>Slot</StyledCard.Title>
+                  <StyledCard.Title>{t("glossary.slot")}</StyledCard.Title>
                   <StyledCard.Value>
                     {(currentEpoch?.slot || 0) % MAX_SLOT_EPOCH}
                     <Box component="span" sx={{ color: (theme) => theme.palette.secondary.light, fontWeight: "400" }}>
@@ -112,14 +114,14 @@ const OverViews: React.FC = () => {
           <StyledCard.Container sx={{ justifyContent: "space-between" }}>
             <StyledCard.Content style={{ padding: "30px 0 0 30px" }}>
               <StyledCard.Title>
-                Live Stake (<ADAicon />)
+                {t("glossary.liveStake")} (<ADAicon />)
               </StyledCard.Title>
               <CustomTooltip title={formatADAFull(data?.liveStake)}>
                 <StyledCard.Value>{formatADA(data?.liveStake)}</StyledCard.Value>
               </CustomTooltip>
             </StyledCard.Content>
             <StyledCard.Content style={{}}>
-              <StyledCard.Title>Delegators</StyledCard.Title>
+              <StyledCard.Title>{t("glossary.delegators")}</StyledCard.Title>
               <StyledCard.Value>{numberWithCommas(data?.delegators)}</StyledCard.Value>
             </StyledCard.Content>
             <Box>
@@ -130,7 +132,7 @@ const OverViews: React.FC = () => {
         <Grid item xl={3} md={6} xs={12}>
           <StyledCard.Container>
             <StyledCard.Content>
-              <StyledCard.Title>Total Pools</StyledCard.Title>
+              <StyledCard.Title>{t("glossary.totalPools")}</StyledCard.Title>
               <StyledCard.Value>
                 {(data?.activePools ? +data.activePools : 0) + (data?.retiredPools ? +data.retiredPools : 0)}
               </StyledCard.Value>
@@ -142,11 +144,11 @@ const OverViews: React.FC = () => {
                 width={"100%"}
               >
                 <Box flex={1}>
-                  <PoolTitle>Active Pools</PoolTitle>
+                  <PoolTitle>{t("glossary.activePools")}</PoolTitle>
                   <PoolValue>{data?.activePools || 0}</PoolValue>
                 </Box>
                 <Box flex={1}>
-                  <PoolTitle>Retired Pools</PoolTitle>
+                  <PoolTitle>{t("glossary.retiredPools")}</PoolTitle>
                   <PoolValue>{data?.retiredPools || 0}</PoolValue>
                 </Box>
               </Box>

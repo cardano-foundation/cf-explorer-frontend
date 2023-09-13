@@ -2,6 +2,7 @@ import { stringify } from "qs";
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -19,6 +20,7 @@ interface ITokenMinting {
 }
 
 const TokenMinting: React.FC<ITokenMinting> = ({ tokenId, metadata }) => {
+  const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -33,7 +35,7 @@ const TokenMinting: React.FC<ITokenMinting> = ({ tokenId, metadata }) => {
 
   const columns: Column<ITokenMintingTable>[] = [
     {
-      title: "Tx Hash",
+      title: t("glossary.txhash"),
       key: "trxHash",
       minWidth: "200px",
       render: (r) => (
@@ -43,7 +45,7 @@ const TokenMinting: React.FC<ITokenMinting> = ({ tokenId, metadata }) => {
       )
     },
     {
-      title: "Amount minted",
+      title: t("glossary.amountedMinted"),
       key: "amountMinted",
       minWidth: "200px",
       render: (r) => (
@@ -53,7 +55,7 @@ const TokenMinting: React.FC<ITokenMinting> = ({ tokenId, metadata }) => {
       )
     },
     {
-      title: "Created At",
+      title: t("createdAt"),
       key: "time",
       minWidth: "200px",
       render: (r) => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>

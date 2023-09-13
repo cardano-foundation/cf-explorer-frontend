@@ -3,6 +3,7 @@ import { stringify } from "qs";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -24,6 +25,7 @@ import { RootState } from "src/stores/types";
 import { StyledContainer, StyledLink, TimeDuration } from "./styles";
 
 const Transactions: React.FC = () => {
+  const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -39,7 +41,7 @@ const Transactions: React.FC = () => {
 
   const columns: Column<Contracts>[] = [
     {
-      title: "Address",
+      title: t("common.address"),
       key: "trxhash",
       minWidth: 120,
 
@@ -52,7 +54,7 @@ const Transactions: React.FC = () => {
       )
     },
     {
-      title: "Balance",
+      title: t("common.balance"),
       key: "balance",
       minWidth: 60,
       render: (r) => (
@@ -66,7 +68,7 @@ const Transactions: React.FC = () => {
       }
     },
     {
-      title: "Value",
+      title: t("common.value"),
       key: "value",
       minWidth: 120,
       render: (r) => (
@@ -76,7 +78,7 @@ const Transactions: React.FC = () => {
       )
     },
     {
-      title: "Transaction Count",
+      title: t("glossary.transactionCount"),
       minWidth: 120,
       key: "txCount",
       render: (r) => (
@@ -92,14 +94,14 @@ const Transactions: React.FC = () => {
 
   return (
     <StyledContainer>
-      <Card title={"Smart Contracts"} underline={false}>
+      <Card title={t("head.page.smartContracts")} underline={false}>
         <TimeDuration>
           <FormNowMessage time={fetchData.lastUpdated} />
         </TimeDuration>
         <Table
           {...fetchData}
           columns={columns}
-          total={{ title: "Total Contracts", count: fetchData.total }}
+          total={{ title: t("glossary.totalContracts"), count: fetchData.total }}
           onClickRow={(_, r) => history.push(details.contract(r.address))}
           pagination={{
             ...pageInfo,

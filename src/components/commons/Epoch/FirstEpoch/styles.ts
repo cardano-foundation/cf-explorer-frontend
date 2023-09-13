@@ -51,7 +51,8 @@ export const EpochNumber = styled(Box)(({ theme }) => ({
 
 export const TitleCard = styled(Box)(({ theme }) => ({
   color: theme.palette.secondary.light,
-  fontSize: "0.875rem"
+  fontSize: "0.875rem",
+  textTransform: "capitalize"
 }));
 
 export const EpochProgress = styled("h3")<{ status: keyof typeof EPOCH_STATUS }>(({ theme }) => ({

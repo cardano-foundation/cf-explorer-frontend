@@ -3,6 +3,7 @@ import { capitalize, isWalletInstalled } from "@cardano-foundation/cardano-conne
 import { CircularProgress } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
 import { MdOutlineFileDownload } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 import { setOpenModal, setWallet } from "src/stores/user";
 import { NETWORK, SUPPORTED_WALLETS } from "src/commons/utils/constants";
@@ -29,6 +30,7 @@ interface IProps {
 }
 
 const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, isModal }) => {
+  const { t } = useTranslation();
   const [walletConnecting, setWalletConnecting] = useState<SupportedWallets | null>(null);
   const toast = useToast();
   const handleClose = () => {
@@ -42,18 +44,19 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
   const onError = (error: Error, walletName: string) => {
     if (error.name === "WrongNetworkTypeError") {
       toast.error(
-        `You are currently connect to ${
-          NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()
-        }, please switch to  ${NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()}!`
+        t("message.changeNetwork", {
+          wrongNetwork: NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase(),
+          correctNetwork: NETWORK.charAt(0).toUpperCase() + NETWORK.slice(1).toLowerCase()
+        })
       );
     } else if (error.name === "WalletExtensionNotFoundError") {
-      toast.error(`${capitalize(walletName)} was not found. Please check if it is installed correctly.`);
-    } else {
       toast.error(
-        `An error has occurred! Please review your setup, such as checking whether you have already created a wallet in your ${capitalize(
-          walletName
-        )} wallet application.`
+        t("message.wallet.notFound", {
+          walletName: capitalize(walletName)
+        })
       );
+    } else {
+      toast.error(t("message.wallet.created", { walletName }));
     }
     setWalletConnecting(null);
   };

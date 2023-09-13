@@ -3,6 +3,7 @@ import { Box, Skeleton } from "@mui/material";
 import { useUpdateEffect } from "react-use";
 import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
@@ -20,6 +21,7 @@ declare interface Props {
 }
 
 const RecentPoolUpdates = ({ onSelect, setShowBackButton }: Props) => {
+  const { t } = useTranslation();
   const { poolId = "", txHash = "" } = useParams<{ poolId: string; txHash?: string }>();
   const history = useHistory();
   const { sidebar } = useSelector(({ user }: RootState) => user);
@@ -61,7 +63,7 @@ const RecentPoolUpdates = ({ onSelect, setShowBackButton }: Props) => {
         <DescriptionText>Recent Updates</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
-            Showing {total} {total > 1 ? "results" : "result"}
+            {t("common.showing")} {total} {total > 1 ? t("common.result") : t("common.results")}
           </WrapFilterDescription>
           <CustomFilter
             filterValue={params}
@@ -69,7 +71,7 @@ const RecentPoolUpdates = ({ onSelect, setShowBackButton }: Props) => {
               setParams(params);
               setPageInfo((pre) => ({ ...pre, page: 0 }));
             }}
-            searchLabel="Search transaction"
+            searchLabel={t("common.searchTx")}
           />
         </Box>
       </StyledList>

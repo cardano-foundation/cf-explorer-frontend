@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { details } from "src/commons/routers";
 import { formatADAFull, formatDateTimeLocal, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
@@ -23,6 +24,7 @@ const DelegationEpochList = ({
   total: number;
   scrollEffect: () => void;
 }) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
@@ -31,13 +33,13 @@ const DelegationEpochList = ({
   };
   const columns: Column<DelegationEpoch>[] = [
     {
-      title: "Epoch",
+      title: t("common.Epoch"),
       key: "epoch",
       minWidth: "120px",
       render: (r) => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>
     },
     {
-      title: "Blocks",
+      title: t("blocks"),
       key: "block",
       minWidth: "120px",
       render: (data) => numberWithCommas(data.block)
@@ -45,7 +47,7 @@ const DelegationEpochList = ({
     {
       title: (
         <Box component={"span"}>
-          Stake Amount (<ADAicon />)
+          {t("stakeAmount")} (<ADAicon />)
         </Box>
       ),
       key: "stakeAmount",
@@ -56,7 +58,7 @@ const DelegationEpochList = ({
     {
       title: (
         <Box component={"span"}>
-          Delegator Rewards (<ADAicon />)
+          {t("delegatorRewards")} (<ADAicon />)
         </Box>
       ),
       key: "delegatorReward",
@@ -66,7 +68,7 @@ const DelegationEpochList = ({
     {
       title: (
         <Box component={"span"}>
-          Fees (<ADAicon />)
+          {t("fees")} (<ADAicon />)
         </Box>
       ),
       key: "fees",
@@ -79,7 +81,7 @@ const DelegationEpochList = ({
     <Table
       columns={columns}
       data={data || []}
-      total={{ count: total, title: "Total Token List" }}
+      total={{ count: total, title: t("glossary.totalTokenList") }}
       loading={loading}
       initialized={initialized}
       pagination={{
@@ -105,6 +107,7 @@ const DelegationStakingDelegatorsList = ({
   total: number;
   scrollEffect: () => void;
 }) => {
+  const { t } = useTranslation();
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
   const history = useHistory();
@@ -113,12 +116,12 @@ const DelegationStakingDelegatorsList = ({
   };
   const columns: Column<StakingDelegators>[] = [
     {
-      title: "No",
+      title: t("no"),
       key: "no",
       render: (r, idx) => idx + 1
     },
     {
-      title: "Delegator",
+      title: t("delegator"),
       key: "delegator",
       minWidth: "50px",
       render: (data) =>
@@ -134,7 +137,7 @@ const DelegationStakingDelegatorsList = ({
     {
       title: (
         <Box component="span">
-          Total Value (<ADAicon />)
+          {t("totalValue")} (<ADAicon />)
         </Box>
       ),
       key: "value",
@@ -142,7 +145,7 @@ const DelegationStakingDelegatorsList = ({
       render: (data) => <Box component={"span"}>{formatADAFull(data.totalStake)}</Box>
     },
     {
-      title: "Staked Time",
+      title: t("stakedTime"),
       key: "stakedTime",
       minWidth: "120px",
       render: (data) => formatDateTimeLocal(data.time || "")
@@ -150,7 +153,7 @@ const DelegationStakingDelegatorsList = ({
     {
       title: (
         <Box component="span">
-          Fees (<ADAicon />)
+          {t("fees")} (<ADAicon />)
         </Box>
       ),
       key: "fees",
@@ -163,7 +166,7 @@ const DelegationStakingDelegatorsList = ({
     <Table
       columns={columns}
       data={data ? data : []}
-      total={{ count: total, title: "Total Token List" }}
+      total={{ count: total, title: t("glossary.totalTokenList") }}
       loading={loading}
       initialized={initialized}
       pagination={{

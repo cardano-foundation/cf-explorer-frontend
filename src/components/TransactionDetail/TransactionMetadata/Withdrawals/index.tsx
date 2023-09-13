@@ -1,5 +1,6 @@
 import React from "react";
 import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import sendImg from "src/commons/resources/images/sendImg.svg";
 import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
@@ -16,12 +17,13 @@ interface WithdrawalsProps {
 }
 
 const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
+  const { t } = useTranslation();
   const { isMobile } = useScreen();
   return (
     <Wrapper>
       <Header>
-        <Box>Wallet Addresses</Box>
-        <Box>Amount</Box>
+        <Box>{t("glassary.walletAddresses")}</Box>
+        <Box>{t("glossary.amount")}</Box>
       </Header>
       {data?.map((item) => (
         <StyledItem key={item.stakeAddressFrom}>
@@ -32,7 +34,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
               </Box>
               {isMobile ? (
                 <Box component={"span"} color={({ palette }) => palette.secondary.light}>
-                  From:
+                  {t("common.from")}:
                 </Box>
               ) : null}
             </Box>
@@ -41,7 +43,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                 <Box minWidth={120}>
                   {!isMobile ? (
                     <Box component={"span"} mr={1} color={({ palette }) => palette.secondary.light}>
-                      From:
+                      {t("common.from")}:
                     </Box>
                   ) : null}
                   <CustomTooltip title={item.stakeAddressFrom}>
@@ -64,7 +66,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
               </Box>
               <Box display={"flex"} flexDirection={isMobile ? "column" : "row"}>
                 <Box minWidth="1.75rem" color={({ palette }) => palette.secondary.light}>
-                  To:
+                  {t("common.to")}:
                 </Box>
                 <Box flex={1}>
                   {item?.addressTo.map((address, idx) => {

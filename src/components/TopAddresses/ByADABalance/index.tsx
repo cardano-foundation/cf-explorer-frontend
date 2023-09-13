@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -16,6 +17,7 @@ import { Actions, PageSize, PerPage, SelectMui, StyledLink, StyledMenuItem, Time
 const perPages = [10, 20, 50, 100];
 
 const TopAddressesByADABalance = () => {
+  const { t } = useTranslation();
   const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const [pageSize, setPageSize] = useState("50");
   const { error, data, initialized, loading, lastUpdated } = useFetchList<Contracts>(
@@ -27,7 +29,7 @@ const TopAddressesByADABalance = () => {
 
   const columns: Column<Address>[] = [
     {
-      title: "Addresses",
+      title: t("glossary.address"),
       key: "address",
       minWidth: 120,
 
@@ -40,7 +42,7 @@ const TopAddressesByADABalance = () => {
       )
     },
     {
-      title: "Balance",
+      title: t("common.balance"),
       key: "balance",
       minWidth: 60,
       render: (r) => (
@@ -51,7 +53,7 @@ const TopAddressesByADABalance = () => {
       )
     },
     {
-      title: "Transaction Count",
+      title: t("glossary.transactionCount"),
       minWidth: 120,
       key: "transaction_count",
       render: (r) => (
@@ -82,7 +84,7 @@ const TopAddressesByADABalance = () => {
               </StyledMenuItem>
             ))}
           </SelectMui>
-          <PerPage>Addresses</PerPage>
+          <PerPage>{t("glossary.address")}</PerPage>
         </PageSize>
       </Actions>
       <Table
