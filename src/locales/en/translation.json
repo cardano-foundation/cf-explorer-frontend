@@ -1,6 +1,5 @@
 {
   "head.page.dashboard": "Cardano Blockchain Explorer",
-  "test": "hello {{a}} and {{b}} or {{c}}",
   "head.page.signIn": "Sign In | Cardano Blockchain Explorer",
   "filter.allFilters": "All Filters",
   "filter.epochs": "Epochs",
