@@ -19,6 +19,7 @@ const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, key?: number): 
   const [error, setError] = useState<string | null>(null);
   const [refreshLoading, setRefreshLoading] = useState(false);
   const lastFetch = useRef<number>();
+  const lastKey = useRef<number | undefined>(key);
 
   const fetch = useCallback(
     async (needLoading?: boolean) => {
@@ -49,7 +50,23 @@ const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, key?: number): 
 
   useEffect(() => {
     // Refresh without "loading" every time the "key" is updated
-    if (initialized && !loading && !refreshLoading) fetch();
+    if (key && !loading && !refreshLoading) {
+      const onFocus = async () => {
+        if (lastKey.current !== key) {
+          fetch();
+          lastKey.current = key;
+        }
+      };
+
+      window.addEventListener("focus", onFocus);
+
+      if (!document.hidden) {
+        fetch();
+        lastKey.current = key;
+      }
+
+      return () => window.removeEventListener("focus", onFocus);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
 
