@@ -36,3 +36,10 @@ export const StyledTable = styled(Table)(() => ({
     minHeight: "75px"
   }
 }));
+
+export const TimeDuration = styled("small")(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  display: "block",
+  textAlign: "left",
+  marginTop: "20px"
+}));

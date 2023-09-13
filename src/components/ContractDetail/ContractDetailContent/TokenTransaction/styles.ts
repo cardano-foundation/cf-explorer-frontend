@@ -39,3 +39,10 @@ export const PriceIcon = styled("img")`
   margin-left: 8px;
   margin-bottom: 5px;
 `;
+
+export const TimeDuration = styled("small")(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  display: "block",
+  textAlign: "left",
+  marginTop: "20px"
+}));
