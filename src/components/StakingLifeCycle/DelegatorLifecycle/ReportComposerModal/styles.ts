@@ -273,7 +273,8 @@ export const StyledTextField = styled(TextField)`
     border-radius: 8px;
     background-color: ${(props) => props.theme.palette.secondary[0]};
   }
-  .MuiFormControl-root {
+  .Mui-focused {
+    border-color: ${(props) => props.theme.palette.secondary.light};
   }
   .MuiInputBase-input {
     font-size: 14px;

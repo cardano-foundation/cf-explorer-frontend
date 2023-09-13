@@ -7,7 +7,13 @@ import { Box } from "@mui/material";
 import { Column } from "src/types/table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
-import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
+import {
+  formatADAFull,
+  formatDateTimeLocal,
+  formatNameBlockNo,
+  getPageInfo,
+  getShortHash
+} from "src/commons/utils/helper";
 import { setOnDetailView } from "src/stores/user";
 import DetailViewBlock from "src/components/commons/DetailView/DetailViewBlock";
 import Card from "src/components/commons/Card";
@@ -41,7 +47,16 @@ const BlockList = () => {
       title: "Block",
       key: "blockNo",
       minWidth: "50px",
-      render: (r) => <Link to={details.block(r.blockNo || r.hash)}>{r.blockNo !== null ? r.blockNo : "_"}</Link>
+      render: (r) => {
+        const { blockName, tooltip } = formatNameBlockNo(r.blockNo, r.epochNo);
+        return (
+          <Link to={details.block(r.blockNo || r.hash)}>
+            <CustomTooltip title={tooltip}>
+              <span>{blockName}</span>
+            </CustomTooltip>
+          </Link>
+        );
+      }
     },
     {
       title: "Block ID",

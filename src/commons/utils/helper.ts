@@ -2,6 +2,7 @@ import BigNumber from "bignumber.js";
 import moment, { DurationInputArg1, DurationInputArg2 } from "moment";
 import { parse } from "qs";
 import jwtDecode from "jwt-decode";
+import { isNil } from "lodash";
 
 import { setUserData } from "../../stores/user";
 import { getInfo, signIn } from "./userRequest";
@@ -267,5 +268,24 @@ export const getDurationUnits = (inp: DurationInputArg1, unit: DurationInputArg2
     d,
     h,
     humanized
+  };
+};
+
+type blockEpochNoType = number | null | undefined;
+export const formatNameBlockNo = (blockNo: blockEpochNoType, epochNo: blockEpochNoType) => {
+  if (isNil(blockNo) && isNil(epochNo))
+    return {
+      blockName: "Genesis",
+      tooltip: ""
+    };
+  if (isNil(blockNo) && !isNil(epochNo)) {
+    return {
+      blockName: "N/A",
+      tooltip: "Epoch Boundary Block"
+    };
+  }
+  return {
+    blockName: blockNo,
+    tooltip: ""
   };
 };
