@@ -2,23 +2,25 @@ import React, { useContext, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { Box } from "@mui/material";
 import { stringify } from "qs";
+import { useSelector } from "react-redux";
 
 import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
-
-import useFetchList from "../../../commons/hooks/useFetchList";
-import { details } from "../../../commons/routers";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { details } from "src/commons/routers";
 import {
   formatADAFull,
   formatDateTimeLocal,
   getPageInfo,
   getShortHash,
   getShortWallet
-} from "../../../commons/utils/helper";
-import Table, { Column } from "../../commons/Table";
-import { Flex, Label, SmallText, StyledLink, PriceValue, DescriptionText } from "./styles";
-import CustomTooltip from "../../commons/CustomTooltip";
-import { API } from "../../../commons/utils/api";
-import ADAicon from "../../commons/ADAIcon";
+} from "src/commons/utils/helper";
+import Table, { Column } from "src/components/commons/Table";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { API } from "src/commons/utils/api";
+import ADAicon from "src/components/commons/ADAIcon";
+import FormNowMessage from "src/components/commons/FormNowMessage";
+
+import { Flex, Label, SmallText, StyledLink, PriceValue, DescriptionText, TimeDuration } from "./styles";
 
 interface ITokenTransaction {
   tokenId: string;
@@ -28,8 +30,14 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
 
-  const fetchData = useFetchList<Transactions>(API.TOKEN.TOKEN_TRX.replace(":tokenId", tokenId), { ...pageInfo });
+  const fetchData = useFetchList<Transactions>(
+    API.TOKEN.TOKEN_TRX.replace(":tokenId", tokenId),
+    { ...pageInfo },
+    false,
+    blockNo
+  );
 
   const columns: Column<Transactions>[] = [
     {
@@ -134,6 +142,9 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
         Included transactions in which the UTXO containing the tokens is used resulting in token movement, while the
         tokens are unspent and returned to the address
       </DescriptionText>
+      <TimeDuration>
+        <FormNowMessage time={fetchData.lastUpdated} />
+      </TimeDuration>
       <Table
         {...fetchData}
         columns={columns}

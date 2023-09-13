@@ -24,9 +24,10 @@ interface ITokenOverview {
   data: IToken | null;
   loading: boolean;
   currentHolders: number;
+  lastUpdated?: number;
 }
 
-const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders }) => {
+const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders, lastUpdated }) => {
   const [openModal, setOpenModal] = useState(false);
   const [policyId, setPolicyId] = useState("");
   const decimalToken = data?.decimals || data?.metadata?.decimals || 0;
@@ -180,6 +181,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
         hash={data?.fingerprint}
         listItem={listItem}
         loading={loading}
+        lastUpdated={lastUpdated}
       />
       <ScriptModal open={openModal} onClose={() => setOpenModal(false)} policy={policyId} />
     </Box>
