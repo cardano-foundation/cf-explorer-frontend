@@ -60,9 +60,9 @@ const MAX_PERCENT_SHOW_PENDING_TIME = 90;
 const MIN_PERCENT_SHOW_ACTIVE_TIME = 5;
 
 const HomeStatistic = () => {
-  const { currentEpoch, usdMarket, btcMarket } = useSelector(({ system }: RootState) => system);
+  const { currentEpoch, usdMarket, btcMarket, blockNo } = useSelector(({ system }: RootState) => system);
 
-  const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS);
+  const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS, undefined, false, blockNo);
 
   const { circulating_supply, total_supply: total = 1 } = usdMarket || {};
   const { liveStake = 0, activeStake = 1 } = data || {};

@@ -36,6 +36,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, key
   const [refreshLoading, setRefreshLoading] = useState(false);
   const [query, setQuery] = useState<Params>(cleanObject(params));
   const lastFetch = useRef<number>();
+  const lastKey = useRef<number | undefined>(key);
 
   const getList = useCallback(
     async (needLoading?: boolean) => {
@@ -83,7 +84,23 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, key
 
   useEffect(() => {
     // Refresh without "loading" every time the "key" is updated
-    if (initialized && !loading && !refreshLoading) getList();
+    if (key && !loading && !refreshLoading) {
+      const onFocus = async () => {
+        if (lastKey.current !== key) {
+          getList();
+          lastKey.current = key;
+        }
+      };
+
+      window.addEventListener("focus", onFocus);
+
+      if (!document.hidden) {
+        getList();
+        lastKey.current = key;
+      }
+
+      return () => window.removeEventListener("focus", onFocus);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
 
