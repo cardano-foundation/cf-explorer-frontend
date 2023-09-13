@@ -415,6 +415,7 @@
   "common.createdAt": "Created At",
   "common.adaValue": " ADA Value",
   "common.holdOrFees": "Hold/Fees",
+  "common.delegationTo": "Delegation To",
   "common.certificate": "Certificate ",
   "common.delegationHistory": "Delegation History",
   "common.rewardsPaid": "Rewards Paid",
