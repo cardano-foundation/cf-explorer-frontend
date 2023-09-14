@@ -1,6 +1,7 @@
 import React from "react";
 import { styled, Container, Box } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { APP_VERSION } from "src/commons/utils/constants";
 import { routers } from "src/commons/routers";
@@ -72,24 +73,25 @@ const LinkTo = styled(Link)`
 `;
 
 const Footer: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <StyledFooter data-testid="footer">
       <FooterContainer>
         <FooterMenu bottom={true} />
         <Copyright data-testid="footer-text">
-          &copy; {new Date().getFullYear()} Cardano Foundation. All rights reserved. Version: {APP_VERSION}
+          &copy; {new Date().getFullYear()} {t("common.copyright")}: {APP_VERSION}
         </Copyright>
         <RefContainer>
           <LinkTo to={routers.FAQ} rel="noopener noreferrer">
-            FAQs
+            {t("common.faqs")}
           </LinkTo>
           <DotDivide />
           <LinkTo to={routers.TERMS_OF_SERVICE} rel="noopener noreferrer">
-            Terms Of Service
+            {t("common.termsOfService")}
           </LinkTo>
           <DotDivide />
           <LinkTo to={routers.POLICY} rel="noopener noreferrer">
-            Privacy Policy
+            {t("common.privacyPolicy")}
           </LinkTo>
         </RefContainer>
       </FooterContainer>

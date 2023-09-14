@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import delegatedIcon from "src/commons/resources/icons/delegated.svg";
 import rewardIcon from "src/commons/resources/icons/reward.svg";
@@ -21,6 +22,7 @@ interface Props {
   lastUpdated: number;
 }
 const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const { stakeId } = useParams<{ stakeId: string }>();
 
@@ -33,19 +35,19 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
     ? hasTicketOrPoolName
       ? `${tickerName}${tickerName && poolName ? " - " : ""}${poolName}`
       : poolId
-    : "Not delegated to any pool";
+    : t("drawer.notDelegatedToAnyPool");
 
   const delegateTo = data?.pool
     ? hasTicketOrPoolName
       ? `${tickerName}${tickerName && poolName ? " - " : ""}${poolName}`
       : getShortWallet(poolId)
-    : "Not delegated to any pool";
+    : t("drawer.notDelegatedToAnyPool");
   const listOverview = [
     {
       icon: delegatedIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Delegated to </TitleCard>
+          <TitleCard mr={1}>{t("glossary.delegatedTo")} </TitleCard>
         </Box>
       ),
       value: (
@@ -60,7 +62,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
       icon: totalStakeIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Total Stake</TitleCard>
+          <TitleCard mr={1}>{t("glossary.totalStake")}</TitleCard>
         </Box>
       ),
       value: (
@@ -70,7 +72,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
             <ADAicon />
           </StyledFlexValue>
           <Box sx={{ color: "blue" }}>
-            <ButtonModal onClick={() => setOpen(true)}>View all addresses</ButtonModal>
+            <ButtonModal onClick={() => setOpen(true)}>{t("drawer.viewAllAddresses")}</ButtonModal>
           </Box>
           <ModalAllAddress open={open} onClose={() => setOpen(false)} stake={stakeId} />
         </Box>
@@ -80,7 +82,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
       icon: rewardIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Rewards available </TitleCard>
+          <TitleCard mr={1}>{t("glossary.rewardsAvailable")} </TitleCard>
         </Box>
       ),
       value: (
@@ -94,7 +96,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
       icon: rewardWithdrawIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> Rewards withdrawn </TitleCard>
+          <TitleCard mr={1}> {t("glossary.rewardsWithdrawn")} </TitleCard>
         </Box>
       ),
       value: (
@@ -110,7 +112,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
     <DetailHeader
       type="STAKE_KEY"
       bookmarkData={data?.stakeAddress || ""}
-      title="Stake Address Details"
+      title={t("head.page.stakeAddressDetail")}
       hash={data?.stakeAddress}
       stakeKeyStatus={data?.status}
       listItem={listOverview}

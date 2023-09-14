@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { Link, RouteComponentProps, withRouter } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { footerMenus, menus } from "src/commons/menus";
@@ -26,6 +27,7 @@ import {
 } from "./styles";
 
 const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
+  const { t } = useTranslation();
   const pathname = history.location.pathname;
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const specialPath = useSelector(({ system }: RootState) => system.specialPath);
@@ -94,7 +96,8 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     <SidebarMenuContainer>
       <Menu>
         {menus.map((item, index) => {
-          const { href, title, children, icon, tooltip } = item;
+          const { href, key, children, icon, tooltip } = item;
+          const title = t(key);
           const tooltipTitle = `${!sidebar ? `${title}${title && tooltip ? `: ` : ``}` : ``}${tooltip || ``}`;
           return (
             <React.Fragment key={index}>
@@ -102,6 +105,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 {href ? (
                   <ListItem
                     button
+                    onClick={() => setActive(null)}
                     data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
                     {...(isExternalLink(href)
                       ? { component: "a", href, target: "_blank" }
@@ -135,7 +139,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                     onClick={() => children?.length && handleOpen(`menu-${index}`)}
                     sx={(theme) => ({
                       ...itemStyle(theme, sidebar),
-                      ...(`menu-${index}` === active || `menu-${index}` === currentActive
+                      ...(`menu-${index}` === currentActive
                         ? {
                             backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
                             color: (theme) => theme.palette.secondary[0]
@@ -143,7 +147,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                         : { color: (theme) => theme.palette.secondary.light }),
                       fontWeight: "bold !important",
                       ":hover":
-                        `menu-${index}` === active || `menu-${index}` === currentActive
+                        `menu-${index}` === currentActive
                           ? {
                               backgroundColor: `${theme.palette.primary.dark} !important`
                             }
@@ -155,13 +159,13 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                         src={icon}
                         alt={title}
                         iconOnly={+!sidebar}
-                        active={+(`menu-${index}` === active || `menu-${index}` === currentActive)}
+                        active={+(`menu-${index}` === currentActive)}
                       />
                     ) : null}
                     <MenuText
                       primary={title}
                       open={+sidebar}
-                      active={+(`menu-${index}` === active || `menu-${index}` === currentActive)}
+                      active={+(`menu-${index}` === currentActive)}
                       disable={+!!tooltipTitle}
                     />
 
@@ -177,7 +181,8 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 <Collapse in={`menu-${index}` === active} timeout="auto" unmountOnExit>
                   <SubMenu disablePadding>
                     {children.map((subItem, subIndex) => {
-                      const { href, title, icon, isSpecialPath } = subItem;
+                      const { href, icon, isSpecialPath, key } = subItem;
+                      const title = t(key);
                       return href ? (
                         <ListItem
                           data-testid={`submenu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
@@ -228,7 +233,8 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
         })}
         <StyledDivider sidebar={+sidebar} />
         {footerMenus.map((item, index) => {
-          const { href, title, children, icon, tooltip } = item;
+          const { href, key, children, icon, tooltip } = item;
+          const title = t(key);
           const tooltipTitle = `${!sidebar ? `${title}${title && tooltip ? `: ` : ``}` : ``}${tooltip || ``}`;
           return (
             <React.Fragment key={index}>
@@ -298,7 +304,8 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 <Collapse in={`footer-${index}` === active} timeout="auto" unmountOnExit>
                   <SubMenu disablePadding>
                     {children.map((subItem, subIndex) => {
-                      const { href, title, icon } = subItem;
+                      const { href, key, icon } = subItem;
+                      const title = t(key);
                       return href ? (
                         <ListItem
                           key={subIndex}

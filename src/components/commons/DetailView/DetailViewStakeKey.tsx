@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { BiChevronRight } from "react-icons/bi";
 import { CgClose } from "react-icons/cg";
 import { Link, useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { DelegationHistoryMainIcon, FileEditIcon, LightningIcon } from "src/commons/resources";
@@ -50,6 +51,7 @@ type DetailViewStakeKeyProps = {
   handleClose: () => void;
 };
 const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
+  const { t } = useTranslation();
   const { stakeId, handleClose } = props;
   const { data } = useFetch<IStakeKeyDetail>(stakeId ? `${API.STAKE.DETAIL}/${stakeId}` : ``);
   const [open, setOpen] = useState(false);
@@ -60,12 +62,12 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
   const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
     {
       key: "delegation",
-      label: "Delegation History",
+      label: t("drawer.delegationHIstory"),
       icon: <DelegationHistoryMainIcon style={{ padding: "2px 4px 2px 2px" }} />
     },
     {
       key: "stake-address",
-      label: "Stake Address History",
+      label: t("drawer.stakeAddressHistory"),
       icon: (
         <StakeKeyHistoryIcon
           fill={theme.palette.border.block}
@@ -76,15 +78,19 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
         />
       )
     },
-    { key: "withdrawal", label: "Withdrawal History", icon: <DetailLinkImage src={FileEditIcon} alt="withdrawal" /> },
+    {
+      key: "withdrawal",
+      label: t("drawer.withDrawalHistory"),
+      icon: <DetailLinkImage src={FileEditIcon} alt="withdrawal" />
+    },
     {
       key: "instantaneous",
-      label: "Instantaneous Rewards",
+      label: t("drawer.InstaneousRewards"),
       icon: <DetailLinkImage src={LightningIcon} alt="rewards" />
     },
     {
       key: "transactions",
-      label: "Transactions",
+      label: t("drawer.transactions"),
       icon: <TransactionIcon width={"20px"} height={"20px"} style={{ padding: "2px" }} display={"block"} />
     }
   ];
@@ -101,8 +107,8 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
     return (
       <ViewDetailDrawer anchor="right" open={!!stakeId} hideBackdrop variant="permanent">
         <ViewDetailHeader>
-          <ViewAllButton tooltipTitle="View Detail" to={details.stake(stakeId)} />
-          <CustomTooltip title="Close">
+          <ViewAllButton tooltipTitle={t("drawer.viewDetails")} to={details.stake(stakeId)} />
+          <CustomTooltip title={t("common.close")}>
             <CloseButton onClick={handleClose}>
               <CgClose />
             </CloseButton>
@@ -156,8 +162,8 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
   return (
     <ViewDetailDrawer anchor="right" open={!!stakeId} hideBackdrop variant="permanent">
       <ViewDetailHeader>
-        <ViewAllButton tooltipTitle="View Detail" to={details.stake(stakeId)} />
-        <CustomTooltip title="Close">
+        <ViewAllButton tooltipTitle={t("drawer.viewDetails")} to={details.stake(stakeId)} />
+        <CustomTooltip title={t("common.close")}>
           <CloseButton onClick={handleClose}>
             <CgClose />
           </CloseButton>
@@ -172,15 +178,17 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
           <Group>
             <DetailsInfoItem>
               <WrapDetailInfo>
-                <DetailLabel>Status</DetailLabel>
+                <DetailLabel>{t("drawer.status")}</DetailLabel>
               </WrapDetailInfo>
               <DetailValue>
-                <StakeKeyStatus status={data.status}>{data.status}</StakeKeyStatus>
+                <StakeKeyStatus status={data.status}>
+                  {data.status === "ACTIVE" ? t("status.active") : t("status.deactivated")}
+                </StakeKeyStatus>
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <WrapDetailInfo>
-                <DetailLabel>Reward available</DetailLabel>
+                <DetailLabel>{t("drawer.rewardAvailable")}</DetailLabel>
               </WrapDetailInfo>
               <DetailValue>
                 {formatADAFull(data.rewardAvailable)}
@@ -189,7 +197,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
             </DetailsInfoItem>
             <DetailsInfoItem>
               <WrapDetailInfo>
-                <DetailLabel>Reward withdrawn</DetailLabel>
+                <DetailLabel>{t("drawer.withDrawn")}</DetailLabel>
               </WrapDetailInfo>
               <DetailValue>
                 {formatADAFull(data.rewardWithdrawn)}
@@ -198,7 +206,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
             </DetailsInfoItem>
             <DetailsInfoItem>
               <WrapDetailInfo>
-                <DetailLabel>Delegated to</DetailLabel>
+                <DetailLabel>{t("drawer.delegatedTo")}</DetailLabel>
               </WrapDetailInfo>
               {data.pool?.poolName || data.pool?.poolId ? (
                 <CustomTooltip title={poolNameToolTip}>
@@ -207,12 +215,12 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
                   </Box>
                 </CustomTooltip>
               ) : (
-                <DelegatedEmptyPool>Not delegated to any pool</DelegatedEmptyPool>
+                <DelegatedEmptyPool>{t("drawer.notDelegatedToAnyPool")}</DelegatedEmptyPool>
               )}
             </DetailsInfoItem>
             <DetailsInfoItem>
               <WrapDetailInfo>
-                <DetailLabel>Total Stake</DetailLabel>
+                <DetailLabel>{t("drawer.totalStake")}</DetailLabel>
               </WrapDetailInfo>
               <DetailValue>
                 {formatADAFull(data.totalStake)}
@@ -221,7 +229,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
             </DetailsInfoItem>
             <Box textAlign={"right"}>
               <ButtonModal sx={{ color: theme.palette.primary.main }} onClick={() => setOpen(true)}>
-                View all addresses
+                {t("drawer.viewAllAddresses")}
               </ButtonModal>
             </Box>
             <ModalAllAddress open={open} onClose={() => setOpen(false)} stake={stakeId} />

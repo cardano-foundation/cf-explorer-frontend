@@ -1,6 +1,7 @@
 import { useCallback, useContext, useState, SetStateAction, Dispatch } from "react";
 import { Box } from "@mui/material";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { defaultAxios } from "src/commons/utils/axios";
 import { VerifyScriptContext } from "src/pages/ContractDetail";
@@ -8,6 +9,7 @@ import { API } from "src/commons/utils/api";
 
 import VerifyScriptModal from "./VerifyScriptModal";
 import { StyledVerifyButton, VerifyScriptContainer } from "./styles";
+import { Uppercase } from "../commons/CustomText/styles";
 
 export interface IVerifyScript {
   verified: boolean;
@@ -15,6 +17,7 @@ export interface IVerifyScript {
 }
 
 export const VerifyScript = ({ verified, setShowBanner }: IVerifyScript) => {
+  const { t } = useTranslation();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const { address } = useParams<{ address: string }>();
@@ -53,7 +56,7 @@ export const VerifyScript = ({ verified, setShowBanner }: IVerifyScript) => {
       }
     } catch (err) {
       // Todo: handle error
-      setErrorMessage("Invalid script, please try again");
+      setErrorMessage(t("message.invalidScript"));
     } finally {
       setLoading(false);
     }
@@ -62,9 +65,9 @@ export const VerifyScript = ({ verified, setShowBanner }: IVerifyScript) => {
   return (
     <>
       <VerifyScriptContainer>
-        <Box>Contract Details</Box>
+        <Box>{t("head.page.constactDetails")}</Box>
         <StyledVerifyButton onClick={handleClickVerifyButton} verified={+verified}>
-          {verified ? "VERIFIED SCRIPT " : "VERIFY SCRIPT"}
+          <Uppercase> {verified ? t("common.verifiedScript") + " " : t("common.verifyScript")}</Uppercase>
         </StyledVerifyButton>
       </VerifyScriptContainer>
       {openModal && (

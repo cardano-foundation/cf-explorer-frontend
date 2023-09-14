@@ -2,6 +2,7 @@ import React from "react";
 import { Tab, Box, useTheme } from "@mui/material";
 import { TabContext, TabPanel } from "@mui/lab";
 import { useHistory, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import {
   DelegationHistoryIcon,
@@ -21,6 +22,7 @@ import TransactionTab from "./Tabs/TransactionTab";
 import { StyledTabList, TitleTab, WrapperTabList } from "./styles";
 
 const StakeTab = () => {
+  const { t } = useTranslation();
   const { stakeId, tabActive = "delegation" } = useParams<{ stakeId: string; tabActive?: TabStakeDetail }>();
   const history = useHistory();
   const theme = useTheme();
@@ -38,31 +40,31 @@ const StakeTab = () => {
   }[] = [
     {
       icon: DelegationHistoryIcon,
-      label: "Delegation History",
+      label: t("tab.DelegationHistory"),
       key: "delegation",
       component: <DelegationHistoryTab isMobile={isMobile} />
     },
     {
       icon: StakeKeyHistoryIcon,
-      label: "Stake Address History",
+      label: t("tab.stakeAddressHistory"),
       key: "stake-key",
       component: <StakeHistoryTab isMobile={isMobile} />
     },
     {
       icon: WithdrawalHistoryIcon,
-      label: "Withdrawal History",
+      label: t("tab.withdrawalHistory"),
       key: "withdrawal",
       component: <WithdrawalHistoryTab />
     },
     {
       icon: InstantaneousHistoryIcon,
-      label: "Instantaneous Rewards",
+      label: t("tab.instantaneousRewards"),
       key: "instantaneous",
       component: <InstantaneousTab />
     },
     {
       icon: TransactionIcon,
-      label: "Transactions",
+      label: t("tab.transactions"),
       key: "transactions",
       component: <TransactionTab />
     }

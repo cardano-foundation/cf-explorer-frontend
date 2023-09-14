@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { Column } from "src/components/commons/Table";
 import ScriptModal from "src/components/ScriptModal";
@@ -17,12 +18,13 @@ interface MintingProps {
 }
 
 const Minting: React.FC<MintingProps> = ({ data }) => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<string>("");
 
   const columns: Column<Required<Transaction>["mints"][number]>[] = [
     {
-      title: "Asset name",
+      title: t("glossary.assetName"),
       isHiddenBorder: true,
       key: "Assetname",
       minWidth: "40px",
@@ -50,7 +52,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       }
     },
     {
-      title: "Amount minted",
+      title: t("glossary.amountedMinted"),
       isHiddenBorder: true,
       key: "Amount",
       minWidth: "40px",
@@ -59,7 +61,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       }
     },
     {
-      title: "Policy script",
+      title: t("common.policyScript"),
       key: "Policy",
       minWidth: "40px",
       maxWidth: "120px",

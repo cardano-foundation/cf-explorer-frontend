@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { CgClose } from "react-icons/cg";
 import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -34,6 +35,7 @@ type DetailViewEpochProps = {
 };
 
 const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handleClose, address }) => {
+  const { t } = useTranslation();
   const { data, loading, initialized } = useFetch<IContractItemTx[]>(
     API.TRANSACTION.HASH_CONTRACT(txHash, address),
     undefined,
@@ -105,7 +107,7 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
             <ContractDiagrams item={data[0]} txHash={txHash} handleClose={handleClose} />
           ) : (
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "10px" }}>
-              <CustomTooltip title="Close">
+              <CustomTooltip title={t("common.close")}>
                 <CloseButton onClick={handleClose} sx={{ alignSelf: "end" }}>
                   <CgClose />
                 </CloseButton>

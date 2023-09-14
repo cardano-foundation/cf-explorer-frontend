@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { WalletIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
@@ -11,11 +12,12 @@ import ConnectWallet from "../ConnectWallet";
 import { Image, Span, StyledButton } from "./styles";
 
 const LoginButton = () => {
+  const { t } = useTranslation();
   const { userData } = useSelector(({ user }: RootState) => user);
   const history = useHistory();
 
   const handleClick = () => {
-    if (localStorage.getItem("token")) {
+    if (localStorage.getItem("token") && userData?.loginType) {
       window.location.reload();
     } else {
       history.push(routers.SIGN_IN);
@@ -42,7 +44,7 @@ const LoginButton = () => {
     <Box position="relative" data-testid="header-signin">
       <StyledButton type="button" onClick={handleClick}>
         <Image src={WalletIcon} alt="wallet" />
-        <Span>Sign In</Span>
+        <Span>{t("common.signIn")}</Span>
       </StyledButton>
     </Box>
   );

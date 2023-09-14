@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { useHistory, useParams } from "react-router";
 
 import {
@@ -25,52 +26,51 @@ interface ITabularTab {
   keyCheckShow: string;
 }
 
-const tabs: ITabularTab[] = [
-  {
-    icon: RegistrationIcon,
-    label: "Registration",
-    key: "registration",
-    component: <StakeRegistrationTab />,
-    keyCheckShow: "hasRegistration"
-  },
-  {
-    icon: DelegationIcon,
-    label: "Delegation History",
-    key: "delegation",
-    component: <DelegationTab />,
-    keyCheckShow: "hasDelegation"
-  },
-  {
-    icon: RewardsDistributionIcon,
-    label: "Rewards Distribution",
-    key: "rewards",
-    component: <RewardsDistributionTab />,
-    keyCheckShow: "hashRewards"
-  },
-  {
-    icon: RewardsWithdrawalIcon,
-    label: "Withdrawal History",
-    key: "withdrawal-history",
-    component: <WithdrawalHistoryTab />,
-    keyCheckShow: "hasWithdrawal"
-  },
-  {
-    icon: DeredistrationIcon,
-    label: "Deregistration",
-    key: "deregistration",
-    component: <DeregistrationTab />,
-    keyCheckShow: "hasDeRegistration"
-  }
-];
-
 interface ITabularProps {
   tabsRenderConfig?: ListStakeKeyResponse;
 }
 
 const Tabular = ({ tabsRenderConfig }: ITabularProps) => {
+  const { t } = useTranslation();
   const { stakeId = "", tab = "registration" } = useParams<{ stakeId: string; tab: DelegationStep }>();
   const history = useHistory();
-
+  const tabs: ITabularTab[] = [
+    {
+      icon: RegistrationIcon,
+      label: t("common.registration"),
+      key: "registration",
+      component: <StakeRegistrationTab />,
+      keyCheckShow: "hasRegistration"
+    },
+    {
+      icon: DelegationIcon,
+      label: t("common.delegationHistory"),
+      key: "delegation",
+      component: <DelegationTab />,
+      keyCheckShow: "hasDelegation"
+    },
+    {
+      icon: RewardsDistributionIcon,
+      label: t("slc.rewardsDisttribution"),
+      key: "rewards",
+      component: <RewardsDistributionTab />,
+      keyCheckShow: "hashRewards"
+    },
+    {
+      icon: RewardsWithdrawalIcon,
+      label: t("common.withdrawalHistory"),
+      key: "withdrawal-history",
+      component: <WithdrawalHistoryTab />,
+      keyCheckShow: "hasWithdrawal"
+    },
+    {
+      icon: DeredistrationIcon,
+      label: t("slc.deregistration"),
+      key: "deregistration",
+      component: <DeregistrationTab />,
+      keyCheckShow: "hasDeRegistration"
+    }
+  ];
   if (!tabsRenderConfig) return null;
 
   const onChangeTab = (tab: any) => {

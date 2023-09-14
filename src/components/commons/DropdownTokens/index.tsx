@@ -73,9 +73,6 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
             "&:hover": {
               "&::-webkit-scrollbar-thumb": {
                 background: theme.palette.secondary.light
-              },
-              "&::-webkit-scrollbar-track": {
-                background: theme.palette.secondary[600]
               }
             }
           }

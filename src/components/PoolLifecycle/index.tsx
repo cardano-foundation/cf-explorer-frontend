@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, CircularProgress, IconButton, styled } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { lowerCase, startCase } from "lodash";
+import { useTranslation } from "react-i18next";
 
 import Table, { Column } from "src/components/commons/Table";
 import { FetchReturnType } from "src/commons/hooks/useFetchList";
@@ -47,6 +48,7 @@ export interface IPoolLifecycleProps {
   onPagination?: ({ page, size }: { page: number; size: number }) => void;
 }
 const PoolLifecycle: React.FC<IPoolLifecycleProps> = ({ onSort, fetchData, pagination, onPagination }) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const [onDownload, setOnDownload] = useState<number | false>(false);
 
@@ -72,7 +74,7 @@ const PoolLifecycle: React.FC<IPoolLifecycleProps> = ({ onSort, fetchData, pagin
 
   const columns: Column<IPoolReportList>[] = [
     {
-      title: "Created At",
+      title: t("createdAt"),
       key: "createdAt",
       render(data) {
         return formatDateTimeLocal(data.createdAt);
@@ -83,7 +85,7 @@ const PoolLifecycle: React.FC<IPoolLifecycleProps> = ({ onSort, fetchData, pagin
     },
     {
       key: "name",
-      title: "Report Name",
+      title: t("common.reportName"),
       maxWidth: "300px",
       render(data) {
         return (
@@ -95,21 +97,21 @@ const PoolLifecycle: React.FC<IPoolLifecycleProps> = ({ onSort, fetchData, pagin
     },
     {
       key: "epoch",
-      title: "Epoch Range",
+      title: t("glossary.epochRnage"),
       render(data) {
         return `Epoch ${data.epochRanges[0]} - Epoch ${data.epochRanges[1]}`;
       }
     },
     {
       key: "transfer",
-      title: "Pool Size",
+      title: t("common.poolSize"),
       render(data) {
-        return data.isPoolSize ? "Yes" : "No";
+        return data.isPoolSize ? t("common.yes") : t("common.no");
       }
     },
     {
       key: "event",
-      title: "Events",
+      title: t("report.events"),
       maxWidth: "200px",
       render(data) {
         return getPoolEventList(data)
@@ -118,7 +120,7 @@ const PoolLifecycle: React.FC<IPoolLifecycleProps> = ({ onSort, fetchData, pagin
       }
     },
     {
-      title: "Exporting Report",
+      title: t("common.exportingReport"),
       key: "status",
       minWidth: "100px",
       render(data) {
@@ -160,7 +162,7 @@ const PoolLifecycle: React.FC<IPoolLifecycleProps> = ({ onSort, fetchData, pagin
       <Table
         {...fetchData}
         columns={columns}
-        total={{ title: "Pool life cycle summary", count: fetchData.total }}
+        total={{ title: t("report.PoolSummary"), count: fetchData.total }}
         onClickRow={(e, row) => history.push(details.generated_pool_detail(row.reportId))}
         pagination={{
           page,
@@ -168,6 +170,7 @@ const PoolLifecycle: React.FC<IPoolLifecycleProps> = ({ onSort, fetchData, pagin
           total: fetchData.total,
           onChange: (page, size) => onPagination?.({ page: page - 1, size })
         }}
+        showTabView
       />
     </Box>
   );

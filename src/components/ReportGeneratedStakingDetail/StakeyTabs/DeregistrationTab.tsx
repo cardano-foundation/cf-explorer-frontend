@@ -1,6 +1,7 @@
 import { Box, IconButton } from "@mui/material";
 import { useContext, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { EyeIcon } from "src/commons/resources";
@@ -18,6 +19,7 @@ import { AdaValue } from "./StakingRegistrationTab";
 import { StakingDetailContext } from "..";
 
 const DeregistrationTab = () => {
+  const { t } = useTranslation();
   const { reportId } = useParams<{ reportId: string }>();
   const { search } = useLocation();
   const [openModal, setOpenModal] = useState(false);
@@ -27,7 +29,7 @@ const DeregistrationTab = () => {
   const [sort, setSort] = useState<string>("");
   const columns: Column<DeregistrationItem>[] = [
     {
-      title: "Transaction Hash",
+      title: t("glossary.txHash"),
       key: "hash",
       minWidth: "120px",
       render: (r) => (
@@ -37,7 +39,7 @@ const DeregistrationTab = () => {
       )
     },
     {
-      title: "Created At",
+      title: t("createdAt"),
       key: "time",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
@@ -48,7 +50,7 @@ const DeregistrationTab = () => {
     {
       title: (
         <>
-          <Box>ADA Amount</Box>
+          <Box>{t("common.adaAmount")}</Box>
           <TableSubTitle>Hold/Fees</TableSubTitle>
         </>
       ),
@@ -68,7 +70,7 @@ const DeregistrationTab = () => {
       )
     },
     {
-      title: "Certificate",
+      title: t("common.certificate"),
       key: "stakeId",
       minWidth: "120px",
       render: () => (
@@ -89,7 +91,7 @@ const DeregistrationTab = () => {
       <Table
         {...fetchData}
         columns={columns}
-        total={{ title: "Total", count: fetchData.total }}
+        total={{ title: t("common.total"), count: fetchData.total }}
         pagination={{
           ...pageInfo,
           total: fetchData.total,

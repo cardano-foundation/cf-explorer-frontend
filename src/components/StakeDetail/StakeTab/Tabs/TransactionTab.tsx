@@ -1,6 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import { stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { TransferIcon } from "src/commons/resources";
@@ -38,6 +39,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
   selected,
   showTitle = true
 }) => {
+  const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -62,7 +64,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
 
   const columns: Column<Transactions>[] = [
     {
-      title: "Tx Hash",
+      title: t("glossary.txHash"),
       key: "txhash",
       minWidth: 120,
 
@@ -90,7 +92,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       }
     },
     {
-      title: "Created At",
+      title: t("glossary.createdAt"),
       key: "created_at",
       minWidth: 120,
       render: (r) => (
@@ -100,7 +102,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       )
     },
     {
-      title: "Block",
+      title: t("glossary.block"),
       key: "block",
       minWidth: 120,
       render: (r) => (
@@ -120,7 +122,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       )
     },
     {
-      title: "Fees",
+      title: t("glossary.fees"),
       key: "fee",
       minWidth: 120,
       render: (r) => (
@@ -131,7 +133,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       )
     },
     {
-      title: "ADA amount",
+      title: t("glossary.adaAmount"),
       minWidth: 120,
       key: "totalOutput",
       render: (transaction) => {
@@ -152,7 +154,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       }
     },
     {
-      title: "Token",
+      title: t("glossary.Token"),
       minWidth: 120,
       key: "totalOutput",
       render: (transaction) => {
@@ -167,9 +169,9 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
         }
         return (
           <Box display={"flex"} alignItems={"center"}>
-            {transaction.tokens && transaction.tokens.length === 1 && <TokenLink token={tokens[0]} />}
+            {transaction.tokens && transaction.tokens.length === 1 && <TokenLink isSuccess={true} token={tokens[0]} />}
             {transaction.tokens && transaction.tokens.length > 1 && (
-              <DropdownTokens tokens={tokens} type={type} hideInputLabel hideMathChar />
+              <DropdownTokens isSuccess={true} tokens={tokens} type={type} hideInputLabel hideMathChar />
             )}
           </Box>
         );
@@ -179,7 +181,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
 
   return (
     <StyledContainer>
-      <Card title={showTitle ? "Transactions" : ""} underline={underline}>
+      <Card title={showTitle ? t("tab.transactions") : ""} underline={underline}>
         <Table
           {...fetchData}
           columns={columns}

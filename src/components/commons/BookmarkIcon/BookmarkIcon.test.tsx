@@ -1,6 +1,6 @@
 import { render, screen } from "src/test-utils";
 
-import BookmarkButton from ".";
+import BookmarkButton from "./index";
 
 describe("BookmarkButton component", () => {
   it("should component render", () => {

@@ -12,6 +12,7 @@ import {
   XAxisProps,
   Label
 } from "recharts";
+import { useTranslation } from "react-i18next";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 import { BigNumber } from "bignumber.js";
@@ -48,14 +49,8 @@ type AnalyticsReward = {
   value: number;
 };
 
-const options = [
-  { value: "ONE_DAY", label: "1d" },
-  { value: "ONE_WEEK", label: "1w" },
-  { value: "ONE_MONTH", label: "1m" },
-  { value: "THREE_MONTH", label: "3m" }
-];
-
 const StakeAnalytics: React.FC = () => {
+  const { t } = useTranslation();
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const [tab, setTab] = useState<"BALANCE" | "REWARD">("BALANCE");
   const { stakeId } = useParams<{ stakeId: string }>();
@@ -65,7 +60,12 @@ const StakeAnalytics: React.FC = () => {
   const { data: dataReward, loading: loadingReward } = useFetch<AnalyticsReward[]>(
     `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`
   );
-
+  const options = [
+    { value: "ONE_DAY", label: t("time.1d") },
+    { value: "ONE_WEEK", label: t("time.1w") },
+    { value: "ONE_MONTH", label: t("time.1m") },
+    { value: "THREE_MONTH", label: t("time.3m") }
+  ];
   const values = data?.map((item) => item.value || 0) || [];
   const maxBalance = BigNumber.max(0, ...values).toString();
   const minBalance = BigNumber.min(maxBalance, ...values).toString();
@@ -104,7 +104,9 @@ const StakeAnalytics: React.FC = () => {
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
     return (
       <TooltipBody>
-        <TooltipLabel>{tab === "BALANCE" ? getLabelTimeTooltip(content.label) : `Epoch ${content.label}`}</TooltipLabel>
+        <TooltipLabel>
+          {tab === "BALANCE" ? getLabelTimeTooltip(content.label) : `${t("epoch")} ${content.label}`}
+        </TooltipLabel>
         <TooltipValue>{formatADAFull(content.payload?.[0]?.value) || 0}</TooltipValue>
       </TooltipBody>
     );
@@ -113,7 +115,7 @@ const StakeAnalytics: React.FC = () => {
   const xAxisProps: XAxisProps = tab === "BALANCE" ? { tickMargin: 5, dx: -15 } : { tickMargin: 5 };
 
   return (
-    <Card title={<TextCardHighlight>Analytics</TextCardHighlight>}>
+    <Card title={<TextCardHighlight>{t("common.analytics")}</TextCardHighlight>}>
       <Wrapper container columns={24} spacing="35px">
         <Grid item xs={24} lg={18}>
           <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
@@ -125,20 +127,20 @@ const StakeAnalytics: React.FC = () => {
                     style={{ marginRight: "2px" }}
                     onClick={() => setTab("BALANCE")}
                   >
-                    Balance
+                    {t("common.balance")}
                   </CustomButton>
                   <CustomButton active={tab === "REWARD" ? 1 : 0} onClick={() => setTab("REWARD")}>
-                    Reward
+                    {t("common.reward")}
                   </CustomButton>
                 </Box>
               </Grid>
             ) : (
               <Grid item sm={6}>
                 <ButtonTitle active={tab === "BALANCE"} onClick={() => setTab("BALANCE")}>
-                  Balance
+                  {t("common.balance")}
                 </ButtonTitle>
                 <ButtonTitle active={tab === "REWARD"} onClick={() => setTab("REWARD")}>
-                  Reward
+                  {t("common.reward")}
                 </ButtonTitle>
               </Grid>
             )}
@@ -163,7 +165,7 @@ const StakeAnalytics: React.FC = () => {
                   width={900}
                   height={400}
                   data={tab === "BALANCE" ? convertDataChart : convertRewardChart}
-                  margin={{ top: 5, right: 10, bottom: 10 }}
+                  margin={{ top: 5, right: 10, bottom: 14 }}
                 >
                   <defs>
                     <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
@@ -181,7 +183,7 @@ const StakeAnalytics: React.FC = () => {
                     tickLine={false}
                     {...xAxisProps}
                   >
-                    <Label value="(UTC)" offset={-8} position="insideBottom" />
+                    <Label value="(UTC)" offset={-12} position="insideBottom" />
                   </XAxis>
                   <YAxis
                     color={theme.palette.secondary.light}
@@ -212,7 +214,7 @@ const StakeAnalytics: React.FC = () => {
               <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <img src={HighestIcon} alt="heighest icon" />
-                  <Title>{tab === "BALANCE" ? "Highest Balance" : "Highest Reward"}</Title>
+                  <Title>{tab === "BALANCE" ? t("common.highestBalance") : t("common.highestReward")}</Title>
                   <ValueInfo>
                     {loading || loadingReward ? (
                       <SkeletonUI variant="rectangular" />
@@ -227,7 +229,7 @@ const StakeAnalytics: React.FC = () => {
               <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <img src={LowestIcon} alt="lowest icon" />
-                  <Title>{tab === "BALANCE" ? "Lowest Balance" : "Lowest Reward"}</Title>
+                  <Title>{tab === "BALANCE" ? t("common.lowestBalance") : t("common.lowestReward")}</Title>
                   <ValueInfo>
                     {loading || loadingReward ? (
                       <SkeletonUI variant="rectangular" />

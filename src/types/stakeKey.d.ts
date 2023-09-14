@@ -96,6 +96,8 @@ interface DelegationItem {
   outSum: number;
   fee: number;
   time: string;
+  poolName?: string;
+  poolId: string;
 }
 interface DelegationDetail extends DelegationItem {
   blockNo: number;

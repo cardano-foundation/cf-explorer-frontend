@@ -2,6 +2,7 @@ import { useState } from "react";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
 import { Box, CircularProgress, IconButton, styled } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { FetchReturnType } from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
@@ -51,6 +52,7 @@ interface IStakekeySummaryProps {
 }
 
 const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort, pagination, onPagination }) => {
+  const { t } = useTranslation();
   const history = useHistory();
 
   const [downloadingReport, setDownloadingReport] = useState<number>();
@@ -75,7 +77,7 @@ const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort, p
 
   const columns: Column<IReportStaking>[] = [
     {
-      title: "Created At",
+      title: t("createdAt"),
       key: "createdAt",
       sort({ sortValue }) {
         onSort?.(sortValue ? `id,${sortValue}` : "");
@@ -86,7 +88,7 @@ const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort, p
     },
     {
       key: "name",
-      title: "Report Name",
+      title: t("common.reportName"),
       maxWidth: "300px",
       render(data) {
         return (
@@ -98,28 +100,28 @@ const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort, p
     },
     {
       key: "date",
-      title: "Date Range",
+      title: t("common.dateRange"),
       render(data) {
         return `${moment(data.fromDate).format("MM/DD/yyyy")} - ${moment(data.toDate).format("MM/DD/yyyy")}`;
       }
     },
     {
       key: "transfer",
-      title: "ADA Transfers",
+      title: t("common.adaTransfers"),
       render(data) {
         return data.isADATransfer ? "Yes" : "No";
       }
     },
     {
       key: "event",
-      title: "Events",
+      title: t("report.events"),
       maxWidth: "200px",
       render(data) {
         return getEventList(data).join(", ");
       }
     },
     {
-      title: "Exporting Report",
+      title: t("common.exportingReport"),
       key: "status",
       minWidth: "100px",
       render(data) {
@@ -160,7 +162,7 @@ const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort, p
       <Table
         {...fetchData}
         columns={columns}
-        total={{ title: "Stake address summary", count: fetchData.total }}
+        total={{ title: t("report.stakeAddressSummary"), count: fetchData.total }}
         onClickRow={(e, row) => history.push(details.generated_staking_detail(row.id))}
         pagination={{
           page,
@@ -168,6 +170,7 @@ const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort, p
           total: fetchData.total,
           onChange: (page, size) => onPagination?.({ page: page - 1, size })
         }}
+        showTabView
       />
     </Box>
   );

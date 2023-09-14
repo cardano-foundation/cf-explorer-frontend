@@ -2,6 +2,7 @@ import { Box, IconButton } from "@mui/material";
 import BigNumber from "bignumber.js";
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { AdaValue } from "src/components/commons/ADAValue";
 import ADAicon from "src/components/commons/ADAIcon";
@@ -17,6 +18,7 @@ import Table, { Column } from "../../../commons/Table";
 import { StyledLink, TableSubTitle } from "../styles";
 
 const StakeRegistrationTab = () => {
+  const { t } = useTranslation();
   const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
   const history = useHistory();
@@ -30,7 +32,7 @@ const StakeRegistrationTab = () => {
 
   const columns: Column<RegistrationItem>[] = [
     {
-      title: "Transaction Hash",
+      title: t("glossary.txHash"),
       key: "hash",
       minWidth: "120px",
       render: (r) => (
@@ -40,7 +42,7 @@ const StakeRegistrationTab = () => {
       )
     },
     {
-      title: "Created At",
+      title: t("createdAt"),
       key: "id",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
@@ -51,8 +53,8 @@ const StakeRegistrationTab = () => {
     {
       title: (
         <>
-          <Box>ADA Value</Box>
-          <TableSubTitle>Hold/Fees</TableSubTitle>
+          <Box>{t("common.adaValue")}</Box>
+          <TableSubTitle>{t("common.holdOrFees")}</TableSubTitle>
         </>
       ),
       key: "block",
@@ -71,7 +73,7 @@ const StakeRegistrationTab = () => {
       )
     },
     {
-      title: "Certificate",
+      title: t("common.certificate"),
       key: "stakeId",
       minWidth: "120px",
       render: () => (
@@ -87,7 +89,7 @@ const StakeRegistrationTab = () => {
       <Table
         {...fetchData}
         columns={columns}
-        total={{ title: "Total", count: fetchData.total }}
+        total={{ title: t("common.total"), count: fetchData.total }}
         pagination={{
           ...pageInfo,
           total: fetchData.total,

@@ -1,6 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -15,6 +16,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import { ADAValueLabel } from "../styles";
 
 const RewardsDistributionTab = () => {
+  const { t } = useTranslation();
   const { reportId } = useParams<{ reportId: string }>();
   const { search } = useLocation();
   const history = useHistory();
@@ -31,7 +33,7 @@ const RewardsDistributionTab = () => {
   const { total } = fetchData;
   const columns: Column<RewardDistributionItem>[] = [
     {
-      title: "Rewards Paid",
+      title: t("common.rewardsPaid"),
       key: "paid",
       minWidth: "120px",
       render: (r) => {
@@ -47,7 +49,7 @@ const RewardsDistributionTab = () => {
       }
     },
     {
-      title: "Created At",
+      title: t("createdAt"),
       key: "time",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
@@ -56,7 +58,7 @@ const RewardsDistributionTab = () => {
       }
     },
     {
-      title: "Epoch",
+      title: t("glossary.epoch"),
       key: "epoch",
       minWidth: "120px",
       render: (r) => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>
@@ -68,7 +70,8 @@ const RewardsDistributionTab = () => {
         <Box />
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
-            Showing {Math.min(total, pageInfo.size)} {Math.min(total, pageInfo.size) > 1 ? "results" : "result"}
+            {t("common.showing")} {Math.min(total, pageInfo.size)}{" "}
+            {Math.min(total, pageInfo.size) > 1 ? t("common.result") : t("common.results")}
           </WrapFilterDescription>
         </Box>
       </Box>

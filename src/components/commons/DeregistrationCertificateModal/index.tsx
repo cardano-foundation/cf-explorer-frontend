@@ -1,5 +1,6 @@
 import { Skeleton } from "@mui/material";
 import { Box } from "@mui/system";
+import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
@@ -17,16 +18,17 @@ export const DeregistrationCertificateModal = ({
   open: boolean;
   handleCloseModal: () => void;
 }) => {
+  const { t } = useTranslation();
   const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`, undefined, false);
 
   return (
-    <StyledModal {...props} width={550} title="Deregistration certificate">
+    <StyledModal {...props} width={550} title={t("common.deregistrationCert")}>
       <Box>
         {loading && <Skeleton variant="rectangular" width={500} height={90} />}
         {!loading && (
           <StyledContainerModal>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
-              Stake Address
+              {t("common.stakeAddress")}
             </Box>
             {data && (
               <Box>

@@ -15,6 +15,7 @@ import moment from "moment";
 import { useParams } from "react-router-dom";
 import { BigNumber } from "bignumber.js";
 import { isArray } from "lodash";
+import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
@@ -50,6 +51,7 @@ const options = [
 ];
 
 const AddressAnalytics: React.FC = () => {
+  const { t } = useTranslation();
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const { address } = useParams<{ address: string }>();
   const theme = useTheme();
@@ -98,7 +100,7 @@ const AddressAnalytics: React.FC = () => {
         <Grid item xs={24} lg={18}>
           <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
             <Grid item xs={4} sm={6}>
-              <ButtonTitle>Balance</ButtonTitle>
+              <ButtonTitle>{t("common.balance")}</ButtonTitle>
             </Grid>
             <Grid item xs={8} sm={6}>
               <Tabs>
@@ -115,7 +117,7 @@ const AddressAnalytics: React.FC = () => {
               <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
             ) : (
               <ResponsiveContainer width="100%" height={400}>
-                <AreaChart width={900} height={400} data={convertDataChart} margin={{ top: 5, right: 5, bottom: 10 }}>
+                <AreaChart width={900} height={400} data={convertDataChart} margin={{ top: 5, right: 5, bottom: 14 }}>
                   <defs>
                     <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
@@ -131,7 +133,7 @@ const AddressAnalytics: React.FC = () => {
                     stroke={theme.palette.secondary.light}
                     dx={-15}
                   >
-                    <Label value="(UTC)" offset={-8} position="insideBottom" />
+                    <Label value="(UTC)" offset={-12} position="insideBottom" />
                   </XAxis>
                   <YAxis
                     tickFormatter={formatPriceValue}
@@ -163,7 +165,7 @@ const AddressAnalytics: React.FC = () => {
                 <Box>
                   <Box minHeight={"90px"}>
                     <img src={HighestIcon} alt="heighest icon" />
-                    <Title>Highest Balance</Title>
+                    <Title>{t("common.highestBalance")}</Title>
                   </Box>
                   <ValueInfo>{loading ? <SkeletonUI variant="rectangular" /> : formatADAFull(maxBalance)}</ValueInfo>
                 </Box>
@@ -174,7 +176,7 @@ const AddressAnalytics: React.FC = () => {
                 <Box>
                   <Box minHeight={"90px"}>
                     <img src={LowestIcon} alt="lowest icon" />
-                    <Title>Lowest Balance</Title>
+                    <Title>{t("common.lowestBalance")}</Title>
                   </Box>
                   <ValueInfo>{loading ? <SkeletonUI variant="rectangular" /> : formatADAFull(minBalance)}</ValueInfo>
                 </Box>

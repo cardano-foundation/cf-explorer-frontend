@@ -5,6 +5,7 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { BiChevronDown } from "react-icons/bi";
+import { useTranslation } from "react-i18next";
 
 import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { details } from "src/commons/routers";
@@ -72,6 +73,7 @@ export interface DetailHeaderProps {
 }
 
 const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
+  const { t } = useTranslation();
   const {
     loading,
     listItem,
@@ -92,14 +94,21 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     input: false,
     output: false
   });
+  const EPOCH_STATUS_MAPPING = {
+    [EPOCH_STATUS.FINISHED]: t("common.epoch.finished"),
+    [EPOCH_STATUS.IN_PROGRESS]: t("common.epoch.inProgress"),
+    [EPOCH_STATUS.REWARDING]: t("common.epoch.rewarding"),
+    [EPOCH_STATUS.SYNCING]: t("common.epoch.cyncing")
+  };
   const { isMobile } = useScreen();
 
   const getHashLabel = () => {
-    if (type === "BLOCK") return "Block Id";
-    if (type === "STAKE_KEY") return "Stake address";
-    if (type === "POOL") return "Pool Id";
-    if (type === "TOKEN") return "Token ID";
+    if (type === "BLOCK") return t("glossary.blockId");
+    if (type === "STAKE_KEY") return t("glossary.stakeAddress");
+    if (type === "POOL") return t("glossary.poolId");
+    if (type === "TOKEN") return t("common.tokenID");
   };
+
   const isDetailToken = type === "TOKEN";
 
   const hashLabel = getHashLabel();
@@ -117,7 +126,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
         {isHideButtonBack === true ? null : (
           <BackButton onClick={history.goBack}>
             <HiArrowLongLeft />
-            <BackText>Back</BackText>
+            <BackText>{t("common.back")}</BackText>
           </BackButton>
         )}
         <HeaderContainer>
@@ -165,15 +174,21 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           {isHideButtonBack === true ? null : (
             <BackButton onClick={history.goBack}>
               <HiArrowLongLeft color={theme.palette.secondary.light} />
-              <BackText>Back</BackText>
+              <BackText>{t("common.back")}</BackText>
             </BackButton>
           )}
           <HeaderContainer>
             <HeaderTitle>{title}</HeaderTitle>
             {bookmarkData && <Bookmark type={type} keyword={bookmarkData} />}
             {transactionStatus && <HeaderStatus status={transactionStatus}>{transactionStatus}</HeaderStatus>}
-            {epoch?.status && <HeaderStatus status={epoch.status}>{EPOCH_STATUS[epoch.status]}</HeaderStatus>}
-            {stakeKeyStatus && <StakeKeyStatus status={stakeKeyStatus}>{stakeKeyStatus}</StakeKeyStatus>}
+            {epoch?.status && (
+              <HeaderStatus status={epoch.status}>{EPOCH_STATUS_MAPPING[EPOCH_STATUS[epoch.status]]}</HeaderStatus>
+            )}
+            {stakeKeyStatus && (
+              <StakeKeyStatus status={stakeKeyStatus}>
+                {stakeKeyStatus === "ACTIVE" ? t("status.active") : t("status.deActivated")}
+              </StakeKeyStatus>
+            )}
           </HeaderContainer>
           {hash && (
             <SlotLeader>
@@ -215,7 +230,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               <EpochNumber is_epoch={+(type === "EPOCH")} to={details.epoch(epoch.no || 0)}>
                 {epoch?.no}
               </EpochNumber>
-              <EpochText>Epoch</EpochText>
+              <EpochText>{t("glossary.epoch")}</EpochText>
             </ProgressCircle>
           </EpochDetail>
         ) : (
@@ -270,7 +285,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                           },
                           "&:hover": {
                             "&::-webkit-scrollbar-thumb": {
-                              background: theme.palette.primary[200]
+                              background: theme.palette.secondary.light
                             }
                           }
                         }

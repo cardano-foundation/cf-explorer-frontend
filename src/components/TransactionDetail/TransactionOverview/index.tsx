@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Box, IconButton, useTheme } from "@mui/material";
 import { BiShowAlt } from "react-icons/bi";
+import { useTranslation } from "react-i18next";
 
 import {
   timeIconUrl,
@@ -13,7 +14,7 @@ import {
   txInputIconUrl,
   txOutputIconUrl
 } from "src/commons/resources";
-import { formatADAFull, formatDateTimeLocal, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatNameBlockNo, getShortWallet } from "src/commons/utils/helper";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { details } from "src/commons/routers";
 import { RootState } from "src/stores/types";
@@ -33,6 +34,7 @@ interface Props {
 }
 
 const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
+  const { t } = useTranslation();
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   const [openListInput, setOpenListInput] = useState(false);
   const [openListOutput, setOpenListOutput] = useState(false);
@@ -71,7 +73,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1} height={24}>
-            Input{" "}
+            {t("glossary.input")}{" "}
             {data?.utxOs && data?.utxOs?.inputs?.length > 1 && (
               <IconButton
                 style={{ padding: 0 }}
@@ -97,7 +99,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
           {openListInput && (
             <DropdownDetail
               minWidth={isMobile ? 160 : 200}
-              title="Address list"
+              title={t("glossary.addressList")}
               value={data?.utxOs?.inputs.map((i) => i.address) || []}
               close={() => setOpenListInput(false)}
             />
@@ -114,7 +116,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1} height={24}>
-            Output{" "}
+            {t("glossary.output")}{" "}
             {data?.utxOs && data?.utxOs?.outputs?.length > 1 && (
               <IconButton
                 style={{ padding: 0 }}
@@ -140,7 +142,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
           {openListOutput && (
             <DropdownDetail
               minWidth={isMobile ? 160 : 200}
-              title="Address list"
+              title={t("glossary.addressList")}
               value={data?.utxOs?.outputs.map((i) => i.address) || []}
               close={() => setOpenListOutput(false)}
             />
@@ -155,7 +157,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Created At</TitleCard>
+          <TitleCard mr={1}>{t("createdAt")}</TitleCard>
         </Box>
       ),
       value: formatDateTimeLocal(data?.tx?.time || "")
@@ -165,7 +167,9 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>
-            {data?.tx?.confirmation && data?.tx?.confirmation > 1 ? "Confirmations" : "Confirmation"}
+            {data?.tx?.confirmation && data?.tx?.confirmation > 1
+              ? t("glossary.comfirmations")
+              : t("glossary.comfirmation")}
           </TitleCard>
         </Box>
       ),
@@ -175,7 +179,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       icon: totalOutputUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Total Output</TitleCard>
+          <TitleCard mr={1}>{t("glossary.totalOutput")}</TitleCard>
         </Box>
       ),
       value: (
@@ -188,7 +192,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       icon: exchageAltIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Transaction Fees </TitleCard>
+          <TitleCard mr={1}>{t("glossary.transactionfees")} </TitleCard>
         </Box>
       ),
       value: (
@@ -202,19 +206,27 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard height={24} mr={1}>
-            {" "}
-            Block
+            {t("glossary.block")}
           </TitleCard>
         </Box>
       ),
-      value: <StyledLink to={details.block(data?.tx?.blockNo || 0)}>{data?.tx?.blockNo || 0}</StyledLink>
+      value: (() => {
+        const { blockName, tooltip } = formatNameBlockNo(data?.tx?.blockNo, data?.tx?.epochNo);
+        return (
+          <StyledLink to={details.block(data?.tx?.blockNo || 0)}>
+            <CustomTooltip title={tooltip}>
+              <span>{blockName}</span>
+            </CustomTooltip>
+          </StyledLink>
+        );
+      })()
     },
     {
       icon: slotIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard height={24} mr={1}>
-            Slot
+            {t("common.slot")}
           </TitleCard>
         </Box>
       ),
@@ -229,7 +241,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
     <DetailHeader
       type="TRANSACTION"
       bookmarkData={data?.tx.hash || ""}
-      title={"Transaction details"}
+      title={t("glossary.transactionDetailTitle")}
       hash={data?.tx.hash}
       transactionStatus={data?.tx.status}
       epoch={
