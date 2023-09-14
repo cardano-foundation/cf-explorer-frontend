@@ -697,5 +697,7 @@
   "404-SCRIPT_NOT_FOUND": "Script not found",
   "400-TIME_RANGE_ILLEGAL": "Time range is illegal",
   "400-REPORT_LIMIT_REACHED": "Report limit reached",
-  "desc.InUnits4Native": "In units of the native token"
+  "desc.InUnits4Native": "In units of the native token",
+  "common.pageNotFound": "Sorry! The page you’re looking for cannot be found.",
+  "common.back2HomePage": "Back to home"
 }

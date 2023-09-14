@@ -26,16 +26,19 @@ const Epoch: React.FC = () => {
   const { search } = useLocation();
   const history = useHistory();
   const { onDetailView } = useSelector(({ user }: RootState) => user);
+  const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
-  const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, { ...pageInfo, sort });
-  const fetchDataLatestEpoch = useFetchList<IDataEpoch>(API.EPOCH.LIST, { page: 0, size: 1 });
+  const [key, setKey] = useState(0);
   const EPOCH_STATUS_MAPPING = {
     [EPOCH_STATUS.FINISHED]: t("common.epoch.finished"),
     [EPOCH_STATUS.IN_PROGRESS]: t("common.epoch.inProgress"),
     [EPOCH_STATUS.REWARDING]: t("common.epoch.rewarding"),
     [EPOCH_STATUS.SYNCING]: t("common.epoch.cyncing")
   };
+  const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, { ...pageInfo, sort }, false, key);
+  const fetchDataLatestEpoch = useFetchList<IDataEpoch>(API.EPOCH.LIST, { page: 0, size: 1 }, false, key);
+
   const mainRef = useRef(document.querySelector("#main"));
   const columns: Column<IDataEpoch>[] = [
     {
@@ -144,6 +147,11 @@ const Epoch: React.FC = () => {
   }, [onDetailView]);
 
   const latestEpoch = fetchDataLatestEpoch.data[0];
+
+  useEffect(() => {
+    // Update key when new epoch for api callback
+    if (epochNo !== undefined && latestEpoch?.no !== undefined && epochNo !== latestEpoch.no) setKey(epochNo);
+  }, [epochNo, latestEpoch?.no]);
 
   return (
     <StyledContainer>

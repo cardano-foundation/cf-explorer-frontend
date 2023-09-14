@@ -18,7 +18,6 @@ import { setOnDetailView } from "src/stores/user";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DetailViewToken from "src/components/commons/DetailView/DetailViewToken";
 import SelectedIcon from "src/components/commons/SelectedIcon";
@@ -30,6 +29,7 @@ const Tokens = () => {
   const [token, setToken] = useState<IToken | null>(null);
   const [sort, setSort] = useState<string>("txCount,DESC");
   const { onDetailView } = useSelector(({ user }: RootState) => user);
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
 
   const [selected, setSelected] = useState<number | null>(null);
   const { search } = useLocation();
@@ -43,7 +43,7 @@ const Tokens = () => {
     API.TOKEN.LIST,
     { ...pageInfo, sort, query: queries.get("tokenName") || "" },
     false,
-    REFRESH_TIMES.TOKEN_LIST
+    blockNo
   );
 
   useEffect(() => {

@@ -20,8 +20,9 @@ import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
 import { setOnDetailView } from "src/stores/user";
 import DetailViewContractHash from "src/components/commons/DetailView/DetailViewContractHash";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
-import { Flex, Label, SmallText, StyledLink, PriceValue } from "./styles";
+import { Flex, Label, SmallText, StyledLink, PriceValue, TimeDuration } from "./styles";
 
 const TokenTransaction: React.FC = () => {
   const { t } = useTranslation();
@@ -29,8 +30,10 @@ const TokenTransaction: React.FC = () => {
   const { search } = useLocation();
   const history = useHistory();
   const { onDetailView } = useSelector(({ user }: RootState) => user);
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<Transactions>(`${API.ADDRESS.DETAIL}/${params.address}/txs`, pageInfo);
+
+  const fetchData = useFetchList<Transactions>(`${API.ADDRESS.DETAIL}/${params.address}/txs`, pageInfo, false, blockNo);
   const [txHashSelected, setTxHashSelected] = useState<string>("");
   const [selected, setSelected] = useState<number | null>(null);
 
@@ -148,6 +151,9 @@ const TokenTransaction: React.FC = () => {
   ];
   return (
     <>
+      <TimeDuration>
+        <FormNowMessage time={fetchData.lastUpdated} />
+      </TimeDuration>
       <Table
         {...fetchData}
         columns={columns}

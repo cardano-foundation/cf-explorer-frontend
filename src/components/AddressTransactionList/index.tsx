@@ -1,6 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import receiveImg from "src/commons/resources/images/receiveImg.svg";
@@ -43,7 +44,9 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
   const pageInfo = getPageInfo(search);
   const url = `${API.ADDRESS.DETAIL}/${address}/txs`;
   const theme = useTheme();
-  const fetchData = useFetchList<Transactions>(url, { ...pageInfo });
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+
+  const fetchData = useFetchList<Transactions>(url, { ...pageInfo }, false, blockNo);
   const onClickRow = (e: any, transaction: Transactions, index: number) => {
     let parent: Element | null = e.target as Element;
     while (parent !== null && !parent?.className.includes("MuiPopover-root")) {

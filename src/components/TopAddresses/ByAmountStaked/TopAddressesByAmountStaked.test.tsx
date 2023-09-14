@@ -33,7 +33,8 @@ describe("TopAddressesByAmountStaked Component", () => {
       initialized: true,
       total: 2,
       totalPage: 1,
-      currentPage: 1
+      currentPage: 1,
+      lastUpdated: Date.now()
     });
   });
   it("rendering component on PC", () => {

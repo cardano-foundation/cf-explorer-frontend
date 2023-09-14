@@ -1,12 +1,11 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 import { formatADAFull, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -19,13 +18,13 @@ const perPages = [10, 20, 50, 100];
 
 const TopAddressesByADABalance = () => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const [pageSize, setPageSize] = useState("50");
   const { error, data, initialized, loading, lastUpdated } = useFetchList<Contracts>(
     API.ADDRESS.TOP_ADDRESS,
     { page: 0, size: +pageSize },
     false,
-    REFRESH_TIMES.TOP_ADDRESS
+    blockNo
   );
 
   const columns: Column<Address>[] = [
@@ -95,7 +94,6 @@ const TopAddressesByADABalance = () => {
         initialized={initialized}
         columns={columns}
         tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "55vh" } }) }}
-        onClickRow={(_, r) => history.push(details.address(r.address))}
       />
     </Box>
   );

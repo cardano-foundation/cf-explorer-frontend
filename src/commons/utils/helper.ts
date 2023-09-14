@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js";
-import moment from "moment";
+import moment, { DurationInputArg1, DurationInputArg2 } from "moment";
 import { parse } from "qs";
 import jwtDecode from "jwt-decode";
 import { isNil } from "lodash";
@@ -264,5 +264,30 @@ export const formatNameBlockNo = (blockNo: blockEpochNoType, epochNo: blockEpoch
   return {
     blockName: blockNo,
     tooltip: ""
+  };
+};
+
+export const getDurationUnits = (inp: DurationInputArg1, unit: DurationInputArg2) => {
+  const duration = moment.duration(inp, unit);
+  const d = duration.days();
+  const h = duration.hours();
+
+  let humanized = "";
+  if (d > 1) {
+    humanized += `${d} days`;
+  } else if (d === 1) {
+    humanized = "1 day";
+  }
+
+  if (h > 1) {
+    humanized += ` ${h} hours`;
+  } else if (h === 1) {
+    humanized += " 1 hour";
+  }
+
+  return {
+    d,
+    h,
+    humanized
   };
 };

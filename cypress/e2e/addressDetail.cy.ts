@@ -17,8 +17,8 @@ describe("address detail spec", () => {
     cy.get(".css-12n155v").contains(address);
     cy.get(":nth-child(2) > .css-198fg3r > .css-1l7sjfb > .css-12euw8y").contains("Analytics");
     cy.get(":nth-child(3) > .css-198fg3r > .css-1l7sjfb > .css-12euw8y").contains("Transactions");
-    //cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("#");
-    cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("Tx Hash");
+    cy.log(cy.$$(".css-1dz0v3k > tr > :nth-child(1)").html());
+    cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("Tx Hash", { matchCase: false });
     cy.get(".css-1dz0v3k > tr > :nth-child(2)").contains("Created At");
     cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Block");
     cy.get(".css-1dz0v3k > tr > :nth-child(4)").contains("Fees");
