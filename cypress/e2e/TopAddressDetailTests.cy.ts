@@ -19,6 +19,6 @@ describe("Top Address Detail Tests", () => {
     //cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("#");
     cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("Stake Address");
     cy.get(".css-1dz0v3k > tr > :nth-child(2)").contains("Pool");
-    cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Stake amount");
+    cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Stake Amount");
   });
 });
