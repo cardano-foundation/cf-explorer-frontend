@@ -38,4 +38,5 @@ interface EpochCurrentType {
   endTime: string;
   startTime: string;
   circulatingSupply: number;
+  blkCount?: number;
 }

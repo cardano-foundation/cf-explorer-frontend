@@ -35,9 +35,8 @@ const BlockList = () => {
   const history = useHistory();
   const { onDetailView } = useSelector(({ user }: RootState) => user);
   const blockNo = useSelector(({ system }: RootState) => system.blockNo);
-  const [block, setBlock] = useState<number | string | null>(null);
   const [sort, setSort] = useState<string>("");
-  const [selected, setSelected] = useState<number | null>(null);
+  const [selected, setSelected] = useState<number | string | null>(null);
   const pageInfo = getPageInfo(search);
 
   const fetchData = useFetchList<Block>(API.BLOCK.LIST, { ...pageInfo, sort }, false, blockNo);
@@ -122,21 +121,19 @@ const BlockList = () => {
         <PriceWrapper>
           {formatADAFull(r.totalOutput)}
           <ADAicon />
-          {block === (r.blockNo || r.hash) && <SelectedIcon />}
+          {selected === (r.blockNo || r.hash) && <SelectedIcon />}
         </PriceWrapper>
       )
     }
   ];
 
-  const openDetail = (_: any, r: Block, index: number) => {
+  const openDetail = (_: any, r: Block) => {
     setOnDetailView(true);
-    setBlock(r.blockNo || r.hash);
-    setSelected(index);
+    setSelected(r.blockNo || r.hash);
   };
 
   const handleClose = () => {
     setOnDetailView(false);
-    setBlock(null);
     setSelected(null);
   };
 
@@ -166,12 +163,13 @@ const BlockList = () => {
             handleCloseDetailView: handleClose
           }}
           onClickRow={openDetail}
+          rowKey={(r: Block) => r.blockNo || r.hash}
           selected={selected}
           showTabView
           tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
         />
       </Card>
-      {block && onDetailView && <DetailViewBlock blockNo={block} handleClose={handleClose} />}
+      {selected && onDetailView && <DetailViewBlock blockNo={selected} handleClose={handleClose} />}
     </StyledContainer>
   );
 };

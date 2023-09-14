@@ -21,7 +21,6 @@ import { Blocks, BlueText, EpochNumber, Output, StatusTableRow, StyledBox, Style
 
 const Epoch: React.FC = () => {
   const { t } = useTranslation();
-  const [epoch, setEpoch] = useState<number | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
   const { search } = useLocation();
   const history = useHistory();
@@ -36,7 +35,7 @@ const Epoch: React.FC = () => {
     [EPOCH_STATUS.REWARDING]: t("common.epoch.rewarding"),
     [EPOCH_STATUS.SYNCING]: t("common.epoch.cyncing")
   };
-  const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, { ...pageInfo, sort }, false, key);
+  const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, { ...pageInfo, sort }, false, epochNo);
   const fetchDataLatestEpoch = useFetchList<IDataEpoch>(API.EPOCH.LIST, { page: 0, size: 1 }, false, key);
 
   const mainRef = useRef(document.querySelector("#main"));
@@ -67,7 +66,7 @@ const Epoch: React.FC = () => {
       render: (r) => (
         <BlueText>
           {formatDateTimeLocal(r.endTime || "")}
-          {epoch === r.no && <SelectedIcon />}
+          {selected === r.no && <SelectedIcon />}
         </BlueText>
       )
     },
@@ -130,15 +129,13 @@ const Epoch: React.FC = () => {
     document.title = t("head.page.epochsList");
   }, [t]);
 
-  const openDetail = (_: any, r: IDataEpoch, index: number) => {
+  const openDetail = (_: any, r: IDataEpoch) => {
     setOnDetailView(true);
-    setEpoch(r.no);
-    setSelected(index);
+    setSelected(r.no);
   };
 
   const handleClose = () => {
     setOnDetailView(false);
-    setEpoch(null);
     setSelected(null);
   };
 
@@ -172,15 +169,16 @@ const Epoch: React.FC = () => {
             handleCloseDetailView: handleClose
           }}
           onClickRow={openDetail}
+          rowKey="no"
           selected={selected}
           showTabView
         />
       </Card>
-      {epoch !== null && onDetailView && (
+      {selected !== null && onDetailView && (
         <DetailViewEpoch
-          epochNo={epoch}
+          epochNo={selected}
           handleClose={handleClose}
-          callback={epoch === latestEpoch?.no ? fetchDataLatestEpoch.update : fetchData.update}
+          callback={selected === latestEpoch?.no ? fetchDataLatestEpoch.update : fetchData.update}
         />
       )}
     </StyledContainer>
