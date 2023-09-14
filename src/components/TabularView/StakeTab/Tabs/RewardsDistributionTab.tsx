@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { useContext, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 import ADAicon from "src/components/commons/ADAIcon";
@@ -17,6 +18,7 @@ import Table, { Column } from "../../../commons/Table";
 import { AmountADARow, StyledLink, WrapWalletLabel, WrapperDelegationTab } from "../styles";
 
 const RewardsDistributionTab = () => {
+  const { t } = useTranslation();
   const detailData = useContext(DelegatorDetailContext);
   const { stakeId } = useParams<{ stakeId: string }>();
   const [sort, setSort] = useState<string>("");
@@ -27,7 +29,7 @@ const RewardsDistributionTab = () => {
 
   const columns: Column<RewardDistributionItem>[] = [
     {
-      title: "Rewards Paid",
+      title: t("common.rewardsPaid"),
       key: "paid",
       minWidth: "120px",
       render: (r) => (
@@ -37,7 +39,7 @@ const RewardsDistributionTab = () => {
       )
     },
     {
-      title: "Created At",
+      title: t("createdAt"),
       key: "id",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
@@ -46,7 +48,7 @@ const RewardsDistributionTab = () => {
       }
     },
     {
-      title: "Epoch",
+      title: t("glossary.epoch"),
       key: "epoch",
       render: (r) => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>
     }
@@ -69,7 +71,8 @@ const RewardsDistributionTab = () => {
         </WrapWalletLabel>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
-            Showing {Math.min(total, pageInfo.size)} {Math.min(total, pageInfo.size) > 1 ? "results" : "result"}
+            {t("common.showing")} {Math.min(total, pageInfo.size)}{" "}
+            {Math.min(total, pageInfo.size) > 1 ? t("common.result") : t("common.results")}
           </WrapFilterDescription>
           <CustomFilter
             excludes={["search"]}
@@ -86,7 +89,7 @@ const RewardsDistributionTab = () => {
       <Table
         {...fetchData}
         columns={columns}
-        total={{ title: "Total", count: fetchData.total }}
+        total={{ title: t("common.total"), count: fetchData.total }}
         pagination={{
           ...pageInfo,
           total: fetchData.total,

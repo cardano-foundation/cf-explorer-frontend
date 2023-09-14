@@ -1,5 +1,6 @@
 import { Box, Grid, Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
 import { CalenderPaleIcon, SliderRight } from "src/commons/resources";
@@ -43,6 +44,7 @@ const LIMIT = 20;
 const MIN_SWIPE_DISTANCE = 50;
 
 const LatestStories = () => {
+  const { t } = useTranslation();
   const [offset, setOffset] = useState<number>(0);
   const { data: dataNews, loading, error } = useFetch<Articles>(`${API.STORIES}?limit=${LIMIT}&offset=${offset}`);
   const data = dataNews?.articles || [];
@@ -141,8 +143,8 @@ const LatestStories = () => {
     return (
       <Box>
         <Header>
-          <Title>Latest Stories</Title>
-          <ViewAllButtonExternal to={CARDANO_NEWS_URL as string} />
+          <Title>{t("common.latestStories")}</Title>
+          <ViewAllButtonExternal to={CARDANO_NEWS_URL as string} tooltipTitle={t("common.viewAll")} />
         </Header>
         <Grid container spacing={2}>
           {new Array(amountSkeleton).fill(0).map((_, index) => (
@@ -182,8 +184,8 @@ const LatestStories = () => {
   return (
     <LatestStoriesContainer data-testid="home-latest-stories">
       <Header>
-        <Title>Latest Stories</Title>
-        <ViewAllButtonExternal to={CARDANO_NEWS_URL as string} />
+        <Title>{t("common.latestStories")}</Title>
+        <ViewAllButtonExternal to={CARDANO_NEWS_URL as string} tooltipTitle={t("common.viewAll")} />
       </Header>
       <Box position={"relative"} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
         <Grid container spacing={2} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>

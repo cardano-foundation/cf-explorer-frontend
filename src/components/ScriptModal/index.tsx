@@ -1,5 +1,6 @@
 import { Box, Skeleton, useTheme } from "@mui/material";
 import { JsonViewer } from "@textea/json-viewer";
+import { useTranslation } from "react-i18next";
 
 import CopyButton from "src/components/commons/CopyButton";
 import useFetch from "src/commons/hooks/useFetch";
@@ -15,6 +16,7 @@ interface ScriptModalProps {
   policy: string;
 }
 const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
+  const { t } = useTranslation();
   const { data, loading } = useFetch<PolicyDetail>(policy && `${API.POLICY}/${policy && policy}`);
   const theme = useTheme();
   return (
@@ -27,7 +29,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
           fontWeight="bold"
           fontFamily={'"Roboto", sans-serif '}
         >
-          Policy ID
+          {t("common.policyID")}
         </Box>
         <Box display={"flex"} flexDirection={"column"} gap={2} mt={2}>
           {loading ? (
@@ -50,7 +52,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
               </Box>
               <Box>
                 <Box component={"span"} color={({ palette }) => palette.secondary.light}>
-                  Total Token:
+                  {t("common.totalToken")}:
                 </Box>
                 <Box
                   data-testid="total-token"
@@ -64,7 +66,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
               </Box>
               <Box>
                 <Box data-testid="policy-script" mb={1} color={({ palette }) => palette.secondary.light}>
-                  Policy script:
+                  {t("common.policyScript")}:
                 </Box>
                 <ViewJson>
                   {data?.policyScript ? (
@@ -80,7 +82,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
                     />
                   ) : (
                     <Box textAlign={"center"} py={2} color={({ palette }) => palette.secondary.light}>
-                      Script not found
+                      {t("script.notfound")}
                     </Box>
                   )}
                 </ViewJson>

@@ -3,6 +3,7 @@ import { Box, Skeleton } from "@mui/material";
 import { useHistory, useParams } from "react-router";
 import { useUpdateEffect } from "react-use";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
@@ -20,6 +21,7 @@ interface Props {
 }
 
 const RecentDeregistrations: React.FC<Props> = ({ onSelect, setShowBackButton }) => {
+  const { t } = useTranslation();
   const { poolId = "", txHash = "" } = useParams<{ poolId: string; txHash?: string }>();
   const history = useHistory();
   const { sidebar } = useSelector(({ user }: RootState) => user);
@@ -70,7 +72,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect, setShowBackButton })
               setParams(params);
               setPageInfo((pre) => ({ ...pre, page: 0 }));
             }}
-            searchLabel="Search transaction"
+            searchLabel={t("common.searchTx")}
           />
         </Box>
       </StyledList>

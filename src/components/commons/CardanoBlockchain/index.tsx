@@ -1,5 +1,6 @@
 import { BoxProps, styled } from "@mui/material";
 import React, { forwardRef } from "react";
+import { useTranslation } from "react-i18next";
 
 import { CardanoSystemIcon } from "src/commons/resources";
 
@@ -12,10 +13,11 @@ const StyledPolygonShape = styled(PolygonShape)(() => ({
 }));
 
 export const CardanoBlockchain: React.FC<BoxProps> = forwardRef(({ ...props }, boxRef) => {
+  const { t } = useTranslation();
   return (
     <StyledPolygonShape {...props} ref={boxRef}>
       <CustomIcon icon={CardanoSystemIcon} height={100} width={100} />
-      Cardano Blockchain
+      {t("common.cardanoBlc")}
     </StyledPolygonShape>
   );
 });

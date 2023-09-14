@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Box, Skeleton } from "@mui/material";
 import { TabContext, TabList } from "@mui/lab";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
 import ViewMoreThreeDots from "src/components/commons/ViewMoreThreeDots";
@@ -12,6 +13,7 @@ import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "s
 import { CertUpdate, ChangeIcon, PoolCert } from "src/commons/resources";
 import CustomTabTitle from "src/components/commons/CustomTabTitle";
 import ADAicon from "src/components/commons/ADAIcon";
+import { Uppercase } from "src/components/commons/CustomText/styles";
 
 import {
   CardBox,
@@ -54,6 +56,7 @@ interface Props {
   onClose: () => void;
 }
 export const PoolUpdateModal = ({ data, open, ...props }: Props) => {
+  const { t } = useTranslation();
   const [tabActive, setTabActive] = useState("poolCertificate");
 
   useEffect(() => {
@@ -64,13 +67,13 @@ export const PoolUpdateModal = ({ data, open, ...props }: Props) => {
     {
       key: "poolCertificate",
       icon: PoolCert,
-      label: "Pool certificate",
+      label: t("common.poolCert"),
       children: <PoolCertificate data={data} />
     },
     {
       key: "certificateUpdates",
       icon: CertUpdate,
-      label: "Certificate updates",
+      label: t("common.certificateUpdates"),
       children: <PoolCertificateUpdate data={data} />
     }
   ];
@@ -81,7 +84,7 @@ export const PoolUpdateModal = ({ data, open, ...props }: Props) => {
   const isUpdated = data?.previousMargin !== data?.margin || data?.previousPledge !== data?.pledge;
 
   return (
-    <StyledModal open={open} {...props} title="Pool certificate" sx={{ maxHeight: "min(70vh, 800px)" }}>
+    <StyledModal open={open} {...props} title={t("common.poolCert")} sx={{ maxHeight: "min(70vh, 800px)" }}>
       {isUpdated ? (
         <TabContext value={tabActive}>
           <TabContainer>
@@ -125,13 +128,14 @@ export const PoolUpdateModal = ({ data, open, ...props }: Props) => {
 export default PoolUpdateModal;
 
 const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const [selectedOwner, setSelectedOwner] = useState<string[]>([]);
   const isUpdateMargin = data?.previousMargin !== null && data?.previousMargin !== data?.margin;
   const isUpdatePledge = data?.previousPledge !== null && data?.previousPledge !== data?.pledge;
   const list: CertificateItemType[] = [
     {
-      label: "Transaction ID",
+      label: t("common.txID"),
       content: (
         <LineData>
           <CustomTooltip title={data?.txHash || ""}>
@@ -142,7 +146,7 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
       )
     },
     {
-      label: "Pool ID",
+      label: t("common.poolId"),
       content: (
         <LineData>
           <CustomTooltip title={data?.poolView || ""}>
@@ -155,7 +159,7 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
       )
     },
     {
-      label: "VRF Key",
+      label: t("common.vrfKey"),
       content: (
         <LineData>
           <CustomTooltip title={data?.vrfKey}>
@@ -166,7 +170,7 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
       )
     },
     {
-      label: "Owners",
+      label: t("common.owners"),
       content: (
         <LineData>
           <CustomTooltip title={data?.stakeKeys[0] || ""}>
@@ -180,7 +184,7 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
       )
     },
     {
-      label: "Reward Account",
+      label: t("common.rewardAccount"),
       content: (
         <LineData>
           <CustomTooltip title={data?.rewardAccount || ""}>
@@ -193,13 +197,13 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
       )
     },
     {
-      label: "Margin",
+      label: t("margin"),
       content: (
         <>
           <Value>{data?.margin ? numberWithCommas(data?.margin * 100, 2) : 0}%</Value>{" "}
           {data?.previousMargin !== null && data?.previousMargin !== data?.margin && (
             <SupperMinimumText>
-              Previous: {data?.previousMargin ? numberWithCommas(data?.previousMargin * 100, 2) : 0} %
+              {t("common.Previous")}: {data?.previousMargin ? numberWithCommas(data?.previousMargin * 100, 2) : 0} %
             </SupperMinimumText>
           )}
         </>
@@ -207,7 +211,7 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
       extra: isUpdateMargin && <ChangeIcon />
     },
     {
-      label: "Pledge",
+      label: t("glossary.pledge"),
       content: (
         <>
           <Value>
@@ -216,7 +220,7 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
           </Value>
           {data?.previousPledge !== null && data?.previousPledge !== data?.pledge && (
             <MinimumText>
-              Previous: {formatADAFull(data?.previousPledge || 0)} <ADAicon width={8} />
+              {t("common.Previous")}: {formatADAFull(data?.previousPledge || 0)} <ADAicon width={8} />
             </MinimumText>
           )}
         </>
@@ -224,7 +228,7 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
       extra: isUpdatePledge && <ChangeIcon />
     },
     {
-      label: "Cost",
+      label: t("glossary.cost"),
       content: (
         <Value>
           {formatADAFull(data?.cost)}
@@ -257,7 +261,7 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
       <ViewMoreAddressModal
         showFullHash={true}
         maxWidth={680}
-        title="Pool Owner"
+        title={t("common.poolOwner")}
         open={!!selectedOwner.length}
         onClose={() => setSelectedOwner([])}
         items={selectedOwner}
@@ -268,21 +272,26 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
 };
 
 const PoolCertificateUpdate = ({ data }: { data: PoolUpdateDetail | null }) => {
+  const { t } = useTranslation();
   return (
     <UpdateList>
       {data?.previousMargin !== null && data?.previousMargin !== data?.margin && (
         <UpdateItem>
-          <Label>Margin</Label>
+          <Label>{t("glossary.margin")}</Label>
           <HistoryList>
             <CardBox>
-              <MinimumText>OLD</MinimumText>
+              <MinimumText>
+                <Uppercase> {t("common.old")}</Uppercase>
+              </MinimumText>
               <Value>{data?.previousMargin ? numberWithCommas(data?.previousMargin * 100, 2) : 0}%</Value>
             </CardBox>
             <ChangeBox>
               <ChangeIcon />
             </ChangeBox>
             <CardBox>
-              <MinimumText>NEW</MinimumText>
+              <MinimumText>
+                <Uppercase>{t("common.new")}</Uppercase>
+              </MinimumText>
               <Value>{data?.margin ? numberWithCommas(data?.margin * 100, 2) : 0}%</Value>
             </CardBox>
           </HistoryList>
@@ -290,10 +299,12 @@ const PoolCertificateUpdate = ({ data }: { data: PoolUpdateDetail | null }) => {
       )}
       {data?.previousPledge !== null && data?.previousPledge !== data?.pledge && (
         <UpdateItem>
-          <Label>Pledge</Label>
+          <Label>{t("glossary.pledge")}</Label>
           <HistoryList>
             <CardBox>
-              <MinimumText>OLD</MinimumText>
+              <MinimumText>
+                <Uppercase> {t("common.old")}</Uppercase>
+              </MinimumText>
               <Value>
                 {formatADAFull(data?.previousPledge)}
                 <StyledAdaLogoIcon />
@@ -303,7 +314,9 @@ const PoolCertificateUpdate = ({ data }: { data: PoolUpdateDetail | null }) => {
               <ChangeIcon />
             </ChangeBox>
             <CardBox>
-              <MinimumText>NEW</MinimumText>
+              <MinimumText>
+                <Uppercase>{t("common.new")}</Uppercase>
+              </MinimumText>
               <Value>
                 {formatADAFull(data?.pledge)}
                 <StyledAdaLogoIcon />

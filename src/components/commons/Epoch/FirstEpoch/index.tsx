@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
 import { ExchangeIcon, cubeIconUrl, slotIconUrl, timeIconUrl } from "src/commons/resources";
 import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
@@ -17,6 +18,14 @@ interface IProps {
 }
 
 export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) {
+  const { t } = useTranslation();
+
+  const EPOCH_STATUS_MAPPING = {
+    [EPOCH_STATUS.FINISHED]: t("common.epoch.finished"),
+    [EPOCH_STATUS.IN_PROGRESS]: t("common.epoch.inProgress"),
+    [EPOCH_STATUS.REWARDING]: t("common.epoch.rewarding"),
+    [EPOCH_STATUS.SYNCING]: t("common.epoch.cyncing")
+  };
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   if (!currentEpochData) return null;
   const progress =
@@ -46,7 +55,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
               status={currentEpochData?.status as keyof typeof EPOCH_STATUS}
             >{`${progress}%`}</EpochProgress>
             <Status status={currentEpochData?.status as keyof typeof EPOCH_STATUS}>
-              {EPOCH_STATUS[currentEpochData?.status]}
+              {EPOCH_STATUS_MAPPING[EPOCH_STATUS[currentEpochData?.status]]}
             </Status>
           </ProgressCircle>
         </Box>
@@ -56,7 +65,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> Start Timestamp</TitleCard>
+          <TitleCard mr={1}> {t("glossary.startTimestamp")}</TitleCard>
         </Box>
       ),
       value: <Content>{formatDateTimeLocal(currentEpochData?.startTime || "")}</Content>
@@ -65,7 +74,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       icon: timeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> End Timestamp</TitleCard>
+          <TitleCard mr={1}> {t("glossary.endTimestamp")}</TitleCard>
         </Box>
       ),
       value: <Content>{formatDateTimeLocal(currentEpochData?.endTime || "")}</Content>
@@ -74,7 +83,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       icon: cubeIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>Blocks </TitleCard>
+          <TitleCard mr={1}>{t("glossary.blocks")} </TitleCard>
         </Box>
       ),
       value: <Content>{currentEpochData?.blkCount}</Content>
@@ -83,7 +92,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       icon: slotIconUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> Slot</TitleCard>
+          <TitleCard mr={1}> {t("glossary.Slot")}</TitleCard>
         </Box>
       ),
       value: (

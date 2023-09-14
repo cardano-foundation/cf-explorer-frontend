@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Box, styled, Button, Typography } from "@mui/material";
 import { useKey } from "react-use";
+import { useTranslation } from "react-i18next";
 
 import { HeaderSearchIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
@@ -9,6 +10,7 @@ import InfoGraphicModal from "src/components/InfoGraphicModal";
 import { useScreen } from "src/commons/hooks/useScreen";
 
 const StakingLifeCycleSearch = () => {
+  const { t } = useTranslation();
   const history = useHistory();
   const { isMobile } = useScreen();
   const [openInfoModal, setOpenInfoModal] = useState(false);
@@ -17,13 +19,13 @@ const StakingLifeCycleSearch = () => {
 
   const hanldeSearch = () => {
     if (!value) {
-      setError("No results found");
+      setError(t("message.noResultsFound"));
     }
     if (value.startsWith("stake")) {
       history.push(details.staking(value, "timeline"));
     } else if (value.startsWith("pool")) {
       history.push(details.spo(value, "timeline"));
-    } else setError("No results found");
+    } else setError(t("message.noResultsFound"));
   };
   useKey("enter", hanldeSearch);
 
@@ -41,18 +43,18 @@ const StakingLifeCycleSearch = () => {
           flexDirection={isMobile ? "column" : "row"}
         >
           <Box fontSize={isMobile ? "32px" : "48px"} whiteSpace={"nowrap"}>
-            Staking Lifecycle
+            {t("glossary.stakingLifecycle")}
           </Box>
         </Box>
       </Title>
       <SearchTitle>
-        Search to explore the staking lifecycle events of a delegator or pool.
-        <InfoLink onClick={() => setOpenInfoModal((pre) => !pre)}>What is staking on Cardano?</InfoLink>
+        {t("common.searchPoolDesc")}
+        <InfoLink onClick={() => setOpenInfoModal((pre) => !pre)}>{t("common.whatCardano")}</InfoLink>
       </SearchTitle>
       <Box>
         <SearchContainer mx={"auto"}>
           <StyledInput
-            placeholder="Type a stake address or pool id"
+            placeholder={t("slc.typeStakeOrPool")}
             onChange={(e) => {
               setValue(e.target.value.trim());
               setError("");

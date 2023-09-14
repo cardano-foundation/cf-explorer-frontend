@@ -3,6 +3,7 @@ import { stringify } from "qs";
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
 import { useHistory, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -31,6 +32,7 @@ interface Props {
 
 const Stake: React.FC<Props> = ({ stakeAddressType }) => {
   const mainRef = useRef(document.querySelector("#main"));
+  const { t } = useTranslation();
   const [stake, setStake] = useState<string | null>(null);
   const { onDetailView } = useSelector(({ user }: RootState) => user);
   const [selected, setSelected] = useState<number | null>(null);
@@ -75,7 +77,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
 
   const columns: Column<IStakeKey>[] = [
     {
-      title: "Tx Hash",
+      title: t("glossary.txHash"),
       key: "trxHash",
       minWidth: isMobile ? 245 : 80,
       render: (r) => (
@@ -85,12 +87,12 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
       )
     },
     {
-      title: "Created At",
+      title: t("glossary.createdAt"),
       key: "time",
       render: (r) => formatDateTimeLocal(r.txTime || "")
     },
     {
-      title: "Block",
+      title: t("glossary.block"),
       key: "block",
       render: (r) => (
         <>
@@ -105,7 +107,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
       )
     },
     {
-      title: "Stake Address",
+      title: t("glossary.stakeAddress"),
       key: "stakeAddress",
       render: (r, idx) => (
         <>
@@ -127,8 +129,8 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
         <Card
           title={
             stakeAddressType === STAKE_ADDRESS_TYPE.REGISTRATION
-              ? "Stake Address Registration"
-              : "Stake Address Deregistration"
+              ? t("head.page.stakeAddressRegistration")
+              : t("head.page.stakeAddressDeregistration")
           }
         >
           <TimeDuration>

@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { get } from "lodash";
+import { useTranslation } from "react-i18next";
 import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 
@@ -16,6 +17,7 @@ import Table, { Column } from "src/components/commons/Table";
 import { Image, PoolName, SearchContainer, StyledInput, StyledLinearProgress, SubmitButton } from "./styles";
 
 const DelegationLists: React.FC = () => {
+  const { t } = useTranslation();
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const { tickerNameSearch = "" } = history.location.state || {};
   const [value, setValue] = useState("");
@@ -48,7 +50,7 @@ const DelegationLists: React.FC = () => {
 
   const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
     {
-      title: "Pool",
+      title: t("glossary.pool"),
       key: "Pool",
       minWidth: "200px",
       maxWidth: "200px",
@@ -65,7 +67,7 @@ const DelegationLists: React.FC = () => {
     {
       title: (
         <Box component={"span"}>
-          Pool size (<ADAicon />)
+          {t("glossary.poolSize")} (<ADAicon />)
         </Box>
       ),
       key: "poolSize",
@@ -75,7 +77,7 @@ const DelegationLists: React.FC = () => {
     {
       title: (
         <Box component={"span"}>
-          Declared Pledge (<ADAicon />)
+          {t("glossary.declaredPledge")} (<ADAicon />)
         </Box>
       ),
       key: "pu.pledge",
@@ -86,7 +88,7 @@ const DelegationLists: React.FC = () => {
       }
     },
     {
-      title: "Saturation",
+      title: t("glossary.saturation"),
       minWidth: "200px",
       key: "Saturation",
       render: (r) => (
@@ -103,19 +105,19 @@ const DelegationLists: React.FC = () => {
       )
     },
     {
-      title: "Number of Delegators",
+      title: t("glossary.numberOfDelegators"),
       minWidth: "200px",
       key: "numberDelegators",
       render: (r) => <Box component={"span"}>{r.numberDelegators || 0}</Box>
     },
     {
-      title: "Blocks in Epoch",
+      title: t("glossary.blocksInEpoch"),
       key: "epochBlock",
       minWidth: "120px",
       render: (r) => <Box component={"span"}>{r.epochBlock || 0}</Box>
     },
     {
-      title: "Blocks lifetime",
+      title: t("glossary.blocksLifetime"),
       minWidth: "100px",
       key: "lifetimeBlock",
       render: (r) => <Box component={"span"}>{r.lifetimeBlock || 0}</Box>
@@ -123,7 +125,7 @@ const DelegationLists: React.FC = () => {
     {
       title: (
         <Box component={"span"}>
-          Fixed Cost (<ADAicon />)
+          {t("glossary.fixedCost")} (<ADAicon />)
         </Box>
       ),
       key: "pu.fixedCost",
@@ -139,7 +141,7 @@ const DelegationLists: React.FC = () => {
       }
     },
     {
-      title: "Margin ",
+      title: t("margin") + " ",
       key: "margin",
       minWidth: "120px",
       render: (r) => `${formatPercent(r.feePercent)}`
@@ -149,7 +151,7 @@ const DelegationLists: React.FC = () => {
     <>
       <SearchContainer ref={tableRef}>
         <StyledInput
-          placeholder="Search Pools"
+          placeholder={t("common.searchPools")}
           onChange={(e) => setValue(e.target.value)}
           value={value}
           onKeyUp={(e) => {

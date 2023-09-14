@@ -1,6 +1,7 @@
 import { useMemo, useRef } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Box, useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
@@ -40,6 +41,7 @@ interface Props {
 }
 
 const DeregistrationDraw: React.FC<Props> = ({ toggleModal, showBackButton }) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
 
@@ -189,7 +191,7 @@ const DeregistrationDraw: React.FC<Props> = ({ toggleModal, showBackButton }) =>
             onClick={toggleModal}
             ref={certificateRef}
           >
-            Deregistration Certificate
+            {t("glossary.deregistrationCertificate")}
           </StyledCertificateShape>
         </MiddleGroup>
         <CardanoBlockchain data-testid="delegator-deregistration-cardano-blockchain" ref={cardanoBlockchainRef} />

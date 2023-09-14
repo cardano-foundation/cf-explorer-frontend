@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Box, Skeleton } from "@mui/material";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { details } from "src/commons/routers";
 import { getShortWallet } from "src/commons/utils/helper";
@@ -46,11 +47,12 @@ interface DelegationCertificateModalrops {
 }
 
 export const DelegationCertificateModal = ({ stake, txHash, ...props }: DelegationCertificateModalrops) => {
+  const { t } = useTranslation();
   const { data } = useFetch<DelegationDetail>((txHash && API.STAKE_LIFECYCLE.DELEGATION_DETAIL(stake, txHash)) || "");
 
   const list: CertificateItemType[] = [
     {
-      label: "Pool ID",
+      label: t("glossary.poolId"),
       content: (
         <LineData>
           <CustomTooltip title={data?.poolId}>
@@ -66,7 +68,7 @@ export const DelegationCertificateModal = ({ stake, txHash, ...props }: Delegati
       )
     },
     {
-      label: "Pool Name",
+      label: t("glossary.poolName"),
       content: (
         <CustomTooltip title={data?.poolName || data?.poolId}>
           <LineData>
@@ -81,7 +83,7 @@ export const DelegationCertificateModal = ({ stake, txHash, ...props }: Delegati
       )
     },
     {
-      label: "Stake Address",
+      label: t("common.stakeAddress"),
       content: (
         <LineData>
           <CustomTooltip title={stake}>
@@ -96,7 +98,7 @@ export const DelegationCertificateModal = ({ stake, txHash, ...props }: Delegati
   ];
 
   return (
-    <StyledModal {...props} title="Delegation certificate">
+    <StyledModal {...props} title={t("slc.delegationCertificate")}>
       <ItemList data-testid="delegation-certificate-modal">
         {list.map(({ label, content, extra }, index) => {
           return (

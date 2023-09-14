@@ -2,6 +2,7 @@ import { useHistory, useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { CircularProgress, useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { getShortWallet } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
@@ -48,6 +49,7 @@ export interface IReportLimit {
 const MODES: ViewMode[] = ["timeline", "tabular"];
 
 const SPOLifecycle = () => {
+  const { t } = useTranslation();
   const { poolId = "", mode = "timeline", tab = "registration" } = useParams<Params>();
   const { data: dataReportLimit } = useFetch<IReportLimit>(API.REPORT.REPORT_LIMIT);
 
@@ -109,9 +111,9 @@ const SPOLifecycle = () => {
       <StyledContainer ref={containerRef}>
         <BoxContainerStyled>
           <LifeCycleHeader sidebar={+sidebar}>
-            <LifeCycleTitle>Staking Lifecycle For</LifeCycleTitle>
+            <LifeCycleTitle>{t("common.slcFor")}</LifeCycleTitle>
             <AddressLine>
-              <Label>Pool ID:</Label>
+              <Label>{t("common.poolID")}:</Label>
               <CustomTooltip title={poolId}>
                 <StakeId to={details.delegation(poolId)}>{getShortWallet(poolId)}</StakeId>
               </CustomTooltip>
@@ -120,7 +122,9 @@ const SPOLifecycle = () => {
           </LifeCycleHeader>
           <BoxItemStyled sidebar={+sidebar}>
             <BoxSwitchContainer sidebar={+sidebar}>
-              <LabelSwitch>Switch to {validMode === "timeline" ? "tabular" : "timeline"} view</LabelSwitch>
+              <LabelSwitch>
+                {validMode === "timeline" ? t("common.switchTablularView") : t("slc.switchTimelineView")} view
+              </LabelSwitch>
               <SwitchGroup>
                 <ButtonSwitch active={+(validMode === "timeline")} onClick={() => changeMode("timeline")}>
                   <TableMode
@@ -137,10 +141,8 @@ const SPOLifecycle = () => {
             <CustomTooltip
               title={
                 !isLoggedIn
-                  ? "Please sign in to use this feature"
-                  : `Please note that you can only create ${
-                      dataReportLimit?.limitPer24hours || 0
-                    } reports within 24 hours`
+                  ? t("common.pleaseSignIntoUseFeature")
+                  : t("message.report.limitGenerate", { time: dataReportLimit?.limitPer24hours || 0 })
               }
             >
               <ReportButtonContainer>
@@ -149,7 +151,7 @@ const SPOLifecycle = () => {
                   onClick={() => setOpen(true)}
                   sidebar={+sidebar}
                 >
-                  Compose report
+                  {t("common.composeReport")}
                 </ButtonReport>
               </ReportButtonContainer>
             </CustomTooltip>

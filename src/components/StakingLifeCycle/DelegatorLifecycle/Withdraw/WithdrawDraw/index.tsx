@@ -1,6 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import { useRef, useMemo } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import {
@@ -65,6 +66,7 @@ interface Props {
 }
 
 export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
+  const { t } = useTranslation();
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const { data, loading } = useFetch<WithdrawDetail>(
     selected.txHash && stakeId && API.STAKE_LIFECYCLE.WITHDRAW_DETAIL(stakeId, selected.txHash)
@@ -179,7 +181,7 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
           <PaymentWalletContainer>
             <PaymentWalletIcon src={PaymentWalletUrl} alt="PaymentWallet" />
             <PaymentWalletInfo>
-              <PaymentWalletTitle>Payment Wallet</PaymentWalletTitle>
+              <PaymentWalletTitle>{t("common.paymentWallet")}</PaymentWalletTitle>
               <PaymentWalletValueContainer>
                 <PaymentWalletIconBox>
                   <WalletIconRewardGreen />
@@ -194,7 +196,7 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
           <PaymentWalletContainer>
             <PaymentWalletIcon src={RewardAccountIconUrl} alt="PaymentWallet" />
             <PaymentWalletInfo>
-              <PaymentWalletTitle>Reward Account</PaymentWalletTitle>
+              <PaymentWalletTitle>{t("glossary.rewardAccount")}</PaymentWalletTitle>
               <PaymentWalletValueContainer>
                 <PaymentWalletIconBox>
                   <WalletIconRewardGreen />

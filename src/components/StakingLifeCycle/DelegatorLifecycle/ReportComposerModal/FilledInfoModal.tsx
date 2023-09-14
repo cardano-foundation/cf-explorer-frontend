@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Box, FormControl, FormControlLabel, RadioGroup, Stack, Radio } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import CustomModal from "src/components/commons/CustomModal";
 import CustomDatePicker, { IDateRange } from "src/components/commons/CustomDatePicker";
@@ -96,6 +97,7 @@ export const EVENTS_NAME = [
 type IEpochRange = [number, number];
 
 const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, saveParams, gotoStep, currentStep }) => {
+  const { t } = useTranslation();
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
 
   const { poolId, stakeId } = useParams<{ poolId: string; stakeId: string }>();
@@ -197,7 +199,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
       const text = e.target.value as string;
       setReportName(text as ReportType);
       if (text.trim().length > 125) {
-        setErrorReportField("Report name can not exceed 125 characters");
+        setErrorReportField(t("common.reportLimitCharacters"));
       } else {
         setErrorReportField("");
       }
@@ -250,25 +252,25 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
     <CustomModal
       open={open}
       onClose={handleCloseModal}
-      title="Report composer"
+      title={t("report.composer")}
       width={500}
       padding="0px 24px !important"
       margin="0px -24px !important"
     >
       <Container>
         <StyledStack>
-          <StyledLabel>Report name</StyledLabel>
-          <StyledTextField placeholder="Enter report name" value={reportName} onChange={onChangeReportName} />
+          <StyledLabel>{t("common.reportName")}</StyledLabel>
+          <StyledTextField placeholder={t("report.placeholder")} value={reportName} onChange={onChangeReportName} />
         </StyledStack>
         {reportType === ReportType.StakeKeyReport && (
           <StyledStack>
-            <StyledLabel>Select a date range</StyledLabel>
+            <StyledLabel>{t("common.selectRange")}</StyledLabel>
             <CustomDatePicker dateRange={dateRange} setDateRange={setDateRange} hideFuture />
           </StyledStack>
         )}
         {reportType === ReportType.PoolReport && (
           <Box sx={{ marginBottom: "20px" }}>
-            <StyledLabel>Select a epoch range</StyledLabel>
+            <StyledLabel>{t("report.selectEpochRange")}</StyledLabel>
             <StyledSlider
               data-testid="slider"
               getAriaLabel={() => "Minimum distance"}
@@ -299,13 +301,13 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
                         <FormControlLabel
                           value={RatioGroupValue.yes}
                           control={<Radio onClick={() => handleClickRadio(key)} />}
-                          label="Yes"
+                          label={t("common.yes")}
                           sx={{ color: (props) => props.palette.secondary.main }}
                         />
                         <FormControlLabel
                           value={RatioGroupValue.no}
                           control={<Radio onClick={() => handleClickRadio(key)} />}
-                          label="No"
+                          label={t("common.no")}
                           sx={{ color: (props) => props.palette.secondary.main }}
                         />
                       </Stack>
@@ -317,8 +319,8 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
           })}
         </Box>
         <Box data-testid="report-events" marginBottom={"20px"}>
-          <SubText>{isPoolReport ? "Pool Report by event" : "Staking lifecycle events"}</SubText>
-          <TextRequired>Select as required</TextRequired>
+          <SubText>{isPoolReport ? t("common.poolReportByEvent") : t("common.stakingLCEvent")}</SubText>
+          <TextRequired>{t("common.select as required")}</TextRequired>
           <Box display={"flex"} flexWrap={"wrap"} gap="10px" marginTop="20px" marginBottom="40px">
             {events.map(({ label, value }) => {
               return (
@@ -336,7 +338,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
         {errorReportField && <TextError>{errorReportField}</TextError>}
         <StyledStack>
           <StyledButton data-testid="next-step" disabled={isDisabledButton} onClick={handleSubmit}>
-            Next
+            {t("common.next")}
           </StyledButton>
         </StyledStack>
       </Container>

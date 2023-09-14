@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -18,6 +19,7 @@ import { Actions, PageSize, PerPage, SelectMui, StyledLink, StyledMenuItem, Time
 const perPages = [10, 20, 50, 100];
 
 const TopAddressesByAmountStaked = () => {
+  const { t } = useTranslation();
   const history = useHistory();
   const [pageSize, setPageSize] = useState("50");
   const { error, data, initialized, loading, lastUpdated } = useFetchList<Contracts>(
@@ -29,7 +31,7 @@ const TopAddressesByAmountStaked = () => {
 
   const columns: Column<TopDelegator>[] = [
     {
-      title: "Stake Address",
+      title: t("common.stakeAddress"),
       minWidth: 200,
       key: "addresses",
       render: (r) => (
@@ -39,7 +41,7 @@ const TopAddressesByAmountStaked = () => {
       )
     },
     {
-      title: "Pool",
+      title: t("glossary.pool"),
       key: "pool",
       maxWidth: 300,
       render: (r) => (
@@ -49,7 +51,7 @@ const TopAddressesByAmountStaked = () => {
       )
     },
     {
-      title: "Stake amount",
+      title: t("stakeAmount"),
       key: "Stakeamount",
       render: (r) => (
         <Box component={"span"}>
@@ -78,7 +80,7 @@ const TopAddressesByAmountStaked = () => {
               </StyledMenuItem>
             ))}
           </SelectMui>
-          <PerPage>Delegators</PerPage>
+          <PerPage>{t("delegators")}</PerPage>
         </PageSize>
       </Actions>
       <Table

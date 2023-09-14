@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
@@ -12,6 +13,7 @@ import { API } from "src/commons/utils/api";
 import { LabelStatus, StyledLink } from "../styles";
 
 const StakeHistoryTab = ({ isMobile = false }) => {
+  const { t } = useTranslation();
   const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
   const history = useHistory();
@@ -21,7 +23,7 @@ const StakeHistoryTab = ({ isMobile = false }) => {
 
   const columns: Column<StakeHistory>[] = [
     {
-      title: "Tx Hash",
+      title: t("glossary.txHash"),
       key: "hash",
       minWidth: isMobile ? "245px" : "120px",
       render: (r) => (
@@ -31,13 +33,13 @@ const StakeHistoryTab = ({ isMobile = false }) => {
       )
     },
     {
-      title: "Created At",
+      title: t("glossary.createdAt"),
       key: "time",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time || "")
     },
     {
-      title: "Block",
+      title: t("glossary.block"),
       key: "block",
       minWidth: "120px",
       render: (r) => (
@@ -53,19 +55,22 @@ const StakeHistoryTab = ({ isMobile = false }) => {
       )
     },
     {
-      title: "Action",
+      title: t("glossary.action"),
       key: "action",
       minWidth: "120px",
-      render: (r) => (
-        <LabelStatus
-          color={(theme) => (r.action === "Registered" ? theme.palette.error[700] : theme.palette.secondary.light)}
-          sx={{
-            background: (theme) => (r.action === "Registered" ? theme.palette.error[100] : theme.palette.primary[200])
-          }}
-        >
-          {r.action ? r.action.split(" ").join("") : ""}
-        </LabelStatus>
-      )
+      render: (r) => {
+        const label = r.action ? r.action.split(" ").join("") : "";
+        return (
+          <LabelStatus
+            color={(theme) => (r.action === "Registered" ? theme.palette.error[700] : theme.palette.secondary.light)}
+            sx={{
+              background: (theme) => (r.action === "Registered" ? theme.palette.error[100] : theme.palette.primary[200])
+            }}
+          >
+            {label === "Registered" ? t("glossary.registered") : t("glossary.deregistered")}
+          </LabelStatus>
+        );
+      }
     }
   ];
 

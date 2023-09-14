@@ -1,5 +1,6 @@
 import { forwardRef } from "react";
 import { BoxProps, IconButton, styled, Box, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { ButtonListIcon } from "src/commons/resources";
 import { formatADAFull } from "src/commons/utils/helper";
@@ -8,7 +9,7 @@ import ADAicon from "../ADAIcon";
 import PopupStaking from "../PopupStaking";
 import PopperStyled from "../PopperStyled";
 
-const HoldContainer = styled(Box)(({ theme }) => ({
+const HoldContainer = styled(Box)<{ title: string }>(({ theme, title }) => ({
   height: "35px",
   width: 184,
   display: "flex",
@@ -28,7 +29,7 @@ const HoldContainer = styled(Box)(({ theme }) => ({
   gap: 5,
   margin: 0,
   "::after": {
-    content: '"HOLD"',
+    content: `"${title}"`,
     borderRadius: "4px",
     fontWeight: "bold",
     color: theme.palette.common.white,
@@ -90,6 +91,7 @@ const HolderValueLabel = styled(Typography)(({ theme }) => ({
 
 export const HoldBox = forwardRef<HTMLElement, Props>((props, feeRef) => {
   const { value, txHash, roundingNumber = 6, children, ...boxProps } = props;
+  const { t } = useTranslation();
   const isOverText =
     typeof feeRef !== "function" &&
     !!feeRef?.current &&
@@ -99,7 +101,7 @@ export const HoldBox = forwardRef<HTMLElement, Props>((props, feeRef) => {
   return (
     <PopperStyled
       render={({ handleClick }) => (
-        <HoldContainer {...boxProps} ref={feeRef}>
+        <HoldContainer {...boxProps} ref={feeRef} title={t("common.hold").toUpperCase()}>
           <Value>
             <HolderValueLabel>{formatADAFull(value || 0, roundingNumber)}</HolderValueLabel>
             <ADAicon width={12} data-testid="holdbox-ada-icon" />

@@ -2,6 +2,7 @@ import { Box, BoxProps, Grid, Icon, useTheme } from "@mui/material";
 import { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import {
   BgBlue,
@@ -80,6 +81,8 @@ const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
 };
 
 const TabularOverview: React.FC = () => {
+  const { t } = useTranslation();
+
   const data = useContext(PoolDetailContext);
   const { stakeKeys, poolSize, epochNo, status, rewardAvailable } = data ?? {};
   const [open, setOpen] = useState(false);
@@ -92,16 +95,16 @@ const TabularOverview: React.FC = () => {
 
   const ownerAccountValue = getShortWallet(stakeKeys?.[0]);
   const STATUS = {
-    ACTIVE: ["Active", theme.palette.secondary.main],
-    INACTIVE: ["Inactive", "rgb(255,0,0)"],
-    RETIRING: ["Retiring", theme.palette.error[700]]
+    ACTIVE: [t("common.active"), theme.palette.secondary.main],
+    INACTIVE: [t("common.incactive"), "rgb(255,0,0)"],
+    RETIRING: [t("common.retiring"), theme.palette.error[700]]
   };
 
   return (
     <Box>
       <Grid container spacing={2}>
         <GridItem
-          title="Pool Size"
+          title={t("glossary.poolSize")}
           bgType="white"
           mainIcon={<PoolSizeIcon />}
           value={
@@ -113,7 +116,7 @@ const TabularOverview: React.FC = () => {
           }
         />
         <GridItem
-          title="Status"
+          title={t("common.status")}
           bgType="white"
           mainIcon={<StatusIcon />}
           value={
@@ -126,12 +129,14 @@ const TabularOverview: React.FC = () => {
               >
                 {STATUS[status ?? "ACTIVE"][0] + ": "}
               </CardValue>
-              <ClickAbleLink to={details.epoch(epochNo)}>Epoch {epochNo}</ClickAbleLink>
+              <ClickAbleLink to={details.epoch(epochNo)}>
+                {t("epoch")} {epochNo}
+              </ClickAbleLink>
             </WrapStatus>
           }
         />
         <GridItem
-          title="Rewards Available"
+          title={t("glossary.rewardsAvailable")}
           bgType="white"
           mainIcon={<RewardsAvailableIcon />}
           value={
@@ -143,7 +148,7 @@ const TabularOverview: React.FC = () => {
           }
         />
         <GridItem
-          title="Owner Account"
+          title={t("common.ownerAccount")}
           bgType="white"
           mainIcon={<OwnerAccountIcon />}
           value={
@@ -168,7 +173,7 @@ const TabularOverview: React.FC = () => {
       <ViewMoreAddressModal
         showFullHash={true}
         onItemClick={onOwnerItemClick}
-        title="Owner Account"
+        title={t("common.ownerAccount")}
         open={open}
         items={stakeKeys}
         onClose={() => setOpen(false)}
