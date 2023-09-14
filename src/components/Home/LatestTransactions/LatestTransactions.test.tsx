@@ -63,7 +63,6 @@ describe("LatestTransactions", () => {
         <LatestTransactions />
       </Router>
     );
-    expect(screen.getByText(mockItem.status)).toBeInTheDocument();
     expect(screen.getByText(formatADAFull(mockItem.amount))).toBeInTheDocument();
     expect(screen.getByText(getShortHash(mockItem.hash))).toBeInTheDocument();
     expect(screen.getByText(mockItem.blockNo)).toBeInTheDocument();

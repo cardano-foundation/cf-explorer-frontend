@@ -55,7 +55,7 @@ const ScriptTab = () => {
       <Box color={({ palette }) => palette.secondary.main}>Contract</Box>
       {data?.isVerified ? (
         <ScriptType>
-          ${t("common.scriptType")}: <span>{t("common.nativeScript")}</span>
+          {t("common.scriptType")}: <span>{t("common.nativeScript")}</span>
         </ScriptType>
       ) : null}
       <Result>
