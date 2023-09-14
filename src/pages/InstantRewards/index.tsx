@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
+import { useTranslation } from "react-i18next";
 
 import ADAicon from "src/components/commons/ADAIcon";
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -18,6 +19,7 @@ import FormNowMessage from "src/components/commons/FormNowMessage";
 import { Actions, StyledContainer, StyledLink, TimeDuration } from "./styles";
 
 const InstantReards = () => {
+  const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -36,7 +38,7 @@ const InstantReards = () => {
 
   const columns: Column<InstantRewards>[] = [
     {
-      title: "Tx Hash",
+      title: t("glossary.txHash"),
       minWidth: 120,
       key: "txHash",
       render: (r) => (
@@ -46,13 +48,13 @@ const InstantReards = () => {
       )
     },
     {
-      title: "Created At",
+      title: t("glossary.createdAt"),
       key: "createdat",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time)
     },
     {
-      title: "Block",
+      title: t("glossary.block"),
       key: "blockNo",
       render: (r) => (
         <>
@@ -64,12 +66,12 @@ const InstantReards = () => {
       )
     },
     {
-      title: "Stake Address",
+      title: t("glossary.stakeAddress"),
       key: "numberOfStakes",
       render: (r) => <Box component={"span"}>{r.numberOfStakes}</Box>
     },
     {
-      title: "Rewards Paid",
+      title: t("glosary.rewardsPaid"),
       key: "reward",
       render: (r) => (
         <Box component={"span"}>
@@ -81,7 +83,7 @@ const InstantReards = () => {
 
   return (
     <StyledContainer>
-      <Card title="Instantaneous Rewards">
+      <Card title={t("drawer.instaneousRewards")}>
         <Actions>
           <TimeDuration>
             <FormNowMessage time={fetchData.lastUpdated} />

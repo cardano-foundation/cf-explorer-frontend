@@ -2,6 +2,7 @@ import React, { createContext, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Box } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
+import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -37,6 +38,7 @@ const reducer = (state: any, action: IAction) => {
 };
 
 const ContractDetail: React.FC = () => {
+  const { t } = useTranslation();
   const { address } = useParams<{ address: string }>();
   const history = useHistory();
   const { data, loading, initialized, error, refresh } = useFetch<WalletAddress>(`${API.ADDRESS.DETAIL}/${address}`);
@@ -65,7 +67,7 @@ const ContractDetail: React.FC = () => {
         <WrapHeader textAlign={"left"}>
           <BackButton onClick={history.goBack}>
             <HiArrowLongLeft fontSize="16px" />
-            <BackText>Back</BackText>
+            <BackText>{t("common.back")}</BackText>
           </BackButton>
         </WrapHeader>
         <Box pt={1} pb={3}>

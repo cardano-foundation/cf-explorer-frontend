@@ -49,10 +49,10 @@ describe("DetailViewStakeKey component", () => {
         <DetailViewStakeKey handleClose={onClose} stakeId={mockStake} />
       </Router>
     );
-    const viewDetail = screen.getByRole("link", { name: /view details/i });
+    const viewDetail = screen.getAllByRole("link", { name: /view details/i });
 
     act(() => {
-      userEvent.click(viewDetail);
+      userEvent.click(viewDetail[0]);
     });
 
     expect(history.location.pathname).toBe(details.stake(mockStake));

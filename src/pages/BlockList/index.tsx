@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { Column } from "src/types/table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -23,10 +24,12 @@ import SelectedIcon from "src/components/commons/SelectedIcon";
 import Link from "src/components/commons/Link";
 import ADAicon from "src/components/commons/ADAIcon";
 import useFetchList from "src/commons/hooks/useFetchList";
+import { Capitalize } from "src/components/commons/CustomText/styles";
 
 import { PriceWrapper, BlueText, StyledContainer, StyledLink } from "./styles";
 
 const BlockList = () => {
+  const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
   const { onDetailView } = useSelector(({ user }: RootState) => user);
@@ -44,7 +47,7 @@ const BlockList = () => {
 
   const columns: Column<Block>[] = [
     {
-      title: "Block",
+      title: <Capitalize>{t("glossary.block")}</Capitalize>,
       key: "blockNo",
       minWidth: "50px",
       render: (r) => {
@@ -59,7 +62,7 @@ const BlockList = () => {
       }
     },
     {
-      title: "Block ID",
+      title: <Capitalize>{t("glossary.blockID")}</Capitalize>,
       key: "blockId",
       minWidth: "150px",
       render: (r) => (
@@ -69,7 +72,7 @@ const BlockList = () => {
       )
     },
     {
-      title: "Epoch/Slot",
+      title: <Capitalize>{t("glossary.EpochSlot")}</Capitalize>,
       key: "epoch",
       minWidth: "150px",
       render: (r) => (
@@ -82,7 +85,7 @@ const BlockList = () => {
       )
     },
     {
-      title: "Created At",
+      title: <Capitalize>{t("createdAt")}</Capitalize>,
       key: "time",
       minWidth: "100px",
       render: (r) => <PriceWrapper>{formatDateTimeLocal(r.time)}</PriceWrapper>,
@@ -91,7 +94,7 @@ const BlockList = () => {
       }
     },
     {
-      title: "Transactions",
+      title: <Capitalize>{t("glossary.transactions")}</Capitalize>,
       key: "txCount",
       minWidth: "50px",
       render: (r) => <BlueText>{r.txCount}</BlueText>,
@@ -100,7 +103,7 @@ const BlockList = () => {
       }
     },
     {
-      title: "Fees",
+      title: <Capitalize>{t("common.fees")}</Capitalize>,
       key: "fees",
       render: (r) => (
         <PriceWrapper>
@@ -110,7 +113,7 @@ const BlockList = () => {
       )
     },
     {
-      title: "Output",
+      title: <Capitalize>{t("glossary.output")}</Capitalize>,
       key: "output",
       minWidth: "100px",
       render: (r) => (
@@ -141,11 +144,11 @@ const BlockList = () => {
 
   return (
     <StyledContainer>
-      <Card data-testid="blocks-card" title={"Blocks"}>
+      <Card data-testid="blocks-card" title={t("head.page.blocks")}>
         <Table
           {...fetchData}
           columns={columns}
-          total={{ title: "Total Blocks", count: fetchData.total }}
+          total={{ title: t("common.totalBlocks"), count: fetchData.total }}
           pagination={{
             ...pageInfo,
             total: fetchData.total,

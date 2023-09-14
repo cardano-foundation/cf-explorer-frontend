@@ -1,6 +1,7 @@
 import { Box, Grid, useTheme } from "@mui/material";
 import { useRef, useState, useMemo } from "react";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { BackIcon, AddressIcon, TimeIcon } from "src/commons/resources";
 import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
@@ -78,7 +79,7 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
   const handleBack = () => {
     history.goBack();
   };
-
+  const { t } = useTranslation();
   const isPoolHold = !!selected?.poolHold;
   const paths = useMemo((): LineArrowItem[] => {
     if (isPoolHold)
@@ -231,18 +232,13 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
             </Box>
           </BoxGroup>
           <StyledCertificateShape onClick={toggleModal} ref={deregistrationRef}>
-            Deregistration Certificate
+            {t("common.deregistrationCert")}
           </StyledCertificateShape>
         </MiddleGroup>
         <CardanoBlockchain ref={cardanoBlockchainRef} />
         <DrawPath paths={paths} />
       </DrawContainer>
-      {!isPoolHold && (
-        <AditionalLabel>
-          Pool hold paid during registration is refunded 1 epoch after the retirement epoch to the reward address of the
-          pool operator
-        </AditionalLabel>
-      )}
+      {!isPoolHold && <AditionalLabel>{t("common.holdBoxLimitWarning")}</AditionalLabel>}
     </Box>
   );
 };
@@ -255,13 +251,14 @@ export const DeregistrationCertificateModal = ({
   data: SPODeregistration | null;
   handleCloseModal: () => void;
 }) => {
+  const { t } = useTranslation();
   return (
-    <StyledModal {...props} title="Deregistration certificate">
+    <StyledModal {...props} title={t("common.deregistrationCert")}>
       <Grid container spacing={1}>
         <StyledGridItem item xs={6}>
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
-              Pool ID
+              {t("common.poolID")}
             </Box>
             {data && (
               <Box>
@@ -278,7 +275,7 @@ export const DeregistrationCertificateModal = ({
         <StyledGridItem item xs={6}>
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
-              Retirement in Epoch
+              {t("glossary.retirementsEpoch")}
             </Box>
             {data && (
               <DetailRetirement pt={"3px"} pb={"5px"}>

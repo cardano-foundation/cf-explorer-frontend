@@ -1,6 +1,7 @@
 import { useMemo, useRef } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Box, useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { details } from "src/commons/routers";
 import { AddressIcon, BackIcon, TimeIcon } from "src/commons/resources";
@@ -15,6 +16,7 @@ import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import ADAicon from "src/components/commons/ADAIcon";
 import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
+import { Capitalize } from "src/components/commons/CustomText/styles";
 
 import {
   IconButtonBack,
@@ -37,6 +39,7 @@ export interface IDelegationDrawProps {
 }
 
 const DelegationDraw: React.FC<IDelegationDrawProps> = ({ toggleModal, showBackButton }) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const { stakeId = "", txHash = "" } = useParams<{ stakeId: string; txHash?: string }>();
 
@@ -150,7 +153,7 @@ const DelegationDraw: React.FC<IDelegationDrawProps> = ({ toggleModal, showBackB
             onClick={toggleModal}
             ref={certificateRef}
           >
-            Delegation Certificate
+            <Capitalize>{t("slc.delegationCertificate")}</Capitalize>
           </StyledCertificateShape>
         </MiddleGroup>
         <CardanoBlockchain data-testid="delegator-delegation-cardano-blockchain" ref={cardanoBlockchainRef} />

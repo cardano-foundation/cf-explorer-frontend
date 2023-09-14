@@ -18,6 +18,6 @@ describe("RecentDeregistrations", () => {
     jest.spyOn(Router, "useParams").mockReturnValue({ stakeId: "1" });
     render(<RecentDeregistration setShowBackButton={jest.fn()} />);
 
-    expect(screen.getByText("Showing 0 result")).toBeInTheDocument();
+    expect(screen.getByText(/Showing 0 result/i)).toBeInTheDocument();
   });
 });

@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -14,6 +15,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import { AmountADARow } from "./styles";
 
 const OperatorRewardTab = () => {
+  const { t } = useTranslation();
   const { poolId = "" } = useParams<{ poolId: string }>();
   const [params, setParams] = useState({
     page: 0,
@@ -25,14 +27,14 @@ const OperatorRewardTab = () => {
   const columns: Column<SPO_REWARD>[] = [
     {
       key: "epochNo",
-      title: "Epoch",
+      title: t("epoch"),
       render(data) {
         return <StyledLink to={details.epoch(data.epochNo)}>{data.epochNo}</StyledLink>;
       }
     },
     {
       key: "time",
-      title: "Created At",
+      title: t("createdAt"),
       sort({ columnKey, sortValue }) {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       },
@@ -42,7 +44,7 @@ const OperatorRewardTab = () => {
     },
     {
       key: "amount",
-      title: "Operator Reward ADA",
+      title: t("common.operatorRewardADA"),
       render(data) {
         return (
           <AmountADARow>
@@ -76,7 +78,7 @@ const OperatorRewardTab = () => {
         defaultSort="time,DESC"
         columns={columns}
         total={{
-          title: "Pool Registration",
+          title: t("common.poolRegistration"),
           count: fetchData.total
         }}
         pagination={{

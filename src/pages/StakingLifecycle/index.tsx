@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { TabContext } from "@mui/lab";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { lists } from "src/commons/routers";
@@ -36,6 +37,7 @@ const DEFAULT_PAGINING = { page: 0, size: 50 };
 const validTabs: LifecycleReportType[] = ["stake-key-reports", "pool-reports"];
 
 const StakingLifecycle: React.FC = () => {
+  const { t } = useTranslation();
   const history = useHistory();
   const { userData } = useSelector(({ user }: RootState) => user);
   const [{ page, size }, setPagi] = useState<{ page: number; size: number; sort?: string }>(DEFAULT_PAGINING);
@@ -88,12 +90,12 @@ const StakingLifecycle: React.FC = () => {
     <Container>
       <StakingLifeCycleSearch />
       <TitleHead>
-        <TextHeadline>Saved reports</TextHeadline>
+        <TextHeadline>{t("common.savedReports")}</TextHeadline>
         <FilterHead>
           <WrapFilterDescription>
-            Showing {totalResult} {totalResult > 1 ? "results" : "result"}
+            {t("common.showing")} {totalResult} {totalResult > 1 ? t("common.result") : t("common.results")}
           </WrapFilterDescription>
-          <CustomFilter sortKey="id" filterValue={params} onChange={setParams} searchLabel="Search report name" />
+          <CustomFilter sortKey="id" filterValue={params} onChange={setParams} searchLabel={t("Search report name")} />
         </FilterHead>
       </TitleHead>
       <TabContext value={validTab}>
@@ -109,11 +111,15 @@ const StakingLifecycle: React.FC = () => {
           >
             <StyledTab
               value={"stake-key-reports"}
-              label={<CustomTabTitle active={validTab === "stake-key-reports"}>Stake Address Reports</CustomTabTitle>}
+              label={
+                <CustomTabTitle active={validTab === "stake-key-reports"}>
+                  {t("common.stakeAddressReports")}
+                </CustomTabTitle>
+              }
             />
             <StyledTab
               value={"pool-reports"}
-              label={<CustomTabTitle active={validTab === "pool-reports"}>Pool Reports</CustomTabTitle>}
+              label={<CustomTabTitle active={validTab === "pool-reports"}>{t("common.poolReports")}</CustomTabTitle>}
             />
           </StyledTabs>
         </TabHeader>

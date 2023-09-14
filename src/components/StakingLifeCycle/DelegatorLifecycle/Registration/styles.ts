@@ -1,4 +1,5 @@
-import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
+import { Box, IconButton as IconButtonMui, styled } from "@mui/material";
+import i18next from "i18next";
 import { Link } from "react-router-dom";
 
 import { AdaLogoIcon } from "src/components/commons/ADAIcon";
@@ -43,7 +44,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
   fontWeight: 700,
   minWidth: "max-content",
   "::after": {
-    content: '"HOLD"',
+    content: `"${i18next.t("common.hold").toUpperCase()}"`,
     borderRadius: "4px",
     fontWeight: "bold",
     color: theme.palette.common.white,
@@ -59,7 +60,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
 
 export const FeeBox = styled(HoldBox)(() => ({
   "::after": {
-    content: '"FEES"'
+    content: `"${i18next.t("common.fees").toUpperCase()}"`
   }
 }));
 
@@ -81,7 +82,7 @@ export const HoldBoxMobile = styled(HoldBox)(({ theme }) => ({
 
 export const FeeBoxMobile = styled(HoldBoxMobile)(() => ({
   "::after": {
-    content: '"FEES"'
+    content: `"${i18next.t("common.fees").toUpperCase()}"`
   }
 }));
 

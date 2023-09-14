@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box } from "@mui/material";
 import { useLocalStorage } from "react-use";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { LinkOff, User2 } from "src/commons/resources/index";
 import { routers } from "src/commons/routers";
@@ -16,6 +17,7 @@ interface IProps {
   userData: any;
 }
 const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
+  const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [, setBookmark] = useLocalStorage<string[]>("bookmark", []);
   const [, setUsername] = useLocalStorage<string>("username", "");
@@ -41,7 +43,7 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
         refreshJwt: localStorage.getItem("refreshToken") || "",
         accountId: localStorage.getItem("username") || ""
       });
-      toast.success("You are now signed out");
+      toast.success(t("message.signedOut"));
     } catch (error) {
       // Todo: handle error
     } finally {

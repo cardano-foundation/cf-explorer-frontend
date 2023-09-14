@@ -3,11 +3,13 @@ import { useEffect, useReducer, useRef, useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { IoMdClose } from "react-icons/io";
 import { Link, useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import useAuth from "src/commons/hooks/useAuth";
 import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
 import { signUp } from "src/commons/utils/userRequest";
+import { ACCOUNT_ERROR } from "src/commons/utils/constants";
 
 import {
   BackButton,
@@ -62,6 +64,7 @@ const formReducer = (state: IForm, event: any) => {
   };
 };
 export default function SignUp() {
+  const { t } = useTranslation();
   const history = useHistory();
   const emailTextField = useRef<HTMLInputElement | null>(null);
   const [error, setError] = useState(false);
@@ -73,8 +76,8 @@ export default function SignUp() {
   const [checkedAgree, setCheckedAgree] = useState(false);
 
   useEffect(() => {
-    document.title = "Sign Up | Cardano Blockchain Explorer";
-  }, []);
+    document.title = `${t("page.signUp")} | ${t("head.page.dashboard")}`;
+  }, [t]);
 
   const handleChangeAgree = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCheckedAgree(event.target.checked);
@@ -122,14 +125,13 @@ export default function SignUp() {
     switch (name) {
       case "password":
         if (!value) {
-          error = "Please enter your Password";
+          error = t("validation.password");
         } else if (
           value.length < 8 ||
           value.length > 30 ||
           !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/.test(value)
         ) {
-          error =
-            "Password has to be from 8 to 30 characters and must contain at least 1 number, 1 special character, 1 uppercase and 1 lowercase letter";
+          error = t("validation.password.length");
         } else if (value === formData.confirmPassword.value) {
           setFormData({
             name: "confirmPassword",
@@ -142,7 +144,7 @@ export default function SignUp() {
             name: "confirmPassword",
             value: formData.confirmPassword.value,
             touched: true,
-            error: "Password does not match"
+            error: t("validation.password.notMatch")
           });
         }
         break;
@@ -171,7 +173,7 @@ export default function SignUp() {
             name: "confirmEmail",
             value: formData.confirmEmail.value,
             touched: true,
-            error: "Email address does not match"
+            error: t("validation.email.notMatch")
           });
         }
         break;
@@ -179,7 +181,7 @@ export default function SignUp() {
         if (!value) {
           error = "Please enter your Confirm Email";
         } else if (value !== formData.email.value) {
-          error = "Email address does not match";
+          error = t("validation.email.notMatch");
         }
         break;
       default:
@@ -269,11 +271,11 @@ export default function SignUp() {
         return;
       }
     } catch (error: any) {
-      if (error?.response?.data?.errorCode === "CC_23") {
+      if (error?.response?.data?.errorCode === ACCOUNT_ERROR.EMAIL_IS_ALREADY_EXIST) {
         setFormData({
           name: "email",
           touched: true,
-          error: error.response.data.errorMessage,
+          error: t(ACCOUNT_ERROR.EMAIL_IS_ALREADY_EXIST),
           value: formData.email.value
         });
       }
@@ -294,15 +296,16 @@ export default function SignUp() {
     <Container>
       {!success ? (
         <WrapContent>
-          <WrapTitle data-testid="signup-title">Sign Up</WrapTitle>
+          <WrapTitle data-testid="signup-title">{t("page.signUp")}</WrapTitle>
           <WrapHintText>
-            Already have an account? <WrapSignUp onClick={() => handleRedirect()}>Sign in here</WrapSignUp>
+            {t("account.haveAccount")}
+            <WrapSignUp onClick={() => handleRedirect()}>{t("account.signInHere")}</WrapSignUp>
           </WrapHintText>
           <FormGroup>
             <WrapForm>
               <BackButton onClick={() => handleRedirect()}>
                 <HiArrowLongLeft fontSize="16px" />
-                <BackText>Back</BackText>
+                <BackText>{t("common.back")}</BackText>
               </BackButton>
               <CloseButton saving={0} onClick={() => handleRedirect(true)}>
                 <IoMdClose />
@@ -320,7 +323,7 @@ export default function SignUp() {
                   name="email"
                   onChange={handleChange}
                   error={Boolean(formData.email.error && formData.email.touched)}
-                  placeholder="Email address"
+                  placeholder={t("account.emailAddress")}
                   onKeyDown={handleKeyDown}
                 />
                 {formData.email.error && formData.email.touched ? (
@@ -339,7 +342,7 @@ export default function SignUp() {
                   name="confirmEmail"
                   onChange={handleChange}
                   error={Boolean(formData.confirmEmail.error && formData.confirmEmail.touched)}
-                  placeholder="Confirm email address"
+                  placeholder={t("account.confirmEmailAddress")}
                 />
                 {formData.confirmEmail.error && formData.confirmEmail.touched ? (
                   <FormHelperTextCustom error>{formData.confirmEmail.error}</FormHelperTextCustom>
@@ -364,7 +367,7 @@ export default function SignUp() {
                   name="password"
                   onChange={handleChange}
                   error={Boolean(formData.password.error && formData.password.touched)}
-                  placeholder="Password"
+                  placeholder={t("account.password")}
                 />
                 {formData.password.error && formData.password.touched ? (
                   <FormHelperTextCustom error>{formData.password.error}</FormHelperTextCustom>
@@ -389,7 +392,7 @@ export default function SignUp() {
                   name="confirmPassword"
                   onChange={handleChange}
                   error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
-                  placeholder="Confirm password"
+                  placeholder={t("account.confirmPassword")}
                 />
                 {formData.confirmPassword.error && formData.confirmPassword.touched ? (
                   <FormHelperTextCustom error>{formData.confirmPassword.error}</FormHelperTextCustom>
@@ -420,13 +423,13 @@ export default function SignUp() {
                       alignItems={"baseline"}
                       gap={"5px"}
                     >
-                      I agree to the
+                      {t("account.agreeToThe")}
                       <Link to={routers.TERMS_OF_SERVICE} target="_blank">
-                        <HighlightLink>Terms & Conditions</HighlightLink>
+                        <HighlightLink>{t("account.termsAndConditions")}</HighlightLink>
                       </Link>
-                      and
+                      {t("common.and")}
                       <Link to={routers.POLICY} target="_blank">
-                        <HighlightLink>Privacy Policy</HighlightLink>
+                        <HighlightLink>{t("account.PrivacyPolicy")}</HighlightLink>
                       </Link>
                     </Box>
                   }
@@ -439,7 +442,7 @@ export default function SignUp() {
                 onClick={handleSubmit}
                 disabled={!enableButton}
               >
-                Sign Up
+                {t("page.signUp")}
               </WrapButton>
             </WrapForm>
           </FormGroup>
@@ -451,17 +454,17 @@ export default function SignUp() {
               <Box textAlign={"center"}>
                 <SuccessIcon />
                 <Box paddingY={"15px"}>
-                  <Title>Verify Your Account</Title>
+                  <Title>{t("account.verifyYourEmail")}</Title>
                 </Box>
                 <Box paddingBottom={"30px"}>
                   <LabelInfo>
-                    Click on the link we sent to <WrapEmail>{formData.email.value}</WrapEmail> to finish your account
-                    setup.
+                    {t("account.clickForSentEmail")} <WrapEmail>{formData.email.value}</WrapEmail>{" "}
+                    {t("account.finishAccSetup")}.
                   </LabelInfo>
                 </Box>
               </Box>
               <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.SIGN_IN)}>
-                Sign In
+                {t("common.signIn")}
               </WrapButton>
             </FormGroup>
           </WrapForm>

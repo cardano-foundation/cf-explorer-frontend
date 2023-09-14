@@ -2,6 +2,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
@@ -33,6 +34,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
   selected,
   showTitle = true
 }) => {
+  const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -46,7 +48,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
 
   const columns: Column<Transactions>[] = [
     {
-      title: "Tx Hash",
+      title: t("glossary.txhash"),
       key: "txhash",
       minWidth: 120,
 
@@ -59,13 +61,13 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       )
     },
     {
-      title: "Created At",
+      title: t("createdAt"),
       key: "createdat",
       minWidth: 120,
       render: (r) => <Box color={({ palette }) => palette.secondary.light}>{formatDateTimeLocal(r.time || "")}</Box>
     },
     {
-      title: "Block",
+      title: t("glossary.block"),
       key: "block",
       minWidth: 120,
       render: (r) => (
@@ -85,14 +87,14 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       )
     },
     {
-      title: "Addresses",
+      title: t("glossary.address"),
       key: "address",
       minWidth: 120,
       render(r) {
         return (
           <div>
             <Box display={"flex"}>
-              <Label> Input: </Label>
+              <Label> {t("glossary.input")}: </Label>
               <div>
                 {r.addressesInput.slice(0, 1).map((tx, key) => {
                   return (
@@ -111,7 +113,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
               </div>
             </Box>
             <Box display={"flex"} mt={1}>
-              <Label>Output: </Label>
+              <Label>{t("glossary.output")}: </Label>
               <div>
                 {r.addressesOutput.slice(0, 1).map((tx, key) => {
                   return (
@@ -134,7 +136,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       }
     },
     {
-      title: "Fees",
+      title: t("common.fees"),
       key: "fee",
       minWidth: 120,
       render: (r) => (
@@ -145,7 +147,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       )
     },
     {
-      title: "Output in ADA",
+      title: t("glossary.outputInAda"),
       minWidth: 120,
       key: "ouput",
       render: (r) => (
@@ -159,11 +161,11 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
 
   return (
     <StyledContainer>
-      <Card title={showTitle ? "Transactions" : ""} underline={underline}>
+      <Card title={showTitle ? t("head.page.transactions") : ""} underline={underline}>
         <Table
           {...fetchData}
           columns={columns}
-          total={{ count: fetchData.total, title: "Total Transactions" }}
+          total={{ count: fetchData.total, title: t("common.totalTxs") }}
           pagination={{
             ...pageInfo,
             total: fetchData.total,

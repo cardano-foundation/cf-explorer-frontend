@@ -1,6 +1,7 @@
 import { Grid, Icon } from "@mui/material";
 import { useContext, useState } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -71,6 +72,7 @@ const GridItem = ({ title, action, value, iconUrl }: TGridItem) => {
 };
 
 const TabularOverview: React.FC = () => {
+  const { t } = useTranslation();
   const data = useContext(DelegatorDetailContext);
   const { totalStake, rewardAvailable, rewardWithdrawn, pool } = data ?? {};
   const { tickerName, poolName, poolId, iconUrl } = pool ?? {};
@@ -83,7 +85,7 @@ const TabularOverview: React.FC = () => {
     <Grid container spacing={2}>
       <Grid item xs={12} sm={6}>
         <GridItem
-          title="Payment Wallet"
+          title={t("common.paymentWallet")}
           iconUrl={PaymentWalletUrl}
           value={<CardAmount amount={Math.max(totalStake || 0, 0)} />}
           action={
@@ -92,28 +94,28 @@ const TabularOverview: React.FC = () => {
               variant="contained"
               startIcon={<Icon fill="white" component={TransactionIcon} />}
             >
-              ADA Transfers
+              {t("common.adaTransfers")}
             </TransferButton>
           }
         />
       </Grid>
       <Grid item xs={12} sm={6}>
         <GridItem
-          title="Reward Account"
+          title={t("rewardAccount")}
           iconUrl={RewardAccountIconUrl}
           value={<CardAmount amount={Math.max(rewardAvailable || 0, 0)} />}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
         <GridItem
-          title="Rewards Withdrawn"
+          title={t("slc.rewardsWithdrawn")}
           iconUrl={RewardWithdrawnIconUrl}
           value={<CardAmount amount={rewardWithdrawn} />}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
         <GridItem
-          title="Delegating To"
+          title={t("slc.delegatingTo")}
           iconUrl={iconUrl || DelegationToIconUrl}
           value={
             pool?.poolId ? (
@@ -125,7 +127,7 @@ const TabularOverview: React.FC = () => {
                 </CardValueDelegating>
               </StyledBoxDelegating>
             ) : (
-              <NoDelegatedStakePool>Not delegated to any pool</NoDelegatedStakePool>
+              <NoDelegatedStakePool>{t("drawer.notDelegatedToAnyPool")}</NoDelegatedStakePool>
             )
           }
         />

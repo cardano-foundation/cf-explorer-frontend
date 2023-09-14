@@ -90,6 +90,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
           </SideBarRight>
         </HeaderTop>
       </HeaderBox>
+
       <TopSearch open={openSearch} onClose={setOpenSearch} />
     </HeaderContainer>
   );

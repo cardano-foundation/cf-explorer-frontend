@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Grid, useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import CopyButton from "src/components/commons/CopyButton";
 import { getShortWallet } from "src/commons/utils/helper";
@@ -15,6 +16,7 @@ interface IProps {
 }
 
 const PoolCertificate: React.FC<IProps> = ({ data }) => {
+  const { t } = useTranslation();
   const theme = useTheme();
 
   return (
@@ -24,7 +26,7 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
         ?.map((item, index) => {
           return (
             <Box px="15px" key={index} mb="15px" bgcolor={theme.palette.background.paper} textAlign="left">
-              <CardHeader>Pool Registrations</CardHeader>
+              <CardHeader>{t("title.poolRegistrations")}</CardHeader>
               <StakeKeyBox key={index} data={item} />
             </Box>
           );
@@ -34,12 +36,12 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
         ?.map((item, index) => {
           return (
             <Box px="15px" key={index} mb="15px" bgcolor={theme.palette.background.paper} textAlign="left">
-              <CardHeader>Pool Deregistrations</CardHeader>
+              <CardHeader>{t("title.poolDeregistrations")}</CardHeader>
               <Box py={2}>
                 <Grid item xs={12} md={6}>
                   <Box display="flex" flexDirection="column" gap="15px">
                     <Box display="flex" alignItems="center">
-                      <TextLabel>Pool Id: </TextLabel>
+                      <TextLabel>{t("common.poolID")}: </TextLabel>
                       <TextValue>
                         <CustomTooltip title={item.poolId}>
                           <span>
@@ -50,7 +52,7 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
                       </TextValue>
                     </Box>
                     <Box display="flex" alignItems="center">
-                      <TextLabel>Epoch: </TextLabel>
+                      <TextLabel>{t("glossary.epoch")}: </TextLabel>
                       <TextValue>
                         <Link to={details.epoch(item.epoch)}>{item.epoch}</Link>
                       </TextValue>
