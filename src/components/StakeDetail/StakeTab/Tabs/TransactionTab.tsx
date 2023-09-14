@@ -26,8 +26,8 @@ const TransactionTab = () => {
 interface TransactionListFullProps {
   underline?: boolean;
   url: string;
-  openDetail?: (_: any, r: Transactions, index: number) => void;
-  selected?: number | null;
+  openDetail?: (_: any, r: Transactions) => void;
+  selected?: string | null;
   showTitle?: boolean;
 }
 
@@ -44,7 +44,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
   const fetchData = useFetchList<Transactions>(url, pageInfo);
   const theme = useTheme();
 
-  const onClickRow = (e: any, r: Transactions, index: number) => {
+  const onClickRow = (e: any, r: Transactions) => {
     let parent: Element | null = e.target as Element;
     while (
       parent !== null &&
@@ -56,14 +56,14 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
     if (parent) {
       return;
     }
-    if (openDetail) return openDetail(e, r, index);
+    if (openDetail) return openDetail(e, r);
     history.push(details.transaction(r.hash));
   };
 
   const columns: Column<Transactions>[] = [
     {
       title: "Tx Hash",
-      key: "txhash",
+      key: "hash",
       minWidth: 120,
 
       render: (transaction) => {
@@ -190,6 +190,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
             onChange: (page, size) => history.replace({ search: stringify({ page, size }) }, history.location.state)
           }}
           onClickRow={onClickRow}
+          rowKey="hash"
           selected={selected}
           className="transactions-table"
         />

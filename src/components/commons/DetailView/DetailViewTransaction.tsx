@@ -189,7 +189,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
 
   const input = data.utxOs?.inputs[0]?.address || "";
   const output = data.utxOs?.outputs[0]?.address || "";
-  const confirmation = blockNo ? blockNo - (data.tx?.blockNo || 0) : data.tx?.confirmation;
+  const confirmation = Math.max(0, blockNo ? blockNo - (data.tx?.blockNo || 0) : data.tx?.confirmation);
 
   return (
     <ViewDetailDrawer anchor="right" open={!!hash} hideBackdrop variant="permanent">

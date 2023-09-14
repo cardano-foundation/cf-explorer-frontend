@@ -26,7 +26,7 @@ import { Flex, Label, SmallText, StyledLink, PriceValue, TimeDuration } from "./
 const columns: Column<Transactions>[] = [
   {
     title: "Tx Hash",
-    key: "trxhash",
+    key: "hash",
     minWidth: "200px",
 
     render: (r) => (
@@ -127,19 +127,16 @@ const TokenTransaction: React.FC = () => {
   const pageInfo = getPageInfo(search);
 
   const fetchData = useFetchList<Transactions>(`${API.ADDRESS.DETAIL}/${params.address}/txs`, pageInfo, false, blockNo);
-  const [txHashSelected, setTxHashSelected] = useState<string>("");
-  const [selected, setSelected] = useState<number | null>(null);
+  const [selected, setSelected] = useState<string>("");
 
-  const openDetail = (_: any, r: Transactions, index: number) => {
-    setTxHashSelected(r.hash);
-    setSelected(index);
+  const openDetail = (_: any, r: Transactions) => {
+    setSelected(r.hash);
     setOnDetailView(true);
   };
 
   const handleClose = () => {
     setOnDetailView(false);
-    setSelected(null);
-    setTxHashSelected("");
+    setSelected("");
   };
 
   useEffect(() => {
@@ -156,6 +153,7 @@ const TokenTransaction: React.FC = () => {
         columns={columns}
         total={{ count: fetchData.total, title: "Total Transactions" }}
         onClickRow={openDetail}
+        rowKey="hash"
         selected={selected}
         pagination={{
           ...pageInfo,
@@ -163,8 +161,8 @@ const TokenTransaction: React.FC = () => {
           onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
         }}
       />
-      {txHashSelected && onDetailView && (
-        <DetailViewContractHash txHash={txHashSelected} address={params.address} handleClose={handleClose} />
+      {selected && onDetailView && (
+        <DetailViewContractHash txHash={selected} address={params.address} handleClose={handleClose} />
       )}
     </>
   );

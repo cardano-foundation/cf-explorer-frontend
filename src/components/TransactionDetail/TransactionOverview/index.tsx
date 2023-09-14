@@ -46,7 +46,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
     if (data) setLastUpdated(Date.now());
   }, [data, blockNo]);
 
-  const confirmation = blockNo ? blockNo - (data?.tx?.blockNo || 0) : data?.tx?.confirmation;
+  const confirmation = Math.max(0, (blockNo ? blockNo - (data?.tx?.blockNo || 0) : data?.tx?.confirmation) || 0);
 
   const inputTransaction = useMemo(() => {
     const result = [];
@@ -173,10 +173,10 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       icon: txConfirmUrl,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>{(confirmation || 0) > 1 ? "Confirmations" : "Confirmation"}</TitleCard>
+          <TitleCard mr={1}>{confirmation > 1 ? "Confirmations" : "Confirmation"}</TitleCard>
         </Box>
       ),
-      value: <>{confirmation || 0}</>
+      value: <>{confirmation}</>
     },
     {
       icon: totalOutputUrl,

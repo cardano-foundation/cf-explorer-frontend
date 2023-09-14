@@ -25,10 +25,9 @@ import { Actions, StyledLink, TimeDuration } from "./styles";
 interface TransactionListProps {
   underline?: boolean;
   url: string;
-  openDetail?: (_: any, r: Transactions, index: number) => void;
-  selected?: number | null;
+  openDetail?: (_: any, r: Transactions) => void;
+  selected?: string | null;
   showTabView?: boolean;
-  hash?: string | null;
   handleClose: () => void;
 }
 
@@ -38,7 +37,6 @@ const TransactionList: React.FC<TransactionListProps> = ({
   openDetail,
   selected,
   showTabView,
-  hash,
   handleClose
 }) => {
   const { search } = useLocation();
@@ -49,15 +47,15 @@ const TransactionList: React.FC<TransactionListProps> = ({
 
   const fetchData = useFetchList<Transactions>(url, { ...pageInfo, sort }, false, blockNo);
   const mainRef = useRef(document.querySelector("#main"));
-  const onClickRow = (_: any, r: Transactions, index: number) => {
-    if (openDetail) return openDetail(_, r, index);
+  const onClickRow = (_: any, r: Transactions) => {
+    if (openDetail) return openDetail(_, r);
     history.push(details.transaction(r.hash));
   };
 
   const columns: Column<Transactions>[] = [
     {
       title: "Tx Hash",
-      key: "txhash",
+      key: "hash",
       minWidth: 120,
 
       render: (r) => (
@@ -113,7 +111,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
           <ADAicon />
-          {hash === r.hash && <SelectedIcon />}
+          {selected === r.hash && <SelectedIcon />}
         </Box>
       ),
       sort: ({ columnKey, sortValue }) => {
@@ -182,6 +180,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
           hideLastPage: true
         }}
         onClickRow={onClickRow}
+        rowKey="hash"
         selected={selected}
         showTabView={showTabView}
         tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}

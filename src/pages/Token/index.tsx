@@ -24,12 +24,11 @@ import SelectedIcon from "src/components/commons/SelectedIcon";
 import { AssetName, Logo, StyledContainer, TimeDuration } from "./styles";
 
 const Tokens = () => {
-  const [token, setToken] = useState<IToken | null>(null);
   const [sort, setSort] = useState<string>("txCount,DESC");
   const { onDetailView } = useSelector(({ user }: RootState) => user);
   const blockNo = useSelector(({ system }: RootState) => system.blockNo);
 
-  const [selected, setSelected] = useState<number | null>(null);
+  const [selected, setSelected] = useState<IToken | null>(null);
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -126,7 +125,7 @@ const Tokens = () => {
       minWidth: "150px",
       render: (r) => (
         <>
-          {formatDateTimeLocal(r.createdOn || "")} {JSON.stringify(token) === JSON.stringify(r) && <SelectedIcon />}
+          {formatDateTimeLocal(r.createdOn || "")} {JSON.stringify(selected) === JSON.stringify(r) && <SelectedIcon />}
         </>
       ),
       sort: ({ columnKey, sortValue }) => {
@@ -135,15 +134,13 @@ const Tokens = () => {
     }
   ];
 
-  const openDetail = (_: any, r: IToken, index: number) => {
+  const openDetail = (_: any, r: IToken) => {
     setOnDetailView(true);
-    setToken(r || null);
-    setSelected(index);
+    setSelected(r || null);
   };
 
   const handleClose = () => {
     setOnDetailView(false);
-    setToken(null);
     setSelected(null);
   };
 
@@ -174,13 +171,14 @@ const Tokens = () => {
             hideLastPage: true
           }}
           onClickRow={openDetail}
-          selected={selected}
+          rowKey="fingerprint"
+          selected={selected?.fingerprint}
           showTabView
           tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
         />
       </Card>
-      {token && onDetailView && (
-        <DetailViewToken tokenId={token.fingerprint || ""} token={token} handleClose={handleClose} />
+      {selected && onDetailView && (
+        <DetailViewToken tokenId={selected.fingerprint || ""} token={selected} handleClose={handleClose} />
       )}
     </StyledContainer>
   );

@@ -21,7 +21,7 @@ import ADAicon from "../commons/ADAIcon";
 interface TransactionListFullProps {
   underline?: boolean;
   url: string;
-  openDetail?: (_: any, r: Transactions, index: number) => void;
+  openDetail?: (_: any, r: Transactions) => void;
   selected?: number | null;
   showTitle?: boolean;
 }
@@ -39,15 +39,15 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
   const fetchData = useFetchList<Transactions>(url, pageInfo);
   const mainRef = useRef(document.querySelector("#main"));
 
-  const onClickRow = (_: any, r: Transactions, index: number) => {
-    if (openDetail) return openDetail(_, r, index);
+  const onClickRow = (_: any, r: Transactions) => {
+    if (openDetail) return openDetail(_, r);
     history.push(details.transaction(r.hash));
   };
 
   const columns: Column<Transactions>[] = [
     {
       title: "Tx Hash",
-      key: "txhash",
+      key: "hash",
       minWidth: 120,
 
       render: (r) => (
@@ -173,6 +173,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
             }
           }}
           onClickRow={onClickRow}
+          rowKey="hash"
           selected={selected}
           className="transactions-table"
         />
