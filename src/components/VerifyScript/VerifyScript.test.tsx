@@ -32,15 +32,15 @@ describe("VerifyScript", () => {
   it("renders the VerifyScript component", () => {
     const { getByText } = render(<VerifyScript {...defaultProps} />);
     expect(getByText("Contract Details")).toBeInTheDocument();
-    expect(getByText("VERIFY SCRIPT")).toBeInTheDocument();
+    expect(getByText(/VERIFY SCRIPT/i)).toBeInTheDocument();
   });
 
   it("opens the modal and submits the form", async () => {
     const { getByText } = render(<VerifyScript {...defaultProps} />);
-    const verifyButton = getByText("VERIFY SCRIPT");
+    const verifyButton = getByText(/VERIFY SCRIPT/i);
     fireEvent.click(verifyButton);
 
-    const submitButton = screen.getAllByText("Verify Script")[1] as HTMLAnchorElement;
+    const submitButton = screen.getAllByText(/Verify Script/i)[1] as HTMLAnchorElement;
     const textArea = screen.getByPlaceholderText("Input Native script") as HTMLTextAreaElement;
     fireEvent.change(textArea, { target: { value: "this is mock script" } });
 

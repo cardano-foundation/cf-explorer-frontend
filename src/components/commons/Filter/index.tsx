@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ClickAwayListener, ListItemIcon, MenuList } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { FilterIC } from "src/commons/resources";
 
@@ -26,6 +27,7 @@ export interface Option {
 }
 
 const Filter: React.FC<FilterProps> = ({ options, onOptionChange }) => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
   const onClickAway = () => {
@@ -53,7 +55,7 @@ const Filter: React.FC<FilterProps> = ({ options, onOptionChange }) => {
             </FilterIconContainer>
           }
         >
-          Filter
+          {t("common.filter")}
         </FilterButton>
         {open && options && (
           <FilterContent>

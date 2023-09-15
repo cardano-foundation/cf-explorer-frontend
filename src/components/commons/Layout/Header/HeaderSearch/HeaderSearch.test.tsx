@@ -32,13 +32,13 @@ describe("HeaderSearch", () => {
   });
   it("should render header search", () => {
     render(<HeaderSearch home={false} />);
-    expect(screen.getByPlaceholderText("Search ...")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/Search .../i)).toBeInTheDocument();
   });
   it("should be able input for seaching", () => {
     render(<HeaderSearch home={false} />);
     const dropdown = screen.getByTestId("all-filters-dropdown");
     fireEvent.click(dropdown);
-    const input = screen.getByPlaceholderText("Search ...");
+    const input = screen.getByPlaceholderText(/Search .../i);
     fireEvent.click(input);
     fireEvent.change(input, { target: { value: "testing value" } });
     expect(input).toHaveValue("testing value");

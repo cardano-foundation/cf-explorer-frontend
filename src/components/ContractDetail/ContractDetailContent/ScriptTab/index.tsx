@@ -52,10 +52,10 @@ const ScriptTab = () => {
 
   return (
     <StyledBox>
-      <Box color={({ palette }) => palette.secondary.main}>Contract</Box>
+      <Box color={({ palette }) => palette.secondary.main}>{t("glossary.contract")}</Box>
       {data?.isVerified ? (
         <ScriptType>
-          ${t("common.scriptType")}: <span>{t("common.nativeScript")}</span>
+          {t("common.scriptType")}: <span>{t("common.nativeScript")}</span>
         </ScriptType>
       ) : null}
       <Result>

@@ -1,15 +1,19 @@
 import { Container } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { NoRecordsIcon } from "src/commons/resources";
 
 import { Image, Message, NoRecordContainer } from "./styles";
 
-const NoStakeAddress = () => (
-  <NoRecordContainer component={Container}>
-    <Image src={NoRecordsIcon} alt="empty icon" />
-    <Message>This address has no stake key associated to it.</Message>
-  </NoRecordContainer>
-);
+const NoStakeAddress = () => {
+  const { t } = useTranslation();
+  return (
+    <NoRecordContainer component={Container}>
+      <Image src={NoRecordsIcon} alt="empty icon" />
+      <Message>{t("common.noStakeMessage")}.</Message>
+    </NoRecordContainer>
+  );
+};
 
 NoStakeAddress.displayName = "NoStakeAddress";
 

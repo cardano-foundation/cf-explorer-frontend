@@ -37,15 +37,15 @@ type AnalyticsData = { date: string; value: number };
 interface ITokenAnalyticsProps {
   dataToken?: IToken | null;
 }
-const options = [
-  { value: "ONE_DAY", label: "1d" },
-  { value: "ONE_WEEK", label: "1w" },
-  { value: "ONE_MONTH", label: "1m" },
-  { value: "THREE_MONTH", label: "3m" }
-];
 
 const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
   const { t } = useTranslation();
+  const options = [
+    { value: "ONE_DAY", label: t("time.1d") },
+    { value: "ONE_WEEK", label: t("time.1w") },
+    { value: "ONE_MONTH", label: t("time.1m") },
+    { value: "THREE_MONTH", label: t("time.3m") }
+  ];
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const { tokenId } = useParams<{ tokenId: string }>();
   const blockNo = useSelector(({ system }: RootState) => system.blockNo);

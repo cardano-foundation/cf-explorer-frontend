@@ -124,7 +124,7 @@ const DelegatorLifecycle = () => {
           <BoxItemStyled sidebar={+sidebar}>
             <BoxSwitchContainer sidebar={+sidebar}>
               <LabelSwitch>
-                {validMode !== "timeline" ? t("common.switchTablularView") : t("common.switchTimelineView")}
+                {validMode === "timeline" ? t("common.switchTablularView") : t("common.switchTimelineView")}
               </LabelSwitch>
               <SwitchGroup>
                 <ButtonSwitch active={+(validMode === "timeline")} onClick={() => changeMode("timeline")}>
