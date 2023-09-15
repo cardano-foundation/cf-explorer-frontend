@@ -32,10 +32,10 @@ interface Props {
 const Stake: React.FC<Props> = ({ stakeAddressType }) => {
   const mainRef = useRef(document.querySelector("#main"));
   const { t } = useTranslation();
-  const [stake, setStake] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
+  const [stakeKey, setStakeKey] = useState<string | null>(null);
   const { onDetailView } = useSelector(({ user }: RootState) => user);
   const blockNo = useSelector(({ system }: RootState) => system.blockNo);
-  const [selected, setSelected] = useState<number | null>(null);
   const { search } = useLocation();
   const history = useHistory();
   const fromPath = history.location.pathname as SpecialPath;
@@ -54,16 +54,16 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
     document.title = `${title} Stake Addresses | Cardano Blockchain Explorer`;
   }, [stakeAddressType]);
 
-  const openDetail = (_: any, r: IStakeKey, index: number) => {
+  const openDetail = (_: any, r: IStakeKey) => {
     setOnDetailView(true);
-    setStake(r.stakeKey);
-    setSelected(index);
+    setSelected(r.txHash);
+    setStakeKey(r.stakeKey);
   };
 
   const handleClose = () => {
     setOnDetailView(false);
-    setStake(null);
     setSelected(null);
+    setStakeKey(null);
   };
 
   useEffect(() => {
@@ -73,7 +73,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
   const columns: Column<IStakeKey>[] = [
     {
       title: t("glossary.txHash"),
-      key: "trxHash",
+      key: "txHash",
       minWidth: isMobile ? 245 : 80,
       render: (r) => (
         <CustomTooltip title={r.txHash}>
@@ -104,7 +104,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
     {
       title: t("glossary.stakeAddress"),
       key: "stakeAddress",
-      render: (r, idx) => (
+      render: (r) => (
         <>
           <CustomTooltip title={r.stakeKey}>
             <StyledLink to={{ pathname: details.stake(r.stakeKey), state: { fromPath } }}>
@@ -112,7 +112,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
             </StyledLink>
           </CustomTooltip>
 
-          {selected === idx && <SelectedIcon />}
+          {selected === r.txHash && <SelectedIcon />}
         </>
       )
     }
@@ -145,13 +145,14 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
               handleCloseDetailView: handleClose
             }}
             onClickRow={openDetail}
+            rowKey="txHash"
             selected={selected}
             showTabView
             tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
           />
         </Card>
       </Box>
-      {stake && onDetailView && <DetailViewStakeKey stakeId={stake} handleClose={handleClose} />}
+      {stakeKey && onDetailView && <DetailViewStakeKey stakeId={stakeKey} handleClose={handleClose} />}
     </StyledContainer>
   );
 };

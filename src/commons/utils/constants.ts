@@ -219,5 +219,6 @@ export const HOTJAR_HJID = process.env.REACT_APP_HOTJAR_HJID;
 export const HOTJAR_HJSV = process.env.REACT_APP_HOTJAR_HJSV;
 
 export enum APP_LANGUAGES {
-  ENGLISH = "en"
+  ENGLISH = "en",
+  FRANCE = "fr"
 }
