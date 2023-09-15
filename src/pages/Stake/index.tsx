@@ -55,7 +55,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
 
   const openDetail = (_: any, r: IStakeKey) => {
     setOnDetailView(true);
-    setSelected(r.stakeKey);
+    setSelected(r.txHash);
   };
 
   const handleClose = () => {
