@@ -28,14 +28,14 @@ interface Props {
 const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   const { t } = useTranslation();
   const [stakeKey, setStakeKey] = useState("");
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const adaRate = useSelector(({ system }: RootState) => system.adaRate);
 
   const {
     data: dataStake,
     loading: loadingStake,
     lastUpdated
-  } = useFetch<WalletStake>(stakeKey ? `${API.STAKE.DETAIL}/${stakeKey}` : "", undefined, false, blockNo);
+  } = useFetch<WalletStake>(stakeKey ? `${API.STAKE.DETAIL}/${stakeKey}` : "", undefined, false, blockKey);
   const theme = useTheme();
   const { isMobile } = useScreen();
   const history = useHistory();

@@ -26,7 +26,7 @@ const DelegationLists: React.FC = () => {
   const [size, setSize] = useState(50);
   const [sort, setSort] = useState<string>("");
   const tableRef = useRef(null);
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   useEffect(() => {
     if (tickerNameSearch !== search) setPage(1);
@@ -40,7 +40,7 @@ const DelegationLists: React.FC = () => {
     API.DELEGATION.POOL_LIST,
     { page: page - 1, size, search, sort },
     false,
-    blockNo
+    blockKey
   );
   const fromPath = history.location.pathname as SpecialPath;
 

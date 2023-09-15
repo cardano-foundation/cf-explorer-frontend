@@ -32,8 +32,8 @@ const Transactions: React.FC = () => {
   const [sort, setSort] = useState<string>("");
   const mainRef = useRef(document.querySelector("#main"));
   const adaRate = useSelector(({ system }: RootState) => system.adaRate);
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
-  const fetchData = useFetchList<Contracts>(API.CONTRACT, { ...pageInfo, sort }, false, blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
+  const fetchData = useFetchList<Contracts>(API.CONTRACT, { ...pageInfo, sort }, false, blockKey);
 
   useEffect(() => {
     document.title = `Contracts List | Cardano Blockchain Explorer`;

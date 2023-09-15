@@ -55,20 +55,20 @@ const StakeAnalytics: React.FC = () => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const [tab, setTab] = useState<"BALANCE" | "REWARD">("BALANCE");
   const { stakeId } = useParams<{ stakeId: string }>();
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const theme = useTheme();
   const { isMobile } = useScreen();
   const { data, loading } = useFetch<AnalyticsBalance[]>(
     `${API.STAKE.ANALYTICS_BALANCE}/${stakeId}/${rangeTime}`,
     undefined,
     false,
-    blockNo
+    blockKey
   );
   const { data: dataReward, loading: loadingReward } = useFetch<AnalyticsReward[]>(
     `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`,
     undefined,
     false,
-    blockNo
+    blockKey
   );
   const options = [
     { value: "ONE_DAY", label: t("time.1d") },

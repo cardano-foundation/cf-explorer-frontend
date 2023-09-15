@@ -28,7 +28,7 @@ const Tokens = () => {
   const { t } = useTranslation();
   const [sort, setSort] = useState<string>("txCount,DESC");
   const { onDetailView } = useSelector(({ user }: RootState) => user);
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   const [selected, setSelected] = useState<IToken | null>(null);
   const { search } = useLocation();
@@ -42,7 +42,7 @@ const Tokens = () => {
     API.TOKEN.LIST,
     { ...pageInfo, sort, query: queries.get("tokenName") || "" },
     false,
-    blockNo
+    blockKey
   );
 
   useEffect(() => {

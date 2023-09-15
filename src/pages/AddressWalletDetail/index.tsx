@@ -13,12 +13,12 @@ import { API } from "src/commons/utils/api";
 const AddressWalletDetail = () => {
   const { address } = useParams<{ address: string }>();
   const { state } = useLocation<{ data?: WalletAddress }>();
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const { data, loading, initialized, error } = useFetch<WalletAddress>(
     state?.data ? "" : `${API.ADDRESS.DETAIL}/${address}`,
     state?.data,
     false,
-    blockNo
+    blockKey
   );
 
   useEffect(() => {

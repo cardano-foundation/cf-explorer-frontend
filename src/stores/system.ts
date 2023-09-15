@@ -33,7 +33,11 @@ const store = createSlice({
     }),
     setBlockNo: (state, action: PayloadAction<number>) => ({
       ...state,
-      blockNo: action.payload
+      blockNo: action.payload | ((state.blockNo || 0) + 1)
+    }),
+    setBlockKey: (state, action: PayloadAction<number | string>) => ({
+      ...state,
+      blockKey: action.payload
     }),
     setSpecialPath: (state, action: PayloadAction<SpecialPath>) => ({
       ...state,
@@ -56,6 +60,10 @@ export const setCurrentEpoch = (currentEpoch: EpochCurrentType) => {
 
 export const setBlockNo = (blockNo: number) => {
   systemStore?.dispatch(store.actions.setBlockNo(blockNo));
+};
+
+export const setBlockKey = (blockKey: number | string) => {
+  systemStore?.dispatch(store.actions.setBlockKey(blockKey));
 };
 
 export const setSpecialPath = (specialPath: SpecialPath) => {

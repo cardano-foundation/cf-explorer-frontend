@@ -11,7 +11,7 @@ import EpochOverview from "src/components/EpochDetail/EpochOverview";
 import { StyledContainer } from "./styles";
 
 const EpochDetail: React.FC = () => {
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
   const { epochId } = useParams<{ epochId: string }>();
   const { state } = useLocation<{ data?: IDataEpoch }>();
@@ -21,7 +21,7 @@ const EpochDetail: React.FC = () => {
     `${API.EPOCH.DETAIL}/${epochId}`,
     state?.data,
     false,
-    epochNo?.toString() === epochId ? blockNo : key
+    epochNo?.toString() === epochId ? blockKey : key
   );
 
   useEffect(() => {

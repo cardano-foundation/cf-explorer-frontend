@@ -5,15 +5,21 @@ import useAuth from "src/commons/hooks/useAuth";
 import useFetch from "src/commons/hooks/useFetch";
 import { API, USER_API } from "src/commons/utils/api";
 import { EVENT_TYPES, MAX_SLOT_EPOCH, NETWORK, NETWORK_TYPES, WS_URL } from "src/commons/utils/constants";
-import { setBlockNo, setBtcMarket, setCurrentEpoch as setStoreCurrentEpoch, setUsdMarket } from "src/stores/system";
+import {
+  setBlockKey,
+  setBlockNo,
+  setBtcMarket,
+  setCurrentEpoch as setStoreCurrentEpoch,
+  setUsdMarket
+} from "src/stores/system";
 
 export const SystemLoader = () => {
   const { isLoggedIn } = useAuth();
   const [, setBookmark] = useLocalStorage<string[]>("bookmark", []);
   const [currentEpoch, setCurrentEpoch] = useState<EpochCurrentType | null>(null);
-  const { data: epochSummary, refresh: refreshEpoch } = useFetch<EpochCurrentType>(`${API.EPOCH.CURRENT_EPOCH}`);
-  const { data: usdMarket, refresh: refreshUSD } = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=usd`);
-  const { data: btcMarket, refresh: refreshBTC } = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=btc`);
+  const { data: epochSummary } = useFetch<EpochCurrentType>(`${API.EPOCH.CURRENT_EPOCH}`);
+  const { data: usdMarket } = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=usd`);
+  const { data: btcMarket } = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=btc`);
   const socket = useRef<WebSocket | null>(null);
 
   const { data: dataBookmark } = useFetch<string[]>(
@@ -26,7 +32,16 @@ export const SystemLoader = () => {
   useEffect(() => {
     if (currentEpoch) {
       currentTime.current = Date.now();
-      const { no, slot, totalSlot = MAX_SLOT_EPOCH, account, startTime, endTime, circulatingSupply } = currentEpoch;
+      const {
+        no,
+        slot,
+        totalSlot = MAX_SLOT_EPOCH,
+        account,
+        startTime,
+        endTime,
+        circulatingSupply,
+        blkCount
+      } = currentEpoch;
       const interval = setInterval(() => {
         const newSlot = slot + Math.floor((Date.now() - currentTime.current) / 1000);
         const isCrawlerStop = newSlot - MAX_SLOT_EPOCH > 1000;
@@ -38,7 +53,8 @@ export const SystemLoader = () => {
           account,
           startTime,
           endTime,
-          circulatingSupply
+          circulatingSupply,
+          blkCount
         });
       }, 1000);
       return () => clearInterval(interval);
@@ -77,6 +93,7 @@ export const SystemLoader = () => {
           switch (data.eventType) {
             case EVENT_TYPES.BLOCK:
               setBlockNo(data.payload.blockNo);
+              if (data.payload.hashTx) setBlockKey(data.payload.blockHash);
               setCurrentEpoch(data.payload.epochSummary);
               break;
             case EVENT_TYPES.CURRENT_PRICE_USD:
@@ -94,13 +111,10 @@ export const SystemLoader = () => {
       };
       socket.current.onclose = (e) => {
         setTimeout(() => {
-          if (socket.current?.readyState === 3) {
+          if (socket.current?.readyState === socket.current?.CLOSED) {
             // eslint-disable-next-line no-console
             console.error("socket close reason: ", e.reason);
             connect();
-            refreshEpoch();
-            refreshUSD();
-            refreshBTC();
           }
         }, 1000);
       };
@@ -112,7 +126,7 @@ export const SystemLoader = () => {
     connect();
 
     return () => {
-      socket.current?.close();
+      if (socket.current?.readyState === socket.current?.OPEN) socket.current?.close();
     };
   }, []);
 

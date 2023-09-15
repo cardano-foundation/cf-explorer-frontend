@@ -36,7 +36,7 @@ const PolicyTable = () => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   const resetFilter = () => {
     history.replace({ search: stringify({ page: 1, size: 50 }) });
@@ -155,7 +155,7 @@ const PolicyTable = () => {
     activeTab === TABS.HOLDERS ? `${API.POLICY}/${policyId}/${TABS.HOLDERS}` : "",
     pageInfo,
     false,
-    blockNo
+    blockKey
   );
 
   const fetchData = activeTab === TABS.TOKENS ? tokenFetchData : holderFetchData;

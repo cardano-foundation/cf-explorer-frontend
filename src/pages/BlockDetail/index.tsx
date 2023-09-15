@@ -11,14 +11,14 @@ import { API } from "src/commons/utils/api";
 import { StyledContainer } from "./styles";
 
 const BlockDetail = () => {
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const { blockId } = useParams<{ blockId: string }>();
   const { state } = useLocation<{ data?: BlockDetail }>();
   const { data, loading, initialized, error, lastUpdated } = useFetch<BlockDetail>(
     `${API.BLOCK.DETAIL}/${blockId}`,
     state?.data,
     false,
-    blockNo
+    blockKey
   );
 
   useEffect(() => {

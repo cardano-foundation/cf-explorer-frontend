@@ -32,13 +32,13 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   const fetchData = useFetchList<Transactions>(
     API.TOKEN.TOKEN_TRX.replace(":tokenId", tokenId),
     { ...pageInfo },
     false,
-    blockNo
+    blockKey
   );
 
   const columns: Column<Transactions>[] = [
