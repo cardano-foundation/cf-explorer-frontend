@@ -132,10 +132,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
 
   return (
     <Box>
-      <DescriptionText>
-        Included transactions in which the UTXO containing the tokens is used resulting in token movement, while the
-        tokens are unspent and returned to the address
-      </DescriptionText>
+      <DescriptionText>{t("desc.transactionUTXO")}</DescriptionText>
       <Table
         {...fetchData}
         columns={columns}

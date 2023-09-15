@@ -8,8 +8,6 @@ import HomeStatistic from "src/components/Home/Statistic";
 import TopDelegationPools from "src/components/Home/TopDelegationPools";
 import HomeTrending from "src/components/Home/Trending";
 
-import "moment/locale/fr";
-
 const HomeContainer = styled(Container)`
   padding-top: 30px;
   padding-bottom: 40px;

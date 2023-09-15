@@ -716,5 +716,6 @@
   "common.addressList": "Addresses list",
   "common.hexFormat": "Hex Format",
   "common.sent": "Sent",
-  "common.received": "Received"
+  "common.received": "Received",
+  "desc.transactionUTXO": "Includes transactions in which the UTXO containing the tokens is used resulting in token movement, while the tokens are unspent and returned to the address"
 }
