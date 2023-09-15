@@ -37,5 +37,5 @@ interface EpochCurrentType {
   account: number;
   endTime: string;
   startTime: string;
-  blkCount?: number;
+  blkCount: number;
 }
