@@ -42,13 +42,13 @@ const ContractDetail: React.FC = () => {
   const { t } = useTranslation();
   const { address } = useParams<{ address: string }>();
   const history = useHistory();
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   const { data, loading, initialized, error, refresh, lastUpdated } = useFetch<WalletAddress>(
     `${API.ADDRESS.DETAIL}/${address}`,
     undefined,
     false,
-    blockNo
+    blockKey
   );
   const [stateContext, dispatch] = React.useReducer(reducer, {});
 

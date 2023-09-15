@@ -33,12 +33,12 @@ interface DelegationDetailChartProps {
 const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId }) => {
   const { t } = useTranslation();
   const [selected, setSelected] = useState<"epochChart" | "delegatorChart">("epochChart");
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const { data, loading } = useFetch<AnalyticsDelegators>(
     `${API.DELEGATION.POOL_ANALYTICS}?poolView=${poolId}`,
     undefined,
     false,
-    blockNo
+    blockKey
   );
   const theme = useTheme();
   const totalStakes =

@@ -25,7 +25,12 @@ export interface FetchReturnType<T> {
   query: Params;
 }
 
-const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, key?: number): FetchReturnType<T> => {
+const useFetchList = <T>(
+  url: string,
+  params: Params = {},
+  isAuth?: boolean,
+  key?: number | string
+): FetchReturnType<T> => {
   const [data, setData] = useState<T[]>([]);
   const [initialized, setInitialized] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -36,7 +41,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, key
   const [refreshLoading, setRefreshLoading] = useState(false);
   const [query, setQuery] = useState<Params>(cleanObject(params));
   const lastFetch = useRef<number>();
-  const lastKey = useRef<number | undefined>(key);
+  const lastKey = useRef<number | string | undefined>(key);
 
   const getList = useCallback(
     async (needLoading?: boolean) => {

@@ -20,14 +20,14 @@ const perPages = [10, 20, 50, 100];
 
 const TopAddressesByAmountStaked = () => {
   const { t } = useTranslation();
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const history = useHistory();
   const [pageSize, setPageSize] = useState("50");
   const { error, data, initialized, loading, lastUpdated } = useFetchList<Contracts>(
     API.STAKE.TOP_DELEGATOR,
     { page: 0, size: +pageSize },
     false,
-    blockNo
+    blockKey
   );
 
   const columns: Column<TopDelegator>[] = [

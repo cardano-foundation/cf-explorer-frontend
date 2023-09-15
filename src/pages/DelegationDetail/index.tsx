@@ -37,7 +37,7 @@ const DelegationDetail: React.FC = () => {
   const pageInfo = getPageInfo(search);
   const tableRef = useRef(null);
   const theme = useTheme();
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   const scrollEffect = () => {
     tableRef !== null &&
@@ -58,21 +58,21 @@ const DelegationDetail: React.FC = () => {
     `${API.DELEGATION.POOL_DETAIL_HEADER}/${poolId}`,
     undefined,
     false,
-    blockNo
+    blockKey
   );
 
   const fetchDataEpochs = useFetchList<DelegationEpoch>(
     API.DELEGATION.POOL_DETAIL("epochs"),
     { poolView: poolId, ...pageInfo },
     false,
-    tab === "epochs" ? blockNo : undefined
+    tab === "epochs" ? blockKey : undefined
   );
 
   const fetchDataDelegators = useFetchList<StakingDelegators>(
     API.DELEGATION.POOL_DETAIL("delegators"),
     { poolView: poolId, ...pageInfo },
     false,
-    tab === "delegators" ? blockNo : undefined
+    tab === "delegators" ? blockKey : undefined
   );
 
   useEffect(() => {

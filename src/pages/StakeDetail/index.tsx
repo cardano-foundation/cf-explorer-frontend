@@ -17,14 +17,14 @@ const StakeDetail: React.FC = () => {
   const mainRef = useRef(document.querySelector("#main"));
   const { stakeId } = useParams<{ stakeId: string }>();
   const { state } = useLocation<{ fromPath?: SpecialPath }>();
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
-  const status = useFetch<ListStakeKeyResponse>(API.STAKE_LIFECYCLE.TABS(stakeId), undefined, false, blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
+  const status = useFetch<ListStakeKeyResponse>(API.STAKE_LIFECYCLE.TABS(stakeId), undefined, false, blockKey);
 
   const { data, loading, initialized, error, lastUpdated } = useFetch<IStakeKeyDetail>(
     `${API.STAKE.DETAIL}/${stakeId}`,
     undefined,
     false,
-    blockNo
+    blockKey
   );
 
   useEffect(() => {

@@ -35,7 +35,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
   const [selected, setSelected] = useState<string | null>(null);
   const [stakeKey, setStakeKey] = useState<string | null>(null);
   const { onDetailView } = useSelector(({ user }: RootState) => user);
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const { search } = useLocation();
   const history = useHistory();
   const fromPath = history.location.pathname as SpecialPath;
@@ -43,7 +43,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
   const pageInfo = getPageInfo(search);
   const { isMobile } = useScreen();
 
-  const fetchData = useFetchList<IStakeKey>(`${API.STAKE.DETAIL}/${stakeAddressType}`, pageInfo, false, blockNo);
+  const fetchData = useFetchList<IStakeKey>(`${API.STAKE.DETAIL}/${stakeAddressType}`, pageInfo, false, blockKey);
 
   useEffect(() => {
     handleClose();

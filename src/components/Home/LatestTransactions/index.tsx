@@ -43,12 +43,12 @@ import {
 
 const LatestTransactions: React.FC = () => {
   const { t } = useTranslation();
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const { data, initialized, lastUpdated } = useFetch<CurrentTransactions[]>(
     API.TRANSACTION.CURRENT,
     undefined,
     false,
-    blockNo
+    blockKey
   );
 
   const history = useHistory();

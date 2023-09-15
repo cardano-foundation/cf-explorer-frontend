@@ -26,13 +26,13 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decim
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   const fetchData = useFetchList<ITokenTopHolderTable>(
     `${API.TOKEN.LIST}/${tokenId}/top_holders`,
     { ...pageInfo, tokenId },
     false,
-    blockNo
+    blockKey
   );
 
   useEffect(() => {

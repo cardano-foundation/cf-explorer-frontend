@@ -27,13 +27,13 @@ const TokenDetail: React.FC = () => {
   const [currentHolders, setCurrentHolder] = useState(0);
   const { tokenId } = useParams<{ tokenId: string }>();
   const { state } = useLocation<{ data?: IToken }>();
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   const { data, loading, initialized, error, lastUpdated } = useFetch<IToken>(
     state?.data ? "" : `${API.TOKEN.LIST}/${tokenId}`,
     state?.data,
     false,
-    blockNo
+    blockKey
   );
 
   const [txCountRealtime, setTxCountRealtime] = useState<number>(0);

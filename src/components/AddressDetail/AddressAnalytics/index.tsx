@@ -55,13 +55,13 @@ const AddressAnalytics: React.FC = () => {
   const { t } = useTranslation();
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const { address } = useParams<{ address: string }>();
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const theme = useTheme();
   const { data: dataAnalytics, loading } = useFetch<AnalyticsData[]>(
     `${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`,
     undefined,
     false,
-    blockNo
+    blockKey
   );
   const data = isArray(dataAnalytics) ? dataAnalytics : [];
   const values = data?.map((item) => item.value || 0) || [];
