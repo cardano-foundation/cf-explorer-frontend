@@ -26,7 +26,7 @@ import { AssetName, Logo, StyledContainer, TimeDuration } from "./styles";
 
 const Tokens = () => {
   const { t } = useTranslation();
-  const [sort, setSort] = useState<string>("txCount,DESC");
+  const [sort, setSort] = useState<string>();
   const { onDetailView } = useSelector(({ user }: RootState) => user);
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
@@ -161,7 +161,6 @@ const Tokens = () => {
           data={data}
           columns={columns}
           total={{ title: "Total", count: fetchData.total }}
-          defaultSort="txCount,DESC"
           pagination={{
             ...pageInfo,
             total: fetchData.total,
