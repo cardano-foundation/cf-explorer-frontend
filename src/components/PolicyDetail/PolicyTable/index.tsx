@@ -3,6 +3,7 @@ import { TabContext, TabPanel } from "@mui/lab";
 import { Box, Tab, useTheme } from "@mui/material";
 import { stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -27,101 +28,8 @@ enum TABS {
   HOLDERS = "holders"
 }
 
-const columnsToken: Column<TokenPolicys>[] = [
-  {
-    title: "Token Name",
-    key: "tokenname",
-    minWidth: "50px",
-    render: (r) => <LinkComponent to={details.token(r.fingerprint)}>{r.displayName || r.name}</LinkComponent>
-  },
-  {
-    title: "Token ID",
-    key: "id",
-    minWidth: "100px",
-    render: (r) => (
-      <CustomTooltip title={r.fingerprint}>
-        <LinkComponent to={details.token(r.fingerprint)}>{getShortWallet(r.fingerprint || "")}</LinkComponent>
-      </CustomTooltip>
-    )
-  },
-  {
-    title: "Created At",
-    key: "date",
-    minWidth: "150px",
-    render: (r) => formatDateTimeLocal(r.createdOn || "")
-  },
-  {
-    title: "Total Supply",
-    key: "totalSupply",
-    minWidth: "150px",
-    render: (r) => {
-      const decimalToken = r?.metadata?.decimals || 0;
-      return <Box component={"span"}>{formatNumberDivByDecimals(r?.supply, decimalToken)}</Box>;
-    }
-  },
-  {
-    title: "Total Transactions",
-    key: "trxtotal",
-    minWidth: "150px",
-    render: (r) => <>{formatAmount(r?.txCount || "")}</>
-  }
-];
-
-const columnsAssetHolders: Column<PolicyHolder>[] = [
-  {
-    title: "Address",
-    key: "address",
-    minWidth: "50px",
-    render: (r) => (
-      <CustomTooltip title={r.address}>
-        <LinkComponent to={details.address(r.address)}>{getShortWallet(r.address || "")}</LinkComponent>
-      </CustomTooltip>
-    )
-  },
-  {
-    title: "Token name",
-    key: "id",
-    minWidth: "100px",
-    render: (r) => <LinkComponent to={details.token(r.fingerprint)}>{r.displayName || ""}</LinkComponent>
-  },
-  {
-    title: "Token ID",
-    key: "id",
-    minWidth: "100px",
-    render: (r) => (
-      <CustomTooltip title={r.fingerprint}>
-        <LinkComponent to={details.token(r.fingerprint)}>{getShortWallet(r.fingerprint || "")}</LinkComponent>
-      </CustomTooltip>
-    )
-  },
-  {
-    title: "Balance",
-    key: "Balance",
-    minWidth: "150px",
-    render: (r) => <Box component={"span"}>{formatNumberDivByDecimals(r.quantity, r?.metadata?.decimals || 0)}</Box>
-  }
-];
-
-const tabs: {
-  label: React.ReactNode;
-  key: TABS;
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
-  columns: Column<PolicyHolder>[] | Column<TokenPolicys>[];
-}[] = [
-  {
-    key: TABS.TOKENS,
-    label: "Token",
-    icon: TokenIcon,
-    columns: columnsToken
-  },
-  {
-    key: TABS.HOLDERS,
-    label: "Policy Asset Holders",
-    icon: AssetHolderIcon,
-    columns: columnsAssetHolders
-  }
-];
 const PolicyTable = () => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = React.useState<TABS>(TABS.TOKENS);
   const theme = useTheme();
   const { policyId } = useParams<{ policyId: string }>();
@@ -144,7 +52,100 @@ const PolicyTable = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const columnsToken: Column<TokenPolicys>[] = [
+    {
+      title: t("common.tokenName"),
+      key: "tokenname",
+      minWidth: "50px",
+      render: (r) => <LinkComponent to={details.token(r.fingerprint)}>{r.displayName || r.name}</LinkComponent>
+    },
+    {
+      title: t("common.tokenID"),
+      key: "id",
+      minWidth: "100px",
+      render: (r) => (
+        <CustomTooltip title={r.fingerprint}>
+          <LinkComponent to={details.token(r.fingerprint)}>{getShortWallet(r.fingerprint || "")}</LinkComponent>
+        </CustomTooltip>
+      )
+    },
+    {
+      title: t("createdAt"),
+      key: "date",
+      minWidth: "150px",
+      render: (r) => formatDateTimeLocal(r.createdOn || "")
+    },
+    {
+      title: t("common.totalSupply"),
+      key: "totalSupply",
+      minWidth: "150px",
+      render: (r) => {
+        const decimalToken = r?.metadata?.decimals || 0;
+        return <Box component={"span"}>{formatNumberDivByDecimals(r?.supply, decimalToken)}</Box>;
+      }
+    },
+    {
+      title: t("common.totalTxs"),
+      key: "trxtotal",
+      minWidth: "150px",
+      render: (r) => <>{formatAmount(r?.txCount || "")}</>
+    }
+  ];
 
+  const columnsAssetHolders: Column<PolicyHolder>[] = [
+    {
+      title: t("common.address"),
+      key: "address",
+      minWidth: "50px",
+      render: (r) => (
+        <CustomTooltip title={r.address}>
+          <LinkComponent to={details.address(r.address)}>{getShortWallet(r.address || "")}</LinkComponent>
+        </CustomTooltip>
+      )
+    },
+    {
+      title: t("common.tokenName"),
+      key: "id",
+      minWidth: "100px",
+      render: (r) => <LinkComponent to={details.token(r.fingerprint)}>{r.displayName || ""}</LinkComponent>
+    },
+    {
+      title: t("common.tokenID"),
+      key: "id",
+      minWidth: "100px",
+      render: (r) => (
+        <CustomTooltip title={r.fingerprint}>
+          <LinkComponent to={details.token(r.fingerprint)}>{getShortWallet(r.fingerprint || "")}</LinkComponent>
+        </CustomTooltip>
+      )
+    },
+    {
+      title: t("common.balance"),
+      key: "Balance",
+      minWidth: "150px",
+      render: (r) => <Box component={"span"}>{formatNumberDivByDecimals(r.quantity, r?.metadata?.decimals || 0)}</Box>
+    }
+  ];
+
+  const tabs: {
+    label: React.ReactNode;
+    key: TABS;
+    icon: React.FC<React.SVGProps<SVGSVGElement>>;
+    columns: Column<PolicyHolder>[] | Column<TokenPolicys>[];
+  }[] = [
+    {
+      key: TABS.TOKENS,
+      label: t("glossary.Token"),
+      icon: TokenIcon,
+      columns: columnsToken
+    },
+    {
+      key: TABS.HOLDERS,
+      label: t("common.policyAssetHolders"),
+      icon: AssetHolderIcon,
+      columns: columnsAssetHolders
+    }
+  ];
   const tokenFetchData = useFetchList<TokenPolicys>(
     activeTab === TABS.TOKENS ? `${API.POLICY}/${policyId}/${TABS.TOKENS}` : "",
     pageInfo

@@ -57,6 +57,7 @@ import {
   TotalNumber,
   Wrapper
 } from "./styles";
+import { Lowercase } from "../CustomText/styles";
 
 type TEmptyRecord = {
   className?: string;
@@ -488,7 +489,7 @@ const PaginationCustom = ({
   handleChangePage: (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => void;
 }) => {
   const [inputPage, setInputPage] = useState(page);
-
+  const { t } = useTranslation();
   useEffect(() => {
     if (pagination?.page) {
       setInputPage(pagination?.page + 1);
@@ -570,8 +571,8 @@ const PaginationCustom = ({
             />
             <Box component={"span"} color={(theme) => theme.palette.secondary.main} fontSize="0.875rem">
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}
-              {numberWithCommas((page > 0 ? page : 1) * size > total ? total : (page > 0 ? page : 1) * size)} of{" "}
-              {numberWithCommas(pagination?.total || 0)}
+              {numberWithCommas((page > 0 ? page : 1) * size > total ? total : (page > 0 ? page : 1) * size)}{" "}
+              <Lowercase>{t("common.of")}</Lowercase> {numberWithCommas(pagination?.total || 0)}
             </Box>
           </Box>
         );

@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { BiChevronDown } from "react-icons/bi";
 
 import { FRONT_END_NETWORK, NETWORK, NETWORKS, NETWORK_NAMES, STORAGE_KEYS } from "src/commons/utils/constants";
-import i18n from "src/i18n";
 import { setOnDetailView } from "src/stores/user";
 
 export const StyledSelect = styled(Select)(({ theme }) => ({
@@ -45,11 +44,7 @@ const SelectNetwork: React.FC = () => {
   const handleChange = async (e?: SelectChangeEvent<unknown>) => {
     if (e) {
       if (FRONT_END_NETWORK[e.target.value as NETWORKS]) {
-        window.open(
-          `${FRONT_END_NETWORK[e.target.value as NETWORKS]}/${i18n.language}`,
-          "_blank",
-          "noopener,noreferrer"
-        );
+        window.open(`${FRONT_END_NETWORK[e.target.value as NETWORKS]}`, "_blank", "noopener,noreferrer");
       }
     }
   };
