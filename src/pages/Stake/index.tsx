@@ -33,6 +33,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
   const mainRef = useRef(document.querySelector("#main"));
   const { t } = useTranslation();
   const [selected, setSelected] = useState<string | null>(null);
+  const [stakeKey, setStakeKey] = useState<string | null>(null);
   const { onDetailView } = useSelector(({ user }: RootState) => user);
   const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const { search } = useLocation();
@@ -56,11 +57,13 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
   const openDetail = (_: any, r: IStakeKey) => {
     setOnDetailView(true);
     setSelected(r.txHash);
+    setStakeKey(r.stakeKey);
   };
 
   const handleClose = () => {
     setOnDetailView(false);
     setSelected(null);
+    setStakeKey(null);
   };
 
   useEffect(() => {
@@ -149,7 +152,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
           />
         </Card>
       </Box>
-      {selected && onDetailView && <DetailViewStakeKey stakeId={selected} handleClose={handleClose} />}
+      {stakeKey && onDetailView && <DetailViewStakeKey stakeId={stakeKey} handleClose={handleClose} />}
     </StyledContainer>
   );
 };
