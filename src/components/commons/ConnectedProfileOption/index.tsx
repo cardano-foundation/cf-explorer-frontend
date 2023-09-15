@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useLocalStorage } from "react-use";
+import { useTranslation } from "react-i18next";
 
 import { LinkOff, User2 } from "src/commons/resources/index";
 import { routers } from "src/commons/routers";
@@ -17,6 +18,7 @@ interface IProps {
   disconnect: () => void;
 }
 const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, stakeAddress }) => {
+  const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [, setBookmark] = useLocalStorage<string[]>("bookmark", []);
   const [, setUsername] = useLocalStorage<string>("username", "");
@@ -90,11 +92,11 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
             }}
           >
             <Icon src={User2} />
-            <Name>Account</Name>
+            <Name>{t("common.account")}</Name>
           </Profile>
           <Disconnect onClick={handleDisconnect}>
             <Icon src={LinkOff} />
-            <Name>Sign Out</Name>
+            <Name>{t("common.signOut")}</Name>
           </Disconnect>
         </Content>
       </WrapContent>
