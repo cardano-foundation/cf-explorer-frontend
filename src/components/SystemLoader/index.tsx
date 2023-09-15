@@ -93,7 +93,7 @@ export const SystemLoader = () => {
           switch (data.eventType) {
             case EVENT_TYPES.BLOCK:
               setBlockNo(data.payload.blockNo);
-              if (data.payload.hashTx) setBlockKey(data.payload.blockHash);
+              if (data.payload.hasTx) setBlockKey(data.payload.blockHash);
               setCurrentEpoch(data.payload.epochSummary);
               break;
             case EVENT_TYPES.CURRENT_PRICE_USD:
