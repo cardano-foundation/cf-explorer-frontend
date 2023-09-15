@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useLocation, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -7,7 +8,6 @@ import NoRecord from "src/components/commons/NoRecord";
 import StakeKeyOverview from "src/components/StakeDetail/StakeOverview";
 import StakeTab from "src/components/StakeDetail/StakeTab";
 import StakeAnalytics from "src/components/StakeDetail/StakeAnalytics";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 import { setSpecialPath } from "src/stores/system";
 import { routers } from "src/commons/routers";
 
@@ -17,18 +17,14 @@ const StakeDetail: React.FC = () => {
   const mainRef = useRef(document.querySelector("#main"));
   const { stakeId } = useParams<{ stakeId: string }>();
   const { state } = useLocation<{ fromPath?: SpecialPath }>();
-  const status = useFetch<ListStakeKeyResponse>(
-    API.STAKE_LIFECYCLE.TABS(stakeId),
-    undefined,
-    false,
-    REFRESH_TIMES.STAKE_REGISTRATION
-  );
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
+  const status = useFetch<ListStakeKeyResponse>(API.STAKE_LIFECYCLE.TABS(stakeId), undefined, false, blockKey);
 
   const { data, loading, initialized, error, lastUpdated } = useFetch<IStakeKeyDetail>(
     `${API.STAKE.DETAIL}/${stakeId}`,
     undefined,
     false,
-    REFRESH_TIMES.STAKE_REGISTRATION
+    blockKey
   );
 
   useEffect(() => {

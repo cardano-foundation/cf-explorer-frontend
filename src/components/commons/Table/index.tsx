@@ -57,6 +57,7 @@ import {
   TotalNumber,
   Wrapper
 } from "./styles";
+import { Lowercase } from "../CustomText/styles";
 
 type TEmptyRecord = {
   className?: string;
@@ -150,17 +151,16 @@ const TableRow = <T extends ColumnType>({
   onClickRow,
   showTabView,
   selectedProps,
-  selected = null,
+  selected = false,
   dataLength,
   selectable,
   toggleSelection,
   isSelected
 }: TableRowProps<T>) => {
   const colRef = useRef(null);
-  const isClickRow = selected === index ? 1 : 0;
 
   return (
-    <TRow onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))} {...selectedProps}>
+    <TRow onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row))} {...selectedProps}>
       {selectable && (
         <TCol>
           <TableCheckBox checked={isSelected?.(row)} onChange={() => toggleSelection?.(row)} />
@@ -175,7 +175,7 @@ const TableRow = <T extends ColumnType>({
             minWidth={column.minWidth}
             maxWidth={column.maxWidth}
             hiddenBorder={column.isHiddenBorder && dataLength === index + 1}
-            selected={isClickRow}
+            selected={+selected}
             style={column.fixed ? { position: "sticky", left: column.leftFixed ? column.leftFixed : "-8px" } : {}}
           >
             {column.render ? column.render(row, index) : row[column.key]}
@@ -183,9 +183,9 @@ const TableRow = <T extends ColumnType>({
         );
       })}
       {showTabView && (
-        <TCol minWidth={50} maxWidth={90} selected={isClickRow}>
+        <TCol minWidth={50} maxWidth={90} selected={+selected}>
           <Box display="flex" alignItems="center" height="1rem">
-            {selected !== index && <CustomIcon icon={EyeIcon} originWidth={31} originHeight={23} width={24} />}
+            {!selected && <CustomIcon icon={EyeIcon} originWidth={31} originHeight={23} width={24} />}
           </Box>
         </TCol>
       )}
@@ -196,6 +196,7 @@ const TableRow = <T extends ColumnType>({
 const TableBody = <T extends ColumnType>({
   data,
   columns,
+  rowKey,
   onClickRow,
   showTabView,
   selected,
@@ -223,23 +224,22 @@ const TableBody = <T extends ColumnType>({
           </Box>
         </LoadingWrapper>
       )}
-      {data &&
-        data.map((row, index) => (
-          <TableRow
-            row={row}
-            key={index}
-            columns={columns}
-            index={index}
-            dataLength={data.length}
-            onClickRow={onClickRow}
-            showTabView={showTabView}
-            selected={selected}
-            selectedProps={selected === index ? selectedProps : undefined}
-            selectable={selectable}
-            toggleSelection={toggleSelection}
-            isSelected={isSelected}
-          />
-        ))}
+      {data?.map((row, index) => (
+        <TableRow
+          row={row}
+          key={index}
+          columns={columns}
+          index={index}
+          dataLength={data.length}
+          onClickRow={onClickRow}
+          showTabView={showTabView}
+          selected={!!rowKey && (typeof rowKey === "function" ? rowKey(row) : row[rowKey]) === selected}
+          selectedProps={selected === index ? selectedProps : undefined}
+          selectable={selectable}
+          toggleSelection={toggleSelection}
+          isSelected={isSelected}
+        />
+      ))}
     </TBody>
   );
 };
@@ -355,6 +355,7 @@ const Table: React.FC<TableProps> = ({
   error,
   onClickRow,
   showTabView,
+  rowKey,
   selected,
   selectedProps,
   defaultSort,
@@ -430,6 +431,7 @@ const Table: React.FC<TableProps> = ({
             data={data}
             onClickRow={onClickRow}
             showTabView={showTabView}
+            rowKey={rowKey}
             selected={selected}
             selectedProps={selectedProps}
             initialized={initialized}
@@ -487,7 +489,7 @@ const PaginationCustom = ({
   handleChangePage: (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => void;
 }) => {
   const [inputPage, setInputPage] = useState(page);
-
+  const { t } = useTranslation();
   useEffect(() => {
     if (pagination?.page) {
       setInputPage(pagination?.page + 1);
@@ -569,8 +571,8 @@ const PaginationCustom = ({
             />
             <Box component={"span"} color={(theme) => theme.palette.secondary.main} fontSize="0.875rem">
               {numberWithCommas((page - 1 >= 0 ? page - 1 : -0) * size + 1)} -{" "}
-              {numberWithCommas((page > 0 ? page : 1) * size > total ? total : (page > 0 ? page : 1) * size)} of{" "}
-              {numberWithCommas(pagination?.total || 0)}
+              {numberWithCommas((page > 0 ? page : 1) * size > total ? total : (page > 0 ? page : 1) * size)}{" "}
+              <Lowercase>{t("common.of")}</Lowercase> {numberWithCommas(pagination?.total || 0)}
             </Box>
           </Box>
         );

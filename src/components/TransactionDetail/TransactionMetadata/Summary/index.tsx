@@ -91,7 +91,7 @@ const SummaryItems = ({
           >
             <Box display="flex" justifyContent={"space-between"} alignItems={"baseline"} pr={1} flexDirection={"row"}>
               <Box pr={1} whiteSpace={"nowrap"} color={({ palette }) => palette.secondary.light}>
-                {type === "down" ? `${t("ADA sent")}:` : `${t("tab.adaReceived")}:`}{" "}
+                {type === "down" ? `${t("tab.adaSent")}:` : `${t("tab.adaReceived")}:`}{" "}
               </Box>
               <Box display="flex" justifyContent={"space-between"} alignItems="center">
                 <Box

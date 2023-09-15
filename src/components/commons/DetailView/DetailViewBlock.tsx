@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { useSelector } from "react-redux";
 import { BiChevronRight } from "react-icons/bi";
 import { useTranslation } from "react-i18next";
 
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { CubeIcon, RocketIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
@@ -58,13 +58,15 @@ type DetailViewBlockProps = {
 const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
   const { t } = useTranslation();
   const { blockNo, handleClose } = props;
-  const { data, lastUpdated } = useFetch<BlockDetail>(
-    `${API.BLOCK.DETAIL}/${blockNo}`,
-    undefined,
-    false,
-    REFRESH_TIMES.BLOCK_DETAIL
-  );
-  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+  const currentBlockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
+  const [lastUpdated, setLastUpdated] = useState<number>();
+
+  const { data } = useFetch<BlockDetail>(`${API.BLOCK.DETAIL}/${blockNo}`, undefined, false);
+
+  useEffect(() => {
+    if (data) setLastUpdated(Date.now());
+  }, [data, currentBlockNo]);
 
   useEffect(() => {
     document.body.style.overflowY = "hidden";
@@ -144,6 +146,8 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
       </ViewDetailDrawer>
     );
 
+  const confirmation = Math.max(0, currentBlockNo ? currentBlockNo - (data.blockNo || 0) : data.confirmation);
+
   return (
     <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
       <ViewDetailHeader>
@@ -165,7 +169,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
               pathLineCap="butt"
               pathWidth={4}
               trailWidth={2}
-              percent={data?.epochNo === currentEpoch?.no ? ((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100 : 100}
+              percent={data?.epochNo === epochNo ? ((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100 : 100}
               trailOpacity={1}
             >
               <EpochNumber>{data?.epochNo !== null ? data?.epochNo : "_"}</EpochNumber>
@@ -202,10 +206,8 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
               <DetailValue>{formatDateTimeLocal(data.time || "")}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                {data?.confirmation > 1 ? t("glossary.comfirmations") : t("glossary.comfirmation")}
-              </DetailLabel>
-              <DetailValue>{data?.confirmation}</DetailValue>
+              <DetailLabel>{confirmation > 1 ? t("glossary.comfirmations") : t("glossary.comfirmation")}</DetailLabel>
+              <DetailValue>{confirmation}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>{t("glossary.transactionfees")}</DetailLabel>

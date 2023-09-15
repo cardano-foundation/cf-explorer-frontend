@@ -73,7 +73,7 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
     return isModal ? (
       <StyledModal
         open
-        title={t("account.connectAWallet")}
+        title={t("common.connect2wallet.title")}
         handleCloseModal={walletConnecting ? () => null : handleClose}
       >
         <WrapContent>{children}</WrapContent>
@@ -81,7 +81,7 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
     ) : (
       <ConnectOption>
         <WrapContent>
-          <Title>{t("account.connectAWallet")}</Title>
+          <Title>{t("common.connect2wallet.title")}</Title>
           <CloseButton connecting={walletConnecting ? 1 : 0} onClick={walletConnecting ? undefined : handleClose}>
             <IoMdClose />
           </CloseButton>
@@ -112,7 +112,7 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
               <GroupFlex>
                 {!isWalletInstalled(wallet.name.toLocaleLowerCase()) ? (
                   <InstallButton onClick={() => handleOpenLink(wallet)}>
-                    {t("account.notInstalled")} <MdOutlineFileDownload size={18} />
+                    {t("common.notInstalled")} <MdOutlineFileDownload size={18} />
                   </InstallButton>
                 ) : (
                   <i />

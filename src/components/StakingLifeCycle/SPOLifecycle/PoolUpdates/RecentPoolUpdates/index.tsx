@@ -60,7 +60,7 @@ const RecentPoolUpdates = ({ onSelect, setShowBackButton }: Props) => {
   return (
     <StyledContainer>
       <StyledList>
-        <DescriptionText>Recent Updates</DescriptionText>
+        <DescriptionText>{t("common.recentUpdates")}</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
             {t("common.showing")} {total} {total > 1 ? t("common.result") : t("common.results")}

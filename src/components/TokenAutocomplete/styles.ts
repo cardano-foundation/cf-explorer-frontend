@@ -59,6 +59,9 @@ export const StyledTextField = styled(TextField)`
     border: 1.5px solid ${(props) => props.theme.palette.border.main};
     border-radius: 8px;
     ${(props) => (props.disabled ? `background: ${props.theme.palette.secondary[600]}` : "")};
+    &:focus-within {
+      border-color: ${({ theme }) => theme.palette.secondary.light};
+    }
   }
   .MuiFormControl-root {
   }
@@ -143,6 +146,9 @@ export const SearchContainer = styled(Box)`
   border-radius: 8px;
   height: 35px;
   border: 1px solid ${(props) => alpha(props.theme.palette.primary.main, 0.2)};
+  &:focus-within {
+    border-color: ${({ theme }) => theme.palette.secondary.light};
+  }
 `;
 
 export const StyledInput = styled("input")`

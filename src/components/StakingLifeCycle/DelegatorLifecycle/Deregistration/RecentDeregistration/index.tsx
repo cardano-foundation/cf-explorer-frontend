@@ -55,7 +55,7 @@ const RecentDeregistrations: React.FC<Props> = ({ setShowBackButton }) => {
   return (
     <StyledContainer>
       <StyledList>
-        <DescriptionText>Deregistration List</DescriptionText>
+        <DescriptionText>{t("common.deregistrationList")}</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
             {t("common.showing")} {data.length} {data.length > 1 ? t("common.result") : t("common.results")}

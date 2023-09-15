@@ -1,15 +1,18 @@
 import React, { useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
+import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import useFetchList from "../../../commons/hooks/useFetchList";
-import { details } from "../../../commons/routers";
-import { formatNumberDivByDecimals, getPageInfo, getShortWallet } from "../../../commons/utils/helper";
-import CustomTooltip from "../../commons/CustomTooltip";
-import Table, { Column } from "../../commons/Table";
-import { PriceValue, SmallText, StyledLink } from "./styles";
-import { API } from "../../../commons/utils/api";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { details } from "src/commons/routers";
+import { formatNumberDivByDecimals, getPageInfo, getShortWallet } from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import Table, { Column } from "src/components/commons/Table";
+import { API } from "src/commons/utils/api";
+import FormNowMessage from "src/components/commons/FormNowMessage";
+
+import { PriceValue, SmallText, StyledLink, TimeDuration } from "./styles";
 
 interface ITokenTopHolder {
   tokenId: string;
@@ -23,17 +26,20 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decim
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
-  const fetchData = useFetchList<ITokenTopHolderTable>(`${API.TOKEN.LIST}/${tokenId}/top_holders`, {
-    ...pageInfo,
-    tokenId
-  });
+  const fetchData = useFetchList<ITokenTopHolderTable>(
+    `${API.TOKEN.LIST}/${tokenId}/top_holders`,
+    { ...pageInfo, tokenId },
+    false,
+    blockKey
+  );
 
   useEffect(() => {
     if (fetchData.total && setCurrentHolder) {
       setCurrentHolder(fetchData.total || 0);
     }
-  }, [fetchData.total]);
+  }, [fetchData.total, setCurrentHolder]);
 
   const columns: Column<ITokenTopHolderTable>[] = [
     {
@@ -69,17 +75,22 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decim
   ];
 
   return (
-    <Table
-      {...fetchData}
-      columns={columns}
-      total={{ title: "Total", count: fetchData.total }}
-      pagination={{
-        ...pageInfo,
-        total: fetchData.total,
-        onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
-      }}
-      onClickRow={(_, r: ITokenTopHolderTable) => history.push(details.address(r.address))}
-    />
+    <>
+      <TimeDuration>
+        <FormNowMessage time={fetchData.lastUpdated} />
+      </TimeDuration>
+      <Table
+        {...fetchData}
+        columns={columns}
+        total={{ title: "Total", count: fetchData.total }}
+        pagination={{
+          ...pageInfo,
+          total: fetchData.total,
+          onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
+        }}
+        onClickRow={(_, r: ITokenTopHolderTable) => history.push(details.address(r.address))}
+      />
+    </>
   );
 };
 
