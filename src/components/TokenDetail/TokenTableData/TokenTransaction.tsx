@@ -77,7 +77,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
         return (
           <>
             <Flex>
-              <Label>${t("drawer.input")}: </Label>
+              <Label>{t("drawer.input")}: </Label>
               <div>
                 <CustomTooltip title={r.addressesInput[0]}>
                   <StyledLink to={details.address(r.addressesInput[0])}>

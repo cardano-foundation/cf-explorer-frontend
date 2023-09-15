@@ -220,7 +220,7 @@
   "glossary.inUnitsOftheNativeToken": "In units of the native token",
   "head.page.smartContracts": "Smart Contracts",
   "glossary.value": "Value",
-  "common.result": "Result{{suffix}}",
+  "common.result": "Result",
   "head.page.pool": "Pools",
   "glossary.Slot": "Slot",
   "glossary.delegators": "Delegators",
