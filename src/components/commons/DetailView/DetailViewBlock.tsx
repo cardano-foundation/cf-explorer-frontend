@@ -146,7 +146,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
       </ViewDetailDrawer>
     );
 
-  const confirmation = currentBlockNo ? currentBlockNo - (data.blockNo || 0) : data.confirmation;
+  const confirmation = Math.max(0, currentBlockNo ? currentBlockNo - (data.blockNo || 0) : data.confirmation);
 
   return (
     <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">

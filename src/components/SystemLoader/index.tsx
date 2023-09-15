@@ -11,9 +11,10 @@ export const SystemLoader = () => {
   const { isLoggedIn } = useAuth();
   const [, setBookmark] = useLocalStorage<string[]>("bookmark", []);
   const [currentEpoch, setCurrentEpoch] = useState<EpochCurrentType | null>(null);
-  const { data: epochSummary } = useFetch<EpochCurrentType>(`${API.EPOCH.CURRENT_EPOCH}`);
-  const { data: usdMarket } = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=usd`);
-  const { data: btcMarket } = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=btc`);
+  const { data: epochSummary, refresh: refreshEpoch } = useFetch<EpochCurrentType>(`${API.EPOCH.CURRENT_EPOCH}`);
+  const { data: usdMarket, refresh: refreshUSD } = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=usd`);
+  const { data: btcMarket, refresh: refreshBTC } = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=btc`);
+  const socket = useRef<WebSocket | null>(null);
 
   const { data: dataBookmark } = useFetch<string[]>(
     isLoggedIn ? `${USER_API.BOOKMARK}?network=${NETWORK_TYPES[NETWORK]}` : "",
@@ -66,32 +67,48 @@ export const SystemLoader = () => {
   }, [epochSummary, setCurrentEpoch]);
 
   useEffect(() => {
-    if (!WS_URL) return;
-    const socket = new WebSocket(WS_URL);
+    const connect = () => {
+      if (!WS_URL) return;
+      socket.current = new WebSocket(WS_URL);
 
-    socket.addEventListener("message", (event) => {
-      try {
-        const data = JSON.parse(event.data) as EventData;
-        switch (data.eventType) {
-          case EVENT_TYPES.BLOCK:
-            setBlockNo(data.payload.blockNo);
-            setCurrentEpoch(data.payload.epochSummary);
-            break;
-          case EVENT_TYPES.CURRENT_PRICE_USD:
-            if (data.payload[0]) setUsdMarket(data.payload[0]);
-            break;
-          case EVENT_TYPES.CURRENT_PRICE_BTC:
-            if (data.payload[0]) setBtcMarket(data.payload[0]);
-            break;
-          default:
-            break;
+      socket.current.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data) as EventData;
+          switch (data.eventType) {
+            case EVENT_TYPES.BLOCK:
+              setBlockNo(data.payload.blockNo);
+              setCurrentEpoch(data.payload.epochSummary);
+              break;
+            case EVENT_TYPES.CURRENT_PRICE_USD:
+              if (data.payload[0]) setUsdMarket(data.payload[0]);
+              break;
+            case EVENT_TYPES.CURRENT_PRICE_BTC:
+              if (data.payload[0]) setBtcMarket(data.payload[0]);
+              break;
+            default:
+              break;
+          }
+        } catch (error) {
+          return error;
         }
-      } catch (error) {
-        return error;
-      }
-    });
+      };
+      socket.current.onclose = () => {
+        setTimeout(() => {
+          if (socket.current?.readyState === 3) {
+            connect();
+            refreshEpoch();
+            refreshUSD();
+            refreshBTC();
+          }
+        }, 1000);
+      };
+    };
 
-    return () => socket.close();
+    connect();
+
+    return () => {
+      socket.current?.close();
+    };
   }, []);
 
   return null;
