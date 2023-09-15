@@ -84,9 +84,11 @@ export const SystemLoader = () => {
           return error;
         }
       };
-      socket.current.onclose = () => {
+      socket.current.onclose = (e) => {
         setTimeout(() => {
           if (socket.current?.readyState === 3) {
+            // eslint-disable-next-line no-console
+            console.error("socket close reason: ", e.reason);
             connect();
             refreshEpoch();
             refreshUSD();
@@ -94,6 +96,9 @@ export const SystemLoader = () => {
           }
         }, 1000);
       };
+
+      // eslint-disable-next-line no-console
+      socket.current.onerror = (e) => console.error("socket error: ", e);
     };
 
     connect();
