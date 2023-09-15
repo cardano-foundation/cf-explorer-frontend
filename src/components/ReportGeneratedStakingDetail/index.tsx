@@ -113,7 +113,7 @@ const ReportGeneratedStakingDetailTabs = () => {
       <TopHeader>
         <BackButton onClick={history.goBack}>
           <HiArrowLongLeft />
-          <BackText>Back</BackText>
+          <BackText>{t("common.back")}</BackText>
         </BackButton>
       </TopHeader>
       <StakingDetailContext.Provider
