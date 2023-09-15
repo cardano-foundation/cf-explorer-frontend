@@ -32,7 +32,16 @@ export const SystemLoader = () => {
   useEffect(() => {
     if (currentEpoch) {
       currentTime.current = Date.now();
-      const { no, slot, totalSlot = MAX_SLOT_EPOCH, account, startTime, endTime, circulatingSupply } = currentEpoch;
+      const {
+        no,
+        slot,
+        totalSlot = MAX_SLOT_EPOCH,
+        account,
+        startTime,
+        endTime,
+        circulatingSupply,
+        blkCount
+      } = currentEpoch;
       const interval = setInterval(() => {
         const newSlot = slot + Math.floor((Date.now() - currentTime.current) / 1000);
         const isCrawlerStop = newSlot - MAX_SLOT_EPOCH > 1000;
@@ -44,7 +53,8 @@ export const SystemLoader = () => {
           account,
           startTime,
           endTime,
-          circulatingSupply
+          circulatingSupply,
+          blkCount
         });
       }, 1000);
       return () => clearInterval(interval);

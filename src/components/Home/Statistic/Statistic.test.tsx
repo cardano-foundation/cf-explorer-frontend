@@ -39,7 +39,8 @@ const mockCurrentEpoch: EpochCurrentType = {
   account: 96433,
   startTime: "2023-01-31T07:02:46.115Z",
   endTime: "2023-05-31T07:02:46.115Z",
-  circulatingSupply: 33999888463776064
+  circulatingSupply: 33999888463776064,
+  blkCount: 0
 };
 
 const mockUSDMarket: CardanoMarket = {
