@@ -151,7 +151,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
       ) : (
         <StyledButton type="button" onClick={handleClick}>
           <Image src={WalletIcon} alt="wallet" />
-          <Span>Connect Wallet</Span>
+          <Span>{t("account.connectWallet")}</Span>
         </StyledButton>
       )}
       {openModal && (

@@ -13,7 +13,7 @@ import { getEventType } from "src/components/StakekeySummary";
 import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
-import { EVENTS_NAME, ReportType } from "./FilledInfoModal";
+import { ReportType } from "./FilledInfoModal";
 import {
   Container,
   OverViewItem,
@@ -83,6 +83,58 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
 
   const [start, end] = params.dateRange || [];
   const [epochStart, epochEnd] = params.epochRange || [];
+  const EVENTS_NAME = [
+    {
+      label: t("common.all"),
+      value: "SELECT_ALL"
+    },
+    {
+      label: t("common.registration"),
+      value: "REGISTRATION",
+      type: ReportType.StakeKeyReport
+    },
+
+    {
+      label: t("common.rewards"),
+      value: "REWARDS",
+      type: ReportType.StakeKeyReport
+    },
+    {
+      label: t("slc.delegation"),
+      value: "DELEGATION",
+      type: ReportType.StakeKeyReport
+    },
+    {
+      label: t("common.withDrawFunds"),
+      value: "WITHDRAWAL",
+      type: ReportType.StakeKeyReport
+    },
+    {
+      label: t("slc.deregistration"),
+      value: "DEREGISTRATION",
+      type: ReportType.StakeKeyReport
+    },
+    {
+      label: t("slc.registrationCertificate"),
+      value: "registration",
+      type: ReportType.PoolReport
+    },
+    {
+      label: t("common.poolUpdate"),
+      value: "pool_update",
+      type: ReportType.PoolReport
+    },
+    {
+      label: t("common.reard"),
+      value: "reward",
+      type: ReportType.PoolReport
+    },
+    {
+      label: t("common.deregistration"),
+      value: "deregistration",
+      type: ReportType.PoolReport
+    }
+  ];
   const events = EVENTS_NAME.filter(({ value }) => params?.eventsKey?.includes(value))
     .map(({ label }) => label)
     .join(", ");
