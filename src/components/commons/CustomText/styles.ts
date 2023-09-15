@@ -7,3 +7,7 @@ export const Capitalize = styled("span")`
 export const Uppercase = styled("span")`
   text-transform: uppercase;
 `;
+
+export const Lowercase = styled("span")`
+  text-transform: lowercase;
+`;

@@ -3,9 +3,8 @@ import { stringify } from "qs";
 import { Box } from "@mui/material";
 import { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
-import Card from "../commons/Card";
-import Table, { Column } from "../commons/Table";
 import {
   formatADAFull,
   formatDateTimeLocal,
@@ -13,21 +12,24 @@ import {
   getPageInfo,
   getShortHash,
   getShortWallet
-} from "../../commons/utils/helper";
-import { details } from "../../commons/routers";
-import { StyledLink } from "./styles";
+} from "src/commons/utils/helper";
+import { details } from "src/commons/routers";
+import useFetchList from "src/commons/hooks/useFetchList";
+
 import CustomTooltip from "../commons/CustomTooltip";
-import useFetchList from "../../commons/hooks/useFetchList";
 import SelectedIcon from "../commons/SelectedIcon";
 import ADAicon from "../commons/ADAIcon";
+import FormNowMessage from "../commons/FormNowMessage";
+import Table, { Column } from "../commons/Table";
+import Card from "../commons/Card";
+import { Actions, StyledLink, TimeDuration } from "./styles";
 
 interface TransactionListProps {
   underline?: boolean;
   url: string;
-  openDetail?: (_: any, r: Transactions, index: number) => void;
-  selected?: number | null;
+  openDetail?: (_: any, r: Transactions) => void;
+  selected?: string | null;
   showTabView?: boolean;
-  hash?: string | null;
   handleClose: () => void;
 }
 
@@ -37,7 +39,6 @@ const TransactionList: React.FC<TransactionListProps> = ({
   openDetail,
   selected,
   showTabView,
-  hash,
   handleClose
 }) => {
   const { t } = useTranslation();
@@ -45,17 +46,19 @@ const TransactionList: React.FC<TransactionListProps> = ({
   const history = useHistory();
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
-  const fetchData = useFetchList<Transactions>(url, { ...pageInfo, sort });
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+
+  const fetchData = useFetchList<Transactions>(url, { ...pageInfo, sort }, false, blockNo);
   const mainRef = useRef(document.querySelector("#main"));
-  const onClickRow = (_: any, r: Transactions, index: number) => {
-    if (openDetail) return openDetail(_, r, index);
+  const onClickRow = (_: any, r: Transactions) => {
+    if (openDetail) return openDetail(_, r);
     history.push(details.transaction(r.hash));
   };
 
   const columns: Column<Transactions>[] = [
     {
       title: t("glossary.txhash"),
-      key: "txhash",
+      key: "hash",
       minWidth: 120,
 
       render: (r) => (
@@ -116,7 +119,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
           <ADAicon />
-          {hash === r.hash && <SelectedIcon />}
+          {selected === r.hash && <SelectedIcon />}
         </Box>
       ),
       sort: ({ columnKey, sortValue }) => {
@@ -165,6 +168,11 @@ const TransactionList: React.FC<TransactionListProps> = ({
       title={pathname?.includes("/transactions") ? "Transactions" : ""}
       underline={underline}
     >
+      <Actions>
+        <TimeDuration>
+          <FormNowMessage time={fetchData.lastUpdated} />
+        </TimeDuration>
+      </Actions>
       <Table
         {...fetchData}
         columns={columns}
@@ -180,6 +188,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
           hideLastPage: true
         }}
         onClickRow={onClickRow}
+        rowKey="hash"
         selected={selected}
         showTabView={showTabView}
         tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}

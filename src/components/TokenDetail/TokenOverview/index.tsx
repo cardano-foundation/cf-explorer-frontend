@@ -25,9 +25,10 @@ interface ITokenOverview {
   data: IToken | null;
   loading: boolean;
   currentHolders: number;
+  lastUpdated?: number;
 }
 
-const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders }) => {
+const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders, lastUpdated }) => {
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
   const [policyId, setPolicyId] = useState("");
@@ -49,7 +50,9 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
       ),
       value: (
         <TokenDescription>
-          <Box mb={1}>Hex Format: #{data?.name || data?.fingerprint}</Box>
+          <Box mb={1}>
+            {t("common.hexFormat")}: #{data?.name || data?.fingerprint}
+          </Box>
           {data?.metadata?.description || ""}
           {data?.metadata?.url ? (
             <TokenUrl onClick={() => window.open(data?.metadata?.url, "_blank")}>{data?.metadata?.url}</TokenUrl>
@@ -182,6 +185,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
         hash={data?.fingerprint}
         listItem={listItem}
         loading={loading}
+        lastUpdated={lastUpdated}
       />
       <ScriptModal open={openModal} onClose={() => setOpenModal(false)} policy={policyId} />
     </Box>
