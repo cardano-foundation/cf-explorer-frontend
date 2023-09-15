@@ -19,7 +19,7 @@ declare type EventData =
         blockHash: string;
         blockNo: number;
         epochSummary: EpochCurrentType;
-        hashTx: boolean;
+        hasTx: boolean;
       };
     }
   | {
