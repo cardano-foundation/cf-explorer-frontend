@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import signMessage from "src/commons/resources/images/sign-message.svg";
 import { StyledDarkLoadingButton } from "src/components/share/styled";
@@ -13,14 +14,15 @@ type TProps = {
   onSignMessage: () => void;
 };
 const SignMessageModal: React.FC<TProps> = ({ open, loadingSubmit, handleCloseModal, onSignMessage }) => {
+  const { t } = useTranslation();
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal}>
       <Box textAlign="center">
         <img src={signMessage} alt="sign-message" />
-        <ModalTitle>Signature Required!</ModalTitle>
-        <Description>Please click on sign button to allow access to your public key </Description>
+        <ModalTitle>{t("account.signatureRequired")}</ModalTitle>
+        <Description>{t("account.allowAccessPublicKey")}</Description>
         <StyledDarkLoadingButton onClick={onSignMessage} loading={loadingSubmit} loadingPosition="end">
-          Sign
+          {t("account.sign")}
         </StyledDarkLoadingButton>
       </Box>
     </StyledModal>
