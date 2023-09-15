@@ -43,9 +43,9 @@ const TransactionList: React.FC<TransactionListProps> = ({
   const history = useHistory();
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
-  const fetchData = useFetchList<Transactions>(url, { ...pageInfo, sort }, false, blockNo);
+  const fetchData = useFetchList<Transactions>(url, { ...pageInfo, sort }, false, blockKey);
   const mainRef = useRef(document.querySelector("#main"));
   const onClickRow = (_: any, r: Transactions) => {
     if (openDetail) return openDetail(_, r);

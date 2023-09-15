@@ -46,14 +46,14 @@ const options = [
 const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const { tokenId } = useParams<{ tokenId: string }>();
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const { isMobile } = useScreen();
   const theme = useTheme();
   const { data, loading } = useFetch<AnalyticsData[]>(
     `${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`,
     undefined,
     false,
-    blockNo
+    blockKey
   );
 
   const values = (data || [])?.map((item) => item.value || 0) || [];

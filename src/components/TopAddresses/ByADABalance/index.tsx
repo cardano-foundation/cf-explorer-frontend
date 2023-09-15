@@ -17,14 +17,14 @@ import { Actions, PageSize, PerPage, SelectMui, StyledLink, StyledMenuItem, Time
 const perPages = [10, 20, 50, 100];
 
 const TopAddressesByADABalance = () => {
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const history = useHistory();
   const [pageSize, setPageSize] = useState("50");
   const { error, data, initialized, loading, lastUpdated } = useFetchList<Contracts>(
     API.ADDRESS.TOP_ADDRESS,
     { page: 0, size: +pageSize },
     false,
-    blockNo
+    blockKey
   );
 
   const columns: Column<Address>[] = [

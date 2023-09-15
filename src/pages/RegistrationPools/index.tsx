@@ -39,9 +39,9 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
   const mainRef = useRef(document.querySelector("#main"));
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
-  const fetchData = useFetchList<Registration>(`${API.POOL}/${poolType}`, { ...pageInfo, sort }, false, blockNo);
+  const fetchData = useFetchList<Registration>(`${API.POOL}/${poolType}`, { ...pageInfo, sort }, false, blockKey);
 
   useEffect(() => {
     const title = poolType === POOL_TYPE.REGISTRATION ? "Registration" : "Deregistration";

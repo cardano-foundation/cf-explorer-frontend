@@ -41,9 +41,9 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
   const pageInfo = getPageInfo(search);
   const url = `${API.ADDRESS.DETAIL}/${address}/txs`;
   const theme = useTheme();
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
-  const fetchData = useFetchList<Transactions>(url, { ...pageInfo }, false, blockNo);
+  const fetchData = useFetchList<Transactions>(url, { ...pageInfo }, false, blockKey);
   const onClickRow = (e: any, transaction: Transactions) => {
     let parent: Element | null = e.target as Element;
     while (parent !== null && !parent?.className.includes("MuiPopover-root")) {

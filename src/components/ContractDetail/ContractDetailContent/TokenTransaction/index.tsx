@@ -123,10 +123,15 @@ const TokenTransaction: React.FC = () => {
   const { search } = useLocation();
   const history = useHistory();
   const { onDetailView } = useSelector(({ user }: RootState) => user);
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<Transactions>(`${API.ADDRESS.DETAIL}/${params.address}/txs`, pageInfo, false, blockNo);
+  const fetchData = useFetchList<Transactions>(
+    `${API.ADDRESS.DETAIL}/${params.address}/txs`,
+    pageInfo,
+    false,
+    blockKey
+  );
   const [selected, setSelected] = useState<string>("");
 
   const openDetail = (_: any, r: Transactions) => {

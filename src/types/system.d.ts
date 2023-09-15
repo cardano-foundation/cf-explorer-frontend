@@ -8,6 +8,7 @@ declare interface SystemStoreType {
   btcMarket: CardanoMarket | null;
   currentEpoch: EpochCurrentType | null;
   blockNo?: number;
+  blockKey?: number | string;
   specialPath: SpecialPath | null;
 }
 
@@ -15,8 +16,10 @@ declare type EventData =
   | {
       eventType: import("src/commons/utils/constants").EVENT_TYPES.BLOCK;
       payload: {
+        blockHash: string;
         blockNo: number;
         epochSummary: EpochCurrentType;
+        hashTx: boolean;
       };
     }
   | {

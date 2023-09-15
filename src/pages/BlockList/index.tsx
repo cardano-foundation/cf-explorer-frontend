@@ -25,12 +25,12 @@ const BlockList = () => {
   const { search } = useLocation();
   const history = useHistory();
   const { onDetailView } = useSelector(({ user }: RootState) => user);
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const [sort, setSort] = useState<string>("");
   const [selected, setSelected] = useState<number | string | null>(null);
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<Block>(API.BLOCK.LIST, { ...pageInfo, sort }, false, blockNo);
+  const fetchData = useFetchList<Block>(API.BLOCK.LIST, { ...pageInfo, sort }, false, blockKey);
   const mainRef = useRef(document.querySelector("#main"));
 
   useEffect(() => {

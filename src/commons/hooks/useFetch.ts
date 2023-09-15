@@ -12,14 +12,14 @@ interface FetchReturnType<T> {
   lastUpdated?: number;
 }
 
-const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, key?: number): FetchReturnType<T> => {
+const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, key?: number | string): FetchReturnType<T> => {
   const [data, setData] = useState<T | null>(initial || null);
   const [initialized, setInitialized] = useState<boolean>(!!initial || false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [refreshLoading, setRefreshLoading] = useState(false);
   const lastFetch = useRef<number>();
-  const lastKey = useRef<number | undefined>(key);
+  const lastKey = useRef<number | string | undefined>(key);
 
   const fetch = useCallback(
     async (needLoading?: boolean) => {

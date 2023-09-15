@@ -18,11 +18,11 @@ import FormNowMessage from "src/components/commons/FormNowMessage";
 import { Actions, StyledContainer, StyledLink, TimeDuration } from "./styles";
 
 const InstantReards = () => {
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<Contracts>(API.STAKE.INSTANT_REWARDS, pageInfo, false, blockNo);
+  const fetchData = useFetchList<Contracts>(API.STAKE.INSTANT_REWARDS, pageInfo, false, blockKey);
 
   const mainRef = useRef(document.querySelector("#main"));
 

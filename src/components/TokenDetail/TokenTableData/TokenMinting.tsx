@@ -22,13 +22,13 @@ const TokenMinting: React.FC<ITokenMinting> = ({ tokenId, metadata }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   const fetchData = useFetchList<ITokenTopHolderTable>(
     `${API.TOKEN.LIST}/${tokenId}/mints`,
     { ...pageInfo, tokenId },
     false,
-    blockNo
+    blockKey
   );
 
   const columns: Column<ITokenMintingTable>[] = [

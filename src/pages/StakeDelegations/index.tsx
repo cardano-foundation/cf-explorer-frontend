@@ -17,12 +17,12 @@ import FormNowMessage from "src/components/commons/FormNowMessage";
 import { Actions, StyledContainer, StyledLink, TimeDuration } from "./styles";
 
 const StakeDelegations = () => {
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const { search } = useLocation();
   const history = useHistory();
   const fromPath = history.location.pathname as SpecialPath;
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<Contracts>(API.STAKE.STAKE_DELEGATIONS, { ...pageInfo }, false, blockNo);
+  const fetchData = useFetchList<Contracts>(API.STAKE.STAKE_DELEGATIONS, { ...pageInfo }, false, blockKey);
 
   const mainRef = useRef(document.querySelector("#main"));
 
