@@ -1,12 +1,15 @@
-import React from "react";
-import { Redirect, Route, Switch, useLocation } from "react-router-dom";
+import { changeLanguage } from "i18next";
+import React, { useEffect } from "react";
+import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { useAsync, useLocalStorage } from "react-use";
 
 import useAuth from "./commons/hooks/useAuth";
 import { routers } from "./commons/routers";
-import { NETWORK, NETWORK_TYPES } from "./commons/utils/constants";
+import { APP_LANGUAGES, NETWORK, NETWORK_TYPES, SUPPORTED_LANGUAGES } from "./commons/utils/constants";
+import { handleChangeLanguage } from "./commons/utils/helper";
 import { getAllBookmarks } from "./commons/utils/userRequest";
 import AccountLayout from "./components/commons/Layout/AccountLayout";
+import i18n from "./i18n";
 import AddressWalletDetail from "./pages/AddressWalletDetail";
 import BlockDetail from "./pages/BlockDetail";
 import BlockList from "./pages/BlockList";
@@ -58,9 +61,7 @@ const PoolsDeregistration = () => <RegistrationPools poolType={POOL_TYPE.DEREREG
 const Routes: React.FC = () => {
   const { isLoggedIn } = useAuth();
   const [, setBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
-  const { pathname } = window.location;
-  const { search } = useLocation();
-  const lang = localStorage.getItem("lang") || "en";
+  const history = useHistory();
 
   useAsync(async () => {
     if (isLoggedIn) {
@@ -78,13 +79,17 @@ const Routes: React.FC = () => {
     }
   }, []);
 
-  if (!pathname.includes(`/${lang}`)) {
-    if (!search) {
-      return <Redirect to={pathname} />;
-    } else {
-      return <Redirect to={pathname + search} />;
+  useEffect(() => {
+    const pattern = /^\/([a-z]{2})\//;
+    const currentLanguage = window.location.pathname.match(pattern)?.[1];
+    if (!currentLanguage || !SUPPORTED_LANGUAGES.includes(currentLanguage)) {
+      changeLanguage(APP_LANGUAGES.ENGLISH);
+      handleChangeLanguage(APP_LANGUAGES.ENGLISH, currentLanguage as APP_LANGUAGES);
+    } else if (SUPPORTED_LANGUAGES.includes(currentLanguage) && i18n.language !== currentLanguage) {
+      changeLanguage(currentLanguage);
     }
-  }
+  }, [history, i18n]);
+
   return (
     <Switch>
       <Route path={routers.SIGN_IN} exact component={SignIn} />
@@ -123,6 +128,10 @@ const Routes: React.FC = () => {
       <Route path={routers.SPO_LIFECYCLE} exact component={SPOLifecycle} />
       <Route path={routers.STAKE_ADDRESS_DELEGATIONS} exact component={StakeDelegations} />
       <Route path={routers.INSTANTANEOUS_REWARDS} exact component={InstantRewards} />
+      <Route path={routers.FAQ} exact component={FAQ} />
+      <Route path={routers.POLICY} exact component={Policy} />
+      <Route path={routers.TERMS_OF_SERVICE} exact component={TermOfServices} />
+      <Route path={routers.NOT_FOUND} component={NotFound} />
       <Route path={routers.ACCOUNT}>
         <AccountLayout>
           <Switch>
@@ -133,10 +142,6 @@ const Routes: React.FC = () => {
           </Switch>
         </AccountLayout>
       </Route>
-      <Route path={routers.FAQ} exact component={FAQ} />
-      <Route path={routers.POLICY} exact component={Policy} />
-      <Route path={routers.TERMS_OF_SERVICE} exact component={TermOfServices} />
-      <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
   );
 };

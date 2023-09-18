@@ -33,7 +33,7 @@ const store = createSlice({
     }),
     setBlockNo: (state, action: PayloadAction<number>) => ({
       ...state,
-      blockNo: action.payload | ((state.blockNo || 0) + 1)
+      blockNo: action.payload
     }),
     setBlockKey: (state, action: PayloadAction<number | string>) => ({
       ...state,
