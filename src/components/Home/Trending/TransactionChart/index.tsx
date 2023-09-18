@@ -67,7 +67,7 @@ const TransactionChart: React.FC = () => {
       key: "trx",
       title: (
         <Box textAlign={"left"}>
-          {t("glossary.metadata")} <Box fontSize={"0.6875rem"}>({t("glossary.withoutSC")})</Box>;
+          {t("glossary.metadata")} <Box fontSize={"0.6875rem"}>({t("glossary.withoutSC")})</Box>
         </Box>
       ),
       value: sumMetadata || 0

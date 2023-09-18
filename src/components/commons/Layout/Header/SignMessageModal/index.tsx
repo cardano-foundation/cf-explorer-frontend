@@ -20,7 +20,7 @@ const SignMessageModal: React.FC<TProps> = ({ open, loadingSubmit, handleCloseMo
       <Box textAlign="center">
         <img src={signMessage} alt="sign-message" />
         <ModalTitle>{t("account.signatureRequired")}</ModalTitle>
-        <Description>{t("account.allowAccessPublicKey")}</Description>
+        <Description>{t("account.allowAccessPublicKey")} </Description>
         <StyledDarkLoadingButton onClick={onSignMessage} loading={loadingSubmit} loadingPosition="end">
           {t("account.sign")}
         </StyledDarkLoadingButton>

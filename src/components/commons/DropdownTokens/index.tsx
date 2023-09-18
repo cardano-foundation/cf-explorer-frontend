@@ -3,6 +3,7 @@ import { useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { Link, useHistory } from "react-router-dom";
 import { RiArrowRightSLine } from "react-icons/ri";
+import { useTranslation } from "react-i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { details } from "src/commons/routers";
@@ -20,6 +21,7 @@ export interface IDropdownTokens {
 }
 
 const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hideMathChar, isSuccess }) => {
+  const { t } = useTranslation();
   const [openDropdown, setOpenDropdown] = useState(false);
   const history = useHistory();
   const isSend = tokens[0].assetQuantity < 0;
@@ -81,7 +83,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
     >
       <OptionSelect sx={{ display: "none" }} value="default">
         {" "}
-        {!hideInputLabel ? (isSend ? "Sent " : "Received ") : ""}Token
+        {!hideInputLabel ? (isSend ? t("common.sent") + " " : t("common.received")) + " " : ""}Token
       </OptionSelect>
       {tokens.map((token, idx) => {
         const isNegative = token.assetQuantity <= 0;
