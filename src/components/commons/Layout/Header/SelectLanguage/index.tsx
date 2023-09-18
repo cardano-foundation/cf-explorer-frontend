@@ -1,37 +1,24 @@
-import { changeLanguage } from "i18next";
-import moment from "moment";
-import { useEffect, useState } from "react";
+import i18next from "i18next";
 import { BiChevronDown } from "react-icons/bi";
 
 import { APP_LANGUAGES } from "src/commons/utils/constants";
-import { getLang, setLang } from "src/commons/utils/helper";
 import { StyledMenuItem } from "src/components/commons/Table/styles";
+import { handleChangeLanguage } from "src/commons/utils/helper";
 
 import { StyledSelect } from "../SelectNetwork";
 
-const SelectLangauge = () => {
-  const [currentLanguage, setCurrentLanguage] = useState<APP_LANGUAGES>(getLang());
-  useEffect(() => {
-    handleChange(currentLanguage);
-  }, [currentLanguage]);
+const SelectLanguage = () => {
+  const language = i18next.language as APP_LANGUAGES;
 
-  const handleChange = (lang: APP_LANGUAGES, isUserBehavior?: boolean) => {
-    const currentLang = getLang();
-    setCurrentLanguage(lang);
-    setLang(lang);
-    changeLanguage(lang);
-    moment.locale(lang);
-    if (isUserBehavior) {
-      const newURL = window.location.href.replace(`/${currentLang}`, "");
-      window.location.href = newURL;
-    }
+  const handleChange = (lang: APP_LANGUAGES) => {
+    handleChangeLanguage(lang, language);
   };
 
   return (
     <StyledSelect
       data-testid="language-select"
-      onChange={(e) => handleChange(e.target.value as APP_LANGUAGES, true)}
-      value={currentLanguage}
+      onChange={(e) => handleChange(e.target.value as APP_LANGUAGES)}
+      value={language}
       IconComponent={BiChevronDown}
       MenuProps={{ style: { zIndex: 1303 } }}
     >
@@ -44,4 +31,4 @@ const SelectLangauge = () => {
   );
 };
 
-export default SelectLangauge;
+export default SelectLanguage;
