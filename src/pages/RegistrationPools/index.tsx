@@ -3,6 +3,7 @@ import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import Card from "src/components/commons/Card";
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -19,7 +20,6 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { API } from "src/commons/utils/api";
 import NoRecord from "src/components/commons/NoRecord";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import ADAicon from "src/components/commons/ADAIcon";
 
@@ -41,13 +41,9 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
   const mainRef = useRef(document.querySelector("#main"));
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
-  const fetchData = useFetchList<Registration>(
-    `${API.POOL}/${poolType}`,
-    { ...pageInfo, sort },
-    false,
-    REFRESH_TIMES.POOL_REGISTRATIONS
-  );
+  const fetchData = useFetchList<Registration>(`${API.POOL}/${poolType}`, { ...pageInfo, sort }, false, blockKey);
 
   useEffect(() => {
     const title = poolType === POOL_TYPE.REGISTRATION ? "Registration" : "Deregistration";

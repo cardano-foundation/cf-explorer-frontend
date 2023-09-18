@@ -16,6 +16,7 @@ import { useParams } from "react-router-dom";
 import { BigNumber } from "bignumber.js";
 import { isArray } from "lodash";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
@@ -53,9 +54,13 @@ const AddressAnalytics: React.FC = () => {
   ];
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const { address } = useParams<{ address: string }>();
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const theme = useTheme();
   const { data: dataAnalytics, loading } = useFetch<AnalyticsData[]>(
-    `${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`
+    `${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`,
+    undefined,
+    false,
+    blockKey
   );
   const data = isArray(dataAnalytics) ? dataAnalytics : [];
   const values = data?.map((item) => item.value || 0) || [];
