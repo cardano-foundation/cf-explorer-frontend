@@ -47,7 +47,7 @@ const AddressAnalytics: React.FC = () => {
   const { t } = useTranslation();
   const options = [
     { value: "ONE_DAY", label: t("time.1d") },
-    { value: "ONE_WEEK", label: t("time.1W") },
+    { value: "ONE_WEEK", label: t("time.1w") },
     { value: "ONE_MONTH", label: t("time.1m") },
     { value: "THREE_MONTH", label: t("time.3m") }
   ];
