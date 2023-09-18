@@ -44,7 +44,7 @@ const SelectNetwork: React.FC = () => {
   const handleChange = async (e?: SelectChangeEvent<unknown>) => {
     if (e) {
       if (FRONT_END_NETWORK[e.target.value as NETWORKS]) {
-        window.open(FRONT_END_NETWORK[e.target.value as NETWORKS], "_blank", "noopener,noreferrer");
+        window.open(`${FRONT_END_NETWORK[e.target.value as NETWORKS]}`, "_blank", "noopener,noreferrer");
       }
     }
   };

@@ -10,18 +10,18 @@ describe("User check information of current Epoch", () => {
     cy.get("span").contains("Per page").should("be.visible");
 
     cy.get('[data-test-id="CircularProgressbarWithChildren"]').click();
-    cy.get("a").contains("View Details").should("be.visible");
+    cy.get("a").contains("View Details", { matchCase: false }).should("be.visible");
 
-    cy.get("a").contains("View Details").click();
+    cy.get("a").contains("View Details", { matchCase: false }).click();
     cy.get('[data-testid="search-bar"]').should("be.visible");
-    cy.get("div").contains("Start Timestamp ").should("be.visible");
-    cy.get("div").contains("End Timestamp ").should("be.visible");
-    cy.get("div").contains(" Total Output").should("be.visible");
+    cy.get("div").contains("Start Timestamp", { matchCase: false }).should("be.visible");
+    cy.get("div").contains("End Timestamp", { matchCase: false }).should("be.visible");
+    cy.get("div").contains(" Total Output", { matchCase: false }).should("be.visible");
     cy.get("div").contains(" Blocks").should("be.visible");
     cy.get("div").contains(" Slot").should("be.visible");
-    cy.get("div").contains(" Unique Accounts").should("be.visible");
-    cy.get("div").contains(" Transaction Count").should("be.visible");
-    cy.get("div").contains(" Rewards Distributed").should("be.visible");
+    cy.get("div").contains(" Unique Accounts", { matchCase: false }).should("be.visible");
+    cy.get("div").contains(" Transaction Count", { matchCase: false }).should("be.visible");
+    cy.get("div").contains(" Rewards Distributed", { matchCase: false }).should("be.visible");
     cy.get('[data-testid="table-common"]').should("be.visible");
     cy.wait(2000);
     cy.get('[data-testid="footer"]').scrollIntoView();

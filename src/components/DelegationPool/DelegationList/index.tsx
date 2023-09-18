@@ -3,12 +3,12 @@ import { get } from "lodash";
 import { useTranslation } from "react-i18next";
 import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { HeaderSearchIcon } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 import { formatADAFull, formatPercent, getShortWallet } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -26,19 +26,21 @@ const DelegationLists: React.FC = () => {
   const [size, setSize] = useState(50);
   const [sort, setSort] = useState<string>("");
   const tableRef = useRef(null);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   useEffect(() => {
     if (tickerNameSearch !== search) setPage(1);
     if (tickerNameSearch) {
       setSearch(decodeURIComponent(tickerNameSearch));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tickerNameSearch]);
 
   const fetchData = useFetchList<Delegators>(
     API.DELEGATION.POOL_LIST,
     { page: page - 1, size, search, sort },
     false,
-    REFRESH_TIMES.POOLS
+    blockKey
   );
   const fromPath = history.location.pathname as SpecialPath;
 

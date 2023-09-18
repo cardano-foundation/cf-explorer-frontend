@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -26,9 +27,13 @@ const TokenDetail: React.FC = () => {
   const [currentHolders, setCurrentHolder] = useState(0);
   const { tokenId } = useParams<{ tokenId: string }>();
   const { state } = useLocation<{ data?: IToken }>();
-  const { data, loading, initialized, error } = useFetch<IToken>(
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
+
+  const { data, loading, initialized, error, lastUpdated } = useFetch<IToken>(
     state?.data ? "" : `${API.TOKEN.LIST}/${tokenId}`,
-    state?.data
+    state?.data,
+    false,
+    blockKey
   );
 
   const [txCountRealtime, setTxCountRealtime] = useState<number>(0);
@@ -49,7 +54,7 @@ const TokenDetail: React.FC = () => {
       }}
     >
       <StyledContainer>
-        <TokenOverview currentHolders={currentHolders} data={data} loading={loading} />
+        <TokenOverview currentHolders={currentHolders} data={data} loading={loading} lastUpdated={lastUpdated} />
         <TokenAnalytics dataToken={data} />
         <TokenTableData
           setCurrentHolder={setCurrentHolder}
