@@ -18,7 +18,13 @@ import {
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { EXT_ADA_PRICE_URL, MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
-import { formatADA, formatADAFull, formatDateTimeLocal, numberWithCommas } from "src/commons/utils/helper";
+import {
+  formatADA,
+  formatADAFull,
+  formatDateTimeLocal,
+  getDurationUnits,
+  numberWithCommas
+} from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import RateWithIcon from "src/components/commons/RateWithIcon";
 import { RootState } from "src/stores/types";
@@ -57,8 +63,8 @@ const SkeletonBox = () => (
 
 const MILION = 10 ** 6;
 
-const MAX_PERCENT_SHOW_PENDING_TIME = 90;
-const MIN_PERCENT_SHOW_ACTIVE_TIME = 5;
+const MAX_PERCENT_SHOW_LAST_BAR = 89;
+const MIN_PERCENT_SHOW_FIRST_BAR = 9;
 
 const HomeStatistic = () => {
   const { t } = useTranslation();
@@ -80,15 +86,19 @@ const HomeStatistic = () => {
   const progress = moment(currentEpoch?.endTime).isAfter(moment())
     ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
     : 100;
-
-  const isShowProgressPendingText = +progress < MAX_PERCENT_SHOW_PENDING_TIME;
-  const isShowProgressActiveText = +progress > MIN_PERCENT_SHOW_ACTIVE_TIME;
+  const isShowProgressPendingText = +progress < MAX_PERCENT_SHOW_LAST_BAR;
+  const isShowProgressActiveText = +progress > MIN_PERCENT_SHOW_FIRST_BAR;
+  const isShowLiveStakePercentText = liveRate.toNumber() >= MIN_PERCENT_SHOW_FIRST_BAR;
+  const isShowOtherStakePercentText = liveRate.toNumber() <= MAX_PERCENT_SHOW_LAST_BAR;
 
   const slot = (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH;
   const countdown = MAX_SLOT_EPOCH - slot;
-  const duration = moment.duration(countdown ? countdown : 0, "second");
-  const days = duration.days();
-  const hours = duration.hours();
+
+  const { d: days, h: hours, humanized } = getDurationUnits(countdown ? countdown : 0, "second");
+  const { humanized: humanizedActive } = getDurationUnits(slot, "second");
+
+  const epochActiveText = `Started ${humanizedActive} ago`;
+  const epochFinishText = `Finishes in ${humanized}`;
 
   const { isGalaxyFoldSmall } = useScreen();
   const sign = Math.sign(BigNumber(usdMarket?.price_change_percentage_24h || 0).toNumber());
@@ -190,12 +200,12 @@ const HomeStatistic = () => {
                     </Box>
                   </Box>
                   <Progress>
-                    <CustomTooltip title={+progress || 0}>
+                    <CustomTooltip title={epochActiveText}>
                       <ProcessActive data-testid="current-epoch-progress-active" rate={+progress || 0}>
                         {isShowProgressActiveText && `${+progress || 0}%`}
                       </ProcessActive>
                     </CustomTooltip>
-                    <CustomTooltip title={`${days}d ${hours}h`}>
+                    <CustomTooltip title={epochFinishText}>
                       <ProgressPending data-testid="current-epoch-progress-pending" rate={100 - (+progress || 0)}>
                         {isShowProgressPendingText && (
                           <TextPending>
@@ -244,21 +254,21 @@ const HomeStatistic = () => {
                     <Title data-testid="live-stake-value">{formatADA(liveStake)}</Title>
                   </CustomTooltip>
                   <Progress>
-                    <CustomTooltip title={liveRate.toFixed(5)}>
+                    <CustomTooltip title={"Total staked to Circulating supply ratio"}>
                       <ProcessActive data-testid="live-stake-progress-active" rate={liveRate.toNumber()}>
-                        {liveRate.toFixed(0, BigNumber.ROUND_DOWN)}%
+                        {isShowLiveStakePercentText && `${liveRate.toFixed(0, BigNumber.ROUND_DOWN)}%`}
                       </ProcessActive>
                     </CustomTooltip>
-                    <CustomTooltip title={liveRate.div(-1).plus(100).toFixed(5)}>
-                      <ProgressPending
-                        data-testid="live-stake-progress-pending"
-                        rate={liveRate.div(-1).plus(100).toNumber()}
-                      >
+                    <ProgressPending
+                      data-testid="live-stake-progress-pending"
+                      rate={liveRate.div(-1).plus(100).toNumber()}
+                    >
+                      {isShowOtherStakePercentText && (
                         <Box color={({ palette }) => palette.secondary.main}>
                           {liveRate.div(-1).plus(100).toFixed(0)}%
                         </Box>
-                      </ProgressPending>
-                    </CustomTooltip>
+                      )}
+                    </ProgressPending>
                   </Progress>
                 </Box>
                 <Box>

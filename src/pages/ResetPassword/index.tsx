@@ -1,5 +1,6 @@
 import { Box, FormGroup, FormHelperText, IconButton, InputAdornment } from "@mui/material";
 import { useEffect, useReducer, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router-dom";
 
 import { FailIcon, HideIcon, LockIcon, ShowIcon } from "src/commons/resources";
@@ -44,6 +45,7 @@ const formReducer = (state: IForm, event: any) => {
 export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string }) {
   const history = useHistory();
   const path = useLocation();
+  const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [code, setCode] = useState("");
@@ -62,7 +64,7 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
   });
 
   useEffect(() => {
-    document.title = "Reset Password | Cardano Blockchain Explorer";
+    document.title = `${t("account.resetPassword")} | ${t("head.page.dashboard")}`;
   }, []);
 
   const handleTogglePassword = () => {
@@ -81,21 +83,20 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
     switch (name) {
       case "password":
         if (!value) {
-          error = "Please enter your Password";
+          error = t("validation.password");
         } else if (
           value.length < 8 ||
           value.length > 30 ||
           !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/.test(value)
         ) {
-          error =
-            "Password has to be from 8 to 30 characters and must contain at least 1 number, 1 special character, 1 uppercase and 1 lowercase letter";
+          error = t("validation.password.length");
         }
         break;
       case "confirmPassword":
         if (!value) {
-          error = "Please enter your Confirm Password";
+          error = t("validation.passwordConfirm");
         } else if (value !== formData.password.value) {
-          error = "Password does not match";
+          error = t("validation.password.notMatch");
         }
         break;
       default:
@@ -200,7 +201,7 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
   return (
     <Container>
       <WrapContent>
-        <WrapTitle>Reset Password</WrapTitle>
+        <WrapTitle>{t("account.resetPassword")}</WrapTitle>
         <FormGroup>
           {!success && !error ? (
             <WrapForm>
@@ -231,7 +232,7 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
                   }}
                   fullWidth
                   type={showPassword ? "text" : "password"}
-                  placeholder="New password"
+                  placeholder={t("account.newPassword")}
                   error={Boolean(formData.password.error && formData.password.touched)}
                 />
                 {formData.password.error && formData.password.touched ? (
@@ -257,7 +258,7 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
                       </IconButton>
                     </InputAdornment>
                   }
-                  placeholder="Confirm password"
+                  placeholder={t("account.confirmPassword")}
                   error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
                 />
                 {formData.confirmPassword.error && formData.confirmPassword.touched ? (
@@ -265,26 +266,26 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
                 ) : null}
               </WrapInput>
               <WrapButton variant="contained" fullWidth onClick={handleSubmit} disabled={!enableButton}>
-                Submit
+                {t("common.submit")}
               </WrapButton>
             </WrapForm>
           ) : !error ? (
             <WrapForm>
-              <Label>Your password has been reset successfully</Label>
+              <Label>{t("message.resetPassword.success")}</Label>
               <WrapButton variant="contained" fullWidth onClick={() => history.replace(routers.SIGN_IN)}>
-                Sign In
+                {t("common.signIn")}
               </WrapButton>
             </WrapForm>
           ) : (
             <WrapForm alignItems={"center"}>
               <FailIcon />
-              <Title>Reset Password Failed</Title>
+              <Title>{t("account.resetPasswordFail")}</Title>
               <Box>
-                <Label mb={1}>There's been an error in the verify process</Label>
-                <Label>This URL is either incorrect or has expired.</Label>
+                <Label mb={1}>{t("account.error.verify")}</Label>
+                <Label>{t("account.expired.link")}</Label>
               </Box>
               <WrapButton variant="contained" fullWidth onClick={() => history.replace(routers.HOME)}>
-                Go to Dashboard
+                {t("account.goToDashboard")}
               </WrapButton>
             </WrapForm>
           )}

@@ -24,6 +24,9 @@ export const StyledInput = styled(InputBase)`
   .MuiInputBase-input {
     padding: 10px 14px;
     border: 1.5px solid ${({ theme, error }) => (error ? theme.palette.error.main : theme.palette.border.main)};
+    &:focus-within {
+      border-color: ${({ theme }) => theme.palette.secondary.light};
+    }
     border-radius: var(--border-radius-sm);
     box-sizing: border-box;
   }

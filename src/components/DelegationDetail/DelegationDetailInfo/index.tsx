@@ -106,7 +106,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Item item xs={6} md={3} top={1}>
             <StyledImg src={TickerIcon} alt="Ticker Icon" />
             <InfoTitle>
-              <StyledTitle>{t("Ticker")}</StyledTitle>
+              <StyledTitle>{t("common.ticker")}</StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.tickerName || ""}</InfoValue>
           </Item>
