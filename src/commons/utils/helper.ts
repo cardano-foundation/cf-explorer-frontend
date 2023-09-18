@@ -1,12 +1,12 @@
 import BigNumber from "bignumber.js";
-import moment, { DurationInputArg1, DurationInputArg2 } from "moment";
-import { parse } from "qs";
 import jwtDecode from "jwt-decode";
 import { isNil } from "lodash";
+import moment, { DurationInputArg1, DurationInputArg2 } from "moment";
+import { parse } from "qs";
 
 import { setUserData } from "../../stores/user";
-import { getInfo, signIn } from "./userRequest";
 import { APP_LANGUAGES, MAX_SLOT_EPOCH, NETWORK, NETWORKS, NETWORK_TYPES } from "./constants";
+import { getInfo, signIn } from "./userRequest";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
 export const alphaNumeric = /[^0-9a-zA-Z]/;
@@ -271,9 +271,18 @@ export const getDurationUnits = (inp: DurationInputArg1, unit: DurationInputArg2
   };
 };
 
-export const getLang = (): APP_LANGUAGES => (localStorage.getItem("lang") as APP_LANGUAGES) || APP_LANGUAGES.ENGLISH;
-export const setLang = (lang: APP_LANGUAGES) => localStorage.setItem("lang", lang);
 type blockEpochNoType = number | null | undefined;
+
+export const handleChangeLanguage = (newLang: APP_LANGUAGES, currentLanguage: APP_LANGUAGES | undefined) => {
+  moment.locale(newLang);
+  const pattern = /^\/([a-z]{2})\//;
+  if (currentLanguage) {
+    window.location.pathname = window.location.pathname.replace(pattern, `/${newLang}/`);
+  } else {
+    window.location.pathname = `/${newLang}${window.location.pathname}`;
+  }
+};
+
 export const formatNameBlockNo = (blockNo: blockEpochNoType, epochNo: blockEpochNoType) => {
   if (isNil(blockNo) && isNil(epochNo))
     return {
