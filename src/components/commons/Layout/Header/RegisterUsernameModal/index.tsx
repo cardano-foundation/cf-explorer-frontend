@@ -84,12 +84,12 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setIs
       }}
     >
       <>
-        <StyledTitle>Enter your Username </StyledTitle>
-        <TextNote>Please enter your Username to create a new unique one</TextNote>
-        <Label required={true}>Username</Label>
+        <StyledTitle>{t("account.enterUrUsername")} </StyledTitle>
+        <TextNote>{t("account.createUniqueAccount")}</TextNote>
+        <Label required={true}>{t("account.username")}</Label>
         <br />
         <StyledInput
-          placeholder="Username"
+          placeholder={t("account.username")}
           value={value}
           style={{ width: "100%" }}
           onChange={(e) => {
@@ -102,13 +102,11 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setIs
             setValue(val);
           }}
         />
-        <FormHelperText>
-          Username has to be from 5 to 30 characters in length, only alphanumeric characters allowed
-        </FormHelperText>
+        <FormHelperText>{t("message.error.accountInValid")}</FormHelperText>
         <TextError>{errorMessage}</TextError>
         <WrapButton>
           <StyledDarkLoadingButton loading={loading} disabled={loading || !!errorMessage || !value} onClick={onSubmit}>
-            Confirm
+            {t("common.confirm")}
           </StyledDarkLoadingButton>
         </WrapButton>
       </>
