@@ -222,3 +222,5 @@ export enum APP_LANGUAGES {
   ENGLISH = "en",
   FRANCE = "fr"
 }
+
+export const SUPPORTED_LANGUAGES = ["en"];
