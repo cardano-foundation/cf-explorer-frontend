@@ -7,7 +7,13 @@ import { useSelector } from "react-redux";
 
 import Card from "src/components/commons/Card";
 import Table, { Column } from "src/components/commons/Table";
-import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
+import {
+  formatADAFull,
+  formatDateTimeLocal,
+  formatNameBlockNo,
+  getPageInfo,
+  getShortHash
+} from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
@@ -50,9 +56,16 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       title: t("glossary.block"),
       key: "block",
       minWidth: "100px",
-      render: (r) => (
-        <StyledLink to={details.block(r.blockNo || r.hash)}>{r.blockNo || getShortHash(r.hash || "")}</StyledLink>
-      )
+      render: (r) => {
+        const { blockName, tooltip } = formatNameBlockNo(r.blockNo, r.epochNo);
+        return (
+          <StyledLink to={details.block(r.blockNo || r.hash)}>
+            <CustomTooltip title={tooltip}>
+              <span>{blockName}</span>
+            </CustomTooltip>
+          </StyledLink>
+        );
+      }
     },
     {
       title: t("glossary.blockID"),
@@ -72,7 +85,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
         <>
           <EpochNo>{r.slotNo}</EpochNo>
           <Box color={({ palette }) => palette.secondary.light}>
-            {r.epochNo}/{r.epochSlotNo || 0}
+            {r.epochNo}/{r.epochSlotNo}
           </Box>
         </>
       )
