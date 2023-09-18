@@ -273,8 +273,7 @@ const HomeStatistic = () => {
                 </Box>
                 <Box>
                   <Box color={({ palette }) => palette.secondary.light}>
-                    {t("glossary.activeStake")} <ADAicon width={10} />
-                    :&nbsp;
+                    {t("glossary.activeStake")} (<ADAicon width={10} />) :&nbsp;
                     <CustomTooltip title={formatADAFull(activeStake)}>
                       <span data-testid="active-stake-value">{formatADA(activeStake)}</span>
                     </CustomTooltip>
@@ -282,8 +281,7 @@ const HomeStatistic = () => {
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
                     <CustomTooltip title={t("glossary.offTheMaxSupply")}>
                       <span>
-                        {t("glossary.circulatingSupply")} <ADAicon width={8} />
-                        :&nbsp;
+                        {t("glossary.circulatingSupply")} (<ADAicon width={8} />) :&nbsp;
                       </span>
                     </CustomTooltip>
                     <CustomTooltip title={formatADAFull(currentEpoch?.circulatingSupply || 0)}>
