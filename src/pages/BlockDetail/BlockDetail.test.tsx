@@ -1,6 +1,5 @@
 import { render, screen } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 
 import BlockDetail from ".";
 
@@ -27,8 +26,7 @@ describe("BlockDetail page", () => {
       data: blockDetail,
       loading: false,
       initialized: true,
-      error: false,
-      lastUpdated: new Date().getTime()
+      error: false
     });
   });
 
@@ -45,7 +43,7 @@ describe("BlockDetail page", () => {
       loading: false,
       initialized: true,
       error: false,
-      lastUpdated: new Date().getTime()
+      lastUpdated: Date.now()
     });
     render(<BlockDetail />);
     expect(screen.getByRole("img", { name: /empty icon/i })).toBeInTheDocument();
@@ -57,10 +55,10 @@ describe("BlockDetail page", () => {
       loading: false,
       initialized: true,
       error: false,
-      lastUpdated: new Date().getTime()
+      lastUpdated: Date.now()
     });
     (useFetch as jest.Mock).mockImplementation(fetchImpFunc);
     render(<BlockDetail />);
-    expect(fetchImpFunc).toHaveBeenCalledWith(`blocks/${undefined}`, undefined, false, REFRESH_TIMES.BLOCK_DETAIL);
+    expect(fetchImpFunc).toHaveBeenCalledWith(`blocks/${undefined}`, undefined, false, undefined);
   });
 });

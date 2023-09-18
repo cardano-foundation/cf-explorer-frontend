@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { CurentEpochPool, LiveStakeIcon, RocketPoolIcon, TotalPoolIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { formatADA, formatADAFull, numberWithCommas } from "src/commons/utils/helper";
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
@@ -28,13 +28,9 @@ import {
 
 const OverViews: React.FC = () => {
   const { t } = useTranslation();
-  const { data, loading, lastUpdated } = useFetch<OverViewDelegation>(
-    API.DELEGATION.HEADER,
-    undefined,
-    false,
-    REFRESH_TIMES.POOLS
-  );
-  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+  const { currentEpoch, blockNo } = useSelector(({ system }: RootState) => system);
+
+  const { data, loading, lastUpdated } = useFetch<OverViewDelegation>(API.DELEGATION.HEADER, undefined, false, blockNo);
 
   if (loading) {
     return (
@@ -66,7 +62,7 @@ const OverViews: React.FC = () => {
       <TimeDuration>
         <FormNowMessage time={lastUpdated} />
       </TimeDuration>
-      <Grid container spacing={2}>
+      <Grid data-testid="pool-overview" container spacing={2}>
         <Grid item xl={3} md={6} xs={12}>
           <StyledCard.Container>
             <StyledCard.Content>
