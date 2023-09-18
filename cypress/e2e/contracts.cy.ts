@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 describe("contracts spec", () => {
   it("should show the contract details of transaction 4223b55d78e90917c5a6054c8a038124f7b1c0ecefc6751dd8bcd6a5016ae2d1", () => {
     const transactionHash = "4223b55d78e90917c5a6054c8a038124f7b1c0ecefc6751dd8bcd6a5016ae2d1";
@@ -49,7 +47,7 @@ describe("contracts spec", () => {
   it.only("should navigate to the contract detail page", () => {
     cy.visit("/contracts");
     cy.get(".css-1l7sjfb").contains("Contracts");
-    cy.get(":nth-child(1) > :nth-child(1) > div > .css-1l62pou").click();
+    cy.get('[data-testid="table-common"] table tbody tr').eq(0).click();
     cy.get(".css-1msjg76 > .css-0").contains("Contract Details");
     cy.get(":nth-child(1) > .css-1heutcx > .css-k6svam > .css-1xc8op").contains("Address");
     cy.get(":nth-child(2) > .css-1heutcx > .css-k6svam > .css-1xc8op").contains("Stake Address");
