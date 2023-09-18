@@ -76,7 +76,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
       case "ONE_MONTH":
         return `${moment(label).format("DD MMM")} - ${moment(label).add(1, "days").format("DD MMM")}`;
       case "THREE_MONTH":
-        return `${moment(label).format("DD MMM")} - ${moment(label).add(6, "days").format("DD MMM")}`;
+        return `${moment(label).format("DD MMM")} - ${moment(label).add(1, "days").format("DD MMM")}`;
       default:
         return "";
     }
@@ -149,7 +149,6 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                       stroke={theme.palette.primary.main}
                       strokeWidth={4}
                       fill="url(#colorUv)"
-                      dot={{ r: 2 }}
                       activeDot={{ r: 6 }}
                     />
                   </AreaChart>
