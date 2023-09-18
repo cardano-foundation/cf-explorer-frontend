@@ -2,9 +2,9 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Dialog, DialogActions, DialogContentText, IconButton } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useHistory } from "react-router-dom";
 import { useLocalStorage } from "react-use";
-import { useTranslation } from "react-i18next";
 
 import useAuth from "src/commons/hooks/useAuth";
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -90,7 +90,7 @@ const Bookmark = () => {
   };
 
   useEffect(() => {
-    document.title = `Bookmarks | Cardano Blockchain Explorer`;
+    document.title = `${t("account.bookmark")} | ${t("head.page.dashboard")}`;
   }, []);
 
   useEffect(() => {
@@ -101,7 +101,7 @@ const Bookmark = () => {
 
   const colDynamic: Record<string, Column<Bookmark>> = {
     ADDRESS: {
-      title: "Address",
+      title: t("common.address"),
       key: "Address",
       minWidth: 120,
       render: (data) => (
@@ -117,7 +117,7 @@ const Bookmark = () => {
       )
     },
     TRANSACTION: {
-      title: "Tnx Hash",
+      title: t("common.tnxHash"),
       key: "Transaction",
       minWidth: 120,
       render: (data) => (
@@ -133,7 +133,7 @@ const Bookmark = () => {
       )
     },
     BLOCK: {
-      title: "Block ID",
+      title: t("glossary.blockID"),
       key: "Block",
       minWidth: 120,
       render: (data) => (
@@ -147,7 +147,7 @@ const Bookmark = () => {
       )
     },
     EPOCH: {
-      title: "EPOCH #",
+      title: `${t("epoch")} #`,
       key: "Epoch",
       minWidth: 120,
       render: (data) => (
@@ -161,7 +161,7 @@ const Bookmark = () => {
       )
     },
     POOL: {
-      title: "Pool ID",
+      title: t("glossary.poolId"),
       key: "Pool",
       minWidth: 120,
       render: (data) => (
@@ -177,7 +177,7 @@ const Bookmark = () => {
       )
     },
     STAKE_KEY: {
-      title: "Stake Address",
+      title: t("common.stakeAddress"),
       key: "StakeKey",
       minWidth: 120,
       render: (data) => (
@@ -198,7 +198,7 @@ const Bookmark = () => {
       ...colDynamic[activeTab as any]
     },
     {
-      title: "Added On",
+      title: t("glossary.addedOn"),
       key: "Added On",
       minWidth: 120,
       render: (data) => {
@@ -206,7 +206,7 @@ const Bookmark = () => {
       }
     },
     {
-      title: <Box textAlign={"right"}>Action</Box>,
+      title: <Box textAlign={"right"}>{t("glossary.action")}</Box>,
       key: "Action",
       minWidth: 120,
       render: (data) => (
@@ -225,7 +225,7 @@ const Bookmark = () => {
     component: React.ReactNode;
   }[] = [
     {
-      label: "Address",
+      label: t("common.address"),
       key: "ADDRESS",
       component: (
         <StyledTable
@@ -247,7 +247,7 @@ const Bookmark = () => {
       )
     },
     {
-      label: "Transaction",
+      label: t("glossary.transaction"),
       key: "TRANSACTION",
       component: (
         <StyledTable
@@ -269,7 +269,7 @@ const Bookmark = () => {
       )
     },
     {
-      label: "Block",
+      label: t("glossary.block"),
       key: "BLOCK",
       component: (
         <StyledTable
@@ -291,7 +291,7 @@ const Bookmark = () => {
       )
     },
     {
-      label: "Epoch",
+      label: t("epoch"),
       key: "EPOCH",
       component: (
         <StyledTable
@@ -313,7 +313,7 @@ const Bookmark = () => {
       )
     },
     {
-      label: "Pool",
+      label: t("glossary.pool"),
       key: "POOL",
       component: (
         <StyledTable
@@ -335,7 +335,7 @@ const Bookmark = () => {
       )
     },
     {
-      label: "Stake Address",
+      label: t("common.stakeAddress"),
       key: "STAKE_KEY",
       component: (
         <StyledTable
@@ -418,24 +418,24 @@ const Bookmark = () => {
           <QuestionConfirm />
         </Box>
         <Box component={"h2"} textAlign={"center"} fontWeight={"bold"} fontSize={"1.125rem"} paddingBottom={"0px"}>
-          Confirmation Required
+          {t("glossary.confirmationRequired")}
         </Box>
         <Box px={2}>
           <DialogContentText fontSize={"1.125rem"}>
-            Are you sure to remove {colDynamic[activeTab].title} {renderIdSelected(selected || "")} ?
+            {t("glossary.confirmRemove")} {colDynamic[activeTab].title} {renderIdSelected(selected || "")} ?
           </DialogContentText>
         </Box>
         <DialogActions>
           <Box width={"100%"} display={"flex"} pt={2} pb={3} flexDirection={"row"} justifyContent={"center"}>
             <CancelButton disabled={loadingDelete} onClick={handleClose} variant="outlined">
-              Cancel
+              {t("common.cancel")}
             </CancelButton>
             <DeleteButton
               loading={loadingDelete}
               onClick={() => selected && deleteBookMark(selected)}
               variant="contained"
             >
-              Continue
+              {t("common.continue")}
             </DeleteButton>
           </Box>
         </DialogActions>

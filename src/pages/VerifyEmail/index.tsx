@@ -1,21 +1,23 @@
 import { Box, CircularProgress, FormGroup } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router-dom";
 
+import { FailIcon, SuccessIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
 import { verifyActive } from "src/commons/utils/userRequest";
-import { FailIcon, SuccessIcon } from "src/commons/resources";
 
 import { Container, Label, Title, WrapButton, WrapContent, WrapForm } from "./styles";
 
 export default function VerifyEmail() {
+  const { t } = useTranslation();
   const history = useHistory();
   const path = useLocation();
   const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    document.title = "Verify Email | Cardano Blockchain Explorer";
+    document.title = `${t("account.verifyEmail")} | ${t("head.page.dashboard")}`;
   }, []);
 
   const handleVerify = async (code: string) => {
@@ -55,21 +57,21 @@ export default function VerifyEmail() {
           ) : success ? (
             <WrapForm alignItems={"center"}>
               <SuccessIcon />
-              <Title mb={3}>You have successfully verified the account.</Title>
+              <Title mb={3}>{t("account.verifySuccess")}</Title>
               <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.SIGN_IN)}>
-                Sign In
+                {t("common.signIn")}
               </WrapButton>
             </WrapForm>
           ) : (
             <WrapForm alignItems={"center"}>
               <FailIcon />
-              <Title>Verify Failed</Title>
+              <Title>{t("account.verifyFailed")}</Title>
               <Box>
-                <Label mb={1}>There's been an error in the verify process</Label>
-                <Label>This URL is either incorrect or has expired.</Label>
+                <Label mb={1}>{t("account.error.verify")}</Label>
+                <Label>{t("account.expired.link")}</Label>
               </Box>
               <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.HOME)}>
-                Go to Dashboard
+                {t("account.goToDashboard")}
               </WrapButton>
             </WrapForm>
           )}

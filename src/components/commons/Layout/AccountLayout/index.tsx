@@ -1,5 +1,6 @@
 import { Box, useTheme } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { MdChevronRight } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -33,11 +34,11 @@ interface Props {
 }
 
 const AccountLayout: React.FC<Props> = ({ children }) => {
+  const { t } = useTranslation();
   const { pathname } = useLocation();
   const { userData } = useSelector(({ user }: RootState) => user);
   const theme = useTheme();
   const [openReportModal, setOpenReportModal] = useState(false);
-
   const fetchUserInfo = useCallback(async () => {
     try {
       const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
@@ -53,7 +54,10 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
       fetchUserInfo();
     }
   }, [fetchUserInfo]);
-
+  const translatedRouter = router.map((route) => ({
+    ...route,
+    title: t(`account.${route.title.replaceAll(" ", "").toLowerCase()}`)
+  }));
   const renderListTabs = () => (
     <SideBar>
       <Box>
@@ -72,7 +76,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
         </Box>
         <Box display={"flex"} justifyContent={"center"} mt={4}>
           <WrapItemMobile>
-            {router.map((route, index) => {
+            {translatedRouter.map((route, index) => {
               const active = route.to === pathname;
               return (
                 <React.Fragment key={index}>
@@ -111,7 +115,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   return (
     <Wrapper>
       <Box component={"h2"} textAlign="left" color={({ palette }) => palette.secondary.main}>
-        Account Overview
+        {t("account.overview")}
       </Box>
       <ContentBox>
         {renderListTabs()}

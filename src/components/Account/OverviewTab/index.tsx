@@ -77,6 +77,7 @@ export const RowItem: React.FC<TRowItem> = ({
 };
 
 const OverviewTab = () => {
+  const { t } = useTranslation();
   const { userData } = useSelector(({ user }: RootState) => user);
   const { isTablet, isMobile } = useScreen();
   const [openModal, setOpenModal] = useState(false);
@@ -84,7 +85,7 @@ const OverviewTab = () => {
   return (
     <Box textAlign="left">
       <RowItem
-        label="You are logged in as"
+        label={t("account.loggedInAs")}
         value={
           userData?.loginType === "connectWallet"
             ? isMobile
@@ -95,7 +96,7 @@ const OverviewTab = () => {
         isTablet={isTablet}
       />
       <RowItem
-        label="Last Login"
+        label={t("account.lastLogin")}
         value={moment(userData?.lastLogin).format("MM/DD/YYYY hh:mm:ss")}
         isTablet={isTablet}
       />
