@@ -22,6 +22,7 @@ import { formatADA, formatADAFull, formatDateTimeLocal, numberWithCommas } from 
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import RateWithIcon from "src/components/commons/RateWithIcon";
 import { RootState } from "src/stores/types";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import {
   AdaPrice,
@@ -35,7 +36,6 @@ import {
   Progress,
   ProgressPending,
   StatisticContainer,
-  StyledAdaLogoIcon,
   TextPending,
   TimeDuration,
   Title,
@@ -234,7 +234,9 @@ const HomeStatistic = () => {
                       src={LiveStakeIcon}
                       alt="Total ADA Stake"
                     />
-                    <Name data-testid="live-stake-box-title">{t("glossary.liveStake")}</Name>
+                    <Name data-testid="live-stake-box-title">
+                      {t("glossary.liveStake")} (<ADAicon />)
+                    </Name>
                   </Box>
                 </Box>
                 <Box>
@@ -261,7 +263,8 @@ const HomeStatistic = () => {
                 </Box>
                 <Box>
                   <Box color={({ palette }) => palette.secondary.light}>
-                    {t("glossary.activeStake")} <StyledAdaLogoIcon />:{" "}
+                    {t("glossary.activeStake")} <ADAicon width={10} />
+                    :&nbsp;
                     <CustomTooltip title={formatADAFull(activeStake)}>
                       <span data-testid="active-stake-value">{formatADA(activeStake)}</span>
                     </CustomTooltip>
@@ -269,7 +272,8 @@ const HomeStatistic = () => {
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
                     <CustomTooltip title={t("glossary.offTheMaxSupply")}>
                       <span>
-                        {t("glossary.circulatingSupply")} <StyledAdaLogoIcon />:{" "}
+                        {t("glossary.circulatingSupply")} <ADAicon width={8} />
+                        :&nbsp;
                       </span>
                     </CustomTooltip>
                     <CustomTooltip title={formatADAFull(currentEpoch?.circulatingSupply || 0)}>
