@@ -24,10 +24,11 @@ interface CopyButtonProps extends IconButtonProps {
   placement?: TooltipProps["placement"];
   className?: string;
   children?: React.ReactNode;
+  customIcon?: string;
   onClick?: (e: React.MouseEvent) => void;
 }
 
-const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, placement, ...props }) => {
+const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, placement, customIcon, ...props }) => {
   const [, copyToClipboard] = useCopyToClipboard();
   const [copied, setCopied] = useState<boolean>();
 
@@ -54,7 +55,7 @@ const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, p
           (copied ? (
             <BiCheckCircle style={{ verticalAlign: "text-bottom", scale: "2" }} />
           ) : (
-            <CopyImage src={CopyIconSquareUrl} alt="icon copy" />
+            <CopyImage src={customIcon || CopyIconSquareUrl} alt="icon copy" />
           ))}
       </Button>
     </CustomTooltip>
