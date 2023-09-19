@@ -1,6 +1,8 @@
 import axios from "axios";
 import jsonBig from "json-bigint";
 
+import i18n from "src/i18n";
+
 import { removeAuthInfo } from "./helper";
 import { refreshToken } from "./userRequest";
 import { API_URL, AUTH_API_URL } from "./constants";
@@ -102,7 +104,7 @@ const getToken = () => {
 };
 const getLang = () => {
   try {
-    const lang = localStorage.getItem("lang");
+    const lang = i18n.language;
     return lang;
   } catch {
     return "en";
