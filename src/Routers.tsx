@@ -1,6 +1,6 @@
 import { changeLanguage } from "i18next";
 import React, { useEffect } from "react";
-import { Redirect, Route, Switch, useHistory } from "react-router-dom";
+import { Redirect, Route, RouteProps, Switch, useHistory } from "react-router-dom";
 import { useAsync, useLocalStorage } from "react-use";
 
 import useAuth from "./commons/hooks/useAuth";
@@ -147,7 +147,7 @@ const Routes: React.FC = () => {
 };
 
 interface PrivateRouteProps {
-  component: React.ComponentType<any>;
+  component: React.ComponentType<RouteProps>;
   path: string;
   exact?: boolean;
 }

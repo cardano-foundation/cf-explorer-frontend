@@ -10,11 +10,12 @@ import { removeAuthInfo } from "src/commons/utils/helper";
 import { signOut } from "src/commons/utils/userRequest";
 import { setOnDetailView } from "src/stores/user";
 import useToast from "src/commons/hooks/useToast";
+import { UserStoreType } from "src/types/user";
 
 import { Content, Disconnect, Icon, Name, Profile, Span, StyledButton, WrapContent } from "./style";
 
 interface IProps {
-  userData: any;
+  userData: UserStoreType["userData"];
 }
 const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
   const { t } = useTranslation();

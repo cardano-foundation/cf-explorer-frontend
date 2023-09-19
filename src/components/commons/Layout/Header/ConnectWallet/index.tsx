@@ -4,6 +4,7 @@ import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { NetworkType } from "@cardano-foundation/cardano-connect-with-wallet-core";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { AxiosError } from "axios";
 
 import { WalletIcon } from "src/commons/resources";
 import { RootState } from "src/stores/types";
@@ -61,10 +62,12 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
     try {
       const response = await getNonce({ address: stakeAddress || "", walletName: enabledWallet?.toUpperCase() || "" });
       return response.data;
-    } catch (error: any) {
-      const message = t(error.data?.errorCode || ACCOUNT_ERROR.INTERNAL_ERROR);
-      toast.error(message);
-      setModalSignMessage(false);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const message = t(error.response?.data?.errorCode || ACCOUNT_ERROR.INTERNAL_ERROR);
+        toast.error(message);
+        setModalSignMessage(false);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stakeAddress]);

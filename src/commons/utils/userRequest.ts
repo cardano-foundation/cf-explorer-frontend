@@ -11,12 +11,12 @@ export const verifyActive = (payload: TVerifyActive) => authAxios.get("verify/ac
 export const forgotPassword = (payload: TForgotPassword) =>
   authAxios.get("verify/forgot-password", { params: payload });
 export const resetPassword = (payload: TResetPassword) => authAxios.put("verify/reset-password", payload);
-export const verifyCodeResetPassword = (payload: TVerifyCodeResetPassword) => authAxios.get("verify/expired-code", { params: payload });
+export const verifyCodeResetPassword = (payload: TVerifyCodeResetPassword) =>
+  authAxios.get("verify/expired-code", { params: payload });
 export const transferWallet = (payload: TTransferWallet) => authAxios.post("auth/transfers-wallet", payload);
 export const refreshToken = (payload: TRefreshToken) => authAxios.get("auth/refresh-token", { params: payload });
 //auth
-export const getInfo = (payload: TGetInfo) =>
-  authAxios.get<any, AxiosResponse<UserDataType, any>>("user/info", { params: payload });
+export const getInfo = (payload: TGetInfo) => authAxios.get<UserDataType>("user/info", { params: payload });
 export const editInfo = (payload: TEditUser) => authAxios.put("user/edit", payload);
 export const getNonce = (payload: TGetNonce) => authAxios.get<NonceObject>("auth/get-nonce", { params: payload });
 export const existEmail = (payload: TCheckExistEmail) => authAxios.get("user/exist-email", { params: payload });
@@ -29,14 +29,14 @@ export const editPrivateNote = (payload: TEditPrivateNote) => authAxios.put("not
 export const removePrivateNote = (noteId: number) => authAxios.delete(`note/delete/${noteId}`);
 //
 export const addBookmark = (payload: Bookmark) =>
-  authAxios.post<any, AxiosResponse<Bookmark, any>>("/bookmark/add", payload);
+  authAxios.post<unknown, AxiosResponse<Bookmark, unknown>>("/bookmark/add", payload);
 export const addListBookmark = (payload: Bookmark[]) =>
-  authAxios.post<any, AxiosResponse<{ passNumber: number; failNumber: number }, any>>("/bookmark/add-list", {
+  authAxios.post<BookmarkResp>("/bookmark/add-list", {
     bookMarks: payload
   });
 export const deleteBookmark = (id: number) => authAxios.delete("/bookmark/delete/" + id);
 export const getAllBookmarks = (network: string) =>
-  authAxios.get<any, AxiosResponse<Bookmark[], any>>("bookmark/find-all-key?network=" + network);
+  authAxios.get<Bookmark[]>("bookmark/find-all-key?network=" + network);
 
 // report
 export const generateStakeKeyReport = (payload: IBodyReportStakeKey) =>

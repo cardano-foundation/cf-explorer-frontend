@@ -24,7 +24,7 @@ import { Capitalize } from "../commons/CustomText/styles";
 
 interface AddressTransactionListProps {
   underline?: boolean;
-  openDetail?: (_: any, transaction: Transactions, index: number) => void;
+  openDetail?: (_: React.MouseEvent, transaction: Transactions, index: number) => void;
   selected?: number | null;
   showTabView?: boolean;
   address: string;
@@ -44,7 +44,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
   const url = `${API.ADDRESS.DETAIL}/${address}/txs`;
   const theme = useTheme();
   const fetchData = useFetchList<Transactions>(url, { ...pageInfo });
-  const onClickRow = (e: any, transaction: Transactions, index: number) => {
+  const onClickRow = (e: React.MouseEvent, transaction: Transactions, index: number) => {
     let parent: Element | null = e.target as Element;
     while (parent !== null && !parent?.className.includes("MuiPopover-root")) {
       parent = parent?.parentElement;

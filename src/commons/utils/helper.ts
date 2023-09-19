@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js";
-import jwtDecode from "jwt-decode";
+import jwtDecode, { JwtPayload } from "jwt-decode";
 import { isNil } from "lodash";
 import moment, { DurationInputArg1, DurationInputArg2 } from "moment";
 import { parse } from "qs";
@@ -231,10 +231,13 @@ export const isValidEmail = (email: string) => regexEmail.test(email);
 export function validateTokenExpired() {
   const token = localStorage.getItem("token");
   if (!token) return false;
-  const decoded: any = jwtDecode(token);
+  const decoded = jwtDecode<JwtPayload>(token);
   const now = moment();
-  const exp = moment(decoded.exp * 1000);
-  return now.isBefore(exp);
+  if (decoded.exp) {
+    const exp = moment(decoded.exp * 1000);
+    return now.isBefore(exp);
+  }
+  return false;
 }
 
 export const isJson = (str: string) => {

@@ -87,10 +87,11 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     isHideButtonBack,
     lastUpdated
   } = props;
+
   const history = useHistory();
   const theme = useTheme();
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
-  const [openBackdrop, setOpenBackdrop] = useState<any>({
+  const [openBackdrop, setOpenBackdrop] = useState<{ [x: string]: boolean }>({
     input: false,
     output: false
   });
