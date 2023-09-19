@@ -100,10 +100,10 @@ export const SystemLoader = () => {
         }
       };
       socket.current.onclose = (e) => {
+        // eslint-disable-next-line no-console
+        console.error("socket close reason: ", e, JSON.stringify(e));
         setTimeout(() => {
           if (socket.current?.readyState === socket.current?.CLOSED) {
-            // eslint-disable-next-line no-console
-            console.error("socket close reason: ", e.reason);
             connect();
           }
         }, 1000);
