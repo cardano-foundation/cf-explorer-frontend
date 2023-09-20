@@ -17,7 +17,7 @@ import {
 } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { EXT_ADA_PRICE_URL, MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { EXT_ADA_PRICE_URL, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import {
   formatADA,
   formatADAFull,
@@ -68,15 +68,10 @@ const MIN_PERCENT_SHOW_FIRST_BAR = 9;
 
 const HomeStatistic = () => {
   const { t } = useTranslation();
+  const { currentEpoch, usdMarket, btcMarket, blockNo } = useSelector(({ system }: RootState) => system);
 
-  const { currentEpoch, usdMarket } = useSelector(({ system }: RootState) => system);
-  const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS);
-  const { data: btcMarket } = useFetch<CardanoMarket[]>(
-    `${API.MARKETS}?currency=btc`,
-    undefined,
-    false,
-    REFRESH_TIMES.CURRENT_PRICE_BTC
-  );
+  const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS, undefined, false, blockNo);
+
   const { total_supply: total = 1 } = usdMarket || {};
   const { liveStake = 0, activeStake = 1 } = data || {};
   const supply = BigNumber(currentEpoch?.circulatingSupply || 0).div(10 ** 6);
@@ -93,7 +88,6 @@ const HomeStatistic = () => {
 
   const slot = (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH;
   const countdown = MAX_SLOT_EPOCH - slot;
-
   const { d: days, h: hours, humanized } = getDurationUnits(countdown ? countdown : 0, "second");
   const { humanized: humanizedActive } = getDurationUnits(slot, "second");
 
@@ -111,7 +105,7 @@ const HomeStatistic = () => {
       data-testid="home-statistic"
     >
       <WrapGrid item xl lg={3} sm={6} xs={12}>
-        {usdMarket && btcMarket?.[0] ? (
+        {usdMarket && btcMarket ? (
           <Link href={EXT_ADA_PRICE_URL} target="_blank">
             <Item data-testid="ada-price-box" smallItem>
               <WrapCardContent>
@@ -136,7 +130,7 @@ const HomeStatistic = () => {
                     value={usdMarket.price_change_percentage_24h}
                     showIcon={false}
                   />
-                  <AdaPrice data-testid="ada-price-in-btc">{btcMarket[0]?.current_price} BTC</AdaPrice>
+                  <AdaPrice data-testid="ada-price-in-btc">{btcMarket.current_price} BTC</AdaPrice>
                 </Content>
                 <Content display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
                   <TimeDuration data-testid="last-update-ada-price">
