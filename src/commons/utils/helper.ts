@@ -3,9 +3,12 @@ import moment, { DurationInputArg1, DurationInputArg2 } from "moment";
 import { parse } from "qs";
 import jwtDecode from "jwt-decode";
 import { isNil } from "lodash";
+import { AxisInterval } from "recharts/types/util/types";
 
-import { setUserData } from "../../stores/user";
-import { APP_LANGUAGES, MAX_SLOT_EPOCH, NETWORK, NETWORKS, NETWORK_TYPES } from "./constants";
+import breakpoints from "src/themes/breakpoints";
+import { setUserData } from "src/stores/user";
+
+import { APP_LANGUAGES, MAX_SLOT_EPOCH, NETWORK, NETWORKS, NETWORK_TYPES, OPTIONS_CHART_ANALYTICS } from "./constants";
 import { getInfo, signIn } from "./userRequest";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
@@ -299,4 +302,29 @@ export const getDurationUnits = (inp: DurationInputArg1, unit: DurationInputArg2
     h,
     humanized
   };
+};
+
+export const getIntervalAnalyticChart = (rangeTime: OPTIONS_CHART_ANALYTICS): AxisInterval => {
+  const width = window.innerWidth;
+  switch (rangeTime) {
+    case OPTIONS_CHART_ANALYTICS.ONE_DAY:
+      if (width < breakpoints.values.sm) {
+        return 2;
+      }
+      return 0;
+    case OPTIONS_CHART_ANALYTICS.ONE_WEEK:
+      return 0;
+    case OPTIONS_CHART_ANALYTICS.ONE_MONTH:
+      if (width < breakpoints.values.sm) {
+        return 4;
+      }
+      return "preserveStart";
+    case OPTIONS_CHART_ANALYTICS.THREE_MONTH:
+      if (width < breakpoints.values.sm) {
+        return 18;
+      }
+      return "preserveStart";
+    default:
+      return "preserveEnd";
+  }
 };
