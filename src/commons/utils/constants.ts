@@ -223,4 +223,11 @@ export enum APP_LANGUAGES {
   FRANCE = "fr"
 }
 
-export const SUPPORTED_LANGUAGES = ["en", "fr"];
+export const SUPPORTED_LANGUAGES = ["en"];
+
+export enum OPTIONS_CHART_ANALYTICS {
+  ONE_DAY = "ONE_DAY",
+  ONE_WEEK = "ONE_WEEK",
+  ONE_MONTH = "ONE_MONTH",
+  THREE_MONTH = "THREE_MONTH"
+}

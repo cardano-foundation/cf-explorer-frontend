@@ -14,6 +14,7 @@ import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { formatNumberDivByDecimals, formatPrice } from "src/commons/utils/helper";
 import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
+import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
 
 import Card from "../../commons/Card";
 import {
@@ -76,13 +77,13 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
 
   const getLabelTimeTooltip = (label: string) => {
     switch (rangeTime) {
-      case "ONE_DAY":
+      case OPTIONS_CHART_ANALYTICS.ONE_DAY:
         return `${moment(label).format("DD MMM HH:mm")} - ${moment(label).add(2, "hour").format("HH:mm")}`;
-      case "ONE_WEEK":
+      case OPTIONS_CHART_ANALYTICS.ONE_WEEK:
         return moment(label).format("DD MMM");
-      case "ONE_MONTH":
+      case OPTIONS_CHART_ANALYTICS.ONE_MONTH:
         return `${moment(label).format("DD MMM")} - ${moment(label).add(1, "days").format("DD MMM")}`;
-      case "THREE_MONTH":
+      case OPTIONS_CHART_ANALYTICS.THREE_MONTH:
         return `${moment(label).format("DD MMM")} - ${moment(label).add(1, "days").format("DD MMM")}`;
       default:
         return "";
@@ -143,6 +144,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                       tickMargin={5}
                       dx={-15}
                       color={theme.palette.secondary.light}
+                      interval={"equidistantPreserveStart"}
                     >
                       <Label value="(UTC)" offset={-12} position="insideBottom" />
                     </XAxis>
