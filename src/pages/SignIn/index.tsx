@@ -218,10 +218,6 @@ export default function SignIn() {
     <Container>
       <WrapContent>
         <WrapTitle data-testid="signin-title">{t("common.signIn")}</WrapTitle>
-        <WrapHintText>
-          {t("account.noAccount")}{" "}
-          <WrapSignUp onClick={() => history.push(routers.SIGN_UP)}>{t("page.signUp")}</WrapSignUp>
-        </WrapHintText>
         <FormGroup>
           <WrapForm>
             <CloseButton saving={0} onClick={() => handleRedirectBack()}>
@@ -308,6 +304,10 @@ export default function SignIn() {
             >
               {t("common.signIn")}
             </WrapButton>
+            <WrapHintText>
+              {t("account.noAccount")}{" "}
+              <WrapSignUp onClick={() => history.push(routers.SIGN_UP)}>{t("page.signUp")}</WrapSignUp>
+            </WrapHintText>
           </WrapForm>
         </FormGroup>
       </WrapContent>

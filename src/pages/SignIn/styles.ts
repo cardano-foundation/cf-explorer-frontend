@@ -51,6 +51,7 @@ export const WrapHintText = styled(Box)`
   color: ${({ theme }) => theme.palette.secondary.light};
   display: flex;
   gap: 5px;
+  align-self: center;
 `;
 
 export const WrapForm = styled(Box)(({ theme }) => ({
