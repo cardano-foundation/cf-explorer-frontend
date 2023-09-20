@@ -12,14 +12,14 @@ const FormNowMessage = ({ time }: Props) => {
 
   useEffect(() => {
     if (time) {
-      setMessage(`Last updated ${moment(time).fromNow()}`);
+      setMessage(`${t("common.lastUpdated")} ${moment(time).fromNow()}`);
       const interval = setInterval(() => {
-        setMessage(`${t("common.lastUpdated")}  ${moment(time).fromNow()}`);
+        setMessage(`${t("common.lastUpdated")} ${moment(time).fromNow()}`);
       }, 1000);
 
       return () => clearInterval(interval);
     }
-  }, [time]);
+  }, [time, t]);
 
   return <>{message}</>;
 };

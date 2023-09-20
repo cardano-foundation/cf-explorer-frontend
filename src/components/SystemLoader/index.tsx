@@ -44,10 +44,10 @@ export const SystemLoader = () => {
       } = currentEpoch;
       const interval = setInterval(() => {
         const newSlot = slot + Math.floor((Date.now() - currentTime.current) / 1000);
-        const isCrawlerStop = newSlot - MAX_SLOT_EPOCH > 1000;
-        const newNo = newSlot >= MAX_SLOT_EPOCH && !isCrawlerStop ? no + 1 : no;
+        const isCrawlerStop = newSlot - totalSlot > 100;
+        const newNo = newSlot >= totalSlot && !isCrawlerStop ? no + 1 : no;
         setStoreCurrentEpoch({
-          slot: newSlot % MAX_SLOT_EPOCH,
+          slot: newSlot % totalSlot,
           no: newNo,
           totalSlot,
           account,

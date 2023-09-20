@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
-import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
