@@ -42,9 +42,10 @@ export const SystemLoader = () => {
         circulatingSupply,
         blkCount
       } = currentEpoch;
+      const TIME_OUT_CRAWLER_STOP = 100;
       const interval = setInterval(() => {
         const newSlot = slot + Math.floor((Date.now() - currentTime.current) / 1000);
-        const isCrawlerStop = newSlot - totalSlot > 100;
+        const isCrawlerStop = newSlot - totalSlot > TIME_OUT_CRAWLER_STOP;
         const newNo = newSlot >= totalSlot && !isCrawlerStop ? no + 1 : no;
         setStoreCurrentEpoch({
           slot: newSlot % totalSlot,
