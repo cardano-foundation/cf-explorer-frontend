@@ -45,19 +45,20 @@ import {
   TextPending,
   TimeDuration,
   Title,
+  VerticalContent,
   WrapCardContent,
   WrapGrid
 } from "./style";
 
 const SkeletonBox = () => (
   <Item>
-    <Content>
+    <Box>
       <ItemSkeleton width="50%" />
       <ItemSkeleton width="30%" />
       <ItemSkeleton />
       <ItemSkeleton width="50%" />
       <ItemSkeleton width="80%" />
-    </Content>
+    </Box>
   </Item>
 );
 
@@ -125,12 +126,12 @@ const HomeStatistic = () => {
                   <Name data-testid="ada-price-box-title">{t("stats.adaPrice")}</Name>
                 </Box>
                 <Box display={"flex"} alignItems={"center"}>
-                  <ItemIcon src={sign > 0 ? HomeUpIcon : HomeDownIcon} alt="Home up icon" />
-                  <Box ml={2}>
+                  <img src={sign > 0 ? HomeUpIcon : HomeDownIcon} alt="Home up icon" width={30} height={30} />
+                  <Box ml={1}>
                     <Title data-testid="ada-current-price">${usdMarket.current_price}</Title>
                   </Box>
                 </Box>
-                <Content display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
+                <Content gap="5px 15px">
                   <RateWithIcon
                     data-testid="ada-twenty-four-hr-price-change"
                     value={usdMarket.price_change_percentage_24h}
@@ -138,7 +139,7 @@ const HomeStatistic = () => {
                   />
                   <AdaPrice data-testid="ada-price-in-btc">{btcMarket[0]?.current_price} BTC</AdaPrice>
                 </Content>
-                <Content display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
+                <Content>
                   <TimeDuration data-testid="last-update-ada-price">
                     {t("info.lastUpdatedTime", { time: moment(usdMarket.last_updated).fromNow() })}
                   </TimeDuration>
@@ -176,7 +177,7 @@ const HomeStatistic = () => {
         {currentEpoch ? (
           <Box component={LinkDom} display={"contents"} to={details.epoch(currentEpoch?.no)}>
             <Item data-testid="current-epoch-box">
-              <Content display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
+              <VerticalContent>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon
                     style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
@@ -189,7 +190,7 @@ const HomeStatistic = () => {
                   </Name>
                 </Box>
                 <Box>
-                  <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
+                  <Content>
                     <Title data-testid="current-epoch-number">{numberWithCommas(currentEpoch?.no)}</Title>
                     <Box color={({ palette }) => palette.secondary.light}>
                       {t("common.slot")}:{" "}
@@ -198,7 +199,7 @@ const HomeStatistic = () => {
                         : numberWithCommas(MAX_SLOT_EPOCH)}
                       / {numberWithCommas(MAX_SLOT_EPOCH)}
                     </Box>
-                  </Box>
+                  </Content>
                   <Progress>
                     <CustomTooltip title={epochActiveText}>
                       <ProcessActive data-testid="current-epoch-progress-active" rate={+progress || 0}>
@@ -224,7 +225,7 @@ const HomeStatistic = () => {
                     {t("glossary.endTimestamp")}: {formatDateTimeLocal(currentEpoch?.endTime)}
                   </Box>
                 </Box>
-              </Content>
+              </VerticalContent>
             </Item>
           </Box>
         ) : (
@@ -235,7 +236,7 @@ const HomeStatistic = () => {
         {data && usdMarket ? (
           <Box component={LinkDom} display={"contents"} to={routers.DELEGATION_POOLS}>
             <Item data-testid="live-stake-box">
-              <Content display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
+              <VerticalContent>
                 <Box>
                   <Box display={"flex"} alignItems={"center"} height={"40px"}>
                     <ItemIcon
@@ -273,7 +274,7 @@ const HomeStatistic = () => {
                 </Box>
                 <Box>
                   <Box color={({ palette }) => palette.secondary.light}>
-                    {t("glossary.activeStake")} (<ADAicon width={10} />) :&nbsp;
+                    {t("glossary.activeStake")} (<ADAicon width={10} />){": "}
                     <CustomTooltip title={formatADAFull(activeStake)}>
                       <span data-testid="active-stake-value">{formatADA(activeStake)}</span>
                     </CustomTooltip>
@@ -281,11 +282,11 @@ const HomeStatistic = () => {
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
                     <CustomTooltip title={t("glossary.offTheMaxSupply")}>
                       <span>
-                        {t("glossary.circulatingSupply")} (<ADAicon width={8} />) :&nbsp;
+                        {t("glossary.circulatingSupply")} (<ADAicon width={8} />){": "}
                       </span>
                     </CustomTooltip>
                     <CustomTooltip title={formatADAFull(currentEpoch?.circulatingSupply || 0)}>
-                      <span data-testid="circulating-supply-value">{formatADA(circulatingSupply.toString())}</span>
+                      <span data-testid="circulating-supply-value">{formatADA(circulatingSupply.toString())} </span>
                     </CustomTooltip>
                     <CustomTooltip title={`${circulatingRate.toFixed(5)}%`}>
                       <span data-testid="circulating-supply-percentage">
@@ -294,7 +295,7 @@ const HomeStatistic = () => {
                     </CustomTooltip>
                   </Box>
                 </Box>
-              </Content>
+              </VerticalContent>
             </Item>
           </Box>
         ) : (
