@@ -55,8 +55,8 @@ type DetailViewEpochProps = {
 };
 
 const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose, callback }) => {
-  const { t } = useTranslation();
   const { currentEpoch, blockNo } = useSelector(({ system }: RootState) => system);
+  const { t } = useTranslation();
   const [key, setKey] = useState(0);
 
   const { data, lastUpdated } = useFetch<IDataEpoch>(
