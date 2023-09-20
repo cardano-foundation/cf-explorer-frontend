@@ -11,7 +11,7 @@ import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import { formatNumberDivByDecimals, formatPrice } from "src/commons/utils/helper";
+import { formatNumberDivByDecimals, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
 import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
 import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
 
@@ -41,12 +41,12 @@ interface ITokenAnalyticsProps {
 const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
   const { t } = useTranslation();
   const options = [
-    { value: "ONE_DAY", label: t("time.1d") },
-    { value: "ONE_WEEK", label: t("time.1w") },
-    { value: "ONE_MONTH", label: t("time.1m") },
-    { value: "THREE_MONTH", label: t("time.3m") }
+    { value: OPTIONS_CHART_ANALYTICS.ONE_DAY, label: t("time.1d") },
+    { value: OPTIONS_CHART_ANALYTICS.ONE_WEEK, label: t("time.1w") },
+    { value: OPTIONS_CHART_ANALYTICS.ONE_MONTH, label: t("time.1m") },
+    { value: OPTIONS_CHART_ANALYTICS.THREE_MONTH, label: t("time.3m") }
   ];
-  const [rangeTime, setRangeTime] = useState("ONE_DAY");
+  const [rangeTime, setRangeTime] = useState<OPTIONS_CHART_ANALYTICS>(OPTIONS_CHART_ANALYTICS.ONE_DAY);
   const { tokenId } = useParams<{ tokenId: string }>();
   const { isMobile } = useScreen();
   const theme = useTheme();
@@ -137,7 +137,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                       tickMargin={5}
                       dx={-15}
                       color={theme.palette.secondary.light}
-                      interval={"equidistantPreserveStart"}
+                      interval={getIntervalAnalyticChart(rangeTime)}
                     >
                       <Label value="(UTC)" offset={-12} position="insideBottom" />
                     </XAxis>

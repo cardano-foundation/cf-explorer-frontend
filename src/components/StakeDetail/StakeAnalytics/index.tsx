@@ -19,7 +19,7 @@ import { BigNumber } from "bignumber.js";
 
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
-import { formatADAFull, formatPrice } from "src/commons/utils/helper";
+import { formatADAFull, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -182,7 +182,7 @@ const StakeAnalytics: React.FC = () => {
                       tab === "BALANCE" ? moment(value).format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM") : value
                     }
                     tickLine={false}
-                    interval={"equidistantPreserveStart"}
+                    interval={getIntervalAnalyticChart(rangeTime)}
                     {...xAxisProps}
                   >
                     <Label value="(UTC)" offset={-12} position="insideBottom" />
