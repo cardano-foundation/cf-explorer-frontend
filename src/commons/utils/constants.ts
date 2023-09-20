@@ -104,6 +104,7 @@ export enum RECEIVED_REWARDS {
 
 export const AUTH_API_URL = process.env.REACT_APP_AUTH_API_URL || get(window, "env.REACT_APP_AUTH_API_URL");
 export const API_URL = process.env.REACT_APP_API_URL || get(window, "env.REACT_APP_API_URL");
+export const WS_URL = process.env.REACT_APP_WS_URL || get(window, "env.REACT_APP_WS_URL");
 export const CARDANO_NEWS_URL = process.env.REACT_APP_CARDANO_NEWS_URL || get(window, "env.REACT_APP_CARDANO_NEWS_URL");
 export const APP_VERSION = process.env.REACT_APP_VERSION || get(window, "env.REACT_APP_VERSION");
 export const EXT_ADA_PRICE_URL =
@@ -157,28 +158,6 @@ export enum ACCOUNT_ERROR {
   REPORT_LIMIT_REACHED = "400-REPORT_LIMIT_REACHED"
 }
 
-// unit second
-export enum REFRESH_TIMES {
-  CURRENT_PRICE_USD = 20,
-  CURRENT_PRICE_BTC = 20,
-  CURRENT_EPOCH = 5,
-  LATEST_TRANSACTION = 20,
-  TOP_DELEGATION_POOLS = 20,
-  EPOCH_DETAIL = 20,
-  EPOCH_DETAIL_VIEW = 20,
-  BLOCK_DETAIL = 20,
-  TRANSACTION_DETAIL = 20,
-  TOKEN_LIST = 20,
-  TOP_ADDRESS = 20,
-  CONTRACTS = 20,
-  POOLS = 20,
-  STAKE_REGISTRATION = 20,
-  POOL_REGISTRATIONS = 20,
-  TOP_DELEGATORS = 20,
-  STAKE_DELEGATIONS = 20,
-  INSTANT_REWARDS = 20
-}
-
 export const PROTOCOL_TYPE = {
   minFeeA: "MIN_FEE_A",
   minFeeB: "MIN_FEE_B",
@@ -228,6 +207,13 @@ export const REWARD_TYPES_LABEL = {
   [REWARD_TYPES.RESERVES]: "Reserves",
   [REWARD_TYPES.TREASURY]: "Treasury"
 };
+
+export enum EVENT_TYPES {
+  BLOCK = "BLOCK",
+  CURRENT_PRICE_USD = "CURRENT_PRICE_USD",
+  CURRENT_PRICE_BTC = "CURRENT_PRICE_BTC",
+  CURRENT_EPOCH = "CURRENT_EPOCH"
+}
 
 export const HOTJAR_HJID = process.env.REACT_APP_HOTJAR_HJID;
 export const HOTJAR_HJSV = process.env.REACT_APP_HOTJAR_HJSV;

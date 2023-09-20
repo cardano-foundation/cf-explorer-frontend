@@ -7,7 +7,6 @@ import "@testing-library/jest-dom/extend-expect";
 
 import { render } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
-import { API } from "src/commons/utils/api";
 import { numberWithCommas } from "src/commons/utils/helper";
 
 import HomeStatistic from ".";
@@ -23,7 +22,7 @@ const mockStakeAnalytis: StakeAnalytics = {
   liveStake: 22812603248193964
 };
 
-const mockBTCMarketItem: CardanoMarket = {
+const mockBTCMarket: CardanoMarket = {
   current_price: 0.00001382,
   market_cap: 484265,
   price_change_24h: 1.02298e-7,
@@ -40,7 +39,8 @@ const mockCurrentEpoch: EpochCurrentType = {
   account: 96433,
   startTime: "2023-01-31T07:02:46.115Z",
   endTime: "2023-05-31T07:02:46.115Z",
-  circulatingSupply: 33999888463776064
+  circulatingSupply: 33999888463776064,
+  blkCount: 0
 };
 
 const mockUSDMarket: CardanoMarket = {
@@ -57,11 +57,12 @@ describe("HomeStatistic", () => {
   beforeEach(() => {
     const mockUseFetch = useFetch as jest.Mock;
     const mockUseSelector = useSelector as jest.Mock;
-    mockUseFetch.mockImplementation((url) => {
-      if (url === API.STAKE.ANALYTICS) return { data: mockStakeAnalytis };
-      return { data: [mockBTCMarketItem] };
+    mockUseFetch.mockReturnValue({ data: mockStakeAnalytis });
+    mockUseSelector.mockReturnValue({
+      currentEpoch: mockCurrentEpoch,
+      usdMarket: mockUSDMarket,
+      btcMarket: mockBTCMarket
     });
-    mockUseSelector.mockReturnValue({ currentEpoch: mockCurrentEpoch, usdMarket: mockUSDMarket });
   });
 
   afterEach(() => {
@@ -73,7 +74,7 @@ describe("HomeStatistic", () => {
     expect(screen.getByTestId("ada-price-box-title")).toBeInTheDocument();
     expect(screen.getByTestId("ada-current-price")).toHaveTextContent(`$${mockUSDMarket.current_price}`);
     expect(screen.getByText("-1,59 %")).toBeInTheDocument();
-    expect(screen.getByTestId("ada-price-in-btc")).toHaveTextContent(`${mockBTCMarketItem.current_price} BTC`);
+    expect(screen.getByTestId("ada-price-in-btc")).toHaveTextContent(`${mockBTCMarket.current_price} BTC`);
   });
 
   it("renders Market cap", async () => {

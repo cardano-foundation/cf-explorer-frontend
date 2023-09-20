@@ -139,3 +139,10 @@ export const DescriptionText = styled(Box)(({ theme }) => ({
   fontSize: 14,
   color: theme.palette.secondary[600]
 }));
+
+export const TimeDuration = styled("small")(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  display: "block",
+  textAlign: "left",
+  marginTop: "5px"
+}));
