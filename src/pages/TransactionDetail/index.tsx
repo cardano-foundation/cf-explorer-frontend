@@ -8,7 +8,6 @@ import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
 import NoRecord from "src/components/commons/NoRecord";
 import { API } from "src/commons/utils/api";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 
 const StyledContainer = styled(Container)`
   padding: 30px 16px 40px;
@@ -22,11 +21,9 @@ const StyledContainer = styled(Container)`
 const Transaction: React.FC = () => {
   const { trxHash } = useParams<{ trxHash: string }>();
   const { state } = useLocation<{ data?: Transaction }>();
-  const { data, loading, initialized, error, lastUpdated } = useFetch<Transaction>(
+  const { data, loading, initialized, error } = useFetch<Transaction>(
     `${API.TRANSACTION.DETAIL}/${trxHash}`,
-    state?.data,
-    false,
-    REFRESH_TIMES.TRANSACTION_DETAIL
+    state?.data
   );
 
   useEffect(() => {
@@ -41,7 +38,7 @@ const Transaction: React.FC = () => {
 
   return (
     <StyledContainer>
-      <TransactionOverview data={data} loading={loading} lastUpdated={lastUpdated} />
+      <TransactionOverview data={data} loading={loading} />
       <Box>
         {!initialized ? (
           <Card>

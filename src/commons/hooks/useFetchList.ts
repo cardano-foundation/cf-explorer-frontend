@@ -21,11 +21,16 @@ export interface FetchReturnType<T> {
   currentPage: number;
   refresh: () => void;
   update: (callback: (data: T[]) => T[]) => void;
-  lastUpdated: number;
+  lastUpdated?: number;
   query: Params;
 }
 
-const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, timeout?: number): FetchReturnType<T> => {
+const useFetchList = <T>(
+  url: string,
+  params: Params = {},
+  isAuth?: boolean,
+  key?: number | string
+): FetchReturnType<T> => {
   const [data, setData] = useState<T[]>([]);
   const [initialized, setInitialized] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -35,7 +40,8 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
   const [total, setTotal] = useState(0);
   const [refreshLoading, setRefreshLoading] = useState(false);
   const [query, setQuery] = useState<Params>(cleanObject(params));
-  const lastFetch = useRef<number>(Date.now());
+  const lastFetch = useRef<number>();
+  const lastKey = useRef<number | string | undefined>(key);
 
   const getList = useCallback(
     async (needLoading?: boolean) => {
@@ -82,23 +88,26 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
   );
 
   useEffect(() => {
-    if (timeout && !loading && !refreshLoading) {
+    // Refresh without "loading" every time the "key" is updated
+    if (key && !loading && !refreshLoading) {
       const onFocus = async () => {
-        if (lastFetch.current + timeout * 1000 <= Date.now()) getList();
+        if (lastKey.current !== key) {
+          getList();
+          lastKey.current = key;
+        }
       };
 
       window.addEventListener("focus", onFocus);
 
-      const timeoutId = setTimeout(() => {
-        if (!document.hidden) getList();
-      }, timeout * 1000);
+      if (!document.hidden) {
+        getList();
+        lastKey.current = key;
+      }
 
-      return () => {
-        clearTimeout(timeoutId);
-        window.removeEventListener("focus", onFocus);
-      };
+      return () => window.removeEventListener("focus", onFocus);
     }
-  }, [getList, timeout, loading, refreshLoading]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
 
   useEffect(() => {
     getList(true);

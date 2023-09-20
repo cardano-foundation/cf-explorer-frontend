@@ -122,6 +122,7 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
     width: drawerWidthMobile
   },
   "&>div": {
+    borderRight: `1px solid ${theme.palette.primary[200]}}`,
     "& > button": {
       visibility: "hidden"
     },

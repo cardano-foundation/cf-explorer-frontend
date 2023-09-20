@@ -25,20 +25,21 @@ import Link from "src/components/commons/Link";
 import ADAicon from "src/components/commons/ADAIcon";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { Capitalize } from "src/components/commons/CustomText/styles";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
-import { PriceWrapper, BlueText, StyledContainer, StyledLink } from "./styles";
+import { PriceWrapper, BlueText, StyledContainer, StyledLink, Actions, TimeDuration } from "./styles";
 
 const BlockList = () => {
   const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
   const { onDetailView } = useSelector(({ user }: RootState) => user);
-  const [block, setBlock] = useState<number | string | null>(null);
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const [sort, setSort] = useState<string>("");
-  const [selected, setSelected] = useState<number | null>(null);
+  const [selected, setSelected] = useState<number | string | null>(null);
   const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<Block>(API.BLOCK.LIST, { ...pageInfo, sort });
+  const fetchData = useFetchList<Block>(API.BLOCK.LIST, { ...pageInfo, sort }, false, blockNo);
   const mainRef = useRef(document.querySelector("#main"));
 
   useEffect(() => {
@@ -120,21 +121,19 @@ const BlockList = () => {
         <PriceWrapper>
           {formatADAFull(r.totalOutput)}
           <ADAicon />
-          {block === (r.blockNo || r.hash) && <SelectedIcon />}
+          {selected === (r.blockNo || r.hash) && <SelectedIcon />}
         </PriceWrapper>
       )
     }
   ];
 
-  const openDetail = (_: any, r: Block, index: number) => {
+  const openDetail = (_: any, r: Block) => {
     setOnDetailView(true);
-    setBlock(r.blockNo || r.hash);
-    setSelected(index);
+    setSelected(r.blockNo || r.hash);
   };
 
   const handleClose = () => {
     setOnDetailView(false);
-    setBlock(null);
     setSelected(null);
   };
 
@@ -145,6 +144,11 @@ const BlockList = () => {
   return (
     <StyledContainer>
       <Card data-testid="blocks-card" title={t("head.page.blocks")}>
+        <Actions>
+          <TimeDuration>
+            <FormNowMessage time={fetchData.lastUpdated} />
+          </TimeDuration>
+        </Actions>
         <Table
           {...fetchData}
           columns={columns}
@@ -159,12 +163,13 @@ const BlockList = () => {
             handleCloseDetailView: handleClose
           }}
           onClickRow={openDetail}
+          rowKey={(r: Block) => r.blockNo || r.hash}
           selected={selected}
           showTabView
           tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
         />
       </Card>
-      {block && onDetailView && <DetailViewBlock blockNo={block} handleClose={handleClose} />}
+      {selected && onDetailView && <DetailViewBlock blockNo={selected} handleClose={handleClose} />}
     </StyledContainer>
   );
 };

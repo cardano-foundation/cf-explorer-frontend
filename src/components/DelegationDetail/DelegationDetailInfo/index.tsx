@@ -21,6 +21,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import DropdownDetail from "src/components/commons/DropdownDetail";
 import ADAicon from "src/components/commons/ADAIcon";
 import { useScreen } from "src/commons/hooks/useScreen";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
 import {
   BackButton,
@@ -42,16 +43,18 @@ import {
   StyledGrid,
   StyledImg,
   StyledLinearProgress,
-  StyledTitle
+  StyledTitle,
+  TimeDuration
 } from "./styles";
 
 export interface IDelegationDetailInfo {
   data: DelegationOverview | null;
   loading: boolean;
   poolId: string;
+  lastUpdated?: number;
 }
 
-const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, poolId }) => {
+const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, poolId, lastUpdated }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const [isOpenReward, setOpenReward] = useState<boolean>(false);
@@ -101,6 +104,9 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         </CustomTooltip>
         <CopyButton text={poolId} />
       </PoolId>
+      <TimeDuration>
+        <FormNowMessage time={lastUpdated} />
+      </TimeDuration>
       <DataContainer>
         <StyledGrid container>
           <Item item xs={6} md={3} top={1}>
