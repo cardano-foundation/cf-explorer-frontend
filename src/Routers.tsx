@@ -131,7 +131,6 @@ const Routes: React.FC = () => {
       <Route path={routers.FAQ} exact component={FAQ} />
       <Route path={routers.POLICY} exact component={Policy} />
       <Route path={routers.TERMS_OF_SERVICE} exact component={TermOfServices} />
-      <Route path={routers.NOT_FOUND} component={NotFound} />
       <Route path={routers.ACCOUNT}>
         <AccountLayout>
           <Switch>
@@ -142,6 +141,7 @@ const Routes: React.FC = () => {
           </Switch>
         </AccountLayout>
       </Route>
+      <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
   );
 };
