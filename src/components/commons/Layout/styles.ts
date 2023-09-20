@@ -126,6 +126,12 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
     "& > button": {
       visibility: "hidden"
     },
+    [theme.breakpoints.down("md")]: {
+      "& > button": {
+        visibility: "visible",
+        display: open ? "flex" : "none"
+      }
+    },
     "&:hover": {
       "& > button": {
         transitionDelay: "0s",
