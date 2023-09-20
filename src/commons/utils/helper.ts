@@ -318,12 +318,15 @@ export const getIntervalAnalyticChart = (rangeTime: OPTIONS_CHART_ANALYTICS): Ax
       if (width < breakpoints.values.sm) {
         return 4;
       }
+      if (width < breakpoints.values.laptop) {
+        return 3;
+      }
       return "preserveStart";
     case OPTIONS_CHART_ANALYTICS.THREE_MONTH:
       if (width < breakpoints.values.sm) {
         return 18;
       }
-      return "preserveStart";
+      return 7;
     default:
       return "preserveEnd";
   }
