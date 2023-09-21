@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import { Box } from "@mui/material";
 import { useKey } from "react-use";
 import { useTranslation } from "react-i18next";
-import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { useTheme } from "@emotion/react";
 
 import { HeaderSearchIcon, WhiteSearchIcon } from "src/commons/resources";
@@ -29,6 +28,8 @@ import {
   StyledIconQuestion
 } from "./styles";
 
+const LIMIT_SIZE = 25;
+
 enum BROWSE_VALUES {
   DELEGATOR = "DELEGATOR",
   STAKE_POOL = "STAKE_POOL"
@@ -36,10 +37,13 @@ enum BROWSE_VALUES {
 
 const StakingLifeCycleSearch = () => {
   const { t } = useTranslation();
-  const { data: delegators } = useFetchList<Delegator>(API.STAKE.TOP_DELEGATOR, { page: 0, size: 25 });
-  const { data: pools } = useFetchList<Delegators>(API.DELEGATION.POOL_LIST, {
+  const { data: delegators, initialized: delegatorsInitialzzed } = useFetchList<Delegator>(API.STAKE.TOP_DELEGATOR, {
     page: 0,
-    size: 25,
+    size: LIMIT_SIZE
+  });
+  const { data: pools, initialized: poolsInitialzzed } = useFetchList<Delegators>(API.DELEGATION.POOL_LIST, {
+    page: 0,
+    size: LIMIT_SIZE,
     sort: "",
     search: ""
   });
@@ -54,11 +58,13 @@ const StakingLifeCycleSearch = () => {
   const BROWSER_OPTIONS = [
     {
       label: t("dropdown.browseDelegator"),
-      value: BROWSE_VALUES.DELEGATOR
+      value: BROWSE_VALUES.DELEGATOR,
+      disabled: !delegatorsInitialzzed
     },
     {
       label: t("dropdown.stakePool"),
-      value: BROWSE_VALUES.STAKE_POOL
+      value: BROWSE_VALUES.STAKE_POOL,
+      disabled: !poolsInitialzzed
     }
   ];
 
@@ -106,13 +112,11 @@ const StakingLifeCycleSearch = () => {
       </Title>
       <SearchTitle>
         {t("common.searchPoolDesc")}
-        <StyledIconQuestion>
-          <AiOutlineQuestionCircle
-            onClick={() => setOpenInfoModal((pre) => !pre)}
-            color={themes.palette.primary.main}
-            size={20}
-          />
-        </StyledIconQuestion>
+        <StyledIconQuestion
+          onClick={() => setOpenInfoModal((pre) => !pre)}
+          color={themes.palette.primary.main}
+          size={20}
+        />
       </SearchTitle>
       <Box>
         <SearchContainer mx={"auto"}>
