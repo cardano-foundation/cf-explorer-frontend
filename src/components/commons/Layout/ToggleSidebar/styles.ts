@@ -16,7 +16,7 @@ export const ToggleMenu = styled("button")`
   z-index: 1;
   ${({ theme }) => theme.breakpoints.down("md")} {
     top: 32px;
-    left: -42px;
+    left: -40px;
     padding: 5px;
   }
 `;
