@@ -25,6 +25,9 @@ export const DrawContainer = styled(Box)(({ theme }) => ({
     maxWidth: 320,
     minWidth: 320,
     gap: "65px"
+  },
+  ">div": {
+    zIndex: 2
   }
 }));
 

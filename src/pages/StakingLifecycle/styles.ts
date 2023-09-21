@@ -69,7 +69,7 @@ export const StyledTabs = styled(Tabs)`
     }
   }
   ${({ theme }) => theme.breakpoints.down("md")} {
-    border-bottom: 1px solid ${(props) => props.theme.palette.border.main};
+    border-bottom: 1px solid ${(props) => props.theme.palette.primary[200]};
     width: 100%;
   }
 `;

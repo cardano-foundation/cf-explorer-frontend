@@ -61,8 +61,14 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
         )
       }
       MenuProps={{
+        MenuListProps: {
+          sx: {
+            bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+          }
+        },
         PaperProps: {
           sx: {
+            bgcolor: ({ palette }) => `${palette.secondary[0]} !important`,
             borderRadius: 2,
             marginTop: 0.5,
             "&::-webkit-scrollbar": {

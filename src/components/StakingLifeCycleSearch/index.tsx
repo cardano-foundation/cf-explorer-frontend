@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useKey } from "react-use";
 import { useTranslation } from "react-i18next";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
-import { useTheme } from "@emotion/react";
 
-import { HeaderSearchIcon, WhiteSearchIcon } from "src/commons/resources";
+import { HeaderSearchIconComponent, WhiteSearchIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import InfoGraphicModal from "src/components/InfoGraphicModal";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -15,6 +14,7 @@ import { API } from "src/commons/utils/api";
 import useFetchList from "src/commons/hooks/useFetchList";
 
 import DropdownMenu from "../commons/DropdownMenu";
+// eslint-disable-next-line import/order
 import {
   StyledContainer,
   Title,
@@ -34,8 +34,11 @@ enum BROWSE_VALUES {
   STAKE_POOL = "STAKE_POOL"
 }
 
+import CustomIcon from "../commons/CustomIcon";
+
 const StakingLifeCycleSearch = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { data: delegators } = useFetchList<Delegator>(API.STAKE.TOP_DELEGATOR, { page: 0, size: 25 });
   const { data: pools } = useFetchList<Delegators>(API.DELEGATION.POOL_LIST, {
     page: 0,
@@ -130,7 +133,7 @@ const StakingLifeCycleSearch = () => {
             }}
           />
           <SubmitButton onClick={hanldeSearch}>
-            <Image src={HeaderSearchIcon} alt="Search" />
+            <CustomIcon icon={HeaderSearchIconComponent} stroke={theme.palette.secondary.light} height={22} />
           </SubmitButton>
         </SearchContainer>
         <Box color={({ palette }) => palette.error[700]} sx={{ marginBottom: "20px" }}>

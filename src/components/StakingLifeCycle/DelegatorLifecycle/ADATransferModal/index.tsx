@@ -46,7 +46,7 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
           <StyledTabs
             value={activityType}
             onChange={onChangeTab}
-            sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.main}`, color: "red" }}
+            sx={{ borderBottom: (theme) => `1px solid ${theme.palette.primary[200]}`, color: "red" }}
             TabIndicatorProps={{ sx: { backgroundColor: (theme) => theme.palette.primary.main, height: 4 } }}
             scrollButtons="auto"
             variant="scrollable"

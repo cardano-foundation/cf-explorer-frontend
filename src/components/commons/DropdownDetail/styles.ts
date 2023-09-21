@@ -1,10 +1,10 @@
-import { alpha, Box, Button, styled } from "@mui/material";
+import { Box, Button, styled } from "@mui/material";
 
 export const InfoValue = styled(Box)(({ theme }) => ({
   fontWeight: "var(--font-weight-bold)",
   fontSize: 14,
   padding: "15px 0",
-  borderTop: `1px solid ${alpha(theme.palette.common.black, 0.05)}`,
+  borderTop: `1px solid ${theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary.main}`,
   [theme.breakpoints.down("sm")]: {
     fontSize: 12
   }
@@ -17,7 +17,7 @@ export const ListDropdownContainer = styled(Box)`
   transform: translate(-50%, 0);
   width: 100%;
   max-height: 300px;
-  background: ${(props) => props.theme.palette.background.paper};
+  background: ${(props) => props.theme.palette.secondary[0]};
   z-index: 1;
   box-shadow: ${(props) => props.theme.shadow.card};
   border-bottom-left-radius: 20px;
