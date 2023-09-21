@@ -14,6 +14,7 @@ import { HighestIconComponent, LowestIconComponent } from "src/commons/resources
 import { API } from "src/commons/utils/api";
 import { formatNumberDivByDecimals, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
 import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
+import { TooltipBody } from "src/components/commons/Layout/styles";
 import CustomIcon from "src/components/commons/CustomIcon";
 import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
 
@@ -28,7 +29,6 @@ import {
   Tab,
   Tabs,
   Title,
-  TooltipBody,
   TooltipLabel,
   TooltipValue,
   ValueInfo,
@@ -93,7 +93,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
 
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
     return (
-      <TooltipBody>
+      <TooltipBody fontSize={"12px"}>
         <TooltipLabel>{getLabelTimeTooltip(content.label)}</TooltipLabel>
         <TooltipValue>
           {formatNumberDivByDecimals(content.payload?.[0]?.value, dataToken?.metadata?.decimals || 0) || 0}

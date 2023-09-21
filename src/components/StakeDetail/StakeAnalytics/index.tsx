@@ -1,49 +1,49 @@
-import React, { useState } from "react";
 import { Box, Grid, useTheme } from "@mui/material";
+import { BigNumber } from "bignumber.js";
+import moment from "moment";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import {
   Area,
   AreaChart,
   CartesianGrid,
+  Label,
   ResponsiveContainer,
   Tooltip,
-  XAxis,
-  YAxis,
   TooltipProps,
+  XAxis,
   XAxisProps,
-  Label
+  YAxis
 } from "recharts";
-import { useTranslation } from "react-i18next";
-import moment from "moment";
-import { useParams } from "react-router-dom";
-import { BigNumber } from "bignumber.js";
-import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
-import Card from "src/components/commons/Card";
-import { formatADAFull, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
-import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
-import { API } from "src/commons/utils/api";
 import { useScreen } from "src/commons/hooks/useScreen";
-import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
+import { API } from "src/commons/utils/api";
 import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
+import { formatADAFull, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
+import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
+import Card from "src/components/commons/Card";
 import CustomIcon from "src/components/commons/CustomIcon";
+import { TooltipBody } from "src/components/commons/Layout/styles";
+import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
 
 import {
   BoxInfo,
   BoxInfoItem,
   BoxInfoItemRight,
-  Tabs,
-  Tab,
   ButtonTitle,
   ChartBox,
-  SkeletonUI,
-  Title,
-  ValueInfo,
-  Wrapper,
   CustomButton,
-  TooltipBody,
+  SkeletonUI,
+  Tab,
+  Tabs,
+  Title,
+  TooltipLabel,
   TooltipValue,
-  TooltipLabel
+  ValueInfo,
+  Wrapper
 } from "./styles";
 
 type AnalyticsBalance = { date: string; value: number };
@@ -115,7 +115,7 @@ const StakeAnalytics: React.FC = () => {
 
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
     return (
-      <TooltipBody>
+      <TooltipBody fontSize={12}>
         <TooltipLabel>
           {tab === "BALANCE" ? getLabelTimeTooltip(content.label) : `${t("epoch")} ${content.label}`}
         </TooltipLabel>

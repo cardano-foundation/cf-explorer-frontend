@@ -1,47 +1,47 @@
-import React, { useState } from "react";
 import { Box, Grid, useTheme } from "@mui/material";
+import { BigNumber } from "bignumber.js";
+import { isArray } from "lodash";
+import moment from "moment";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import {
   Area,
   AreaChart,
   CartesianGrid,
+  Label,
   ResponsiveContainer,
   Tooltip,
-  XAxis,
-  YAxis,
   TooltipProps,
-  Label
+  XAxis,
+  YAxis
 } from "recharts";
-import moment from "moment";
-import { useParams } from "react-router-dom";
-import { BigNumber } from "bignumber.js";
-import { isArray } from "lodash";
-import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
-import Card from "src/components/commons/Card";
-import { formatADAFull, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
 import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import CustomIcon from "src/components/commons/CustomIcon";
 import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
+import { formatADAFull, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
+import Card from "src/components/commons/Card";
+import CustomIcon from "src/components/commons/CustomIcon";
+import { TooltipBody } from "src/components/commons/Layout/styles";
 
 import {
   BoxInfo,
   BoxInfoItem,
   BoxInfoItemRight,
-  Tabs,
-  Tab,
   ButtonTitle,
   ChartBox,
   SkeletonUI,
-  Title,
-  ValueInfo,
-  Wrapper,
+  Tab,
+  Tabs,
   TextCardHighlight,
-  TooltipBody,
+  Title,
   TooltipLabel,
-  TooltipValue
+  TooltipValue,
+  ValueInfo,
+  Wrapper
 } from "./styles";
 
 type AnalyticsData = { date: string; value: number };
@@ -93,7 +93,7 @@ const AddressAnalytics: React.FC = () => {
 
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
     return (
-      <TooltipBody>
+      <TooltipBody fontSize={12}>
         <TooltipLabel>{getLabelTimeTooltip(content.label)}</TooltipLabel>
         <TooltipValue>{formatADAFull(content.payload?.[0]?.value) || 0}</TooltipValue>
       </TooltipBody>
