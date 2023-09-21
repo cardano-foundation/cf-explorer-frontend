@@ -182,7 +182,7 @@ const StakeAnalytics: React.FC = () => {
                       tab === "BALANCE" ? moment(value).format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM") : value
                     }
                     tickLine={false}
-                    interval={getIntervalAnalyticChart(rangeTime)}
+                    interval={tab === "BALANCE" ? getIntervalAnalyticChart(rangeTime) : undefined}
                     {...xAxisProps}
                   >
                     <Label value="(UTC)" offset={-12} position="insideBottom" />
