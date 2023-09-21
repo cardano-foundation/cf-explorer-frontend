@@ -309,3 +309,7 @@ export { ReactComponent as TwitterX } from "./icons/TwitterX.svg";
 export { ReactComponent as ExclamationTriangleIcon } from "./icons/exclamation-triangle.svg";
 export { ReactComponent as ADAactive } from "./icons/Staking/ADAactive.svg";
 export { ReactComponent as ADAinactive } from "./icons/Staking/ADAinactive.svg";
+export { ReactComponent as OutlineEye } from "./icons/outline-eye.svg";
+export { ReactComponent as Polygon } from "./icons/polygon.svg";
+export { ReactComponent as PoundSign } from "./icons/pound-sign.svg";
+export { ReactComponent as ArrowDown } from "./icons/arrow-down.svg";

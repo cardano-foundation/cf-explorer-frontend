@@ -127,6 +127,22 @@ interface IContractItemTx {
   redeemerSteps: number;
   scriptBytes: string;
   scriptHash: string;
+  stakeAddress?: string;
+  burningTokens?: {
+    displayName: string;
+    fingerprint: string;
+    name: string;
+    quantity: number;
+  }[];
+  mintingTokens?: {
+    displayName: string;
+    fingerprint: string;
+    name: string;
+    quantity: number;
+  }[];
+  utxoHash?: string;
+  utxoIndex?: number;
+  redeemerCertType?: "DELEGATION" | "STAKE_DEREGISTRATION";
 }
 
 interface Transaction {

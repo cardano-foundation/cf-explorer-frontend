@@ -64,7 +64,7 @@ const PopperStyled = (props: Props) => {
   return (
     <>
       {render({ handleClick: anchorEl ? handleClose : handleClick })}
-      <StyledPopper open={open} anchorEl={anchorEl} placement={"top-start"} ref={refElement}>
+      <StyledPopper open={open} anchorEl={anchorEl} placement={"top"} ref={refElement}>
         {showCloseButton && (
           <Box
             onClick={handleClose}
