@@ -72,7 +72,7 @@ const StyledButtonMenu = styled(Button)`
 `;
 
 interface IDropdownMenuProps {
-  options: { label: string; value: string }[];
+  options: { label: string; value: string; disabled?: boolean }[];
   title: string;
   handleSelect: (value: string) => void;
   handleClose?: () => void;
@@ -131,8 +131,8 @@ export default function DropdownMenu(props: IDropdownMenuProps) {
         open={open}
         onClose={onClose}
       >
-        {options.map(({ value, label }) => (
-          <MenuItem key={value} onClick={() => onSelect(value)} disableRipple>
+        {options.map(({ value, label, disabled }) => (
+          <MenuItem key={value} onClick={() => onSelect(value)} disabled={disabled}>
             {label}
           </MenuItem>
         ))}
