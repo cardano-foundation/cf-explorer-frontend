@@ -83,7 +83,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
     {
       key: "summary",
       icon: SummaryIcon,
-      label: t("drawer.summary"),
+      label: <Box pl={"5px"}>{t("drawer.summary")}</Box>,
       children: <Summary data={data?.summary || null} isFailed={data?.tx.status === TRANSACTION_STATUS.FAILED} />
     },
     {

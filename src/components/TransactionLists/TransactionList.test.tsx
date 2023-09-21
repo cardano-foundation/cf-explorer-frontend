@@ -12,9 +12,8 @@ const mockProps = {
   underline: true,
   url: "https://example.com/transactions",
   openDetail: jest.fn(),
-  selected: 1,
+  selected: "transaction-hash",
   showTabView: true,
-  hash: "transaction-hash",
   handleClose: jest.fn()
 };
 

@@ -2,11 +2,12 @@ import { Box, Grid, Skeleton } from "@mui/material";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import { BlankBlueIcon } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { REFRESH_TIMES, TRANSACTION_STATUS } from "src/commons/utils/constants";
+import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 import {
   formatADAFull,
   formatDateTimeLocal,
@@ -42,11 +43,12 @@ import {
 
 const LatestTransactions: React.FC = () => {
   const { t } = useTranslation();
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const { data, initialized, lastUpdated } = useFetch<CurrentTransactions[]>(
     API.TRANSACTION.CURRENT,
     undefined,
     false,
-    REFRESH_TIMES.LATEST_TRANSACTION
+    blockKey
   );
 
   const history = useHistory();
