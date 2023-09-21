@@ -12,13 +12,16 @@ export const FilterButton = styled(Button)`
   padding: 6px 12px 6px 14px;
   font-size: 14px;
   font-weight: 700;
+  &::hover {
+    background: ${({ theme }) => theme.palette.secondary[0]};
+  }
 `;
 
 export const FilterContent = styled(Box)`
   position: absolute;
   right: 0px;
   top: calc(100% + 11px);
-  background-color: ${({ theme }) => theme.palette.common.white};
+  background-color: ${({ theme }) => theme.palette.secondary[0]};
   min-width: 200px;
   border-radius: 6px;
   padding: 6px 0px;
@@ -27,7 +30,7 @@ export const FilterContent = styled(Box)`
   &::before {
     content: "";
     display: block;
-    background: ${({ theme }) => theme.palette.common.white};
+    background: ${({ theme }) => theme.palette.secondary[0]};
     z-index: 9;
     position: absolute;
     top: -6px;
@@ -40,6 +43,7 @@ export const FilterContent = styled(Box)`
 `;
 
 export const FilterContainer = styled(Box)`
+  background: ${({ theme }) => theme.palette.secondary[0]};
   position: relative;
   display: inline-flex;
 `;

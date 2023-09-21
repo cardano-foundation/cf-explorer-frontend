@@ -59,7 +59,6 @@ const RewardActivity: React.FC = () => {
       minWidth: "100px",
       render: (r) => <StyledLink to={details.epoch(r.epochNo || 0)}>{r.epochNo}</StyledLink>
     },
-
     {
       title: t("glossary.txType"),
       key: "transactionCount",

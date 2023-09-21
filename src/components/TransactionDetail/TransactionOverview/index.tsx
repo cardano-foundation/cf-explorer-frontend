@@ -1,18 +1,18 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Box, IconButton, useTheme } from "@mui/material";
 import { BiShowAlt } from "react-icons/bi";
 import { useTranslation } from "react-i18next";
 
 import {
-  timeIconUrl,
-  exchageAltIconUrl,
-  txConfirmUrl,
-  totalOutputUrl,
-  cubeIconUrl,
-  slotIconUrl,
-  txInputIconUrl,
-  txOutputIconUrl
+  TxInputIcon,
+  TxOutputIcon,
+  TimeIconComponent,
+  TxConfirm,
+  TotalOutput,
+  ExchageAltIcon,
+  CubeIconComponent,
+  SlotIcon
 } from "src/commons/resources";
 import { formatADAFull, formatDateTimeLocal, formatNameBlockNo, getShortWallet } from "src/commons/utils/helper";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
@@ -30,16 +30,25 @@ import { MaxSlot, StyledLink, TitleCard } from "./styles";
 interface Props {
   data: Transaction | null;
   loading: boolean;
-  lastUpdated: number;
 }
 
-const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
+const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
   const { t } = useTranslation();
-  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
+
   const [openListInput, setOpenListInput] = useState(false);
   const [openListOutput, setOpenListOutput] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState<number>();
+
   const theme = useTheme();
   const { isMobile } = useScreen();
+
+  useEffect(() => {
+    if (data) setLastUpdated(Date.now());
+  }, [data, blockNo]);
+
+  const confirmation = Math.max(0, (blockNo ? blockNo - (data?.tx?.blockNo || 0) : data?.tx?.confirmation) || 0);
 
   const inputTransaction = useMemo(() => {
     const result = [];
@@ -69,7 +78,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
 
   const listOverview = [
     {
-      icon: txInputIconUrl,
+      icon: TxInputIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1} height={24}>
@@ -112,7 +121,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       key: "input"
     },
     {
-      icon: txOutputIconUrl,
+      icon: TxOutputIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1} height={24}>
@@ -154,7 +163,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       key: "output"
     },
     {
-      icon: timeIconUrl,
+      icon: TimeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>{t("createdAt")}</TitleCard>
@@ -163,20 +172,16 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       value: formatDateTimeLocal(data?.tx?.time || "")
     },
     {
-      icon: txConfirmUrl,
+      icon: TxConfirm,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>
-            {data?.tx?.confirmation && data?.tx?.confirmation > 1
-              ? t("glossary.comfirmations")
-              : t("glossary.comfirmation")}
-          </TitleCard>
+          <TitleCard mr={1}>{confirmation > 1 ? t("glossary.comfirmations") : t("glossary.comfirmation")}</TitleCard>
         </Box>
       ),
-      value: <>{data?.tx?.confirmation || 0}</>
+      value: <>{confirmation}</>
     },
     {
-      icon: totalOutputUrl,
+      icon: TotalOutput,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>{t("glossary.totalOutput")}</TitleCard>
@@ -189,7 +194,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       )
     },
     {
-      icon: exchageAltIconUrl,
+      icon: ExchageAltIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>{t("glossary.transactionfees")} </TitleCard>
@@ -202,7 +207,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       )
     },
     {
-      icon: cubeIconUrl,
+      icon: CubeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard height={24} mr={1}>
@@ -222,7 +227,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       })()
     },
     {
-      icon: slotIconUrl,
+      icon: SlotIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard height={24} mr={1}>
@@ -247,7 +252,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       epoch={
         data && {
           no: data.tx.epochNo,
-          slot: currentEpoch?.no === data.tx.epochNo ? data.tx.epochSlot : MAX_SLOT_EPOCH
+          slot: epochNo === data.tx.epochNo ? data.tx.epochSlot : MAX_SLOT_EPOCH
         }
       }
       listItem={listOverview}

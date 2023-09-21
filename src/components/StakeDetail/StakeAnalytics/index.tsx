@@ -3,6 +3,7 @@ import { BigNumber } from "bignumber.js";
 import moment from "moment";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
   Area,
@@ -19,13 +20,14 @@ import {
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
-import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
 import { formatADAFull, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
 import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
 import Card from "src/components/commons/Card";
+import CustomIcon from "src/components/commons/CustomIcon";
 import { TooltipBody } from "src/components/commons/Layout/styles";
+import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
 
 import {
   BoxInfo,
@@ -55,11 +57,20 @@ const StakeAnalytics: React.FC = () => {
   const [rangeTime, setRangeTime] = useState<OPTIONS_CHART_ANALYTICS>(OPTIONS_CHART_ANALYTICS.ONE_DAY);
   const [tab, setTab] = useState<"BALANCE" | "REWARD">("BALANCE");
   const { stakeId } = useParams<{ stakeId: string }>();
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const theme = useTheme();
   const { isMobile } = useScreen();
-  const { data, loading } = useFetch<AnalyticsBalance[]>(`${API.STAKE.ANALYTICS_BALANCE}/${stakeId}/${rangeTime}`);
+  const { data, loading } = useFetch<AnalyticsBalance[]>(
+    `${API.STAKE.ANALYTICS_BALANCE}/${stakeId}/${rangeTime}`,
+    undefined,
+    false,
+    blockKey
+  );
   const { data: dataReward, loading: loadingReward } = useFetch<AnalyticsReward[]>(
-    `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`
+    `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`,
+    undefined,
+    false,
+    blockKey
   );
   const options = [
     { value: OPTIONS_CHART_ANALYTICS.ONE_DAY, label: t("time.1d") },
@@ -214,7 +225,7 @@ const StakeAnalytics: React.FC = () => {
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
-                  <img src={HighestIcon} alt="heighest icon" />
+                  <CustomIcon height={30} fill={theme.palette.secondary.light} icon={HighestIconComponent} />
                   <Title>{tab === "BALANCE" ? t("common.highestBalance") : t("common.highestReward")}</Title>
                   <ValueInfo>
                     {loading || loadingReward ? (
@@ -229,7 +240,7 @@ const StakeAnalytics: React.FC = () => {
             <Box flex={1}>
               <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
-                  <img src={LowestIcon} alt="lowest icon" />
+                  <CustomIcon height={30} fill={theme.palette.secondary.light} icon={LowestIconComponent} />
                   <Title>{tab === "BALANCE" ? t("common.lowestBalance") : t("common.lowestReward")}</Title>
                   <ValueInfo>
                     {loading || loadingReward ? (

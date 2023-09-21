@@ -5,7 +5,8 @@ import {
   PaginationRenderItemParams,
   alpha,
   styled,
-  useScrollTrigger
+  useScrollTrigger,
+  useTheme
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -77,6 +78,7 @@ const TableHeader = <T extends ColumnType>({
   toggleSelectAll,
   isSelectAll
 }: TableHeaderProps<T>) => {
+  const theme = useTheme();
   const [{ columnKey, sort }, setSort] = useState<{ columnKey: string; sort: "" | "DESC" | "ASC" }>({
     columnKey: defaultSort ? defaultSort.split(",")[0] : "",
     sort: defaultSort ? (defaultSort.split(",")[1] as "" | "DESC" | "ASC") : ""
@@ -103,14 +105,14 @@ const TableHeader = <T extends ColumnType>({
     if (key === columnKey)
       switch (sort) {
         case "DESC":
-          return <SortTableDown />;
+          return <SortTableDown fill={theme.palette.primary.main} />;
         case "ASC":
-          return <SortTableUp />;
+          return <SortTableUp fill={theme.palette.primary.main} />;
         default: {
-          return <SortTableUpDown />;
+          return <SortTableUpDown fill={theme.palette.primary.main} />;
         }
       }
-    return <SortTableUpDown />;
+    return <SortTableUpDown fill={theme.palette.primary.main} />;
   };
   return (
     <THead>
@@ -151,17 +153,16 @@ const TableRow = <T extends ColumnType>({
   onClickRow,
   showTabView,
   selectedProps,
-  selected = null,
+  selected = false,
   dataLength,
   selectable,
   toggleSelection,
   isSelected
 }: TableRowProps<T>) => {
   const colRef = useRef(null);
-  const isClickRow = selected === index ? 1 : 0;
-
+  const theme = useTheme();
   return (
-    <TRow onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))} {...selectedProps}>
+    <TRow onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row))} {...selectedProps}>
       {selectable && (
         <TCol>
           <TableCheckBox checked={isSelected?.(row)} onChange={() => toggleSelection?.(row)} />
@@ -176,7 +177,7 @@ const TableRow = <T extends ColumnType>({
             minWidth={column.minWidth}
             maxWidth={column.maxWidth}
             hiddenBorder={column.isHiddenBorder && dataLength === index + 1}
-            selected={isClickRow}
+            selected={+selected}
             style={column.fixed ? { position: "sticky", left: column.leftFixed ? column.leftFixed : "-8px" } : {}}
           >
             {column.render ? column.render(row, index) : row[column.key]}
@@ -184,9 +185,17 @@ const TableRow = <T extends ColumnType>({
         );
       })}
       {showTabView && (
-        <TCol minWidth={50} maxWidth={90} selected={isClickRow}>
+        <TCol minWidth={50} maxWidth={90} selected={+selected}>
           <Box display="flex" alignItems="center" height="1rem">
-            {selected !== index && <CustomIcon icon={EyeIcon} originWidth={31} originHeight={23} width={24} />}
+            {!selected && (
+              <CustomIcon
+                stroke={theme.palette.secondary.light}
+                icon={EyeIcon}
+                originWidth={31}
+                originHeight={23}
+                width={24}
+              />
+            )}
           </Box>
         </TCol>
       )}
@@ -197,6 +206,7 @@ const TableRow = <T extends ColumnType>({
 const TableBody = <T extends ColumnType>({
   data,
   columns,
+  rowKey,
   onClickRow,
   showTabView,
   selected,
@@ -224,23 +234,22 @@ const TableBody = <T extends ColumnType>({
           </Box>
         </LoadingWrapper>
       )}
-      {data &&
-        data.map((row, index) => (
-          <TableRow
-            row={row}
-            key={index}
-            columns={columns}
-            index={index}
-            dataLength={data.length}
-            onClickRow={onClickRow}
-            showTabView={showTabView}
-            selected={selected}
-            selectedProps={selected === index ? selectedProps : undefined}
-            selectable={selectable}
-            toggleSelection={toggleSelection}
-            isSelected={isSelected}
-          />
-        ))}
+      {data?.map((row, index) => (
+        <TableRow
+          row={row}
+          key={index}
+          columns={columns}
+          index={index}
+          dataLength={data.length}
+          onClickRow={onClickRow}
+          showTabView={showTabView}
+          selected={!!rowKey && (typeof rowKey === "function" ? rowKey(row) : row[rowKey]) === selected}
+          selectedProps={selected === index ? selectedProps : undefined}
+          selectable={selectable}
+          toggleSelection={toggleSelection}
+          isSelected={isSelected}
+        />
+      ))}
     </TBody>
   );
 };
@@ -299,6 +308,16 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
               MenuProps={{
                 sx: {
                   zIndex: 1305
+                },
+                MenuListProps: {
+                  sx: {
+                    bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+                  }
+                },
+                PaperProps: {
+                  sx: {
+                    bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+                  }
                 }
               }}
             >
@@ -356,6 +375,7 @@ const Table: React.FC<TableProps> = ({
   error,
   onClickRow,
   showTabView,
+  rowKey,
   selected,
   selectedProps,
   defaultSort,
@@ -431,6 +451,7 @@ const Table: React.FC<TableProps> = ({
             data={data}
             onClickRow={onClickRow}
             showTabView={showTabView}
+            rowKey={rowKey}
             selected={selected}
             selectedProps={selectedProps}
             initialized={initialized}

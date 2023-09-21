@@ -31,7 +31,7 @@ export const Button = styled("button")<{ active: number }>`
 `;
 
 export const BoxInfo = styled(Box)<{ space: number }>(({ theme }) => ({
-  background: theme.palette.common.white,
+  background: theme.palette.secondary[0],
   borderRadius: "10px",
   display: "flex",
   flexDirection: "column",

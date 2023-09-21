@@ -6,7 +6,7 @@ import { DateRangeIcon } from "src/commons/resources";
 export const DatePickerContainer = styled(Box)<{ open: number }>(({ theme, open }) => ({
   border: `1.5px solid ${open ? theme.palette.secondary.light : theme.palette.primary[200]}`,
   borderRadius: 8,
-  backgroundColor: theme.palette.common.white,
+  backgroundColor: theme.palette.secondary[0],
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",

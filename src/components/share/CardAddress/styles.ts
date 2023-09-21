@@ -65,7 +65,7 @@ export const RowItem = styled(Box)`
 `;
 
 export const CardItem = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: theme.palette.secondary[0],
   minHeight: "200px",
   height: "100%",
   borderRadius: "10px",

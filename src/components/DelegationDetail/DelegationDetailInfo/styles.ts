@@ -73,7 +73,7 @@ export const PoolIdValue = styled("small")`
 `;
 
 export const DataContainer = styled("div")(({ theme }) => ({
-  background: theme.palette.background.paper,
+  background: theme.palette.secondary[0],
   display: "flex",
   flexDirection: "column",
   boxShadow: theme.shadow.detailHeader,
@@ -198,4 +198,10 @@ export const ButtonViewAll = styled(Button)(({ theme }) => ({
     background: theme.palette.primary.dark,
     borderColor: theme.palette.primary[200]
   }
+}));
+
+export const TimeDuration = styled("small")(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  display: "block",
+  margin: "0px 0px 25px"
 }));
