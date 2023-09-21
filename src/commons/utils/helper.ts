@@ -300,3 +300,7 @@ export const formatNameBlockNo = (blockNo: blockEpochNoType, epochNo: blockEpoch
     tooltip: ""
   };
 };
+
+export const getRandomInt = (max: number) => {
+  return Math.floor(Math.random() * max);
+};
