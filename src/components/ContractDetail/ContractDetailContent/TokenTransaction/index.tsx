@@ -33,7 +33,7 @@ const TokenTransaction: React.FC = () => {
   const fetchData = useFetchList<Transactions>(`${API.ADDRESS.DETAIL}/${params.address}/txs`, pageInfo);
   const [txHashSelected, setTxHashSelected] = useState<string>("");
   const [selected, setSelected] = useState<number | null>(null);
-
+  const isOpenDrawer = !!(txHashSelected && onDetailView);
   const openDetail = (_: any, r: Transactions, index: number) => {
     setTxHashSelected(r.hash);
     setSelected(index);
@@ -160,9 +160,12 @@ const TokenTransaction: React.FC = () => {
           onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
         }}
       />
-      {txHashSelected && onDetailView && (
-        <DetailViewContractHash txHash={txHashSelected} address={params.address} handleClose={handleClose} />
-      )}
+      <DetailViewContractHash
+        txHash={txHashSelected}
+        address={params.address}
+        open={isOpenDrawer}
+        handleClose={handleClose}
+      />
     </>
   );
 };

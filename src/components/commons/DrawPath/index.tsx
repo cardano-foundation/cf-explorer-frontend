@@ -1,5 +1,5 @@
 import { styled } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import React, { CSSProperties, useEffect, useRef, useState } from "react";
 import { useWindowSize } from "react-use";
 import { useSelector } from "react-redux";
 
@@ -16,9 +16,11 @@ const DrawPathContainer = styled("svg")(() => ({
 
 interface Props {
   paths: LineArrowItem[];
+  lineStyle?: CSSProperties;
+  style?: CSSProperties;
 }
 
-export const DrawPath: React.FC<Props> = ({ paths }) => {
+export const DrawPath: React.FC<Props> = ({ paths, lineStyle, style }) => {
   const [size, setSize] = useState<[number, number]>([0, 0]);
   const { width } = useWindowSize(0);
   const ref = useRef<SVGSVGElement | null>(null);
@@ -32,9 +34,13 @@ export const DrawPath: React.FC<Props> = ({ paths }) => {
   }, [width, sidebar]);
 
   return (
-    <DrawPathContainer ref={ref} xmlns="http://www.w3.org/2000/svg" style={{ width: size[0], height: size[1] }}>
+    <DrawPathContainer
+      ref={ref}
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ width: size[0], height: size[1], ...style }}
+    >
       {paths.map((path, index) => (
-        <LineArrow key={index} {...path} parent={ref} />
+        <LineArrow key={index} {...path} parent={ref} style={lineStyle} />
       ))}
     </DrawPathContainer>
   );

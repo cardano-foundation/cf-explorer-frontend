@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
-import ContractDiagrams from "src/components/ContractDiagrams";
+import ContractSideView from "src/components/Contracts/ContractSideView";
 
 import CustomTooltip from "../CustomTooltip";
 import {
@@ -18,13 +18,12 @@ import {
   DetailLabelSkeleton,
   DetailValueSkeleton,
   ProgressSkeleton,
-  ViewDetailDrawer,
   Group,
   ViewDetailScroll,
   ViewDetailHeader,
-  ViewDetailDrawerContractHash,
   ViewDetailContainerContractHash,
-  ViewDetailScrollContractHash
+  ViewDetailScrollContractHash,
+  StyledSpendviewDrawer
 } from "./styles";
 import NoRecord from "../NoRecord";
 
@@ -32,9 +31,10 @@ type DetailViewEpochProps = {
   handleClose: () => void;
   txHash: string;
   address: string;
+  open?: boolean;
 };
 
-const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handleClose, address }) => {
+const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handleClose, address, open }) => {
   const { t } = useTranslation();
   const { data, loading, initialized } = useFetch<IContractItemTx[]>(
     API.TRANSACTION.HASH_CONTRACT(txHash, address),
@@ -44,7 +44,6 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
 
   useEffect(() => {
     document.body.style.overflowY = "hidden";
-
     return () => {
       document.body.style.overflowY = "scroll";
     };
@@ -52,7 +51,13 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
 
   if (loading || !initialized) {
     return (
-      <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent" data-testid="view-detail-drawer-loading">
+      <StyledSpendviewDrawer
+        transitionDuration={100}
+        anchor="right"
+        open={open}
+        hideBackdrop
+        data-testid="view-detail-drawer-contract-hash"
+      >
         <ViewDetailHeader />
         <ViewDetailContainer>
           <ViewDetailScroll>
@@ -89,22 +94,22 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
             })}
           </ViewDetailScroll>
         </ViewDetailContainer>
-      </ViewDetailDrawer>
+      </StyledSpendviewDrawer>
     );
   }
 
   return (
-    <ViewDetailDrawerContractHash
-      anchor="right"
-      open
+    <StyledSpendviewDrawer
       hideBackdrop
-      variant="permanent"
+      transitionDuration={100}
+      anchor="right"
+      open={open}
       data-testid="view-detail-drawer-contract-hash"
     >
       <ViewDetailContainerContractHash>
         <ViewDetailScrollContractHash>
           {data?.[0] ? (
-            <ContractDiagrams item={data[0]} txHash={txHash} handleClose={handleClose} />
+            <ContractSideView data={data[0]} txHash={txHash} handleClose={handleClose} />
           ) : (
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "10px" }}>
               <CustomTooltip title={t("common.close")}>
@@ -117,7 +122,7 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
           )}
         </ViewDetailScrollContractHash>
       </ViewDetailContainerContractHash>
-    </ViewDetailDrawerContractHash>
+    </StyledSpendviewDrawer>
   );
 };
 
