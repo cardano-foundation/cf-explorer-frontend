@@ -3,28 +3,31 @@ import { useHistory } from "react-router-dom";
 import { Box } from "@mui/material";
 import { useKey } from "react-use";
 import { useTranslation } from "react-i18next";
+import { AiOutlineQuestionCircle } from "react-icons/ai";
+import { useTheme } from "@emotion/react";
 
 import { HeaderSearchIcon, WhiteSearchIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import InfoGraphicModal from "src/components/InfoGraphicModal";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { getRandomInt } from "src/commons/utils/helper";
-import { BROWSE_POOL_IDS, BROWSE_STAKE_ADDRESSES } from "src/commons/utils/constants";
+import { API } from "src/commons/utils/api";
+import useFetchList from "src/commons/hooks/useFetchList";
 
+import DropdownMenu from "../commons/DropdownMenu";
 import {
   StyledContainer,
   Title,
   SearchTitle,
-  InfoLink,
   SearchContainer,
   StyledInput,
   SubmitButton,
   Image,
   SearchButton,
   TextOR,
-  ExampleBox
+  ExampleBox,
+  StyledIconQuestion
 } from "./styles";
-import DropdownMenu from "../commons/DropdownMenu";
 
 enum BROWSE_VALUES {
   DELEGATOR = "DELEGATOR",
@@ -33,12 +36,20 @@ enum BROWSE_VALUES {
 
 const StakingLifeCycleSearch = () => {
   const { t } = useTranslation();
+  const { data: delegators } = useFetchList<Delegator>(API.STAKE.TOP_DELEGATOR, { page: 0, size: 25 });
+  const { data: pools } = useFetchList<Delegators>(API.DELEGATION.POOL_LIST, {
+    page: 0,
+    size: 25,
+    sort: "",
+    search: ""
+  });
 
   const history = useHistory();
   const { isMobile } = useScreen();
   const [openInfoModal, setOpenInfoModal] = useState(false);
   const [value, setValue] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const themes = useTheme();
 
   const BROWSER_OPTIONS = [
     {
@@ -64,16 +75,18 @@ const StakingLifeCycleSearch = () => {
   useKey("enter", hanldeSearch);
 
   useEffect(() => {
-    document.title = "Welcome to Staking Lifecycle | Cardano Blockchain Explorer";
-  }, []);
+    document.title = `${t("common.welcomeStakingLifecycle")} | ${t("head.page.dashboard")}`;
+  }, [t]);
 
   const handleSelect = (value: string) => {
     if (value === BROWSE_VALUES.DELEGATOR) {
-      const rndIndex = getRandomInt(BROWSE_STAKE_ADDRESSES.length);
-      history.push(details.staking(BROWSE_STAKE_ADDRESSES[rndIndex]));
+      const listStakeAddress = delegators.map(({ stakeKey }) => stakeKey);
+      const rndIndex = getRandomInt(listStakeAddress.length);
+      history.push(details.staking(listStakeAddress[rndIndex]));
     } else {
-      const rndIndex = getRandomInt(BROWSE_POOL_IDS.length);
-      history.push(details.spo(BROWSE_POOL_IDS[rndIndex]));
+      const listPools = pools.map(({ poolId }) => poolId);
+      const rndIndex = getRandomInt(listPools.length);
+      history.push(details.spo(listPools[rndIndex]));
     }
   };
 
@@ -93,7 +106,13 @@ const StakingLifeCycleSearch = () => {
       </Title>
       <SearchTitle>
         {t("common.searchPoolDesc")}
-        <InfoLink onClick={() => setOpenInfoModal((pre) => !pre)}>{t("common.whatCardano")}</InfoLink>
+        <StyledIconQuestion>
+          <AiOutlineQuestionCircle
+            onClick={() => setOpenInfoModal((pre) => !pre)}
+            color={themes.palette.primary.main}
+            size={20}
+          />
+        </StyledIconQuestion>
       </SearchTitle>
       <Box>
         <SearchContainer mx={"auto"}>
