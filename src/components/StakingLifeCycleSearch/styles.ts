@@ -69,14 +69,16 @@ export const SearchTitle = styled(Typography)(({ theme }) => ({
   fontSize: "18px",
   fontWeight: 700,
   margin: "30px 0px 20px 0px",
-  color: theme.palette.secondary.main,
+  color: theme.palette.secondary.light,
+  textWrap: "balance",
   [theme.breakpoints.down("md")]: {
     margin: "60px 0px 20px 0px",
     padding: "0px 60px"
   },
   [theme.breakpoints.down("sm")]: {
     margin: "0px 0px 20px 0px",
-    padding: "0px 5px"
+    padding: "0px 5px",
+    flexDirection: "column"
   }
 }));
 
@@ -124,4 +126,17 @@ export const TextOR = styled(Typography)`
   font-size: 18px;
   font-weight: 700;
   color: ${(props) => props.theme.palette.secondary.light};
+`;
+
+export const StyledIconQuestion = styled("span")`
+  margin-left: 8px;
+  vertical-align: middle;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    display: block;
+    margin: 8px 0;
+  }
 `;
