@@ -1,7 +1,7 @@
-import { Box, Button, Container, styled } from "@mui/material";
+import { Box, Button, Container, Switch, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
-import { MenuIcon } from "src/commons/resources";
+import { MenuIcon, sunIcon, moonIcon } from "src/commons/resources";
 
 export const HeaderContainer = styled("header")`
   color: ${(props) => props.theme.palette.secondary.main};
@@ -134,3 +134,34 @@ export const HeaderSearchContainer = styled(Box)`
     display: none;
   }
 `;
+
+export const SwitchMode = styled(Switch)(() => ({
+  padding: 8,
+  width: 64,
+  height: 40,
+  "& .MuiSwitch-track": {
+    borderRadius: 80 / 2,
+    "&:before, &:after": {
+      content: '""',
+      position: "absolute",
+      top: "50%",
+      transform: "translateY(-50%)",
+      width: 20,
+      height: 20
+    },
+    "&:before": {
+      backgroundImage: `url(${moonIcon})`,
+      left: 12
+    },
+    "&:after": {
+      backgroundImage: `url(${sunIcon})`,
+      right: 12
+    }
+  },
+  "& .MuiSwitch-thumb": {
+    boxShadow: "none",
+    width: 18,
+    height: 18,
+    margin: `2px 4px`
+  }
+}));

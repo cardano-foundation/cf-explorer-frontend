@@ -99,6 +99,8 @@ import CardanoBlueLogo from "./icons/cardanoBlue.svg";
 import CardanoBlueDarkmodeLogo from "./icons/cardanoBlueDarkmode.svg";
 import TwitterXIcon from "./icons/TwitterX.svg";
 import NoRecordsIcon from "./images/NoRecords.svg";
+import sunIcon from "./icons/sun.svg";
+import moonIcon from "./icons/moon.svg";
 
 export {
   LogoFullIcon,
@@ -225,7 +227,9 @@ export {
   UserIconComponent,
   DropIconComponent,
   DelegatorIconComponent,
-  HeaderSearchIconComponent
+  HeaderSearchIconComponent,
+  sunIcon,
+  moonIcon
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
