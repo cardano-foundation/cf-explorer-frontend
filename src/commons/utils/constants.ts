@@ -235,3 +235,12 @@ export const HOTJAR_HJSV = process.env.REACT_APP_HOTJAR_HJSV;
 export enum APP_LANGUAGES {
   ENGLISH = "en"
 }
+
+export const SUPPORTED_LANGUAGES = ["en"];
+
+export enum OPTIONS_CHART_ANALYTICS {
+  ONE_DAY = "ONE_DAY",
+  ONE_WEEK = "ONE_WEEK",
+  ONE_MONTH = "ONE_MONTH",
+  THREE_MONTH = "THREE_MONTH"
+}

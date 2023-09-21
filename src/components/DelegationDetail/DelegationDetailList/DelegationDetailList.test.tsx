@@ -33,7 +33,7 @@ describe("DelegationDetailList component", () => {
     render(<DelegationStakingDelegatorsList {...mockProps} />);
     expect(screen.getByRole("link", { name: /view 1/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /view 2/i })).toBeInTheDocument();
-    expect(screen.getByText(/results/i)).toBeInTheDocument();
+    expect(screen.getByText(/result/i)).toBeInTheDocument();
   });
 
   it("should detail page button click", () => {

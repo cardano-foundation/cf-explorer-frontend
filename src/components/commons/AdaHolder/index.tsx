@@ -1,5 +1,6 @@
 import React, { forwardRef } from "react";
 import { BoxProps, styled } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { AdaHolderIconUrl } from "src/commons/resources";
 import { formatADAFull } from "src/commons/utils/helper";
@@ -16,10 +17,11 @@ export interface IAdaHolderProps extends BoxProps {
 }
 
 export const AdaHolder: React.FC<IAdaHolderProps> = forwardRef(({ value, ...props }, boxRef) => {
+  const { t } = useTranslation();
   return (
     <StyledPolygonShape {...props} ref={boxRef}>
       <AdaHolderImage src={AdaHolderIconUrl} alt="AdaHolderIconUrl" />
-      ADA Holder
+      {t("common.adaHolder")}
       {value !== undefined && (
         <AdaHolderValue>
           {formatADAFull(value)}

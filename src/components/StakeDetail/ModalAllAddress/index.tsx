@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import Table, { Column } from "src/components/commons/Table";
@@ -20,6 +21,7 @@ interface ModalAllAddressProps {
 }
 
 const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(50);
@@ -28,7 +30,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
 
   const columns: Column<Addresses>[] = [
     {
-      title: "Addresses",
+      title: t("glossary.address"),
       minWidth: 120,
       render: (r) => (
         <StyledLink to={details.address(r.address)}>
@@ -40,7 +42,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
       key: "Addresses"
     },
     {
-      title: "Balance",
+      title: t("common.balance"),
       minWidth: 80,
       render: (r) => <Box component={"span"}>{formatADAFull(r.balance)}</Box>,
       key: "Balance"
@@ -54,7 +56,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
     <StyledModal
       open={props.open}
       handleCloseModal={props.onClose}
-      title="Addresses list"
+      title={t("common.addressList")}
       width={"600px"}
       contentStyle={{ overflowY: "unset" }}
     >
@@ -63,7 +65,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
           {...fetchData}
           columns={columns}
           maxHeight={maxHeightCalc}
-          total={{ title: "Total Epochs", count: fetchData.total }}
+          total={{ title: t("common.totalEpoch"), count: fetchData.total }}
           pagination={{
             onChange(page, size) {
               setPage(page);

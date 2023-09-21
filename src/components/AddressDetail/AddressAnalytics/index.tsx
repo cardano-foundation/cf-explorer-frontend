@@ -19,9 +19,10 @@ import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
-import { formatADAFull, formatPrice } from "src/commons/utils/helper";
+import { formatADAFull, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
+import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
 
 import {
   BoxInfo,
@@ -43,16 +44,15 @@ import {
 
 type AnalyticsData = { date: string; value: number };
 
-const options = [
-  { value: "ONE_DAY", label: "1d" },
-  { value: "ONE_WEEK", label: "1w" },
-  { value: "ONE_MONTH", label: "1m" },
-  { value: "THREE_MONTH", label: "3m" }
-];
-
 const AddressAnalytics: React.FC = () => {
   const { t } = useTranslation();
-  const [rangeTime, setRangeTime] = useState("ONE_DAY");
+  const options = [
+    { value: OPTIONS_CHART_ANALYTICS.ONE_DAY, label: t("time.1d") },
+    { value: OPTIONS_CHART_ANALYTICS.ONE_WEEK, label: t("time.1w") },
+    { value: OPTIONS_CHART_ANALYTICS.ONE_MONTH, label: t("time.1m") },
+    { value: OPTIONS_CHART_ANALYTICS.THREE_MONTH, label: t("time.3m") }
+  ];
+  const [rangeTime, setRangeTime] = useState<OPTIONS_CHART_ANALYTICS>(OPTIONS_CHART_ANALYTICS.ONE_DAY);
   const { address } = useParams<{ address: string }>();
   const theme = useTheme();
   const { data: dataAnalytics, loading } = useFetch<AnalyticsData[]>(
@@ -74,11 +74,11 @@ const AddressAnalytics: React.FC = () => {
 
   const getLabelTimeTooltip = (label: string) => {
     switch (rangeTime) {
-      case "ONE_DAY":
+      case OPTIONS_CHART_ANALYTICS.ONE_DAY:
         return `${moment(label).format("DD MMM YYYY HH:mm:ss")}`;
-      case "ONE_WEEK":
-      case "ONE_MONTH":
-      case "THREE_MONTH":
+      case OPTIONS_CHART_ANALYTICS.ONE_WEEK:
+      case OPTIONS_CHART_ANALYTICS.ONE_MONTH:
+      case OPTIONS_CHART_ANALYTICS.THREE_MONTH:
         return moment(label).format("DD MMM YYYY");
       default:
         return "";
@@ -95,7 +95,7 @@ const AddressAnalytics: React.FC = () => {
   };
 
   return (
-    <Card title={<TextCardHighlight>Analytics</TextCardHighlight>}>
+    <Card title={<TextCardHighlight>{t("analytics")}</TextCardHighlight>}>
       <Wrapper container columns={24} spacing="35px">
         <Grid item xs={24} lg={18}>
           <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
@@ -132,6 +132,7 @@ const AddressAnalytics: React.FC = () => {
                     color={theme.palette.secondary.light}
                     stroke={theme.palette.secondary.light}
                     dx={-15}
+                    interval={getIntervalAnalyticChart(rangeTime)}
                   >
                     <Label value="(UTC)" offset={-12} position="insideBottom" />
                   </XAxis>
@@ -150,7 +151,6 @@ const AddressAnalytics: React.FC = () => {
                     stroke={theme.palette.primary.main}
                     strokeWidth={4}
                     fill="url(#colorUv)"
-                    dot={{ r: 2 }}
                     activeDot={{ r: 6 }}
                   />
                 </AreaChart>
