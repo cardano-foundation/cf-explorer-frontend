@@ -1,4 +1,4 @@
-import { styled, Container } from "@mui/material";
+import { styled, Container, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const BlueText = styled("span")`
@@ -42,4 +42,18 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
     },
     marginTop: "0px !important"
   }
+}));
+
+export const Actions = styled(Box)(() => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  flexWrap: "wrap",
+  marginTop: -10
+}));
+
+export const TimeDuration = styled("small")(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  display: "block",
+  margin: "12px 0px"
 }));
