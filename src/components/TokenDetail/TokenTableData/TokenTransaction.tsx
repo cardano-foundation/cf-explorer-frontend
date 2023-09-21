@@ -2,8 +2,8 @@ import React, { useContext, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { Box } from "@mui/material";
 import { stringify } from "qs";
-import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
 import useFetchList from "src/commons/hooks/useFetchList";

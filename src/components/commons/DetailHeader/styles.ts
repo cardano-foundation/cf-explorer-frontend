@@ -174,7 +174,7 @@ export const SlotLeaderCopy = styled(CopyButton)`
 export const DetailsInfo = styled(Grid)<{ length: number; isClickAble?: number }>`
   padding: 30px ${(props) => (props.length > 6 ? 25 : 15)}px;
   margin-top: 15px;
-  background: ${(props) => props.theme.palette.background.paper};
+  background: ${(props) => props.theme.palette.secondary[0]};
   border-radius: 15px;
   ${({ theme }) => theme.breakpoints.down("lg")} {
     padding: 30px 25px;
@@ -412,7 +412,7 @@ export const AllowSearchButton = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   width: 35,
   height: 35,
-  backgroundColor: theme.palette.primary[100],
+  backgroundColor: theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[100],
   top: -10,
   right: 0,
   borderRadius: 4,
@@ -429,6 +429,7 @@ export const StyledSelect = styled(Select)(({ theme }) => ({
   right: 0,
   zIndex: 101,
   backgroundColor: theme.palette.secondary[0],
+  color: theme.palette.secondary.main,
   borderRadius: 8,
   height: 35,
   fieldset: {

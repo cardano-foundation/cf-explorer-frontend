@@ -1,8 +1,8 @@
 import BigNumber from "bignumber.js";
-import jwtDecode from "jwt-decode";
-import { isNil } from "lodash";
 import moment, { DurationInputArg1, DurationInputArg2 } from "moment";
 import { parse } from "qs";
+import jwtDecode from "jwt-decode";
+import { isNil } from "lodash";
 import { AxisInterval } from "recharts/types/util/types";
 
 import breakpoints from "src/themes/breakpoints";
@@ -277,6 +277,10 @@ export const formatNameBlockNo = (blockNo: blockEpochNoType, epochNo: blockEpoch
     blockName: blockNo,
     tooltip: ""
   };
+};
+
+export const getRandomInt = (max: number) => {
+  return Math.floor(Math.random() * max);
 };
 
 export const getIntervalAnalyticChart = (rangeTime: OPTIONS_CHART_ANALYTICS): AxisInterval => {

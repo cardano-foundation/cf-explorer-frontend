@@ -208,9 +208,10 @@ export const Icon = styled("img")`
 `;
 
 export const ItemName = styled("small")`
+  margin-top: ${(props) => props.theme.spacing(1)};
   font-size: var(--font-size-text-x-small);
   font-weight: var(--font-weight-bold);
-  color: ${(props) => props.theme.palette.primary.contrastText};
+  color: ${(props) => props.theme.palette.secondary[0]};
   text-transform: uppercase;
   margin-bottom: 5px;
 `;
@@ -515,7 +516,7 @@ export const LogoEmpty = styled(Box)`
   height: 30px;
   background: ${(props) => alpha(props.theme.palette.common.white, 0.5)};
   border-radius: 50%;
-  border: 1px solid ${(props) => props.theme.palette.border.main};
+  border: 1px solid ${(props) => props.theme.palette.primary[200]};
   display: inline-block;
   padding: 3px 10px;
 `;

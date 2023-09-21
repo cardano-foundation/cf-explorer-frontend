@@ -15,7 +15,7 @@ export const LogoEmpty = styled(Box)`
   height: 30px;
   background: ${(props) => alpha(props.theme.palette.common.white, 0.6)};
   border-radius: 50%;
-  border: 1px solid ${(props) => props.theme.palette.border.main};
+  border: 1px solid ${(props) => props.theme.palette.primary[200]};
 `;
 
 export const Amount = styled(Box)`

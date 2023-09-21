@@ -3,8 +3,8 @@ import React, { useEffect, useRef } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { parse, stringify } from "qs";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import DelegationDetailInfo from "src/components/DelegationDetail/DelegationDetailInfo";

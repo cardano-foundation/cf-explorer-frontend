@@ -29,14 +29,15 @@ const Epoch: React.FC = () => {
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
   const [key, setKey] = useState(0);
+  const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, { ...pageInfo, sort }, false, epochNo);
+  const fetchDataLatestEpoch = useFetchList<IDataEpoch>(API.EPOCH.LIST, { page: 0, size: 1 }, false, key);
+
   const EPOCH_STATUS_MAPPING = {
     [EPOCH_STATUS.FINISHED]: t("common.epoch.finished"),
     [EPOCH_STATUS.IN_PROGRESS]: t("common.epoch.inProgress"),
     [EPOCH_STATUS.REWARDING]: t("common.epoch.rewarding"),
     [EPOCH_STATUS.SYNCING]: t("common.epoch.cyncing")
   };
-  const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, { ...pageInfo, sort }, false, epochNo);
-  const fetchDataLatestEpoch = useFetchList<IDataEpoch>(API.EPOCH.LIST, { page: 0, size: 1 }, false, key);
 
   const mainRef = useRef(document.querySelector("#main"));
   const columns: Column<IDataEpoch>[] = [

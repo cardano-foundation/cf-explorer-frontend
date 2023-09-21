@@ -3,7 +3,7 @@ import { CgClose } from "react-icons/cg";
 import { BiChevronRight } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import moment from "moment";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
@@ -28,7 +28,6 @@ import {
   DetailsInfoItem,
   DetailLabel,
   DetailValue,
-  Icon,
   BlockDefault,
   DetailLabelSkeleton,
   DetailValueSkeleton,
@@ -55,8 +54,9 @@ type DetailViewEpochProps = {
 };
 
 const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose, callback }) => {
-  const { t } = useTranslation();
   const { currentEpoch, blockNo } = useSelector(({ system }: RootState) => system);
+  const { t } = useTranslation();
+  const theme = useTheme();
   const [key, setKey] = useState(0);
 
   const { data, lastUpdated } = useFetch<IDataEpoch>(
@@ -199,14 +199,14 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
           </HeaderContainer>
           <ListItem>
             <Item>
-              <Icon src={CubeIcon} alt="socket" />
+              <CubeIcon width={24} height={24} fill={theme.palette.secondary[0]} />
               <ItemName>{t("glossary.blocks")}</ItemName>
               <ItemValue>
                 {currentEpoch?.no === epochNo ? currentEpoch.blkCount || data.blkCount : data.blkCount}
               </ItemValue>
             </Item>
             <Item>
-              <Icon src={RocketIcon} alt="socket" />
+              <RocketIcon width={24} height={24} fill={theme.palette.secondary[0]} />
               <ItemName>{t("common.slot")}</ItemName>
               <ItemValue>
                 {slot}

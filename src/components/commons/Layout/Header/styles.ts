@@ -39,7 +39,7 @@ export const HeaderTop = styled("div")(({ theme }) => ({
     justifyContent: "space-between",
     width: "calc(100% - 32px)",
     padding: "16px 16px",
-    backgroundColor: theme.palette.common.white,
+    backgroundColor: theme.palette.secondary[0],
     boxShadow: theme.shadow.card
   }
 }));
@@ -129,8 +129,8 @@ export const Toggle = styled("i")`
   }
 `;
 
-export const HeaderSearchContainer = styled(Box)`
+export const HeaderSearchContainer = styled(Box)<{ home?: number }>`
   ${(props) => props.theme.breakpoints.down("sm")} {
-    display: none;
+    display: ${({ home }) => (home ? "block" : "none")};
   }
 `;

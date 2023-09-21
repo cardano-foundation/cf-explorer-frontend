@@ -10,10 +10,11 @@ import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
-import { HighestIcon, LowestIcon } from "src/commons/resources";
+import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { formatNumberDivByDecimals, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
 import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
+import CustomIcon from "src/components/commons/CustomIcon";
 import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
 
 import Card from "../../commons/Card";
@@ -140,7 +141,12 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                     <XAxis
                       dataKey="date"
                       tickFormatter={(value) => moment(value).format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM")}
-                      tickLine={false}
+                      tick={{
+                        fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+                      }}
+                      tickLine={{
+                        stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+                      }}
                       tickMargin={5}
                       dx={-15}
                       color={theme.palette.secondary.light}
@@ -148,7 +154,16 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                     >
                       <Label value="(UTC)" offset={-12} position="insideBottom" />
                     </XAxis>
-                    <YAxis tickFormatter={formatPriceValue} tickLine={false} color={theme.palette.secondary.light} />
+                    <YAxis
+                      tickFormatter={formatPriceValue}
+                      tick={{
+                        fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+                      }}
+                      tickLine={{
+                        stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+                      }}
+                      color={theme.palette.secondary.light}
+                    />
                     <Tooltip content={renderTooltip} cursor={false} />
                     <CartesianGrid vertical={false} strokeWidth={0.33} />
                     <Area
@@ -171,7 +186,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                 <BoxInfoItemRight display={"flex"} justifyContent={"center"}>
                   <Box>
                     <Box minHeight={"90px"}>
-                      <img src={HighestIcon} alt="heighest icon" />
+                      <CustomIcon height={30} fill={theme.palette.secondary.light} icon={HighestIconComponent} />
                       <Title>{t("glossary.highestVolume")}</Title>
                     </Box>
                     <ValueInfo>
@@ -188,7 +203,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                 <BoxInfoItem display={"flex"} justifyContent={"center"}>
                   <Box>
                     <Box minHeight={"90px"}>
-                      <img src={LowestIcon} alt="lowest icon" />
+                      <CustomIcon height={30} fill={theme.palette.secondary.light} icon={LowestIconComponent} />
                       <Title>{t("glossary.lowestVolume")}</Title>
                     </Box>
                     <ValueInfo>

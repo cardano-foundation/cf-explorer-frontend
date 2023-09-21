@@ -42,12 +42,13 @@ export const SystemLoader = () => {
         circulatingSupply,
         blkCount
       } = currentEpoch;
+      const TIME_OUT_CRAWLER_STOP = 100;
       const interval = setInterval(() => {
         const newSlot = slot + Math.floor((Date.now() - currentTime.current) / 1000);
-        const isCrawlerStop = newSlot - MAX_SLOT_EPOCH > 1000;
-        const newNo = newSlot >= MAX_SLOT_EPOCH && !isCrawlerStop ? no + 1 : no;
+        const isCrawlerStop = newSlot - totalSlot > TIME_OUT_CRAWLER_STOP;
+        const newNo = newSlot >= totalSlot && !isCrawlerStop ? no + 1 : no;
         setStoreCurrentEpoch({
-          slot: newSlot % MAX_SLOT_EPOCH,
+          slot: newSlot % totalSlot,
           no: newNo,
           totalSlot,
           account,
@@ -110,10 +111,10 @@ export const SystemLoader = () => {
         }
       };
       socket.current.onclose = (e) => {
+        // eslint-disable-next-line no-console
+        console.error("socket close reason: ", e, JSON.stringify(e));
         setTimeout(() => {
           if (socket.current?.readyState === socket.current?.CLOSED) {
-            // eslint-disable-next-line no-console
-            console.error("socket close reason: ", e.reason);
             connect();
           }
         }, 1000);
