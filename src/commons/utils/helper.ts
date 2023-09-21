@@ -1,11 +1,14 @@
 import BigNumber from "bignumber.js";
-import jwtDecode from "jwt-decode";
-import { isNil } from "lodash";
 import moment, { DurationInputArg1, DurationInputArg2 } from "moment";
 import { parse } from "qs";
+import jwtDecode from "jwt-decode";
+import { isNil } from "lodash";
+import { AxisInterval } from "recharts/types/util/types";
 
-import { setUserData } from "../../stores/user";
-import { APP_LANGUAGES, MAX_SLOT_EPOCH, NETWORK, NETWORKS, NETWORK_TYPES } from "./constants";
+import breakpoints from "src/themes/breakpoints";
+import { setUserData } from "src/stores/user";
+
+import { APP_LANGUAGES, MAX_SLOT_EPOCH, NETWORK, NETWORKS, NETWORK_TYPES, OPTIONS_CHART_ANALYTICS } from "./constants";
 import { getInfo, signIn } from "./userRequest";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
@@ -246,31 +249,6 @@ export const isJson = (str: string) => {
   return true;
 };
 
-export const getDurationUnits = (inp: DurationInputArg1, unit: DurationInputArg2) => {
-  const duration = moment.duration(inp, unit);
-  const d = duration.days();
-  const h = duration.hours();
-
-  let humanized = "";
-  if (d > 1) {
-    humanized += `${d} days`;
-  } else if (d === 1) {
-    humanized = "1 day";
-  }
-
-  if (h > 1) {
-    humanized += ` ${h} hours`;
-  } else if (h === 1) {
-    humanized += " 1 hour";
-  }
-
-  return {
-    d,
-    h,
-    humanized
-  };
-};
-
 type blockEpochNoType = number | null | undefined;
 
 export const handleChangeLanguage = (newLang: APP_LANGUAGES, currentLanguage: APP_LANGUAGES | undefined) => {
@@ -299,4 +277,61 @@ export const formatNameBlockNo = (blockNo: blockEpochNoType, epochNo: blockEpoch
     blockName: blockNo,
     tooltip: ""
   };
+};
+
+export const getRandomInt = (max: number) => {
+  return Math.floor(Math.random() * max);
+};
+
+export const getDurationUnits = (inp: DurationInputArg1, unit: DurationInputArg2) => {
+  const duration = moment.duration(inp, unit);
+  const d = duration.days();
+  const h = duration.hours();
+
+  let humanized = "";
+  if (d > 1) {
+    humanized += `${d} days`;
+  } else if (d === 1) {
+    humanized = "1 day";
+  }
+
+  if (h > 1) {
+    humanized += ` ${h} hours`;
+  } else if (h === 1) {
+    humanized += " 1 hour";
+  }
+
+  return {
+    d,
+    h,
+    humanized
+  };
+};
+
+export const getIntervalAnalyticChart = (rangeTime: OPTIONS_CHART_ANALYTICS): AxisInterval => {
+  const width = window.innerWidth;
+  switch (rangeTime) {
+    case OPTIONS_CHART_ANALYTICS.ONE_DAY:
+      if (width < breakpoints.values.sm) {
+        return 2;
+      }
+      return 0;
+    case OPTIONS_CHART_ANALYTICS.ONE_WEEK:
+      return 0;
+    case OPTIONS_CHART_ANALYTICS.ONE_MONTH:
+      if (width < breakpoints.values.sm) {
+        return 4;
+      }
+      if (width < breakpoints.values.laptop) {
+        return 3;
+      }
+      return "preserveStart";
+    case OPTIONS_CHART_ANALYTICS.THREE_MONTH:
+      if (width < breakpoints.values.sm) {
+        return 18;
+      }
+      return 7;
+    default:
+      return "preserveEnd";
+  }
 };

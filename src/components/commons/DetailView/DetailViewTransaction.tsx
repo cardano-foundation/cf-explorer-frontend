@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BiChevronRight } from "react-icons/bi";
 import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { useSelector } from "react-redux";
@@ -24,7 +24,7 @@ import {
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
 import { RootState } from "src/stores/types";
 
@@ -76,13 +76,14 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
   const { t } = useTranslation();
   const { hash, handleClose } = props;
   const theme = useTheme();
-  const { data, lastUpdated } = useFetch<Transaction>(
-    hash ? `${API.TRANSACTION.DETAIL}/${hash}` : ``,
-    undefined,
-    false,
-    REFRESH_TIMES.TRANSACTION_DETAIL
-  );
-  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+  const { data } = useFetch<Transaction>(hash ? `${API.TRANSACTION.DETAIL}/${hash}` : ``);
+  const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const [lastUpdated, setLastUpdated] = useState<number>();
+
+  useEffect(() => {
+    if (data) setLastUpdated(Date.now());
+  }, [data, blockNo]);
 
   const tabs: { key: keyof Transaction; label: string; icon?: React.ReactNode }[] = [
     { key: "summary", label: t("drawer.summary"), icon: <DelegationHistoryMainIcon /> },
@@ -198,8 +199,9 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
       </ViewDetailDrawer>
     );
 
-  const input = data?.utxOs?.inputs[0]?.address || "";
-  const output = data?.utxOs?.outputs[0]?.address || "";
+  const input = data.utxOs?.inputs[0]?.address || "";
+  const output = data.utxOs?.outputs[0]?.address || "";
+  const confirmation = Math.max(0, blockNo ? blockNo - (data.tx?.blockNo || 0) : data.tx?.confirmation);
 
   return (
     <ViewDetailDrawer anchor="right" open={!!hash} hideBackdrop variant="permanent">
@@ -223,7 +225,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
               pathWidth={4}
               trailWidth={2}
               percent={
-                data?.tx?.epochNo === currentEpoch?.no
+                data?.tx?.epochNo === epochNo
                   ? ((data?.tx?.epochSlot || 0) / (data?.tx?.maxEpochSlot || MAX_SLOT_EPOCH)) * 100
                   : 100
               }
@@ -291,10 +293,8 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
               </DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
-              <DetailLabel>
-                {data?.tx?.confirmation > 1 ? t("glossary.comfirmations") : t("glossary.comfirmation")}
-              </DetailLabel>
-              <DetailValue>{data?.tx?.confirmation}</DetailValue>
+              <DetailLabel>{confirmation > 1 ? t("glossary.comfirmations") : t("glossary.comfirmation")}</DetailLabel>
+              <DetailValue>{confirmation}</DetailValue>
             </DetailsInfoItem>
             <DetailsInfoItem>
               <DetailLabel>{t("glossary.transactionfees")}</DetailLabel>

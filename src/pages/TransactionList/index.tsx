@@ -17,8 +17,7 @@ const StyledContainer = styled(Container)`
 `;
 
 const Transactions = () => {
-  const [hash, setHash] = useState<string | null>(null);
-  const [selected, setSelected] = useState<number | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
   const { onDetailView } = useSelector(({ user }: RootState) => user);
 
   useEffect(() => {
@@ -26,15 +25,13 @@ const Transactions = () => {
     document.title = `Transactions List | Cardano Blockchain Explorer`;
   }, []);
 
-  const openDetail = (_: any, r: Transactions, index: number) => {
+  const openDetail = (_: any, r: Transactions) => {
     setOnDetailView(true);
-    setHash(r.hash);
-    setSelected(index);
+    setSelected(r.hash);
   };
 
   const handleClose = () => {
     setOnDetailView(false);
-    setHash(null);
     setSelected(null);
   };
 
@@ -50,11 +47,10 @@ const Transactions = () => {
           openDetail={openDetail}
           selected={selected}
           showTabView
-          hash={hash}
           handleClose={handleClose}
         />
       </StyledContainer>
-      {hash && onDetailView && <DetailViewTransaction hash={hash} handleClose={handleClose} />}
+      {selected && onDetailView && <DetailViewTransaction hash={selected} handleClose={handleClose} />}
     </>
   );
 };

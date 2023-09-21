@@ -26,6 +26,7 @@ import {
   Title,
   Toggle
 } from "./styles";
+import SelectLanguage from "./SelectLanguage";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [lists.dashboard()];
 
@@ -75,7 +76,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
               />
             </Box>
           </Title>
-          <HeaderSearchContainer>{!pathMatched && <HeaderSearch home={home} />}</HeaderSearchContainer>
+          <HeaderSearchContainer home={+home}>{!pathMatched && <HeaderSearch home={home} />}</HeaderSearchContainer>
         </HeaderMain>
         <HeaderTop data-testid="header-top" ref={refElement}>
           <HeaderLogoLink to="/" data-testid="header-logo">
@@ -84,6 +85,8 @@ const Header: React.FC<RouteComponentProps> = (props) => {
           <SideBarRight>
             <NetworkContainer>
               <SelectNetwork />
+              &nbsp;
+              <SelectLanguage />
             </NetworkContainer>
             <LoginButton />
             {history.location.pathname !== routers.STAKING_LIFECYCLE && (

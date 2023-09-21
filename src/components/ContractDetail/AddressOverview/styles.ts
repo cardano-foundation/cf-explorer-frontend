@@ -79,3 +79,10 @@ export const BannerSuccess = styled(Box)`
   padding: 12px 0px;
   margin: 20px 0px;
 `;
+
+export const TimeDuration = styled("small")(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  display: "block",
+  textAlign: "left",
+  flex: 1
+}));

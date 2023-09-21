@@ -86,7 +86,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
           <TitleCard mr={1}>{t("glossary.blocks")} </TitleCard>
         </Box>
       ),
-      value: <Content>{currentEpochData?.blkCount}</Content>
+      value: <Content>{currentEpoch?.blkCount || currentEpochData?.blkCount}</Content>
     },
     {
       icon: SlotIcon,

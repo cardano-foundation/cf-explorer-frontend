@@ -99,6 +99,11 @@ import CardanoBlueLogo from "./icons/cardanoBlue.svg";
 import CardanoBlueDarkmodeLogo from "./icons/cardanoBlueDarkmode.svg";
 import TwitterXIcon from "./icons/TwitterX.svg";
 import NoRecordsIcon from "./images/NoRecords.svg";
+import WhiteSearchIcon from "./icons/white-search-icon.svg";
+import WalletRoundedIcon from "./icons/wallet-rounded.svg";
+import ArrowUpIcon from "./icons/arrow-up.svg";
+import CopyOutlineIcon, { ReactComponent as CopyOutline } from "./icons/copy-outline.svg";
+import ArrowDownIcon from "./icons/arrow-down.svg";
 
 export {
   LogoFullIcon,
@@ -225,7 +230,13 @@ export {
   UserIconComponent,
   DropIconComponent,
   DelegatorIconComponent,
-  HeaderSearchIconComponent
+  HeaderSearchIconComponent,
+  WhiteSearchIcon,
+  WalletRoundedIcon,
+  ArrowUpIcon,
+  CopyOutlineIcon,
+  ArrowDownIcon,
+  CopyOutline
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
@@ -354,3 +365,4 @@ export { ReactComponent as CubeIcon } from "./icons/cube.svg";
 export { ReactComponent as RocketIcon } from "./icons/rocket.svg";
 export { ReactComponent as USDIconComponent } from "./icons/usdIcon.svg";
 export { ReactComponent as FileEditIcon } from "./icons/file-edit.svg";
+export { ReactComponent as BrowserIcon } from "./icons/browser-icon.svg";

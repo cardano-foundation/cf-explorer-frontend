@@ -17,3 +17,10 @@ export const DelegationData = styled(Box)`
 export const TabsContainer = styled(Box)(({ theme }) => ({
   borderBottom: `1px solid ${theme.palette.primary[200]}`
 }));
+
+export const TimeDuration = styled("small")(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  display: "block",
+  textAlign: "left",
+  margin: "15px 0px 0px"
+}));

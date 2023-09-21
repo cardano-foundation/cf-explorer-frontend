@@ -2,6 +2,7 @@ import { useHistory } from "react-router-dom";
 import { Box } from "@mui/material";
 import { get } from "lodash";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { details, routers } from "src/commons/routers";
@@ -10,7 +11,6 @@ import ViewAllButton from "src/components/commons/ViewAllButton";
 import { Column } from "src/components/commons/Table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { API } from "src/commons/utils/api";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import ADAicon from "src/components/commons/ADAIcon";
 
@@ -29,11 +29,13 @@ import {
 
 const TopDelegationPools = () => {
   const { t } = useTranslation();
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+
   const { data, loading, initialized, lastUpdated } = useFetch<DelegationPool[]>(
     `${API.DELEGATION.TOP}?page=0&size=5`,
     undefined,
     false,
-    REFRESH_TIMES.TOP_DELEGATION_POOLS
+    blockNo
   );
   const history = useHistory();
 

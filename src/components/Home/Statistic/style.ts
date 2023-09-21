@@ -61,6 +61,16 @@ export const ItemIcon = styled("img")`
 
 export const Content = styled(Box)`
   overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+`;
+
+export const VerticalContent = styled(Content)`
+  flex-direction: column;
+  align-items: unset;
+  height: 100%;
 `;
 
 export const Name = styled("h4")`
@@ -105,21 +115,14 @@ export const SmallValue = styled("small")`
 
 export const AdaPrice = styled("small")`
   color: ${(props) => props.theme.palette.secondary.light};
-  white-space: nowrap;
-  margin-left: 15px;
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    margin-left: 0px;
-  }
 `;
+
 export const TimeDuration = styled("small")<{ marginTop?: string }>`
   color: ${(props) => props.theme.palette.secondary.light};
   margin-top: ${(props) => props.marginTop || 0};
-  white-space: nowrap;
   display: block;
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    white-space: unset;
-  }
 `;
+
 export const XSmall = styled("span")`
   font-size: var(--font-size-text-small);
   color: ${(props) => props.theme.palette.secondary.light};

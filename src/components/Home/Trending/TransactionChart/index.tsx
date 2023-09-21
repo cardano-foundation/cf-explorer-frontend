@@ -37,6 +37,7 @@ export type TypeChart = "trx" | "simple" | "complex";
 const TransactionChart: React.FC = () => {
   const { t } = useTranslation();
   const [rangeTime, setRangeTime] = useState<Time>("ONE_DAY");
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const { isMobile } = useScreen();
   const optionsTime: Record<Time, { label: string; displayName: string }> = {
     ONE_DAY: {
@@ -57,7 +58,12 @@ const TransactionChart: React.FC = () => {
     }
   };
 
-  const { data, loading } = useFetch<TransactionChartIF[]>(`${API.TRANSACTION.GRAPH}/${rangeTime}`);
+  const { data, loading } = useFetch<TransactionChartIF[]>(
+    `${API.TRANSACTION.GRAPH}/${rangeTime}`,
+    undefined,
+    false,
+    blockKey
+  );
 
   const sumSimple = (data || []).reduce((prev, item) => prev + item.simpleTransactions, 0);
   const sumMetadata = (data || []).reduce((prev, item) => prev + item.metadata, 0);
