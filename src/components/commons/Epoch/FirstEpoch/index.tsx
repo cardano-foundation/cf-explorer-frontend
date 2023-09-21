@@ -107,7 +107,14 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
   ];
   return (
     <Container onClick={() => onClick(currentEpochData, currentEpochData, -1)}>
-      <DetailHeader isHideButtonBack={true} loading={false} listItem={listOverview} type="EPOCH" title={" "} />
+      <DetailHeader
+        isClickAble={true}
+        isHideButtonBack={true}
+        loading={false}
+        listItem={listOverview}
+        type="EPOCH"
+        title={" "}
+      />
     </Container>
   );
 }
