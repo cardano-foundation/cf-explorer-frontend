@@ -167,10 +167,10 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
   ];
 
   const items = tabs.filter((item) => data?.[item.key]);
+  const indexExpand = items.findIndex((item) => item.key === tabActive);
 
   const needBorderRadius = (currentKey: string) => {
     if (!tabActive) return "0";
-    const indexExpand = items.findIndex((item) => item.key === tabActive);
     const indexCurrent = items.findIndex((item) => item.key === currentKey);
     if (indexExpand - 1 >= 0 && indexExpand - 1 === indexCurrent) return "0 0 12px 12px";
     if (indexExpand + 1 < items.length && indexExpand + 1 === indexCurrent) return "12px 12px 0 0";
@@ -179,15 +179,24 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
 
   return (
     <Box mt={4} ref={tabRef}>
-      {items?.map(({ key, icon: Icon, label, children }) => (
+      {items?.map(({ key, icon: Icon, label, children }, index) => (
         <CustomAccordion
           key={key}
           expanded={tabActive === key}
           customBorderRadius={needBorderRadius(key)}
+          isDisplayBorderTop={tabActive !== key && key !== items[0].key && index !== indexExpand + 1}
           onChange={handleChangeTab(key)}
         >
           <AccordionSummary
-            expandIcon={<IoIosArrowDown />}
+            expandIcon={
+              <IoIosArrowDown
+                style={{
+                  width: "21px",
+                  height: "21px"
+                }}
+                color={key === tabActive ? theme.palette.primary.main : theme.palette.secondary[600]}
+              />
+            }
             sx={{
               paddingX: theme.spacing(3),
               paddingY: theme.spacing(1)

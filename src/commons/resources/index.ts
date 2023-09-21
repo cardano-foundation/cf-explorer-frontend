@@ -91,6 +91,7 @@ import TwitterXIcon from "./icons/TwitterX.svg";
 import NoRecordsIcon from "./images/NoRecords.svg";
 import WalletRoundedIcon from "./icons/wallet-rounded.svg";
 import ArrowUpIcon from "./icons/arrow-up.svg";
+import CopyOutlineIcon from "./icons/copy-outline.svg";
 import ArrowDownIcon from "./icons/arrow-down.svg";
 
 export {
@@ -187,6 +188,7 @@ export {
   NoRecordsIcon,
   WalletRoundedIcon,
   ArrowUpIcon,
+  CopyOutlineIcon,
   ArrowDownIcon
 };
 
