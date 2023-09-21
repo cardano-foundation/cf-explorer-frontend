@@ -1,4 +1,4 @@
-import { Box, Switch, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
@@ -23,6 +23,7 @@ import {
   NetworkContainer,
   SearchButton,
   SideBarRight,
+  SwitchMode,
   Title,
   Toggle
 } from "./styles";
@@ -83,6 +84,12 @@ const Header: React.FC<RouteComponentProps> = (props) => {
             {!sidebar && <HeaderLogo src={LogoIcon} alt="logo desktop" />}
           </HeaderLogoLink>
           <SideBarRight>
+            <SwitchMode
+              checked={themeMode === "dark"}
+              onChange={(e) => {
+                setTheme(e.target.checked ? "dark" : "light");
+              }}
+            />
             <NetworkContainer>
               <SelectNetwork />
               &nbsp;
@@ -95,12 +102,6 @@ const Header: React.FC<RouteComponentProps> = (props) => {
               </SearchButton>
             )}
             <Toggle onClick={handleToggle} />
-            <Switch
-              checked={themeMode === "dark"}
-              onChange={(e) => {
-                setTheme(e.target.checked ? "dark" : "light");
-              }}
-            />
           </SideBarRight>
         </HeaderTop>
       </HeaderBox>

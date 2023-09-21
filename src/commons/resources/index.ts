@@ -104,6 +104,8 @@ import WalletRoundedIcon from "./icons/wallet-rounded.svg";
 import ArrowUpIcon from "./icons/arrow-up.svg";
 import CopyOutlineIcon, { ReactComponent as CopyOutline } from "./icons/copy-outline.svg";
 import ArrowDownIcon from "./icons/arrow-down.svg";
+import sunIcon from "./icons/sun.svg";
+import moonIcon from "./icons/moon.svg";
 
 export {
   LogoFullIcon,
@@ -236,7 +238,9 @@ export {
   ArrowUpIcon,
   CopyOutlineIcon,
   ArrowDownIcon,
-  CopyOutline
+  CopyOutline,
+  sunIcon,
+  moonIcon
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
