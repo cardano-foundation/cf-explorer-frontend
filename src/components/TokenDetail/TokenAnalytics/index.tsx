@@ -2,18 +2,19 @@ import { Box, Grid, useTheme } from "@mui/material";
 import BigNumber from "bignumber.js";
 import moment from "moment";
 import { FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { Area, AreaChart, CartesianGrid, Label, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { TooltipProps } from "recharts/types/component/Tooltip";
-import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
+import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
 import { formatNumberDivByDecimals, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
 import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
-import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
+import { TooltipBody } from "src/components/commons/Layout/styles";
 
 import Card from "../../commons/Card";
 import {
@@ -26,7 +27,6 @@ import {
   Tab,
   Tabs,
   Title,
-  TooltipBody,
   TooltipLabel,
   TooltipValue,
   ValueInfo,
@@ -85,7 +85,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
 
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
     return (
-      <TooltipBody>
+      <TooltipBody fontSize={"12px"}>
         <TooltipLabel>{getLabelTimeTooltip(content.label)}</TooltipLabel>
         <TooltipValue>
           {formatNumberDivByDecimals(content.payload?.[0]?.value, dataToken?.metadata?.decimals || 0) || 0}
