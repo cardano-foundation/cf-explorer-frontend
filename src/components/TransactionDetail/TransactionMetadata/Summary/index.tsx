@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { ArrowDownIcon, ArrowUpIcon, WalletRoundedIcon, CopyOutlineIcon } from "src/commons/resources";
+import { ArrowDownIcon, ArrowUpIcon, WalletRoundedIcon, CopyOutline } from "src/commons/resources";
 
 import { details } from "../../../../commons/routers";
 import { formatADAFull, formatNumberDivByDecimals, getShortWallet } from "../../../../commons/utils/helper";
@@ -32,6 +32,7 @@ const SummaryItems = ({
       rowGap={2}
       container
       sx={{
+        background: (theme) => theme.palette.secondary[0],
         px: 3,
         py: 2,
         mb: 1,
@@ -42,7 +43,7 @@ const SummaryItems = ({
     >
       <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
         <Box display="flex" paddingX={2}>
-          <Icon src={WalletRoundedIcon} alt="send icon" />
+          <Icon src={WalletRoundedIcon} alt="wallet icon" />
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
             <TitleText>{t("common.wallet")}</TitleText>
             <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
@@ -62,7 +63,7 @@ const SummaryItems = ({
                 </Link>
                 <CopyButton
                   text={item.address}
-                  customIcon={CopyOutlineIcon}
+                  customIcon={CopyOutline}
                   style={{ cursor: "pointer", verticalAlign: "text-bottom" }}
                 />
               </Box>

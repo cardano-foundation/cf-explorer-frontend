@@ -5,13 +5,13 @@ import moment from "moment";
 import { useTranslation } from "react-i18next";
 
 import {
-  timeIconUrl,
-  outputIconUrl,
-  cubeIconUrl,
-  slotIconUrl,
-  exchageIconUrl,
-  RewardIcon,
-  User2
+  TimeIconComponent,
+  OutputIcon,
+  CubeIconComponent,
+  SlotIcon,
+  User2Component,
+  ExchageIcon,
+  RewardIconComponent
 } from "src/commons/resources";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import DetailHeader from "src/components/commons/DetailHeader";
@@ -33,7 +33,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
 
   const listOverview = [
     {
-      icon: timeIconUrl,
+      icon: TimeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>{t("glossary.startTimestamp")} </TitleCard>
@@ -42,7 +42,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       value: formatDateTimeLocal(data?.startTime || "")
     },
     {
-      icon: timeIconUrl,
+      icon: TimeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>{t("glossary.endTimestamp")} </TitleCard>
@@ -51,7 +51,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       value: formatDateTimeLocal(data?.endTime || "")
     },
     {
-      icon: outputIconUrl,
+      icon: OutputIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> {t("glossary.totalOutput")}</TitleCard>
@@ -64,7 +64,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       )
     },
     {
-      icon: cubeIconUrl,
+      icon: CubeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> {t("glossary.blocks")}</TitleCard>
@@ -73,7 +73,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       value: data?.blkCount || 0
     },
     {
-      icon: slotIconUrl,
+      icon: SlotIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> {t("common.slot")}</TitleCard>
@@ -87,7 +87,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       )
     },
     {
-      icon: User2,
+      icon: User2Component,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> {t("glossary.uniqueAccounts")}</TitleCard>
@@ -96,7 +96,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       value: data?.account
     },
     {
-      icon: exchageIconUrl,
+      icon: ExchageIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> {t("glossary.transactionCount")}</TitleCard>
@@ -105,7 +105,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       value: data?.txCount
     },
     {
-      icon: RewardIcon,
+      icon: RewardIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> {t("glossary.rewardsDistributed")}</TitleCard>

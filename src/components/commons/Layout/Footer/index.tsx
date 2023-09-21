@@ -11,7 +11,7 @@ import FooterMenu from "../Sidebar/FooterMenu";
 const StyledFooter = styled("footer")`
   height: 60px;
   padding: 0px 10px;
-  border-top: 1px solid ${(props) => props.theme.palette.border.main};
+  border-top: 1px solid ${(props) => props.theme.palette.primary[200]};
   ${({ theme }) => theme.breakpoints.down("md")} {
     height: unset;
     padding: 10px;

@@ -731,7 +731,6 @@
   "400-TIME_RANGE_ILLEGAL": "Time range is illegal",
   "400-REPORT_LIMIT_REACHED": "Report limit reached",
   "desc.InUnits4Native": "In units of the native token",
-  "desc.transactionUTXO": "Includes transactions in which the UTXO containing the tokens is used resulting in token movement, while the tokens are unspent and returned to the address",
   "common.pageNotFound": "Sorry! The page you’re looking for cannot be found.",
   "common.back2HomePage": "Back to home",
   "message.error.title": "Error",
@@ -752,5 +751,6 @@
   "common.addressList": "Addresses list",
   "common.hexFormat": "Hex Format",
   "common.sent": "Sent",
-  "common.received": "Received"
+  "common.received": "Received",
+  "desc.transactionUTXO": "Includes transactions in which the UTXO containing the tokens is used resulting in token movement, while the tokens are unspent and returned to the address"
 }

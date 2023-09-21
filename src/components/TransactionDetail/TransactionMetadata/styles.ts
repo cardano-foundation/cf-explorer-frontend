@@ -34,10 +34,11 @@ export const CustomAccordion = styled(Accordion)<{
     boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.05)"
   },
   "&:before": {
-    display: isDisplayBorderTop ? "block" : "none",
+    display: isDisplayBorderTop ? "flex" : "none",
     width: "calc(100% - 40px)",
     margin: "0 auto",
-    height: "2px",
-    background: theme.palette.primary[200]
+    height: "1px",
+    borderBottom: `2px solid ${theme.palette.primary[200]}`,
+    background: "transparent"
   }
 }));

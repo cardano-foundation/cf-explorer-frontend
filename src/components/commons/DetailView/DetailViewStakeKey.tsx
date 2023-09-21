@@ -81,7 +81,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
     {
       key: "withdrawal",
       label: t("drawer.withDrawalHistory"),
-      icon: <DetailLinkImage src={FileEditIcon} alt="withdrawal" />
+      icon: <FileEditIcon />
     },
     {
       key: "instantaneous",

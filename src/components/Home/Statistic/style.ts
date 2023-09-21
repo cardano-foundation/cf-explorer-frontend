@@ -1,6 +1,7 @@
 import { Box, Card, Grid, Skeleton, styled } from "@mui/material";
 
 import { AdaLogoIcon } from "src/components/commons/ADAIcon";
+import { ThemeType } from "src/types/user";
 
 export const StatisticContainer = styled(Grid)`
   margin-bottom: 24px;
@@ -11,7 +12,9 @@ export const WrapGrid = styled(Grid)`
   flex-direction: column;
 `;
 
-export const Item = styled(Card)<{ smallItem?: boolean }>`
+export const Item = styled(Card)<{ smallItem?: boolean; themeMode?: ThemeType }>`
+  background: ${({ theme, themeMode }) =>
+    themeMode === "light" ? theme.palette.secondary[700] : theme.palette.secondary[0]};
   height: 100%;
   min-height: 164px;
   font-family: var(--font-family-text);

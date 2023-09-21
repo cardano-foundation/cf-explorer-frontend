@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useKey } from "react-use";
 import { useTranslation } from "react-i18next";
-import { useTheme } from "@emotion/react";
 
-import { HeaderSearchIcon, WhiteSearchIcon } from "src/commons/resources";
+import { HeaderSearchIconComponent, WhiteSearchIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import InfoGraphicModal from "src/components/InfoGraphicModal";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -14,6 +13,7 @@ import { API } from "src/commons/utils/api";
 import useFetchList from "src/commons/hooks/useFetchList";
 
 import DropdownMenu from "../commons/DropdownMenu";
+// eslint-disable-next-line import/order
 import {
   StyledContainer,
   Title,
@@ -34,6 +34,8 @@ enum BROWSE_VALUES {
   DELEGATOR = "DELEGATOR",
   STAKE_POOL = "STAKE_POOL"
 }
+
+import CustomIcon from "../commons/CustomIcon";
 
 const StakingLifeCycleSearch = () => {
   const { t } = useTranslation();
@@ -134,7 +136,7 @@ const StakingLifeCycleSearch = () => {
             }}
           />
           <SubmitButton onClick={hanldeSearch}>
-            <Image src={HeaderSearchIcon} alt="Search" />
+            <CustomIcon icon={HeaderSearchIconComponent} stroke={themes.palette.secondary.light} height={22} />
           </SubmitButton>
         </SearchContainer>
         <Box color={({ palette }) => palette.error[700]} sx={{ marginBottom: "20px" }}>

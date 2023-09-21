@@ -35,6 +35,7 @@ import Table from "src/components/commons/Table";
 import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "src/types/protocol";
 import { Column } from "src/types/table";
 import NoRecord from "src/components/commons/NoRecord";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import { ExplainerTextModal } from "./ExplainerTextModal";
 import { explainerTextGlobalConstants, explainerTextProtocolHistory } from "./explainerText";
@@ -524,7 +525,7 @@ export const ProtocolParameterHistory = () => {
               px={2}
               onClick={() => setShowFiter(!showFilter)}
             >
-              <FilterIcon />
+              <CustomIcon icon={FilterIcon} fill={theme.palette.secondary.light} height={18} />
               <Box ml={1} fontWeight={"bold"} color={({ palette }) => palette.secondary.light}>
                 {t("common.filter")}
               </Box>
@@ -645,13 +646,13 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
   return (
     <FilterContainer padding={2} pt={5}>
       <CloseButton saving={0} onClick={() => setShowFiter(false)} data-testid="close-modal-button">
-        <IoMdClose />
+        <IoMdClose color={theme.palette.secondary.light} />
       </CloseButton>
       <Box display={"flex"} flexDirection={"column"}>
         <ButtonFilter onClick={() => setSort("LastFirst")}>
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
-              <ImArrowDown2 />
+              <ImArrowDown2 color={theme.palette.secondary.light} />
               <Box ml={1} color={({ palette }) => palette.secondary.main}>
                 {t("filter.latestFirst")}
               </Box>
@@ -662,7 +663,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
         <ButtonFilter onClick={() => setSort("FirstLast")}>
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
-              <ImArrowUp2 />
+              <ImArrowUp2 color={theme.palette.secondary.light} />
               <Box ml={1} color={({ palette }) => palette.secondary.main}>
                 {t("filter.firstLatest")}
               </Box>
@@ -673,7 +674,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
         <ButtonFilter onClick={() => setShowDaterange(true)}>
           <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
             <Box display={"flex"} alignItems={"center"}>
-              <DateRangeIcon />
+              <CustomIcon icon={DateRangeIcon} fill={theme.palette.secondary.light} height={18} />
               <Box ml={1} color={({ palette }) => palette.secondary.main}>
                 {" "}
                 {t("filter.daterange")}
@@ -693,12 +694,18 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
               justifyContent={"space-between"}
             >
               <Box display={"flex"} alignItems={"center"}>
-                <ProtocolParam />
+                <CustomIcon icon={ProtocolParam} stroke={theme.palette.secondary.light} height={18} />
                 <Box ml={1} color={({ palette }) => palette.secondary.main}>
                   {t("common.parameterChanges")} {filterOption.length > 0 ? `(${filterOption.length})` : ""}
                 </Box>
               </Box>
-              <Box>{expanded === "params" ? <IoIosArrowDown /> : <IoIosArrowUp />}</Box>
+              <Box>
+                {expanded === "params" ? (
+                  <IoIosArrowDown color={theme.palette.secondary.light} />
+                ) : (
+                  <IoIosArrowUp color={theme.palette.secondary.light} />
+                )}
+              </Box>
             </Box>
           </AccordionSummary>
           <AccordionDetails>
@@ -776,7 +783,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           color={({ palette }) => `${palette.primary.main} !important`}
         >
           <Box mr={1}>{t("common.reset")}</Box>
-          <ResetIcon />
+          <CustomIcon icon={ResetIcon} fill={theme.palette.primary.main} height={16} />
         </Box>
       </Box>
       <DateRangeModal

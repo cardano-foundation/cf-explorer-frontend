@@ -2,7 +2,7 @@ import { alpha, Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const Wrapper = styled(Box)`
-  background: ${(props) => props.theme.palette.common.white};
+  background: ${(props) => props.theme.palette.secondary[0]};
   padding: 25px;
 `;
 export const Header = styled(Box)`
@@ -16,7 +16,7 @@ export const Header = styled(Box)`
 `;
 
 export const StyledItem = styled(Box)`
-  background-color: white;
+  background-color: ${({ theme }) => theme.palette.secondary[0]};
   text-align: left;
   padding: 10px 0;
   font-size: var(--font-size-text);

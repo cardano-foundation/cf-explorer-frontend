@@ -283,31 +283,6 @@ export const getRandomInt = (max: number) => {
   return Math.floor(Math.random() * max);
 };
 
-export const getDurationUnits = (inp: DurationInputArg1, unit: DurationInputArg2) => {
-  const duration = moment.duration(inp, unit);
-  const d = duration.days();
-  const h = duration.hours();
-
-  let humanized = "";
-  if (d > 1) {
-    humanized += `${d} days`;
-  } else if (d === 1) {
-    humanized = "1 day";
-  }
-
-  if (h > 1) {
-    humanized += ` ${h} hours`;
-  } else if (h === 1) {
-    humanized += " 1 hour";
-  }
-
-  return {
-    d,
-    h,
-    humanized
-  };
-};
-
 export const getIntervalAnalyticChart = (rangeTime: OPTIONS_CHART_ANALYTICS): AxisInterval => {
   const width = window.innerWidth;
   switch (rangeTime) {
@@ -334,4 +309,28 @@ export const getIntervalAnalyticChart = (rangeTime: OPTIONS_CHART_ANALYTICS): Ax
     default:
       return "preserveEnd";
   }
+};
+export const getDurationUnits = (inp: DurationInputArg1, unit: DurationInputArg2) => {
+  const duration = moment.duration(inp, unit);
+  const d = duration.days();
+  const h = duration.hours();
+
+  let humanized = "";
+  if (d > 1) {
+    humanized += `${d} days`;
+  } else if (d === 1) {
+    humanized = "1 day";
+  }
+
+  if (h > 1) {
+    humanized += ` ${h} hours`;
+  } else if (h === 1) {
+    humanized += " 1 hour";
+  }
+
+  return {
+    d,
+    h,
+    humanized
+  };
 };
