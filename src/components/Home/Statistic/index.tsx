@@ -8,12 +8,17 @@ import { useTranslation } from "react-i18next";
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
+  AdaPriceDarkIcon,
   AdaPriceIcon,
   CurrentEpochHome,
+  CurrentEpochHomeDark,
   HomeDownIcon,
   HomeUpIcon,
+  LiveStakeDarkIcon,
   LiveStakeIcon,
-  MarketCapIcon
+  MarketCapDarkIcon,
+  MarketCapIcon,
+  UpGreenDarkmodeIcon
 } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
@@ -64,6 +69,7 @@ const HomeStatistic = () => {
   const { t } = useTranslation();
 
   const { currentEpoch, usdMarket } = useSelector(({ system }: RootState) => system);
+  const { theme: themeMode } = useSelector(({ user }: RootState) => user);
   const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS);
   const { data: btcMarket } = useFetch<CardanoMarket[]>(
     `${API.MARKETS}?currency=btc`,
@@ -103,19 +109,22 @@ const HomeStatistic = () => {
       <WrapGrid item xl lg={3} sm={6} xs={12}>
         {usdMarket && btcMarket?.[0] ? (
           <Link href={EXT_ADA_PRICE_URL} target="_blank">
-            <Item data-testid="ada-price-box" smallItem>
+            <Item data-testid="ada-price-box" smallItem themeMode={themeMode}>
               <WrapCardContent>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon
                     style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
                     data-testid="ada-price-icon"
-                    src={AdaPriceIcon}
+                    src={themeMode === "light" ? AdaPriceIcon : AdaPriceDarkIcon}
                     alt={t("stats.adaPrice")}
                   />
                   <Name data-testid="ada-price-box-title">{t("stats.adaPrice")}</Name>
                 </Box>
                 <Box display={"flex"} alignItems={"center"}>
-                  <ItemIcon src={sign > 0 ? HomeUpIcon : HomeDownIcon} alt="Home up icon" />
+                  <ItemIcon
+                    src={sign > 0 ? (themeMode === "light" ? HomeUpIcon : UpGreenDarkmodeIcon) : HomeDownIcon}
+                    alt="Home up icon"
+                  />
                   <Box ml={2}>
                     <Title data-testid="ada-current-price">${usdMarket.current_price}</Title>
                   </Box>
@@ -143,10 +152,14 @@ const HomeStatistic = () => {
       <WrapGrid item xl lg={3} sm={6} xs={12}>
         {usdMarket ? (
           <Link href={EXT_ADA_PRICE_URL} target="_blank">
-            <Item data-testid="market-cap-box" smallItem>
+            <Item data-testid="market-cap-box" smallItem themeMode={themeMode}>
               <WrapCardContent>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
-                  <ItemIcon data-testid="market-cap-icon" src={MarketCapIcon} alt="Market cap" />
+                  <ItemIcon
+                    data-testid="market-cap-icon"
+                    src={themeMode === "light" ? MarketCapIcon : MarketCapDarkIcon}
+                    alt="Market cap"
+                  />
                   <Name data-testid="market-cap-box-title">{t("glossary.marketCap")}</Name>
                 </Box>
                 <Title data-testid="market-cap-value">${numberWithCommas(usdMarket.market_cap)}</Title>
@@ -165,13 +178,13 @@ const HomeStatistic = () => {
       <WrapGrid item xl lg={3} sm={6} xs={12}>
         {currentEpoch ? (
           <Box component={LinkDom} display={"contents"} to={details.epoch(currentEpoch?.no)}>
-            <Item data-testid="current-epoch-box">
+            <Item data-testid="current-epoch-box" themeMode={themeMode}>
               <Content display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon
                     style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
                     data-testid="market-cap-icon"
-                    src={CurrentEpochHome}
+                    src={themeMode === "light" ? CurrentEpochHome : CurrentEpochHomeDark}
                     alt="Market cap"
                   />
                   <Name data-testid="current-epoch-box-title" style={isGalaxyFoldSmall ? { maxWidth: "30px" } : {}}>
@@ -224,14 +237,14 @@ const HomeStatistic = () => {
       <WrapGrid item xl lg={3} sm={6} xs={12}>
         {data && usdMarket ? (
           <Box component={LinkDom} display={"contents"} to={routers.DELEGATION_POOLS}>
-            <Item data-testid="live-stake-box">
+            <Item data-testid="live-stake-box" themeMode={themeMode}>
               <Content display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
                 <Box>
                   <Box display={"flex"} alignItems={"center"} height={"40px"}>
                     <ItemIcon
                       style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
                       data-testid="live-stake-icon"
-                      src={LiveStakeIcon}
+                      src={themeMode === "light" ? LiveStakeIcon : LiveStakeDarkIcon}
                       alt="Total ADA Stake"
                     />
                     <Name data-testid="live-stake-box-title">{t("glossary.liveStake")}</Name>
@@ -261,9 +274,9 @@ const HomeStatistic = () => {
                 </Box>
                 <Box>
                   <Box color={({ palette }) => palette.secondary.light}>
-                    {t("glossary.activeStake")} <StyledAdaLogoIcon />:{" "}
+                    {t("glossary.activeStake")} <StyledAdaLogoIcon color="#fff" />:{" "}
                     <CustomTooltip title={formatADAFull(activeStake)}>
-                      <span data-testid="active-stake-value">{formatADA(activeStake)}</span>
+                      <span data-testid="active-stake-v-= alue">{formatADA(activeStake)}</span>
                     </CustomTooltip>
                   </Box>
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>

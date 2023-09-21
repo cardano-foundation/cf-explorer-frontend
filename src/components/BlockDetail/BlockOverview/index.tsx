@@ -4,13 +4,13 @@ import { useTranslation } from "react-i18next";
 import { isNil } from "lodash";
 
 import {
-  timeIconUrl,
-  exchageIconUrl,
-  exchageAltIconUrl,
-  outputIconUrl,
-  cubeIconUrl,
-  txConfirmUrl,
-  slotIconUrl
+  TimeIconComponent,
+  TxConfirm,
+  ExchageIcon,
+  ExchageAltIcon,
+  OutputIcon,
+  CubeIconComponent,
+  SlotIcon
 } from "src/commons/resources";
 import { formatADAFull, formatDateTimeLocal, formatNameBlockNo } from "src/commons/utils/helper";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
@@ -32,7 +32,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
 
   const listOverview = [
     {
-      icon: timeIconUrl,
+      icon: TimeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>{t("createdAt")} </TitleCard>
@@ -41,7 +41,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       value: formatDateTimeLocal(data?.time || "")
     },
     {
-      icon: txConfirmUrl,
+      icon: TxConfirm,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>
@@ -52,7 +52,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       value: <WrapConfirmation>{data?.confirmation || 0}</WrapConfirmation>
     },
     {
-      icon: exchageIconUrl,
+      icon: ExchageIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>
@@ -63,7 +63,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       value: data?.txCount || 0
     },
     {
-      icon: exchageAltIconUrl,
+      icon: ExchageAltIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>{t("glossary.transactionfees")} </TitleCard>
@@ -76,7 +76,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       )
     },
     {
-      icon: outputIconUrl,
+      icon: OutputIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> {t("glossary.totalOutputInAda")}</TitleCard>
@@ -89,7 +89,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       )
     },
     {
-      icon: cubeIconUrl,
+      icon: CubeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> {t("glossary.block")}</TitleCard>
@@ -105,7 +105,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       })()
     },
     {
-      icon: slotIconUrl,
+      icon: SlotIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> {t("glossary.Slot")}</TitleCard>

@@ -126,7 +126,9 @@ const StyledInput = styled("input")`
   font-size: var(--font-size-text-small);
   border-radius: 8px;
   overflow: hidden;
+  background: ${({ theme }) => theme.palette.secondary[0]} !important;
   text-overflow: ellipsis;
+  color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
 const SubmitButton = styled(Button)`
@@ -146,6 +148,7 @@ const Image = styled("img")`
 `;
 
 const Title = styled("h1")`
+  color: ${({ theme }) => theme.palette.secondary.main};
   text-align: center;
   ${({ theme }) => theme.breakpoints.down("md")} {
     font-size: 30px;

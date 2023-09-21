@@ -73,7 +73,7 @@ export const PoolIdValue = styled("small")`
 `;
 
 export const DataContainer = styled("div")(({ theme }) => ({
-  background: theme.palette.background.paper,
+  background: theme.palette.secondary[0],
   display: "flex",
   flexDirection: "column",
   boxShadow: theme.shadow.detailHeader,

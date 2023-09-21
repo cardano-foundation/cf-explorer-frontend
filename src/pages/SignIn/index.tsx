@@ -287,6 +287,7 @@ export default function SignIn() {
               fullWidth
               onClick={handleSubmit}
               disabled={!enableButton}
+              isDisabled={+!enableButton}
             >
               {t("common.signIn")}
             </WrapButton>

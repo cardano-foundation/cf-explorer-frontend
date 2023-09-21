@@ -15,7 +15,7 @@ export const BackText = styled("small")`
 
 export const FilterContainer = styled(Box)(({ theme }) => ({
   width: 300,
-  backgroundColor: theme.palette.common.white,
+  backgroundColor: theme.palette.secondary[0],
   zIndex: 15,
   position: "absolute",
   top: "calc(100% + 10px)",
@@ -53,10 +53,11 @@ export const ButtonFilter = styled(Button)(({ theme }) => ({
   pading: "12px 0"
 }));
 
-export const AccordionContainer = styled(Accordion)(() => ({
+export const AccordionContainer = styled(Accordion)(({ theme }) => ({
   boxShadow: "none",
   textAlign: "left",
-  width: "100%"
+  width: "100%",
+  backgroundColor: theme.palette.secondary[0]
 }));
 export const AccordionSummary = styled(AccordionSummaryMUI)(() => ({
   padding: "0 8px !important",

@@ -1,10 +1,19 @@
 import React from "react";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, useTheme } from "@mui/material";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import { CurentEpochPool, LiveStakeIcon, RocketPoolIcon, TotalPoolIcon } from "src/commons/resources";
+import {
+  CurentEpochPool,
+  CurentEpochPoolDark,
+  LiveStakeDarkIcon,
+  LiveStakeIcon,
+  RocketPoolDarkIcon,
+  RocketPoolIcon,
+  TotalPoolDarkIcon,
+  TotalPoolIcon
+} from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
@@ -28,6 +37,7 @@ import {
 
 const OverViews: React.FC = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { data, loading, lastUpdated } = useFetch<OverViewDelegation>(
     API.DELEGATION.HEADER,
     undefined,
@@ -82,13 +92,13 @@ const OverViews: React.FC = () => {
                 </StyledCard.Comment>
               </Box>
             </StyledCard.Content>
-            <StyledImg src={CurentEpochPool} alt="Clock" />
+            <StyledImg src={theme.mode === "light" ? CurentEpochPool : CurentEpochPoolDark} alt="Clock" />
           </StyledCard.Container>
         </Grid>
         <Grid item xl={3} md={6} xs={12}>
           <Box height={"100%"}>
             <Box
-              bgcolor={(theme) => theme.palette.common.white}
+              bgcolor={(theme) => theme.palette.secondary[0]}
               boxShadow={(theme) => theme.shadow.card}
               borderRadius="12px"
               height={"100%"}
@@ -103,7 +113,7 @@ const OverViews: React.FC = () => {
                     </Box>
                   </StyledCard.Value>
                 </StyledCard.Content>
-                <StyledImg src={RocketPoolIcon} alt="Rocket" />
+                <StyledImg src={theme.mode === "light" ? RocketPoolIcon : RocketPoolDarkIcon} alt="Rocket" />
               </StyledCard.Container>
               <Box position={"relative"} top={-60} px={4}>
                 <StyledLinearProgress
@@ -129,7 +139,7 @@ const OverViews: React.FC = () => {
               <StyledCard.Value>{numberWithCommas(data?.delegators)}</StyledCard.Value>
             </StyledCard.Content>
             <Box>
-              <StyledImg src={LiveStakeIcon} alt="Rocket" />
+              <StyledImg src={theme.mode === "light" ? LiveStakeIcon : LiveStakeDarkIcon} alt="Rocket" />
             </Box>
           </StyledCard.Container>
         </Grid>
@@ -157,7 +167,12 @@ const OverViews: React.FC = () => {
                 </Box>
               </Box>
             </StyledCard.Content>
-            <StyledCustomIcon icon={TotalPoolIcon} originWidth={35} originHeight={35} width={35} />
+            <StyledCustomIcon
+              icon={theme.mode === "light" ? TotalPoolIcon : TotalPoolDarkIcon}
+              originWidth={35}
+              originHeight={35}
+              width={35}
+            />
           </StyledCard.Container>
         </Grid>
       </Grid>

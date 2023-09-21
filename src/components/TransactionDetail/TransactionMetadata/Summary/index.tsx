@@ -38,7 +38,7 @@ const SummaryItems = ({
       flexDirection={isMobile ? "column" : "row"}
       justifyContent={"space-between"}
       sx={{
-        background: (theme) => theme.palette.background.paper,
+        background: (theme) => theme.palette.secondary[0],
         px: 3,
         py: 2,
         mb: 1,

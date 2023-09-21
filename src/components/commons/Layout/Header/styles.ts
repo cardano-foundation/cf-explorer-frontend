@@ -39,7 +39,7 @@ export const HeaderTop = styled("div")(({ theme }) => ({
     justifyContent: "space-between",
     width: "calc(100% - 32px)",
     padding: "16px 16px",
-    backgroundColor: theme.palette.common.white,
+    backgroundColor: theme.palette.secondary[0],
     boxShadow: theme.shadow.card
   }
 }));

@@ -3,10 +3,10 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import delegatedIcon from "src/commons/resources/icons/delegated.svg";
-import rewardIcon from "src/commons/resources/icons/reward.svg";
-import rewardWithdrawIcon from "src/commons/resources/icons/rewardWithdraw.svg";
-import totalStakeIcon from "src/commons/resources/icons/totalStake.svg";
+import { ReactComponent as delegatedIcon } from "src/commons/resources/icons/delegated.svg";
+import { ReactComponent as rewardIcon } from "src/commons/resources/icons/reward.svg";
+import { ReactComponent as rewardWithdrawIcon } from "src/commons/resources/icons/rewardWithdraw.svg";
+import { ReactComponent as totalStakeIcon } from "src/commons/resources/icons/totalStake.svg";
 import { details } from "src/commons/routers";
 import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";

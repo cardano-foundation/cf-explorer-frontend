@@ -56,22 +56,22 @@ export const StyledTextField = styled(TextField)`
   .MuiInputBase-root {
     padding: 0 9px;
     height: 40px;
-    border: 1.5px solid ${(props) => props.theme.palette.border.main};
+    border: 1.5px solid ${(props) => props.theme.palette.primary[200]};
+    color: ${(props) => props.theme.palette.secondary.main};
     border-radius: 8px;
+
     ${(props) => (props.disabled ? `background: ${props.theme.palette.secondary[600]}` : "")};
   }
   .MuiFormControl-root {
   }
   .MuiInputBase-input {
     font-size: 14px;
-    &::-webkit-input-placeholder {
+    &::placeholder {
       ${(props) =>
-        props.disabled
-          ? `color: ${props.theme.palette.background.paper};
-            opacity: 1;
-            -webkit-text-fill-color: ${props.theme.palette.background.paper};
-            `
-          : ""}
+        `color: ${props.theme.palette.secondary.main};
+            opacity: ${props.disabled ? 0.5 : 1};
+            -webkit-text-fill-color: ${props.theme.palette.secondary.main};
+            `}
     }
   }
   .MuiOutlinedInput-notchedOutline {
@@ -96,7 +96,7 @@ export const LogoEmpty = styled(Box)`
   height: 25px;
   background: ${(props) => alpha(props.theme.palette.common.white, 0.6)};
   border-radius: 50%;
-  border: 1px solid ${(props) => props.theme.palette.border.main};
+  border: 1px solid ${(props) => props.theme.palette.primary[200]};
 `;
 
 export const ModalContainer = styled(Box)(({ theme }) => ({
@@ -138,7 +138,7 @@ export const SearchContainer = styled(Box)`
   align-items: center;
   width: 100%;
   max-width: 250px;
-  background: ${(props) => props.theme.palette.background.paper};
+  background: ${(props) => props.theme.palette.secondary[0]};
   padding: 0 12px;
   border-radius: 8px;
   height: 35px;
@@ -150,6 +150,8 @@ export const StyledInput = styled("input")`
   width: 100%;
   font-size: var(--font-size-text-small);
   border-radius: 8px;
+  color: ${({ theme }) => theme.palette.secondary.main};
+  background: ${(props) => props.theme.palette.secondary[0]};
 `;
 
 export const SubmitButton = styled(Button)`

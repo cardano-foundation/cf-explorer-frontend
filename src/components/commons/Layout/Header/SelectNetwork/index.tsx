@@ -8,14 +8,15 @@ import { setOnDetailView } from "src/stores/user";
 
 export const StyledSelect = styled(Select)(({ theme }) => ({
   fontFamily: "var(--font-family-title)",
-  border: `2px solid ${theme.palette.primary[200]}`,
+  border: `2px solid ${theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary[600]}`,
   background: "transparent",
   color: theme.palette.secondary.main,
   borderRadius: "8px",
   "& > div": {
     padding: "6.5px 12px",
     fontWeight: "var(--font-weight-bold)",
-    cursor: "pointer"
+    cursor: "pointer",
+    color: theme.palette.secondary.main
   },
   "& > fieldset": {
     top: 0,
@@ -24,19 +25,17 @@ export const StyledSelect = styled(Select)(({ theme }) => ({
   "& > svg": {
     color: theme.palette.text.secondary,
     fontSize: "20px"
-  },
-  [theme.breakpoints.down("md")]: {
-    background: theme.palette.background.paper
   }
 }));
 
 const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
-  "&.Mui-selected": {
-    backgroundColor: theme.palette.primary[200]
-  },
-  "&:hover": {
-    backgroundColor: theme.palette.primary[200] + " !important"
-  }
+  color: theme.palette.secondary.main
+  // "&.Mui-selected": {
+  //   backgroundColor: theme.palette.primary[200]
+  // },
+  // "&:hover": {
+  //   backgroundColor: theme.palette.primary[200] + " !important"
+  // }
 }));
 
 const SelectNetwork: React.FC = () => {
@@ -67,7 +66,19 @@ const SelectNetwork: React.FC = () => {
       onChange={handleChange}
       value={NETWORK}
       IconComponent={BiChevronDown}
-      MenuProps={{ style: { zIndex: 1303 } }}
+      MenuProps={{
+        style: { zIndex: 1303 },
+        MenuListProps: {
+          sx: {
+            bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+          }
+        },
+        PaperProps: {
+          sx: {
+            bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+          }
+        }
+      }}
       onOpen={handleOpen}
     >
       {Object.entries(NETWORK_NAMES).map(([key, value]) => (

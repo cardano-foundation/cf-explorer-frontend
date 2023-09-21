@@ -5,14 +5,14 @@ import { BiShowAlt } from "react-icons/bi";
 import { useTranslation } from "react-i18next";
 
 import {
-  timeIconUrl,
-  exchageAltIconUrl,
-  txConfirmUrl,
-  totalOutputUrl,
-  cubeIconUrl,
-  slotIconUrl,
-  txInputIconUrl,
-  txOutputIconUrl
+  TxInputIcon,
+  TxOutputIcon,
+  TimeIconComponent,
+  TxConfirm,
+  TotalOutput,
+  ExchageAltIcon,
+  CubeIconComponent,
+  SlotIcon
 } from "src/commons/resources";
 import { formatADAFull, formatDateTimeLocal, formatNameBlockNo, getShortWallet } from "src/commons/utils/helper";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
@@ -69,7 +69,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
 
   const listOverview = [
     {
-      icon: txInputIconUrl,
+      icon: TxInputIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1} height={24}>
@@ -112,7 +112,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       key: "input"
     },
     {
-      icon: txOutputIconUrl,
+      icon: TxOutputIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1} height={24}>
@@ -154,7 +154,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       key: "output"
     },
     {
-      icon: timeIconUrl,
+      icon: TimeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>{t("createdAt")}</TitleCard>
@@ -163,7 +163,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       value: formatDateTimeLocal(data?.tx?.time || "")
     },
     {
-      icon: txConfirmUrl,
+      icon: TxConfirm,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>
@@ -176,7 +176,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       value: <>{data?.tx?.confirmation || 0}</>
     },
     {
-      icon: totalOutputUrl,
+      icon: TotalOutput,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>{t("glossary.totalOutput")}</TitleCard>
@@ -189,7 +189,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       )
     },
     {
-      icon: exchageAltIconUrl,
+      icon: ExchageAltIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>{t("glossary.transactionfees")} </TitleCard>
@@ -202,7 +202,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       )
     },
     {
-      icon: cubeIconUrl,
+      icon: CubeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard height={24} mr={1}>
@@ -222,7 +222,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       })()
     },
     {
-      icon: slotIconUrl,
+      icon: SlotIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard height={24} mr={1}>

@@ -1,7 +1,9 @@
 import { Box, styled } from "@mui/material";
 import { BigNumber } from "bignumber.js";
+import { useSelector } from "react-redux";
 
-import { DownRedIcon, UpGreenIcon } from "src/commons/resources";
+import { DownRedIcon, UpGreenDarkmodeIcon, UpGreenIcon } from "src/commons/resources";
+import { ThemeType } from "src/types/user";
 
 import CustomTooltip from "../CustomTooltip";
 
@@ -23,19 +25,26 @@ const ImageRate = styled("img")<{ sign: number }>`
   height: 10px;
 `;
 
-const PriceValue = styled("span")<{ sign: number }>`
-  color: ${({ theme, sign }) => (sign > 0 ? theme.palette.success[800] : theme.palette.error[700])};
+const PriceValue = styled("span")<{ sign: number; themeMode: ThemeType }>`
+  color: ${({ theme, sign, themeMode }) =>
+    sign > 0
+      ? themeMode === "light"
+        ? theme.palette.success[800]
+        : theme.palette.success[700]
+      : themeMode === "light"
+      ? theme.palette.error[700]
+      : theme.palette.error[100]};
   font-weight: var(--font-weight-bold);
 `;
 
 const PriceChange = styled("span")`
-  color: ${(props) => props.theme.palette.text.primary};
+  color: ${(props) => props.theme.palette.secondary.light};
   margin-left: -8px;
   font-weight: var(--font-weight-bold);
 `;
 
 const PriceNoValue = styled("span")`
-  color: ${(props) => props.theme.palette.text.primary};
+  color: ${(props) => props.theme.palette.secondary.light};
   margin-left: 28px;
   font-weight: var(--font-weight-bold);
 `;
@@ -47,16 +56,22 @@ interface Props {
   showIcon?: boolean;
 }
 const RateWithIcon = ({ value, size, multiple = 1, showIcon = true }: Props) => {
+  const { theme: themeMode } = useSelector(({ user }: RootState) => user);
   if (!value) return <PriceNoValue>0</PriceNoValue>;
 
   const multiplied = BigNumber(value).multipliedBy(multiple);
   const sign = Math.sign(multiplied.toNumber());
-
   return (
     <CustomTooltip title={`${sign > 0 ? "+" : ""}${multiplied.toNumber()}`}>
       <PriceRate size={size}>
-        {showIcon && <ImageRate sign={sign} src={sign > 0 ? UpGreenIcon : DownRedIcon} alt="rate" />}
-        <PriceValue sign={sign}>
+        {showIcon && (
+          <ImageRate
+            sign={sign}
+            src={sign > 0 ? (themeMode === "light" ? UpGreenIcon : UpGreenDarkmodeIcon) : DownRedIcon}
+            alt="rate"
+          />
+        )}
+        <PriceValue sign={sign} themeMode={themeMode}>
           {sign > 0 ? "+" : ""}
           {multiplied.toFixed(2, BigNumber.ROUND_DOWN).toString().replace(".", ",")} %
         </PriceValue>

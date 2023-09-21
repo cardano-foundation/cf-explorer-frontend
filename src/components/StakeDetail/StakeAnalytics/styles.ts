@@ -8,9 +8,9 @@ export const StyledGrid = styled(Grid)(({ theme }) => ({
 }));
 
 export const BoxInfo = styled(Box)(({ theme }) => ({
-  background: theme.palette.common.white,
+  background: theme.palette.secondary[0],
   borderRadius: "10px",
-  color: theme.palette.primary.contrastText,
+  color: theme.palette.secondary.main,
   display: "flex",
   flexDirection: "column",
   textAlign: "center",

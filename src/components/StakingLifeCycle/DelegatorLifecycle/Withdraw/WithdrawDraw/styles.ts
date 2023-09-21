@@ -95,7 +95,7 @@ export const AccountContainer = styled(Box)(({ theme }) => ({
 }));
 
 export const PaymentWalletContainer = styled(Box)(({ theme }) => ({
-  background: theme.palette.common.white,
+  background: theme.palette.secondary[0],
   borderRadius: 12,
   padding: "15px 10px",
   display: "flex",
@@ -130,7 +130,7 @@ export const PaymentWalletValueContainer = styled(Box)(() => ({
 }));
 
 export const PaymentWalletIconBox = styled(Box)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.common.white, 0.1),
+  backgroundColor: theme.palette.secondary[0],
   display: "flex",
   alignItems: "center",
   gap: 5

@@ -137,5 +137,5 @@ export const DescriptionText = styled(Box)(({ theme }) => ({
   margin: `${theme.spacing(1)} 0`,
   textAlign: "left",
   fontSize: 14,
-  color: theme.palette.secondary[600]
+  color: theme.mode === "light" ? theme.palette.secondary[600] : theme.palette.secondary[800]
 }));

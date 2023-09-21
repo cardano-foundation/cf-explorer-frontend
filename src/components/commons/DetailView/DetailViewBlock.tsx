@@ -3,6 +3,7 @@ import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { useSelector } from "react-redux";
 import { BiChevronRight } from "react-icons/bi";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "@mui/material";
 
 import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
 import { CubeIcon, RocketIcon } from "src/commons/resources";
@@ -22,7 +23,6 @@ import {
   DetailsInfoItem,
   DetailLabel,
   DetailValue,
-  Icon,
   BlockDefault,
   DetailLabelSkeleton,
   DetailValueSkeleton,
@@ -58,6 +58,7 @@ type DetailViewBlockProps = {
 const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
   const { t } = useTranslation();
   const { blockNo, handleClose } = props;
+  const theme = useTheme();
   const { data, lastUpdated } = useFetch<BlockDetail>(
     `${API.BLOCK.DETAIL}/${blockNo}`,
     undefined,
@@ -174,12 +175,12 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
           </HeaderContainer>
           <ListItem>
             <Item>
-              <Icon src={CubeIcon} alt="socket" />
+              <CubeIcon width={24} height={24} fill={theme.palette.secondary[0]} />
               <ItemName>{t("glossary.block")}</ItemName>
               <ItemValue>{data?.blockNo !== null ? data.blockNo : "_"}</ItemValue>
             </Item>
             <Item>
-              <Icon src={RocketIcon} alt="socket" />
+              <RocketIcon width={24} height={24} fill={theme.palette.secondary[0]} />
               <ItemName>{t("common.slot")}</ItemName>
               <ItemValue>
                 {data?.epochSlotNo || 0}
