@@ -43,7 +43,7 @@ const SummaryItems = ({
     >
       <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
         <Box display="flex" paddingX={2}>
-          <Icon src={WalletRoundedIcon} alt="send icon" />
+          <Icon src={WalletRoundedIcon} alt="wallet icon" />
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
             <TitleText>{t("common.wallet")}</TitleText>
             <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
