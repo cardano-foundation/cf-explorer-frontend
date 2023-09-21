@@ -41,7 +41,7 @@ export const LogoLink = styled(Link)<{ open?: number }>`
   ${({ theme }) => theme.breakpoints.down("md")} {
     height: 44px;
     width: 155px;
-    margin-left: 16px;
+    margin-left: 20px;
     margin-bottom: 16px;
   }
 `;

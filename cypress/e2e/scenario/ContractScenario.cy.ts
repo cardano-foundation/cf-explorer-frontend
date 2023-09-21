@@ -9,8 +9,7 @@ describe("contract scenario", () => {
     cy.get('[data-testid="submenu-button-smart_contracts"]').click();
     cy.visit("/contracts/" + contactDetail);
     cy.get("small").contains(contactDetail);
-    //cy.get('th').contains("#").should("be.visible");
-    cy.get("th").contains("Tx Hash").should("be.visible");
+    cy.get("th").contains("Tx Hash", { matchCase: false }).should("be.visible");
     cy.get("th").contains("Created At").should("be.visible");
     cy.get("th").contains("Block").should("be.visible");
     cy.get("th").contains("Addresses").should("be.visible");

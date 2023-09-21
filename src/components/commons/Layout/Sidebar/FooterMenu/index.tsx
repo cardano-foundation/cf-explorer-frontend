@@ -23,7 +23,7 @@ export const Menu = styled(List)<{ open: number; bottom: number }>`
   padding: 0px 10px;
   z-index: 1305;
   background: ${({ theme, bottom }) => (bottom ? "none" : theme.palette.primary[100])};
-  border-top: 1px solid ${(props) => props.theme.palette.border.main};
+  border-top: 1px solid ${(props) => props.theme.palette.primary[200]};
   ${({ theme }) => theme.breakpoints.down("md")} {
     border-top: 0px;
     position: relative;

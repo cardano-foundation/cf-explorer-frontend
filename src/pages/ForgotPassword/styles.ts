@@ -11,7 +11,7 @@ export const Container = styled(Box)`
   padding: 30px 0;
   min-width: 100vw;
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    min-height: 80vh;
+    min-height: 70vh;
   }
 `;
 
