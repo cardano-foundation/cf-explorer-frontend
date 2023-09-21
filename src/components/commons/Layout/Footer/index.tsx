@@ -44,6 +44,10 @@ const Copyright = styled("small")`
   }
 `;
 
+const Version = styled("span")`
+  text-wrap: nowrap;
+`;
+
 const RefContainer = styled(Box)`
   display: flex;
   gap: 10px;
@@ -61,12 +65,15 @@ const RefContainer = styled(Box)`
   }
 `;
 
-const DotDivide = styled(Box)`
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: ${(props) => props.theme.palette.primary.main};
-`;
+const DotDivide = styled(Box)(({ theme }) => ({
+  width: "4px",
+  height: "4px",
+  borderRadius: "50%",
+  background: theme.palette.primary.main,
+  [theme.breakpoints.down("sm")]: {
+    display: "none"
+  }
+}));
 
 const LinkTo = styled(Link)`
   color: ${(props) => `${props.theme.palette.primary.main} !important`};
@@ -79,7 +86,10 @@ const Footer: React.FC = () => {
       <FooterContainer>
         <FooterMenu bottom={true} />
         <Copyright data-testid="footer-text">
-          &copy; {new Date().getFullYear()} {t("common.copyright")}: {APP_VERSION}
+          &copy; {new Date().getFullYear()} {t("common.copyright")}{" "}
+          <Version>
+            {t("common.version")}: {APP_VERSION}
+          </Version>
         </Copyright>
         <RefContainer>
           <LinkTo to={routers.FAQ} rel="noopener noreferrer">

@@ -35,6 +35,9 @@ In the terminal run command: `cp .env.example .env`
 - Update API URL for explorer service. 
     >Example: `REACT_APP_API_URL=http://localhost:8080`
 
+- Update WebSocket URL for real-time expolorer service. 
+    >Example: `REACT_APP_WS_URL=ws://localhost:8080/ws`
+
 - Update API URL for authentication service.
     >Example: `REACT_APP_AUTH_API_URL=http://localhost:8081`
 

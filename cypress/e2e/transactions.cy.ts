@@ -6,8 +6,7 @@ describe("transactions spec", () => {
     cy.get('[data-testid="menu-button-blockchain"]').click();
     cy.get('[data-testid="submenu-button-transactions"]').click();
     cy.get('[data-testid="transactions-card"]').contains("Transactions");
-    //cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("#");
-    cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("Tx Hash");
+    cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("Tx Hash", { matchCase: false });
     cy.get(".css-1dz0v3k > tr > :nth-child(2)").contains("Block");
     cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Fees");
     cy.get(".css-1dz0v3k > tr > :nth-child(4)").contains("Output in ADA");
@@ -33,7 +32,7 @@ describe("transactions spec", () => {
     cy.get(":nth-child(2) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Output");
     cy.get(":nth-child(3) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Created At");
     cy.get(":nth-child(4) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Confirmations");
-    cy.get(":nth-child(5) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Total Output");
+    cy.get(":nth-child(5) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Total Output", { matchCase: false });
     cy.get(":nth-child(6) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Transaction Fees");
     cy.get(":nth-child(7) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Block");
     cy.get(":nth-child(8) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Slot");

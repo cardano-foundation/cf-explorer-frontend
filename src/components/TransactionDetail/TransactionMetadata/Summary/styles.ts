@@ -1,4 +1,4 @@
-import { Box, MenuItem, Select, alpha, styled } from "@mui/material";
+import { Box, Grid, MenuItem, Select, alpha, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const Img = styled("img")(() => ({
@@ -94,7 +94,35 @@ export const TitleText = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "flex-start",
   alignItems: "center",
+  whiteSpace: "nowrap",
   paddingRight: theme.spacing(1),
-  marginBottom: theme.spacing(1),
+  paddingBottom: "5px",
+  fontWeight: 600,
+  fontSize: "14px",
   color: theme.palette.secondary.light
+}));
+
+export const WrapContainerGrid = styled(Grid)(({ theme }) => ({
+  background: theme.palette.background.paper,
+  borderBottom: `1px solid ${theme.palette.primary[200]}`,
+  "&:last-child": {
+    borderBottom: "none"
+  }
+}));
+
+export const WrapTokensInfo = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  [theme.breakpoints.down("md")]: {
+    paddingTop: theme.spacing(2)
+  }
+}));
+
+export const WrapItemsInfo = styled(Box)(({ theme }) => ({
+  display: "flex",
+  [theme.breakpoints.down("sm")]: {
+    "&:last-child": {
+      paddingTop: theme.spacing(2)
+    }
+  }
 }));

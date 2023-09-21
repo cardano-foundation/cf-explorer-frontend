@@ -2,6 +2,7 @@ import { Box, useTheme } from "@mui/material";
 import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import receiveImg from "src/commons/resources/images/receiveImg.svg";
 import sendImg from "src/commons/resources/images/sendImg.svg";
@@ -24,7 +25,7 @@ import { Capitalize } from "../commons/CustomText/styles";
 
 interface AddressTransactionListProps {
   underline?: boolean;
-  openDetail?: (_: any, transaction: Transactions, index: number) => void;
+  openDetail?: (_: any, transaction: Transactions) => void;
   selected?: number | null;
   showTabView?: boolean;
   address: string;
@@ -43,8 +44,10 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
   const pageInfo = getPageInfo(search);
   const url = `${API.ADDRESS.DETAIL}/${address}/txs`;
   const theme = useTheme();
-  const fetchData = useFetchList<Transactions>(url, { ...pageInfo });
-  const onClickRow = (e: any, transaction: Transactions, index: number) => {
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
+
+  const fetchData = useFetchList<Transactions>(url, { ...pageInfo }, false, blockKey);
+  const onClickRow = (e: any, transaction: Transactions) => {
     let parent: Element | null = e.target as Element;
     while (parent !== null && !parent?.className.includes("MuiPopover-root")) {
       parent = parent?.parentElement;
@@ -52,7 +55,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
     if (parent) {
       return;
     }
-    if (openDetail) return openDetail(e, transaction, index);
+    if (openDetail) return openDetail(e, transaction);
     history.push(details.transaction(transaction.hash));
   };
   const { isMobile } = useScreen();
@@ -175,6 +178,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
           onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
         }}
         onClickRow={onClickRow}
+        rowKey="hash"
         selected={selected}
         showTabView={showTabView}
       />

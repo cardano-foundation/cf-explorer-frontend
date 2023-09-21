@@ -11,7 +11,7 @@ export const Container = styled(Box)`
   min-width: 100vw;
   padding: 30px 0;
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    min-height: 80vh;
+    min-height: 70vh;
   }
 `;
 
@@ -51,6 +51,7 @@ export const WrapHintText = styled(Box)`
   color: ${({ theme }) => theme.palette.secondary.light};
   display: flex;
   gap: 5px;
+  align-self: center;
 `;
 
 export const WrapForm = styled(Box)(({ theme }) => ({

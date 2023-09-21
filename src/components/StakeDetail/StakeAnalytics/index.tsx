@@ -16,14 +16,16 @@ import { useTranslation } from "react-i18next";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 import { BigNumber } from "bignumber.js";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
-import { formatADAFull, formatPrice } from "src/commons/utils/helper";
+import { formatADAFull, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
+import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
 
 import {
   BoxInfo,
@@ -51,20 +53,29 @@ type AnalyticsReward = {
 
 const StakeAnalytics: React.FC = () => {
   const { t } = useTranslation();
-  const [rangeTime, setRangeTime] = useState("ONE_DAY");
+  const [rangeTime, setRangeTime] = useState<OPTIONS_CHART_ANALYTICS>(OPTIONS_CHART_ANALYTICS.ONE_DAY);
   const [tab, setTab] = useState<"BALANCE" | "REWARD">("BALANCE");
   const { stakeId } = useParams<{ stakeId: string }>();
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const theme = useTheme();
   const { isMobile } = useScreen();
-  const { data, loading } = useFetch<AnalyticsBalance[]>(`${API.STAKE.ANALYTICS_BALANCE}/${stakeId}/${rangeTime}`);
+  const { data, loading } = useFetch<AnalyticsBalance[]>(
+    `${API.STAKE.ANALYTICS_BALANCE}/${stakeId}/${rangeTime}`,
+    undefined,
+    false,
+    blockKey
+  );
   const { data: dataReward, loading: loadingReward } = useFetch<AnalyticsReward[]>(
-    `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`
+    `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`,
+    undefined,
+    false,
+    blockKey
   );
   const options = [
-    { value: "ONE_DAY", label: t("time.1d") },
-    { value: "ONE_WEEK", label: t("time.1w") },
-    { value: "ONE_MONTH", label: t("time.1m") },
-    { value: "THREE_MONTH", label: t("time.3m") }
+    { value: OPTIONS_CHART_ANALYTICS.ONE_DAY, label: t("time.1d") },
+    { value: OPTIONS_CHART_ANALYTICS.ONE_WEEK, label: t("time.1w") },
+    { value: OPTIONS_CHART_ANALYTICS.ONE_MONTH, label: t("time.1m") },
+    { value: OPTIONS_CHART_ANALYTICS.THREE_MONTH, label: t("time.3m") }
   ];
   const values = data?.map((item) => item.value || 0) || [];
   const maxBalance = BigNumber.max(0, ...values).toString();
@@ -90,11 +101,11 @@ const StakeAnalytics: React.FC = () => {
 
   const getLabelTimeTooltip = (label: string) => {
     switch (rangeTime) {
-      case "ONE_DAY":
+      case OPTIONS_CHART_ANALYTICS.ONE_DAY:
         return `${moment(label).format("DD MMM YYYY HH:mm:ss")}`;
-      case "ONE_WEEK":
-      case "ONE_MONTH":
-      case "THREE_MONTH":
+      case OPTIONS_CHART_ANALYTICS.ONE_WEEK:
+      case OPTIONS_CHART_ANALYTICS.ONE_MONTH:
+      case OPTIONS_CHART_ANALYTICS.THREE_MONTH:
         return moment(label).format("DD MMM YYYY");
       default:
         return "";
@@ -181,6 +192,7 @@ const StakeAnalytics: React.FC = () => {
                       tab === "BALANCE" ? moment(value).format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM") : value
                     }
                     tickLine={false}
+                    interval={getIntervalAnalyticChart(rangeTime)}
                     {...xAxisProps}
                   >
                     <Label value="(UTC)" offset={-12} position="insideBottom" />
