@@ -279,6 +279,10 @@ export const formatNameBlockNo = (blockNo: blockEpochNoType, epochNo: blockEpoch
   };
 };
 
+export const getRandomInt = (max: number) => {
+  return Math.floor(Math.random() * max);
+};
+
 export const getDurationUnits = (inp: DurationInputArg1, unit: DurationInputArg2) => {
   const duration = moment.duration(inp, unit);
   const d = duration.days();
