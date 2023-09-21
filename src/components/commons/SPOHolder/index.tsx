@@ -4,7 +4,7 @@ import React, { forwardRef, useRef } from "react";
 import { isArray } from "lodash";
 import { useTranslation } from "react-i18next";
 
-import { SPOHolderIconUrl, SPOInfo, SPOKey, PolygonSPOUrl, PolygonSPODarkUrl } from "src/commons/resources";
+import { SPOHolderIconUrl, SPOInfo, SPOKey, PolygonSPOUrl, PolygonSPODarkUrlPng } from "src/commons/resources";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { getShortWallet } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
@@ -121,7 +121,7 @@ const PolygonShapeSPO = styled(PolygonShape)(({ theme }) => ({
   height: "250px",
   width: 190,
   position: "relative",
-  backgroundImage: `url(${theme.mode === "light" ? PolygonSPOUrl : PolygonSPODarkUrl})`
+  backgroundImage: `url(${theme.mode === "light" ? PolygonSPOUrl : PolygonSPODarkUrlPng})`
 }));
 
 export const SPOImage = styled("img")(() => ({

@@ -12,6 +12,9 @@ export const FilterButton = styled(Button)`
   padding: 6px 12px 6px 14px;
   font-size: 14px;
   font-weight: 700;
+  &::hover {
+    background: ${({ theme }) => theme.palette.secondary[0]};
+  }
 `;
 
 export const FilterContent = styled(Box)`
@@ -41,7 +44,6 @@ export const FilterContent = styled(Box)`
 
 export const FilterContainer = styled(Box)`
   background: ${({ theme }) => theme.palette.secondary[0]};
-
   position: relative;
   display: inline-flex;
 `;

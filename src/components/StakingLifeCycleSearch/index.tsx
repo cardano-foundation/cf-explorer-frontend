@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Box, styled, Button, Typography } from "@mui/material";
+import { Box, styled, Button, Typography, useTheme } from "@mui/material";
 import { useKey } from "react-use";
 import { useTranslation } from "react-i18next";
 
-import { HeaderSearchIcon } from "src/commons/resources";
+import { HeaderSearchIconComponent } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import InfoGraphicModal from "src/components/InfoGraphicModal";
 import { useScreen } from "src/commons/hooks/useScreen";
 
+import CustomIcon from "../commons/CustomIcon";
+
 const StakingLifeCycleSearch = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const history = useHistory();
   const { isMobile } = useScreen();
   const [openInfoModal, setOpenInfoModal] = useState(false);
@@ -67,7 +70,7 @@ const StakingLifeCycleSearch = () => {
             }}
           />
           <SubmitButton onClick={hanldeSearch}>
-            <Image src={HeaderSearchIcon} alt="Search" />
+            <CustomIcon icon={HeaderSearchIconComponent} stroke={theme.palette.secondary.light} height={22} />
           </SubmitButton>
         </SearchContainer>
         <Box color={({ palette }) => palette.error[700]}>{error}</Box>
@@ -141,10 +144,6 @@ const SubmitButton = styled(Button)`
   min-width: 60px;
   width: 60px;
   height: 60px;
-`;
-const Image = styled("img")`
-  width: 20px;
-  height: 20px;
 `;
 
 const Title = styled("h1")`

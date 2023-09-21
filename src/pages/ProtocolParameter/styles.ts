@@ -25,10 +25,13 @@ export const FilterContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     left: "0"
   },
+  ":hover": {
+    backgroundColor: theme.palette.secondary[0]
+  },
   ":after": {
     content: "''",
     display: "block",
-    background: "rgb(255, 255, 255)",
+    background: theme.palette.secondary[0],
     zIndex: 9,
     position: "absolute",
     top: "-6px",
@@ -36,7 +39,6 @@ export const FilterContainer = styled(Box)(({ theme }) => ({
     width: "14px",
     height: "16px",
     transform: "rotate(45deg)",
-    boxShadow: "rgba(189, 197, 209, 0.2) 0px 0.5rem 1.2rem",
     [theme.breakpoints.down("md")]: {
       right: "0",
       left: "32px"

@@ -68,6 +68,7 @@ import PaymentWalletUrl from "./images/payment-wallet.png";
 import SPOHolderIconUrl from "./images/spo-holder.png";
 import PolygonSPOUrl from "./images/polygon-spo.png";
 import PolygonSPODarkUrl from "./images/polygon-spo-dark.svg";
+import PolygonSPODarkUrlPng from "./images/polygon-spo-dark.png";
 import RewardAccountIconUrl from "./images/reward-box-icon.png";
 import DelegationToIconUrl from "./images/delegation-to.png";
 import RewardWithdrawnIconUrl from "./images/reward-withdrawn.png";
@@ -168,6 +169,7 @@ export {
   SPOHolderIconUrl,
   PolygonSPOUrl,
   PolygonSPODarkUrl,
+  PolygonSPODarkUrlPng,
   RewardAccountIconUrl,
   DelegationToIconUrl,
   RewardWithdrawnIconUrl,
