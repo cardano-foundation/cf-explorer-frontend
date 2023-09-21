@@ -7,12 +7,14 @@ import {
 } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { isString } from "lodash";
+import { useTranslation } from "react-i18next";
 
 import { removeToast } from "src/stores/toast";
 
 import { StyledAlert, StyledStack, StyledTitle } from "./styles";
 
 const ToastContainer: React.FC = () => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const { toasts } = useSelector((state: RootState) => state.toast);
 
@@ -29,28 +31,28 @@ const ToastContainer: React.FC = () => {
     switch (severity) {
       case "error": {
         return {
-          title: getTitle(title, "Error"),
+          title: getTitle(title, t("message.error.title")),
           color: theme.palette.error[700],
           background: theme.palette.error[100]
         };
       }
       case "success": {
         return {
-          title: getTitle(title, "Success"),
+          title: getTitle(title, t("message.success.title")),
           color: theme.palette.success[800],
           background: theme.palette.success[100]
         };
       }
       case "warning": {
         return {
-          title: getTitle(title, "Warning"),
+          title: getTitle(title, t("message.warning.title")),
           color: theme.palette.warning[800],
           background: theme.palette.warning[100]
         };
       }
       default: {
         return {
-          title: getTitle(title, "Information"),
+          title: getTitle(title, t("message.information.title")),
           color: theme.palette.info.main,
           background: theme.palette.info.dark
         };

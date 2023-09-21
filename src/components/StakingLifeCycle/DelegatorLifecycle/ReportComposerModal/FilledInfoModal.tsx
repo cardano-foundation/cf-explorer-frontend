@@ -104,7 +104,58 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
 
   const reportType: ReportType = stakeId ? ReportType.StakeKeyReport : ReportType.PoolReport;
   const address = poolId || stakeId;
+  const EVENTS_NAME = [
+    {
+      label: t("common.all"),
+      value: SELECT_ALL
+    },
+    {
+      label: t("common.registration"),
+      value: "REGISTRATION",
+      type: ReportType.StakeKeyReport
+    },
 
+    {
+      label: t("common.rewards"),
+      value: "REWARDS",
+      type: ReportType.StakeKeyReport
+    },
+    {
+      label: t("slc.delegation"),
+      value: "DELEGATION",
+      type: ReportType.StakeKeyReport
+    },
+    {
+      label: t("common.withDrawFunds"),
+      value: "WITHDRAWAL",
+      type: ReportType.StakeKeyReport
+    },
+    {
+      label: t("slc.deregistration"),
+      value: "DEREGISTRATION",
+      type: ReportType.StakeKeyReport
+    },
+    {
+      label: t("slc.registrationCertificate"),
+      value: "registration",
+      type: ReportType.PoolReport
+    },
+    {
+      label: t("common.poolUpdate"),
+      value: "pool_update",
+      type: ReportType.PoolReport
+    },
+    {
+      label: t("common.reard"),
+      value: "reward",
+      type: ReportType.PoolReport
+    },
+    {
+      label: t("common.deregistration"),
+      value: "deregistration",
+      type: ReportType.PoolReport
+    }
+  ];
   const [dateRange, setDateRange] = useState<IDateRange>([null, null]);
   const [adaTransfers, setADATransfer] = useState<RatioGroupValue>(RatioGroupValue.unTicked);
   const [poolSize, setPoolSize] = useState<RatioGroupValue>(RatioGroupValue.unTicked);

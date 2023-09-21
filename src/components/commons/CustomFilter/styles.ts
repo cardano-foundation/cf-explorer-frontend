@@ -25,6 +25,9 @@ export const StyledInput = styled(InputBase)`
     padding: 10px 14px;
     color: ${({ theme }) => theme.palette.secondary.main};
     border: 1.5px solid ${({ theme, error }) => (error ? theme.palette.error.main : theme.palette.primary[200])};
+    &:focus-within {
+      border-color: ${({ theme }) => theme.palette.secondary.light};
+    }
     border-radius: var(--border-radius-sm);
     box-sizing: border-box;
   }

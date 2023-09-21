@@ -113,7 +113,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       ),
       value: (
         <>
-          {data?.epochSlotNo}
+          {data?.epochNo}
           <Subtext>/{isNil(data?.epochSlotNo) ? null : MAX_SLOT_EPOCH}</Subtext>
         </>
       )

@@ -9,7 +9,7 @@ import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
 import { CubeIcon, RocketIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
-import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatNameBlockNo, getShortHash } from "src/commons/utils/helper";
 import { RootState } from "src/stores/types";
 import { API } from "src/commons/utils/api";
 
@@ -145,6 +145,8 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
       </ViewDetailDrawer>
     );
 
+  const { blockName, tooltip } = formatNameBlockNo(data?.blockNo, data?.epochNo);
+
   return (
     <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
       <ViewDetailHeader>
@@ -177,14 +179,16 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
             <Item>
               <CubeIcon width={24} height={24} fill={theme.palette.secondary[0]} />
               <ItemName>{t("glossary.block")}</ItemName>
-              <ItemValue>{data?.blockNo !== null ? data.blockNo : "_"}</ItemValue>
+              <CustomTooltip title={tooltip}>
+                <ItemValue sx={{ textTransform: "none" }}>{blockName}</ItemValue>
+              </CustomTooltip>
             </Item>
             <Item>
               <RocketIcon width={24} height={24} fill={theme.palette.secondary[0]} />
               <ItemName>{t("common.slot")}</ItemName>
               <ItemValue>
-                {data?.epochSlotNo || 0}
-                <BlockDefault>/{data?.totalSlot || MAX_SLOT_EPOCH}</BlockDefault>
+                {data?.epochNo}
+                <BlockDefault>/{data?.epochSlotNo}</BlockDefault>
               </ItemValue>
             </Item>
           </ListItem>
@@ -222,18 +226,6 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
                 <ADAicon />
               </DetailValue>
             </DetailsInfoItem>
-            {/* <DetailsInfoItem>
-              <DetailLabel>
-
-                Slot leader
-              </DetailLabel>
-              <DetailValue>
-                <CustomTooltip title={data.slotLeader}>
-                  <Box component={"span"}>{getShortWallet(data.slotLeader)}</Box>
-                </CustomTooltip>
-                <CopyButton text={data.slotLeader} />
-              </DetailValue>
-            </DetailsInfoItem> */}
           </Group>
           <Group>
             <DetailLink to={details.block(blockNo)}>

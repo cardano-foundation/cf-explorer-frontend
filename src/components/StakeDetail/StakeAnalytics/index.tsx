@@ -201,7 +201,6 @@ const StakeAnalytics: React.FC = () => {
                     stroke={theme.palette.primary.main}
                     strokeWidth={4}
                     fill="url(#colorUv)"
-                    dot={tab === "BALANCE" ? { r: 2 } : { r: 0 }}
                     activeDot={{ r: 6 }}
                   />
                 </AreaChart>

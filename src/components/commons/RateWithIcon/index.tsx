@@ -62,7 +62,7 @@ const RateWithIcon = ({ value, size, multiple = 1, showIcon = true }: Props) => 
   const multiplied = BigNumber(value).multipliedBy(multiple);
   const sign = Math.sign(multiplied.toNumber());
   return (
-    <CustomTooltip title={`${sign > 0 ? "+" : ""}${multiplied.toNumber()}`}>
+    <CustomTooltip title={`${sign > 0 ? "+" : ""}${multiplied.toNumber()}%`}>
       <PriceRate size={size}>
         {showIcon && (
           <ImageRate

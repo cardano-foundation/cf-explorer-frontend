@@ -37,15 +37,15 @@ type AnalyticsData = { date: string; value: number };
 interface ITokenAnalyticsProps {
   dataToken?: IToken | null;
 }
-const options = [
-  { value: "ONE_DAY", label: "1d" },
-  { value: "ONE_WEEK", label: "1w" },
-  { value: "ONE_MONTH", label: "1m" },
-  { value: "THREE_MONTH", label: "3m" }
-];
 
 const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
   const { t } = useTranslation();
+  const options = [
+    { value: "ONE_DAY", label: t("time.1d") },
+    { value: "ONE_WEEK", label: t("time.1w") },
+    { value: "ONE_MONTH", label: t("time.1m") },
+    { value: "THREE_MONTH", label: t("time.3m") }
+  ];
   const [rangeTime, setRangeTime] = useState("ONE_DAY");
   const { tokenId } = useParams<{ tokenId: string }>();
   const { isMobile } = useScreen();
@@ -77,7 +77,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
       case "ONE_MONTH":
         return `${moment(label).format("DD MMM")} - ${moment(label).add(1, "days").format("DD MMM")}`;
       case "THREE_MONTH":
-        return `${moment(label).format("DD MMM")} - ${moment(label).add(6, "days").format("DD MMM")}`;
+        return `${moment(label).format("DD MMM")} - ${moment(label).add(1, "days").format("DD MMM")}`;
       default:
         return "";
     }
@@ -164,7 +164,6 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                       stroke={theme.palette.primary.main}
                       strokeWidth={4}
                       fill="url(#colorUv)"
-                      dot={{ r: 2 }}
                       activeDot={{ r: 6 }}
                     />
                   </AreaChart>
