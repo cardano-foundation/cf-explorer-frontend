@@ -182,7 +182,7 @@ export const DetailsInfo = styled(Grid)<{ length: number; isClickAble?: number }
   ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 20px 15px;
   }
-  transition: box-shadow 250ms;
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0m;
   &:hover {
     box-shadow: ${({ theme, isClickAble }) =>
       isClickAble ? "1px 2px 15px 0px " + alpha(theme.palette.secondary.light, 0.25) : ""};
