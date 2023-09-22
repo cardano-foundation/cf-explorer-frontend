@@ -158,7 +158,6 @@ const TableRow = <T extends ColumnType>({
   isSelected
 }: TableRowProps<T>) => {
   const colRef = useRef(null);
-
   return (
     <TRow onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row))} {...selectedProps}>
       {selectable && (
@@ -316,9 +315,11 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
         {total && total.count ? (
           <Box ml={"20px"} fontSize="0.875rem">
             <TotalNumber>{numberWithCommas(total.count)}</TotalNumber>{" "}
-            {t("common.result", {
-              suffix: total.count > 1 ? "s" : ""
-            })}
+            {total.isDataOverSize
+              ? t("glossary.mostRelavant")
+              : total.count > 1
+              ? t("common.results")
+              : t("common.result")}
           </Box>
         ) : (
           ""
