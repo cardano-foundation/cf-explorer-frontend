@@ -11,7 +11,7 @@ export const Form = styled("form")<{ home: number; sidebar?: number }>(({ theme,
   height: home ? 60 : 44,
   margin: "auto",
   borderRadius: home ? 30 : 8,
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: theme.palette.secondary[0],
   color: theme.palette.text.primary,
   padding: `0px 0px 0px ${home ? 15 : 0}px`,
   boxSizing: "border-box",
@@ -73,7 +73,9 @@ export const StyledInput = styled(Input)<{ home: number }>`
   border-radius: 0;
   font-size: ${(props) => (props.home ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
   width: 100%;
-  border-left: 2px solid ${(props) => props.theme.palette.border.main};
+  background: ${(props) => props.theme.palette.secondary[0]};
+  color: ${(props) => props.theme.palette.secondary.main};
+  border-left: 2px solid ${(props) => props.theme.palette.primary[200]};
   ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 0px 0px 0px 10px;
   }
@@ -104,7 +106,7 @@ export const OptionsWrapper = styled(Box)<{ home: number }>(({ theme, home }) =>
   left: home ? 145 : 0,
   width: home ? "calc(100% - 280px)" : "100%",
   boxSizing: "border-box",
-  backgroundColor: theme.palette.common.white,
+  backgroundColor: theme.palette.secondary[0],
   textAlign: "left",
   padding: "0 10px",
   borderBottomLeftRadius: 10,

@@ -31,7 +31,7 @@ export const Button = styled("button")<{ active: number }>`
 `;
 
 export const BoxInfo = styled(Box)<{ space: number }>(({ theme }) => ({
-  background: theme.palette.common.white,
+  background: theme.palette.secondary[0],
   borderRadius: "10px",
   display: "flex",
   flexDirection: "column",
@@ -179,15 +179,6 @@ export const Horizon = styled("div")`
   opacity: 0.07;
   border: 1px solid ${(props) => props.theme.palette.common.white};
 `;
-
-export const TooltipBody = styled(Box)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.secondary[0], 0.8),
-  borderRadius: 2,
-  padding: 8,
-  border: `1px solid ${theme.palette.primary[200]}`,
-  fontSize: 12,
-  color: theme.palette.secondary.light
-}));
 
 export const TooltipLabel = styled(Box)(() => ({
   marginBottom: 3

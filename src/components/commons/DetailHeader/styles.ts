@@ -171,16 +171,21 @@ export const SlotLeaderCopy = styled(CopyButton)`
   margin-bottom: 3px;
 `;
 
-export const DetailsInfo = styled(Grid)<{ length: number }>`
+export const DetailsInfo = styled(Grid)<{ length: number; isClickAble?: number }>`
   padding: 30px ${(props) => (props.length > 6 ? 25 : 15)}px;
   margin-top: 15px;
-  background: ${(props) => props.theme.palette.background.paper};
+  background: ${(props) => props.theme.palette.secondary[0]};
   border-radius: 15px;
   ${({ theme }) => theme.breakpoints.down("lg")} {
     padding: 30px 25px;
   }
   ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 20px 15px;
+  }
+  transition: box-shadow 250ms;
+  &:hover {
+    box-shadow: ${({ theme, isClickAble }) =>
+      isClickAble ? "1px 2px 15px 0px " + alpha(theme.palette.secondary.light, 0.25) : ""};
   }
 `;
 
@@ -407,7 +412,7 @@ export const AllowSearchButton = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   width: 35,
   height: 35,
-  backgroundColor: theme.palette.primary[100],
+  backgroundColor: theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[100],
   top: -10,
   right: 0,
   borderRadius: 4,
@@ -424,6 +429,7 @@ export const StyledSelect = styled(Select)(({ theme }) => ({
   right: 0,
   zIndex: 101,
   backgroundColor: theme.palette.secondary[0],
+  color: theme.palette.secondary.main,
   borderRadius: 8,
   height: 35,
   fieldset: {

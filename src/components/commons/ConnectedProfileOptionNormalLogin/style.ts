@@ -3,6 +3,7 @@ import { Box, ButtonBase, Popover, styled } from "@mui/material";
 export const WrapContent = styled(Popover)`
   .MuiPaper-root {
     margin-top: 6px;
+    background: ${({ theme }) => theme.palette.secondary[0]};
     border-radius: 20px;
     width: 220px;
     height: 120px;
@@ -20,6 +21,7 @@ export const Content = styled(Box)`
 
 export const Profile = styled(Box)`
   display: flex;
+  color: ${(props) => props.theme.palette.secondary.main};
   align-items: center;
 `;
 
@@ -61,7 +63,7 @@ export const StyledButton = styled(ButtonBase)`
 export const Span = styled("span")`
   font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
-  color: ${(props) => props.theme.palette.primary.contrastText};
+  color: ${(props) => props.theme.palette.secondary[0]};
   white-space: nowrap;
   line-height: 1;
 `;

@@ -1,7 +1,12 @@
 import { get } from "lodash";
 
+import dataMainnet from "src/commons/utils/data-networks/mainnet.json";
+import dataPreprod from "src/commons/utils/data-networks/preprod.json";
+import dataPreview from "src/commons/utils/data-networks/preview.json";
+
 import { Wallet } from "../../types/user";
 import { EternlIcon, FlintIcon, NamiIcon, TyphonIcon, YoroiIcon } from "../resources";
+
 export const STORAGE_KEYS = {
   THEME: "dark",
   USER_INFO: "user_info",
@@ -219,10 +224,19 @@ export const HOTJAR_HJID = process.env.REACT_APP_HOTJAR_HJID;
 export const HOTJAR_HJSV = process.env.REACT_APP_HOTJAR_HJSV;
 
 export enum APP_LANGUAGES {
-  ENGLISH = "en"
+  ENGLISH = "en",
+  FRANCE = "fr"
 }
 
 export const SUPPORTED_LANGUAGES = ["en"];
+
+const DATA_BY_NETWORKS = {
+  mainnet: dataMainnet,
+  preprod: dataPreprod,
+  preview: dataPreview
+};
+export const BROWSE_STAKE_ADDRESSES = DATA_BY_NETWORKS[NETWORK].stakeAddresses;
+export const BROWSE_POOL_IDS = DATA_BY_NETWORKS[NETWORK].poolIds;
 
 export enum OPTIONS_CHART_ANALYTICS {
   ONE_DAY = "ONE_DAY",

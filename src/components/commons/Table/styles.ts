@@ -42,7 +42,7 @@ export const THeader = styled("th")`
   color: ${(props) => props.theme.palette.secondary.main};
   position: sticky;
   top: 0;
-  background-color: ${(props) => props.theme.palette.common.white};
+  background-color: ${(props) => props.theme.palette.secondary[0]};
   z-index: 2;
 `;
 
@@ -136,12 +136,12 @@ export const WrappModalScrollBar = styled(Box)(
 
 export const Wrapper = styled(Box)<{ loading?: number }>(
   ({ theme, loading }) => `
-  overflow: scroll; 
-  background: ${theme.palette.common.white};
+  overflow: auto;
+  background: ${theme.palette.secondary[0]};
   padding: ${theme.spacing(1)};
   padding-top: 0;
   border-radius: ${theme.spacing(1.5)};
-  ${loading ? "overflow-y: hidden;" : ""} 
+  ${loading ? "overflow-y: hidden;" : ""}
 
   ${theme.breakpoints.down("sm")} {
     padding: 0;
@@ -157,9 +157,9 @@ export const Wrapper = styled(Box)<{ loading?: number }>(
     background: transparent;
   }
   &::-webkit-scrollbar-button:vertical:start:decrement {
-    height: 72px; 
+    height: 72px;
     display: block;
-  } 
+  }
   &:hover {
     &::-webkit-scrollbar-thumb {
       background: ${theme.palette.secondary.light};
@@ -186,7 +186,7 @@ export const InputNumber = styled("input")<{ length: number }>(({ theme, length 
   borderRadius: 4,
   textAlign: "center",
   fontWeight: "bold",
-  border: `1px solid ${theme.palette.border.main}`,
+  border: `1px solid ${theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary[600]}`,
   color: theme.palette.secondary.main,
   "::-webkit-inner-spin-button": {
     appearance: "none",
@@ -199,7 +199,7 @@ export const SelectMui = styled(CustomSelect)(({ theme }) => ({
   borderRadius: "4px",
   fontSize: 14,
   minWidth: 50,
-  border: `1px solid ${theme.palette.grey[200]}`,
+  border: `1px solid ${theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary[600]}`,
   color: theme.palette.secondary.main,
   "& > div": {
     padding: "2.45px 14px"

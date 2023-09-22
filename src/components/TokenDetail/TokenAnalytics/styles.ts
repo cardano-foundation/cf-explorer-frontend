@@ -1,9 +1,9 @@
 import { Grid, Skeleton, Button, styled, Box, alpha } from "@mui/material";
 
 export const BoxInfo = styled(Box)<{ space: number }>(({ theme }) => ({
-  background: theme.palette.common.white,
+  background: theme.palette.secondary[0],
   borderRadius: "10px",
-  color: theme.palette.primary.contrastText,
+  color: theme.palette.secondary[0],
   display: "flex",
   flexDirection: "column",
   textAlign: "center",
@@ -151,15 +151,6 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
     backgroundColor: active ? `${theme.palette.primary.main} !important` : "none",
     color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.secondary.light
   }
-}));
-
-export const TooltipBody = styled(Box)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.secondary[0], 0.8),
-  borderRadius: 2,
-  padding: 8,
-  border: `1px solid ${theme.palette.primary[200]}`,
-  fontSize: 12,
-  color: theme.palette.secondary.light
 }));
 
 export const TooltipLabel = styled(Box)(() => ({

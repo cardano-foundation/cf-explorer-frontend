@@ -3,6 +3,7 @@ import { BiChevronRight } from "react-icons/bi";
 import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "@mui/material";
 
 import useFetch from "src/commons/hooks/useFetch";
 import {
@@ -18,7 +19,7 @@ import {
   RewardsDistributionIconUrl,
   RocketIcon,
   StakeCertificatesIconUrl,
-  USDIcon,
+  USDIconComponent,
   WithdrawlIcon
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
@@ -51,7 +52,6 @@ import {
   EpochText,
   Group,
   HeaderContainer,
-  Icon,
   IconSkeleton,
   Item,
   ItemName,
@@ -75,6 +75,7 @@ type DetailViewTransactionProps = {
 const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
   const { t } = useTranslation();
   const { hash, handleClose } = props;
+  const theme = useTheme();
   const { data } = useFetch<Transaction>(hash ? `${API.TRANSACTION.DETAIL}/${hash}` : ``);
   const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
   const blockNo = useSelector(({ system }: RootState) => system.blockNo);
@@ -87,8 +88,8 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
   const tabs: { key: keyof Transaction; label: string; icon?: React.ReactNode }[] = [
     { key: "summary", label: t("drawer.summary"), icon: <DelegationHistoryMainIcon /> },
     { key: "utxOs", label: t("tab.utxos"), icon: <CgArrowsExchange /> },
-    { key: "contracts", label: t("glossary.contracts"), icon: <DetailLinkImage src={FileEditIcon} alt="contact" /> },
-    { key: "collaterals", label: t("glossary.collateral"), icon: <DetailLinkImage src={USDIcon} alt="contact" /> },
+    { key: "contracts", label: t("glossary.contracts"), icon: <FileEditIcon /> },
+    { key: "collaterals", label: t("glossary.collateral"), icon: <USDIconComponent /> },
     { key: "notes", label: t("tab.notes"), icon: <DetailLinkImage src={NoteEditIcon} alt="contact" /> },
     { key: "withdrawals", label: t("tab.withdrawal"), icon: <DetailLinkImage src={WithdrawlIcon} alt="contact" /> },
     {
@@ -236,12 +237,12 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
           </HeaderContainer>
           <ListItem>
             <Item>
-              <Icon src={CubeIcon} alt="socket" />
+              <CubeIcon width={24} height={24} fill={theme.palette.secondary[0]} />
               <ItemName>{t("glossary.block")}</ItemName>
               <ItemValue>{data?.tx?.blockNo}</ItemValue>
             </Item>
             <Item>
-              <Icon src={RocketIcon} alt="socket" />
+              <RocketIcon width={24} height={24} fill={theme.palette.secondary[0]} />
               <ItemName>{t("common.slot")}</ItemName>
               <ItemValue>
                 {data?.tx?.epochSlot}
