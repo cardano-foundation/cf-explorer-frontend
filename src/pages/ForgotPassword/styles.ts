@@ -70,6 +70,7 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
     borderWidth: "1px",
     borderStyle: "solid",
     borderColor: error ? theme.palette.error[700] : theme.palette.secondary.light,
+    transition: "border ease 0.3s",
     "&::before": {
       display: "none"
     },
