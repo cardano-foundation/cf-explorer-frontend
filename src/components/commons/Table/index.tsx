@@ -32,6 +32,7 @@ import {
   TableRowProps,
   TableTopHeaderProps
 } from "src/types/table";
+import breakpoints from "src/themes/breakpoints";
 
 import CustomIcon from "../CustomIcon";
 import Filter from "../Filter";
@@ -59,6 +60,8 @@ import {
   Wrapper
 } from "./styles";
 import { Lowercase } from "../CustomText/styles";
+
+const SPACING_TOP_TABLE = 250;
 
 type TEmptyRecord = {
   className?: string;
@@ -394,9 +397,19 @@ const Table: React.FC<TableProps> = ({
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange
   });
+
   const tableRef = useRef(null);
   const wrapperRef = useRef<HTMLElement>(null);
-  const heightTable = Math.min((tableRef?.current as any)?.clientHeight || 0, window.innerHeight * 0.5);
+  const { width } = useScreen();
+
+  let heightTable = Math.min((tableRef?.current as any)?.clientHeight || 0, window.innerHeight * 0.5);
+
+  if (width >= breakpoints.values.sm && width <= breakpoints.values.lg) {
+    const footerHeight = document.getElementById("footer")?.offsetHeight || SPACING_TOP_TABLE;
+    heightTable =
+      Math.min((tableRef?.current as any)?.clientHeight || 0, window.innerHeight) - (footerHeight + SPACING_TOP_TABLE);
+  }
+
   const toggleSelectAll = (isChecked: boolean) => {
     if (data && isChecked) {
       selectAll(data);
