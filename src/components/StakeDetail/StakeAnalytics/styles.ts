@@ -165,8 +165,8 @@ export const ChartBox = styled(Box)<{ highest: number; lowest: number }>(({ them
     [`&:nth-of-type(${highest})`]: {
       filter: "url(#highest)",
       text: {
-        fill: theme.palette.success.main,
-        color: theme.palette.success.main
+        fill: theme.palette.success[800],
+        color: theme.palette.success[800]
       }
     }
   }
