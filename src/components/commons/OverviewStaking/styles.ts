@@ -31,11 +31,12 @@ export const OverviewTitle = styled("p")`
   color: ${(props) => props.theme.palette.secondary.main};
 `;
 
-export const Card = styled(CardMui)(() => ({
+export const Card = styled(CardMui)(({ theme }) => ({
   padding: "20px",
   display: "flex",
   alignItems: "flex-start",
   gap: 10,
   flexDirection: "column",
-  justifyContent: "center"
+  justifyContent: "center",
+  background: theme.palette.secondary[0]
 }));

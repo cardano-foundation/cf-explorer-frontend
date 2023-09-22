@@ -23,7 +23,7 @@ export const StyledHelper = styled(FormHelperText)`
 `;
 
 export const StyledInput = styled(InputBase)`
-  border: 1.5px solid ${(props) => props.theme.palette.border.main};
+  border: 1.5px solid ${(props) => props.theme.palette.primary[200]};
   border-radius: 8px;
   height: 40px;
   padding: 12px 14px;

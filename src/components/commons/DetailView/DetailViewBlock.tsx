@@ -3,6 +3,7 @@ import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { useSelector } from "react-redux";
 import { BiChevronRight } from "react-icons/bi";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "@mui/material";
 
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { CubeIcon, RocketIcon } from "src/commons/resources";
@@ -22,7 +23,6 @@ import {
   DetailsInfoItem,
   DetailLabel,
   DetailValue,
-  Icon,
   BlockDefault,
   DetailLabelSkeleton,
   DetailValueSkeleton,
@@ -61,7 +61,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
   const currentBlockNo = useSelector(({ system }: RootState) => system.blockNo);
   const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
   const [lastUpdated, setLastUpdated] = useState<number>();
-
+  const theme = useTheme();
   const { data } = useFetch<BlockDetail>(`${API.BLOCK.DETAIL}/${blockNo}`, undefined, false);
 
   useEffect(() => {
@@ -179,14 +179,14 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
           </HeaderContainer>
           <ListItem>
             <Item>
-              <Icon src={CubeIcon} alt="socket" />
+              <CubeIcon width={24} height={24} fill={theme.palette.secondary[0]} />
               <ItemName>{t("glossary.block")}</ItemName>
               <CustomTooltip title={tooltip}>
                 <ItemValue sx={{ textTransform: "none" }}>{blockName}</ItemValue>
               </CustomTooltip>
             </Item>
             <Item>
-              <Icon src={RocketIcon} alt="socket" />
+              <RocketIcon width={24} height={24} fill={theme.palette.secondary[0]} />
               <ItemName>{t("common.slot")}</ItemName>
               <ItemValue>
                 {data?.epochNo}

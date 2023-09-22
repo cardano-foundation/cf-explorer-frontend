@@ -81,7 +81,7 @@ export const StyledButton = styled(Button)`
   height: 44px;
   padding: 10px 20px;
   text-align: center;
-  color: ${(props) => props.theme.palette.common.white};
+  color: ${(props) => props.theme.palette.secondary[0]};
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
@@ -93,7 +93,7 @@ export const StyledButton = styled(Button)`
   &:disabled {
     background: ${(props) => props.theme.palette.secondary.main};
     opacity: 0.3;
-    color: ${(props) => props.theme.palette.common.white};
+    color: ${(props) => props.theme.palette.secondary[0]};
   }
   &:hover {
     background: ${(props) => props.theme.palette.secondary.main};
@@ -142,7 +142,7 @@ export const TextRequired = styled("div")`
 
 export const ButtonEvent = styled(Button)<{ active: number }>(({ theme, active }) => ({
   background: active ? theme.palette.secondary.light : theme.palette.primary[200],
-  color: active ? theme.palette.common.white : theme.palette.secondary.light,
+  color: active ? theme.palette.secondary[0] : theme.palette.secondary.light,
   borderRadius: "6px",
   height: "44px",
   alignItems: "center",
@@ -272,6 +272,13 @@ export const StyledTextField = styled(TextField)`
     border: 1.5px solid ${(props) => props.theme.palette.primary[200]};
     border-radius: 8px;
     background-color: ${(props) => props.theme.palette.secondary[0]};
+    color: ${(props) => props.theme.palette.secondary.main};
+    &::placeholder {
+      ${(props) =>
+        `color: ${props.theme.palette.secondary.main};
+            -webkit-text-fill-color: ${props.theme.palette.secondary.main};
+            `}
+    }
   }
   .Mui-focused {
     border-color: ${(props) => props.theme.palette.secondary.light};

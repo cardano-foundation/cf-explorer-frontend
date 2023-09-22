@@ -24,7 +24,7 @@ export const StyledInput = styled(InputBase)`
   }
   .MuiInputBase-input {
     padding: 10px 14px;
-    border: 1.5px solid ${({ theme, error }) => (error ? theme.palette.error.main : theme.palette.border.main)};
+    border: 1.5px solid ${({ theme, error }) => (error ? theme.palette.error.main : theme.palette.primary[200])};
     border-radius: var(--border-radius-sm);
     box-sizing: border-box;
   }
@@ -45,17 +45,17 @@ export const StyledLabelInput = styled(FormLabel)`
 export const StyledDarkLoadingButton = styled(LoadingButton)`
   padding: 10px 20px;
   min-width: 150px;
-  background: ${(props) => props.theme.palette.text.primary};
+  background: ${(props) => props.theme.palette.primary.main};
   border: none;
   border-radius: var(--border-radius-sm);
   font-size: var(--font-size-text);
   height: 40px;
-  color: white;
+  color: ${(props) => props.theme.palette.secondary[0]};
   font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
   text-transform: unset;
   &:hover {
-    background: ${(props) => props.theme.palette.text.primary};
+    background: ${(props) => props.theme.palette.primary.main};
   }
   &:disabled {
     color: white;

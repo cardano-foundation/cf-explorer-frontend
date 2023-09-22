@@ -6,7 +6,7 @@ export const StyledButton = styled(ButtonBase)`
   align-items: center;
   padding: 12px 20px;
   gap: 8px;
-  background: ${(props) => props.theme.palette.secondary.main};
+  background: ${({ theme }) => (theme.mode === "light" ? theme.palette.secondary.main : theme.palette.primary.main)};
   border-radius: 8px;
   cursor: pointer;
   height: auto;
@@ -19,7 +19,7 @@ export const StyledButton = styled(ButtonBase)`
 export const Span = styled("span")`
   font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
-  color: ${(props) => props.theme.palette.primary.contrastText};
+  color: ${({ theme }) => (theme.mode === "light" ? theme.palette.secondary[0] : theme.palette.secondary[100])};
   white-space: nowrap;
   line-height: 1;
 `;
