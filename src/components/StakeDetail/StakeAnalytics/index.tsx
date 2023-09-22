@@ -1,56 +1,52 @@
-import { Box, Grid, useTheme } from "@mui/material";
-import { BigNumber } from "bignumber.js";
-import moment from "moment";
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import React, { useMemo, useState } from "react";
+import { Box, Grid, alpha, useTheme } from "@mui/material";
 import {
   Area,
-  AreaChart,
+  ComposedChart,
   CartesianGrid,
-  Label,
   ResponsiveContainer,
   Tooltip,
-  TooltipProps,
   XAxis,
+  YAxis,
+  TooltipProps,
   XAxisProps,
-  YAxis
+  Label,
+  Line
 } from "recharts";
+import { getNiceTickValues } from "recharts-scale";
+import { useTranslation } from "react-i18next";
+import moment from "moment";
+import { useParams } from "react-router-dom";
+import { BigNumber } from "bignumber.js";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
-import { useScreen } from "src/commons/hooks/useScreen";
-import { API } from "src/commons/utils/api";
-import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
-import { formatADAFull, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
-import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
 import Card from "src/components/commons/Card";
+import { formatADAFull, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
+import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
+import { API } from "src/commons/utils/api";
+import { useScreen } from "src/commons/hooks/useScreen";
+import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
+import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
 import CustomIcon from "src/components/commons/CustomIcon";
 import { TooltipBody } from "src/components/commons/Layout/styles";
-import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
 
 import {
   BoxInfo,
   BoxInfoItem,
   BoxInfoItemRight,
+  Tabs,
+  Tab,
   ButtonTitle,
   ChartBox,
-  CustomButton,
   SkeletonUI,
-  Tab,
-  Tabs,
   Title,
-  TooltipLabel,
-  TooltipValue,
   ValueInfo,
-  Wrapper
+  Wrapper,
+  CustomButton,
+  TooltipValue,
+  TooltipLabel
 } from "./styles";
-
-type AnalyticsBalance = { date: string; value: number };
-type AnalyticsReward = {
-  epoch: number;
-  value: number;
-};
 
 const StakeAnalytics: React.FC = () => {
   const { t } = useTranslation();
@@ -60,7 +56,7 @@ const StakeAnalytics: React.FC = () => {
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const theme = useTheme();
   const { isMobile } = useScreen();
-  const { data, loading } = useFetch<AnalyticsBalance[]>(
+  const { data, loading } = useFetch<StakeAnalyticsBalance>(
     `${API.STAKE.ANALYTICS_BALANCE}/${stakeId}/${rangeTime}`,
     undefined,
     false,
@@ -78,22 +74,59 @@ const StakeAnalytics: React.FC = () => {
     { value: OPTIONS_CHART_ANALYTICS.ONE_MONTH, label: t("time.1m") },
     { value: OPTIONS_CHART_ANALYTICS.THREE_MONTH, label: t("time.3m") }
   ];
-  const values = data?.map((item) => item.value || 0) || [];
+  const values = data?.data?.map?.((item) => item.value || 0) || [];
   const maxBalance = BigNumber.max(0, ...values).toString();
   const minBalance = BigNumber.min(maxBalance, ...values).toString();
 
-  const rewards = dataReward?.map((item) => item.value || 0) || [];
+  const rewards = dataReward?.map?.((item) => item.value || 0) || [];
   const maxReward = BigNumber.max(0, ...rewards).toString();
   const minReward = BigNumber.min(maxReward, ...rewards).toString();
 
-  const convertDataChart = data?.map((item) => ({
+  const highest = Number(tab === "BALANCE" ? data?.highestBalance : maxReward) || 0;
+  const lowest = Number(tab === "BALANCE" ? data?.lowestBalance : minReward) || 0;
+
+  const maxValue = Math.max(Number(tab === "BALANCE" ? maxBalance : maxReward), highest);
+
+  const convertDataChart: AnalyticsBalanceExpanded[] = (data?.data || []).map?.((item) => ({
     value: item.value || 0,
-    date: item.date
+    date: item.date,
+    highest,
+    lowest
   }));
-  const convertRewardChart = dataReward?.map((item) => ({
+
+  const convertRewardChart = dataReward?.map?.((item) => ({
     value: item.value || 0,
-    epoch: item.epoch
+    epoch: item.epoch,
+    highest,
+    lowest
   }));
+
+  const customTicks = useMemo(() => {
+    // Default ticks by recharts
+    const ticks = getNiceTickValues([0, maxValue], 5);
+
+    // With 14 is font-size (tick label height), 400 is chart height
+    const labelHeight = 14 / 400;
+
+    const tickMax = ticks[ticks.length - 1] || 1;
+
+    // If tick near lowest and highest ( tick / tickMax < labelHeight), hidden it.
+    const needShowTicks = ticks.filter(
+      (tick) =>
+        BigNumber(tick).minus(lowest).div(tickMax).abs().gt(labelHeight) &&
+        BigNumber(tick).minus(highest).div(tickMax).abs().gt(labelHeight)
+    );
+    // Ticks add highest
+    needShowTicks.push(highest);
+
+    // If lowest equal highest, add it.
+    if (BigNumber(highest).minus(lowest).div(tickMax).abs().gt(0)) needShowTicks.push(lowest);
+
+    return needShowTicks.sort((a, b) => a - b);
+  }, [maxValue, highest, lowest]);
+
+  const lowestIndex = customTicks.indexOf(lowest) + 1;
+  const highestIndex = customTicks.indexOf(highest) + 1;
 
   const formatPriceValue = (value: string) => {
     const bigValue = BigNumber(value).div(10 ** 6);
@@ -168,23 +201,32 @@ const StakeAnalytics: React.FC = () => {
               )}
             </Grid>
           </Grid>
-          <ChartBox>
+          <ChartBox highest={highestIndex} lowest={lowestIndex}>
             {loading || loadingReward || !data || !dataReward ? (
               <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
             ) : (
               <ResponsiveContainer width="100%" height={400}>
-                <AreaChart
+                <ComposedChart
                   width={900}
                   height={400}
                   data={tab === "BALANCE" ? convertDataChart : convertRewardChart}
                   margin={{ top: 5, right: 10, bottom: 14 }}
                 >
-                  <defs>
-                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
-                      <stop offset="100%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
-                    </linearGradient>
-                  </defs>
+                  {/* Defs for ticks filter background color */}
+                  {["lowest", "highest"].map((item) => (
+                    <defs key={item}>
+                      <filter x="-.15" y="-.15" width="1.25" height="1.2" id={item}>
+                        <feFlood
+                          floodColor={theme.palette[item === "highest" ? "success" : "error"][100]}
+                          result="bg"
+                        />
+                        <feMerge>
+                          <feMergeNode in="bg" />
+                          <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                      </filter>
+                    </defs>
+                  ))}
                   <XAxis
                     color={theme.palette.secondary.light}
                     stroke={theme.palette.secondary.light}
@@ -203,6 +245,8 @@ const StakeAnalytics: React.FC = () => {
                     stroke={theme.palette.secondary.light}
                     tickFormatter={formatPriceValue}
                     tickLine={false}
+                    interval={0}
+                    ticks={customTicks}
                   />
                   <Tooltip content={renderTooltip} cursor={false} />
                   <CartesianGrid vertical={false} strokeWidth={0.33} />
@@ -212,10 +256,28 @@ const StakeAnalytics: React.FC = () => {
                     dataKey="value"
                     stroke={theme.palette.primary.main}
                     strokeWidth={4}
-                    fill="url(#colorUv)"
+                    fill={alpha(theme.palette.primary.main, 0.2)}
                     activeDot={{ r: 6 }}
                   />
-                </AreaChart>
+                  <Line
+                    type="monotone"
+                    dataKey="lowest"
+                    stroke={theme.palette.error[700]}
+                    strokeWidth={1}
+                    dot={false}
+                    activeDot={false}
+                    strokeDasharray="3 3"
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="highest"
+                    stroke={theme.palette.success.main}
+                    strokeWidth={1}
+                    dot={false}
+                    activeDot={false}
+                    strokeDasharray="3 3"
+                  />
+                </ComposedChart>
               </ResponsiveContainer>
             )}
           </ChartBox>
