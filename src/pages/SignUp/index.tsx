@@ -327,7 +327,7 @@ export default function SignUp() {
                   onKeyDown={handleKeyDown}
                 />
                 {formData.email.error && formData.email.touched ? (
-                  <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom>
+                  <FormHelperTextCustom>{formData.email.error}</FormHelperTextCustom>
                 ) : null}
               </WrapInput>
               <WrapInput>
@@ -345,7 +345,7 @@ export default function SignUp() {
                   placeholder={t("account.confirmEmailAddress")}
                 />
                 {formData.confirmEmail.error && formData.confirmEmail.touched ? (
-                  <FormHelperTextCustom error>{formData.confirmEmail.error}</FormHelperTextCustom>
+                  <FormHelperTextCustom>{formData.confirmEmail.error}</FormHelperTextCustom>
                 ) : null}
               </WrapInput>
               <WrapInput>
@@ -370,7 +370,7 @@ export default function SignUp() {
                   placeholder={t("account.password")}
                 />
                 {formData.password.error && formData.password.touched ? (
-                  <FormHelperTextCustom error>{formData.password.error}</FormHelperTextCustom>
+                  <FormHelperTextCustom>{formData.password.error}</FormHelperTextCustom>
                 ) : null}
               </WrapInput>
               <WrapInput>
@@ -395,7 +395,7 @@ export default function SignUp() {
                   placeholder={t("account.confirmPassword")}
                 />
                 {formData.confirmPassword.error && formData.confirmPassword.touched ? (
-                  <FormHelperTextCustom error>{formData.confirmPassword.error}</FormHelperTextCustom>
+                  <FormHelperTextCustom>{formData.confirmPassword.error}</FormHelperTextCustom>
                 ) : null}
               </WrapInput>
               <Box display={"flex"}>

@@ -1,8 +1,8 @@
-import { Box, FormGroup, FormHelperText, IconButton, InputAdornment } from "@mui/material";
+import { Box, FormGroup, IconButton, InputAdornment } from "@mui/material";
 import { useEffect, useReducer, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 
 import useAuth from "src/commons/hooks/useAuth";
 import useToast from "src/commons/hooks/useToast";
@@ -247,7 +247,7 @@ export default function SignIn() {
                 placeholder={t("account.emailAddress")}
               />
               {formData.email.error && formData.email.touched ? (
-                <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom>
+                <FormHelperTextCustom>{formData.email.error}</FormHelperTextCustom>
               ) : null}
             </WrapInput>
             <WrapInput>
@@ -273,7 +273,7 @@ export default function SignIn() {
                 error={Boolean(formData.password.error && formData.password.touched)}
               />
               {formData.password.error && formData.password.touched ? (
-                <FormHelperText error>{formData.password.error}</FormHelperText>
+                <FormHelperTextCustom>{formData.password.error}</FormHelperTextCustom>
               ) : null}
             </WrapInput>
             <ForgotPassword data-testid="forgot-password-link">
@@ -287,7 +287,6 @@ export default function SignIn() {
               fullWidth
               onClick={handleSubmit}
               disabled={!enableButton}
-              isDisabled={+!enableButton}
             >
               {t("common.signIn")}
             </WrapButton>

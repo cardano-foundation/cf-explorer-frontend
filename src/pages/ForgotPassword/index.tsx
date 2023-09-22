@@ -197,7 +197,7 @@ export default function ForgotPassword() {
                   error={Boolean(formData.email.error && formData.email.touched)}
                 />
                 {formData.email.error && formData.email.touched ? (
-                  <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom>
+                  <FormHelperTextCustom>{formData.email.error}</FormHelperTextCustom>
                 ) : null}
               </WrapInput>
               <WrapButton

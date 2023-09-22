@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Divider, FormHelperText, Input, IconButton, styled } from "@mui/material";
+import { alpha, Alert, Box, Button, Divider, FormHelperText, Input, IconButton, styled } from "@mui/material";
 
 import { User2RC } from "src/commons/resources";
 
@@ -71,7 +71,9 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
     borderWidth: "1px",
     borderStyle: "solid",
     borderColor: error
-      ? theme.palette.error.main
+      ? theme.mode === "light"
+        ? theme.palette.error.main
+        : theme.palette.error[700]
       : theme.mode === "light"
       ? theme.palette.primary[200]
       : theme.palette.secondary[700],
@@ -96,6 +98,7 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
 export const FormHelperTextCustom = styled(FormHelperText)`
   font-size: 14px;
   line-height: 16px;
+  color: ${({ theme }) => (theme.mode === "light" ? theme.palette.error.main : theme.palette.error[700])};
 `;
 export const Label = styled(Box)`
   font-weight: 400;
@@ -120,20 +123,25 @@ export const UserCustomIcon = styled(User2RC)`
   }
 `;
 
-export const WrapButton = styled(Button)`
-  background: ${({ theme }) => theme.palette.secondary.main};
-  padding: 15px 20px;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 19px;
-  text-align: center;
-  text-transform: none;
-  color: ${({ theme }) => theme.palette.secondary[0]};
-  &:hover {
-    background: ${({ theme }) => theme.palette.secondary.main};
-  }
-`;
+export const WrapButton = styled(Button)(({ theme }) => ({
+  background: theme.mode === "dark" ? theme.palette.primary.main : theme.palette.secondary.main,
+  padding: "15px 20px",
+  borderRadius: "8px",
+  fontWeight: 700,
+  fontSize: "16px",
+  lineHeight: "19px",
+  textAlign: "center",
+  color: theme.palette.secondary[0],
+  "&:hover": {
+    background: theme.palette.secondary.main
+  },
+  "&.Mui-disabled": {
+    color: theme.mode === "dark" ? theme.palette.secondary[0] : theme.palette.secondary.main,
+    background:
+      theme.mode === "dark" ? alpha(theme.palette.secondary.light, 0.3) : alpha(theme.palette.common.black, 0.26)
+  },
+  textTransform: "none"
+}));
 
 export const WrapButtonConnectWallet = styled(Button)`
   border-color: ${({ theme }) => theme.palette.primary.main};
