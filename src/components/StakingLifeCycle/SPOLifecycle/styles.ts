@@ -7,7 +7,7 @@ export const Step = styled(Box)(({ theme }) => ({
   borderBottomWidth: "3px",
   borderBottomStyle: "solid",
   [theme.breakpoints.down("sm")]: {
-    padding: "16px 30px"
+    padding: "16px 0px"
   },
   cursor: "pointer"
 }));
@@ -19,6 +19,9 @@ export const TitleStep = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(1),
   [theme.breakpoints.down("md")]: {
     whiteSpace: "nowrap"
+  },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 10
   }
 }));
 
@@ -41,7 +44,7 @@ export const WrapTitle = styled(Box)(({ theme }) => ({
 }));
 
 export const NextButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.common.white,
+  color: theme.palette.secondary[0],
   background: theme.palette.secondary.main,
   textTransform: "capitalize",
   fontWeight: "bold",
@@ -62,7 +65,7 @@ export const PreviousButton = styled(Button)(({ theme }) => ({
   fontWeight: "bold",
   padding: "8px 20px",
   borderRadius: "8px",
-  border: `2px solid ${theme.palette.border.hint}`,
+  border: `2px solid ${theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary[700]}`,
   ":hover": {
     background: alpha(theme.palette.secondary.main, 0.1)
   },

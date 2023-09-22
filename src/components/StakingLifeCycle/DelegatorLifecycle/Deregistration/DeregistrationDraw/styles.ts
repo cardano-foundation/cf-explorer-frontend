@@ -23,6 +23,9 @@ export const DrawContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     maxWidth: 320,
     minWidth: 320
+  },
+  ">div": {
+    zIndex: 2
   }
 }));
 
@@ -123,7 +126,8 @@ export const InfoText = styled(Box)(({ theme }) => ({
   alignItems: "center",
   marginLeft: theme.spacing(1),
   fontWeight: 600,
-  fontSize: "14px"
+  fontSize: "14px",
+  color: theme.palette.secondary.main
 }));
 
 export const StepInfo = styled(Box)(({ theme }) => ({

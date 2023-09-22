@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 
-import { ExchangeIcon, cubeIconUrl, slotIconUrl, timeIconUrl } from "src/commons/resources";
+import { CubeIconComponent, ExchangeIcon, SlotIcon, TimeIconComponent } from "src/commons/resources";
 import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
 import { Status } from "src/pages/Epoch/styles";
@@ -62,7 +62,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       )
     },
     {
-      icon: timeIconUrl,
+      icon: TimeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> {t("glossary.startTimestamp")}</TitleCard>
@@ -71,7 +71,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       value: <Content>{formatDateTimeLocal(currentEpochData?.startTime || "")}</Content>
     },
     {
-      icon: timeIconUrl,
+      icon: TimeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> {t("glossary.endTimestamp")}</TitleCard>
@@ -80,7 +80,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       value: <Content>{formatDateTimeLocal(currentEpochData?.endTime || "")}</Content>
     },
     {
-      icon: cubeIconUrl,
+      icon: CubeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}>{t("glossary.blocks")} </TitleCard>
@@ -89,7 +89,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       value: <Content>{currentEpoch?.blkCount || currentEpochData?.blkCount}</Content>
     },
     {
-      icon: slotIconUrl,
+      icon: SlotIcon,
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard mr={1}> {t("glossary.Slot")}</TitleCard>
@@ -107,7 +107,14 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
   ];
   return (
     <Container onClick={() => onClick(currentEpochData, currentEpochData, -1)}>
-      <DetailHeader isHideButtonBack={true} loading={false} listItem={listOverview} type="EPOCH" title={" "} />
+      <DetailHeader
+        isClickAble={true}
+        isHideButtonBack={true}
+        loading={false}
+        listItem={listOverview}
+        type="EPOCH"
+        title={" "}
+      />
     </Container>
   );
 }

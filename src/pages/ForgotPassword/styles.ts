@@ -4,14 +4,15 @@ import { User2RC } from "src/commons/resources";
 
 export const Container = styled(Box)`
   display: flex;
-  background-color: ${({ theme }) => theme.palette.primary[100]};
+  background-color: ${({ theme }) =>
+    theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[100]};
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   padding: 30px 0;
   min-width: 100vw;
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    min-height: 80vh;
+    min-height: 70vh;
   }
 `;
 
@@ -41,7 +42,7 @@ export const WrapHintText = styled(Box)`
 
 export const WrapForm = styled(Box)(({ theme }) => ({
   margin: "10px 30px 0 30px",
-  background: theme.palette.common.white,
+  background: theme.palette.secondary[0],
   borderRadius: "12px",
   display: "flex",
   flexDirection: "column",
@@ -69,7 +70,12 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
     borderRadius: "8px",
     borderWidth: "1px",
     borderStyle: "solid",
-    borderColor: error ? theme.palette.error[700] : theme.palette.secondary.light,
+    borderColor: error
+      ? theme.palette.error.main
+      : theme.mode === "light"
+      ? theme.palette.primary[200]
+      : theme.palette.secondary[700],
+    transition: "border ease 0.3s",
     "&::before": {
       display: "none"
     },
@@ -77,7 +83,11 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
       display: "none"
     },
     padding: "5px 10px",
-    backgroundColor: error ? "rgba(247, 94, 94, 0.05)" : "",
+    color: theme.palette.secondary.main,
+    backgroundColor: error ? "rgba(247, 94, 94, 0.05)" : theme.palette.secondary[0],
+    "&:-webkit-autofill:hover ": {
+      WebkitBoxShadow: "0 0 0 30px red inset !important"
+    },
     "&.MuiInputBase-root.Mui-focused": {
       borderColor: error ? "" : theme.palette.primary.main
     }
@@ -120,6 +130,10 @@ export const WrapButton = styled(Button)`
   line-height: 19px;
   text-align: center;
   text-transform: none;
+  color: ${({ theme }) => theme.palette.secondary[0]};
+  &:hover {
+    background: ${({ theme }) => theme.palette.secondary.main};
+  }
 `;
 
 export const WrapButtonConnectWallet = styled(Button)`

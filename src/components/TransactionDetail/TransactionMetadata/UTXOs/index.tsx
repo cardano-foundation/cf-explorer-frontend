@@ -61,7 +61,7 @@ const Card = ({
     return <Img src={srcImg} alt="send icon" />;
   };
   return (
-    <Box textAlign={"left"} mb={1} sx={{ background: (theme) => theme.palette.background.paper }}>
+    <Box textAlign={"left"} mb={1} sx={{ background: (theme) => theme.palette.secondary[0] }}>
       <Header fontWeight="bold">
         <Box color={(theme) => theme.palette.secondary.main} fontSize={"1rem"} lineHeight="19px" mb="2px">
           {type === "down" ? t("glossary.input") : t("glossary.output")}

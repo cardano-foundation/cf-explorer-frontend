@@ -8,9 +8,9 @@ export const StyledGrid = styled(Grid)(({ theme }) => ({
 }));
 
 export const BoxInfo = styled(Box)(({ theme }) => ({
-  background: theme.palette.common.white,
+  background: theme.palette.secondary[0],
   borderRadius: "10px",
-  color: theme.palette.primary.contrastText,
+  color: theme.palette.secondary.main,
   display: "flex",
   flexDirection: "column",
   textAlign: "center",
@@ -203,15 +203,6 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
     height: `28px !important`,
     marginRight: "0px"
   }
-}));
-
-export const TooltipBody = styled(Box)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.secondary[0], 0.8),
-  borderRadius: 2,
-  padding: 8,
-  border: `1px solid ${theme.palette.primary.main}`,
-  fontSize: 12,
-  color: theme.palette.secondary.main
 }));
 
 export const TooltipLabel = styled(Box)(() => ({

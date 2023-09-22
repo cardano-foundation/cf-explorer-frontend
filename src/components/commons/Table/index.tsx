@@ -5,7 +5,8 @@ import {
   PaginationRenderItemParams,
   alpha,
   styled,
-  useScrollTrigger
+  useScrollTrigger,
+  useTheme
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -77,6 +78,7 @@ const TableHeader = <T extends ColumnType>({
   toggleSelectAll,
   isSelectAll
 }: TableHeaderProps<T>) => {
+  const theme = useTheme();
   const [{ columnKey, sort }, setSort] = useState<{ columnKey: string; sort: "" | "DESC" | "ASC" }>({
     columnKey: defaultSort ? defaultSort.split(",")[0] : "",
     sort: defaultSort ? (defaultSort.split(",")[1] as "" | "DESC" | "ASC") : ""
@@ -103,14 +105,14 @@ const TableHeader = <T extends ColumnType>({
     if (key === columnKey)
       switch (sort) {
         case "DESC":
-          return <SortTableDown />;
+          return <SortTableDown fill={theme.palette.primary.main} />;
         case "ASC":
-          return <SortTableUp />;
+          return <SortTableUp fill={theme.palette.primary.main} />;
         default: {
-          return <SortTableUpDown />;
+          return <SortTableUpDown fill={theme.palette.primary.main} />;
         }
       }
-    return <SortTableUpDown />;
+    return <SortTableUpDown fill={theme.palette.primary.main} />;
   };
   return (
     <THead>
@@ -158,7 +160,7 @@ const TableRow = <T extends ColumnType>({
   isSelected
 }: TableRowProps<T>) => {
   const colRef = useRef(null);
-
+  const theme = useTheme();
   return (
     <TRow onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row))} {...selectedProps}>
       {selectable && (
@@ -185,7 +187,15 @@ const TableRow = <T extends ColumnType>({
       {showTabView && (
         <TCol minWidth={50} maxWidth={90} selected={+selected}>
           <Box display="flex" alignItems="center" height="1rem">
-            {!selected && <CustomIcon icon={EyeIcon} originWidth={31} originHeight={23} width={24} />}
+            {!selected && (
+              <CustomIcon
+                stroke={theme.palette.secondary.light}
+                icon={EyeIcon}
+                originWidth={31}
+                originHeight={23}
+                width={24}
+              />
+            )}
           </Box>
         </TCol>
       )}
@@ -298,6 +308,16 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
               MenuProps={{
                 sx: {
                   zIndex: 1305
+                },
+                MenuListProps: {
+                  sx: {
+                    bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+                  }
+                },
+                PaperProps: {
+                  sx: {
+                    bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+                  }
                 }
               }}
             >
@@ -316,9 +336,11 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
         {total && total.count ? (
           <Box ml={"20px"} fontSize="0.875rem">
             <TotalNumber>{numberWithCommas(total.count)}</TotalNumber>{" "}
-            {t("common.result", {
-              suffix: total.count > 1 ? "s" : ""
-            })}
+            {total.isDataOverSize
+              ? t("glossary.mostRelavant")
+              : total.count > 1
+              ? t("common.results")
+              : t("common.result")}
           </Box>
         ) : (
           ""

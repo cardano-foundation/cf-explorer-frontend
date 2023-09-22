@@ -1,4 +1,4 @@
-import { styled, Card as CardMui } from "@mui/material";
+import { alpha, styled, Card as CardMui } from "@mui/material";
 
 export const WrapContainer = styled("div")`
   display: flex;
@@ -31,11 +31,17 @@ export const OverviewTitle = styled("p")`
   color: ${(props) => props.theme.palette.secondary.main};
 `;
 
-export const Card = styled(CardMui)(() => ({
+export const Card = styled(CardMui)(({ theme }) => ({
   padding: "20px",
   display: "flex",
   alignItems: "flex-start",
   gap: 10,
   flexDirection: "column",
-  justifyContent: "center"
+  justifyContent: "center",
+  background: theme.palette.secondary[0],
+  transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0m",
+  cursor: "pointer",
+  "&:hover": {
+    boxShadow: "1px 2px 15px 0px " + alpha(theme.palette.secondary.light, 0.25)
+  }
 }));
