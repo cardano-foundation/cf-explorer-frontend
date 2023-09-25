@@ -3,7 +3,7 @@ import { useRef, useState, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { BackIcon, AddressIcon, TimeIcon } from "src/commons/resources";
+import { BackIcon, AddressIcon, TimeIcon, AddressIconDark2, TimeIconDark } from "src/commons/resources";
 import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
@@ -16,6 +16,7 @@ import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import DrawPath from "src/components/commons/DrawPath";
 import ADAicon from "src/components/commons/ADAIcon";
+import CustomIcon from "src/components/commons/CustomIcon";
 import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
 
 import { StyledLink } from "../styles";
@@ -191,7 +192,11 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
         )}
         <InfoGroup>
           <Info>
-            <AddressIcon fill={theme.palette.secondary.light} />
+            <CustomIcon
+              icon={theme.isDark ? AddressIconDark2 : AddressIcon}
+              height={30}
+              fill={theme.palette.secondary.light}
+            />
             <CustomTooltip title={selected?.txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(selected?.txHash)}>
@@ -210,7 +215,11 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
             </InfoText>
           </Info>
           <Info>
-            <TimeIcon fill={theme.palette.secondary.light} />
+            <CustomIcon
+              icon={theme.isDark ? TimeIconDark : TimeIcon}
+              height={30}
+              fill={theme.palette.secondary.light}
+            />
             <InfoText>{formatDateTimeLocal(selected?.time || "")}</InfoText>
           </Info>
         </InfoGroup>

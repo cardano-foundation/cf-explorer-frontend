@@ -51,7 +51,7 @@ import UserIcon, { ReactComponent as UserIconComponent } from "./icons/user.svg"
 import DropIcon, { ReactComponent as DropIconComponent } from "./icons/drop.svg";
 import DelegatorIcon, { ReactComponent as DelegatorIconComponent } from "./icons/delegator.svg";
 import LightningIcon from "./icons/lightning.svg";
-import LinkOff from "./icons/link-off.svg";
+import LinkOff, { ReactComponent as LinkOffComponent } from "./icons/link-off.svg";
 import User2, { ReactComponent as User2Component } from "./icons/user2.svg";
 import FlintIcon from "./icons/flint.svg";
 import NamiIcon from "./icons/nami.svg";
@@ -64,12 +64,15 @@ import ProtocolIcon from "./icons/menus/Protocol.svg";
 import PolygonWhiteIconUrl from "./icons/polygon-white.svg";
 import PolygonBlackIconUrl from "./icons/polygon-back.svg";
 import AdaHolderIconUrl from "./images/ada-holder.png";
+import AdaHolderIconDarlUrl from "./images/ada-holder-dark.png";
 import PaymentWalletUrl from "./images/payment-wallet.png";
+import PaymentWalletDarkUrl from "./images/payment-wallet-dark.png";
 import SPOHolderIconUrl from "./images/spo-holder.png";
 import PolygonSPOUrl from "./images/polygon-spo.png";
 import PolygonSPODarkUrl from "./images/polygon-spo-dark.svg";
 import PolygonSPODarkUrlPng from "./images/polygon-spo-dark.png";
 import RewardAccountIconUrl from "./images/reward-box-icon.png";
+import RewardAccountIconDarkUrl from "./images/reward-box-icon-dark.png";
 import DelegationToIconUrl from "./images/delegation-to.png";
 import RewardWithdrawnIconUrl from "./images/reward-withdrawn.png";
 import timeIconUrl, { ReactComponent as TimeIconComponent } from "./icons/time.svg";
@@ -167,12 +170,15 @@ export {
   PolygonWhiteIconUrl,
   PolygonBlackIconUrl,
   AdaHolderIconUrl,
+  AdaHolderIconDarlUrl,
   PaymentWalletUrl,
+  PaymentWalletDarkUrl,
   SPOHolderIconUrl,
   PolygonSPOUrl,
   PolygonSPODarkUrl,
   PolygonSPODarkUrlPng,
   RewardAccountIconUrl,
+  RewardAccountIconDarkUrl,
   DelegationToIconUrl,
   RewardWithdrawnIconUrl,
   timeIconUrl,
@@ -229,7 +235,8 @@ export {
   DelegatorIconComponent,
   HeaderSearchIconComponent,
   sunIcon,
-  moonIcon
+  moonIcon,
+  LinkOffComponent
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
@@ -264,11 +271,15 @@ export { ReactComponent as BgPink } from "./images/bg-pink.svg";
 export { ReactComponent as BgGreen } from "./images/bg-green.svg";
 export { ReactComponent as PigSave } from "./images/pig-save.svg";
 export { ReactComponent as ButtonListIcon } from "./icons/Staking/buttonList.svg";
+export { ReactComponent as ButtonListIconDark } from "./icons/Staking/buttonListDark.svg";
 export { ReactComponent as InfoIcon } from "./icons/Staking/infoIcon.svg";
 export { ReactComponent as TranferIcon } from "./icons/Staking/tranfer.svg";
 export { ReactComponent as BackIcon } from "./icons/Staking/BackIcon.svg";
 export { ReactComponent as AddressIcon } from "./icons/Staking/AddressIcon.svg";
+export { ReactComponent as AddressIconDark } from "./icons/Staking/AddressIconDark.svg";
+export { ReactComponent as AddressIconDark2 } from "./icons/Staking/AddressIconDark2.svg";
 export { ReactComponent as TimeIcon } from "./icons/Staking/TimeIcon.svg";
+export { ReactComponent as TimeIconDark } from "./icons/Staking/TimeIconDark.svg";
 export { ReactComponent as ADAOrangeIcon } from "./icons/Staking/ADAOrangeIcon.svg";
 export { ReactComponent as FilterIC } from "./icons/filter-ic.svg";
 export { ReactComponent as CalenderIcon } from "./icons/calender-pale.svg";
@@ -314,8 +325,11 @@ export { ReactComponent as SuccessIcon } from "./icons/success.svg";
 export { ReactComponent as FailIcon } from "./icons/failed.svg";
 export { ReactComponent as StakingDelegators } from "./icons/stakingDelegators.svg";
 export { ReactComponent as CertificateIcon } from "./icons/certificate.svg";
+export { ReactComponent as CertificateDarkIcon } from "./icons/certificate-dark.svg";
 export { ReactComponent as CardanoSystemIcon } from "./icons/cardano-system.svg";
+export { ReactComponent as CardanoSystemDarkIcon } from "./icons/cardano-system-dark.svg";
 export { ReactComponent as WalletIconRewardGreen } from "./icons/Staking/walletIconRewardGreen.svg";
+export { ReactComponent as WalletIconRewardGreenDark } from "./icons/Staking/walletIconRewardGreenDark.svg";
 export { ReactComponent as TransferIcon } from "./icons/transfer.svg";
 export { ReactComponent as DelegationHistoryMainIcon } from "./icons/delegationHistoryGreen.svg";
 export { ReactComponent as BlockIcon } from "./icons/blockIcon.svg";

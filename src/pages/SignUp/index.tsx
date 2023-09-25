@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment, useTheme } from "@mui/material";
 import { useEffect, useReducer, useRef, useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { IoMdClose } from "react-icons/io";
@@ -69,6 +69,7 @@ export default function SignUp() {
   const emailTextField = useRef<HTMLInputElement | null>(null);
   const [error, setError] = useState(false);
   const { isLoggedIn } = useAuth();
+  const theme = useTheme();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -308,7 +309,7 @@ export default function SignUp() {
                 <BackText>{t("common.back")}</BackText>
               </BackButton>
               <CloseButton saving={0} onClick={() => handleRedirect(true)}>
-                <IoMdClose />
+                <IoMdClose color={theme.palette.secondary.light} />
               </CloseButton>
               <WrapInput>
                 <InputCustom

@@ -1,4 +1,4 @@
-import { Box, FormGroup, IconButton, InputAdornment } from "@mui/material";
+import { Box, FormGroup, IconButton, InputAdornment, useTheme } from "@mui/material";
 import { useEffect, useReducer, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IoMdClose } from "react-icons/io";
@@ -58,7 +58,7 @@ const formReducer = (state: IForm, event: any) => {
 
 export default function SignIn() {
   const { t } = useTranslation();
-
+  const theme = useTheme();
   const history = useHistory();
   const toast = useToast();
   const AUTHENTICATE_ROUTES = [
@@ -225,7 +225,7 @@ export default function SignIn() {
         <FormGroup>
           <WrapForm>
             <CloseButton saving={0} onClick={() => handleRedirectBack()}>
-              <IoMdClose />
+              <IoMdClose color={theme.palette.secondary.light} />
             </CloseButton>
             {invalidInfomation ? (
               <Box pt={"24px"}>

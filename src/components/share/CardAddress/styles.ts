@@ -30,7 +30,7 @@ export const AddressLink = styled(Link)`
 export const AddressGroup = styled(Box)(({ theme }) => ({
   marginTop: "15px",
   marginBottom: "24px",
-  background: theme.palette.primary[200],
+  background: theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[200],
   borderRadius: "8px",
   padding: "12px 20px",
   display: "flex",

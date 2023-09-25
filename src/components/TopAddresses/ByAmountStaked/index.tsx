@@ -73,6 +73,18 @@ const TopAddressesByAmountStaked = () => {
             onChange={(event: any) => setPageSize(event.target.value)}
             displayEmpty
             inputProps={{ "aria-label": "Without label" }}
+            MenuProps={{
+              MenuListProps: {
+                sx: {
+                  bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+                }
+              },
+              PaperProps: {
+                sx: {
+                  bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+                }
+              }
+            }}
           >
             {perPages.map((item) => (
               <StyledMenuItem key={item} value={item}>
