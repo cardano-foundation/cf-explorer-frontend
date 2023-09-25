@@ -79,8 +79,8 @@ const AddressAnalytics: React.FC = () => {
   const maxBalance = BigNumber.max(0, ...values).toString();
   const minBalance = BigNumber.min(maxBalance, ...values).toString();
 
-  const highest = Number(maxBalance);
-  const lowest = Number(minBalance);
+  const highest = Number(data?.highestBalance || maxBalance);
+  const lowest = Number(data?.lowestBalance || minBalance);
 
   const convertDataChart: AnalyticsExpanded[] =
     data?.data?.map((item) => ({
