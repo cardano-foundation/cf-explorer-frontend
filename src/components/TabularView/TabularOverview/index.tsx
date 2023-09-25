@@ -9,7 +9,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import {
   DelegationToIconUrl,
   PaymentWalletUrl,
-  RewardAccountIconUrl,
+  GiftIcon,
   RewardWithdrawnIconUrl,
   TransactionIcon
 } from "../../../commons/resources/index";
@@ -52,14 +52,15 @@ type TGridItem = {
   title: string;
   value: React.ReactNode;
   iconUrl: string;
+  iconSize?: { width?: string | number; height?: string | number };
 };
 
-const GridItem = ({ title, action, value, iconUrl }: TGridItem) => {
+const GridItem = ({ title, action, value, iconUrl, iconSize }: TGridItem) => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
 
   return (
     <CardItem sidebar={+sidebar}>
-      <ItemIcon src={iconUrl} alt="title" />
+      <ItemIcon src={iconUrl} alt="title" style={{ ...iconSize }} />
       <CardContent>
         <CardInfo>
           <CardTitle>{title}</CardTitle>
@@ -102,7 +103,8 @@ const TabularOverview: React.FC = () => {
       <Grid item xs={12} sm={6}>
         <GridItem
           title={t("rewardAccount")}
-          iconUrl={RewardAccountIconUrl}
+          iconSize={{ width: "74px", height: "80px" }}
+          iconUrl={GiftIcon}
           value={<CardAmount amount={Math.max(rewardAvailable || 0, 0)} />}
         />
       </Grid>

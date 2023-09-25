@@ -89,6 +89,7 @@ import DashboardIcon from "./icons/menus/Dashboard.svg";
 import CardanoBlueLogo from "./icons/cardanoBlue.svg";
 import TwitterXIcon from "./icons/TwitterX.svg";
 import NoRecordsIcon from "./images/NoRecords.svg";
+import GiftIcon from "./images/gift-icon.png";
 
 export {
   LogoFullIcon,
@@ -181,7 +182,8 @@ export {
   HomeDownIcon,
   CardanoBlueLogo,
   TwitterXIcon,
-  NoRecordsIcon
+  NoRecordsIcon,
+  GiftIcon
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
