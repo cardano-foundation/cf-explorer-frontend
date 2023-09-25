@@ -68,6 +68,10 @@ export const DrawContainer = styled(Box)(({ theme }) => ({
     maxWidth: 320,
     minWidth: 320
   },
+  [theme.breakpoints.down(355)]: {
+    maxWidth: 290,
+    minWidth: 290
+  },
   ">div": {
     zIndex: 2
   }
@@ -91,6 +95,9 @@ export const MiddleGroup = styled(Box)(({ theme }) => ({
     maxWidth: 320,
     minWidth: 320,
     gap: 33
+  },
+  [theme.breakpoints.down(355)]: {
+    gap: 20
   }
 }));
 
