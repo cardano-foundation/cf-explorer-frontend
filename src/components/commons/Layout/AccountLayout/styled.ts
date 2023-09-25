@@ -58,7 +58,7 @@ export const WrapItemMobile = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     display: "flex",
     width: "unset",
-    backgroundColor: theme.palette.grey["A200"],
+    backgroundColor: theme.mode === "dark" ? theme.palette.primary[100] : theme.palette.grey["A200"],
     borderRadius: "8px"
   },
   [theme.breakpoints.down("sm")]: {
@@ -77,8 +77,18 @@ export const NavItemMobile = styled(Link)<{ active: number }>(({ theme, active }
   fontSize: "14px",
   lineHeight: "16px",
   display: "none",
-  color: `${active ? theme.palette.common.white : theme.palette.secondary.light} !important`,
-  backgroundColor: active ? theme.palette.primary.main : theme.palette.grey["A200"],
+  color: `${
+    active
+      ? theme.mode === "dark"
+        ? theme.palette.common.black
+        : theme.palette.common.white
+      : theme.palette.secondary.light
+  } !important`,
+  backgroundColor: active
+    ? theme.palette.primary.main
+    : theme.mode === "dark"
+    ? theme.palette.primary[100]
+    : theme.palette.grey["A200"],
   padding: "10px 17px",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
