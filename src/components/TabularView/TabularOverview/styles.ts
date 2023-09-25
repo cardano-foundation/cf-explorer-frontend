@@ -127,7 +127,8 @@ export const StyledBoxDelegating = styled(Link)(() => ({
 export const NoDelegatedStakePool = styled(Box)(({ theme }) => ({
   color: theme.palette.error[700],
   fontWeight: 500,
-  fontSize: 16
+  fontSize: 16,
+  textAlign: "left"
 }));
 
 export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
