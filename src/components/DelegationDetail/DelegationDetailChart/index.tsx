@@ -3,6 +3,7 @@ import BigNumber from "bignumber.js";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
@@ -32,7 +33,13 @@ interface DelegationDetailChartProps {
 const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId }) => {
   const { t } = useTranslation();
   const [selected, setSelected] = useState<"epochChart" | "delegatorChart">("epochChart");
-  const { data, loading } = useFetch<AnalyticsDelegators>(`${API.DELEGATION.POOL_ANALYTICS}?poolView=${poolId}`);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
+  const { data, loading } = useFetch<AnalyticsDelegators>(
+    `${API.DELEGATION.POOL_ANALYTICS}?poolView=${poolId}`,
+    undefined,
+    false,
+    blockKey
+  );
   const theme = useTheme();
   const totalStakes =
     data?.epochChart?.dataByDays?.map((item) => item.totalStake).filter((item) => item !== null) || [];

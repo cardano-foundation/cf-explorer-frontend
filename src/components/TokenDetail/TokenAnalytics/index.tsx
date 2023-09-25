@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { Area, AreaChart, CartesianGrid, Label, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { TooltipProps } from "recharts/types/component/Tooltip";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -48,9 +49,15 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
   ];
   const [rangeTime, setRangeTime] = useState<OPTIONS_CHART_ANALYTICS>(OPTIONS_CHART_ANALYTICS.ONE_DAY);
   const { tokenId } = useParams<{ tokenId: string }>();
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const { isMobile } = useScreen();
   const theme = useTheme();
-  const { data, loading } = useFetch<AnalyticsData[]>(`${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`);
+  const { data, loading } = useFetch<AnalyticsData[]>(
+    `${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`,
+    undefined,
+    false,
+    blockKey
+  );
 
   const values = (data || [])?.map((item) => item.value || 0) || [];
 

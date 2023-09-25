@@ -3,6 +3,7 @@ import moment from "moment";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -37,6 +38,7 @@ export type TypeChart = "trx" | "simple" | "complex";
 const TransactionChart: React.FC = () => {
   const { t } = useTranslation();
   const [rangeTime, setRangeTime] = useState<Time>("ONE_DAY");
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const { isMobile } = useScreen();
   const optionsTime: Record<Time, { label: string; displayName: string }> = {
     ONE_DAY: {
@@ -57,7 +59,12 @@ const TransactionChart: React.FC = () => {
     }
   };
 
-  const { data, loading } = useFetch<TransactionChartIF[]>(`${API.TRANSACTION.GRAPH}/${rangeTime}`);
+  const { data, loading } = useFetch<TransactionChartIF[]>(
+    `${API.TRANSACTION.GRAPH}/${rangeTime}`,
+    undefined,
+    false,
+    blockKey
+  );
 
   const sumSimple = (data || []).reduce((prev, item) => prev + item.simpleTransactions, 0);
   const sumMetadata = (data || []).reduce((prev, item) => prev + item.metadata, 0);
@@ -166,7 +173,7 @@ const formatTimeX = (date: Time) => {
 const getLabel = (date: string, range: Time) => {
   switch (range) {
     case "ONE_DAY":
-      return `${moment(date).format("MM/DD HH:mm")} - ${moment(date).add(1, "hour").format("HH:mm")} (UTC)`;
+      return `${moment(date).format("MMM DD HH:mm")} - ${moment(date).add(1, "hour").format("HH:mm")} (UTC)`;
     case "ONE_WEEK":
     case "TWO_WEEK":
     case "ONE_MONTH":

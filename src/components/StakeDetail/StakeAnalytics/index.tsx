@@ -16,6 +16,7 @@ import {
   XAxisProps,
   YAxis
 } from "recharts";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -55,11 +56,20 @@ const StakeAnalytics: React.FC = () => {
   const [rangeTime, setRangeTime] = useState<OPTIONS_CHART_ANALYTICS>(OPTIONS_CHART_ANALYTICS.ONE_DAY);
   const [tab, setTab] = useState<"BALANCE" | "REWARD">("BALANCE");
   const { stakeId } = useParams<{ stakeId: string }>();
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const theme = useTheme();
   const { isMobile } = useScreen();
-  const { data, loading } = useFetch<AnalyticsBalance[]>(`${API.STAKE.ANALYTICS_BALANCE}/${stakeId}/${rangeTime}`);
+  const { data, loading } = useFetch<AnalyticsBalance[]>(
+    `${API.STAKE.ANALYTICS_BALANCE}/${stakeId}/${rangeTime}`,
+    undefined,
+    false,
+    blockKey
+  );
   const { data: dataReward, loading: loadingReward } = useFetch<AnalyticsReward[]>(
-    `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`
+    `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`,
+    undefined,
+    false,
+    blockKey
   );
   const options = [
     { value: OPTIONS_CHART_ANALYTICS.ONE_DAY, label: t("time.1d") },
@@ -182,7 +192,7 @@ const StakeAnalytics: React.FC = () => {
                       tab === "BALANCE" ? moment(value).format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM") : value
                     }
                     tickLine={false}
-                    interval={getIntervalAnalyticChart(rangeTime)}
+                    interval={tab === "BALANCE" ? getIntervalAnalyticChart(rangeTime) : undefined}
                     {...xAxisProps}
                   >
                     <Label value="(UTC)" offset={-12} position="insideBottom" />

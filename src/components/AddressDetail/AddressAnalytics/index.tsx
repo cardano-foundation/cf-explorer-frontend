@@ -16,6 +16,7 @@ import {
   XAxis,
   YAxis
 } from "recharts";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { HighestIcon, LowestIcon } from "src/commons/resources";
@@ -54,9 +55,13 @@ const AddressAnalytics: React.FC = () => {
   ];
   const [rangeTime, setRangeTime] = useState<OPTIONS_CHART_ANALYTICS>(OPTIONS_CHART_ANALYTICS.ONE_DAY);
   const { address } = useParams<{ address: string }>();
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const theme = useTheme();
   const { data: dataAnalytics, loading } = useFetch<AnalyticsData[]>(
-    `${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`
+    `${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`,
+    undefined,
+    false,
+    blockKey
   );
   const data = isArray(dataAnalytics) ? dataAnalytics : [];
   const values = data?.map((item) => item.value || 0) || [];
