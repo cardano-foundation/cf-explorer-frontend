@@ -1,7 +1,7 @@
-import { Box, Button, Container, Switch, styled } from "@mui/material";
+import { Box, Button, Container, IconButton, Switch, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
-import { MenuIcon, sunIcon, moonIcon } from "src/commons/resources";
+import { sunIcon, moonIcon } from "src/commons/resources";
 
 export const HeaderContainer = styled("header")`
   color: ${(props) => props.theme.palette.secondary.main};
@@ -117,12 +117,7 @@ export const NetworkContainer = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const Toggle = styled("i")`
-  width: 20px;
-  height: 24px;
-  background-image: url(${MenuIcon});
-  background-repeat: no-repeat;
-  background-position: center;
+export const ButtonSideBar = styled(IconButton)`
   display: none;
   ${({ theme }) => theme.breakpoints.down("md")} {
     display: block;

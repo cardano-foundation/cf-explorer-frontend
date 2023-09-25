@@ -29,13 +29,13 @@ export const StyledSelect = styled(Select)(({ theme }) => ({
 }));
 
 const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
-  color: theme.palette.secondary.main
-  // "&.Mui-selected": {
-  //   backgroundColor: theme.palette.primary[200]
-  // },
-  // "&:hover": {
-  //   backgroundColor: theme.palette.primary[200] + " !important"
-  // }
+  color: theme.palette.secondary.main,
+  "&.Mui-selected": {
+    backgroundColor: theme.palette.primary[200]
+  },
+  "&:hover": {
+    backgroundColor: theme.palette.primary[200] + " !important"
+  }
 }));
 
 const SelectNetwork: React.FC = () => {
