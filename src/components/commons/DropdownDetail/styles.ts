@@ -1,4 +1,4 @@
-import { Box, Button, styled } from "@mui/material";
+import { Box, IconButton, styled } from "@mui/material";
 
 export const InfoValue = styled(Box)(({ theme }) => ({
   fontWeight: "var(--font-weight-bold)",
@@ -24,15 +24,20 @@ export const ListDropdownContainer = styled(Box)`
   border-bottom-right-radius: 20px;
 `;
 
-export const ButtonClose = styled(Button)`
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  padding: 0;
-  min-width: 0;
-  top: 10px;
-  right: 10px;
-`;
+export const ButtonClose = styled(IconButton)(({ theme }) => ({
+  position: "absolute",
+  top: 10,
+  right: 10,
+  width: 30,
+  height: 30,
+  padding: 0,
+  border: `1px solid ${theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary[600]}`,
+  cursor: "pointer",
+  [theme.breakpoints.down("sm")]: {
+    right: 15,
+    zIndex: 10
+  }
+}));
 
 export const DropdownTitle = styled("h4")(({ theme }) => ({
   margin: 20,

@@ -3,17 +3,18 @@ import { useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 
-import { AddressIcon, BackIcon, TimeIcon } from "src/commons/resources";
-import { details } from "src/commons/routers";
+import { AddressIcon, BackIcon, TimeIcon, AddressIconDark2, TimeIconDark } from "src/commons/resources";
 import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { details } from "src/commons/routers";
 import ADAicon from "src/components/commons/ADAIcon";
 import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import CopyButton from "src/components/commons/CopyButton";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import DrawPath from "src/components/commons/DrawPath";
 import FeeBoxSPO from "src/components/commons/FeeBoxSPO";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import SPOHolder from "src/components/commons/SPOHolder";
+import CustomIcon from "src/components/commons/CustomIcon";
 import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
 import StyledModal from "src/components/commons/StyledModal";
 
@@ -135,7 +136,11 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
         )}
         <InfoGroup>
           <Info>
-            <AddressIcon fill={theme.palette.secondary.light} />
+            <CustomIcon
+              icon={theme.isDark ? AddressIconDark2 : AddressIcon}
+              height={30}
+              fill={theme.palette.secondary.light}
+            />
             <CustomTooltip title={selected?.txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(selected?.txHash)}>
@@ -154,7 +159,11 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
             </InfoText>
           </Info>
           <Info>
-            <TimeIcon fill={theme.palette.secondary.light} />
+            <CustomIcon
+              icon={theme.isDark ? TimeIconDark : TimeIcon}
+              height={30}
+              fill={theme.palette.secondary.light}
+            />
             <InfoText>{formatDateTimeLocal(selected?.time || "")}</InfoText>
           </Info>
         </InfoGroup>

@@ -247,7 +247,7 @@ export const DetailLabel = styled("small")`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  color: ${(props) => props.theme.palette.secondary.main};
+  color: ${(props) => (props.theme.isDark ? props.theme.palette.secondary.light : props.theme.palette.secondary.main)};
   line-height: 26px;
   white-space: nowrap;
   text-transform: capitalize;

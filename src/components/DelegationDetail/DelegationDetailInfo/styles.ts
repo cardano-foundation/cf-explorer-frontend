@@ -1,4 +1,4 @@
-import { alpha, Box, Button, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
+import { Box, Button, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
 
 export const HeaderDetailContainer = styled(Box)(({ theme }) => ({
   textAlign: "left",
@@ -87,15 +87,15 @@ export const DataContainer = styled("div")(({ theme }) => ({
 export const Item = styled(Grid)<{ top?: number }>(({ top, theme }) => ({
   position: "relative",
   padding: top ? "0 25px 20px" : "20px 25px 0",
-  borderLeft: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
-  borderBottom: top ? `1px solid ${alpha(theme.palette.common.black, 0.1)}` : "none",
+  borderLeft: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
+  borderBottom: top ? `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}` : "none",
 
   "&:first-of-type, &:nth-of-type(5)": {
     borderLeft: 0,
     paddingLeft: 0
   },
   [theme.breakpoints.down("md")]: {
-    borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+    borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
     padding: 15,
     paddingRight: 0,
     "&:nth-of-type(2n + 1)": {

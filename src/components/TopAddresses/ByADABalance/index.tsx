@@ -77,6 +77,18 @@ const TopAddressesByADABalance = () => {
             displayEmpty
             inputProps={{ "aria-label": "Without label" }}
             sx={{ color: ({ palette }) => palette.secondary.main }}
+            MenuProps={{
+              MenuListProps: {
+                sx: {
+                  bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+                }
+              },
+              PaperProps: {
+                sx: {
+                  bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+                }
+              }
+            }}
           >
             {perPages.map((item) => (
               <StyledMenuItem key={item} value={item}>

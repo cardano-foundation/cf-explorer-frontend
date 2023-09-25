@@ -27,9 +27,13 @@ export const CustomButton = styled("button")<{ active: number }>(({ theme, activ
   borderRadius: "5px",
   padding: "6px 0",
   fontWeight: "var(--font-weight-bold)",
-  color: active ? `${theme.palette.secondary.light} !important` : theme.palette.secondary.main,
-  backgroundColor: active ? theme.palette.primary[200] : "transparent",
-  border: `2px solid ${theme.palette.primary[200]}`,
+  color: active
+    ? `${theme.isDark ? theme.palette.secondary[0] : theme.palette.secondary.light} !important`
+    : theme.palette.secondary.main,
+  backgroundColor: active
+    ? `${theme.isDark ? theme.palette.primary.main : theme.palette.primary[200]} !important`
+    : "transparent",
+  border: `2px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
   cursor: "pointer",
   fontFamily: "var(--font-family-title)",
   fontSize: "16px",

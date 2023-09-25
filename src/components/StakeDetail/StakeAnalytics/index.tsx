@@ -78,7 +78,8 @@ const StakeAnalytics: React.FC = () => {
     { value: OPTIONS_CHART_ANALYTICS.ONE_MONTH, label: t("time.1m") },
     { value: OPTIONS_CHART_ANALYTICS.THREE_MONTH, label: t("time.3m") }
   ];
-  const values = data?.map((item) => item.value || 0) || [];
+
+  const values = (((data as any)?.data as AnalyticsBalance[]) || [])?.map((item) => item.value || 0) || [];
   const maxBalance = BigNumber.max(0, ...values).toString();
   const minBalance = BigNumber.min(maxBalance, ...values).toString();
 
@@ -86,7 +87,7 @@ const StakeAnalytics: React.FC = () => {
   const maxReward = BigNumber.max(0, ...rewards).toString();
   const minReward = BigNumber.min(maxReward, ...rewards).toString();
 
-  const convertDataChart = data?.map((item) => ({
+  const convertDataChart = (((data as any)?.data as AnalyticsBalance[]) || [])?.map((item) => ({
     value: item.value || 0,
     date: item.date
   }));
@@ -181,8 +182,12 @@ const StakeAnalytics: React.FC = () => {
                 >
                   <defs>
                     <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
-                      <stop offset="100%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
+                      <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={theme.isDark ? 0.6 : 0.2} />
+                      <stop
+                        offset="100%"
+                        stopColor={theme.palette.primary.main}
+                        stopOpacity={theme.isDark ? 0.6 : 0.2}
+                      />
                     </linearGradient>
                   </defs>
                   <XAxis
