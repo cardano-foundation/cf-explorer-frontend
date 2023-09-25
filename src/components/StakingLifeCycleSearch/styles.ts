@@ -136,6 +136,6 @@ export const StyledIconQuestion = styled(AiOutlineQuestionCircle)`
   }
   ${({ theme }) => theme.breakpoints.down("sm")} {
     display: block;
-    margin: 8px 0;
+    margin: 8px auto;
   }
 `;
