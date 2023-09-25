@@ -1,7 +1,7 @@
-import { Box, BoxProps, styled } from "@mui/material";
+import { Box, BoxProps, styled, useTheme } from "@mui/material";
 import React, { forwardRef } from "react";
 
-import { CertificateIcon } from "src/commons/resources";
+import { CertificateDarkIcon, CertificateIcon } from "src/commons/resources";
 
 import CustomIcon from "../CustomIcon";
 
@@ -27,9 +27,10 @@ const CertificateBox = styled(Box)(({ theme }) => ({
 }));
 
 export const CertificateShape: React.FC<BoxProps> = forwardRef(({ children, ...props }, boxRef) => {
+  const theme = useTheme();
   return (
     <CertificateBox {...props} ref={boxRef}>
-      <CustomIcon icon={CertificateIcon} height={100} />
+      <CustomIcon icon={theme.isDark ? CertificateDarkIcon : CertificateIcon} height={100} />
       {children}
     </CertificateBox>
   );

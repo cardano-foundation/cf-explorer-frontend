@@ -14,12 +14,13 @@ export const VerifyScriptContainer = styled(Box)`
 `;
 
 export const StyledVerifyButton = styled(Box)<{ verified: number }>(({ verified, theme }) => ({
-  color: verified ? theme.palette.success[800] : theme.palette.secondary[0],
+  color: verified ? theme.palette.success[800] : theme.isDark ? theme.palette.warning[800] : theme.palette.secondary[0],
   background: verified
     ? theme.palette.success[100]
     : theme.mode === "light"
     ? theme.palette.secondary.light
-    : theme.palette.secondary[800],
+    : theme.palette.warning[100],
+  border: `1px solid ${theme.isDark ? theme.palette.warning[800] : "none"}`,
   cursor: "pointer",
   borderRadius: 2,
   padding: "4px 14px",

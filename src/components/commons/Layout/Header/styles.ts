@@ -135,11 +135,13 @@ export const HeaderSearchContainer = styled(Box)<{ home?: number }>`
   }
 `;
 
-export const SwitchMode = styled(Switch)(() => ({
+export const SwitchMode = styled(Switch)(({ theme }) => ({
   padding: 8,
   width: 64,
   height: 40,
   "& .MuiSwitch-track": {
+    background: theme.palette.secondary.main,
+    opacity: 1,
     borderRadius: 80 / 2,
     "&:before, &:after": {
       content: '""',
@@ -151,17 +153,20 @@ export const SwitchMode = styled(Switch)(() => ({
     },
     "&:before": {
       backgroundImage: `url(${moonIcon})`,
-      left: 12
+      left: 12,
+      opacity: 1
     },
     "&:after": {
       backgroundImage: `url(${sunIcon})`,
-      right: 12
+      right: 12,
+      opacity: 1
     }
   },
   "& .MuiSwitch-thumb": {
     boxShadow: "none",
     width: 18,
     height: 18,
-    margin: `2px 4px`
+    margin: `2px 4px`,
+    background: theme.palette.secondary[0]
   }
 }));

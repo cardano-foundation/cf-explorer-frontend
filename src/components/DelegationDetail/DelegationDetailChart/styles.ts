@@ -21,9 +21,12 @@ export const Button = styled("button")<{ active: number }>`
   padding: 6px 0;
   font-weight: var(--font-weight-bold);
   color: ${({ theme, active }) =>
-    active ? `${theme.palette.secondary.light} !important` : theme.palette.secondary.main};
-  border: 1px solid ${({ theme }) => theme.palette.primary[200]};
-  background-color: ${({ theme, active }) => (active ? theme.palette.primary[200] : "transparent")};
+    active
+      ? `${theme.isDark ? theme.palette.secondary[0] : theme.palette.secondary.light} !important`
+      : theme.palette.secondary.main};
+  border: 1px solid ${({ theme }) => (theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200])};
+  background-color: ${({ theme, active }) =>
+    active ? `${theme.isDark ? theme.palette.primary.main : theme.palette.primary[200]} !important` : "transparent"};
   cursor: pointer;
   font-family: var(--font-family-title);
   font-size: 16px;
@@ -149,7 +152,7 @@ export const AnalyticsTitle = styled("h2")(({ theme }) => ({
   width: "max-content",
   fontSize: "20px",
   color: theme.palette.secondary.main,
-  borderBottom: `2px solid ${theme.palette.primary[200]}`,
+  borderBottom: `2px solid ${theme.isDark ? theme.palette.primary.main : theme.palette.primary[200]}`,
   [theme.breakpoints.down("sm")]: {
     margin: "30px 0 15px"
   }

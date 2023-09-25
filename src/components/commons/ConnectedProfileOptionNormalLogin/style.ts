@@ -37,11 +37,11 @@ export const Disconnect = styled(Box)`
 export const Icon = styled("img")`
   width: 24px;
   height: 24px;
-  margin-right: 10px;
 `;
 
 export const Name = styled("h4")`
   margin: 0px;
+  margin-left: 10px;
 `;
 
 export const StyledButton = styled(ButtonBase)`

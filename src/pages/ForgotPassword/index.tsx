@@ -1,4 +1,4 @@
-import { Box, FormGroup } from "@mui/material";
+import { Box, FormGroup, useTheme } from "@mui/material";
 import { useEffect, useReducer, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { HiArrowLongLeft } from "react-icons/hi2";
@@ -48,6 +48,7 @@ export default function ForgotPassword() {
   const { t } = useTranslation();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
+  const theme = useTheme();
   const emailInputRef = useRef<HTMLInputElement | null>(null);
   const [formData, setFormData] = useReducer(formReducer, {
     email: {
@@ -178,7 +179,7 @@ export default function ForgotPassword() {
                 <BackText>{t("common.back")}</BackText>
               </BackButton>
               <CloseButton saving={0} onClick={() => handleRedirect(true)}>
-                <IoMdClose />
+                <IoMdClose color={theme.palette.secondary.light} />
               </CloseButton>
               <WrapInput>
                 <InputCustom
@@ -197,7 +198,7 @@ export default function ForgotPassword() {
                   error={Boolean(formData.email.error && formData.email.touched)}
                 />
                 {formData.email.error && formData.email.touched ? (
-                  <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom>
+                  <FormHelperTextCustom>{formData.email.error}</FormHelperTextCustom>
                 ) : null}
               </WrapInput>
               <WrapButton

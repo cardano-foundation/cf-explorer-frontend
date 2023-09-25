@@ -124,7 +124,7 @@ export const OptionsWrapper = styled(Box)<{ home: number }>(({ theme, home }) =>
 
 export const Option = styled(Button)(({ theme }) => ({
   textTransform: "inherit",
-  color: theme.palette.common.black,
+  color: theme.palette.secondary.light,
   width: "100%",
   justifyContent: "space-between",
   margin: "4px 0"
