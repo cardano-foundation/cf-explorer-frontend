@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { EmailIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
 import { forgotPassword } from "src/commons/utils/userRequest";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import {
   AlertCustom,
@@ -185,7 +186,7 @@ export default function ForgotPassword() {
                 <InputCustom
                   startAdornment={
                     <Box paddingRight={"10px"} paddingTop={"7px"} paddingBottom={"2px"}>
-                      <EmailIcon />
+                      <CustomIcon height={20} fill={theme.palette.secondary.light} icon={EmailIcon} />
                     </Box>
                   }
                   name="email"

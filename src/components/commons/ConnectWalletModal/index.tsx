@@ -102,7 +102,6 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
           return (
             <WalletItem
               key={wallet.name}
-              active={active ? 1 : 0}
               connecting={walletConnecting ? 1 : 0}
               onClick={() => !walletConnecting && handleConnect(wallet.name)}
             >
