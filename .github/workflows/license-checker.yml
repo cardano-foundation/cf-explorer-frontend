@@ -1,0 +1,42 @@
+name: License Checker
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    types: [opened, synchronize]
+  workflow_dispatch:
+
+jobs:
+  license-checker:
+    permissions:
+      contents: read
+      packages: write
+    runs-on: ubuntu-latest
+    if: |
+      "contains(github.event.head_commit.message, 'release-please--branches--main')" ||
+      ${{ github.event_name == 'pull_request' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: 🫡 Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+
+      - name: Install license_finder
+        run: |
+          gem install license_finder
+
+      - name: Check licenses
+        run: |
+          ./tools/license-checker.sh
