@@ -19,7 +19,7 @@ const CustomTextArea = styled(TextareaAutosize)`
   overflow-y: auto !important;
   &:focus-visible {
     border: 1.5px solid
-      ${({ theme }) => (theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary[700])};
+      ${({ theme }) => (theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary[600])};
     outline: none;
   }
 `;
