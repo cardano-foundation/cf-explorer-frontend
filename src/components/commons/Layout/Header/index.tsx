@@ -1,10 +1,16 @@
-import { Box, useTheme } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
 import { useScreen } from "src/commons/hooks/useScreen";
-import { CardanoBlueDarkmodeLogo, CardanoBlueLogo, LogoIcon, SearchIcon } from "src/commons/resources";
+import {
+  CardanoBlueDarkmodeLogo,
+  CardanoBlueLogo,
+  LogoIcon,
+  MenuIconComponent,
+  SearchIcon
+} from "src/commons/resources";
 import { lists, routers } from "src/commons/routers";
 import { setOnDetailView, setSidebar, setTheme } from "src/stores/user";
 
@@ -24,10 +30,10 @@ import {
   SearchButton,
   SideBarRight,
   SwitchMode,
-  Title,
-  Toggle
+  Title
 } from "./styles";
 import SelectLanguage from "./SelectLanguage";
+import CustomIcon from "../../CustomIcon";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [lists.dashboard()];
 
@@ -98,10 +104,12 @@ const Header: React.FC<RouteComponentProps> = (props) => {
             <LoginButton />
             {history.location.pathname !== routers.STAKING_LIFECYCLE && (
               <SearchButton onClick={handleOpenSearch} home={+home}>
-                <SearchIcon fontSize={24} />
+                <SearchIcon fontSize={24} stroke={theme.palette.secondary.light} fill={theme.palette.secondary[0]} />
               </SearchButton>
             )}
-            <Toggle onClick={handleToggle} />
+            <IconButton onClick={handleToggle}>
+              <CustomIcon icon={MenuIconComponent} height={18} fill={theme.palette.secondary.light} />
+            </IconButton>
           </SideBarRight>
         </HeaderTop>
       </HeaderBox>

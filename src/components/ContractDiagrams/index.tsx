@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { CgClose } from "react-icons/cg";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "@mui/material";
 
 import { RedeemerArrowDownIcon, RedeemerPlusIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
@@ -34,6 +35,7 @@ interface IContractDiagramProps {
 
 export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagramProps) => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const linkToPage = () => {
     if (txHash) return details.transaction(txHash);
     return item.address ? details.contract(item.address) : details.policyDetail(item.scriptHash);
@@ -46,7 +48,7 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
         {handleClose ? (
           <CustomTooltip title={t("common.close")}>
             <CloseButton onClick={handleClose}>
-              <CgClose />
+              <CgClose color={theme.palette.secondary.light} />
             </CloseButton>
           </CustomTooltip>
         ) : null}

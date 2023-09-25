@@ -106,7 +106,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     <Card>
       <WrapHeader>
         <BackButton onClick={history.goBack}>
-          <HiArrowLongLeft fontSize="16px" />
+          <HiArrowLongLeft color={theme.palette.secondary.light} fontSize="16px" />
           <BackText>{t("common.back")}</BackText>
         </BackButton>
         <Box width={"100%"} display={"flex"} flexWrap={"wrap"} alignItems={"center"} justifyContent={"space-between"}>

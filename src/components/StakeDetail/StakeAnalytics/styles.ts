@@ -31,7 +31,7 @@ export const CustomButton = styled("button")<{ active: number }>(({ theme, activ
     ? `${theme.isDark ? theme.palette.secondary[0] : theme.palette.secondary.light} !important`
     : theme.palette.secondary.main,
   backgroundColor: active
-    ? `${theme.isDark ? theme.palette.primary.main : theme.palette.primary[200]} !important`
+    ? `${theme.mode === "dark" ? theme.palette.primary.main : theme.palette.primary[200]} !important`
     : "transparent",
   border: `2px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
   cursor: "pointer",
@@ -142,9 +142,13 @@ export const ButtonTitle = styled("button")<{ active: boolean }>(({ theme, activ
   padding: "8px 30px",
   fontWeight: "bold",
   fontSize: "1rem",
-  color: active ? `${theme.palette.secondary.light} !important` : theme.palette.secondary.main,
-  backgroundColor: active ? theme.palette.primary[200] : "transparent",
-  border: `2px solid ${theme.palette.primary[200]}`,
+  color: active
+    ? `${theme.isDark ? theme.palette.secondary[0] : theme.palette.secondary.light} !important`
+    : theme.palette.secondary.main,
+  backgroundColor: active
+    ? `${theme.mode === "dark" ? theme.palette.primary.main : theme.palette.primary[200]} !important`
+    : "transparent",
+  border: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
   fontFamily: "var(--font-family-title)",
   cursor: "pointer",
   marginRight: theme.spacing(1),

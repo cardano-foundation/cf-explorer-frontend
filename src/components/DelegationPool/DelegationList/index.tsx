@@ -173,7 +173,13 @@ const DelegationLists: React.FC = () => {
             });
           }}
         >
-          <CustomIcon icon={HeaderSearchIconComponent} stroke={theme.palette.secondary.light} height={22} width={22} />
+          <CustomIcon
+            icon={HeaderSearchIconComponent}
+            fill={theme.palette.secondary[0]}
+            stroke={theme.palette.secondary.light}
+            height={22}
+            width={22}
+          />
         </SubmitButton>
       </SearchContainer>
       <Table

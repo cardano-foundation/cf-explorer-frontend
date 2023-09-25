@@ -98,7 +98,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
           <ViewAllButton tooltipTitle={t("common.viewDetail")} to={details.epoch(epochNo)} />
           <CustomTooltip title={t("common.close")}>
             <CloseButton onClick={handleClose}>
-              <CgClose />
+              <CgClose color={theme.palette.secondary.light} />
             </CloseButton>
           </CustomTooltip>
         </ViewDetailHeader>
@@ -178,7 +178,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
         </TimeDuration>
         <CustomTooltip title={t("common.close")}>
           <CloseButton onClick={handleClose}>
-            <CgClose />
+            <CgClose color={theme.palette.secondary.light} />
           </CloseButton>
         </CustomTooltip>
       </ViewDetailHeader>
