@@ -10,6 +10,7 @@ import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessIcon } from "src/common
 import { routers } from "src/commons/routers";
 import { signUp } from "src/commons/utils/userRequest";
 import { ACCOUNT_ERROR } from "src/commons/utils/constants";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import {
   BackButton,
@@ -316,7 +317,7 @@ export default function SignUp() {
                   inputRef={emailTextField}
                   startAdornment={
                     <Box paddingRight={"10px"} paddingTop={"7px"} paddingBottom={"2px"}>
-                      <EmailIcon />
+                      <CustomIcon height={20} fill={theme.palette.secondary.light} icon={EmailIcon} />
                     </Box>
                   }
                   fullWidth
@@ -335,7 +336,7 @@ export default function SignUp() {
                 <InputCustom
                   startAdornment={
                     <Box paddingRight={"10px"} paddingTop={"7px"} paddingBottom={"2px"}>
-                      <EmailIcon />
+                      <CustomIcon height={20} fill={theme.palette.secondary.light} icon={EmailIcon} />
                     </Box>
                   }
                   fullWidth
@@ -353,7 +354,7 @@ export default function SignUp() {
                 <InputCustom
                   startAdornment={
                     <Box paddingRight={"10px"} paddingTop={"5px"} paddingBottom={"2px"}>
-                      <LockIcon />
+                      <CustomIcon height={25} fill={theme.palette.secondary.light} icon={LockIcon} />
                     </Box>
                   }
                   type={showPassword ? "text" : "password"}
@@ -378,7 +379,7 @@ export default function SignUp() {
                 <InputCustom
                   startAdornment={
                     <Box paddingRight={"10px"} paddingTop={"5px"} paddingBottom={"2px"}>
-                      <LockIcon />
+                      <CustomIcon height={25} fill={theme.palette.secondary.light} icon={LockIcon} />
                     </Box>
                   }
                   fullWidth

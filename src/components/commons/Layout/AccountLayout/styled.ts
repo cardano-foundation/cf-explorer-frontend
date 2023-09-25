@@ -34,7 +34,7 @@ export const NavItem = styled(Link)<{ active: number }>(({ theme, active }) => (
   width: "100%",
   padding: "17px 0",
   margin: "auto",
-  backgroundColor: active ? theme.palette.primary[200] : theme.palette.background.paper,
+  backgroundColor: active ? theme.palette.primary[200] : "transparent",
   color: `${active ? theme.palette.secondary.main : theme.palette.secondary.light} !important`,
   fontWeight: "bold",
   [theme.breakpoints.down("md")]: {
@@ -49,7 +49,7 @@ export const Divider = styled(Box)<{ first: boolean }>(({ theme, first }) => ({
   left: "10%",
   width: "80%",
   height: 0,
-  borderBottom: `1px solid ${theme.palette.secondary.main}`,
+  borderBottom: `1px solid ${theme.palette.secondary.light}`,
   opacity: 0.07000000029802322
 }));
 

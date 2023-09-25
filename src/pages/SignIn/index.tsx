@@ -13,6 +13,7 @@ import { isValidEmail, removeAuthInfo } from "src/commons/utils/helper";
 import { getInfo, signIn } from "src/commons/utils/userRequest";
 import ConnectWallet from "src/components/commons/Layout/Header/ConnectWallet";
 import { setUserData } from "src/stores/user";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import {
   AlertCustom,
@@ -237,7 +238,7 @@ export default function SignIn() {
                 error={Boolean(formData.email.error && formData.email.touched)}
                 startAdornment={
                   <Box paddingRight={"10px"} paddingTop={"3px"}>
-                    <UserCustomIcon />
+                    <CustomIcon height={25} fill={theme.palette.secondary.light} icon={UserCustomIcon} />
                   </Box>
                 }
                 name="email"
@@ -254,7 +255,7 @@ export default function SignIn() {
               <InputCustom
                 startAdornment={
                   <Box paddingRight={"10px"} paddingTop={"5px"} paddingBottom={"2px"}>
-                    <LockIcon />
+                    <CustomIcon height={25} fill={theme.palette.secondary.light} icon={LockIcon} />
                   </Box>
                 }
                 fullWidth

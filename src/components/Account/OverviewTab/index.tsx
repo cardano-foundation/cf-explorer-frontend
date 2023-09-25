@@ -91,7 +91,7 @@ const OverviewTab = () => {
             ? isMobile
               ? getShortWallet(userData.address || "")
               : userData?.address
-            : userData?.email
+            : userData?.username
         }
         isTablet={isTablet}
       />
