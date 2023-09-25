@@ -98,7 +98,9 @@ const LatestTransactions: React.FC = () => {
                           </HeaderStatus>
                           <Box display={"flex"} alignItems={"flex-start"}>
                             <PriveValue>{formatADAFull(amount)}</PriveValue>
-                            <ADAicon width={14} />
+                            <Box component={"span"} sx={{ width: 14 }}>
+                              <ADAicon width={14} />
+                            </Box>
                           </Box>
                         </LatestTransactionItemHeader>
                       </ItemHeader>
