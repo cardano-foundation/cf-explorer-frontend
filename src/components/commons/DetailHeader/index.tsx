@@ -72,6 +72,7 @@ export interface DetailHeaderProps {
     hideHeader?: boolean;
   }[];
   isHideButtonBack?: boolean;
+  isClickAble?: boolean;
 }
 
 const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
@@ -87,12 +88,14 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     bookmarkData,
     stakeKeyStatus,
     isHideButtonBack,
-    lastUpdated
+    lastUpdated,
+    isClickAble
   } = props;
+
   const history = useHistory();
   const theme = useTheme();
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
-  const [openBackdrop, setOpenBackdrop] = useState<any>({
+  const [openBackdrop, setOpenBackdrop] = useState<{ [x: string]: boolean }>({
     input: false,
     output: false
   });
@@ -239,7 +242,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           ""
         )}
       </WrapHeader>
-      <DetailsInfo container length={numberOfItems}>
+      <DetailsInfo isClickAble={+Boolean(isClickAble)} container length={numberOfItems}>
         {listItem.map((item, index) => {
           const keyItem = item.key || "";
           return (

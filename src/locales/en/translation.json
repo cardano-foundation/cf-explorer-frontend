@@ -369,7 +369,7 @@
   "glossary.Token": "Token",
   "glossary.slc": "Staking Lifecycle",
   "slc.subTitle": "Search to explore the staking lifecycle events of a delegator or pool. What is staking on Cardano?",
-  "slc.typeStakeOrPool": "Type a stake address or pool id",
+  "slc.typeStakeOrPool": "Search stake address or pool ID",
   "slc.stakingDelegationLC": "Staking Delegation Lifecycle",
   "common.stakeAddress": "Stake Address",
   "common.switchTablularView": "Switch to tabular view",
@@ -556,7 +556,7 @@
   "common.address": "Address",
   "common.balance": "Balance",
   "common.perpage": "Per page",
-  "common.results": "Result",
+  "common.results": "Results",
   "common.protocolParameters": "Protocol Parameters",
   "common.updatableParameters": "Updatable Parameters",
   "common.viewUpdateHistory": "View update history",
@@ -682,6 +682,7 @@
   "report.searchLabel": "Search report name",
   "report.events": "Events",
   "report.stakeAddressSummary": "Stake address summary",
+  "glossary.mostRelavant": "most relevant results",
   "dropdown.browseDelegator": "Browse an example delegator",
   "dropdown.stakePool": "Browse an example stake pool",
   "common.welcomeStakingLifecycle": "Welcome to Staking Lifecycle",
@@ -731,7 +732,6 @@
   "400-TIME_RANGE_ILLEGAL": "Time range is illegal",
   "400-REPORT_LIMIT_REACHED": "Report limit reached",
   "desc.InUnits4Native": "In units of the native token",
-  "desc.transactionUTXO": "Includes transactions in which the UTXO containing the tokens is used resulting in token movement, while the tokens are unspent and returned to the address",
   "common.pageNotFound": "Sorry! The page you’re looking for cannot be found.",
   "common.back2HomePage": "Back to home",
   "message.error.title": "Error",
@@ -752,5 +752,6 @@
   "common.addressList": "Addresses list",
   "common.hexFormat": "Hex Format",
   "common.sent": "Sent",
-  "common.received": "Received"
+  "common.received": "Received",
+  "desc.transactionUTXO": "Includes transactions in which the UTXO containing the tokens is used resulting in token movement, while the tokens are unspent and returned to the address"
 }

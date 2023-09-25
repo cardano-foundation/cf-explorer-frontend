@@ -1,20 +1,21 @@
-import React, { useState } from "react";
-import { Box, Grid, useTheme } from "@mui/material";
+import React, { useMemo, useState } from "react";
+import { Box, Grid, alpha, useTheme } from "@mui/material";
 import {
   Area,
-  AreaChart,
+  ComposedChart,
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
   TooltipProps,
-  Label
+  Label,
+  Line
 } from "recharts";
+import { getNiceTickValues } from "recharts-scale";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 import { BigNumber } from "bignumber.js";
-import { isArray } from "lodash";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
@@ -23,8 +24,9 @@ import Card from "src/components/commons/Card";
 import { formatADAFull, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
 import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import CustomIcon from "src/components/commons/CustomIcon";
 import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
+import CustomIcon from "src/components/commons/CustomIcon";
+import { TooltipBody } from "src/components/commons/Layout/styles";
 
 import {
   BoxInfo,
@@ -39,12 +41,22 @@ import {
   ValueInfo,
   Wrapper,
   TextCardHighlight,
-  TooltipBody,
   TooltipLabel,
   TooltipValue
 } from "./styles";
 
 type AnalyticsData = { date: string; value: number };
+
+interface AddressAnalyticsData {
+  data: AnalyticsData[];
+  highestBalance: number | null;
+  lowestBalance: number | null;
+}
+
+interface AnalyticsExpanded extends AnalyticsData {
+  highest: number;
+  lowest: number;
+}
 
 const AddressAnalytics: React.FC = () => {
   const { t } = useTranslation();
@@ -58,21 +70,54 @@ const AddressAnalytics: React.FC = () => {
   const { address } = useParams<{ address: string }>();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const theme = useTheme();
-  const { data: dataAnalytics, loading } = useFetch<AnalyticsData[]>(
+  const { data, loading } = useFetch<AddressAnalyticsData>(
     `${API.ADDRESS.ANALYTICS}/${address}/${rangeTime}`,
     undefined,
     false,
     blockKey
   );
-  const data = isArray(dataAnalytics) ? dataAnalytics : [];
-  const values = data?.map((item) => item.value || 0) || [];
+  const values = data?.data?.map?.((item) => item.value || 0) || [];
   const maxBalance = BigNumber.max(0, ...values).toString();
   const minBalance = BigNumber.min(maxBalance, ...values).toString();
 
-  const convertDataChart = data?.map((item) => ({
-    value: item.value || 0,
-    date: item.date
-  }));
+  const highest = Number(maxBalance);
+  const lowest = Number(minBalance);
+
+  const convertDataChart: AnalyticsExpanded[] =
+    data?.data?.map((item) => ({
+      value: item.value || 0,
+      date: item.date,
+      highest,
+      lowest
+    })) || [];
+
+  const customTicks = useMemo(() => {
+    // Default ticks by recharts
+    const ticks = getNiceTickValues([0, Math.max(Number(maxBalance), highest)], 5);
+
+    // With 14 is font-size (tick label height), 400 is chart height
+    const labelHeight = 14 / 400;
+
+    const tickMax = ticks[ticks.length - 1] || 1;
+
+    // If tick near lowest and highest ( tick / tickMax < labelHeight), hidden it.
+    const needShowTicks = ticks.filter(
+      (tick) =>
+        BigNumber(tick).minus(lowest).div(tickMax).abs().gt(labelHeight) &&
+        BigNumber(tick).minus(highest).div(tickMax).abs().gt(labelHeight)
+    );
+    // Ticks add highest
+    needShowTicks.push(highest);
+
+    // If lowest equal highest, add it.
+    if (BigNumber(highest).minus(lowest).div(tickMax).abs().gt(0)) needShowTicks.push(lowest);
+
+    return needShowTicks.sort((a, b) => a - b);
+  }, [maxBalance, highest, lowest]);
+
+  const lowestIndex = customTicks.indexOf(lowest) + 1;
+  const highestIndex = customTicks.indexOf(highest) + 1;
+
   const formatPriceValue = (value: string) => {
     const bigValue = BigNumber(value).div(10 ** 6);
     return formatPrice(bigValue.toString());
@@ -93,7 +138,7 @@ const AddressAnalytics: React.FC = () => {
 
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
     return (
-      <TooltipBody>
+      <TooltipBody fontSize={12}>
         <TooltipLabel>{getLabelTimeTooltip(content.label)}</TooltipLabel>
         <TooltipValue>{formatADAFull(content.payload?.[0]?.value) || 0}</TooltipValue>
       </TooltipBody>
@@ -118,22 +163,32 @@ const AddressAnalytics: React.FC = () => {
               </Tabs>
             </Grid>
           </Grid>
-          <ChartBox>
+          <ChartBox highest={highestIndex} lowest={lowestIndex}>
             {loading || !data ? (
               <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
             ) : (
               <ResponsiveContainer width="100%" height={400}>
-                <AreaChart width={900} height={400} data={convertDataChart} margin={{ top: 5, right: 5, bottom: 14 }}>
-                  <defs>
-                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={theme.isDark ? 0.6 : 0.2} />
-                      <stop
-                        offset="100%"
-                        stopColor={theme.palette.primary.main}
-                        stopOpacity={theme.isDark ? 0.6 : 0.2}
-                      />
-                    </linearGradient>
-                  </defs>
+                <ComposedChart
+                  width={900}
+                  height={400}
+                  data={convertDataChart}
+                  margin={{ top: 5, right: 5, bottom: 14 }}
+                >
+                  {/* Defs for ticks filter background color */}
+                  {["lowest", "highest"].map((item) => (
+                    <defs key={item}>
+                      <filter x="-.15" y="-.15" width="1.25" height="1.2" id={item}>
+                        <feFlood
+                          floodColor={theme.palette[item === "highest" ? "success" : "error"][100]}
+                          result="bg"
+                        />
+                        <feMerge>
+                          <feMergeNode in="bg" />
+                          <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                      </filter>
+                    </defs>
+                  ))}
                   <XAxis
                     dataKey="date"
                     tickFormatter={(value) => moment(value).format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM")}
@@ -160,7 +215,8 @@ const AddressAnalytics: React.FC = () => {
                       stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
                     }}
                     color={theme.palette.secondary.light}
-                    stroke={theme.palette.secondary.light}
+                    interval={0}
+                    ticks={customTicks}
                   />
                   <Tooltip content={renderTooltip} cursor={false} />
                   <CartesianGrid vertical={false} strokeWidth={0.33} />
@@ -170,16 +226,34 @@ const AddressAnalytics: React.FC = () => {
                     dataKey="value"
                     stroke={theme.palette.primary.main}
                     strokeWidth={4}
-                    fill="url(#colorUv)"
+                    fill={alpha(theme.palette.primary.main, theme.isDark ? 0.6 : 0.2)}
                     activeDot={{ r: 6 }}
                   />
-                </AreaChart>
+                  <Line
+                    type="monotone"
+                    dataKey="lowest"
+                    stroke={theme.palette.error[700]}
+                    strokeWidth={1}
+                    dot={false}
+                    activeDot={false}
+                    strokeDasharray="3 3"
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="highest"
+                    stroke={theme.palette.success.main}
+                    strokeWidth={1}
+                    dot={false}
+                    activeDot={false}
+                    strokeDasharray="3 3"
+                  />
+                </ComposedChart>
               </ResponsiveContainer>
             )}
           </ChartBox>
         </Grid>
         <Grid item xs={24} lg={6}>
-          <BoxInfo height={"100%"} space={data?.length ? 36 : 16}>
+          <BoxInfo height={"100%"} space={data?.data?.length ? 36 : 16}>
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} justifyContent={"center"}>
                 <Box>

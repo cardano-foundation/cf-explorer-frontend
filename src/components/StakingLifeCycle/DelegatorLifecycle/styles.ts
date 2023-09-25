@@ -5,11 +5,8 @@ export const Step = styled(Box)(({ theme }) => ({
   padding: `0 0 ${theme.spacing(3)}`,
   borderBottomWidth: "3px",
   borderBottomStyle: "solid",
-  [theme.breakpoints.down("lg")]: {
-    minWidth: "190px"
-  },
   [theme.breakpoints.down("sm")]: {
-    padding: "16px 30px"
+    padding: "16px 0px"
   },
   cursor: "pointer"
 }));
@@ -18,7 +15,10 @@ export const StepButton = styled(Box)<{ active: number }>(() => ({}));
 export const TitleStep = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "0.875rem",
-  marginTop: theme.spacing(1)
+  marginTop: theme.spacing(1),
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "10px"
+  }
 }));
 
 export const NextButton = styled(Button)(({ theme }) => ({

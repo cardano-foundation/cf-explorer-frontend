@@ -166,3 +166,29 @@ interface RewardDistributionStaking {
   hasMemberReward: boolean;
   hasLeaderReward: boolean;
 }
+
+interface AnalyticsBalance {
+  date: string;
+  value: number;
+}
+
+interface AnalyticsReward {
+  epoch: number;
+  value: number;
+}
+
+interface StakeAnalyticsBalance {
+  data: AnalyticsBalance[];
+  highestBalance: number | null;
+  lowestBalance: number | null;
+}
+
+interface AnalyticsBalanceExpanded extends AnalyticsBalance {
+  highest: number;
+  lowest: number;
+}
+
+interface AnalyticRewardsExpanded extends AnalyticsReward {
+  highest: number;
+  lowest: number;
+}

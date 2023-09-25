@@ -153,15 +153,6 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   }
 }));
 
-export const TooltipBody = styled(Box)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.secondary[0], 0.8),
-  borderRadius: 2,
-  padding: 8,
-  border: `1px solid ${theme.palette.primary[200]}`,
-  fontSize: 12,
-  color: theme.palette.secondary.light
-}));
-
 export const TooltipLabel = styled(Box)(() => ({
   marginBottom: 3
 }));

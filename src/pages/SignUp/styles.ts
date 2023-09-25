@@ -183,6 +183,7 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
       : theme.mode === "light"
       ? theme.palette.primary[200]
       : theme.palette.secondary[700],
+    transition: "border ease 0.3s",
     "&::before": {
       display: "none"
     },

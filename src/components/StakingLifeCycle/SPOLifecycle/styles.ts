@@ -7,7 +7,7 @@ export const Step = styled(Box)(({ theme }) => ({
   borderBottomWidth: "3px",
   borderBottomStyle: "solid",
   [theme.breakpoints.down("sm")]: {
-    padding: "16px 30px"
+    padding: "16px 0px"
   },
   cursor: "pointer"
 }));
@@ -19,6 +19,9 @@ export const TitleStep = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(1),
   [theme.breakpoints.down("md")]: {
     whiteSpace: "nowrap"
+  },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 10
   }
 }));
 

@@ -94,6 +94,7 @@ const HomeStatistic = () => {
 
   const slot = (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH;
   const countdown = MAX_SLOT_EPOCH - slot;
+
   const { d: days, h: hours, humanized } = getDurationUnits(countdown ? countdown : 0, "second");
   const { humanized: humanizedActive } = getDurationUnits(slot, "second");
 

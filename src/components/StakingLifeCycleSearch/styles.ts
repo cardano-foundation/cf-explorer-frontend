@@ -1,4 +1,5 @@
 import { Box, styled, Button, Typography } from "@mui/material";
+import { AiOutlineQuestionCircle } from "react-icons/ai";
 
 export const StyledContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
@@ -128,7 +129,7 @@ export const TextOR = styled(Typography)`
   color: ${(props) => props.theme.palette.secondary.light};
 `;
 
-export const StyledIconQuestion = styled("span")`
+export const StyledIconQuestion = styled(AiOutlineQuestionCircle)`
   margin-left: 8px;
   vertical-align: middle;
   cursor: pointer;
