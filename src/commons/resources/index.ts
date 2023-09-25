@@ -23,7 +23,7 @@ import UpGreenIcon from "./icons/up-green.svg";
 import UpGreenDarkmodeIcon from "./icons/up-green-darkmode.svg";
 import BlankBlueIcon from "./icons/blank-blue.svg";
 import CalenderPaleIcon from "./icons/calender-pale.svg";
-import MenuIcon from "./icons/menus/hamburger.svg";
+import MenuIcon, { ReactComponent as MenuIconComponent } from "./icons/menus/hamburger.svg";
 import PolicyWhiteIcon from "./icons/policy-white.svg";
 import BlockChainMenuIcon from "./icons/menus/blockchain.svg";
 import DelegatePoolMenuIcon from "./icons/menus/delegate.svg";
@@ -50,7 +50,7 @@ import RewardIcon, { ReactComponent as RewardIconComponent } from "./icons/rewar
 import UserIcon, { ReactComponent as UserIconComponent } from "./icons/user.svg";
 import DropIcon, { ReactComponent as DropIconComponent } from "./icons/drop.svg";
 import DelegatorIcon, { ReactComponent as DelegatorIconComponent } from "./icons/delegator.svg";
-import LightningIcon from "./icons/lightning.svg";
+import LightningIcon, { ReactComponent as LightningIconComponent } from "./icons/lightning.svg";
 import LinkOff, { ReactComponent as LinkOffComponent } from "./icons/link-off.svg";
 import User2, { ReactComponent as User2Component } from "./icons/user2.svg";
 import FlintIcon from "./icons/flint.svg";
@@ -236,7 +236,9 @@ export {
   HeaderSearchIconComponent,
   sunIcon,
   moonIcon,
-  LinkOffComponent
+  LinkOffComponent,
+  LightningIconComponent,
+  MenuIconComponent
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";

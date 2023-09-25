@@ -481,6 +481,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           <CustomIcon
             icon={HeaderSearchIconComponent}
             stroke={theme.palette.secondary.light}
+            fill={theme.palette.secondary[0]}
             height={home ? 24 : 20}
             width={home ? 24 : 20}
           />

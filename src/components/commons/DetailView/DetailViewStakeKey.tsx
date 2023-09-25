@@ -7,7 +7,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
-import { DelegationHistoryMainIcon, FileEditIcon, LightningIcon } from "src/commons/resources";
+import { DelegationHistoryMainIcon, FileEditIcon, LightningIconComponent } from "src/commons/resources";
 import { ReactComponent as TransactionIcon } from "src/commons/resources/icons/exchangeArrow.svg";
 import { ReactComponent as StakeKeyHistoryIcon } from "src/commons/resources/icons/stateKeyHistory.svg";
 import { details } from "src/commons/routers";
@@ -29,7 +29,6 @@ import {
   DetailLabelSkeleton,
   DetailLink,
   DetailLinkIcon,
-  DetailLinkImage,
   DetailLinkName,
   DetailLinkRight,
   DetailValue,
@@ -45,6 +44,7 @@ import {
   ViewDetailScroll,
   WrapDetailInfo
 } from "./styles";
+import CustomIcon from "../CustomIcon";
 
 type DetailViewStakeKeyProps = {
   stakeId: string;
@@ -86,7 +86,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
     {
       key: "instantaneous",
       label: t("drawer.InstaneousRewards"),
-      icon: <DetailLinkImage src={LightningIcon} alt="rewards" />
+      icon: <CustomIcon icon={LightningIconComponent} height={26} />
     },
     {
       key: "transactions",
@@ -110,7 +110,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
           <ViewAllButton tooltipTitle={t("drawer.viewDetails")} to={details.stake(stakeId)} />
           <CustomTooltip title={t("common.close")}>
             <CloseButton onClick={handleClose}>
-              <CgClose />
+              <CgClose color={theme.palette.secondary.light} />
             </CloseButton>
           </CustomTooltip>
         </ViewDetailHeader>
@@ -165,7 +165,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
         <ViewAllButton tooltipTitle={t("drawer.viewDetails")} to={details.stake(stakeId)} />
         <CustomTooltip title={t("common.close")}>
           <CloseButton onClick={handleClose}>
-            <CgClose />
+            <CgClose color={theme.palette.secondary.light} />
           </CloseButton>
         </CustomTooltip>
       </ViewDetailHeader>

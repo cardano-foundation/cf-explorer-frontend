@@ -12,7 +12,7 @@ export const ContractDiagramsContainer = styled(Box)<{ isTxPageView?: boolean }>
 
 export const TxHash = styled(Box)`
   text-align: left;
-  background-color: ${({ theme }) => (theme.isDark ? "transperent" : theme.palette.primary[200])};
+  background-color: ${({ theme }) => (theme.isDark ? "transparent" : theme.palette.primary[200])};
   border-radius: 8px;
   padding: 16px 20px;
 `;

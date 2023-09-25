@@ -109,6 +109,7 @@ const background = {
 const error = {
   100: "#FFEBEE",
   700: "#C20024",
+  800: "#C20024",
   contrastText: COMMON.white,
 
   light: RED[100_15],

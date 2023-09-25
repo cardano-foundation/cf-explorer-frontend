@@ -110,7 +110,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
         </RedirectButton>
       }
     >
-      {showBanner && <BannerSuccess>{t("message.contracctVarified")}</BannerSuccess>}
+      {!showBanner && <BannerSuccess>{t("message.contracctVarified")}</BannerSuccess>}
       <GridContainer container spacing={2} mt={2}>
         <GridItem item xs={12} md={6}>
           <Box overflow="hidden" borderRadius={3} height={"100%"}>

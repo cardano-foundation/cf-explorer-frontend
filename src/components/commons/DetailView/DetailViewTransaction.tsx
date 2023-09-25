@@ -135,7 +135,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
           <ViewAllButton tooltipTitle={t("common.viewDetail")} to={details.transaction(hash)} />
           <CustomTooltip title={t("common.close")}>
             <CloseButton onClick={handleClose}>
-              <CgClose />
+              <CgClose color={theme.palette.secondary.light} />
             </CloseButton>
           </CustomTooltip>
         </ViewDetailHeader>
@@ -210,7 +210,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
         </TimeDuration>
         <CustomTooltip title={t("common.close")}>
           <CloseButton onClick={handleClose}>
-            <CgClose />
+            <CgClose color={theme.palette.secondary.light} />
           </CloseButton>
         </CustomTooltip>
       </ViewDetailHeader>

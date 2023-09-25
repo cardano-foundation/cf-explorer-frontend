@@ -82,7 +82,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
           <ViewAllButton tooltipTitle={t("common.viewDetail")} to={details.block(blockNo)} />
           <CustomTooltip title={t("common.close")}>
             <CloseButton onClick={handleClose}>
-              <CgClose />
+              <CgClose color={theme.palette.secondary.light} />
             </CloseButton>
           </CustomTooltip>
         </ViewDetailHeader>
@@ -156,7 +156,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
         </TimeDuration>
         <CustomTooltip title={t("common.close")}>
           <CloseButton onClick={handleClose}>
-            <CgClose />
+            <CgClose color={theme.palette.secondary.light} />
           </CloseButton>
         </CustomTooltip>
       </ViewDetailHeader>

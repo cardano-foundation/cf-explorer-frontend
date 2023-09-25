@@ -163,7 +163,12 @@ const CustomFilter: React.FC<Props> = (props) => {
                       }}
                       sx={{ marginLeft: "5px" }}
                     >
-                      <CustomIcon icon={SearchIcon} stroke={theme.palette.secondary.light} width={20} />
+                      <CustomIcon
+                        icon={SearchIcon}
+                        stroke={theme.palette.secondary.light}
+                        fill={theme.palette.secondary[0]}
+                        width={20}
+                      />
                     </IconButton>
                   }
                   value={search}

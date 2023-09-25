@@ -113,8 +113,8 @@ export const ButtonTitle = styled("button")(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "1rem",
   marginRight: 5,
-  color: theme.palette.secondary.light,
-  backgroundColor: theme.palette.primary[200],
+  color: theme.isDark ? theme.palette.secondary[0] : theme.palette.secondary.light,
+  backgroundColor: theme.isDark ? theme.palette.primary.main : theme.palette.primary[200],
   fontFamily: "var(--font-family-title)",
 
   [theme.breakpoints.down("sm")]: {
