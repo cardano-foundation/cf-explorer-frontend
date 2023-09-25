@@ -59,6 +59,7 @@ import EternlIcon from "./icons/eternl.svg";
 import YoroiIcon from "./icons/yoroi.svg";
 import TyphonIcon from "./icons/typhon.svg";
 import EmptyIcon from "./images/noData.png";
+import EmptyDarkIcon from "./icons/EmptyIconDark.svg";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 import ProtocolIcon from "./icons/menus/Protocol.svg";
 import PolygonWhiteIconUrl from "./icons/polygon-white.svg";
@@ -249,7 +250,8 @@ export {
   moonIcon,
   LinkOffComponent,
   LightningIconComponent,
-  MenuIconComponent
+  MenuIconComponent,
+  EmptyDarkIcon
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";

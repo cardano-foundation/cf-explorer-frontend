@@ -1,4 +1,4 @@
-import { Box, IconButton, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
@@ -19,6 +19,7 @@ import HeaderSearch from "./HeaderSearch";
 import LoginButton from "./LoginButton";
 import SelectNetwork from "./SelectNetwork";
 import {
+  ButtonSideBar,
   HeaderBox,
   HeaderContainer,
   HeaderLogo,
@@ -107,9 +108,9 @@ const Header: React.FC<RouteComponentProps> = (props) => {
                 <SearchIcon fontSize={24} stroke={theme.palette.secondary.light} fill={theme.palette.secondary[0]} />
               </SearchButton>
             )}
-            <IconButton onClick={handleToggle}>
+            <ButtonSideBar onClick={handleToggle}>
               <CustomIcon icon={MenuIconComponent} height={18} fill={theme.palette.secondary.light} />
-            </IconButton>
+            </ButtonSideBar>
           </SideBarRight>
         </HeaderTop>
       </HeaderBox>
