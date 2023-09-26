@@ -46,18 +46,7 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
     } else {
       setUrlFetch(API.TRANSACTION.HASH_CONTRACT(txHash, address));
     }
-  }, [txHash]);
-
-  useEffect(() => {
-    if (open && txHash) {
-      document.body.style.overflowY = "hidden";
-    } else {
-      document.body.style.overflowY = "scroll";
-    }
-    return () => {
-      document.body.style.overflowY = "scroll";
-    };
-  }, [open, txHash]);
+  }, [txHash, address]);
 
   const renderContent = () => {
     if (loading || !initialized) {
