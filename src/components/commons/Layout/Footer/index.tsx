@@ -31,6 +31,8 @@ const FooterContainer = styled(Container)`
 `;
 
 const Copyright = styled("small")`
+  display: flex;
+  gap: 3px;
   color: ${(props) => props.theme.palette.secondary.light};
   font-family: var(--font-family-title);
   ::first-letter {
@@ -40,7 +42,10 @@ const Copyright = styled("small")`
   }
   ${({ theme }) => theme.breakpoints.down("md")} {
     width: 100%;
-    text-align: center;
+    justify-content: center;
+  }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    flex-direction: column;
   }
 `;
 
