@@ -157,7 +157,6 @@ export const Wrapper = styled(Box)<{ loading?: number }>(
     background: transparent;
   }
   &::-webkit-scrollbar-button:vertical:start:decrement {
-    height: 72px;
     display: block;
   }
   &:hover {
