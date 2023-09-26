@@ -88,11 +88,12 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
     "&::after": {
       display: "none"
     },
+    transition: "border ease 0.3s",
     padding: "5px 10px",
     color: theme.palette.secondary.main,
     backgroundColor: error ? "rgba(247, 94, 94, 0.05)" : "",
     "&.MuiInputBase-root.Mui-focused": {
-      borderColor: error ? "" : theme.palette.primary.main
+      borderColor: error ? "" : theme.palette.secondary.light
     }
   })
 );
