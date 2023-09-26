@@ -7,7 +7,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
-import { DelegationHistoryMainIcon, FileEditIcon, LightningIcon } from "src/commons/resources";
+import { DelegationHistoryMainIcon, FileEditIcon, LightningIconComponent } from "src/commons/resources";
 import { ReactComponent as TransactionIcon } from "src/commons/resources/icons/exchangeArrow.svg";
 import { ReactComponent as StakeKeyHistoryIcon } from "src/commons/resources/icons/stateKeyHistory.svg";
 import { details } from "src/commons/routers";
@@ -29,7 +29,6 @@ import {
   DetailLabelSkeleton,
   DetailLink,
   DetailLinkIcon,
-  DetailLinkImage,
   DetailLinkName,
   DetailLinkRight,
   DetailValue,
@@ -45,20 +44,29 @@ import {
   ViewDetailScroll,
   WrapDetailInfo
 } from "./styles";
+import CustomIcon from "../CustomIcon";
 
 type DetailViewStakeKeyProps = {
   stakeId: string;
   handleClose: () => void;
+  open?: boolean;
 };
 const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
   const { t } = useTranslation();
   const { stakeId, handleClose } = props;
-  const { data } = useFetch<IStakeKeyDetail>(stakeId ? `${API.STAKE.DETAIL}/${stakeId}` : ``);
+  const [urlFetch, setUrlFetch] = useState("");
+  const { data, loading } = useFetch<IStakeKeyDetail>(urlFetch);
   const [open, setOpen] = useState(false);
   const theme = useTheme();
   const history = useHistory();
   const fromPath = history.location.pathname as SpecialPath;
-
+  useEffect(() => {
+    if (!stakeId) {
+      setUrlFetch("");
+    } else {
+      setUrlFetch(`${API.STAKE.DETAIL}/${stakeId}`);
+    }
+  }, [stakeId]);
   const tabs: { key: string; label: string; icon?: React.ReactNode }[] = [
     {
       key: "delegation",
@@ -81,12 +89,12 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
     {
       key: "withdrawal",
       label: t("drawer.withDrawalHistory"),
-      icon: <DetailLinkImage src={FileEditIcon} alt="withdrawal" />
+      icon: <FileEditIcon />
     },
     {
       key: "instantaneous",
       label: t("drawer.InstaneousRewards"),
-      icon: <DetailLinkImage src={LightningIcon} alt="rewards" />
+      icon: <CustomIcon icon={LightningIconComponent} height={26} />
     },
     {
       key: "transactions",
@@ -95,165 +103,166 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
     }
   ];
 
-  useEffect(() => {
-    document.body.style.overflowY = "hidden";
+  const renderContent = () => {
+    if (!data || loading || !stakeId) {
+      return (
+        <>
+          <ViewDetailHeader>
+            <ViewAllButton tooltipTitle={t("drawer.viewDetails")} to={details.stake(stakeId)} />
+            <CustomTooltip title={t("common.close")}>
+              <CloseButton onClick={handleClose}>
+                <CgClose />
+              </CloseButton>
+            </CustomTooltip>
+          </ViewDetailHeader>
+          <ViewDetailContainer>
+            <ViewDetailScroll>
+              <Group>
+                {new Array(4).fill(0).map((_, index) => {
+                  return (
+                    <DetailsInfoItem key={index}>
+                      <DetailLabel>
+                        <DetailValueSkeleton variant="rectangular" />
+                      </DetailLabel>
+                      <DetailValue>
+                        <DetailLabelSkeleton variant="rectangular" />
+                      </DetailValue>
+                    </DetailsInfoItem>
+                  );
+                })}
+              </Group>
+              {new Array(2).fill(0).map((_, index) => {
+                return (
+                  <Group key={index}>
+                    <DetailsInfoItem>
+                      <DetailLabel>
+                        <DetailValueSkeleton variant="rectangular" />
+                      </DetailLabel>
+                      <DetailValue>
+                        <DetailLabelSkeleton variant="rectangular" />
+                      </DetailValue>
+                    </DetailsInfoItem>
+                  </Group>
+                );
+              })}
+            </ViewDetailScroll>
+          </ViewDetailContainer>
+          <ViewMoreButton to={details.stake(stakeId)} />
+        </>
+      );
+    }
+    const poolName = data.pool?.poolName
+      ? `${data.pool.tickerName || ""} - ${data.pool.poolName}`
+      : data.pool?.poolId
+      ? getShortWallet(data.pool.poolId)
+      : "-";
 
-    return () => {
-      document.body.style.overflowY = "scroll";
-    };
-  }, []);
-
-  if (!data)
+    const poolNameToolTip = data.pool?.poolName
+      ? `${data.pool.tickerName || ""} - ${data.pool.poolName}`
+      : data.pool?.poolId || "-";
     return (
-      <ViewDetailDrawer anchor="right" open={!!stakeId} hideBackdrop variant="permanent">
+      <>
+        {" "}
         <ViewDetailHeader>
           <ViewAllButton tooltipTitle={t("drawer.viewDetails")} to={details.stake(stakeId)} />
           <CustomTooltip title={t("common.close")}>
             <CloseButton onClick={handleClose}>
-              <CgClose />
+              <CgClose color={theme.palette.secondary.light} />
             </CloseButton>
           </CustomTooltip>
         </ViewDetailHeader>
         <ViewDetailContainer>
           <ViewDetailScroll>
+            <StakeKeyHeader>
+              <StakeKeyLink to={details.stake(stakeId)}>{stakeId}</StakeKeyLink>
+              <CopyButton text={stakeId} />
+            </StakeKeyHeader>
             <Group>
-              {new Array(4).fill(0).map((_, index) => {
-                return (
-                  <DetailsInfoItem key={index}>
-                    <DetailLabel>
-                      <DetailValueSkeleton variant="rectangular" />
-                    </DetailLabel>
-                    <DetailValue>
-                      <DetailLabelSkeleton variant="rectangular" />
-                    </DetailValue>
-                  </DetailsInfoItem>
-                );
-              })}
+              <DetailsInfoItem>
+                <WrapDetailInfo>
+                  <DetailLabel>{t("drawer.status")}</DetailLabel>
+                </WrapDetailInfo>
+                <DetailValue>
+                  <StakeKeyStatus status={data.status}>
+                    {data.status === "ACTIVE" ? t("status.active") : t("status.deactivated")}
+                  </StakeKeyStatus>
+                </DetailValue>
+              </DetailsInfoItem>
+              <DetailsInfoItem>
+                <WrapDetailInfo>
+                  <DetailLabel>{t("drawer.rewardAvailable")}</DetailLabel>
+                </WrapDetailInfo>
+                <DetailValue>
+                  {formatADAFull(data.rewardAvailable)}
+                  <ADAicon />
+                </DetailValue>
+              </DetailsInfoItem>
+              <DetailsInfoItem>
+                <WrapDetailInfo>
+                  <DetailLabel>{t("drawer.withDrawn")}</DetailLabel>
+                </WrapDetailInfo>
+                <DetailValue>
+                  {formatADAFull(data.rewardWithdrawn)}
+                  <ADAicon />
+                </DetailValue>
+              </DetailsInfoItem>
+              <DetailsInfoItem>
+                <WrapDetailInfo>
+                  <DetailLabel>{t("drawer.delegatedTo")}</DetailLabel>
+                </WrapDetailInfo>
+                {data.pool?.poolName || data.pool?.poolId ? (
+                  <CustomTooltip title={poolNameToolTip}>
+                    <Box component={Link} display="inline-block" to={details.delegation(data.pool?.poolId)}>
+                      <DelegatedDetail>{poolName}</DelegatedDetail>
+                    </Box>
+                  </CustomTooltip>
+                ) : (
+                  <DelegatedEmptyPool>{t("drawer.notDelegatedToAnyPool")}</DelegatedEmptyPool>
+                )}
+              </DetailsInfoItem>
+              <DetailsInfoItem>
+                <WrapDetailInfo>
+                  <DetailLabel>{t("drawer.totalStake")}</DetailLabel>
+                </WrapDetailInfo>
+                <DetailValue>
+                  {formatADAFull(data.totalStake)}
+                  <ADAicon />
+                </DetailValue>
+              </DetailsInfoItem>
+              <Box textAlign={"right"}>
+                <ButtonModal sx={{ color: theme.palette.primary.main }} onClick={() => setOpen(true)}>
+                  {t("drawer.viewAllAddresses")}
+                </ButtonModal>
+              </Box>
+              <ModalAllAddress open={open} onClose={() => setOpen(false)} stake={stakeId} />
             </Group>
-            {new Array(2).fill(0).map((_, index) => {
+            {tabs.map(({ key, label, icon }) => {
               return (
-                <Group key={index}>
-                  <DetailsInfoItem>
+                <Group key={key}>
+                  <DetailLink to={{ pathname: details.stake(stakeId, key), state: { fromPath } }}>
                     <DetailLabel>
-                      <DetailValueSkeleton variant="rectangular" />
+                      <DetailLinkIcon>{icon}</DetailLinkIcon>
+                      <DetailLinkName>{label}</DetailLinkName>
                     </DetailLabel>
                     <DetailValue>
-                      <DetailLabelSkeleton variant="rectangular" />
+                      <DetailLinkRight>
+                        <BiChevronRight size={24} />
+                      </DetailLinkRight>
                     </DetailValue>
-                  </DetailsInfoItem>
+                  </DetailLink>
                 </Group>
               );
             })}
           </ViewDetailScroll>
         </ViewDetailContainer>
-        <ViewMoreButton to={details.stake(stakeId)} />
-      </ViewDetailDrawer>
+        <ViewMoreButton to={{ pathname: details.stake(stakeId), state: { fromPath } }} />
+      </>
     );
-  const poolName = data.pool?.poolName
-    ? `${data.pool.tickerName || ""} - ${data.pool.poolName}`
-    : data.pool?.poolId
-    ? getShortWallet(data.pool.poolId)
-    : "-";
-
-  const poolNameToolTip = data.pool?.poolName
-    ? `${data.pool.tickerName || ""} - ${data.pool.poolName}`
-    : data.pool?.poolId || "-";
+  };
 
   return (
-    <ViewDetailDrawer anchor="right" open={!!stakeId} hideBackdrop variant="permanent">
-      <ViewDetailHeader>
-        <ViewAllButton tooltipTitle={t("drawer.viewDetails")} to={details.stake(stakeId)} />
-        <CustomTooltip title={t("common.close")}>
-          <CloseButton onClick={handleClose}>
-            <CgClose />
-          </CloseButton>
-        </CustomTooltip>
-      </ViewDetailHeader>
-      <ViewDetailContainer>
-        <ViewDetailScroll>
-          <StakeKeyHeader>
-            <StakeKeyLink to={details.stake(stakeId)}>{stakeId}</StakeKeyLink>
-            <CopyButton text={stakeId} />
-          </StakeKeyHeader>
-          <Group>
-            <DetailsInfoItem>
-              <WrapDetailInfo>
-                <DetailLabel>{t("drawer.status")}</DetailLabel>
-              </WrapDetailInfo>
-              <DetailValue>
-                <StakeKeyStatus status={data.status}>
-                  {data.status === "ACTIVE" ? t("status.active") : t("status.deactivated")}
-                </StakeKeyStatus>
-              </DetailValue>
-            </DetailsInfoItem>
-            <DetailsInfoItem>
-              <WrapDetailInfo>
-                <DetailLabel>{t("drawer.rewardAvailable")}</DetailLabel>
-              </WrapDetailInfo>
-              <DetailValue>
-                {formatADAFull(data.rewardAvailable)}
-                <ADAicon />
-              </DetailValue>
-            </DetailsInfoItem>
-            <DetailsInfoItem>
-              <WrapDetailInfo>
-                <DetailLabel>{t("drawer.withDrawn")}</DetailLabel>
-              </WrapDetailInfo>
-              <DetailValue>
-                {formatADAFull(data.rewardWithdrawn)}
-                <ADAicon />
-              </DetailValue>
-            </DetailsInfoItem>
-            <DetailsInfoItem>
-              <WrapDetailInfo>
-                <DetailLabel>{t("drawer.delegatedTo")}</DetailLabel>
-              </WrapDetailInfo>
-              {data.pool?.poolName || data.pool?.poolId ? (
-                <CustomTooltip title={poolNameToolTip}>
-                  <Box component={Link} display="inline-block" to={details.delegation(data.pool?.poolId)}>
-                    <DelegatedDetail>{poolName}</DelegatedDetail>
-                  </Box>
-                </CustomTooltip>
-              ) : (
-                <DelegatedEmptyPool>{t("drawer.notDelegatedToAnyPool")}</DelegatedEmptyPool>
-              )}
-            </DetailsInfoItem>
-            <DetailsInfoItem>
-              <WrapDetailInfo>
-                <DetailLabel>{t("drawer.totalStake")}</DetailLabel>
-              </WrapDetailInfo>
-              <DetailValue>
-                {formatADAFull(data.totalStake)}
-                <ADAicon />
-              </DetailValue>
-            </DetailsInfoItem>
-            <Box textAlign={"right"}>
-              <ButtonModal sx={{ color: theme.palette.primary.main }} onClick={() => setOpen(true)}>
-                {t("drawer.viewAllAddresses")}
-              </ButtonModal>
-            </Box>
-            <ModalAllAddress open={open} onClose={() => setOpen(false)} stake={stakeId} />
-          </Group>
-          {tabs.map(({ key, label, icon }) => {
-            return (
-              <Group key={key}>
-                <DetailLink to={{ pathname: details.stake(stakeId, key), state: { fromPath } }}>
-                  <DetailLabel>
-                    <DetailLinkIcon>{icon}</DetailLinkIcon>
-                    <DetailLinkName>{label}</DetailLinkName>
-                  </DetailLabel>
-                  <DetailValue>
-                    <DetailLinkRight>
-                      <BiChevronRight size={24} />
-                    </DetailLinkRight>
-                  </DetailValue>
-                </DetailLink>
-              </Group>
-            );
-          })}
-        </ViewDetailScroll>
-      </ViewDetailContainer>
-      <ViewMoreButton to={{ pathname: details.stake(stakeId), state: { fromPath } }} />
+    <ViewDetailDrawer anchor="right" open={Boolean(open && stakeId)} variant="temporary" onClose={handleClose}>
+      {renderContent()}
     </ViewDetailDrawer>
   );
 };

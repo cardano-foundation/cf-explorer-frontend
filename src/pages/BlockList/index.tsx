@@ -169,7 +169,7 @@ const BlockList = () => {
           tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
         />
       </Card>
-      {selected && onDetailView && <DetailViewBlock blockNo={selected} handleClose={handleClose} />}
+      <DetailViewBlock blockNo={selected || 0} open={onDetailView} handleClose={handleClose} />
     </StyledContainer>
   );
 };

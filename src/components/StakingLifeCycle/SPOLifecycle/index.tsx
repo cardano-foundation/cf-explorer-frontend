@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DeredistrationIcon,
-  InfoIcon,
   NextIcon,
   OperatorRewardIcon,
   PoolUpdateIcon,
@@ -15,6 +14,7 @@ import {
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 
 import {
   DeregistrationSPOProcessDescription,
@@ -61,6 +61,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
   const history = useHistory();
   const { isMobile } = useScreen();
   const { palette } = useTheme();
+
   const [tabsValid, setTabValid] = useState(["isRegistration", "isUpdate", "isReward", "isDeRegistration"]);
   useEffect(() => {
     const element = document.getElementById(`step-${currentStep}`);
@@ -211,9 +212,8 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
         })}
       </Box>
       <StepHeader>
-        <WrapTitle>
-          {stepper[currentStep]?.title}{" "}
-          <InfoIcon style={{ cursor: "pointer" }} onClick={() => setOpenDescriptionModal(true)} />
+        <WrapTitle alignItems={"center"} display={"flex"} gap={1}>
+          {stepper[currentStep]?.title} <InfoSolidIcon onClick={() => setOpenDescriptionModal(true)} />
         </WrapTitle>
       </StepHeader>
       <Box>{stepper[currentStep]?.description}</Box>
@@ -262,7 +262,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
               ? t("common.viewTabular")
               : stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid + 1])?.title}
           </ButtonText>
-          <NextIcon />
+          <NextIcon fill={palette.secondary[0]} />
         </NextButton>
       </StyledGroupButton>
     </StyledComponent>

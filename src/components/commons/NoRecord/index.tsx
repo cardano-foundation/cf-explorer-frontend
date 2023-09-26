@@ -1,7 +1,7 @@
 import React from "react";
-import { Box, BoxProps, Container, styled } from "@mui/material";
+import { Box, BoxProps, Container, styled, useTheme } from "@mui/material";
 
-import { EmptyIcon } from "src/commons/resources";
+import { EmptyDarkIcon, EmptyIcon } from "src/commons/resources";
 
 const NoRecordContainer = styled(Box)`
   display: flex;
@@ -16,11 +16,14 @@ const Image = styled("img")`
   height: 214px;
 `;
 
-const NoRecord: React.FC<BoxProps> = React.forwardRef((props, ref) => (
-  <NoRecordContainer component={Container} className="no-record" ref={ref} {...props}>
-    <Image src={EmptyIcon} alt="empty icon" />
-  </NoRecordContainer>
-));
+const NoRecord: React.FC<BoxProps> = React.forwardRef((props, ref) => {
+  const theme = useTheme();
+  return (
+    <NoRecordContainer component={Container} className="no-record" ref={ref} {...props}>
+      <Image src={theme.isDark ? EmptyDarkIcon : EmptyIcon} alt="empty icon" />
+    </NoRecordContainer>
+  );
+});
 
 NoRecord.displayName = "NoRecord";
 

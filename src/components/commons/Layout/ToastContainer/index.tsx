@@ -1,4 +1,4 @@
-import { AlertProps, useTheme } from "@mui/material";
+import { AlertProps, Box, IconButton, useTheme } from "@mui/material";
 import {
   MdOutlineErrorOutline,
   MdOutlineCheckCircleOutline,
@@ -8,6 +8,7 @@ import {
 import { useSelector } from "react-redux";
 import { isString } from "lodash";
 import { useTranslation } from "react-i18next";
+import { IoMdClose } from "react-icons/io";
 
 import { removeToast } from "src/stores/toast";
 
@@ -59,6 +60,17 @@ const ToastContainer: React.FC = () => {
       }
     }
   };
+  const getColor = (severity: AlertProps["severity"]) => {
+    if (severity === "error") {
+      return theme.isDark ? theme.palette.error[700] : theme.palette.error[800];
+    }
+    if (severity === "success") {
+      return theme.palette.success[800];
+    }
+    if (severity === "warning") {
+      return theme.palette.warning[800];
+    }
+  };
   return (
     <>
       <StyledStack spacing={2}>
@@ -75,6 +87,11 @@ const ToastContainer: React.FC = () => {
                 info: <MdInfoOutline color={theme.palette.info.main} />,
                 warning: <MdOutlineWarningAmber color={theme.palette.warning[800]} />
               }}
+              action={
+                <IconButton color="inherit" size="small">
+                  <IoMdClose color={theme.palette.secondary.light} />
+                </IconButton>
+              }
               severity={severity}
               variant="standard"
               borderColor={color}
@@ -84,7 +101,9 @@ const ToastContainer: React.FC = () => {
               icon={!title || undefined}
             >
               {title && <StyledTitle>{title}</StyledTitle>}
-              {message}
+              <Box color={() => getColor(severity)} display={"inline"}>
+                {message}
+              </Box>
             </StyledAlert>
           );
         })}

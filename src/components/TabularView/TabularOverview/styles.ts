@@ -17,6 +17,7 @@ export const CardItem = styled(Card)<{ sidebar?: number }>(({ theme, sidebar }) 
   boxSizing: "border-box",
   gap: 20,
   flex: 1,
+  background: theme.palette.secondary[0],
   boxShadow: theme.shadow.card,
   borderRadius: 12,
   minWidth: "calc(50% - 10px)",
@@ -127,12 +128,14 @@ export const StyledBoxDelegating = styled(Link)(() => ({
 export const NoDelegatedStakePool = styled(Box)(({ theme }) => ({
   color: theme.palette.error[700],
   fontWeight: 500,
-  fontSize: 16
+  fontSize: 16,
+  textAlign: "left"
 }));
 
 export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
   fontSize: 18,
   marginLeft: 8,
+  fill: theme.palette.secondary.main,
   paddingTop: 2,
   [theme.breakpoints.down("sm")]: {
     marginLeft: 5,

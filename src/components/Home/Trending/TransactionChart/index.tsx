@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import { Box, Grid, useTheme } from "@mui/material";
 import moment from "moment";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { Box, Grid, alpha, useTheme } from "@mui/material";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
+import { useScreen } from "src/commons/hooks/useScreen";
 import { API } from "src/commons/utils/api";
 import { numberWithCommas } from "src/commons/utils/helper";
-import { useScreen } from "src/commons/hooks/useScreen";
+import { TooltipBody } from "src/components/commons/Layout/styles";
 
 import {
   BoxInfo,
@@ -172,11 +173,11 @@ const formatTimeX = (date: Time) => {
 const getLabel = (date: string, range: Time) => {
   switch (range) {
     case "ONE_DAY":
-      return `${moment(date).format("MM/DD HH:mm")} - ${moment(date).add(1, "hour").format("HH:mm")} (UTC)`;
+      return `${moment(date).format("DD MMM HH:mm")} - ${moment(date).add(1, "hour").format("HH:mm")} (UTC)`;
     case "ONE_WEEK":
     case "TWO_WEEK":
     case "ONE_MONTH":
-      return moment(date).format("MM/DD");
+      return moment(date).format("DD MMM");
 
     default:
       break;
@@ -201,13 +202,7 @@ const renderTooltipContent = (o: any, range: Time) => {
   const total = (payload || []).reduce((result: number, entry: any) => result + entry.value, 0);
   return (
     <Box key={label}>
-      <Box
-        p={1}
-        bgcolor={({ palette }) => alpha(palette.common.white, 0.9)}
-        borderRadius={"8px"}
-        textAlign={"left"}
-        boxShadow={(theme) => theme.shadow.dropdown}
-      >
+      <TooltipBody textAlign={"left"}>
         <Box color={({ palette }) => palette.secondary.main} textAlign={"center"}>
           {getLabel(label, range)}
         </Box>
@@ -215,7 +210,9 @@ const renderTooltipContent = (o: any, range: Time) => {
           .map((entry: any, index: number) => {
             return (
               <Box key={`item-${index}`} mt={1}>
-                <Box fontSize={"0.75rem"}>{`${nameTooltips[entry.name as keyof typeof nameTooltips]}`}</Box>
+                <Box fontSize={"0.75rem"} color={({ palette }) => palette.secondary.light}>{`${
+                  nameTooltips[entry.name as keyof typeof nameTooltips]
+                }`}</Box>
                 <Box display={"flex"} alignItems={"center"} mt={1}>
                   <Box width={"20px"} height={"20px"} bgcolor={entry.fill} borderRadius={"4px"} mr={1} />
                   <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
@@ -226,13 +223,15 @@ const renderTooltipContent = (o: any, range: Time) => {
             );
           })
           .reverse()}
-      </Box>
+      </TooltipBody>
     </Box>
   );
 };
 
 const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time }) => {
   const theme = useTheme();
+  const { theme: themeMode } = useSelector(({ user }: RootState) => user);
+
   if (!data) return <></>;
   return (
     <Box width={"100%"} minHeight={"250px"} height={250}>
@@ -251,11 +250,16 @@ const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
-            color={theme.palette.secondary.light}
+            tick={{ fill: themeMode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800] }}
+            tickLine={{ stroke: themeMode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800] }}
             dataKey="date"
             tickFormatter={(date: string) => formatX(date, range)}
           />
-          <YAxis color={theme.palette.secondary.light} tickFormatter={toPercent} />
+          <YAxis
+            tick={{ fill: themeMode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800] }}
+            tickLine={{ stroke: themeMode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800] }}
+            tickFormatter={toPercent}
+          />
           <Tooltip content={(o: any) => renderTooltipContent(o, range)} />
           <Area
             type="monotone"
@@ -271,7 +275,7 @@ const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time
             stackId="1"
             strokeWidth={3}
             stroke={theme.palette.secondary[0]}
-            fill={theme.palette.primary[500]}
+            fill={theme.mode === "light" ? theme.palette.primary[500] : theme.palette.primary.main}
           />
           <Area
             type="monotone"

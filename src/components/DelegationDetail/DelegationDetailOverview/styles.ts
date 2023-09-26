@@ -10,7 +10,7 @@ export const Item = styled("div")`
   align-items: center;
   gap: 10px;
   justify-content: center;
-  background: ${(props) => props.theme.palette.common.white};
+  background: ${(props) => props.theme.palette.secondary[0]};
   box-shadow: ${(props) => props.theme.shadow.card};
   border-radius: 12px;
   padding: 24px;

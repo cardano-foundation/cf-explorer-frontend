@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { get } from "lodash";
 import { useTranslation } from "react-i18next";
 import { useEffect, useRef, useState } from "react";
@@ -6,18 +6,20 @@ import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import useFetchList from "src/commons/hooks/useFetchList";
-import { HeaderSearchIcon } from "src/commons/resources";
+import { HeaderSearchIconComponent } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatADAFull, formatPercent, getShortWallet } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
+import CustomIcon from "src/components/commons/CustomIcon";
 
-import { Image, PoolName, SearchContainer, StyledInput, StyledLinearProgress, SubmitButton } from "./styles";
+import { PoolName, SearchContainer, StyledInput, StyledLinearProgress, SubmitButton } from "./styles";
 
 const DelegationLists: React.FC = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const { tickerNameSearch = "" } = history.location.state || {};
   const [value, setValue] = useState("");
@@ -147,6 +149,15 @@ const DelegationLists: React.FC = () => {
       key: "margin",
       minWidth: "120px",
       render: (r) => `${formatPercent(r.feePercent)}`
+    },
+    {
+      title: t("common.ticker") + " ",
+      key: "tickerName",
+      minWidth: "120px",
+      render: (r) => <Box component={"span"}>{r.tickerName}</Box>,
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      }
     }
   ];
   return (
@@ -171,13 +182,19 @@ const DelegationLists: React.FC = () => {
             });
           }}
         >
-          <Image src={HeaderSearchIcon} alt="Search" />
+          <CustomIcon
+            icon={HeaderSearchIconComponent}
+            fill={theme.palette.secondary[0]}
+            stroke={theme.palette.secondary.light}
+            height={22}
+            width={22}
+          />
         </SubmitButton>
       </SearchContainer>
       <Table
         {...fetchData}
         columns={columns}
-        total={{ count: fetchData.total, title: "Total" }}
+        total={{ count: fetchData.total, title: "Total", isDataOverSize: fetchData.isDataOverSize }}
         onClickRow={(_, r: Delegators) => history.push(details.delegation(r.poolId), { fromPath })}
         pagination={{
           page: page - 1,

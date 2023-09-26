@@ -1,4 +1,4 @@
-import { Box, FormGroup, FormHelperText, IconButton, InputAdornment } from "@mui/material";
+import { Box, FormGroup, IconButton, InputAdornment } from "@mui/material";
 import { useEffect, useReducer, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router-dom";
@@ -65,6 +65,7 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
 
   useEffect(() => {
     document.title = `${t("account.resetPassword")} | ${t("head.page.dashboard")}`;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleTogglePassword = () => {
@@ -236,7 +237,7 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
                   error={Boolean(formData.password.error && formData.password.touched)}
                 />
                 {formData.password.error && formData.password.touched ? (
-                  <FormHelperTextCustom error>{formData.password.error}</FormHelperTextCustom>
+                  <FormHelperTextCustom>{formData.password.error}</FormHelperTextCustom>
                 ) : null}
               </WrapInput>
               <WrapInput>
@@ -262,7 +263,7 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
                   error={Boolean(formData.confirmPassword.error && formData.confirmPassword.touched)}
                 />
                 {formData.confirmPassword.error && formData.confirmPassword.touched ? (
-                  <FormHelperText error>{formData.confirmPassword.error}</FormHelperText>
+                  <FormHelperTextCustom>{formData.confirmPassword.error}</FormHelperTextCustom>
                 ) : null}
               </WrapInput>
               <WrapButton variant="contained" fullWidth onClick={handleSubmit} disabled={!enableButton}>

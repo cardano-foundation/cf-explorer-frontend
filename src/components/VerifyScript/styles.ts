@@ -14,8 +14,13 @@ export const VerifyScriptContainer = styled(Box)`
 `;
 
 export const StyledVerifyButton = styled(Box)<{ verified: number }>(({ verified, theme }) => ({
-  color: verified ? theme.palette.success[800] : theme.palette.common.white,
-  background: verified ? theme.palette.success[100] : theme.palette.secondary.light,
+  color: verified ? theme.palette.success[800] : theme.isDark ? theme.palette.warning[800] : theme.palette.secondary[0],
+  background: verified
+    ? theme.palette.success[100]
+    : theme.mode === "light"
+    ? theme.palette.secondary.light
+    : theme.palette.warning[100],
+  border: `1px solid ${theme.isDark ? theme.palette.warning[800] : "none"}`,
   cursor: "pointer",
   borderRadius: 2,
   padding: "4px 14px",
@@ -53,8 +58,9 @@ export const VerifyButton = styled(Box)<{ disabled: boolean }>`
   font-size: 16px;
   line-height: 24px;
   text-align: center;
-  color: ${(props) => props.theme.palette.common.white};
-  background: ${(props) => props.theme.palette.secondary.main};
+  color: ${(props) => props.theme.palette.secondary[0]};
+  background: ${(props) =>
+    props.theme.mode === "light" ? props.theme.palette.secondary.main : props.theme.palette.primary.main};
   border-radius: 8px;
   padding: 10px 20px;
   position: absolute;

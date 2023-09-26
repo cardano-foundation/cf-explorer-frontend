@@ -30,7 +30,7 @@ export const AddressLink = styled(Link)`
 export const AddressGroup = styled(Box)(({ theme }) => ({
   marginTop: "15px",
   marginBottom: "24px",
-  background: theme.palette.primary[200],
+  background: theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[200],
   borderRadius: "8px",
   padding: "12px 20px",
   display: "flex",
@@ -65,7 +65,7 @@ export const RowItem = styled(Box)`
 `;
 
 export const CardItem = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: theme.palette.secondary[0],
   minHeight: "200px",
   height: "100%",
   borderRadius: "10px",

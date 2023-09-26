@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button } from "@mui/material";
+import { Autocomplete, Box, Button, useTheme } from "@mui/material";
 import { debounce } from "lodash";
 import { useEffect, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
@@ -32,6 +32,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
   const { t } = useTranslation();
   const [openModalToken, setOpenModalToken] = useState(false);
   const [search, setSearch] = useState("");
+  const theme = useTheme();
   const history = useHistory();
   const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
   const [initialized, setInitialized] = useState(false);
@@ -65,6 +66,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
         ListboxProps={{
           sx(theme) {
             return {
+              background: theme.palette.secondary[0],
               "&::-webkit-scrollbar": {
                 width: "5px"
               },
@@ -155,7 +157,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
           );
         }}
         renderInput={(params: any) => <StyledTextField {...params} placeholder={t("glossary.searchToken")} />}
-        popupIcon={<BiChevronDown />}
+        popupIcon={<BiChevronDown color={theme.palette.secondary.main} />}
       />
       <ModalToken address={address} open={openModalToken} onClose={() => setOpenModalToken(false)} />
     </Box>
