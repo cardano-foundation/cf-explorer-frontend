@@ -171,7 +171,7 @@ export const SlotLeaderCopy = styled(CopyButton)`
   margin-bottom: 3px;
 `;
 
-export const DetailsInfo = styled(Grid)<{ length: number }>`
+export const DetailsInfo = styled(Grid)<{ length: number; isClickAble?: number }>`
   padding: 30px ${(props) => (props.length > 6 ? 25 : 15)}px;
   margin-top: 15px;
   background: ${(props) => props.theme.palette.background.paper};
@@ -181,6 +181,11 @@ export const DetailsInfo = styled(Grid)<{ length: number }>`
   }
   ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 20px 15px;
+  }
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0m;
+  &:hover {
+    box-shadow: ${({ theme, isClickAble }) =>
+      isClickAble ? "1px 2px 15px 0px " + alpha(theme.palette.secondary.light, 0.25) : ""};
   }
 `;
 
