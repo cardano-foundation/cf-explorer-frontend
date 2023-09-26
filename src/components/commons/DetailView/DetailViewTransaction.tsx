@@ -353,7 +353,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
   };
 
   return (
-    <ViewDetailDrawer anchor="right" open={Boolean(open && hash)} variant="persistent" hideBackdrop>
+    <ViewDetailDrawer anchor="right" open={Boolean(open && hash)} variant="temporary" onClose={handleClose}>
       {renderContent()}
     </ViewDetailDrawer>
   );

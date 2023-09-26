@@ -271,7 +271,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
   };
 
   return (
-    <ViewDetailDrawer anchor="right" open={Boolean(open && stakeId)} variant="persistent" hideBackdrop>
+    <ViewDetailDrawer anchor="right" open={Boolean(open && stakeId)} variant="temporary" onClose={handleClose}>
       {renderContent()}
     </ViewDetailDrawer>
   );
