@@ -93,17 +93,6 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
     }
   }, [data, callback]);
 
-  useEffect(() => {
-    if (open && epochNo) {
-      document.body.style.overflowY = "hidden";
-    } else {
-      document.body.style.overflowY = "scroll";
-    }
-    return () => {
-      document.body.style.overflowY = "scroll";
-    };
-  }, [open, epochNo]);
-
   const renderContent = () => {
     if (!data || loading || !epochNo) {
       return (
