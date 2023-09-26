@@ -136,12 +136,12 @@ export const WrappModalScrollBar = styled(Box)(
 
 export const Wrapper = styled(Box)<{ loading?: number }>(
   ({ theme, loading }) => `
-  overflow: scroll; 
+  overflow: scroll;
   background: ${theme.palette.common.white};
   padding: ${theme.spacing(1)};
   padding-top: 0;
   border-radius: ${theme.spacing(1.5)};
-  ${loading ? "overflow-y: hidden;" : ""} 
+  ${loading ? "overflow-y: hidden;" : ""}
 
   ${theme.breakpoints.down("sm")} {
     padding: 0;
@@ -157,9 +157,9 @@ export const Wrapper = styled(Box)<{ loading?: number }>(
     background: transparent;
   }
   &::-webkit-scrollbar-button:vertical:start:decrement {
-    height: 72px; 
+    height: 72px;
     display: block;
-  } 
+  }
   &:hover {
     &::-webkit-scrollbar-thumb {
       background: ${theme.palette.secondary.light};
