@@ -177,7 +177,7 @@ const DelegationLists: React.FC = () => {
       <Table
         {...fetchData}
         columns={columns}
-        total={{ count: fetchData.total, title: "Total" }}
+        total={{ count: fetchData.total, title: "Total", isDataOverSize: fetchData.isDataOverSize }}
         onClickRow={(_, r: Delegators) => history.push(details.delegation(r.poolId), { fromPath })}
         pagination={{
           page: page - 1,
