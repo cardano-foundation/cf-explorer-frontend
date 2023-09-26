@@ -178,9 +178,12 @@ const Tokens = () => {
           tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
         />
       </Card>
-      {selected && onDetailView && (
-        <DetailViewToken tokenId={selected.fingerprint || ""} token={selected} handleClose={handleClose} />
-      )}
+      <DetailViewToken
+        open={onDetailView}
+        tokenId={selected?.fingerprint || ""}
+        token={selected}
+        handleClose={handleClose}
+      />
     </StyledContainer>
   );
 };

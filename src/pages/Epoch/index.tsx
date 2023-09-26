@@ -175,13 +175,12 @@ const Epoch: React.FC = () => {
           showTabView
         />
       </Card>
-      {selected !== null && onDetailView && (
-        <DetailViewEpoch
-          epochNo={selected}
-          handleClose={handleClose}
-          callback={selected === latestEpoch?.no ? fetchDataLatestEpoch.update : fetchData.update}
-        />
-      )}
+      <DetailViewEpoch
+        open={onDetailView}
+        epochNo={selected || 0}
+        handleClose={handleClose}
+        callback={selected === latestEpoch?.no ? fetchDataLatestEpoch.update : fetchData.update}
+      />
     </StyledContainer>
   );
 };
