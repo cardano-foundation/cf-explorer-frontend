@@ -53,8 +53,8 @@ const StakingLifecycle: React.FC = () => {
   };
 
   useEffect(() => {
-    document.title = "Saved Reports | Cardano Blockchain Explorer";
-  }, []);
+    document.title = `${t("common.savedReports")} | ${t("head.page.dashboard")}`;
+  }, [t]);
 
   const handleSort = (sort?: string) => setParams({ ...params, sort });
 
@@ -90,7 +90,7 @@ const StakingLifecycle: React.FC = () => {
     <Container>
       <StakingLifeCycleSearch />
       <TitleHead>
-        <TextHeadline>{t("common.savedReports")}</TextHeadline>
+        <TextHeadline>{t("common.yourSavedReports")}</TextHeadline>
         <FilterHead>
           <WrapFilterDescription>
             {t("common.showing")} {totalResult} {totalResult > 1 ? t("common.result") : t("common.results")}
@@ -103,7 +103,7 @@ const StakingLifecycle: React.FC = () => {
           <StyledTabs
             value={validTab}
             onChange={handleChange}
-            sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.main}` }}
+            sx={{ borderBottom: (theme) => `1px solid ${theme.palette.primary[200]}` }}
             TabIndicatorProps={{ sx: { backgroundColor: (theme) => theme.palette.primary.main, height: 4 } }}
             scrollButtons="auto"
             variant="scrollable"

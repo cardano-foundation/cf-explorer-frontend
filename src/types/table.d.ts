@@ -59,6 +59,7 @@ export interface TableProps<T extends ColumnType = any> {
   total?: {
     count: number;
     title: string;
+    isDataOverSize?: boolean | null;
   };
   defaultSort?: string;
   pagination?: {

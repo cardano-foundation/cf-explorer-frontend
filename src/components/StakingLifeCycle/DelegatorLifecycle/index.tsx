@@ -7,7 +7,6 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DelegationIcon,
   DeredistrationIcon,
-  InfoIcon,
   NextIcon,
   PreviousIcon,
   RegistrationIcon,
@@ -17,6 +16,7 @@ import {
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 
 import {
   DelegationProcessDescription,
@@ -230,7 +230,6 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
                   {step.icon}
                 </StepButton>
                 <TitleStep
-                  px={2}
                   sx={{
                     color: colorProps.textColor
                   }}
@@ -245,7 +244,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       <StepHeader>
         <StyledBox>
           <TabTitle>{stepper[currentStep].title}</TabTitle>
-          <InfoIcon style={{ cursor: "pointer" }} onClick={() => setOpenDescriptionModal(true)} />
+          <InfoSolidIcon onClick={() => setOpenDescriptionModal(true)} />
         </StyledBox>
         <ADATransfersButton onClick={() => setOpen(true)}>
           <TranferIcon /> {t("common.adaTransfers")}

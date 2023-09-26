@@ -15,7 +15,6 @@ const HomeContainer = styled(Container)`
 
 const Home = () => {
   const { t } = useTranslation();
-
   useEffect(() => {
     document.title = t("head.page.dashboard");
   }, [t]);

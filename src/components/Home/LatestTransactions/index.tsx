@@ -1,10 +1,10 @@
-import { Box, Grid, Skeleton } from "@mui/material";
+import { Box, Grid, Skeleton, useTheme } from "@mui/material";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
-import { BlankBlueIcon } from "src/commons/resources";
+import { SeeMoreIconHome } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { TRANSACTION_STATUS } from "src/commons/utils/constants";
@@ -32,7 +32,6 @@ import {
   TransactionContainer,
   BlockNo,
   WalletAddress,
-  BlankImage,
   RowItem,
   HeaderStatus,
   Actions,
@@ -43,6 +42,7 @@ import {
 
 const LatestTransactions: React.FC = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const { data, initialized, lastUpdated } = useFetch<CurrentTransactions[]>(
     API.TRANSACTION.CURRENT,
@@ -100,7 +100,9 @@ const LatestTransactions: React.FC = () => {
                           </HeaderStatus>
                           <Box display={"flex"} alignItems={"flex-start"}>
                             <PriveValue>{formatADAFull(amount)}</PriveValue>
-                            <ADAicon width={14} />
+                            <Box component={"span"} sx={{ width: 14 }}>
+                              <ADAicon width={14} />
+                            </Box>
                           </Box>
                         </LatestTransactionItemHeader>
                       </ItemHeader>
@@ -138,7 +140,14 @@ const LatestTransactions: React.FC = () => {
                               <CustomTooltip title={add}>
                                 <Link to={details.address(add)}>
                                   <WalletAddress>{getShortWallet(add)}</WalletAddress>
-                                  <BlankImage src={BlankBlueIcon} alt="blank blue" />
+
+                                  <Box
+                                    component={SeeMoreIconHome}
+                                    ml={1}
+                                    fill={theme.palette.primary.main}
+                                    width={10}
+                                    height={10}
+                                  />
                                 </Link>
                               </CustomTooltip>
                             </RowItem>
@@ -152,7 +161,13 @@ const LatestTransactions: React.FC = () => {
                                 <CustomTooltip title={add}>
                                   <Link to={details.address(add)}>
                                     <WalletAddress>{getShortWallet(add)}</WalletAddress>
-                                    <BlankImage src={BlankBlueIcon} alt="blank blue" />
+                                    <Box
+                                      component={SeeMoreIconHome}
+                                      ml={1}
+                                      fill={theme.palette.primary.main}
+                                      width={10}
+                                      height={10}
+                                    />
                                   </Link>
                                 </CustomTooltip>
                               </Box>
