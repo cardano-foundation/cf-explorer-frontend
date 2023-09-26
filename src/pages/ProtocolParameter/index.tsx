@@ -220,7 +220,7 @@ const ProtocolParameter: React.FC = () => {
   if (histories && histories !== "histories") return <NoRecord />;
 
   return (
-    <Container sx={{ paddingTop: "30px" }}>
+    <Container>
       {histories && (
         <Box textAlign={"left"}>
           <BackButton onClick={() => history.push(lists.protocolParameters())}>
@@ -231,7 +231,7 @@ const ProtocolParameter: React.FC = () => {
       )}
       {histories && <ProtocolParameterHistory />}
       {!histories && (
-        <Card titleSx={{ margin: 0 }} title={t("common.protocolParameters")}>
+        <Card title={t("common.protocolParameters")}>
           <Box pt={2}>
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>

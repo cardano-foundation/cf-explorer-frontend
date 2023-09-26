@@ -58,7 +58,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
 
   return (
     <HeaderContainer data-testid="header">
-      <HeaderBox home={home ? 1 : 0}>
+      <HeaderBox home={home ? 1 : 0} sx={{ background: "#ddd" }}>
         <HeaderMain home={home ? 1 : 0}>
           <Title home={home ? 1 : 0} data-testid="home-title">
             <Box

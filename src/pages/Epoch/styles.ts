@@ -3,7 +3,6 @@ import { Box, styled, Container } from "@mui/material";
 import { EPOCH_STATUS } from "src/commons/utils/constants";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
-  paddingTop: "20px",
   [theme.breakpoints.down("sm")]: {
     padding: "0px 0 40px",
     "& > div:nth-of-type(1)": {

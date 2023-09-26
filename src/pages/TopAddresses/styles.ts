@@ -18,7 +18,6 @@ export const TabTitle = styled(Box)`
 `;
 
 export const StyledContainer = styled(Container)`
-  margin-top: 18px;
   .MuiSelect-select.MuiSelect-outlined {
     padding-top: 10px;
     padding-bottom: 10px;
