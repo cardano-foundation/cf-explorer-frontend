@@ -130,17 +130,6 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
     { key: "metadata", label: t("glossary.metadata"), icon: <DetailLinkImage src={MetadataIconUrl} alt="contact" /> }
   ];
 
-  useEffect(() => {
-    if (open && hash) {
-      document.body.style.overflowY = "hidden";
-    } else {
-      document.body.style.overflowY = "scroll";
-    }
-    return () => {
-      document.body.style.overflowY = "scroll";
-    };
-  }, [open, hash]);
-
   const renderContent = () => {
     if (!data || loading || !epochNo) {
       return (

@@ -77,16 +77,6 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
     }
   }, [blockNo]);
 
-  useEffect(() => {
-    if (open && blockNo) {
-      document.body.style.overflowY = "hidden";
-    } else {
-      document.body.style.overflowY = "scroll";
-    }
-    return () => {
-      document.body.style.overflowY = "scroll";
-    };
-  }, [open, blockNo]);
   const renderContent = () => {
     if (!data || loading || !epochNo) {
       return (

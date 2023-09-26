@@ -103,16 +103,6 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
     }
   ];
 
-  useEffect(() => {
-    if (open && stakeId) {
-      document.body.style.overflowY = "hidden";
-    } else {
-      document.body.style.overflowY = "scroll";
-    }
-    return () => {
-      document.body.style.overflowY = "scroll";
-    };
-  }, [open, stakeId]);
   const renderContent = () => {
     if (!data || loading || !stakeId) {
       return (
