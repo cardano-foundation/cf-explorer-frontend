@@ -173,11 +173,11 @@ const formatTimeX = (date: Time) => {
 const getLabel = (date: string, range: Time) => {
   switch (range) {
     case "ONE_DAY":
-      return `${moment(date).format("MMM DD HH:mm")} - ${moment(date).add(1, "hour").format("HH:mm")} (UTC)`;
+      return `${moment(date).format("DD MMM HH:mm")} - ${moment(date).add(1, "hour").format("HH:mm")} (UTC)`;
     case "ONE_WEEK":
     case "TWO_WEEK":
     case "ONE_MONTH":
-      return moment(date).format("MM/DD");
+      return moment(date).format("DD MMM");
 
     default:
       break;
