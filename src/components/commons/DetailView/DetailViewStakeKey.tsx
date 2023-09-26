@@ -53,7 +53,7 @@ type DetailViewStakeKeyProps = {
 };
 const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
   const { t } = useTranslation();
-  const { stakeId, handleClose } = props;
+  const { stakeId, handleClose, open: openDetail } = props;
   const [urlFetch, setUrlFetch] = useState("");
   const { data, loading } = useFetch<IStakeKeyDetail>(urlFetch);
   const [open, setOpen] = useState(false);
@@ -259,9 +259,8 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
       </>
     );
   };
-
   return (
-    <ViewDetailDrawer anchor="right" open={Boolean(open && stakeId)} variant="temporary" onClose={handleClose}>
+    <ViewDetailDrawer anchor="right" open={Boolean(openDetail && stakeId)} variant="temporary" onClose={handleClose}>
       {renderContent()}
     </ViewDetailDrawer>
   );
