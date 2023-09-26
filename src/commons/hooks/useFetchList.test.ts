@@ -27,6 +27,7 @@ describe("useFetchList", () => {
       total: 0,
       totalPage: 0,
       currentPage: 0,
+      isDataOverSize: null,
       refresh: expect.any(Function),
       update: expect.any(Function),
       lastUpdated: undefined,

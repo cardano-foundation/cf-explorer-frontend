@@ -89,6 +89,11 @@ import DashboardIcon from "./icons/menus/Dashboard.svg";
 import CardanoBlueLogo from "./icons/cardanoBlue.svg";
 import TwitterXIcon from "./icons/TwitterX.svg";
 import NoRecordsIcon from "./images/NoRecords.svg";
+import WhiteSearchIcon from "./icons/white-search-icon.svg";
+import WalletRoundedIcon from "./icons/wallet-rounded.svg";
+import ArrowUpIcon from "./icons/arrow-up.svg";
+import CopyOutlineIcon from "./icons/copy-outline.svg";
+import ArrowDownIcon from "./icons/arrow-down.svg";
 
 export {
   LogoFullIcon,
@@ -181,7 +186,12 @@ export {
   HomeDownIcon,
   CardanoBlueLogo,
   TwitterXIcon,
-  NoRecordsIcon
+  NoRecordsIcon,
+  WhiteSearchIcon,
+  WalletRoundedIcon,
+  ArrowUpIcon,
+  CopyOutlineIcon,
+  ArrowDownIcon
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
@@ -303,3 +313,4 @@ export { ReactComponent as TwitterX } from "./icons/TwitterX.svg";
 export { ReactComponent as ExclamationTriangleIcon } from "./icons/exclamation-triangle.svg";
 export { ReactComponent as ADAactive } from "./icons/Staking/ADAactive.svg";
 export { ReactComponent as ADAinactive } from "./icons/Staking/ADAinactive.svg";
+export { ReactComponent as BrowserIcon } from "./icons/browser-icon.svg";
