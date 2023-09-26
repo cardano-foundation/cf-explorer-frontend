@@ -11,7 +11,7 @@ export const Container = styled(Box)`
   justify-content: center;
   align-items: center;
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    min-height: 80vh;
+    min-height: 70vh;
   }
 `;
 
