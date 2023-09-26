@@ -146,13 +146,15 @@ const SPOLifecycle = () => {
               }
             >
               <ReportButtonContainer>
-                <ButtonReport
-                  disabled={!isLoggedIn || dataReportLimit?.isLimitReached}
-                  onClick={() => setOpen(true)}
-                  sidebar={+sidebar}
-                >
-                  {t("common.composeReport")}
-                </ButtonReport>
+                {!(!isLoggedIn || dataReportLimit?.isLimitReached) && (
+                  <ButtonReport
+                    disabled={!isLoggedIn || dataReportLimit?.isLimitReached}
+                    onClick={() => setOpen(true)}
+                    sidebar={+sidebar}
+                  >
+                    {t("common.composeReport")}
+                  </ButtonReport>
+                )}
               </ReportButtonContainer>
             </CustomTooltip>
           </BoxItemStyled>
