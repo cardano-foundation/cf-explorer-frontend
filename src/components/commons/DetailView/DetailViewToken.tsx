@@ -269,7 +269,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
     );
   };
   return (
-    <ViewDetailDrawer anchor="right" open={Boolean(open && tokenId)} hideBackdrop variant="persistent">
+    <ViewDetailDrawer anchor="right" open={Boolean(open && tokenId)} variant="temporary" onClose={handleClose}>
       {renderContent()}
     </ViewDetailDrawer>
   );

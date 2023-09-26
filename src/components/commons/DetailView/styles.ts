@@ -7,8 +7,8 @@ import { CONFIRMATION_STATUS, STAKE_KEY_STATUS, TRANSACTION_STATUS } from "src/c
 import { BoxRaised } from "../BoxRaised";
 
 export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
-  "& > div": {
-    zIndex: 1302,
+  zIndex: 1302,
+  "& .MuiDrawer-paper": {
     background: `${theme.palette.secondary[0]}`,
     border: "none",
     height: "100%",
@@ -23,6 +23,9 @@ export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
       width: "100%",
       overflowY: "hidden"
     }
+  },
+  "& .MuiModal-backdrop": {
+    background: "transparent"
   }
 }));
 
