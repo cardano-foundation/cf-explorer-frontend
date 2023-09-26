@@ -262,7 +262,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
   };
 
   return (
-    <ViewDetailDrawer anchor="right" open={Boolean(open && blockNo)} variant="persistent" hideBackdrop>
+    <ViewDetailDrawer anchor="right" open={Boolean(open && blockNo)} variant="temporary" onClose={handleClose}>
       {renderContent()}
     </ViewDetailDrawer>
   );

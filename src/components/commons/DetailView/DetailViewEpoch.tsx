@@ -293,7 +293,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
   };
 
   return (
-    <ViewDetailDrawer anchor="right" open={Boolean(open && epochNo)} variant="persistent" hideBackdrop>
+    <ViewDetailDrawer anchor="right" open={Boolean(open && epochNo)} variant="temporary" onClose={handleClose}>
       {renderContent()}
     </ViewDetailDrawer>
   );

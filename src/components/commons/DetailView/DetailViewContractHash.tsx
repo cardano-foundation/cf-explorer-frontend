@@ -126,8 +126,8 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
     <ViewDetailDrawerContractHash
       anchor="right"
       open={Boolean(open && txHash)}
-      variant="persistent"
-      hideBackdrop
+      variant="temporary"
+      onClose={handleClose}
       data-testid="view-detail-drawer-contract-hash"
     >
       {renderContent()}
