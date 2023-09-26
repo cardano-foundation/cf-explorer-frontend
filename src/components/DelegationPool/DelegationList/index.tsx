@@ -147,6 +147,15 @@ const DelegationLists: React.FC = () => {
       key: "margin",
       minWidth: "120px",
       render: (r) => `${formatPercent(r.feePercent)}`
+    },
+    {
+      title: t("common.ticker") + " ",
+      key: "tickerName",
+      minWidth: "120px",
+      render: (r) => <Box component={"span"}>{r.tickerName}</Box>,
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      }
     }
   ];
   return (
