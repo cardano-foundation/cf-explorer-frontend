@@ -190,7 +190,7 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
       WebkitBoxShadow: "0 0 0 30px red inset !important"
     },
     "&.MuiInputBase-root.Mui-focused": {
-      borderColor: error ? "" : theme.palette.primary.main
+      borderColor: error ? "" : theme.palette.secondary.light
     }
   })
 );
