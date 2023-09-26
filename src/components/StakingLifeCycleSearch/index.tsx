@@ -96,7 +96,7 @@ export const StyledContainer = styled(Box)(({ theme }) => ({
     paddingBottom: "50px"
   },
   [theme.breakpoints.down("sm")]: {
-    padding: "37px 5px"
+    padding: "10px 5px"
   }
 }));
 

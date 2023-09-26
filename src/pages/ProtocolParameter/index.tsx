@@ -220,7 +220,7 @@ const ProtocolParameter: React.FC = () => {
   if (histories && histories !== "histories") return <NoRecord />;
 
   return (
-    <Container>
+    <Container sx={{ paddingTop: "30px" }}>
       {histories && (
         <Box textAlign={"left"}>
           <BackButton onClick={() => history.push(lists.protocolParameters())}>

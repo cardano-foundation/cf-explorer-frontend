@@ -4,7 +4,7 @@ export const HeaderDetailContainer = styled(Box)(({ theme }) => ({
   textAlign: "left",
   position: "relative",
   [theme.breakpoints.down("md")]: {
-    paddingTop: 32
+    paddingTop: 30
   }
 }));
 

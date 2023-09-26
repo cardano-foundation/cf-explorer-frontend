@@ -25,7 +25,6 @@ export const StyledContainer = styled(Container)`
   }
 
   @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
-    padding-top: 10px;
     margin-top: 0px !important;
   }
 `;

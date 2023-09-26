@@ -8,7 +8,7 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
     paddingTop: "0px"
   },
   [theme.breakpoints.down("sm")]: {
-    padding: "10px 0 40px",
+    padding: "0px 0 40px",
     "& > div:nth-of-type(1)": {
       "& > div:nth-of-type(1)": {
         padding: "0 16px"

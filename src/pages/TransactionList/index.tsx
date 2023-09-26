@@ -11,7 +11,7 @@ import { setOnDetailView } from "src/stores/user";
 const StyledContainer = styled(Container)`
   padding-top: 20px;
   @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
-    padding-top: 10px;
+    padding-top: 0;
     margin-top: 0px !important;
   }
 `;

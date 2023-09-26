@@ -18,6 +18,11 @@ const Header = styled(Box)`
 `;
 
 export const Title = styled("h2")<{ underline: number }>`
+  line-height: 0;
+  margin-top: 48px;
+  ${(props) => props.theme.breakpoints.down("md")} {
+    margin-top: 32px;
+  }
   text-align: left;
   padding-bottom: 8px;
   margin-bottom: 0px;
@@ -36,7 +41,6 @@ export const Title = styled("h2")<{ underline: number }>`
   }
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 24px !important;
-    padding-top: 10px;
   }
 `;
 
