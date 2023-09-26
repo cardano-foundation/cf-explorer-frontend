@@ -177,7 +177,7 @@ const getLabel = (date: string, range: Time) => {
     case "ONE_WEEK":
     case "TWO_WEEK":
     case "ONE_MONTH":
-      return moment(date).format("MM/DD");
+      return moment(date).format("MMM DD");
 
     default:
       break;
