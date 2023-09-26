@@ -3,6 +3,7 @@ import { Box, ButtonBase, Popover, styled } from "@mui/material";
 export const WrapContent = styled(Popover)`
   .MuiPaper-root {
     margin-top: 6px;
+    background: ${({ theme }) => theme.palette.secondary[0]};
     border-radius: 20px;
     width: 220px;
     height: 120px;
@@ -12,7 +13,7 @@ export const WrapContent = styled(Popover)`
 `;
 
 export const Content = styled(Box)`
-  padding: 16px 24px;
+  width: 100%;
   & > div {
     cursor: pointer;
   }
@@ -20,26 +21,34 @@ export const Content = styled(Box)`
 
 export const Profile = styled(Box)`
   display: flex;
+  padding: 8px 12px;
+  color: ${(props) => props.theme.palette.secondary.main};
   align-items: center;
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.primary[200]} !important;
+  }
 `;
 
 export const Disconnect = styled(Box)`
   display: flex;
   align-items: center;
-  margin-top: 26px;
+  padding: 8px 12px;
   h4 {
     color: ${(props) => props.theme.palette.error[700]};
+  }
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.primary[200]} !important;
   }
 `;
 
 export const Icon = styled("img")`
   width: 24px;
   height: 24px;
-  margin-right: 10px;
 `;
 
 export const Name = styled("h4")`
   margin: 0px;
+  margin-left: 10px;
 `;
 
 export const StyledButton = styled(ButtonBase)`
@@ -61,7 +70,7 @@ export const StyledButton = styled(ButtonBase)`
 export const Span = styled("span")`
   font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
-  color: ${(props) => props.theme.palette.primary.contrastText};
+  color: ${(props) => props.theme.palette.secondary[0]};
   white-space: nowrap;
   line-height: 1;
 `;

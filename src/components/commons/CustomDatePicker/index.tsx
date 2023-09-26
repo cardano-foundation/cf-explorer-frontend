@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
 import { range } from "lodash";
 import moment from "moment";
 import { BsFillCaretDownFill } from "react-icons/bs";
@@ -34,6 +34,7 @@ export interface ICustomDatePicker {
 
 const CustomDatePicker = (props: ICustomDatePicker) => {
   const { dateRange, setDateRange, hideFuture } = props;
+  const theme = useTheme();
   const [startDate, endDate] = dateRange;
   const [open, setOpen] = useState(false);
   const [yearModal, setYearModal] = useState(false);
@@ -113,7 +114,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
         }) => (
           <HeaderContainer>
             <CloseButton onClick={onClose}>
-              <IoMdClose size={20} />
+              <IoMdClose size={20} color={theme.palette.secondary.light} />
             </CloseButton>
             <YearSelect>
               {moment(date).format("MMMM YYYY")}

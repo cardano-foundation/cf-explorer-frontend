@@ -7,7 +7,7 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   transform: "translate(-50%, -51%)",
   width: "max-content",
   height: "max-content",
-  backgroundColor: theme.palette.primary[100],
+  backgroundColor: theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[0],
   borderRadius: 20,
   textAlign: "left",
   outline: "none",
@@ -31,7 +31,7 @@ export const CloseButton = styled(IconButton)(({ theme }) => ({
   width: 30,
   height: 30,
   padding: 0,
-  border: `1px solid ${theme.palette.grey["A100"]}`,
+  border: `1px solid ${theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary[600]}`,
   cursor: "pointer",
   [theme.breakpoints.down("sm")]: {
     right: 15,
