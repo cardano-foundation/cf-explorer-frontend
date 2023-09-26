@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const Wrapper = styled(Box)`
   text-align: left;
-  background: ${(props) => props.theme.palette.common.white};
+  background: ${(props) => props.theme.palette.secondary[0]};
 `;
 
 export const Img = styled("img")(() => ({

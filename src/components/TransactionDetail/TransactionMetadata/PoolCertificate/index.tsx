@@ -25,7 +25,7 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
         ?.filter((d) => d.type === "POOL_REGISTRATION")
         ?.map((item, index) => {
           return (
-            <Box px="15px" key={index} mb="15px" bgcolor={theme.palette.background.paper} textAlign="left">
+            <Box px="15px" key={index} mb="15px" bgcolor={theme.palette.secondary[0]} textAlign="left">
               <CardHeader>{t("title.poolRegistrations")}</CardHeader>
               <StakeKeyBox key={index} data={item} />
             </Box>
@@ -35,7 +35,7 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
         ?.filter((d) => d.type === "POOL_DEREGISTRATION")
         ?.map((item, index) => {
           return (
-            <Box px="15px" key={index} mb="15px" bgcolor={theme.palette.background.paper} textAlign="left">
+            <Box px="15px" key={index} mb="15px" bgcolor={theme.palette.secondary[0]} textAlign="left">
               <CardHeader>{t("title.poolDeregistrations")}</CardHeader>
               <Box py={2}>
                 <Grid item xs={12} md={6}>

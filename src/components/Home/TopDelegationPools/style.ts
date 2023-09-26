@@ -34,7 +34,7 @@ export const Title = styled("h3")`
     content: "";
     width: 50px;
     height: 4px;
-    background: ${({ theme }) => theme.palette.primary[200]};
+    background: ${({ theme }) => (theme.mode === "light" ? theme.palette.primary[200] : theme.palette.primary.main)};
   }
 `;
 
@@ -88,7 +88,7 @@ export const DelegateTable = styled(Table)`
       td {
         cursor: pointer;
         font-size: var(--font-size-text-small);
-        border-bottom: 1px solid ${(props) => props.theme.palette.border.main};
+        border-bottom: 1px solid ${(props) => props.theme.palette.primary[200]};
         border-radius: 0 !important;
       }
       &:last-child {

@@ -1,17 +1,18 @@
-import { Box, Button, Divider, FormHelperText, IconButton, Input, styled } from "@mui/material";
+import { Box, Button, Divider, FormHelperText, IconButton, Input, alpha, styled } from "@mui/material";
 
 import { User2RC } from "src/commons/resources";
 
 export const Container = styled(Box)`
   display: flex;
-  background-color: ${({ theme }) => theme.palette.primary[100]};
+  background-color: ${({ theme }) =>
+    theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[100]};
   min-height: 100vh;
   min-width: 100vw;
   justify-content: center;
   align-items: center;
   padding: 30px 0;
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    min-height: 80vh;
+    min-height: 70vh;
   }
 `;
 
@@ -55,7 +56,7 @@ export const WrapHintText = styled(Box)`
 
 export const WrapForm = styled(Box)(({ theme }) => ({
   margin: "10px 30px 0 30px",
-  background: theme.palette.common.white,
+  background: theme.palette.secondary[0],
   borderRadius: "12px",
   display: "flex",
   position: "relative",
@@ -100,16 +101,25 @@ export const UserCustomIcon = styled(User2RC)`
   }
 `;
 
-export const WrapButton = styled(Button)`
-  background: ${({ theme }) => theme.palette.secondary.main};
-  padding: 15px 20px;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 19px;
-  text-align: center;
-  text-transform: none;
-`;
+export const WrapButton = styled(Button)(({ theme }) => ({
+  background: theme.mode === "dark" ? theme.palette.primary.main : theme.palette.secondary.main,
+  padding: "15px 20px",
+  borderRadius: "8px",
+  fontWeight: 700,
+  fontSize: "16px",
+  lineHeight: "19px",
+  textAlign: "center",
+  color: theme.palette.secondary[0],
+  "&:hover": {
+    background: theme.palette.secondary.main
+  },
+  "&.Mui-disabled": {
+    color: theme.mode === "dark" ? theme.palette.secondary[0] : theme.palette.secondary.main,
+    background:
+      theme.mode === "dark" ? alpha(theme.palette.secondary.light, 0.3) : alpha(theme.palette.common.black, 0.26)
+  },
+  textTransform: "none"
+}));
 
 export const WrapButtonConnectWallet = styled(Button)`
   border-color: ${({ theme }) => theme.palette.primary.main};
@@ -166,7 +176,14 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
     borderRadius: "8px",
     borderWidth: "1px",
     borderStyle: "solid",
-    borderColor: error ? theme.palette.error.main : theme.palette.secondary.light,
+    borderColor: error
+      ? theme.mode === "light"
+        ? theme.palette.error.main
+        : theme.palette.error[700]
+      : theme.mode === "light"
+      ? theme.palette.primary[200]
+      : theme.palette.secondary[700],
+    transition: "border ease 0.3s",
     "&::before": {
       display: "none"
     },
@@ -174,7 +191,11 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
       display: "none"
     },
     padding: "5px 10px",
-    backgroundColor: error ? "rgba(247, 94, 94, 0.05)" : "",
+    color: theme.palette.secondary.main,
+    backgroundColor: error ? "rgba(247, 94, 94, 0.05)" : theme.palette.secondary[0],
+    "&:-webkit-autofill:hover ": {
+      WebkitBoxShadow: "0 0 0 30px red inset !important"
+    },
     "&.MuiInputBase-root.Mui-focused": {
       borderColor: error ? "" : theme.palette.primary.main
     }
@@ -182,8 +203,9 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
 );
 
 export const FormHelperTextCustom = styled(FormHelperText)`
-  font-size: 14px
+  font-size: 14px;
   line-height: 16px;
+  color: ${({ theme }) => (theme.mode === "light" ? theme.palette.error.main : theme.palette.error[700])};
 `;
 
 export const BackButton = styled(Box)(({ theme }) => ({

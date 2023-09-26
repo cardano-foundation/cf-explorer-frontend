@@ -50,7 +50,14 @@ export const MenuIcon = styled("img")<{ iconOnly?: number; active?: number; disa
   height: 24px;
   min-width: 24px;
   margin-right: ${(props) => (props.iconOnly ? 0 : 15)}px;
-  filter: ${(props) => (props.active ? `brightness(5)` : props.theme.palette.secondary.light)};
+  filter: ${(props) =>
+    props.active
+      ? props.theme.mode === "light"
+        ? `brightness(5)`
+        : props.theme.palette.secondary[0]
+      : props.theme.mode === "light"
+      ? props.theme.palette.secondary.light
+      : `brightness(5)`};
   ${({ theme }) => theme.breakpoints.down("md")} {
     margin-right: 15px;
   }
@@ -95,6 +102,7 @@ export const SubMenuText = styled(MenuText)`
 
 export const FooterMenuContainer = styled(Box)(({ theme }) => ({
   display: "block",
+  background: theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[100],
   [theme.breakpoints.down("md")]: {
     display: "none"
   }

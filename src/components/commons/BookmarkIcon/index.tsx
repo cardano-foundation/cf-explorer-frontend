@@ -72,14 +72,14 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
     if (!isLoggedIn) {
       return (
         <CustomTooltip title={t("common.pleaseSignInToSaveYourBookmark")}>
-          <BookmarkIcon fill={theme.palette.text.hint} />
+          <BookmarkIcon fill={theme.palette.secondary.main} />
         </CustomTooltip>
       );
     }
     if (bookmark) {
-      return <Bookmarked />;
+      return <Bookmarked fill={theme.palette.success[700]} />;
     }
-    return <BookmarkIcon fill={theme.palette.text.hint} />;
+    return <BookmarkIcon fill={theme.palette.secondary.main} />;
   };
 
   return (

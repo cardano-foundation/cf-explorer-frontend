@@ -8,8 +8,9 @@ import { socials } from "src/commons/menus";
 import { RootState } from "src/stores/types";
 import { setSidebar } from "src/stores/user";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import { ThemeType } from "src/types/user";
 
-export const Menu = styled(List)<{ open: number; bottom: number }>`
+export const Menu = styled(List)<{ open: number; bottom: number; themeMode: ThemeType }>`
   position: absolute;
   bottom: 0;
   left: 0;
@@ -22,8 +23,9 @@ export const Menu = styled(List)<{ open: number; bottom: number }>`
   flex-direction: row;
   padding: 0px 10px;
   z-index: 1305;
-  background: ${({ theme, bottom }) => (bottom ? "none" : theme.palette.primary[100])};
-  border-top: 1px solid ${(props) => props.theme.palette.border.main};
+  background: ${({ theme, bottom, themeMode }) =>
+    bottom ? "none" : themeMode === "light" ? theme.palette.primary[100] : theme.palette.secondary[100]};
+  border-top: 1px solid ${(props) => props.theme.palette.primary[200]};
   ${({ theme }) => theme.breakpoints.down("md")} {
     border-top: 0px;
     position: relative;
@@ -56,15 +58,15 @@ const itemStyle: CustomSX = (theme, sidebar, bottom) => ({
   cursor: "pointer",
   borderRadius: 30,
   padding: 0,
-  color: `${theme.palette.text.hint} !important`,
-  background: theme.palette.primary[100],
+  color: `${theme.palette.secondary.light} !important`,
+  background: theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[0],
   border: `1px solid ${theme.palette.primary[200]}`,
   [theme.breakpoints.down("md")]: {
     display: bottom ? "flex" : sidebar ? "flex" : "none"
   },
   "&:hover": {
-    background: theme.palette.primary[100],
-    color: `${theme.palette.common.black} !important`,
+    background: theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[0],
+    color: `${theme.palette.secondary.main} !important`,
     img: {
       filter: "brightness(0.75)"
     }
@@ -91,9 +93,9 @@ type TProps = {
   bottom?: boolean;
 };
 const FooterMenu = ({ bottom = false }: TProps) => {
-  const { sidebar } = useSelector(({ user }: RootState) => user);
+  const { sidebar, theme } = useSelector(({ user }: RootState) => user);
   return (
-    <Menu open={+sidebar} bottom={+bottom}>
+    <Menu open={+sidebar} bottom={+bottom} themeMode={theme}>
       {socials.map((item, index) => {
         const { href, title, icon: Icon } = item;
         return (

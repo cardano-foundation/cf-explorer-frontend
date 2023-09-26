@@ -3,6 +3,7 @@ import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { useSelector } from "react-redux";
 import { BiChevronRight } from "react-icons/bi";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "@mui/material";
 
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { CubeIcon, RocketIcon } from "src/commons/resources";
@@ -22,7 +23,6 @@ import {
   DetailsInfoItem,
   DetailLabel,
   DetailValue,
-  Icon,
   BlockDefault,
   DetailLabelSkeleton,
   DetailValueSkeleton,
@@ -64,6 +64,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
   const [lastUpdated, setLastUpdated] = useState<number>();
   const [urlFetch, setUrlFetch] = useState("");
   const { data, loading } = useFetch<BlockDetail>(urlFetch, undefined, false);
+  const theme = useTheme();
 
   useEffect(() => {
     if (data) setLastUpdated(Date.now());
@@ -169,7 +170,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
           </TimeDuration>
           <CustomTooltip title={t("common.close")}>
             <CloseButton onClick={handleClose}>
-              <CgClose />
+              <CgClose color={theme.palette.secondary.light} />
             </CloseButton>
           </CustomTooltip>
         </ViewDetailHeader>
@@ -190,14 +191,14 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
             </HeaderContainer>
             <ListItem>
               <Item>
-                <Icon src={CubeIcon} alt="socket" />
+                <CubeIcon width={24} height={24} fill={theme.palette.secondary[0]} />
                 <ItemName>{t("glossary.block")}</ItemName>
                 <CustomTooltip title={tooltip}>
                   <ItemValue sx={{ textTransform: "none" }}>{blockName}</ItemValue>
                 </CustomTooltip>
               </Item>
               <Item>
-                <Icon src={RocketIcon} alt="socket" />
+                <RocketIcon width={24} height={24} fill={theme.palette.secondary[0]} />
                 <ItemName>{t("common.slot")}</ItemName>
                 <ItemValue>
                   {data?.epochNo}

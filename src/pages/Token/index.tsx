@@ -160,7 +160,7 @@ const Tokens = () => {
           {...fetchData}
           data={data}
           columns={columns}
-          total={{ title: "Total", count: fetchData.total }}
+          total={{ title: "Total", count: fetchData.total, isDataOverSize: fetchData.isDataOverSize }}
           pagination={{
             ...pageInfo,
             total: fetchData.total,
