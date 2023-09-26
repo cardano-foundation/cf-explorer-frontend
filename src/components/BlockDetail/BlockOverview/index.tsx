@@ -23,7 +23,7 @@ import { Subtext, TitleCard, WrapConfirmation } from "./styles";
 interface BlockOverviewProps {
   data: BlockDetail | null;
   loading: boolean;
-  lastUpdated: number;
+  lastUpdated?: number;
 }
 
 const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdated }) => {
