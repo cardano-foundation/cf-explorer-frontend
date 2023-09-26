@@ -1,11 +1,9 @@
 import { Box, Button, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
 
-export const HeaderDetailContainer = styled(Box)(({ theme }) => ({
+export const HeaderDetailContainer = styled(Box)(() => ({
   textAlign: "left",
   position: "relative",
-  [theme.breakpoints.down("md")]: {
-    paddingTop: 32
-  }
+  paddingTop: 30
 }));
 
 export const BackButton = styled(Box)`

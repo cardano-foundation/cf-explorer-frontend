@@ -1,6 +1,8 @@
 import { alpha, Paper, TextField, styled, Box, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 
+import Card from "src/components/commons/Card";
+
 export const StyledAAmount = styled(Box)`
   display: flex;
   color: ${({ theme }) => theme.palette.secondary.main};
@@ -84,5 +86,17 @@ export const TimeDuration = styled("small")(({ theme }) => ({
   color: theme.palette.secondary.light,
   display: "block",
   textAlign: "left",
-  flex: 1
+  flex: 1,
+  [theme.breakpoints.down("md")]: {
+    marginTop: 8
+  }
 }));
+
+export const CardContainer = styled(Card)`
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    h2 {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+  }
+`;

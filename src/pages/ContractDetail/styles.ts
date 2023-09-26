@@ -18,7 +18,6 @@ export const BackButton = styled(Box)`
   text-align: left;
   align-items: center;
   gap: 10px;
-  margin-bottom: 10px;
   cursor: pointer;
 `;
 
