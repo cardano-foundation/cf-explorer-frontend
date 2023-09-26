@@ -53,10 +53,6 @@ const Version = styled("span")`
   text-wrap: nowrap;
 `;
 
-const Version = styled("span")`
-  text-wrap: nowrap;
-`;
-
 const RefContainer = styled(Box)`
   display: flex;
   gap: 10px;
