@@ -71,6 +71,9 @@ export const DrawContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down(355)]: {
     maxWidth: 290,
     minWidth: 290
+  },
+  ">div": {
+    zIndex: 2
   }
 }));
 

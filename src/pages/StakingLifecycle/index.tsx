@@ -103,7 +103,7 @@ const StakingLifecycle: React.FC = () => {
           <StyledTabs
             value={validTab}
             onChange={handleChange}
-            sx={{ borderBottom: (theme) => `1px solid ${theme.palette.border.main}` }}
+            sx={{ borderBottom: (theme) => `1px solid ${theme.palette.primary[200]}` }}
             TabIndicatorProps={{ sx: { backgroundColor: (theme) => theme.palette.primary.main, height: 4 } }}
             scrollButtons="auto"
             variant="scrollable"

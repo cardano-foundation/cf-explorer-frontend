@@ -10,7 +10,12 @@ import {
   TimeIcon,
   PaymentWalletUrl,
   WalletIconRewardGreen,
-  RewardAccountIconUrl
+  RewardAccountIconUrl,
+  RewardAccountIconDarkUrl,
+  PaymentWalletDarkUrl,
+  WalletIconRewardGreenDark,
+  AddressIconDark2,
+  TimeIconDark
 } from "src/commons/resources";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import DrawPath from "src/components/commons/DrawPath";
@@ -23,6 +28,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import { StyledCopyButton } from "src/components/StakingLifeCycle/SPOLifecycle/Registration/styles";
 import ADAicon from "src/components/commons/ADAIcon";
 import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import { StyledLink } from "../../Registration/styles";
 import {
@@ -155,7 +161,11 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
 
         <InfoGroup>
           <Info>
-            <AddressIcon fill={theme.palette.secondary.light} />
+            <CustomIcon
+              icon={theme.isDark ? AddressIconDark2 : AddressIcon}
+              height={30}
+              fill={theme.palette.secondary.light}
+            />
             <CustomTooltip title={txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(txHash)}>{getShortHash(txHash || "")}</StyledLink>
@@ -170,7 +180,11 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
             <InfoText>{formatADAFull(amount || 0)}</InfoText>
           </Info>
           <Info>
-            <TimeIcon fill={theme.palette.secondary.light} />
+            <CustomIcon
+              icon={theme.isDark ? TimeIconDark : TimeIcon}
+              height={30}
+              fill={theme.palette.secondary.light}
+            />
             <InfoText>{formatDateTimeLocal(time || "")}</InfoText>
           </Info>
         </InfoGroup>
@@ -179,12 +193,12 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
         <AdaHolder ref={adaHolderRef} />
         <AccountContainer ref={paymentRef}>
           <PaymentWalletContainer>
-            <PaymentWalletIcon src={PaymentWalletUrl} alt="PaymentWallet" />
+            <PaymentWalletIcon src={theme.isDark ? PaymentWalletDarkUrl : PaymentWalletUrl} alt="PaymentWallet" />
             <PaymentWalletInfo>
               <PaymentWalletTitle>{t("common.paymentWallet")}</PaymentWalletTitle>
               <PaymentWalletValueContainer>
                 <PaymentWalletIconBox>
-                  <WalletIconRewardGreen />
+                  <CustomIcon icon={theme.isDark ? WalletIconRewardGreenDark : WalletIconRewardGreen} height={29} />
                   <AmountWithIconBox>
                     <PaymentWalleValue>{formatADAFull(stakeTotalAmount || 0)}</PaymentWalleValue>
                     <StyledAdaLogoIcon />
@@ -194,12 +208,15 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
             </PaymentWalletInfo>
           </PaymentWalletContainer>
           <PaymentWalletContainer>
-            <PaymentWalletIcon src={RewardAccountIconUrl} alt="PaymentWallet" />
+            <PaymentWalletIcon
+              src={theme.isDark ? RewardAccountIconDarkUrl : RewardAccountIconUrl}
+              alt="PaymentWallet"
+            />
             <PaymentWalletInfo>
               <PaymentWalletTitle>{t("glossary.rewardAccount")}</PaymentWalletTitle>
               <PaymentWalletValueContainer>
                 <PaymentWalletIconBox>
-                  <WalletIconRewardGreen />
+                  <CustomIcon icon={theme.isDark ? WalletIconRewardGreenDark : WalletIconRewardGreen} height={29} />
                   <AmountWithIconBox>
                     <PaymentWalleValue>{formatADAFull(stakeRewardAvailable || 0)}</PaymentWalleValue>
                     <StyledAdaLogoIcon />

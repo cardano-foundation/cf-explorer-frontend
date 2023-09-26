@@ -48,6 +48,7 @@ import {
   WrapLeaderValue
 } from "./styles";
 import NoRecord from "../NoRecord";
+import CustomIcon from "../CustomIcon";
 
 export interface DetailHeaderProps {
   type: Bookmark["type"];
@@ -60,9 +61,10 @@ export interface DetailHeaderProps {
   stakeKeyStatus?: StakeStatus;
   epoch?: DetailHeaderBlock | null;
   listItem: {
-    icon?: string;
+    icon?: React.FunctionComponent<React.SVGAttributes<SVGElement>> | string;
     title: React.ReactNode;
     value?: React.ReactNode;
+    strokeColor?: string;
     allowSearch?: boolean;
     dataSearch?: any[];
     isSent?: boolean;
@@ -70,6 +72,7 @@ export interface DetailHeaderProps {
     hideHeader?: boolean;
   }[];
   isHideButtonBack?: boolean;
+  isClickAble?: boolean;
 }
 
 const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
@@ -85,12 +88,14 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     bookmarkData,
     stakeKeyStatus,
     isHideButtonBack,
-    lastUpdated
+    lastUpdated,
+    isClickAble
   } = props;
+
   const history = useHistory();
   const theme = useTheme();
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
-  const [openBackdrop, setOpenBackdrop] = useState<any>({
+  const [openBackdrop, setOpenBackdrop] = useState<{ [x: string]: boolean }>({
     input: false,
     output: false
   });
@@ -237,7 +242,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           ""
         )}
       </WrapHeader>
-      <DetailsInfo container length={numberOfItems}>
+      <DetailsInfo isClickAble={+Boolean(isClickAble)} container length={numberOfItems}>
         {listItem.map((item, index) => {
           const keyItem = item.key || "";
           return (
@@ -253,14 +258,25 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               itemOnRow={itemOnRow}
             >
               <Box position="relative" display={item.hideHeader ? "none" : ""}>
-                {item.icon ? <img src={item.icon} alt="" height={20} /> : null}
+                {item.icon ? (
+                  typeof item.icon === "string" ? (
+                    <img src={item.icon} alt="" height={20} />
+                  ) : (
+                    <CustomIcon
+                      fill={!item.strokeColor ? theme.palette.secondary.main : ""}
+                      stroke={item.strokeColor ? theme.palette.secondary.main : ""}
+                      icon={item.icon}
+                      height={22}
+                    />
+                  )
+                ) : null}
                 {item.allowSearch && keyItem && (
                   <AllowSearchButton
                     onClick={() => {
                       setOpenBackdrop((prev: any) => ({ ...prev, [keyItem]: true }));
                     }}
                   >
-                    <SearchIcon stroke={theme.palette.secondary.light} />
+                    <SearchIcon stroke={theme.palette.secondary.light} fill={theme.palette.secondary[0]} />
                   </AllowSearchButton>
                 )}
                 {item.allowSearch && keyItem && openBackdrop[keyItem] && (
@@ -270,9 +286,15 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                     value={""}
                     IconComponent={BiChevronDown}
                     MenuProps={{
+                      MenuListProps: {
+                        sx: {
+                          bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+                        }
+                      },
                       PaperProps: {
                         sx: {
                           borderRadius: 2,
+                          bgcolor: ({ palette }) => `${palette.secondary[0]} !important`,
                           marginTop: 0.5,
                           "&::-webkit-scrollbar": {
                             width: "5px"
