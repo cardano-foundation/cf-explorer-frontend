@@ -3,9 +3,10 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useTheme } from "@mui/material";
 
-import { RootState } from "src/stores/types";
+import { CloseLineIcon } from "src/commons/resources";
 
 import CustomTooltip from "../../CustomTooltip";
+import CustomIcon from "../../CustomIcon";
 import { ToggleMenu, ArrowCollapse } from "./styles";
 
 interface Props {
@@ -37,6 +38,15 @@ const ToggleSidebar: React.FC<Props> = ({ handleToggle }) => {
           ) : (
             <FaArrowRight color={theme.palette.secondary.light} data-testid="toggle-sidebar-arrow-right" />
           )}
+        </ArrowCollapse>
+        <ArrowCollapse mobile={1}>
+          <CustomIcon
+            icon={CloseLineIcon}
+            width={18}
+            height={18}
+            fill="currentColor"
+            color={(theme) => theme.palette.secondary.light}
+          />
         </ArrowCollapse>
       </ToggleMenu>
     </CustomTooltip>
