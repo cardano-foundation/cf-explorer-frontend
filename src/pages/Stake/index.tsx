@@ -152,7 +152,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
           />
         </Card>
       </Box>
-      {stakeKey && onDetailView && <DetailViewStakeKey stakeId={stakeKey} handleClose={handleClose} />}
+      <DetailViewStakeKey stakeId={stakeKey || ""} open={onDetailView} handleClose={handleClose} />
     </StyledContainer>
   );
 };

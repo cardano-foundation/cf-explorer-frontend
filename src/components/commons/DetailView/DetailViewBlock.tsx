@@ -51,36 +51,123 @@ import ADAicon from "../ADAIcon";
 import FormNowMessage from "../FormNowMessage";
 
 type DetailViewBlockProps = {
-  blockNo: number | string;
+  blockNo?: number | string;
   handleClose: () => void;
+  open?: boolean;
 };
 
 const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
   const { t } = useTranslation();
-  const { blockNo, handleClose } = props;
+  const { blockNo, handleClose, open } = props;
   const currentBlockNo = useSelector(({ system }: RootState) => system.blockNo);
   const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
   const [lastUpdated, setLastUpdated] = useState<number>();
+  const [urlFetch, setUrlFetch] = useState("");
+  const { data, loading } = useFetch<BlockDetail>(urlFetch, undefined, false);
   const theme = useTheme();
-  const { data } = useFetch<BlockDetail>(`${API.BLOCK.DETAIL}/${blockNo}`, undefined, false);
 
   useEffect(() => {
     if (data) setLastUpdated(Date.now());
   }, [data, currentBlockNo]);
 
   useEffect(() => {
-    document.body.style.overflowY = "hidden";
+    if (!blockNo) {
+      setUrlFetch("");
+    } else {
+      setUrlFetch(`${API.BLOCK.DETAIL}/${blockNo}`);
+    }
+  }, [blockNo]);
 
+  useEffect(() => {
+    if (open && blockNo) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "scroll";
+    }
     return () => {
       document.body.style.overflowY = "scroll";
     };
-  }, []);
-
-  if (!data)
+  }, [open, blockNo]);
+  const renderContent = () => {
+    if (!data || loading || !epochNo) {
+      return (
+        <>
+          <ViewDetailHeader>
+            <ViewAllButton tooltipTitle={t("common.viewDetail")} to={details.block(blockNo)} />
+            <CustomTooltip title={t("common.close")}>
+              <CloseButton onClick={handleClose}>
+                <CgClose />
+              </CloseButton>
+            </CustomTooltip>
+          </ViewDetailHeader>
+          <ViewDetailContainer>
+            <ViewDetailScroll>
+              <HeaderContainer>
+                <ProgressSkeleton variant="circular" />
+              </HeaderContainer>
+              <ListItem>
+                <Item>
+                  <IconSkeleton variant="circular" />
+                  <ItemName>
+                    <DetailValueSkeleton variant="rectangular" />
+                  </ItemName>
+                  <ItemValue>
+                    <DetailLabelSkeleton variant="rectangular" />
+                  </ItemValue>
+                </Item>
+                <Item>
+                  <IconSkeleton variant="circular" />
+                  <ItemName>
+                    <DetailValueSkeleton variant="rectangular" />
+                  </ItemName>
+                  <ItemValue>
+                    <DetailLabelSkeleton variant="rectangular" />
+                  </ItemValue>
+                </Item>
+              </ListItem>
+              <Group>
+                {new Array(4).fill(0).map((_, index) => {
+                  return (
+                    <DetailsInfoItem key={index}>
+                      <DetailLabel>
+                        <DetailValueSkeleton variant="rectangular" />
+                      </DetailLabel>
+                      <DetailValue>
+                        <DetailLabelSkeleton variant="rectangular" />
+                      </DetailValue>
+                    </DetailsInfoItem>
+                  );
+                })}
+              </Group>
+              {new Array(2).fill(0).map((_, index) => {
+                return (
+                  <Group key={index}>
+                    <DetailsInfoItem>
+                      <DetailLabel>
+                        <DetailValueSkeleton variant="rectangular" />
+                      </DetailLabel>
+                      <DetailValue>
+                        <DetailLabelSkeleton variant="rectangular" />
+                      </DetailValue>
+                    </DetailsInfoItem>
+                  </Group>
+                );
+              })}
+            </ViewDetailScroll>
+          </ViewDetailContainer>
+          <ViewMoreButton to={details.block(blockNo)} />
+        </>
+      );
+    }
+    const { blockName, tooltip } = formatNameBlockNo(data?.blockNo, data?.epochNo);
+    const confirmation = Math.max(0, currentBlockNo ? currentBlockNo - (data.blockNo || 0) : data.confirmation);
     return (
-      <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
+      <>
         <ViewDetailHeader>
           <ViewAllButton tooltipTitle={t("common.viewDetail")} to={details.block(blockNo)} />
+          <TimeDuration>
+            <FormNowMessage time={lastUpdated} />
+          </TimeDuration>
           <CustomTooltip title={t("common.close")}>
             <CloseButton onClick={handleClose}>
               <CgClose color={theme.palette.secondary.light} />
@@ -90,161 +177,93 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
         <ViewDetailContainer>
           <ViewDetailScroll>
             <HeaderContainer>
-              <ProgressSkeleton variant="circular" />
+              <ProgressCircle
+                size={150}
+                pathLineCap="butt"
+                pathWidth={4}
+                trailWidth={2}
+                percent={data?.epochNo === epochNo ? ((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100 : 100}
+                trailOpacity={1}
+              >
+                <EpochNumber>{data?.epochNo !== null ? data?.epochNo : "_"}</EpochNumber>
+                <EpochText>{t("glossary.epoch")}</EpochText>
+              </ProgressCircle>
             </HeaderContainer>
             <ListItem>
               <Item>
-                <IconSkeleton variant="circular" />
-                <ItemName>
-                  <DetailValueSkeleton variant="rectangular" />
-                </ItemName>
-                <ItemValue>
-                  <DetailLabelSkeleton variant="rectangular" />
-                </ItemValue>
+                <CubeIcon width={24} height={24} fill={theme.palette.secondary[0]} />
+                <ItemName>{t("glossary.block")}</ItemName>
+                <CustomTooltip title={tooltip}>
+                  <ItemValue sx={{ textTransform: "none" }}>{blockName}</ItemValue>
+                </CustomTooltip>
               </Item>
               <Item>
-                <IconSkeleton variant="circular" />
-                <ItemName>
-                  <DetailValueSkeleton variant="rectangular" />
-                </ItemName>
+                <RocketIcon width={24} height={24} fill={theme.palette.secondary[0]} />
+                <ItemName>{t("common.slot")}</ItemName>
                 <ItemValue>
-                  <DetailLabelSkeleton variant="rectangular" />
+                  {data?.epochNo}
+                  <BlockDefault>/{data?.epochSlotNo}</BlockDefault>
                 </ItemValue>
               </Item>
             </ListItem>
             <Group>
-              {new Array(4).fill(0).map((_, index) => {
-                return (
-                  <DetailsInfoItem key={index}>
-                    <DetailLabel>
-                      <DetailValueSkeleton variant="rectangular" />
-                    </DetailLabel>
-                    <DetailValue>
-                      <DetailLabelSkeleton variant="rectangular" />
-                    </DetailValue>
-                  </DetailsInfoItem>
-                );
-              })}
+              <DetailsInfoItem>
+                <DetailLabel>{t("glossary.blockId")}</DetailLabel>
+                <DetailValue>
+                  <CustomTooltip title={data?.hash}>
+                    <StyledLink to={details.block(blockNo)}>{getShortHash(data?.hash)}</StyledLink>
+                  </CustomTooltip>
+                  <CopyButton text={data?.hash} />
+                </DetailValue>
+              </DetailsInfoItem>
+              <DetailsInfoItem>
+                <DetailLabel>{t("createdAt")}</DetailLabel>
+                <DetailValue>{formatDateTimeLocal(data.time || "")}</DetailValue>
+              </DetailsInfoItem>
+              <DetailsInfoItem>
+                <DetailLabel>{confirmation > 1 ? t("glossary.comfirmations") : t("glossary.comfirmation")}</DetailLabel>
+                <DetailValue>{confirmation}</DetailValue>
+              </DetailsInfoItem>
+              <DetailsInfoItem>
+                <DetailLabel>{t("glossary.transactionfees")}</DetailLabel>
+                <DetailValue>
+                  {formatADAFull(data?.totalFees)}
+                  <ADAicon />
+                </DetailValue>
+              </DetailsInfoItem>
+              <DetailsInfoItem>
+                <DetailLabel>{t("glossary.totalOutputInAda")}</DetailLabel>
+                <DetailValue>
+                  {formatADAFull(data?.totalOutput)}
+                  <ADAicon />
+                </DetailValue>
+              </DetailsInfoItem>
             </Group>
-            {new Array(2).fill(0).map((_, index) => {
-              return (
-                <Group key={index}>
-                  <DetailsInfoItem>
-                    <DetailLabel>
-                      <DetailValueSkeleton variant="rectangular" />
-                    </DetailLabel>
-                    <DetailValue>
-                      <DetailLabelSkeleton variant="rectangular" />
-                    </DetailValue>
-                  </DetailsInfoItem>
-                </Group>
-              );
-            })}
+            <Group>
+              <DetailLink to={details.block(blockNo)}>
+                <DetailLabel>
+                  <DetailLinkIcon>
+                    <CgArrowsExchange />
+                  </DetailLinkIcon>
+                  <DetailLinkName>{t("glossary.transactions")}</DetailLinkName>
+                </DetailLabel>
+                <DetailValue>
+                  <DetailLinkRight>
+                    <BiChevronRight size={24} />
+                  </DetailLinkRight>
+                </DetailValue>
+              </DetailLink>
+            </Group>
           </ViewDetailScroll>
         </ViewDetailContainer>
         <ViewMoreButton to={details.block(blockNo)} />
-      </ViewDetailDrawer>
+      </>
     );
-
-  const { blockName, tooltip } = formatNameBlockNo(data?.blockNo, data?.epochNo);
-  const confirmation = Math.max(0, currentBlockNo ? currentBlockNo - (data.blockNo || 0) : data.confirmation);
+  };
 
   return (
-    <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
-      <ViewDetailHeader>
-        <ViewAllButton tooltipTitle={t("common.viewDetail")} to={details.block(blockNo)} />
-        <TimeDuration>
-          <FormNowMessage time={lastUpdated} />
-        </TimeDuration>
-        <CustomTooltip title={t("common.close")}>
-          <CloseButton onClick={handleClose}>
-            <CgClose color={theme.palette.secondary.light} />
-          </CloseButton>
-        </CustomTooltip>
-      </ViewDetailHeader>
-      <ViewDetailContainer>
-        <ViewDetailScroll>
-          <HeaderContainer>
-            <ProgressCircle
-              size={150}
-              pathLineCap="butt"
-              pathWidth={4}
-              trailWidth={2}
-              percent={data?.epochNo === epochNo ? ((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100 : 100}
-              trailOpacity={1}
-            >
-              <EpochNumber>{data?.epochNo !== null ? data?.epochNo : "_"}</EpochNumber>
-              <EpochText>{t("glossary.epoch")}</EpochText>
-            </ProgressCircle>
-          </HeaderContainer>
-          <ListItem>
-            <Item>
-              <CubeIcon width={24} height={24} fill={theme.palette.secondary[0]} />
-              <ItemName>{t("glossary.block")}</ItemName>
-              <CustomTooltip title={tooltip}>
-                <ItemValue sx={{ textTransform: "none" }}>{blockName}</ItemValue>
-              </CustomTooltip>
-            </Item>
-            <Item>
-              <RocketIcon width={24} height={24} fill={theme.palette.secondary[0]} />
-              <ItemName>{t("common.slot")}</ItemName>
-              <ItemValue>
-                {data?.epochNo}
-                <BlockDefault>/{data?.epochSlotNo}</BlockDefault>
-              </ItemValue>
-            </Item>
-          </ListItem>
-          <Group>
-            <DetailsInfoItem>
-              <DetailLabel>{t("glossary.blockId")}</DetailLabel>
-              <DetailValue>
-                <CustomTooltip title={data?.hash}>
-                  <StyledLink to={details.block(blockNo)}>{getShortHash(data?.hash)}</StyledLink>
-                </CustomTooltip>
-                <CopyButton text={data?.hash} />
-              </DetailValue>
-            </DetailsInfoItem>
-            <DetailsInfoItem>
-              <DetailLabel>{t("createdAt")}</DetailLabel>
-              <DetailValue>{formatDateTimeLocal(data.time || "")}</DetailValue>
-            </DetailsInfoItem>
-            <DetailsInfoItem>
-              <DetailLabel>{confirmation > 1 ? t("glossary.comfirmations") : t("glossary.comfirmation")}</DetailLabel>
-              <DetailValue>{confirmation}</DetailValue>
-            </DetailsInfoItem>
-            <DetailsInfoItem>
-              <DetailLabel>{t("glossary.transactionfees")}</DetailLabel>
-              <DetailValue>
-                {formatADAFull(data?.totalFees)}
-                <ADAicon />
-              </DetailValue>
-            </DetailsInfoItem>
-            <DetailsInfoItem>
-              <DetailLabel>{t("glossary.totalOutputInAda")}</DetailLabel>
-              <DetailValue>
-                {formatADAFull(data?.totalOutput)}
-                <ADAicon />
-              </DetailValue>
-            </DetailsInfoItem>
-          </Group>
-          <Group>
-            <DetailLink to={details.block(blockNo)}>
-              <DetailLabel>
-                <DetailLinkIcon>
-                  <CgArrowsExchange />
-                </DetailLinkIcon>
-                <DetailLinkName>{t("glossary.transactions")}</DetailLinkName>
-              </DetailLabel>
-              <DetailValue>
-                <DetailLinkRight>
-                  <BiChevronRight size={24} />
-                </DetailLinkRight>
-              </DetailValue>
-            </DetailLink>
-          </Group>
-        </ViewDetailScroll>
-      </ViewDetailContainer>
-      <ViewMoreButton to={details.block(blockNo)} />
+    <ViewDetailDrawer anchor="right" open={Boolean(open && blockNo)} variant="persistent" hideBackdrop>
+      {renderContent()}
     </ViewDetailDrawer>
   );
 };

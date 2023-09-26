@@ -50,7 +50,7 @@ const Transactions = () => {
           handleClose={handleClose}
         />
       </StyledContainer>
-      {selected && onDetailView && <DetailViewTransaction hash={selected} handleClose={handleClose} />}
+      <DetailViewTransaction hash={selected || ""} open={onDetailView} handleClose={handleClose} />
     </>
   );
 };
