@@ -64,7 +64,7 @@ const OverViews: React.FC = () => {
       </TimeDuration>
       <Grid container spacing={2}>
         <Grid item xl={3} md={6} xs={12}>
-          <StyledCard.Container>
+          <StyledCard.ClickAble to={details.epoch(data?.epochNo)}>
             <StyledCard.Content>
               <StyledCard.Title>{t("glossary.epoch")}</StyledCard.Title>
               <StyledCard.Link to={details.epoch(data?.epochNo)}>{data?.epochNo}</StyledCard.Link>
@@ -79,7 +79,7 @@ const OverViews: React.FC = () => {
               </Box>
             </StyledCard.Content>
             <StyledImg src={CurentEpochPool} alt="Clock" />
-          </StyledCard.Container>
+          </StyledCard.ClickAble>
         </Grid>
         <Grid item xl={3} md={6} xs={12}>
           <Box height={"100%"}>
@@ -89,7 +89,7 @@ const OverViews: React.FC = () => {
               borderRadius="12px"
               height={"100%"}
             >
-              <StyledCard.Container style={{ boxShadow: "none" }}>
+              <StyledCard.ClickAble to={details.epoch(data?.epochNo)}>
                 <StyledCard.Content>
                   <StyledCard.Title>{t("glossary.slot")}</StyledCard.Title>
                   <StyledCard.Value>
@@ -100,7 +100,7 @@ const OverViews: React.FC = () => {
                   </StyledCard.Value>
                 </StyledCard.Content>
                 <StyledImg src={RocketPoolIcon} alt="Rocket" />
-              </StyledCard.Container>
+              </StyledCard.ClickAble>
               <Box position={"relative"} top={-60} px={4}>
                 <StyledLinearProgress
                   variant="determinate"

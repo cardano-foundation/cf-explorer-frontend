@@ -32,8 +32,12 @@ const mockSummary = {
 describe("Summary component", () => {
   it("should component render", () => {
     render(<Summary data={mockSummary} />);
-    expect(screen.getByRole("img", { name: /send icon/i })).toBeInTheDocument();
-    expect(screen.getByText(/ada received:/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole("img", {
+        name: /wallet icon/i
+      })
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Wallet/i)).toBeInTheDocument();
     expect(screen.getByText(getShortWallet(mockSummary.stakeAddress[0].address))).toBeInTheDocument();
   });
 
