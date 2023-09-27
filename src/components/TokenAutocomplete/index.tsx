@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { useScreen } from "src/commons/hooks/useScreen";
-import { HeaderSearchIcon } from "src/commons/resources";
+import { HeaderSearchIconComponent } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatNumberDivByDecimals, getShortWallet } from "src/commons/utils/helper";
@@ -18,7 +18,6 @@ import Table, { Column } from "../commons/Table";
 import { WrappModalScrollBar } from "../commons/Table/styles";
 import {
   AssetName,
-  Image,
   Logo,
   LogoEmpty,
   Option,
@@ -27,6 +26,7 @@ import {
   StyledTextField,
   SubmitButton
 } from "./styles";
+import CustomIcon from "../commons/CustomIcon";
 
 const TokenAutocomplete = ({ address }: { address: string }) => {
   const { t } = useTranslation();
@@ -168,6 +168,7 @@ export default TokenAutocomplete;
 
 const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => void; address: string }) => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const [{ page, size }, setPagination] = useState({ page: 0, size: 50 });
   const [value, setValue] = useState("");
   const [search, setSearch] = useState("");
@@ -232,7 +233,12 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             }}
           />
           <SubmitButton onClick={() => handleSearch()}>
-            <Image src={HeaderSearchIcon} alt="Search" />
+            <CustomIcon
+              icon={HeaderSearchIconComponent}
+              height={22}
+              fill={theme.palette.secondary[0]}
+              stroke={theme.palette.secondary.light}
+            />
           </SubmitButton>
         </SearchContainer>
         <WrappModalScrollBar>

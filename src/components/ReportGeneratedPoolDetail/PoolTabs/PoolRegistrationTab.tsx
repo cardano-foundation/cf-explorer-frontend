@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -18,11 +18,13 @@ import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
 import RegistrationCertificateModal from "src/components/StakingLifeCycle/SPOLifecycle/Registration/RegistrationCertificateModal";
 import ADAicon from "src/components/commons/ADAIcon";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import { ReportGeneratedPoolDetailContext } from "..";
 
 const PoolRegistrationTab = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { reportId = "" } = useParams<{ reportId: string }>();
   const { poolId } = useContext(ReportGeneratedPoolDetailContext);
   const [params, setParams] = useState({
@@ -76,7 +78,7 @@ const PoolRegistrationTab = () => {
       title: t("common.certificate"),
       render: (data) => (
         <IconButton onClick={() => setSelected(data?.poolUpdateId || 0)}>
-          <EyeIcon />
+          <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
         </IconButton>
       )
     }

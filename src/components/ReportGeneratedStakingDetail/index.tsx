@@ -1,6 +1,6 @@
 import React, { useMemo, createContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { Box, styled } from "@mui/material";
+import { Box, styled, useTheme } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
 
@@ -39,6 +39,7 @@ interface ITab {
 export const StakingDetailContext = createContext({ stakeKey: "", reportName: "" });
 const ReportGeneratedStakingDetailTabs = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { reportId } = useParams<{ reportId: string }>();
   const history = useHistory();
   const reportDetail = useFetch<IReportStaking>(API.REPORT.STAKING_REPORTED_DETAIL(reportId));
@@ -112,7 +113,7 @@ const ReportGeneratedStakingDetailTabs = () => {
     <Box>
       <TopHeader>
         <BackButton onClick={history.goBack}>
-          <HiArrowLongLeft />
+          <HiArrowLongLeft color={theme.palette.secondary.light} />
           <BackText>{t("common.back")}</BackText>
         </BackButton>
       </TopHeader>

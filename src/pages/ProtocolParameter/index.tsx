@@ -226,7 +226,7 @@ const ProtocolParameter: React.FC = () => {
       {histories && (
         <Box textAlign={"left"} sx={{ marginTop: "30px" }}>
           <BackButton onClick={() => history.push(lists.protocolParameters())}>
-            <HiArrowLongLeft />
+            <HiArrowLongLeft color={theme.palette.secondary.light} />
             <BackText>{t("common.back")}</BackText>
           </BackButton>
         </Box>

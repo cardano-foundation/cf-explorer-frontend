@@ -194,13 +194,13 @@ export const NetAmountBox = styled(HoldBox)(({ theme }) => ({
   boxSizing: "border-box",
   minHeight: 70,
   height: "max-content",
-  borderColor: theme.palette.success[800],
+  borderColor: theme.isDark ? theme.palette.success[100] : theme.palette.success[800],
   width: "100%",
   maxWidth: 200,
   minWidth: 180,
   "::after": {
     content: `"${i18next.t("glossary.netAmount").toUpperCase()}"`,
-    background: theme.palette.success[800]
+    background: theme.isDark ? theme.palette.success[100] : theme.palette.success[800]
   },
   [theme.breakpoints.down(1440)]: {
     width: 180,

@@ -138,11 +138,20 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       key: "totalOutput",
       render: (transaction) => {
         const isUp = transaction?.balance >= 0;
+        let colorTheme: string;
+        if (isUp) {
+          colorTheme = theme.palette.success[800];
+          if (theme.mode === "dark") {
+            colorTheme = theme.palette.success.main;
+          }
+        } else {
+          colorTheme = theme.palette.error[700];
+        }
         return (
           <Box display="inline-flex" alignItems="center">
             {transaction?.balance ? (
               <>
-                <Box mr={1} color={isUp ? theme.palette.success[800] : theme.palette.error[700]}>
+                <Box mr={1} color={colorTheme}>
                   {!isUp ? `` : `+`}
                   {formatADAFull(transaction.balance)}
                 </Box>

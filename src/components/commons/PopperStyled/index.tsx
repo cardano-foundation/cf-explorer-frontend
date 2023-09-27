@@ -12,6 +12,7 @@ const StyledPopper = styled(Popper)(({ theme }) => ({
   color: "rgb(19, 21, 47)",
   transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
   borderRadius: 4,
+  zIndex: 10,
   boxShadow:
     "rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px",
   "&::before": {
@@ -21,6 +22,7 @@ const StyledPopper = styled(Popper)(({ theme }) => ({
     position: "absolute",
     width: 12,
     height: 12,
+    zIndex: 10,
     bottom: -6,
     transform: "rotate(45deg)",
     left: "calc(50% - 6px)"
@@ -74,6 +76,7 @@ const PopperStyled = (props: Props) => {
             right={0}
             width={20}
             height={20}
+            zIndex={10}
             sx={{
               transform: "translateX(50%) translateY(-50%)",
               cursor: "pointer",
