@@ -9,21 +9,20 @@ describe("User check information of Random Token", () => {
     cy.get("span").contains("Per page").should("be.visible");
 
     cy.get('[data-testid="table-common"] tbody tr').eq(0).click();
-    cy.get("a").contains("View Details").should("be.visible");
-    cy.get("a").contains("View Details").click();
+    cy.get("a").contains("View Details", { matchCase: false }).should("be.visible");
+    cy.get("a").contains("View Details", { matchCase: false }).click();
     cy.wait(2000);
 
     cy.get('[data-testid="search-bar"]').should("be.visible");
-    cy.get("p > div").should("be.visible");
-    cy.get("div").contains("Total Supply").should("be.visible");
+    cy.get("div").contains("Total Supply", { matchCase: false }).should("be.visible");
     cy.get("div").contains("Total Transactions").should("be.visible");
-    cy.get("div").contains("Policy Id").should("be.visible");
+    cy.get("div").contains("Policy Id", { matchCase: false }).should("be.visible");
     cy.get("div").contains("Token Type").should("be.visible");
-    cy.get("div").contains("Number of Holders").should("be.visible");
-    cy.get("div").contains("Total Volume").should("be.visible");
-    cy.get("div").contains("Volume 24H").should("be.visible");
+    cy.get("div").contains("Number of Holders", { matchCase: false }).should("be.visible");
+    cy.get("div").contains("Total Volume", { matchCase: false }).should("be.visible");
+    cy.get("div").contains("Volume 24H", { matchCase: false }).should("be.visible");
     cy.get("div").contains("Created At").should("be.visible");
-    cy.get("div").contains("Token Last Activity").should("be.visible");
+    cy.get("div").contains("Token Last Activity", { matchCase: false }).should("be.visible");
     cy.get('div[class="recharts-responsive-container"]').should("be.visible");
 
     cy.get('[data-testid="footer"]').scrollIntoView();

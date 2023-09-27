@@ -11,7 +11,7 @@ import FooterMenu from "../Sidebar/FooterMenu";
 const StyledFooter = styled("footer")`
   height: 60px;
   padding: 0px 10px;
-  border-top: 1px solid ${(props) => props.theme.palette.border.main};
+  border-top: 1px solid ${(props) => props.theme.palette.primary[200]};
   ${({ theme }) => theme.breakpoints.down("md")} {
     height: unset;
     padding: 10px;
@@ -87,7 +87,7 @@ const LinkTo = styled(Link)`
 const Footer: React.FC = () => {
   const { t } = useTranslation();
   return (
-    <StyledFooter data-testid="footer">
+    <StyledFooter data-testid="footer" id="footer">
       <FooterContainer>
         <FooterMenu bottom={true} />
         <Copyright data-testid="footer-text">

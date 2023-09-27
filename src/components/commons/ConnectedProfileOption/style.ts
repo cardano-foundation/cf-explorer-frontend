@@ -2,6 +2,7 @@ import { Box, ButtonBase, Popover, styled } from "@mui/material";
 
 export const WrapContent = styled(Popover)`
   .MuiPaper-root {
+    background: ${({ theme }) => theme.palette.secondary[0]};
     margin-top: 6px;
     border-radius: 20px;
     width: 220px;
@@ -21,6 +22,9 @@ export const Content = styled(Box)`
 export const Profile = styled(Box)`
   display: flex;
   align-items: center;
+  h4 {
+    color: ${(props) => props.theme.palette.secondary.main};
+  }
 `;
 
 export const Disconnect = styled(Box)`
@@ -28,7 +32,8 @@ export const Disconnect = styled(Box)`
   align-items: center;
   margin-top: 26px;
   h4 {
-    color: ${(props) => props.theme.palette.error[700]};
+    color: ${(props) =>
+      props.theme.mode === "light" ? props.theme.palette.error[700] : props.theme.palette.error[100]};
   }
 `;
 
@@ -48,7 +53,7 @@ export const StyledButton = styled(ButtonBase)`
   align-items: center;
   padding: 12px 20px;
   gap: 8px;
-  background: ${(props) => props.theme.palette.secondary.main};
+  background: ${({ theme }) => (theme.mode === "light" ? theme.palette.secondary.main : theme.palette.primary.main)};
   border-radius: 8px;
   cursor: pointer;
   height: auto;
@@ -61,7 +66,7 @@ export const StyledButton = styled(ButtonBase)`
 export const Span = styled("span")`
   font-family: var(--font-family-title);
   font-weight: var(--font-weight-bold);
-  color: ${(props) => props.theme.palette.primary.contrastText};
+  color: ${(props) => props.theme.palette.secondary[0]};
   white-space: nowrap;
   line-height: 1;
 `;

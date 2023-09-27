@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { BiChevronRight } from "react-icons/bi";
 import { CgClose } from "react-icons/cg";
+import { useTheme } from "@mui/material";
 
 import { PeopleIcon, TransactionIcon, UnionTokenIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
@@ -57,6 +58,7 @@ type DetailViewTokenProps = {
 const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
   const { t } = useTranslation();
   const { token: data, handleClose, tokenId, open } = props;
+  const theme = useTheme();
 
   const renderContent = () => {
     if (!data) {
@@ -135,7 +137,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
           <ViewAllButton tooltipTitle={t("common.viewDetail")} to={details.token(tokenId)} />
           <CustomTooltip title={t("common.close")}>
             <CloseButton onClick={handleClose}>
-              <CgClose />
+              <CgClose color={theme.palette.secondary.light} />
             </CloseButton>
           </CustomTooltip>
         </ViewDetailHeader>

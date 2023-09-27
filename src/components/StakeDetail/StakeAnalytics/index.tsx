@@ -10,10 +10,10 @@ import {
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
-  TooltipProps,
   XAxis,
-  XAxisProps,
   YAxis,
+  TooltipProps,
+  XAxisProps,
   Label,
   Line
 } from "recharts";
@@ -21,30 +21,31 @@ import { getNiceTickValues } from "recharts-scale";
 import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
-import { useScreen } from "src/commons/hooks/useScreen";
-import { HighestIcon, LowestIcon } from "src/commons/resources";
-import { API } from "src/commons/utils/api";
-import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
-import { formatADAFull, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
-import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
 import Card from "src/components/commons/Card";
+import { formatADAFull, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
+import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
+import { API } from "src/commons/utils/api";
+import { useScreen } from "src/commons/hooks/useScreen";
+import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
+import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
+import CustomIcon from "src/components/commons/CustomIcon";
 import { TooltipBody } from "src/components/commons/Layout/styles";
 
 import {
   BoxInfo,
   BoxInfoItem,
   BoxInfoItemRight,
+  Tabs,
+  Tab,
   ButtonTitle,
   ChartBox,
-  CustomButton,
   SkeletonUI,
-  Tab,
-  Tabs,
   Title,
-  TooltipLabel,
-  TooltipValue,
   ValueInfo,
-  Wrapper
+  Wrapper,
+  CustomButton,
+  TooltipValue,
+  TooltipLabel
 } from "./styles";
 
 const StakeAnalytics: React.FC = () => {
@@ -255,7 +256,7 @@ const StakeAnalytics: React.FC = () => {
                     dataKey="value"
                     stroke={theme.palette.primary.main}
                     strokeWidth={4}
-                    fill={alpha(theme.palette.primary.main, 0.2)}
+                    fill={alpha(theme.palette.primary.main, theme.isDark ? 0.6 : 0.2)}
                     activeDot={{ r: 6 }}
                   />
                   <Line
@@ -286,7 +287,7 @@ const StakeAnalytics: React.FC = () => {
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
-                  <img src={HighestIcon} alt="heighest icon" />
+                  <CustomIcon height={30} fill={theme.palette.secondary.light} icon={HighestIconComponent} />
                   <Title>{tab === "BALANCE" ? t("common.highestBalance") : t("common.highestReward")}</Title>
                   <ValueInfo>
                     {loading || loadingReward ? (
@@ -301,7 +302,7 @@ const StakeAnalytics: React.FC = () => {
             <Box flex={1}>
               <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
-                  <img src={LowestIcon} alt="lowest icon" />
+                  <CustomIcon height={30} fill={theme.palette.secondary.light} icon={LowestIconComponent} />
                   <Title>{tab === "BALANCE" ? t("common.lowestBalance") : t("common.lowestReward")}</Title>
                   <ValueInfo>
                     {loading || loadingReward ? (

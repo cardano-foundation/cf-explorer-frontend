@@ -1,6 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { Breakpoint, styled } from "@mui/material";
-import React, { MutableRefObject, useEffect, useMemo, useRef, useState } from "react";
+import React, { CSSProperties, MutableRefObject, useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useWindowSize } from "react-use";
 
@@ -64,6 +64,7 @@ export interface LineArrowItem {
 
 interface LineArrowProps extends LineArrowItem {
   parent: MutableRefObject<SVGSVGElement | null>;
+  style?: CSSProperties;
 }
 
 export const LineArrow: React.FC<LineArrowProps> = (props) => {
@@ -78,7 +79,8 @@ export const LineArrow: React.FC<LineArrowProps> = (props) => {
     endOffset = [],
     arrow,
     fold,
-    autoAlign
+    autoAlign,
+    style
   } = props;
   const [mount, setMount] = useState(0);
   const { width } = useWindowSize(0);
@@ -278,7 +280,7 @@ export const LineArrow: React.FC<LineArrowProps> = (props) => {
 
   if (!mount) return null;
 
-  return <StyledLine d={d} ref={ref} strokeDasharray={dashed ? 20 : undefined} />;
+  return <StyledLine d={d} ref={ref} strokeDasharray={dashed ? 20 : undefined} style={style} />;
 };
 
 export default LineArrow;

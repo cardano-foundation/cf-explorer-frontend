@@ -3,7 +3,14 @@ import BigNumber from "bignumber.js";
 import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { RewardIcon, USDIcon, exchageIconUrl, fileGuardUrl, slotIconUrl, timeIconUrl } from "src/commons/resources";
+import {
+  ExchageIcon,
+  FileGuard,
+  RewardIconComponent,
+  SlotIcon,
+  TimeIconComponent,
+  USDIconComponent
+} from "src/commons/resources";
 import {
   formatDateTimeLocal,
   formatNumberDivByDecimals,
@@ -63,11 +70,12 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
     {
       title: <WrapTitle>{t("common.totalSupply")}</WrapTitle>,
       value: <Box component={"span"}>{formatNumberDivByDecimals(data?.supply, decimalToken)}</Box>,
-      icon: slotIconUrl
+      icon: SlotIcon
     },
     {
       title: <WrapTitle>{t("glossary.policyId")}</WrapTitle>,
-      icon: fileGuardUrl,
+      icon: FileGuard,
+      strokeColor: "#000",
       value: (
         <>
           <Box position={"relative"}>
@@ -97,12 +105,12 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
           </Box>
         </Box>
       ),
-      icon: exchageIconUrl,
+      icon: ExchageIcon,
       value: numberWithCommas(txCountRealtime || data?.txCount)
     },
     {
       title: <WrapTitle>{t("glossary.tokenType")}</WrapTitle>,
-      icon: USDIcon,
+      icon: USDIconComponent,
       value: (
         <>
           <Box>{data?.tokenType}</Box>
@@ -124,7 +132,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
           </Box>
         </Box>
       ),
-      icon: RewardIcon,
+      icon: RewardIconComponent,
       value: numberWithCommas(currentHolders || data?.numberOfHolders || "")
     },
     {
@@ -137,7 +145,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
           </Box>
         </Box>
       ),
-      icon: exchageIconUrl,
+      icon: ExchageIcon,
       value: formatNumberDivByDecimals(data?.totalVolume || "", decimalToken || 0)
     },
     {
@@ -150,7 +158,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
           </Box>
         </Box>
       ),
-      icon: USDIcon,
+      icon: USDIconComponent,
       value: formatNumberDivByDecimals(data?.volumeIn24h || "", data?.metadata?.decimals || 0)
     },
     {
@@ -161,7 +169,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
           </Box>
         </Box>
       ),
-      icon: timeIconUrl,
+      icon: TimeIconComponent,
       value: formatDateTimeLocal(data?.createdOn || "")
     },
     {
@@ -172,7 +180,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
           </Box>
         </Box>
       ),
-      icon: timeIconUrl,
+      icon: TimeIconComponent,
       value: formatDateTimeLocal(data?.tokenLastActivity || "")
     }
   ];

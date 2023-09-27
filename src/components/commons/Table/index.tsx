@@ -5,7 +5,8 @@ import {
   PaginationRenderItemParams,
   alpha,
   styled,
-  useScrollTrigger
+  useScrollTrigger,
+  useTheme
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -31,6 +32,7 @@ import {
   TableRowProps,
   TableTopHeaderProps
 } from "src/types/table";
+import breakpoints from "src/themes/breakpoints";
 
 import CustomIcon from "../CustomIcon";
 import Filter from "../Filter";
@@ -59,11 +61,14 @@ import {
 } from "./styles";
 import { Lowercase } from "../CustomText/styles";
 
+const SPACING_TOP_TABLE = 250;
+
 type TEmptyRecord = {
   className?: string;
+  isModal?: boolean;
 };
-export const EmptyRecord: React.FC<TEmptyRecord> = ({ className }) => (
-  <Empty className={className}>
+export const EmptyRecord: React.FC<TEmptyRecord> = ({ className, isModal }) => (
+  <Empty className={className} isModal={+(isModal || 0)}>
     <NoRecord p={`${0} !important`} />
   </Empty>
 );
@@ -75,8 +80,10 @@ const TableHeader = <T extends ColumnType>({
   showTabView,
   selectable,
   toggleSelectAll,
-  isSelectAll
+  isSelectAll,
+  isModal
 }: TableHeaderProps<T>) => {
+  const theme = useTheme();
   const [{ columnKey, sort }, setSort] = useState<{ columnKey: string; sort: "" | "DESC" | "ASC" }>({
     columnKey: defaultSort ? defaultSort.split(",")[0] : "",
     sort: defaultSort ? (defaultSort.split(",")[1] as "" | "DESC" | "ASC") : ""
@@ -103,20 +110,20 @@ const TableHeader = <T extends ColumnType>({
     if (key === columnKey)
       switch (sort) {
         case "DESC":
-          return <SortTableDown />;
+          return <SortTableDown fill={theme.palette.primary.main} />;
         case "ASC":
-          return <SortTableUp />;
+          return <SortTableUp fill={theme.palette.primary.main} />;
         default: {
-          return <SortTableUpDown />;
+          return <SortTableUpDown fill={theme.palette.primary.main} />;
         }
       }
-    return <SortTableUpDown />;
+    return <SortTableUpDown fill={theme.palette.primary.main} />;
   };
   return (
     <THead>
       <tr>
         {selectable && (
-          <THeader>
+          <THeader isModal={+(isModal || 0)}>
             <TableCheckBox checked={isSelectAll} onChange={(e) => toggleSelectAll?.(e.target.checked)} />
           </THeader>
         )}
@@ -126,6 +133,7 @@ const TableHeader = <T extends ColumnType>({
             style={
               column.fixed ? { position: "sticky", left: column.leftFixed ? column.leftFixed : "-8px", zIndex: 10 } : {}
             }
+            isModal={+(isModal || 0)}
           >
             {column.title}
             {column.sort && (
@@ -155,19 +163,22 @@ const TableRow = <T extends ColumnType>({
   dataLength,
   selectable,
   toggleSelection,
-  isSelected
+  isSelected,
+  isModal
 }: TableRowProps<T>) => {
   const colRef = useRef(null);
+  const theme = useTheme();
   return (
     <TRow onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row))} {...selectedProps}>
       {selectable && (
-        <TCol>
+        <TCol isModal={+(isModal || 0)}>
           <TableCheckBox checked={isSelected?.(row)} onChange={() => toggleSelection?.(row)} />
         </TCol>
       )}
       {columns.map((column, idx) => {
         return (
           <TCol
+            isModal={+(isModal || 0)}
             className="tb-col"
             key={idx}
             ref={colRef}
@@ -182,9 +193,17 @@ const TableRow = <T extends ColumnType>({
         );
       })}
       {showTabView && (
-        <TCol minWidth={50} maxWidth={90} selected={+selected}>
+        <TCol isModal={+(isModal || 0)} minWidth={50} maxWidth={90} selected={+selected}>
           <Box display="flex" alignItems="center" height="1rem">
-            {!selected && <CustomIcon icon={EyeIcon} originWidth={31} originHeight={23} width={24} />}
+            {!selected && (
+              <CustomIcon
+                stroke={theme.palette.secondary.light}
+                icon={EyeIcon}
+                originWidth={31}
+                originHeight={23}
+                width={24}
+              />
+            )}
           </Box>
         </TCol>
       )}
@@ -204,7 +223,8 @@ const TableBody = <T extends ColumnType>({
   initialized,
   selectable,
   toggleSelection,
-  isSelected
+  isSelected,
+  isModal
 }: TableProps<T>) => {
   return (
     <TBody>
@@ -237,6 +257,7 @@ const TableBody = <T extends ColumnType>({
           selectable={selectable}
           toggleSelection={toggleSelection}
           isSelected={isSelected}
+          isModal={isModal}
         />
       ))}
     </TBody>
@@ -297,6 +318,16 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
               MenuProps={{
                 sx: {
                   zIndex: 1305
+                },
+                MenuListProps: {
+                  sx: {
+                    bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+                  }
+                },
+                PaperProps: {
+                  sx: {
+                    bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+                  }
                 }
               }}
             >
@@ -367,15 +398,26 @@ const Table: React.FC<TableProps> = ({
   renderAction,
   fliterOptions,
   onFilterChange,
+  maxHeight,
   isShowingResult,
-  maxHeight
+  isModal
 }) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange
   });
+
   const tableRef = useRef(null);
   const wrapperRef = useRef<HTMLElement>(null);
-  const heightTable = Math.min((tableRef?.current as any)?.clientHeight || 0, window.innerHeight * 0.5);
+  const { width } = useScreen();
+
+  let heightTable = Math.min((tableRef?.current as any)?.clientHeight || 0, window.innerHeight * 0.5);
+
+  if (width >= breakpoints.values.sm && width <= breakpoints.values.lg) {
+    const footerHeight = document.getElementById("footer")?.offsetHeight || SPACING_TOP_TABLE;
+    heightTable =
+      Math.min((tableRef?.current as any)?.clientHeight || 0, window.innerHeight) - (footerHeight + SPACING_TOP_TABLE);
+  }
+
   const toggleSelectAll = (isChecked: boolean) => {
     if (data && isChecked) {
       selectAll(data);
@@ -424,6 +466,7 @@ const Table: React.FC<TableProps> = ({
             showTabView={showTabView}
             selected={selected}
             selectable={selectable}
+            isModal={isModal}
             toggleSelectAll={toggleSelectAll}
             isSelectAll={isSelectAll}
           />
@@ -440,10 +483,13 @@ const Table: React.FC<TableProps> = ({
             selectable={selectable}
             toggleSelection={toggleSelection}
             isSelected={isSelected}
+            isModal={isModal}
           />
         </TableFullWidth>
         {loading && !initialized && <TableSekeleton />}
-        {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord className={emptyClassName} />}
+        {!loading && ((initialized && data?.length === 0) || error) && (
+          <EmptyRecord isModal={isModal} className={emptyClassName} />
+        )}
       </Wrapper>
       {showPagination && (
         <FooterTable total={total} clearSelection={clearSelection} pagination={pagination} loading={!!loading} />

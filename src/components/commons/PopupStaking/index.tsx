@@ -1,17 +1,18 @@
 import { Box, styled, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 
-import { AddressIcon } from "src/commons/resources";
+import { AddressIcon, AddressIconDark } from "src/commons/resources";
 import { getShortHash } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 
 import CopyButton from "../CopyButton";
+import CustomIcon from "../CustomIcon";
 
 const PopupStaking = ({ hash }: { hash: string }) => {
   const theme = useTheme();
   return (
     <Box display={"flex"} alignItems={"center"}>
-      <AddressIcon fill={theme.palette.primary.main} />
+      <CustomIcon icon={theme.isDark ? AddressIconDark : AddressIcon} height={30} fill={theme.palette.primary.main} />
       <Hash to={details.transaction(hash)}>{getShortHash(hash)}</Hash>
       <CopyButton text={hash} />
     </Box>

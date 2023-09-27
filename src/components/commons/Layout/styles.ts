@@ -121,6 +121,9 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
   [theme.breakpoints.down("sm")]: {
     width: drawerWidthMobile
   },
+  "& .MuiPaper-root": {
+    borderColor: theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary[600]
+  },
   "&>div": {
     borderRight: `1px solid ${theme.palette.primary[200]}`,
     "& > button": {

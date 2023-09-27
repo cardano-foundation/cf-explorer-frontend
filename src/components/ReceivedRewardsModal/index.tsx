@@ -128,6 +128,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
             <Table
               {...fetchData}
               columns={columns}
+              isModal={true}
               maxHeight={`calc(70vh - ${isMobile ? (isGalaxyFoldSmall ? "270px" : "230px") : "208px"})`}
               total={{ count: fetchData.total, title: "Total Transactions" }}
               pagination={{

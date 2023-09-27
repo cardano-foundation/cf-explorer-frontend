@@ -1,9 +1,10 @@
-import { styled } from "@mui/material";
+import { styled, useTheme } from "@mui/material";
 
 import { ADAsymbol } from "../../../commons/resources";
 
 const ADAicon = ({ ...props }) => {
-  return <ADAsymbol data-testid="ada-icon" width={10} {...props} />;
+  const theme = useTheme();
+  return <ADAsymbol fill={theme.palette.secondary.main} data-testid="ada-icon" width={10} {...props} />;
 };
 
 export const AdaLogoIcon = styled(ADAsymbol)(() => ({

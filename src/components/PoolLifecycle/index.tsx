@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, CircularProgress, IconButton, styled } from "@mui/material";
+import { Box, CircularProgress, IconButton, styled, useTheme } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { lowerCase, startCase } from "lodash";
 import { useTranslation } from "react-i18next";
@@ -49,6 +49,7 @@ export interface IPoolLifecycleProps {
 }
 const PoolLifecycle: React.FC<IPoolLifecycleProps> = ({ onSort, fetchData, pagination, onPagination }) => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const history = useHistory();
   const [onDownload, setOnDownload] = useState<number | false>(false);
 
@@ -146,7 +147,7 @@ const PoolLifecycle: React.FC<IPoolLifecycleProps> = ({ onSort, fetchData, pagin
                 textTransform={"capitalize"}
                 onClick={() => downloadFn(data.reportId, data.reportName, "EXCEL")}
               >
-                <CustomIcon icon={DownloadGreenIcon} width={24} />
+                <CustomIcon icon={DownloadGreenIcon} fill={theme.palette.success[700]} width={24} />
               </Box>
             ) : (
               <></>

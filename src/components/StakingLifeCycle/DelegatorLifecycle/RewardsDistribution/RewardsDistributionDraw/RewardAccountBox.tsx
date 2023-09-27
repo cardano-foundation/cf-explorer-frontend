@@ -2,7 +2,7 @@ import { BoxProps, Typography } from "@mui/material";
 import { forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import { RewardAccountIconUrl, WalletIconRewardGreen } from "src/commons/resources";
+import { GiftIcon, WalletIconRewardGreen } from "src/commons/resources";
 import { formatADAFull } from "src/commons/utils/helper";
 
 import {
@@ -23,7 +23,7 @@ const RewardAccountBox: React.FC<IRewardAccountBoxProps> = forwardRef(({ value, 
   const { t } = useTranslation();
   return (
     <RewardAccountCcontainer ref={boxRef} onClick={toggleRewardModal}>
-      <RewardBoxImg src={RewardAccountIconUrl} />
+      <RewardBoxImg src={GiftIcon} />
       <Typography
         fontWeight={700}
         fontSize={20}

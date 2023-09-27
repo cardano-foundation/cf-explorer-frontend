@@ -5,11 +5,12 @@ import { useTranslation } from "react-i18next";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
 import { useSelector } from "react-redux";
 
-import useFetch from "src/commons/hooks/useFetch";
-import { HighestIcon, LowestIcon } from "src/commons/resources";
-import { API } from "src/commons/utils/api";
 import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/helper";
+import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
 import { TooltipBody } from "src/components/commons/Layout/styles";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import {
   AnalyticsTitle,
@@ -103,22 +104,36 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                 >
                   <defs>
                     <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
-                      <stop offset="100%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
+                      <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={theme.isDark ? 0.6 : 0.2} />
+                      <stop
+                        offset="100%"
+                        stopColor={theme.palette.primary.main}
+                        stopOpacity={theme.isDark ? 0.6 : 0.2}
+                      />
                     </linearGradient>
                   </defs>
                   <XAxis
                     dataKey="epochNo"
-                    tickLine={false}
                     tickMargin={5}
                     dx={-5}
+                    tick={{
+                      fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+                    }}
+                    tickLine={{
+                      stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+                    }}
                     color={theme.palette.secondary.light}
                   />
                   <YAxis
                     dataKey={selected === "epochChart" ? "totalStake" : "numberDelegator"}
                     color={theme.palette.secondary.light}
                     tickFormatter={formatValue}
-                    tickLine={false}
+                    tick={{
+                      fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+                    }}
+                    tickLine={{
+                      stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+                    }}
                   />
                   <Tooltip content={renderTooltip} cursor={false} />
                   <CartesianGrid vertical={false} strokeWidth={0.33} />
@@ -141,7 +156,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
-                  <img src={HighestIcon} alt="heighest icon" />
+                  <CustomIcon height={30} fill={theme.palette.secondary.light} icon={HighestIconComponent} />
                   <Title>{selected === "epochChart" ? t("highestStake") : t("highestNumberOfDelegators")}</Title>
                   <Value>
                     {loading || !data?.[selected] ? (
@@ -158,7 +173,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
             <Box flex={1}>
               <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
-                  <img src={LowestIcon} alt="lowest icon" />
+                  <CustomIcon height={30} fill={theme.palette.secondary.light} icon={LowestIconComponent} />
                   <Title>{selected === "epochChart" ? t("lowestStake") : t("lowestNumberOfDelegators")}</Title>
                   <Value>
                     {loading || !data?.[selected] ? (

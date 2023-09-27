@@ -1,4 +1,4 @@
-import { Box, Modal, ModalProps, SxProps } from "@mui/material";
+import { Box, Modal, ModalProps, SxProps, useTheme } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
 
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -25,10 +25,10 @@ const StyledModal: React.FC<IProps> = ({
   paddingX,
   paddingY,
   contentStyle = {},
-  modalStyle = {},
+  modalStyle = {}
 }) => {
   const { isMobile } = useScreen();
-
+  const theme = useTheme();
   return (
     <Modal
       open={open}
@@ -46,7 +46,7 @@ const StyledModal: React.FC<IProps> = ({
         sx={modalStyle}
       >
         <CloseButton saving={0} onClick={handleCloseModal} data-testid="close-modal-button">
-          <IoMdClose />
+          <IoMdClose color={theme.palette.secondary.light} />
         </CloseButton>
         {title && (
           <Box marginBottom={"20px"}>

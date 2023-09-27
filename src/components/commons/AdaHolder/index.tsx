@@ -1,8 +1,8 @@
 import React, { forwardRef } from "react";
-import { BoxProps, styled } from "@mui/material";
+import { BoxProps, styled, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { AdaHolderIconUrl } from "src/commons/resources";
+import { AdaHolderIconDarlUrl, AdaHolderIconUrl } from "src/commons/resources";
 import { formatADAFull } from "src/commons/utils/helper";
 
 import { AdaHolderImage, AdaHolderValue, StyledAdaLogoIcon } from "./styles";
@@ -18,9 +18,10 @@ export interface IAdaHolderProps extends BoxProps {
 
 export const AdaHolder: React.FC<IAdaHolderProps> = forwardRef(({ value, ...props }, boxRef) => {
   const { t } = useTranslation();
+  const theme = useTheme();
   return (
     <StyledPolygonShape {...props} ref={boxRef}>
-      <AdaHolderImage src={AdaHolderIconUrl} alt="AdaHolderIconUrl" />
+      <AdaHolderImage src={theme.isDark ? AdaHolderIconDarlUrl : AdaHolderIconUrl} alt="AdaHolderIconUrl" />
       {t("common.adaHolder")}
       {value !== undefined && (
         <AdaHolderValue>
