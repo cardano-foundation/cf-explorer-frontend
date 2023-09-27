@@ -67,6 +67,15 @@ const DelegationLists: React.FC = () => {
       )
     },
     {
+      title: t("common.ticker") + " ",
+      key: "tickerName",
+      minWidth: "120px",
+      render: (r) => <Box component={"span"}>{r.tickerName}</Box>,
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      }
+    },
+    {
       title: (
         <Box component={"span"}>
           {t("glossary.poolSize")} (<ADAicon />)
