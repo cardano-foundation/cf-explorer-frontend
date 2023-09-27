@@ -130,7 +130,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
       <HeaderDetailContainer>
         {isHideButtonBack === true ? null : (
           <BackButton onClick={history.goBack}>
-            <HiArrowLongLeft />
+            <HiArrowLongLeft color={theme.palette.secondary.light} />
             <BackText>{t("common.back")}</BackText>
           </BackButton>
         )}

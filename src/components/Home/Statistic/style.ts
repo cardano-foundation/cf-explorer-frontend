@@ -154,6 +154,7 @@ export const ProcessActive = styled("div")<{ rate: number }>`
   align-items: center;
   width: ${(props) => props.rate}%;
   background-color: ${(props) => props.theme.palette.primary.main};
+  color: ${({ theme }) => (theme.mode === "light" ? "inherit" : theme.palette.secondary[100])};
 `;
 
 export const ProgressPending = styled(ProcessActive)<{ rate: number }>`

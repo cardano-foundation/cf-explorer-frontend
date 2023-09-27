@@ -28,6 +28,7 @@ export type TableHeaderProps<T extends ColumnType> = Pick<
 > & {
   selectable?: boolean;
   toggleSelectAll?: (checked: boolean) => void;
+  isModal?: boolean;
   isSelectAll?: boolean;
 };
 
@@ -45,6 +46,7 @@ export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & 
   selectable?: boolean;
   toggleSelection?: (row: T) => void;
   isSelected?: (item: T) => boolean;
+  isModal?: boolean;
 };
 
 export interface TableProps<T extends ColumnType = any> {
@@ -99,6 +101,7 @@ export interface TableProps<T extends ColumnType = any> {
    */
   maxHeight?: number | string;
   tableWrapperProps?: BoxProps;
+  isModal?: boolean;
 }
 
 export interface FooterTableProps {
@@ -113,6 +116,7 @@ export interface TableTopHeaderProps {
   fliterOptions?: Option[];
   renderAction?: (items) => React.ReactNode;
   selectedItems?: string[];
+  isModal?: boolean;
   isSelectAll?: boolean;
   totalShowingResult?: number | boolean;
   onFilterChange?: (value: any, option?: Option) => void;

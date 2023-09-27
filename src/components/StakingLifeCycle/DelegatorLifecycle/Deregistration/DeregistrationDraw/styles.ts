@@ -99,12 +99,12 @@ export const StyledFeeBox = styled(FeeBox)(({ theme }) => ({
 }));
 
 export const StyledWithHoldBox = styled(HoldBox)(({ theme }) => ({
-  border: `2px solid ${theme.palette.success[800]} `,
+  border: `2px solid ${theme.isDark ? theme.palette.success[100] : theme.palette.success[800]} `,
   boxSizing: "border-box",
   height: 70,
   width: 180,
   "&:after": {
-    backgroundColor: theme.palette.success[800]
+    backgroundColor: theme.isDark ? theme.palette.success[100] : theme.palette.success[800]
   },
   [theme.breakpoints.down("lg")]: {
     alignSelf: "flex-end"
