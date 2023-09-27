@@ -7,7 +7,7 @@ export const ModalContainer = styled(Box)<{ width?: number | string; viewwidth?:
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: `min(${viewwidth || "70"}vw, ${typeof width === "string" ? width : `${width || 500}px`})`,
-    backgroundColor: theme.palette.primary[100],
+    backgroundColor: theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[0],
     borderRadius: 20,
     textAlign: "left",
     outline: "none",

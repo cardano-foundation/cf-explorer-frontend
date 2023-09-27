@@ -5,7 +5,14 @@ import { useTranslation } from "react-i18next";
 
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import { BackIcon, AddressIcon, TimeIcon, ExclamationTriangleIcon } from "src/commons/resources";
+import {
+  BackIcon,
+  AddressIcon,
+  TimeIcon,
+  ExclamationTriangleIcon,
+  AddressIconDark2,
+  TimeIconDark
+} from "src/commons/resources";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import DrawPath from "src/components/commons/DrawPath";
 import AdaHolder from "src/components/commons/AdaHolder";
@@ -123,7 +130,11 @@ export const RegistrationDraw = ({ toggleModal, showBackButton = false }: Props)
         )}
         <InfoGroup>
           <Info>
-            <AddressIcon fill={theme.palette.secondary.light} />
+            <CustomIcon
+              icon={theme.isDark ? AddressIconDark2 : AddressIcon}
+              height={30}
+              fill={theme.palette.secondary.light}
+            />
             <CustomTooltip title={txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(txHash)}>{getShortHash(txHash || "")}</StyledLink>
@@ -138,7 +149,11 @@ export const RegistrationDraw = ({ toggleModal, showBackButton = false }: Props)
             <InfoText>{formatADAFull(deposit + fee || 0)}</InfoText>
           </Info>
           <Info>
-            <TimeIcon fill={theme.palette.secondary.light} />
+            <CustomIcon
+              icon={theme.isDark ? TimeIconDark : TimeIcon}
+              height={30}
+              fill={theme.palette.secondary.light}
+            />
             <InfoText>{formatDateTimeLocal(time)}</InfoText>
           </Info>
         </InfoGroup>

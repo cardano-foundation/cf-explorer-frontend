@@ -1,8 +1,10 @@
 import { styled, TextareaAutosize } from "@mui/material";
 
 const CustomTextArea = styled(TextareaAutosize)`
-  background: ${({ theme }) => theme.palette.common.white};
-  border: 1.5px solid ${({ theme }) => theme.palette.border.primary};
+  background: ${({ theme }) => theme.palette.secondary[0]};
+  color: ${({ theme }) => theme.palette.secondary.light};
+  border: 1.5px solid
+    ${({ theme }) => (theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary[600])};
   border-radius: 8px;
   font-weight: 400;
   font-size: 14px;
@@ -10,11 +12,17 @@ const CustomTextArea = styled(TextareaAutosize)`
   width: 100%;
   min-height: 160px;
   max-height: 160px;
+  outline: none;
   resize: none;
   padding: 12px 14px;
   box-sizing: border-box;
   font-family: inherit;
   overflow-y: auto !important;
+  &:focus-visible {
+    border: 1.5px solid
+      ${({ theme }) => (theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary[600])};
+    outline: none;
+  }
 `;
 
 export default CustomTextArea;

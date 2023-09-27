@@ -61,8 +61,14 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
         )
       }
       MenuProps={{
+        MenuListProps: {
+          sx: {
+            bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+          }
+        },
         PaperProps: {
           sx: {
+            bgcolor: ({ palette }) => `${palette.secondary[0]} !important`,
             borderRadius: 2,
             marginTop: 0.5,
             "&::-webkit-scrollbar": {
@@ -94,7 +100,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
         const isTokenNameLong = tokenName.length > 20;
         return (
           <OptionSelect key={idx} onClick={() => handleClickItem(details.token(token?.assetId))}>
-            <Box color={({ palette }) => palette.secondary.light}>
+            <Box color={({ palette }) => palette.secondary.main}>
               {isTokenNameLong ? (
                 <CustomTooltip title={tokenName} placement="top">
                   <Box>{shortTokenName}</Box>
@@ -142,10 +148,10 @@ export const TokenLink: React.FC<{
         width={"100%"}
         height={38}
       >
-        <Box mr={2} color={({ palette }) => palette.secondary.light}>
+        <Box mr={2} color={({ palette }) => palette.secondary.main}>
           {isTokenNameLong ? (
             <CustomTooltip title={tokenName} placement="top">
-              <Box color={({ palette }) => palette.secondary.light}>{shortTokenName}</Box>
+              <Box color={({ palette }) => palette.secondary.main}>{shortTokenName}</Box>
             </CustomTooltip>
           ) : (
             tokenName

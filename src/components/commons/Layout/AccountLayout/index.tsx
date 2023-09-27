@@ -70,7 +70,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
             </CustomTooltip>
           ) : (
             <StyledUsername component={"h4"} pt={1} m="auto">
-              {userData?.email}
+              {userData?.username}
             </StyledUsername>
           )}
         </Box>
@@ -98,7 +98,7 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
                       <Box pl={"20px"}>{route.title}</Box>
                       <MdChevronRight
                         size={25}
-                        color={route.to === pathname ? theme.palette.primary.main : theme.palette.text.hint}
+                        color={route.to === pathname ? theme.palette.primary.main : theme.palette.secondary.light}
                         display={active ? "none" : "block"}
                       />
                     </Box>

@@ -4,6 +4,7 @@ import { Box, Tab, useTheme } from "@mui/material";
 import { stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
@@ -18,8 +19,9 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { AssetHolderIcon, TokenIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
-import { LinkComponent, StyledBoxContainer, StyledTabList, TitleTab } from "./styles";
+import { LinkComponent, StyledBoxContainer, StyledTabList, TimeDuration, TitleTab } from "./styles";
 
 enum TABS {
   TOKENS = "tokens",
@@ -34,6 +36,7 @@ const PolicyTable = () => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   const resetFilter = () => {
     history.replace({ search: stringify({ page: 1, size: 50 }) });
@@ -46,6 +49,8 @@ const PolicyTable = () => {
 
   useEffect(() => {
     resetFilter();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const columnsToken: Column<TokenPolicys>[] = [
     {
@@ -141,7 +146,19 @@ const PolicyTable = () => {
       columns: columnsAssetHolders
     }
   ];
-  const fetchData = useFetchList<PolicyHolder | TokenPolicys>(`${API.POLICY}/${policyId}/${activeTab}`, pageInfo);
+  const tokenFetchData = useFetchList<TokenPolicys>(
+    activeTab === TABS.TOKENS ? `${API.POLICY}/${policyId}/${TABS.TOKENS}` : "",
+    pageInfo
+  );
+
+  const holderFetchData = useFetchList<PolicyHolder>(
+    activeTab === TABS.HOLDERS ? `${API.POLICY}/${policyId}/${TABS.HOLDERS}` : "",
+    pageInfo,
+    false,
+    blockKey
+  );
+
+  const fetchData = activeTab === TABS.TOKENS ? tokenFetchData : holderFetchData;
 
   return (
     <StyledBoxContainer>
@@ -171,6 +188,13 @@ const PolicyTable = () => {
         </Box>
         {tabs.map(({ key, columns }) => (
           <TabPanel style={{ padding: 0 }} key={key} value={key}>
+            {key === TABS.HOLDERS ? (
+              <TimeDuration>
+                <FormNowMessage time={holderFetchData.lastUpdated} />
+              </TimeDuration>
+            ) : (
+              ""
+            )}
             <Table
               {...fetchData}
               columns={columns}
