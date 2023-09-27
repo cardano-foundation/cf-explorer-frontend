@@ -21,11 +21,10 @@ export const StyledPoolLink = styled(Link)`
 `;
 
 export const RegistrationContainer = styled(Container)(({ theme }) => ({
-  paddingTop: "30px",
   textAlign: "left",
   position: "relative",
   [theme.breakpoints.down("md")]: {
-    padding: "25px 16px 30px"
+    padding: "0px 16px 30px"
   }
 }));
 
