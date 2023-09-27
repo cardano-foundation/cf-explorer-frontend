@@ -2,8 +2,6 @@ import { Box, Container, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)`
-  margin-top: 18px;
-
   .MuiSelect-select.MuiSelect-outlined {
     padding-top: 10px;
     padding-bottom: 10px;

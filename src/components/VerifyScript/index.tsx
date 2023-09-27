@@ -64,7 +64,7 @@ export const VerifyScript = ({ verified, setShowBanner }: IVerifyScript) => {
 
   return (
     <>
-      <VerifyScriptContainer>
+      <VerifyScriptContainer id="VerifyScriptContainer">
         <Box>{t("head.page.constactDetails")}</Box>
         <StyledVerifyButton onClick={handleClickVerifyButton} verified={+verified}>
           <Uppercase> {verified ? t("common.verifiedScript") + " " : t("common.verifyScript")}</Uppercase>

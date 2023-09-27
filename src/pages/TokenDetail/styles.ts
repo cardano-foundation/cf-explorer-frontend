@@ -15,7 +15,6 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
     "& h2": {
       paddingLeft: "0px"
     },
-    paddingTop: "10px",
     marginTop: "0px !important"
   }
 }));
