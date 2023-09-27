@@ -1,10 +1,9 @@
-import { Skeleton } from "@mui/material";
+import { useContext } from "react";
 import { Box } from "@mui/system";
 import { useTranslation } from "react-i18next";
 
-import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
-import { API } from "src/commons/utils/api";
+import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 
 import CopyButton from "../CopyButton";
 import StyledModal from "../StyledModal";
@@ -19,27 +18,24 @@ export const DeregistrationCertificateModal = ({
   handleCloseModal: () => void;
 }) => {
   const { t } = useTranslation();
-  const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`, undefined, false);
+  const data = useContext(DelegatorDetailContext);
 
   return (
     <StyledModal {...props} width={550} title={t("common.deregistrationCert")}>
       <Box>
-        {loading && <Skeleton variant="rectangular" width={500} height={90} />}
-        {!loading && (
-          <StyledContainerModal>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
-              {t("common.stakeAddress")}
-            </Box>
-            {data && (
+        <StyledContainerModal>
+          <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
+            {t("common.stakeAddress")}
+          </Box>
+          {data && (
+            <Box>
               <Box>
-                <Box>
-                  <StakeLink to={details.stake(stake)}>{stake || ""}</StakeLink>
-                  <CopyButton text={stake} />
-                </Box>
+                <StakeLink to={details.stake(stake)}>{stake || ""}</StakeLink>
+                <CopyButton text={stake} />
               </Box>
-            )}
-          </StyledContainerModal>
-        )}
+            </Box>
+          )}
+        </StyledContainerModal>
       </Box>
     </StyledModal>
   );

@@ -74,10 +74,15 @@ const DelegatorLifecycle = () => {
   const theme = useTheme();
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { isLoggedIn } = useAuth();
-  const { data, error, initialized } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}`, undefined, false);
   const { data: listTabs, loading: loadingListTabs } = useFetch<ListStakeKeyResponse>(
     API.STAKE_LIFECYCLE.TABS(stakeId)
   );
+  const { data, error, initialized } = useFetch<IStakeKeyDetail>(
+    listTabs ? `${API.STAKE.DETAIL}/${stakeId}` : "",
+    undefined,
+    false
+  );
+
   const { data: dataReportLimit } = useFetch<IReportLimit>(API.REPORT.REPORT_LIMIT);
 
   useEffect(() => {
@@ -142,13 +147,15 @@ const DelegatorLifecycle = () => {
               }
             >
               <ReportButtonContainer>
-                <ButtonReport
-                  disabled={!isLoggedIn || dataReportLimit?.isLimitReached}
-                  onClick={() => setOpen(true)}
-                  sidebar={+sidebar}
-                >
-                  {t("common.composeReport")}
-                </ButtonReport>
+                {!(!isLoggedIn || dataReportLimit?.isLimitReached) && (
+                  <ButtonReport
+                    disabled={!isLoggedIn || dataReportLimit?.isLimitReached}
+                    onClick={() => setOpen(true)}
+                    sidebar={+sidebar}
+                  >
+                    {t("common.composeReport")}
+                  </ButtonReport>
+                )}
               </ReportButtonContainer>
             </CustomTooltip>
           </BoxItemStyled>

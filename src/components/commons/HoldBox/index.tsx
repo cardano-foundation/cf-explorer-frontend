@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { BoxProps, IconButton, styled, Box, Typography } from "@mui/material";
+import { BoxProps, IconButton, styled, Box, Typography, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import { ButtonListIcon } from "src/commons/resources";
@@ -8,6 +8,7 @@ import { formatADAFull } from "src/commons/utils/helper";
 import ADAicon from "../ADAIcon";
 import PopupStaking from "../PopupStaking";
 import PopperStyled from "../PopperStyled";
+import CustomIcon from "../CustomIcon";
 
 const HoldContainer = styled(Box)<{ title: string }>(({ theme, title }) => ({
   height: "35px",
@@ -16,12 +17,12 @@ const HoldContainer = styled(Box)<{ title: string }>(({ theme, title }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   padding: theme.spacing(2),
-  border: `2px solid ${theme.palette.error[700]}`,
+  border: `2px solid ${theme.isDark ? theme.palette.error[100] : theme.palette.error[700]}`,
   borderRadius: "10px",
   marginRight: theme.spacing(2.5),
   marginLeft: theme.spacing(2.5),
   position: "relative",
-  background: theme.palette.common.white,
+  background: theme.palette.secondary[0],
   fontSize: "18px",
   lineHeight: "21px",
   fontWeight: 700,
@@ -32,13 +33,13 @@ const HoldContainer = styled(Box)<{ title: string }>(({ theme, title }) => ({
     content: `"${title}"`,
     borderRadius: "4px",
     fontWeight: "bold",
-    color: theme.palette.common.white,
+    color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary[0],
     padding: "6px 8px",
     fontSize: "14px",
     position: "absolute",
     top: "-50%",
     left: theme.spacing(2),
-    background: theme.palette.error[700],
+    background: theme.isDark ? theme.palette.error[100] : theme.palette.error[700],
     transform: " translate(0, 60%)"
   },
   [theme.breakpoints.down("md")]: {
@@ -66,9 +67,12 @@ const Value = styled(Box)(({ theme }) => ({
 }));
 
 const Button = styled(IconButton)<{ over?: number }>(({ theme, over }) => ({
-  background: theme.palette.primary[100],
+  background: theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100],
   [theme.breakpoints.down(over ? "lg" : "sm")]: {
     padding: 3
+  },
+  ":hover": {
+    background: theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100]
   }
 }));
 
@@ -92,6 +96,7 @@ const HolderValueLabel = styled(Typography)(({ theme }) => ({
 export const HoldBox = forwardRef<HTMLElement, Props>((props, feeRef) => {
   const { value, txHash, roundingNumber = 6, children, ...boxProps } = props;
   const { t } = useTranslation();
+  const theme = useTheme();
   const isOverText =
     typeof feeRef !== "function" &&
     !!feeRef?.current &&
@@ -111,7 +116,11 @@ export const HoldBox = forwardRef<HTMLElement, Props>((props, feeRef) => {
             onClick={() => typeof feeRef !== "function" && feeRef?.current && handleClick(feeRef?.current)}
             over={+isOverText}
           >
-            <ButtonListIcon />
+            <CustomIcon
+              icon={ButtonListIcon}
+              fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.main}
+              height={24}
+            />
           </Button>
         </HoldContainer>
       )}

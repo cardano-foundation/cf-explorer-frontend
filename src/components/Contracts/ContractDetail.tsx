@@ -8,10 +8,10 @@ import { details as routerDetals } from "src/commons/routers";
 import Mintviews from "./Mintviews";
 import Certviews from "./Certviews";
 import Rewardviews from "./Rewardviews";
-import Spendviews from "./Spendviews";
 import { DetailContainer, DetailContent, DetailHeader } from "./styles";
 import { StyledLink } from "../share/styled";
 import CustomTooltip from "../commons/CustomTooltip";
+import Spendviews from "./SpendViews";
 
 export interface ContractDetailProps {
   view?: "SPEND" | "MINT" | "CERT" | "REWARD";

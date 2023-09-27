@@ -71,7 +71,7 @@ export const Title = styled("h3")`
     content: "";
     width: 50px;
     height: 4px;
-    background: ${({ theme }) => theme.palette.primary[200]};
+    background: ${({ theme }) => (theme.mode === "light" ? theme.palette.primary[200] : theme.palette.primary.main)};
   }
 `;
 
@@ -113,7 +113,7 @@ export const ColorChart = styled(Box)<{ type: TypeChart }>(({ theme, type }) => 
       case "trx":
         return theme.palette.success[700];
       case "simple":
-        return theme.palette.primary[500];
+        return theme.mode === "light" ? theme.palette.primary[500] : theme.palette.primary.main;
       case "complex":
         return theme.palette.warning[700];
 

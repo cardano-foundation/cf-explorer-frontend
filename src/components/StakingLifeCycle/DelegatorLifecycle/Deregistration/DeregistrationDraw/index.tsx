@@ -8,7 +8,14 @@ import { API } from "src/commons/utils/api";
 import useFetch from "src/commons/hooks/useFetch";
 import NoRecord from "src/components/commons/NoRecord";
 import DrawSkeleton from "src/components/commons/DrawSkeleton";
-import { AddressIcon, BackIcon, ExclamationTriangleIcon, TimeIcon } from "src/commons/resources";
+import {
+  AddressIcon,
+  AddressIconDark2,
+  BackIcon,
+  ExclamationTriangleIcon,
+  TimeIcon,
+  TimeIconDark
+} from "src/commons/resources";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import CustomIcon from "src/components/commons/CustomIcon";
@@ -143,7 +150,11 @@ const DeregistrationDraw: React.FC<Props> = ({ toggleModal, showBackButton }) =>
 
         <InfoGroup>
           <Info>
-            <AddressIcon fill={theme.palette.secondary.light} />
+            <CustomIcon
+              icon={theme.isDark ? AddressIconDark2 : AddressIcon}
+              height={30}
+              fill={theme.palette.secondary.light}
+            />
             <CustomTooltip title={txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(txHash)}>{getShortHash(txHash)}</StyledLink>
@@ -158,7 +169,11 @@ const DeregistrationDraw: React.FC<Props> = ({ toggleModal, showBackButton }) =>
             <InfoText>{formatADAFull(Math.abs(deposit) - fee)}</InfoText>
           </Info>
           <Info>
-            <TimeIcon fill={theme.palette.secondary.light} />
+            <CustomIcon
+              icon={theme.isDark ? TimeIconDark : TimeIcon}
+              height={30}
+              fill={theme.palette.secondary.light}
+            />
             <InfoText>{formatDateTimeLocal(time)}</InfoText>
           </Info>
         </InfoGroup>

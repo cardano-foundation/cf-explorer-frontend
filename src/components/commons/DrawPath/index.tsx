@@ -10,7 +10,6 @@ const DrawPathContainer = styled("svg")(() => ({
   right: 0,
   position: "absolute",
   display: "block",
-  zIndex: -1,
   pointerEvents: "none"
 }));
 

@@ -1,18 +1,25 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
 import { useScreen } from "src/commons/hooks/useScreen";
-import { CardanoBlueLogo, LogoIcon, SearchIcon } from "src/commons/resources";
+import {
+  CardanoBlueDarkmodeLogo,
+  CardanoBlueLogo,
+  LogoIcon,
+  MenuIconComponent,
+  SearchIcon
+} from "src/commons/resources";
 import { lists, routers } from "src/commons/routers";
-import { setOnDetailView, setSidebar } from "src/stores/user";
+import { setOnDetailView, setSidebar, setTheme } from "src/stores/user";
 
 import TopSearch from "../Sidebar/TopSearch";
 import HeaderSearch from "./HeaderSearch";
 import LoginButton from "./LoginButton";
 import SelectNetwork from "./SelectNetwork";
 import {
+  ButtonSideBar,
   HeaderBox,
   HeaderContainer,
   HeaderLogo,
@@ -23,20 +30,22 @@ import {
   NetworkContainer,
   SearchButton,
   SideBarRight,
-  Title,
-  Toggle
+  SwitchMode,
+  Title
 } from "./styles";
+import SelectLanguage from "./SelectLanguage";
+import CustomIcon from "../../CustomIcon";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [lists.dashboard()];
 
 const Header: React.FC<RouteComponentProps> = (props) => {
   const { history } = props;
-  const { isMobile } = useScreen();
+  const { isMobile, isGalaxyFoldSmall } = useScreen();
   const home = history.location.pathname === "/";
-  const { sidebar } = useSelector(({ user }: RootState) => user);
+  const { sidebar, theme: themeMode } = useSelector(({ user }: RootState) => user);
   const [openSearch, setOpenSearch] = React.useState(false);
   const handleToggle = () => setSidebar(!sidebar);
-
+  const theme = useTheme();
   const pathMatched = HIDDEN_HEADER_SEARCH_PATHS.find((subPath: string) => history.location.pathname.includes(subPath));
 
   const refElement = useRef<HTMLDivElement>(null);
@@ -67,26 +76,43 @@ const Header: React.FC<RouteComponentProps> = (props) => {
               justifyContent={"center"}
               flexDirection={isMobile ? "column" : "row"}
             >
-              <Box component={"img"} src={CardanoBlueLogo} width={isMobile ? "80vw" : "auto"} sx={{ margin: "2rem" }} />
+              <Box
+                component={"img"}
+                src={theme.mode === "light" ? CardanoBlueLogo : CardanoBlueDarkmodeLogo}
+                width={isMobile ? "80vw" : "auto"}
+                sx={{ margin: "2rem" }}
+              />
             </Box>
           </Title>
-          <HeaderSearchContainer>{!pathMatched && <HeaderSearch home={home} />}</HeaderSearchContainer>
+          <HeaderSearchContainer home={+home}>{!pathMatched && <HeaderSearch home={home} />}</HeaderSearchContainer>
         </HeaderMain>
         <HeaderTop data-testid="header-top" ref={refElement}>
           <HeaderLogoLink to="/" data-testid="header-logo">
             {!sidebar && <HeaderLogo src={LogoIcon} alt="logo desktop" />}
           </HeaderLogoLink>
           <SideBarRight>
+            {!isGalaxyFoldSmall && (
+              <SwitchMode
+                checked={themeMode === "dark"}
+                onChange={(e) => {
+                  setTheme(e.target.checked ? "dark" : "light");
+                }}
+              />
+            )}
             <NetworkContainer>
               <SelectNetwork />
+              &nbsp;
+              <SelectLanguage />
             </NetworkContainer>
             <LoginButton />
             {history.location.pathname !== routers.STAKING_LIFECYCLE && (
               <SearchButton onClick={handleOpenSearch} home={+home}>
-                <SearchIcon fontSize={24} />
+                <SearchIcon fontSize={24} stroke={theme.palette.secondary.light} fill={theme.palette.secondary[0]} />
               </SearchButton>
             )}
-            <Toggle onClick={handleToggle} />
+            <ButtonSideBar onClick={handleToggle}>
+              <CustomIcon icon={MenuIconComponent} height={18} fill={theme.palette.secondary.light} />
+            </ButtonSideBar>
           </SideBarRight>
         </HeaderTop>
       </HeaderBox>

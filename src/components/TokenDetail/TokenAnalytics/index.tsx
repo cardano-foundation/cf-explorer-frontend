@@ -6,13 +6,17 @@ import { useParams } from "react-router-dom";
 import { Area, AreaChart, CartesianGrid, Label, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { TooltipProps } from "recharts/types/component/Tooltip";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
-import { HighestIcon, LowestIcon } from "src/commons/resources";
+import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import { formatNumberDivByDecimals, formatPrice } from "src/commons/utils/helper";
+import { formatNumberDivByDecimals, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
 import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
+import { TooltipBody } from "src/components/commons/Layout/styles";
+import CustomIcon from "src/components/commons/CustomIcon";
+import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
 
 import Card from "../../commons/Card";
 import {
@@ -25,7 +29,6 @@ import {
   Tab,
   Tabs,
   Title,
-  TooltipBody,
   TooltipLabel,
   TooltipValue,
   ValueInfo,
@@ -40,16 +43,22 @@ interface ITokenAnalyticsProps {
 const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
   const { t } = useTranslation();
   const options = [
-    { value: "ONE_DAY", label: t("time.1d") },
-    { value: "ONE_WEEK", label: t("time.1w") },
-    { value: "ONE_MONTH", label: t("time.1m") },
-    { value: "THREE_MONTH", label: t("time.3m") }
+    { value: OPTIONS_CHART_ANALYTICS.ONE_DAY, label: t("time.1d") },
+    { value: OPTIONS_CHART_ANALYTICS.ONE_WEEK, label: t("time.1w") },
+    { value: OPTIONS_CHART_ANALYTICS.ONE_MONTH, label: t("time.1m") },
+    { value: OPTIONS_CHART_ANALYTICS.THREE_MONTH, label: t("time.3m") }
   ];
-  const [rangeTime, setRangeTime] = useState("ONE_DAY");
+  const [rangeTime, setRangeTime] = useState<OPTIONS_CHART_ANALYTICS>(OPTIONS_CHART_ANALYTICS.ONE_DAY);
   const { tokenId } = useParams<{ tokenId: string }>();
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const { isMobile } = useScreen();
   const theme = useTheme();
-  const { data, loading } = useFetch<AnalyticsData[]>(`${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`);
+  const { data, loading } = useFetch<AnalyticsData[]>(
+    `${API.TOKEN.ANALYTICS}/${tokenId}/${rangeTime}`,
+    undefined,
+    false,
+    blockKey
+  );
 
   const values = (data || [])?.map((item) => item.value || 0) || [];
 
@@ -69,13 +78,13 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
 
   const getLabelTimeTooltip = (label: string) => {
     switch (rangeTime) {
-      case "ONE_DAY":
+      case OPTIONS_CHART_ANALYTICS.ONE_DAY:
         return `${moment(label).format("DD MMM HH:mm")} - ${moment(label).add(2, "hour").format("HH:mm")}`;
-      case "ONE_WEEK":
+      case OPTIONS_CHART_ANALYTICS.ONE_WEEK:
         return moment(label).format("DD MMM");
-      case "ONE_MONTH":
+      case OPTIONS_CHART_ANALYTICS.ONE_MONTH:
         return `${moment(label).format("DD MMM")} - ${moment(label).add(1, "days").format("DD MMM")}`;
-      case "THREE_MONTH":
+      case OPTIONS_CHART_ANALYTICS.THREE_MONTH:
         return `${moment(label).format("DD MMM")} - ${moment(label).add(1, "days").format("DD MMM")}`;
       default:
         return "";
@@ -84,7 +93,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
 
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
     return (
-      <TooltipBody>
+      <TooltipBody fontSize={"12px"}>
         <TooltipLabel>{getLabelTimeTooltip(content.label)}</TooltipLabel>
         <TooltipValue>
           {formatNumberDivByDecimals(content.payload?.[0]?.value, dataToken?.metadata?.decimals || 0) || 0}
@@ -125,21 +134,44 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                   >
                     <defs>
                       <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
-                        <stop offset="100%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
+                        <stop
+                          offset="0%"
+                          stopColor={theme.palette.primary.main}
+                          stopOpacity={theme.isDark ? 0.6 : 0.2}
+                        />
+                        <stop
+                          offset="100%"
+                          stopColor={theme.palette.primary.main}
+                          stopOpacity={theme.isDark ? 0.6 : 0.2}
+                        />
                       </linearGradient>
                     </defs>
                     <XAxis
                       dataKey="date"
                       tickFormatter={(value) => moment(value).format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM")}
-                      tickLine={false}
+                      tick={{
+                        fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+                      }}
+                      tickLine={{
+                        stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+                      }}
                       tickMargin={5}
                       dx={-15}
                       color={theme.palette.secondary.light}
+                      interval={getIntervalAnalyticChart(rangeTime)}
                     >
                       <Label value="(UTC)" offset={-12} position="insideBottom" />
                     </XAxis>
-                    <YAxis tickFormatter={formatPriceValue} tickLine={false} color={theme.palette.secondary.light} />
+                    <YAxis
+                      tickFormatter={formatPriceValue}
+                      tick={{
+                        fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+                      }}
+                      tickLine={{
+                        stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+                      }}
+                      color={theme.palette.secondary.light}
+                    />
                     <Tooltip content={renderTooltip} cursor={false} />
                     <CartesianGrid vertical={false} strokeWidth={0.33} />
                     <Area
@@ -162,7 +194,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                 <BoxInfoItemRight display={"flex"} justifyContent={"center"}>
                   <Box>
                     <Box minHeight={"90px"}>
-                      <img src={HighestIcon} alt="heighest icon" />
+                      <CustomIcon height={30} fill={theme.palette.secondary.light} icon={HighestIconComponent} />
                       <Title>{t("glossary.highestVolume")}</Title>
                     </Box>
                     <ValueInfo>
@@ -179,7 +211,7 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                 <BoxInfoItem display={"flex"} justifyContent={"center"}>
                   <Box>
                     <Box minHeight={"90px"}>
-                      <img src={LowestIcon} alt="lowest icon" />
+                      <CustomIcon height={30} fill={theme.palette.secondary.light} icon={LowestIconComponent} />
                       <Title>{t("glossary.lowestVolume")}</Title>
                     </Box>
                     <ValueInfo>
