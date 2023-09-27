@@ -63,7 +63,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
     return (
       <HeaderDetailContainer>
         <BackButton onClick={history.goBack}>
-          <HiArrowLongLeft />
+          <HiArrowLongLeft color={theme.palette.secondary.light} />
           <BackText>{t("common.back")}</BackText>
         </BackButton>
         <HeaderContainer>
@@ -84,7 +84,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
   return (
     <HeaderDetailContainer>
       <BackButton onClick={history.goBack}>
-        <HiArrowLongLeft />
+        <HiArrowLongLeft color={theme.palette.secondary.light} />
         <BackText>{t("common.back")}</BackText>
       </BackButton>
       <HeaderContainer>

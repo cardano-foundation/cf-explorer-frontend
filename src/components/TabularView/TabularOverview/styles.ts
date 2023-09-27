@@ -144,7 +144,7 @@ export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
 
 export const TransferButton = styled(Button)(({ theme }) => ({
   background: theme.palette.primary.main,
-  color: theme.palette.common.white,
+  color: theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0],
   fontSize: 14,
   fontWeight: 700,
   lineHeight: "16px",

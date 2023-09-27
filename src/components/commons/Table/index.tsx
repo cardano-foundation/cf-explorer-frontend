@@ -62,9 +62,10 @@ import { Lowercase } from "../CustomText/styles";
 
 type TEmptyRecord = {
   className?: string;
+  isModal?: boolean;
 };
-export const EmptyRecord: React.FC<TEmptyRecord> = ({ className }) => (
-  <Empty className={className}>
+export const EmptyRecord: React.FC<TEmptyRecord> = ({ className, isModal }) => (
+  <Empty className={className} isModal={+(isModal || 0)}>
     <NoRecord p={`${0} !important`} />
   </Empty>
 );
@@ -76,7 +77,8 @@ const TableHeader = <T extends ColumnType>({
   showTabView,
   selectable,
   toggleSelectAll,
-  isSelectAll
+  isSelectAll,
+  isModal
 }: TableHeaderProps<T>) => {
   const theme = useTheme();
   const [{ columnKey, sort }, setSort] = useState<{ columnKey: string; sort: "" | "DESC" | "ASC" }>({
@@ -118,7 +120,7 @@ const TableHeader = <T extends ColumnType>({
     <THead>
       <tr>
         {selectable && (
-          <THeader>
+          <THeader isModal={+(isModal || 0)}>
             <TableCheckBox checked={isSelectAll} onChange={(e) => toggleSelectAll?.(e.target.checked)} />
           </THeader>
         )}
@@ -128,6 +130,7 @@ const TableHeader = <T extends ColumnType>({
             style={
               column.fixed ? { position: "sticky", left: column.leftFixed ? column.leftFixed : "-8px", zIndex: 10 } : {}
             }
+            isModal={+(isModal || 0)}
           >
             {column.title}
             {column.sort && (
@@ -157,7 +160,8 @@ const TableRow = <T extends ColumnType>({
   dataLength,
   selectable,
   toggleSelection,
-  isSelected
+  isSelected,
+  isModal
 }: TableRowProps<T>) => {
   const colRef = useRef(null);
   const isClickRow = selected === index ? 1 : 0;
@@ -165,13 +169,14 @@ const TableRow = <T extends ColumnType>({
   return (
     <TRow onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row, index))} {...selectedProps}>
       {selectable && (
-        <TCol>
+        <TCol isModal={+(isModal || 0)}>
           <TableCheckBox checked={isSelected?.(row)} onChange={() => toggleSelection?.(row)} />
         </TCol>
       )}
       {columns.map((column, idx) => {
         return (
           <TCol
+            isModal={+(isModal || 0)}
             className="tb-col"
             key={idx}
             ref={colRef}
@@ -186,7 +191,7 @@ const TableRow = <T extends ColumnType>({
         );
       })}
       {showTabView && (
-        <TCol minWidth={50} maxWidth={90} selected={isClickRow}>
+        <TCol isModal={+(isModal || 0)} minWidth={50} maxWidth={90} selected={isClickRow}>
           <Box display="flex" alignItems="center" height="1rem">
             {selected !== index && (
               <CustomIcon
@@ -215,7 +220,8 @@ const TableBody = <T extends ColumnType>({
   initialized,
   selectable,
   toggleSelection,
-  isSelected
+  isSelected,
+  isModal
 }: TableProps<T>) => {
   return (
     <TBody>
@@ -249,6 +255,7 @@ const TableBody = <T extends ColumnType>({
             selectable={selectable}
             toggleSelection={toggleSelection}
             isSelected={isSelected}
+            isModal={isModal}
           />
         ))}
     </TBody>
@@ -386,8 +393,9 @@ const Table: React.FC<TableProps> = ({
   renderAction,
   fliterOptions,
   onFilterChange,
+  maxHeight,
   isShowingResult,
-  maxHeight
+  isModal
 }) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange
@@ -443,6 +451,7 @@ const Table: React.FC<TableProps> = ({
             showTabView={showTabView}
             selected={selected}
             selectable={selectable}
+            isModal={isModal}
             toggleSelectAll={toggleSelectAll}
             isSelectAll={isSelectAll}
           />
@@ -458,10 +467,13 @@ const Table: React.FC<TableProps> = ({
             selectable={selectable}
             toggleSelection={toggleSelection}
             isSelected={isSelected}
+            isModal={isModal}
           />
         </TableFullWidth>
         {loading && !initialized && <TableSekeleton />}
-        {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord className={emptyClassName} />}
+        {!loading && ((initialized && data?.length === 0) || error) && (
+          <EmptyRecord isModal={isModal} className={emptyClassName} />
+        )}
       </Wrapper>
       {showPagination && (
         <FooterTable total={total} clearSelection={clearSelection} pagination={pagination} loading={!!loading} />

@@ -11,6 +11,7 @@ import { getShortHash } from "src/commons/utils/helper";
 import { DeregistrationCertificateModal } from "src/components/StakingLifeCycle/SPOLifecycle/Deregistration";
 import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
 import { AdaValue } from "src/components/commons/ADAValue";
+import CustomIcon from "src/components/commons/CustomIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
@@ -68,7 +69,7 @@ const DeregsitrationTab = () => {
       title: t("common.certificate"),
       render: (data) => (
         <IconButton onClick={() => setSelected(data)}>
-          <EyeIcon />
+          <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
         </IconButton>
       )
     }

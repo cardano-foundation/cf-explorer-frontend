@@ -97,7 +97,8 @@ export const Logo = styled("img")`
 export const LogoEmpty = styled(Box)`
   width: 25px;
   height: 25px;
-  background: ${(props) => alpha(props.theme.palette.common.white, 0.6)};
+  background: ${(props) =>
+    props.theme.isDark ? props.theme.palette.secondary[800] : alpha(props.theme.palette.common.white, 0.6)};
   border-radius: 50%;
   border: 1px solid ${(props) => props.theme.palette.primary[200]};
 `;
