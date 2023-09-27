@@ -183,15 +183,6 @@ export const TextCardHighlight = styled("span")`
   border-bottom: ${(props) => `2px solid ${props.theme.palette.primary[200]}`};
 `;
 
-export const TooltipBody = styled(Box)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.secondary[0], 0.8),
-  borderRadius: 2,
-  padding: 8,
-  border: `1px solid ${theme.palette.primary.main}`,
-  fontSize: 12,
-  color: theme.palette.secondary.light
-}));
-
 export const TooltipLabel = styled(Box)(() => ({
   marginBottom: 3
 }));

@@ -181,3 +181,12 @@ export const Main = styled(Box)<{ open: number }>(({ theme, open }) => ({
     minHeight: "calc(100vh - 263px)"
   }
 }));
+
+export const TooltipBody = styled(Box)(({ theme }) => ({
+  backgroundColor: alpha(theme.palette.secondary[0], 0.9),
+  borderRadius: 4,
+  padding: 8,
+  border: `1px solid ${theme.palette.primary[200]}`,
+  color: theme.palette.secondary.light,
+  boxShadow: theme.shadow.card
+}));

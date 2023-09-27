@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import { Box, Grid, useTheme } from "@mui/material";
 import moment from "moment";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { Box, Grid, alpha, useTheme } from "@mui/material";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
+import { useScreen } from "src/commons/hooks/useScreen";
 import { API } from "src/commons/utils/api";
 import { numberWithCommas } from "src/commons/utils/helper";
-import { useScreen } from "src/commons/hooks/useScreen";
+import { TooltipBody } from "src/components/commons/Layout/styles";
 
 import {
   BoxInfo,
@@ -172,11 +173,11 @@ const formatTimeX = (date: Time) => {
 const getLabel = (date: string, range: Time) => {
   switch (range) {
     case "ONE_DAY":
-      return `${moment(date).format("MM/DD HH:mm")} - ${moment(date).add(1, "hour").format("HH:mm")} (UTC)`;
+      return `${moment(date).format("DD MMM HH:mm")} - ${moment(date).add(1, "hour").format("HH:mm")} (UTC)`;
     case "ONE_WEEK":
     case "TWO_WEEK":
     case "ONE_MONTH":
-      return moment(date).format("MM/DD");
+      return moment(date).format("DD MMM");
 
     default:
       break;
@@ -201,13 +202,7 @@ const renderTooltipContent = (o: any, range: Time) => {
   const total = (payload || []).reduce((result: number, entry: any) => result + entry.value, 0);
   return (
     <Box key={label}>
-      <Box
-        p={1}
-        bgcolor={({ palette }) => alpha(palette.common.white, 0.9)}
-        borderRadius={"8px"}
-        textAlign={"left"}
-        boxShadow={(theme) => theme.shadow.dropdown}
-      >
+      <TooltipBody textAlign={"left"}>
         <Box color={({ palette }) => palette.secondary.main} textAlign={"center"}>
           {getLabel(label, range)}
         </Box>
@@ -226,7 +221,7 @@ const renderTooltipContent = (o: any, range: Time) => {
             );
           })
           .reverse()}
-      </Box>
+      </TooltipBody>
     </Box>
   );
 };

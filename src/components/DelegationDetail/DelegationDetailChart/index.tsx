@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import { Grid, Skeleton, styled, Box, useTheme } from "@mui/material";
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
+import { Box, Grid, Skeleton, styled, useTheme } from "@mui/material";
 import BigNumber from "bignumber.js";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
 import { useSelector } from "react-redux";
 
-import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/helper";
-import { HighestIcon, LowestIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
+import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
+import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/helper";
+import { TooltipBody } from "src/components/commons/Layout/styles";
 
 import {
   AnalyticsTitle,
@@ -20,7 +21,6 @@ import {
   GridWrapper,
   StyledContainer,
   Title,
-  TooltipBody,
   TooltipLabel,
   TooltipValue,
   Value
@@ -59,7 +59,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
 
   const renderTooltip: TooltipProps<number, number>["content"] = (content) => {
     return (
-      <TooltipBody>
+      <TooltipBody fontSize={12}>
         <TooltipLabel>
           {t("epoch")} {content.label}
         </TooltipLabel>
