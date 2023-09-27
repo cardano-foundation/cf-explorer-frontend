@@ -1,3 +1,7 @@
+import { BigNumber } from "bignumber.js";
+import moment from "moment";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import React, { useMemo, useState } from "react";
 import { Box, Grid, alpha, useTheme } from "@mui/material";
 import {
@@ -13,10 +17,6 @@ import {
   Line
 } from "recharts";
 import { getNiceTickValues } from "recharts-scale";
-import moment from "moment";
-import { useParams } from "react-router-dom";
-import { BigNumber } from "bignumber.js";
-import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
