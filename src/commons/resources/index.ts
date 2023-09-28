@@ -108,6 +108,11 @@ import sunIcon from "./icons/sun.svg";
 import moonIcon from "./icons/moon.svg";
 import WhiteSearchIcon from "./icons/white-search-icon.svg";
 import WalletRoundedIcon from "./icons/wallet-rounded.svg";
+import SummaryWalletDark from "./icons/summaryWalletDark.svg";
+import UpGreenDarkmode from "./icons/upGreenDark.svg";
+import UpGreenUtxoDarkmode from "./icons/uputxoGreenDark.svg";
+import DownRedDarkmode from "./icons/downRedDark.svg";
+import DownRedUtxoDarkmode from "./icons/downUtxoRedDark.svg";
 import ArrowUpIcon from "./icons/arrow-up.svg";
 import CopyOutlineIcon, { ReactComponent as CopyOutlineIconComponent } from "./icons/copy-outline.svg";
 import GiftIcon from "./images/gift-icon.png";
@@ -258,7 +263,12 @@ export {
   ArrowDownIcon,
   RocketIconUrl,
   RocketIcon,
-  CopyOutlineIconComponent
+  CopyOutlineIconComponent,
+  SummaryWalletDark,
+  UpGreenDarkmode,
+  DownRedDarkmode,
+  UpGreenUtxoDarkmode,
+  DownRedUtxoDarkmode
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
