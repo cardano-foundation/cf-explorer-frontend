@@ -1,8 +1,10 @@
-import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Box, Tab, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
 import React, { useMemo, useRef } from "react";
-import { useHistory, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { IoIosArrowDown } from "react-icons/io";
+import { useHistory, useParams } from "react-router-dom";
 
 import {
   CollateralIcon,
@@ -35,24 +37,30 @@ import Summary from "./Summary";
 import UTXO from "./UTXOs";
 import Withdrawals from "./Withdrawals";
 import "./index.css";
-import { TitleTab } from "./styles";
+import { CustomAccordion, TitleTab } from "./styles";
 
 interface TransactionMetadataProps {
   data: Transaction | null;
   loading: boolean;
 }
 
+interface TTab {
+  key: keyof Transaction;
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  label: React.ReactNode;
+  children: React.ReactNode;
+}
+
 const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
   const { t } = useTranslation();
-  let { tabActive = "summary" } = useParams<{ tabActive: keyof Transaction }>();
+  const { tabActive = false } = useParams<{ tabActive: keyof Transaction }>();
   const history = useHistory();
   const theme = useTheme();
   const tabRef = useRef(null);
-  if (!data?.[tabActive]) tabActive = "summary";
 
-  const handleChange = (event: React.SyntheticEvent, tab: keyof Transaction) => {
+  const handleChangeTab = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     (tabRef as any)?.current.scrollIntoView();
-    history.replace(details.transaction(data?.tx?.hash, tab));
+    history.replace(details.transaction(data?.tx?.hash, newExpanded ? panel : ""));
   };
 
   const protocolsMergeData: TProtocolMerge[] = useMemo(() => {
@@ -71,12 +79,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
     return result;
   }, [data?.protocols, data?.previousProtocols]);
 
-  const tabs: {
-    key: keyof Transaction;
-    icon: React.FC<React.SVGProps<SVGSVGElement>>;
-    label: string;
-    children: React.ReactNode;
-  }[] = [
+  const tabs: TTab[] = [
     {
       key: "summary",
       icon: SummaryIcon,
@@ -128,7 +131,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
     {
       key: "mints",
       icon: MintingIcon,
-      label: t("tab.minting"),
+      label: <Box pl={"1px"}>{t("tab.minting")}</Box>,
       children: <Minting data={data?.mints} />
     },
     {
@@ -164,43 +167,50 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
   ];
 
   const items = tabs.filter((item) => data?.[item.key]);
+  const indexExpand = items.findIndex((item) => item.key === tabActive);
+
+  const needBorderRadius = (currentKey: string) => {
+    if (!tabActive) return "0";
+    const indexCurrent = items.findIndex((item) => item.key === currentKey);
+    if (indexExpand - 1 >= 0 && indexExpand - 1 === indexCurrent) return "0 0 12px 12px";
+    if (indexExpand + 1 < items.length && indexExpand + 1 === indexCurrent) return "12px 12px 0 0";
+    return "0";
+  };
 
   return (
     <Box mt={4} ref={tabRef}>
-      <TabContext value={tabActive}>
-        <Box sx={{ borderBottom: (theme) => `1px solid ${theme.palette.primary[200]}` }}>
-          <TabList
-            onChange={handleChange}
-            TabIndicatorProps={{
-              sx: { background: (theme) => theme.palette.primary.main, color: (theme) => theme.palette.primary.main }
-            }}
-            variant="scrollable"
-            scrollButtons={false}
-          >
-            {items?.map(({ key, icon: Icon, label }) => (
-              <Tab
-                key={key}
-                value={key}
-                data-testid={`tab-${key}`}
-                style={{ padding: "12px 0px", marginRight: 40 }}
-                label={
-                  <Box display={"flex"} alignItems="center">
-                    <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.secondary.light} />
-                    <TitleTab pl={1} active={+(key === tabActive)}>
-                      {label}
-                    </TitleTab>
-                  </Box>
-                }
+      {items?.map(({ key, icon: Icon, label, children }, index) => (
+        <CustomAccordion
+          key={key}
+          expanded={tabActive === key}
+          customBorderRadius={needBorderRadius(key)}
+          isDisplayBorderTop={tabActive !== key && key !== items[0].key && index !== indexExpand + 1}
+          onChange={handleChangeTab(key)}
+        >
+          <AccordionSummary
+            expandIcon={
+              <IoIosArrowDown
+                style={{
+                  width: "21px",
+                  height: "21px"
+                }}
+                color={key === tabActive ? theme.palette.primary.main : theme.palette.secondary[600]}
               />
-            ))}
-          </TabList>
-        </Box>
-        {items.map((item) => (
-          <TabPanel key={item.key} value={item.key} style={{ padding: 0, paddingTop: 12 }}>
-            {item.children}
-          </TabPanel>
-        ))}
-      </TabContext>
+            }
+            sx={{
+              paddingX: theme.spacing(3),
+              paddingY: theme.spacing(1)
+            }}
+          >
+            {" "}
+            <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.secondary[600]} />
+            <TitleTab pl={1} active={+(key === tabActive)}>
+              {label}
+            </TitleTab>
+          </AccordionSummary>
+          <AccordionDetails>{children}</AccordionDetails>
+        </CustomAccordion>
+      ))}
     </Box>
   );
 };

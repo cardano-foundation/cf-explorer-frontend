@@ -160,7 +160,7 @@ const Tokens = () => {
           {...fetchData}
           data={data}
           columns={columns}
-          total={{ title: "Total", count: fetchData.total }}
+          total={{ title: "Total", count: fetchData.total, isDataOverSize: fetchData.isDataOverSize }}
           pagination={{
             ...pageInfo,
             total: fetchData.total,
@@ -178,9 +178,12 @@ const Tokens = () => {
           tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
         />
       </Card>
-      {selected && onDetailView && (
-        <DetailViewToken tokenId={selected.fingerprint || ""} token={selected} handleClose={handleClose} />
-      )}
+      <DetailViewToken
+        open={onDetailView}
+        tokenId={selected?.fingerprint || ""}
+        token={selected}
+        handleClose={handleClose}
+      />
     </StyledContainer>
   );
 };

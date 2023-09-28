@@ -13,7 +13,6 @@ const StyledContainer = styled(Container)`
   padding: 30px 16px 40px;
 
   @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
-    padding-top: 10px;
     margin-top: 0px !important;
   }
 `;

@@ -2,7 +2,7 @@ import { Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledContainerModal = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.secondary[0],
+  backgroundColor: theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0],
   padding: 24,
   [theme.breakpoints.down("md")]: {
     padding: "15px !important"

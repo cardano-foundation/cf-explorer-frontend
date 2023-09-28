@@ -169,9 +169,12 @@ const TokenTransaction: React.FC = () => {
           onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
         }}
       />
-      {selected && onDetailView && (
-        <DetailViewContractHash txHash={selected} address={params.address} handleClose={handleClose} />
-      )}
+      <DetailViewContractHash
+        open={onDetailView}
+        txHash={selected}
+        address={params.address}
+        handleClose={handleClose}
+      />
     </>
   );
 };

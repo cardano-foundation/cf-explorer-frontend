@@ -2,12 +2,14 @@ import { Box, Checkbox, Typography, styled, Pagination, MenuItem } from "@mui/ma
 
 import CustomSelect from "../CustomSelect";
 
-export const Empty = styled(Box)`
+export const Empty = styled(Box)<{ isModal?: number }>`
   text-align: center;
   padding: 30px 0;
   position: relative;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  background: ${({ isModal, theme }) =>
+    theme.isDark && isModal ? theme.palette.secondary[100] : theme.palette.secondary[0]};
 `;
 
 export const EmtyImage = styled("img")`
@@ -33,16 +35,17 @@ export const THead = styled("thead")(({ theme }) => ({
   }
 }));
 
-export const THeader = styled("th")`
+export const THeader = styled("th")<{ isModal?: number }>`
   text-align: left;
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-text-small);
   padding: 20px;
-  color: ${(props) => props.theme.palette.secondary.main};
+  color: ${({ theme }) => theme.palette.secondary.main};
   position: sticky;
   top: 0;
-  background-color: ${(props) => props.theme.palette.common.white};
+  background-color: ${({ theme, isModal }) =>
+    isModal && theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0]};
   z-index: 2;
 `;
 
@@ -66,6 +69,7 @@ export const TCol = styled("td")<{
   maxWidth?: number | string;
   hiddenBorder?: boolean;
   selected?: number;
+  isModal?: number;
 }>`
   width: ${({ width }) => (typeof width === "number" ? `${width}px` : width || "max-content")};
   min-width: ${({ minWidth }) => (typeof minWidth === "number" ? `${minWidth}px` : minWidth || "80px")};
@@ -76,7 +80,12 @@ export const TCol = styled("td")<{
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.secondary.light};
   padding: 24px 20px;
-  background: ${(props) => (props.selected ? props.theme.palette.primary[100] : props.theme.palette.secondary[0])};
+  background: ${(props) =>
+    props.selected
+      ? props.theme.palette.primary[100]
+      : props.isModal && props.theme.isDark
+      ? props.theme.palette.secondary[100]
+      : props.theme.palette.secondary[0]};
 `;
 
 export const TBody = styled("tbody")`
@@ -136,8 +145,8 @@ export const WrappModalScrollBar = styled(Box)(
 
 export const Wrapper = styled(Box)<{ loading?: number }>(
   ({ theme, loading }) => `
-  overflow: scroll;
-  background: ${theme.palette.common.white};
+  overflow: auto;
+  background: ${theme.palette.secondary[0]};
   padding: ${theme.spacing(1)};
   padding-top: 0;
   border-radius: ${theme.spacing(1.5)};
@@ -197,7 +206,7 @@ export const InputNumber = styled("input")<{ length: number }>(({ theme, length 
   borderRadius: 4,
   textAlign: "center",
   fontWeight: "bold",
-  border: `1px solid ${theme.palette.border.main}`,
+  border: `1px solid ${theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary[600]}`,
   color: theme.palette.secondary.main,
   "::-webkit-inner-spin-button": {
     appearance: "none",
@@ -210,7 +219,7 @@ export const SelectMui = styled(CustomSelect)(({ theme }) => ({
   borderRadius: "4px",
   fontSize: 14,
   minWidth: 50,
-  border: `1px solid ${theme.palette.grey[200]}`,
+  border: `1px solid ${theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary[600]}`,
   color: theme.palette.secondary.main,
   "& > div": {
     padding: "2.45px 14px"
@@ -267,7 +276,8 @@ export const StyledPagination = styled(Pagination)(() => ({
 
 export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   color: theme.palette.secondary.main,
+  background: theme.palette.secondary[0] + " !important",
   "&:hover, &.Mui-selected": {
-    background: theme.palette.primary[200] + " !important"
+    backgroundColor: theme.palette.primary[200] + " !important"
   }
 }));

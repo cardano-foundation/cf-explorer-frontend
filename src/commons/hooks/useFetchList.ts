@@ -19,6 +19,7 @@ export interface FetchReturnType<T> {
   total: number;
   totalPage: number;
   currentPage: number;
+  isDataOverSize?: boolean | null;
   refresh: () => void;
   update: (callback: (data: T[]) => T[]) => void;
   lastUpdated?: number;
@@ -37,6 +38,7 @@ const useFetchList = <T>(
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(params.page ?? 0);
   const [totalPage, setTotalPage] = useState(0);
+  const [isDataOverSize, setIsDataOverSize] = useState<boolean | null>(null);
   const [total, setTotal] = useState(0);
   const [refreshLoading, setRefreshLoading] = useState(false);
   const [query, setQuery] = useState<Params>(cleanObject(params));
@@ -69,6 +71,7 @@ const useFetchList = <T>(
         setQuery(cleanObject(params));
         setData((res?.data?.data || []) as T[]);
         setError(null);
+        setIsDataOverSize(res?.data?.isDataOverSize ?? null);
         setCurrentPage(res.data.currentPage);
         setTotalPage(res.data.totalPages);
         setTotal(res.data.totalItems);
@@ -124,7 +127,8 @@ const useFetchList = <T>(
     refresh: getList,
     update: setData,
     lastUpdated: lastFetch.current,
-    query
+    query,
+    isDataOverSize
   };
 };
 

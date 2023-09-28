@@ -1,8 +1,8 @@
 import React, { forwardRef } from "react";
-import { BoxProps } from "@mui/material";
+import { BoxProps, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { AdaHolderIconUrl } from "src/commons/resources";
+import { AdaHolderIconDarlUrl, AdaHolderIconUrl } from "src/commons/resources";
 
 import { DisableAbleLabel, FacingImg, RectBox } from "./styles";
 export interface Props extends BoxProps {
@@ -10,9 +10,10 @@ export interface Props extends BoxProps {
 }
 const ADAHolderRect: React.FC<Props> = forwardRef(({ disabled, ...props }, boxRef) => {
   const { t } = useTranslation();
+  const theme = useTheme();
   return (
     <RectBox disabled={+!!disabled} {...props} ref={boxRef}>
-      <FacingImg src={AdaHolderIconUrl} />
+      <FacingImg src={theme.isDark ? AdaHolderIconDarlUrl : AdaHolderIconUrl} />
       <DisableAbleLabel disabled={+!!disabled}>{t("common.adaHolder")}</DisableAbleLabel>
     </RectBox>
   );

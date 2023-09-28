@@ -97,7 +97,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
       <Menu>
         {menus.map((item, index) => {
           const { href, key, children, icon, tooltip } = item;
-          const title = t(key);
+          const title = t(key || "");
           const tooltipTitle = `${!sidebar ? `${title}${title && tooltip ? `: ` : ``}` : ``}${tooltip || ``}`;
           return (
             <React.Fragment key={index}>
@@ -182,7 +182,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                   <SubMenu disablePadding>
                     {children.map((subItem, subIndex) => {
                       const { href, icon, isSpecialPath, key } = subItem;
-                      const title = t(key);
+                      const title = t(key || "");
                       return href ? (
                         <ListItem
                           data-testid={`submenu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
@@ -234,7 +234,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
         <StyledDivider sidebar={+sidebar} />
         {footerMenus.map((item, index) => {
           const { href, key, children, icon, tooltip } = item;
-          const title = t(key);
+          const title = t(key || "");
           const tooltipTitle = `${!sidebar ? `${title}${title && tooltip ? `: ` : ``}` : ``}${tooltip || ``}`;
           return (
             <React.Fragment key={index}>
@@ -305,7 +305,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                   <SubMenu disablePadding>
                     {children.map((subItem, subIndex) => {
                       const { href, key, icon } = subItem;
-                      const title = t(key);
+                      const title = t(key || "");
                       return href ? (
                         <ListItem
                           key={subIndex}

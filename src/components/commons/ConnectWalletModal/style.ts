@@ -41,7 +41,7 @@ export const CloseButton = styled(IconButton)<{ connecting: number }>`
   }
 `;
 
-export const WalletItem = styled(Box)<{ active: number; connecting: number }>`
+export const WalletItem = styled(Box)<{ connecting: number }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -52,13 +52,11 @@ export const WalletItem = styled(Box)<{ active: number; connecting: number }>`
   margin-top: 10px;
   box-sizing: border-box;
   border-radius: 10px;
-  border: 1px solid ${(props) => props.theme.palette.primary[200]};
+  border: 1px solid
+    ${(props) => (props.theme.mode === "dark" ? props.theme.palette.secondary[100] : props.theme.palette.primary[200])};
   cursor: ${(props) => (props.connecting ? `wait` : `pointer`)};
-  box-shadow: ${(props) => (props.active ? props.theme.shadow.card : "none")};
-  background-color: ${(props) => (props.active ? props.theme.palette.success[100] : props.theme.palette.primary[100])};
-  &:hover {
-    background-color: ${(props) => props.theme.palette.primary[200]};
-  }
+  background-color: ${(props) =>
+    props.theme.mode === "dark" ? props.theme.palette.secondary[100] : props.theme.palette.primary[100]};
 `;
 
 export const GroupFlex = styled(Box)`
@@ -80,11 +78,13 @@ export const InstallButton = styled(Button)`
   justify-content: space-between;
   align-items: center;
   gap: 5px;
-  background: ${(props) => props.theme.palette.purple[100]};
+  background: ${(props) =>
+    props.theme.mode === "dark" ? props.theme.palette.warning[100] : props.theme.palette.purple[100]};
   border-radius: 5px;
   padding: 4px 10px;
   height: 29px;
-  color: ${(props) => props.theme.palette.purple[200]};
+  color: ${(props) =>
+    props.theme.mode === "dark" ? props.theme.palette.warning[700] : props.theme.palette.purple[200]};
   text-transform: none;
   font-size: var(--font-size-text-x-small);
   font-weight: var(--font-weight-bold);

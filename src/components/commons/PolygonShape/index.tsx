@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
 import { Box, BoxProps, styled } from "@mui/material";
 
-import { PolygonWhiteIconUrl } from "src/commons/resources";
+import { PolygonWhiteIconUrl, PolygonBlackIconUrl } from "src/commons/resources";
 
 const PolygonBox = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -18,7 +18,7 @@ const PolygonBox = styled(Box)(({ theme }) => ({
   textAlign: "center",
   color: theme.palette.secondary.main,
   padding: "40px 40px 50px",
-  backgroundImage: `url(${PolygonWhiteIconUrl})`,
+  backgroundImage: `url(${theme.mode === "light" ? PolygonWhiteIconUrl : PolygonBlackIconUrl})`,
   backgroundSize: "contain",
   backgroundPosition: "center center",
   backgroundRepeat: "no-repeat"

@@ -46,10 +46,25 @@ const lightTheme: CustomTheme = {
 };
 
 const darkTheme: CustomTheme = {
-  ...lightTheme,
+  palette: palette.dark,
+  shadow: shadows.light,
+  typography: typography,
+  breakpoints: breakpoints,
   mode: "dark",
-  isDark: false
+  isDark: true,
+  components: {
+    MuiContainer: {
+      styleOverrides: {
+        maxWidthLg: {
+          [theme.breakpoints.up("xl")]: {
+            maxWidth: 2030
+          }
+        }
+      }
+    }
+  }
 };
+
 declare module "@mui/material" {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface Theme extends CustomTheme {

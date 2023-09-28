@@ -2,7 +2,7 @@ import { Button, alpha, Box, Container, IconButton, styled } from "@mui/material
 import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)`
-  padding-top: 20px;
+  padding-top: 30px;
   position: relative;
   min-height: calc(100vh - 170px);
 `;
@@ -113,8 +113,8 @@ export const ButtonSwitch = styled(IconButton)<{ active: number }>(({ theme, act
 }));
 
 export const ButtonReport = styled(Button)<{ sidebar?: number }>(({ theme }) => ({
-  color: theme.palette.common.white,
-  background: theme.palette.text.primary,
+  color: theme.palette.secondary[0],
+  background: theme.palette.secondary.main,
   height: "44px",
   textTransform: "capitalize",
   fontWeight: 700,
@@ -122,11 +122,12 @@ export const ButtonReport = styled(Button)<{ sidebar?: number }>(({ theme }) => 
   borderRadius: "8px",
   whiteSpace: "nowrap",
   ":hover": {
-    background: alpha(theme.palette.secondary.main, 0.8)
+    background: theme.palette.secondary.main
   },
   "&:disabled": {
     opacity: 0.5,
-    color: theme.palette.common.white
+    color: theme.palette.secondary[0],
+    background: theme.palette.secondary[600]
   },
   [theme.breakpoints.down("lg")]: {
     width: "auto"

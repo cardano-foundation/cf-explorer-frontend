@@ -7,10 +7,11 @@ import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/ut
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import DrawPath from "src/components/commons/DrawPath";
+import CustomIcon from "src/components/commons/CustomIcon";
 import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import FeeBox from "src/components/commons/FeeBox";
 import { details } from "src/commons/routers";
-import { AddressIcon, BackIcon, TimeIcon } from "src/commons/resources";
+import { AddressIcon, AddressIconDark2, BackIcon, TimeIcon, TimeIconDark } from "src/commons/resources";
 import SPOHolder from "src/components/commons/SPOHolder";
 import CopyButton from "src/components/commons/CopyButton";
 import ADAicon from "src/components/commons/ADAIcon";
@@ -111,7 +112,11 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
         )}
         <InfoGroup>
           <Info>
-            <AddressIcon fill={theme.palette.secondary.light} />
+            <CustomIcon
+              icon={theme.isDark ? AddressIconDark2 : AddressIcon}
+              height={30}
+              fill={theme.palette.secondary.light}
+            />
             <CustomTooltip title={txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(data?.txHash)}>{getShortHash(txHash || "")}</StyledLink>
@@ -126,7 +131,11 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
             <InfoText>{formatADAFull(fee || 0)}</InfoText>
           </Info>
           <Info>
-            <TimeIcon fill={theme.palette.secondary.light} />
+            <CustomIcon
+              icon={theme.isDark ? TimeIconDark : TimeIcon}
+              height={30}
+              fill={theme.palette.secondary.light}
+            />
             <InfoText>{formatDateTimeLocal(time || "")}</InfoText>
           </Info>
         </InfoGroup>

@@ -11,14 +11,22 @@ import { API } from "src/commons/utils/api";
 import { exchangeADAToUSD, formatADAFull, getShortWallet } from "src/commons/utils/helper";
 import { RootState } from "src/stores/types";
 import CardAddress from "src/components/share/CardAddress";
-import Card from "src/components/commons/Card";
 import TokenAutocomplete from "src/components/TokenAutocomplete";
 import ADAicon from "src/components/commons/ADAIcon";
 import { useScreen } from "src/commons/hooks/useScreen";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 
-import { GridContainer, GridItem, Pool, RedirectButton, StyledAAmount, BannerSuccess, TimeDuration } from "./styles";
+import {
+  GridContainer,
+  GridItem,
+  Pool,
+  RedirectButton,
+  StyledAAmount,
+  BannerSuccess,
+  TimeDuration,
+  CardContainer
+} from "./styles";
 
 interface Props {
   data: WalletAddress | null;
@@ -104,7 +112,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
   ];
 
   return (
-    <Card
+    <CardContainer
       title={<VerifyScript verified={!!data?.verifiedContract} setShowBanner={setShowBanner} />}
       extra={
         <RedirectButton
@@ -145,7 +153,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
           </Box>
         </GridItem>
       </GridContainer>
-    </Card>
+    </CardContainer>
   );
 };
 

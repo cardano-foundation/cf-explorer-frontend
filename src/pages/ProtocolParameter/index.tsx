@@ -4,16 +4,17 @@ import {
   Box,
   Button,
   Checkbox,
+  ClickAwayListener,
   Container,
   IconButton,
   Skeleton,
   alpha,
   useTheme
 } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import { isObject, isEmpty } from "lodash";
+import { isEmpty, isObject } from "lodash";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { ImArrowDown2, ImArrowUp2 } from "react-icons/im";
@@ -27,14 +28,15 @@ import { details, lists } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { PROTOCOL_TYPE } from "src/commons/utils/constants";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
-import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
 import ParseScriptModal from "src/components/ParseScriptModal";
 import Card from "src/components/commons/Card";
+import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import NoRecord from "src/components/commons/NoRecord";
 import Table from "src/components/commons/Table";
 import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "src/types/protocol";
 import { Column } from "src/types/table";
-import NoRecord from "src/components/commons/NoRecord";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import { ExplainerTextModal } from "./ExplainerTextModal";
 import { explainerTextGlobalConstants, explainerTextProtocolHistory } from "./explainerText";
@@ -222,16 +224,16 @@ const ProtocolParameter: React.FC = () => {
   return (
     <Container>
       {histories && (
-        <Box textAlign={"left"}>
+        <Box textAlign={"left"} sx={{ marginTop: "30px" }}>
           <BackButton onClick={() => history.push(lists.protocolParameters())}>
-            <HiArrowLongLeft />
+            <HiArrowLongLeft color={theme.palette.secondary.light} />
             <BackText>{t("common.back")}</BackText>
           </BackButton>
         </Box>
       )}
       {histories && <ProtocolParameterHistory />}
       {!histories && (
-        <Card titleSx={{ margin: 0 }} title={t("common.protocolParameters")}>
+        <Card title={t("common.protocolParameters")}>
           <Box pt={2}>
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
@@ -524,7 +526,7 @@ export const ProtocolParameterHistory = () => {
               px={2}
               onClick={() => setShowFiter(!showFilter)}
             >
-              <FilterIcon />
+              <CustomIcon icon={FilterIcon} fill={theme.palette.secondary.light} height={18} />
               <Box ml={1} fontWeight={"bold"} color={({ palette }) => palette.secondary.light}>
                 {t("common.filter")}
               </Box>
@@ -643,149 +645,155 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
     setShowFiter(false);
   };
   return (
-    <FilterContainer padding={2} pt={5}>
-      <CloseButton saving={0} onClick={() => setShowFiter(false)} data-testid="close-modal-button">
-        <IoMdClose />
-      </CloseButton>
-      <Box display={"flex"} flexDirection={"column"}>
-        <ButtonFilter onClick={() => setSort("LastFirst")}>
-          <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-            <Box display={"flex"} alignItems={"center"}>
-              <ImArrowDown2 />
-              <Box ml={1} color={({ palette }) => palette.secondary.main}>
-                {t("filter.latestFirst")}
-              </Box>
-            </Box>
-            {sort === "LastFirst" && <BsFillCheckCircleFill size={16} />}
-          </Box>
-        </ButtonFilter>
-        <ButtonFilter onClick={() => setSort("FirstLast")}>
-          <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-            <Box display={"flex"} alignItems={"center"}>
-              <ImArrowUp2 />
-              <Box ml={1} color={({ palette }) => palette.secondary.main}>
-                {t("filter.firstLatest")}
-              </Box>
-            </Box>
-            {sort === "FirstLast" && <BsFillCheckCircleFill size={16} />}
-          </Box>
-        </ButtonFilter>
-        <ButtonFilter onClick={() => setShowDaterange(true)}>
-          <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-            <Box display={"flex"} alignItems={"center"}>
-              <DateRangeIcon />
-              <Box ml={1} color={({ palette }) => palette.secondary.main}>
-                {" "}
-                {t("filter.daterange")}
-              </Box>
-            </Box>
-            {!isEmpty(dateRange) && <BsFillCheckCircleFill size={16} />}
-          </Box>
-        </ButtonFilter>
-
-        <AccordionContainer expanded={expanded === "params"} onChange={handleChange("params")}>
-          <AccordionSummary>
-            <Box
-              fontSize={"0.875rem"}
-              width={"100%"}
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"space-between"}
-            >
+    <ClickAwayListener
+      onClickAway={() => {
+        setShowFiter(false);
+      }}
+    >
+      <FilterContainer padding={2} pt={5}>
+        <CloseButton saving={0} onClick={() => setShowFiter(false)} data-testid="close-modal-button">
+          <IoMdClose />
+        </CloseButton>
+        <Box display={"flex"} flexDirection={"column"}>
+          <ButtonFilter onClick={() => setSort("LastFirst")}>
+            <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
               <Box display={"flex"} alignItems={"center"}>
-                <ProtocolParam />
+                <ImArrowDown2 />
                 <Box ml={1} color={({ palette }) => palette.secondary.main}>
-                  {t("common.parameterChanges")} {filterOption.length > 0 ? `(${filterOption.length})` : ""}
+                  {t("filter.latestFirst")}
                 </Box>
               </Box>
-              <Box>{expanded === "params" ? <IoIosArrowDown /> : <IoIosArrowUp />}</Box>
+              {sort === "LastFirst" && <BsFillCheckCircleFill size={16} />}
             </Box>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Box height={170} overflow={"auto"}>
-              <Box>
-                <Checkbox
-                  checked={filterOption.length === Object.keys(PROTOCOL_TYPE).length}
-                  id={"all"}
-                  sx={{
-                    color: ({ palette }) => alpha(palette.common.black, 0.15),
-                    "&.Mui-checked": {
-                      color: `${theme.palette.primary.main} !important`
-                    }
-                  }}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      clear();
-                      pushFilterOption(...Object.keys(PROTOCOL_TYPE));
-                    } else {
-                      clear();
-                    }
-                  }}
-                />
-                <StyledDropdownItem htmlFor={"all"} style={{ cursor: "pointer" }}>
-                  {t("common.allParameters")}
-                </StyledDropdownItem>
+          </ButtonFilter>
+          <ButtonFilter onClick={() => setSort("FirstLast")}>
+            <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+              <Box display={"flex"} alignItems={"center"}>
+                <ImArrowUp2 />
+                <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                  {t("filter.firstLatest")}
+                </Box>
               </Box>
+              {sort === "FirstLast" && <BsFillCheckCircleFill size={16} />}
+            </Box>
+          </ButtonFilter>
+          <ButtonFilter onClick={() => setShowDaterange(true)}>
+            <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+              <Box display={"flex"} alignItems={"center"}>
+                <DateRangeIcon />
+                <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                  {" "}
+                  {t("filter.daterange")}
+                </Box>
+              </Box>
+              {!isEmpty(dateRange) && <BsFillCheckCircleFill size={16} />}
+            </Box>
+          </ButtonFilter>
 
-              {Object.keys(PROTOCOL_TYPE).map((k, idx) => (
-                <Box key={idx}>
+          <AccordionContainer expanded={expanded === "params"} onChange={handleChange("params")}>
+            <AccordionSummary>
+              <Box
+                fontSize={"0.875rem"}
+                width={"100%"}
+                display={"flex"}
+                alignItems={"center"}
+                justifyContent={"space-between"}
+              >
+                <Box display={"flex"} alignItems={"center"}>
+                  <ProtocolParam />
+                  <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                    {t("common.parameterChanges")} {filterOption.length > 0 ? `(${filterOption.length})` : ""}
+                  </Box>
+                </Box>
+                <Box>{expanded === "params" ? <IoIosArrowDown /> : <IoIosArrowUp />}</Box>
+              </Box>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box height={170} overflow={"auto"}>
+                <Box>
                   <Checkbox
-                    id={k}
-                    checked={filterOption.includes(k)}
-                    onChange={(e) =>
-                      e.target.checked
-                        ? pushFilterOption(k)
-                        : removeAtFilterOption(filterOption.findIndex((f) => f === k))
-                    }
+                    checked={filterOption.length === Object.keys(PROTOCOL_TYPE).length}
+                    id={"all"}
                     sx={{
                       color: ({ palette }) => alpha(palette.common.black, 0.15),
                       "&.Mui-checked": {
                         color: `${theme.palette.primary.main} !important`
                       }
                     }}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        clear();
+                        pushFilterOption(...Object.keys(PROTOCOL_TYPE));
+                      } else {
+                        clear();
+                      }
+                    }}
                   />
-                  <StyledDropdownItem htmlFor={k} style={{ cursor: "pointer" }}>
-                    {k}
+                  <StyledDropdownItem htmlFor={"all"} style={{ cursor: "pointer" }}>
+                    {t("common.allParameters")}
                   </StyledDropdownItem>
                 </Box>
-              ))}
-            </Box>
-          </AccordionDetails>
-        </AccordionContainer>
 
-        <Box>
-          <ApplyFilterButton
-            data-testid="apply-filters"
-            onClick={handleApplyFilter}
-            disabled={filterOption.length === 0 && !sort && isEmpty(dateRange)}
+                {Object.keys(PROTOCOL_TYPE).map((k, idx) => (
+                  <Box key={idx}>
+                    <Checkbox
+                      id={k}
+                      checked={filterOption.includes(k)}
+                      onChange={(e) =>
+                        e.target.checked
+                          ? pushFilterOption(k)
+                          : removeAtFilterOption(filterOption.findIndex((f) => f === k))
+                      }
+                      sx={{
+                        color: ({ palette }) => alpha(palette.common.black, 0.15),
+                        "&.Mui-checked": {
+                          color: `${theme.palette.primary.main} !important`
+                        }
+                      }}
+                    />
+                    <StyledDropdownItem htmlFor={k} style={{ cursor: "pointer" }}>
+                      {k}
+                    </StyledDropdownItem>
+                  </Box>
+                ))}
+              </Box>
+            </AccordionDetails>
+          </AccordionContainer>
+
+          <Box>
+            <ApplyFilterButton
+              data-testid="apply-filters"
+              onClick={handleApplyFilter}
+              disabled={filterOption.length === 0 && !sort && isEmpty(dateRange)}
+            >
+              {t("common.applyFilters")}
+            </ApplyFilterButton>
+          </Box>
+          <Box
+            component={Button}
+            width={"100%"}
+            textTransform={"capitalize"}
+            onClick={() => {
+              setResetFilter(true);
+              setShowFiter(false);
+            }}
+            display={"flex"}
+            alignItems={"center"}
+            mt={2}
+            color={({ palette }) => `${palette.primary.main} !important`}
           >
-            {t("common.applyFilters")}
-          </ApplyFilterButton>
+            <Box mr={1}>{t("common.reset")}</Box>
+            <ResetIcon />
+          </Box>
         </Box>
-        <Box
-          component={Button}
-          width={"100%"}
-          textTransform={"capitalize"}
-          onClick={() => {
-            setResetFilter(true);
-            setShowFiter(false);
-          }}
-          display={"flex"}
-          alignItems={"center"}
-          mt={2}
-          color={({ palette }) => `${palette.primary.main} !important`}
-        >
-          <Box mr={1}>{t("common.reset")}</Box>
-          <ResetIcon />
-        </Box>
-      </Box>
-      <DateRangeModal
-        onClose={() => setShowDaterange(false)}
-        open={showDaterange}
-        value={dateRange}
-        onDateRangeChange={({ fromDate, toDate }) => setDateRange({ fromDate, toDate })}
-      />
-    </FilterContainer>
+        <DateRangeModal
+          onClose={() => setShowDaterange(false)}
+          open={showDaterange}
+          value={dateRange}
+          onDateRangeChange={({ fromDate, toDate }) => setDateRange({ fromDate, toDate })}
+        />
+      </FilterContainer>
+    </ClickAwayListener>
   );
 };
 

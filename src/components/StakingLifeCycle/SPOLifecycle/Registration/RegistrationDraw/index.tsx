@@ -5,11 +5,12 @@ import { useTranslation } from "react-i18next";
 
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import { BackIcon, AddressIcon, TimeIcon } from "src/commons/resources";
+import { BackIcon, AddressIcon, TimeIcon, AddressIconDark2, TimeIconDark } from "src/commons/resources";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import DrawPath from "src/components/commons/DrawPath";
 import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import { details } from "src/commons/routers";
+import CustomIcon from "src/components/commons/CustomIcon";
 import SPOHolder from "src/components/commons/SPOHolder";
 import ADAicon from "src/components/commons/ADAIcon";
 import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
@@ -118,7 +119,11 @@ export const RegistrationDraw = ({ selected, toggleModal, data, showBackButton }
 
         <InfoGroup>
           <Info>
-            <AddressIcon fill={theme.palette.secondary.light} />
+            <CustomIcon
+              icon={theme.isDark ? AddressIconDark2 : AddressIcon}
+              height={30}
+              fill={theme.palette.secondary.light}
+            />
             <CustomTooltip title={txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(data?.txHash)}>{getShortHash(txHash || "")}</StyledLink>
@@ -133,7 +138,11 @@ export const RegistrationDraw = ({ selected, toggleModal, data, showBackButton }
             <InfoText>{formatADAFull(poolHold + fee || 0)}</InfoText>
           </Info>
           <Info>
-            <TimeIcon fill={theme.palette.secondary.light} />
+            <CustomIcon
+              icon={theme.isDark ? TimeIconDark : TimeIcon}
+              height={30}
+              fill={theme.palette.secondary.light}
+            />
             <InfoText>{formatDateTimeLocal(time || "")}</InfoText>
           </Info>
         </InfoGroup>
