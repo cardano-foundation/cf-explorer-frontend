@@ -1,16 +1,17 @@
-import { IconButtonProps, Box, IconButton, styled } from "@mui/material";
+import { IconButtonProps, Box, IconButton, styled, alpha } from "@mui/material";
 import React, { forwardRef } from "react";
 
 export const Button = styled(IconButton)(({ theme }) => ({
   width: 30,
   height: 30,
   marginLeft: 6,
-  backgroundColor: theme.palette.grey[200]
+  backgroundColor: theme.mode === "light" ? theme.palette.grey[200] : alpha(theme.palette.common.white, 0.2)
 }));
 
 export const DotsIcon = styled(Box)`
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.palette.secondary.light};
+  background-color: ${({ theme }) =>
+    theme.mode === "light" ? theme.palette.secondary.light : theme.palette.common.white};
   width: 3.6px;
   height: 3.6px;
   position: relative;
@@ -23,7 +24,8 @@ export const DotsIcon = styled(Box)`
     right: -7px;
     top: 0px;
     border-radius: 50%;
-    background-color: ${({ theme }) => theme.palette.secondary.light};
+    background-color: ${({ theme }) =>
+      theme.mode === "light" ? theme.palette.secondary.light : theme.palette.common.white};
   }
   &::after {
     content: "";
@@ -34,7 +36,8 @@ export const DotsIcon = styled(Box)`
     left: -7px;
     top: 0px;
     border-radius: 50%;
-    background-color: ${({ theme }) => theme.palette.secondary.light};
+    background-color: ${({ theme }) =>
+      theme.mode === "light" ? theme.palette.secondary.light : theme.palette.common.white};
   }
 `;
 

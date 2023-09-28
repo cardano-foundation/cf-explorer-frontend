@@ -78,6 +78,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
                       enableClipboard={false}
                       collapseStringsAfterLength={false}
                       style={{ padding: 0, background: "none", color: theme.palette.text.secondary }}
+                      theme={theme.mode}
                       rootName={false}
                     />
                   ) : (

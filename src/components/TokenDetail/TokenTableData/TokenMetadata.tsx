@@ -30,6 +30,7 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson }) => {
           collapseStringsAfterLength={false}
           style={{ padding: 0, background: "none", color: theme.palette.text.primary }}
           rootName={false}
+          theme={theme.mode}
         />
       )}
     </ViewJson>
