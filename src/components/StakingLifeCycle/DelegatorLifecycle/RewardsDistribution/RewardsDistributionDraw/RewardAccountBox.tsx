@@ -2,7 +2,12 @@ import { BoxProps, Typography, useTheme } from "@mui/material";
 import { forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import { RewardAccountIconDarkUrl, RewardAccountIconUrl, WalletIconRewardGreen } from "src/commons/resources";
+import {
+  RewardAccountIconDarkUrl,
+  RewardAccountIconUrl,
+  WalletIconRewardGreen,
+  WalletIconRewardGreenDark
+} from "src/commons/resources";
 import { formatADAFull } from "src/commons/utils/helper";
 
 import {
@@ -35,7 +40,7 @@ const RewardAccountBox: React.FC<IRewardAccountBoxProps> = forwardRef(({ value, 
       </Typography>
       <RewardValueLabel>
         <ClickAbleButton data-testid="toggle-reward-modal">
-          <WalletIconRewardGreen />
+          {theme.isDark ? <WalletIconRewardGreenDark /> : <WalletIconRewardGreen />}
         </ClickAbleButton>
         <RewardValue>
           {formatADAFull(value || 0)}

@@ -44,7 +44,8 @@ export const TotalTransaction = styled(Typography)`
 
 export const AmountADARow = styled(Typography)<{ amount: string }>`
   font-size: 14px;
-  color: ${({ amount, theme }) => (+amount > 0 ? theme.palette.success[800] : theme.palette.error[700])};
+  color: ${({ amount, theme }) =>
+    +amount > 0 ? (theme.isDark ? theme.palette.success.main : theme.palette.success[800]) : theme.palette.error[700]};
   display: flex;
   gap: 10px;
   align-items: center;

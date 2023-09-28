@@ -49,7 +49,8 @@ import {
   ButtonFilter,
   ColumnProtocol,
   FilterContainer,
-  StyledDropdownItem
+  StyledDropdownItem,
+  TextDescription
 } from "./styles";
 
 interface IProtocolParamVertical {
@@ -91,6 +92,7 @@ const ProtocolParameter: React.FC = () => {
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `${t("common.protocolParameters")} | ${t("head.page.dashboard")}`;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const theme = useTheme();
@@ -317,7 +319,6 @@ export const ProtocolParameterHistory = () => {
   const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
   const historyUrlBase = PROTOCOL_PARAMETER.HISTORY;
   let historyUrlParams = "";
-
   if (filterParams.length === 0 || filterParams.length === TOTAL_PARAMETER) {
     historyUrlParams = "ALL";
   } else {
@@ -346,7 +347,7 @@ export const ProtocolParameterHistory = () => {
   const [showFilter, setShowFiter] = useState(false);
   const [resetFilter, setResetFilter] = useState<boolean>(false);
   const [sortTimeFilter, setSortTimeFilter] = useState<"FirstLast" | "LastFirst" | "">("");
-
+  const [totalEpoch, setTotalEpoch] = useState<number>(0);
   const getTitleColumn = (data: ProtocolHistory | null) => {
     data &&
       (data.epochChanges || [])?.map(({ endEpoch, startEpoch }) => {
@@ -447,6 +448,10 @@ export const ProtocolParameterHistory = () => {
     if (dataHistory) {
       clearColumnTitle();
       getTitleColumn(dataHistory);
+      const totalEpoch = (dataHistory?.epochChanges || []).reduce((acc, cur) => {
+        return acc + (cur.endEpoch === cur.startEpoch ? 1 : cur.startEpoch - cur.endEpoch + 1);
+      }, 0);
+      setTotalEpoch(totalEpoch);
     }
   }, [JSON.stringify(dataHistory)]);
 
@@ -470,7 +475,7 @@ export const ProtocolParameterHistory = () => {
       setResetFilter(false);
     }
   }, [resetFilter]);
-
+  const totalFilter = filterParams.length + (sortTimeFilter ? 1 : 0) + (dateRangeFilter.fromDate ? 1 : 0);
   useUpdateEffect(() => {
     setColumnsTable([columnsTable[0], ...columnsTable.slice(1).reverse()]);
   }, [sortTimeFilter]);
@@ -517,18 +522,32 @@ export const ProtocolParameterHistory = () => {
         textAlign={"left"}
         extra={
           <Box position={"relative"}>
-            <Box
-              component={Button}
-              variant="text"
-              textTransform={"capitalize"}
-              bgcolor={({ palette }) => palette.primary[200]}
-              border={({ palette }) => `1px solid ${palette.primary[200]}`}
-              px={2}
-              onClick={() => setShowFiter(!showFilter)}
-            >
-              <CustomIcon icon={FilterIcon} fill={theme.palette.secondary.light} height={18} />
-              <Box ml={1} fontWeight={"bold"} color={({ palette }) => palette.secondary.light}>
-                {t("common.filter")}
+            <Box display={"flex"} alignItems={"center"} gap={"15px"}>
+              {totalFilter && (
+                <TextDescription>{t("glossary.showingNumberEpochs", { total: totalEpoch })}</TextDescription>
+              )}
+              <Box
+                component={Button}
+                variant="text"
+                textTransform={"capitalize"}
+                bgcolor={({ palette, mode }) => (mode === "dark" ? palette.secondary[0] : palette.primary[200])}
+                border={({ palette, mode }) => `1px solid ${mode === "dark" ? "none" : palette.primary[200]}`}
+                px={2}
+                onClick={() => setShowFiter(!showFilter)}
+              >
+                <CustomIcon
+                  icon={FilterIcon}
+                  fill={theme.mode === "dark" ? theme.palette.primary.main : theme.palette.secondary.light}
+                  height={18}
+                />
+                <Box
+                  ml={1}
+                  whiteSpace={"nowrap"}
+                  fontWeight={"bold"}
+                  color={({ palette, mode }) => (mode === "dark" ? palette.primary.main : palette.secondary.light)}
+                >
+                  {t("common.filter")} {totalFilter ? `(${totalFilter})` : ""}
+                </Box>
               </Box>
             </Box>
             {showFilter && (

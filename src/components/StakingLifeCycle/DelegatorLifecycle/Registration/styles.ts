@@ -27,6 +27,10 @@ export const BoxGroup = styled(Box)(({ theme }) => ({
   }
 }));
 
+export const WrapContent = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(3)
+}));
+
 export const HoldBox = styled(Box)(({ theme }) => ({
   height: "35px",
   display: "flex",

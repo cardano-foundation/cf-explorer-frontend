@@ -35,7 +35,7 @@ const StakeDelegations = () => {
   const columns: Column<StakeDelegationItem>[] = [
     {
       title: t("glossary.txHash"),
-      minWidth: 120,
+      minWidth: 200,
       key: "txHash",
       render: (r) => (
         <CustomTooltip title={r.txHash}>
@@ -46,12 +46,13 @@ const StakeDelegations = () => {
     {
       title: t("glossary.createdAt"),
       key: "createdat",
-      minWidth: "120px",
+      minWidth: "200px",
       render: (r) => formatDateTimeLocal(r.time)
     },
     {
       title: t("glossary.block"),
       key: "blockNo",
+      minWidth: "200px",
       render: (r) => (
         <>
           <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
@@ -67,6 +68,7 @@ const StakeDelegations = () => {
     {
       title: t("glossary.stakeAddress"),
       key: "stakeAddress",
+      minWidth: "200px",
       render: (r) => (
         <>
           {r.stakeKeys.slice(0, 2).map((stakeKey, idx) => (
@@ -85,6 +87,7 @@ const StakeDelegations = () => {
     {
       title: t("glossary.pool"),
       key: "pool",
+      minWidth: "200px",
       render: (r) => (
         <>
           {r.pools.slice(0, 2).map((pool, idx) => (

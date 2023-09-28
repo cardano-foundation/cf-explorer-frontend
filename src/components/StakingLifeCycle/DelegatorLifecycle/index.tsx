@@ -249,7 +249,8 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
           <InfoIcon style={{ cursor: "pointer" }} onClick={() => setOpenDescriptionModal(true)} />
         </StyledBox>
         <ADATransfersButton onClick={() => setOpen(true)}>
-          <CustomIcon icon={TranferIcon} height={20} fill={theme.palette.secondary[0]} /> {t("common.adaTransfers")}
+          <CustomIcon icon={TranferIcon} width={20} height={20} fill={theme.palette.secondary[0]} />
+          {t("common.adaTransfers")}
         </ADATransfersButton>
       </StepHeader>
       <Box>{stepper[currentStep].description}</Box>
@@ -274,7 +275,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
               setCurrentStep(stepper.findIndex((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1]));
             }}
           >
-            <PreviousIcon />
+            <CustomIcon icon={PreviousIcon} height={30} fill={theme.palette.secondary.main} />
             <ButtonText>
               {t("common.previous")}:{" "}
               {stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1])?.title}
@@ -306,7 +307,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
               ? t("common.viewTabular")
               : stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid + 1])?.title}
           </ButtonText>
-          <NextIcon />
+          <CustomIcon icon={NextIcon} height={30} fill={theme.palette.secondary[0]} />
         </NextButton>
       </StyledGroupButton>
       <ADATransferModal open={open} handleCloseModal={() => setOpen(false)} />

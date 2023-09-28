@@ -567,6 +567,7 @@
   "glossary.globalconstants": "Global Constants",
   "explain.shelleyEra": "Please be aware that we just display the protocol parameters from Shelley Era onwards (from Epoch {{epoch}}). For further information, please visit",
   "common.ppUpdateHistory": "Protocol parameters update history",
+  "glossary.showingNumberEpochs": "Showing {{total}} epochs",
   "filter.latestFirst": "Latest - First",
   "filter.firstLatest": "First - Latest",
   "common.parameterChanges": "Parameter changes",

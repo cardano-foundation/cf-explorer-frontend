@@ -293,6 +293,7 @@ export { ReactComponent as ButtonListIconDark } from "./icons/Staking/buttonList
 export { ReactComponent as InfoIcon } from "./icons/Staking/infoIcon.svg";
 export { ReactComponent as TranferIcon } from "./icons/Staking/tranfer.svg";
 export { ReactComponent as BackIcon } from "./icons/Staking/BackIcon.svg";
+export { ReactComponent as BackDarkIcon } from "./icons/back-dark-icon.svg";
 export { ReactComponent as AddressIcon } from "./icons/Staking/AddressIcon.svg";
 export { ReactComponent as AddressIconDark } from "./icons/Staking/AddressIconDark.svg";
 export { ReactComponent as AddressIconDark2 } from "./icons/Staking/AddressIconDark2.svg";
