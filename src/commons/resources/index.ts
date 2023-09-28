@@ -115,9 +115,9 @@ import DownRedDarkmode from "./icons/downRedDark.svg";
 import DownRedUtxoDarkmode from "./icons/downUtxoRedDark.svg";
 import ArrowUpIcon from "./icons/arrow-up.svg";
 import CopyOutlineIcon, { ReactComponent as CopyOutlineIconComponent } from "./icons/copy-outline.svg";
+import ArrowDownIcon from "./icons/arrow-down.svg";
 import GiftIcon from "./images/gift-icon.png";
 import DelegatingIcon from "./icons/delegating-icon.svg";
-import ArrowDownIcon from "./icons/arrow-down-red.svg";
 
 export {
   LogoFullIcon,

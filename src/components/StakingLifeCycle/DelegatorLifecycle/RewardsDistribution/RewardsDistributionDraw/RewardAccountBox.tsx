@@ -1,4 +1,4 @@
-import { useTheme, BoxProps, Typography } from "@mui/material";
+import { BoxProps, Typography, useTheme } from "@mui/material";
 import { forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 
