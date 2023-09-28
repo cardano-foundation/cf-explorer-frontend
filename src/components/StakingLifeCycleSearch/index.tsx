@@ -136,7 +136,12 @@ const StakingLifeCycleSearch = () => {
             }}
           />
           <SubmitButton onClick={hanldeSearch}>
-            <CustomIcon icon={HeaderSearchIconComponent} stroke={themes.palette.secondary.light} height={22} />
+            <CustomIcon
+              icon={HeaderSearchIconComponent}
+              stroke={theme.palette.secondary.light}
+              fill={theme.palette.secondary[0]}
+              height={22}
+            />
           </SubmitButton>
         </SearchContainer>
         <Box color={({ palette }) => palette.error[700]} sx={{ marginBottom: "20px" }}>
