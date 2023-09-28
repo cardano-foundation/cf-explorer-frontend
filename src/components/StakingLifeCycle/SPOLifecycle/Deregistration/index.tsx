@@ -1,6 +1,5 @@
 import { Box, Grid, useTheme } from "@mui/material";
 import { useMemo, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 
 import { AddressIcon, BackIcon, TimeIcon } from "src/commons/resources";
@@ -77,7 +76,6 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
   const handleBack = () => {
     history.goBack();
   };
-  const { t } = useTranslation();
   const paths = useMemo((): LineArrowItem[] => {
     return [
       {
@@ -171,13 +169,16 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
             </Box>
           </BoxGroup>
           <StyledCertificateShape onClick={toggleModal} ref={deregistrationRef}>
-            {t("common.deregistrationCert")}
+            Deregistration certificate
           </StyledCertificateShape>
         </MiddleGroup>
         <CardanoBlockchain ref={cardanoBlockchainRef} />
         <DrawPath paths={paths} />
       </DrawContainer>
-      <AditionalLabel>{t("common.holdBoxLimitWarning")}</AditionalLabel>
+      <AditionalLabel>
+        Pool hold paid during registration is refunded 1 epoch after the retirement epoch to the reward address of the
+        pool operator
+      </AditionalLabel>
     </Box>
   );
 };
@@ -190,14 +191,13 @@ export const DeregistrationCertificateModal = ({
   data: SPODeregistration | null;
   handleCloseModal: () => void;
 }) => {
-  const { t } = useTranslation();
   return (
-    <StyledModal {...props} title={t("common.deregistrationCert")}>
+    <StyledModal {...props} title="Deregistration certificate">
       <Grid container spacing={1}>
         <StyledGridItem item xs={6}>
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
-              {t("common.poolID")}
+              Pool ID
             </Box>
             {data && (
               <Box>
@@ -214,7 +214,7 @@ export const DeregistrationCertificateModal = ({
         <StyledGridItem item xs={6}>
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
-              {t("glossary.retirementsEpoch")}
+              Retirement in Epoch
             </Box>
             {data && (
               <DetailRetirement pt={"3px"} pb={"5px"}>
