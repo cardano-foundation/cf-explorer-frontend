@@ -55,7 +55,7 @@ const StakingLifeCycleSearch = () => {
   const [openInfoModal, setOpenInfoModal] = useState(false);
   const [value, setValue] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const themes = useTheme();
+  const theme = useTheme();
 
   const BROWSER_OPTIONS = [
     {
@@ -116,7 +116,7 @@ const StakingLifeCycleSearch = () => {
         {t("common.searchPoolDesc")}
         <StyledIconQuestion
           onClick={() => setOpenInfoModal((pre) => !pre)}
-          color={themes.palette.primary.main}
+          color={theme.palette.primary.main}
           size={20}
         />
       </SearchTitle>
