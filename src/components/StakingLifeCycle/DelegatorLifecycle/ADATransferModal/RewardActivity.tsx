@@ -84,6 +84,7 @@ const RewardActivity: React.FC = () => {
           total: fetchData.total,
           onChange: (page, size) => setPagi({ page: page - 1, size })
         }}
+        isModal
       />
     </Box>
   );

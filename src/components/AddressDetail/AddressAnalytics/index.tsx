@@ -20,12 +20,12 @@ import { getNiceTickValues } from "recharts-scale";
 import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
-import Card from "src/components/commons/Card";
-import { formatADAFull, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
 import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
+import CustomIcon from "src/components/commons/CustomIcon";
 import { API } from "src/commons/utils/api";
 import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
-import CustomIcon from "src/components/commons/CustomIcon";
+import { formatADAFull, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
+import Card from "src/components/commons/Card";
 import { TooltipBody } from "src/components/commons/Layout/styles";
 
 import {

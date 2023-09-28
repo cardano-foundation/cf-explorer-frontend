@@ -1,15 +1,15 @@
-import { useContext, useState } from "react";
 import { Box } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 
 import { details } from "src/commons/routers";
 import CopyButton from "src/components/commons/CopyButton";
 
+import DelegatorDetailContext from "../DelegatorDetailContext";
 import RecentRegistrations from "./RecentRegistrations";
 import { RegistrationDraw } from "./RegistrationDraw";
 import { StakeLink, StyledCustomModal } from "./styles";
-import DelegatorDetailContext from "../DelegatorDetailContext";
 
 const Registration = () => {
   const [openModal, setOpenModal] = useState(false);

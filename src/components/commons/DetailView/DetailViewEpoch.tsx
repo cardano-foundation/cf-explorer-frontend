@@ -7,7 +7,7 @@ import { Box, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
-import { BlockIcon, CubeIcon, RocketIcon } from "src/commons/resources";
+import { BlockIcon, RocketIconUrl, cubeIconUrl } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
 import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
@@ -44,7 +44,8 @@ import {
   DetailLinkRight,
   ViewDetailScroll,
   ViewDetailHeader,
-  TimeDuration
+  TimeDuration,
+  Icon
 } from "./styles";
 
 type DetailViewEpochProps = {
@@ -57,9 +58,9 @@ type DetailViewEpochProps = {
 const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose, callback, open }) => {
   const { currentEpoch, blockNo } = useSelector(({ system }: RootState) => system);
   const { t } = useTranslation();
-  const theme = useTheme();
   const [key, setKey] = useState(0);
   const [urlFetch, setUrlFetch] = useState("");
+  const theme = useTheme();
 
   const { data, lastUpdated, loading } = useFetch<IDataEpoch>(
     urlFetch,
@@ -202,14 +203,14 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
             </HeaderContainer>
             <ListItem>
               <Item>
-                <CubeIcon width={24} height={24} fill={theme.palette.secondary[0]} />
+                <Icon src={cubeIconUrl} alt="socket" />
                 <ItemName>{t("glossary.blocks")}</ItemName>
                 <ItemValue>
                   {currentEpoch?.no === epochNo ? currentEpoch.blkCount || data.blkCount : data.blkCount}
                 </ItemValue>
               </Item>
               <Item>
-                <RocketIcon width={24} height={24} fill={theme.palette.secondary[0]} />
+                <Icon src={RocketIconUrl} alt="socket" />
                 <ItemName>{t("common.slot")}</ItemName>
                 <ItemValue>
                   {slot}

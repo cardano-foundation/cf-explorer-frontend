@@ -7,7 +7,6 @@ import { useTheme } from "@mui/material";
 
 import useFetch from "src/commons/hooks/useFetch";
 import {
-  CubeIcon,
   DelegationHistoryMainIcon,
   DelegationIconUrl,
   FileEditIcon,
@@ -17,10 +16,11 @@ import {
   NoteEditIcon,
   ProtocolUpdateIconUrl,
   RewardsDistributionIconUrl,
-  RocketIcon,
+  RocketIconUrl,
   StakeCertificatesIconUrl,
   USDIconComponent,
-  WithdrawlIcon
+  WithdrawlIcon,
+  cubeIconUrl
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
@@ -52,6 +52,7 @@ import {
   EpochText,
   Group,
   HeaderContainer,
+  Icon,
   IconSkeleton,
   Item,
   ItemName,
@@ -239,12 +240,12 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
             </HeaderContainer>
             <ListItem>
               <Item>
-                <CubeIcon width={24} height={24} fill={theme.palette.secondary[0]} />
+                <Icon src={cubeIconUrl} alt="socket" />
                 <ItemName>{t("glossary.block")}</ItemName>
                 <ItemValue>{data?.tx?.blockNo}</ItemValue>
               </Item>
               <Item>
-                <RocketIcon width={24} height={24} fill={theme.palette.secondary[0]} />
+                <Icon src={RocketIconUrl} alt="socket" />
                 <ItemName>{t("common.slot")}</ItemName>
                 <ItemValue>
                   {data?.tx?.epochSlot}

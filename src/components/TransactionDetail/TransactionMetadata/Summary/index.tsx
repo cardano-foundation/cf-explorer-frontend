@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { ArrowDownIcon, ArrowUpIcon, WalletRoundedIcon, CopyOutline } from "src/commons/resources";
+import { ArrowDownIcon, ArrowUpIcon, WalletRoundedIcon, CopyOutlineIconComponent } from "src/commons/resources";
 
 import { details } from "../../../../commons/routers";
 import { formatADAFull, formatNumberDivByDecimals, getShortWallet } from "../../../../commons/utils/helper";
@@ -63,7 +63,7 @@ const SummaryItems = ({
                 </Link>
                 <CopyButton
                   text={item.address}
-                  customIcon={CopyOutline}
+                  customIcon={CopyOutlineIconComponent}
                   style={{ cursor: "pointer", verticalAlign: "text-bottom" }}
                 />
               </Box>
@@ -111,6 +111,7 @@ const SummaryItems = ({
             <Box display={"flex"} alignItems={"center"} mt={1}>
               <TokenLink
                 token={tokensSent[0]}
+                isSummary={true}
                 isSuccess={!isFailed}
                 sx={{ minWidth: "100%", background: (theme) => theme.palette.primary[100] }}
                 hideValue
@@ -120,6 +121,7 @@ const SummaryItems = ({
           {tokensSent && tokensSent.length > 1 && (
             <Box display={"flex"} alignItems={"center"} mt={1}>
               <DropdownTokens
+                isSummary={true}
                 tokens={tokensSent}
                 type={type}
                 hideInputLabel
@@ -152,6 +154,7 @@ const SummaryItems = ({
             <Box display={"flex"} alignItems={"center"} mt={1}>
               <TokenLink
                 token={tokensReceived[0]}
+                isSummary={true}
                 isSuccess={!isFailed}
                 sx={{ minWidth: "100%", background: (theme) => theme.palette.primary[100] }}
                 hideValue
@@ -163,6 +166,7 @@ const SummaryItems = ({
               <DropdownTokens
                 tokens={tokensReceived}
                 type={type}
+                isSummary={true}
                 hideInputLabel
                 isSuccess={!isFailed}
                 sx={{

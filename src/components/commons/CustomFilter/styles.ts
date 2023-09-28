@@ -1,4 +1,4 @@
-import { Box, InputBase, ListItemIcon, styled } from "@mui/material";
+import { Button, Box, InputBase, ListItemIcon, styled } from "@mui/material";
 
 export const Container = styled(Box)`
   width: 100%;
@@ -36,3 +36,9 @@ export const StyledInput = styled(InputBase)`
 export const StyledListItemIcon = styled(ListItemIcon)`
   color: inherit;
 `;
+
+export const WrapButton = styled(Button)(({ theme }) => ({
+  "&:disabled": {
+    backgroundColor: theme.palette.secondary.main
+  }
+}));

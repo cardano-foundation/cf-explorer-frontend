@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "@mui/material";
 
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
-import { CubeIcon, RocketIcon } from "src/commons/resources";
+import { RocketIconUrl, cubeIconUrl } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
 import { formatADAFull, formatDateTimeLocal, formatNameBlockNo, getShortHash } from "src/commons/utils/helper";
@@ -41,7 +41,8 @@ import {
   DetailLinkName,
   ViewDetailHeader,
   ViewDetailScroll,
-  TimeDuration
+  TimeDuration,
+  Icon
 } from "./styles";
 import ViewMoreButton from "../ViewMoreButton";
 import CustomTooltip from "../CustomTooltip";
@@ -59,12 +60,12 @@ type DetailViewBlockProps = {
 const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
   const { t } = useTranslation();
   const { blockNo, handleClose, open } = props;
+  const theme = useTheme();
   const currentBlockNo = useSelector(({ system }: RootState) => system.blockNo);
   const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
   const [lastUpdated, setLastUpdated] = useState<number>();
   const [urlFetch, setUrlFetch] = useState("");
   const { data, loading } = useFetch<BlockDetail>(urlFetch, undefined, false);
-  const theme = useTheme();
 
   useEffect(() => {
     if (data) setLastUpdated(Date.now());
@@ -181,14 +182,14 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
             </HeaderContainer>
             <ListItem>
               <Item>
-                <CubeIcon width={24} height={24} fill={theme.palette.secondary[0]} />
+                <Icon src={cubeIconUrl} alt="socket" />
                 <ItemName>{t("glossary.block")}</ItemName>
                 <CustomTooltip title={tooltip}>
                   <ItemValue sx={{ textTransform: "none" }}>{blockName}</ItemValue>
                 </CustomTooltip>
               </Item>
               <Item>
-                <RocketIcon width={24} height={24} fill={theme.palette.secondary[0]} />
+                <Icon src={RocketIconUrl} alt="socket" />
                 <ItemName>{t("common.slot")}</ItemName>
                 <ItemValue>
                   {data?.epochNo}

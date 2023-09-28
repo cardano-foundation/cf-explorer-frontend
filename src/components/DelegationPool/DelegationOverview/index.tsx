@@ -37,9 +37,8 @@ import {
 
 const OverViews: React.FC = () => {
   const { t } = useTranslation();
-  const theme = useTheme();
   const { currentEpoch, blockNo } = useSelector(({ system }: RootState) => system);
-
+  const theme = useTheme();
   const { data, loading, lastUpdated } = useFetch<OverViewDelegation>(API.DELEGATION.HEADER, undefined, false, blockNo);
 
   if (loading) {

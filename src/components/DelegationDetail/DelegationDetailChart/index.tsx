@@ -9,8 +9,8 @@ import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/
 import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
-import { TooltipBody } from "src/components/commons/Layout/styles";
 import CustomIcon from "src/components/commons/CustomIcon";
+import { TooltipBody } from "src/components/commons/Layout/styles";
 
 import {
   AnalyticsTitle,

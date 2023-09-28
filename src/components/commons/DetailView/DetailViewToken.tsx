@@ -59,7 +59,6 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
   const { t } = useTranslation();
   const { token: data, handleClose, tokenId, open } = props;
   const theme = useTheme();
-
   const renderContent = () => {
     if (!data) {
       return (
