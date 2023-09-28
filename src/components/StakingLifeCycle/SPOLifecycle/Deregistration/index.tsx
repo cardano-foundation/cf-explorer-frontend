@@ -1,326 +1,197 @@
-import { alpha, Box, Grid, styled } from "@mui/material";
-import { useRef, useState, useEffect } from "react";
-import { Link as LinkDom } from "react-router-dom";
+import { Box, Grid, useTheme } from "@mui/material";
+import { useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
 
-import {
-  SPOStalking,
-  ButtonListIcon,
-  BackIcon,
-  AddressIcon,
-  ADAGreen,
-  TimeIcon,
-  SPOInfo,
-  SPOKey,
-} from "../../../../commons/resources";
-import cadarnoSystem from "../../../../commons/resources/icons/Staking/cadarnoSystemIcon.svg";
-import DelegationCertificateIcon from "../../../../commons/resources/icons/Staking/DelegationCertificateIcon.svg";
+import { BackIcon, AddressIcon, TimeIcon, AddressIconDark2, TimeIconDark } from "src/commons/resources";
+import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { details } from "src/commons/routers";
+import ADAicon from "src/components/commons/ADAIcon";
+import CustomIcon from "src/components/commons/CustomIcon";
+import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
+import CopyButton from "src/components/commons/CopyButton";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import DrawPath from "src/components/commons/DrawPath";
+import FeeBoxSPO from "src/components/commons/FeeBoxSPO";
+import { LineArrowItem } from "src/components/commons/LineArrow";
+import SPOHolder from "src/components/commons/SPOHolder";
+import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
+import StyledModal from "src/components/commons/StyledModal";
 
-import Line from "../../../Line";
-import { FeeBox, HoldBox, IconButton, IconButtonBack, Info, InfoText } from "./styles";
-import ADAicon from "../../../commons/ADAIcon";
-import ArrowDiagram from "../../../ArrowDiagram";
-import PopoverStyled from "../../../commons/PopoverStyled";
+import { StyledLink } from "../styles";
 import RecentDeregistrations from "./RecentDeregistrations";
-import { formatADA, getShortHash, getShortWallet } from "../../../../commons/utils/helper";
-import moment from "moment";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import { ButtonSPO, PoolName, PoolNamePopup } from "../Registration/styles";
-import { details } from "../../../../commons/routers";
-import CopyButton from "../../../commons/CopyButton";
-import StyledModal from "../../../commons/StyledModal";
-import PopupStaking from "../../../commons/PopupStaking";
+import { AditionalLabel } from "./RecentDeregistrations/styles";
+import {
+  BoxGroup,
+  CustomLink,
+  DetailRetirement,
+  DrawContainer,
+  IconButtonBack,
+  Info,
+  InfoGroup,
+  InfoText,
+  MiddleGroup,
+  StepInfo,
+  StyledCertificateShape,
+  StyledCopyButton,
+  StyledGridItem
+} from "./styles";
 
-const Deregistration = ({
-  containerPosition,
-  handleResize,
-}: {
-  containerPosition: {
-    top?: number;
-    left?: number;
-  };
-  handleResize: () => void;
-}) => {
+const Deregistration = () => {
   const [selected, setSelected] = useState<SPODeregistration | null>(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [showBackButton, setShowBackButton] = useState<boolean>(false);
+
+  const handleSelect = (deregistration: SPODeregistration | null) => {
+    setSelected(deregistration);
+  };
+
+  const handleToggleModal = () => setOpenModal((state) => !state);
 
   return (
     <Box>
-      <Box>{selected === null && <RecentDeregistrations onSelect={registration => setSelected(registration)} />}</Box>
-      <Box>
-        {!!selected && (
-          <DeregistrationTimeline
-            handleResize={handleResize}
-            selected={selected}
-            containerPosition={containerPosition}
-            setSelected={setSelected}
-          />
-        )}
-      </Box>
+      <DeregistrationCertificateModal data={selected} handleCloseModal={handleToggleModal} open={openModal} />
+      <RecentDeregistrations onSelect={handleSelect} setShowBackButton={setShowBackButton} />
+      {selected && (
+        <DeregistrationTimeline selected={selected} toggleModal={handleToggleModal} showBackButton={showBackButton} />
+      )}
     </Box>
   );
 };
 export default Deregistration;
 
-const DeregistrationTimeline = ({
-  containerPosition,
-  selected,
-  setSelected,
-  handleResize,
-}: {
-  containerPosition: {
-    top?: number;
-    left?: number;
-  };
-  handleResize: () => void;
-  setSelected: (registration: SPODeregistration | null) => void;
+type DeregistrationTimelineProps = {
   selected: SPODeregistration | null;
-}) => {
-  const [openModal, setOpenModal] = useState(false);
+  toggleModal: () => void;
+  showBackButton?: boolean;
+};
 
-  const adaHolderRef = useRef(null);
-  const holdRef = useRef(null);
+export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }: DeregistrationTimelineProps) => {
+  const history = useHistory();
+  const theme = useTheme();
+
+  const SPOHolderRef = useRef(null);
   const feeRef = useRef(null);
-  const cadarnoSystemRef = useRef(null);
-  const fake1Ref = useRef(null);
-  const fake2Ref = useRef(null);
-  const registrationRef = useRef(null);
-  const SPOInfoRef = useRef(null);
-  const SPOKeyRef = useRef(null);
+  const cardanoBlockchainRef = useRef(null);
+  const deregistrationRef = useRef(null);
 
-  useEffect(() => {
-    handleResize();
-  }, [adaHolderRef.current]);
+  const handleBack = () => {
+    history.goBack();
+  };
+  const { t } = useTranslation();
+  const paths = useMemo((): LineArrowItem[] => {
+    return [
+      {
+        start: SPOHolderRef,
+        startPosition: { 0: ["right", "bottom"], sm: ["right", "middle"], lg: ["right", "middle"] },
+        end: feeRef,
+        endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
+        startOffset: { 0: [-5, -50], sm: [0], lg: [-10, -15] },
+        endOffset: { 0: [0, 0], lg: [0] },
+        fold: { 0: "none", sm: "horizontal", lg: "none" }
+      },
+      {
+        start: feeRef,
+        startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
+        end: cardanoBlockchainRef,
+        endPosition: { 0: ["right", "top"], sm: ["right", "middle"], lg: ["left", "middle"] },
+        startOffset: { 0: [0] },
+        endOffset: { 0: [-22, 45], sm: [-10, 0], lg: [10, 0] },
+        arrow: { 0: "top", sm: "right", lg: "left" },
+        fold: { 0: "none", sm: "vertical", lg: "none" }
+      },
+      {
+        start: SPOHolderRef,
+        startPosition: { 0: ["right", "middle"], lg: ["center", "bottom"] },
+        end: deregistrationRef,
+        endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
+        startOffset: { 0: [0], lg: [0, 0] },
+        endOffset: { 0: [0, 30], lg: [0] },
+        arrow: { 0: "top", lg: "left" },
+        fold: { 0: "horizontal", lg: "vertical" }
+      },
+      {
+        start: deregistrationRef,
+        startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
+        end: cardanoBlockchainRef,
+        endPosition: { 0: ["center", "top"], sm: ["left", "middle"], lg: ["center", "bottom"] },
+        startOffset: { 0: [0], lg: [0, 0] },
+        endOffset: { 0: [-94, 45], sm: [10, 0], lg: [0] },
+        arrow: { 0: "top", sm: "left", lg: "bottom" },
+        fold: { 0: "none", sm: "vertical", lg: "horizontal" }
+      }
+    ];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected]);
 
   return (
     <Box>
-      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} mt={1} mb={2}>
-        <IconButtonBack onClick={() => setSelected(null)}>
-          <BackIcon />
-        </IconButtonBack>
-        <Box display={"flex"}>
+      <StepInfo>
+        {showBackButton ? (
+          <IconButtonBack onClick={handleBack}>
+            <BackIcon />
+          </IconButtonBack>
+        ) : (
+          <Box />
+        )}
+        <InfoGroup>
           <Info>
-            <AddressIcon fill="#438F68" />
-            <InfoText>{getShortHash(selected?.txHash || "")}</InfoText>
-          </Info>
-          <Info>
-            <ADAGreen />
-            <InfoText>{formatADA(selected?.totalFee || 0)}</InfoText>
-          </Info>
-          <Info>
-            <TimeIcon />
-            <InfoText>{moment(selected?.time).format("MM/DD/yyyy HH:mm:ss")}</InfoText>
-          </Info>
-        </Box>
-      </Box>
-      <Box>
-        <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
-          <Box ref={adaHolderRef} width={190} height={245} position={"relative"}>
-            <SPOStalking />
-            <CustomTooltip title={selected?.poolName}>
-              <PoolName> {selected?.poolName}</PoolName>
+            <CustomIcon
+              icon={theme.isDark ? AddressIconDark2 : AddressIcon}
+              height={30}
+              fill={theme.palette.secondary.light}
+            />
+            <CustomTooltip title={selected?.txHash}>
+              <InfoText>
+                <StyledLink to={details.transaction(selected?.txHash)}>
+                  {getShortHash(selected?.txHash || "")}
+                </StyledLink>
+              </InfoText>
             </CustomTooltip>
-            <PopoverStyled
-              render={({ handleClick }) => (
-                <ButtonSPO
-                  ref={SPOInfoRef}
-                  component={IconButton}
-                  left={"33%"}
-                  onClick={() => SPOInfoRef?.current && handleClick(SPOInfoRef.current)}
-                >
-                  <SPOInfo />
-                </ButtonSPO>
-              )}
-              content={
-                <Box>
-                  <Box display={"flex"} alignItems={"center"}>
-                    <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
-                      Pool ID:
-                    </Box>
-                    <PoolNamePopup to={details.delegation(selected?.poolView)}>
-                      {getShortHash(selected?.poolView || "")}
-                    </PoolNamePopup>
-                    <CopyButton text={selected?.poolView} />
-                  </Box>
-                  <Box display={"flex"} alignItems={"center"}>
-                    <Box fontSize="1.125rem" color={({ palette }) => palette.grey[400]}>
-                      Pool name:
-                    </Box>
-                    <PoolNamePopup to={details.delegation(selected?.poolView)}>{selected?.poolName}</PoolNamePopup>
-                  </Box>
-                </Box>
-              }
+            <StyledCopyButton text={selected?.txHash} />
+          </Info>
+          <Info>
+            <StyledADASymbol>
+              <ADAicon />
+            </StyledADASymbol>
+            <InfoText>
+              {formatADAFull(selected?.poolHold ? selected?.poolHold - selected?.fee : selected?.fee || 0)}
+            </InfoText>
+          </Info>
+          <Info>
+            <CustomIcon
+              icon={theme.isDark ? TimeIconDark : TimeIcon}
+              height={30}
+              fill={theme.palette.secondary.light}
             />
-            <PopoverStyled
-              render={({ handleClick }) => (
-                <ButtonSPO
-                  ref={SPOKeyRef}
-                  component={IconButton}
-                  left={"52%"}
-                  onClick={() => SPOKeyRef?.current && handleClick(SPOKeyRef.current)}
-                >
-                  <SPOKey fill="#438F68" />
-                </ButtonSPO>
-              )}
-              content={
-                <Box display={"flex"} alignItems={"center"}>
-                  {selected?.stakeKeys && selected.stakeKeys.length > 0 && (
-                    <>
-                      <SPOKey fill="#108AEF" />
-                      <PoolNamePopup to={details.stake(selected?.stakeKeys[0] || "")}>
-                        {getShortWallet(selected?.stakeKeys[0] || "")}
-                      </PoolNamePopup>
-                      <CopyButton text={selected?.stakeKeys[0]} />
-                    </>
-                  )}
-                </Box>
-              }
-            />
-          </Box>
-
-          <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
-            <Box display={"flex"} flex={1}>
-              <PopoverStyled
-                render={({ handleClick }) => (
-                  <HoldBox ref={holdRef} ml={1}>
-                    <Box>
-                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                        {formatADA(selected?.poolHold)}
-                      </Box>
-                      <ADAicon fontSize="18px" />
-                    </Box>
-                    <IconButton onClick={() => holdRef?.current && handleClick(holdRef.current)}>
-                      <ButtonListIcon />
-                    </IconButton>
-                  </HoldBox>
-                )}
-                content={<PopupStaking hash={selected?.txHash || ""} />}
-              />
-              <PopoverStyled
-                render={({ handleClick }) => (
-                  <FeeBox ref={feeRef}>
-                    <Box>
-                      <Box component={"span"} fontSize={"18px"} fontWeight={"bold"} mr={1}>
-                        {formatADA(selected?.fee)}
-                      </Box>
-                      <ADAicon fontSize="18px" />
-                    </Box>
-                    <IconButton onClick={() => feeRef?.current && handleClick(feeRef.current)}>
-                      <ButtonListIcon />
-                    </IconButton>
-                  </FeeBox>
-                )}
-                content={<PopupStaking hash={selected?.txHash || ""} />}
-              />
+            <InfoText>{formatDateTimeLocal(selected?.time || "")}</InfoText>
+          </Info>
+        </InfoGroup>
+      </StepInfo>
+      <DrawContainer>
+        <SPOHolder
+          ref={SPOHolderRef}
+          data={{ poolName: selected?.poolName, poolView: selected?.poolView, stakeKeys: selected?.stakeKeys }}
+        />
+        <MiddleGroup>
+          <BoxGroup>
+            <Box display="flex" justifyContent={"center"}>
+              <FeeBoxSPO ref={feeRef} value={selected?.fee || ""} txHash={selected?.txHash || ""} />
             </Box>
-          </Box>
-          <Box ref={cadarnoSystemRef}>
-            {/* <CadarnoSystemIcon /> */}
-            <img style={{ marginLeft: "5px" }} src={cadarnoSystem} alt="carrdano" />
-          </Box>
-
-          <svg
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              height: "100vh",
-              width: "100vw",
-              zIndex: "-1",
-            }}
-          >
-            <Line
-              containerPosition={containerPosition}
-              fromRef={adaHolderRef}
-              toRef={feeRef}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
-            />
-
-            <ArrowDiagram
-              containerPosition={containerPosition}
-              fromRef={feeRef}
-              toRef={cadarnoSystemRef}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
-            />
-            <Line
-              containerPosition={containerPosition}
-              fromRef={cadarnoSystemRef}
-              toRef={holdRef}
-              orient="vertical"
-              pointFrom="border"
-              pointTo="center"
-              connectToReverse={true}
-              connectFromReverse={true}
-              isCentalVertical={false}
-            />
-            <ArrowDiagram
-              containerPosition={containerPosition}
-              fromRef={holdRef}
-              toRef={adaHolderRef}
-              pointTo="border"
-              pointFrom="border"
-              orient="vertical"
-              connectToReverse={true}
-              connectFromReverse={true}
-              isCentalHorizontal={false}
-            />
-            <Line
-              containerPosition={containerPosition}
-              fromRef={adaHolderRef}
-              toRef={fake1Ref}
-              orient="horizontal"
-              pointFrom="border"
-              pointTo="center"
-            />
-            <ArrowDiagram
-              containerPosition={containerPosition}
-              fromRef={fake1Ref}
-              toRef={registrationRef}
-              pointTo="border"
-              pointFrom="center"
-              orient="vertical"
-            />
-            <Line
-              containerPosition={containerPosition}
-              fromRef={registrationRef}
-              toRef={fake2Ref}
-              orient="vertical"
-              pointFrom="border"
-              pointTo="center"
-            />
-            <ArrowDiagram
-              containerPosition={containerPosition}
-              fromRef={fake2Ref}
-              toRef={cadarnoSystemRef}
-              orient="horizontal"
-              pointFrom="center"
-              pointTo="border"
-            />
-          </svg>
-        </Box>
-        <Box display={"flex"} justifyContent={"space-between"} position={"relative"} top={"-60px"}>
-          <Box ref={fake1Ref} width={"190px"} height={220}></Box>
-          <Box
-            ref={registrationRef}
-            width={220}
-            height={220}
-            component={IconButton}
-            p={0}
-            onClick={() => setOpenModal(true)}
-          >
-            <img style={{ marginLeft: "5px" }} src={DelegationCertificateIcon} alt="RegistrationCertificateIcon" />
-          </Box>
-          <Box ref={fake2Ref} width={"190px"} height={220}></Box>
-        </Box>
-      </Box>
-      <RegistrationCertificateModal data={selected} handleCloseModal={() => setOpenModal(false)} open={openModal} />
+          </BoxGroup>
+          <StyledCertificateShape onClick={toggleModal} ref={deregistrationRef}>
+            {t("common.deregistrationCert")}
+          </StyledCertificateShape>
+        </MiddleGroup>
+        <CardanoBlockchain ref={cardanoBlockchainRef} />
+        <DrawPath paths={paths} />
+      </DrawContainer>
+      <AditionalLabel>{t("common.holdBoxLimitWarning")}</AditionalLabel>
     </Box>
   );
 };
 
-const RegistrationCertificateModal = ({
+export const DeregistrationCertificateModal = ({
   data,
   ...props
 }: {
@@ -328,36 +199,40 @@ const RegistrationCertificateModal = ({
   data: SPODeregistration | null;
   handleCloseModal: () => void;
 }) => {
+  const { t } = useTranslation();
   return (
-    <StyledModal {...props} title="Pool registration certificate">
+    <StyledModal {...props} title={t("common.deregistrationCert")}>
       <Grid container spacing={1}>
-        <Grid item xs={6}>
-          <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
-              Pool ID
+        <StyledGridItem item xs={6}>
+          <Box>
+            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
+              {t("common.poolID")}
             </Box>
             {data && (
               <Box>
-                <Link to={details.delegation(data?.poolView || "")}>{getShortWallet(data?.poolId || "")}</Link>{" "}
-                <CopyButton text={data?.poolId || ""} />
+                <CustomTooltip title={data?.poolView || ""}>
+                  <CustomLink to={details.delegation(data?.poolView || "")}>
+                    {getShortWallet(data?.poolView || "")}
+                  </CustomLink>
+                </CustomTooltip>
+                <CopyButton text={data?.poolView || ""} />
               </Box>
             )}
           </Box>
-        </Grid>
-        <Grid item xs={6}>
-          <Box bgcolor={({ palette }) => alpha(palette.grey[300], 0.1)} p={3}>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.grey[400]}>
-              Retirement in Epoch
+        </StyledGridItem>
+        <StyledGridItem item xs={6}>
+          <Box>
+            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
+              {t("glossary.retirementsEpoch")}
             </Box>
-            {data && <Box fontSize={"0.875rem"}>{data?.retiringEpoch}</Box>}
+            {data && (
+              <DetailRetirement pt={"3px"} pb={"5px"}>
+                {data?.retiringEpoch}
+              </DetailRetirement>
+            )}
           </Box>
-        </Grid>
+        </StyledGridItem>
       </Grid>
     </StyledModal>
   );
 };
-
-const Link = styled(LinkDom)(({ theme }) => ({
-  fontSize: "0.875rem",
-  color: `${theme.palette.blue[800]} !important`,
-}));
