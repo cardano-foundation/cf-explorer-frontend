@@ -44,12 +44,16 @@ export const RegistrationCertificateModal = ({ stake, open, handleCloseModal }: 
     <StyledCustomModal open={open} onClose={handleCloseModal} title={t("sklc.registrationCertificate")}>
       {loading && <Skeleton variant="rectangular" width={500} height={90} />}
       {!loading && (
-        <Box p={3}>
+        <Box p={3} bgcolor={({ palette, isDark }) => (isDark ? palette.secondary[100] : palette.secondary[0])}>
           <Box fontWeight={"bold"} mb={1} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
             {t("common.stakeAddress")}
           </Box>
           {data && (
-            <Box display={"flex"} alignItems={"center"}>
+            <Box
+              display={"flex"}
+              alignItems={"center"}
+              bgcolor={({ palette, isDark }) => (isDark ? palette.secondary[100] : palette.secondary[0])}
+            >
               <StakeLink to={details.stake(stake)}>{stake || ""}</StakeLink>
               <CopyButton text={stake} />
             </Box>

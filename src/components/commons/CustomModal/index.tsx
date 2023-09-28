@@ -1,4 +1,4 @@
-import { BoxProps, IconButtonProps, Modal, ModalProps } from "@mui/material";
+import { BoxProps, IconButtonProps, Modal, ModalProps, useTheme } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
 import { forwardRef } from "react";
 
@@ -28,12 +28,14 @@ export const CustomModal: React.FC<Props> = forwardRef((props, ref) => {
     modalContainerProps,
     ...contentProps
   } = props;
+  const theme = useTheme();
+
   return (
     <Modal open={open} onClose={onClose} {...modalProps}>
       <ModalContainer {...modalContainerProps}>
         {closeButton || (
           <CloseButton {...closeButtonProps} onClick={onClose} data-testid="close-modal-button">
-            <IoMdClose />
+            <IoMdClose color={theme.palette.secondary.light} />
           </CloseButton>
         )}
         {title && <WrapTitle {...titleProps}>{title}</WrapTitle>}

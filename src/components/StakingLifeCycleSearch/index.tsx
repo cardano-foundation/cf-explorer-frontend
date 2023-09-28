@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useKey } from "react-use";
 import { useTranslation } from "react-i18next";
-import { useTheme } from "@emotion/react";
 
-import { HeaderSearchIcon, WhiteSearchIcon } from "src/commons/resources";
+import { HeaderSearchIconComponent, WhiteSearchIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import InfoGraphicModal from "src/components/InfoGraphicModal";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -26,6 +25,7 @@ import {
   ExampleBox,
   StyledIconQuestion
 } from "./styles";
+// eslint-disable-next-line import/order
 import DropdownMenu from "../commons/DropdownMenu";
 
 const LIMIT_SIZE = 25;
@@ -35,8 +35,11 @@ enum BROWSE_VALUES {
   STAKE_POOL = "STAKE_POOL"
 }
 
+import CustomIcon from "../commons/CustomIcon";
+
 const StakingLifeCycleSearch = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { data: delegators, initialized: delegatorsInitialzzed } = useFetchList<Delegator>(API.STAKE.TOP_DELEGATOR, {
     page: 0,
     size: LIMIT_SIZE
@@ -134,7 +137,7 @@ const StakingLifeCycleSearch = () => {
             }}
           />
           <SubmitButton onClick={hanldeSearch}>
-            <Image src={HeaderSearchIcon} alt="Search" />
+            <CustomIcon icon={HeaderSearchIconComponent} stroke={theme.palette.secondary.light} height={22} />
           </SubmitButton>
         </SearchContainer>
         <Box color={({ palette }) => palette.error[700]} sx={{ marginBottom: "20px" }}>

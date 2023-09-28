@@ -51,7 +51,9 @@ export const StatusTableRow = styled(Status)<{ status: string }>(({ theme, statu
     status === "REWARDING"
       ? theme.palette.success[100]
       : status === "FINISHED"
-      ? theme.palette.primary[100]
+      ? theme.mode === "light"
+        ? theme.palette.primary[100]
+        : theme.palette.secondary[100]
       : theme.palette.warning[100],
   padding: "5px 10px",
   borderRadius: "3px",

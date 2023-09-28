@@ -52,16 +52,38 @@ const primary = {
   dark: "#001F66",
   contrastText: "#fff"
 };
+const primaryDarkmode = {
+  100: "#6C6F89",
+  200: "#6C6F89",
+  500: "#061322",
+  main: "#66BDFF",
+  dark: "#3DABFF",
+  contrastText: "#fff"
+};
 
 const secondary = {
   dark: GREY[300],
   0: "#FFFFFF",
+  100: "#FFFFFF",
   600: "#6C6F89",
+  700: "#FFFFFF",
+  800: "#FFFFFF",
   light: "#434656",
   main: "#24262E",
   contrastText: COMMON.white
 };
+const secondaryDark = {
+  dark: GREY[300],
 
+  0: "#24262E",
+  100: "#131316",
+  600: "#6C6F89",
+  700: "#434656",
+  800: "#BDBFCB",
+  light: "#D6E2FF",
+  main: "#F6F9FF",
+  contrastText: COMMON.white
+};
 const text = {
   primary: GREY[400],
   secondary: GREY[300],
@@ -87,16 +109,38 @@ const background = {
 const error = {
   100: "#FFEBEE",
   700: "#C20024",
+  800: "#C20024",
   contrastText: COMMON.white,
 
   light: RED[100_15],
   main: RED[100],
   dark: RED[100]
 };
+const errorDarkmode = {
+  100: "#C20024",
+  700: "#FFA3B4",
+  800: "#FFEBEE",
+  contrastText: COMMON.white,
+
+  light: RED[100_15],
+  main: RED[100],
+  dark: RED[100]
+};
+
 const warning = {
   100: "#FEF8EC",
   700: "#F6C667",
   800: "#744F07",
+  contrastText: COMMON.white,
+
+  light: YELLOW[100_15],
+  main: YELLOW[100],
+  dark: YELLOW[100]
+};
+const warningDarkmode = {
+  100: "#744F07",
+  700: "#F6C667",
+  800: "#FEF8EC",
   contrastText: COMMON.white,
 
   light: YELLOW[100_15],
@@ -115,6 +159,13 @@ const success = {
   100: "#EDFCF8",
   700: "#1EC198",
   800: "#116A54",
+  contrastText: COMMON.white,
+  main: "#116A54"
+};
+const successDarkmode = {
+  100: "#116A54",
+  700: "#20CFA4",
+  800: "#EDFCF8",
   contrastText: COMMON.white,
   main: "#116A54"
 };
@@ -140,6 +191,24 @@ const customPalette = {
   warning,
   info,
   success,
+  grey: GREY,
+  text,
+  background,
+  blue: BLUE,
+  red: RED,
+  yellow: YELLOW,
+  purple: PURPLE,
+  gradient: GRADIENTS,
+  border
+};
+const customPaletteDarkmode = {
+  common: COMMON,
+  primary: primaryDarkmode,
+  secondary: secondaryDark,
+  error: errorDarkmode,
+  warning: warningDarkmode,
+  success: successDarkmode,
+  info,
   grey: GREY,
   text,
   background,
@@ -182,7 +251,7 @@ const light: CustomPalette = {
 };
 
 const dark: CustomPalette = {
-  ...customPalette
+  ...customPaletteDarkmode
 };
 
 const palette: { [key in ThemeType]: CustomPalette } = {
