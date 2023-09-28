@@ -20,6 +20,7 @@ const AssetsModal: React.FC<AssetsModalProps> = ({ open = false, onClose, data, 
   const handleCloseModal = () => onClose?.();
   return (
     <CustomModal
+      modalProps={{ style: { zIndex: 1302 } }}
       open={open}
       onClose={handleCloseModal}
       title={

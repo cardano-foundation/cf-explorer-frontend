@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import { BackIcon } from "src/commons/resources";
 import { formatLongText } from "src/commons/utils/helper";
@@ -17,36 +17,39 @@ export interface ContractDetailProps {
   view?: "SPEND" | "MINT" | "CERT" | "REWARD";
   data?: IContractItemTx;
   onGoBack?: (data?: IContractItemTx) => void;
+  isMobile?: boolean;
 }
 
-const ContractDetail: React.FC<ContractDetailProps> = ({ data, onGoBack }) => {
+const ContractDetail: React.FC<ContractDetailProps> = ({ data, onGoBack, isMobile }) => {
   const details = {
     CERT: {
-      component: <Certviews data={data} />,
+      component: <Certviews data={data} isMobile={isMobile} />,
       contract: data?.stakeAddress,
-      detail: routerDetals.address
+      detail: routerDetals.stake
     },
     MINT: {
-      component: <Mintviews data={data} isBurned={!!data?.burningTokens?.length} />,
+      component: <Mintviews data={data} isBurned={!!data?.burningTokens?.length} isMobile={isMobile} />,
       contract: data?.scriptHash,
       detail: routerDetals.policyDetail
     },
     REWARD: {
-      component: <Rewardviews data={data} />,
+      component: <Rewardviews data={data} isMobile={isMobile} />,
       contract: data?.stakeAddress,
       detail: routerDetals.stake
     },
     SPEND: {
-      component: <Spendviews data={data} />,
+      component: <Spendviews data={data} isMobile={isMobile} />,
       contract: data?.address,
-      detail: routerDetals.stake
+      detail: routerDetals.address
     }
   };
   const { component, contract, detail } = details[(data?.purpose as ContractDetailProps["view"]) || "SPEND"];
   return (
-    <DetailContainer>
+    <DetailContainer isMobile={+!!isMobile}>
       <DetailHeader>
-        <BackIcon style={{ cursor: "pointer" }} onClick={() => onGoBack?.(data)} />
+        <Box flex={1} display="flex" justifyContent="flex-start">
+          {!isMobile && <BackIcon style={{ cursor: "pointer" }} onClick={() => onGoBack?.(data)} />}
+        </Box>
         <Typography fontWeight="500">
           Contract:{" "}
           <CustomTooltip title={contract}>

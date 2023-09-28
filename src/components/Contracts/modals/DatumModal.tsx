@@ -17,6 +17,7 @@ const DatumModal: React.FC<DatumModalProps> = ({ open = false, onClose, data }) 
   const handleCloseModal = () => onClose?.();
   return (
     <CustomModal
+      modalProps={{ style: { zIndex: 1302 } }}
       open={open}
       onClose={handleCloseModal}
       title="Redeemer"
@@ -34,7 +35,7 @@ const DatumModal: React.FC<DatumModalProps> = ({ open = false, onClose, data }) 
           {data &&
             data.length > 0 &&
             data.map((item) => (
-              <Grid item xs={12} key={item.title}>
+              <Grid item xs={12} md={6} key={item.title}>
                 <DataCard title={item.title} value={item.value} />
               </Grid>
             ))}

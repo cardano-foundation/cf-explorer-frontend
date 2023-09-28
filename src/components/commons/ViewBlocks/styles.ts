@@ -97,17 +97,17 @@ export const Rrounded = styled(Box)`
   }
 `;
 
-export const MintContainer = styled(Box)`
+export const MintContainer = styled(Box)<{ isMobile?: number }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px;
   justify-content: space-between;
   height: max-content;
   position: relative;
   box-sizing: border-box;
   width: 100%;
   max-width: 920px;
+  flex-direction: ${({ isMobile }) => (isMobile ? "column" : "row")};
   ${(props) => props.theme.breakpoints.down("lg")} {
     width: 100%;
     justify-content: center;
@@ -147,12 +147,26 @@ export const BlueBox = styled(Box)`
   border-radius: 16px;
 `;
 
-export const SpendContainer = styled(MintContainer)`
+export const MintBlueBox = styled(BlueBox)`
+  max-width: 100%;
+`;
+
+export const MintRrounded = styled(Rrounded)`
+  ${({ theme }) => theme.breakpoints.down(430)} {
+    flex-direction: column;
+  }
+`;
+
+export const SpendContainer = styled(MintContainer)<{ isMobile?: number }>`
   width: 100%;
   max-width: 780px;
+  justify-content: space-between;
   ${({ theme }) => theme.breakpoints.down("lg")} {
     flex-wrap: nowrap;
   }
+  flex-direction: ${({ isMobile }) => (isMobile ? "column" : "row")};
+  gap: ${({ isMobile }) => (isMobile ? "60px" : "unset")};
+  padding: 0px;
 `;
 
 export const LongButton = styled("button")`
@@ -183,18 +197,23 @@ export const SpendBlueBox = styled(BlueBox)`
   width: 100%;
   max-width: 484px;
   border-radius: 20px;
+  ${({ theme }) => theme.breakpoints.down(420)} {
+    flex-direction: column;
+  }
 `;
 
 export const RewardContainer = styled(MintContainer)`
   justify-content: center;
   align-items: center;
 `;
-export const Center = styled(Box)`
+export const Center = styled(Box)<{ isMoble?: number }>`
   max-width: 620px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: ${({ isMoble }) => (isMoble ? "column" : "row")};
+  gap: ${({ isMoble }) => (isMoble ? "60px" : "unset")};
   ${({ theme }) => theme.breakpoints.down("sm")} {
     flex-direction: column;
     gap: 60px;
