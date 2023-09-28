@@ -48,13 +48,6 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
     }
   }, [txHash, address]);
 
-  useEffect(() => {
-    document.body.style.overflowY = "hidden";
-    return () => {
-      document.body.style.overflowY = "scroll";
-    };
-  }, []);
-
   if (loading || !initialized) {
     return (
       <StyledSpendviewDrawer
