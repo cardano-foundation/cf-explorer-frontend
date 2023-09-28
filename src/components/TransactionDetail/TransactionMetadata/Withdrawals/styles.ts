@@ -1,9 +1,11 @@
-import { alpha, Box, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const Wrapper = styled(Box)`
   background: ${(props) => props.theme.palette.secondary[0]};
   padding: 25px;
+  border: 1px solid ${({ theme }) => (theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200])};
+  border-radius: ${({ theme }) => theme.spacing(2)};
 `;
 export const Header = styled(Box)`
   display: flex;
@@ -11,7 +13,7 @@ export const Header = styled(Box)`
   font-size: var(--font-size-text-small);
   font-weight: var(--font-weight-bold);
   color: ${(props) => props.theme.palette.secondary.main};
-  border-bottom: 1px solid ${(props) => props.theme.palette.primary[200]};
+  border-bottom: 1px solid ${({ theme }) => (theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200])};
   padding-bottom: 8px;
 `;
 
@@ -20,7 +22,7 @@ export const StyledItem = styled(Box)`
   text-align: left;
   padding: 10px 0;
   font-size: var(--font-size-text);
-  border-bottom: 1px solid ${(props) => alpha(props.theme.palette.common.black, 0.1)};
+  border-bottom: 1px solid ${({ theme }) => (theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200])};
 `;
 
 export const ItemContainer = styled(Box)(({ theme }) => ({

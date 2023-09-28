@@ -194,7 +194,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
                   width: "21px",
                   height: "21px"
                 }}
-                color={key === tabActive ? theme.palette.primary.main : theme.palette.secondary[600]}
+                color={key === tabActive ? theme.palette.primary.main : theme.palette.secondary.light}
               />
             }
             sx={{
@@ -203,7 +203,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
             }}
           >
             {" "}
-            <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.secondary[600]} />
+            <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.secondary.light} />
             <TitleTab pl={1} active={+(key === tabActive)}>
               {label}
             </TitleTab>
