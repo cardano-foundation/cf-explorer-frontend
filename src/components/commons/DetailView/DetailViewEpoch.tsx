@@ -3,11 +3,11 @@ import { CgClose } from "react-icons/cg";
 import { BiChevronRight } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import moment from "moment";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
-import { BlockIcon, CubeIcon, RocketIcon } from "src/commons/resources";
+import { BlockIcon, RocketIconUrl, cubeIconUrl } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
 import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
@@ -28,7 +28,6 @@ import {
   DetailsInfoItem,
   DetailLabel,
   DetailValue,
-  Icon,
   BlockDefault,
   DetailLabelSkeleton,
   DetailValueSkeleton,
@@ -45,7 +44,8 @@ import {
   DetailLinkRight,
   ViewDetailScroll,
   ViewDetailHeader,
-  TimeDuration
+  TimeDuration,
+  Icon
 } from "./styles";
 
 type DetailViewEpochProps = {
@@ -60,6 +60,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
   const { t } = useTranslation();
   const [key, setKey] = useState(0);
   const [urlFetch, setUrlFetch] = useState("");
+  const theme = useTheme();
 
   const { data, lastUpdated, loading } = useFetch<IDataEpoch>(
     urlFetch,
@@ -181,7 +182,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
           </TimeDuration>
           <CustomTooltip title={t("common.close")}>
             <CloseButton onClick={handleClose}>
-              <CgClose />
+              <CgClose color={theme.palette.secondary.light} />
             </CloseButton>
           </CustomTooltip>
         </ViewDetailHeader>
@@ -202,14 +203,14 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
             </HeaderContainer>
             <ListItem>
               <Item>
-                <Icon src={CubeIcon} alt="socket" />
+                <Icon src={cubeIconUrl} alt="socket" />
                 <ItemName>{t("glossary.blocks")}</ItemName>
                 <ItemValue>
                   {currentEpoch?.no === epochNo ? currentEpoch?.blkCount || data.blkCount : data.blkCount}
                 </ItemValue>
               </Item>
               <Item>
-                <Icon src={RocketIcon} alt="socket" />
+                <Icon src={RocketIconUrl} alt="socket" />
                 <ItemName>{t("common.slot")}</ItemName>
                 <ItemValue>
                   {slot}

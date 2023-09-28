@@ -21,12 +21,13 @@ import { getNiceTickValues } from "recharts-scale";
 import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
+import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
 import { useScreen } from "src/commons/hooks/useScreen";
-import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
 import { formatADAFull, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
 import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
+import CustomIcon from "src/components/commons/CustomIcon";
 import Card from "src/components/commons/Card";
 import { TooltipBody } from "src/components/commons/Layout/styles";
 
@@ -286,7 +287,7 @@ const StakeAnalytics: React.FC = () => {
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
-                  <img src={HighestIcon} alt="heighest icon" />
+                  <CustomIcon height={30} fill={theme.palette.secondary.light} icon={HighestIconComponent} />
                   <Title>{tab === "BALANCE" ? t("common.highestBalance") : t("common.highestReward")}</Title>
                   <ValueInfo>
                     {loading || loadingReward ? (
@@ -301,7 +302,7 @@ const StakeAnalytics: React.FC = () => {
             <Box flex={1}>
               <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
-                  <img src={LowestIcon} alt="lowest icon" />
+                  <CustomIcon height={30} fill={theme.palette.secondary.light} icon={LowestIconComponent} />
                   <Title>{tab === "BALANCE" ? t("common.lowestBalance") : t("common.lowestReward")}</Title>
                   <ValueInfo>
                     {loading || loadingReward ? (

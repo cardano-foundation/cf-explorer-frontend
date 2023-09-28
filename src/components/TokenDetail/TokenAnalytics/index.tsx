@@ -9,11 +9,12 @@ import { TooltipProps } from "recharts/types/component/Tooltip";
 import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
-import { HighestIcon, LowestIcon } from "src/commons/resources";
+import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
 import { formatNumberDivByDecimals, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
 import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
+import CustomIcon from "src/components/commons/CustomIcon";
 import { TooltipBody } from "src/components/commons/Layout/styles";
 
 import Card from "../../commons/Card";
@@ -168,7 +169,7 @@ const TokenAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
               <BoxInfoItemRight display={"flex"} justifyContent={"center"}>
                 <Box>
                   <Box minHeight={"90px"}>
-                    <img src={HighestIcon} alt="heighest icon" />
+                    <CustomIcon height={30} fill={theme.palette.secondary.light} icon={HighestIconComponent} />
                     <Title>{t("glossary.highestVolume")}</Title>
                   </Box>
                   <ValueInfo>
@@ -185,7 +186,7 @@ const TokenAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
               <BoxInfoItem display={"flex"} justifyContent={"center"}>
                 <Box>
                   <Box minHeight={"90px"}>
-                    <img src={LowestIcon} alt="lowest icon" />
+                    <CustomIcon height={30} fill={theme.palette.secondary.light} icon={LowestIconComponent} />
                     <Title>{t("glossary.lowestVolume")}</Title>
                   </Box>
                   <ValueInfo>

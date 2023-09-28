@@ -8,6 +8,7 @@ import { EyeIcon } from "src/commons/resources";
 import { DeregistrationCertificateModal } from "src/components/commons/DeregistrationCertificateModal";
 import { AdaValue } from "src/components/commons/ADAValue";
 import ADAicon from "src/components/commons/ADAIcon";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { details } from "../../../../commons/routers";
@@ -80,7 +81,7 @@ const DeregistrationTab = () => {
       minWidth: "120px",
       render: () => (
         <IconButton onClick={() => setOpenModal(true)}>
-          <EyeIcon />
+          <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
         </IconButton>
       )
     }

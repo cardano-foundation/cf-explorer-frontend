@@ -1,4 +1,4 @@
-import { Grid, Icon } from "@mui/material";
+import { Grid, Icon, useTheme } from "@mui/material";
 import { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -73,6 +73,7 @@ const GridItem = ({ title, action, value, iconUrl }: TGridItem) => {
 
 const TabularOverview: React.FC = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const data = useContext(DelegatorDetailContext);
   const { totalStake, rewardAvailable, rewardWithdrawn, pool } = data ?? {};
   const { tickerName, poolName, poolId, iconUrl } = pool ?? {};
@@ -92,7 +93,12 @@ const TabularOverview: React.FC = () => {
             <TransferButton
               onClick={() => setOpen(true)}
               variant="contained"
-              startIcon={<Icon fill="white" component={TransactionIcon} />}
+              startIcon={
+                <Icon
+                  fill={theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0]}
+                  component={TransactionIcon}
+                />
+              }
             >
               {t("common.adaTransfers")}
             </TransferButton>

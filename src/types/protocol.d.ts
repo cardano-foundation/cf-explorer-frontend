@@ -78,5 +78,5 @@ interface ProtocolHistory {
   maxValSize: TProtocolItem[];
   collateralPercent: TProtocolItem[];
   maxCollateralInputs: TProtocolItem[];
-  coinsPerUtxoSize: TProtocolItem[];
+  coinsPerUTxOByte: TProtocolItem[];
 }

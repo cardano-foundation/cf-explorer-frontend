@@ -1,4 +1,4 @@
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
 import { useContext, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -16,11 +16,13 @@ import Table, { Column } from "src/components/commons/Table";
 import CustomFilter, { FilterParams } from "src/components/commons/CustomFilter";
 import { DelegationCertificateModal } from "src/components/StakingLifeCycle/DelegatorLifecycle/Delegation";
 import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import { StyledLink, WrapperDelegationTab, WrapWalletLabel } from "../styles";
 
 const DelegationTab = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const detailData = useContext(DelegatorDetailContext);
   const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
@@ -77,7 +79,7 @@ const DelegationTab = () => {
       minWidth: "120px",
       render: (r) => (
         <IconButton onClick={() => setSelected(r.txHash)}>
-          <EyeIcon />
+          <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
         </IconButton>
       )
     }

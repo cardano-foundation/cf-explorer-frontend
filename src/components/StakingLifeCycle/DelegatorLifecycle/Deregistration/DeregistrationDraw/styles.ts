@@ -23,6 +23,9 @@ export const DrawContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     maxWidth: 320,
     minWidth: 320
+  },
+  ">div": {
+    zIndex: 2
   }
 }));
 
@@ -96,12 +99,12 @@ export const StyledFeeBox = styled(FeeBox)(({ theme }) => ({
 }));
 
 export const StyledWithHoldBox = styled(HoldBox)(({ theme }) => ({
-  border: `2px solid ${theme.palette.success[800]} `,
+  border: `2px solid ${theme.isDark ? theme.palette.success[100] : theme.palette.success[800]} `,
   boxSizing: "border-box",
   height: 70,
   width: 180,
   "&:after": {
-    backgroundColor: theme.palette.success[800]
+    backgroundColor: theme.isDark ? theme.palette.success[100] : theme.palette.success[800]
   },
   [theme.breakpoints.down("lg")]: {
     alignSelf: "flex-end"
@@ -123,7 +126,8 @@ export const InfoText = styled(Box)(({ theme }) => ({
   alignItems: "center",
   marginLeft: theme.spacing(1),
   fontWeight: 600,
-  fontSize: "14px"
+  fontSize: "14px",
+  color: theme.palette.secondary.main
 }));
 
 export const StepInfo = styled(Box)(({ theme }) => ({

@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -12,12 +12,14 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
 import { AdaValue } from "src/components/commons/ADAValue";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import { PoolUpdateModal } from "../../PoolUpdates/PoolUpdateModal";
 import { ClickAbleLink } from "./styles";
 
 const PoolUpdateTab = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { poolId = "" } = useParams<{ poolId: string }>();
   const [selectedValue, setSelectedValue] = useState<PoolUpdateDetail | null>(null);
   const [params, setParams] = useState({
@@ -62,7 +64,7 @@ const PoolUpdateTab = () => {
       render(data) {
         return (
           <ClickAbleLink onClick={() => setSelectedValue(data)}>
-            <EyeIcon />
+            <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
           </ClickAbleLink>
         );
       }
