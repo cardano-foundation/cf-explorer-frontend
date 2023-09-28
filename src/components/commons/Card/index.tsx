@@ -20,6 +20,8 @@ const Header = styled(Box)`
 export const Title = styled("h2")<{ underline: number }>`
   text-align: left;
   padding-bottom: 8px;
+  margin-top: 30px;
+  line-height: 1;
   margin-bottom: 0px;
   position: relative;
   width: max-content;

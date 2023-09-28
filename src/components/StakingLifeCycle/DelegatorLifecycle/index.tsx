@@ -232,7 +232,6 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
                   {step.icon}
                 </StepButton>
                 <TitleStep
-                  px={2}
                   sx={{
                     color: colorProps.textColor
                   }}

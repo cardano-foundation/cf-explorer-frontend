@@ -2,11 +2,12 @@ import { Box, Grid, Skeleton, useTheme } from "@mui/material";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import { SeeMoreIconHome } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { REFRESH_TIMES, TRANSACTION_STATUS } from "src/commons/utils/constants";
+import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 import {
   formatADAFull,
   formatDateTimeLocal,
@@ -42,11 +43,12 @@ import {
 const LatestTransactions: React.FC = () => {
   const { t } = useTranslation();
   const theme = useTheme();
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const { data, initialized, lastUpdated } = useFetch<CurrentTransactions[]>(
     API.TRANSACTION.CURRENT,
     undefined,
     false,
-    REFRESH_TIMES.LATEST_TRANSACTION
+    blockKey
   );
 
   const history = useHistory();
@@ -98,7 +100,9 @@ const LatestTransactions: React.FC = () => {
                           </HeaderStatus>
                           <Box display={"flex"} alignItems={"flex-start"}>
                             <PriveValue>{formatADAFull(amount)}</PriveValue>
-                            <ADAicon width={14} />
+                            <Box component={"span"} sx={{ width: 14 }}>
+                              <ADAicon width={14} />
+                            </Box>
                           </Box>
                         </LatestTransactionItemHeader>
                       </ItemHeader>

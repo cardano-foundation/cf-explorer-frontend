@@ -15,8 +15,10 @@ export const Form = styled("form")<{ home: number; sidebar?: number }>(({ theme,
   color: theme.palette.text.primary,
   padding: `0px 0px 0px ${home ? 15 : 0}px`,
   boxSizing: "border-box",
-  marginTop: home ? 30 : 0,
+  marginTop: home ? 0 : 0,
+  marginBottom: home ? 20 : 0,
   border: `1.5px solid ${theme.palette.primary[200]}`,
+  transition: "border ease 0.3s",
   "&:focus-within": {
     borderColor: theme.palette.secondary.light
   },

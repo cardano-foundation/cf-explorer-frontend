@@ -36,9 +36,9 @@ export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & 
   row: T;
   dataLength?: number;
   index: number;
-  onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
+  onClickRow?: (e: React.MouseEvent, record: T) => void;
   showTabView?: boolean;
-  selected?: number | null;
+  selected?: boolean;
   selectedProps?: {
     className?: string;
     style?: React.CSSProperties;
@@ -61,6 +61,7 @@ export interface TableProps<T extends ColumnType = any> {
   total?: {
     count: number;
     title: string;
+    isDataOverSize?: boolean | null;
   };
   defaultSort?: string;
   pagination?: {
@@ -72,9 +73,14 @@ export interface TableProps<T extends ColumnType = any> {
     hideLastPage?: boolean;
   };
   allowSelect?: boolean;
-  onClickRow?: (e: React.MouseEvent, record: T, index: number) => void;
+  onClickRow?: (e: React.MouseEvent, record: T) => void;
   showTabView?: boolean;
-  selected?: number | null;
+  /**
+   * @default This props default is row index. If value is string, key of row is row[rowKey].
+   * If rowKey is function, key is result of that fuction
+   */
+  rowKey?: string | ((record: T) => string | number | symbol);
+  selected?: string | number | symbol | null;
   selectedProps?: {
     className?: string;
     style?: React.CSSProperties;

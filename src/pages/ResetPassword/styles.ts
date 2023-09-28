@@ -12,7 +12,7 @@ export const Container = styled(Box)`
   align-items: center;
   padding: 30px 0;
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    min-height: 80vh;
+    min-height: 70vh;
   }
 `;
 
@@ -82,6 +82,7 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
       : theme.mode === "light"
       ? theme.palette.primary[200]
       : theme.palette.secondary[700],
+    transition: "border ease 0.3s",
     "&::before": {
       display: "none"
     },
@@ -92,7 +93,7 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
     color: theme.palette.secondary.main,
     backgroundColor: error ? "rgba(247, 94, 94, 0.05)" : "",
     "&.MuiInputBase-root.Mui-focused": {
-      borderColor: error ? "" : theme.palette.primary.main
+      borderColor: error ? "" : theme.palette.secondary.light
     }
   })
 );

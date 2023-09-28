@@ -124,9 +124,9 @@ export const ButtonSideBar = styled(IconButton)`
   }
 `;
 
-export const HeaderSearchContainer = styled(Box)`
+export const HeaderSearchContainer = styled(Box)<{ home?: number }>`
   ${(props) => props.theme.breakpoints.down("sm")} {
-    display: none;
+    display: ${({ home }) => (home ? "block" : "none")};
   }
 `;
 

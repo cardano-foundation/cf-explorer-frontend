@@ -1,11 +1,9 @@
 import { Box, Button, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
 
-export const HeaderDetailContainer = styled(Box)(({ theme }) => ({
+export const HeaderDetailContainer = styled(Box)(() => ({
   textAlign: "left",
   position: "relative",
-  [theme.breakpoints.down("md")]: {
-    paddingTop: 32
-  }
+  paddingTop: 30
 }));
 
 export const BackButton = styled(Box)`
@@ -198,4 +196,10 @@ export const ButtonViewAll = styled(Button)(({ theme }) => ({
     background: theme.palette.primary.dark,
     borderColor: theme.palette.primary[200]
   }
+}));
+
+export const TimeDuration = styled("small")(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  display: "block",
+  margin: "0px 0px 25px"
 }));

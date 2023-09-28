@@ -219,10 +219,6 @@ export default function SignIn() {
     <Container>
       <WrapContent>
         <WrapTitle data-testid="signin-title">{t("common.signIn")}</WrapTitle>
-        <WrapHintText>
-          {t("account.noAccount")}{" "}
-          <WrapSignUp onClick={() => history.push(routers.SIGN_UP)}>{t("page.signUp")}</WrapSignUp>
-        </WrapHintText>
         <FormGroup>
           <WrapForm>
             <CloseButton saving={0} onClick={() => handleRedirectBack()}>
@@ -233,6 +229,24 @@ export default function SignIn() {
                 <AlertCustom severity="error">{t("message.unableSignIn")}</AlertCustom>
               </Box>
             ) : null}
+            <ConnectWallet
+              onSuccess={handleLoginSuccess}
+              customButton={({ handleClick }) => (
+                <WrapButtonConnectWallet
+                  data-testid="connect-wallet"
+                  variant="outlined"
+                  fullWidth
+                  onClick={handleClick}
+                >
+                  {t("account.connectWallet")}
+                </WrapButtonConnectWallet>
+              )}
+            ></ConnectWallet>
+            <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+              <WrapDivider />
+              <WrapOr>{t("common.or")}</WrapOr>
+              <WrapDivider />
+            </Box>
             <WrapInput>
               <InputCustom
                 error={Boolean(formData.email.error && formData.email.touched)}
@@ -291,24 +305,10 @@ export default function SignIn() {
             >
               {t("common.signIn")}
             </WrapButton>
-            <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-              <WrapDivider />
-              <WrapOr>{t("common.or")}</WrapOr>
-              <WrapDivider />
-            </Box>
-            <ConnectWallet
-              onSuccess={handleLoginSuccess}
-              customButton={({ handleClick }) => (
-                <WrapButtonConnectWallet
-                  data-testid="connect-wallet"
-                  variant="outlined"
-                  fullWidth
-                  onClick={handleClick}
-                >
-                  {t("account.connectWallet")}
-                </WrapButtonConnectWallet>
-              )}
-            ></ConnectWallet>
+            <WrapHintText>
+              {t("account.noAccount")}{" "}
+              <WrapSignUp onClick={() => history.push(routers.SIGN_UP)}>{t("page.signUp")}</WrapSignUp>
+            </WrapHintText>
           </WrapForm>
         </FormGroup>
       </WrapContent>

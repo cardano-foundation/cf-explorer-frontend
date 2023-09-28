@@ -20,8 +20,9 @@ import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
 import { setOnDetailView } from "src/stores/user";
 import DetailViewContractHash from "src/components/commons/DetailView/DetailViewContractHash";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
-import { Flex, Label, SmallText, StyledLink, PriceValue } from "./styles";
+import { Flex, Label, SmallText, StyledLink, PriceValue, TimeDuration } from "./styles";
 
 const TokenTransaction: React.FC = () => {
   const { t } = useTranslation();
@@ -29,21 +30,25 @@ const TokenTransaction: React.FC = () => {
   const { search } = useLocation();
   const history = useHistory();
   const { onDetailView } = useSelector(({ user }: RootState) => user);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<Transactions>(`${API.ADDRESS.DETAIL}/${params.address}/txs`, pageInfo);
-  const [txHashSelected, setTxHashSelected] = useState<string>("");
-  const [selected, setSelected] = useState<number | null>(null);
 
-  const openDetail = (_: any, r: Transactions, index: number) => {
-    setTxHashSelected(r.hash);
-    setSelected(index);
+  const fetchData = useFetchList<Transactions>(
+    `${API.ADDRESS.DETAIL}/${params.address}/txs`,
+    pageInfo,
+    false,
+    blockKey
+  );
+  const [selected, setSelected] = useState<string>("");
+
+  const openDetail = (_: any, r: Transactions) => {
+    setSelected(r.hash);
     setOnDetailView(true);
   };
 
   const handleClose = () => {
     setOnDetailView(false);
-    setSelected(null);
-    setTxHashSelected("");
+    setSelected("");
   };
 
   useEffect(() => {
@@ -53,7 +58,7 @@ const TokenTransaction: React.FC = () => {
   const columns: Column<Transactions>[] = [
     {
       title: t("glossary.txhash"),
-      key: "trxhash",
+      key: "hash",
       minWidth: "200px",
 
       render: (r) => (
@@ -148,11 +153,15 @@ const TokenTransaction: React.FC = () => {
   ];
   return (
     <>
+      <TimeDuration>
+        <FormNowMessage time={fetchData.lastUpdated} />
+      </TimeDuration>
       <Table
         {...fetchData}
         columns={columns}
         total={{ count: fetchData.total, title: t("common.totalTxs") }}
         onClickRow={openDetail}
+        rowKey="hash"
         selected={selected}
         pagination={{
           ...pageInfo,
@@ -160,9 +169,12 @@ const TokenTransaction: React.FC = () => {
           onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
         }}
       />
-      {txHashSelected && onDetailView && (
-        <DetailViewContractHash txHash={txHashSelected} address={params.address} handleClose={handleClose} />
-      )}
+      <DetailViewContractHash
+        open={onDetailView}
+        txHash={selected}
+        address={params.address}
+        handleClose={handleClose}
+      />
     </>
   );
 };

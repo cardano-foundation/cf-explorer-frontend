@@ -11,23 +11,37 @@ import { API } from "src/commons/utils/api";
 import { exchangeADAToUSD, formatADAFull, getShortWallet } from "src/commons/utils/helper";
 import { RootState } from "src/stores/types";
 import CardAddress from "src/components/share/CardAddress";
-import Card from "src/components/commons/Card";
 import TokenAutocomplete from "src/components/TokenAutocomplete";
 import ADAicon from "src/components/commons/ADAIcon";
 import { useScreen } from "src/commons/hooks/useScreen";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
-import { GridContainer, GridItem, Pool, RedirectButton, StyledAAmount, BannerSuccess } from "./styles";
+import {
+  GridContainer,
+  GridItem,
+  Pool,
+  RedirectButton,
+  StyledAAmount,
+  BannerSuccess,
+  TimeDuration,
+  CardContainer
+} from "./styles";
 
 interface Props {
   data: WalletAddress | null;
   loading: boolean;
+  lastUpdated?: number;
 }
 
-const AddressOverview: React.FC<Props> = ({ data, loading }) => {
+const AddressOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
   const { t } = useTranslation();
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(
-    data?.stakeAddress ? `${API.STAKE.DETAIL}/${data?.stakeAddress}` : ""
+    data?.stakeAddress ? `${API.STAKE.DETAIL}/${data?.stakeAddress}` : "",
+    undefined,
+    false,
+    blockNo
   );
   const history = useHistory();
   const { adaRate } = useSelector(({ system }: RootState) => system);
@@ -98,7 +112,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
   ];
 
   return (
-    <Card
+    <CardContainer
       title={<VerifyScript verified={!!data?.verifiedContract} setShowBanner={setShowBanner} />}
       extra={
         <RedirectButton
@@ -110,7 +124,10 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
         </RedirectButton>
       }
     >
-      {!showBanner && <BannerSuccess>{t("message.contracctVarified")}</BannerSuccess>}
+      {showBanner && <BannerSuccess>{t("message.contracctVarified")}</BannerSuccess>}
+      <TimeDuration>
+        <FormNowMessage time={lastUpdated} />
+      </TimeDuration>
       <GridContainer container spacing={2} mt={2}>
         <GridItem item xs={12} md={6}>
           <Box overflow="hidden" borderRadius={3} height={"100%"}>
@@ -136,7 +153,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
           </Box>
         </GridItem>
       </GridContainer>
-    </Card>
+    </CardContainer>
   );
 };
 

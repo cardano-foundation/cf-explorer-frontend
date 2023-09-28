@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Box, IconButton, useTheme } from "@mui/material";
 import { BiShowAlt } from "react-icons/bi";
@@ -30,16 +30,25 @@ import { MaxSlot, StyledLink, TitleCard } from "./styles";
 interface Props {
   data: Transaction | null;
   loading: boolean;
-  lastUpdated: number;
 }
 
-const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
+const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
   const { t } = useTranslation();
-  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
+
   const [openListInput, setOpenListInput] = useState(false);
   const [openListOutput, setOpenListOutput] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState<number>();
+
   const theme = useTheme();
   const { isMobile } = useScreen();
+
+  useEffect(() => {
+    if (data) setLastUpdated(Date.now());
+  }, [data, blockNo]);
+
+  const confirmation = Math.max(0, (blockNo ? blockNo - (data?.tx?.blockNo || 0) : data?.tx?.confirmation) || 0);
 
   const inputTransaction = useMemo(() => {
     const result = [];
@@ -166,14 +175,10 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       icon: TxConfirm,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>
-            {data?.tx?.confirmation && data?.tx?.confirmation > 1
-              ? t("glossary.comfirmations")
-              : t("glossary.comfirmation")}
-          </TitleCard>
+          <TitleCard mr={1}>{confirmation > 1 ? t("glossary.comfirmations") : t("glossary.comfirmation")}</TitleCard>
         </Box>
       ),
-      value: <>{data?.tx?.confirmation || 0}</>
+      value: <>{confirmation}</>
     },
     {
       icon: TotalOutput,
@@ -247,7 +252,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading, lastUpdated }) =>
       epoch={
         data && {
           no: data.tx.epochNo,
-          slot: currentEpoch?.no === data.tx.epochNo ? data.tx.epochSlot : MAX_SLOT_EPOCH
+          slot: epochNo === data.tx.epochNo ? data.tx.epochSlot : MAX_SLOT_EPOCH
         }
       }
       listItem={listOverview}

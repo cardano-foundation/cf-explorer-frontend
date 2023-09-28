@@ -12,7 +12,7 @@ export const Container = styled(Box)`
   align-items: center;
   padding: 30px 0;
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    min-height: 80vh;
+    min-height: 70vh;
   }
 `;
 

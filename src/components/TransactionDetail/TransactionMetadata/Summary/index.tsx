@@ -1,20 +1,17 @@
-import { Box, useTheme } from "@mui/material";
+import { Box, Grid, useTheme } from "@mui/material";
 import React from "react";
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
-import { TransferIcon } from "src/commons/resources";
+import { ArrowDownIcon, ArrowUpIcon, WalletRoundedIcon, CopyOutlineIconComponent } from "src/commons/resources";
 
-import receiveImg from "../../../../commons/resources/images/receiveImg.svg";
-import sendImg from "../../../../commons/resources/images/sendImg.svg";
 import { details } from "../../../../commons/routers";
-import { formatADAFull, getShortWallet } from "../../../../commons/utils/helper";
+import { formatADAFull, formatNumberDivByDecimals, getShortWallet } from "../../../../commons/utils/helper";
 import ADAicon from "../../../commons/ADAIcon";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import DropdownTokens, { TokenLink } from "../../../commons/DropdownTokens";
-import { Icon, Item, TitleText } from "./styles";
-import { useScreen } from "../../../../commons/hooks/useScreen";
+import { Icon, TitleText, ValueText, WrapContainerGrid, WrapItemsInfo, WrapTokensInfo } from "./styles";
 
 const SummaryItems = ({
   item,
@@ -25,18 +22,15 @@ const SummaryItems = ({
   type?: "up" | "down";
   isFailed?: boolean;
 }) => {
-  const isTransferType = item?.tokens.some((t) => {
-    return (t.assetQuantity < 0 && item?.value >= 0) || (t.assetQuantity >= 0 && item?.value < 0);
-  });
   const { t } = useTranslation();
   const theme = useTheme();
-  const { isMobile } = useScreen();
+  const tokensSent = item.tokens?.filter((token) => token.assetQuantity <= 0);
+  const tokensReceived = item.tokens?.filter((token) => token.assetQuantity > 0);
 
   return (
-    <Box
-      display={"flex"}
-      flexDirection={isMobile ? "column" : "row"}
-      justifyContent={"space-between"}
+    <WrapContainerGrid
+      rowGap={2}
+      container
       sx={{
         background: (theme) => theme.palette.secondary[0],
         px: 3,
@@ -47,79 +41,145 @@ const SummaryItems = ({
         }
       }}
     >
-      <Box display={"flex"} justifyContent={"space-between"} sx={{ overflowX: "auto", overflowY: "hidden" }}>
-        {isTransferType ? (
-          <Box width={40} ml={"2px"} mt={"3px"} mr={"8px"}>
-            <TransferIcon style={{ scale: "1.15" }} />
-          </Box>
-        ) : (
-          <Box width={50}>
-            <Icon src={type !== "up" ? receiveImg : sendImg} alt="send icon" />
-          </Box>
-        )}
-        <Box flex={1} pt="4px">
-          <Box display={"flex"} alignItems="center" justifyContent={"flex-start"}>
-            <Item>
-              <TitleText>{type === "down" ? t("common.from") : t("common.to")}: </TitleText>
-              <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} flex={1} mb={1}>
-                <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} flexWrap={"nowrap"}>
-                  <Link
-                    to={item.address.startsWith("stake") ? details.stake(item.address) : details.address(item.address)}
-                  >
-                    <CustomTooltip title={item.address}>
-                      <Box
-                        color={(theme) => theme.palette.primary.main}
-                        fontWeight="bold"
-                        fontFamily={"var(--font-family-text)"}
-                      >
-                        {getShortWallet(item.address)}
-                      </Box>
-                    </CustomTooltip>
-                  </Link>
-                  <CopyButton text={item.address} style={{ cursor: "pointer", verticalAlign: "text-bottom" }} />
-                </Box>
-              </Box>
-            </Item>
-          </Box>
-          <Box
-            display={"flex"}
-            flexDirection={isMobile ? "column" : "row"}
-            alignItems={isMobile ? "flex-start" : "center"}
-            justifyContent={"space-between"}
-            width="100%"
-            mb={1}
-          >
-            <Box display="flex" justifyContent={"space-between"} alignItems={"baseline"} pr={1} flexDirection={"row"}>
-              <Box pr={1} whiteSpace={"nowrap"} color={({ palette }) => palette.secondary.light}>
-                {type === "down" ? `${t("tab.adaSent")}:` : `${t("tab.adaReceived")}:`}{" "}
-              </Box>
-              <Box display="flex" justifyContent={"space-between"} alignItems="center">
-                <Box
-                  component={"span"}
-                  whiteSpace="nowrap"
-                  color={(theme) => (type === "up" ? theme.palette.success[800] : theme.palette.error[700])}
-                  fontWeight="bold"
-                  mr={1}
+      <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
+        <Box display="flex" paddingX={2}>
+          <Icon src={WalletRoundedIcon} alt="wallet icon" />
+          <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
+            <TitleText>{t("common.wallet")}</TitleText>
+            <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
+              <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} flexWrap={"nowrap"}>
+                <Link
+                  to={item.address.startsWith("stake") ? details.stake(item.address) : details.address(item.address)}
                 >
-                  {type === "down" ? `${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
-                </Box>
-                <ADAicon />
+                  <CustomTooltip title={item.address}>
+                    <Box
+                      color={(theme) => theme.palette.primary.main}
+                      fontWeight="bold"
+                      fontFamily={"var(--font-family-text)"}
+                    >
+                      {getShortWallet(item.address)}
+                    </Box>
+                  </CustomTooltip>
+                </Link>
+                <CopyButton
+                  text={item.address}
+                  customIcon={CopyOutlineIconComponent}
+                  style={{ cursor: "pointer", verticalAlign: "text-bottom" }}
+                />
               </Box>
             </Box>
           </Box>
         </Box>
-      </Box>
-      {item.tokens && item.tokens.length === 1 && (
-        <Box display={"flex"} alignItems={"center"} ml={isMobile ? "50px" : 0}>
-          <TokenLink token={item.tokens[0]} isSuccess={!isFailed} />
-        </Box>
-      )}
-      {item.tokens && item.tokens.length > 1 && (
-        <Box display={"flex"} alignItems={"center"} ml={isMobile ? "50px" : 0}>
-          <DropdownTokens tokens={item.tokens} type={type} hideInputLabel isSuccess={!isFailed} />
-        </Box>
-      )}
-    </Box>
+      </Grid>
+      <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
+        <WrapItemsInfo paddingX={2}>
+          <Icon src={type === "up" ? ArrowUpIcon : ArrowDownIcon} alt="send icon" />
+          <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
+            <TitleText>{type === "down" ? `${t("tab.adaSent")}` : `${t("tab.adaReceived")}`}</TitleText>
+            <Box display="flex" alignItems="center">
+              <ValueText mr={1}>
+                {item.value
+                  ? type === "down"
+                    ? `${formatADAFull(item.value).replace("-", "")}`
+                    : `+${formatADAFull(item.value)}`
+                  : t("common.na")}
+              </ValueText>
+              {item.value ? <ADAicon /> : null}
+            </Box>
+          </Box>
+        </WrapItemsInfo>
+      </Grid>
+      <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
+        <WrapTokensInfo paddingX={2}>
+          <Box display={"flex"}>
+            <Icon src={ArrowDownIcon} alt="send icon" />
+            <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
+              <TitleText>{t("tab.tokensSent")}</TitleText>
+              <ValueText alignSelf={"flex-start"}>
+                {tokensSent.length === 0
+                  ? t("common.na")
+                  : tokensSent.length === 1
+                  ? formatNumberDivByDecimals(
+                      tokensSent[0]?.assetQuantity || 0,
+                      tokensSent[0]?.metadata?.decimals || 0
+                    ).replace("-", "")
+                  : t("tab.multiple")}
+              </ValueText>
+            </Box>
+          </Box>
+          {tokensSent && tokensSent.length === 1 && (
+            <Box display={"flex"} alignItems={"center"} mt={1}>
+              <TokenLink
+                token={tokensSent[0]}
+                isSummary={true}
+                isSuccess={!isFailed}
+                sx={{ minWidth: "100%", background: (theme) => theme.palette.primary[100] }}
+                hideValue
+              />
+            </Box>
+          )}
+          {tokensSent && tokensSent.length > 1 && (
+            <Box display={"flex"} alignItems={"center"} mt={1}>
+              <DropdownTokens
+                isSummary={true}
+                tokens={tokensSent}
+                type={type}
+                hideInputLabel
+                isSuccess={!isFailed}
+                sx={{ minWidth: "100%", background: (theme) => theme.palette.primary[100] }}
+              />
+            </Box>
+          )}
+        </WrapTokensInfo>
+      </Grid>
+      <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
+        <WrapTokensInfo paddingX={2}>
+          <Box display={"flex"}>
+            <Icon src={ArrowUpIcon} alt="send icon" />
+            <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
+              <TitleText>{t("tab.tokensReceived")}</TitleText>
+              <ValueText alignSelf={"flex-start"}>
+                {tokensReceived.length === 0
+                  ? t("common.na")
+                  : tokensReceived.length === 1
+                  ? `+${formatNumberDivByDecimals(
+                      tokensReceived[0]?.assetQuantity || 0,
+                      tokensReceived[0]?.metadata?.decimals || 0
+                    )}`
+                  : t("tab.multiple")}
+              </ValueText>
+            </Box>
+          </Box>
+          {tokensReceived && tokensReceived.length === 1 && (
+            <Box display={"flex"} alignItems={"center"} mt={1}>
+              <TokenLink
+                token={tokensReceived[0]}
+                isSummary={true}
+                isSuccess={!isFailed}
+                sx={{ minWidth: "100%", background: (theme) => theme.palette.primary[100] }}
+                hideValue
+              />
+            </Box>
+          )}
+          {tokensReceived && tokensReceived.length > 1 && (
+            <Box display={"flex"} alignItems={"center"} mt={1}>
+              <DropdownTokens
+                tokens={tokensReceived}
+                type={type}
+                isSummary={true}
+                hideInputLabel
+                isSuccess={!isFailed}
+                sx={{
+                  minWidth: "100%",
+                  background: (theme) => theme.palette.primary[100],
+                  color: theme.palette.secondary.main
+                }}
+              />
+            </Box>
+          )}
+        </WrapTokensInfo>
+      </Grid>
+    </WrapContainerGrid>
   );
 };
 

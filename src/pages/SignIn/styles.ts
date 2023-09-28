@@ -12,7 +12,7 @@ export const Container = styled(Box)`
   min-width: 100vw;
   padding: 30px 0;
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    min-height: 80vh;
+    min-height: 70vh;
   }
 `;
 
@@ -52,6 +52,7 @@ export const WrapHintText = styled(Box)`
   color: ${({ theme }) => theme.palette.secondary.light};
   display: flex;
   gap: 5px;
+  align-self: center;
 `;
 
 export const WrapForm = styled(Box)(({ theme }) => ({
@@ -91,6 +92,7 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
       : theme.mode === "light"
       ? theme.palette.primary[200]
       : theme.palette.secondary[700],
+    transition: "border ease 0.3s",
     "&::before": {
       display: "none"
     },
@@ -104,7 +106,7 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
       WebkitBoxShadow: "0 0 0 30px red inset !important"
     },
     "&.MuiInputBase-root.Mui-focused": {
-      borderColor: error ? "" : theme.palette.primary.main
+      borderColor: error ? "" : theme.palette.secondary.light
     }
   })
 );

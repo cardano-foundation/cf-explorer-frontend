@@ -88,6 +88,7 @@ import txOutputIconUrl, { ReactComponent as TxOutputIcon } from "./icons/txOutpu
 import totalOutputUrl, { ReactComponent as TotalOutput } from "./icons/totalOutput.svg";
 import CopyIconSquareUrl, { ReactComponent as CopyIconSquare } from "./images/copy.svg";
 import fileGuardUrl, { ReactComponent as FileGuard } from "./icons/file-guard.svg";
+import RocketIconUrl, { ReactComponent as RocketIcon } from "./icons/rocket.svg";
 import DelegationIconUrl from "./icons/delegationIcon.svg";
 import RewardsDistributionIconUrl from "./icons/rewardsDistribution.svg";
 import StakeCertificatesIconUrl from "./icons/stakeCertificateIcon.svg";
@@ -105,6 +106,11 @@ import TwitterXIcon from "./icons/TwitterX.svg";
 import NoRecordsIcon from "./images/NoRecords.svg";
 import sunIcon from "./icons/sun.svg";
 import moonIcon from "./icons/moon.svg";
+import WhiteSearchIcon from "./icons/white-search-icon.svg";
+import WalletRoundedIcon from "./icons/wallet-rounded.svg";
+import ArrowUpIcon from "./icons/arrow-up.svg";
+import CopyOutlineIcon, { ReactComponent as CopyOutlineIconComponent } from "./icons/copy-outline.svg";
+import ArrowDownIcon from "./icons/arrow-down.svg";
 
 export {
   LogoFullIcon,
@@ -240,7 +246,15 @@ export {
   LinkOffComponent,
   LightningIconComponent,
   MenuIconComponent,
-  EmptyDarkIcon
+  EmptyDarkIcon,
+  WhiteSearchIcon,
+  WalletRoundedIcon,
+  ArrowUpIcon,
+  CopyOutlineIcon,
+  ArrowDownIcon,
+  RocketIconUrl,
+  RocketIcon,
+  CopyOutlineIconComponent
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
@@ -373,6 +387,6 @@ export { ReactComponent as ADAinactive } from "./icons/Staking/ADAinactive.svg";
 export { ReactComponent as SeeMoreIconHome } from "./icons/seemore.svg";
 export { ReactComponent as WalletIconComponent } from "./icons/walletIcon.svg";
 export { ReactComponent as CubeIcon } from "./icons/cube.svg";
-export { ReactComponent as RocketIcon } from "./icons/rocket.svg";
 export { ReactComponent as USDIconComponent } from "./icons/usdIcon.svg";
 export { ReactComponent as FileEditIcon } from "./icons/file-edit.svg";
+export { ReactComponent as BrowserIcon } from "./icons/browser-icon.svg";
