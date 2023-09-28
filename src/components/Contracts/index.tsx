@@ -27,11 +27,11 @@ const ContractsList: React.FC<ContractsListProps> = ({ data }) => {
   }, [trxHash]);
 
   return (
-    <Grid container spacing={2}>
+    <>
       {detailData ? (
         <ContractDetail onGoBack={() => setDetailData(undefined)} data={detailData} />
       ) : (
-        <>
+        <Grid container spacing={2}>
           <SmartContractsInfoModal open={openContractInfo} onClose={() => setOpenContactInfo(!openContractInfo)} />
           <Grid item xs={12}>
             <Box display="flex" alignItems="center" gap="4px" flex={1}>
@@ -47,9 +47,9 @@ const ContractsList: React.FC<ContractsListProps> = ({ data }) => {
                 <ContractItem onClick={goToDetail} data={item} />
               </Grid>
             ))}
-        </>
+        </Grid>
       )}
-    </Grid>
+    </>
   );
 };
 

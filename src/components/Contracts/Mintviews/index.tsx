@@ -3,7 +3,14 @@ import { useTheme } from "@mui/material";
 
 import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
-import { BlueBox, Rrounded, MiddleBox, MintContainer, RightBox } from "src/components/commons/ViewBlocks/styles";
+import {
+  Rrounded,
+  MiddleBox,
+  MintContainer,
+  RightBox,
+  MintBlueBox,
+  MintRrounded
+} from "src/components/commons/ViewBlocks/styles";
 import Redeemer from "src/components/commons/ViewBlocks/Redeemer";
 import Contract from "src/components/commons/ViewBlocks/Contract";
 import Assets from "src/components/commons/ViewBlocks/Assets";
@@ -19,9 +26,10 @@ import CompiledCodeModal from "../modals/CompiledCodeModal";
 export interface MintviewsProps {
   isBurned?: boolean;
   data?: IContractItemTx;
+  isMobile?: boolean;
 }
 
-const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data }) => {
+const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile }) => {
   const theme = useTheme();
   const redeemerRef = useRef(null);
   const middleBoxRef = useRef(null);
@@ -64,17 +72,55 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data }) => {
       }
     ];
   }, []);
+
+  const mobilePaths = useMemo((): LineArrowItem[] => {
+    return [
+      {
+        start: redeemerRef,
+        end: middleBoxRef,
+        startPosition: { 0: ["center", "bottom"], sm: ["right", "middle"] },
+        endPosition: { 0: ["center", "top"], sm: ["left", "middle"] },
+        arrow: { 0: "top", sm: "left" },
+        fold: { sm: "horizontal", lg: "none" },
+        startOffset: { 0: [0, 0], sm: [0, 0] },
+        endOffset: { 0: [0, -16], sm: [0, 0] }
+      },
+      {
+        start: middleBoxRef,
+        end: rightBoxRef,
+        startPosition: {
+          0: ["center", "bottom"]
+        },
+        endPosition: {
+          0: ["center", "top"]
+        },
+        arrow: { 0: "top" },
+        fold: { sm: "none" },
+        startOffset: { 0: [0] },
+        endOffset: { 0: [0, -16] },
+        autoAlign: { 0: "none", sm: "start-vertical" }
+      }
+    ];
+  }, []);
   const mintedAssetsData = useMemo(() => {
     const mintingTokens = (data?.mintingTokens as IContractItemTx["mintingTokens"]) || [];
-    return mintingTokens.map((item) => ({ title: item.displayName, value: item.quantity, link: item.fingerprint }));
+    return mintingTokens.map((item) => ({
+      title: item.displayName ?? item.fingerprint,
+      value: item.quantity,
+      link: item.fingerprint
+    }));
   }, [data]);
 
   const burnedAssetsData = useMemo(() => {
     const burningTokens = (data?.burningTokens as IContractItemTx["burningTokens"]) || [];
-    return burningTokens.map((item) => ({ title: item.displayName, value: item.quantity, link: item.fingerprint }));
+    return burningTokens.map((item) => ({
+      title: item.displayName ?? item.fingerprint,
+      value: item.quantity,
+      link: item.fingerprint
+    }));
   }, [data]);
   return (
-    <MintContainer>
+    <MintContainer isMobile={+!!isMobile}>
       <AssetsModal open={openAssets} data={mintedAssetsData} onClose={() => setOpenAssets(!openAssets)} />
       <AssetsModal
         open={openBurnedAssets}
@@ -110,23 +156,27 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data }) => {
       </MiddleBox>
       {isBurned ? (
         <RightBox ref={rightBoxRef}>
-          <BlueBox>
-            <Rrounded>
+          <MintBlueBox>
+            <MintRrounded>
               <Assets onClick={() => setOpenAssets(!openAssets)} total={data?.mintingTokens?.length} />
               <Burn total={data?.burningTokens?.length} onClick={() => setOpenBurnedAssets(!openBurnedAssets)} />
-            </Rrounded>
+            </MintRrounded>
             <PolicyID hash={data?.scriptHash} detail={details.policyDetail} />
-          </BlueBox>
+          </MintBlueBox>
         </RightBox>
       ) : (
-        <RightBox>
+        <MintBlueBox>
           <Rrounded ref={rightBoxRef}>
             <Assets onClick={() => setOpenAssets(!openAssets)} total={data?.mintingTokens?.length} />
             <PolicyID hash={data?.scriptHash} detail={details.policyDetail} />
           </Rrounded>
-        </RightBox>
+        </MintBlueBox>
       )}
-      <DrawPath paths={paths} lineStyle={{ stroke: theme.palette.secondary.light }} style={{ zIndex: 0 }} />
+      <DrawPath
+        paths={isMobile ? mobilePaths : paths}
+        lineStyle={{ stroke: theme.palette.secondary.light }}
+        style={{ zIndex: 0 }}
+      />
     </MintContainer>
   );
 };

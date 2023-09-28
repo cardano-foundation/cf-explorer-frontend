@@ -23,9 +23,10 @@ import CompiledCodeModal from "../modals/CompiledCodeModal";
 
 interface SpendViewProps {
   data?: IContractItemTx;
+  isMobile?: boolean;
 }
 
-const Spendviews: React.FC<SpendViewProps> = ({ data }) => {
+const Spendviews: React.FC<SpendViewProps> = ({ data, isMobile }) => {
   const theme = useTheme();
   const leftBoxRef = useRef(null);
   const rightBoxRef = useRef(null);
@@ -47,9 +48,22 @@ const Spendviews: React.FC<SpendViewProps> = ({ data }) => {
       }
     ];
   }, []);
-
+  const mobilePaths = useMemo((): LineArrowItem[] => {
+    return [
+      {
+        start: leftBoxRef,
+        end: rightBoxRef,
+        startPosition: { 0: ["center", "bottom"] },
+        endPosition: { 0: ["center", "top"] },
+        arrow: { 0: "top" },
+        fold: { sm: "horizontal" },
+        startOffset: { 0: [0, 0] },
+        endOffset: { 0: [0, -16] }
+      }
+    ];
+  }, []);
   return (
-    <SpendContainer>
+    <SpendContainer isMobile={+!!isMobile}>
       <RedeemerModal
         data={[
           { title: "Purpose", value: data?.purpose },
@@ -62,8 +76,8 @@ const Spendviews: React.FC<SpendViewProps> = ({ data }) => {
       />
       <DatumModal
         data={[
-          { title: "Datum Hash", value: data?.datumHashIn },
-          { title: "Datum", value: data?.datumBytesIn }
+          { title: "Datum Hash", value: data?.datumHashOut || data?.datumHashIn },
+          { title: "Datum", value: data?.datumBytesOut || data?.datumBytesIn }
         ]}
         open={openDatum}
         onClose={() => setOpenDatum(false)}
@@ -107,7 +121,11 @@ const Spendviews: React.FC<SpendViewProps> = ({ data }) => {
         <Contract hash={data?.address} detail={details.address} />
         <CompiledCode onClick={() => setOpenCompiledCode(!openCompiledCode)} />
       </MiddleBox>
-      <DrawPath paths={paths} lineStyle={{ stroke: theme.palette.secondary.light }} style={{ zIndex: 0 }} />
+      <DrawPath
+        paths={isMobile ? mobilePaths : paths}
+        lineStyle={{ stroke: theme.palette.secondary.light }}
+        style={{ zIndex: 0 }}
+      />
     </SpendContainer>
   );
 };

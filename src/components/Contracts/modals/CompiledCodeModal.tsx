@@ -17,6 +17,7 @@ const CompiledCodeModal: React.FC<CompiledCodeModalProps> = ({ open = false, onC
   const handleCloseModal = () => onClose?.();
   return (
     <CustomModal
+      modalProps={{ style: { zIndex: 1302 } }}
       open={open}
       onClose={handleCloseModal}
       title="Compiled Code"
@@ -24,7 +25,7 @@ const CompiledCodeModal: React.FC<CompiledCodeModalProps> = ({ open = false, onC
       modalContainerProps={{ px: "20px" }}
     >
       <ModalContent>
-        <ExplanDropdown title="What is the datum?">
+        <ExplanDropdown title="What is compiled code?">
           On the Cardano blockchain, the compiled code of smart contracts is stored on, and distributed across the
           decentralised network. It is not possible to modify the rules of existing smart contract and it is also not
           possible to de-compile the stored smart contract code back from it's compiled state back in to the original

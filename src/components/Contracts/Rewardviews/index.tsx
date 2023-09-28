@@ -14,9 +14,10 @@ import CompiledCodeModal from "../modals/CompiledCodeModal";
 
 interface RewardviewsProps {
   data?: IContractItemTx;
+  isMobile?: boolean;
 }
 
-const Rewardviews: React.FC<RewardviewsProps> = ({ data }) => {
+const Rewardviews: React.FC<RewardviewsProps> = ({ data, isMobile }) => {
   const theme = useTheme();
   const redeemerRef = useRef(null);
   const middleBoxRef = useRef(null);
@@ -24,6 +25,21 @@ const Rewardviews: React.FC<RewardviewsProps> = ({ data }) => {
   const [openCompiledCode, setOpenCompiledCode] = useState(false);
 
   const paths = useMemo((): LineArrowItem[] => {
+    return [
+      {
+        start: redeemerRef,
+        end: middleBoxRef,
+        startPosition: { 0: ["center", "bottom"], sm: ["right", "middle"] },
+        endPosition: { 0: ["center", "top"], sm: ["left", "middle"] },
+        arrow: { 0: "top", sm: "left" },
+        fold: { sm: "horizontal", lg: "none" },
+        startOffset: { 0: [0, 0], sm: [0, 0] },
+        endOffset: { 0: [0, -10], sm: [-16, 0] }
+      }
+    ];
+  }, []);
+
+  const mobilePaths = useMemo((): LineArrowItem[] => {
     return [
       {
         start: redeemerRef,
@@ -67,7 +83,11 @@ const Rewardviews: React.FC<RewardviewsProps> = ({ data }) => {
           <CompiledCode onClick={() => setOpenCompiledCode(!openCompiledCode)} />
         </MiddleBox>
       </Center>
-      <DrawPath paths={paths} lineStyle={{ stroke: theme.palette.secondary.light }} style={{ zIndex: 0 }} />
+      <DrawPath
+        paths={isMobile ? paths : mobilePaths}
+        lineStyle={{ stroke: theme.palette.secondary.light }}
+        style={{ zIndex: 0 }}
+      />
     </RewardContainer>
   );
 };

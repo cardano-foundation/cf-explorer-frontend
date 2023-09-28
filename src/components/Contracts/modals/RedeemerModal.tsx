@@ -17,6 +17,7 @@ const RedeemerModal: React.FC<RedeemerModalProps> = ({ open = false, onClose, da
   const handleCloseModal = () => onClose?.();
   return (
     <CustomModal
+      modalProps={{ style: { zIndex: 1302 } }}
       open={open}
       onClose={handleCloseModal}
       title="Redeemer"
@@ -35,7 +36,7 @@ const RedeemerModal: React.FC<RedeemerModalProps> = ({ open = false, onClose, da
           {data &&
             data.length > 0 &&
             data.map((item) => (
-              <Grid item xs={6} key={item.title}>
+              <Grid item xs={12} md={6} key={item.title}>
                 <DataCard title={item.title} value={item.value} />
               </Grid>
             ))}

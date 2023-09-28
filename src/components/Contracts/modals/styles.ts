@@ -7,6 +7,7 @@ export const ModalContent = styled(Box)`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  max-height: 80vh;
   padding: 4px;
 `;
 

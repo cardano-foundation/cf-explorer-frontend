@@ -16,9 +16,10 @@ import CompiledCodeModal from "../modals/CompiledCodeModal";
 
 interface CertviewsProps {
   data?: IContractItemTx;
+  isMobile?: boolean;
 }
 
-const Certviews: React.FC<CertviewsProps> = ({ data }) => {
+const Certviews: React.FC<CertviewsProps> = ({ data, isMobile }) => {
   const theme = useTheme();
   const certRef = useRef(null);
   const middleRef = useRef(null);
@@ -36,6 +37,21 @@ const Certviews: React.FC<CertviewsProps> = ({ data }) => {
         fold: { sm: "horizontal", lg: "none" },
         startOffset: { 0: [0, 0], sm: [0, 0] },
         endOffset: { 0: [0, -10], sm: [-16, 0] }
+      }
+    ];
+  }, []);
+
+  const mobilePaths = useMemo((): LineArrowItem[] => {
+    return [
+      {
+        start: certRef,
+        end: middleRef,
+        startPosition: { 0: ["center", "bottom"] },
+        endPosition: { 0: ["center", "top"] },
+        arrow: { 0: "top" },
+        fold: { sm: "horizontal" },
+        startOffset: { 0: [0, 0] },
+        endOffset: { 0: [0, -10] }
       }
     ];
   }, []);
@@ -62,7 +78,7 @@ const Certviews: React.FC<CertviewsProps> = ({ data }) => {
         open={openCompiledCode}
         onClose={() => setOpenCompiledCode(false)}
       />
-      <Center>
+      <Center isMoble={+!!isMobile}>
         <CertRrounded ref={certRef}>
           <CertificateType redeemerCertType={data?.redeemerCertType} />
           <LongButton>
@@ -81,7 +97,11 @@ const Certviews: React.FC<CertviewsProps> = ({ data }) => {
           <CompiledCode onClick={() => setOpenCompiledCode(!openCompiledCode)} />
         </MiddleBox>
       </Center>
-      <DrawPath paths={paths} lineStyle={{ stroke: theme.palette.secondary.light }} style={{ zIndex: 0 }} />
+      <DrawPath
+        paths={isMobile ? mobilePaths : paths}
+        lineStyle={{ stroke: theme.palette.secondary.light }}
+        style={{ zIndex: 0 }}
+      />
     </CertContainer>
   );
 };
