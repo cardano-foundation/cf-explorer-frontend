@@ -1,36 +1,36 @@
 import { Box, Grid, useTheme } from "@mui/material";
-import { useRef, useState, useMemo } from "react";
+import { useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 
-import { BackIcon, AddressIcon, TimeIcon } from "src/commons/resources";
-import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
-import CustomTooltip from "src/components/commons/CustomTooltip";
+import { AddressIcon, BackIcon, TimeIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import CopyButton from "src/components/commons/CopyButton";
-import StyledModal from "src/components/commons/StyledModal";
-import SPOHolder from "src/components/commons/SPOHolder";
-import HoldBoxSPO from "src/components/commons/HoldBoxSPO";
-import FeeBoxSPO from "src/components/commons/FeeBoxSPO";
-import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
-import { LineArrowItem } from "src/components/commons/LineArrow";
-import DrawPath from "src/components/commons/DrawPath";
+import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
+import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
+import CopyButton from "src/components/commons/CopyButton";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import DrawPath from "src/components/commons/DrawPath";
+import FeeBoxSPO from "src/components/commons/FeeBoxSPO";
+import { LineArrowItem } from "src/components/commons/LineArrow";
+import SPOHolder from "src/components/commons/SPOHolder";
 import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
+import StyledModal from "src/components/commons/StyledModal";
 
 import { StyledLink } from "../styles";
-import { AditionalLabel } from "./RecentDeregistrations/styles";
 import RecentDeregistrations from "./RecentDeregistrations";
+import { AditionalLabel } from "./RecentDeregistrations/styles";
 import {
+  BoxGroup,
   CustomLink,
   DetailRetirement,
+  DrawContainer,
   IconButtonBack,
   Info,
   InfoGroup,
   InfoText,
-  StepInfo,
-  DrawContainer,
   MiddleGroup,
-  BoxGroup,
+  StepInfo,
   StyledCertificateShape,
   StyledCopyButton,
   StyledGridItem
@@ -70,7 +70,6 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
   const theme = useTheme();
 
   const SPOHolderRef = useRef(null);
-  const holdRef = useRef(null);
   const feeRef = useRef(null);
   const cardanoBlockchainRef = useRef(null);
   const deregistrationRef = useRef(null);
@@ -78,62 +77,8 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
   const handleBack = () => {
     history.goBack();
   };
-
-  const isPoolHold = !!selected?.poolHold;
+  const { t } = useTranslation();
   const paths = useMemo((): LineArrowItem[] => {
-    if (isPoolHold)
-      return [
-        {
-          start: SPOHolderRef,
-          startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-          end: cardanoBlockchainRef,
-          endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
-          startOffset: { 0: [0], lg: [-10, -15] },
-          endOffset: { 0: [0, 0], lg: [0] },
-          arrow: { 0: "top", lg: "left" },
-          fold: { 0: "none" }
-        },
-        {
-          start: SPOHolderRef,
-          startPosition: { 0: ["left", "bottom"], sm: ["left", "middle"], lg: ["center", "bottom"] },
-          end: deregistrationRef,
-          endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
-          startOffset: { 0: [4, -54], sm: [0], lg: [0, 0] },
-          endOffset: { 0: [0, 30], lg: [0] },
-          arrow: { 0: "top", lg: "left" },
-          fold: { 0: "none", sm: "horizontal", lg: "vertical" }
-        },
-        {
-          start: deregistrationRef,
-          startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-          end: cardanoBlockchainRef,
-          endPosition: { 0: ["center", "top"], sm: ["left", "middle"], lg: ["center", "bottom"] },
-          startOffset: { 0: [0], lg: [0, 0] },
-          endOffset: { 0: [-94, 50], sm: [10, 0], lg: [0] },
-          arrow: { 0: "top", sm: "left", lg: "bottom" },
-          fold: { 0: "none", sm: "vertical", lg: "horizontal" }
-        },
-        {
-          start: cardanoBlockchainRef,
-          startPosition: { 0: ["right", "middle"], lg: ["left", "middle"] },
-          end: holdRef,
-          endPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-          startOffset: { 0: [-10], lg: [50, -70] },
-          endOffset: { 0: [50, -10], sm: [0, -10], lg: [0] },
-          arrow: { 0: "bottom", lg: "right" },
-          fold: { 0: "horizontal", lg: "none" }
-        },
-        {
-          start: holdRef,
-          startPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
-          end: SPOHolderRef,
-          endPosition: { 0: ["right", "middle"], lg: ["right", "middle"] },
-          startOffset: { 0: [50], sm: [0], lg: [0] },
-          endOffset: { 0: [0, 0], lg: [-5, -84] },
-          arrow: { 0: "right", lg: "right" },
-          fold: { 0: "vertical", lg: "none" }
-        }
-      ];
     return [
       {
         start: SPOHolderRef,
@@ -219,30 +164,20 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
           ref={SPOHolderRef}
           data={{ poolName: selected?.poolName, poolView: selected?.poolView, stakeKeys: selected?.stakeKeys }}
         />
-        <MiddleGroup hold={+isPoolHold}>
+        <MiddleGroup>
           <BoxGroup>
-            {isPoolHold && (
-              <Box>
-                <HoldBoxSPO ref={holdRef} value={selected?.poolHold || ""} txHash={selected?.txHash || ""} />
-              </Box>
-            )}
-            <Box display="flex" justifyContent={isPoolHold ? "unset" : "center"}>
+            <Box display="flex" justifyContent={"center"}>
               <FeeBoxSPO ref={feeRef} value={selected?.fee || ""} txHash={selected?.txHash || ""} />
             </Box>
           </BoxGroup>
           <StyledCertificateShape onClick={toggleModal} ref={deregistrationRef}>
-            Deregistration Certificate
+            {t("common.deregistrationCert")}
           </StyledCertificateShape>
         </MiddleGroup>
         <CardanoBlockchain ref={cardanoBlockchainRef} />
         <DrawPath paths={paths} />
       </DrawContainer>
-      {!isPoolHold && (
-        <AditionalLabel>
-          Pool hold paid during registration is refunded 1 epoch after the retirement epoch to the reward address of the
-          pool operator
-        </AditionalLabel>
-      )}
+      <AditionalLabel>{t("common.holdBoxLimitWarning")}</AditionalLabel>
     </Box>
   );
 };
@@ -255,13 +190,14 @@ export const DeregistrationCertificateModal = ({
   data: SPODeregistration | null;
   handleCloseModal: () => void;
 }) => {
+  const { t } = useTranslation();
   return (
-    <StyledModal {...props} title="Deregistration certificate">
+    <StyledModal {...props} title={t("common.deregistrationCert")}>
       <Grid container spacing={1}>
         <StyledGridItem item xs={6}>
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
-              Pool ID
+              {t("common.poolID")}
             </Box>
             {data && (
               <Box>
@@ -278,7 +214,7 @@ export const DeregistrationCertificateModal = ({
         <StyledGridItem item xs={6}>
           <Box>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
-              Retirement in Epoch
+              {t("glossary.retirementsEpoch")}
             </Box>
             {data && (
               <DetailRetirement pt={"3px"} pb={"5px"}>
