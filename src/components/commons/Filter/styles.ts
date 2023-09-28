@@ -3,8 +3,8 @@ import { Box, Button, ListItemText, MenuItem, styled } from "@mui/material";
 export const FilterButton = styled(Button)`
   border: none;
   outline: none;
-  background-color: ${({ theme }) => theme.palette.primary[200]};
-  color: ${({ theme }) => theme.palette.secondary.light};
+  background-color: ${({ theme }) => (theme.mode === "dark" ? theme.palette.secondary[0] : theme.palette.primary[200])};
+  color: ${({ theme }) => (theme.mode === "dark" ? theme.palette.primary.main : theme.palette.secondary.light)};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,6 +46,7 @@ export const FilterContainer = styled(Box)`
   background: ${({ theme }) => theme.palette.secondary[0]};
   position: relative;
   display: inline-flex;
+  border-radius: 5px;
 `;
 
 export const FilterIconContainer = styled(Box)`

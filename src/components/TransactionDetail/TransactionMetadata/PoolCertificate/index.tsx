@@ -9,7 +9,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import Link from "src/components/commons/Link";
 
 import StakeKeyBox from "./StakeKeyBox";
-import { CardHeader, TextLabel, TextValue } from "./styles";
+import { CardHeader, TextLabel, TextValue, Wrapper } from "./styles";
 
 interface IProps {
   data: Transaction["poolCertificates"] | null;
@@ -20,7 +20,7 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
   const theme = useTheme();
 
   return (
-    <>
+    <Wrapper>
       {data
         ?.filter((d) => d.type === "POOL_REGISTRATION")
         ?.map((item, index) => {
@@ -63,7 +63,7 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
             </Box>
           );
         })}
-    </>
+    </Wrapper>
   );
 };
 

@@ -34,6 +34,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import RateWithIcon from "src/components/commons/RateWithIcon";
 import { RootState } from "src/stores/types";
 import ADAicon from "src/components/commons/ADAIcon";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
 import {
   AdaPrice,
@@ -75,9 +76,8 @@ const MIN_PERCENT_SHOW_FIRST_BAR = 9;
 const HomeStatistic = () => {
   const { t } = useTranslation();
   const { currentEpoch, usdMarket, btcMarket, blockNo } = useSelector(({ system }: RootState) => system);
-
-  const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS, undefined, false, blockNo);
   const { theme: themeMode } = useSelector(({ user }: RootState) => user);
+  const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS, undefined, false, blockNo);
   const { total_supply: total = 1 } = usdMarket || {};
   const { liveStake = 0, activeStake = 1 } = data || {};
   const supply = BigNumber(currentEpoch?.circulatingSupply || 0).div(10 ** 6);
@@ -146,7 +146,7 @@ const HomeStatistic = () => {
                 </Content>
                 <Content>
                   <TimeDuration data-testid="last-update-ada-price">
-                    {t("info.lastUpdatedTime", { time: moment(usdMarket.last_updated).fromNow() })}
+                    <FormNowMessage time={usdMarket.last_updated} />
                   </TimeDuration>
                 </Content>
               </WrapCardContent>
@@ -172,7 +172,7 @@ const HomeStatistic = () => {
                 <Title data-testid="market-cap-value">${numberWithCommas(usdMarket.market_cap)}</Title>
                 <Content>
                   <TimeDuration data-testid="last-update-market-cap">
-                    {t("common.lastUpdated")} {moment(usdMarket.last_updated).fromNow()}
+                    <FormNowMessage time={usdMarket.last_updated} />
                   </TimeDuration>
                 </Content>
               </WrapCardContent>

@@ -3,20 +3,20 @@ import { useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 
-import { BackIcon, AddressIcon, TimeIcon, AddressIconDark2, TimeIconDark } from "src/commons/resources";
+import { BackIcon, AddressIcon, TimeIcon, AddressIconDark2, TimeIconDark, BackDarkIcon } from "src/commons/resources";
 import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomIcon from "src/components/commons/CustomIcon";
 import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import CopyButton from "src/components/commons/CopyButton";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import DrawPath from "src/components/commons/DrawPath";
 import FeeBoxSPO from "src/components/commons/FeeBoxSPO";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import SPOHolder from "src/components/commons/SPOHolder";
 import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
 import StyledModal from "src/components/commons/StyledModal";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import { StyledLink } from "../styles";
 import RecentDeregistrations from "./RecentDeregistrations";
@@ -128,9 +128,7 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
     <Box>
       <StepInfo>
         {showBackButton ? (
-          <IconButtonBack onClick={handleBack}>
-            <BackIcon />
-          </IconButtonBack>
+          <IconButtonBack onClick={handleBack}>{theme.isDark ? <BackDarkIcon /> : <BackIcon />}</IconButtonBack>
         ) : (
           <Box />
         )}
@@ -139,7 +137,7 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
             <CustomIcon
               icon={theme.isDark ? AddressIconDark2 : AddressIcon}
               height={30}
-              fill={theme.palette.secondary.light}
+              fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
             />
             <CustomTooltip title={selected?.txHash}>
               <InfoText>
@@ -152,7 +150,7 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
           </Info>
           <Info>
             <StyledADASymbol>
-              <ADAicon />
+              <ADAicon fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light} />
             </StyledADASymbol>
             <InfoText>
               {formatADAFull(selected?.poolHold ? selected?.poolHold - selected?.fee : selected?.fee || 0)}
@@ -162,7 +160,7 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
             <CustomIcon
               icon={theme.isDark ? TimeIconDark : TimeIcon}
               height={30}
-              fill={theme.palette.secondary.light}
+              fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
             />
             <InfoText>{formatDateTimeLocal(selected?.time || "")}</InfoText>
           </Info>
