@@ -29,7 +29,9 @@ export const ExplanDropdownContainer = styled(Box)`
   gap: 20px;
 `;
 
-export const ExplanDropdownContent = styled(Box)``;
+export const ExplanDropdownContent = styled(Box)`
+  color: ${({ theme }) => theme.palette.secondary.light};
+`;
 
 export const DataCardBox = styled(Box)`
   border-radius: 8px;
@@ -55,6 +57,24 @@ export const DataValue = styled(Typography)`
   line-break: anywhere;
   max-height: 40vh;
   overflow: auto;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  &:hover {
+    border-radius: 8px 0px 0px 8px;
+    &::-webkit-scrollbar-thumb {
+      background: ${({ theme }) => theme.palette.secondary.light};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${({ theme }) => theme.palette.primary[100]};
+    }
+  }
 `;
 
 export const CLCardContaienr = styled(Box)`
@@ -65,11 +85,11 @@ export const CLCardContaienr = styled(Box)`
   width: 100%;
   box-shadow: 2px 2px 10px 0px rgba(67, 70, 86, 0.2);
   align-items: flex-start;
-  background-color: ${({ theme }) => theme.palette.common.white};
+  background-color: ${({ theme }) => (theme.isDark ? theme.palette.primary[100] : theme.palette.common.white)};
   justify-content: flex-start;
   box-sizing: border-box;
   padding: 20px;
-  color: ${({ theme }) => theme.palette.secondary.light};
+  color: ${({ theme }) => (theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light)};
   & > div {
     box-sizing: border-box;
     width: 100%;
@@ -85,7 +105,7 @@ export const CLButton = styled("button")`
   border: none;
   background-color: ${({ theme }) => theme.palette.primary.main};
   padding: 1rem;
-  color: ${({ theme }) => theme.palette.primary[100]};
+  color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100])};
   font-weight: 500;
   font-size: 1rem;
   border-radius: 8px;

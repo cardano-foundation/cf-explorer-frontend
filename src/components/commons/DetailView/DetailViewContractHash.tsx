@@ -23,7 +23,7 @@ import {
   ViewDetailHeader,
   ViewDetailContainerContractHash,
   ViewDetailScrollContractHash,
-  StyledSpendviewDrawer
+  ViewDetailDrawer
 } from "./styles";
 import NoRecord from "../NoRecord";
 
@@ -113,7 +113,7 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
   };
 
   return (
-    <StyledSpendviewDrawer
+    <ViewDetailDrawer
       hideBackdrop
       transitionDuration={100}
       data-testid="view-detail-drawer-contract-hash"
@@ -123,7 +123,7 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
       onClose={handleClose}
     >
       {renderContent()}
-    </StyledSpendviewDrawer>
+    </ViewDetailDrawer>
   );
 };
 

@@ -4,6 +4,7 @@ import React from "react";
 import CustomModal from "src/components/commons/CustomModal";
 import { CustomBadge } from "src/components/commons/ViewBlocks/styles";
 import { details } from "src/commons/routers";
+import { numberWithCommas } from "src/commons/utils/helper";
 
 import { DataTitle } from "../common/styles";
 import { ModalContent, StyledItem, StyledLink, StyledList, StyledListItemText } from "./styles";
@@ -55,7 +56,7 @@ const AssetsModal: React.FC<AssetsModalProps> = ({ open = false, onClose, data, 
                 key={item.title}
                 secondaryAction={
                   <Typography style={{ color: isBurned ? theme.palette.error[700] : theme.palette.secondary.light }}>
-                    {item.value}
+                    {numberWithCommas(item.value, 3)}
                   </Typography>
                 }
               >

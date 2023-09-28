@@ -20,7 +20,7 @@ const DatumModal: React.FC<DatumModalProps> = ({ open = false, onClose, data }) 
       modalProps={{ style: { zIndex: 1302 } }}
       open={open}
       onClose={handleCloseModal}
-      title="Redeemer"
+      title="Datum"
       width={550}
       modalContainerProps={{ px: "20px" }}
     >
