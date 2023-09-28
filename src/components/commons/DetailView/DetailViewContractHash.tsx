@@ -1,11 +1,11 @@
-import { Box, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { CgClose } from "react-icons/cg";
+import { Box, useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
-import ContractDiagrams from "src/components/ContractDiagrams";
+import ContractSideView from "src/components/Contracts/ContractSideView";
 
 import CustomTooltip from "../CustomTooltip";
 import NoRecord from "../NoRecord";
@@ -15,16 +15,16 @@ import {
   DetailLabelSkeleton,
   DetailValue,
   DetailValueSkeleton,
-  DetailsInfoItem,
-  Group,
-  HeaderContainer,
   ProgressSkeleton,
-  ViewDetailContainer,
-  ViewDetailContainerContractHash,
-  ViewDetailDrawerContractHash,
-  ViewDetailHeader,
+  Group,
   ViewDetailScroll,
-  ViewDetailScrollContractHash
+  ViewDetailHeader,
+  ViewDetailContainerContractHash,
+  ViewDetailScrollContractHash,
+  StyledSpendviewDrawer,
+  ViewDetailContainer,
+  HeaderContainer,
+  DetailsInfoItem
 } from "./styles";
 
 type DetailViewEpochProps = {
@@ -48,31 +48,30 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
     }
   }, [txHash, address]);
 
-  const renderContent = () => {
-    if (loading || !initialized) {
-      return (
-        <>
-          <ViewDetailHeader />
-          <ViewDetailContainer>
-            <ViewDetailScroll>
-              <HeaderContainer>
-                <ProgressSkeleton variant="circular" />
-              </HeaderContainer>
-              <Group>
-                {new Array(4).fill(0).map((_, index) => {
-                  return (
-                    <DetailsInfoItem key={index}>
-                      <DetailLabel>
-                        <DetailValueSkeleton variant="rectangular" />
-                      </DetailLabel>
-                      <DetailValue>
-                        <DetailLabelSkeleton variant="rectangular" />
-                      </DetailValue>
-                    </DetailsInfoItem>
-                  );
-                })}
-              </Group>
-              {new Array(2).fill(0).map((_, index) => {
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+    return () => {
+      document.body.style.overflowY = "scroll";
+    };
+  }, []);
+
+  if (loading || !initialized) {
+    return (
+      <StyledSpendviewDrawer
+        transitionDuration={100}
+        anchor="right"
+        open={open}
+        hideBackdrop
+        data-testid="view-detail-drawer-contract-hash"
+      >
+        <ViewDetailHeader />
+        <ViewDetailContainer>
+          <ViewDetailScroll>
+            <HeaderContainer>
+              <ProgressSkeleton variant="circular" />
+            </HeaderContainer>
+            <Group>
+              {new Array(4).fill(0).map((_, index) => {
                 return (
                   <Group key={index}>
                     <DetailsInfoItem>
@@ -86,16 +85,39 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
                   </Group>
                 );
               })}
-            </ViewDetailScroll>
-          </ViewDetailContainer>
-        </>
-      );
-    }
-    return (
+            </Group>
+            {new Array(2).fill(0).map((_, index) => {
+              return (
+                <Group key={index}>
+                  <DetailsInfoItem>
+                    <DetailLabel>
+                      <DetailValueSkeleton variant="rectangular" />
+                    </DetailLabel>
+                    <DetailValue>
+                      <DetailLabelSkeleton variant="rectangular" />
+                    </DetailValue>
+                  </DetailsInfoItem>
+                </Group>
+              );
+            })}
+          </ViewDetailScroll>
+        </ViewDetailContainer>
+      </StyledSpendviewDrawer>
+    );
+  }
+
+  return (
+    <StyledSpendviewDrawer
+      hideBackdrop
+      transitionDuration={100}
+      anchor="right"
+      open={open}
+      data-testid="view-detail-drawer-contract-hash"
+    >
       <ViewDetailContainerContractHash>
         <ViewDetailScrollContractHash>
           {data?.[0] ? (
-            <ContractDiagrams item={data[0]} txHash={txHash} handleClose={handleClose} />
+            <ContractSideView data={data[0]} txHash={txHash} handleClose={handleClose} />
           ) : (
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "10px" }}>
               <CustomTooltip title={t("common.close")}>
@@ -108,19 +130,7 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
           )}
         </ViewDetailScrollContractHash>
       </ViewDetailContainerContractHash>
-    );
-  };
-
-  return (
-    <ViewDetailDrawerContractHash
-      anchor="right"
-      open={Boolean(open && txHash)}
-      variant="temporary"
-      onClose={handleClose}
-      data-testid="view-detail-drawer-contract-hash"
-    >
-      {renderContent()}
-    </ViewDetailDrawerContractHash>
+    </StyledSpendviewDrawer>
   );
 };
 

@@ -33,6 +33,7 @@ import {
   SwitchMode,
   Title
 } from "./styles";
+import SelectLanguage from "./SelectLanguage";
 import CustomIcon from "../../CustomIcon";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [lists.dashboard()];
@@ -100,6 +101,8 @@ const Header: React.FC<RouteComponentProps> = (props) => {
             )}
             <NetworkContainer>
               <SelectNetwork />
+              &nbsp;
+              <SelectLanguage />
             </NetworkContainer>
             <LoginButton />
             {history.location.pathname !== routers.STAKING_LIFECYCLE && (

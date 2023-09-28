@@ -8,12 +8,12 @@ import {
   Area,
   ComposedChart,
   CartesianGrid,
-  Label,
   ResponsiveContainer,
   Tooltip,
-  TooltipProps,
   XAxis,
   YAxis,
+  TooltipProps,
+  Label,
   Line
 } from "recharts";
 import { getNiceTickValues } from "recharts-scale";
@@ -32,17 +32,17 @@ import {
   BoxInfo,
   BoxInfoItem,
   BoxInfoItemRight,
+  Tabs,
+  Tab,
   ButtonTitle,
   ChartBox,
   SkeletonUI,
-  Tab,
-  Tabs,
-  TextCardHighlight,
   Title,
-  TooltipLabel,
-  TooltipValue,
   ValueInfo,
-  Wrapper
+  Wrapper,
+  TextCardHighlight,
+  TooltipLabel,
+  TooltipValue
 } from "./styles";
 
 type AnalyticsData = { date: string; value: number };
@@ -226,7 +226,7 @@ const AddressAnalytics: React.FC = () => {
                     dataKey="value"
                     stroke={theme.palette.primary.main}
                     strokeWidth={4}
-                    fill={alpha(theme.palette.primary.main, 0.2)}
+                    fill={alpha(theme.palette.primary.main, theme.isDark ? 0.6 : 0.2)}
                     activeDot={{ r: 6 }}
                   />
                   <Line

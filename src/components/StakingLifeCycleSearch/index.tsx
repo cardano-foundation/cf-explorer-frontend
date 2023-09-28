@@ -1,32 +1,32 @@
-import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { Box, useTheme } from "@mui/material";
-import { useKey } from "react-use";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
+import { useKey } from "react-use";
 
+import useFetchList from "src/commons/hooks/useFetchList";
+import { useScreen } from "src/commons/hooks/useScreen";
 import { HeaderSearchIconComponent, WhiteSearchIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import InfoGraphicModal from "src/components/InfoGraphicModal";
-import { useScreen } from "src/commons/hooks/useScreen";
-import { getRandomInt } from "src/commons/utils/helper";
 import { API } from "src/commons/utils/api";
-import useFetchList from "src/commons/hooks/useFetchList";
+import { getRandomInt } from "src/commons/utils/helper";
+import InfoGraphicModal from "src/components/InfoGraphicModal";
+import DropdownMenu from "src/components/commons/DropdownMenu";
 
+// eslint-disable-next-line import/order
 import {
-  StyledContainer,
-  Title,
-  SearchTitle,
-  SearchContainer,
-  StyledInput,
-  SubmitButton,
+  ExampleBox,
   Image,
   SearchButton,
+  SearchContainer,
+  SearchTitle,
+  StyledContainer,
+  StyledIconQuestion,
+  StyledInput,
+  SubmitButton,
   TextOR,
-  ExampleBox,
-  StyledIconQuestion
+  Title
 } from "./styles";
-// eslint-disable-next-line import/order
-import DropdownMenu from "../commons/DropdownMenu";
 
 const LIMIT_SIZE = 25;
 
@@ -39,7 +39,6 @@ import CustomIcon from "../commons/CustomIcon";
 
 const StakingLifeCycleSearch = () => {
   const { t } = useTranslation();
-  const theme = useTheme();
   const { data: delegators, initialized: delegatorsInitialzzed } = useFetchList<Delegator>(API.STAKE.TOP_DELEGATOR, {
     page: 0,
     size: LIMIT_SIZE
@@ -137,7 +136,7 @@ const StakingLifeCycleSearch = () => {
             }}
           />
           <SubmitButton onClick={hanldeSearch}>
-            <CustomIcon icon={HeaderSearchIconComponent} stroke={theme.palette.secondary.light} height={22} />
+            <CustomIcon icon={HeaderSearchIconComponent} stroke={themes.palette.secondary.light} height={22} />
           </SubmitButton>
         </SearchContainer>
         <Box color={({ palette }) => palette.error[700]} sx={{ marginBottom: "20px" }}>

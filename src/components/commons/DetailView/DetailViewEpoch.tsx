@@ -206,7 +206,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
                 <Icon src={cubeIconUrl} alt="socket" />
                 <ItemName>{t("glossary.blocks")}</ItemName>
                 <ItemValue>
-                  {currentEpoch?.no === epochNo ? currentEpoch?.blkCount || data.blkCount : data.blkCount}
+                  {currentEpoch?.no === epochNo ? currentEpoch.blkCount || data.blkCount : data.blkCount}
                 </ItemValue>
               </Item>
               <Item>

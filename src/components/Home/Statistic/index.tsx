@@ -75,9 +75,8 @@ const MIN_PERCENT_SHOW_FIRST_BAR = 9;
 const HomeStatistic = () => {
   const { t } = useTranslation();
   const { currentEpoch, usdMarket, btcMarket, blockNo } = useSelector(({ system }: RootState) => system);
-
-  const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS, undefined, false, blockNo);
   const { theme: themeMode } = useSelector(({ user }: RootState) => user);
+  const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS, undefined, false, blockNo);
   const { total_supply: total = 1 } = usdMarket || {};
   const { liveStake = 0, activeStake = 1 } = data || {};
   const supply = BigNumber(currentEpoch?.circulatingSupply || 0).div(10 ** 6);

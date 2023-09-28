@@ -10,10 +10,10 @@ import {
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
-  TooltipProps,
   XAxis,
-  XAxisProps,
   YAxis,
+  TooltipProps,
+  XAxisProps,
   Label,
   Line
 } from "recharts";
@@ -35,17 +35,17 @@ import {
   BoxInfo,
   BoxInfoItem,
   BoxInfoItemRight,
+  Tabs,
+  Tab,
   ButtonTitle,
   ChartBox,
-  CustomButton,
   SkeletonUI,
-  Tab,
-  Tabs,
   Title,
-  TooltipLabel,
-  TooltipValue,
   ValueInfo,
-  Wrapper
+  Wrapper,
+  CustomButton,
+  TooltipValue,
+  TooltipLabel
 } from "./styles";
 
 const StakeAnalytics: React.FC = () => {
@@ -256,7 +256,7 @@ const StakeAnalytics: React.FC = () => {
                     dataKey="value"
                     stroke={theme.palette.primary.main}
                     strokeWidth={4}
-                    fill={alpha(theme.palette.primary.main, 0.2)}
+                    fill={alpha(theme.palette.primary.main, theme.isDark ? 0.6 : 0.2)}
                     activeDot={{ r: 6 }}
                   />
                   <Line

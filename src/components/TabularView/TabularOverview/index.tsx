@@ -5,17 +5,17 @@ import { useTranslation } from "react-i18next";
 
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-
 import {
-  DelegationToIconUrl,
   PaymentWalletUrl,
-  RewardAccountIconUrl,
+  GiftIcon,
   RewardWithdrawnIconUrl,
-  TransactionIcon
-} from "../../../commons/resources/index";
-import { details } from "../../../commons/routers";
-import { formatADAFull, getShortHash } from "../../../commons/utils/helper";
-import ADATransferModal from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal";
+  TransactionIcon,
+  DelegatingIcon
+} from "src/commons/resources/index";
+import { details } from "src/commons/routers";
+import { formatADAFull, getShortHash } from "src/commons/utils/helper";
+import ADATransferModal from "src/components/StakingLifeCycle/DelegatorLifecycle/ADATransferModal";
+
 import {
   CardContent,
   CardInfo,
@@ -52,14 +52,15 @@ type TGridItem = {
   title: string;
   value: React.ReactNode;
   iconUrl: string;
+  iconSize?: { width?: string | number; height?: string | number };
 };
 
-const GridItem = ({ title, action, value, iconUrl }: TGridItem) => {
+const GridItem = ({ title, action, value, iconUrl, iconSize }: TGridItem) => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
 
   return (
     <CardItem sidebar={+sidebar}>
-      <ItemIcon src={iconUrl} alt="title" />
+      <ItemIcon src={iconUrl} alt="title" style={{ ...iconSize }} />
       <CardContent>
         <CardInfo>
           <CardTitle>{title}</CardTitle>
@@ -108,7 +109,8 @@ const TabularOverview: React.FC = () => {
       <Grid item xs={12} sm={6}>
         <GridItem
           title={t("rewardAccount")}
-          iconUrl={RewardAccountIconUrl}
+          iconSize={{ width: "74px", height: "80px" }}
+          iconUrl={GiftIcon}
           value={<CardAmount amount={Math.max(rewardAvailable || 0, 0)} />}
         />
       </Grid>
@@ -122,7 +124,7 @@ const TabularOverview: React.FC = () => {
       <Grid item xs={12} sm={6}>
         <GridItem
           title={t("slc.delegatingTo")}
-          iconUrl={iconUrl || DelegationToIconUrl}
+          iconUrl={iconUrl || DelegatingIcon}
           value={
             pool?.poolId ? (
               <StyledBoxDelegating to={details.delegation(pool?.poolId)}>

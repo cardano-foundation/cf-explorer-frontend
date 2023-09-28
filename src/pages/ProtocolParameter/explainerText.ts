@@ -36,7 +36,7 @@ export const explainerTextProtocolHistory: Record<keyof Omit<ProtocolHistory, "e
   maxValSize: "The limit on the serialized size of the Value in each output.",
   collateralPercent: "Percentage of fee that is used as collateral for a failed transaction.",
   maxCollateralInputs: "Maximum number of collateral inputs in a transaction.",
-  coinsPerUtxoSize:
+  coinsPerUTxOByte:
     "Starting in the Babbage era, update proposals that want to modify coinsPerUTxOByte must bear in mind that the measurement is in bytes, not words. In the Alonzo era, deposit charged per word of UTxO storage."
 };
 

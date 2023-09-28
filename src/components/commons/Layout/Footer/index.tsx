@@ -87,7 +87,7 @@ const LinkTo = styled(Link)`
 const Footer: React.FC = () => {
   const { t } = useTranslation();
   return (
-    <StyledFooter data-testid="footer">
+    <StyledFooter data-testid="footer" id="footer">
       <FooterContainer>
         <FooterMenu bottom={true} />
         <Copyright data-testid="footer-text">
