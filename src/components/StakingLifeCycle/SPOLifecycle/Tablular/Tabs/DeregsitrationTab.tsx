@@ -1,4 +1,4 @@
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
 import BigNumber from "bignumber.js";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -15,11 +15,13 @@ import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
 import { AdaValue } from "src/components/commons/ADAValue";
 import ADAicon from "src/components/commons/ADAIcon";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import { DeregistrationCertificateModal } from "../../Deregistration";
 
 const DeregsitrationTab = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { poolId = "" } = useParams<{ poolId: string }>();
   const [params, setParams] = useState({
     page: 0,
@@ -81,7 +83,7 @@ const DeregsitrationTab = () => {
       title: t("common.certificate"),
       render: (data) => (
         <IconButton onClick={() => setSelected(data)}>
-          <EyeIcon />
+          <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
         </IconButton>
       )
     }

@@ -102,6 +102,11 @@ export const TitleText = styled(Box)(({ theme }) => ({
   color: theme.palette.secondary.light
 }));
 
+export const ValueText = styled(Box)(({ theme }) => ({
+  whiteSpace: "nowrap",
+  color: theme.palette.secondary.main
+}));
+
 export const WrapContainerGrid = styled(Grid)(({ theme }) => ({
   background: theme.palette.background.paper,
   borderBottom: `1px solid ${theme.palette.primary[200]}`,

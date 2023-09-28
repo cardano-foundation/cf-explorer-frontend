@@ -20,6 +20,8 @@ const Header = styled(Box)`
 export const Title = styled("h2")<{ underline: number }>`
   text-align: left;
   padding-bottom: 8px;
+  margin-top: 30px;
+  line-height: 1;
   margin-bottom: 0px;
   position: relative;
   width: max-content;
@@ -30,7 +32,12 @@ export const Title = styled("h2")<{ underline: number }>`
     position: absolute;
     width: 100%;
     height: 4px;
-    background-color: ${(props) => (props.underline ? props.theme.palette.primary[200] : "unset")};
+    background-color: ${(props) =>
+      props.underline
+        ? props.theme.mode === "light"
+          ? props.theme.palette.primary[200]
+          : props.theme.palette.primary.main
+        : "unset"};
     left: 0;
     bottom: 0;
   }

@@ -2,9 +2,8 @@ import { styled, Container, Select, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
-  paddingTop: "20px",
   [theme.breakpoints.down("sm")]: {
-    padding: "10px 0 40px",
+    padding: "0px 0 40px",
     "& > div > div:nth-of-type(2)": {
       padding: "0 16px"
     },

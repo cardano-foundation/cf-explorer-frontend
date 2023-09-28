@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 
 import { truncateCustom } from "src/commons/utils/helper";
@@ -28,6 +28,7 @@ interface Props {
 
 const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
   const [openModal, setOpenModal] = useState(false);
+  const theme = useTheme();
   const history = useHistory();
   const { isMobile, isTablet } = useScreen();
 
@@ -36,7 +37,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
       <OverViewContainer display={"flex"} justifyContent="space-between" alignItems={"center"}>
         <Box>
           <BackButton onClick={history.goBack}>
-            <HiArrowLongLeft />
+            <HiArrowLongLeft color={theme.palette.secondary.light} />
             <BackText>Back</BackText>
           </BackButton>
           <HeaderContainer>

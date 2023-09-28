@@ -1,4 +1,4 @@
-import { Box, styled, Button } from "@mui/material";
+import { Box, styled, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const ModalContainer = styled(Box)(({ theme }) => ({
@@ -18,17 +18,20 @@ export const ModalContainer = styled(Box)(({ theme }) => ({
   textAlign: "left"
 }));
 
-export const ButtonClose = styled(Button)(({ theme }) => ({
+export const ButtonClose = styled(IconButton)(({ theme }) => ({
   position: "absolute",
-  top: theme.spacing(2),
-  right: theme.spacing(2),
+  top: 10,
+  right: 10,
   width: 30,
   height: 30,
-  borderRadius: "50%",
   padding: 0,
-  minWidth: 0
+  border: `1px solid ${theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary[600]}`,
+  cursor: "pointer",
+  [theme.breakpoints.down("sm")]: {
+    right: 15,
+    zIndex: 10
+  }
 }));
-
 export const ViewJson = styled(Box)(({ theme }) => ({
   overflowY: "auto",
   textAlign: "left",

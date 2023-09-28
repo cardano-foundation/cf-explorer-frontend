@@ -18,10 +18,18 @@ export interface IDropdownTokens {
   hideInputLabel?: boolean;
   hideMathChar?: boolean;
   isSuccess?: boolean;
+  isSummary?: boolean;
   sx?: SxProps<Theme>;
 }
 
-const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hideMathChar, isSuccess, sx }) => {
+const DropdownTokens: React.FC<IDropdownTokens> = ({
+  tokens,
+  hideInputLabel,
+  hideMathChar,
+  isSuccess,
+  sx,
+  isSummary
+}) => {
   const { t } = useTranslation();
   const [openDropdown, setOpenDropdown] = useState(false);
   const history = useHistory();
@@ -38,6 +46,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
         ...sx
       }}
       open={openDropdown}
+      isSummary={isSummary}
       onOpen={() => setOpenDropdown(true)}
       onClose={() => setOpenDropdown(false)}
       value={"default"}
@@ -61,8 +70,14 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
         )
       }
       MenuProps={{
+        MenuListProps: {
+          sx: {
+            bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+          }
+        },
         PaperProps: {
           sx: {
+            bgcolor: ({ palette }) => `${palette.secondary[0]} !important`,
             borderRadius: 2,
             marginTop: 0.5,
             "&::-webkit-scrollbar": {
@@ -94,7 +109,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
         const isTokenNameLong = tokenName.length > 20;
         return (
           <OptionSelect key={idx} onClick={() => handleClickItem(details.token(token?.assetId))}>
-            <Box color={({ palette }) => palette.secondary.light}>
+            <Box color={({ palette }) => palette.secondary.main}>
               {isTokenNameLong ? (
                 <CustomTooltip title={tokenName} placement="top">
                   <Box>{shortTokenName}</Box>
@@ -123,15 +138,16 @@ export default DropdownTokens;
 export const TokenLink: React.FC<{
   token: Token;
   isSuccess?: boolean;
+  isSummary?: boolean;
   sx?: SxProps<Theme>;
   hideValue?: boolean;
-}> = ({ token, isSuccess, sx, hideValue }) => {
+}> = ({ token, isSuccess, sx, hideValue, isSummary }) => {
   const tokenName = token.assetName || token.assetId;
   const shortTokenName = getShortWallet(tokenName);
   const isTokenNameLong = tokenName.length > 20;
 
   return (
-    <TokenButton sx={sx}>
+    <TokenButton sx={sx} isSummary={isSummary}>
       <Box
         component={Link}
         to={details.token(token.assetId)}
@@ -142,10 +158,10 @@ export const TokenLink: React.FC<{
         width={"100%"}
         height={38}
       >
-        <Box mr={2} color={({ palette }) => palette.secondary.light}>
+        <Box mr={2} color={({ palette }) => palette.secondary.main}>
           {isTokenNameLong ? (
             <CustomTooltip title={tokenName} placement="top">
-              <Box color={({ palette }) => palette.secondary.light}>{shortTokenName}</Box>
+              <Box color={({ palette }) => palette.secondary.main}>{shortTokenName}</Box>
             </CustomTooltip>
           ) : (
             tokenName

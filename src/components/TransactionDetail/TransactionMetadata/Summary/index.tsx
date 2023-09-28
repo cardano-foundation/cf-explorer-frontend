@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { ArrowDownIcon, ArrowUpIcon, WalletRoundedIcon } from "src/commons/resources";
+import { ArrowDownIcon, ArrowUpIcon, WalletRoundedIcon, CopyOutlineIconComponent } from "src/commons/resources";
 
 import { details } from "../../../../commons/routers";
 import { formatADAFull, formatNumberDivByDecimals, getShortWallet } from "../../../../commons/utils/helper";
@@ -11,7 +11,7 @@ import ADAicon from "../../../commons/ADAIcon";
 import CopyButton from "../../../commons/CopyButton";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import DropdownTokens, { TokenLink } from "../../../commons/DropdownTokens";
-import { Icon, TitleText, WrapContainerGrid, WrapItemsInfo, WrapTokensInfo } from "./styles";
+import { Icon, TitleText, ValueText, WrapContainerGrid, WrapItemsInfo, WrapTokensInfo } from "./styles";
 
 const SummaryItems = ({
   item,
@@ -29,8 +29,10 @@ const SummaryItems = ({
 
   return (
     <WrapContainerGrid
+      rowGap={2}
       container
       sx={{
+        background: (theme) => theme.palette.secondary[0],
         px: 3,
         py: 2,
         mb: 1,
@@ -39,9 +41,9 @@ const SummaryItems = ({
         }
       }}
     >
-      <Grid xs={12} sm={6} md={3}>
+      <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
         <Box display="flex" paddingX={2}>
-          <Icon src={WalletRoundedIcon} alt="send icon" />
+          <Icon src={WalletRoundedIcon} alt="wallet icon" />
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
             <TitleText>{t("common.wallet")}</TitleText>
             <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
@@ -59,37 +61,41 @@ const SummaryItems = ({
                     </Box>
                   </CustomTooltip>
                 </Link>
-                <CopyButton text={item.address} style={{ cursor: "pointer", verticalAlign: "text-bottom" }} />
+                <CopyButton
+                  text={item.address}
+                  customIcon={CopyOutlineIconComponent}
+                  style={{ cursor: "pointer", verticalAlign: "text-bottom" }}
+                />
               </Box>
             </Box>
           </Box>
         </Box>
       </Grid>
-      <Grid xs={12} sm={6} md={3}>
+      <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
         <WrapItemsInfo paddingX={2}>
           <Icon src={type === "up" ? ArrowUpIcon : ArrowDownIcon} alt="send icon" />
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
             <TitleText>{type === "down" ? `${t("tab.adaSent")}` : `${t("tab.adaReceived")}`}</TitleText>
             <Box display="flex" alignItems="center">
-              <Box component={"span"} whiteSpace="nowrap" mr={1}>
+              <ValueText mr={1}>
                 {item.value
                   ? type === "down"
                     ? `${formatADAFull(item.value).replace("-", "")}`
                     : `+${formatADAFull(item.value)}`
                   : t("common.na")}
-              </Box>
+              </ValueText>
               {item.value ? <ADAicon /> : null}
             </Box>
           </Box>
         </WrapItemsInfo>
       </Grid>
-      <Grid xs={12} sm={6} md={3}>
+      <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
         <WrapTokensInfo paddingX={2}>
           <Box display={"flex"}>
             <Icon src={ArrowDownIcon} alt="send icon" />
             <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
               <TitleText>{t("tab.tokensSent")}</TitleText>
-              <Box component={"span"} whiteSpace="nowrap" alignSelf={"flex-start"}>
+              <ValueText alignSelf={"flex-start"}>
                 {tokensSent.length === 0
                   ? t("common.na")
                   : tokensSent.length === 1
@@ -98,13 +104,14 @@ const SummaryItems = ({
                       tokensSent[0]?.metadata?.decimals || 0
                     ).replace("-", "")
                   : t("tab.multiple")}
-              </Box>
+              </ValueText>
             </Box>
           </Box>
           {tokensSent && tokensSent.length === 1 && (
             <Box display={"flex"} alignItems={"center"} mt={1}>
               <TokenLink
                 token={tokensSent[0]}
+                isSummary={true}
                 isSuccess={!isFailed}
                 sx={{ minWidth: "100%", background: (theme) => theme.palette.primary[100] }}
                 hideValue
@@ -114,6 +121,7 @@ const SummaryItems = ({
           {tokensSent && tokensSent.length > 1 && (
             <Box display={"flex"} alignItems={"center"} mt={1}>
               <DropdownTokens
+                isSummary={true}
                 tokens={tokensSent}
                 type={type}
                 hideInputLabel
@@ -124,13 +132,13 @@ const SummaryItems = ({
           )}
         </WrapTokensInfo>
       </Grid>
-      <Grid xs={12} sm={6} md={3}>
+      <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
         <WrapTokensInfo paddingX={2}>
           <Box display={"flex"}>
             <Icon src={ArrowUpIcon} alt="send icon" />
             <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
               <TitleText>{t("tab.tokensReceived")}</TitleText>
-              <Box component={"span"} whiteSpace="nowrap" alignSelf={"flex-start"}>
+              <ValueText alignSelf={"flex-start"}>
                 {tokensReceived.length === 0
                   ? t("common.na")
                   : tokensReceived.length === 1
@@ -139,13 +147,14 @@ const SummaryItems = ({
                       tokensReceived[0]?.metadata?.decimals || 0
                     )}`
                   : t("tab.multiple")}
-              </Box>
+              </ValueText>
             </Box>
           </Box>
           {tokensReceived && tokensReceived.length === 1 && (
             <Box display={"flex"} alignItems={"center"} mt={1}>
               <TokenLink
                 token={tokensReceived[0]}
+                isSummary={true}
                 isSuccess={!isFailed}
                 sx={{ minWidth: "100%", background: (theme) => theme.palette.primary[100] }}
                 hideValue
@@ -157,9 +166,14 @@ const SummaryItems = ({
               <DropdownTokens
                 tokens={tokensReceived}
                 type={type}
+                isSummary={true}
                 hideInputLabel
                 isSuccess={!isFailed}
-                sx={{ minWidth: "100%", background: (theme) => theme.palette.primary[100] }}
+                sx={{
+                  minWidth: "100%",
+                  background: (theme) => theme.palette.primary[100],
+                  color: theme.palette.secondary.main
+                }}
               />
             </Box>
           )}

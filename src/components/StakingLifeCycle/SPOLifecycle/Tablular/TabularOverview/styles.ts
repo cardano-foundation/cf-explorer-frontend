@@ -7,6 +7,7 @@ export const CardOverview = styled(Box)`
   height: 120px;
   display: flex;
   align-items: center;
+  background: ${({ theme }) => theme.palette.secondary[0]};
   justify-content: space-between;
   padding: 0 25px;
   position: relative;
@@ -78,7 +79,10 @@ export const ClickAbleLink = styled(Link)`
 
 export const ViewMoreButton = styled(IconButton)`
   padding: 14px;
-  background-color: ${({ theme }) => theme.palette.border.primary};
+  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[600] : theme.palette.border.primary)};
+  &:hover {
+    background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[600] : theme.palette.border.primary)};
+  }
 `;
 
 export const DotsIcon = styled(Box)`
