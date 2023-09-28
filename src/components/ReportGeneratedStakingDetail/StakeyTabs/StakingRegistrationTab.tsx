@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import { BoxProps, IconButton, Box } from "@mui/material";
+import { BoxProps, IconButton, Box, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
@@ -14,6 +14,7 @@ import Table, { Column } from "src/components/commons/Table";
 import { API } from "src/commons/utils/api";
 import { EyeIcon } from "src/commons/resources";
 import { RegistrationCertificateModal } from "src/components/StakingLifeCycle/DelegatorLifecycle/Registration";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import { StakingDetailContext } from "..";
 
@@ -32,6 +33,7 @@ export const AdaValue = ({ value, gap = "8px", fontSize, ...props }: IAdaValue) 
 
 const StakingRegistrationTab = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { reportId } = useParams<{ reportId: string }>();
   const [openModal, setOpenModal] = useState(false);
   const { search } = useLocation();
@@ -92,7 +94,7 @@ const StakingRegistrationTab = () => {
       minWidth: "120px",
       render: () => (
         <IconButton onClick={() => setOpenModal(true)}>
-          <EyeIcon />
+          <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
         </IconButton>
       )
     }

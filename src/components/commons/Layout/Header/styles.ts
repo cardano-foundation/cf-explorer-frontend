@@ -1,7 +1,7 @@
-import { Box, Button, Container, styled } from "@mui/material";
+import { Box, Button, Container, IconButton, Switch, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
-import { MenuIcon } from "src/commons/resources";
+import { sunIcon, moonIcon } from "src/commons/resources";
 
 export const HeaderContainer = styled("header")`
   color: ${(props) => props.theme.palette.secondary.main};
@@ -39,7 +39,7 @@ export const HeaderTop = styled("div")(({ theme }) => ({
     justifyContent: "space-between",
     width: "calc(100% - 32px)",
     padding: "16px 16px",
-    backgroundColor: theme.palette.common.white,
+    backgroundColor: theme.palette.secondary[0],
     boxShadow: theme.shadow.card
   }
 }));
@@ -117,20 +117,51 @@ export const NetworkContainer = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const Toggle = styled("i")`
-  width: 20px;
-  height: 24px;
-  background-image: url(${MenuIcon});
-  background-repeat: no-repeat;
-  background-position: center;
+export const ButtonSideBar = styled(IconButton)`
   display: none;
   ${({ theme }) => theme.breakpoints.down("md")} {
     display: block;
   }
 `;
 
-export const HeaderSearchContainer = styled(Box)`
+export const HeaderSearchContainer = styled(Box)<{ home?: number }>`
   ${(props) => props.theme.breakpoints.down("sm")} {
-    display: none;
+    display: ${({ home }) => (home ? "block" : "none")};
   }
 `;
+
+export const SwitchMode = styled(Switch)(({ theme }) => ({
+  padding: 8,
+  width: 64,
+  height: 40,
+  "& .MuiSwitch-track": {
+    background: theme.palette.secondary.main,
+    opacity: 1,
+    borderRadius: 80 / 2,
+    "&:before, &:after": {
+      content: '""',
+      position: "absolute",
+      top: "50%",
+      transform: "translateY(-50%)",
+      width: 20,
+      height: 20
+    },
+    "&:before": {
+      backgroundImage: `url(${moonIcon})`,
+      left: 12,
+      opacity: 1
+    },
+    "&:after": {
+      backgroundImage: `url(${sunIcon})`,
+      right: 12,
+      opacity: 1
+    }
+  },
+  "& .MuiSwitch-thumb": {
+    boxShadow: "none",
+    width: 18,
+    height: 18,
+    margin: `2px 4px`,
+    background: theme.palette.secondary[0]
+  }
+}));

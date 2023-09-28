@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { styled, Container } from "@mui/material";
+import { useSelector } from "react-redux";
 
 import AddressTransactionList from "src/components/AddressTransactionList";
 import AddressHeader from "src/components/AddressDetail/AddressHeader";
@@ -12,9 +13,12 @@ import { API } from "src/commons/utils/api";
 const AddressWalletDetail = () => {
   const { address } = useParams<{ address: string }>();
   const { state } = useLocation<{ data?: WalletAddress }>();
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const { data, loading, initialized, error } = useFetch<WalletAddress>(
     state?.data ? "" : `${API.ADDRESS.DETAIL}/${address}`,
-    state?.data
+    state?.data,
+    false,
+    blockKey
   );
 
   useEffect(() => {
@@ -44,13 +48,10 @@ const ContainerBox = styled(Container)`
   padding-top: 30px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
   @media screen and (max-width: ${(props) => props.theme.breakpoints.values.md}px) {
-    padding-top: 0;
     margin-top: -20px;
   }
   @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
-    padding-top: 20px;
     margin-top: 0px !important;
   }
 `;

@@ -27,9 +27,10 @@ describe("useFetchList", () => {
       total: 0,
       totalPage: 0,
       currentPage: 0,
+      isDataOverSize: null,
       refresh: expect.any(Function),
       update: expect.any(Function),
-      lastUpdated: expect.any(Number),
+      lastUpdated: undefined,
       query: {}
     };
 
@@ -62,6 +63,7 @@ describe("useFetchList", () => {
       expect(result.current.currentPage).toBe(1);
       expect(result.current.totalPage).toBe(1);
       expect(result.current.total).toBe(2);
+      expect(result.current.lastUpdated).not.toBe(undefined);
     });
   });
 
@@ -80,6 +82,7 @@ describe("useFetchList", () => {
       expect(result.current.loading).toBe(false);
       expect(result.current.data).toEqual([]);
       expect(result.current.error).toEqual(error.message);
+      expect(result.current.lastUpdated).not.toBe(undefined);
     });
   });
 
@@ -111,19 +114,61 @@ describe("useFetchList", () => {
       expect(result.current.currentPage).toBe(1);
       expect(result.current.totalPage).toBe(1);
       expect(result.current.total).toBe(2);
+      expect(result.current.lastUpdated).not.toBe(undefined);
     });
+
+    const lastUpdated = result.current.lastUpdated;
 
     result.current.refresh();
 
     await waitFor(() => {
       expect(result.current.loading).toBe(false);
-      expect(result.current.data).toEqual(data);
+      expect(result.current.totalPage).toBe(1);
+      expect(result.current.total).toBe(2);
+      expect(result.current.lastUpdated).not.toBe(lastUpdated);
+    });
+  });
+
+  it("should handle update key", async () => {
+    const data = [
+      { id: 1, name: "John" },
+      { id: 2, name: "Jane" }
+    ];
+
+    const response = {
+      data: data,
+      currentPage: 1,
+      totalPages: 1,
+      totalItems: 2
+    };
+
+    let key = 1;
+
+    mockAxios.onGet(`${mockApi}?page=1`).reply(200, response);
+
+    const { result, rerender } = renderHook(() => useFetchList(mockApi, { page: 1 }, false, key));
+
+    await waitFor(() => {
+      expect(result.current.loading).toBe(true);
+      expect(result.current.data).toEqual([]);
     });
 
     await waitFor(() => {
       expect(result.current.loading).toBe(false);
-      expect(result.current.totalPage).toBe(1);
-      expect(result.current.total).toBe(2);
+      expect(result.current.data).toEqual(data);
+      expect(result.current.lastUpdated).not.toBe(undefined);
+    });
+
+    const lastUpdated = result.current.lastUpdated;
+
+    key = 2;
+
+    rerender();
+
+    await waitFor(() => {
+      expect(result.current.loading).toBe(false);
+      expect(result.current.data).toEqual(data);
+      expect(result.current.lastUpdated).not.toBe(lastUpdated);
     });
   });
 });

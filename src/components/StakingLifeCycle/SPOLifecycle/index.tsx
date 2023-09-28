@@ -61,6 +61,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
   const history = useHistory();
   const { isMobile } = useScreen();
   const { palette } = useTheme();
+
   const [tabsValid, setTabValid] = useState(["isRegistration", "isUpdate", "isReward", "isDeRegistration"]);
   useEffect(() => {
     const element = document.getElementById(`step-${currentStep}`);
@@ -261,7 +262,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
               ? t("common.viewTabular")
               : stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid + 1])?.title}
           </ButtonText>
-          <NextIcon />
+          <NextIcon fill={palette.secondary[0]} />
         </NextButton>
       </StyledGroupButton>
     </StyledComponent>

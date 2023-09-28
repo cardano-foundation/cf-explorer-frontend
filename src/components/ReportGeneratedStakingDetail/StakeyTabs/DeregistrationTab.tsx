@@ -1,4 +1,4 @@
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
 import { useContext, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -14,12 +14,14 @@ import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
 import { DeregistrationCertificateModal } from "src/components/commons/DeregistrationCertificateModal";
 import ADAicon from "src/components/commons/ADAIcon";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import { AdaValue } from "./StakingRegistrationTab";
 import { StakingDetailContext } from "..";
 
 const DeregistrationTab = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { reportId } = useParams<{ reportId: string }>();
   const { search } = useLocation();
   const [openModal, setOpenModal] = useState(false);
@@ -75,7 +77,7 @@ const DeregistrationTab = () => {
       minWidth: "120px",
       render: () => (
         <IconButton onClick={() => setOpenModal(true)}>
-          <EyeIcon />
+          <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
         </IconButton>
       )
     }

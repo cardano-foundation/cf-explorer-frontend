@@ -27,8 +27,8 @@ const TransactionTab = () => {
 interface TransactionListFullProps {
   underline?: boolean;
   url: string;
-  openDetail?: (_: any, r: Transactions, index: number) => void;
-  selected?: number | null;
+  openDetail?: (_: any, r: Transactions) => void;
+  selected?: string | null;
   showTitle?: boolean;
 }
 
@@ -46,7 +46,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
   const fetchData = useFetchList<Transactions>(url, pageInfo);
   const theme = useTheme();
 
-  const onClickRow = (e: any, r: Transactions, index: number) => {
+  const onClickRow = (e: any, r: Transactions) => {
     let parent: Element | null = e.target as Element;
     while (
       parent !== null &&
@@ -58,14 +58,14 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
     if (parent) {
       return;
     }
-    if (openDetail) return openDetail(e, r, index);
+    if (openDetail) return openDetail(e, r);
     history.push(details.transaction(r.hash));
   };
 
   const columns: Column<Transactions>[] = [
     {
       title: t("glossary.txHash"),
-      key: "txhash",
+      key: "hash",
       minWidth: 120,
 
       render: (transaction) => {
@@ -122,7 +122,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       )
     },
     {
-      title: t("glossary.fees"),
+      title: t("fees"),
       key: "fee",
       minWidth: 120,
       render: (r) => (
@@ -138,11 +138,20 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       key: "totalOutput",
       render: (transaction) => {
         const isUp = transaction?.balance >= 0;
+        let colorTheme: string;
+        if (isUp) {
+          colorTheme = theme.palette.success[800];
+          if (theme.mode === "dark") {
+            colorTheme = theme.palette.success.main;
+          }
+        } else {
+          colorTheme = theme.palette.error[700];
+        }
         return (
           <Box display="inline-flex" alignItems="center">
             {transaction?.balance ? (
               <>
-                <Box mr={1} color={isUp ? theme.palette.success[800] : theme.palette.error[700]}>
+                <Box mr={1} color={colorTheme}>
                   {!isUp ? `` : `+`}
                   {formatADAFull(transaction.balance)}
                 </Box>
@@ -192,6 +201,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
             onChange: (page, size) => history.replace({ search: stringify({ page, size }) }, history.location.state)
           }}
           onClickRow={onClickRow}
+          rowKey="hash"
           selected={selected}
           className="transactions-table"
         />

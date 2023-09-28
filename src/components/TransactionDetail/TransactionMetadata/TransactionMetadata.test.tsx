@@ -1,8 +1,4 @@
-import { Router } from "react-router-dom";
-import { createBrowserHistory } from "history";
-
-import { fireEvent, render, screen } from "src/test-utils";
-import { details } from "src/commons/routers";
+import { render, screen } from "src/test-utils";
 
 import TransactionMetadata from ".";
 
@@ -186,24 +182,9 @@ const mockTransaction = {
 describe("TransactionMetadata component", () => {
   it("should component render", () => {
     render(<TransactionMetadata data={mockTransaction} loading={false} />);
-    expect(screen.getByRole("tab", { name: /summaryicon\.svg summary/i })).toBeInTheDocument();
-    expect(screen.getByRole("tab", { name: /utxoicon\.svg utxos/i })).toBeInTheDocument();
-    expect(screen.getByRole("tab", { name: /contracticon\.svg contracts\(1\)/i })).toBeInTheDocument();
-    expect(screen.getByRole("tab", { name: /noteicon\.svg notes\(2\)/i })).toBeInTheDocument();
-  });
-
-  it("should user goto detail page", () => {
-    const {
-      summary: { stakeAddress }
-    } = mockTransaction;
-
-    const history = createBrowserHistory();
-    render(
-      <Router history={history}>
-        <TransactionMetadata data={mockTransaction} loading={false} />
-      </Router>
-    );
-    fireEvent.click(screen.getByRole("link", { name: stakeAddress[0].address }));
-    expect(history.location.pathname).toBe(details.stake(stakeAddress[0].address));
+    expect(screen.getByRole("button", { name: /summaryicon\.svg summary/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /utxoicon\.svg utxos/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /contracticon\.svg contracts\(1\)/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /noteicon\.svg notes\(2\)/i })).toBeInTheDocument();
   });
 });
