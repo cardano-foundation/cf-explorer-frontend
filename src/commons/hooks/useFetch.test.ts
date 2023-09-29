@@ -10,7 +10,7 @@ interface FetchReturnType<T> {
   error: string | null;
   initialized: boolean;
   refresh: () => void;
-  lastUpdated: number;
+  lastUpdated?: number;
 }
 
 describe("useFetch", () => {
@@ -34,7 +34,7 @@ describe("useFetch", () => {
       initialized: false,
       loading: true,
       refresh: expect.any(Function),
-      lastUpdated: expect.any(Number)
+      lastUpdated: undefined
     };
 
     expect(result.current).toEqual(expected);
@@ -54,6 +54,7 @@ describe("useFetch", () => {
     await waitFor(() => {
       expect(result.current.loading).toBe(false);
       expect(result.current.data).toEqual(data);
+      expect(result.current.lastUpdated).not.toBe(undefined);
     });
   });
 
@@ -72,6 +73,7 @@ describe("useFetch", () => {
       expect(result.current.loading).toBe(false);
       expect(result.current.data).toBe(null);
       expect(result.current.error).toEqual(error.message);
+      expect(result.current.lastUpdated).not.toBe(undefined);
     });
   });
 
@@ -81,26 +83,28 @@ describe("useFetch", () => {
 
     const { result } = renderHook(() => useFetch(mockApi, null));
 
-    waitFor(() => {
-      expect(result.current.loading).toBe(true);
-      expect(result.current.data).toBe(null);
-
+    await waitFor(() => {
       expect(result.current.loading).toBe(false);
+      expect(result.current.lastUpdated).not.toBe(undefined);
     });
+
+    const lastUpdated = result.current.lastUpdated;
 
     result.current.refresh();
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(result.current.loading).toBe(false);
       expect(result.current.data).toEqual(data);
+      expect(result.current.lastUpdated).not.toBe(lastUpdated);
     });
   });
 
-  it("should handle timeout", async () => {
+  it("should handle update key", async () => {
     const data = { id: 1, name: "Adam" };
+    let key = 1;
     mockAxios.onGet(mockApi).reply(200, data);
 
-    const { result } = renderHook(() => useFetch(mockApi, null, false, 1));
+    const { result, rerender } = renderHook(() => useFetch(mockApi, null, false, key));
 
     await waitFor(() => {
       expect(result.current.loading).toBe(true);
@@ -110,18 +114,19 @@ describe("useFetch", () => {
     await waitFor(() => {
       expect(result.current.loading).toBe(false);
       expect(result.current.data).toEqual(data);
+      expect(result.current.lastUpdated).not.toBe(undefined);
     });
 
-    jest.advanceTimersByTime(1000);
+    const lastUpdated = result.current.lastUpdated;
+
+    key = 2;
+
+    rerender();
 
     await waitFor(() => {
       expect(result.current.loading).toBe(false);
       expect(result.current.data).toEqual(data);
-    });
-
-    await waitFor(() => {
-      expect(result.current.loading).toBe(false);
-      expect(result.current.data).toEqual(data);
+      expect(result.current.lastUpdated).not.toBe(lastUpdated);
     });
   });
 });

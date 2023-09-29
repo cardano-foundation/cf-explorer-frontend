@@ -304,6 +304,10 @@ export const formatNameBlockNo = (blockNo: blockEpochNoType, epochNo: blockEpoch
   };
 };
 
+export const getRandomInt = (max: number) => {
+  return Math.floor(Math.random() * max);
+};
+
 export const getIntervalAnalyticChart = (rangeTime: OPTIONS_CHART_ANALYTICS): AxisInterval => {
   const width = window.innerWidth;
   switch (rangeTime) {

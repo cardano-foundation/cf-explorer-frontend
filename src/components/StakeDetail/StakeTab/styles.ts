@@ -62,5 +62,6 @@ export const StyledTabList = styled(TabList)(({ theme }) => ({
 }));
 
 export const WrapperTabList = styled(Box)(({ theme }) => ({
-  borderBottom: `1px solid ${theme.palette.primary[200]}`
+  borderBottom: `1px solid ${theme.palette.primary[200]}`,
+  paddingTop: 10
 }));

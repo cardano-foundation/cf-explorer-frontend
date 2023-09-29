@@ -86,7 +86,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
           <TitleCard mr={1}>{t("glossary.blocks")} </TitleCard>
         </Box>
       ),
-      value: <Content>{currentEpochData?.blkCount}</Content>
+      value: <Content>{currentEpoch?.blkCount || currentEpochData?.blkCount}</Content>
     },
     {
       icon: slotIconUrl,
@@ -107,7 +107,14 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
   ];
   return (
     <Container onClick={() => onClick(currentEpochData, currentEpochData, -1)}>
-      <DetailHeader isHideButtonBack={true} loading={false} listItem={listOverview} type="EPOCH" title={" "} />
+      <DetailHeader
+        isClickAble={true}
+        isHideButtonBack={true}
+        loading={false}
+        listItem={listOverview}
+        type="EPOCH"
+        title={" "}
+      />
     </Container>
   );
 }

@@ -9,16 +9,14 @@ import DetailViewTransaction from "src/components/commons/DetailView/DetailViewT
 import { setOnDetailView } from "src/stores/user";
 
 const StyledContainer = styled(Container)`
-  padding-top: 20px;
   @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
-    padding-top: 10px;
+    padding-top: 0;
     margin-top: 0px !important;
   }
 `;
 
 const Transactions = () => {
-  const [hash, setHash] = useState<string | null>(null);
-  const [selected, setSelected] = useState<number | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
   const { onDetailView } = useSelector(({ user }: RootState) => user);
 
   useEffect(() => {
@@ -26,15 +24,13 @@ const Transactions = () => {
     document.title = `Transactions List | Cardano Blockchain Explorer`;
   }, []);
 
-  const openDetail = (_: any, r: Transactions, index: number) => {
+  const openDetail = (_: any, r: Transactions) => {
     setOnDetailView(true);
-    setHash(r.hash);
-    setSelected(index);
+    setSelected(r.hash);
   };
 
   const handleClose = () => {
     setOnDetailView(false);
-    setHash(null);
     setSelected(null);
   };
 
@@ -50,11 +46,10 @@ const Transactions = () => {
           openDetail={openDetail}
           selected={selected}
           showTabView
-          hash={hash}
           handleClose={handleClose}
         />
       </StyledContainer>
-      {hash && onDetailView && <DetailViewTransaction hash={hash} handleClose={handleClose} />}
+      <DetailViewTransaction hash={selected || ""} open={onDetailView} handleClose={handleClose} />
     </>
   );
 };

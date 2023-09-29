@@ -123,9 +123,25 @@ export const ButtonTitle = styled("button")(({ theme }) => ({
   }
 }));
 
-export const ChartBox = styled(Box)(({ theme }) => ({
+export const ChartBox = styled(Box)<{ highest: number; lowest: number }>(({ theme, highest, lowest }) => ({
   paddingTop: theme.spacing(3),
-  fontSize: 12
+  fontSize: 12,
+  ".yAxis .recharts-layer": {
+    [`&:nth-of-type(${lowest})`]: {
+      filter: "url(#lowest)",
+      text: {
+        fill: theme.palette.error[700],
+        color: theme.palette.error[700]
+      }
+    },
+    [`&:nth-of-type(${highest})`]: {
+      filter: "url(#highest)",
+      text: {
+        fill: theme.palette.success[800],
+        color: theme.palette.success[800]
+      }
+    }
+  }
 }));
 
 export const SkeletonUI = styled(Skeleton)(({ theme }) => ({
@@ -166,15 +182,6 @@ export const TextCardHighlight = styled("span")`
   font-size: 20px;
   border-bottom: ${(props) => `2px solid ${props.theme.palette.primary[200]}`};
 `;
-
-export const TooltipBody = styled(Box)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.secondary[0], 0.8),
-  borderRadius: 2,
-  padding: 8,
-  border: `1px solid ${theme.palette.primary.main}`,
-  fontSize: 12,
-  color: theme.palette.secondary.light
-}));
 
 export const TooltipLabel = styled(Box)(() => ({
   marginBottom: 3

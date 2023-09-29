@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { BiChevronRight } from "react-icons/bi";
 import { useSelector } from "react-redux";
@@ -6,7 +6,7 @@ import moment from "moment";
 import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { BlockIcon, CubeIcon, RocketIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
@@ -49,20 +49,39 @@ import {
 } from "./styles";
 
 type DetailViewEpochProps = {
-  epochNo: number;
+  epochNo?: number;
   handleClose: () => void;
   callback: (callback: (data: IDataEpoch[]) => IDataEpoch[]) => void;
+  open?: boolean;
 };
 
-const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose, callback }) => {
-  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose, callback, open }) => {
+  const { currentEpoch, blockNo } = useSelector(({ system }: RootState) => system);
   const { t } = useTranslation();
-  const { data, lastUpdated } = useFetch<IDataEpoch>(
-    `${API.EPOCH.DETAIL}/${epochNo}`,
+  const [key, setKey] = useState(0);
+  const [urlFetch, setUrlFetch] = useState("");
+
+  const { data, lastUpdated, loading } = useFetch<IDataEpoch>(
+    urlFetch,
     undefined,
     false,
-    epochNo === currentEpoch?.no ? REFRESH_TIMES.EPOCH_DETAIL_VIEW : 0
+    epochNo === currentEpoch?.no ? blockNo : key
   );
+
+  useEffect(() => {
+    if (!epochNo) {
+      setUrlFetch("");
+    } else {
+      setUrlFetch(`${API.EPOCH.DETAIL}/${epochNo}`);
+    }
+  }, [epochNo]);
+
+  useEffect(() => {
+    // Update key if this epoch don't have rewards and when new epoch distributed for api callback
+    if (!data?.rewardsDistributed && epochNo !== undefined && data?.no !== undefined && epochNo !== data.no) {
+      setKey(epochNo);
+    }
+  }, [epochNo, data?.no, data?.rewardsDistributed]);
 
   useEffect(() => {
     if (data) {
@@ -74,19 +93,92 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
     }
   }, [data, callback]);
 
-  useEffect(() => {
-    document.body.style.overflowY = "hidden";
+  const renderContent = () => {
+    if (!data || loading || !epochNo) {
+      return (
+        <>
+          <ViewDetailHeader>
+            <ViewAllButton tooltipTitle={t("common.viewDetail")} to={details.epoch(epochNo)} />
+            <CustomTooltip title={t("common.close")}>
+              <CloseButton onClick={handleClose}>
+                <CgClose />
+              </CloseButton>
+            </CustomTooltip>
+          </ViewDetailHeader>
+          <ViewDetailContainer>
+            <ViewDetailScroll>
+              <HeaderContainer>
+                <ProgressSkeleton variant="circular" />
+              </HeaderContainer>
+              <ListItem>
+                <Item>
+                  <IconSkeleton variant="circular" />
+                  <ItemName>
+                    <DetailValueSkeleton variant="rectangular" />
+                  </ItemName>
+                  <ItemValue>
+                    <DetailLabelSkeleton variant="rectangular" />
+                  </ItemValue>
+                </Item>
+                <Item>
+                  <IconSkeleton variant="circular" />
+                  <ItemName>
+                    <DetailValueSkeleton variant="rectangular" />
+                  </ItemName>
+                  <ItemValue>
+                    <DetailLabelSkeleton variant="rectangular" />
+                  </ItemValue>
+                </Item>
+              </ListItem>
+              <Group>
+                {new Array(4).fill(0).map((_, index) => {
+                  return (
+                    <DetailsInfoItem key={index}>
+                      <DetailLabel>
+                        <DetailValueSkeleton variant="rectangular" />
+                      </DetailLabel>
+                      <DetailValue>
+                        <DetailLabelSkeleton variant="rectangular" />
+                      </DetailValue>
+                    </DetailsInfoItem>
+                  );
+                })}
+              </Group>
+              {new Array(2).fill(0).map((_, index) => {
+                return (
+                  <Group key={index}>
+                    <DetailsInfoItem>
+                      <DetailLabel>
+                        <DetailValueSkeleton variant="rectangular" />
+                      </DetailLabel>
+                      <DetailValue>
+                        <DetailLabelSkeleton variant="rectangular" />
+                      </DetailValue>
+                    </DetailsInfoItem>
+                  </Group>
+                );
+              })}
+            </ViewDetailScroll>
+          </ViewDetailContainer>
+          <ViewMoreButton to={details.epoch(epochNo)} />
+        </>
+      );
+    }
+    const slot =
+      data.no === currentEpoch?.no
+        ? moment(formatDateTimeLocal(data.endTime)).diff(moment()) >= 0
+          ? currentEpoch.slot
+          : data.maxSlot || MAX_SLOT_EPOCH
+        : data.maxSlot || MAX_SLOT_EPOCH;
 
-    return () => {
-      document.body.style.overflowY = "scroll";
-    };
-  }, []);
-
-  if (!data)
+    const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
     return (
-      <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
+      <>
         <ViewDetailHeader>
           <ViewAllButton tooltipTitle={t("common.viewDetail")} to={details.epoch(epochNo)} />
+          <TimeDuration>
+            <FormNowMessage time={lastUpdated} />
+          </TimeDuration>
           <CustomTooltip title={t("common.close")}>
             <CloseButton onClick={handleClose}>
               <CgClose />
@@ -96,173 +188,102 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
         <ViewDetailContainer>
           <ViewDetailScroll>
             <HeaderContainer>
-              <ProgressSkeleton variant="circular" />
+              <ProgressCircle
+                size={150}
+                pathLineCap="butt"
+                pathWidth={4}
+                trailWidth={2}
+                percent={progress}
+                trailOpacity={1}
+              >
+                <EpochNumber>{epochNo}</EpochNumber>
+                <EpochText>{t("epoch")}</EpochText>
+              </ProgressCircle>
             </HeaderContainer>
             <ListItem>
               <Item>
-                <IconSkeleton variant="circular" />
-                <ItemName>
-                  <DetailValueSkeleton variant="rectangular" />
-                </ItemName>
+                <Icon src={CubeIcon} alt="socket" />
+                <ItemName>{t("glossary.blocks")}</ItemName>
                 <ItemValue>
-                  <DetailLabelSkeleton variant="rectangular" />
+                  {currentEpoch?.no === epochNo ? currentEpoch?.blkCount || data.blkCount : data.blkCount}
                 </ItemValue>
               </Item>
               <Item>
-                <IconSkeleton variant="circular" />
-                <ItemName>
-                  <DetailValueSkeleton variant="rectangular" />
-                </ItemName>
+                <Icon src={RocketIcon} alt="socket" />
+                <ItemName>{t("common.slot")}</ItemName>
                 <ItemValue>
-                  <DetailLabelSkeleton variant="rectangular" />
+                  {slot}
+                  <BlockDefault>/{MAX_SLOT_EPOCH}</BlockDefault>
                 </ItemValue>
               </Item>
             </ListItem>
             <Group>
-              {new Array(4).fill(0).map((_, index) => {
-                return (
-                  <DetailsInfoItem key={index}>
-                    <DetailLabel>
-                      <DetailValueSkeleton variant="rectangular" />
-                    </DetailLabel>
-                    <DetailValue>
-                      <DetailLabelSkeleton variant="rectangular" />
-                    </DetailValue>
-                  </DetailsInfoItem>
-                );
-              })}
+              <DetailsInfoItem>
+                <DetailLabel>{t("glossary.startTimestamp")}</DetailLabel>
+                <DetailValue>{formatDateTimeLocal(data.startTime || "")}</DetailValue>
+              </DetailsInfoItem>
+              <DetailsInfoItem>
+                <DetailLabel>{t("glossary.endTimestamp")}</DetailLabel>
+                <DetailValue>{formatDateTimeLocal(data.endTime || "")}</DetailValue>
+              </DetailsInfoItem>
+              <DetailsInfoItem>
+                <DetailLabel>{t("glossary.blocks")}</DetailLabel>
+                <DetailValue>{data.blkCount}</DetailValue>
+              </DetailsInfoItem>
+              <DetailsInfoItem>
+                <DetailLabel>{t("glossary.uniqueAccounts")}</DetailLabel>
+                <DetailValue>{data.account}</DetailValue>
+              </DetailsInfoItem>
+              <DetailsInfoItem>
+                <DetailLabel>{t("drawer.txCount")}</DetailLabel>
+                <DetailValue>{data.txCount}</DetailValue>
+              </DetailsInfoItem>
+              <DetailsInfoItem>
+                <DetailLabel>{t("glossary.rewardsDistributed")}</DetailLabel>
+                <DetailValue>
+                  {data?.rewardsDistributed ? (
+                    <Box>
+                      {formatADAFull(data?.rewardsDistributed)}&nbsp;
+                      <ADAicon />
+                    </Box>
+                  ) : (
+                    t("common.notAvailable")
+                  )}
+                </DetailValue>
+              </DetailsInfoItem>
+              <DetailsInfoItem>
+                <DetailLabel>{t("glossary.totalOutput")}</DetailLabel>
+                <DetailValue>
+                  {formatADAFull(data.outSum)}
+                  <ADAicon />
+                </DetailValue>
+              </DetailsInfoItem>
             </Group>
-            {new Array(2).fill(0).map((_, index) => {
-              return (
-                <Group key={index}>
-                  <DetailsInfoItem>
-                    <DetailLabel>
-                      <DetailValueSkeleton variant="rectangular" />
-                    </DetailLabel>
-                    <DetailValue>
-                      <DetailLabelSkeleton variant="rectangular" />
-                    </DetailValue>
-                  </DetailsInfoItem>
-                </Group>
-              );
-            })}
+            <Group>
+              <DetailLink to={details.epoch(epochNo)}>
+                <DetailLabel style={{ fontSize: 18 }}>
+                  <DetailLinkIcon>
+                    <BlockIcon />
+                  </DetailLinkIcon>
+                  {t("glossary.blocks")}
+                </DetailLabel>
+                <DetailValue>
+                  <DetailLinkRight>
+                    <BiChevronRight size={24} />
+                  </DetailLinkRight>
+                </DetailValue>
+              </DetailLink>
+            </Group>
           </ViewDetailScroll>
         </ViewDetailContainer>
         <ViewMoreButton to={details.epoch(epochNo)} />
-      </ViewDetailDrawer>
+      </>
     );
+  };
 
-  const slot =
-    data.no === currentEpoch?.no
-      ? moment(formatDateTimeLocal(data?.endTime)).diff(moment()) >= 0
-        ? currentEpoch.slot
-        : MAX_SLOT_EPOCH
-      : MAX_SLOT_EPOCH;
-
-  const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
   return (
-    <ViewDetailDrawer anchor="right" open hideBackdrop variant="permanent">
-      <ViewDetailHeader>
-        <ViewAllButton tooltipTitle={t("common.viewDetail")} to={details.epoch(epochNo)} />
-        <TimeDuration>
-          <FormNowMessage time={lastUpdated} />
-        </TimeDuration>
-        <CustomTooltip title={t("common.close")}>
-          <CloseButton onClick={handleClose}>
-            <CgClose />
-          </CloseButton>
-        </CustomTooltip>
-      </ViewDetailHeader>
-      <ViewDetailContainer>
-        <ViewDetailScroll>
-          <HeaderContainer>
-            <ProgressCircle
-              size={150}
-              pathLineCap="butt"
-              pathWidth={4}
-              trailWidth={2}
-              percent={progress}
-              trailOpacity={1}
-            >
-              <EpochNumber>{epochNo}</EpochNumber>
-              <EpochText>{t("epoch")}</EpochText>
-            </ProgressCircle>
-          </HeaderContainer>
-          <ListItem>
-            <Item>
-              <Icon src={CubeIcon} alt="socket" />
-              <ItemName>{t("glossary.blocks")}</ItemName>
-              <ItemValue>{data.blkCount}</ItemValue>
-            </Item>
-            <Item>
-              <Icon src={RocketIcon} alt="socket" />
-              <ItemName>{t("common.slot")}</ItemName>
-              <ItemValue>
-                {slot}
-                <BlockDefault>/{MAX_SLOT_EPOCH}</BlockDefault>
-              </ItemValue>
-            </Item>
-          </ListItem>
-          <Group>
-            <DetailsInfoItem>
-              <DetailLabel>{t("glossary.startTimestamp")}</DetailLabel>
-              <DetailValue>{formatDateTimeLocal(data.startTime || "")}</DetailValue>
-            </DetailsInfoItem>
-            <DetailsInfoItem>
-              <DetailLabel>{t("glossary.endTimestamp")}</DetailLabel>
-              <DetailValue>{formatDateTimeLocal(data.endTime || "")}</DetailValue>
-            </DetailsInfoItem>
-            <DetailsInfoItem>
-              <DetailLabel>{t("glossary.blocks")}</DetailLabel>
-              <DetailValue>{data.blkCount}</DetailValue>
-            </DetailsInfoItem>
-            <DetailsInfoItem>
-              <DetailLabel>{t("glossary.uniqueAccounts")}</DetailLabel>
-              <DetailValue>{data.account}</DetailValue>
-            </DetailsInfoItem>
-            <DetailsInfoItem>
-              <DetailLabel>{t("drawer.txCount")}</DetailLabel>
-              <DetailValue>{data.txCount}</DetailValue>
-            </DetailsInfoItem>
-            <DetailsInfoItem>
-              <DetailLabel>{t("glossary.rewardsDistributed")}</DetailLabel>
-              <DetailValue>
-                {data?.rewardsDistributed ? (
-                  <Box>
-                    {formatADAFull(data?.rewardsDistributed)}&nbsp;
-                    <ADAicon />
-                  </Box>
-                ) : (
-                  t("common.notAvailable")
-                )}
-              </DetailValue>
-            </DetailsInfoItem>
-            <DetailsInfoItem>
-              <DetailLabel>{t("glossary.totalOutput")}</DetailLabel>
-              <DetailValue>
-                {formatADAFull(data.outSum)}
-                <ADAicon />
-              </DetailValue>
-            </DetailsInfoItem>
-          </Group>
-          <Group>
-            <DetailLink to={details.epoch(epochNo)}>
-              <DetailLabel style={{ fontSize: 18 }}>
-                <DetailLinkIcon>
-                  <BlockIcon />
-                </DetailLinkIcon>
-                {t("glossary.blocks")}
-              </DetailLabel>
-              <DetailValue>
-                <DetailLinkRight>
-                  <BiChevronRight size={24} />
-                </DetailLinkRight>
-              </DetailValue>
-            </DetailLink>
-          </Group>
-        </ViewDetailScroll>
-      </ViewDetailContainer>
-      <ViewMoreButton to={details.epoch(epochNo)} />
+    <ViewDetailDrawer anchor="right" open={Boolean(open && epochNo)} variant="temporary" onClose={handleClose}>
+      {renderContent()}
     </ViewDetailDrawer>
   );
 };

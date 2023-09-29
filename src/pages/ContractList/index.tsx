@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 import {
   exchangeADAToUSD,
   formatADAFull,
@@ -32,8 +31,9 @@ const Transactions: React.FC = () => {
   const pageInfo = getPageInfo(search);
   const [sort, setSort] = useState<string>("");
   const mainRef = useRef(document.querySelector("#main"));
-  const fetchData = useFetchList<Contracts>(API.CONTRACT, { ...pageInfo, sort }, false, REFRESH_TIMES.CONTRACTS);
-  const { adaRate } = useSelector(({ system }: RootState) => system);
+  const adaRate = useSelector(({ system }: RootState) => system.adaRate);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
+  const fetchData = useFetchList<Contracts>(API.CONTRACT, { ...pageInfo, sort }, false, blockKey);
 
   useEffect(() => {
     document.title = `Contracts List | Cardano Blockchain Explorer`;

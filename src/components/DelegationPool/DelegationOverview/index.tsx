@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { CurentEpochPool, LiveStakeIcon, RocketPoolIcon, TotalPoolIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { formatADA, formatADAFull, numberWithCommas } from "src/commons/utils/helper";
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
@@ -28,13 +28,9 @@ import {
 
 const OverViews: React.FC = () => {
   const { t } = useTranslation();
-  const { data, loading, lastUpdated } = useFetch<OverViewDelegation>(
-    API.DELEGATION.HEADER,
-    undefined,
-    false,
-    REFRESH_TIMES.POOLS
-  );
-  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+  const { currentEpoch, blockNo } = useSelector(({ system }: RootState) => system);
+
+  const { data, loading, lastUpdated } = useFetch<OverViewDelegation>(API.DELEGATION.HEADER, undefined, false, blockNo);
 
   if (loading) {
     return (
@@ -68,7 +64,7 @@ const OverViews: React.FC = () => {
       </TimeDuration>
       <Grid container spacing={2}>
         <Grid item xl={3} md={6} xs={12}>
-          <StyledCard.Container>
+          <StyledCard.ClickAble to={details.epoch(data?.epochNo)}>
             <StyledCard.Content>
               <StyledCard.Title>{t("glossary.epoch")}</StyledCard.Title>
               <StyledCard.Link to={details.epoch(data?.epochNo)}>{data?.epochNo}</StyledCard.Link>
@@ -83,7 +79,7 @@ const OverViews: React.FC = () => {
               </Box>
             </StyledCard.Content>
             <StyledImg src={CurentEpochPool} alt="Clock" />
-          </StyledCard.Container>
+          </StyledCard.ClickAble>
         </Grid>
         <Grid item xl={3} md={6} xs={12}>
           <Box height={"100%"}>
@@ -93,7 +89,7 @@ const OverViews: React.FC = () => {
               borderRadius="12px"
               height={"100%"}
             >
-              <StyledCard.Container style={{ boxShadow: "none" }}>
+              <StyledCard.ClickAble to={details.epoch(data?.epochNo)}>
                 <StyledCard.Content>
                   <StyledCard.Title>{t("glossary.slot")}</StyledCard.Title>
                   <StyledCard.Value>
@@ -104,7 +100,7 @@ const OverViews: React.FC = () => {
                   </StyledCard.Value>
                 </StyledCard.Content>
                 <StyledImg src={RocketPoolIcon} alt="Rocket" />
-              </StyledCard.Container>
+              </StyledCard.ClickAble>
               <Box position={"relative"} top={-60} px={4}>
                 <StyledLinearProgress
                   variant="determinate"
