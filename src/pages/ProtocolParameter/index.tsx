@@ -777,7 +777,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                       }}
                     />
                     <StyledDropdownItem htmlFor={k} style={{ cursor: "pointer" }}>
-                      {k}
+                      {k === "coinsPerUtxoSize" ? "coinsPerUtxoByte" : k}
                     </StyledDropdownItem>
                   </Box>
                 ))}
