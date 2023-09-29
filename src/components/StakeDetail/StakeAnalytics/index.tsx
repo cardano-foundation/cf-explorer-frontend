@@ -74,9 +74,9 @@ const StakeAnalytics: React.FC = () => {
     { value: OPTIONS_CHART_ANALYTICS.ONE_MONTH, label: t("time.1m") },
     { value: OPTIONS_CHART_ANALYTICS.THREE_MONTH, label: t("time.3m") }
   ];
-  const values = data?.data?.map?.((item) => item.value || 0) || [];
-  const maxBalance = BigNumber.max(0, ...values).toString();
-  const minBalance = BigNumber.min(maxBalance, ...values).toString();
+
+  const maxBalance = BigNumber(data?.highestBalance || 0).toString();
+  const minBalance = BigNumber(data?.lowestBalance || 0).toString();
 
   const rewards = dataReward?.map?.((item) => item.value || 0) || [];
   const maxReward = BigNumber.max(0, ...rewards).toString();
