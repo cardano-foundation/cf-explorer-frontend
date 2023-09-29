@@ -6,13 +6,13 @@ describe("block spec", () => {
     cy.get('[data-testid="submenu-button-top_ada_holders"]').click();
     cy.wait(500);
     cy.get("tbody tr td").eq(2).click();
-    cy.get('[data-testid="table-common"] table th').eq(0).contains("Tx Hash");
-    cy.get('[data-testid="table-common"] table th').eq(1).contains("Created At");
-    cy.get('[data-testid="table-common"] table th').eq(2).contains("Block");
+    cy.get('[data-testid="table-common"] table th').eq(0).contains("Address");
+    cy.get('[data-testid="table-common"] table th').eq(1).contains("Balance");
+    cy.get('[data-testid="table-common"] table th').eq(2).contains("Transaction count", { matchCase: false });
 
-    // cy.contains("[id*='T-amount-staked']").click();
-    // cy.get('[data-testid="table-common"] table th').eq(0).contains("Stake Address");
-    // cy.get('[data-testid="table-common"] table th').eq(1).contains("Pool");
-    // cy.get('[data-testid="table-common"] table th').eq(2).contains("Stake amount");
+    cy.contains("By Amount Staked").click();
+    cy.get('[data-testid="table-common"] table th').eq(0).contains("Stake Address");
+    cy.get('[data-testid="table-common"] table th').eq(1).contains("Pool");
+    cy.get('[data-testid="table-common"] table th').eq(2).contains("Stake amount", { matchCase: false });
   });
 });

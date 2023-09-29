@@ -10,10 +10,10 @@ import {
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
-  TooltipProps,
   XAxis,
-  XAxisProps,
   YAxis,
+  TooltipProps,
+  XAxisProps,
   Label,
   Line
 } from "recharts";
@@ -35,17 +35,17 @@ import {
   BoxInfo,
   BoxInfoItem,
   BoxInfoItemRight,
+  Tabs,
+  Tab,
   ButtonTitle,
   ChartBox,
-  CustomButton,
   SkeletonUI,
-  Tab,
-  Tabs,
   Title,
-  TooltipLabel,
-  TooltipValue,
   ValueInfo,
-  Wrapper
+  Wrapper,
+  CustomButton,
+  TooltipValue,
+  TooltipLabel
 } from "./styles";
 
 const StakeAnalytics: React.FC = () => {
@@ -74,9 +74,9 @@ const StakeAnalytics: React.FC = () => {
     { value: OPTIONS_CHART_ANALYTICS.ONE_MONTH, label: t("time.1m") },
     { value: OPTIONS_CHART_ANALYTICS.THREE_MONTH, label: t("time.3m") }
   ];
-  const values = data?.data?.map?.((item) => item.value || 0) || [];
-  const maxBalance = BigNumber.max(0, ...values).toString();
-  const minBalance = BigNumber.min(maxBalance, ...values).toString();
+
+  const maxBalance = BigNumber(data?.highestBalance || 0).toString();
+  const minBalance = BigNumber(data?.lowestBalance || 0).toString();
 
   const rewards = dataReward?.map?.((item) => item.value || 0) || [];
   const maxReward = BigNumber.max(0, ...rewards).toString();
@@ -260,7 +260,7 @@ const StakeAnalytics: React.FC = () => {
                     dataKey="value"
                     stroke={theme.palette.primary.main}
                     strokeWidth={4}
-                    fill={alpha(theme.palette.primary.main, 0.2)}
+                    fill={alpha(theme.palette.primary.main, theme.isDark ? 0.6 : 0.2)}
                     activeDot={{ r: 6 }}
                   />
                   <Line

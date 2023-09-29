@@ -1,13 +1,12 @@
-import { useState } from "react";
-import { Box, Skeleton } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { Box } from "@mui/material";
+import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 
-import useFetch from "src/commons/hooks/useFetch";
-import { API } from "src/commons/utils/api";
 import { details } from "src/commons/routers";
 import CopyButton from "src/components/commons/CopyButton";
 
+import DelegatorDetailContext from "../DelegatorDetailContext";
 import RecentRegistrations from "./RecentRegistrations";
 import { RegistrationDraw } from "./RegistrationDraw";
 import { StakeLink, StyledCustomModal } from "./styles";
@@ -37,29 +36,22 @@ interface RegistrationCertificateModalProps {
 }
 
 export const RegistrationCertificateModal = ({ stake, open, handleCloseModal }: RegistrationCertificateModalProps) => {
+  const data = useContext(DelegatorDetailContext);
   const { t } = useTranslation();
-  const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`);
 
   return (
-    <StyledCustomModal open={open} onClose={handleCloseModal} title={t("sklc.registrationCertificate")}>
-      {loading && <Skeleton variant="rectangular" width={500} height={90} />}
-      {!loading && (
-        <Box p={3} bgcolor={({ palette, isDark }) => (isDark ? palette.secondary[100] : palette.secondary[0])}>
-          <Box fontWeight={"bold"} mb={1} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
-            {t("common.stakeAddress")}
-          </Box>
-          {data && (
-            <Box
-              display={"flex"}
-              alignItems={"center"}
-              bgcolor={({ palette, isDark }) => (isDark ? palette.secondary[100] : palette.secondary[0])}
-            >
-              <StakeLink to={details.stake(stake)}>{stake || ""}</StakeLink>
-              <CopyButton text={stake} />
-            </Box>
-          )}
+    <StyledCustomModal open={open} onClose={handleCloseModal} title="Registration certificate">
+      <Box p={3}>
+        <Box fontWeight={"bold"} mb={1} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
+          {t("common.stakeAddress")}
         </Box>
-      )}
+        {data && (
+          <Box display={"flex"} alignItems={"center"}>
+            <StakeLink to={details.stake(stake)}>{stake || ""}</StakeLink>
+            <CopyButton text={stake} />
+          </Box>
+        )}
+      </Box>
     </StyledCustomModal>
   );
 };

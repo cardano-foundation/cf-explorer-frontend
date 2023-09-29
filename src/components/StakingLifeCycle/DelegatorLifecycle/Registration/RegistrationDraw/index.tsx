@@ -11,7 +11,8 @@ import {
   TimeIcon,
   ExclamationTriangleIcon,
   AddressIconDark2,
-  TimeIconDark
+  TimeIconDark,
+  BackDarkIcon
 } from "src/commons/resources";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import DrawPath from "src/components/commons/DrawPath";
@@ -123,7 +124,7 @@ export const RegistrationDraw = ({ toggleModal, showBackButton = false }: Props)
       <StepInfo>
         {showBackButton ? (
           <IconButtonBack data-testid="delegator-registration-back-button" onClick={handleBack}>
-            <BackIcon />
+            {theme.isDark ? <BackDarkIcon /> : <BackIcon />}
           </IconButtonBack>
         ) : (
           <Box />
@@ -133,7 +134,7 @@ export const RegistrationDraw = ({ toggleModal, showBackButton = false }: Props)
             <CustomIcon
               icon={theme.isDark ? AddressIconDark2 : AddressIcon}
               height={30}
-              fill={theme.palette.secondary.light}
+              fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
             />
             <CustomTooltip title={txHash}>
               <InfoText>
@@ -144,7 +145,7 @@ export const RegistrationDraw = ({ toggleModal, showBackButton = false }: Props)
           </Info>
           <Info>
             <StyledADASymbol>
-              <ADAicon width={12} />
+              <ADAicon width={12} fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light} />
             </StyledADASymbol>
             <InfoText>{formatADAFull(deposit + fee || 0)}</InfoText>
           </Info>
@@ -152,7 +153,7 @@ export const RegistrationDraw = ({ toggleModal, showBackButton = false }: Props)
             <CustomIcon
               icon={theme.isDark ? TimeIconDark : TimeIcon}
               height={30}
-              fill={theme.palette.secondary.light}
+              fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
             />
             <InfoText>{formatDateTimeLocal(time)}</InfoText>
           </Info>

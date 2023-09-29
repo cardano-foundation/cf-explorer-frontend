@@ -66,6 +66,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
   const [lastUpdated, setLastUpdated] = useState<number>();
   const [urlFetch, setUrlFetch] = useState("");
   const { data, loading } = useFetch<BlockDetail>(urlFetch, undefined, false);
+
   useEffect(() => {
     if (data) setLastUpdated(Date.now());
   }, [data, currentBlockNo]);

@@ -146,7 +146,6 @@ const PolicyTable = () => {
       columns: columnsAssetHolders
     }
   ];
-
   const tokenFetchData = useFetchList<TokenPolicys>(
     activeTab === TABS.TOKENS ? `${API.POLICY}/${policyId}/${TABS.TOKENS}` : "",
     pageInfo

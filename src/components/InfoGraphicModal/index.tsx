@@ -22,8 +22,13 @@ const InfoGraphicModal: React.FC<IInfoGraphicModalProps> = (props) => {
     <CustomModal
       {...props}
       closeButtonProps={{
-        sx: { background: theme.palette.grey[200], border: "none", "&:hover": { background: theme.palette.grey[200] } }
+        sx: {
+          background: theme.isDark ? theme.palette.grey[600] : theme.palette.grey[200],
+          border: "none",
+          "&:hover": { background: theme.isDark ? theme.palette.grey[600] : theme.palette.grey[200] }
+        }
       }}
+      closeIconProps={theme.isDark ? { color: theme.palette.common.black } : {}}
       modalProps={{
         sx: {
           "& > div.MuiBox-root": { padding: "25px" },

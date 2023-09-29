@@ -8,12 +8,12 @@ import {
   Area,
   ComposedChart,
   CartesianGrid,
-  Label,
   ResponsiveContainer,
   Tooltip,
-  TooltipProps,
   XAxis,
   YAxis,
+  TooltipProps,
+  Label,
   Line
 } from "recharts";
 import { getNiceTickValues } from "recharts-scale";
@@ -32,17 +32,17 @@ import {
   BoxInfo,
   BoxInfoItem,
   BoxInfoItemRight,
+  Tabs,
+  Tab,
   ButtonTitle,
   ChartBox,
   SkeletonUI,
-  Tab,
-  Tabs,
-  TextCardHighlight,
   Title,
-  TooltipLabel,
-  TooltipValue,
   ValueInfo,
-  Wrapper
+  Wrapper,
+  TextCardHighlight,
+  TooltipLabel,
+  TooltipValue
 } from "./styles";
 
 type AnalyticsData = { date: string; value: number };
@@ -76,12 +76,12 @@ const AddressAnalytics: React.FC = () => {
     false,
     blockKey
   );
-  const values = data?.data?.map?.((item) => item.value || 0) || [];
-  const maxBalance = BigNumber.max(0, ...values).toString();
-  const minBalance = BigNumber.min(maxBalance, ...values).toString();
 
-  const highest = Number(data?.highestBalance || maxBalance);
-  const lowest = Number(data?.lowestBalance || minBalance);
+  const maxBalance = BigNumber(data?.highestBalance || 0).toString();
+  const minBalance = BigNumber(data?.lowestBalance || 0).toString();
+
+  const highest = Number(maxBalance);
+  const lowest = Number(minBalance);
   const isEqualLine = highest === lowest;
 
   const convertDataChart: AnalyticsExpanded[] =
@@ -230,7 +230,7 @@ const AddressAnalytics: React.FC = () => {
                     dataKey="value"
                     stroke={theme.palette.primary.main}
                     strokeWidth={4}
-                    fill={alpha(theme.palette.primary.main, 0.2)}
+                    fill={alpha(theme.palette.primary.main, theme.isDark ? 0.6 : 0.2)}
                     activeDot={{ r: 6 }}
                   />
                   <Line

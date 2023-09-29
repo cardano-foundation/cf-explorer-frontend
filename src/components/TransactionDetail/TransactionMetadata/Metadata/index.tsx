@@ -1,24 +1,14 @@
 import React, { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import { getShortHash, isJson } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
 import CopyButton from "src/components/commons/CopyButton";
 import ParseScriptModal from "src/components/ParseScriptModal";
-import { SeeMoreIcon } from "src/commons/resources";
+import { SeeMoreIconHome } from "src/commons/resources";
 
-import {
-  Wrapper,
-  Header,
-  RowMetadata,
-  Title,
-  Value,
-  ViewAllImage,
-  StyledButton,
-  TitleValue,
-  MetaDataValue
-} from "./styles";
+import { Wrapper, Header, RowMetadata, Title, Value, StyledButton, TitleValue, MetaDataValue } from "./styles";
 
 interface MetadataProps {
   data?: Transaction["metadata"];
@@ -27,6 +17,7 @@ interface MetadataProps {
 
 const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const [selectedText, setSelectedText] = useState<{ label: number; value: string } | null>(null);
   const { isTablet } = useScreen();
 
@@ -58,7 +49,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
             <Value>
               <MetaDataValue>{metadata.value || ""}</MetaDataValue>
               <StyledButton onClick={() => setSelectedText(metadata)}>
-                <ViewAllImage src={SeeMoreIcon} alt="view all" />
+                <SeeMoreIconHome fill={theme.palette.primary.main} />
               </StyledButton>
             </Value>
           </RowMetadata>

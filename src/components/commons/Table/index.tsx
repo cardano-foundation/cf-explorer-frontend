@@ -193,12 +193,12 @@ const TableRow = <T extends ColumnType>({
         );
       })}
       {showTabView && (
-        <TCol minWidth={50} maxWidth={90} selected={+selected}>
+        <TCol isModal={+(isModal || 0)} minWidth={50} maxWidth={90} selected={+selected}>
           <Box display="flex" alignItems="center" height="1rem">
             {!selected && (
               <CustomIcon
-                icon={EyeIcon}
                 stroke={theme.palette.secondary.light}
+                icon={EyeIcon}
                 originWidth={31}
                 originHeight={23}
                 width={24}

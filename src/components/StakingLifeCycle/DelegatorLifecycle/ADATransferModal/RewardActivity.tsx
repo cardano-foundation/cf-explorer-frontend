@@ -59,7 +59,6 @@ const RewardActivity: React.FC = () => {
       minWidth: "100px",
       render: (r) => <StyledLink to={details.epoch(r.epochNo || 0)}>{r.epochNo}</StyledLink>
     },
-
     {
       title: t("glossary.txType"),
       key: "transactionCount",
@@ -85,6 +84,7 @@ const RewardActivity: React.FC = () => {
           total: fetchData.total,
           onChange: (page, size) => setPagi({ page: page - 1, size })
         }}
+        isModal
       />
     </Box>
   );

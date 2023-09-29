@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import StakeKeyBox from "./StakeKeyBox";
 import { CardHeader } from "../PoolCertificate/styles";
+import { Wrapper } from "./styles";
 
 interface IProps {
   data: Transaction["stakeCertificates"] | null;
@@ -13,7 +14,7 @@ const StakeCertificate: React.FC<IProps> = ({ data }) => {
   const { t } = useTranslation();
   const theme = useTheme();
   return (
-    <>
+    <Wrapper>
       {data
         ?.filter((d) => d.type === "STAKE_REGISTRATION")
         ?.map((item, index) => (
@@ -30,7 +31,7 @@ const StakeCertificate: React.FC<IProps> = ({ data }) => {
             <StakeKeyBox key={index} data={item} />
           </Box>
         ))}
-    </>
+    </Wrapper>
   );
 };
 
