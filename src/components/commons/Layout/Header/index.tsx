@@ -12,8 +12,9 @@ import {
   SearchIcon
 } from "src/commons/resources";
 import { lists, routers } from "src/commons/routers";
-import { setOnDetailView, setSidebar, setTheme } from "src/stores/user";
+import { setOnDetailView, setSidebar } from "src/stores/user";
 
+import CustomIcon from "../../CustomIcon";
 import TopSearch from "../Sidebar/TopSearch";
 import HeaderSearch from "./HeaderSearch";
 import LoginButton from "./LoginButton";
@@ -30,18 +31,16 @@ import {
   NetworkContainer,
   SearchButton,
   SideBarRight,
-  SwitchMode,
   Title
 } from "./styles";
-import CustomIcon from "../../CustomIcon";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [lists.dashboard()];
 
 const Header: React.FC<RouteComponentProps> = (props) => {
   const { history } = props;
-  const { isMobile, isGalaxyFoldSmall } = useScreen();
+  const { isMobile } = useScreen();
   const home = history.location.pathname === "/";
-  const { sidebar, theme: themeMode } = useSelector(({ user }: RootState) => user);
+  const { sidebar } = useSelector(({ user }: RootState) => user);
   const [openSearch, setOpenSearch] = React.useState(false);
   const handleToggle = () => setSidebar(!sidebar);
   const theme = useTheme();
@@ -90,14 +89,14 @@ const Header: React.FC<RouteComponentProps> = (props) => {
             {!sidebar && <HeaderLogo src={LogoIcon} alt="logo desktop" />}
           </HeaderLogoLink>
           <SideBarRight>
-            {!isGalaxyFoldSmall && (
-              <SwitchMode
-                checked={themeMode === "dark"}
-                onChange={(e) => {
-                  setTheme(e.target.checked ? "dark" : "light");
-                }}
-              />
-            )}
+            {/* {!isGalaxyFoldSmall && (
+                <SwitchMode
+                  checked={themeMode === "dark"}
+                  onChange={(e) => {
+                    setTheme(e.target.checked ? "dark" : "light");
+                  }}
+                />
+            )} */}
             <NetworkContainer>
               <SelectNetwork />
             </NetworkContainer>
