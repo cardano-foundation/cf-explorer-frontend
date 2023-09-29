@@ -22,7 +22,7 @@ export const TitleStep = styled(Box)(({ theme }) => ({
 }));
 
 export const NextButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.common.white,
+  color: theme.palette.secondary[0],
   background: theme.palette.secondary.main,
   textTransform: "capitalize",
   fontWeight: "bold",
@@ -39,7 +39,7 @@ export const PreviousButton = styled(Button)(({ theme }) => ({
   fontWeight: "bold",
   borderRadius: "8px",
   padding: "10px 20px",
-  border: `2px solid ${theme.palette.primary[200]}`,
+  border: `2px solid ${theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary[700]}`,
   ":hover": {
     background: "transparent"
   }

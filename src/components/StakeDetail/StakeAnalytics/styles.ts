@@ -8,9 +8,9 @@ export const StyledGrid = styled(Grid)(({ theme }) => ({
 }));
 
 export const BoxInfo = styled(Box)(({ theme }) => ({
-  background: theme.palette.common.white,
+  background: theme.palette.secondary[0],
   borderRadius: "10px",
-  color: theme.palette.primary.contrastText,
+  color: theme.palette.secondary.main,
   display: "flex",
   flexDirection: "column",
   textAlign: "center",
@@ -27,9 +27,13 @@ export const CustomButton = styled("button")<{ active: number }>(({ theme, activ
   borderRadius: "5px",
   padding: "6px 0",
   fontWeight: "var(--font-weight-bold)",
-  color: active ? `${theme.palette.secondary.light} !important` : theme.palette.secondary.main,
-  backgroundColor: active ? theme.palette.primary[200] : "transparent",
-  border: `2px solid ${theme.palette.primary[200]}`,
+  color: active
+    ? `${theme.isDark ? theme.palette.secondary[0] : theme.palette.secondary.light} !important`
+    : theme.palette.secondary.main,
+  backgroundColor: active
+    ? `${theme.mode === "dark" ? theme.palette.primary.main : theme.palette.primary[200]} !important`
+    : "transparent",
+  border: `2px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
   cursor: "pointer",
   fontFamily: "var(--font-family-title)",
   fontSize: "16px",
@@ -138,9 +142,13 @@ export const ButtonTitle = styled("button")<{ active: boolean }>(({ theme, activ
   padding: "8px 30px",
   fontWeight: "bold",
   fontSize: "1rem",
-  color: active ? `${theme.palette.secondary.light} !important` : theme.palette.secondary.main,
-  backgroundColor: active ? theme.palette.primary[200] : "transparent",
-  border: `2px solid ${theme.palette.primary[200]}`,
+  color: active
+    ? `${theme.isDark ? theme.palette.secondary[0] : theme.palette.secondary.light} !important`
+    : theme.palette.secondary.main,
+  backgroundColor: active
+    ? `${theme.mode === "dark" ? theme.palette.primary.main : theme.palette.primary[200]} !important`
+    : "transparent",
+  border: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
   fontFamily: "var(--font-family-title)",
   cursor: "pointer",
   marginRight: theme.spacing(1),
@@ -151,26 +159,29 @@ export const ButtonTitle = styled("button")<{ active: boolean }>(({ theme, activ
   }
 }));
 
-export const ChartBox = styled(Box)<{ highest: number; lowest: number }>(({ theme, highest, lowest }) => ({
-  paddingTop: theme.spacing(3),
-  fontSize: 12,
-  ".yAxis .recharts-layer": {
-    [`&:nth-of-type(${lowest})`]: {
-      filter: "url(#lowest)",
-      text: {
-        fill: theme.palette.error[700],
-        color: theme.palette.error[700]
-      }
-    },
-    [`&:nth-of-type(${highest})`]: {
-      filter: "url(#highest)",
-      text: {
-        fill: theme.palette.success[800],
-        color: theme.palette.success[800]
+export const ChartBox = styled(Box)<{ highest: number; lowest: number }>(({ theme, highest, lowest }) => {
+  const isEqual = highest === lowest;
+  return {
+    paddingTop: theme.spacing(3),
+    fontSize: 12,
+    ".yAxis .recharts-layer": {
+      [`&:nth-of-type(${lowest})`]: {
+        filter: "url(#lowest)",
+        text: {
+          fill: isEqual ? theme.palette.primary.main : theme.palette.error[700],
+          color: isEqual ? theme.palette.primary.main : theme.palette.error[700]
+        }
+      },
+      [`&:nth-of-type(${highest})`]: {
+        filter: "url(#highest)",
+        text: {
+          fill: isEqual ? theme.palette.primary.main : theme.palette.success[800],
+          color: isEqual ? theme.palette.primary.main : theme.palette.success[800]
+        }
       }
     }
-  }
-}));
+  };
+});
 
 export const SkeletonUI = styled(Skeleton)(({ theme }) => ({
   paddingTop: theme.spacing(3),

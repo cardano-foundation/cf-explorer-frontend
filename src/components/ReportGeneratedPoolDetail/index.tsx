@@ -1,6 +1,6 @@
 import React, { useMemo, createContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { Box, styled } from "@mui/material";
+import { Box, styled, useTheme } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
 
@@ -33,6 +33,7 @@ export const ReportGeneratedPoolDetailContext = createContext({ reportName: "", 
 
 const ReportGeneratedPoolDetailTabs = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { reportId } = useParams<{ reportId: string }>();
   const history = useHistory();
   const reportDetail = useFetch<IPoolReportList>(API.REPORT.POOL_REPORTED_DETAIL(reportId));
@@ -99,7 +100,7 @@ const ReportGeneratedPoolDetailTabs = () => {
     <Box>
       <TopHeader>
         <BackButton onClick={history.goBack}>
-          <HiArrowLongLeft />
+          <HiArrowLongLeft color={theme.palette.secondary.light} />
           <BackText>Back</BackText>
         </BackButton>
       </TopHeader>

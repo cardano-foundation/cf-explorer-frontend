@@ -21,12 +21,13 @@ import { getNiceTickValues } from "recharts-scale";
 import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
+import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
 import { useScreen } from "src/commons/hooks/useScreen";
-import { HighestIcon, LowestIcon } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
 import { formatADAFull, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
 import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
+import CustomIcon from "src/components/commons/CustomIcon";
 import Card from "src/components/commons/Card";
 import { TooltipBody } from "src/components/commons/Layout/styles";
 
@@ -83,6 +84,7 @@ const StakeAnalytics: React.FC = () => {
 
   const highest = Number(tab === "BALANCE" ? data?.highestBalance : maxReward) || 0;
   const lowest = Number(tab === "BALANCE" ? data?.lowestBalance : minReward) || 0;
+  const isEqualLine = highest === lowest;
 
   const maxValue = Math.max(Number(tab === "BALANCE" ? maxBalance : maxReward), highest);
 
@@ -212,20 +214,23 @@ const StakeAnalytics: React.FC = () => {
                   margin={{ top: 5, right: 10, bottom: 14 }}
                 >
                   {/* Defs for ticks filter background color */}
-                  {["lowest", "highest"].map((item) => (
-                    <defs key={item}>
-                      <filter x="-.15" y="-.15" width="1.25" height="1.2" id={item}>
-                        <feFlood
-                          floodColor={theme.palette[item === "highest" ? "success" : "error"][100]}
-                          result="bg"
-                        />
-                        <feMerge>
-                          <feMergeNode in="bg" />
-                          <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                      </filter>
-                    </defs>
-                  ))}
+                  {["lowest", "highest"].map((item) => {
+                    let floodColor = theme.palette[item === "highest" ? "success" : "error"][100];
+                    if (isEqualLine) {
+                      floodColor = theme.palette.primary[200];
+                    }
+                    return (
+                      <defs key={item}>
+                        <filter x="-.15" y="-.15" width="1.25" height="1.2" id={item}>
+                          <feFlood floodColor={floodColor} result="bg" />
+                          <feMerge>
+                            <feMergeNode in="bg" />
+                            <feMergeNode in="SourceGraphic" />
+                          </feMerge>
+                        </filter>
+                      </defs>
+                    );
+                  })}
                   <XAxis
                     color={theme.palette.secondary.light}
                     stroke={theme.palette.secondary.light}
@@ -261,7 +266,7 @@ const StakeAnalytics: React.FC = () => {
                   <Line
                     type="monotone"
                     dataKey="lowest"
-                    stroke={theme.palette.error[700]}
+                    stroke={isEqualLine ? theme.palette.primary.main : theme.palette.error[700]}
                     strokeWidth={1}
                     dot={false}
                     activeDot={false}
@@ -270,7 +275,7 @@ const StakeAnalytics: React.FC = () => {
                   <Line
                     type="monotone"
                     dataKey="highest"
-                    stroke={theme.palette.success.main}
+                    stroke={isEqualLine ? theme.palette.primary.main : theme.palette.success.main}
                     strokeWidth={1}
                     dot={false}
                     activeDot={false}
@@ -286,7 +291,7 @@ const StakeAnalytics: React.FC = () => {
             <Box flex={1}>
               <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
-                  <img src={HighestIcon} alt="heighest icon" />
+                  <CustomIcon height={30} fill={theme.palette.secondary.light} icon={HighestIconComponent} />
                   <Title>{tab === "BALANCE" ? t("common.highestBalance") : t("common.highestReward")}</Title>
                   <ValueInfo>
                     {loading || loadingReward ? (
@@ -301,7 +306,7 @@ const StakeAnalytics: React.FC = () => {
             <Box flex={1}>
               <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
-                  <img src={LowestIcon} alt="lowest icon" />
+                  <CustomIcon height={30} fill={theme.palette.secondary.light} icon={LowestIconComponent} />
                   <Title>{tab === "BALANCE" ? t("common.lowestBalance") : t("common.lowestReward")}</Title>
                   <ValueInfo>
                     {loading || loadingReward ? (

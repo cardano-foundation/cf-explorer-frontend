@@ -1,21 +1,21 @@
-import { Grid, Icon } from "@mui/material";
+import { Grid, Icon, useTheme } from "@mui/material";
 import { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-
 import {
-  DelegationToIconUrl,
   PaymentWalletUrl,
   GiftIcon,
   RewardWithdrawnIconUrl,
-  TransactionIcon
-} from "../../../commons/resources/index";
-import { details } from "../../../commons/routers";
-import { formatADAFull, getShortHash } from "../../../commons/utils/helper";
-import ADATransferModal from "../../StakingLifeCycle/DelegatorLifecycle/ADATransferModal";
+  TransactionIcon,
+  DelegatingIcon
+} from "src/commons/resources/index";
+import { details } from "src/commons/routers";
+import { formatADAFull, getShortHash } from "src/commons/utils/helper";
+import ADATransferModal from "src/components/StakingLifeCycle/DelegatorLifecycle/ADATransferModal";
+
 import {
   CardContent,
   CardInfo,
@@ -74,6 +74,7 @@ const GridItem = ({ title, action, value, iconUrl, iconSize }: TGridItem) => {
 
 const TabularOverview: React.FC = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const data = useContext(DelegatorDetailContext);
   const { totalStake, rewardAvailable, rewardWithdrawn, pool } = data ?? {};
   const { tickerName, poolName, poolId, iconUrl } = pool ?? {};
@@ -93,7 +94,12 @@ const TabularOverview: React.FC = () => {
             <TransferButton
               onClick={() => setOpen(true)}
               variant="contained"
-              startIcon={<Icon fill="white" component={TransactionIcon} />}
+              startIcon={
+                <Icon
+                  fill={theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0]}
+                  component={TransactionIcon}
+                />
+              }
             >
               {t("common.adaTransfers")}
             </TransferButton>
@@ -118,7 +124,7 @@ const TabularOverview: React.FC = () => {
       <Grid item xs={12} sm={6}>
         <GridItem
           title={t("slc.delegatingTo")}
-          iconUrl={iconUrl || DelegationToIconUrl}
+          iconUrl={iconUrl || DelegatingIcon}
           value={
             pool?.poolId ? (
               <StyledBoxDelegating to={details.delegation(pool?.poolId)}>

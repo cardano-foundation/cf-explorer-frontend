@@ -36,6 +36,7 @@ import NoRecord from "src/components/commons/NoRecord";
 import Table from "src/components/commons/Table";
 import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "src/types/protocol";
 import { Column } from "src/types/table";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import { ExplainerTextModal } from "./ExplainerTextModal";
 import { explainerTextGlobalConstants, explainerTextProtocolHistory } from "./explainerText";
@@ -225,7 +226,7 @@ const ProtocolParameter: React.FC = () => {
       {histories && (
         <Box textAlign={"left"} sx={{ marginTop: "30px" }}>
           <BackButton onClick={() => history.push(lists.protocolParameters())}>
-            <HiArrowLongLeft />
+            <HiArrowLongLeft color={theme.palette.secondary.light} />
             <BackText>{t("common.back")}</BackText>
           </BackButton>
         </Box>
@@ -525,7 +526,7 @@ export const ProtocolParameterHistory = () => {
               px={2}
               onClick={() => setShowFiter(!showFilter)}
             >
-              <FilterIcon />
+              <CustomIcon icon={FilterIcon} fill={theme.palette.secondary.light} height={18} />
               <Box ml={1} fontWeight={"bold"} color={({ palette }) => palette.secondary.light}>
                 {t("common.filter")}
               </Box>

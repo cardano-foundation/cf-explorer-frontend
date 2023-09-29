@@ -26,12 +26,12 @@ export const SearchContainer = styled("div")(({ theme }) => ({
   alignItems: "center",
   width: "100%",
   maxWidth: 360,
-  background: theme.palette.background.paper,
+  background: theme.palette.secondary[0],
   padding: "0 12px",
   borderRadius: 8,
   marginBottom: 15,
   height: 35,
-  border: `1.5px solid ${theme.palette.grey[200]}`,
+  border: `1.5px solid ${theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary[700]}`,
   "&:focus-within": {
     borderColor: theme.palette.secondary.light
   },
@@ -44,6 +44,8 @@ export const SearchContainer = styled("div")(({ theme }) => ({
 export const StyledInput = styled("input")`
   border: none;
   width: 100%;
+  background: ${({ theme }) => theme.palette.secondary[0]};
+  color: ${({ theme }) => theme.palette.secondary.main};
   font-size: var(--font-size-text-small);
   border-radius: 8px;
 `;

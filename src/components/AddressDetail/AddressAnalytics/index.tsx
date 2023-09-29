@@ -20,7 +20,8 @@ import { getNiceTickValues } from "recharts-scale";
 import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
-import { HighestIcon, LowestIcon } from "src/commons/resources";
+import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
+import CustomIcon from "src/components/commons/CustomIcon";
 import { API } from "src/commons/utils/api";
 import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
 import { formatADAFull, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
@@ -81,6 +82,7 @@ const AddressAnalytics: React.FC = () => {
 
   const highest = Number(data?.highestBalance || maxBalance);
   const lowest = Number(data?.lowestBalance || minBalance);
+  const isEqualLine = highest === lowest;
 
   const convertDataChart: AnalyticsExpanded[] =
     data?.data?.map((item) => ({
@@ -174,24 +176,32 @@ const AddressAnalytics: React.FC = () => {
                   margin={{ top: 5, right: 5, bottom: 14 }}
                 >
                   {/* Defs for ticks filter background color */}
-                  {["lowest", "highest"].map((item) => (
-                    <defs key={item}>
-                      <filter x="-.15" y="-.15" width="1.25" height="1.2" id={item}>
-                        <feFlood
-                          floodColor={theme.palette[item === "highest" ? "success" : "error"][100]}
-                          result="bg"
-                        />
-                        <feMerge>
-                          <feMergeNode in="bg" />
-                          <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                      </filter>
-                    </defs>
-                  ))}
+                  {["lowest", "highest"].map((item) => {
+                    let floodColor = theme.palette[item === "highest" ? "success" : "error"][100];
+                    if (isEqualLine) {
+                      floodColor = theme.palette.primary[200];
+                    }
+                    return (
+                      <defs key={item}>
+                        <filter x="-.15" y="-.15" width="1.25" height="1.2" id={item}>
+                          <feFlood floodColor={floodColor} result="bg" />
+                          <feMerge>
+                            <feMergeNode in="bg" />
+                            <feMergeNode in="SourceGraphic" />
+                          </feMerge>
+                        </filter>
+                      </defs>
+                    );
+                  })}
                   <XAxis
                     dataKey="date"
                     tickFormatter={(value) => moment(value).format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM")}
-                    tickLine={false}
+                    tick={{
+                      fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+                    }}
+                    tickLine={{
+                      stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+                    }}
                     tickMargin={5}
                     color={theme.palette.secondary.light}
                     stroke={theme.palette.secondary.light}
@@ -202,7 +212,12 @@ const AddressAnalytics: React.FC = () => {
                   </XAxis>
                   <YAxis
                     tickFormatter={formatPriceValue}
-                    tickLine={false}
+                    tick={{
+                      fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+                    }}
+                    tickLine={{
+                      stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+                    }}
                     color={theme.palette.secondary.light}
                     interval={0}
                     ticks={customTicks}
@@ -221,7 +236,7 @@ const AddressAnalytics: React.FC = () => {
                   <Line
                     type="monotone"
                     dataKey="lowest"
-                    stroke={theme.palette.error[700]}
+                    stroke={isEqualLine ? theme.palette.primary.main : theme.palette.error[700]}
                     strokeWidth={1}
                     dot={false}
                     activeDot={false}
@@ -230,7 +245,7 @@ const AddressAnalytics: React.FC = () => {
                   <Line
                     type="monotone"
                     dataKey="highest"
-                    stroke={theme.palette.success.main}
+                    stroke={isEqualLine ? theme.palette.primary.main : theme.palette.success.main}
                     strokeWidth={1}
                     dot={false}
                     activeDot={false}
@@ -247,7 +262,7 @@ const AddressAnalytics: React.FC = () => {
               <BoxInfoItemRight display={"flex"} justifyContent={"center"}>
                 <Box>
                   <Box minHeight={"90px"}>
-                    <img src={HighestIcon} alt="heighest icon" />
+                    <CustomIcon height={30} fill={theme.palette.secondary.light} icon={HighestIconComponent} />
                     <Title>{t("common.highestBalance")}</Title>
                   </Box>
                   <ValueInfo>{loading ? <SkeletonUI variant="rectangular" /> : formatADAFull(maxBalance)}</ValueInfo>
@@ -258,7 +273,7 @@ const AddressAnalytics: React.FC = () => {
               <BoxInfoItem display={"flex"} justifyContent={"center"}>
                 <Box>
                   <Box minHeight={"90px"}>
-                    <img src={LowestIcon} alt="lowest icon" />
+                    <CustomIcon height={30} fill={theme.palette.secondary.light} icon={LowestIconComponent} />
                     <Title>{t("common.lowestBalance")}</Title>
                   </Box>
                   <ValueInfo>{loading ? <SkeletonUI variant="rectangular" /> : formatADAFull(minBalance)}</ValueInfo>

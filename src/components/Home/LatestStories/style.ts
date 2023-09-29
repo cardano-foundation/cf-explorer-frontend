@@ -33,7 +33,7 @@ export const Title = styled("h3")`
     content: "";
     width: 50px;
     height: 4px;
-    background: ${({ theme }) => theme.palette.primary[200]};
+    background: ${({ theme }) => (theme.mode === "light" ? theme.palette.primary[200] : theme.palette.primary.main)};
   }
 `;
 
