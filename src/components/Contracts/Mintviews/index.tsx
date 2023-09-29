@@ -119,6 +119,7 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
       link: item.fingerprint
     }));
   }, [data]);
+  const isMint = data?.mintingTokens && data.mintingTokens?.length > 0;
   return (
     <MintContainer isMobile={+!!isMobile}>
       <AssetsModal open={openAssets} data={mintedAssetsData} onClose={() => setOpenAssets(!openAssets)} />
@@ -158,10 +159,14 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
         <RightBox ref={rightBoxRef}>
           <MintBlueBox>
             <MintRrounded>
-              <Assets onClick={() => setOpenAssets(!openAssets)} total={data?.mintingTokens?.length} />
+              {isMint ? (
+                <Assets onClick={() => setOpenAssets(!openAssets)} total={data?.mintingTokens?.length} />
+              ) : (
+                <PolicyID hash={data?.scriptHash} detail={details.policyDetail} />
+              )}
               <Burn total={data?.burningTokens?.length} onClick={() => setOpenBurnedAssets(!openBurnedAssets)} />
             </MintRrounded>
-            <PolicyID hash={data?.scriptHash} detail={details.policyDetail} />
+            {isMint && <PolicyID hash={data?.scriptHash} detail={details.policyDetail} />}
           </MintBlueBox>
         </RightBox>
       ) : (

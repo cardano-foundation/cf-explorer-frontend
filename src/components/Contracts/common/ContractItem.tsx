@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Box, Typography, useTheme } from "@mui/material";
 
 import { formatLongText } from "src/commons/utils/helper";
@@ -6,6 +6,7 @@ import { InfoIcon } from "src/commons/resources";
 import { StyledLink } from "src/components/share/styled";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import { CLButton, CLCardContaienr } from "./styles";
 
@@ -15,7 +16,18 @@ export interface ContractItemProps {
 }
 
 const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
+  const containerRef = useRef<SVGSVGElement>(null);
+  const [open, setOpen] = useState(false);
   const theme = useTheme();
+  const { isMobile, isTablet } = useScreen();
+
+  useEffect(() => {
+    document.addEventListener("click", handleDocumentClick);
+    return () => {
+      document.removeEventListener("click", handleDocumentClick);
+    };
+  }, []);
+
   const contractAddress = useMemo(() => {
     switch (data.purpose) {
       case "SPEND":
@@ -44,6 +56,13 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
         };
     }
   }, [data]);
+
+  const handleDocumentClick = (event: MouseEvent) => {
+    if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      setOpen(false);
+    }
+  };
+
   return (
     <CLCardContaienr>
       <Box>
@@ -69,9 +88,15 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
             )
           </span>
         )}
-        <CustomTooltip title={contractAddress?.explain}>
-          <InfoIcon />
-        </CustomTooltip>
+        {isMobile || isTablet ? (
+          <CustomTooltip title={contractAddress?.explain} open={open}>
+            <InfoIcon ref={containerRef} onClick={() => setOpen(!open)} />
+          </CustomTooltip>
+        ) : (
+          <CustomTooltip title={contractAddress?.explain}>
+            <InfoIcon />
+          </CustomTooltip>
+        )}
       </Box>
       <Box>
         <CLButton onClick={() => onClick?.(data)}>View Contract</CLButton>

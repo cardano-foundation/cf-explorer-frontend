@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { stringify } from "qs";
 import { Box } from "@mui/material";
+import { stringify } from "qs";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 
+import useFetchList from "src/commons/hooks/useFetchList";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
 import {
   formatADAFull,
   formatDateTimeLocal,
@@ -12,17 +15,14 @@ import {
   getShortHash,
   getShortWallet
 } from "src/commons/utils/helper";
-import Table, { Column } from "src/components/commons/Table";
-import CustomTooltip from "src/components/commons/CustomTooltip";
-import useFetchList from "src/commons/hooks/useFetchList";
-import { details } from "src/commons/routers";
-import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
-import { setOnDetailView } from "src/stores/user";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 import DetailViewContractHash from "src/components/commons/DetailView/DetailViewContractHash";
 import FormNowMessage from "src/components/commons/FormNowMessage";
+import Table, { Column } from "src/components/commons/Table";
+import { setOnDetailView } from "src/stores/user";
 
-import { Flex, Label, SmallText, StyledLink, PriceValue, TimeDuration } from "./styles";
+import { Flex, Label, PriceValue, SmallText, StyledLink, TimeDuration } from "./styles";
 
 const TokenTransaction: React.FC = () => {
   const { t } = useTranslation();
@@ -30,8 +30,8 @@ const TokenTransaction: React.FC = () => {
   const { search } = useLocation();
   const history = useHistory();
   const { onDetailView } = useSelector(({ user }: RootState) => user);
-  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const pageInfo = getPageInfo(search);
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   const fetchData = useFetchList<Transactions>(
     `${API.ADDRESS.DETAIL}/${params.address}/txs`,
