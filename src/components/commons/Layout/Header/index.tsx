@@ -14,6 +14,7 @@ import {
 import { lists, routers } from "src/commons/routers";
 import { setOnDetailView, setSidebar, setTheme } from "src/stores/user";
 
+import CustomIcon from "../../CustomIcon";
 import TopSearch from "../Sidebar/TopSearch";
 import HeaderSearch from "./HeaderSearch";
 import LoginButton from "./LoginButton";
@@ -33,7 +34,6 @@ import {
   SwitchMode,
   Title
 } from "./styles";
-import CustomIcon from "../../CustomIcon";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [lists.dashboard()];
 
