@@ -10,10 +10,10 @@ import {
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
-  TooltipProps,
   XAxis,
-  XAxisProps,
   YAxis,
+  TooltipProps,
+  XAxisProps,
   Label,
   Line
 } from "recharts";
@@ -35,17 +35,17 @@ import {
   BoxInfo,
   BoxInfoItem,
   BoxInfoItemRight,
+  Tabs,
+  Tab,
   ButtonTitle,
   ChartBox,
-  CustomButton,
   SkeletonUI,
-  Tab,
-  Tabs,
   Title,
-  TooltipLabel,
-  TooltipValue,
   ValueInfo,
-  Wrapper
+  Wrapper,
+  CustomButton,
+  TooltipValue,
+  TooltipLabel
 } from "./styles";
 
 const StakeAnalytics: React.FC = () => {
@@ -84,6 +84,7 @@ const StakeAnalytics: React.FC = () => {
 
   const highest = Number(tab === "BALANCE" ? data?.highestBalance : maxReward) || 0;
   const lowest = Number(tab === "BALANCE" ? data?.lowestBalance : minReward) || 0;
+  const isEqualLine = highest === lowest;
 
   const maxValue = Math.max(Number(tab === "BALANCE" ? maxBalance : maxReward), highest);
 
@@ -213,20 +214,23 @@ const StakeAnalytics: React.FC = () => {
                   margin={{ top: 5, right: 10, bottom: 14 }}
                 >
                   {/* Defs for ticks filter background color */}
-                  {["lowest", "highest"].map((item) => (
-                    <defs key={item}>
-                      <filter x="-.15" y="-.15" width="1.25" height="1.2" id={item}>
-                        <feFlood
-                          floodColor={theme.palette[item === "highest" ? "success" : "error"][100]}
-                          result="bg"
-                        />
-                        <feMerge>
-                          <feMergeNode in="bg" />
-                          <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                      </filter>
-                    </defs>
-                  ))}
+                  {["lowest", "highest"].map((item) => {
+                    let floodColor = theme.palette[item === "highest" ? "success" : "error"][100];
+                    if (isEqualLine) {
+                      floodColor = theme.palette.primary[200];
+                    }
+                    return (
+                      <defs key={item}>
+                        <filter x="-.15" y="-.15" width="1.25" height="1.2" id={item}>
+                          <feFlood floodColor={floodColor} result="bg" />
+                          <feMerge>
+                            <feMergeNode in="bg" />
+                            <feMergeNode in="SourceGraphic" />
+                          </feMerge>
+                        </filter>
+                      </defs>
+                    );
+                  })}
                   <XAxis
                     color={theme.palette.secondary.light}
                     stroke={theme.palette.secondary.light}
@@ -256,13 +260,13 @@ const StakeAnalytics: React.FC = () => {
                     dataKey="value"
                     stroke={theme.palette.primary.main}
                     strokeWidth={4}
-                    fill={alpha(theme.palette.primary.main, 0.2)}
+                    fill={alpha(theme.palette.primary.main, theme.isDark ? 0.6 : 0.2)}
                     activeDot={{ r: 6 }}
                   />
                   <Line
                     type="monotone"
                     dataKey="lowest"
-                    stroke={theme.palette.error[700]}
+                    stroke={isEqualLine ? theme.palette.primary.main : theme.palette.error[700]}
                     strokeWidth={1}
                     dot={false}
                     activeDot={false}
@@ -271,7 +275,7 @@ const StakeAnalytics: React.FC = () => {
                   <Line
                     type="monotone"
                     dataKey="highest"
-                    stroke={theme.palette.success.main}
+                    stroke={isEqualLine ? theme.palette.primary.main : theme.palette.success.main}
                     strokeWidth={1}
                     dot={false}
                     activeDot={false}

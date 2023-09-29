@@ -23,9 +23,9 @@ import {
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { TRANSACTION_STATUS } from "src/commons/utils/constants";
+import ContractsList from "src/components/Contracts";
 
 import Collaterals from "./Collaterals";
-import Contracts from "./Contracts";
 import Delegations from "./Delegations";
 import InstantaneousRewards from "./InstantaneousRewards";
 import Metadata from "./Metadata";
@@ -83,7 +83,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
     {
       key: "summary",
       icon: SummaryIcon,
-      label: t("drawer.summary"),
+      label: <Box pl={"5px"}>{t("drawer.summary")}</Box>,
       children: <Summary data={data?.summary || null} isFailed={data?.tx.status === TRANSACTION_STATUS.FAILED} />
     },
     {
@@ -98,7 +98,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
       key: "contracts",
       icon: ContractIcon,
       label: `${t("glossary.contracts")}(${data?.contracts?.length || 0})`,
-      children: <Contracts data={data?.contracts} />
+      children: <ContractsList data={data?.contracts} />
     },
     {
       key: "collaterals",

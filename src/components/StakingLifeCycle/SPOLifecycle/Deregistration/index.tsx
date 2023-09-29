@@ -10,13 +10,13 @@ import ADAicon from "src/components/commons/ADAIcon";
 import CustomIcon from "src/components/commons/CustomIcon";
 import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import CopyButton from "src/components/commons/CopyButton";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import DrawPath from "src/components/commons/DrawPath";
 import FeeBoxSPO from "src/components/commons/FeeBoxSPO";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import SPOHolder from "src/components/commons/SPOHolder";
 import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
 import StyledModal from "src/components/commons/StyledModal";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import { StyledLink } from "../styles";
 import RecentDeregistrations from "./RecentDeregistrations";

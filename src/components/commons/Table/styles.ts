@@ -177,6 +177,17 @@ export const Wrapper = styled(Box)<{ loading?: number }>(
       background: ${theme.palette.primary[100]};
     }
   }
+  ${theme.breakpoints.down("md")} {
+    &::-webkit-scrollbar {
+      display: block !important;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: ${theme.palette.secondary.light};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${theme.palette.primary[100]};
+    }
+  }
 `
 );
 

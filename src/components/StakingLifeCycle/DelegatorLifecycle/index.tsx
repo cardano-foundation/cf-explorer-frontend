@@ -7,7 +7,6 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DelegationIcon,
   DeredistrationIcon,
-  InfoIcon,
   NextIcon,
   PreviousIcon,
   RegistrationIcon,
@@ -17,6 +16,7 @@ import {
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import CustomIcon from "src/components/commons/CustomIcon";
 
 import {
@@ -246,7 +246,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       <StepHeader>
         <StyledBox>
           <TabTitle>{stepper[currentStep].title}</TabTitle>
-          <InfoIcon style={{ cursor: "pointer" }} onClick={() => setOpenDescriptionModal(true)} />
+          <InfoSolidIcon onClick={() => setOpenDescriptionModal(true)} />
         </StyledBox>
         <ADATransfersButton onClick={() => setOpen(true)}>
           <CustomIcon icon={TranferIcon} width={20} height={20} fill={theme.palette.secondary[0]} />

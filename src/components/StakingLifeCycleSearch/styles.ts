@@ -37,6 +37,7 @@ export const StyledInput = styled("input")`
   border-radius: 8px;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: ${({ theme }) => theme.palette.secondary.main};
   background: ${({ theme }) => theme.palette.secondary[0]};
 `;
 
