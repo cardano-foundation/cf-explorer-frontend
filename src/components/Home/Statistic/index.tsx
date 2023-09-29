@@ -34,6 +34,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import RateWithIcon from "src/components/commons/RateWithIcon";
 import { RootState } from "src/stores/types";
 import ADAicon from "src/components/commons/ADAIcon";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
 import {
   AdaPrice,
@@ -146,7 +147,7 @@ const HomeStatistic = () => {
                 </Content>
                 <Content>
                   <TimeDuration data-testid="last-update-ada-price">
-                    {t("info.lastUpdatedTime", { time: moment(usdMarket.last_updated).fromNow() })}
+                    <FormNowMessage time={usdMarket.last_updated} />
                   </TimeDuration>
                 </Content>
               </WrapCardContent>
@@ -172,7 +173,7 @@ const HomeStatistic = () => {
                 <Title data-testid="market-cap-value">${numberWithCommas(usdMarket.market_cap)}</Title>
                 <Content>
                   <TimeDuration data-testid="last-update-market-cap">
-                    {t("common.lastUpdated")} {moment(usdMarket.last_updated).fromNow()}
+                    <FormNowMessage time={usdMarket.last_updated} />
                   </TimeDuration>
                 </Content>
               </WrapCardContent>
