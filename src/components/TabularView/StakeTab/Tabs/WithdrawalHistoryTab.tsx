@@ -92,7 +92,7 @@ const WithdrawalHistoryTab = () => {
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
             {t("common.showing")} {Math.min(total, pageInfo.size)}{" "}
-            {Math.min(total, pageInfo.size) > 1 ? t("common.result") : t("common.results")}
+            {Math.min(total, pageInfo.size) > 1 ? t("common.results") : t("common.result")}
           </WrapFilterDescription>
 
           <CustomFilter

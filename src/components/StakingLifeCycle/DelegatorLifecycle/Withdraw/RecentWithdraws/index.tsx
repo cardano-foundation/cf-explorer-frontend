@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Skeleton } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import { useHistory, useParams } from "react-router";
 import { useUpdateEffect } from "react-use";
 import { useSelector } from "react-redux";
@@ -12,8 +12,8 @@ import OverviewStaking from "src/components/commons/OverviewStaking";
 import { EmptyRecord, FooterTable } from "src/components/commons/Table";
 import { details } from "src/commons/routers";
 
-import { GridBox, StyledContainer, StyledList, WrapFilterDescription } from "./styles";
-import { DescriptionText } from "../../styles";
+import { GridBox, StyledContainer, WrapFilterDescription } from "./styles";
+import { DescriptionText, FilterContainer, StyledList } from "../../styles";
 
 interface Props {
   onSelect: (withdraw: WithdrawItem | null) => void;
@@ -62,9 +62,9 @@ const RecentWithdraws: React.FC<Props> = ({ onSelect, setShowBackButton }) => {
     <StyledContainer>
       <StyledList>
         <DescriptionText>{t("slc.recentWithdrawals")}</DescriptionText>
-        <Box display={"flex"} alignItems={"center"} gap={2}>
+        <FilterContainer>
           <WrapFilterDescription>
-            {t("common.showing")} {data.length} {data.length > 1 ? t("common.result") : t("common.results")}
+            {t("common.showing")} {data.length} {data.length > 1 ? t("common.results") : t("common.result")}
           </WrapFilterDescription>
           <CustomFilter
             filterValue={params}
@@ -74,7 +74,7 @@ const RecentWithdraws: React.FC<Props> = ({ onSelect, setShowBackButton }) => {
             }}
             searchLabel={t("common.searchTx")}
           />
-        </Box>
+        </FilterContainer>
       </StyledList>
       <GridBox sidebar={+sidebar}>
         {loading &&

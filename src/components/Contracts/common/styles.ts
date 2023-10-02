@@ -111,3 +111,8 @@ export const CLButton = styled("button")`
   border-radius: 8px;
   cursor: pointer;
 `;
+
+export const ContractAddressLabel = styled(Typography)`
+  font-weight: 600;
+  text-align: left;
+`;

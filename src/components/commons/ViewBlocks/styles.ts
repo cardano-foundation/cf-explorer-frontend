@@ -95,6 +95,9 @@ export const Rrounded = styled(Box)`
   ${(props) => props.theme.breakpoints.down("lg")} {
     max-width: 336px;
   }
+  ${({ theme }) => theme.breakpoints.down(430)} {
+    flex-direction: column;
+  }
 `;
 
 export const MintContainer = styled(Box)<{ isMobile?: number }>`

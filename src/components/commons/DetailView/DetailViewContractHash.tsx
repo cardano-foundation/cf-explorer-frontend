@@ -114,7 +114,6 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
 
   return (
     <ViewDetailDrawer
-      hideBackdrop
       transitionDuration={100}
       data-testid="view-detail-drawer-contract-hash"
       anchor="right"

@@ -36,6 +36,25 @@ export const ContractSideViewContent = styled(Box)`
   margin-top: 16px;
   flex: 1;
   overflow-y: auto;
+  padding-bottom: 12px;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  &:hover {
+    border-radius: 8px 0px 0px 8px;
+    &::-webkit-scrollbar-thumb {
+      background: ${({ theme }) => theme.palette.secondary.light};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${({ theme }) => theme.palette.primary[100]};
+    }
+  }
 `;
 
 export const ContractSideViewHeader = styled(Box)``;
