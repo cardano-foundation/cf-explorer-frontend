@@ -118,6 +118,7 @@ export const WrapperDelegationTab = styled(Box)`
   ${({ theme }) => theme.breakpoints.down("sm")} {
     flex-direction: column;
     gap: 10px;
+    align-items: start;
   }
 `;
 

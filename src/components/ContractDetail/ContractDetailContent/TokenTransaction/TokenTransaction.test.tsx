@@ -47,7 +47,8 @@ describe("TokenTransaction component", () => {
 
   it("when user select a row", () => {
     render(<TokenTransaction />);
-    fireEvent.click(screen.getByRole("cell", { name: /transaction-hash/i }));
-    expect(screen.getByTestId(/view-detail-drawer/i)).toBeInTheDocument();
+    const cellTxHash = screen.getAllByRole("cell", { name: /transaction-hash/i });
+    fireEvent.click(cellTxHash[0]);
+    expect(screen.getAllByTestId(/view-detail-drawer/i)[0]).toBeInTheDocument();
   });
 });

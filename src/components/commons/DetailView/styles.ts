@@ -540,14 +540,16 @@ export const TimeDuration = styled("small")(({ theme }) => ({
   padding: 10
 }));
 
-export const ViewDetailDrawerContractHash = styled(ViewDetailDrawer)`
-  width: 100%;
-`;
+export const ViewDetailDrawerContractHash = styled(ViewDetailDrawer)``;
 
-export const ViewDetailContainerContractHash = styled(ViewDetailContainer)`
-  margin-left: 0;
-`;
-export const ViewDetailScrollContractHash = styled(ViewDetailScroll)`
-  padding-top: 0;
-  margin-right: 0;
+export const ViewDetailContainerContractHash = styled(ViewDetailContainer)``;
+export const ViewDetailScrollContractHash = styled(ViewDetailScroll)``;
+
+export const StyledSpendviewDrawer = styled(Drawer)`
+  z-index: 1302;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    top: 76px;
+    height: calc(100vh - 76px);
+    max-width: unset;
+  }
 `;

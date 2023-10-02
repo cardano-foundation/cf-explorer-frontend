@@ -43,7 +43,7 @@ describe("DelegationOverview component", () => {
       </Router>
     );
 
-    fireEvent.click(screen.getByRole("link", { name: /50/i }));
+    fireEvent.click(screen.getAllByRole("link", { name: /50/i })[0]);
     expect(history.location.pathname).toBe(details.epoch(mockData.epochNo));
   });
 });

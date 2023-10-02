@@ -16,7 +16,7 @@ import {
   handleClicktWithoutAnchor
 } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import ViewAllButton from "src/components/commons/ViewAllButton";
+import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
 import useFetch from "src/commons/hooks/useFetch";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import ADAicon from "src/components/commons/ADAIcon";
@@ -60,7 +60,7 @@ const LatestTransactions: React.FC = () => {
           <TimeDuration>
             <FormNowMessage time={lastUpdated} />
           </TimeDuration>
-          <ViewAllButton data-testid="view-all" to={routers.TRANSACTION_LIST} />
+          <ViewAllButtonExternal data-testid="view-all" to={routers.TRANSACTION_LIST} />
         </Actions>
       </Header>
       <TimeDurationSm>

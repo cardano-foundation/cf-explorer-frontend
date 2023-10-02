@@ -30,12 +30,8 @@ export const BackButton = styled(Box)`
   gap: 10px;
   cursor: pointer;
   @media screen and (max-width: ${breakpoints.values.md}px) {
-    margin-top: 30px;
     position: relative;
     top: 5px;
-  }
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    margin-top: 0px;
   }
 `;
 
@@ -69,6 +65,7 @@ export const HeaderTitle = styled(Box)`
   color: ${(props) => props.theme.palette.secondary.main};
   font-size: 2.25rem;
   margin: 0.5rem 0;
+  text-transform: capitalize;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 1.5rem;
   }

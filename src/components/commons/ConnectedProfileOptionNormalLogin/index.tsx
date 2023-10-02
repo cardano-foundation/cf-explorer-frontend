@@ -38,7 +38,7 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
 
   const open = Boolean(anchorEl);
   const id = open ? "profile-popover" : undefined;
-
+  const username = userData?.username || userData?.email || "";
   const handleDisconnect = async () => {
     // eslint-disable-next-line no-console
     const themeMode = JSON.parse(localStorage.getItem("persist:user") || "")?.theme || "light";
@@ -70,7 +70,7 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
   return (
     <Box>
       <StyledButton aria-describedby={id} type="button" onClick={handleClick}>
-        <Span> {userData?.username?.split("@")[0]}</Span>
+        <Span> {username.split("@")[0]}</Span>
       </StyledButton>
       <WrapContent
         id={id}

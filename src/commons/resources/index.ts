@@ -110,6 +110,8 @@ import CardanoBlueLogo from "./icons/cardanoBlue.svg";
 import CardanoBlueDarkmodeLogo from "./icons/cardanoBlueDarkmode.svg";
 import TwitterXIcon from "./icons/TwitterX.svg";
 import NoRecordsIcon from "./images/NoRecords.svg";
+import GiftIcon from "./images/gift-icon.png";
+import DelegatingIcon from "./icons/delegating-icon.svg";
 import sunIcon from "./icons/sun.svg";
 import moonIcon from "./icons/moon.svg";
 import WhiteSearchIcon from "./icons/white-search-icon.svg";
@@ -231,6 +233,8 @@ export {
   CardanoBlueDarkmodeLogo,
   TwitterXIcon,
   NoRecordsIcon,
+  GiftIcon,
+  DelegatingIcon,
   LogoDarkmodeFullIcon,
   LogoDarkmodeShortIcon,
   // React component
@@ -413,6 +417,10 @@ export { ReactComponent as TwitterX } from "./icons/TwitterX.svg";
 export { ReactComponent as ExclamationTriangleIcon } from "./icons/exclamation-triangle.svg";
 export { ReactComponent as ADAactive } from "./icons/Staking/ADAactive.svg";
 export { ReactComponent as ADAinactive } from "./icons/Staking/ADAinactive.svg";
+export { ReactComponent as OutlineEye } from "./icons/outline-eye.svg";
+export { ReactComponent as Polygon } from "./icons/polygon.svg";
+export { ReactComponent as PoundSign } from "./icons/pound-sign.svg";
+export { ReactComponent as ArrowDown } from "./icons/arrow-down.svg";
 export { ReactComponent as SeeMoreIconHome } from "./icons/seemore.svg";
 export { ReactComponent as WalletIconComponent } from "./icons/walletIcon.svg";
 export { ReactComponent as CubeIcon } from "./icons/cube.svg";
