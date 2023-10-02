@@ -57,7 +57,7 @@ const RecentRegistrations: React.FC<Props> = ({ setShowBackButton }) => {
         <DescriptionText sx={{ mr: 0 }}>{t("common.registrationList")}</DescriptionText>
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
-            {t("common.showing")} {data.length} {data.length > 1 ? t("common.result") : t("common.results")}
+            {t("common.showing")} {data.length} {data.length < 1 ? t("common.result") : t("common.results")}
           </WrapFilterDescription>
           <CustomFilter
             filterValue={params}

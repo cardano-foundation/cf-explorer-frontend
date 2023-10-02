@@ -38,6 +38,7 @@ export const StyledInput = styled("input")`
   overflow: hidden;
   text-overflow: ellipsis;
   background: ${({ theme }) => theme.palette.secondary[0]};
+  color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
 export const SubmitButton = styled(Button)`
