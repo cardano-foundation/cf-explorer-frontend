@@ -234,7 +234,9 @@ const Card = ({
                         isFailed
                           ? theme.palette.secondary[600]
                           : type === "up"
-                          ? theme.palette.success[800]
+                          ? theme.isDark
+                            ? theme.palette.success[700]
+                            : theme.palette.success[800]
                           : theme.palette.error[700]
                       }
                       fontWeight="bold"

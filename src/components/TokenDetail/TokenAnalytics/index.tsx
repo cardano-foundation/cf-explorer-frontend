@@ -112,6 +112,15 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                 </Tabs>
               </Grid>
             </Grid>
+            <Grid item xs={8} sm={8}>
+              <Tabs>
+                {options.map(({ value, label }) => (
+                  <Tab key={value} active={rangeTime === value ? 1 : 0} onClick={() => setRangeTime(value)}>
+                    {label}
+                  </Tab>
+                ))}
+              </Tabs>
+            </Grid>
             <ChartBox>
               {loading || !data ? (
                 <SkeletonUI variant="rectangular" style={{ height: "375px", display: "block" }} />
@@ -125,8 +134,16 @@ const AddressAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                   >
                     <defs>
                       <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
-                        <stop offset="100%" stopColor={theme.palette.primary.main} stopOpacity={0.2} />
+                        <stop
+                          offset="0%"
+                          stopColor={theme.palette.primary.main}
+                          stopOpacity={theme.isDark ? 0.6 : 0.2}
+                        />
+                        <stop
+                          offset="100%"
+                          stopColor={theme.palette.primary.main}
+                          stopOpacity={theme.isDark ? 0.6 : 0.2}
+                        />
                       </linearGradient>
                     </defs>
                     <XAxis

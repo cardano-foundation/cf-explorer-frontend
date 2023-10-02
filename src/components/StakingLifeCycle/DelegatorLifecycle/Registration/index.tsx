@@ -9,7 +9,7 @@ import CopyButton from "src/components/commons/CopyButton";
 import DelegatorDetailContext from "../DelegatorDetailContext";
 import RecentRegistrations from "./RecentRegistrations";
 import { RegistrationDraw } from "./RegistrationDraw";
-import { StakeLink, StyledCustomModal } from "./styles";
+import { StakeLink, StyledCustomModal, WrapContent } from "./styles";
 
 const Registration = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -41,7 +41,7 @@ export const RegistrationCertificateModal = ({ stake, open, handleCloseModal }: 
 
   return (
     <StyledCustomModal open={open} onClose={handleCloseModal} title="Registration certificate">
-      <Box p={3}>
+      <WrapContent>
         <Box fontWeight={"bold"} mb={1} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
           {t("common.stakeAddress")}
         </Box>
@@ -51,7 +51,7 @@ export const RegistrationCertificateModal = ({ stake, open, handleCloseModal }: 
             <CopyButton text={stake} />
           </Box>
         )}
-      </Box>
+      </WrapContent>
     </StyledCustomModal>
   );
 };

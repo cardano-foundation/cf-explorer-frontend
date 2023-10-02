@@ -10,16 +10,16 @@ import {
   DelegationHistoryMainIcon,
   DelegationIconUrl,
   FileEditIcon,
-  InstantaneousHistoryIconUrl,
-  MetadataIconUrl,
-  MintingIconUrl,
+  InstantaneousHistoryComponent,
+  MintingIconComponent,
   NoteEditIcon,
-  ProtocolUpdateIconUrl,
-  RewardsDistributionIconUrl,
+  NoteEditIconComponent,
+  ProtocolUpdateComponent,
+  RewardsDistributionComponent,
   RocketIconUrl,
-  StakeCertificatesIconUrl,
+  StakeCertificatesComponent,
   USDIconComponent,
-  WithdrawlIcon,
+  WithdrawlIconComponent,
   cubeIconUrl
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
@@ -102,34 +102,34 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
     { key: "contracts", label: t("glossary.contracts"), icon: <FileEditIcon /> },
     { key: "collaterals", label: t("glossary.collateral"), icon: <USDIconComponent /> },
     { key: "notes", label: t("tab.notes"), icon: <DetailLinkImage src={NoteEditIcon} alt="contact" /> },
-    { key: "withdrawals", label: t("tab.withdrawal"), icon: <DetailLinkImage src={WithdrawlIcon} alt="contact" /> },
+    { key: "withdrawals", label: t("tab.withdrawal"), icon: <WithdrawlIconComponent /> },
     {
       key: "delegations",
       label: t("tab.delegations"),
       icon: <DetailLinkImage src={DelegationIconUrl} alt="contact" />
     },
-    { key: "mints", label: t("tab.minting"), icon: <DetailLinkImage src={MintingIconUrl} alt="contact" /> },
+    { key: "mints", label: t("tab.minting"), icon: <MintingIconComponent /> },
     {
       key: "poolCertificates",
       label: t("tab.poolCertificates"),
-      icon: <DetailLinkImage src={RewardsDistributionIconUrl} alt="contact" />
+      icon: <RewardsDistributionComponent />
     },
     {
       key: "stakeCertificates",
       label: t("tab.stakeCertificates"),
-      icon: <DetailLinkImage src={StakeCertificatesIconUrl} alt="contact" />
+      icon: <StakeCertificatesComponent />
     },
     {
       key: "protocols",
       label: t("tab.protocolUpdate"),
-      icon: <DetailLinkImage src={ProtocolUpdateIconUrl} alt="contact" />
+      icon: <ProtocolUpdateComponent />
     },
     {
       key: "instantaneousRewards",
       label: t("glossary.instantaneousRewards"),
-      icon: <DetailLinkImage src={InstantaneousHistoryIconUrl} alt="contact" />
+      icon: <InstantaneousHistoryComponent />
     },
-    { key: "metadata", label: t("glossary.metadata"), icon: <DetailLinkImage src={MetadataIconUrl} alt="contact" /> }
+    { key: "metadata", label: t("glossary.metadata"), icon: <NoteEditIconComponent /> }
   ];
 
   const renderContent = () => {

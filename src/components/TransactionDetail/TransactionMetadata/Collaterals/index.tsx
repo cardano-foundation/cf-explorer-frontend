@@ -176,7 +176,13 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                 <Box
                   component={"span"}
                   whiteSpace="nowrap"
-                  color={(theme) => (type === "output" ? theme.palette.success[800] : theme.palette.error[700])}
+                  color={(theme) =>
+                    type === "output"
+                      ? theme.isDark
+                        ? theme.palette.success[700]
+                        : theme.palette.success[800]
+                      : theme.palette.error[700]
+                  }
                   fontWeight="bold"
                   mr={1}
                 >

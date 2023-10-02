@@ -123,7 +123,7 @@ const SPOLifecycle = () => {
           <BoxItemStyled sidebar={+sidebar}>
             <BoxSwitchContainer sidebar={+sidebar}>
               <LabelSwitch>
-                {validMode === "timeline" ? t("common.switchTablularView") : t("slc.switchTimelineView")} view
+                {validMode === "timeline" ? t("common.switchTablularView") : t("slc.switchTimelineView")}
               </LabelSwitch>
               <SwitchGroup>
                 <ButtonSwitch active={+(validMode === "timeline")} onClick={() => changeMode("timeline")}>
