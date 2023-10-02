@@ -164,7 +164,7 @@ export const StyledCopyButton = styled(CopyButton)`
 `;
 export const StyledGridItem = styled(Grid)(({ theme }) => ({
   "& > div": {
-    background: theme.palette.secondary[0],
+    background: theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0],
     padding: 24
   },
   [theme.breakpoints.down("sm")]: {

@@ -107,7 +107,7 @@ export const OverviewIcon = styled(Box)`
 
 export const Amount = styled(Box)<{ type: "up" | "down" }>(({ type, theme }) => ({
   color:
-    type === "up" ? (theme.isDark ? theme.palette.success[100] : theme.palette.success[800]) : theme.palette.error[700],
+    type === "up" ? (theme.isDark ? theme.palette.success[700] : theme.palette.success[800]) : theme.palette.error[700],
   display: "flex",
   alignItems: "center",
   gap: 5,

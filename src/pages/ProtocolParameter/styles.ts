@@ -104,11 +104,7 @@ export const ColumnProtocol = styled(Box)<{ isLink: number; to: string }>(({ isL
   minHeight: "16px",
   textOverflow: "ellipsis",
   display: "block",
-  background: isLink
-    ? theme.mode === "dark"
-      ? alpha(theme.palette.success[700], 0.15)
-      : theme.palette.success[100]
-    : "transparent",
+  background: isLink ? theme.palette.success[100] : "transparent",
   color: isLink ? `${theme.palette.success[800]} !important` : `${theme.palette.secondary.light} !important`,
   fontWeight: isLink ? "bold" : "normal"
 }));

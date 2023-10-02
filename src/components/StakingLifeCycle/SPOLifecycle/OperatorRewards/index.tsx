@@ -130,6 +130,7 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void 
           total: fetchData.total,
           onChange: (page, size) => setPagination({ page: page - 1, size })
         }}
+        isModal
       />
     </CustomModal>
   );

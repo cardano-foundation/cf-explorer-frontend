@@ -45,7 +45,7 @@ const RewardsDistributionTab = () => {
               color={
                 isPositiveNumber
                   ? theme.isDark
-                    ? theme.palette.success[100]
+                    ? theme.palette.success[700]
                     : theme.palette.success[800]
                   : theme.palette.error[700]
               }
@@ -80,7 +80,7 @@ const RewardsDistributionTab = () => {
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
             {t("common.showing")} {Math.min(total, pageInfo.size)}{" "}
-            {Math.min(total, pageInfo.size) > 1 ? t("common.result") : t("common.results")}
+            {Math.min(total, pageInfo.size) <= 1 ? t("common.result") : t("common.results")}
           </WrapFilterDescription>
         </Box>
       </Box>

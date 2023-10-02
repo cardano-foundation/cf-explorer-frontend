@@ -1,10 +1,10 @@
 import { Box, useTheme } from "@mui/material";
 import { stringify } from "qs";
-import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
-import { TransferIcon } from "src/commons/resources";
+import { DownRedUtxoDarkmode, TransferIcon, UpGreenUtxoDarkmode } from "src/commons/resources";
 import receiveImg from "src/commons/resources/images/receiveImg.svg";
 import sendImg from "src/commons/resources/images/sendImg.svg";
 import { details } from "src/commons/routers";
@@ -81,7 +81,18 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
               </Box>
             ) : (
               <Box width={50} display={transaction?.balance !== null ? "" : "none"}>
-                <Img src={type !== "up" ? receiveImg : sendImg} alt="send icon" />
+                <Img
+                  src={
+                    type !== "up"
+                      ? theme.isDark
+                        ? DownRedUtxoDarkmode
+                        : receiveImg
+                      : theme.isDark
+                      ? UpGreenUtxoDarkmode
+                      : sendImg
+                  }
+                  alt="send icon"
+                />
               </Box>
             )}
             <CustomTooltip title={transaction.hash}>
@@ -142,7 +153,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
         if (isUp) {
           colorTheme = theme.palette.success[800];
           if (theme.mode === "dark") {
-            colorTheme = theme.palette.success.main;
+            colorTheme = theme.palette.success[700];
           }
         } else {
           colorTheme = theme.palette.error[700];
