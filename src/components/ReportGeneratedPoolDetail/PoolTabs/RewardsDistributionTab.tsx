@@ -50,7 +50,16 @@ const RewardsDistributionTab = () => {
         const isPositiveNumber = data.amount > 0;
         return (
           <ADAValueLabel>
-            <Box component={"span"} color={isPositiveNumber ? theme.palette.success[800] : theme.palette.error[700]}>
+            <Box
+              component={"span"}
+              color={
+                isPositiveNumber
+                  ? theme.isDark
+                    ? theme.palette.success[100]
+                    : theme.palette.success[800]
+                  : theme.palette.error[700]
+              }
+            >
               {isPositiveNumber ? "+" : "-"} {formatADAFull(data.amount)} <ADAicon />
             </Box>
           </ADAValueLabel>

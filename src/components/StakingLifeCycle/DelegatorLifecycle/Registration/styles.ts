@@ -29,7 +29,7 @@ export const BoxGroup = styled(Box)(({ theme }) => ({
 
 export const WrapContent = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
-  background: theme.palette.secondary[100]
+  background: theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0]
 }));
 
 export const HoldBox = styled(Box)(({ theme }) => ({
