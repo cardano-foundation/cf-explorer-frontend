@@ -1,6 +1,7 @@
 import userEvent from "@testing-library/user-event";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { act, render, screen } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
@@ -25,15 +26,23 @@ const mockTransaction = {
 };
 const { tx } = mockTransaction;
 jest.mock("src/commons/hooks/useFetch");
-
+jest.mock("react-redux", () => {
+  return {
+    __esModule: true,
+    ...jest.requireActual("react-redux"),
+    useSelector: jest.fn()
+  };
+});
 describe("DetailViewTransaction component", () => {
   beforeEach(() => {
     (useFetch as jest.Mock).mockReturnValue({
       data: mockTransaction
     });
+    const mockUseSelector = useSelector as jest.Mock;
+    mockUseSelector.mockReturnValueOnce(tx.epochNo).mockReturnValueOnce(tx.blockNo).mockReturnValue({ sidebar: true });
   });
   it("should component render", () => {
-    render(<DetailViewTransaction handleClose={jest.fn()} hash={mockHash} />);
+    render(<DetailViewTransaction handleClose={jest.fn()} hash={mockHash} open={true} />);
     expect(screen.getByText(tx.blockNo)).toBeInTheDocument();
     expect(screen.getByText(tx.status)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: mockHash })).toBeInTheDocument();
@@ -43,7 +52,7 @@ describe("DetailViewTransaction component", () => {
     const history = createMemoryHistory();
     render(
       <Router history={history}>
-        <DetailViewTransaction handleClose={jest.fn()} hash={mockHash} />
+        <DetailViewTransaction handleClose={jest.fn()} hash={mockHash} open={true} />
       </Router>
     );
     act(() => {

@@ -1,16 +1,16 @@
-import { Box } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
-import { details } from "src/commons/routers";
-import { StyledLink } from "src/components/share/styled";
 import { BalanceIcon, HashtagIcon } from "src/commons/resources";
+import { details } from "src/commons/routers";
 import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import ADAicon from "src/components/commons/ADAIcon";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomIcon from "src/components/commons/CustomIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import ADAicon from "src/components/commons/ADAIcon";
+import { StyledLink } from "src/components/share/styled";
 
 import { OverviewIcon, TextTx, TextUserInfo } from "./styles";
 
@@ -37,8 +37,7 @@ const UserInfo = ({
             <CustomIcon
               icon={HashtagIcon}
               width={17}
-              color={(theme) => theme.palette.primary.main}
-              fill="currentColor"
+              fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
             />
           </OverviewIcon>
           &nbsp;
@@ -51,7 +50,11 @@ const UserInfo = ({
         </Box>
         <Box display={"flex"} alignItems="center" mt={isTablet ? "5px" : "0px"}>
           <OverviewIcon marginRight={1}>
-            <BalanceIcon stroke={theme.palette.primary.main} />
+            <CustomIcon
+              icon={BalanceIcon}
+              width={17}
+              stroke={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
+            />
           </OverviewIcon>
           <TextUserInfo>
             <Box component={"span"} mr={1}>

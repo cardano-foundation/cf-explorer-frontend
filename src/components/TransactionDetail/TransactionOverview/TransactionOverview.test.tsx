@@ -196,7 +196,8 @@ describe("TransactionOverview component", () => {
     expect(screen.getByText(/confirmations/i)).toBeInTheDocument();
     expect(screen.getByText(/total output/i)).toBeInTheDocument();
     expect(screen.getByText(/transaction fees/i)).toBeInTheDocument();
-    expect(screen.getByText(/block/i)).toBeInTheDocument();
+    const block = screen.getAllByText(/block/i)[0] as HTMLAnchorElement;
+    expect(block).toBeInTheDocument();
   });
 
   it("should user goto detail page", () => {

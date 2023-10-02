@@ -303,7 +303,7 @@ const HomeStatistic = () => {
                   <Box color={({ palette }) => palette.secondary.light}>
                     {t("glossary.activeStake")} (<ADAicon width={10} />){": "}
                     <CustomTooltip title={formatADAFull(activeStake)}>
-                      <span data-testid="active-stake-v-= alue">{formatADA(activeStake)}</span>
+                      <span data-testid="active-stake-value">{formatADA(activeStake)}</span>
                     </CustomTooltip>
                   </Box>
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>

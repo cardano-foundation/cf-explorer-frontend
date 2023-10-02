@@ -500,7 +500,7 @@ export const StakeKeyStatus = styled("small")<{ status: StakeStatus }>`
       case STAKE_KEY_STATUS.ACTIVE:
         return props.theme.palette.success[800];
       default:
-        return props.theme.palette.warning[800];
+        return props.theme.isDark ? props.theme.palette.warning[100] : props.theme.palette.warning[800];
     }
   }};
   background-color: ${(props) => {
@@ -508,7 +508,7 @@ export const StakeKeyStatus = styled("small")<{ status: StakeStatus }>`
       case STAKE_KEY_STATUS.ACTIVE:
         return props.theme.palette.success[100];
       default:
-        return props.theme.palette.warning[100];
+        return props.theme.isDark ? props.theme.palette.warning[800] : props.theme.palette.warning[100];
     }
   }};
   padding: 3px 10px;
@@ -540,14 +540,16 @@ export const TimeDuration = styled("small")(({ theme }) => ({
   padding: 10
 }));
 
-export const ViewDetailDrawerContractHash = styled(ViewDetailDrawer)`
-  width: 100%;
-`;
+export const ViewDetailDrawerContractHash = styled(ViewDetailDrawer)``;
 
-export const ViewDetailContainerContractHash = styled(ViewDetailContainer)`
-  margin-left: 0;
-`;
-export const ViewDetailScrollContractHash = styled(ViewDetailScroll)`
-  padding-top: 0;
-  margin-right: 0;
+export const ViewDetailContainerContractHash = styled(ViewDetailContainer)``;
+export const ViewDetailScrollContractHash = styled(ViewDetailScroll)``;
+
+export const StyledSpendviewDrawer = styled(Drawer)`
+  z-index: 1302;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    top: 76px;
+    height: calc(100vh - 76px);
+    max-width: unset;
+  }
 `;

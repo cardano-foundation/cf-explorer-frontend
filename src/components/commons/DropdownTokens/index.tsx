@@ -99,7 +99,6 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({
       }}
     >
       <OptionSelect sx={{ display: "none" }} value="default">
-        {" "}
         {!hideInputLabel ? (isSend ? t("common.sent") + " " : t("common.received")) + " " : ""} {t("tab.viewTokens")}
       </OptionSelect>
       {tokens.map((token, idx) => {

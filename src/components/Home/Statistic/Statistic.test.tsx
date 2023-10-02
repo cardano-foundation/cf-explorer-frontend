@@ -82,7 +82,7 @@ describe("HomeStatistic", () => {
     expect(screen.getByTestId("market-cap-box-title")).toBeInTheDocument();
     expect(screen.getByTestId("market-cap-value")).toHaveTextContent(`$${numberWithCommas(mockUSDMarket.market_cap)}`);
     expect(screen.getByTestId("last-update-market-cap")).toHaveTextContent(
-      `Last updated ${moment(mockUSDMarket.last_updated).fromNow()}`
+      `Last updated ${moment(mockUSDMarket.last_updated + "Z").fromNow()}`
     );
   });
 

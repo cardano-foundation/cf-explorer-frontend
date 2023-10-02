@@ -6,7 +6,7 @@ import { Column } from "src/components/commons/Table";
 import ParseScriptModal from "src/components/ParseScriptModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
-import { TableProtocol, UpdatedValue } from "./styles";
+import { TableProtocol, UpdatedValue, Wrapper } from "./styles";
 
 interface IProps {
   data: TProtocolMerge[];
@@ -66,7 +66,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
   ];
 
   return (
-    <>
+    <Wrapper>
       <TableProtocol columns={columns} data={data.filter((item) => item.value !== null)} />
       <ParseScriptModal
         open={!!costModelScript}
@@ -74,7 +74,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
         script={costModelScript}
         title={t("common.CostModel")}
       />
-    </>
+    </Wrapper>
   );
 };
 

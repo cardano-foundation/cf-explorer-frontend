@@ -45,7 +45,7 @@ defaultAxios.interceptors.response.use(
       axios.defaults.headers.common["Authorization"] = "Bearer " + response.data?.accessToken;
       return authAxios(originRequest);
     }
-    if (error.response?.data?.errorCode === "CC_4") {
+    if (error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED) {
       removeAuthInfo();
       if (window.location.href.includes("/account")) {
         window.location.href = "/";
@@ -92,7 +92,7 @@ defaultAxiosDownload.interceptors.response.use(
       axios.defaults.headers.common["Authorization"] = "Bearer " + response.data?.accessToken;
       return authAxios(originRequest);
     }
-    if (error.response?.data?.errorCode === "CC_4") {
+    if (error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED) {
       removeAuthInfo();
       if (window.location.href.includes("/account")) {
         window.location.href = "/";
@@ -157,7 +157,7 @@ authAxios.interceptors.response.use(
       axios.defaults.headers.common["Authorization"] = "Bearer " + response.data?.accessToken;
       return authAxios(originRequest);
     }
-    if (error.response?.data?.errorCode === "CC_4") {
+    if (error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED) {
       removeAuthInfo();
       if (window.location.href.includes("/account")) {
         window.location.href = "/";
@@ -202,7 +202,7 @@ uploadAxios.interceptors.response.use(
       axios.defaults.headers.common["Authorization"] = "Bearer " + response.data?.accessToken;
       return authAxios(originRequest);
     }
-    if (error.response?.data?.errorCode === "CC_4") {
+    if (error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED) {
       removeAuthInfo();
       if (window.location.href.includes("/account")) {
         window.location.href = "/";
