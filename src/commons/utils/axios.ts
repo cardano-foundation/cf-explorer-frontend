@@ -5,7 +5,7 @@ import i18n from "src/i18n";
 
 import { removeAuthInfo } from "./helper";
 import { refreshToken } from "./userRequest";
-import { API_URL, AUTH_API_URL } from "./constants";
+import { ACCOUNT_ERROR, API_URL, AUTH_API_URL } from "./constants";
 
 const defaultAxios = axios.create({
   baseURL: API_URL,
@@ -34,8 +34,8 @@ defaultAxios.interceptors.response.use(
   async (error) => {
     const originRequest = error.config;
     if (
-      error.response?.data?.errorCode === "CC_2" &&
-      error.response?.data?.errorCode === "CC_3" &&
+      (error.response?.data?.errorCode === ACCOUNT_ERROR.INVALID_TOKEN ||
+        error.response?.data?.errorCode === ACCOUNT_ERROR.TOKEN_EXPIRED) &&
       !originRequest._retry
     ) {
       originRequest._retry = true;
@@ -45,7 +45,7 @@ defaultAxios.interceptors.response.use(
       axios.defaults.headers.common["Authorization"] = "Bearer " + response.data?.accessToken;
       return authAxios(originRequest);
     }
-    if (error.response?.data?.errorCode === "CC_4") {
+    if (error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED) {
       removeAuthInfo();
       if (window.location.href.includes("/account")) {
         window.location.href = "/";
@@ -81,8 +81,8 @@ defaultAxiosDownload.interceptors.response.use(
   async (error) => {
     const originRequest = error.config;
     if (
-      error.response?.data?.errorCode === "CC_2" &&
-      error.response?.data?.errorCode === "CC_3" &&
+      (error.response?.data?.errorCode === ACCOUNT_ERROR.INVALID_TOKEN ||
+        error.response?.data?.errorCode === ACCOUNT_ERROR.TOKEN_EXPIRED) &&
       !originRequest._retry
     ) {
       originRequest._retry = true;
@@ -92,7 +92,7 @@ defaultAxiosDownload.interceptors.response.use(
       axios.defaults.headers.common["Authorization"] = "Bearer " + response.data?.accessToken;
       return authAxios(originRequest);
     }
-    if (error.response?.data?.errorCode === "CC_4") {
+    if (error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED) {
       removeAuthInfo();
       if (window.location.href.includes("/account")) {
         window.location.href = "/";
@@ -145,7 +145,11 @@ authAxios.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originRequest = error.config;
-    if (error.response?.data?.errorCode === "CC_3" && !originRequest._retry) {
+    if (
+      (error.response?.data?.errorCode === ACCOUNT_ERROR.INVALID_TOKEN ||
+        error.response?.data?.errorCode === ACCOUNT_ERROR.TOKEN_EXPIRED) &&
+      !originRequest._retry
+    ) {
       originRequest._retry = true;
       const response = await refreshToken({ refreshJwt: localStorage.getItem("refreshToken") || "" });
       localStorage.setItem("token", response.data?.accessToken);
@@ -153,7 +157,7 @@ authAxios.interceptors.response.use(
       axios.defaults.headers.common["Authorization"] = "Bearer " + response.data?.accessToken;
       return authAxios(originRequest);
     }
-    if (error.response?.data?.errorCode === "CC_4") {
+    if (error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED) {
       removeAuthInfo();
       if (window.location.href.includes("/account")) {
         window.location.href = "/";
@@ -187,8 +191,8 @@ uploadAxios.interceptors.response.use(
   async (error) => {
     const originRequest = error.config;
     if (
-      error.response?.data?.errorCode === "CC_2" &&
-      error.response?.data?.errorCode === "CC_3" &&
+      (error.response?.data?.errorCode === ACCOUNT_ERROR.INVALID_TOKEN ||
+        error.response?.data?.errorCode === ACCOUNT_ERROR.TOKEN_EXPIRED) &&
       !originRequest._retry
     ) {
       originRequest._retry = true;
@@ -198,7 +202,7 @@ uploadAxios.interceptors.response.use(
       axios.defaults.headers.common["Authorization"] = "Bearer " + response.data?.accessToken;
       return authAxios(originRequest);
     }
-    if (error.response?.data?.errorCode === "CC_4") {
+    if (error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED) {
       removeAuthInfo();
       if (window.location.href.includes("/account")) {
         window.location.href = "/";
