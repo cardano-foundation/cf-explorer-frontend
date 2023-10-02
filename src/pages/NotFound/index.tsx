@@ -1,5 +1,6 @@
 import { Container, styled } from "@mui/material";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { NotFoundIcon } from "src/commons/resources";
@@ -45,6 +46,7 @@ const BackToHome = styled(Link)`
 `;
 
 const NotFound = () => {
+  const { t } = useTranslation();
   useEffect(() => {
     document.title = `Page Not Found | Cardano Blockchain Explorer`;
   }, []);
@@ -52,8 +54,8 @@ const NotFound = () => {
   return (
     <NotFoundContainer>
       <Image src={NotFoundIcon} alt="404" />
-      <Title>Sorry! The page you’re looking for cannot be found.</Title>
-      <BackToHome to={routers.HOME}>Back to home</BackToHome>
+      <Title>{t("common.pageNotFound")}</Title>
+      <BackToHome to={routers.HOME}>{t("common.back2HomePage")}</BackToHome>
     </NotFoundContainer>
   );
 };

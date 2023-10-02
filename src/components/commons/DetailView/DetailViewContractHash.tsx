@@ -1,31 +1,31 @@
-import { Box, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { CgClose } from "react-icons/cg";
+import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
-import ContractDiagrams from "src/components/ContractDiagrams";
+import ContractSideView from "src/components/Contracts/ContractSideView";
 
 import CustomTooltip from "../CustomTooltip";
-import NoRecord from "../NoRecord";
 import {
   CloseButton,
-  DetailLabel,
-  DetailLabelSkeleton,
-  DetailValue,
-  DetailValueSkeleton,
-  DetailsInfoItem,
-  Group,
   HeaderContainer,
-  ProgressSkeleton,
   ViewDetailContainer,
-  ViewDetailContainerContractHash,
-  ViewDetailDrawerContractHash,
-  ViewDetailHeader,
+  DetailsInfoItem,
+  DetailLabel,
+  DetailValue,
+  DetailLabelSkeleton,
+  DetailValueSkeleton,
+  ProgressSkeleton,
+  Group,
   ViewDetailScroll,
-  ViewDetailScrollContractHash
+  ViewDetailHeader,
+  ViewDetailContainerContractHash,
+  ViewDetailScrollContractHash,
+  ViewDetailDrawer
 } from "./styles";
+import NoRecord from "../NoRecord";
 
 type DetailViewEpochProps = {
   handleClose: () => void;
@@ -37,8 +37,7 @@ type DetailViewEpochProps = {
 const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handleClose, address, open }) => {
   const { t } = useTranslation();
   const [urlFetch, setUrlFetch] = useState("");
-  const { data, loading, initialized } = useFetch<IContractItemTx[]>(urlFetch, undefined, false);
-  const theme = useTheme();
+  const { data, loading } = useFetch<IContractItemTx[]>(urlFetch, undefined, false);
 
   useEffect(() => {
     if (!txHash) {
@@ -46,10 +45,10 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
     } else {
       setUrlFetch(API.TRANSACTION.HASH_CONTRACT(txHash, address));
     }
-  }, [txHash, address]);
+  }, [address, txHash]);
 
   const renderContent = () => {
-    if (loading || !initialized) {
+    if (!data || loading || !address) {
       return (
         <>
           <ViewDetailHeader />
@@ -92,35 +91,39 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
       );
     }
     return (
-      <ViewDetailContainerContractHash>
-        <ViewDetailScrollContractHash>
-          {data?.[0] ? (
-            <ContractDiagrams item={data[0]} txHash={txHash} handleClose={handleClose} />
-          ) : (
-            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "10px" }}>
-              <CustomTooltip title={t("common.close")}>
-                <CloseButton onClick={handleClose} sx={{ alignSelf: "end" }}>
-                  <CgClose color={theme.palette.secondary.light} />
-                </CloseButton>
-              </CustomTooltip>
-              <NoRecord sx={{ paddingTop: 10 }} width={"200px"} />
-            </Box>
-          )}
-        </ViewDetailScrollContractHash>
-      </ViewDetailContainerContractHash>
+      <>
+        <ViewDetailContainerContractHash>
+          <ViewDetailScrollContractHash>
+            {data?.[0] ? (
+              <ContractSideView data={data[0]} txHash={txHash} handleClose={handleClose} />
+            ) : (
+              <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "10px" }}>
+                <CustomTooltip title={t("common.close")}>
+                  <CloseButton onClick={handleClose} sx={{ alignSelf: "end" }}>
+                    <CgClose />
+                  </CloseButton>
+                </CustomTooltip>
+                <NoRecord sx={{ paddingTop: 10 }} width={"200px"} />
+              </Box>
+            )}
+          </ViewDetailScrollContractHash>
+        </ViewDetailContainerContractHash>
+      </>
     );
   };
 
   return (
-    <ViewDetailDrawerContractHash
+    <ViewDetailDrawer
+      hideBackdrop
+      transitionDuration={100}
+      data-testid="view-detail-drawer-contract-hash"
       anchor="right"
       open={Boolean(open && txHash)}
       variant="temporary"
       onClose={handleClose}
-      data-testid="view-detail-drawer-contract-hash"
     >
       {renderContent()}
-    </ViewDetailDrawerContractHash>
+    </ViewDetailDrawer>
   );
 };
 

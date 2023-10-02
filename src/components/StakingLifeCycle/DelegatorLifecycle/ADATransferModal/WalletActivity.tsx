@@ -81,6 +81,7 @@ const WalletActivity: React.FC = () => {
           total: fetchData.total,
           onChange: (page, size) => setPageInfo({ page: page - 1, size })
         }}
+        isModal
       />
     </Box>
   );

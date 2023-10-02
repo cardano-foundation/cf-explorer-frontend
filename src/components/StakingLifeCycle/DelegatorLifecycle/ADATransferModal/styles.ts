@@ -96,7 +96,8 @@ export const StyledLinkKey = styled(Link)`
 
 export const OverviewIcon = styled(Box)`
   border-radius: 49px;
-  background: ${(props) => props.theme.palette.primary[200]};
+  background: ${(props) =>
+    props.theme.isDark ? props.theme.palette.secondary[100] : props.theme.palette.primary[200]};
   width: 29px;
   height: 29px;
   display: flex;
@@ -105,7 +106,8 @@ export const OverviewIcon = styled(Box)`
 `;
 
 export const Amount = styled(Box)<{ type: "up" | "down" }>(({ type, theme }) => ({
-  color: type === "up" ? theme.palette.success[800] : theme.palette.error[700],
+  color:
+    type === "up" ? (theme.isDark ? theme.palette.success[100] : theme.palette.success[800]) : theme.palette.error[700],
   display: "flex",
   alignItems: "center",
   gap: 5,

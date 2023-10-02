@@ -1,5 +1,6 @@
 import { BoxProps, IconButtonProps, Modal, ModalProps, useTheme } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
+import { IconBaseProps } from "react-icons/lib";
 import { forwardRef } from "react";
 
 import { CloseButton, ContentContainer, ModalContainer, WrapTitle } from "./styles";
@@ -9,6 +10,7 @@ interface Props extends Omit<BoxProps, "title"> {
   onClose: () => void;
   modalProps?: Partial<ModalProps>;
   closeButtonProps?: IconButtonProps;
+  closeIconProps?: IconBaseProps;
   closeButton?: React.ReactNode;
   title?: React.ReactNode;
   titleProps?: BoxProps;
@@ -26,6 +28,7 @@ export const CustomModal: React.FC<Props> = forwardRef((props, ref) => {
     modalProps,
     children,
     modalContainerProps,
+    closeIconProps,
     ...contentProps
   } = props;
   const theme = useTheme();
@@ -35,7 +38,7 @@ export const CustomModal: React.FC<Props> = forwardRef((props, ref) => {
       <ModalContainer {...modalContainerProps}>
         {closeButton || (
           <CloseButton {...closeButtonProps} onClick={onClose} data-testid="close-modal-button">
-            <IoMdClose color={theme.palette.secondary.light} />
+            <IoMdClose color={theme.palette.secondary.light} {...closeIconProps} />
           </CloseButton>
         )}
         {title && <WrapTitle {...titleProps}>{title}</WrapTitle>}

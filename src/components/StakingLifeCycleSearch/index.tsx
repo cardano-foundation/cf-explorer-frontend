@@ -1,32 +1,34 @@
-import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { Box, useTheme } from "@mui/material";
-import { useKey } from "react-use";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
+import { useKey } from "react-use";
 
+import useFetchList from "src/commons/hooks/useFetchList";
+import { useScreen } from "src/commons/hooks/useScreen";
 import { HeaderSearchIconComponent, WhiteSearchIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import InfoGraphicModal from "src/components/InfoGraphicModal";
-import { useScreen } from "src/commons/hooks/useScreen";
-import { getRandomInt } from "src/commons/utils/helper";
 import { API } from "src/commons/utils/api";
-import useFetchList from "src/commons/hooks/useFetchList";
+import { getRandomInt } from "src/commons/utils/helper";
+import InfoGraphicModal from "src/components/InfoGraphicModal";
+import DropdownMenu from "src/components/commons/DropdownMenu";
+import dataMainnet from "src/commons/configs/mainnet.json";
+import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 
+// eslint-disable-next-line import/order
 import {
-  StyledContainer,
-  Title,
-  SearchTitle,
-  SearchContainer,
-  StyledInput,
-  SubmitButton,
+  ExampleBox,
   Image,
   SearchButton,
+  SearchContainer,
+  SearchTitle,
+  StyledContainer,
+  StyledIconQuestion,
+  StyledInput,
+  SubmitButton,
   TextOR,
-  ExampleBox,
-  StyledIconQuestion
+  Title
 } from "./styles";
-// eslint-disable-next-line import/order
-import DropdownMenu from "../commons/DropdownMenu";
 
 const LIMIT_SIZE = 25;
 
@@ -37,37 +39,44 @@ enum BROWSE_VALUES {
 
 import CustomIcon from "../commons/CustomIcon";
 
+const isMainnet = NETWORK === NETWORKS.mainnet;
+
 const StakingLifeCycleSearch = () => {
   const { t } = useTranslation();
-  const theme = useTheme();
-  const { data: delegators, initialized: delegatorsInitialzzed } = useFetchList<Delegator>(API.STAKE.TOP_DELEGATOR, {
-    page: 0,
-    size: LIMIT_SIZE
-  });
-  const { data: pools, initialized: poolsInitialzzed } = useFetchList<Delegators>(API.DELEGATION.POOL_LIST, {
-    page: 0,
-    size: LIMIT_SIZE,
-    sort: "",
-    search: ""
-  });
+  const { data: delegators, initialized: delegatorsInitialzzed } = useFetchList<Delegator>(
+    isMainnet ? "" : API.STAKE.TOP_DELEGATOR,
+    {
+      page: 0,
+      size: LIMIT_SIZE
+    }
+  );
+  const { data: pools, initialized: poolsInitialzzed } = useFetchList<Delegators>(
+    isMainnet ? "" : API.DELEGATION.POOL_LIST,
+    {
+      page: 0,
+      size: LIMIT_SIZE,
+      sort: "",
+      search: ""
+    }
+  );
 
   const history = useHistory();
   const { isMobile } = useScreen();
   const [openInfoModal, setOpenInfoModal] = useState(false);
   const [value, setValue] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const themes = useTheme();
+  const theme = useTheme();
 
   const BROWSER_OPTIONS = [
     {
       label: t("dropdown.browseDelegator"),
       value: BROWSE_VALUES.DELEGATOR,
-      disabled: !delegatorsInitialzzed
+      disabled: isMainnet ? false : !delegatorsInitialzzed
     },
     {
       label: t("dropdown.stakePool"),
       value: BROWSE_VALUES.STAKE_POOL,
-      disabled: !poolsInitialzzed
+      disabled: isMainnet ? false : !poolsInitialzzed
     }
   ];
 
@@ -89,11 +98,11 @@ const StakingLifeCycleSearch = () => {
 
   const handleSelect = (value: string) => {
     if (value === BROWSE_VALUES.DELEGATOR) {
-      const listStakeAddress = delegators.map(({ stakeKey }) => stakeKey);
+      const listStakeAddress = isMainnet ? dataMainnet.stakeAddresses : delegators.map(({ stakeKey }) => stakeKey);
       const rndIndex = getRandomInt(listStakeAddress.length);
       history.push(details.staking(listStakeAddress[rndIndex]));
     } else {
-      const listPools = pools.map(({ poolId }) => poolId);
+      const listPools = isMainnet ? dataMainnet.poolIds : pools.map(({ poolId }) => poolId);
       const rndIndex = getRandomInt(listPools.length);
       history.push(details.spo(listPools[rndIndex]));
     }
@@ -117,7 +126,7 @@ const StakingLifeCycleSearch = () => {
         {t("common.searchPoolDesc")}
         <StyledIconQuestion
           onClick={() => setOpenInfoModal((pre) => !pre)}
-          color={themes.palette.primary.main}
+          color={theme.palette.primary.main}
           size={20}
         />
       </SearchTitle>

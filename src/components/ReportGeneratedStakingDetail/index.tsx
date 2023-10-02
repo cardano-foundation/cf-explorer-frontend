@@ -114,7 +114,7 @@ const ReportGeneratedStakingDetailTabs = () => {
       <TopHeader>
         <BackButton onClick={history.goBack}>
           <HiArrowLongLeft color={theme.palette.secondary.light} />
-          <BackText>Back</BackText>
+          <BackText>{t("common.back")}</BackText>
         </BackButton>
       </TopHeader>
       <StakingDetailContext.Provider

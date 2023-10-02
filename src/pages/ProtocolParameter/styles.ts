@@ -104,7 +104,11 @@ export const ColumnProtocol = styled(Box)<{ isLink: number; to: string }>(({ isL
   minHeight: "16px",
   textOverflow: "ellipsis",
   display: "block",
-  background: isLink ? theme.palette.success[100] : "transparent",
+  background: isLink
+    ? theme.mode === "dark"
+      ? alpha(theme.palette.success[700], 0.15)
+      : theme.palette.success[100]
+    : "transparent",
   color: isLink ? `${theme.palette.success[800]} !important` : `${theme.palette.secondary.light} !important`,
   fontWeight: isLink ? "bold" : "normal"
 }));
@@ -112,3 +116,8 @@ export const ColumnProtocol = styled(Box)<{ isLink: number; to: string }>(({ isL
 export const StyledDropdownItem = styled("label")`
   color: ${({ theme }) => theme.palette.secondary.main};
 `;
+
+export const TextDescription = styled("small")(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  whiteSpace: "nowrap"
+}));

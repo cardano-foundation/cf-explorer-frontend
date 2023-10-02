@@ -93,7 +93,7 @@ const StakingLifecycle: React.FC = () => {
         <TextHeadline>{t("common.yourSavedReports")}</TextHeadline>
         <FilterHead>
           <WrapFilterDescription>
-            {t("common.showing")} {totalResult} {totalResult > 1 ? t("common.result") : t("common.results")}
+            {t("common.showing")} {totalResult} {totalResult <= 1 ? t("common.result") : t("common.results")}
           </WrapFilterDescription>
           <CustomFilter sortKey="id" filterValue={params} onChange={setParams} searchLabel={t("Search report name")} />
         </FilterHead>
