@@ -5,10 +5,23 @@ import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { Provider } from "react-redux";
 import { I18nextProvider } from "react-i18next";
+import "@testing-library/jest-dom/extend-expect";
 
 import themes from "./themes";
 import store from "./stores";
 import i18n from "./i18n";
+
+//Fix for "matchMedia not present, legacy browsers require a polyfill jest" error
+/* eslint-disable @typescript-eslint/no-empty-function */
+window.matchMedia =
+  window.matchMedia ||
+  function () {
+    return {
+      matches: false,
+      addListener: function () {},
+      removeListener: function () {}
+    };
+  };
 
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   const history = createMemoryHistory();

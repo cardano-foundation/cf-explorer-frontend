@@ -20,13 +20,13 @@ describe("DropdownDetail component", () => {
       expect(screen.getByText(getShortWallet(item))).toBeInTheDocument();
     });
     expect(screen.getByRole("heading", { name: /dropdown title/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /icon close/i })).toBeInTheDocument();
+    expect(screen.getByTestId(/icon-close/i)).toBeInTheDocument();
   });
 
   it("should component close", () => {
     render(<DropdownDetail {...mockProps} />);
     act(() => {
-      userEvent.click(screen.getByRole("button", { name: /icon close/i }));
+      userEvent.click(screen.getByTestId(/icon-close/i));
     });
     expect(mockProps.close).toBeCalled();
   });

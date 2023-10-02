@@ -11,6 +11,8 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import { getRandomInt } from "src/commons/utils/helper";
 import { API } from "src/commons/utils/api";
 import useFetchList from "src/commons/hooks/useFetchList";
+import { NETWORK, NETWORKS } from "src/commons/utils/constants";
+import dataMainnet from "src/commons/configs/mainnet.json";
 
 import {
   StyledContainer,
@@ -37,19 +39,28 @@ enum BROWSE_VALUES {
 
 import CustomIcon from "../commons/CustomIcon";
 
+const isMainnet = NETWORK === NETWORKS.mainnet;
+
 const StakingLifeCycleSearch = () => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const { data: delegators, initialized: delegatorsInitialzzed } = useFetchList<Delegator>(API.STAKE.TOP_DELEGATOR, {
-    page: 0,
-    size: LIMIT_SIZE
-  });
-  const { data: pools, initialized: poolsInitialzzed } = useFetchList<Delegators>(API.DELEGATION.POOL_LIST, {
-    page: 0,
-    size: LIMIT_SIZE,
-    sort: "",
-    search: ""
-  });
+
+  const { data: delegators, initialized: delegatorsInitialzzed } = useFetchList<Delegator>(
+    isMainnet ? "" : API.STAKE.TOP_DELEGATOR,
+    {
+      page: 0,
+      size: LIMIT_SIZE
+    }
+  );
+  const { data: pools, initialized: poolsInitialzzed } = useFetchList<Delegators>(
+    isMainnet ? "" : API.DELEGATION.POOL_LIST,
+    {
+      page: 0,
+      size: LIMIT_SIZE,
+      sort: "",
+      search: ""
+    }
+  );
 
   const history = useHistory();
   const { isMobile } = useScreen();
@@ -62,12 +73,12 @@ const StakingLifeCycleSearch = () => {
     {
       label: t("dropdown.browseDelegator"),
       value: BROWSE_VALUES.DELEGATOR,
-      disabled: !delegatorsInitialzzed
+      disabled: isMainnet ? false : !delegatorsInitialzzed
     },
     {
       label: t("dropdown.stakePool"),
       value: BROWSE_VALUES.STAKE_POOL,
-      disabled: !poolsInitialzzed
+      disabled: isMainnet ? false : !poolsInitialzzed
     }
   ];
 
@@ -89,11 +100,11 @@ const StakingLifeCycleSearch = () => {
 
   const handleSelect = (value: string) => {
     if (value === BROWSE_VALUES.DELEGATOR) {
-      const listStakeAddress = delegators.map(({ stakeKey }) => stakeKey);
+      const listStakeAddress = isMainnet ? dataMainnet.stakeAddresses : delegators.map(({ stakeKey }) => stakeKey);
       const rndIndex = getRandomInt(listStakeAddress.length);
       history.push(details.staking(listStakeAddress[rndIndex]));
     } else {
-      const listPools = pools.map(({ poolId }) => poolId);
+      const listPools = isMainnet ? dataMainnet.poolIds : pools.map(({ poolId }) => poolId);
       const rndIndex = getRandomInt(listPools.length);
       history.push(details.spo(listPools[rndIndex]));
     }
