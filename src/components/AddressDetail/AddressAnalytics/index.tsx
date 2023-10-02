@@ -76,12 +76,12 @@ const AddressAnalytics: React.FC = () => {
     false,
     blockKey
   );
-  const values = data?.data?.map?.((item) => item.value || 0) || [];
-  const maxBalance = BigNumber.max(0, ...values).toString();
-  const minBalance = BigNumber.min(maxBalance, ...values).toString();
 
-  const highest = Number(data?.highestBalance || maxBalance);
-  const lowest = Number(data?.lowestBalance || minBalance);
+  const maxBalance = BigNumber(data?.highestBalance || 0).toString();
+  const minBalance = BigNumber(data?.lowestBalance || 0).toString();
+
+  const highest = Number(maxBalance);
+  const lowest = Number(minBalance);
   const isEqualLine = highest === lowest;
 
   const convertDataChart: AnalyticsExpanded[] =
