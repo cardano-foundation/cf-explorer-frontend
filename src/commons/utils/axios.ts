@@ -33,7 +33,11 @@ defaultAxios.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originRequest = error.config;
-    if (error.response?.data?.errorCode === "CC_3" && !originRequest._retry) {
+    if (
+      error.response?.data?.errorCode === "CC_2" &&
+      error.response?.data?.errorCode === "CC_3" &&
+      !originRequest._retry
+    ) {
       originRequest._retry = true;
       const response = await refreshToken({ refreshJwt: localStorage.getItem("refreshToken") || "" });
       localStorage.setItem("token", response.data?.accessToken);
@@ -76,7 +80,11 @@ defaultAxiosDownload.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originRequest = error.config;
-    if (error.response?.data?.errorCode === "CC_3" && !originRequest._retry) {
+    if (
+      error.response?.data?.errorCode === "CC_2" &&
+      error.response?.data?.errorCode === "CC_3" &&
+      !originRequest._retry
+    ) {
       originRequest._retry = true;
       const response = await refreshToken({ refreshJwt: localStorage.getItem("refreshToken") || "" });
       localStorage.setItem("token", response.data?.accessToken);
@@ -178,7 +186,11 @@ uploadAxios.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originRequest = error.config;
-    if (error.response?.data?.errorCode === "CC_3" && !originRequest._retry) {
+    if (
+      error.response?.data?.errorCode === "CC_2" &&
+      error.response?.data?.errorCode === "CC_3" &&
+      !originRequest._retry
+    ) {
       originRequest._retry = true;
       const response = await refreshToken({ refreshJwt: localStorage.getItem("refreshToken") || "" });
       localStorage.setItem("token", response.data?.accessToken);
