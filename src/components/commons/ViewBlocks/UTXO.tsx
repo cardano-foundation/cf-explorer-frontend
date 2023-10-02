@@ -17,6 +17,7 @@ const UTXO: React.FC<UTXOProps> = React.forwardRef((props, ref) => {
   const anchorEl = useRef();
   return (
     <PopperStyled
+      placement="top"
       render={({ handleClick }) => (
         <PolygonContainer ref={anchorEl}>
           <Polygon />

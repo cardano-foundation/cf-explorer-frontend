@@ -18,6 +18,7 @@ import PolicyID from "src/components/commons/ViewBlocks/PolicyID";
 import CompiledCode from "src/components/commons/ViewBlocks/CompiledCode";
 import Burn from "src/components/commons/ViewBlocks/Burn";
 import { details } from "src/commons/routers";
+import { formatNumberDivByDecimals } from "src/commons/utils/helper";
 
 import AssetsModal from "../modals/AssetsModal";
 import RedeemerModal from "../modals/RedeemerModal";
@@ -105,8 +106,8 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
   const mintedAssetsData = useMemo(() => {
     const mintingTokens = (data?.mintingTokens as IContractItemTx["mintingTokens"]) || [];
     return mintingTokens.map((item) => ({
-      title: item.displayName ?? item.fingerprint,
-      value: item.quantity,
+      title: item.displayName || item.fingerprint,
+      value: formatNumberDivByDecimals(item.quantity, item?.metadata?.decimals || 0),
       link: item.fingerprint
     }));
   }, [data]);
@@ -114,8 +115,8 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
   const burnedAssetsData = useMemo(() => {
     const burningTokens = (data?.burningTokens as IContractItemTx["burningTokens"]) || [];
     return burningTokens.map((item) => ({
-      title: item.displayName ?? item.fingerprint,
-      value: item.quantity,
+      title: item.displayName || item.fingerprint,
+      value: formatNumberDivByDecimals(item.quantity, item?.metadata?.decimals || 0),
       link: item.fingerprint
     }));
   }, [data]);
@@ -170,8 +171,8 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
           </MintBlueBox>
         </RightBox>
       ) : (
-        <MintBlueBox>
-          <Rrounded ref={rightBoxRef}>
+        <MintBlueBox ref={rightBoxRef}>
+          <Rrounded>
             <Assets onClick={() => setOpenAssets(!openAssets)} total={data?.mintingTokens?.length} />
             <PolicyID hash={data?.scriptHash} detail={details.policyDetail} />
           </Rrounded>

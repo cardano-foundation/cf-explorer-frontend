@@ -8,7 +8,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
 import { useScreen } from "src/commons/hooks/useScreen";
 
-import { CLButton, CLCardContaienr } from "./styles";
+import { CLButton, CLCardContaienr, ContractAddressLabel } from "./styles";
 
 export interface ContractItemProps {
   data: IContractItemTx;
@@ -34,7 +34,7 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
         return {
           value: data.address,
           explain: "A script with the purpose to control how to spend outputs",
-          detail: details.address
+          detail: details.contract
         };
       case "MINT":
         return {
@@ -66,7 +66,7 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
   return (
     <CLCardContaienr>
       <Box>
-        <Typography fontWeight={600}>Contract Address:</Typography>
+        <ContractAddressLabel>Contract Address:</ContractAddressLabel>
         <CustomTooltip title={contractAddress?.value}>
           <StyledLink
             style={{ fontWeight: "500", textDecoration: "underline" }}

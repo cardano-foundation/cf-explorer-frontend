@@ -68,7 +68,8 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
         startOffset: { 0: [-1.5, -55], sm: [-10, 0], lg: [0] },
         endOffset: { 0: [8, 0], lg: [0] },
         arrow: { 0: "top", lg: "left" },
-        fold: { sm: "horizontal", lg: "none" }
+        fold: { sm: "horizontal", lg: "none" },
+        autoAlign: { 0: "end-vertical", sm: "none" }
       },
       {
         start: feeRef,
@@ -76,9 +77,10 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
         end: cardanoBlockchainRef,
         endPosition: { 0: ["right", "top"], sm: ["right", "middle"], lg: ["left", "middle"] },
         startOffset: { 0: [8, -15], lg: [0] },
-        endOffset: { 0: [-18, 49], sm: [-10], lg: [10] },
+        endOffset: { 0: [-18, 40], sm: [-10], lg: [10] },
         fold: { sm: "vertical", lg: "none" },
-        arrow: { 0: "top", sm: "right", lg: "left" }
+        arrow: { 0: "top", sm: "right", lg: "left" },
+        autoAlign: { 0: "start-vertical", sm: "none" }
       },
       {
         start: SPOPoolRef,
@@ -86,16 +88,18 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
         end: registrationRef,
         endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
         startOffset: { 0: [3, -55], sm: [10, 0], lg: [0] },
-        fold: { sm: "horizontal", lg: "vertical" }
+        fold: { sm: "horizontal", lg: "vertical" },
+        autoAlign: { 0: "end-vertical", sm: "none" }
       },
       {
         start: registrationRef,
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
         end: cardanoBlockchainRef,
         endPosition: { 0: ["left", "top"], sm: ["left", "middle"], lg: ["center", "bottom"] },
-        endOffset: { 0: [18, 49], sm: [10], lg: [0, 3] },
+        endOffset: { 0: [18, 40], sm: [10], lg: [0, 3] },
         fold: { sm: "vertical", lg: "horizontal" },
-        arrow: { 0: "top", sm: "left", lg: "bottom" }
+        arrow: { 0: "top", sm: "left", lg: "bottom" },
+        autoAlign: { 0: "start-vertical", sm: "none" }
       }
     ];
   }, []);
