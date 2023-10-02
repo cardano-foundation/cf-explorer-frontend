@@ -49,11 +49,7 @@ export const RegistrationCertificateModal = ({ stake, open, handleCloseModal }: 
             {t("common.stakeAddress")}
           </Box>
           {data && (
-            <Box
-              display={"flex"}
-              alignItems={"center"}
-              bgcolor={({ palette, isDark }) => (isDark ? "" : palette.secondary[0])}
-            >
+            <Box display={"flex"} alignItems={"center"}>
               <StakeLink to={details.stake(stake)}>{stake || ""}</StakeLink>
               <CopyButton text={stake} />
             </Box>

@@ -500,7 +500,7 @@ export const StakeKeyStatus = styled("small")<{ status: StakeStatus }>`
       case STAKE_KEY_STATUS.ACTIVE:
         return props.theme.palette.success[800];
       default:
-        return props.theme.palette.warning[800];
+        return props.theme.isDark ? props.theme.palette.warning[100] : props.theme.palette.warning[800];
     }
   }};
   background-color: ${(props) => {
@@ -508,7 +508,7 @@ export const StakeKeyStatus = styled("small")<{ status: StakeStatus }>`
       case STAKE_KEY_STATUS.ACTIVE:
         return props.theme.palette.success[100];
       default:
-        return props.theme.palette.warning[100];
+        return props.theme.isDark ? props.theme.palette.warning[800] : props.theme.palette.warning[100];
     }
   }};
   padding: 3px 10px;

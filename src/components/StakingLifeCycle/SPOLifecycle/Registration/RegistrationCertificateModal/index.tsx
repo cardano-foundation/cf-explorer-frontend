@@ -1,19 +1,20 @@
 import { Box, Skeleton } from "@mui/material";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
 
-import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
-import ViewMoreThreeDots from "src/components/commons/ViewMoreThreeDots";
-import { API } from "src/commons/utils/api";
 import useFetch from "src/commons/hooks/useFetch";
-import CustomTooltip from "src/components/commons/CustomTooltip";
-import CopyButton from "src/components/commons/CopyButton";
 import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
 import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
 import ADAicon from "src/components/commons/ADAIcon";
+import CopyButton from "src/components/commons/CopyButton";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import ViewMoreThreeDots from "src/components/commons/ViewMoreThreeDots";
+import CustomModal from "src/components/commons/CustomModal";
 
-import { VRFKeyText, Item, ItemList, Label, LineData, StyledLink, StyledModal, Value } from "./styles";
+import { Item, ItemList, Label, LineData, StyledLink, VRFKeyText, Value } from "./styles";
 
 interface CertificateItemType {
   label: React.ReactNode;
@@ -124,7 +125,7 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
   ];
 
   return (
-    <StyledModal {...props} title={t("common.poolRegisCert")} sx={{ maxHeight: "min(70vh, 800px)" }}>
+    <CustomModal {...props} title={t("common.poolRegisCert")} sx={{ maxHeight: "min(70vh, 800px)" }}>
       <ViewMoreAddressModal
         showFullHash={true}
         maxWidth={680}
@@ -154,7 +155,7 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
           );
         })}
       </ItemList>
-    </StyledModal>
+    </CustomModal>
   );
 };
 export default RegistrationCertificateModal;

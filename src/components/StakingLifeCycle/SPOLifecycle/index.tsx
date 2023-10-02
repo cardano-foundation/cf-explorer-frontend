@@ -4,6 +4,7 @@ import { useHistory, useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
+import CustomIcon from "src/components/commons/CustomIcon";
 import {
   DeredistrationIcon,
   InfoIcon,
@@ -61,6 +62,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
   const history = useHistory();
   const { isMobile } = useScreen();
   const { palette } = useTheme();
+  const theme = useTheme();
 
   const [tabsValid, setTabValid] = useState(["isRegistration", "isUpdate", "isReward", "isDeRegistration"]);
   useEffect(() => {
@@ -233,7 +235,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
               setCurrentStep(stepper.findIndex((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1]));
             }}
           >
-            <PreviousIcon />
+            <CustomIcon icon={PreviousIcon} height={30} fill={theme.palette.secondary.main} />
             <Box fontSize={isMobile ? 14 : 16} component={"span"}>
               {t("common.Previous")}:{" "}
               {stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1])?.title}
@@ -263,7 +265,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
               ? t("common.viewTabular")
               : stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid + 1])?.title}
           </ButtonText>
-          <NextIcon fill={palette.secondary[0]} />
+          <CustomIcon icon={NextIcon} height={30} fill={theme.palette.secondary[0]} />
         </NextButton>
       </StyledGroupButton>
     </StyledComponent>
