@@ -117,9 +117,12 @@ export const WrapHeader = styled(Box)(({ theme }) => ({
 
 export const RedirectButton = styled(Box)(({ theme }) => ({
   textTransform: "capitalize",
-  backgroundColor: theme.palette.secondary.main,
   color: theme.palette.secondary[0],
-  padding: `${theme.spacing(1)} ${theme.spacing(2)} `
+  padding: `${theme.spacing(1)} ${theme.spacing(2)} `,
+  backgroundColor: theme.mode === "light" ? theme.palette.secondary.main : theme.palette.primary.main,
+  ":hover": {
+    backgroundColor: theme.isDark ? theme.palette.primary.dark : alpha(theme.palette.secondary.main, 0.8)
+  }
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({

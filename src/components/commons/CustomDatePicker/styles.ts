@@ -15,7 +15,8 @@ export const DatePickerContainer = styled(Box)<{ open: number }>(({ theme, open 
     zIndex: 2
   },
   "div[class=react-datepicker]": {
-    fontFamily: theme.typography.fontFamily
+    fontFamily: theme.typography.fontFamily,
+    backgroundColor: theme.mode === "dark" ? theme.palette.secondary[0] : theme.palette.common.white
   },
   "div[class*=react-datepicker__header]": {
     backgroundColor: theme.palette.secondary[0],
@@ -44,9 +45,13 @@ export const DatePickerContainer = styled(Box)<{ open: number }>(({ theme, open 
   "div[class*=react-datepicker__day--outside-month], div[class*=react-datepicker__day--disabled]": {
     color: theme.palette.secondary[600]
   },
+  "div[class*=react-datepicker__day--outside-month]:hover": {
+    color: theme.mode === "dark" ? theme.palette.secondary.main : ""
+  },
   "div[class=react-datepicker__day-name]": {
     width: 40,
-    margin: "2.5px 0"
+    margin: "2.5px 0",
+    color: theme.palette.secondary.main
   },
   "div[class*=react-datepicker__day--keyboard-selected]": {
     backgroundColor: "transparent"
@@ -152,12 +157,13 @@ export const CloseButton = styled(IconButton)(({ theme }) => ({
   }
 }));
 
-export const YearSelect = styled(Box)(() => ({
+export const YearSelect = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   fontWeight: 600,
   fontSize: 16,
-  paddingLeft: 12
+  paddingLeft: 12,
+  color: theme.palette.secondary.main
 }));
 
 export const SelectYear = styled(Box)<{ isActive: number }>(({ theme, isActive }) => ({
@@ -165,9 +171,14 @@ export const SelectYear = styled(Box)<{ isActive: number }>(({ theme, isActive }
   cursor: "pointer",
   borderRadius: "18px",
   backgroundColor: isActive ? theme.palette.primary.main : "transparent",
-  color: isActive ? theme.palette.common.white : theme.palette.text.primary,
+  color: isActive
+    ? theme.palette.common.white
+    : theme.mode === "dark"
+    ? theme.palette.primary[100]
+    : theme.palette.text.primary,
   "&:hover": {
-    backgroundColor: isActive ? theme.palette.primary.main : theme.palette.primary[100]
+    backgroundColor: isActive ? theme.palette.primary.main : theme.palette.primary[100],
+    color: theme.mode === "dark" ? theme.palette.common.white : ""
   }
 }));
 
@@ -178,7 +189,8 @@ export const HiddenScroll = styled(Box)(({ theme }) => ({
   width: "fit-content",
   height: "200px",
   overflow: "auto",
-  backgroundColor: theme.palette.common.white,
+  backgroundColor: "transparent",
+  border: `1px solid ${theme.mode === "dark" ? theme.palette.primary[200] : "none"}`,
   boxShadow: `0px 4px 16px ${alpha(theme.palette.common.black, 0.12)}`,
   borderRadius: "8px",
   zIndex: 1,
@@ -202,11 +214,12 @@ export const HiddenScroll = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const YearList = styled(Box)(() => ({
+export const YearList = styled(Box)(({ theme }) => ({
   display: "grid",
   gridTemplateColumns: "repeat(4, 1fr)",
   gridGap: "8px",
-  padding: "10px 6px"
+  padding: "10px 6px",
+  backgroundColor: theme.mode === "dark" ? theme.palette.secondary[0] : theme.palette.common.white
 }));
 
 export const DateIconContainer = styled(Box)(() => ({

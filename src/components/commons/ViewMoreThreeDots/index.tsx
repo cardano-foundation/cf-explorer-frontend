@@ -5,7 +5,7 @@ export const Button = styled(IconButton)(({ theme }) => ({
   width: 30,
   height: 30,
   marginLeft: 6,
-  backgroundColor: theme.palette.grey[200]
+  backgroundColor: theme.isDark ? theme.palette.secondary[0] : theme.palette.grey[200]
 }));
 
 export const DotsIcon = styled(Box)`

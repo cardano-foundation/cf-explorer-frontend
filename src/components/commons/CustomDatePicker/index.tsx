@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Box, IconButton, useTheme } from "@mui/material";
+import { Box, IconButton, alpha, useTheme } from "@mui/material";
 import { range } from "lodash";
 import moment from "moment";
 import { BsFillCaretDownFill } from "react-icons/bs";
@@ -123,7 +123,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
                 onClick={() => setYearModal(!yearModal)}
                 sx={{ marginLeft: "16px" }}
               >
-                <BsFillCaretDownFill size="12px" />
+                <BsFillCaretDownFill size="12px" color={theme.palette.secondary.main} />
               </IconButton>
             </YearSelect>
             {yearModal && (
@@ -150,10 +150,20 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
             )}
             <Box position="relative">
               <IconButton data-testid="decrease-month" onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
-                <IoIosArrowBack size="18px" />
+                <IoIosArrowBack
+                  size="18px"
+                  color={
+                    !prevMonthButtonDisabled ? theme.palette.secondary.main : alpha(theme.palette.secondary.main, 0.2)
+                  }
+                />
               </IconButton>
               <IconButton data-testid="increase-month" onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
-                <IoIosArrowForward size="18px" />
+                <IoIosArrowForward
+                  size="18px"
+                  color={
+                    !nextMonthButtonDisabled ? theme.palette.secondary.main : alpha(theme.palette.secondary.main, 0.2)
+                  }
+                />
               </IconButton>
             </Box>
           </HeaderContainer>

@@ -40,7 +40,16 @@ const RewardsDistributionTab = () => {
         const isPositiveNumber = r.amount > 0;
         return (
           <ADAValueLabel>
-            <Box component={"span"} color={isPositiveNumber ? theme.palette.success[800] : theme.palette.error[700]}>
+            <Box
+              component={"span"}
+              color={
+                isPositiveNumber
+                  ? theme.isDark
+                    ? theme.palette.success[700]
+                    : theme.palette.success[800]
+                  : theme.palette.error[700]
+              }
+            >
               {isPositiveNumber ? "+" : "-"} {formatADAFull(r.amount)}&nbsp;
               <ADAicon />
             </Box>
@@ -71,7 +80,7 @@ const RewardsDistributionTab = () => {
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
             {t("common.showing")} {Math.min(total, pageInfo.size)}{" "}
-            {Math.min(total, pageInfo.size) > 1 ? t("common.result") : t("common.results")}
+            {Math.min(total, pageInfo.size) <= 1 ? t("common.result") : t("common.results")}
           </WrapFilterDescription>
         </Box>
       </Box>
