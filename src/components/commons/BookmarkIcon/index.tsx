@@ -54,12 +54,12 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
           deleteBookmark(bookmark?.id || 0);
           setBookmarks((bookmarks || []).filter((b) => b.keyword !== `${keyword}`));
           toast.success(t("common.bookmarkHasBeenRemoved"));
-        } catch (error) {
-          toast.error(`${t("message.common.somethingWentWrong")} ${t("message.common.tryAgain")}`);
+        } catch (error: any) {
+          toast.error(t(error?.response?.data?.errorCode));
         }
       }
-    } catch (error) {
-      toast.error(`${t("message.common.somethingWentWrong")} ${t("message.common.tryAgain")}`);
+    } catch (error: any) {
+      toast.error(t(error?.response?.data?.errorCode));
     } finally {
       setLoading(false);
     }
