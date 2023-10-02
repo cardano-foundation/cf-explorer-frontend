@@ -104,7 +104,7 @@ const TopDelegationPools = () => {
           <TimeDuration>
             <FormNowMessage time={lastUpdated} />
           </TimeDuration>
-          <ViewAllButtonExternal data-testid="view-all" to={routers.DELEGATION_POOLS} />
+          <ViewAllButtonExternal to={routers.DELEGATION_POOLS} />
         </Actions>
       </Header>
       <TimeDurationSm>

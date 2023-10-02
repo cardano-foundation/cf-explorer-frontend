@@ -52,12 +52,10 @@ describe("TopDelegationPools", () => {
       </Router>
     );
     expect(screen.getByText("Pools")).toBeInTheDocument();
-    const seeAllButton = screen.getByTestId("view-all");
+    const seeAllButton = screen.getByTestId("view-all-button");
     expect(seeAllButton).toBeInTheDocument();
     await userEvent.click(seeAllButton);
-    await waitFor(async () => {
-      expect(history.location.pathname).toBe(routers.DELEGATION_POOLS);
-    });
+    expect(seeAllButton).toHaveAttribute("href", routers.DELEGATION_POOLS);
   });
 
   it("renders data in the table Pools", async () => {
