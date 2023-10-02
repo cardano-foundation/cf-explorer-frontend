@@ -1,26 +1,26 @@
+import { useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { BiChevronRight } from "react-icons/bi";
 import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { useSelector } from "react-redux";
-import { useTranslation } from "react-i18next";
-import { useTheme } from "@mui/material";
 
 import useFetch from "src/commons/hooks/useFetch";
 import {
+  CubeIconComponent,
   DelegationHistoryMainIcon,
   DelegationIconUrl,
   FileEditIcon,
   InstantaneousHistoryComponent,
+  MetadataIconTx,
   MintingIconComponent,
   NoteEditIcon,
-  NoteEditIconComponent,
   ProtocolUpdateComponent,
   RewardsDistributionComponent,
-  RocketIconUrl,
+  RocketIcon,
   StakeCertificatesComponent,
   USDIconComponent,
-  WithdrawlIconComponent,
-  cubeIconUrl
+  WithdrawlIconComponent
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
@@ -30,6 +30,7 @@ import { RootState } from "src/stores/types";
 
 import ADAicon from "../ADAIcon";
 import CopyButton from "../CopyButton";
+import CustomIcon from "../CustomIcon";
 import CustomTooltip from "../CustomTooltip";
 import FormNowMessage from "../FormNowMessage";
 import ProgressCircle from "../ProgressCircle";
@@ -52,7 +53,6 @@ import {
   EpochText,
   Group,
   HeaderContainer,
-  Icon,
   IconSkeleton,
   Item,
   ItemName,
@@ -129,7 +129,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
       label: t("glossary.instantaneousRewards"),
       icon: <InstantaneousHistoryComponent />
     },
-    { key: "metadata", label: t("glossary.metadata"), icon: <NoteEditIconComponent /> }
+    { key: "metadata", label: t("glossary.metadata"), icon: <MetadataIconTx /> }
   ];
 
   const renderContent = () => {
@@ -240,12 +240,20 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
             </HeaderContainer>
             <ListItem>
               <Item>
-                <Icon src={cubeIconUrl} alt="socket" />
+                <CustomIcon
+                  icon={CubeIconComponent}
+                  height={30}
+                  fill={theme.isDark ? theme.palette.secondary[0] : theme.palette.common.white}
+                />
                 <ItemName>{t("glossary.block")}</ItemName>
                 <ItemValue>{data?.tx?.blockNo}</ItemValue>
               </Item>
               <Item>
-                <Icon src={RocketIconUrl} alt="socket" />
+                <CustomIcon
+                  icon={RocketIcon}
+                  height={30}
+                  fill={theme.isDark ? theme.palette.secondary[0] : theme.palette.common.white}
+                />
                 <ItemName>{t("common.slot")}</ItemName>
                 <ItemValue>
                   {data?.tx?.epochSlot}

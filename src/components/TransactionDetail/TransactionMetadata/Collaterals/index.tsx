@@ -1,9 +1,10 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { SxProps } from "@mui/system";
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 import { useScreen } from "src/commons/hooks/useScreen";
+import { DownRedUtxoDarkmode, UpGreenUtxoDarkmode } from "src/commons/resources";
 import receiveImg from "src/commons/resources/images/receiveImg.svg";
 import sendImg from "src/commons/resources/images/sendImg.svg";
 import { details } from "src/commons/routers";
@@ -83,6 +84,7 @@ export default Collaterals;
 
 const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "input" | "output" }) => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { isTablet } = useScreen();
   return (
     <Box>
@@ -91,7 +93,18 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
           <ItemContent>
             <Box display="flex" alignItems="center">
               <Box width={50}>
-                <Img src={type === "input" ? receiveImg : sendImg} alt="send icon" />
+                <Img
+                  src={
+                    type === "input"
+                      ? theme.isDark
+                        ? DownRedUtxoDarkmode
+                        : receiveImg
+                      : theme.isDark
+                      ? UpGreenUtxoDarkmode
+                      : sendImg
+                  }
+                  alt="send icon"
+                />
               </Box>
               {isTablet ? (
                 <Box color={({ palette }) => palette.secondary.light}>

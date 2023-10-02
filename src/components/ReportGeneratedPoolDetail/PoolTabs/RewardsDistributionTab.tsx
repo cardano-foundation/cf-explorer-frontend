@@ -55,7 +55,7 @@ const RewardsDistributionTab = () => {
               color={
                 isPositiveNumber
                   ? theme.isDark
-                    ? theme.palette.success[100]
+                    ? theme.palette.success[700]
                     : theme.palette.success[800]
                   : theme.palette.error[700]
               }

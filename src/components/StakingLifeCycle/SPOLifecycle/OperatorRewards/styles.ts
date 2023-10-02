@@ -49,5 +49,6 @@ export const ADATitle = styled(Box)(({ theme }) => ({
   fontWeight: 700
 }));
 export const ADAAmount = styled(Box)`
-  color: ${(props) => props.theme.palette.success[800]} !important;
+  color: ${(props) =>
+    props.theme.isDark ? props.theme.palette.success[700] : props.theme.palette.success[800]} !important;
 `;

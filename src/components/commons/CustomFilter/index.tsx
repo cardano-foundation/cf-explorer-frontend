@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
 import { Box, Button, ClickAwayListener, IconButton, MenuList, useTheme } from "@mui/material";
 import moment from "moment";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -8,11 +8,10 @@ import {
   ArrowFromTopIcon,
   CalenderIcon,
   FilterIC,
-  ResetIcon,
-  SearchIcon
+  HeaderSearchIconComponent,
+  ResetIcon
 } from "src/commons/resources";
 
-import DateRangeModal, { DATETIME_PARTTEN } from "./DateRangeModal";
 import CustomIcon from "../CustomIcon";
 import { Option } from "../Filter";
 import {
@@ -23,6 +22,7 @@ import {
   FilterListItemText,
   FilterMenuItem
 } from "../Filter/styles";
+import DateRangeModal, { DATETIME_PARTTEN } from "./DateRangeModal";
 import { AdditionContainer, StyledInput, StyledListItemIcon } from "./styles";
 
 export interface FilterParams {
@@ -72,7 +72,14 @@ const CustomFilter: React.FC<Props> = (props) => {
     },
     {
       label: searchLabel,
-      icon: <CustomIcon icon={SearchIcon} stroke={theme.palette.secondary.light} width={22} />,
+      icon: (
+        <CustomIcon
+          icon={HeaderSearchIconComponent}
+          stroke={theme.palette.secondary.light}
+          fill={theme.palette.secondary[0]}
+          height={22}
+        />
+      ),
       value: "search",
       active: !!filterValue?.search
     }
@@ -142,7 +149,7 @@ const CustomFilter: React.FC<Props> = (props) => {
             </FilterIconContainer>
           }
         >
-          Filter
+          {t("common.filter")}
         </FilterButton>
         {open && (
           <FilterContent>
@@ -168,10 +175,10 @@ const CustomFilter: React.FC<Props> = (props) => {
                       sx={{ marginLeft: "5px" }}
                     >
                       <CustomIcon
-                        icon={SearchIcon}
+                        icon={HeaderSearchIconComponent}
                         stroke={theme.palette.secondary.light}
                         fill={theme.palette.secondary[0]}
-                        width={20}
+                        height={22}
                       />
                     </IconButton>
                   }

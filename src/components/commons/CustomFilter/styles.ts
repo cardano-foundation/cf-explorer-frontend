@@ -39,6 +39,6 @@ export const StyledListItemIcon = styled(ListItemIcon)`
 
 export const WrapButton = styled(Button)(({ theme }) => ({
   "&:disabled": {
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.isDark ? theme.palette.secondary.main : ""
   }
 }));

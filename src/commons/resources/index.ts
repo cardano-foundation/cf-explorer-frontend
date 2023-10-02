@@ -120,8 +120,10 @@ import UpGreenUtxoDarkmode from "./icons/uputxoGreenDark.svg";
 import DownRedDarkmode from "./icons/downRedDark.svg";
 import DownRedUtxoDarkmode from "./icons/downUtxoRedDark.svg";
 import ArrowUpIcon from "./icons/arrow-up.svg";
+import ArrowUpDarkIcon from "./icons/arrow-up-dark.svg";
 import CopyOutlineIcon, { ReactComponent as CopyOutlineIconComponent } from "./icons/copy-outline.svg";
-import ArrowDownIcon from "./icons/arrow-down.svg";
+import ArrowDownIcon from "./icons/arrow-down-red.svg";
+import ArrowDownDarkIcon from "./icons/arrow-down-red-dark.svg";
 
 export {
   LogoFullIcon,
@@ -261,8 +263,10 @@ export {
   WhiteSearchIcon,
   WalletRoundedIcon,
   ArrowUpIcon,
+  ArrowUpDarkIcon,
   CopyOutlineIcon,
   ArrowDownIcon,
+  ArrowDownDarkIcon,
   RocketIconUrl,
   RocketIcon,
   CopyOutlineIconComponent,
