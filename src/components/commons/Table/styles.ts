@@ -1,4 +1,4 @@
-import { Box, Checkbox, Typography, styled, Pagination, MenuItem } from "@mui/material";
+import { Box, Checkbox, Typography, styled, Pagination, MenuItem, alpha } from "@mui/material";
 
 import CustomSelect from "../CustomSelect";
 
@@ -58,7 +58,8 @@ export const TRow = styled("tr")<{ selected?: number }>`
   &:hover {
     border-radius: 10px;
     > td {
-      background-color: ${({ theme }) => theme.palette.primary[100]} !important;
+      background-color: ${({ theme }) =>
+        theme.isDark ? alpha(theme.palette.primary[100], 0.7) : theme.palette.primary[100]} !important;
     }
   }
 `;

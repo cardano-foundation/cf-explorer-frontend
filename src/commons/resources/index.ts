@@ -38,9 +38,9 @@ import TokenADA from "./icons/tokenADA.svg";
 import MediumIcon from "./icons/medium.svg";
 import RocketBackground from "./icons/rocket-bg.svg";
 import USDIcon from "./icons/usd.svg";
-import NoteEditIcon from "./icons/note-edit.svg";
-import WithdrawlIcon from "./icons/withdrawl.svg";
-import MintingIconUrl from "./icons/minting.svg";
+import NoteEditIcon, { ReactComponent as NoteEditIconComponent } from "./icons/note-edit.svg";
+import WithdrawlIcon, { ReactComponent as WithdrawlIconComponent } from "./icons/withdrawl.svg";
+import MintingIconUrl, { ReactComponent as MintingIconComponent } from "./icons/minting.svg";
 import HighestIcon, { ReactComponent as HighestIconComponent } from "./icons/highest-icon.svg";
 import LowestIcon, { ReactComponent as LowestIconComponent } from "./icons/lowest-icon.svg";
 import SeeMoreIcon from "./icons/seemore.svg";
@@ -89,11 +89,17 @@ import totalOutputUrl, { ReactComponent as TotalOutput } from "./icons/totalOutp
 import CopyIconSquareUrl, { ReactComponent as CopyIconSquare } from "./images/copy.svg";
 import fileGuardUrl, { ReactComponent as FileGuard } from "./icons/file-guard.svg";
 import RocketIconUrl, { ReactComponent as RocketIcon } from "./icons/rocket.svg";
-import DelegationIconUrl from "./icons/delegationIcon.svg";
-import RewardsDistributionIconUrl from "./icons/rewardsDistribution.svg";
-import StakeCertificatesIconUrl from "./icons/stakeCertificateIcon.svg";
-import ProtocolUpdateIconUrl from "./icons/protocolUpdateIcon.svg";
-import InstantaneousHistoryIconUrl from "./icons/instantaneousHistoryIcon.svg";
+import DelegationIconUrl, { ReactComponent as DelegationIconComponent } from "./icons/delegationIcon.svg";
+import RewardsDistributionIconUrl, {
+  ReactComponent as RewardsDistributionComponent
+} from "./icons/rewardsDistribution.svg";
+import StakeCertificatesIconUrl, {
+  ReactComponent as StakeCertificatesComponent
+} from "./icons/stakeCertificateIcon.svg";
+import ProtocolUpdateIconUrl, { ReactComponent as ProtocolUpdateComponent } from "./icons/protocolUpdateIcon.svg";
+import InstantaneousHistoryIconUrl, {
+  ReactComponent as InstantaneousHistoryComponent
+} from "./icons/instantaneousHistoryIcon.svg";
 import MetadataIconUrl from "./icons/metadataIcon2.svg";
 import CurrentEpochHome from "./icons/currentEpochHome.svg";
 import CurrentEpochHomeDark from "./icons/currentEpochHomeDark.svg";
@@ -268,7 +274,15 @@ export {
   DownRedDarkmode,
   UpGreenUtxoDarkmode,
   DownRedUtxoDarkmode,
-  CopyOutlineIconComponent
+  CopyOutlineIconComponent,
+  NoteEditIconComponent,
+  WithdrawlIconComponent,
+  DelegationIconComponent,
+  MintingIconComponent,
+  RewardsDistributionComponent,
+  StakeCertificatesComponent,
+  ProtocolUpdateComponent,
+  InstantaneousHistoryComponent
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";

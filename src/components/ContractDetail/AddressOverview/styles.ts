@@ -64,7 +64,7 @@ export const RedirectButton = styled(Box)(({ theme }) => ({
   color: theme.palette.secondary[0],
   padding: `${theme.spacing(1)} ${theme.spacing(2)} `,
   ":hover": {
-    backgroundColor: alpha(theme.palette.secondary.main, 0.8)
+    backgroundColor: theme.isDark ? theme.palette.primary.dark : alpha(theme.palette.secondary.main, 0.8)
   }
 }));
 

@@ -39,6 +39,7 @@ export const StyledInput = styled("input")`
   text-overflow: ellipsis;
   color: ${({ theme }) => theme.palette.secondary.main};
   background: ${({ theme }) => theme.palette.secondary[0]};
+  color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
 export const SubmitButton = styled(Button)`

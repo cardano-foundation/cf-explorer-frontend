@@ -49,5 +49,6 @@ export const AddressLink = styled(Link)`
 export const Amount = styled("span")`
   font-weight: var(--font-weight-bold);
   font-family: var(--font-size-text);
-  color: ${(props) => props.theme.palette.success[800]};
+  color: ${(props) => (props.theme.isDark ? props.theme.palette.success[700] : props.theme.palette.success[800])};
+  padding-right: ${({ theme }) => theme.spacing(1)};
 `;
