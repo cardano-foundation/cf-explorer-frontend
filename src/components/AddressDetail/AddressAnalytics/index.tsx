@@ -82,6 +82,7 @@ const AddressAnalytics: React.FC = () => {
 
   const highest = Number(data?.highestBalance || maxBalance);
   const lowest = Number(data?.lowestBalance || minBalance);
+  const isEqualLine = highest === lowest;
 
   const convertDataChart: AnalyticsExpanded[] =
     data?.data?.map((item) => ({
@@ -175,20 +176,23 @@ const AddressAnalytics: React.FC = () => {
                   margin={{ top: 5, right: 5, bottom: 14 }}
                 >
                   {/* Defs for ticks filter background color */}
-                  {["lowest", "highest"].map((item) => (
-                    <defs key={item}>
-                      <filter x="-.15" y="-.15" width="1.25" height="1.2" id={item}>
-                        <feFlood
-                          floodColor={theme.palette[item === "highest" ? "success" : "error"][100]}
-                          result="bg"
-                        />
-                        <feMerge>
-                          <feMergeNode in="bg" />
-                          <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                      </filter>
-                    </defs>
-                  ))}
+                  {["lowest", "highest"].map((item) => {
+                    let floodColor = theme.palette[item === "highest" ? "success" : "error"][100];
+                    if (isEqualLine) {
+                      floodColor = theme.palette.primary[200];
+                    }
+                    return (
+                      <defs key={item}>
+                        <filter x="-.15" y="-.15" width="1.25" height="1.2" id={item}>
+                          <feFlood floodColor={floodColor} result="bg" />
+                          <feMerge>
+                            <feMergeNode in="bg" />
+                            <feMergeNode in="SourceGraphic" />
+                          </feMerge>
+                        </filter>
+                      </defs>
+                    );
+                  })}
                   <XAxis
                     dataKey="date"
                     tickFormatter={(value) => moment(value).format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM")}
@@ -232,7 +236,7 @@ const AddressAnalytics: React.FC = () => {
                   <Line
                     type="monotone"
                     dataKey="lowest"
-                    stroke={theme.palette.error[700]}
+                    stroke={isEqualLine ? theme.palette.primary.main : theme.palette.error[700]}
                     strokeWidth={1}
                     dot={false}
                     activeDot={false}
@@ -241,7 +245,7 @@ const AddressAnalytics: React.FC = () => {
                   <Line
                     type="monotone"
                     dataKey="highest"
-                    stroke={theme.palette.success.main}
+                    stroke={isEqualLine ? theme.palette.primary.main : theme.palette.success.main}
                     strokeWidth={1}
                     dot={false}
                     activeDot={false}

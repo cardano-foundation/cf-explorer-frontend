@@ -218,6 +218,8 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   };
 
   const getKeyIfOnlyOneNonNullResult = (data: IResponseSearchAll | undefined) => {
+    if (data?.validTokenName && data?.validPoolName) return "";
+
     let count = 0;
     let keyName = "";
     for (const key in data) {
@@ -519,7 +521,6 @@ export const OptionsSearch = ({
   totalResult
 }: OptionProps) => {
   const history = useHistory();
-
   const listOptionsTokensAndPools = dataSearchTokensAndPools?.map((i) => {
     return {
       suggestText: (
@@ -579,14 +580,15 @@ export const OptionsSearch = ({
                 cb: () => history.push(addressLink),
                 formatter: getShortWallet
               };
-            case "token":
-              return {
-                suggestText: "Search for a Token by",
-                cb: () => history.push(details.token(encodeURIComponent((value || "").trim().toLocaleLowerCase()))),
-                formatter: getShortWallet
-              };
             case "validTokenName":
               if (data.validTokenName) {
+                if (data.token) {
+                  return {
+                    suggestText: "Search for a Token by",
+                    cb: () => history.push(details.token(data?.token?.fingerprint)),
+                    formatter: formatLongText
+                  };
+                }
                 return {
                   suggestText: "Search for a Token by",
                   cb: () =>
@@ -597,15 +599,15 @@ export const OptionsSearch = ({
                 };
               }
               return;
-            case "pool":
-              return {
-                suggestText: "Search for a Pool by",
-                cb: () =>
-                  history.push(details.delegation(encodeURIComponent((value || "").trim().toLocaleLowerCase()))),
-                formatter: getShortWallet
-              };
             case "validPoolName":
               if (data?.validPoolName) {
+                if (data.pool) {
+                  return {
+                    suggestText: "Search for a Pool by",
+                    cb: () => history.push(details.delegation(data?.pool?.poolId)),
+                    formatter: formatLongText
+                  };
+                }
                 return {
                   suggestText: "Search for a Pool by",
                   cb: () =>
