@@ -1,4 +1,4 @@
-import { useTheme, BoxProps, Typography } from "@mui/material";
+import { BoxProps, Typography } from "@mui/material";
 import { forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -21,7 +21,6 @@ export interface IRewardAccountBoxProps extends BoxProps {
 
 const RewardAccountBox: React.FC<IRewardAccountBoxProps> = forwardRef(({ value, toggleRewardModal }, boxRef) => {
   const { t } = useTranslation();
-  const theme = useTheme();
   return (
     <RewardAccountCcontainer ref={boxRef} onClick={toggleRewardModal}>
       <RewardBoxImg src={GiftIcon} />

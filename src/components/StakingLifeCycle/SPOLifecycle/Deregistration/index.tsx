@@ -152,9 +152,7 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
             <StyledADASymbol>
               <ADAicon fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light} />
             </StyledADASymbol>
-            <InfoText>
-              {formatADAFull(selected?.poolHold ? selected?.poolHold - selected?.fee : selected?.fee || 0)}
-            </InfoText>
+            <InfoText>{formatADAFull(selected?.fee || 0)}</InfoText>
           </Info>
           <Info>
             <CustomIcon

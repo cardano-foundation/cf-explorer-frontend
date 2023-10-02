@@ -35,6 +35,7 @@ export const ContractSideViewContainer = styled(Box)`
 export const ContractSideViewContent = styled(Box)`
   margin-top: 16px;
   flex: 1;
+  overflow-y: auto;
 `;
 
 export const ContractSideViewHeader = styled(Box)``;

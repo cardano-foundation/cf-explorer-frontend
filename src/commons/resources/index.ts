@@ -263,12 +263,12 @@ export {
   ArrowDownIcon,
   RocketIconUrl,
   RocketIcon,
-  CopyOutlineIconComponent,
   SummaryWalletDark,
   UpGreenDarkmode,
   DownRedDarkmode,
   UpGreenUtxoDarkmode,
-  DownRedUtxoDarkmode
+  DownRedUtxoDarkmode,
+  CopyOutlineIconComponent
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";

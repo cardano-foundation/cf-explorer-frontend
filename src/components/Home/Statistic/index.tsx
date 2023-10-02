@@ -4,6 +4,7 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 import { Link as LinkDom } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useEffect, useRef } from "react";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -34,6 +35,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import RateWithIcon from "src/components/commons/RateWithIcon";
 import { RootState } from "src/stores/types";
 import ADAicon from "src/components/commons/ADAIcon";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
 import {
   AdaPrice,
@@ -102,6 +104,22 @@ const HomeStatistic = () => {
 
   const { isGalaxyFoldSmall } = useScreen();
   const sign = Math.sign(BigNumber(usdMarket?.price_change_percentage_24h || 0).toNumber());
+
+  const marketcap = useRef<{ last_updated: string; market_cap: number }>({
+    last_updated: "",
+    market_cap: 0
+  });
+
+  useEffect(() => {
+    if (Number(usdMarket?.market_cap) !== Number(marketcap.current.market_cap)) {
+      marketcap.current = {
+        market_cap: usdMarket?.market_cap || 0,
+        last_updated: usdMarket?.last_updated || ""
+      };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [usdMarket?.market_cap]);
+
   return (
     <StatisticContainer
       container
@@ -145,7 +163,7 @@ const HomeStatistic = () => {
                 </Content>
                 <Content>
                   <TimeDuration data-testid="last-update-ada-price">
-                    {t("info.lastUpdatedTime", { time: moment(usdMarket.last_updated).fromNow() })}
+                    <FormNowMessage time={usdMarket.last_updated + "Z"} />
                   </TimeDuration>
                 </Content>
               </WrapCardContent>
@@ -171,7 +189,7 @@ const HomeStatistic = () => {
                 <Title data-testid="market-cap-value">${numberWithCommas(usdMarket.market_cap)}</Title>
                 <Content>
                   <TimeDuration data-testid="last-update-market-cap">
-                    {t("common.lastUpdated")} {moment(usdMarket.last_updated).fromNow()}
+                    <FormNowMessage time={marketcap.current.last_updated + "Z"} />
                   </TimeDuration>
                 </Content>
               </WrapCardContent>
@@ -284,7 +302,7 @@ const HomeStatistic = () => {
                   <Box color={({ palette }) => palette.secondary.light}>
                     {t("glossary.activeStake")} (<ADAicon width={10} />){": "}
                     <CustomTooltip title={formatADAFull(activeStake)}>
-                      <span data-testid="active-stake-v-= alue">{formatADA(activeStake)}</span>
+                      <span data-testid="active-stake-value">{formatADA(activeStake)}</span>
                     </CustomTooltip>
                   </Box>
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
