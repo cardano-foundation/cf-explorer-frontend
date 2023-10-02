@@ -65,6 +65,7 @@ export const HeaderTitle = styled(Box)`
   color: ${(props) => props.theme.palette.secondary.main};
   font-size: 2.25rem;
   margin: 0.5rem 0;
+  text-transform: capitalize;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 1.5rem;
   }
