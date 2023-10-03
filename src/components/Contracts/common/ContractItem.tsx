@@ -8,7 +8,7 @@ import { formatLongText } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { StyledLink } from "src/components/share/styled";
 
-import { CLButton, CLCardContaienr, ContractAddressLabel, WrapLabel } from "./styles";
+import { CLButton, CLCardContaienr, WrapLabel } from "./styles";
 
 export interface ContractItemProps {
   data: IContractItemTx;
@@ -66,7 +66,7 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
   return (
     <CLCardContaienr>
       <Box>
-        <ContractAddressLabel>Contract Address:</ContractAddressLabel>
+        <WrapLabel>Contract Address:</WrapLabel>
         <CustomTooltip title={contractAddress?.value}>
           <StyledLink
             style={{ fontWeight: "500", textDecoration: "underline" }}

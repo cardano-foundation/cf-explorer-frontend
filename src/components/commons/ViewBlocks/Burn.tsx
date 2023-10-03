@@ -14,7 +14,7 @@ const Burn: React.FC<BurnProps> = ({ total, onClick }) => {
   const theme = useTheme();
   return (
     <PolygonContainer>
-      {theme.isDark ? <PolygonDarkRedIcon /> : <CustomIcon icon={Polygon} width={120} />}
+      {theme.isDark ? <PolygonDarkRedIcon /> : <Polygon />}
       <PolygonContent>
         <Typography display="flex" gap="4px" alignItems="center" color={theme.palette.error[700]} fontWeight={500}>
           Burn{" "}

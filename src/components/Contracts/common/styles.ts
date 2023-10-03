@@ -124,7 +124,8 @@ export const ContractAddressLabel = styled(Typography)`
   color: ${({ theme }) => theme.palette.secondary.light};
 `;
 
-export const WrapLabel = styled(Typography)`
-  color: ${({ theme }) => theme.palette.secondary.light};
-  font-weight: 600;
-`;
+export const WrapLabel = styled(Typography)(({ theme }) => ({
+  fontWeight: 600,
+  color: theme.palette.secondary.light,
+  textAlign: "left"
+}));

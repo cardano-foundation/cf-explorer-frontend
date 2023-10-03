@@ -221,7 +221,7 @@ export const SpendBlueBox = styled(BlueBox)`
   ${({ theme }) => theme.breakpoints.down(420)} {
     flex-direction: column;
   }
-  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white)};
+  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[200])};
 `;
 
 export const RewardContainer = styled(MintContainer)`
@@ -258,15 +258,19 @@ export const CertificateTypeBox = styled(Box)`
 `;
 
 export const CertValueBox = styled(Typography)(({ theme }) => ({
-  color: theme.isDark ? theme.palette.secondary.main : ""
+  color: theme.isDark ? theme.palette.secondary.main : "",
+  textAlign: "start"
 }));
 
 export const CertContainer = styled(MintContainer)`
   justify-content: center;
 `;
 
-export const CertRrounded = styled(Rrounded)`
-  flex-direction: column;
-  justify-content: flex-start;
-  min-width: 300px;
-`;
+export const CertRrounded = styled(Rrounded)(({ theme }) => ({
+  flexDirection: "column",
+  justifyContent: "flex-start",
+  minWidth: "300",
+  [theme.breakpoints.down(theme.breakpoints.values.sm)]: {
+    width: "280"
+  }
+}));
