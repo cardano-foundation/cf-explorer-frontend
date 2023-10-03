@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import useFetch from "src/commons/hooks/useFetch";
 import { details, routers } from "src/commons/routers";
 import { formatADAFull, formatPercent, getShortWallet } from "src/commons/utils/helper";
-import ViewAllButton from "src/components/commons/ViewAllButton";
+import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
 import { Column } from "src/components/commons/Table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { API } from "src/commons/utils/api";
@@ -104,7 +104,7 @@ const TopDelegationPools = () => {
           <TimeDuration>
             <FormNowMessage time={lastUpdated} />
           </TimeDuration>
-          <ViewAllButton data-testid="view-all" to={routers.DELEGATION_POOLS} />
+          <ViewAllButtonExternal data-testid="view-all" to={routers.DELEGATION_POOLS} />
         </Actions>
       </Header>
       <TimeDurationSm>

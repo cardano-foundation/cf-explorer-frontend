@@ -11,7 +11,7 @@ import CustomIcon from "src/components/commons/CustomIcon";
 import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
 import FeeBox from "src/components/commons/FeeBox";
 import { details } from "src/commons/routers";
-import { AddressIcon, AddressIconDark2, BackIcon, TimeIcon, TimeIconDark } from "src/commons/resources";
+import { AddressIcon, AddressIconDark2, BackDarkIcon, BackIcon, TimeIcon, TimeIconDark } from "src/commons/resources";
 import SPOHolder from "src/components/commons/SPOHolder";
 import CopyButton from "src/components/commons/CopyButton";
 import ADAicon from "src/components/commons/ADAIcon";
@@ -104,9 +104,7 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
     <Box>
       <StepInfo>
         {showBackButton ? (
-          <IconButtonBack onClick={handleBack}>
-            <BackIcon />
-          </IconButtonBack>
+          <IconButtonBack onClick={handleBack}>{theme.isDark ? <BackDarkIcon /> : <BackIcon />}</IconButtonBack>
         ) : (
           <Box />
         )}
@@ -115,7 +113,7 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
             <CustomIcon
               icon={theme.isDark ? AddressIconDark2 : AddressIcon}
               height={30}
-              fill={theme.palette.secondary.light}
+              fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
             />
             <CustomTooltip title={txHash}>
               <InfoText>
@@ -126,7 +124,7 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
           </Info>
           <Info>
             <StyledADASymbol>
-              <ADAicon />
+              <ADAicon fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light} />
             </StyledADASymbol>
             <InfoText>{formatADAFull(fee || 0)}</InfoText>
           </Info>
@@ -134,7 +132,7 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
             <CustomIcon
               icon={theme.isDark ? TimeIconDark : TimeIcon}
               height={30}
-              fill={theme.palette.secondary.light}
+              fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
             />
             <InfoText>{formatDateTimeLocal(time || "")}</InfoText>
           </Info>

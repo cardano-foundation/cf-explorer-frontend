@@ -112,3 +112,8 @@ export const ColumnProtocol = styled(Box)<{ isLink: number; to: string }>(({ isL
 export const StyledDropdownItem = styled("label")`
   color: ${({ theme }) => theme.palette.secondary.main};
 `;
+
+export const TextDescription = styled("small")(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  whiteSpace: "nowrap"
+}));

@@ -35,7 +35,7 @@ describe("DetailViewStakeKey component", () => {
 
   it("should component render", () => {
     const onClose = jest.fn();
-    render(<DetailViewStakeKey handleClose={onClose} stakeId={mockStake} />);
+    render(<DetailViewStakeKey handleClose={onClose} stakeId={mockStake} open={true} />);
     expect(screen.getByRole("heading", { name: /withdrawal history/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /instantaneous rewards/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: new RegExp(mockStake, "i") })).toBeInTheDocument();
@@ -46,7 +46,7 @@ describe("DetailViewStakeKey component", () => {
     const onClose = jest.fn();
     render(
       <Router history={history}>
-        <DetailViewStakeKey handleClose={onClose} stakeId={mockStake} />
+        <DetailViewStakeKey handleClose={onClose} stakeId={mockStake} open={true} />
       </Router>
     );
     const viewDetail = screen.getAllByRole("link", { name: /view details/i });

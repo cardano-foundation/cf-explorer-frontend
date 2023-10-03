@@ -44,8 +44,8 @@ describe("DetailViewToken component", () => {
   });
 
   it("should component render", () => {
-    render(<DetailViewToken handleClose={jest.fn()} token={mockToken} tokenId={mockTokenId} />);
-    expect(screen.getByText(/Token Display Name/i)).toBeInTheDocument();
+    render(<DetailViewToken handleClose={jest.fn()} token={mockToken} tokenId={mockTokenId} open={true} />);
+    expect(screen.getAllByText(/Token Display Name/i)[0]).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /Transactions/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /top holders/i })).toBeInTheDocument();
   });
@@ -54,7 +54,7 @@ describe("DetailViewToken component", () => {
     const history = createBrowserHistory();
     render(
       <Router history={history}>
-        <DetailViewToken handleClose={jest.fn()} token={mockToken} tokenId={mockTokenId} />
+        <DetailViewToken handleClose={jest.fn()} token={mockToken} tokenId={mockTokenId} open={true} />
       </Router>
     );
     act(() => {

@@ -1,10 +1,14 @@
 import { alpha, Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export const Wrapper = styled(Box)`
-  text-align: left;
-  background: ${(props) => props.theme.palette.secondary[0]};
-`;
+export const Wrapper = styled(Box)<{ type?: "input" | "output" }>(({ theme, type }) => ({
+  textAlign: "left",
+  background: theme.palette.secondary[0],
+  border: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]} `,
+  borderRadius: theme.spacing(2),
+  borderEndEndRadius: type === "output" ? 0 : theme.spacing(2),
+  borderEndStartRadius: type === "output" ? 0 : theme.spacing(2)
+}));
 
 export const Img = styled("img")(() => ({
   paddingRight: "10px",
@@ -29,7 +33,7 @@ export const Item = styled(Box)(({ theme }) => ({
   textAlign: "left",
   padding: "15px 0px 25px 0px !important",
   margin: "0px 25px",
-  borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+  borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
   "&:last-of-type": {
     borderBottom: "none"
   },
@@ -74,7 +78,7 @@ export const Header = styled(Box)(({ theme }) => ({
   marginLeft: "25px",
   fontSize: "12px",
   color: theme.palette.text.primary,
-  borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+  borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
   [theme.breakpoints.down("sm")]: {
     margin: "0 15px"
   }
@@ -97,6 +101,8 @@ export const ItemFooter = styled(Box)(({ theme }) => ({
   alignItems: "center",
   padding: "12px 25px",
   background: theme.palette.primary[200],
+  borderEndEndRadius: theme.spacing(2),
+  borderEndStartRadius: theme.spacing(2),
   [theme.breakpoints.down("sm")]: {
     padding: "12px 15px"
   }
