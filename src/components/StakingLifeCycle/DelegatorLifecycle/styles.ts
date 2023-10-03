@@ -103,6 +103,9 @@ export const DescriptionText = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     fontSize: "14px",
     paddingTop: "0.5px"
+  },
+  [theme.breakpoints.down(355)]: {
+    marginTop: 10
   }
 }));
 
@@ -116,3 +119,26 @@ export const StyledGroupButton = styled(Box)(({ theme }) => ({
     borderTop: `1px solid ${alpha(theme.palette.grey[200], 1)}`
   }
 }));
+
+export const StyledList = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginBottom: 20,
+  [theme.breakpoints.down("sm")]: {
+    alignItems: "center"
+  },
+  [theme.breakpoints.down(355)]: {
+    alignItems: "flex-start"
+  }
+}));
+
+export const FilterContainer = styled(Box)`
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  ${({ theme }) => theme.breakpoints.down(355)} {
+    flex-direction: column-reverse;
+    align-items: flex-end;
+  }
+`;

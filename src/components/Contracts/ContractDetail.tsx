@@ -41,7 +41,7 @@ const ContractDetail: React.FC<ContractDetailProps> = ({ data, onGoBack, isMobil
     SPEND: {
       component: <Spendviews data={data} isMobile={isMobile} />,
       contract: data?.address,
-      detail: routerDetals.address
+      detail: routerDetals.contract
     }
   };
   const { component, contract, detail } = details[(data?.purpose as ContractDetailProps["view"]) || "SPEND"];

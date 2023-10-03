@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, Skeleton } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { useUpdateEffect } from "react-use";
@@ -13,8 +13,8 @@ import OverviewStaking from "src/components/commons/OverviewStaking";
 import { EmptyRecord, FooterTable } from "src/components/commons/Table";
 import { details } from "src/commons/routers";
 
-import { GridBox, StyledContainer, StyledList, WrapFilterDescription } from "./styles";
-import { DescriptionText } from "../../styles";
+import { GridBox, StyledContainer, WrapFilterDescription } from "./styles";
+import { DescriptionText, FilterContainer, StyledList } from "../../styles";
 
 interface Props {
   setShowBackButton: (status: boolean) => void;
@@ -56,7 +56,7 @@ const RecentDeregistrations: React.FC<Props> = ({ setShowBackButton }) => {
     <StyledContainer>
       <StyledList>
         <DescriptionText>{t("common.deregistrationList")}</DescriptionText>
-        <Box display={"flex"} alignItems={"center"} gap={2}>
+        <FilterContainer>
           <WrapFilterDescription>
             {t("common.showing")} {data.length} {data.length <= 1 ? t("common.result") : t("common.results")}
           </WrapFilterDescription>
@@ -68,7 +68,7 @@ const RecentDeregistrations: React.FC<Props> = ({ setShowBackButton }) => {
             }}
             searchLabel={t("common.searchTx")}
           />
-        </Box>
+        </FilterContainer>
       </StyledList>
       <GridBox sidebar={+sidebar}>
         {loading &&

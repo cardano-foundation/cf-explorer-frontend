@@ -18,6 +18,7 @@ const PolicyID: React.FC<PolicyIDProps> = ({ hash, detail }) => {
   const theme = useTheme();
   return (
     <PopperStyled
+      placement="top"
       render={({ handleClick }) => (
         <PolygonContainer ref={anchorEl}>
           {theme.isDark ? <PolygonDarkIcon /> : <Polygon />}
