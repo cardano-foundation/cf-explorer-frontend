@@ -76,3 +76,7 @@ export const StyledListItemText = styled(ListItemText)`
     }
   }
 `;
+
+export const WhatIsMartContract = styled(Box)`
+  color: ${({ theme }) => theme.palette.secondary.light};
+`;

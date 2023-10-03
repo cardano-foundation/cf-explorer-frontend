@@ -74,7 +74,7 @@ const PopperStyled = (props: Props) => {
             onClick={handleClose}
             position="absolute"
             top={0}
-            right={0}
+            right={5}
             width={20}
             height={20}
             zIndex={10}
