@@ -28,6 +28,7 @@ const StyledMenuDropdown = styled((props: MenuProps) => (
     marginLeft: 138,
     minWidth: 275,
     color: theme.palette.secondary.light,
+    background: theme.isDark ? theme.palette.secondary[100] : "",
     boxShadow: "0px 3px 5px 0px rgba(67, 70, 86, 0.25)",
     "& .MuiMenu-list": {
       padding: "8px 0"
@@ -70,6 +71,12 @@ const StyledButtonMenu = styled(Button)`
     width: 100% !important;
   }
 `;
+
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  "&:hover": {
+    backgroundColor: theme.isDark ? theme.palette.secondary[600] : ""
+  }
+}));
 
 interface IDropdownMenuProps {
   options: { label: string; value: string; disabled?: boolean }[];
@@ -132,9 +139,9 @@ export default function DropdownMenu(props: IDropdownMenuProps) {
         onClose={onClose}
       >
         {options.map(({ value, label, disabled }) => (
-          <MenuItem key={value} onClick={() => onSelect(value)} disabled={disabled}>
+          <StyledMenuItem key={value} onClick={() => onSelect(value)} disabled={disabled}>
             {label}
-          </MenuItem>
+          </StyledMenuItem>
         ))}
       </StyledMenuDropdown>
     </>

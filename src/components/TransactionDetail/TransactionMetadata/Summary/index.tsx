@@ -3,7 +3,15 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { ArrowDownIcon, ArrowUpIcon, WalletRoundedIcon, CopyOutlineIconComponent } from "src/commons/resources";
+import {
+  ArrowDownDarkIcon,
+  ArrowDownIcon,
+  ArrowUpDarkIcon,
+  ArrowUpIcon,
+  CopyOutlineIconComponent,
+  SummaryWalletDark,
+  WalletRoundedIcon
+} from "src/commons/resources";
 
 import { details } from "../../../../commons/routers";
 import { formatADAFull, formatNumberDivByDecimals, getShortWallet } from "../../../../commons/utils/helper";
@@ -43,7 +51,7 @@ const SummaryItems = ({
     >
       <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
         <Box display="flex" paddingX={2}>
-          <Icon src={WalletRoundedIcon} alt="wallet icon" />
+          <Icon src={theme.isDark ? SummaryWalletDark : WalletRoundedIcon} alt="wallet icon" />
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
             <TitleText>{t("common.wallet")}</TitleText>
             <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
@@ -73,7 +81,18 @@ const SummaryItems = ({
       </Grid>
       <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
         <WrapItemsInfo paddingX={2}>
-          <Icon src={type === "up" ? ArrowUpIcon : ArrowDownIcon} alt="send icon" />
+          <Icon
+            src={
+              type === "up"
+                ? theme.isDark
+                  ? ArrowUpDarkIcon
+                  : ArrowUpIcon
+                : theme.isDark
+                ? ArrowDownDarkIcon
+                : ArrowDownIcon
+            }
+            alt="send icon"
+          />
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
             <TitleText>{type === "down" ? `${t("tab.adaSent")}` : `${t("tab.adaReceived")}`}</TitleText>
             <Box display="flex" alignItems="center">
@@ -92,7 +111,7 @@ const SummaryItems = ({
       <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
         <WrapTokensInfo paddingX={2}>
           <Box display={"flex"}>
-            <Icon src={ArrowDownIcon} alt="send icon" />
+            <Icon src={theme.isDark ? ArrowDownDarkIcon : ArrowDownIcon} alt="send icon" />
             <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
               <TitleText>{t("tab.tokensSent")}</TitleText>
               <ValueText alignSelf={"flex-start"}>
@@ -135,7 +154,7 @@ const SummaryItems = ({
       <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
         <WrapTokensInfo paddingX={2}>
           <Box display={"flex"}>
-            <Icon src={ArrowUpIcon} alt="send icon" />
+            <Icon src={theme.isDark ? ArrowUpDarkIcon : ArrowUpIcon} alt="send icon" />
             <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
               <TitleText>{t("tab.tokensReceived")}</TitleText>
               <ValueText alignSelf={"flex-start"}>

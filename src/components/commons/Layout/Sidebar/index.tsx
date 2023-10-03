@@ -6,8 +6,11 @@ import { useWindowSize } from "react-use";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { LogoDarkmodeFullIcon, LogoDarkmodeShortIcon, LogoFullIcon, LogoIcon } from "src/commons/resources";
 import { RootState } from "src/stores/types";
+import { setTheme } from "src/stores/user";
 
+import SelectLanguage from "../Header/SelectLanguage";
 import SelectNetwork from "../Header/SelectNetwork";
+import { SwitchMode } from "../Header/styles";
 import SidebarMenu from "./SidebarMenu";
 import { HeaderTop, LogoLink, NavBarLogo, NavbarContainer, NavbarMenuBottom } from "./styles";
 
@@ -42,14 +45,17 @@ const Sidebar: React.FC = () => {
         <SelectNetwork />
       </NavbarMenuBottom>
       {isGalaxyFoldSmall && (
-        <Box p={"0 14px"}>
-          {/* <SwitchMode
-            checked={theme === "dark"}
-            onChange={(e) => {
-              setTheme(e.target.checked ? "dark" : "light");
-            }}
-          /> */}
-        </Box>
+        <>
+          <SelectLanguage />
+          <Box p={"0 14px"}>
+            <SwitchMode
+              checked={theme === "dark"}
+              onChange={(e) => {
+                setTheme(e.target.checked ? "dark" : "light");
+              }}
+            />
+          </Box>
+        </>
       )}
     </NavbarContainer>
   );

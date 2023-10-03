@@ -43,12 +43,12 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
           componentsProps={{
             transition: {
               style: {
-                backgroundColor: "white",
+                backgroundColor: theme.isDark ? "black" : "white",
                 boxShadow: `0px 0px 10px ${alpha(theme.palette.common.white, 0.25)}`,
                 padding: "10px"
               }
             },
-            arrow: { style: { color: "white" } }
+            arrow: { style: { color: theme.isDark ? "black" : "white" } }
           }}
           title={
             <Box>
@@ -84,12 +84,12 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
           componentsProps={{
             transition: {
               style: {
-                backgroundColor: "white",
+                backgroundColor: theme.isDark ? "black" : "white",
                 boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
                 padding: "10px"
               }
             },
-            arrow: { style: { color: "white" } }
+            arrow: { style: { color: theme.isDark ? "black" : "white" } }
           }}
           title={
             rewardAccounts.length > 0 && (

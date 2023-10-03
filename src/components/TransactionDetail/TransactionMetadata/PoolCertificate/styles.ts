@@ -34,5 +34,11 @@ export const CardHeader = styled(Box)(({ theme }) => ({
   padding: "15px 0px",
   fontWeight: "bold",
   color: theme.palette.secondary.main,
-  borderBottom: `1px solid ${theme.palette.primary[200]}`
+  borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`
+}));
+
+export const Wrapper = styled(Box)(({ theme }) => ({
+  border: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
+  borderRadius: theme.spacing(2),
+  overflow: "hidden"
 }));

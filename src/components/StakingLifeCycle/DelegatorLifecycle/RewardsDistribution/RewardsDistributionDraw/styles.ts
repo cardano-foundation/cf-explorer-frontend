@@ -26,6 +26,11 @@ export const DrawContainer = styled(Box)(({ theme }) => ({
   },
   ">div": {
     zIndex: 2
+  },
+  [theme.breakpoints.down(355)]: {
+    maxWidth: "unset",
+    minWidth: "unset",
+    width: "100%"
   }
 }));
 
@@ -105,6 +110,10 @@ export const HolderWrapper = styled(Box)(({ theme }) => ({
     maxWidth: 328,
     padding: "24px 34px",
     flexDirection: "row-reverse"
+  },
+  [theme.breakpoints.down(355)]: {
+    gap: 20,
+    padding: "24px 24px"
   }
 }));
 
@@ -152,7 +161,7 @@ export const RewardValue = styled(Box)(({ theme }) => ({
 
 export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
   fontSize: 11,
-  color: theme.palette.text.secondary,
+  fill: theme.palette.secondary.main,
   marginBottom: ".125em"
 }));
 

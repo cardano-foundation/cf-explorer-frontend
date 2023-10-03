@@ -48,7 +48,7 @@ export const StyledCard = {
   `,
   ClickAble: styled(Link)`
     height: 100%;
-    background: ${(props) => props.theme.palette.background.paper};
+    background: ${(props) => props.theme.palette.secondary[0]};
     border-radius: 12px;
     box-shadow: ${(props) => props.theme.shadow.card};
     position: relative;

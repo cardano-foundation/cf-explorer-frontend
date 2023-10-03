@@ -14,6 +14,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DropdownTokens, { TokenLink } from "src/components/commons/DropdownTokens";
+import { DownRedUtxoDarkmode, UpGreenUtxoDarkmode } from "src/commons/resources";
 
 import { Header, Img, Item, ItemContent, ItemFooter, WrapInfo, WrapUTXOs } from "./styles";
 
@@ -57,11 +58,32 @@ const Card = ({
     <ADAicon sx={{ color: isFailed ? theme.palette.secondary[600] : theme.palette.secondary.main }} />
   );
   const renderIcon = (type: "up" | "down") => {
-    const srcImg = isFailed ? (type === "down" ? receiveImgFail : sendImgFail) : type === "down" ? receiveImg : sendImg;
+    const srcImg = isFailed
+      ? type === "down"
+        ? theme.isDark
+          ? DownRedUtxoDarkmode
+          : receiveImgFail
+        : theme.isDark
+        ? UpGreenUtxoDarkmode
+        : sendImgFail
+      : type === "down"
+      ? theme.isDark
+        ? DownRedUtxoDarkmode
+        : receiveImg
+      : theme.isDark
+      ? UpGreenUtxoDarkmode
+      : sendImg;
     return <Img src={srcImg} alt="send icon" />;
   };
   return (
-    <Box textAlign={"left"} mb={1} sx={{ background: (theme) => theme.palette.secondary[0] }}>
+    <Box
+      textAlign={"left"}
+      mb={1}
+      border={(theme) => `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`}
+      borderRadius={4}
+      sx={{ background: (theme) => theme.palette.secondary[0] }}
+      overflow={"hidden"}
+    >
       <Header fontWeight="bold">
         <Box color={(theme) => theme.palette.secondary.main} fontSize={"1rem"} lineHeight="19px" mb="2px">
           {type === "down" ? t("glossary.input") : t("glossary.output")}
@@ -212,7 +234,9 @@ const Card = ({
                         isFailed
                           ? theme.palette.secondary[600]
                           : type === "up"
-                          ? theme.palette.success[800]
+                          ? theme.isDark
+                            ? theme.palette.success[700]
+                            : theme.palette.success[800]
                           : theme.palette.error[700]
                       }
                       fontWeight="bold"

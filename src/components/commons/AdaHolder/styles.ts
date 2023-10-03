@@ -18,6 +18,6 @@ export const AdaHolderValue = styled(Typography)(({ theme }) => ({
 
 export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
   fontSize: 11,
-  color: theme.palette.text.secondary,
+  fill: theme.palette.secondary.main,
   marginBottom: ".125em"
 }));
