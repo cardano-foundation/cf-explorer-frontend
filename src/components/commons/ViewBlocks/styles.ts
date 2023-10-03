@@ -98,7 +98,7 @@ export const Rrounded = styled(Box)`
   display: flex;
   justify-content: center;
   gap: 24px;
-  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white)};
+  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[200])};
   width: 100%;
   max-width: 324px;
   ${(props) => props.theme.breakpoints.down("lg")} {
