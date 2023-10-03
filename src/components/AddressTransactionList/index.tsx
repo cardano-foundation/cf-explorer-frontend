@@ -17,7 +17,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import DropdownTokens, { TokenLink } from "src/components/commons/DropdownTokens";
 import Table, { Column } from "src/components/commons/Table";
 import { SmallText } from "src/components/share/styled";
-import { TransferIcon } from "src/commons/resources";
+import { DownRedUtxoDarkmode, TransferIcon, UpGreenUtxoDarkmode } from "src/commons/resources";
 
 import { Img, StyledLink } from "./styles";
 import { TextCardHighlight } from "../AddressDetail/AddressAnalytics/styles";
@@ -79,7 +79,18 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
               </Box>
             ) : (
               <Box width={50} display={transaction?.balance === null ? "none" : ""}>
-                <Img src={type !== "up" ? receiveImg : sendImg} alt="send icon" />
+                <Img
+                  src={
+                    type !== "up"
+                      ? theme.isDark
+                        ? DownRedUtxoDarkmode
+                        : receiveImg
+                      : theme.isDark
+                      ? UpGreenUtxoDarkmode
+                      : sendImg
+                  }
+                  alt="send icon"
+                />
               </Box>
             )}
             <CustomTooltip title={transaction.hash}>
@@ -131,7 +142,16 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
         const isUp = transaction.balance >= 0;
         return (
           <Box display="inline-flex" alignItems="center">
-            <Box mr={1} color={isUp ? theme.palette.success[800] : theme.palette.error[700]}>
+            <Box
+              mr={1}
+              color={
+                isUp
+                  ? theme.isDark
+                    ? theme.palette.success[700]
+                    : theme.palette.success[800]
+                  : theme.palette.error[700]
+              }
+            >
               {!isUp ? `` : `+`}
               {formatADAFull(transaction.balance)}
             </Box>

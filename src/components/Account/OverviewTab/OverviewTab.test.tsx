@@ -145,7 +145,7 @@ describe("Overview Component", () => {
 
   it("Rendering component on PC", async () => {
     render(<OverviewTab />);
-    expect(screen.getByText(mockApiData.email)).toBeInTheDocument();
+    expect(screen.getByText(mockApiData.username)).toBeInTheDocument();
     expect(screen.getByText(mockApiData.lastLogin)).toBeInTheDocument();
   });
 });

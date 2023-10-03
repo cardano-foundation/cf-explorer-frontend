@@ -14,6 +14,7 @@ import {
 import { lists, routers } from "src/commons/routers";
 import { setOnDetailView, setSidebar, setTheme } from "src/stores/user";
 
+import CustomIcon from "../../CustomIcon";
 import TopSearch from "../Sidebar/TopSearch";
 import HeaderSearch from "./HeaderSearch";
 import LoginButton from "./LoginButton";
@@ -33,7 +34,7 @@ import {
   SwitchMode,
   Title
 } from "./styles";
-import CustomIcon from "../../CustomIcon";
+import SelectLanguage from "./SelectLanguage";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [lists.dashboard()];
 
@@ -91,12 +92,15 @@ const Header: React.FC<RouteComponentProps> = (props) => {
           </HeaderLogoLink>
           <SideBarRight>
             {!isGalaxyFoldSmall && (
-              <SwitchMode
-                checked={themeMode === "dark"}
-                onChange={(e) => {
-                  setTheme(e.target.checked ? "dark" : "light");
-                }}
-              />
+              <>
+                <SwitchMode
+                  checked={themeMode === "dark"}
+                  onChange={(e) => {
+                    setTheme(e.target.checked ? "dark" : "light");
+                  }}
+                />
+                <SelectLanguage />
+              </>
             )}
             <NetworkContainer>
               <SelectNetwork />

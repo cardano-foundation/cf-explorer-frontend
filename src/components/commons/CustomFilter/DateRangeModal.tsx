@@ -4,7 +4,7 @@ import moment from "moment";
 import { useTranslation } from "react-i18next";
 
 import CustomModal from "../CustomModal";
-import { DatePickerFooter, Container } from "./styles";
+import { DatePickerFooter, Container, WrapButton } from "./styles";
 import CustomDatePicker, { IDateRange } from "../CustomDatePicker";
 
 export const DATETIME_PARTTEN = `YYYY/MM/DD HH:mm:ss`;
@@ -45,9 +45,9 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
       <Container>
         <CustomDatePicker dateRange={dateRange} setDateRange={setDateRange} hideFuture />
         <DatePickerFooter>
-          <Button disabled={!dateRange[0] || !dateRange[1]} variant="contained" onClick={onSubmit}>
+          <WrapButton disabled={!dateRange[0] || !dateRange[1]} variant="contained" onClick={onSubmit}>
             {t("common.ok")}
-          </Button>
+          </WrapButton>
           <Button variant="outlined" onClick={() => onClose?.()}>
             {t("common.cancel")}
           </Button>

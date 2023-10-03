@@ -27,8 +27,8 @@ describe("DetailViewEpoch component", () => {
     });
   });
   it("rendering component on PC", () => {
-    render(<DetailViewEpoch callback={jest.fn()} epochNo={123} handleClose={jest.fn()} />);
-    expect(screen.getByText(/View Details/i)).toBeInTheDocument();
+    render(<DetailViewEpoch callback={jest.fn()} epochNo={123} handleClose={jest.fn()} open={true} />);
+    expect(screen.getAllByText(/View Details/i)[0]).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /20947/i })).toBeInTheDocument();
     expect(screen.getByText(mockedData.txCount)).toBeInTheDocument();
     expect(screen.getByText(formatADAFull(mockedData.outSum))).toBeInTheDocument();
