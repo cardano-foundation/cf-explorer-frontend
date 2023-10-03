@@ -1,14 +1,14 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Box, Typography, useTheme } from "@mui/material";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
-import { formatLongText } from "src/commons/utils/helper";
-import { InfoIcon } from "src/commons/resources";
-import { StyledLink } from "src/components/share/styled";
-import CustomTooltip from "src/components/commons/CustomTooltip";
-import { details } from "src/commons/routers";
 import { useScreen } from "src/commons/hooks/useScreen";
+import { InfoIcon } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { formatLongText } from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { StyledLink } from "src/components/share/styled";
 
-import { CLButton, CLCardContaienr } from "./styles";
+import { CLButton, CLCardContaienr, WrapLabel } from "./styles";
 
 export interface ContractItemProps {
   data: IContractItemTx;
@@ -66,7 +66,7 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
   return (
     <CLCardContaienr>
       <Box>
-        <Typography fontWeight={600}>Contract Address:</Typography>
+        <WrapLabel>Contract Address:</WrapLabel>
         <CustomTooltip title={contractAddress?.value}>
           <StyledLink
             style={{ fontWeight: "500", textDecoration: "underline" }}
@@ -77,7 +77,7 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
         </CustomTooltip>
       </Box>
       <Box>
-        <Typography fontWeight={600}>Purpose:</Typography>
+        <WrapLabel>Purpose:</WrapLabel>
         <Typography>{data.purpose}</Typography>
         {!!data?.burningTokens?.length && (
           <span>

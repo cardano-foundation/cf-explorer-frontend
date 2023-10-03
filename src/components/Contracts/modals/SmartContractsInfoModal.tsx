@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import React from "react";
 
 import CustomModal from "src/components/commons/CustomModal";
@@ -16,6 +16,7 @@ export interface SmartContractsInfoModalProps {
 const ContractInfoLink = "https://docs.cardano.org/new-to-cardano/what-is-a-smart-contract/";
 
 const SmartContractsInfoModal: React.FC<SmartContractsInfoModalProps> = ({ open = false, onClose }) => {
+  const theme = useTheme();
   const continuteReading = () => {
     onClose?.();
     window.open(ContractInfoLink, "_blank");
@@ -31,7 +32,7 @@ const SmartContractsInfoModal: React.FC<SmartContractsInfoModalProps> = ({ open 
       modalContainerProps={{ px: "20px" }}
     >
       <ModalContent>
-        <Box>
+        <Box color={theme.palette.secondary.light}>
           <Typography component="p" mb={2}>
             A smart contract is an automated digital agreement, written in code, that tracks, verifies, and executes the
             binding transactions of a contract between various parties. The transactions of the contract are

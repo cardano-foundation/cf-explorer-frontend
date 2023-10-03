@@ -15,8 +15,9 @@ export interface AssetsModalProps {
   onClose?: () => void;
   data?: Data[];
   isBurned?: boolean;
+  isBurnType?: boolean;
 }
-const AssetsModal: React.FC<AssetsModalProps> = ({ open = false, onClose, data, isBurned }) => {
+const AssetsModal: React.FC<AssetsModalProps> = ({ open = false, onClose, data, isBurned, isBurnType }) => {
   const theme = useTheme();
   const handleCloseModal = () => onClose?.();
   return (
@@ -34,7 +35,16 @@ const AssetsModal: React.FC<AssetsModalProps> = ({ open = false, onClose, data, 
           color={theme.palette.secondary.main}
         >
           {isBurned ? "Burn" : "Assets"}{" "}
-          <CustomBadge bgColor={isBurned ? theme.palette.error[700] : theme.palette.secondary.light}>
+          <CustomBadge
+            bgColor={
+              isBurned
+                ? theme.palette.error[700]
+                : theme.isDark && isBurnType
+                ? theme.palette.primary.main
+                : theme.palette.secondary.light
+            }
+            color={theme.isDark ? theme.palette.secondary[100] : ""}
+          >
             {data?.length}
           </CustomBadge>
         </Typography>

@@ -122,7 +122,12 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
   const isMint = data?.mintingTokens && data.mintingTokens?.length > 0;
   return (
     <MintContainer isMobile={+!!isMobile}>
-      <AssetsModal open={openAssets} data={mintedAssetsData} onClose={() => setOpenAssets(!openAssets)} />
+      <AssetsModal
+        isBurnType={true}
+        open={openAssets}
+        data={mintedAssetsData}
+        onClose={() => setOpenAssets(!openAssets)}
+      />
       <AssetsModal
         open={openBurnedAssets}
         isBurned={true}
@@ -157,10 +162,14 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
       </MiddleBox>
       {isBurned ? (
         <RightBox ref={rightBoxRef}>
-          <MintBlueBox>
+          <MintBlueBox isBurned={isBurned}>
             <MintRrounded>
               {isMint ? (
-                <Assets onClick={() => setOpenAssets(!openAssets)} total={data?.mintingTokens?.length} />
+                <Assets
+                  onClick={() => setOpenAssets(!openAssets)}
+                  total={data?.mintingTokens?.length}
+                  isBurned={isBurned}
+                />
               ) : (
                 <PolicyID hash={data?.scriptHash} detail={details.policyDetail} />
               )}
@@ -179,7 +188,7 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
       )}
       <DrawPath
         paths={isMobile ? mobilePaths : paths}
-        lineStyle={{ stroke: theme.palette.secondary.light }}
+        lineStyle={{ stroke: theme.isDark ? theme.palette.secondary[700] : theme.palette.secondary.light }}
         style={{ zIndex: 0 }}
       />
     </MintContainer>

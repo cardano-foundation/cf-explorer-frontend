@@ -1,11 +1,12 @@
 import { Typography, useTheme } from "@mui/material";
 import React, { useRef } from "react";
 
-import { Polygon, PoundSign } from "src/commons/resources";
+import { Polygon, PolygonDarkIcon, PoundSign } from "src/commons/resources";
 import PopContent from "src/components/Contracts/common/PopContent";
 
 import { CircleBox, PolygonContainer, PolygonContent } from "./styles";
 import PopperStyled from "../PopperStyled";
+import CustomIcon from "../CustomIcon";
 
 interface ContractProps {
   hash?: string;
@@ -19,7 +20,7 @@ const Contract: React.FC<ContractProps> = ({ hash, detail }) => {
     <PopperStyled
       render={({ handleClick }) => (
         <PolygonContainer ref={anchorEl}>
-          <Polygon />
+          {theme.isDark ? <PolygonDarkIcon /> : <Polygon />}
           <PolygonContent>
             <Typography fontWeight={500} color={theme.palette.primary.main}>
               Contract
@@ -29,7 +30,11 @@ const Contract: React.FC<ContractProps> = ({ hash, detail }) => {
                 typeof anchorEl !== "function" && anchorEl?.current && handleClick(anchorEl.current as HTMLElement)
               }
             >
-              <PoundSign />
+              <CustomIcon
+                icon={PoundSign}
+                height={23}
+                fill={theme.isDark ? theme.palette.common.black : theme.palette.common.white}
+              />
             </CircleBox>
           </PolygonContent>
         </PolygonContainer>
