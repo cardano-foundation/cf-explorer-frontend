@@ -8,12 +8,7 @@ export const Container = styled(Box)`
     theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[100]};
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  padding: 30px 0;
   min-width: 100vw;
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    min-height: 70vh;
-  }
 `;
 
 export const WrapContent = styled(Box)`
@@ -86,7 +81,7 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
     },
     padding: "5px 10px",
     color: theme.palette.secondary.main,
-    backgroundColor: error ? "rgba(247, 94, 94, 0.05)" : theme.palette.secondary[0],
+    backgroundColor: error ? (theme.isDark ? "" : "rgba(247, 94, 94, 0.05)") : theme.palette.secondary[0],
     "&:-webkit-autofill:hover ": {
       WebkitBoxShadow: "0 0 0 30px red inset !important"
     },
@@ -134,7 +129,7 @@ export const WrapButton = styled(Button)(({ theme }) => ({
   textAlign: "center",
   color: theme.palette.secondary[0],
   "&:hover": {
-    background: theme.palette.secondary.main
+    background: theme.isDark ? "" : theme.palette.secondary.main
   },
   "&.Mui-disabled": {
     color: theme.mode === "dark" ? theme.palette.secondary[0] : theme.palette.secondary.main,
@@ -177,14 +172,15 @@ export const WrapSignUp = styled(Box)`
 `;
 
 export const AlertCustom = styled(Alert)`
-  border-color: ${({ theme }) => theme.palette.error[700]};
+  border-color: ${({ theme }) => theme.palette.error.main};
   border-style: solid;
   border-width: 1px;
-  color: ${({ theme }) => theme.palette.secondary.main};
+  color: ${({ theme }) => (theme.mode === "dark" ? theme.palette.error[800] : theme.palette.text.primary)};
   padding: 0 16px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 12px;
   }
+  ${({ theme }) => theme.mode === "dark" && `background-color: ${theme.palette.error[100]};`}
 `;
 
 export const BackButton = styled(Box)(({ theme }) => ({
@@ -218,5 +214,8 @@ export const CloseButton = styled(IconButton)<{ saving: number }>`
   cursor: ${(props) => (props.saving ? `wait` : `pointer`)};
   &:hover {
     ${(props) => (props.saving ? `background: none;` : ``)}
+  }
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    top: 4px;
   }
 `;

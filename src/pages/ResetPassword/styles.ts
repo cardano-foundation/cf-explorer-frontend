@@ -6,14 +6,9 @@ export const Container = styled(Box)`
   display: flex;
   background-color: ${({ theme }) =>
     theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[100]};
-  min-height: 100vh;
   min-width: 100vw;
   justify-content: center;
   align-items: center;
-  padding: 30px 0;
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    min-height: 70vh;
-  }
 `;
 
 export const WrapContent = styled(Box)`
@@ -91,7 +86,7 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
     },
     padding: "5px 10px",
     color: theme.palette.secondary.main,
-    backgroundColor: error ? "rgba(247, 94, 94, 0.05)" : "",
+    backgroundColor: error ? (theme.isDark ? "" : "rgba(247, 94, 94, 0.05)") : theme.palette.secondary[0],
     "&.MuiInputBase-root.Mui-focused": {
       borderColor: error ? "" : theme.palette.secondary.light
     }
@@ -136,7 +131,7 @@ export const WrapButton = styled(Button)(({ theme }) => ({
   textAlign: "center",
   color: theme.palette.secondary[0],
   "&:hover": {
-    background: theme.palette.secondary.main
+    background: theme.isDark ? "" : theme.palette.secondary.main
   },
   "&.Mui-disabled": {
     color: theme.mode === "dark" ? theme.palette.secondary[0] : theme.palette.secondary.main,

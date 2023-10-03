@@ -1,9 +1,9 @@
-import { Box, CircularProgress, FormGroup } from "@mui/material";
+import { Box, CircularProgress, FormGroup, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router-dom";
 
-import { FailIcon, SuccessIcon } from "src/commons/resources";
+import { FailDarkIcon, FailIcon, SuccessDarkIcon, SuccessIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
 import { verifyActive } from "src/commons/utils/userRequest";
 
@@ -15,7 +15,23 @@ export default function VerifyEmail() {
   const path = useLocation();
   const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState(false);
+  const theme = useTheme();
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
 
+  const updateHeight = () => {
+    setViewportHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateHeight);
+    document.body.style.overflow = "hidden";
+    updateHeight();
+
+    return () => {
+      document.body.style.overflow = "unset";
+      window.removeEventListener("resize", updateHeight);
+    };
+  }, []);
   useEffect(() => {
     document.title = `${t("account.verifyEmail")} | ${t("head.page.dashboard")}`;
   }, []);
@@ -41,7 +57,7 @@ export default function VerifyEmail() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path.search]);
   return (
-    <Container>
+    <Container sx={{ height: `${viewportHeight}px` }}>
       <WrapContent>
         <FormGroup>
           {loading ? (
@@ -56,7 +72,7 @@ export default function VerifyEmail() {
             </WrapForm>
           ) : success ? (
             <WrapForm alignItems={"center"}>
-              <SuccessIcon />
+              {theme.isDark ? <SuccessDarkIcon /> : <SuccessIcon />}
               <Title mb={3}>{t("account.verifySuccess")}</Title>
               <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.SIGN_IN)}>
                 {t("common.signIn")}
@@ -64,7 +80,7 @@ export default function VerifyEmail() {
             </WrapForm>
           ) : (
             <WrapForm alignItems={"center"}>
-              <FailIcon />
+              {theme.isDark ? <FailDarkIcon /> : <FailIcon />}
               <Title>{t("account.verifyFailed")}</Title>
               <Box>
                 <Label mb={1}>{t("account.error.verify")}</Label>
