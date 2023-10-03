@@ -40,7 +40,7 @@ export const DataCardBox = styled(Box)`
   display: flex;
   flex-direction: column;
   padding: 16px 20px;
-  background-color: ${({ theme }) => theme.palette.common.white};
+  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white)};
   gap: 5px;
 `;
 
@@ -51,7 +51,7 @@ export const DataTitle = styled(Typography)`
 
 export const DataValue = styled(Typography)`
   font-weight: 400;
-  color: ${({ theme }) => theme.palette.secondary.light};
+  color: ${({ theme }) => (theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light)};
   font-feature-settings: "clig" off, "liga" off;
   line-height: normal;
   line-break: anywhere;
@@ -77,6 +77,11 @@ export const DataValue = styled(Typography)`
   }
 `;
 
+export const TagNumber = styled(Typography)`
+  font-size: 16px;
+  color: ${({ theme }) => theme.palette.secondary.light};
+`;
+
 export const CLCardContaienr = styled(Box)`
   border-radius: 8px;
   display: flex;
@@ -85,7 +90,7 @@ export const CLCardContaienr = styled(Box)`
   width: 100%;
   box-shadow: 2px 2px 10px 0px rgba(67, 70, 86, 0.2);
   align-items: flex-start;
-  background-color: ${({ theme }) => (theme.isDark ? theme.palette.primary[100] : theme.palette.common.white)};
+  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white)};
   justify-content: flex-start;
   box-sizing: border-box;
   padding: 20px;
@@ -105,14 +110,16 @@ export const CLButton = styled("button")`
   border: none;
   background-color: ${({ theme }) => theme.palette.primary.main};
   padding: 1rem;
-  color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100])};
+  color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[0] : theme.palette.primary[100])};
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 16px;
   border-radius: 8px;
   cursor: pointer;
+  font-family: "Roboto", monospace;
 `;
 
-export const ContractAddressLabel = styled(Typography)`
-  font-weight: 600;
-  text-align: left;
-`;
+export const WrapLabel = styled(Typography)(({ theme }) => ({
+  fontWeight: 600,
+  color: theme.palette.secondary.light,
+  textAlign: "left"
+}));

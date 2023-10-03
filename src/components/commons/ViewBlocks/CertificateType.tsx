@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography } from "@mui/material";
 
-import { CertificateTypeBox } from "./styles";
+import { CertValueBox, CertificateTypeBox } from "./styles";
 
 const CertificateType: React.FC<{ redeemerCertType?: IContractItemTx["redeemerCertType"] }> = ({
   redeemerCertType = "DELEGATION"
@@ -15,7 +15,7 @@ const CertificateType: React.FC<{ redeemerCertType?: IContractItemTx["redeemerCe
       <Typography fontSize="1rem" fontWeight={600}>
         Certificate Type:
       </Typography>
-      <Typography>{certType[redeemerCertType]}</Typography>
+      <CertValueBox>{certType[redeemerCertType]}</CertValueBox>
     </CertificateTypeBox>
   );
 };

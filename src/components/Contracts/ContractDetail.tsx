@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 
 import { BackIcon } from "src/commons/resources";
 import { formatLongText } from "src/commons/utils/helper";
@@ -21,6 +21,7 @@ export interface ContractDetailProps {
 }
 
 const ContractDetail: React.FC<ContractDetailProps> = ({ data, onGoBack, isMobile }) => {
+  const theme = useTheme();
   const details = {
     CERT: {
       component: <Certviews data={data} isMobile={isMobile} />,
@@ -50,7 +51,7 @@ const ContractDetail: React.FC<ContractDetailProps> = ({ data, onGoBack, isMobil
         <Box flex={1} display="flex" justifyContent="flex-start">
           {!isMobile && <BackIcon style={{ cursor: "pointer" }} onClick={() => onGoBack?.(data)} />}
         </Box>
-        <Typography fontWeight="500">
+        <Typography fontWeight="500" color={theme.palette.secondary.light}>
           Contract:{" "}
           <CustomTooltip title={contract}>
             <StyledLink style={{ fontWeight: "500", textDecoration: "underline" }} to={detail(contract)}>

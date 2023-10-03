@@ -1,9 +1,12 @@
-import { Box, Typography, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 
-import CopyButton from "src/components/commons/CopyButton";
 import { formatLongText } from "src/commons/utils/helper";
+import CopyButton from "src/components/commons/CopyButton";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+
+import { TagNumber } from "./styles";
 
 export interface PopContentProps {
   hash: string;
@@ -14,8 +17,10 @@ export interface PopContentProps {
 const PopContent: React.FC<PopContentProps> = ({ hash, num, detail }) => {
   return (
     <Box display="flex" padding="4px" gap="2px">
-      <Hash to={detail?.(hash) || "/"}>{formatLongText(hash)}</Hash>{" "}
-      {typeof num === "number" && <Typography fontSize={"1rem"}>#{num}</Typography>}
+      <CustomTooltip title={hash}>
+        <Hash to={detail?.(hash) || "/"}>{formatLongText(hash)}</Hash>
+      </CustomTooltip>{" "}
+      {typeof num === "number" && <TagNumber>#{num}</TagNumber>}
       <CopyButton text={hash} />
     </Box>
   );
