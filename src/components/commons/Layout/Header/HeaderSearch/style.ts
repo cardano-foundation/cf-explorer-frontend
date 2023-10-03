@@ -65,6 +65,9 @@ export const SelectOption = styled(MenuItem)<{ home: number }>`
   font-size: ${(props) => (props.home ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
   color: ${(props) => props.theme.palette.secondary.main};
   font-weight: var(--font-weight-normal);
+  &:hover {
+    background-color: ${(props) => (props.theme.mode === "dark" ? props.theme.palette.secondary[600] : "")};
+  }
 `;
 
 export const StyledInput = styled(Input)<{ home: number }>`

@@ -247,6 +247,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             key={search}
             data={data || []}
             columns={columns}
+            isModal={true}
             total={{ title: "Total", count: fetchData.total }}
             maxHeight={isTablet ? "50vh" : "55vh"}
             pagination={{

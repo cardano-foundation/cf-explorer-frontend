@@ -57,7 +57,7 @@ const RecentDelegations: React.FC<Props> = ({ setShowBackButton }) => {
         <DescriptionText>{t("slc.recentDelegations")}</DescriptionText>
         <FilterContainer>
           <WrapFilterDescription>
-            {t("common.showing")} {data.length} {data.length > 1 ? t("common.results") : t("common.result")}
+            {t("common.showing")} {data.length} {data.length <= 1 ? t("common.result") : t("common.results")}
           </WrapFilterDescription>
           <CustomFilter
             filterValue={params}

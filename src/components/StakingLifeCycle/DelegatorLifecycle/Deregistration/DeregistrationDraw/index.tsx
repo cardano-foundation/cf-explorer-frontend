@@ -11,6 +11,7 @@ import DrawSkeleton from "src/components/commons/DrawSkeleton";
 import {
   AddressIcon,
   AddressIconDark2,
+  BackDarkIcon,
   BackIcon,
   ExclamationTriangleIcon,
   TimeIcon,
@@ -142,7 +143,7 @@ const DeregistrationDraw: React.FC<Props> = ({ toggleModal, showBackButton }) =>
       <StepInfo>
         {showBackButton ? (
           <IconButtonBack data-testid="delegator-deregistration-back-button" onClick={handleBack}>
-            <BackIcon />
+            {theme.isDark ? <BackDarkIcon /> : <BackIcon />}
           </IconButtonBack>
         ) : (
           <Box />
@@ -153,7 +154,7 @@ const DeregistrationDraw: React.FC<Props> = ({ toggleModal, showBackButton }) =>
             <CustomIcon
               icon={theme.isDark ? AddressIconDark2 : AddressIcon}
               height={30}
-              fill={theme.palette.secondary.light}
+              fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
             />
             <CustomTooltip title={txHash}>
               <InfoText>
@@ -164,7 +165,7 @@ const DeregistrationDraw: React.FC<Props> = ({ toggleModal, showBackButton }) =>
           </Info>
           <Info>
             <StyledADASymbol>
-              <ADAicon />
+              <ADAicon fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light} />
             </StyledADASymbol>
             <InfoText>{formatADAFull(Math.abs(deposit) - fee)}</InfoText>
           </Info>
@@ -172,7 +173,7 @@ const DeregistrationDraw: React.FC<Props> = ({ toggleModal, showBackButton }) =>
             <CustomIcon
               icon={theme.isDark ? TimeIconDark : TimeIcon}
               height={30}
-              fill={theme.palette.secondary.light}
+              fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
             />
             <InfoText>{formatDateTimeLocal(time)}</InfoText>
           </Info>

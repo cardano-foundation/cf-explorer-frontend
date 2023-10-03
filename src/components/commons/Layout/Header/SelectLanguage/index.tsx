@@ -20,7 +20,19 @@ const SelectLanguage = () => {
       onChange={(e) => handleChange(e.target.value as APP_LANGUAGES)}
       value={language}
       IconComponent={BiChevronDown}
-      MenuProps={{ style: { zIndex: 1303 } }}
+      MenuProps={{
+        style: { zIndex: 1303 },
+        MenuListProps: {
+          sx: {
+            bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+          }
+        },
+        PaperProps: {
+          sx: {
+            bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+          }
+        }
+      }}
     >
       {Object.entries(APP_LANGUAGES).map(([, value]) => (
         <StyledMenuItem data-testid="language-options" key={value} value={value}>

@@ -21,3 +21,8 @@ export const UpdatedValue = styled(Box)(() => ({
   textTransform: "none",
   display: "block"
 }));
+export const Wrapper = styled(Box)(({ theme }) => ({
+  border: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
+  borderRadius: theme.spacing(2),
+  overflow: "hidden"
+}));

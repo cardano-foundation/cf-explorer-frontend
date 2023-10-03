@@ -16,7 +16,10 @@ export const SquareBox = styled(Box)`
 `;
 
 export const PrimaryText = styled(Typography)`
-  color: ${(props) => props.theme.palette.common.white};
+  color: ${(props) => (props.theme.isDark ? props.theme.palette.secondary[100] : props.theme.palette.common.white)};
+  font-weight: 500;
+  font-size: 16px;
+  font-family: "Roboto", monospace;
 `;
 
 export const CircleBox = styled(Box)<{ bgColor?: string }>`
@@ -33,7 +36,8 @@ export const CircleBox = styled(Box)<{ bgColor?: string }>`
 
 export const CircleBoxOutline = styled(CircleBox)`
   box-sizing: border-box;
-  background-color: ${(props) => props.theme.palette.common.white};
+  background-color: ${(props) =>
+    props.theme.isDark ? props.theme.palette.secondary[100] : props.theme.palette.common.white};
 `;
 
 export const PolygonContainer = styled(Box)`
@@ -58,7 +62,7 @@ export const CompiledCodeButton = styled(Box)`
   box-sizing: border-box;
   background-color: ${(props) => props.theme.palette.primary.main};
   padding: 16px 20px;
-  color: ${(props) => props.theme.palette.common.white};
+  color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white)};
   cursor: pointer;
   border-radius: 8px;
   font-weight: 500;
@@ -77,19 +81,24 @@ export const CustomBadge = styled("span")<{ bgColor?: string; color?: string }>`
   width: 19px;
   height: 19px;
   border-radius: 50%;
-  background-color: ${(props) => props.bgColor ?? props.theme.palette.secondary.light};
-  color: ${(props) => props.color ?? props.theme.palette.common.white};
+  background-color: ${(props) =>
+    props.bgColor
+      ? props.bgColor
+      : props.theme.isDark
+      ? props.theme.palette.secondary[600]
+      : props.theme.palette.secondary.light};
+  color: ${(props) => (props.color ? props.color : props.theme.palette.common.white)};
 `;
 
 export const Rrounded = styled(Box)`
   box-sizing: border-box;
   border-radius: 16px;
-  border: 2px dashed ${({ theme }) => theme.palette.secondary.light};
+  border: 2px dashed ${({ theme }) => (theme.isDark ? theme.palette.secondary[600] : theme.palette.secondary.light)};
   padding: 24px 34px;
   display: flex;
   justify-content: center;
   gap: 24px;
-  background-color: ${({ theme }) => theme.palette.primary[200]};
+  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white)};
   width: 100%;
   max-width: 324px;
   ${(props) => props.theme.breakpoints.down("lg")} {
@@ -150,9 +159,16 @@ export const BlueBox = styled(Box)`
   border-radius: 16px;
 `;
 
-export const MintBlueBox = styled(BlueBox)`
-  max-width: 100%;
-`;
+export const MintBlueBox = styled(BlueBox)<{ isBurned?: boolean }>(({ isBurned, theme }) => ({
+  maxWidth: "100%",
+  backgroundColor: theme.isDark
+    ? isBurned
+      ? theme.palette.secondary[100]
+      : theme.palette.secondary[0]
+    : isBurned
+    ? theme.palette.primary[200]
+    : theme.palette.common.white
+}));
 
 export const MintRrounded = styled(Rrounded)`
   ${({ theme }) => theme.breakpoints.down(430)} {
@@ -176,10 +192,12 @@ export const LongButton = styled("button")`
   outline: none;
   border: none;
   background-color: ${({ theme }) => theme.palette.primary.main};
-  color: ${({ theme }) => theme.palette.common.white};
+  color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white)};
   padding: 16px;
   border-radius: 8px;
-  font-size: 1rem;
+  font-weight: 500;
+  font-size: 16px;
+  font-family: "Roboto", monospace;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -203,6 +221,7 @@ export const SpendBlueBox = styled(BlueBox)`
   ${({ theme }) => theme.breakpoints.down(420)} {
     flex-direction: column;
   }
+  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white)};
 `;
 
 export const RewardContainer = styled(MintContainer)`
@@ -233,9 +252,14 @@ export const CertificateTypeBox = styled(Box)`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  background-color: ${({ theme }) => theme.palette.common.white};
+  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[0] : theme.palette.common.white)};
   width: 100%;
+  color: ${({ theme }) => theme.palette.secondary.light};
 `;
+
+export const CertValueBox = styled(Typography)(({ theme }) => ({
+  color: theme.isDark ? theme.palette.secondary.main : ""
+}));
 
 export const CertContainer = styled(MintContainer)`
   justify-content: center;

@@ -24,6 +24,15 @@ export const Amount = styled(Box)`
 `;
 
 export const TableMinting = styled(Table)(({ theme }) => ({
+  "& td": {
+    borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`
+  },
+  "& th": {
+    borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`
+  },
+  "& tr:last-child th": {
+    borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`
+  },
   "& > div:first-of-type": {
     margin: 0
   },

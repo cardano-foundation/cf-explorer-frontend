@@ -88,7 +88,7 @@ const Certviews: React.FC<CertviewsProps> = ({ data, isMobile }) => {
               onClick={() => setOpenRedeemer(!openRedeemer)}
               icon={OutlineEye}
               width={22}
-              fill={theme.palette.common.white}
+              fill={theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white}
             />
           </LongButton>
         </CertRrounded>
@@ -99,7 +99,7 @@ const Certviews: React.FC<CertviewsProps> = ({ data, isMobile }) => {
       </Center>
       <DrawPath
         paths={isMobile ? mobilePaths : paths}
-        lineStyle={{ stroke: theme.palette.secondary.light }}
+        lineStyle={{ stroke: theme.isDark ? theme.palette.secondary[600] : theme.palette.secondary.light }}
         style={{ zIndex: 0 }}
       />
     </CertContainer>

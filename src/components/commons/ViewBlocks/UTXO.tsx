@@ -1,11 +1,13 @@
 import React, { useRef } from "react";
 import { Typography, useTheme } from "@mui/material";
 
-import { Polygon, PoundSign } from "src/commons/resources";
+import { Polygon, PolygonDarkIcon, PoundSign } from "src/commons/resources";
 import PopContent from "src/components/Contracts/common/PopContent";
 
 import { CircleBox, PolygonContainer, PolygonContent } from "./styles";
 import PopperStyled from "../PopperStyled";
+import CustomIcon from "../CustomIcon";
+
 export interface UTXOProps {
   onClick?: (e: any) => void;
   index?: number;
@@ -20,7 +22,7 @@ const UTXO: React.FC<UTXOProps> = React.forwardRef((props, ref) => {
       placement="top"
       render={({ handleClick }) => (
         <PolygonContainer ref={anchorEl}>
-          <Polygon />
+          {theme.isDark ? <PolygonDarkIcon /> : <Polygon />}
           <PolygonContent>
             <Typography
               display="flex"
@@ -37,7 +39,11 @@ const UTXO: React.FC<UTXOProps> = React.forwardRef((props, ref) => {
                 typeof anchorEl !== "function" && anchorEl?.current && handleClick(anchorEl.current as HTMLElement)
               }
             >
-              <PoundSign />
+              <CustomIcon
+                icon={PoundSign}
+                height={23}
+                fill={theme.isDark ? theme.palette.common.black : theme.palette.common.white}
+              />
             </CircleBox>
           </PolygonContent>
         </PolygonContainer>

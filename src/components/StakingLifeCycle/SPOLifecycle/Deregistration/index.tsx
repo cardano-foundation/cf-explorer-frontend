@@ -3,7 +3,7 @@ import { useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 
-import { BackIcon, AddressIcon, TimeIcon, AddressIconDark2, TimeIconDark } from "src/commons/resources";
+import { BackIcon, AddressIcon, TimeIcon, AddressIconDark2, TimeIconDark, BackDarkIcon } from "src/commons/resources";
 import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import ADAicon from "src/components/commons/ADAIcon";
@@ -132,9 +132,7 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
     <Box>
       <StepInfo>
         {showBackButton ? (
-          <IconButtonBack onClick={handleBack}>
-            <BackIcon />
-          </IconButtonBack>
+          <IconButtonBack onClick={handleBack}>{theme.isDark ? <BackDarkIcon /> : <BackIcon />}</IconButtonBack>
         ) : (
           <Box />
         )}
@@ -143,7 +141,7 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
             <CustomIcon
               icon={theme.isDark ? AddressIconDark2 : AddressIcon}
               height={30}
-              fill={theme.palette.secondary.light}
+              fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
             />
             <CustomTooltip title={selected?.txHash}>
               <InfoText>
@@ -156,17 +154,15 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
           </Info>
           <Info>
             <StyledADASymbol>
-              <ADAicon />
+              <ADAicon fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light} />
             </StyledADASymbol>
-            <InfoText>
-              {formatADAFull(selected?.poolHold ? selected?.poolHold - selected?.fee : selected?.fee || 0)}
-            </InfoText>
+            <InfoText>{formatADAFull(selected?.fee || 0)}</InfoText>
           </Info>
           <Info>
             <CustomIcon
               icon={theme.isDark ? TimeIconDark : TimeIcon}
               height={30}
-              fill={theme.palette.secondary.light}
+              fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
             />
             <InfoText>{formatDateTimeLocal(selected?.time || "")}</InfoText>
           </Info>

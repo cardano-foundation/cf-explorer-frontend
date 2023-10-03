@@ -12,7 +12,7 @@ export const Header = styled(Box)(({ theme }) => ({
   marginLeft: "25px",
   fontSize: "12px",
   color: theme.palette.text.primary,
-  borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+  borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
   [theme.breakpoints.down("sm")]: {
     margin: "0 15px"
   }
@@ -47,6 +47,8 @@ export const ItemFooter = styled(Box)(({ theme }) => ({
   alignItems: "center",
   padding: "12px 25px",
   background: theme.palette.primary[200],
+  borderEndEndRadius: theme.spacing(1),
+  borderEndStartRadius: theme.spacing(1),
   [theme.breakpoints.down("sm")]: {
     padding: "12px 15px"
   }
@@ -70,7 +72,7 @@ export const Item = styled(Box)(({ theme }) => ({
   textAlign: "left",
   padding: "15px 0px",
   margin: "0px 25px",
-  borderBottom: `1px solid ${alpha(theme.palette.common.black, 0.1)}`,
+  borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
   "&:last-of-type": {
     borderBottom: "none"
   },
