@@ -1,7 +1,8 @@
+import { Box, Typography, useTheme } from "@mui/material";
 import React, { useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { IoIosArrowUp } from "react-icons/io";
 
-import { ArrowDown, InfoIcon } from "src/commons/resources";
+import { InfoIcon } from "src/commons/resources";
 
 import {
   ArrowIconContainer,
@@ -18,6 +19,7 @@ export interface ExplanDropdownProps {
 }
 const ExplanDropdown: React.FC<ExplanDropdownProps> = ({ title, content, children }) => {
   const [open, setOpen] = useState(false);
+  const theme = useTheme();
   return (
     <ExplanDropdownContainer>
       <ExplanDropdownHeader onClick={() => setOpen(!open)}>
@@ -26,7 +28,7 @@ const ExplanDropdown: React.FC<ExplanDropdownProps> = ({ title, content, childre
           <InfoIcon />
         </Box>
         <ArrowIconContainer open={+open}>
-          <ArrowDown />
+          <IoIosArrowUp color={theme.palette.secondary.light} />
         </ArrowIconContainer>
       </ExplanDropdownHeader>
       {open && (

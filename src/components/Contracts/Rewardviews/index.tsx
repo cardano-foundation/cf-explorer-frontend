@@ -85,7 +85,7 @@ const Rewardviews: React.FC<RewardviewsProps> = ({ data, isMobile }) => {
       </Center>
       <DrawPath
         paths={isMobile ? paths : mobilePaths}
-        lineStyle={{ stroke: theme.palette.secondary.light }}
+        lineStyle={{ stroke: theme.isDark ? theme.palette.secondary[700] : theme.palette.secondary.light }}
         style={{ zIndex: 0 }}
       />
     </RewardContainer>

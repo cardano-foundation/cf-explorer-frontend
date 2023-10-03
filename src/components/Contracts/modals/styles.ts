@@ -12,7 +12,7 @@ export const ModalContent = styled(Box)`
 `;
 
 export const StyledList = styled(List)`
-  background-color: ${({ theme }) => theme.palette.common.white};
+  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white)};
   border-radius: 8px;
   box-shadow: 1px 2px 4px 0px rgba(67, 70, 86, 0.2);
   overflow: hidden;

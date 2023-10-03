@@ -64,6 +64,8 @@ import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 import ProtocolIcon from "./icons/menus/Protocol.svg";
 import PolygonWhiteIconUrl from "./icons/polygon-white.svg";
 import PolygonBlackIconUrl from "./icons/polygon-back.svg";
+import PolygonDarkIconUrl, { ReactComponent as PolygonDarkIcon } from "./icons/polygon-dark.svg";
+import PolygonDarkRedIconUrl, { ReactComponent as PolygonDarkRedIcon } from "./icons/polygon-dark-red.svg";
 import AdaHolderIconUrl from "./images/ada-holder.png";
 import AdaHolderIconDarlUrl from "./images/ada-holder-dark.png";
 import PaymentWalletUrl from "./images/payment-wallet.png";
@@ -218,10 +220,14 @@ export {
   CardanoBlueDarkmodeLogo,
   TwitterXIcon,
   NoRecordsIcon,
+  PolygonDarkIconUrl,
+  PolygonDarkRedIconUrl,
   LogoDarkmodeFullIcon,
   LogoDarkmodeShortIcon,
   // React component
   ExchangeIcon,
+  PolygonDarkIcon,
+  PolygonDarkRedIcon,
   CubeIconComponent,
   SlotIcon,
   TimeIconComponent,

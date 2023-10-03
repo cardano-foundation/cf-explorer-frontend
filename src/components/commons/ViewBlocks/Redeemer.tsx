@@ -1,7 +1,6 @@
+import { BoxProps, useTheme } from "@mui/material";
 import { forwardRef } from "react";
-import { BoxProps } from "@mui/material";
-
-import { OutlineEye } from "src/commons/resources";
+import { FiEye } from "react-icons/fi";
 
 import { CircleBoxOutline, PrimaryText, SquareBox } from "./styles";
 
@@ -9,11 +8,12 @@ export interface RedeemerProps extends BoxProps {
   onClick?: () => void;
 }
 const Redeemer: React.FC<RedeemerProps> = forwardRef(({ onClick, ...rest }, ref) => {
+  const theme = useTheme();
   return (
     <SquareBox {...rest} ref={ref}>
       <PrimaryText>Redeemer</PrimaryText>
       <CircleBoxOutline onClick={onClick}>
-        <OutlineEye />
+        <FiEye color={theme.palette.primary.main} />
       </CircleBoxOutline>
     </SquareBox>
   );
