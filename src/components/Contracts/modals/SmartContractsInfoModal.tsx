@@ -3,7 +3,7 @@ import React from "react";
 
 import CustomModal from "src/components/commons/CustomModal";
 
-import { ModalContent, WhatIsMartContract } from "./styles";
+import { ModalContent, TitleModal } from "./styles";
 import { CLButton } from "../common/styles";
 
 type Data = { title: string; value: string };
@@ -31,7 +31,7 @@ const SmartContractsInfoModal: React.FC<SmartContractsInfoModalProps> = ({ open 
       modalContainerProps={{ px: "20px" }}
     >
       <ModalContent>
-        <WhatIsMartContract>
+        <TitleModal>
           <Typography component="p" mb={2}>
             A smart contract is an automated digital agreement, written in code, that tracks, verifies, and executes the
             binding transactions of a contract between various parties. The transactions of the contract are
@@ -43,7 +43,7 @@ const SmartContractsInfoModal: React.FC<SmartContractsInfoModalProps> = ({ open 
             The smart contract code is stored on, and distributed across, a decentralised blockchain network, making it
             transparent and irreversible.
           </Typography>
-        </WhatIsMartContract>
+        </TitleModal>
         <CLButton onClick={continuteReading}>Continue Reading</CLButton>
       </ModalContent>
     </CustomModal>

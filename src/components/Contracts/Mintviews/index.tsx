@@ -166,15 +166,20 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
           <MintBlueBox isBurned={isBurned}>
             <MintRrounded>
               {isMint ? (
-                <Assets
-                  onClick={() => setOpenAssets(!openAssets)}
-                  total={data?.mintingTokens?.length}
-                  isBurned={isBurned}
-                />
+                <>
+                  <Assets
+                    onClick={() => setOpenAssets(!openAssets)}
+                    total={data?.mintingTokens?.length}
+                    isBurned={isBurned}
+                  />
+                  <Burn total={data?.burningTokens?.length} onClick={() => setOpenBurnedAssets(!openBurnedAssets)} />
+                </>
               ) : (
-                <PolicyID hash={data?.scriptHash} detail={details.policyDetail} />
+                <>
+                  <Burn total={data?.burningTokens?.length} onClick={() => setOpenBurnedAssets(!openBurnedAssets)} />
+                  <PolicyID hash={data?.scriptHash} detail={details.policyDetail} />
+                </>
               )}
-              <Burn total={data?.burningTokens?.length} onClick={() => setOpenBurnedAssets(!openBurnedAssets)} />
             </MintRrounded>
             {isMint && <PolicyID hash={data?.scriptHash} detail={details.policyDetail} />}
           </MintBlueBox>
