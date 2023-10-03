@@ -88,7 +88,8 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
         endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
         startOffset: { 0: [-5, -50], sm: [0], lg: [-10, -15] },
         endOffset: { 0: [0, 0], lg: [0] },
-        fold: { 0: "none", sm: "horizontal", lg: "none" }
+        fold: { 0: "none", sm: "horizontal", lg: "none" },
+        autoAlign: { 0: "end-vertical", sm: "none" }
       },
       {
         start: feeRef,
@@ -96,9 +97,10 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
         end: cardanoBlockchainRef,
         endPosition: { 0: ["right", "top"], sm: ["right", "middle"], lg: ["left", "middle"] },
         startOffset: { 0: [0] },
-        endOffset: { 0: [-22, 45], sm: [-10, 0], lg: [10, 0] },
+        endOffset: { 0: [-22, 38], sm: [-10, 0], lg: [10, 0] },
         arrow: { 0: "top", sm: "right", lg: "left" },
-        fold: { 0: "none", sm: "vertical", lg: "none" }
+        fold: { 0: "none", sm: "vertical", lg: "none" },
+        autoAlign: { 0: "start-vertical", sm: "none" }
       },
       {
         start: SPOHolderRef,
@@ -108,7 +110,8 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
         startOffset: { 0: [0], lg: [0, 0] },
         endOffset: { 0: [0, 30], lg: [0] },
         arrow: { 0: "top", lg: "left" },
-        fold: { 0: "horizontal", lg: "vertical" }
+        fold: { 0: "horizontal", lg: "vertical" },
+        autoAlign: { 0: "end-vertical", sm: "none" }
       },
       {
         start: deregistrationRef,
@@ -118,7 +121,8 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
         startOffset: { 0: [0], lg: [0, 0] },
         endOffset: { 0: [-94, 45], sm: [10, 0], lg: [0] },
         arrow: { 0: "top", sm: "left", lg: "bottom" },
-        fold: { 0: "none", sm: "vertical", lg: "horizontal" }
+        fold: { 0: "none", sm: "vertical", lg: "horizontal" },
+        autoAlign: { 0: "end-vertical", sm: "none" }
       }
     ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -152,9 +156,7 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
             <StyledADASymbol>
               <ADAicon fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light} />
             </StyledADASymbol>
-            <InfoText>
-              {formatADAFull(selected?.poolHold ? selected?.poolHold - selected?.fee : selected?.fee || 0)}
-            </InfoText>
+            <InfoText>{formatADAFull(selected?.fee || 0)}</InfoText>
           </Info>
           <Info>
             <CustomIcon

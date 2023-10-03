@@ -113,3 +113,26 @@ export const StyledLink = styled(Link)`
   font-weight: inherit;
   color: inherit;
 `;
+
+export const FilterContainer = styled(Box)`
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  ${({ theme }) => theme.breakpoints.down(355)} {
+    flex-direction: column-reverse;
+    align-items: flex-end;
+  }
+`;
+
+export const StyledList = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginBottom: 20,
+  [theme.breakpoints.down("sm")]: {
+    alignItems: "center"
+  },
+  [theme.breakpoints.down(355)]: {
+    alignItems: "flex-start"
+  }
+}));

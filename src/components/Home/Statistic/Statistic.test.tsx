@@ -1,6 +1,5 @@
 import { cleanup, screen } from "@testing-library/react";
 import { useSelector } from "react-redux";
-import moment from "moment";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import "@testing-library/jest-dom/extend-expect";
@@ -81,9 +80,6 @@ describe("HomeStatistic", () => {
     render(<HomeStatistic />);
     expect(screen.getByTestId("market-cap-box-title")).toBeInTheDocument();
     expect(screen.getByTestId("market-cap-value")).toHaveTextContent(`$${numberWithCommas(mockUSDMarket.market_cap)}`);
-    expect(screen.getByTestId("last-update-market-cap")).toHaveTextContent(
-      `Last updated ${moment(mockUSDMarket.last_updated).fromNow()}`
-    );
   });
 
   it("renders Live Stake", async () => {

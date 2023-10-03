@@ -118,6 +118,13 @@ export const WrapperDelegationTab = styled(Box)`
   ${({ theme }) => theme.breakpoints.down("sm")} {
     flex-direction: column;
     gap: 10px;
+    align-items: stretch;
+  }
+`;
+
+export const TabularFilterContainer = styled(Box)`
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    justify-content: flex-end;
   }
 `;
 

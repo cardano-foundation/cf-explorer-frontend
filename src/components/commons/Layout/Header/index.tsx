@@ -34,6 +34,7 @@ import {
   SwitchMode,
   Title
 } from "./styles";
+import SelectLanguage from "./SelectLanguage";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [lists.dashboard()];
 
@@ -91,12 +92,15 @@ const Header: React.FC<RouteComponentProps> = (props) => {
           </HeaderLogoLink>
           <SideBarRight>
             {!isGalaxyFoldSmall && (
-              <SwitchMode
-                checked={themeMode === "dark"}
-                onChange={(e) => {
-                  setTheme(e.target.checked ? "dark" : "light");
-                }}
-              />
+              <>
+                <SwitchMode
+                  checked={themeMode === "dark"}
+                  onChange={(e) => {
+                    setTheme(e.target.checked ? "dark" : "light");
+                  }}
+                />
+                <SelectLanguage />
+              </>
             )}
             <NetworkContainer>
               <SelectNetwork />

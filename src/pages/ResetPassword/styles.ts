@@ -17,6 +17,7 @@ export const WrapContent = styled(Box)`
   gap: 5px;
   align-items: center;
   justify-content: center;
+  transform: translateY(-45px);
 `;
 
 export const Title = styled(Box)`

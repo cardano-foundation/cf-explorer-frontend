@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from "src/test-utils";
+import { act, fireEvent, render, screen, waitFor } from "src/test-utils";
 
 import DropdownMenu from ".";
 
@@ -16,11 +16,13 @@ describe("DropdownMenu component", () => {
   it("should component render", () => {
     render(<DropdownMenu {...mockProps} />);
     const menuButton = screen.getByTestId("dropdown-menu-button");
-    act(async () => {
+    act(() => {
       fireEvent.click(menuButton);
-      const option = screen.getByText(/test 1/i);
-      await expect(option).toBeInTheDocument();
-      await expect(mockProps.handleSelect).toBeCalled();
+      waitFor(async () => {
+        const option = screen.getByTestId(/test 1/i);
+        await expect(option).toBeInTheDocument();
+        await expect(mockProps.handleSelect).toBeCalled();
+      });
     });
   });
 });

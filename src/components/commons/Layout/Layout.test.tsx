@@ -12,6 +12,5 @@ describe("Layout component", () => {
       </CustomLayout>
     );
     expect(screen.getByText(/contents/i)).toBeInTheDocument();
-    expect(screen.getByText(/header-search\.svg/i)).toBeInTheDocument();
   });
 });

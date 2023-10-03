@@ -24,7 +24,7 @@ const DropdownDetail: React.FC<IDropdownDetailProps> = ({ title, value, close, m
   return (
     <ListDropdownContainer minWidth={minWidth} ref={ref}>
       <ButtonClose onClick={close}>
-        <IoMdClose color={theme.palette.secondary.light} />
+        <IoMdClose color={theme.palette.secondary.light} data-testid="icon-close" />
       </ButtonClose>
       <DropdownTitle>{title}</DropdownTitle>
       <DropdownList>
