@@ -1,9 +1,9 @@
-import { Box, FormGroup, IconButton, InputAdornment } from "@mui/material";
+import { Box, FormGroup, IconButton, InputAdornment, useTheme } from "@mui/material";
 import { useEffect, useReducer, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router-dom";
 
-import { FailIcon, HideIcon, LockIcon, ShowIcon } from "src/commons/resources";
+import { FailDarkIcon, FailIcon, HideIcon, LockIcon, ShowIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
 import { resetPassword, verifyCodeResetPassword } from "src/commons/utils/userRequest";
 
@@ -46,6 +46,7 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
   const history = useHistory();
   const path = useLocation();
   const { t } = useTranslation();
+  const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [code, setCode] = useState("");
@@ -62,6 +63,22 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
       value: ""
     }
   });
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+
+  const updateHeight = () => {
+    setViewportHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateHeight);
+    document.body.style.overflow = "hidden";
+    updateHeight();
+
+    return () => {
+      document.body.style.overflow = "unset";
+      window.removeEventListener("resize", updateHeight);
+    };
+  }, []);
 
   useEffect(() => {
     document.title = `${t("account.resetPassword")} | ${t("head.page.dashboard")}`;
@@ -200,7 +217,7 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
   if (initing) return null;
 
   return (
-    <Container>
+    <Container sx={{ height: `${viewportHeight}px` }}>
       <WrapContent>
         <WrapTitle>{t("account.resetPassword")}</WrapTitle>
         <FormGroup>
@@ -279,7 +296,7 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
             </WrapForm>
           ) : (
             <WrapForm alignItems={"center"}>
-              <FailIcon />
+              {theme.isDark ? <FailDarkIcon /> : <FailIcon />}
               <Title>{t("account.resetPasswordFail")}</Title>
               <Box>
                 <Label mb={1}>{t("account.error.verify")}</Label>

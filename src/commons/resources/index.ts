@@ -380,6 +380,8 @@ export { ReactComponent as UnionTokenIcon } from "./icons/union-token.svg";
 export { ReactComponent as PeopleIcon } from "./icons/people.svg";
 export { ReactComponent as SuccessIcon } from "./icons/success.svg";
 export { ReactComponent as FailIcon } from "./icons/failed.svg";
+export { ReactComponent as SuccessDarkIcon } from "./icons/success-dark.svg";
+export { ReactComponent as FailDarkIcon } from "./icons/failed-dark.svg";
 export { ReactComponent as StakingDelegators } from "./icons/stakingDelegators.svg";
 export { ReactComponent as CertificateIcon } from "./icons/certificate.svg";
 export { ReactComponent as CertificateDarkIcon } from "./icons/certificate-dark.svg";
