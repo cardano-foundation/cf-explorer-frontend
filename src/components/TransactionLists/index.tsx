@@ -79,13 +79,11 @@ const TransactionList: React.FC<TransactionListProps> = ({
       render: (r) => {
         const { blockName, tooltip } = formatNameBlockNo(r.blockNo, r.epochNo) || getShortHash(r.blockHash);
         return (
-          <Box>
-            <StyledLink to={details.block(r.blockNo || r.blockHash)}>
-              <CustomTooltip title={tooltip}>
-                <span>{blockName}</span>
-              </CustomTooltip>
-            </StyledLink>
-          </Box>
+          <StyledLink to={details.block(r.blockNo || r.blockHash)}>
+            <CustomTooltip title={tooltip}>
+              <span>{blockName}</span>
+            </CustomTooltip>
+          </StyledLink>
         );
       }
     },
