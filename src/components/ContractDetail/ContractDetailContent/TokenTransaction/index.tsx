@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import { stringify } from "qs";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -52,7 +51,7 @@ const TokenTransaction: React.FC = () => {
     {
       title: t("glossary.txhash"),
       key: "hash",
-      minWidth: "200px",
+      minWidth: "150px",
 
       render: (r) => (
         <>
@@ -70,19 +69,20 @@ const TokenTransaction: React.FC = () => {
       render: (r) => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>
     },
     {
-      title: t("glossary.block"),
-      key: "block",
-      minWidth: "120px",
-      render: (r) => (
-        <>
-          <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
-          <br />
-          <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
-          <Box component={"span"} color={({ palette }) => palette.secondary.light}>
-            {r.epochSlotNo}{" "}
-          </Box>
-        </>
-      )
+      title: t("glossary.epoch"),
+      key: "epochNo",
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>
+    },
+    {
+      title: t("glossary.slot"),
+      key: "epochSlotNo",
+      minWidth: "50px"
+    },
+    {
+      title: t("glossary.absoluteSlot"),
+      key: "slot",
+      minWidth: "100px"
     },
     {
       title: t("glossary.address"),
@@ -122,7 +122,7 @@ const TokenTransaction: React.FC = () => {
     {
       title: t("fees"),
       key: "fee",
-      minWidth: "120px",
+      minWidth: "50px",
       render: (r) => (
         <PriceValue>
           <SmallText>

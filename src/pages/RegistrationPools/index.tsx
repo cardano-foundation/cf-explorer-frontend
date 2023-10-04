@@ -75,16 +75,23 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
     {
       title: t("glossary.block"),
       key: "block",
-      render: (pool) => (
-        <>
-          <StyledLink to={details.block(pool.block)}>{pool.block}</StyledLink>
-          <br />
-          <StyledLink to={details.epoch(pool.epoch)}>{pool.epoch}</StyledLink>/{" "}
-          <Box component={"span"} color={({ palette }) => palette.secondary.light}>
-            {pool.slotNo}
-          </Box>
-        </>
-      )
+      render: (pool) => <StyledLink to={details.block(pool.block)}>{pool.block}</StyledLink>
+    },
+    {
+      title: t("glossary.epoch"),
+      key: "epoch",
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>
+    },
+    {
+      title: t("glossary.slot"),
+      key: "epochSlotNo",
+      minWidth: "50px"
+    },
+    {
+      title: t("glossary.absoluteSlot"),
+      key: "slotNo",
+      minWidth: "100px"
     },
     {
       title: t("glossary.pool"),
