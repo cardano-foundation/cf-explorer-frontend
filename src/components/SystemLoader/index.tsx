@@ -63,11 +63,11 @@ export const SystemLoader = () => {
   }, [currentEpoch]);
 
   useEffect(() => {
-    if (usdMarket?.[0]) setUsdMarket(usdMarket[0]);
+    if (usdMarket?.[0]) setUsdMarket({ ...usdMarket[0], last_updated: new Date().toString() });
   }, [usdMarket]);
 
   useEffect(() => {
-    if (btcMarket?.[0]) setBtcMarket(btcMarket[0]);
+    if (btcMarket?.[0]) setBtcMarket({ ...btcMarket[0], last_updated: new Date().toString() });
   }, [btcMarket]);
 
   useEffect(() => {
@@ -98,10 +98,10 @@ export const SystemLoader = () => {
               setCurrentEpoch(data.payload.epochSummary);
               break;
             case EVENT_TYPES.CURRENT_PRICE_USD:
-              if (data.payload[0]) setUsdMarket(data.payload[0]);
+              if (data.payload[0]) setUsdMarket({ ...data.payload[0], last_updated: new Date().toString() });
               break;
             case EVENT_TYPES.CURRENT_PRICE_BTC:
-              if (data.payload[0]) setBtcMarket(data.payload[0]);
+              if (data.payload[0]) setBtcMarket({ ...data.payload[0], last_updated: new Date().toString() });
               break;
             default:
               break;

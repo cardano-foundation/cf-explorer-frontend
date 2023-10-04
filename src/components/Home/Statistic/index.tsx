@@ -110,6 +110,7 @@ const HomeStatistic = () => {
     last_updated: "",
     market_cap: 0
   });
+  const priceBTC = useRef<number>(0);
 
   useEffect(() => {
     if (Number(usdMarket?.market_cap) !== Number(marketcap.current.market_cap)) {
@@ -120,6 +121,17 @@ const HomeStatistic = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usdMarket?.market_cap]);
+
+  useEffect(() => {
+    if (Number(btcMarket?.current_price) !== priceBTC.current) {
+      priceBTC.current = Number(btcMarket?.current_price);
+      marketcap.current = {
+        ...marketcap.current,
+        last_updated: btcMarket?.last_updated || ""
+      };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [btcMarket?.current_price, marketcap.current]);
 
   return (
     <StatisticContainer
@@ -164,7 +176,7 @@ const HomeStatistic = () => {
                 </Content>
                 <Content>
                   <TimeDuration data-testid="last-update-ada-price">
-                    <FormNowMessage time={usdMarket.last_updated + "Z"} />
+                    <FormNowMessage time={usdMarket.last_updated} />
                   </TimeDuration>
                 </Content>
               </WrapCardContent>
@@ -190,7 +202,7 @@ const HomeStatistic = () => {
                 <Title data-testid="market-cap-value">${numberWithCommas(usdMarket.market_cap)}</Title>
                 <Content>
                   <TimeDuration data-testid="last-update-market-cap">
-                    <FormNowMessage time={marketcap.current.last_updated + "Z"} />
+                    <FormNowMessage time={marketcap.current.last_updated} />
                   </TimeDuration>
                 </Content>
               </WrapCardContent>
