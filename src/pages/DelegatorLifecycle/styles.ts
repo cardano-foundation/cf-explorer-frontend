@@ -34,6 +34,9 @@ export const LifeCycleTitle = styled("h2")(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     fontSize: 24,
     lineHeight: "28px"
+  },
+  [theme.breakpoints.down(355)]: {
+    fontSize: 22
   }
 }));
 
