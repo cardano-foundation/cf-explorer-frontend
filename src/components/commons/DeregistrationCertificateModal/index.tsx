@@ -1,4 +1,3 @@
-import { Skeleton } from "@mui/material";
 import { Box } from "@mui/system";
 import { useTranslation } from "react-i18next";
 
@@ -7,6 +6,7 @@ import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 
 import CopyButton from "../CopyButton";
+import { CommonSkeleton } from "../CustomSkeleton";
 import StyledModal from "../StyledModal";
 import { StakeLink, StyledContainerModal } from "./styles";
 
@@ -24,7 +24,7 @@ export const DeregistrationCertificateModal = ({
   return (
     <StyledModal {...props} width={550} title={t("common.deregistrationCert")}>
       <Box>
-        {loading && <Skeleton variant="rectangular" width={500} height={90} />}
+        {loading && <CommonSkeleton variant="rectangular" width={500} height={90} />}
         {!loading && (
           <StyledContainerModal>
             <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>

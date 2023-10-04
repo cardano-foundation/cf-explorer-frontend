@@ -1,7 +1,9 @@
+import { Box, BoxProps, styled } from "@mui/material";
 import React, { forwardRef } from "react";
-import { Box, BoxProps, Skeleton, styled } from "@mui/material";
 
-const InformationSkeleton = styled(Skeleton)(({ theme }) => ({
+import { CommonSkeleton } from "../CustomSkeleton";
+
+const InformationSkeleton = styled(CommonSkeleton)(({ theme }) => ({
   width: 600,
   height: 30,
   borderRadius: 8,
@@ -13,7 +15,7 @@ const InformationSkeleton = styled(Skeleton)(({ theme }) => ({
   }
 }));
 
-const ShapeSkeleton = styled(Skeleton)(({ theme }) => ({
+const ShapeSkeleton = styled(CommonSkeleton)(({ theme }) => ({
   width: "100%",
   height: 300,
   borderRadius: 8,

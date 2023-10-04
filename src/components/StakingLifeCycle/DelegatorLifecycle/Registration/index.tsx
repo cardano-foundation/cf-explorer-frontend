@@ -1,12 +1,13 @@
+import { Box } from "@mui/material";
 import { useState } from "react";
-import { Box, Skeleton } from "@mui/material";
-import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 
 import useFetch from "src/commons/hooks/useFetch";
-import { API } from "src/commons/utils/api";
 import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
 import CopyButton from "src/components/commons/CopyButton";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
 import RecentRegistrations from "./RecentRegistrations";
 import { RegistrationDraw } from "./RegistrationDraw";
@@ -42,7 +43,7 @@ export const RegistrationCertificateModal = ({ stake, open, handleCloseModal }: 
 
   return (
     <StyledCustomModal open={open} onClose={handleCloseModal} title={t("sklc.registrationCertificate")}>
-      {loading && <Skeleton variant="rectangular" width={500} height={90} />}
+      {loading && <CommonSkeleton variant="rectangular" width={500} height={90} />}
       {!loading && (
         <WrapContent>
           <Box fontWeight={"bold"} mb={1} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>

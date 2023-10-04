@@ -1,4 +1,4 @@
-import { alpha, Box, Grid, MenuItem, Select, Skeleton, styled } from "@mui/material";
+import { alpha, Box, Grid, MenuItem, Select, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
@@ -6,6 +6,7 @@ import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "src/commons/utils/const
 import breakpoints from "src/themes/breakpoints";
 
 import CopyButton from "../CopyButton";
+import { CommonSkeleton } from "../CustomSkeleton";
 interface CardItemProps {
   length: number;
   wide?: number;
@@ -71,7 +72,7 @@ export const HeaderTitle = styled(Box)`
   }
 `;
 
-export const HeaderTitleSkeleton = styled(Skeleton)`
+export const HeaderTitleSkeleton = styled(CommonSkeleton)`
   height: 1em;
   width: 200px;
   max-width: 100%;
@@ -203,19 +204,19 @@ export const Icon = styled("img")`
   height: 25px;
 `;
 
-export const IconSkeleton = styled(Skeleton)`
+export const IconSkeleton = styled(CommonSkeleton)`
   width: 24px;
   height: 24px;
 `;
 
-export const DetailLabelSkeleton = styled(Skeleton)`
+export const DetailLabelSkeleton = styled(CommonSkeleton)`
   height: 1em;
   width: 50%;
   min-width: 100px;
   border-radius: 4px;
 `;
 
-export const DetailValueSkeleton = styled(Skeleton)`
+export const DetailValueSkeleton = styled(CommonSkeleton)`
   height: 1em;
   width: 50%;
   min-width: 100px;
