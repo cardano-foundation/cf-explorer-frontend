@@ -1,6 +1,7 @@
-import { Box, Skeleton as SkeletonMUI, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 
 import { BoxRaised } from "src/components/commons/BoxRaised";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
 import { TypeChart } from ".";
 
@@ -102,7 +103,7 @@ export const InfoItem = styled(Box)(({ theme }) => ({
     borderBottom: "none"
   }
 }));
-export const Skeleton = styled(SkeletonMUI)(() => ({
+export const Skeleton = styled(CommonSkeleton)(() => ({
   height: 300,
   borderRadius: 12
 }));

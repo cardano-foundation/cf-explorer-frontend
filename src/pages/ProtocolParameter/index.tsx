@@ -7,7 +7,6 @@ import {
   ClickAwayListener,
   Container,
   IconButton,
-  Skeleton,
   alpha,
   useTheme
 } from "@mui/material";
@@ -31,12 +30,13 @@ import { formatDateTimeLocal } from "src/commons/utils/helper";
 import ParseScriptModal from "src/components/ParseScriptModal";
 import Card from "src/components/commons/Card";
 import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
+import CustomIcon from "src/components/commons/CustomIcon";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import NoRecord from "src/components/commons/NoRecord";
 import Table from "src/components/commons/Table";
 import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "src/types/protocol";
 import { Column } from "src/types/table";
-import CustomIcon from "src/components/commons/CustomIcon";
 
 import { ExplainerTextModal } from "./ExplainerTextModal";
 import { explainerTextGlobalConstants, explainerTextProtocolHistory } from "./explainerText";
@@ -256,7 +256,7 @@ const ProtocolParameter: React.FC = () => {
                 </Box>
                 {!initialLastest && (
                   <Box
-                    component={Skeleton}
+                    component={CommonSkeleton}
                     mt={2}
                     borderRadius={({ spacing }) => spacing(2)}
                     variant="rectangular"
@@ -277,7 +277,7 @@ const ProtocolParameter: React.FC = () => {
                   </Box>
                   {!initialFixed && (
                     <Box
-                      component={Skeleton}
+                      component={CommonSkeleton}
                       mt={2}
                       borderRadius={({ spacing }) => spacing(2)}
                       variant="rectangular"
@@ -482,7 +482,13 @@ export const ProtocolParameterHistory = () => {
 
   if (loading) {
     return (
-      <Box component={Skeleton} mt={2} borderRadius={({ spacing }) => spacing(2)} variant="rectangular" height={400} />
+      <Box
+        component={CommonSkeleton}
+        mt={2}
+        borderRadius={({ spacing }) => spacing(2)}
+        variant="rectangular"
+        height={400}
+      />
     );
   }
 

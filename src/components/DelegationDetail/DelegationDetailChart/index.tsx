@@ -1,15 +1,16 @@
-import { Box, Grid, Skeleton, styled, useTheme } from "@mui/material";
+import { Box, Grid, styled, useTheme } from "@mui/material";
 import BigNumber from "bignumber.js";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
 import { useSelector } from "react-redux";
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
 
-import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/helper";
-import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
+import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
+import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/helper";
 import CustomIcon from "src/components/commons/CustomIcon";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import { TooltipBody } from "src/components/commons/Layout/styles";
 
 import {
@@ -196,6 +197,6 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
 
 export default DelegationDetailChart;
 
-const SkeletonUI = styled(Skeleton)(() => ({
+const SkeletonUI = styled(CommonSkeleton)(() => ({
   borderRadius: 10
 }));
