@@ -79,7 +79,7 @@ export default function SignUp() {
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
 
   const updateHeight = () => {
-    setViewportHeight(window.innerHeight);
+    setViewportHeight(window.innerHeight + 100);
   };
 
   useEffect(() => {
