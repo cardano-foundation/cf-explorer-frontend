@@ -1,15 +1,16 @@
+import { Box, useTheme } from "@mui/material";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
-import { Column } from "src/components/commons/Table";
-import ScriptModal from "src/components/ScriptModal";
-import { PolicyScriptIcon } from "src/commons/resources";
-import { Logo } from "src/pages/Token/styles";
+import { HeaderSearchIconComponent } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import { formatAmount, getShortWallet } from "src/commons/utils/helper";
+import ScriptModal from "src/components/ScriptModal";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { Column } from "src/components/commons/Table";
+import { Logo } from "src/pages/Token/styles";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import { Amount, AssetName, LogoEmpty, TableMinting } from "./styles";
 
@@ -20,6 +21,7 @@ interface MintingProps {
 const Minting: React.FC<MintingProps> = ({ data }) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+  const theme = useTheme();
   const [selectedItem, setSelectedItem] = useState<string>("");
 
   const columns: Column<Required<Transaction>["mints"][number]>[] = [
@@ -74,7 +76,12 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
               setSelectedItem(r.policy || "");
             }}
           >
-            <PolicyScriptIcon />
+            <CustomIcon
+              icon={HeaderSearchIconComponent}
+              stroke={theme.palette.secondary.light}
+              fill={theme.palette.secondary[0]}
+              height={22}
+            />
           </Box>
         );
       }
