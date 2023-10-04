@@ -49,6 +49,8 @@ import {
   ButtonFilter,
   ColumnProtocol,
   FilterContainer,
+  Header,
+  HeaderButton,
   StyledDropdownItem,
   TextDescription
 } from "./styles";
@@ -240,19 +242,10 @@ const ProtocolParameter: React.FC = () => {
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
                 <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                  <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main} fontSize={"1.25rem"}>
-                    {t("common.updatableParameters")}
-                  </Box>
-                  <Box
-                    component={Button}
-                    variant="contained"
-                    textTransform={"capitalize"}
-                    fontWeight={"bold"}
-                    fontSize={"0.875rem"}
-                    onClick={() => history.push(lists.protocolParameters("histories"))}
-                  >
+                  <Header>{t("common.updatableParameters")}</Header>
+                  <HeaderButton variant="contained" onClick={() => history.push(lists.protocolParameters("histories"))}>
                     {t("common.viewUpdateHistory")}
-                  </Box>
+                  </HeaderButton>
                 </Box>
                 {!initialLastest && (
                   <Box
