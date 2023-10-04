@@ -428,7 +428,6 @@ export { ReactComponent as ADAinactive } from "./icons/Staking/ADAinactive.svg";
 export { ReactComponent as OutlineEye } from "./icons/outline-eye.svg";
 export { ReactComponent as Polygon } from "./icons/polygon.svg";
 export { ReactComponent as PoundSign } from "./icons/pound-sign.svg";
-export { ReactComponent as ArrowDown } from "./icons/arrow-down.svg";
 export { ReactComponent as SeeMoreIconHome } from "./icons/seemore.svg";
 export { ReactComponent as WalletIconComponent } from "./icons/walletIcon.svg";
 export { ReactComponent as CubeIcon } from "./icons/cube.svg";
