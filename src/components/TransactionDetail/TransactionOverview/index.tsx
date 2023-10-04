@@ -25,7 +25,7 @@ import DropdownDetail from "src/components/commons/DropdownDetail";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
 
-import { MaxSlot, StyledLink, TitleCard } from "./styles";
+import { StyledLink, TitleCard } from "./styles";
 
 interface Props {
   data: Transaction | null;
@@ -231,15 +231,11 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       title: (
         <Box display={"flex"} alignItems="center">
           <TitleCard height={24} mr={1}>
-            {t("common.slot")}
+            {`${t("common.slot")} - ${t("glossary.absoluteSlot")}`}
           </TitleCard>
         </Box>
       ),
-      value: (
-        <>
-          {data?.tx?.epochSlot || 0}/<MaxSlot>{MAX_SLOT_EPOCH}</MaxSlot>
-        </>
-      )
+      value: `${data?.tx?.epochSlot} - ${data?.tx?.slotNo || 0}`
     }
   ];
   return (

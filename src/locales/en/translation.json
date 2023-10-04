@@ -104,6 +104,7 @@
   "page.dashboard": "Dashboard",
   "glossary.blockchain": "Blockchain",
   "glossary.epochs": "Epochs",
+  "glossary.absoluteSlot": "Absolute Slot",
   "glossary.blocks": "Blocks",
   "glossary.transactions": "Transactions",
   "glossary.nativeTokens": "Native Tokens",
