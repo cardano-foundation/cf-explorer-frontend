@@ -88,7 +88,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect, setShowBackButton })
             return (
               <OverviewStaking
                 key={item.txHash}
-                amount={item.poolHold ? item.poolHold - item.fee : item.fee}
+                amount={item.fee}
                 time={item.time}
                 hash={item.txHash}
                 item={item}

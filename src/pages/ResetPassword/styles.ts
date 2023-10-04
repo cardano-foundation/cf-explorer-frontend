@@ -10,10 +10,6 @@ export const Container = styled(Box)`
   min-width: 100vw;
   justify-content: center;
   align-items: center;
-  padding: 30px 0;
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    min-height: 70vh;
-  }
 `;
 
 export const WrapContent = styled(Box)`
@@ -22,6 +18,7 @@ export const WrapContent = styled(Box)`
   gap: 5px;
   align-items: center;
   justify-content: center;
+  transform: translateY(-45px);
 `;
 
 export const Title = styled(Box)`
