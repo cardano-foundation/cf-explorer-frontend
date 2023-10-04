@@ -9,17 +9,16 @@ describe("User check information of latest Block", () => {
     cy.get("span").contains("Per page").should("be.visible");
 
     cy.get('[data-testid="table-common"] tbody tr').eq(0).click();
-    cy.get("a").contains("View Details").should("be.visible");
-    cy.get("a").contains("View Details").click();
-    cy.wait(2000);
+    cy.get("a").contains("View Details", { matchCase: false }).should("be.visible");
+    cy.get("a").contains("View Details", { matchCase: false }).click();
 
     cy.get('[data-testid="search-bar"]').should("be.visible");
     cy.get("p > div").should("be.visible");
-    cy.get("div").contains("Block details").should("be.visible");
-    cy.get("div").contains("Created At ").should("be.visible");
+    cy.get("div").contains("Block details", { matchCase: false }).should("be.visible");
+    cy.get("div").contains("Created At", { matchCase: false }).should("be.visible");
     cy.get("div").contains("Confirmation").should("be.visible");
     cy.get("div").contains("Transactions").should("be.visible");
-    cy.get("div").contains("Transaction Fees ").should("be.visible");
+    cy.get("div").contains("Transaction Fees", { matchCase: false }).should("be.visible");
     cy.get("div").contains(" Block").should("be.visible");
     cy.get("div").contains(" Slot").should("be.visible");
     cy.get('[data-testid="table-common"]').should("be.visible");
