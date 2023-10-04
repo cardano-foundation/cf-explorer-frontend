@@ -493,7 +493,7 @@
   "slc.nextViewInTabular": "Next: View in Tabular",
   "slc.switchTimelineView": "Switch to timeline view",
   "common.status": "Status",
-  "common.retiring": "Retiring",
+  "common.retired": "Retired",
   "common.incactive": "Inactive",
   "common.active": "Active",
   "slc.rewardsAvailable": "Rewards Available",
