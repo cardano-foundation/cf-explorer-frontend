@@ -89,17 +89,23 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
     {
       title: t("glossary.block"),
       key: "block",
-      render: (r) => (
-        <>
-          <StyledLink to={details.block(r.block)}>{r.block}</StyledLink>
-          <div style={{ display: "flex", marginTop: "6px" }}>
-            <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>/
-            <Box component={"span"} color={({ palette }) => palette.secondary.light}>
-              {r.epochSlotNo}
-            </Box>
-          </div>
-        </>
-      )
+      render: (r) => <StyledLink to={details.block(r.block)}>{r.block}</StyledLink>
+    },
+    {
+      title: t("glossary.epoch"),
+      key: "epoch",
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>
+    },
+    {
+      title: t("glossary.slot"),
+      key: "epochSlotNo",
+      minWidth: "50px"
+    },
+    {
+      title: t("glossary.absoluteSlot"),
+      key: "slotNo",
+      minWidth: "100px"
     },
     {
       title: t("glossary.stakeAddress"),
