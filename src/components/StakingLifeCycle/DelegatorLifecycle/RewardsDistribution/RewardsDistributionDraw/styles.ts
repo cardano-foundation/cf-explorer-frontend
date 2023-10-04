@@ -179,3 +179,62 @@ export const StyledADAOrangeIcon = styled(ADAOrangeIcon)(() => ({
     opacity: 0.8
   }
 }));
+
+export const IconWrapper = styled(Box)`
+  background-color: ${({ theme }) => theme.palette.border.primary};
+  border-radius: 50%;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  cursor: pointer;
+`;
+
+export const OperatorRewardWrapper = styled(Box)`
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: "";
+    width: 44px;
+    height: 44px;
+    display: block;
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    border-radius: 50%;
+    background: ${({ theme }) => theme.palette.secondary[900]};
+  }
+`;
+
+export const OperatorRewardContainer = styled(Box)`
+  position: relative;
+`;
+
+export const RewardsModalContent = styled(Box)`
+  width: 100%;
+  max-width: 550px;
+  color: ${({ theme }) => theme.palette.secondary.light};
+  max-height: 78vh;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background: ${({ theme }) => theme.palette.secondary.light};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${({ theme }) => theme.palette.primary[100]};
+    }
+  }
+`;

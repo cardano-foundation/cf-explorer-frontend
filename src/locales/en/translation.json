@@ -795,5 +795,6 @@
   "explain.slotsPerKESPeriod": "After how many slots will a pool's operational key pair evolve (Key Evolving Signatures).",
   "explain.slotLength": "The length of each slot (in seconds).",
   "explain.maxKESEvolutions": "What is the maximum number of times a KES key pair can evolve before a new KES key pair must be generated from the master keys.",
-  "explain.securityParam": "After how many blocks is the blockchain considered to be final"
+  "explain.securityParam": "After how many blocks is the blockchain considered to be final",
+  "explain.operatorRewardSPO": "List of pool operator rewards received in this reward account, displayed separately from delegator rewards. Relevant only if this reward account has been registered as the reward account of a stake pool and received operator rewards."
 }
