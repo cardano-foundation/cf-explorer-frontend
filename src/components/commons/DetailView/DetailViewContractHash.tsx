@@ -52,7 +52,7 @@ const DetailViewContractHash: React.FC<DetailViewEpochProps> = ({ txHash, handle
     if (loading || !initialized) {
       return (
         <>
-          <ViewDetailHeader />
+          <ViewDetailHeader data-testId="view-detail-drawer-loading" />
           <ViewDetailContainer>
             <ViewDetailScroll>
               <HeaderContainer>

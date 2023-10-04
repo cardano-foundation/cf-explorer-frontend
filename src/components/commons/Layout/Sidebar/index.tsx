@@ -1,17 +1,17 @@
+import { Box } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useWindowSize } from "react-use";
-import { Box } from "@mui/material";
 
-import { RootState } from "src/stores/types";
-import { LogoFullIcon, LogoIcon, LogoDarkmodeFullIcon, LogoDarkmodeShortIcon } from "src/commons/resources";
 import { useScreen } from "src/commons/hooks/useScreen";
+import { LogoDarkmodeFullIcon, LogoDarkmodeShortIcon, LogoFullIcon, LogoIcon } from "src/commons/resources";
+import { RootState } from "src/stores/types";
 import { setTheme } from "src/stores/user";
 
-import SidebarMenu from "./SidebarMenu";
-import { NavbarContainer, NavBarLogo, LogoLink, HeaderTop, NavbarMenuBottom } from "./styles";
 import SelectNetwork from "../Header/SelectNetwork";
 import { SwitchMode } from "../Header/styles";
+import SidebarMenu from "./SidebarMenu";
+import { HeaderTop, LogoLink, NavBarLogo, NavbarContainer, NavbarMenuBottom } from "./styles";
 
 const Sidebar: React.FC = () => {
   const { sidebar, theme } = useSelector(({ user }: RootState) => user);

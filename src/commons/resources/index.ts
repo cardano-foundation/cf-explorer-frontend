@@ -110,6 +110,8 @@ import CardanoBlueLogo from "./icons/cardanoBlue.svg";
 import CardanoBlueDarkmodeLogo from "./icons/cardanoBlueDarkmode.svg";
 import TwitterXIcon from "./icons/TwitterX.svg";
 import NoRecordsIcon from "./images/NoRecords.svg";
+import GiftIcon from "./images/gift-icon.png";
+import DelegatingIcon from "./icons/delegating-icon.svg";
 import sunIcon from "./icons/sun.svg";
 import moonIcon from "./icons/moon.svg";
 import WhiteSearchIcon from "./icons/white-search-icon.svg";
@@ -231,6 +233,8 @@ export {
   CardanoBlueDarkmodeLogo,
   TwitterXIcon,
   NoRecordsIcon,
+  GiftIcon,
+  DelegatingIcon,
   LogoDarkmodeFullIcon,
   LogoDarkmodeShortIcon,
   // React component
