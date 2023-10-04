@@ -114,12 +114,14 @@ const RewardsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({
       <HolderWrapper ref={holderGroupRef}>
         <ADAHolderRect ref={adaHolderRef} disabled={!isADAHolder} />
         <OperatorRewardContainer>
-          <OperatorRewardWrapper>
+          <OperatorRewardWrapper isRewardPool={+!isRewardPool}>
             <ADAOperatorRewardRect ref={operatorRewardRef} disabled={!isRewardPool} />
           </OperatorRewardWrapper>
-          <IconWrapper>
-            <InfoSolidIcon width="35px" height="35px" onClick={() => setOpenRewardsModal(!openRewardsModal)} />
-          </IconWrapper>
+          {!isRewardPool && (
+            <IconWrapper>
+              <InfoSolidIcon width="35px" height="35px" onClick={() => setOpenRewardsModal(!openRewardsModal)} />
+            </IconWrapper>
+          )}
         </OperatorRewardContainer>
       </HolderWrapper>
       <RewardAccountBox

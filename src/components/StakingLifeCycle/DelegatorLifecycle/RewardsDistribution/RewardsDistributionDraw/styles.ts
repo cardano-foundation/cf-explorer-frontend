@@ -193,14 +193,14 @@ export const IconWrapper = styled(Box)`
   cursor: pointer;
 `;
 
-export const OperatorRewardWrapper = styled(Box)`
+export const OperatorRewardWrapper = styled(Box)<{ isRewardPool?: number }>`
   position: relative;
   overflow: hidden;
   &::after {
     content: "";
     width: 44px;
     height: 44px;
-    display: block;
+    display: ${({ isRewardPool }) => (isRewardPool ? "block" : "none")};
     position: absolute;
     top: -16px;
     right: -16px;
