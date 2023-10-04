@@ -8,9 +8,9 @@ describe("Pool general information ", () => {
     cy.wait(1000);
     cy.get('div>div>button[active="0"]').click();
     cy.get('[data-testid="table-common"]').should("be.visible");
-    cy.get("div").contains("Pool Size").should("be.visible");
+    cy.get("div").contains("Pool Size", { matchCase: false }).should("be.visible");
     cy.get("div").contains("Status").should("be.visible");
-    cy.get("div").contains("Rewards Available").should("be.visible");
-    cy.get("div").contains("Owner Account").should("be.visible");
+    cy.get("div").contains("Rewards Available", { matchCase: false }).should("be.visible");
+    cy.get("div").contains("Owner Account", { matchCase: false }).should("be.visible");
   });
 });

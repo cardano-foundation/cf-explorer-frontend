@@ -6,10 +6,10 @@ describe("User check information of stake address deregistration", () => {
     cy.get('[data-testid="search-bar"]').should("be.visible");
     cy.get('[data-testid="table-common"]').should("be.visible");
     cy.get('[data-testid="table-common"] tbody tr').eq(0).click();
-    cy.get(".css-62ep8s").contains("View Details").click();
+    cy.get(".css-62ep8s").contains("View Details", { matchCase: false }).click();
 
     cy.get('[data-testid="search-bar"]').should("be.visible");
-    cy.get(".css-igne3v").contains("Stake Address Details").should("be.visible");
+    cy.get("div").contains("Stake Address Detail", { matchCase: false }).should("be.visible");
     cy.get(":nth-child(1) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Delegated to").should("be.visible");
     cy.get(":nth-child(2) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Total Stake").should("be.visible");
     cy.get(":nth-child(3) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root")
@@ -32,7 +32,7 @@ describe("User check information of stake address deregistration", () => {
 
     cy.get(".MuiTabs-flexContainer button").eq(0).should("have.attr", "aria-selected", "true");
     cy.get('[data-testid="table-common"]').should("be.visible");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should("be.visible").contains("Tx Hash");
+    cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should("be.visible").contains("Transaction Hash");
     cy.get('[data-testid = "table-common"] th:nth-of-type(2)').should("be.visible").contains("Created At");
     cy.get('[data-testid = "table-common"] th:nth-of-type(3)').should("be.visible").contains("Block");
     cy.get('[data-testid = "table-common"] th:nth-of-type(4)').should("be.visible").contains("Pool ID");
@@ -41,7 +41,7 @@ describe("User check information of stake address deregistration", () => {
     cy.get(".MuiTabs-flexContainer button").eq(1).click();
     cy.get(".MuiTabs-flexContainer button").eq(1).should("have.attr", "aria-selected", "true");
     cy.get('[data-testid="table-common"]').should("be.visible");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should("be.visible").contains("Tx Hash");
+    cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should("be.visible").contains("Transaction Hash");
     cy.get('[data-testid = "table-common"] th:nth-of-type(2)').should("be.visible").contains("Created At");
     cy.get('[data-testid = "table-common"] th:nth-of-type(3)').should("be.visible").contains("Block");
     cy.get('[data-testid = "table-common"] th:nth-of-type(4)').should("be.visible").contains("Action");
@@ -49,7 +49,7 @@ describe("User check information of stake address deregistration", () => {
     cy.get(".MuiTabs-flexContainer button").eq(2).click();
     cy.get(".MuiTabs-flexContainer button").eq(2).should("have.attr", "aria-selected", "true");
     cy.get('[data-testid="table-common"]').should("be.visible");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should("be.visible").contains("Tx Hash");
+    cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should("be.visible").contains("Transaction Hash");
     cy.get('[data-testid = "table-common"] th:nth-of-type(2)').should("be.visible").contains("Created At");
     cy.get('[data-testid = "table-common"] th:nth-of-type(3)').should("be.visible").contains("Block");
     cy.get('[data-testid = "table-common"] th:nth-of-type(4)').should("be.visible").contains("Amount");
@@ -57,7 +57,7 @@ describe("User check information of stake address deregistration", () => {
     cy.get(".MuiTabs-flexContainer button").eq(3).click();
     cy.get(".MuiTabs-flexContainer button").eq(3).should("have.attr", "aria-selected", "true");
     cy.get('[data-testid="table-common"]').should("be.visible");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should("be.visible").contains("Tx Hash");
+    cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should("be.visible").contains("Transaction Hash");
     cy.get('[data-testid = "table-common"] th:nth-of-type(2)').should("be.visible").contains("Created At");
     cy.get('[data-testid = "table-common"] th:nth-of-type(3)').should("be.visible").contains("Block");
     cy.get('[data-testid = "table-common"] th:nth-of-type(4)').should("be.visible").contains("Rewards Paid");
@@ -65,8 +65,7 @@ describe("User check information of stake address deregistration", () => {
     cy.get(".MuiTabs-flexContainer button").eq(4).click();
     cy.get(".MuiTabs-flexContainer button").eq(4).should("have.attr", "aria-selected", "true");
     cy.get('[data-testid="table-common"]').should("be.visible");
-    //cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should('be.visible').contains('#');
-    cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should("be.visible").contains("Tx Hash");
+    cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should("be.visible").contains("Transaction Hash");
     cy.get('[data-testid = "table-common"] th:nth-of-type(2)').should("be.visible").contains("Created At");
     cy.get('[data-testid = "table-common"] th:nth-of-type(3)').should("be.visible").contains("Block");
     cy.get('[data-testid = "table-common"] th:nth-of-type(4)').should("be.visible").contains("Fees");

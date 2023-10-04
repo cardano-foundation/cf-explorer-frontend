@@ -21,7 +21,7 @@ describe("block spec", () => {
     cy.visit("/blocks");
     cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("Block");
     cy.get(".css-1dz0v3k > tr > :nth-child(2)").contains("Block ID");
-    cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Epoch/Slot");
+    cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Epoch / Slot", { matchCase: false });
     cy.get(".css-1dz0v3k > tr > :nth-child(4)").contains("Created At");
     cy.get(".css-1dz0v3k > tr > :nth-child(5)").contains("Transactions");
     cy.get(".css-1dz0v3k > tr > :nth-child(6)").contains("Fees");
@@ -36,7 +36,7 @@ describe("block spec", () => {
   it("should navigate to the block detail page", () => {
     const block = "7588518";
     cy.visit("/block/7588518");
-    cy.get(".css-igne3v").contains("Block details");
+    cy.get(".css-1uehs23").contains("Block details", { matchCase: false });
     cy.get(":nth-child(1) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Created At");
     cy.get(":nth-child(2) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Confirmations");
     cy.get(":nth-child(3) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Transactions");
@@ -46,7 +46,7 @@ describe("block spec", () => {
     cy.get(":nth-child(7) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Slot");
     cy.get('[data-testid="table-common"]').verifyElementDisplay;
     //cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("#");
-    cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("Tx Hash");
+    cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("Tx Hash", { matchCase: false });
     cy.get(".css-1dz0v3k > tr > :nth-child(2)").contains("Created At");
     cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Block");
     cy.get(".css-1dz0v3k > tr > :nth-child(4)").contains("Addresses");

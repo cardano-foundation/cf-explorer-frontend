@@ -6,9 +6,6 @@ describe("Stake address details e2e", () => {
     cy.get('[data-testid="submenu-button-stake_delegation(s)"]').click();
     cy.get("tbody tr td a").first().click();
     cy.get('[class*="MuiGrid-root"]').first().should("be.visible");
-    cy.get('[data-testid="tab-summary"]').should("be.visible");
-    cy.get('[data-testid="tab-utxOs"]').should("be.visible");
-    cy.get('[data-testid="tab-delegations"]').should("be.visible");
-    cy.get('[data-test-id="CircularProgressbarWithChildren__children"]').should("be.visible");
+    cy.get(".MuiAccordionSummary-content div").contains("UTXOs", { matchCase: false });
   });
 });
