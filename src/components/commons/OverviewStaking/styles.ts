@@ -14,7 +14,8 @@ export const WrapContainer = styled("div")`
 `;
 export const OverviewIcon = styled("div")`
   border-radius: 49px;
-  background: ${(props) => props.theme.palette.primary[100]};
+  background: ${(props) =>
+    props.theme.mode === "dark" ? props.theme.palette.secondary[100] : props.theme.palette.primary[100]};
   width: 29px;
   height: 29px;
   display: flex;

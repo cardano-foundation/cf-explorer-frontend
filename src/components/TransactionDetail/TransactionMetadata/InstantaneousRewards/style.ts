@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 export const Wrapper = styled(Box)`
   background: ${(props) => props.theme.palette.secondary[0]};
   padding: 25px;
+  border: 1px solid ${({ theme }) => (theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200])};
+  border-radius: ${({ theme }) => theme.spacing(2)};
+  overflow: "hidden";
 `;
 export const Header = styled(Box)`
   display: flex;

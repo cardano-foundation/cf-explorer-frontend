@@ -75,7 +75,8 @@ export const StyledAddressSelect = styled(Box)`
 `;
 
 export const StyledButton = styled(Button)`
-  background: ${(props) => props.theme.palette.secondary.main};
+  background: ${(props) =>
+    props.theme.isDark ? props.theme.palette.secondary.light : props.theme.palette.secondary.main};
   width: 100%;
   border-radius: 8px;
   height: 44px;
@@ -113,7 +114,7 @@ export const StyledBackButton = styled(Button)<{ width?: number | string }>(({ w
   fontSize: 16,
   lineHeight: "19px",
   fontWeight: 700,
-  border: `2px solid ${theme.palette.border.hint}`,
+  border: `2px solid ${theme.isDark ? theme.palette.primary[100] : theme.palette.border.hint}`,
   textTransform: "none",
   ":hover": {
     opacity: 0.8
@@ -192,7 +193,7 @@ export const TextLabelReview = styled("div")`
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  color: ${(props) => props.theme.palette.secondary.main};
+  color: ${(props) => (props.theme.isDark ? props.theme.palette.secondary.light : props.theme.palette.secondary.main)};
   opacity: 0.6;
   white-space: nowrap;
   ${({ theme }) => theme.breakpoints.down("sm")} {

@@ -64,7 +64,7 @@ const RecentPoolUpdates = ({ onSelect, setShowBackButton }: Props) => {
         <DescriptionText>{t("common.recentUpdates")}</DescriptionText>
         <FilterContainer>
           <WrapFilterDescription>
-            {t("common.showing")} {total} {total > 1 ? t("common.result") : t("common.results")}
+            {t("common.showing")} {total} {total <= 1 ? t("common.result") : t("common.results")}
           </WrapFilterDescription>
           <CustomFilter
             filterValue={params}

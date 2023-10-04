@@ -1,9 +1,9 @@
 import { Box, FormGroup, useTheme } from "@mui/material";
 import { useEffect, useReducer, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { IoMdClose } from "react-icons/io";
-import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
 
 import { EmailIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
@@ -58,7 +58,22 @@ export default function ForgotPassword() {
   });
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
 
+  const updateHeight = () => {
+    setViewportHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateHeight);
+    document.body.style.overflow = "hidden";
+    updateHeight();
+
+    return () => {
+      document.body.style.overflow = "unset";
+      window.removeEventListener("resize", updateHeight);
+    };
+  }, []);
   useEffect(() => {
     document.title = t("account.forgotPassword");
   }, [t]);
@@ -161,7 +176,7 @@ export default function ForgotPassword() {
   };
 
   return (
-    <Container>
+    <Container sx={{ height: `${viewportHeight}px` }}>
       <WrapContent>
         <WrapTitle>{t("account.forgotPassword")}</WrapTitle>
         <WrapHintText>
@@ -176,7 +191,7 @@ export default function ForgotPassword() {
                 </Box>
               ) : null}
               <BackButton onClick={() => handleRedirect()}>
-                <HiArrowLongLeft fontSize="16px" />
+                <HiArrowLongLeft fontSize="16px" color={theme.palette.secondary.light} />
                 <BackText>{t("common.back")}</BackText>
               </BackButton>
               <CloseButton saving={0} onClick={() => handleRedirect(true)}>
@@ -206,7 +221,7 @@ export default function ForgotPassword() {
                 variant="contained"
                 fullWidth
                 onClick={handleSubmit}
-                disabled={loading || !!formData.email.error}
+                disabled={loading || !!formData.email.error || !formData.email.value}
               >
                 {t("common.submit")}
               </WrapButton>

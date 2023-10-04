@@ -83,6 +83,23 @@ export default function SignIn() {
     }
   });
 
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+
+  const updateHeight = () => {
+    setViewportHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateHeight);
+    document.body.style.overflow = "hidden";
+    updateHeight();
+
+    return () => {
+      document.body.style.overflow = "unset";
+      window.removeEventListener("resize", updateHeight);
+    };
+  }, []);
+
   useEffect(() => {
     document.title = t("head.page.signIn");
   }, [t]);
@@ -216,7 +233,7 @@ export default function SignIn() {
     }
   };
   return (
-    <Container>
+    <Container sx={{ height: `${viewportHeight}px` }}>
       <WrapContent>
         <WrapTitle data-testid="signin-title">{t("common.signIn")}</WrapTitle>
         <FormGroup>
@@ -226,7 +243,9 @@ export default function SignIn() {
             </CloseButton>
             {invalidInfomation ? (
               <Box pt={"24px"}>
-                <AlertCustom severity="error">{t("message.unableSignIn")}</AlertCustom>
+                <AlertCustom variant={theme.isDark ? "filled" : "standard"} severity="error">
+                  {t("message.unableSignIn")}
+                </AlertCustom>
               </Box>
             ) : null}
             <ConnectWallet

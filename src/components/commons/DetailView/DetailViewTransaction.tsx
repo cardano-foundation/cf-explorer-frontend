@@ -1,26 +1,26 @@
+import { useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { BiChevronRight } from "react-icons/bi";
 import { CgArrowsExchange, CgClose } from "react-icons/cg";
 import { useSelector } from "react-redux";
-import { useTranslation } from "react-i18next";
-import { useTheme } from "@mui/material";
 
 import useFetch from "src/commons/hooks/useFetch";
 import {
+  CubeIconComponent,
   DelegationHistoryMainIcon,
   DelegationIconUrl,
   FileEditIcon,
-  InstantaneousHistoryIconUrl,
-  MetadataIconUrl,
-  MintingIconUrl,
+  InstantaneousHistoryComponent,
+  MetadataIconTx,
+  MintingIconComponent,
   NoteEditIcon,
-  ProtocolUpdateIconUrl,
-  RewardsDistributionIconUrl,
-  RocketIconUrl,
-  StakeCertificatesIconUrl,
+  ProtocolUpdateComponent,
+  RewardsDistributionComponent,
+  RocketIcon,
+  StakeCertificatesComponent,
   USDIconComponent,
-  WithdrawlIcon,
-  cubeIconUrl
+  WithdrawlIconComponent
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
@@ -30,6 +30,7 @@ import { RootState } from "src/stores/types";
 
 import ADAicon from "../ADAIcon";
 import CopyButton from "../CopyButton";
+import CustomIcon from "../CustomIcon";
 import CustomTooltip from "../CustomTooltip";
 import FormNowMessage from "../FormNowMessage";
 import ProgressCircle from "../ProgressCircle";
@@ -52,7 +53,6 @@ import {
   EpochText,
   Group,
   HeaderContainer,
-  Icon,
   IconSkeleton,
   Item,
   ItemName,
@@ -102,34 +102,34 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
     { key: "contracts", label: t("glossary.contracts"), icon: <FileEditIcon /> },
     { key: "collaterals", label: t("glossary.collateral"), icon: <USDIconComponent /> },
     { key: "notes", label: t("tab.notes"), icon: <DetailLinkImage src={NoteEditIcon} alt="contact" /> },
-    { key: "withdrawals", label: t("tab.withdrawal"), icon: <DetailLinkImage src={WithdrawlIcon} alt="contact" /> },
+    { key: "withdrawals", label: t("tab.withdrawal"), icon: <WithdrawlIconComponent /> },
     {
       key: "delegations",
       label: t("tab.delegations"),
       icon: <DetailLinkImage src={DelegationIconUrl} alt="contact" />
     },
-    { key: "mints", label: t("tab.minting"), icon: <DetailLinkImage src={MintingIconUrl} alt="contact" /> },
+    { key: "mints", label: t("tab.minting"), icon: <MintingIconComponent /> },
     {
       key: "poolCertificates",
       label: t("tab.poolCertificates"),
-      icon: <DetailLinkImage src={RewardsDistributionIconUrl} alt="contact" />
+      icon: <RewardsDistributionComponent />
     },
     {
       key: "stakeCertificates",
       label: t("tab.stakeCertificates"),
-      icon: <DetailLinkImage src={StakeCertificatesIconUrl} alt="contact" />
+      icon: <StakeCertificatesComponent />
     },
     {
       key: "protocols",
       label: t("tab.protocolUpdate"),
-      icon: <DetailLinkImage src={ProtocolUpdateIconUrl} alt="contact" />
+      icon: <ProtocolUpdateComponent />
     },
     {
       key: "instantaneousRewards",
       label: t("glossary.instantaneousRewards"),
-      icon: <DetailLinkImage src={InstantaneousHistoryIconUrl} alt="contact" />
+      icon: <InstantaneousHistoryComponent />
     },
-    { key: "metadata", label: t("glossary.metadata"), icon: <DetailLinkImage src={MetadataIconUrl} alt="contact" /> }
+    { key: "metadata", label: t("glossary.metadata"), icon: <MetadataIconTx /> }
   ];
 
   const renderContent = () => {
@@ -240,12 +240,20 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
             </HeaderContainer>
             <ListItem>
               <Item>
-                <Icon src={cubeIconUrl} alt="socket" />
+                <CustomIcon
+                  icon={CubeIconComponent}
+                  height={30}
+                  fill={theme.isDark ? theme.palette.secondary[0] : theme.palette.common.white}
+                />
                 <ItemName>{t("glossary.block")}</ItemName>
                 <ItemValue>{data?.tx?.blockNo}</ItemValue>
               </Item>
               <Item>
-                <Icon src={RocketIconUrl} alt="socket" />
+                <CustomIcon
+                  icon={RocketIcon}
+                  height={30}
+                  fill={theme.isDark ? theme.palette.secondary[0] : theme.palette.common.white}
+                />
                 <ItemName>{t("common.slot")}</ItemName>
                 <ItemValue>
                   {data?.tx?.epochSlot}
