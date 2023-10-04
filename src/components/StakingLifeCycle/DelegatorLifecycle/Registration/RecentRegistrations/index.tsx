@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, Skeleton } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { useUpdateEffect } from "react-use";
@@ -13,8 +13,8 @@ import CustomFilter, { FilterParams } from "src/components/commons/CustomFilter"
 import OverviewStaking from "src/components/commons/OverviewStaking";
 import { EmptyRecord, FooterTable } from "src/components/commons/Table";
 
-import { GridBox, StyledContainer, StyledList, WrapFilterDescription } from "./styles";
-import { DescriptionText } from "../../styles";
+import { GridBox, StyledContainer, WrapFilterDescription } from "./styles";
+import { DescriptionText, FilterContainer, StyledList } from "../../styles";
 
 interface Props {
   setShowBackButton: (status: boolean) => void;
@@ -55,9 +55,9 @@ const RecentRegistrations: React.FC<Props> = ({ setShowBackButton }) => {
     <StyledContainer data-testid="recent-registration">
       <StyledList>
         <DescriptionText sx={{ mr: 0 }}>{t("common.registrationList")}</DescriptionText>
-        <Box display={"flex"} alignItems={"center"} gap={2}>
+        <FilterContainer>
           <WrapFilterDescription>
-            {t("common.showing")} {data.length} {data.length > 1 ? t("common.result") : t("common.results")}
+            {t("common.showing")} {data.length} {data.length > 1 ? t("common.results") : t("common.result")}
           </WrapFilterDescription>
           <CustomFilter
             filterValue={params}
@@ -67,7 +67,7 @@ const RecentRegistrations: React.FC<Props> = ({ setShowBackButton }) => {
             }}
             searchLabel={t("common.searchTx")}
           />
-        </Box>
+        </FilterContainer>
       </StyledList>
       <GridBox sidebar={+sidebar}>
         {loading &&

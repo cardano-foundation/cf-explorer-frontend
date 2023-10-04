@@ -43,3 +43,4 @@ export const CustomAccordion = styled(Accordion)<{
     background: "transparent"
   }
 }));
+

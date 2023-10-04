@@ -76,19 +76,21 @@ export const RegistrationDraw = ({ toggleModal, showBackButton = false }: Props)
         end: holdRef,
         endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
         startOffset: { 0: [-18, -50], sm: [-10, 0], lg: [0] },
-        endOffset: { 0: [7.2, 1], lg: [0] },
+        endOffset: { 0: [0, 0], sm: [7.2, 1], lg: [0] },
         arrow: { 0: "top", lg: "left" },
-        fold: { sm: "horizontal", lg: "none" }
+        fold: { sm: "horizontal", lg: "none" },
+        autoAlign: { 0: "end-vertical", sm: "none" }
       },
       {
         start: holdRef,
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
         end: cardanoBlockchainRef,
         endPosition: { 0: ["right", "top"], sm: ["right", "middle"], lg: ["left", "middle"] },
-        startOffset: { 0: [8, -15], lg: [0] },
-        endOffset: { 0: [-18, 51], sm: [-10], lg: [10] },
+        startOffset: { 0: [0, 0], sm: [16, -15], lg: [0] },
+        endOffset: { 0: [-18, 40], sm: [-10], lg: [10] },
         fold: { sm: "vertical", lg: "none" },
-        arrow: { 0: "top", sm: "right", lg: "left" }
+        arrow: { 0: "top", sm: "right", lg: "left" },
+        autoAlign: { 0: "start-vertical", sm: "none" }
       },
       {
         start: adaHolderRef,
@@ -96,16 +98,20 @@ export const RegistrationDraw = ({ toggleModal, showBackButton = false }: Props)
         end: certificateRef,
         endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
         startOffset: { 0: [18, -50], sm: [10, 0], lg: [0] },
-        fold: { sm: "horizontal", lg: "vertical" }
+        endOffset: { 0: [0, 0], sm: [0] },
+        fold: { sm: "horizontal", lg: "vertical" },
+        autoAlign: { 0: "end-vertical", sm: "none" }
       },
       {
         start: certificateRef,
         startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
         end: cardanoBlockchainRef,
         endPosition: { 0: ["left", "top"], sm: ["left", "middle"], lg: ["center", "bottom"] },
-        endOffset: { 0: [18, 51], sm: [10], lg: [0, 3] },
+        startOffset: { 0: [0, 0], sm: [0] },
+        endOffset: { 0: [10, 40], sm: [10], lg: [0, 3] },
         fold: { sm: "vertical", lg: "horizontal" },
-        arrow: { 0: "top", sm: "left", lg: "bottom" }
+        arrow: { 0: "top", sm: "left", lg: "bottom" },
+        autoAlign: { 0: "start-vertical", sm: "none" }
       }
     ];
   }, []);
