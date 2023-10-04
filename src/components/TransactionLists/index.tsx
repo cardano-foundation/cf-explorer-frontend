@@ -75,7 +75,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
     {
       title: t("glossary.block"),
       key: "block",
-      minWidth: 60,
+      minWidth: 50,
       render: (r) => {
         const { blockName, tooltip } = formatNameBlockNo(r.blockNo, r.epochNo) || getShortHash(r.blockHash);
         return (
