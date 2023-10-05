@@ -69,6 +69,12 @@ const TokenTransaction: React.FC = () => {
       render: (r) => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>
     },
     {
+      title: t("glossary.block"),
+      key: "block",
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
+    },
+    {
       title: t("glossary.epoch"),
       key: "epochNo",
       minWidth: "50px",
