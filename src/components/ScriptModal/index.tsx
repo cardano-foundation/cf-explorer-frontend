@@ -80,6 +80,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
                       collapseStringsAfterLength={false}
                       style={{ padding: 0, background: "none", color: theme.palette.text.secondary }}
                       rootName={false}
+                      theme={theme.isDark ? "dark" : "light"}
                     />
                   ) : (
                     <Box textAlign={"center"} py={2} color={({ palette }) => palette.secondary.light}>
