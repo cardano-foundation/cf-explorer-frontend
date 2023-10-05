@@ -89,6 +89,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
     {
       title: t("glossary.block"),
       key: "block",
+      minWidth: "50px",
       render: (r) => <StyledLink to={details.block(r.block)}>{r.block}</StyledLink>
     },
     {

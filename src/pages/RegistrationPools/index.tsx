@@ -75,6 +75,7 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
     {
       title: t("glossary.block"),
       key: "block",
+      minWidth: "50px",
       render: (pool) => <StyledLink to={details.block(pool.block)}>{pool.block}</StyledLink>
     },
     {

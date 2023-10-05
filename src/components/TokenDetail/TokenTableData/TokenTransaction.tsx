@@ -57,6 +57,12 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       )
     },
     {
+      title: t("glossary.block"),
+      key: "block",
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
+    },
+    {
       title: t("glossary.epoch"),
       key: "epoch",
       minWidth: "50px",

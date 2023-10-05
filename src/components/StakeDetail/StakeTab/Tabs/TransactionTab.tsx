@@ -115,7 +115,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
     {
       title: t("glossary.block"),
       key: "block",
-      minWidth: 120,
+      minWidth: 50,
       render: (r) => (
         <StyledLink to={details.block(r.blockNo || r.blockHash)}>{r.blockNo || getShortHash(r.blockHash)}</StyledLink>
       )
