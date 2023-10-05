@@ -1,4 +1,6 @@
-import { Box, Button, Grid, LinearProgress, Skeleton, styled } from "@mui/material";
+import { Box, Button, Grid, LinearProgress, styled } from "@mui/material";
+
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
 export const HeaderDetailContainer = styled(Box)(() => ({
   textAlign: "left",
@@ -34,7 +36,7 @@ export const HeaderTitle = styled("h2")`
   white-space: nowrap;
 `;
 
-export const HeaderTitleSkeleton = styled(Skeleton)`
+export const HeaderTitleSkeleton = styled(CommonSkeleton)`
   height: 1em;
   width: 200px;
   max-width: 100%;
@@ -48,7 +50,7 @@ export const PoolId = styled("p")`
   margin-bottom: 10px;
 `;
 
-export const PoolIdSkeleton = styled(Skeleton)`
+export const PoolIdSkeleton = styled(CommonSkeleton)`
   height: 1em;
   width: 50%;
   border-radius: 4px;

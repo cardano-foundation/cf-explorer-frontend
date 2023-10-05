@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import { useUpdateEffect } from "react-use";
+
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
 import useFetchList from "../../../../../commons/hooks/useFetchList";
 import { details } from "../../../../../commons/routers";
@@ -80,7 +81,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, setShowBackButton }) =
       <GridBox sidebar={+sidebar}>
         {loading &&
           [...new Array(12)].map((i, ii) => (
-            <Skeleton key={ii} style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
+            <CommonSkeleton key={ii} style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
           ))}
 
         {!loading &&

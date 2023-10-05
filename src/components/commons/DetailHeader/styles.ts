@@ -1,4 +1,4 @@
-import { alpha, Box, Grid, MenuItem, Select, Skeleton, styled } from "@mui/material";
+import { alpha, Box, Grid, MenuItem, Select, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
@@ -6,6 +6,7 @@ import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "src/commons/utils/const
 import breakpoints from "src/themes/breakpoints";
 
 import CopyButton from "../CopyButton";
+import { CommonSkeleton } from "../CustomSkeleton";
 interface CardItemProps {
   length: number;
   wide?: number;
@@ -71,7 +72,7 @@ export const HeaderTitle = styled(Box)`
   }
 `;
 
-export const HeaderTitleSkeleton = styled(Skeleton)`
+export const HeaderTitleSkeleton = styled(CommonSkeleton)`
   height: 1em;
   width: 200px;
   max-width: 100%;
@@ -88,7 +89,7 @@ export const HeaderStatus = styled("small")<{ status?: TransactionStatus | IData
       case TRANSACTION_STATUS.PENDDING:
       case "IN_PROGRESS":
       case "SYNCING":
-        return theme.isDark ? theme.palette.warning[800] : theme.palette.warning[800];
+        return theme.isDark ? theme.palette.warning[100] : theme.palette.warning[800];
       case "FINISHED":
         return theme.palette.primary.main;
       default:
@@ -104,7 +105,7 @@ export const HeaderStatus = styled("small")<{ status?: TransactionStatus | IData
       case TRANSACTION_STATUS.PENDDING:
       case "IN_PROGRESS":
       case "SYNCING":
-        return theme.isDark ? theme.palette.warning[100] : theme.palette.warning[100];
+        return theme.isDark ? theme.palette.warning[800] : theme.palette.warning[100];
       case "FINISHED":
         return theme.palette.primary[100];
       default:
@@ -123,7 +124,7 @@ export const StakeKeyStatus = styled("small")<{ status?: StakeStatus }>`
       case "ACTIVE":
         return theme.palette.success[800];
       default:
-        return theme.isDark ? theme.palette.warning[800] : theme.palette.secondary.light;
+        return theme.isDark ? theme.palette.warning[100] : theme.palette.secondary.light;
     }
   }};
   background-color: ${({ theme, status }) => {
@@ -131,7 +132,7 @@ export const StakeKeyStatus = styled("small")<{ status?: StakeStatus }>`
       case "ACTIVE":
         return theme.palette.success[100];
       default:
-        return theme.isDark ? theme.palette.warning[100] : alpha(theme.palette.secondary.light, 0.2);
+        return theme.isDark ? theme.palette.warning[800] : alpha(theme.palette.secondary.light, 0.2);
     }
   }};
   text-transform: uppercase;
@@ -203,19 +204,19 @@ export const Icon = styled("img")`
   height: 25px;
 `;
 
-export const IconSkeleton = styled(Skeleton)`
+export const IconSkeleton = styled(CommonSkeleton)`
   width: 24px;
   height: 24px;
 `;
 
-export const DetailLabelSkeleton = styled(Skeleton)`
+export const DetailLabelSkeleton = styled(CommonSkeleton)`
   height: 1em;
   width: 50%;
   min-width: 100px;
   border-radius: 4px;
 `;
 
-export const DetailValueSkeleton = styled(Skeleton)`
+export const DetailValueSkeleton = styled(CommonSkeleton)`
   height: 1em;
   width: 50%;
   min-width: 100px;

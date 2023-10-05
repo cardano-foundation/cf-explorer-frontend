@@ -1,13 +1,14 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { Box } from "@mui/material";
 import { useState } from "react";
-import { Box, Skeleton } from "@mui/material";
 import { useParams } from "react-router-dom";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
-import ReceivedRewardsModal from "src/components/ReceivedRewardsModal";
 import { RECEIVED_REWARDS } from "src/commons/utils/constants";
+import ReceivedRewardsModal from "src/components/ReceivedRewardsModal";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
 import RewarsDistributionDraw from "./RewardsDistributionDraw";
 
@@ -21,7 +22,7 @@ const RewardsDistribution = () => {
   if (loading) {
     return (
       <Box borderRadius={10} overflow="hidden">
-        <Skeleton variant="rectangular" height={300} width="100%" />
+        <CommonSkeleton variant="rectangular" height={300} width="100%" />
       </Box>
     );
   }

@@ -1,7 +1,6 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
-import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
@@ -21,16 +20,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 
-import {
-  EpochNo,
-  StyledOutput,
-  BlueText,
-  StyledContainer,
-  StyledLink,
-  PriceWrapper,
-  Actions,
-  TimeDuration
-} from "./styles";
+import { StyledOutput, BlueText, StyledContainer, StyledLink, PriceWrapper, Actions, TimeDuration } from "./styles";
 
 interface IEpochBlockList {
   epochId: string;
@@ -78,17 +68,20 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       )
     },
     {
-      title: t("glossary.EpochSlot"),
-      key: "slot",
-      minWidth: "100px",
-      render: (r) => (
-        <>
-          <EpochNo>{r.slotNo}</EpochNo>
-          <Box color={({ palette }) => palette.secondary.light}>
-            {r.epochNo}/{r.epochSlotNo}
-          </Box>
-        </>
-      )
+      title: t("glossary.epoch"),
+      key: "epochNo",
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>
+    },
+    {
+      title: t("glossary.slot"),
+      key: "epochSlotNo",
+      minWidth: "50px"
+    },
+    {
+      title: t("glossary.absoluteSlot"),
+      key: "slotNo",
+      minWidth: "100px"
     },
     {
       title: t("createdAt"),

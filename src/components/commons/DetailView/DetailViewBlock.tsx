@@ -215,6 +215,10 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
                 </DetailValue>
               </DetailsInfoItem>
               <DetailsInfoItem>
+                <DetailLabel>{t("glossary.absoluteSlot")}</DetailLabel>
+                <DetailValue>{data.slotNo}</DetailValue>
+              </DetailsInfoItem>
+              <DetailsInfoItem>
                 <DetailLabel>{t("createdAt")}</DetailLabel>
                 <DetailValue>{formatDateTimeLocal(data.time || "")}</DetailValue>
               </DetailsInfoItem>

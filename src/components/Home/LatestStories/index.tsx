@@ -1,16 +1,17 @@
-import { Box, BoxProps, Skeleton } from "@mui/material";
+import { Box, BoxProps } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Settings } from "react-slick";
 
-import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
+import useFetch from "src/commons/hooks/useFetch";
 import { CalenderPaleIcon, SliderRight } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import useFetch from "src/commons/hooks/useFetch";
-import { formatDateTime, getHostname } from "src/commons/utils/helper";
 import { CARDANO_NEWS_URL } from "src/commons/utils/constants";
-import breakpoints from "src/themes/breakpoints";
+import { formatDateTime, getHostname } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
+import breakpoints from "src/themes/breakpoints";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
 import {
   Author,
@@ -23,13 +24,13 @@ import {
   ItemTitle,
   LatestStoriesContainer,
   NextSwiper,
+  PrevSwiper,
   ResourceHref,
+  StyledSlider,
   Time,
   TimeIcon,
   Title,
-  WrapHeader,
-  StyledSlider,
-  PrevSwiper
+  WrapHeader
 } from "./style";
 
 declare interface SlickArrowProps extends BoxProps {
@@ -142,12 +143,12 @@ const LatestStories = () => {
         {(loading || !data.length) &&
           new Array(4).fill(0).map((_, index) => (
             <Item key={index}>
-              <Box component={Skeleton} variant="rectangular" borderRadius={2} height={132} />
-              <Box component={Skeleton} variant="rectangular" borderRadius={2} height={15} mt={1} width="70%" />
-              <Box component={Skeleton} variant="rectangular" borderRadius={2} height={15} mt={1} width="80%" />
-              <Box component={Skeleton} variant="rectangular" borderRadius={2} height={80} mt={1} />
+              <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={132} />
+              <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={15} mt={1} width="70%" />
+              <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={15} mt={1} width="80%" />
+              <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={80} mt={1} />
               <FooterCard>
-                <Box component={Skeleton} variant="rectangular" borderRadius={2} height={20} width="60%" />
+                <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={20} width="60%" />
               </FooterCard>
             </Item>
           ))}

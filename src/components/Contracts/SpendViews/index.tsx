@@ -1,5 +1,6 @@
 import { useTheme } from "@mui/material";
 import React, { useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { OutlineEye } from "src/commons/resources";
 import CustomIcon from "src/components/commons/CustomIcon";
@@ -33,7 +34,7 @@ const Spendviews: React.FC<SpendViewProps> = ({ data, isMobile }) => {
   const [openRedeemer, setOpenRedeemer] = useState(false);
   const [openDatum, setOpenDatum] = useState(false);
   const [openCompiledCode, setOpenCompiledCode] = useState(false);
-
+  const { t } = useTranslation();
   const paths = useMemo((): LineArrowItem[] => {
     return [
       {
@@ -66,18 +67,18 @@ const Spendviews: React.FC<SpendViewProps> = ({ data, isMobile }) => {
     <SpendContainer isMobile={+!!isMobile}>
       <RedeemerModal
         data={[
-          { title: "Purpose", value: data?.purpose },
-          { title: "Data", value: data?.redeemerBytes },
-          { title: "Mem", value: data?.redeemerMem },
-          { title: "Steps", value: data?.redeemerSteps }
+          { title: t("contract.purpose"), value: data?.purpose },
+          { title: t("contract.data"), value: data?.redeemerBytes },
+          { title: t("contract.mem"), value: data?.redeemerMem },
+          { title: t("contract.steps"), value: data?.redeemerSteps }
         ]}
         open={openRedeemer}
         onClose={() => setOpenRedeemer(false)}
       />
       <DatumModal
         data={[
-          { title: "Datum Hash", value: data?.datumHashOut || data?.datumHashIn },
-          { title: "Datum", value: data?.datumBytesOut || data?.datumBytesIn }
+          { title: t("contract.datumHash"), value: data?.datumHashOut || data?.datumHashIn },
+          { title: t("contract.datum"), value: data?.datumBytesOut || data?.datumBytesIn }
         ]}
         open={openDatum}
         onClose={() => setOpenDatum(false)}
@@ -85,7 +86,7 @@ const Spendviews: React.FC<SpendViewProps> = ({ data, isMobile }) => {
       <CompiledCodeModal
         data={[
           {
-            title: "Compiled Code",
+            title: t("contract.compiledCode"),
             value: data?.scriptBytes
           }
         ]}
@@ -96,7 +97,7 @@ const Spendviews: React.FC<SpendViewProps> = ({ data, isMobile }) => {
         <UTXO hash={data?.utxoHash} index={data?.utxoIndex} detail={details.transaction} />
         <SpendRounded>
           <LongButton>
-            Redeemer
+            {t("contract.redeemer")}
             <CustomIcon
               style={{ cursor: "pointer" }}
               onClick={() => setOpenRedeemer(!openRedeemer)}

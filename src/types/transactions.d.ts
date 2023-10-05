@@ -163,6 +163,7 @@ interface Transaction {
     fee: number;
     totalOutput: number;
     maxEpochSlot: number;
+    slotNo: number;
   };
   summary: {
     stakeAddress: {
