@@ -169,6 +169,12 @@ authAxios.interceptors.response.use(
         window.location.href = "/";
       }
     }
+    if (
+      error.response?.data?.errorCode === ACCOUNT_ERROR.INVALID_TOKEN ||
+      error.response?.data?.errorCode === ACCOUNT_ERROR.TOKEN_EXPIRED
+    ) {
+      removeAuthInfo();
+    }
     return Promise.reject(error);
   }
 );
