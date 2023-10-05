@@ -1,4 +1,4 @@
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
 import BigNumber from "bignumber.js";
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import { AdaValue } from "src/components/commons/ADAValue";
 import ADAicon from "src/components/commons/ADAIcon";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import useFetchList from "../../../../commons/hooks/useFetchList";
 import { EyeIcon } from "../../../../commons/resources";
@@ -19,6 +20,7 @@ import { StyledLink, TableSubTitle } from "../styles";
 
 const StakeRegistrationTab = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
   const history = useHistory();
@@ -78,7 +80,7 @@ const StakeRegistrationTab = () => {
       minWidth: "120px",
       render: () => (
         <IconButton onClick={() => setOpenModal(true)}>
-          <EyeIcon />
+          <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
         </IconButton>
       )
     }

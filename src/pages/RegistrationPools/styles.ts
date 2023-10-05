@@ -21,11 +21,10 @@ export const StyledPoolLink = styled(Link)`
 `;
 
 export const RegistrationContainer = styled(Container)(({ theme }) => ({
-  paddingTop: "30px",
   textAlign: "left",
   position: "relative",
   [theme.breakpoints.down("md")]: {
-    padding: "25px 16px 30px"
+    padding: "0px 16px 30px"
   }
 }));
 
@@ -37,7 +36,7 @@ export const StyledTabs = styled(Tabs)`
     }
   }
   ${({ theme }) => theme.breakpoints.down("md")} {
-    border-bottom: 1px solid ${(props) => props.theme.palette.border.main};
+    border-bottom: 1px solid ${(props) => props.theme.palette.primary[200]};
     width: 100%;
   }
 `;
@@ -47,7 +46,7 @@ export const WrapHeader = styled(Box)(({ theme }) => ({
   flexDirection: "row",
   justifyContent: "space-between",
   alignItems: "center",
-  borderBottom: `1px solid ${theme.palette.border.main}`,
+  borderBottom: `1px solid ${theme.palette.primary[200]}`,
   [theme.breakpoints.down("md")]: {
     alignItems: "flex-start",
     borderBottom: "none",

@@ -1,9 +1,9 @@
-import { Box, useTheme } from "@mui/material";
+import { Box, SxProps, Theme, useTheme } from "@mui/material";
 import { useState } from "react";
-import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import { Link, useHistory } from "react-router-dom";
-import { RiArrowRightSLine } from "react-icons/ri";
 import { useTranslation } from "react-i18next";
+import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import { RiArrowRightSLine } from "react-icons/ri";
+import { Link, useHistory } from "react-router-dom";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { details } from "src/commons/routers";
@@ -18,9 +18,18 @@ export interface IDropdownTokens {
   hideInputLabel?: boolean;
   hideMathChar?: boolean;
   isSuccess?: boolean;
+  isSummary?: boolean;
+  sx?: SxProps<Theme>;
 }
 
-const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hideMathChar, isSuccess }) => {
+const DropdownTokens: React.FC<IDropdownTokens> = ({
+  tokens,
+  hideInputLabel,
+  hideMathChar,
+  isSuccess,
+  sx,
+  isSummary
+}) => {
   const { t } = useTranslation();
   const [openDropdown, setOpenDropdown] = useState(false);
   const history = useHistory();
@@ -33,9 +42,11 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
   return (
     <CustomSelect
       sx={{
-        minWidth: isMobile ? "100%" : "250px"
+        minWidth: isMobile ? "100%" : "250px",
+        ...sx
       }}
       open={openDropdown}
+      isSummary={isSummary}
       onOpen={() => setOpenDropdown(true)}
       onClose={() => setOpenDropdown(false)}
       value={"default"}
@@ -59,8 +70,14 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
         )
       }
       MenuProps={{
+        MenuListProps: {
+          sx: {
+            bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+          }
+        },
         PaperProps: {
           sx: {
+            bgcolor: ({ palette }) => `${palette.secondary[0]} !important`,
             borderRadius: 2,
             marginTop: 0.5,
             "&::-webkit-scrollbar": {
@@ -82,8 +99,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
       }}
     >
       <OptionSelect sx={{ display: "none" }} value="default">
-        {" "}
-        {!hideInputLabel ? (isSend ? t("common.sent") + " " : t("common.received")) + " " : ""}Token
+        {!hideInputLabel ? (isSend ? t("common.sent") + " " : t("common.received")) + " " : ""} {t("tab.viewTokens")}
       </OptionSelect>
       {tokens.map((token, idx) => {
         const isNegative = token.assetQuantity <= 0;
@@ -92,7 +108,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
         const isTokenNameLong = tokenName.length > 20;
         return (
           <OptionSelect key={idx} onClick={() => handleClickItem(details.token(token?.assetId))}>
-            <Box color={({ palette }) => palette.secondary.light}>
+            <Box color={({ palette }) => palette.secondary.main}>
               {isTokenNameLong ? (
                 <CustomTooltip title={tokenName} placement="top">
                   <Box>{shortTokenName}</Box>
@@ -118,13 +134,19 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({ tokens, hideInputLabel, hid
 
 export default DropdownTokens;
 
-export const TokenLink: React.FC<{ token: Token; isSuccess?: boolean }> = ({ token, isSuccess }) => {
+export const TokenLink: React.FC<{
+  token: Token;
+  isSuccess?: boolean;
+  isSummary?: boolean;
+  sx?: SxProps<Theme>;
+  hideValue?: boolean;
+}> = ({ token, isSuccess, sx, hideValue, isSummary }) => {
   const tokenName = token.assetName || token.assetId;
   const shortTokenName = getShortWallet(tokenName);
   const isTokenNameLong = tokenName.length > 20;
 
   return (
-    <TokenButton>
+    <TokenButton sx={sx} isSummary={isSummary}>
       <Box
         component={Link}
         to={details.token(token.assetId)}
@@ -135,23 +157,25 @@ export const TokenLink: React.FC<{ token: Token; isSuccess?: boolean }> = ({ tok
         width={"100%"}
         height={38}
       >
-        <Box mr={2} color={({ palette }) => palette.secondary.light}>
+        <Box mr={2} color={({ palette }) => palette.secondary.main}>
           {isTokenNameLong ? (
             <CustomTooltip title={tokenName} placement="top">
-              <Box color={({ palette }) => palette.secondary.light}>{shortTokenName}</Box>
+              <Box color={({ palette }) => palette.secondary.main}>{shortTokenName}</Box>
             </CustomTooltip>
           ) : (
             tokenName
           )}
         </Box>
         <Box display={"flex"} alignItems={"center"}>
-          <Box
-            fontWeight={"bold"}
-            fontSize={"14px"}
-            color={({ palette }) => (isSuccess ? palette.secondary.main : palette.secondary[600])}
-          >
-            {formatNumberDivByDecimals(token?.assetQuantity || 0, token?.metadata?.decimals || 0)}
-          </Box>
+          {!hideValue ? (
+            <Box
+              fontWeight={"bold"}
+              fontSize={"14px"}
+              color={({ palette }) => (isSuccess ? palette.secondary.main : palette.secondary[600])}
+            >
+              {formatNumberDivByDecimals(token?.assetQuantity || 0, token?.metadata?.decimals || 0)}
+            </Box>
+          ) : null}
           <Box mr={1} mt={"2px"}>
             <RiArrowRightSLine />
           </Box>

@@ -1,15 +1,9 @@
 import React from "react";
-import { alpha, Box, styled, TooltipProps } from "@mui/material";
+import { alpha, Box, styled, TooltipProps, useTheme } from "@mui/material";
 
-import { SeeMoreIcon } from "src/commons/resources";
+import { SeeMoreIconHome } from "src/commons/resources";
 
 import CustomTooltip from "../CustomTooltip";
-
-const ViewAllImage = styled("img")`
-  width: auto;
-  height: 16px;
-  min-width: 16px;
-`;
 
 const StyledLink = styled(Box)`
   display: flex;
@@ -35,11 +29,13 @@ const ViewAllButtonExternal: React.FC<ViewAllButtonExternalProps> = ({
   placement = "top",
   to = ""
 }) => {
+  const theme = useTheme();
+
   return (
     <CustomTooltip placement={placement} title={tooltipTitle}>
-      <a href={to as string} target="_blank" rel="noreferrer">
+      <a href={to as string} target="_blank" rel="noreferrer" data-testid="view-all-button">
         <StyledLink>
-          <ViewAllImage src={SeeMoreIcon} alt="view all" />
+          <SeeMoreIconHome fill={theme.palette.primary.main} />
         </StyledLink>
       </a>
     </CustomTooltip>

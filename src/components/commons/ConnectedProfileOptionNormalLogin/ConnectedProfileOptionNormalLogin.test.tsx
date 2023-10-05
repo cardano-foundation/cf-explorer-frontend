@@ -23,13 +23,13 @@ const userData: UserDataType = {
 
 test("Render username", async () => {
   render(<ConnectedProfileOptionNormalLogin userData={userData} />);
-  const element = screen.getByText(/useremail/i);
+  const element = screen.getByText(/username/i);
   expect(element).toBeInTheDocument();
 });
 
 test("normal click username button", async () => {
   render(<ConnectedProfileOptionNormalLogin userData={userData} />);
-  await userEvent.click(screen.getByText(/useremail/i));
+  await userEvent.click(screen.getByText(/username/i));
   expect(screen.getByText(/Account/i)).toBeInTheDocument();
 });
 
@@ -40,7 +40,7 @@ test("login click user profile button", async () => {
       <ConnectedProfileOptionNormalLogin userData={userData} />
     </Router>
   );
-  await userEvent.click(screen.getByText(/useremail/i));
+  await userEvent.click(screen.getByText(/username/i));
   const aboutItem = screen.getByText(/Account/i);
   await userEvent.click(aboutItem);
   expect(history.length).toBe(2);

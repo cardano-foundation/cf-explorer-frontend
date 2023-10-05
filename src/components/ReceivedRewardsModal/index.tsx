@@ -1,15 +1,15 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { useScreen } from "src/commons/hooks/useScreen";
-import { ReceidvedRewardsIC } from "src/commons/resources";
+import { WalletIconRewardGreen, WalletIconRewardGreenDark } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
 import { RECEIVED_REWARDS, REWARD_TYPES, REWARD_TYPES_LABEL } from "src/commons/utils/constants";
+import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
 
 import ADAicon from "../commons/ADAIcon";
 import StyledModal from "../commons/StyledModal";
@@ -46,6 +46,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [sort, setSort] = useState<string>("");
   const { isMobile, isGalaxyFoldSmall } = useScreen();
+  const theme = useTheme();
   const fetchData = useFetchList<RewardDistributionItem>(
     stakeId && open ? API.STAKE_LIFECYCLE.RECEIVED_REWARD(stakeId) + (type ? `?type=${type}` : "") : "",
     { ...params, sort }
@@ -116,7 +117,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
           {type == RECEIVED_REWARDS.ALL ? (
             <RewardBalanceHeader>
               <RewardBalance>
-                <ReceidvedRewardsIC />
+                {theme.isDark ? <WalletIconRewardGreenDark /> : <WalletIconRewardGreen />}
                 <RewardBalanceTitle>
                   {t("glossary.rewardBalance")}: {formatADAFull(reward)}
                 </RewardBalanceTitle>
@@ -128,6 +129,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
             <Table
               {...fetchData}
               columns={columns}
+              isModal={true}
               maxHeight={`calc(70vh - ${isMobile ? (isGalaxyFoldSmall ? "270px" : "230px") : "208px"})`}
               total={{ count: fetchData.total, title: "Total Transactions" }}
               pagination={{

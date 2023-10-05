@@ -4,16 +4,17 @@ import {
   Box,
   Button,
   Checkbox,
+  ClickAwayListener,
   Container,
   IconButton,
   Skeleton,
   alpha,
   useTheme
 } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import { isObject, isEmpty } from "lodash";
+import { isEmpty, isObject } from "lodash";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { ImArrowDown2, ImArrowUp2 } from "react-icons/im";
@@ -27,14 +28,15 @@ import { details, lists } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { PROTOCOL_TYPE } from "src/commons/utils/constants";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
-import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
 import ParseScriptModal from "src/components/ParseScriptModal";
 import Card from "src/components/commons/Card";
+import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import NoRecord from "src/components/commons/NoRecord";
 import Table from "src/components/commons/Table";
 import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "src/types/protocol";
 import { Column } from "src/types/table";
-import NoRecord from "src/components/commons/NoRecord";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import { ExplainerTextModal } from "./ExplainerTextModal";
 import { explainerTextGlobalConstants, explainerTextProtocolHistory } from "./explainerText";
@@ -47,7 +49,8 @@ import {
   ButtonFilter,
   ColumnProtocol,
   FilterContainer,
-  StyledDropdownItem
+  StyledDropdownItem,
+  TextDescription
 } from "./styles";
 
 interface IProtocolParamVertical {
@@ -89,6 +92,7 @@ const ProtocolParameter: React.FC = () => {
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `${t("common.protocolParameters")} | ${t("head.page.dashboard")}`;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const theme = useTheme();
@@ -222,16 +226,16 @@ const ProtocolParameter: React.FC = () => {
   return (
     <Container>
       {histories && (
-        <Box textAlign={"left"}>
+        <Box textAlign={"left"} sx={{ marginTop: "30px" }}>
           <BackButton onClick={() => history.push(lists.protocolParameters())}>
-            <HiArrowLongLeft />
+            <HiArrowLongLeft color={theme.palette.secondary.light} />
             <BackText>{t("common.back")}</BackText>
           </BackButton>
         </Box>
       )}
       {histories && <ProtocolParameterHistory />}
       {!histories && (
-        <Card titleSx={{ margin: 0 }} title={t("common.protocolParameters")}>
+        <Card title={t("common.protocolParameters")}>
           <Box pt={2}>
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
@@ -315,7 +319,6 @@ export const ProtocolParameterHistory = () => {
   const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
   const historyUrlBase = PROTOCOL_PARAMETER.HISTORY;
   let historyUrlParams = "";
-
   if (filterParams.length === 0 || filterParams.length === TOTAL_PARAMETER) {
     historyUrlParams = "ALL";
   } else {
@@ -344,7 +347,7 @@ export const ProtocolParameterHistory = () => {
   const [showFilter, setShowFiter] = useState(false);
   const [resetFilter, setResetFilter] = useState<boolean>(false);
   const [sortTimeFilter, setSortTimeFilter] = useState<"FirstLast" | "LastFirst" | "">("");
-
+  const [totalEpoch, setTotalEpoch] = useState<number>(0);
   const getTitleColumn = (data: ProtocolHistory | null) => {
     data &&
       (data.epochChanges || [])?.map(({ endEpoch, startEpoch }) => {
@@ -445,6 +448,10 @@ export const ProtocolParameterHistory = () => {
     if (dataHistory) {
       clearColumnTitle();
       getTitleColumn(dataHistory);
+      const totalEpoch = (dataHistory?.epochChanges || []).reduce((acc, cur) => {
+        return acc + (cur.endEpoch === cur.startEpoch ? 1 : cur.startEpoch - cur.endEpoch + 1);
+      }, 0);
+      setTotalEpoch(totalEpoch);
     }
   }, [JSON.stringify(dataHistory)]);
 
@@ -468,7 +475,7 @@ export const ProtocolParameterHistory = () => {
       setResetFilter(false);
     }
   }, [resetFilter]);
-
+  const totalFilter = filterParams.length + (sortTimeFilter ? 1 : 0) + (dateRangeFilter.fromDate ? 1 : 0);
   useUpdateEffect(() => {
     setColumnsTable([columnsTable[0], ...columnsTable.slice(1).reverse()]);
   }, [sortTimeFilter]);
@@ -515,18 +522,36 @@ export const ProtocolParameterHistory = () => {
         textAlign={"left"}
         extra={
           <Box position={"relative"}>
-            <Box
-              component={Button}
-              variant="text"
-              textTransform={"capitalize"}
-              bgcolor={({ palette }) => palette.primary[200]}
-              border={({ palette }) => `1px solid ${palette.primary[200]}`}
-              px={2}
-              onClick={() => setShowFiter(!showFilter)}
-            >
-              <FilterIcon />
-              <Box ml={1} fontWeight={"bold"} color={({ palette }) => palette.secondary.light}>
-                {t("common.filter")}
+            <Box display={"flex"} alignItems={"center"} gap={"15px"}>
+              {Boolean(totalFilter && totalEpoch) && (
+                <TextDescription>
+                  {totalEpoch > 1
+                    ? t("glossary.showingNumberEpochs", { total: totalEpoch })
+                    : t("glossary.showingNumberEpoch", { total: totalEpoch })}
+                </TextDescription>
+              )}
+              <Box
+                component={Button}
+                variant="text"
+                textTransform={"capitalize"}
+                bgcolor={({ palette, mode }) => (mode === "dark" ? palette.secondary[0] : palette.primary[200])}
+                border={({ palette, mode }) => `1px solid ${mode === "dark" ? "none" : palette.primary[200]}`}
+                px={2}
+                onClick={() => setShowFiter(!showFilter)}
+              >
+                <CustomIcon
+                  icon={FilterIcon}
+                  fill={theme.mode === "dark" ? theme.palette.primary.main : theme.palette.secondary.light}
+                  height={18}
+                />
+                <Box
+                  ml={1}
+                  whiteSpace={"nowrap"}
+                  fontWeight={"bold"}
+                  color={({ palette, mode }) => (mode === "dark" ? palette.primary.main : palette.secondary.light)}
+                >
+                  {t("common.filter")} {totalFilter ? `(${totalFilter})` : ""}
+                </Box>
               </Box>
             </Box>
             {showFilter && (
@@ -643,149 +668,162 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
     setShowFiter(false);
   };
   return (
-    <FilterContainer padding={2} pt={5}>
-      <CloseButton saving={0} onClick={() => setShowFiter(false)} data-testid="close-modal-button">
-        <IoMdClose />
-      </CloseButton>
-      <Box display={"flex"} flexDirection={"column"}>
-        <ButtonFilter onClick={() => setSort("LastFirst")}>
-          <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-            <Box display={"flex"} alignItems={"center"}>
-              <ImArrowDown2 />
-              <Box ml={1} color={({ palette }) => palette.secondary.main}>
-                {t("filter.latestFirst")}
-              </Box>
-            </Box>
-            {sort === "LastFirst" && <BsFillCheckCircleFill size={16} />}
-          </Box>
-        </ButtonFilter>
-        <ButtonFilter onClick={() => setSort("FirstLast")}>
-          <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-            <Box display={"flex"} alignItems={"center"}>
-              <ImArrowUp2 />
-              <Box ml={1} color={({ palette }) => palette.secondary.main}>
-                {t("filter.firstLatest")}
-              </Box>
-            </Box>
-            {sort === "FirstLast" && <BsFillCheckCircleFill size={16} />}
-          </Box>
-        </ButtonFilter>
-        <ButtonFilter onClick={() => setShowDaterange(true)}>
-          <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-            <Box display={"flex"} alignItems={"center"}>
-              <DateRangeIcon />
-              <Box ml={1} color={({ palette }) => palette.secondary.main}>
-                {" "}
-                {t("filter.daterange")}
-              </Box>
-            </Box>
-            {!isEmpty(dateRange) && <BsFillCheckCircleFill size={16} />}
-          </Box>
-        </ButtonFilter>
-
-        <AccordionContainer expanded={expanded === "params"} onChange={handleChange("params")}>
-          <AccordionSummary>
-            <Box
-              fontSize={"0.875rem"}
-              width={"100%"}
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"space-between"}
-            >
+    <ClickAwayListener
+      onClickAway={() => {
+        setShowFiter(false);
+      }}
+    >
+      <FilterContainer padding={2} pt={5}>
+        <CloseButton saving={0} onClick={() => setShowFiter(false)} data-testid="close-modal-button">
+          <IoMdClose color={theme.palette.secondary.main} />
+        </CloseButton>
+        <Box display={"flex"} flexDirection={"column"}>
+          <ButtonFilter onClick={() => setSort("LastFirst")}>
+            <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
               <Box display={"flex"} alignItems={"center"}>
-                <ProtocolParam />
+                <ImArrowDown2 color={theme.palette.secondary.main} />
                 <Box ml={1} color={({ palette }) => palette.secondary.main}>
-                  {t("common.parameterChanges")} {filterOption.length > 0 ? `(${filterOption.length})` : ""}
+                  {t("filter.latestFirst")}
                 </Box>
               </Box>
-              <Box>{expanded === "params" ? <IoIosArrowDown /> : <IoIosArrowUp />}</Box>
+              {sort === "LastFirst" && <BsFillCheckCircleFill size={16} color={theme.palette.secondary.main} />}
             </Box>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Box height={170} overflow={"auto"}>
-              <Box>
-                <Checkbox
-                  checked={filterOption.length === Object.keys(PROTOCOL_TYPE).length}
-                  id={"all"}
-                  sx={{
-                    color: ({ palette }) => alpha(palette.common.black, 0.15),
-                    "&.Mui-checked": {
-                      color: `${theme.palette.primary.main} !important`
-                    }
-                  }}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      clear();
-                      pushFilterOption(...Object.keys(PROTOCOL_TYPE));
-                    } else {
-                      clear();
-                    }
-                  }}
-                />
-                <StyledDropdownItem htmlFor={"all"} style={{ cursor: "pointer" }}>
-                  {t("common.allParameters")}
-                </StyledDropdownItem>
+          </ButtonFilter>
+          <ButtonFilter onClick={() => setSort("FirstLast")}>
+            <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+              <Box display={"flex"} alignItems={"center"}>
+                <ImArrowUp2 color={theme.palette.secondary.main} />
+                <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                  {t("filter.firstLatest")}
+                </Box>
               </Box>
+              {sort === "FirstLast" && <BsFillCheckCircleFill size={16} color={theme.palette.secondary.main} />}
+            </Box>
+          </ButtonFilter>
+          <ButtonFilter onClick={() => setShowDaterange(true)}>
+            <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+              <Box display={"flex"} alignItems={"center"}>
+                <CustomIcon icon={DateRangeIcon} fill={theme.palette.secondary.main} height={18} />
+                <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                  {" "}
+                  {t("filter.daterange")}
+                </Box>
+              </Box>
+              {!isEmpty(dateRange) && <BsFillCheckCircleFill size={16} color={theme.palette.secondary.main} />}
+            </Box>
+          </ButtonFilter>
 
-              {Object.keys(PROTOCOL_TYPE).map((k, idx) => (
-                <Box key={idx}>
+          <AccordionContainer expanded={expanded === "params"} onChange={handleChange("params")}>
+            <AccordionSummary>
+              <Box
+                fontSize={"0.875rem"}
+                width={"100%"}
+                display={"flex"}
+                alignItems={"center"}
+                justifyContent={"space-between"}
+              >
+                <Box display={"flex"} alignItems={"center"}>
+                  <CustomIcon icon={ProtocolParam} stroke={theme.palette.secondary.main} height={20} />
+                  <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                    {t("common.parameterChanges")} {filterOption.length > 0 ? `(${filterOption.length})` : ""}
+                  </Box>
+                </Box>
+                <Box>
+                  {expanded === "params" ? (
+                    <IoIosArrowDown color={theme.palette.secondary.main} />
+                  ) : (
+                    <IoIosArrowUp color={theme.palette.secondary.main} />
+                  )}
+                </Box>
+              </Box>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box height={170} overflow={"auto"}>
+                <Box>
                   <Checkbox
-                    id={k}
-                    checked={filterOption.includes(k)}
-                    onChange={(e) =>
-                      e.target.checked
-                        ? pushFilterOption(k)
-                        : removeAtFilterOption(filterOption.findIndex((f) => f === k))
-                    }
+                    checked={filterOption.length === Object.keys(PROTOCOL_TYPE).length}
+                    id={"all"}
                     sx={{
-                      color: ({ palette }) => alpha(palette.common.black, 0.15),
+                      color: ({ palette, isDark }) => alpha(isDark ? palette.common.white : palette.common.black, 0.15),
                       "&.Mui-checked": {
                         color: `${theme.palette.primary.main} !important`
                       }
                     }}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        clear();
+                        pushFilterOption(...Object.keys(PROTOCOL_TYPE));
+                      } else {
+                        clear();
+                      }
+                    }}
                   />
-                  <StyledDropdownItem htmlFor={k} style={{ cursor: "pointer" }}>
-                    {k}
+                  <StyledDropdownItem htmlFor={"all"} style={{ cursor: "pointer" }}>
+                    {t("common.allParameters")}
                   </StyledDropdownItem>
                 </Box>
-              ))}
-            </Box>
-          </AccordionDetails>
-        </AccordionContainer>
 
-        <Box>
-          <ApplyFilterButton
-            data-testid="apply-filters"
-            onClick={handleApplyFilter}
-            disabled={filterOption.length === 0 && !sort && isEmpty(dateRange)}
+                {Object.keys(PROTOCOL_TYPE).map((k, idx) => (
+                  <Box key={idx}>
+                    <Checkbox
+                      id={k}
+                      checked={filterOption.includes(k)}
+                      onChange={(e) =>
+                        e.target.checked
+                          ? pushFilterOption(k)
+                          : removeAtFilterOption(filterOption.findIndex((f) => f === k))
+                      }
+                      sx={{
+                        color: ({ palette, isDark }) =>
+                          alpha(isDark ? palette.common.white : palette.common.black, 0.15),
+                        "&.Mui-checked": {
+                          color: `${theme.palette.primary.main} !important`
+                        }
+                      }}
+                    />
+                    <StyledDropdownItem htmlFor={k} style={{ cursor: "pointer" }}>
+                      {k === "coinsPerUtxoSize" ? "coinsPerUtxoByte" : k}
+                    </StyledDropdownItem>
+                  </Box>
+                ))}
+              </Box>
+            </AccordionDetails>
+          </AccordionContainer>
+
+          <Box>
+            <ApplyFilterButton
+              data-testid="apply-filters"
+              onClick={handleApplyFilter}
+              disabled={filterOption.length === 0 && !sort && isEmpty(dateRange)}
+            >
+              {t("common.applyFilters")}
+            </ApplyFilterButton>
+          </Box>
+          <Box
+            component={Button}
+            width={"100%"}
+            textTransform={"capitalize"}
+            onClick={() => {
+              setResetFilter(true);
+              setShowFiter(false);
+            }}
+            display={"flex"}
+            alignItems={"center"}
+            mt={2}
+            color={({ palette }) => `${palette.primary.main} !important`}
           >
-            {t("common.applyFilters")}
-          </ApplyFilterButton>
+            <Box mr={1}>{t("common.reset")}</Box>
+            <CustomIcon icon={ResetIcon} height={16} fill={theme.palette.primary.main} />
+          </Box>
         </Box>
-        <Box
-          component={Button}
-          width={"100%"}
-          textTransform={"capitalize"}
-          onClick={() => {
-            setResetFilter(true);
-            setShowFiter(false);
-          }}
-          display={"flex"}
-          alignItems={"center"}
-          mt={2}
-          color={({ palette }) => `${palette.primary.main} !important`}
-        >
-          <Box mr={1}>{t("common.reset")}</Box>
-          <ResetIcon />
-        </Box>
-      </Box>
-      <DateRangeModal
-        onClose={() => setShowDaterange(false)}
-        open={showDaterange}
-        value={dateRange}
-        onDateRangeChange={({ fromDate, toDate }) => setDateRange({ fromDate, toDate })}
-      />
-    </FilterContainer>
+        <DateRangeModal
+          onClose={() => setShowDaterange(false)}
+          open={showDaterange}
+          value={dateRange}
+          onDateRangeChange={({ fromDate, toDate }) => setDateRange({ fromDate, toDate })}
+        />
+      </FilterContainer>
+    </ClickAwayListener>
   );
 };
 

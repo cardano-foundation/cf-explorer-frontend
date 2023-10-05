@@ -2,8 +2,10 @@ import { alpha, Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const Wrapper = styled(Box)`
-  background: ${(props) => props.theme.palette.common.white};
+  background: ${(props) => props.theme.palette.secondary[0]};
   padding: 25px;
+  border: 1px solid ${({ theme }) => (theme.isDark ? theme.palette.primary[200] : theme.palette.secondary[700])};
+  border-radius: ${({ theme }) => theme.spacing(2)};
 `;
 export const Header = styled(Box)`
   display: flex;
@@ -63,7 +65,7 @@ export const Value = styled(Box)(({ theme }) => ({
   wordBreak: "break-all",
   width: "100%",
   textAlign: "left",
-  background: theme.palette.primary[100],
+  background: theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100],
   padding: `${theme.spacing(2)} 50px ${theme.spacing(2)} ${theme.spacing(1)}`,
   minHeight: 40,
   position: "relative",

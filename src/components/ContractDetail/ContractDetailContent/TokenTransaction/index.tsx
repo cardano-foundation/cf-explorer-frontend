@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { stringify } from "qs";
 import { Box } from "@mui/material";
+import { stringify } from "qs";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 
+import useFetchList from "src/commons/hooks/useFetchList";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
 import {
   formatADAFull,
   formatDateTimeLocal,
@@ -12,16 +15,14 @@ import {
   getShortHash,
   getShortWallet
 } from "src/commons/utils/helper";
-import Table, { Column } from "src/components/commons/Table";
-import CustomTooltip from "src/components/commons/CustomTooltip";
-import useFetchList from "src/commons/hooks/useFetchList";
-import { details } from "src/commons/routers";
-import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
-import { setOnDetailView } from "src/stores/user";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 import DetailViewContractHash from "src/components/commons/DetailView/DetailViewContractHash";
+import FormNowMessage from "src/components/commons/FormNowMessage";
+import Table, { Column } from "src/components/commons/Table";
+import { setOnDetailView } from "src/stores/user";
 
-import { Flex, Label, SmallText, StyledLink, PriceValue } from "./styles";
+import { Flex, Label, PriceValue, SmallText, StyledLink, TimeDuration } from "./styles";
 
 const TokenTransaction: React.FC = () => {
   const { t } = useTranslation();
@@ -32,17 +33,14 @@ const TokenTransaction: React.FC = () => {
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<Transactions>(`${API.ADDRESS.DETAIL}/${params.address}/txs`, pageInfo);
   const [txHashSelected, setTxHashSelected] = useState<string>("");
-  const [selected, setSelected] = useState<number | null>(null);
 
-  const openDetail = (_: any, r: Transactions, index: number) => {
+  const openDetail = (_: any, r: Transactions) => {
     setTxHashSelected(r.hash);
-    setSelected(index);
     setOnDetailView(true);
   };
 
   const handleClose = () => {
     setOnDetailView(false);
-    setSelected(null);
     setTxHashSelected("");
   };
 
@@ -53,7 +51,7 @@ const TokenTransaction: React.FC = () => {
   const columns: Column<Transactions>[] = [
     {
       title: t("glossary.txhash"),
-      key: "trxhash",
+      key: "hash",
       minWidth: "200px",
 
       render: (r) => (
@@ -148,21 +146,28 @@ const TokenTransaction: React.FC = () => {
   ];
   return (
     <>
+      <TimeDuration>
+        <FormNowMessage time={fetchData.lastUpdated} />
+      </TimeDuration>
       <Table
         {...fetchData}
         columns={columns}
         total={{ count: fetchData.total, title: t("common.totalTxs") }}
         onClickRow={openDetail}
-        selected={selected}
+        rowKey="hash"
+        selected={txHashSelected}
         pagination={{
           ...pageInfo,
           total: fetchData.total,
           onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
         }}
       />
-      {txHashSelected && onDetailView && (
-        <DetailViewContractHash txHash={txHashSelected} address={params.address} handleClose={handleClose} />
-      )}
+      <DetailViewContractHash
+        open={onDetailView}
+        txHash={txHashSelected}
+        address={params.address}
+        handleClose={handleClose}
+      />
     </>
   );
 };

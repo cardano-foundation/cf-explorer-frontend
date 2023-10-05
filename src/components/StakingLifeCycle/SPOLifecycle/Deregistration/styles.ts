@@ -83,16 +83,24 @@ export const DrawContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     maxWidth: 320,
     minWidth: 320
+  },
+  ">div": {
+    zIndex: 2
+  },
+  [theme.breakpoints.down(355)]: {
+    maxWidth: 320,
+    minWidth: "unset",
+    width: "100%"
   }
 }));
 
-export const MiddleGroup = styled(Box)<{ hold?: number }>(({ theme, hold }) => ({
+export const MiddleGroup = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-around",
   width: "max-content",
   flexDirection: "column",
-  gap: hold ? 25 : 90,
-  paddingTop: hold ? 5 : 75,
+  gap: 90,
+  paddingTop: 75,
 
   [theme.breakpoints.down("lg")]: {
     gap: 10
@@ -103,12 +111,17 @@ export const MiddleGroup = styled(Box)<{ hold?: number }>(({ theme, hold }) => (
     gap: 30,
     paddingTop: 46,
     paddingBottom: 35,
-    alignItems: hold ? "unset" : "center"
+    alignItems: "center"
   },
   [theme.breakpoints.down("sm")]: {
     maxWidth: 320,
     minWidth: 320,
     gap: 10
+  },
+  [theme.breakpoints.down(355)]: {
+    maxWidth: 320,
+    minWidth: "unset",
+    width: "100%"
   }
 }));
 
@@ -143,6 +156,11 @@ export const BoxGroup = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     maxWidth: 178,
     minWidth: 178
+  },
+  [theme.breakpoints.down(355)]: {
+    maxWidth: 178,
+    minWidth: "unset",
+    width: "100%"
   }
 }));
 
@@ -161,7 +179,7 @@ export const StyledCopyButton = styled(CopyButton)`
 `;
 export const StyledGridItem = styled(Grid)(({ theme }) => ({
   "& > div": {
-    background: theme.palette.secondary[0],
+    background: theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0],
     padding: 24
   },
   [theme.breakpoints.down("sm")]: {

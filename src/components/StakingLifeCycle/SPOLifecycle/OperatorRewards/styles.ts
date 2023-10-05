@@ -25,6 +25,14 @@ export const DrawContainer = styled(Box)(({ theme }) => ({
     maxWidth: 320,
     minWidth: 320,
     gap: "65px"
+  },
+  ">div": {
+    zIndex: 2
+  },
+  [theme.breakpoints.down(355)]: {
+    maxWidth: 320,
+    minWidth: "unset",
+    width: "100%"
   }
 }));
 
@@ -46,5 +54,6 @@ export const ADATitle = styled(Box)(({ theme }) => ({
   fontWeight: 700
 }));
 export const ADAAmount = styled(Box)`
-  color: ${(props) => props.theme.palette.success[800]} !important;
+  color: ${(props) =>
+    props.theme.isDark ? props.theme.palette.success[700] : props.theme.palette.success[800]} !important;
 `;

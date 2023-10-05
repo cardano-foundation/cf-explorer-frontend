@@ -1,13 +1,11 @@
 import { changeLanguage } from "i18next";
 import React, { useEffect } from "react";
 import { Redirect, Route, RouteProps, Switch, useHistory } from "react-router-dom";
-import { useAsync, useLocalStorage } from "react-use";
 
 import useAuth from "./commons/hooks/useAuth";
 import { routers } from "./commons/routers";
-import { APP_LANGUAGES, NETWORK, NETWORK_TYPES, SUPPORTED_LANGUAGES } from "./commons/utils/constants";
+import { APP_LANGUAGES, SUPPORTED_LANGUAGES } from "./commons/utils/constants";
 import { handleChangeLanguage } from "./commons/utils/helper";
-import { getAllBookmarks } from "./commons/utils/userRequest";
 import AccountLayout from "./components/commons/Layout/AccountLayout";
 import i18n from "./i18n";
 import AddressWalletDetail from "./pages/AddressWalletDetail";
@@ -50,7 +48,6 @@ import TopDelegators from "./pages/TopDelegators";
 import TransactionDetail from "./pages/TransactionDetail";
 import TransactionList from "./pages/TransactionList";
 import VerifyEmail from "./pages/VerifyEmail";
-import { setOpenSyncBookmarkModal } from "./stores/user";
 
 const StakeAddressRegistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.REGISTRATION} />;
 const StakeAddressDeregistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.DEREREGISTRATION} />;
@@ -59,25 +56,7 @@ const PoolsCertificate = () => <RegistrationPools poolType={POOL_TYPE.REGISTRATI
 const PoolsDeregistration = () => <RegistrationPools poolType={POOL_TYPE.DEREREGISTRATION} />;
 
 const Routes: React.FC = () => {
-  const { isLoggedIn } = useAuth();
-  const [, setBookmark] = useLocalStorage<Bookmark[]>("bookmark", []);
   const history = useHistory();
-
-  useAsync(async () => {
-    if (isLoggedIn) {
-      if (
-        (((JSON.parse(localStorage.getItem("bookmark") || "[]") as Bookmark[]) || [])?.filter((r) => !r.id) || [])
-          .length > 0
-      ) {
-        setOpenSyncBookmarkModal(true);
-      } else {
-        const { data } = await getAllBookmarks(NETWORK_TYPES[NETWORK]);
-        if (data) {
-          setBookmark(data);
-        }
-      }
-    }
-  }, []);
 
   useEffect(() => {
     const pattern = /^\/([a-z]{2})\//;
@@ -131,7 +110,6 @@ const Routes: React.FC = () => {
       <Route path={routers.FAQ} exact component={FAQ} />
       <Route path={routers.POLICY} exact component={Policy} />
       <Route path={routers.TERMS_OF_SERVICE} exact component={TermOfServices} />
-      <Route path={routers.NOT_FOUND} component={NotFound} />
       <Route path={routers.ACCOUNT}>
         <AccountLayout>
           <Switch>
@@ -142,6 +120,7 @@ const Routes: React.FC = () => {
           </Switch>
         </AccountLayout>
       </Route>
+      <Route path={routers.NOT_FOUND} component={NotFound} />
     </Switch>
   );
 };

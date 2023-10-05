@@ -4,20 +4,26 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 import { Link as LinkDom } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useEffect, useRef } from "react";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
+  AdaPriceDarkIcon,
   AdaPriceIcon,
   CurrentEpochHome,
+  CurrentEpochHomeDark,
   HomeDownIcon,
   HomeUpIcon,
+  LiveStakeDarkIcon,
   LiveStakeIcon,
-  MarketCapIcon
+  MarketCapDarkIcon,
+  MarketCapIcon,
+  UpGreenDarkmodeIcon
 } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { EXT_ADA_PRICE_URL, MAX_SLOT_EPOCH, REFRESH_TIMES } from "src/commons/utils/constants";
+import { EXT_ADA_PRICE_URL, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import {
   formatADA,
   formatADAFull,
@@ -29,6 +35,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import RateWithIcon from "src/components/commons/RateWithIcon";
 import { RootState } from "src/stores/types";
 import ADAicon from "src/components/commons/ADAIcon";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
 import {
   AdaPrice,
@@ -45,19 +52,20 @@ import {
   TextPending,
   TimeDuration,
   Title,
+  VerticalContent,
   WrapCardContent,
   WrapGrid
 } from "./style";
 
 const SkeletonBox = () => (
   <Item>
-    <Content>
+    <Box>
       <ItemSkeleton width="50%" />
       <ItemSkeleton width="30%" />
       <ItemSkeleton />
       <ItemSkeleton width="50%" />
       <ItemSkeleton width="80%" />
-    </Content>
+    </Box>
   </Item>
 );
 
@@ -68,15 +76,10 @@ const MIN_PERCENT_SHOW_FIRST_BAR = 9;
 
 const HomeStatistic = () => {
   const { t } = useTranslation();
+  const { currentEpoch, usdMarket, btcMarket, blockNo } = useSelector(({ system }: RootState) => system);
 
-  const { currentEpoch, usdMarket } = useSelector(({ system }: RootState) => system);
-  const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS);
-  const { data: btcMarket } = useFetch<CardanoMarket[]>(
-    `${API.MARKETS}?currency=btc`,
-    undefined,
-    false,
-    REFRESH_TIMES.CURRENT_PRICE_BTC
-  );
+  const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS, undefined, false, blockNo);
+  const { theme: themeMode } = useSelector(({ user }: RootState) => user);
   const { total_supply: total = 1 } = usdMarket || {};
   const { liveStake = 0, activeStake = 1 } = data || {};
   const supply = BigNumber(currentEpoch?.circulatingSupply || 0).div(10 ** 6);
@@ -102,6 +105,34 @@ const HomeStatistic = () => {
 
   const { isGalaxyFoldSmall } = useScreen();
   const sign = Math.sign(BigNumber(usdMarket?.price_change_percentage_24h || 0).toNumber());
+
+  const marketcap = useRef<{ last_updated: string; market_cap: number }>({
+    last_updated: "",
+    market_cap: 0
+  });
+  const priceBTC = useRef<number>(0);
+
+  useEffect(() => {
+    if (Number(usdMarket?.market_cap) !== Number(marketcap.current.market_cap)) {
+      marketcap.current = {
+        market_cap: usdMarket?.market_cap || 0,
+        last_updated: usdMarket?.last_updated || ""
+      };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [usdMarket?.market_cap]);
+
+  useEffect(() => {
+    if (Number(btcMarket?.current_price) !== priceBTC.current) {
+      priceBTC.current = Number(btcMarket?.current_price);
+      marketcap.current = {
+        ...marketcap.current,
+        last_updated: btcMarket?.last_updated || ""
+      };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [btcMarket?.current_price, marketcap.current]);
+
   return (
     <StatisticContainer
       container
@@ -111,36 +142,41 @@ const HomeStatistic = () => {
       data-testid="home-statistic"
     >
       <WrapGrid item xl lg={3} sm={6} xs={12}>
-        {usdMarket && btcMarket?.[0] ? (
+        {usdMarket && btcMarket ? (
           <Link href={EXT_ADA_PRICE_URL} target="_blank">
-            <Item data-testid="ada-price-box" smallItem>
+            <Item data-testid="ada-price-box" smallItem themeMode={themeMode}>
               <WrapCardContent>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon
                     style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
                     data-testid="ada-price-icon"
-                    src={AdaPriceIcon}
+                    src={themeMode === "light" ? AdaPriceIcon : AdaPriceDarkIcon}
                     alt={t("stats.adaPrice")}
                   />
                   <Name data-testid="ada-price-box-title">{t("stats.adaPrice")}</Name>
                 </Box>
                 <Box display={"flex"} alignItems={"center"}>
-                  <ItemIcon src={sign > 0 ? HomeUpIcon : HomeDownIcon} alt="Home up icon" />
-                  <Box ml={2}>
+                  <img
+                    src={sign > 0 ? (themeMode === "light" ? HomeUpIcon : UpGreenDarkmodeIcon) : HomeDownIcon}
+                    alt="Home up icon"
+                    width={30}
+                    height={30}
+                  />
+                  <Box ml={1}>
                     <Title data-testid="ada-current-price">${usdMarket.current_price}</Title>
                   </Box>
                 </Box>
-                <Content display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
+                <Content gap="5px 15px">
                   <RateWithIcon
                     data-testid="ada-twenty-four-hr-price-change"
                     value={usdMarket.price_change_percentage_24h}
                     showIcon={false}
                   />
-                  <AdaPrice data-testid="ada-price-in-btc">{btcMarket[0]?.current_price} BTC</AdaPrice>
+                  <AdaPrice data-testid="ada-price-in-btc">{btcMarket.current_price} BTC</AdaPrice>
                 </Content>
-                <Content display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
+                <Content>
                   <TimeDuration data-testid="last-update-ada-price">
-                    {t("info.lastUpdatedTime", { time: moment(usdMarket.last_updated).fromNow() })}
+                    <FormNowMessage time={usdMarket.last_updated} />
                   </TimeDuration>
                 </Content>
               </WrapCardContent>
@@ -153,16 +189,20 @@ const HomeStatistic = () => {
       <WrapGrid item xl lg={3} sm={6} xs={12}>
         {usdMarket ? (
           <Link href={EXT_ADA_PRICE_URL} target="_blank">
-            <Item data-testid="market-cap-box" smallItem>
+            <Item data-testid="market-cap-box" smallItem themeMode={themeMode}>
               <WrapCardContent>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
-                  <ItemIcon data-testid="market-cap-icon" src={MarketCapIcon} alt="Market cap" />
+                  <ItemIcon
+                    data-testid="market-cap-icon"
+                    src={themeMode === "light" ? MarketCapIcon : MarketCapDarkIcon}
+                    alt="Market cap"
+                  />
                   <Name data-testid="market-cap-box-title">{t("glossary.marketCap")}</Name>
                 </Box>
                 <Title data-testid="market-cap-value">${numberWithCommas(usdMarket.market_cap)}</Title>
                 <Content>
                   <TimeDuration data-testid="last-update-market-cap">
-                    {t("common.lastUpdated")} {moment(usdMarket.last_updated).fromNow()}
+                    <FormNowMessage time={marketcap.current.last_updated} />
                   </TimeDuration>
                 </Content>
               </WrapCardContent>
@@ -175,13 +215,13 @@ const HomeStatistic = () => {
       <WrapGrid item xl lg={3} sm={6} xs={12}>
         {currentEpoch ? (
           <Box component={LinkDom} display={"contents"} to={details.epoch(currentEpoch?.no)}>
-            <Item data-testid="current-epoch-box">
-              <Content display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
+            <Item data-testid="current-epoch-box" themeMode={themeMode}>
+              <VerticalContent>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon
                     style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
                     data-testid="market-cap-icon"
-                    src={CurrentEpochHome}
+                    src={themeMode === "light" ? CurrentEpochHome : CurrentEpochHomeDark}
                     alt="Market cap"
                   />
                   <Name data-testid="current-epoch-box-title" style={isGalaxyFoldSmall ? { maxWidth: "30px" } : {}}>
@@ -189,7 +229,7 @@ const HomeStatistic = () => {
                   </Name>
                 </Box>
                 <Box>
-                  <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} flexWrap={"wrap"}>
+                  <Content>
                     <Title data-testid="current-epoch-number">{numberWithCommas(currentEpoch?.no)}</Title>
                     <Box color={({ palette }) => palette.secondary.light}>
                       {t("common.slot")}:{" "}
@@ -198,7 +238,7 @@ const HomeStatistic = () => {
                         : numberWithCommas(MAX_SLOT_EPOCH)}
                       / {numberWithCommas(MAX_SLOT_EPOCH)}
                     </Box>
-                  </Box>
+                  </Content>
                   <Progress>
                     <CustomTooltip title={epochActiveText}>
                       <ProcessActive data-testid="current-epoch-progress-active" rate={+progress || 0}>
@@ -224,7 +264,7 @@ const HomeStatistic = () => {
                     {t("glossary.endTimestamp")}: {formatDateTimeLocal(currentEpoch?.endTime)}
                   </Box>
                 </Box>
-              </Content>
+              </VerticalContent>
             </Item>
           </Box>
         ) : (
@@ -234,14 +274,14 @@ const HomeStatistic = () => {
       <WrapGrid item xl lg={3} sm={6} xs={12}>
         {data && usdMarket ? (
           <Box component={LinkDom} display={"contents"} to={routers.DELEGATION_POOLS}>
-            <Item data-testid="live-stake-box">
-              <Content display={"flex"} flexDirection={"column"} justifyContent={"space-between"} height={"100%"}>
+            <Item data-testid="live-stake-box" themeMode={themeMode}>
+              <VerticalContent>
                 <Box>
                   <Box display={"flex"} alignItems={"center"} height={"40px"}>
                     <ItemIcon
                       style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
                       data-testid="live-stake-icon"
-                      src={LiveStakeIcon}
+                      src={themeMode === "light" ? LiveStakeIcon : LiveStakeDarkIcon}
                       alt="Total ADA Stake"
                     />
                     <Name data-testid="live-stake-box-title">
@@ -273,8 +313,7 @@ const HomeStatistic = () => {
                 </Box>
                 <Box>
                   <Box color={({ palette }) => palette.secondary.light}>
-                    {t("glossary.activeStake")} <ADAicon width={10} />
-                    :&nbsp;
+                    {t("glossary.activeStake")} (<ADAicon width={10} />){": "}
                     <CustomTooltip title={formatADAFull(activeStake)}>
                       <span data-testid="active-stake-value">{formatADA(activeStake)}</span>
                     </CustomTooltip>
@@ -282,12 +321,11 @@ const HomeStatistic = () => {
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
                     <CustomTooltip title={t("glossary.offTheMaxSupply")}>
                       <span>
-                        {t("glossary.circulatingSupply")} <ADAicon width={8} />
-                        :&nbsp;
+                        {t("glossary.circulatingSupply")} (<ADAicon width={8} />){": "}
                       </span>
                     </CustomTooltip>
                     <CustomTooltip title={formatADAFull(currentEpoch?.circulatingSupply || 0)}>
-                      <span data-testid="circulating-supply-value">{formatADA(circulatingSupply.toString())}</span>
+                      <span data-testid="circulating-supply-value">{formatADA(circulatingSupply.toString())} </span>
                     </CustomTooltip>
                     <CustomTooltip title={`${circulatingRate.toFixed(5)}%`}>
                       <span data-testid="circulating-supply-percentage">
@@ -296,7 +334,7 @@ const HomeStatistic = () => {
                     </CustomTooltip>
                   </Box>
                 </Box>
-              </Content>
+              </VerticalContent>
             </Item>
           </Box>
         ) : (

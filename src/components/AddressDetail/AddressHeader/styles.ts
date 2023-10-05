@@ -56,7 +56,7 @@ export const StyledTextField = styled(TextField)`
   .MuiInputBase-root {
     padding: 0 9px;
     height: 40px;
-    border: 1.5px solid ${(props) => props.theme.palette.border.main};
+    border: 1.5px solid ${(props) => props.theme.palette.primary[200]};
     border-radius: 8px;
   }
   .MuiInputBase-input {
@@ -77,7 +77,7 @@ export const LogoEmpty = styled(Box)`
   height: 25px;
   background: ${(props) => alpha(props.theme.palette.common.white, 0.6)};
   border-radius: 50%;
-  border: 1px solid ${(props) => props.theme.palette.border.main};
+  border: 1px solid ${(props) => props.theme.palette.primary[200]};
 `;
 export const BackButton = styled(Box)`
   display: inline-flex;
@@ -117,9 +117,12 @@ export const WrapHeader = styled(Box)(({ theme }) => ({
 
 export const RedirectButton = styled(Box)(({ theme }) => ({
   textTransform: "capitalize",
-  backgroundColor: theme.palette.secondary.main,
   color: theme.palette.secondary[0],
-  padding: `${theme.spacing(1)} ${theme.spacing(2)} `
+  padding: `${theme.spacing(1)} ${theme.spacing(2)} `,
+  backgroundColor: theme.mode === "light" ? theme.palette.secondary.main : theme.palette.primary.main,
+  ":hover": {
+    backgroundColor: theme.isDark ? theme.palette.primary.dark : alpha(theme.palette.secondary.main, 0.8)
+  }
 }));
 
 export const TimeDuration = styled("small")(({ theme }) => ({

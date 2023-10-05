@@ -1,4 +1,4 @@
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
 import { useContext, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -16,11 +16,13 @@ import Table, { Column } from "src/components/commons/Table";
 import CustomFilter, { FilterParams } from "src/components/commons/CustomFilter";
 import { DelegationCertificateModal } from "src/components/StakingLifeCycle/DelegatorLifecycle/Delegation";
 import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import { StyledLink, WrapperDelegationTab, WrapWalletLabel } from "../styles";
 
 const DelegationTab = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const detailData = useContext(DelegatorDetailContext);
   const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
@@ -77,7 +79,7 @@ const DelegationTab = () => {
       minWidth: "120px",
       render: (r) => (
         <IconButton onClick={() => setSelected(r.txHash)}>
-          <EyeIcon />
+          <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
         </IconButton>
       )
     }
@@ -98,7 +100,7 @@ const DelegationTab = () => {
         <Box display={"flex"} alignItems={"center"} gap={2}>
           <WrapFilterDescription>
             {t("common.showing")} {Math.min(total, pageInfo.size)}{" "}
-            {Math.min(total, pageInfo.size) > 1 ? t("common.result") : t("common.results")}
+            {Math.min(total, pageInfo.size) <= 1 ? t("common.result") : t("common.results")}
           </WrapFilterDescription>
           <CustomFilter
             filterValue={params}

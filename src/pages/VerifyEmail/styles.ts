@@ -1,24 +1,20 @@
-import { Box, Button, Divider, Input, styled } from "@mui/material";
+import { alpha, Box, Button, Divider, Input, styled } from "@mui/material";
 
 import { User2RC } from "src/commons/resources";
 
 export const Container = styled(Box)`
   display: flex;
-  background-color: ${({ theme }) => theme.palette.primary[100]};
-  min-height: 100vh;
+  background-color: ${({ theme }) =>
+    theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[100]};
   min-width: 100vw;
   justify-content: center;
   align-items: center;
-  padding: 30px 0;
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    min-height: 80vh;
-  }
 `;
 
 export const Title = styled(Box)`
   font-weight: 700;
   font-size: 20px;
-  color: ${({ theme }) => theme.palette.secondary.light};
+  color: ${({ theme }) => (theme.mode === "dark" ? theme.palette.common.white : theme.palette.secondary.light)};
 `;
 
 export const WrapContent = styled(Box)`
@@ -27,6 +23,7 @@ export const WrapContent = styled(Box)`
   gap: 5px;
   align-items: center;
   justify-content: center;
+  transform: translateY(-45px);
 `;
 
 export const WrapTitle = styled(Box)`
@@ -48,7 +45,7 @@ export const WrapHintText = styled(Box)`
 
 export const WrapForm = styled(Box)(({ theme }) => ({
   margin: "10px 30px 0 30px",
-  background: theme.palette.common.white,
+  background: theme.palette.secondary[0],
   borderRadius: "12px",
   display: "flex",
   flexDirection: "column",
@@ -83,7 +80,7 @@ export const InputCustom = styled(Input, { shouldForwardProp: (prop) => prop !==
       display: "none"
     },
     padding: "5px 10px",
-    backgroundColor: error ? "rgba(247, 94, 94, 0.05)" : "",
+    backgroundColor: error ? (theme.isDark ? "" : "rgba(247, 94, 94, 0.05)") : theme.palette.secondary[0],
     "&.MuiInputBase-root.Mui-focused": {
       borderColor: error ? "" : theme.palette.primary.main
     }
@@ -113,16 +110,25 @@ export const UserCustomIcon = styled(User2RC)`
   }
 `;
 
-export const WrapButton = styled(Button)`
-  background: ${({ theme }) => theme.palette.secondary.main};
-  padding: 15px 20px;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 19px;
-  text-align: center;
-  text-transform: none;
-`;
+export const WrapButton = styled(Button)(({ theme }) => ({
+  background: theme.mode === "dark" ? theme.palette.primary.main : theme.palette.secondary.main,
+  padding: "15px 20px",
+  borderRadius: "8px",
+  fontWeight: 700,
+  fontSize: "16px",
+  lineHeight: "19px",
+  textAlign: "center",
+  color: theme.palette.secondary[0],
+  "&:hover": {
+    background: theme.isDark ? "" : theme.palette.secondary.main
+  },
+  "&.Mui-disabled": {
+    color: theme.mode === "dark" ? theme.palette.secondary[0] : theme.palette.secondary.main,
+    background:
+      theme.mode === "dark" ? alpha(theme.palette.secondary.light, 0.3) : alpha(theme.palette.common.black, 0.26)
+  },
+  textTransform: "none"
+}));
 
 export const WrapButtonConnectWallet = styled(Button)`
   border-color: ${({ theme }) => theme.palette.primary.main};

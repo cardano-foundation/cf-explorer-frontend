@@ -19,23 +19,31 @@ export interface FetchReturnType<T> {
   total: number;
   totalPage: number;
   currentPage: number;
+  isDataOverSize?: boolean | null;
   refresh: () => void;
   update: (callback: (data: T[]) => T[]) => void;
-  lastUpdated: number;
+  lastUpdated?: number;
   query: Params;
 }
 
-const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, timeout?: number): FetchReturnType<T> => {
+const useFetchList = <T>(
+  url: string,
+  params: Params = {},
+  isAuth?: boolean,
+  key?: number | string
+): FetchReturnType<T> => {
   const [data, setData] = useState<T[]>([]);
   const [initialized, setInitialized] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(params.page ?? 0);
   const [totalPage, setTotalPage] = useState(0);
+  const [isDataOverSize, setIsDataOverSize] = useState<boolean | null>(null);
   const [total, setTotal] = useState(0);
   const [refreshLoading, setRefreshLoading] = useState(false);
   const [query, setQuery] = useState<Params>(cleanObject(params));
-  const lastFetch = useRef<number>(Date.now());
+  const lastFetch = useRef<number>();
+  const lastKey = useRef<number | string | undefined>(key);
 
   const getList = useCallback(
     async (needLoading?: boolean) => {
@@ -63,6 +71,7 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
         setQuery(cleanObject(params));
         setData((res?.data?.data || []) as T[]);
         setError(null);
+        setIsDataOverSize(res?.data?.isDataOverSize ?? null);
         setCurrentPage(res.data.currentPage);
         setTotalPage(res.data.totalPages);
         setTotal(res.data.totalItems);
@@ -82,23 +91,26 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
   );
 
   useEffect(() => {
-    if (timeout && !loading && !refreshLoading) {
+    // Refresh without "loading" every time the "key" is updated
+    if (key && !loading && !refreshLoading) {
       const onFocus = async () => {
-        if (lastFetch.current + timeout * 1000 <= Date.now()) getList();
+        if (lastKey.current !== key) {
+          getList();
+          lastKey.current = key;
+        }
       };
 
       window.addEventListener("focus", onFocus);
 
-      const timeoutId = setTimeout(() => {
-        if (!document.hidden) getList();
-      }, timeout * 1000);
+      if (!document.hidden) {
+        getList();
+        lastKey.current = key;
+      }
 
-      return () => {
-        clearTimeout(timeoutId);
-        window.removeEventListener("focus", onFocus);
-      };
+      return () => window.removeEventListener("focus", onFocus);
     }
-  }, [getList, timeout, loading, refreshLoading]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
 
   useEffect(() => {
     getList(true);
@@ -115,7 +127,8 @@ const useFetchList = <T>(url: string, params: Params = {}, isAuth?: boolean, tim
     refresh: getList,
     update: setData,
     lastUpdated: lastFetch.current,
-    query
+    query,
+    isDataOverSize
   };
 };
 

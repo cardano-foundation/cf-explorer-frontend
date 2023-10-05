@@ -23,6 +23,14 @@ export const DrawContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     maxWidth: 320,
     minWidth: 320
+  },
+  ">div": {
+    zIndex: 2
+  },
+  [theme.breakpoints.down(355)]: {
+    maxWidth: "unset",
+    minWidth: "unset",
+    width: "100%"
   }
 }));
 
@@ -41,7 +49,7 @@ export const RectBox = styled(Box)<{ disabled?: number }>(({ disabled, theme }) 
   borderRadius: 12,
   gap: 12,
   padding: "15px 20px",
-  backgroundColor: disabled ? theme.palette.secondary[600] : theme.palette.common.white,
+  backgroundColor: disabled ? theme.palette.secondary[600] : theme.palette.secondary[0],
   boxSizing: "border-box",
   position: "relative",
   "& > image": {
@@ -53,9 +61,13 @@ export const RectBox = styled(Box)<{ disabled?: number }>(({ disabled, theme }) 
 }));
 
 export const DisableAbleLabel = styled(Typography)<{ disabled?: number }>(({ theme, disabled }) => ({
-  fontSize: "1ren",
+  fontSize: "1rem",
   fontWeight: 700,
-  color: disabled ? theme.palette.common.white : theme.palette.secondary[600],
+  color: disabled
+    ? theme.palette.secondary[0]
+    : theme.mode === "light"
+    ? theme.palette.secondary[600]
+    : theme.palette.secondary.main,
   textAlign: "left",
   flex: 1,
   [theme.breakpoints.down("lg")]: {
@@ -98,6 +110,10 @@ export const HolderWrapper = styled(Box)(({ theme }) => ({
     maxWidth: 328,
     padding: "24px 34px",
     flexDirection: "row-reverse"
+  },
+  [theme.breakpoints.down(355)]: {
+    gap: 20,
+    padding: "24px 24px"
   }
 }));
 
@@ -145,7 +161,7 @@ export const RewardValue = styled(Box)(({ theme }) => ({
 
 export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
   fontSize: 11,
-  color: theme.palette.text.secondary,
+  fill: theme.palette.secondary.main,
   marginBottom: ".125em"
 }));
 

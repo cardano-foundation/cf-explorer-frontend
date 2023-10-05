@@ -2,11 +2,11 @@ import { Box } from "@mui/material";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -20,13 +20,14 @@ const perPages = [10, 20, 50, 100];
 
 const TopAddressesByAmountStaked = () => {
   const { t } = useTranslation();
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const history = useHistory();
   const [pageSize, setPageSize] = useState("50");
   const { error, data, initialized, loading, lastUpdated } = useFetchList<Contracts>(
     API.STAKE.TOP_DELEGATOR,
     { page: 0, size: +pageSize },
     false,
-    REFRESH_TIMES.TOP_DELEGATORS
+    blockKey
   );
 
   const columns: Column<TopDelegator>[] = [
@@ -73,6 +74,18 @@ const TopAddressesByAmountStaked = () => {
             onChange={(event: any) => setPageSize(event.target.value)}
             displayEmpty
             inputProps={{ "aria-label": "Without label" }}
+            MenuProps={{
+              MenuListProps: {
+                sx: {
+                  bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+                }
+              },
+              PaperProps: {
+                sx: {
+                  bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+                }
+              }
+            }}
           >
             {perPages.map((item) => (
               <StyledMenuItem key={item} value={item}>

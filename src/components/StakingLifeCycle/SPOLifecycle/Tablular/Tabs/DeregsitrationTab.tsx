@@ -1,25 +1,24 @@
-import { Box, IconButton } from "@mui/material";
-import BigNumber from "bignumber.js";
+import { Box, IconButton, useTheme } from "@mui/material";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { EyeIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatADAFull, getShortHash } from "src/commons/utils/helper";
-import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
+import { getShortHash } from "src/commons/utils/helper";
+import { AdaValue } from "src/components/commons/ADAValue";
+import CustomIcon from "src/components/commons/CustomIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
-import { AdaValue } from "src/components/commons/ADAValue";
-import ADAicon from "src/components/commons/ADAIcon";
 
 import { DeregistrationCertificateModal } from "../../Deregistration";
 
 const DeregsitrationTab = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { poolId = "" } = useParams<{ poolId: string }>();
   const [params, setParams] = useState({
     page: 0,
@@ -53,27 +52,9 @@ const DeregsitrationTab = () => {
     },
     {
       key: "fee",
-      title: (
-        <Box>
-          {t("glossary.adaValue")}
-          <Box fontSize={"0.75rem"} fontWeight={"normal"}>
-            {t("common.holdOrFees")}
-          </Box>
-        </Box>
-      ),
+      title: t("common.fees"),
       render(data) {
-        return (
-          <Box>
-            <AdaValue value={data.poolHold ? new BigNumber(data.poolHold).minus(data.fee).toString() : 0} />
-            <TableSubTitle>
-              <Box display="flex" mt={1} alignItems="center" lineHeight="1">
-                {formatADAFull(data.poolHold)}&nbsp;
-                <ADAicon width={9} />/{formatADAFull(data.fee)}&nbsp;
-                <ADAicon width={9} />
-              </Box>
-            </TableSubTitle>
-          </Box>
-        );
+        return <AdaValue value={data.fee} />;
       }
     },
     {
@@ -81,7 +62,7 @@ const DeregsitrationTab = () => {
       title: t("common.certificate"),
       render: (data) => (
         <IconButton onClick={() => setSelected(data)}>
-          <EyeIcon />
+          <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
         </IconButton>
       )
     }

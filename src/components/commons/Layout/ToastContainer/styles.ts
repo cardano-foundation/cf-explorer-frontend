@@ -28,5 +28,5 @@ export const StyledAlert = styled(Alert)<{ background: string; borderColor: stri
 export const StyledTitle = styled(AlertTitle)(({ theme }) => ({
   textAlign: "left",
   fontWeight: "bold",
-  color: theme.palette.text.primary
+  color: theme.palette.secondary.main
 }));

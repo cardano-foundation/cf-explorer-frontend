@@ -1,6 +1,7 @@
 import { Box, Card, Grid, Skeleton, styled } from "@mui/material";
 
 import { AdaLogoIcon } from "src/components/commons/ADAIcon";
+import { ThemeType } from "src/types/user";
 
 export const StatisticContainer = styled(Grid)`
   margin-bottom: 24px;
@@ -11,7 +12,9 @@ export const WrapGrid = styled(Grid)`
   flex-direction: column;
 `;
 
-export const Item = styled(Card)<{ smallItem?: boolean }>`
+export const Item = styled(Card)<{ smallItem?: boolean; themeMode?: ThemeType }>`
+  background: ${({ theme, themeMode }) =>
+    themeMode === "light" ? theme.palette.secondary[700] : theme.palette.secondary[0]};
   height: 100%;
   min-height: 164px;
   font-family: var(--font-family-text);
@@ -58,6 +61,16 @@ export const ItemIcon = styled("img")`
 
 export const Content = styled(Box)`
   overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+`;
+
+export const VerticalContent = styled(Content)`
+  flex-direction: column;
+  align-items: unset;
+  height: 100%;
 `;
 
 export const Name = styled("h4")`
@@ -102,21 +115,14 @@ export const SmallValue = styled("small")`
 
 export const AdaPrice = styled("small")`
   color: ${(props) => props.theme.palette.secondary.light};
-  white-space: nowrap;
-  margin-left: 15px;
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    margin-left: 0px;
-  }
 `;
+
 export const TimeDuration = styled("small")<{ marginTop?: string }>`
   color: ${(props) => props.theme.palette.secondary.light};
   margin-top: ${(props) => props.marginTop || 0};
-  white-space: nowrap;
   display: block;
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    white-space: unset;
-  }
 `;
+
 export const XSmall = styled("span")`
   font-size: var(--font-size-text-small);
   color: ${(props) => props.theme.palette.secondary.light};
@@ -148,6 +154,7 @@ export const ProcessActive = styled("div")<{ rate: number }>`
   align-items: center;
   width: ${(props) => props.rate}%;
   background-color: ${(props) => props.theme.palette.primary.main};
+  color: ${({ theme }) => (theme.mode === "light" ? "inherit" : theme.palette.secondary[100])};
 `;
 
 export const ProgressPending = styled(ProcessActive)<{ rate: number }>`

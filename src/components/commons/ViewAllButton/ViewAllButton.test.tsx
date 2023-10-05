@@ -8,7 +8,7 @@ import ViewAllButton from ".";
 describe("ViewMoreButton component", () => {
   it("should component render", () => {
     render(<ViewAllButton to={"/example"} />);
-    expect(screen.getByRole("img", { name: /view all/i })).toBeInTheDocument();
+    expect(screen.getByTestId(/view-all-button/i)).toBeInTheDocument();
   });
   it("should component redirect to details", () => {
     const history = createBrowserHistory();
@@ -18,7 +18,7 @@ describe("ViewMoreButton component", () => {
       </Router>
     );
 
-    fireEvent.click(screen.getByRole("img", { name: /view all/i }));
+    fireEvent.click(screen.getByTestId(/view-all-button/i));
     expect(history.location.pathname).toBe("/example");
   });
 });

@@ -5,11 +5,8 @@ export const Step = styled(Box)(({ theme }) => ({
   padding: `0 0 ${theme.spacing(3)}`,
   borderBottomWidth: "3px",
   borderBottomStyle: "solid",
-  [theme.breakpoints.down("lg")]: {
-    minWidth: "190px"
-  },
   [theme.breakpoints.down("sm")]: {
-    padding: "16px 30px"
+    padding: "16px 0px"
   },
   cursor: "pointer"
 }));
@@ -18,11 +15,14 @@ export const StepButton = styled(Box)<{ active: number }>(() => ({}));
 export const TitleStep = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "0.875rem",
-  marginTop: theme.spacing(1)
+  marginTop: theme.spacing(1),
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "10px"
+  }
 }));
 
 export const NextButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.common.white,
+  color: theme.palette.secondary[0],
   background: theme.palette.secondary.main,
   textTransform: "capitalize",
   fontWeight: "bold",
@@ -39,7 +39,7 @@ export const PreviousButton = styled(Button)(({ theme }) => ({
   fontWeight: "bold",
   borderRadius: "8px",
   padding: "10px 20px",
-  border: `2px solid ${theme.palette.primary[200]}`,
+  border: `2px solid ${theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary[700]}`,
   ":hover": {
     background: "transparent"
   }
@@ -103,6 +103,9 @@ export const DescriptionText = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     fontSize: "14px",
     paddingTop: "0.5px"
+  },
+  [theme.breakpoints.down(355)]: {
+    marginTop: 10
   }
 }));
 
@@ -116,3 +119,26 @@ export const StyledGroupButton = styled(Box)(({ theme }) => ({
     borderTop: `1px solid ${alpha(theme.palette.grey[200], 1)}`
   }
 }));
+
+export const StyledList = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginBottom: 20,
+  [theme.breakpoints.down("sm")]: {
+    alignItems: "center"
+  },
+  [theme.breakpoints.down(355)]: {
+    alignItems: "flex-start"
+  }
+}));
+
+export const FilterContainer = styled(Box)`
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  ${({ theme }) => theme.breakpoints.down(355)} {
+    flex-direction: column-reverse;
+    align-items: flex-end;
+  }
+`;

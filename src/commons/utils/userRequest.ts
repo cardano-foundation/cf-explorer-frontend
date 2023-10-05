@@ -1,8 +1,10 @@
 import { AxiosResponse } from "axios";
+import { stringify } from "qs";
 
 import { UserDataType } from "../../types/user";
 import defaultAxios, { authAxios, defaultAxiosDownload } from "./axios";
 import { API } from "./api";
+import { NETWORK, NETWORK_TYPES } from "./constants";
 //user
 export const signOut = (payload: TSignOut) => authAxios.post("auth/sign-out", payload);
 export const signIn = (payload: TSignIn) => authAxios.post("auth/sign-in", payload);
@@ -34,7 +36,15 @@ export const addListBookmark = (payload: Bookmark[]) =>
   authAxios.post<BookmarkResp>("/bookmark/add-list", {
     bookMarks: payload
   });
-export const deleteBookmark = (id: number) => authAxios.delete("/bookmark/delete/" + id);
+export const deleteBookmark = ({
+  type,
+  network = NETWORK_TYPES[NETWORK],
+  keyword
+}: {
+  type?: string;
+  network?: NETWORK_TYPES;
+  keyword: string;
+}) => authAxios.delete(`/bookmark/delete?${stringify({ type, network, keyword })}`);
 export const getAllBookmarks = (network: string) =>
   authAxios.get<Bookmark[]>("bookmark/find-all-key?network=" + network);
 

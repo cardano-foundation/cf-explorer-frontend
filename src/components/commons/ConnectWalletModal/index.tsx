@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { capitalize, isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet-core";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, useTheme } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { useTranslation } from "react-i18next";
@@ -31,6 +31,7 @@ interface IProps {
 
 const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, isModal }) => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const [walletConnecting, setWalletConnecting] = useState<SupportedWallets | null>(null);
   const toast = useToast();
   const handleClose = () => {
@@ -83,7 +84,7 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
         <WrapContent>
           <Title>{t("common.connect2wallet.title")}</Title>
           <CloseButton connecting={walletConnecting ? 1 : 0} onClick={walletConnecting ? undefined : handleClose}>
-            <IoMdClose />
+            <IoMdClose color={theme.palette.secondary.light} />
           </CloseButton>
           {children}
         </WrapContent>
@@ -101,7 +102,6 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
           return (
             <WalletItem
               key={wallet.name}
-              active={active ? 1 : 0}
               connecting={walletConnecting ? 1 : 0}
               onClick={() => !walletConnecting && handleConnect(wallet.name)}
             >

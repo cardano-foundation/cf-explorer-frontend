@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { stringify } from "qs";
+import { useSelector } from "react-redux";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -12,23 +13,18 @@ import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table from "src/components/commons/Table";
 import { Column } from "src/types/table";
-import { REFRESH_TIMES } from "src/commons/utils/constants";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 
 import { Actions, StyledContainer, StyledLink, TimeDuration } from "./styles";
 
 const StakeDelegations = () => {
   const { t } = useTranslation();
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const { search } = useLocation();
   const history = useHistory();
   const fromPath = history.location.pathname as SpecialPath;
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<Contracts>(
-    API.STAKE.STAKE_DELEGATIONS,
-    { ...pageInfo },
-    false,
-    REFRESH_TIMES.STAKE_DELEGATIONS
-  );
+  const fetchData = useFetchList<Contracts>(API.STAKE.STAKE_DELEGATIONS, { ...pageInfo }, false, blockKey);
 
   const mainRef = useRef(document.querySelector("#main"));
 
@@ -39,7 +35,7 @@ const StakeDelegations = () => {
   const columns: Column<StakeDelegationItem>[] = [
     {
       title: t("glossary.txHash"),
-      minWidth: 120,
+      minWidth: 200,
       key: "txHash",
       render: (r) => (
         <CustomTooltip title={r.txHash}>
@@ -50,12 +46,13 @@ const StakeDelegations = () => {
     {
       title: t("glossary.createdAt"),
       key: "createdat",
-      minWidth: "120px",
+      minWidth: "200px",
       render: (r) => formatDateTimeLocal(r.time)
     },
     {
       title: t("glossary.block"),
       key: "blockNo",
+      minWidth: "200px",
       render: (r) => (
         <>
           <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
@@ -71,6 +68,7 @@ const StakeDelegations = () => {
     {
       title: t("glossary.stakeAddress"),
       key: "stakeAddress",
+      minWidth: "200px",
       render: (r) => (
         <>
           {r.stakeKeys.slice(0, 2).map((stakeKey, idx) => (
@@ -89,6 +87,7 @@ const StakeDelegations = () => {
     {
       title: t("glossary.pool"),
       key: "pool",
+      minWidth: "200px",
       render: (r) => (
         <>
           {r.pools.slice(0, 2).map((pool, idx) => (

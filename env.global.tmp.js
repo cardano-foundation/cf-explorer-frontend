@@ -3,6 +3,7 @@ window.env = {};
 window.env.REACT_APP_VERSION = `$REACT_APP_VERSION`;
 window.env.REACT_APP_NETWORK = `$REACT_APP_NETWORK`;
 window.env.REACT_APP_API_URL = `$REACT_APP_API_URL`;
+window.env.REACT_APP_WS_URL = `$REACT_APP_WS_URL`;
 
 window.env.REACT_APP_AUTH_API_URL = `$REACT_APP_AUTH_API_URL`;
 

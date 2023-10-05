@@ -41,19 +41,12 @@ describe("LatestTransactions", () => {
   });
 
   it("renders LatestTransactions", async () => {
-    const history = createMemoryHistory();
-    render(
-      <Router history={history}>
-        <LatestTransactions />
-      </Router>
-    );
+    render(<LatestTransactions />);
     expect(screen.getByText("Latest Transactions")).toBeInTheDocument();
-    const seeAllButton = screen.getByTestId("view-all");
+    const seeAllButton = screen.getByTestId("view-all-button");
     expect(seeAllButton).toBeInTheDocument();
     await userEvent.click(seeAllButton);
-    await waitFor(async () => {
-      expect(history.location.pathname).toBe(routers.TRANSACTION_LIST);
-    });
+    expect(seeAllButton).toHaveAttribute("href", routers.TRANSACTION_LIST);
   });
 
   it("renders data in the table LatestTransactions", async () => {

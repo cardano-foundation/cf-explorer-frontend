@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment, useTheme } from "@mui/material";
 import { useEffect, useReducer, useRef, useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { IoMdClose } from "react-icons/io";
@@ -6,10 +6,11 @@ import { Link, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import useAuth from "src/commons/hooks/useAuth";
-import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessIcon } from "src/commons/resources";
+import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessDarkIcon, SuccessIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
 import { signUp } from "src/commons/utils/userRequest";
 import { ACCOUNT_ERROR } from "src/commons/utils/constants";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import {
   BackButton,
@@ -69,12 +70,28 @@ export default function SignUp() {
   const emailTextField = useRef<HTMLInputElement | null>(null);
   const [error, setError] = useState(false);
   const { isLoggedIn } = useAuth();
+  const theme = useTheme();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [checkedAgree, setCheckedAgree] = useState(false);
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
 
+  const updateHeight = () => {
+    setViewportHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateHeight);
+    document.body.style.overflow = "hidden";
+    updateHeight();
+
+    return () => {
+      document.body.style.overflow = "unset";
+      window.removeEventListener("resize", updateHeight);
+    };
+  }, []);
   useEffect(() => {
     document.title = `${t("page.signUp")} | ${t("head.page.dashboard")}`;
   }, [t]);
@@ -293,7 +310,7 @@ export default function SignUp() {
   };
 
   return (
-    <Container>
+    <Container sx={{ height: `${viewportHeight}px` }}>
       {!success ? (
         <WrapContent>
           <WrapTitle data-testid="signup-title">{t("page.signUp")}</WrapTitle>
@@ -304,18 +321,18 @@ export default function SignUp() {
           <FormGroup>
             <WrapForm>
               <BackButton onClick={() => handleRedirect()}>
-                <HiArrowLongLeft fontSize="16px" />
+                <HiArrowLongLeft fontSize="16px" color={theme.palette.secondary.light} />
                 <BackText>{t("common.back")}</BackText>
               </BackButton>
               <CloseButton saving={0} onClick={() => handleRedirect(true)}>
-                <IoMdClose />
+                <IoMdClose color={theme.palette.secondary.light} />
               </CloseButton>
               <WrapInput>
                 <InputCustom
                   inputRef={emailTextField}
                   startAdornment={
                     <Box paddingRight={"10px"} paddingTop={"7px"} paddingBottom={"2px"}>
-                      <EmailIcon />
+                      <CustomIcon height={20} fill={theme.palette.secondary.light} icon={EmailIcon} />
                     </Box>
                   }
                   fullWidth
@@ -327,14 +344,14 @@ export default function SignUp() {
                   onKeyDown={handleKeyDown}
                 />
                 {formData.email.error && formData.email.touched ? (
-                  <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom>
+                  <FormHelperTextCustom>{formData.email.error}</FormHelperTextCustom>
                 ) : null}
               </WrapInput>
               <WrapInput>
                 <InputCustom
                   startAdornment={
                     <Box paddingRight={"10px"} paddingTop={"7px"} paddingBottom={"2px"}>
-                      <EmailIcon />
+                      <CustomIcon height={20} fill={theme.palette.secondary.light} icon={EmailIcon} />
                     </Box>
                   }
                   fullWidth
@@ -345,14 +362,14 @@ export default function SignUp() {
                   placeholder={t("account.confirmEmailAddress")}
                 />
                 {formData.confirmEmail.error && formData.confirmEmail.touched ? (
-                  <FormHelperTextCustom error>{formData.confirmEmail.error}</FormHelperTextCustom>
+                  <FormHelperTextCustom>{formData.confirmEmail.error}</FormHelperTextCustom>
                 ) : null}
               </WrapInput>
               <WrapInput>
                 <InputCustom
                   startAdornment={
                     <Box paddingRight={"10px"} paddingTop={"5px"} paddingBottom={"2px"}>
-                      <LockIcon />
+                      <CustomIcon height={25} fill={theme.palette.secondary.light} icon={LockIcon} />
                     </Box>
                   }
                   type={showPassword ? "text" : "password"}
@@ -370,14 +387,14 @@ export default function SignUp() {
                   placeholder={t("account.password")}
                 />
                 {formData.password.error && formData.password.touched ? (
-                  <FormHelperTextCustom error>{formData.password.error}</FormHelperTextCustom>
+                  <FormHelperTextCustom>{formData.password.error}</FormHelperTextCustom>
                 ) : null}
               </WrapInput>
               <WrapInput>
                 <InputCustom
                   startAdornment={
                     <Box paddingRight={"10px"} paddingTop={"5px"} paddingBottom={"2px"}>
-                      <LockIcon />
+                      <CustomIcon height={25} fill={theme.palette.secondary.light} icon={LockIcon} />
                     </Box>
                   }
                   fullWidth
@@ -395,7 +412,7 @@ export default function SignUp() {
                   placeholder={t("account.confirmPassword")}
                 />
                 {formData.confirmPassword.error && formData.confirmPassword.touched ? (
-                  <FormHelperTextCustom error>{formData.confirmPassword.error}</FormHelperTextCustom>
+                  <FormHelperTextCustom>{formData.confirmPassword.error}</FormHelperTextCustom>
                 ) : null}
               </WrapInput>
               <Box display={"flex"}>
@@ -408,7 +425,8 @@ export default function SignUp() {
                         opacity: "0.15",
                         "&.Mui-checked": {
                           opacity: "1"
-                        }
+                        },
+                        color: ({ palette }) => palette.secondary.light
                       }}
                       size="medium"
                     />
@@ -452,7 +470,7 @@ export default function SignUp() {
           <WrapForm>
             <FormGroup>
               <Box textAlign={"center"}>
-                <SuccessIcon />
+                {theme.isDark ? <SuccessDarkIcon /> : <SuccessIcon />}
                 <Box paddingY={"15px"}>
                   <Title>{t("account.verifyYourEmail")}</Title>
                 </Box>

@@ -1,8 +1,8 @@
 import React from "react";
 import { Link, LinkProps } from "react-router-dom";
-import { styled, TooltipProps } from "@mui/material";
+import { styled, TooltipProps, useTheme } from "@mui/material";
 
-import { SeeMoreIcon } from "src/commons/resources";
+import { SeeMoreIconHome } from "src/commons/resources";
 
 import CustomTooltip from "../CustomTooltip";
 
@@ -13,16 +13,12 @@ const StyledLink = styled(Link)`
   width: 35px;
   height: 35px;
   border-radius: 5px;
-  background: ${(props) => props.theme.palette.primary[100]};
+  background: ${(props) =>
+    props.theme.mode === "light" ? props.theme.palette.primary[100] : props.theme.palette.secondary[100]};
   &:hover {
-    background: ${(props) => props.theme.palette.primary[100]};
+    background: ${(props) =>
+      props.theme.mode === "light" ? props.theme.palette.primary[100] : props.theme.palette.secondary[100]};
   }
-`;
-
-const ViewAllImage = styled("img")`
-  width: auto;
-  height: 16px;
-  min-width: 16px;
 `;
 
 interface ViewAllButtonProps extends LinkProps {
@@ -31,10 +27,12 @@ interface ViewAllButtonProps extends LinkProps {
 }
 
 const ViewAllButton: React.FC<ViewAllButtonProps> = ({ tooltipTitle = "View All", placement = "top", ...props }) => {
+  const theme = useTheme();
+
   return (
     <CustomTooltip placement={placement} title={tooltipTitle}>
       <StyledLink {...props}>
-        <ViewAllImage src={SeeMoreIcon} alt="view all" />
+        <SeeMoreIconHome fill={theme.palette.primary.main} data-testid="view-all-button" />
       </StyledLink>
     </CustomTooltip>
   );

@@ -1,6 +1,7 @@
 import React from "react";
+import { IoMdClose } from "react-icons/io";
+import { useTheme } from "@mui/material";
 
-import { CloseIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { getShortWallet } from "src/commons/utils/helper";
 import { StyledLink } from "src/components/share/styled";
@@ -19,10 +20,11 @@ interface IDropdownDetailProps {
 
 const DropdownDetail: React.FC<IDropdownDetailProps> = ({ title, value, close, minWidth, isStakeDetail = false }) => {
   const ref = useOutsideClick(close);
+  const theme = useTheme();
   return (
     <ListDropdownContainer minWidth={minWidth} ref={ref}>
       <ButtonClose onClick={close}>
-        <img src={CloseIcon} alt="icon close" />
+        <IoMdClose color={theme.palette.secondary.light} data-testid="icon-close" />
       </ButtonClose>
       <DropdownTitle>{title}</DropdownTitle>
       <DropdownList>

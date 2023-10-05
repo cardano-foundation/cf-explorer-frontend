@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import sendImg from "src/commons/resources/images/sendImg.svg";
@@ -9,6 +9,7 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
+import { UpGreenUtxoDarkmode } from "src/commons/resources";
 
 import { AddressLink, Amount, ItemContainer, StatusIcon, StyledItem, Wrapper, Header } from "./styles";
 
@@ -18,6 +19,7 @@ interface WithdrawalsProps {
 
 const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { isMobile } = useScreen();
   return (
     <Wrapper>
@@ -30,7 +32,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
           <ItemContainer>
             <Box display="flex" alignItems="center">
               <Box width={50}>
-                <StatusIcon src={sendImg} alt="wallet icon" />
+                <StatusIcon src={theme.isDark ? UpGreenUtxoDarkmode : sendImg} alt="wallet icon" />
               </Box>
               {isMobile ? (
                 <Box component={"span"} color={({ palette }) => palette.secondary.light}>
@@ -61,7 +63,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                 </Box>
                 <Box minWidth="max-content" maxWidth="50%">
                   <Amount>+ {formatADAFull(item?.amount)}</Amount>
-                  <ADAicon ml={"3px"} />
+                  <ADAicon />
                 </Box>
               </Box>
               <Box display={"flex"} flexDirection={isMobile ? "column" : "row"}>

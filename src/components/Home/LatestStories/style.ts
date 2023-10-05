@@ -1,6 +1,7 @@
-import { Box, Grid, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
+import Slider from "react-slick";
 
-import { BoxRaised } from "src/components/commons/BoxRaised";
+import { BoxRaised } from "../../commons/BoxRaised";
 
 export const LatestStoriesContainer = styled(Box)`
   text-align: center;
@@ -32,24 +33,33 @@ export const Title = styled("h3")`
     content: "";
     width: 50px;
     height: 4px;
-    background: ${({ theme }) => theme.palette.primary[200]};
+    background: ${({ theme }) => (theme.mode === "light" ? theme.palette.primary[200] : theme.palette.primary.main)};
+  }
+`;
+
+export const StyledSlider = styled(Slider)`
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    margin-bottom: 40px;
+  }
+  div[class*="slick-list"] {
+    margin: -15px -8px 0px;
+
+    div[class*="slick-slide"] > div {
+      padding: 15px 8px;
+    }
   }
 `;
 
 export const Item = styled(BoxRaised)`
   position: relative;
-  height: 337px;
+  height: 377px;
   text-align: left;
   cursor: pointer;
   overflow: hidden;
+  padding: 20px 15px;
+  box-sizing: border-box;
   &:hover {
     box-shadow: ${(props) => props.theme.shadow.cardHover};
-  }
-  display: flex;
-  flex-direction: column;
-  padding: 20px 15px;
-  ${(props) => props.theme.breakpoints.down("sm")} {
-    min-width: 258px;
   }
 `;
 
@@ -94,6 +104,7 @@ export const Author = styled("span")`
   font-weight: var(--font-weight-bold);
   margin: 11px 5px 0 0;
 `;
+
 export const ItemTitle = styled("h5")`
   display: -webkit-box;
   width: 100%;
@@ -160,36 +171,36 @@ export const Description = styled(Box)`
 export const FooterCard = styled(Box)`
   position: absolute;
   bottom: 20px;
+  width: calc(100% - 40px);
 `;
 
 export const NextSwiper = styled(Box)`
-  background: ${(props) => props.theme.palette.purple["100"]};
+  background: ${(props) => props.theme.palette.purple["100"]} !important;
   width: 50px;
   height: 50px;
+  padding: 19px 21px;
+  box-sizing: border-box;
   border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
-  &:hover {
-    transform: scale(1.1);
-  }
   position: absolute;
-  right: -10px;
-  bottom: 46%;
-  ${({ theme }) => theme.breakpoints.down("lg")} {
+  top: 50%;
+  transform: translateX(-25%) translateY(-50%);
+  animation: all 1s;
+  z-index: 1;
+  &:hover {
+    transform: translateX(-25%) translateY(-50%) scale(1.1);
+  }
+  &::before {
     display: none;
+  }
+  ${({ theme }) => theme.breakpoints.down("lg")} {
+    display: none !important;
   }
 `;
 
 export const PrevSwiper = styled(NextSwiper)`
-  left: -10px;
-  transform: rotate(180deg);
+  transform: translateX(25%) translateY(-50%) rotate(180deg);
   &:hover {
-    transform: rotate(180deg) scale(1.1) !important;
+    transform: translateX(25%) translateY(-50%) rotate(180deg) scale(1.1) !important;
   }
-`;
-
-export const CustomGrid = styled(Grid)`
-  width: 100%;
 `;

@@ -1,4 +1,5 @@
 import { useTheme } from "@mui/material";
+import { useEffect } from "react";
 
 import InfoGraphicImage from "src/commons/resources/images/infographic.png";
 
@@ -11,12 +12,23 @@ interface IInfoGraphicModalProps {
 }
 const InfoGraphicModal: React.FC<IInfoGraphicModalProps> = (props) => {
   const theme = useTheme();
+
+  useEffect(() => {
+    const newImage = new window.Image();
+    newImage.src = InfoGraphicImage;
+  }, []);
+
   return (
     <CustomModal
       {...props}
       closeButtonProps={{
-        sx: { background: theme.palette.grey[200], border: "none", "&:hover": { background: theme.palette.grey[200] } }
+        sx: {
+          background: theme.isDark ? theme.palette.grey[600] : theme.palette.grey[200],
+          border: "none",
+          "&:hover": { background: theme.isDark ? theme.palette.grey[600] : theme.palette.grey[200] }
+        }
       }}
+      closeIconProps={theme.isDark ? { color: theme.palette.common.black } : {}}
       modalProps={{
         sx: {
           "& > div.MuiBox-root": { padding: "25px" },

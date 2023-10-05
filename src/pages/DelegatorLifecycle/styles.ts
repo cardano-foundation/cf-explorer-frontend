@@ -2,7 +2,7 @@ import { Button, alpha, Box, Container, IconButton, styled } from "@mui/material
 import { Link } from "react-router-dom";
 
 export const StyledContainer = styled(Container)`
-  padding-top: 20px;
+  padding-top: 30px;
   position: relative;
   min-height: calc(100vh - 170px);
 `;
@@ -34,6 +34,9 @@ export const LifeCycleTitle = styled("h2")(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     fontSize: 24,
     lineHeight: "28px"
+  },
+  [theme.breakpoints.down(355)]: {
+    fontSize: 22
   }
 }));
 

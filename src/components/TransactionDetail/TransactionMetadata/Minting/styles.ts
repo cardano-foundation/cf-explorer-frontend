@@ -15,7 +15,7 @@ export const LogoEmpty = styled(Box)`
   height: 30px;
   background: ${(props) => alpha(props.theme.palette.common.white, 0.6)};
   border-radius: 50%;
-  border: 1px solid ${(props) => props.theme.palette.border.main};
+  border: 1px solid ${(props) => props.theme.palette.primary[200]};
 `;
 
 export const Amount = styled(Box)`
@@ -24,6 +24,15 @@ export const Amount = styled(Box)`
 `;
 
 export const TableMinting = styled(Table)(({ theme }) => ({
+  "& td": {
+    borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`
+  },
+  "& th": {
+    borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`
+  },
+  "& tr:last-child th": {
+    borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`
+  },
   "& > div:first-of-type": {
     margin: 0
   },

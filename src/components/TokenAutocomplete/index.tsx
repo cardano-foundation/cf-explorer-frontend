@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button } from "@mui/material";
+import { Autocomplete, Box, Button, useTheme } from "@mui/material";
 import { debounce } from "lodash";
 import { useEffect, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { useScreen } from "src/commons/hooks/useScreen";
-import { HeaderSearchIcon } from "src/commons/resources";
+import { HeaderSearchIconComponent } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatNumberDivByDecimals, getShortWallet } from "src/commons/utils/helper";
@@ -18,7 +18,6 @@ import Table, { Column } from "../commons/Table";
 import { WrappModalScrollBar } from "../commons/Table/styles";
 import {
   AssetName,
-  Image,
   Logo,
   LogoEmpty,
   Option,
@@ -27,11 +26,13 @@ import {
   StyledTextField,
   SubmitButton
 } from "./styles";
+import CustomIcon from "../commons/CustomIcon";
 
 const TokenAutocomplete = ({ address }: { address: string }) => {
   const { t } = useTranslation();
   const [openModalToken, setOpenModalToken] = useState(false);
   const [search, setSearch] = useState("");
+  const theme = useTheme();
   const history = useHistory();
   const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
   const [initialized, setInitialized] = useState(false);
@@ -65,6 +66,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
         ListboxProps={{
           sx(theme) {
             return {
+              background: theme.palette.secondary[0],
               "&::-webkit-scrollbar": {
                 width: "5px"
               },
@@ -155,7 +157,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
           );
         }}
         renderInput={(params: any) => <StyledTextField {...params} placeholder={t("glossary.searchToken")} />}
-        popupIcon={<BiChevronDown />}
+        popupIcon={<BiChevronDown color={theme.palette.secondary.main} />}
       />
       <ModalToken address={address} open={openModalToken} onClose={() => setOpenModalToken(false)} />
     </Box>
@@ -166,6 +168,7 @@ export default TokenAutocomplete;
 
 const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => void; address: string }) => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const [{ page, size }, setPagination] = useState({ page: 0, size: 50 });
   const [value, setValue] = useState("");
   const [search, setSearch] = useState("");
@@ -230,7 +233,12 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             }}
           />
           <SubmitButton onClick={() => handleSearch()}>
-            <Image src={HeaderSearchIcon} alt="Search" />
+            <CustomIcon
+              icon={HeaderSearchIconComponent}
+              height={22}
+              fill={theme.palette.secondary[0]}
+              stroke={theme.palette.secondary.light}
+            />
           </SubmitButton>
         </SearchContainer>
         <WrappModalScrollBar>
@@ -239,6 +247,7 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
             key={search}
             data={data || []}
             columns={columns}
+            isModal={true}
             total={{ title: "Total", count: fetchData.total }}
             maxHeight={isTablet ? "50vh" : "55vh"}
             pagination={{
