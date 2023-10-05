@@ -1,5 +1,6 @@
 import { useTheme } from "@mui/material";
 import React, { useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { OutlineEye } from "src/commons/resources";
 import CustomIcon from "src/components/commons/CustomIcon";
@@ -20,6 +21,7 @@ interface CertviewsProps {
 }
 
 const Certviews: React.FC<CertviewsProps> = ({ data, isMobile }) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const certRef = useRef(null);
   const middleRef = useRef(null);
@@ -59,10 +61,10 @@ const Certviews: React.FC<CertviewsProps> = ({ data, isMobile }) => {
     <CertContainer>
       <RedeemerModal
         data={[
-          { title: "Purpose", value: data?.purpose },
-          { title: "Data", value: data?.redeemerBytes },
-          { title: "Mem", value: data?.redeemerMem },
-          { title: "Steps", value: data?.redeemerSteps }
+          { title: t("contract.purpose"), value: data?.purpose },
+          { title: t("contract.data"), value: data?.redeemerBytes },
+          { title: t("contract.mem"), value: data?.redeemerMem },
+          { title: t("contract.steps"), value: data?.redeemerSteps }
         ]}
         open={openRedeemer}
         onClose={() => setOpenRedeemer(false)}
@@ -71,7 +73,7 @@ const Certviews: React.FC<CertviewsProps> = ({ data, isMobile }) => {
       <CompiledCodeModal
         data={[
           {
-            title: "Compiled Code",
+            title: t("contract.compiledCode"),
             value: data?.scriptBytes
           }
         ]}
@@ -82,7 +84,7 @@ const Certviews: React.FC<CertviewsProps> = ({ data, isMobile }) => {
         <CertRrounded ref={certRef}>
           <CertificateType redeemerCertType={data?.redeemerCertType} />
           <LongButton>
-            Redeemer
+            {t("contract.redeemer")}
             <CustomIcon
               style={{ cursor: "pointer" }}
               onClick={() => setOpenRedeemer(!openRedeemer)}
