@@ -72,22 +72,6 @@ const InstantReards = () => {
       minWidth: "100px"
     },
     {
-      title: t("glossary.epoch"),
-      key: "epochNo",
-      minWidth: "50px",
-      render: (r) => <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>
-    },
-    {
-      title: t("glossary.slot"),
-      key: "epochSlotNo",
-      minWidth: "50px"
-    },
-    {
-      title: t("glossary.absoluteSlot"),
-      key: "slotNo",
-      minWidth: "100px"
-    },
-    {
       title: t("glossary.stakeAddress"),
       key: "numberOfStakes",
       render: (r) => <Box component={"span"}>{r.numberOfStakes}</Box>
