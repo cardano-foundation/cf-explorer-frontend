@@ -7,7 +7,6 @@ EDL 1.0
 Eclipse Public License v2.0
 BSD License 3
 ISC
-unknown
 BSD Zero Clause License
 Mozilla Public License 2.0
 New BSD

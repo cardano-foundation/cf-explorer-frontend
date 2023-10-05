@@ -1,0 +1,4 @@
+@typescript-eslint/parser
+!react-use
+redux-devtools-extension
+string-format
