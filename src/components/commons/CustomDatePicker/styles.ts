@@ -104,7 +104,7 @@ export const DatePickerContainer = styled(Box)<{ open: number }>(({ theme, open 
   },
   [theme.breakpoints.down("sm")]: {
     "div[class*=react-datepicker-popper]": {
-      top: "-100% !important"
+      top: "-20% !important"
     },
     "div[class=react-datepicker__triangle]": {
       display: "none"

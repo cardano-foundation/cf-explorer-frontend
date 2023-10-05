@@ -20,9 +20,7 @@ jest.mock("src/commons/utils/axios", () => ({
   }
 }));
 
-const defaultProps: IVerifyScript = {
-  verified: false
-};
+const defaultProps: IVerifyScript = {};
 
 describe("VerifyScript", () => {
   afterEach(() => {
