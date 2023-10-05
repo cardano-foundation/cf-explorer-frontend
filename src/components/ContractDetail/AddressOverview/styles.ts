@@ -113,14 +113,14 @@ export const WrapButtonExtra = styled(Box)(({ theme }) => ({
 export const StyledVerifyButton = styled(Box)(({ theme }) => ({
   color: theme.palette.success[800],
   background: theme.palette.success[100],
-  border: `1px solid ${theme.isDark ? theme.palette.warning[800] : "none"}`,
+  border: `2px solid ${theme.isDark ? theme.palette.warning[800] : theme.palette.success.main}`,
   cursor: "pointer",
-  borderRadius: 2,
+  borderRadius: 4,
   padding: "8px 14px",
   fontWeight: 700,
   lineHeight: 1.2,
   fontSize: "14px",
-  height: "30px",
+  height: "34px",
   boxSizing: "border-box"
 }));
 
