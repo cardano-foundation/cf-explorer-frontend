@@ -36,7 +36,8 @@ defaultAxios.interceptors.response.use(
     if (
       (error.response?.data?.errorCode === ACCOUNT_ERROR.INVALID_TOKEN ||
         error.response?.data?.errorCode === ACCOUNT_ERROR.TOKEN_EXPIRED) &&
-      !originRequest._retry
+      !originRequest._retry &&
+      localStorage.getItem("refreshToken")
     ) {
       originRequest._retry = true;
       const response = await refreshToken({ refreshJwt: localStorage.getItem("refreshToken") || "" });
@@ -45,7 +46,10 @@ defaultAxios.interceptors.response.use(
       axios.defaults.headers.common["Authorization"] = "Bearer " + response.data?.accessToken;
       return authAxios(originRequest);
     }
-    if (error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED) {
+    if (
+      error.response?.data?.errorCode === ACCOUNT_ERROR.INVALID_TOKEN ||
+      error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED
+    ) {
       removeAuthInfo();
       if (window.location.href.includes("/account")) {
         window.location.href = "/";
@@ -83,7 +87,8 @@ defaultAxiosDownload.interceptors.response.use(
     if (
       (error.response?.data?.errorCode === ACCOUNT_ERROR.INVALID_TOKEN ||
         error.response?.data?.errorCode === ACCOUNT_ERROR.TOKEN_EXPIRED) &&
-      !originRequest._retry
+      !originRequest._retry &&
+      localStorage.getItem("refreshToken")
     ) {
       originRequest._retry = true;
       const response = await refreshToken({ refreshJwt: localStorage.getItem("refreshToken") || "" });
@@ -148,7 +153,8 @@ authAxios.interceptors.response.use(
     if (
       (error.response?.data?.errorCode === ACCOUNT_ERROR.INVALID_TOKEN ||
         error.response?.data?.errorCode === ACCOUNT_ERROR.TOKEN_EXPIRED) &&
-      !originRequest._retry
+      !originRequest._retry &&
+      localStorage.getItem("refreshToken")
     ) {
       originRequest._retry = true;
       const response = await refreshToken({ refreshJwt: localStorage.getItem("refreshToken") || "" });
@@ -193,7 +199,8 @@ uploadAxios.interceptors.response.use(
     if (
       (error.response?.data?.errorCode === ACCOUNT_ERROR.INVALID_TOKEN ||
         error.response?.data?.errorCode === ACCOUNT_ERROR.TOKEN_EXPIRED) &&
-      !originRequest._retry
+      !originRequest._retry &&
+      localStorage.getItem("refreshToken")
     ) {
       originRequest._retry = true;
       const response = await refreshToken({ refreshJwt: localStorage.getItem("refreshToken") || "" });
