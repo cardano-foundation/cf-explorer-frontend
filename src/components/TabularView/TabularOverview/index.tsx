@@ -1,35 +1,36 @@
 import { Grid, Icon, useTheme } from "@mui/material";
 import { useContext, useState } from "react";
-import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
-import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import {
+  DelegatingIcon,
   PaymentWalletUrl,
-  GiftIcon,
+  RewardAccountIconDarkUrl,
+  RewardAccountIconUrl,
   RewardWithdrawnIconUrl,
-  TransactionIcon,
-  DelegatingIcon
+  TransactionIcon
 } from "src/commons/resources/index";
 import { details } from "src/commons/routers";
 import { formatADAFull, getShortHash } from "src/commons/utils/helper";
 import ADATransferModal from "src/components/StakingLifeCycle/DelegatorLifecycle/ADATransferModal";
+import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import {
+  BoxStyled,
+  BoxValue,
   CardContent,
   CardInfo,
   CardItem,
   CardTitle,
   CardValue,
-  ItemIcon,
-  StyledAdaLogoIcon,
-  TransferButton,
-  NoDelegatedStakePool,
   CardValueDelegating,
-  BoxStyled,
+  ItemIcon,
+  NoDelegatedStakePool,
+  StyledAdaLogoIcon,
   StyledBoxDelegating,
-  BoxValue
+  TransferButton
 } from "./styles";
 
 type TCardAmount = {
@@ -110,7 +111,7 @@ const TabularOverview: React.FC = () => {
         <GridItem
           title={t("rewardAccount")}
           iconSize={{ width: "74px", height: "80px" }}
-          iconUrl={GiftIcon}
+          iconUrl={theme.isDark ? RewardAccountIconDarkUrl : RewardAccountIconUrl}
           value={<CardAmount amount={Math.max(rewardAvailable || 0, 0)} />}
         />
       </Grid>

@@ -3,20 +3,19 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useWindowSize } from "react-use";
 
-import { useScreen } from "src/commons/hooks/useScreen";
 import { LogoDarkmodeFullIcon, LogoDarkmodeShortIcon, LogoFullIcon, LogoIcon } from "src/commons/resources";
 import { RootState } from "src/stores/types";
 import { setTheme } from "src/stores/user";
 
+import SelectLanguage from "../Header/SelectLanguage";
 import SelectNetwork from "../Header/SelectNetwork";
 import { SwitchMode } from "../Header/styles";
 import SidebarMenu from "./SidebarMenu";
-import { HeaderTop, LogoLink, NavBarLogo, NavbarContainer, NavbarMenuBottom } from "./styles";
+import { HeaderTop, LogoLink, NavBarLogo, NavbarContainer, NavbarMenuBottom, WrapButtonSelect } from "./styles";
 
 const Sidebar: React.FC = () => {
   const { sidebar, theme } = useSelector(({ user }: RootState) => user);
   const { height } = useWindowSize();
-  const { isGalaxyFoldSmall } = useScreen();
   const getLogo = () => {
     if (theme === "light") {
       if (sidebar) {
@@ -43,8 +42,9 @@ const Sidebar: React.FC = () => {
       <NavbarMenuBottom sidebar={+sidebar}>
         <SelectNetwork />
       </NavbarMenuBottom>
-      {isGalaxyFoldSmall && (
-        <Box p={"0 14px"}>
+      <WrapButtonSelect>
+        <SelectLanguage />
+        <Box>
           <SwitchMode
             checked={theme === "dark"}
             onChange={(e) => {
@@ -52,7 +52,7 @@ const Sidebar: React.FC = () => {
             }}
           />
         </Box>
-      )}
+      </WrapButtonSelect>
     </NavbarContainer>
   );
 };

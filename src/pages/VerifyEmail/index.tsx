@@ -81,10 +81,10 @@ export default function VerifyEmail() {
           ) : (
             <WrapForm alignItems={"center"}>
               {theme.isDark ? <FailDarkIcon /> : <FailIcon />}
-              <Title>{t("account.verifyFailed")}</Title>
+              <Title>{t("account.expiredEmail.link")}</Title>
               <Box>
                 <Label mb={1}>{t("account.error.verify")}</Label>
-                <Label>{t("account.expired.link")}</Label>
+                <Label>{t("account.expiredEmail.link")}</Label>
               </Box>
               <WrapButton variant="contained" fullWidth onClick={() => history.push(routers.HOME)}>
                 {t("account.goToDashboard")}

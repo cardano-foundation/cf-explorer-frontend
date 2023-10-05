@@ -96,8 +96,7 @@ const TabularOverview: React.FC = () => {
   const ownerAccountValue = getShortWallet(stakeKeys?.[0]);
   const STATUS = {
     ACTIVE: [t("common.active"), theme.palette.secondary.main],
-    INACTIVE: [t("common.incactive"), "rgb(255,0,0)"],
-    RETIRING: [t("common.retiring"), theme.palette.error[700]]
+    RETIRED: [t("common.retired"), theme.palette.error[700]]
   };
 
   return (

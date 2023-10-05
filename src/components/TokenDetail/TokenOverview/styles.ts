@@ -1,6 +1,8 @@
-import { alpha, Box, Button, Container, Skeleton, styled } from "@mui/material";
+import { alpha, Box, Button, Container, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
+
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
 import CopyButton from "../../commons/CopyButton";
 
@@ -40,7 +42,7 @@ export const HeaderTitle = styled("h2")`
   margin: 0.5rem 0;
 `;
 
-export const HeaderTitleSkeleton = styled(Skeleton)`
+export const HeaderTitleSkeleton = styled(CommonSkeleton)`
   height: 1em;
   width: 200px;
   max-width: 100%;
@@ -66,7 +68,7 @@ export const SlotLeader = styled("small")`
   align-items: center;
 `;
 
-export const SlotLeaderSkeleton = styled(Skeleton)`
+export const SlotLeaderSkeleton = styled(CommonSkeleton)`
   height: 1em;
   width: 50%;
   border-radius: 4px;

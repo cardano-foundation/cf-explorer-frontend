@@ -8,9 +8,7 @@ export const TopDelegateContainer = styled(BoxRaised)`
   margin-bottom: 24px;
   padding: 20px;
   text-align: left;
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    padding: 20px 15px;
-  }
+  padding-bottom: 0;
 `;
 
 export const Header = styled(Box)`
@@ -68,6 +66,7 @@ export const DelegateTable = styled(Table)`
     overflow-y: hidden;
     padding: 0;
     border: none;
+    height: auto;
   }
   * {
     box-shadow: none !important;

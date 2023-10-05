@@ -4,8 +4,6 @@ import { User2RC } from "src/commons/resources";
 
 export const Container = styled(Box)`
   display: flex;
-  background-color: ${({ theme }) =>
-    theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[100]};
   min-width: 100vw;
   justify-content: center;
   align-items: center;
@@ -34,7 +32,6 @@ export const WrapContent = styled(Box)`
   gap: 5px;
   align-items: center;
   justify-content: center;
-  transform: translateY(-45px);
 `;
 
 export const WrapTitle = styled(Box)`

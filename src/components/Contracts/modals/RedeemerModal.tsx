@@ -1,5 +1,6 @@
 import { Grid } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import CustomModal from "src/components/commons/CustomModal";
 
@@ -14,24 +15,19 @@ export interface RedeemerModalProps {
   data?: Data[];
 }
 const RedeemerModal: React.FC<RedeemerModalProps> = ({ open = false, onClose, data }) => {
+  const { t } = useTranslation();
   const handleCloseModal = () => onClose?.();
   return (
     <CustomModal
       modalProps={{ style: { zIndex: 1302 } }}
       open={open}
       onClose={handleCloseModal}
-      title="Redeemer"
+      title={t("contract.redeemer")}
       width={550}
       modalContainerProps={{ px: "20px" }}
     >
       <ModalContent>
-        <ExplanDropdown title="What is the redeemer?">
-          UTXO is an object that describes a quantity of assets (value), a condition for spending and/or delegating
-          those assets (address), and in addition a data payload (datum) can be added. Datum is a piece of information
-          that can be associated with a UTXO and is used to carry script state information such as its owner or the
-          timing details which define when the UTXO can be spent. When a script is executed in a spending scenario, it
-          receives not only the transaction as context but also the datum associated with the output being spent.
-        </ExplanDropdown>
+        <ExplanDropdown title={t("explain.redeemer")}>{t("explain.redeemer.desc")}</ExplanDropdown>
         <Grid container spacing={2}>
           {data &&
             data.length > 0 &&
