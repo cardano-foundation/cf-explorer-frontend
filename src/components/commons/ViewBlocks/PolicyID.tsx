@@ -1,5 +1,6 @@
 import { Typography, useTheme } from "@mui/material";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Polygon, PolygonDarkIcon, PoundSign } from "src/commons/resources";
 import PopContent from "src/components/Contracts/common/PopContent";
@@ -14,6 +15,7 @@ interface PolicyIDProps {
 }
 
 const PolicyID: React.FC<PolicyIDProps> = ({ hash, detail }) => {
+  const { t } = useTranslation();
   const anchorEl = useRef();
   const theme = useTheme();
   return (
@@ -24,7 +26,7 @@ const PolicyID: React.FC<PolicyIDProps> = ({ hash, detail }) => {
           {theme.isDark ? <PolygonDarkIcon /> : <Polygon />}
           <PolygonContent>
             <Typography whiteSpace={"nowrap"} fontWeight={500} color={theme.palette.primary.main}>
-              Policy ID
+              {t("filter.policyId")}
             </Typography>
             <CircleBox
               onClick={() =>

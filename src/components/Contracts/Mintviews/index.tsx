@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import { useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
@@ -31,6 +32,7 @@ export interface MintviewsProps {
 }
 
 const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile }) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const redeemerRef = useRef(null);
   const middleBoxRef = useRef(null);
@@ -137,10 +139,10 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
       />
       <RedeemerModal
         data={[
-          { title: "Purpose", value: data?.purpose },
-          { title: "Data", value: data?.redeemerBytes },
-          { title: "Mem", value: data?.redeemerMem },
-          { title: "Steps", value: data?.redeemerSteps }
+          { title: t("contract.purpose"), value: data?.purpose },
+          { title: t("contract.data"), value: data?.redeemerBytes },
+          { title: t("contract.mem"), value: data?.redeemerMem },
+          { title: t("contract.steps"), value: data?.redeemerSteps }
         ]}
         open={openRedeemer}
         onClose={() => setOpenRedeemer(false)}
@@ -149,7 +151,7 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
       <CompiledCodeModal
         data={[
           {
-            title: "Compiled Code",
+            title: t("contract.compiledCode"),
             value: data?.scriptBytes
           }
         ]}
