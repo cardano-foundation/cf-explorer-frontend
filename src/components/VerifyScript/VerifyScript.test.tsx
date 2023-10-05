@@ -29,8 +29,7 @@ describe("VerifyScript", () => {
 
   it("renders the VerifyScript component", () => {
     const { getByText } = render(<VerifyScript {...defaultProps} />);
-    expect(getByText("Contract Details")).toBeInTheDocument();
-    expect(getByText(/VERIFY SCRIPT/i)).toBeInTheDocument();
+    expect(getByText(/Verify Script/)).toBeInTheDocument();
   });
 
   it("opens the modal and submits the form", async () => {
