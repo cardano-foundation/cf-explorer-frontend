@@ -89,7 +89,7 @@ export const HeaderStatus = styled("small")<{ status?: TransactionStatus | IData
       case TRANSACTION_STATUS.PENDDING:
       case "IN_PROGRESS":
       case "SYNCING":
-        return theme.isDark ? theme.palette.warning[800] : theme.palette.warning[800];
+        return theme.isDark ? theme.palette.warning[100] : theme.palette.warning[800];
       case "FINISHED":
         return theme.palette.primary.main;
       default:
@@ -105,7 +105,7 @@ export const HeaderStatus = styled("small")<{ status?: TransactionStatus | IData
       case TRANSACTION_STATUS.PENDDING:
       case "IN_PROGRESS":
       case "SYNCING":
-        return theme.isDark ? theme.palette.warning[100] : theme.palette.warning[100];
+        return theme.isDark ? theme.palette.warning[800] : theme.palette.warning[100];
       case "FINISHED":
         return theme.palette.primary[100];
       default:
@@ -124,7 +124,7 @@ export const StakeKeyStatus = styled("small")<{ status?: StakeStatus }>`
       case "ACTIVE":
         return theme.palette.success[800];
       default:
-        return theme.isDark ? theme.palette.warning[800] : theme.palette.secondary.light;
+        return theme.isDark ? theme.palette.warning[100] : theme.palette.secondary.light;
     }
   }};
   background-color: ${({ theme, status }) => {
@@ -132,7 +132,7 @@ export const StakeKeyStatus = styled("small")<{ status?: StakeStatus }>`
       case "ACTIVE":
         return theme.palette.success[100];
       default:
-        return theme.isDark ? theme.palette.warning[100] : alpha(theme.palette.secondary.light, 0.2);
+        return theme.isDark ? theme.palette.warning[800] : alpha(theme.palette.secondary.light, 0.2);
     }
   }};
   text-transform: uppercase;
