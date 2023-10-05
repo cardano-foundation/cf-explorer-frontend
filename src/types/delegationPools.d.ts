@@ -43,13 +43,18 @@ interface DelegationOverview {
   margin: number;
   epochBlock: number;
   lifetimeBlock: number;
+  description?: string;
+  hashView?: string;
+  homepage?: string;
+  iconUrl?: string;
+  logoUrl?: string;
 }
 
 interface DelegationEpoch {
   epoch: number;
   block: number;
   stakeAmount: number;
-  delegators: number;
+  delegators?: number;
   fee: number;
   ros: number;
 }

@@ -37,6 +37,9 @@ import {
   InfoTitle,
   InfoValue,
   Item,
+  PoolDescription,
+  PoolDescriptionWrapper,
+  PoolHomepage,
   PoolId,
   PoolIdLabel,
   PoolIdSkeleton,
@@ -91,20 +94,48 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <BackText>{t("common.back")}</BackText>
       </BackButton>
       <HeaderContainer>
-        <CustomTooltip title={data?.poolName || poolId}>
-          <HeaderTitle>{data?.poolName || poolId}</HeaderTitle>
-        </CustomTooltip>
-        <BookmarkButton keyword={poolId} type="POOL" />
+        <Box display={"flex"} alignItems={"center"} flex={4}>
+          <CustomTooltip title={data?.poolName || poolId}>
+            <HeaderTitle>{data?.poolName || poolId}</HeaderTitle>
+          </CustomTooltip>
+          <BookmarkButton keyword={poolId} type="POOL" />
+        </Box>
+        <Box component={"img"} src={data?.logoUrl || ""} width={"64px"} />
       </HeaderContainer>
       <PoolId>
+        <PoolIdLabel>{t("common.poolId")}: </PoolIdLabel>
         <CustomTooltip title={poolId}>
           <Link to={details.delegation(poolId)}>
-            <PoolIdLabel>{t("common.poolId")}: </PoolIdLabel>
             <PoolIdValue>{isMobile ? getShortWallet(poolId) : poolId}</PoolIdValue>
           </Link>
         </CustomTooltip>
         <CopyButton text={poolId} />
       </PoolId>
+      {data?.hashView && (
+        <PoolId>
+          <PoolIdLabel>{t("common.poolhash")}: </PoolIdLabel>
+          <CustomTooltip title={data?.hashView || ""}>
+            <Link to={details.delegation(poolId)}>
+              <PoolIdValue>{isMobile ? getShortWallet(data?.hashView) : data?.hashView}</PoolIdValue>
+            </Link>
+          </CustomTooltip>
+          <CopyButton text={poolId} />
+        </PoolId>
+      )}
+      {data?.homepage && (
+        <PoolId>
+          <PoolIdLabel>{t("common.poolHomepage")}: </PoolIdLabel>
+          <PoolHomepage href={data?.homepage} target="_blank" rel="noreferrer">
+            {data?.homepage}
+          </PoolHomepage>
+        </PoolId>
+      )}
+      {data?.description && (
+        <PoolDescriptionWrapper>
+          <PoolIdLabel>{t("common.poolDescription")}: </PoolIdLabel>
+          <PoolDescription>{data?.description}</PoolDescription>
+        </PoolDescriptionWrapper>
+      )}
       <TimeDuration>
         <FormNowMessage time={lastUpdated} />
       </TimeDuration>

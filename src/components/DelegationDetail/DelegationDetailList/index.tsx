@@ -63,7 +63,9 @@ const DelegationEpochList = ({
       ),
       key: "delegatorReward",
       minWidth: "120px",
-      render: (data) => <Box component={"span"}>{formatADAFull(data.delegators)}</Box>
+      render: (data) => (
+        <Box component={"span"}>{data.delegators ? formatADAFull(data.delegators) : t("common.notAvailable")}</Box>
+      )
     },
     {
       title: (
@@ -73,7 +75,7 @@ const DelegationEpochList = ({
       ),
       key: "fees",
       minWidth: "120px",
-      render: (data) => <Box component={"span"}>{formatADAFull(data.fee)}</Box>
+      render: (data) => <Box component={"span"}>{data.fee ? formatADAFull(data.fee) : t("common.notAvailable")}</Box>
     }
   ];
 
