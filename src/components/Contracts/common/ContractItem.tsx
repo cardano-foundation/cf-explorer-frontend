@@ -67,7 +67,7 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
   };
 
   return (
-    <CLCardContaienr>
+    <CLCardContaienr data-testid="contract-card-item">
       <Box>
         <WrapLabel>{t("contract.address")}:</WrapLabel>
         <CustomTooltip title={contractAddress?.value}>
