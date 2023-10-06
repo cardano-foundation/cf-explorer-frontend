@@ -64,7 +64,7 @@ export const WrapToken = styled(Box)(({ theme }) => ({
   flexWrap: "wrap",
   width: "auto",
   [theme.breakpoints.down("md")]: {
-    wordBreak: "break-all",
+    wordBreak: "break-word",
     "& > a": {
       whiteSpace: "unset",
       margin: 0

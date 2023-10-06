@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
-import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, getShortHash } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -42,7 +42,7 @@ const ItemInstantaneousRewards = ({ data }: { data: Transaction["instantaneousRe
             <Content>
               <Link data-testid={`stake-item-${item.stakeAddress}`} to={details.stake(item.stakeAddress)}>
                 <CustomTooltip title={item.stakeAddress}>
-                  <Title>{isTablet ? getShortWallet(item.stakeAddress) : item.stakeAddress}</Title>
+                  <Title>{isTablet ? getShortHash(item.stakeAddress) : item.stakeAddress}</Title>
                 </CustomTooltip>
               </Link>
               <CopyButton text={item.stakeAddress} />

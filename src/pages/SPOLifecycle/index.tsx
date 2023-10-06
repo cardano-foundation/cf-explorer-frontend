@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { CircularProgress, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { getShortWallet } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import SPOLifecycleComponent from "src/components/StakingLifeCycle/SPOLifecycle";
 import ReportComposerModal from "src/components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
@@ -115,7 +115,7 @@ const SPOLifecycle = () => {
             <AddressLine>
               <Label>{t("common.poolID")}:</Label>
               <CustomTooltip title={poolId}>
-                <StakeId to={details.delegation(poolId)}>{getShortWallet(poolId)}</StakeId>
+                <StakeId to={details.delegation(poolId)}>{getShortHash(poolId)}</StakeId>
               </CustomTooltip>
               <CopyButton text={poolId} />
             </AddressLine>

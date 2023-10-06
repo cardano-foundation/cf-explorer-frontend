@@ -8,7 +8,7 @@ import VerifyScript from "src/components/VerifyScript";
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { exchangeADAToUSD, formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import { exchangeADAToUSD, formatADAFull, getShortHash } from "src/commons/utils/helper";
 import { RootState } from "src/stores/types";
 import CardAddress from "src/components/share/CardAddress";
 import TokenAutocomplete from "src/components/TokenAutocomplete";
@@ -101,7 +101,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
               dataStake?.pool?.poolName
             ) : (
               <CustomTooltip title={dataStake?.pool?.poolId || ""} arrow>
-                <span>{getShortWallet(dataStake?.pool?.poolId || "")}</span>
+                <span>{getShortHash(dataStake?.pool?.poolId || "")}</span>
               </CustomTooltip>
             )}
           </Pool>

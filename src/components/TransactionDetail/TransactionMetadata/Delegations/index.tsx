@@ -3,7 +3,7 @@ import { Box, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import sendImg from "src/commons/resources/images/sendImg.svg";
-import { getShortWallet } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import CopyButton from "src/components/commons/CopyButton";
 import { UpGreenUtxoDarkmode } from "src/commons/resources";
@@ -34,7 +34,7 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
                     {t("glossary.from")}:
                   </Box>
                   <CustomTooltip title={item.address}>
-                    <AddressLink to={details.stake(item.address)}>{getShortWallet(item.address || "")}</AddressLink>
+                    <AddressLink to={details.stake(item.address)}>{getShortHash(item.address || "")}</AddressLink>
                   </CustomTooltip>
                   <CopyButton text={item.address || ""} />
                 </Box>
@@ -43,7 +43,7 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
                     {t("common.poolID")}:
                   </Box>
                   <CustomTooltip title={item.poolId}>
-                    <AddressLink to={details.delegation(item.poolId)}>{getShortWallet(item.poolId || "")}</AddressLink>
+                    <AddressLink to={details.delegation(item.poolId)}>{getShortHash(item.poolId || "")}</AddressLink>
                   </CustomTooltip>
                   <CopyButton text={item.poolId || ""} />
                 </Box>

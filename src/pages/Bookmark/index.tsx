@@ -14,7 +14,7 @@ import { ReactComponent as DeleteBookmark } from "src/commons/resources/icons/de
 import { ReactComponent as QuestionConfirm } from "src/commons/resources/icons/questionConfirm.svg";
 import { details, routers } from "src/commons/routers";
 import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
-import { formatBlockHashById, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { formatBlockHashById, getShortHash } from "src/commons/utils/helper";
 import { deleteBookmark } from "src/commons/utils/userRequest";
 import { ButtonClose } from "src/components/ScriptModal/styles";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -110,7 +110,7 @@ const Bookmark = () => {
           color={(theme) => `${theme.palette.primary.main} !important`}
         >
           <CustomTooltip title={data.keyword}>
-            <Box component={"span"}>{getShortWallet(data.keyword)}</Box>
+            <Box component={"span"}>{getShortHash(data.keyword)}</Box>
           </CustomTooltip>
         </Box>
       )
@@ -170,7 +170,7 @@ const Bookmark = () => {
           color={(theme) => `${theme.palette.primary.main} !important`}
         >
           <CustomTooltip title={data.keyword}>
-            <Box component={"span"}>{getShortWallet(data.keyword)}</Box>
+            <Box component={"span"}>{getShortHash(data.keyword)}</Box>
           </CustomTooltip>
         </Box>
       )
@@ -186,7 +186,7 @@ const Bookmark = () => {
           color={(theme) => `${theme.palette.primary.main} !important`}
         >
           <CustomTooltip title={data.keyword}>
-            <Box component={"span"}>{getShortWallet(data.keyword)}</Box>
+            <Box component={"span"}>{getShortHash(data.keyword)}</Box>
           </CustomTooltip>
         </Box>
       )
@@ -363,7 +363,7 @@ const Bookmark = () => {
         return getShortHash(keyword);
       case "ADDRESS":
       case "STAKE_KEY":
-        return getShortWallet(keyword);
+        return getShortHash(keyword);
 
       default:
         return keyword;

@@ -7,7 +7,7 @@ import { Link, useHistory } from "react-router-dom";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { details } from "src/commons/routers";
-import { formatNumberDivByDecimals, getShortWallet } from "src/commons/utils/helper";
+import { formatNumberDivByDecimals, getShortHash } from "src/commons/utils/helper";
 
 import CustomTooltip from "../CustomTooltip";
 import { CustomSelect, OptionSelect, TokenButton } from "./styles";
@@ -104,7 +104,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({
       {tokens.map((token, idx) => {
         const isNegative = token.assetQuantity <= 0;
         const tokenName = token.assetName || token.assetId;
-        const shortTokenName = getShortWallet(tokenName);
+        const shortTokenName = getShortHash(tokenName);
         const isTokenNameLong = tokenName.length > 20;
         return (
           <OptionSelect key={idx} onClick={() => handleClickItem(details.token(token?.assetId))}>
@@ -142,7 +142,7 @@ export const TokenLink: React.FC<{
   hideValue?: boolean;
 }> = ({ token, isSuccess, sx, hideValue, isSummary }) => {
   const tokenName = token.assetName || token.assetId;
-  const shortTokenName = getShortWallet(tokenName);
+  const shortTokenName = getShortHash(tokenName);
   const isTokenNameLong = tokenName.length > 20;
 
   return (

@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatADAFull, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import { formatADAFull, getShortHash, numberWithCommas } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import FormNowMessage from "src/components/commons/FormNowMessage";
@@ -38,7 +38,7 @@ const TopAddressesByADABalance = () => {
       render: (r) => (
         <div>
           <CustomTooltip title={r.address}>
-            <StyledLink to={details.address(r.address)}>{getShortWallet(r.address)}</StyledLink>
+            <StyledLink to={details.address(r.address)}>{getShortHash(r.address)}</StyledLink>
           </CustomTooltip>
         </div>
       )

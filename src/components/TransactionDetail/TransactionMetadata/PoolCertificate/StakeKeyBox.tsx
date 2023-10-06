@@ -2,7 +2,7 @@ import { Box, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import { details } from "src/commons/routers";
-import { getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Link from "src/components/commons/Link";
@@ -19,7 +19,7 @@ const StakeKeyBox = ({ data }: TProps) => {
   const leftRow = [
     {
       label: t("common.poolID"),
-      value: getShortWallet(data.poolId),
+      value: getShortHash(data.poolId),
       isHyperLink: true,
       originValue: data.poolId,
       linkTo: details.delegation(data.poolId)
@@ -32,7 +32,7 @@ const StakeKeyBox = ({ data }: TProps) => {
     },
     {
       label: t("common.rewardAccount"),
-      value: data.rewardAccount ? getShortWallet(data.rewardAccount) : "",
+      value: data.rewardAccount ? getShortHash(data.rewardAccount) : "",
       isHyperLink: true,
       originValue: data.rewardAccount,
       linkTo: details.stake(data.rewardAccount)
@@ -76,7 +76,7 @@ const StakeKeyBox = ({ data }: TProps) => {
                         <Box key={index} display={"flex"}>
                           <CustomTooltip title={item}>
                             <TextValue>
-                              <Link to={details.stake(item || "")}>{getShortWallet(item)}</Link>
+                              <Link to={details.stake(item || "")}>{getShortHash(item)}</Link>
                             </TextValue>
                           </CustomTooltip>
                           <CopyButton sx={{ marginLeft: 1, height: 16 }} text={item} />

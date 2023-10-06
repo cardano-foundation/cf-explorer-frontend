@@ -1,6 +1,6 @@
 import { render, screen } from "src/test-utils";
 import useFetchList from "src/commons/hooks/useFetchList";
-import { getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 
 import RegistrationPools, { POOL_TYPE } from "./index";
 
@@ -63,7 +63,7 @@ describe("RegistrationPools component", () => {
     expect(screen.getByText(getShortHash(data.txHash))).toBeInTheDocument();
     expect(screen.getByText(data.poolName)).toBeInTheDocument();
     data.stakeKey.forEach((stakeKey: string) => {
-      expect(screen.getByText(getShortWallet(stakeKey))).toBeInTheDocument();
+      expect(screen.getByText(getShortHash(stakeKey))).toBeInTheDocument();
     });
   });
 
@@ -86,7 +86,7 @@ describe("RegistrationPools component", () => {
     expect(screen.queryByText(getShortHash(data.txHash))).not.toBeInTheDocument();
     expect(screen.queryByText(data.poolName)).not.toBeInTheDocument();
     data.stakeKey.forEach((stakeKey: string) => {
-      expect(screen.queryByText(getShortWallet(stakeKey))).not.toBeInTheDocument();
+      expect(screen.queryByText(getShortHash(stakeKey))).not.toBeInTheDocument();
     });
   });
 });

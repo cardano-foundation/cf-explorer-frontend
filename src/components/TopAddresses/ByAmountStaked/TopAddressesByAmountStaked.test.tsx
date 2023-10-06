@@ -1,6 +1,6 @@
 import { render, screen } from "src/test-utils";
 import useFetchList from "src/commons/hooks/useFetchList";
-import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, getShortHash } from "src/commons/utils/helper";
 
 import TopAddressesByAmountStaked from "./index";
 
@@ -45,7 +45,7 @@ describe("TopAddressesByAmountStaked Component", () => {
   it("rendering with Data", () => {
     render(<TopAddressesByAmountStaked />);
     const data = mockedData[0];
-    expect(screen.getByText(getShortWallet(data.stakeKey))).toBeInTheDocument();
+    expect(screen.getByText(getShortHash(data.stakeKey))).toBeInTheDocument();
     expect(screen.getByText(formatADAFull(data.balance))).toBeInTheDocument();
   });
 

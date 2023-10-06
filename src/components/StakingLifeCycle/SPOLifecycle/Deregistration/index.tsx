@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 
 import { BackIcon, AddressIcon, TimeIcon, AddressIconDark2, TimeIconDark, BackDarkIcon } from "src/commons/resources";
-import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomIcon from "src/components/commons/CustomIcon";
@@ -212,7 +212,7 @@ export const DeregistrationCertificateModal = ({
               <Box>
                 <CustomTooltip title={data?.poolView || ""}>
                   <CustomLink to={details.delegation(data?.poolView || "")}>
-                    {getShortWallet(data?.poolView || "")}
+                    {getShortHash(data?.poolView || "")}
                   </CustomLink>
                 </CustomTooltip>
                 <CopyButton text={data?.poolView || ""} />

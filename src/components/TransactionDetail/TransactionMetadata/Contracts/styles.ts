@@ -22,7 +22,7 @@ export const WrapAddress = styled(Box)(({ theme }) => ({
   margin: "0 auto",
   display: "flex",
   alignItems: "center",
-  wordBreak: "break-all"
+  wordBreak: "break-word"
 }));
 
 export const Title = styled(Box)(({ theme }) => ({

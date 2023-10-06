@@ -68,7 +68,7 @@ export const ButtonLink = styled(Link)(({ theme }) => ({
   color: `${theme.palette.primary.main} !important`,
   fontFamily: "Roboto, sans-serif !important",
   textAlign: "left",
-  wordBreak: "break-all",
+  wordBreak: "break-word",
   marginTop: theme.spacing(2),
   display: "inline"
 }));

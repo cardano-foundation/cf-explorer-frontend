@@ -9,7 +9,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { HeaderSearchIconComponent } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatADAFull, formatPercent, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, formatPercent, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
@@ -62,7 +62,7 @@ const DelegationLists: React.FC = () => {
         <CustomTooltip title={r.poolName || r.poolId}>
           <PoolName to={{ pathname: details.delegation(r.poolId), state: { fromPath } }}>
             <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
-              {r.poolName || `${getShortWallet(r.poolId)}`}
+              {r.poolName || `${getShortHash(r.poolId)}`}
             </Box>
           </PoolName>
         </CustomTooltip>

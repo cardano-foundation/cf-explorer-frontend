@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { Box, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { getShortHash, isJson } from "src/commons/utils/helper";
-import { useScreen } from "src/commons/hooks/useScreen";
-import CopyButton from "src/components/commons/CopyButton";
+import { isJson } from "src/commons/utils/helper";
 import ParseScriptModal from "src/components/ParseScriptModal";
 import { SeeMoreIconHome } from "src/commons/resources";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
 import { Wrapper, Header, RowMetadata, Title, Value, StyledButton, TitleValue, MetaDataValue } from "./styles";
 
@@ -19,7 +18,6 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
   const { t } = useTranslation();
   const theme = useTheme();
   const [selectedText, setSelectedText] = useState<{ label: number; value: string } | null>(null);
-  const { isTablet } = useScreen();
 
   return (
     <Box>
@@ -34,8 +32,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
           pt={2}
           color={({ palette }) => `${palette.secondary.main}  !important`}
         >
-          {isTablet ? getShortHash(hash || "") : hash}
-          <CopyButton text={hash || ""} />
+          <DynamicEllipsisText value={hash || ""} isCoppy={true} />
         </Box>
       </Wrapper>
       {(data || [])?.map((metadata, idx) => (

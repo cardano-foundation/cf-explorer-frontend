@@ -30,7 +30,7 @@ export const ContractAddress = styled(Box)`
   color: ${(props) => props.theme.palette.primary.main};
   font-size: 14px;
   font-weight: 400;
-  word-break: break-all;
+  word-break: break-word;
 `;
 
 export const TabLabel = styled(Typography)`

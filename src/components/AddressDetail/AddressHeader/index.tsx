@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
 
-import { exchangeADAToUSD, formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import { exchangeADAToUSD, formatADAFull, getShortHash } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import useFetch from "src/commons/hooks/useFetch";
 import CardAddress from "src/components/share/CardAddress";
@@ -83,7 +83,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
             dataStake?.pool?.poolName
           ) : (
             <CustomTooltip title={dataStake?.pool?.poolId || ""} arrow>
-              <span>{getShortWallet(dataStake?.pool?.poolId || "")}</span>
+              <span>{getShortHash(dataStake?.pool?.poolId || "")}</span>
             </CustomTooltip>
           )}
         </Link>

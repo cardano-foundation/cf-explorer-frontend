@@ -9,7 +9,7 @@ import { PolicyScriptIcon } from "src/commons/resources";
 import { Logo } from "src/pages/Token/styles";
 import { details } from "src/commons/routers";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import { formatAmount, getShortWallet } from "src/commons/utils/helper";
+import { formatAmount, getShortHash } from "src/commons/utils/helper";
 
 import { Amount, AssetName, LogoEmpty, TableMinting } from "./styles";
 
@@ -42,7 +42,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
                   r.assetName
                 ) : (
                   <CustomTooltip title={r.assetId}>
-                    <Box component={"span"}>{getShortWallet(r.assetId)}</Box>
+                    <Box component={"span"}>{getShortHash(r.assetId)}</Box>
                   </CustomTooltip>
                 )}
               </Box>

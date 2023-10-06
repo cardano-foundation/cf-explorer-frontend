@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import { getShortWallet } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 import DelegatorLifecycleComponent from "src/components/StakingLifeCycle/DelegatorLifecycle";
 import Tabular from "src/components/StakingLifeCycle/DelegatorLifecycle/Tabular";
 import CopyButton from "src/components/commons/CopyButton";
@@ -111,7 +111,7 @@ const DelegatorLifecycle = () => {
             <AddressLine>
               <Label>{t("common.stakeAddress")}:</Label>
               <CustomTooltip title={stakeId}>
-                <StakeId to={details.stake(stakeId)}>{getShortWallet(stakeId)}</StakeId>
+                <StakeId to={details.stake(stakeId)}>{getShortHash(stakeId)}</StakeId>
               </CustomTooltip>
               <CopyButton text={stakeId} />
             </AddressLine>

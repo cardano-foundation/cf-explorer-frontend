@@ -8,13 +8,7 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import {
-  formatADAFull,
-  formatDateTimeLocal,
-  getPageInfo,
-  getShortHash,
-  getShortWallet
-} from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DetailViewContractHash from "src/components/commons/DetailView/DetailViewContractHash";
@@ -95,9 +89,7 @@ const TokenTransaction: React.FC = () => {
               <Label>{t("drawer.input")}: </Label>
               <div>
                 <CustomTooltip title={r.addressesInput[0]}>
-                  <StyledLink to={details.address(r.addressesInput[0])}>
-                    {getShortWallet(r.addressesInput[0])}
-                  </StyledLink>
+                  <StyledLink to={details.address(r.addressesInput[0])}>{getShortHash(r.addressesInput[0])}</StyledLink>
                 </CustomTooltip>
                 <br />
                 {r.addressesInput.length > 1 && <StyledLink to={details.transaction(r.hash)}>...</StyledLink>}
@@ -108,7 +100,7 @@ const TokenTransaction: React.FC = () => {
               <div>
                 <CustomTooltip title={r.addressesOutput[0]}>
                   <StyledLink to={details.address(r.addressesOutput[0])}>
-                    {getShortWallet(r.addressesOutput[0])}
+                    {getShortHash(r.addressesOutput[0])}
                   </StyledLink>
                 </CustomTooltip>
                 <br />

@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import { formatADAFull, getShortHash, numberWithCommas } from "src/commons/utils/helper";
 import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
 import ADAicon from "src/components/commons/ADAIcon";
 import CopyButton from "src/components/commons/CopyButton";
@@ -53,9 +53,7 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
       content: (
         <LineData>
           <CustomTooltip title={data?.poolView || ""}>
-            <StyledLink to={details.delegation(data?.poolView || "")}>
-              {getShortWallet(data?.poolView || "")}
-            </StyledLink>
+            <StyledLink to={details.delegation(data?.poolView || "")}>{getShortHash(data?.poolView || "")}</StyledLink>
           </CustomTooltip>
           <CopyButton text={data?.poolView || ""} />
         </LineData>
@@ -77,7 +75,7 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
       content: (
         <LineData>
           <CustomTooltip title={data?.stakeKeys[0] || ""}>
-            <StyledLink to={details.stake(data?.stakeKeys[0] || "")}>{getShortWallet(data?.stakeKeys[0])}</StyledLink>
+            <StyledLink to={details.stake(data?.stakeKeys[0] || "")}>{getShortHash(data?.stakeKeys[0])}</StyledLink>
           </CustomTooltip>
           <CopyButton text={data?.stakeKeys[0] || ""} />
         </LineData>
@@ -92,7 +90,7 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
         <LineData>
           <CustomTooltip title={data?.rewardAccount || ""}>
             <StyledLink to={details.stake(data?.rewardAccount || "")}>
-              {getShortWallet(data?.rewardAccount || "")}
+              {getShortHash(data?.rewardAccount || "")}
             </StyledLink>
           </CustomTooltip>
           <CopyButton text={data?.rewardAccount || ""} />

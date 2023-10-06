@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { details } from "src/commons/routers";
-import { getShortWallet } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import StyledModal from "src/components/commons/StyledModal";
@@ -60,7 +60,7 @@ export const DelegationCertificateModal = ({ stake, txHash, ...props }: Delegati
               data-testid="delegator-delegation-cetificate-modal-pool-id"
               to={details.delegation(data?.poolId || "")}
             >
-              {getShortWallet(data?.poolId || "")}
+              {getShortHash(data?.poolId || "")}
             </StyledLink>
           </CustomTooltip>
           <CopyButton data-testid="delegator-delegation-cetificate-modal-copy-pool-id" text={data?.poolId || ""} />
@@ -76,7 +76,7 @@ export const DelegationCertificateModal = ({ stake, txHash, ...props }: Delegati
               data-testid="delegator-delegation-cetificate-modal-pool-name"
               to={details.delegation(data?.poolId || "")}
             >
-              {data?.poolName || getShortWallet(data?.poolId)}
+              {data?.poolName || getShortHash(data?.poolId)}
             </StyledLink>
           </LineData>
         </CustomTooltip>
@@ -88,7 +88,7 @@ export const DelegationCertificateModal = ({ stake, txHash, ...props }: Delegati
         <LineData>
           <CustomTooltip title={stake}>
             <StyledLink data-testid="delegator-delegation-cetificate-modal-stake-id" to={details.stake(stake)}>
-              {getShortWallet(stake)}
+              {getShortHash(stake)}
             </StyledLink>
           </CustomTooltip>
           <CopyButton data-testid="delegator-delegation-cetificate-modal-copy-stake-id" text={stake} />

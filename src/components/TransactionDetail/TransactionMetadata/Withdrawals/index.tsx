@@ -3,7 +3,7 @@ import { Box, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import sendImg from "src/commons/resources/images/sendImg.svg";
-import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, getShortHash } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import { useScreen } from "src/commons/hooks/useScreen";
 import CopyButton from "src/components/commons/CopyButton";
@@ -56,7 +56,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                           : details.stake(item.stakeAddressFrom)
                       }
                     >
-                      {getShortWallet(item.stakeAddressFrom || "")}
+                      {getShortHash(item.stakeAddressFrom || "")}
                     </AddressLink>
                   </CustomTooltip>
                   <CopyButton text={item.stakeAddressFrom || ""} />
@@ -78,7 +78,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                           <AddressLink
                             to={address.startsWith("addr") ? details.address(address) : details.stake(address)}
                           >
-                            {getShortWallet(address || "")}
+                            {getShortHash(address || "")}
                           </AddressLink>
                         </CustomTooltip>
                         <CopyButton text={address || ""} />

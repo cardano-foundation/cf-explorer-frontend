@@ -8,7 +8,7 @@ import { DownRedUtxoDarkmode, UpGreenUtxoDarkmode } from "src/commons/resources"
 import receiveImg from "src/commons/resources/images/receiveImg.svg";
 import sendImg from "src/commons/resources/images/sendImg.svg";
 import { details } from "src/commons/routers";
-import { formatADAFull, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -176,7 +176,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                             color={(theme) => theme.palette.primary.main}
                             mr={1}
                           >
-                            {getShortWallet(item.address)}
+                            {getShortHash(item.address)}
                           </Box>
                         </CustomTooltip>
                       </Link>{" "}

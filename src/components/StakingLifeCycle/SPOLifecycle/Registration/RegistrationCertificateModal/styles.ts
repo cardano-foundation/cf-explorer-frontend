@@ -52,7 +52,7 @@ export const StyledLink = styled(Link)(({ theme }) => ({
   fontSize: 14,
   lineHeight: "22px",
   color: `${theme.palette.primary.main} !important`,
-  wordBreak: "break-all",
+  wordBreak: "break-word",
   fontWeight: 500,
   marginRight: 5,
   [theme.breakpoints.down("sm")]: {
@@ -64,7 +64,7 @@ export const VRFKeyText = styled(Box)(({ theme }) => ({
   fontSize: 14,
   lineHeight: "22px",
   color: theme.palette.primary.main,
-  wordBreak: "break-all",
+  wordBreak: "break-word",
   fontWeight: 500,
   display: "inline",
   marginRight: 5,
