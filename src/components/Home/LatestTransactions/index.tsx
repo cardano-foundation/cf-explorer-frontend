@@ -1,12 +1,14 @@
-import { Box, Grid, Skeleton } from "@mui/material";
+import { Box, Grid, useTheme } from "@mui/material";
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 
-import { BlankBlueIcon } from "src/commons/resources";
+import useFetch from "src/commons/hooks/useFetch";
+import { SeeMoreIconHome } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { REFRESH_TIMES, TRANSACTION_STATUS } from "src/commons/utils/constants";
+import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 import {
   formatADAFull,
   formatDateTimeLocal,
@@ -14,39 +16,40 @@ import {
   getShortWallet,
   handleClicktWithoutAnchor
 } from "src/commons/utils/helper";
-import CustomTooltip from "src/components/commons/CustomTooltip";
-import ViewAllButton from "src/components/commons/ViewAllButton";
-import useFetch from "src/commons/hooks/useFetch";
-import FormNowMessage from "src/components/commons/FormNowMessage";
 import ADAicon from "src/components/commons/ADAIcon";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import FormNowMessage from "src/components/commons/FormNowMessage";
+import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
 import {
+  Actions,
+  BlockNo,
   Hash,
   Header,
+  HeaderStatus,
   Item,
   ItemDetail,
   ItemHeader,
+  LatestTransactionItemHeader,
   PriveValue,
-  Title,
-  TransactionContainer,
-  BlockNo,
-  WalletAddress,
-  BlankImage,
   RowItem,
-  HeaderStatus,
-  Actions,
   TimeDuration,
   TimeDurationSm,
-  LatestTransactionItemHeader
+  Title,
+  TransactionContainer,
+  WalletAddress
 } from "./style";
 
 const LatestTransactions: React.FC = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const { data, initialized, lastUpdated } = useFetch<CurrentTransactions[]>(
     API.TRANSACTION.CURRENT,
     undefined,
     false,
-    REFRESH_TIMES.LATEST_TRANSACTION
+    blockKey
   );
 
   const history = useHistory();
@@ -58,7 +61,7 @@ const LatestTransactions: React.FC = () => {
           <TimeDuration>
             <FormNowMessage time={lastUpdated} />
           </TimeDuration>
-          <ViewAllButton data-testid="view-all" to={routers.TRANSACTION_LIST} />
+          <ViewAllButtonExternal to={routers.TRANSACTION_LIST} />
         </Actions>
       </Header>
       <TimeDurationSm>
@@ -72,14 +75,14 @@ const LatestTransactions: React.FC = () => {
                   <Grid item xl lg={3} xs={6} key={index}>
                     <Item>
                       <ItemHeader>
-                        <Skeleton variant="circular" width={50} height={40} />
-                        <Skeleton variant="text" width={"100%"} />
+                        <CommonSkeleton variant="circular" width={50} height={40} />
+                        <CommonSkeleton variant="text" width={"100%"} />
                       </ItemHeader>
-                      <Skeleton />
-                      <Skeleton variant="text" height={30} width={"100%"} />
-                      <Skeleton variant="text" height={30} width={"100%"} />
-                      <Skeleton variant="text" height={30} width={"100%"} />
-                      <Skeleton variant="text" height={30} width={"100%"} />
+                      <CommonSkeleton />
+                      <CommonSkeleton variant="text" height={30} width={"100%"} />
+                      <CommonSkeleton variant="text" height={30} width={"100%"} />
+                      <CommonSkeleton variant="text" height={30} width={"100%"} />
+                      <CommonSkeleton variant="text" height={30} width={"100%"} />
                     </Item>
                   </Grid>
                 );
@@ -98,7 +101,9 @@ const LatestTransactions: React.FC = () => {
                           </HeaderStatus>
                           <Box display={"flex"} alignItems={"flex-start"}>
                             <PriveValue>{formatADAFull(amount)}</PriveValue>
-                            <ADAicon width={14} />
+                            <Box component={"span"} sx={{ width: 14 }}>
+                              <ADAicon width={14} />
+                            </Box>
                           </Box>
                         </LatestTransactionItemHeader>
                       </ItemHeader>
@@ -136,7 +141,14 @@ const LatestTransactions: React.FC = () => {
                               <CustomTooltip title={add}>
                                 <Link to={details.address(add)}>
                                   <WalletAddress>{getShortWallet(add)}</WalletAddress>
-                                  <BlankImage src={BlankBlueIcon} alt="blank blue" />
+
+                                  <Box
+                                    component={SeeMoreIconHome}
+                                    ml={1}
+                                    fill={theme.palette.primary.main}
+                                    width={10}
+                                    height={10}
+                                  />
                                 </Link>
                               </CustomTooltip>
                             </RowItem>
@@ -150,7 +162,13 @@ const LatestTransactions: React.FC = () => {
                                 <CustomTooltip title={add}>
                                   <Link to={details.address(add)}>
                                     <WalletAddress>{getShortWallet(add)}</WalletAddress>
-                                    <BlankImage src={BlankBlueIcon} alt="blank blue" />
+                                    <Box
+                                      component={SeeMoreIconHome}
+                                      ml={1}
+                                      fill={theme.palette.primary.main}
+                                      width={10}
+                                      height={10}
+                                    />
                                   </Link>
                                 </CustomTooltip>
                               </Box>

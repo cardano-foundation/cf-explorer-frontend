@@ -1,9 +1,10 @@
-import { Box, LinearProgress, Skeleton, styled } from "@mui/material";
+import { Box, LinearProgress, alpha, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import CustomIcon from "src/components/commons/CustomIcon";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
-export const StyledSkeleton = styled(Skeleton)`
+export const StyledSkeleton = styled(CommonSkeleton)`
   border-radius: var(--border-radius);
   min-height: 150px;
 `;
@@ -40,11 +41,24 @@ export const StyledCustomIcon = styled(CustomIcon)`
 export const StyledCard = {
   Container: styled("div")`
     height: 100%;
-    background: ${(props) => props.theme.palette.background.paper};
+    background: ${(props) => props.theme.palette.secondary[0]};
     border-radius: 12px;
     box-shadow: ${(props) => props.theme.shadow.card};
     position: relative;
     display: flex;
+  `,
+  ClickAble: styled(Link)`
+    height: 100%;
+    background: ${(props) => props.theme.palette.secondary[0]};
+    border-radius: 12px;
+    box-shadow: ${(props) => props.theme.shadow.card};
+    position: relative;
+    display: flex;
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0m;
+    cursor: pointer;
+    &:hover {
+      box-shadow: ${({ theme }) => "1px 2px 15px 0px " + alpha(theme.palette.secondary.light, 0.25)};
+    }
   `,
   Content: styled("div")`
     width: 100%;

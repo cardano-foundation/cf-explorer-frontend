@@ -1,8 +1,8 @@
-import { Box, FormGroup, FormHelperText, IconButton, InputAdornment } from "@mui/material";
+import { Box, FormGroup, IconButton, InputAdornment, useTheme } from "@mui/material";
 import { useEffect, useReducer, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 
 import useAuth from "src/commons/hooks/useAuth";
 import useToast from "src/commons/hooks/useToast";
@@ -13,6 +13,8 @@ import { isValidEmail, removeAuthInfo } from "src/commons/utils/helper";
 import { getInfo, signIn } from "src/commons/utils/userRequest";
 import ConnectWallet from "src/components/commons/Layout/Header/ConnectWallet";
 import { setUserData } from "src/stores/user";
+import CustomIcon from "src/components/commons/CustomIcon";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import {
   AlertCustom,
@@ -58,9 +60,10 @@ const formReducer = (state: IForm, event: any) => {
 
 export default function SignIn() {
   const { t } = useTranslation();
-
+  const theme = useTheme();
   const history = useHistory();
   const toast = useToast();
+  const { isMobile } = useScreen();
   const AUTHENTICATE_ROUTES = [
     routers.SIGN_IN as string,
     routers.SIGN_UP as string,
@@ -81,6 +84,20 @@ export default function SignIn() {
       value: ""
     }
   });
+
+  useEffect(() => {
+    document.body.style.backgroundColor =
+      theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[100];
+    document.body.style.height = isMobile ? "80vh" : "100vh";
+    document.body.style.display = "flex";
+    document.body.style.alignItems = "center";
+    return () => {
+      document.body.style.backgroundColor = "unset";
+      document.body.style.height = "unset";
+      document.body.style.display = "unset";
+      document.body.style.alignItems = "unset";
+    };
+  }, []);
 
   useEffect(() => {
     document.title = t("head.page.signIn");
@@ -218,26 +235,42 @@ export default function SignIn() {
     <Container>
       <WrapContent>
         <WrapTitle data-testid="signin-title">{t("common.signIn")}</WrapTitle>
-        <WrapHintText>
-          {t("account.noAccount")}{" "}
-          <WrapSignUp onClick={() => history.push(routers.SIGN_UP)}>{t("page.signUp")}</WrapSignUp>
-        </WrapHintText>
         <FormGroup>
           <WrapForm>
             <CloseButton saving={0} onClick={() => handleRedirectBack()}>
-              <IoMdClose />
+              <IoMdClose color={theme.palette.secondary.light} />
             </CloseButton>
             {invalidInfomation ? (
               <Box pt={"24px"}>
-                <AlertCustom severity="error">{t("message.unableSignIn")}</AlertCustom>
+                <AlertCustom variant={theme.isDark ? "filled" : "standard"} severity="error">
+                  {t("message.unableSignIn")}
+                </AlertCustom>
               </Box>
             ) : null}
+            <ConnectWallet
+              onSuccess={handleLoginSuccess}
+              customButton={({ handleClick }) => (
+                <WrapButtonConnectWallet
+                  data-testid="connect-wallet"
+                  variant="outlined"
+                  fullWidth
+                  onClick={handleClick}
+                >
+                  {t("account.connectWallet")}
+                </WrapButtonConnectWallet>
+              )}
+            ></ConnectWallet>
+            <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+              <WrapDivider />
+              <WrapOr>{t("common.or")}</WrapOr>
+              <WrapDivider />
+            </Box>
             <WrapInput>
               <InputCustom
                 error={Boolean(formData.email.error && formData.email.touched)}
                 startAdornment={
                   <Box paddingRight={"10px"} paddingTop={"3px"}>
-                    <UserCustomIcon />
+                    <CustomIcon height={25} fill={theme.palette.secondary.light} icon={UserCustomIcon} />
                   </Box>
                 }
                 name="email"
@@ -247,14 +280,14 @@ export default function SignIn() {
                 placeholder={t("account.emailAddress")}
               />
               {formData.email.error && formData.email.touched ? (
-                <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom>
+                <FormHelperTextCustom>{formData.email.error}</FormHelperTextCustom>
               ) : null}
             </WrapInput>
             <WrapInput>
               <InputCustom
                 startAdornment={
                   <Box paddingRight={"10px"} paddingTop={"5px"} paddingBottom={"2px"}>
-                    <LockIcon />
+                    <CustomIcon height={25} fill={theme.palette.secondary.light} icon={LockIcon} />
                   </Box>
                 }
                 fullWidth
@@ -273,7 +306,7 @@ export default function SignIn() {
                 error={Boolean(formData.password.error && formData.password.touched)}
               />
               {formData.password.error && formData.password.touched ? (
-                <FormHelperText error>{formData.password.error}</FormHelperText>
+                <FormHelperTextCustom>{formData.password.error}</FormHelperTextCustom>
               ) : null}
             </WrapInput>
             <ForgotPassword data-testid="forgot-password-link">
@@ -290,24 +323,10 @@ export default function SignIn() {
             >
               {t("common.signIn")}
             </WrapButton>
-            <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-              <WrapDivider />
-              <WrapOr>{t("common.or")}</WrapOr>
-              <WrapDivider />
-            </Box>
-            <ConnectWallet
-              onSuccess={handleLoginSuccess}
-              customButton={({ handleClick }) => (
-                <WrapButtonConnectWallet
-                  data-testid="connect-wallet"
-                  variant="outlined"
-                  fullWidth
-                  onClick={handleClick}
-                >
-                  {t("account.connectWallet")}
-                </WrapButtonConnectWallet>
-              )}
-            ></ConnectWallet>
+            <WrapHintText>
+              {t("account.noAccount")}{" "}
+              <WrapSignUp onClick={() => history.push(routers.SIGN_UP)}>{t("page.signUp")}</WrapSignUp>
+            </WrapHintText>
           </WrapForm>
         </FormGroup>
       </WrapContent>

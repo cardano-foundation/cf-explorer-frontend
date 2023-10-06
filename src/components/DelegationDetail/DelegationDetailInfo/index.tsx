@@ -1,26 +1,29 @@
-import { Box, Skeleton } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { Link, useHistory } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 
+import { useScreen } from "src/commons/hooks/useScreen";
 import {
-  CalendarIcon,
-  DelegatorIcon,
-  DropIcon,
-  HighestIcon,
-  RewardIcon,
-  TickerIcon,
-  UserIcon
+  CalendarIconComponent,
+  DelegatorIconComponent,
+  DropIconComponent,
+  HighestIconComponent,
+  RewardIconComponent,
+  TickerIconComponent,
+  UserIconComponent
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { formatADAFull, formatDateTimeLocal, formatPercent, getShortWallet } from "src/commons/utils/helper";
+import ADAicon from "src/components/commons/ADAIcon";
 import BookmarkButton from "src/components/commons/BookmarkIcon";
 import CopyButton from "src/components/commons/CopyButton";
+import CustomIcon from "src/components/commons/CustomIcon";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DropdownDetail from "src/components/commons/DropdownDetail";
-import ADAicon from "src/components/commons/ADAIcon";
-import { useScreen } from "src/commons/hooks/useScreen";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 
 import {
   BackButton,
@@ -40,19 +43,21 @@ import {
   PoolIdSkeleton,
   PoolIdValue,
   StyledGrid,
-  StyledImg,
   StyledLinearProgress,
-  StyledTitle
+  StyledTitle,
+  TimeDuration
 } from "./styles";
 
 export interface IDelegationDetailInfo {
   data: DelegationOverview | null;
   loading: boolean;
   poolId: string;
+  lastUpdated?: number;
 }
 
-const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, poolId }) => {
+const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, poolId, lastUpdated }) => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const history = useHistory();
   const [isOpenReward, setOpenReward] = useState<boolean>(false);
   const [isOpenOwner, setOpenOwner] = useState<boolean>(false);
@@ -62,7 +67,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
     return (
       <HeaderDetailContainer>
         <BackButton onClick={history.goBack}>
-          <HiArrowLongLeft />
+          <HiArrowLongLeft color={theme.palette.secondary.light} />
           <BackText>{t("common.back")}</BackText>
         </BackButton>
         <HeaderContainer>
@@ -74,7 +79,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <PoolIdSkeleton variant="rectangular" />
         </PoolId>
         <Box borderRadius={10} overflow="hidden">
-          <Skeleton variant="rectangular" height={250} width="100%" />
+          <CommonSkeleton variant="rectangular" height={250} width="100%" />
         </Box>
       </HeaderDetailContainer>
     );
@@ -83,7 +88,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
   return (
     <HeaderDetailContainer>
       <BackButton onClick={history.goBack}>
-        <HiArrowLongLeft />
+        <HiArrowLongLeft color={theme.palette.secondary.light} />
         <BackText>{t("common.back")}</BackText>
       </BackButton>
       <HeaderContainer>
@@ -101,24 +106,27 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         </CustomTooltip>
         <CopyButton text={poolId} />
       </PoolId>
+      <TimeDuration>
+        <FormNowMessage time={lastUpdated} />
+      </TimeDuration>
       <DataContainer>
         <StyledGrid container>
           <Item item xs={6} md={3} top={1}>
-            <StyledImg src={TickerIcon} alt="Ticker Icon" />
+            <CustomIcon fill={theme.palette.secondary.light} icon={TickerIconComponent} height={22} />
             <InfoTitle>
               <StyledTitle>{t("common.ticker")}</StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.tickerName || ""}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1}>
-            <StyledImg src={CalendarIcon} alt="Calendar Icon" />
+            <CustomIcon fill={theme.palette.secondary.light} height={22} icon={CalendarIconComponent} />
             <InfoTitle>
               <StyledTitle>{t("createdAt")}</StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.createDate && formatDateTimeLocal(data.createDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
-            <StyledImg src={RewardIcon} alt="Reward Icon" />
+            <CustomIcon fill={theme.palette.secondary.light} height={22} icon={RewardIconComponent} />
             <InfoTitle>
               <Box>
                 <StyledTitle>{t("rewardAccount")}</StyledTitle>
@@ -164,7 +172,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             )}
           </Item>
           <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
-            <StyledImg src={UserIcon} alt="User Icon" />
+            <CustomIcon fill={theme.palette.secondary.light} height={22} icon={UserIconComponent} />
             <InfoTitle>
               <Box>
                 <StyledTitle>{t("ownerAccount")}</StyledTitle>{" "}
@@ -215,7 +223,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             )}
           </Item>
           <Item item xs={6} md={3}>
-            <StyledImg src={DropIcon} alt="Drop Icon" />
+            <CustomIcon fill={theme.palette.secondary.light} height={22} icon={DropIconComponent} />
             <InfoTitle>
               <StyledTitle>{t("glossary.poolSize")}</StyledTitle>
             </InfoTitle>
@@ -227,7 +235,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             </InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <StyledImg src={HighestIcon} alt="Highest Icon" />
+            <CustomIcon fill={theme.palette.secondary.light} height={24} icon={HighestIconComponent} />
             <InfoTitle>
               <StyledTitle>{t("stakeLimit")}</StyledTitle>
             </InfoTitle>
@@ -239,7 +247,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             </InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <StyledImg src={DelegatorIcon} alt="Delegator Icon" />
+            <CustomIcon fill={theme.palette.secondary.light} height={22} icon={DelegatorIconComponent} />
             <InfoTitle>
               <StyledTitle>{t("delegators")}</StyledTitle>
             </InfoTitle>

@@ -13,7 +13,7 @@ export const ItemList = styled(Box)(({ theme }) => ({
 }));
 
 export const Item = styled(Box)(({ theme, flexDirection }) => ({
-  backgroundColor: theme.palette.secondary[0],
+  backgroundColor: theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0],
   padding: 20,
   flex: 1,
   display: "flex",

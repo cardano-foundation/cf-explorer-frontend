@@ -74,6 +74,14 @@ export const DrawContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     maxWidth: 320,
     minWidth: 320
+  },
+  ">div": {
+    zIndex: 2
+  },
+  [theme.breakpoints.down(355)]: {
+    maxWidth: "unset",
+    minWidth: "unset",
+    width: "100%"
   }
 }));
 
@@ -95,7 +103,7 @@ export const AccountContainer = styled(Box)(({ theme }) => ({
 }));
 
 export const PaymentWalletContainer = styled(Box)(({ theme }) => ({
-  background: theme.palette.common.white,
+  background: theme.palette.secondary[0],
   borderRadius: 12,
   padding: "15px 10px",
   display: "flex",
@@ -130,7 +138,7 @@ export const PaymentWalletValueContainer = styled(Box)(() => ({
 }));
 
 export const PaymentWalletIconBox = styled(Box)(({ theme }) => ({
-  backgroundColor: alpha(theme.palette.common.white, 0.1),
+  backgroundColor: theme.palette.secondary[0],
   display: "flex",
   alignItems: "center",
   gap: 5
@@ -164,7 +172,7 @@ export const AmountGroup = styled(Box)(({ theme }) => ({
 
 export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
   fontSize: 11,
-  color: theme.palette.text.secondary,
+  fill: theme.palette.secondary.main,
   marginBottom: ".125em"
 }));
 
@@ -184,6 +192,9 @@ export const BoxGroup = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.down("sm")]: {
     gap: 18
+  },
+  [theme.breakpoints.down(355)]: {
+    gap: 2
   }
 }));
 
@@ -191,13 +202,13 @@ export const NetAmountBox = styled(HoldBox)(({ theme }) => ({
   boxSizing: "border-box",
   minHeight: 70,
   height: "max-content",
-  borderColor: theme.palette.success[800],
+  borderColor: theme.isDark ? theme.palette.success[100] : theme.palette.success[800],
   width: "100%",
   maxWidth: 200,
   minWidth: 180,
   "::after": {
     content: `"${i18next.t("glossary.netAmount").toUpperCase()}"`,
-    background: theme.palette.success[800]
+    background: theme.isDark ? theme.palette.success[100] : theme.palette.success[800]
   },
   [theme.breakpoints.down(1440)]: {
     width: 180,

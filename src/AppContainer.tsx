@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { ThemeProvider } from "@mui/material/styles";
 import { useLocation } from "react-router-dom";
+import { Box } from "@mui/material";
 
 import CustomLayout from "./components/commons/Layout";
 import { RootState } from "./stores/types";
@@ -15,7 +16,7 @@ interface Props {
 }
 
 const AppContainer: React.FC<Props> = (props) => {
-  const { theme } = useSelector(({ user }: RootState) => user);
+  const { theme } = useSelector(({ theme }: RootState) => theme);
   const { children } = props;
   const location = useLocation();
   const excludedRoutes: string[] = [
@@ -27,12 +28,14 @@ const AppContainer: React.FC<Props> = (props) => {
   ];
   return (
     <ThemeProvider theme={themes[theme]}>
-      <SystemLoader />
-      <SyncBookmarkModal />
-      <ToastContainer />
-      <div data-theme={theme}>
-        {excludedRoutes.includes(location.pathname) ? <>{children}</> : <CustomLayout>{children}</CustomLayout>}
-      </div>
+      <Box bgcolor={theme === "light" ? themes[theme].palette.primary[100] : themes[theme].palette.secondary[100]}>
+        <SystemLoader />
+        <SyncBookmarkModal />
+        <ToastContainer />
+        <div data-theme={theme}>
+          {excludedRoutes.includes(location.pathname) ? <>{children}</> : <CustomLayout>{children}</CustomLayout>}
+        </div>
+      </Box>
     </ThemeProvider>
   );
 };

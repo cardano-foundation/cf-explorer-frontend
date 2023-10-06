@@ -75,13 +75,14 @@ export const StyledAddressSelect = styled(Box)`
 `;
 
 export const StyledButton = styled(Button)`
-  background: ${(props) => props.theme.palette.secondary.main};
+  background: ${(props) =>
+    props.theme.isDark ? props.theme.palette.secondary.light : props.theme.palette.secondary.main};
   width: 100%;
   border-radius: 8px;
   height: 44px;
   padding: 10px 20px;
   text-align: center;
-  color: ${(props) => props.theme.palette.common.white};
+  color: ${(props) => props.theme.palette.secondary[0]};
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
@@ -93,7 +94,7 @@ export const StyledButton = styled(Button)`
   &:disabled {
     background: ${(props) => props.theme.palette.secondary.main};
     opacity: 0.3;
-    color: ${(props) => props.theme.palette.common.white};
+    color: ${(props) => props.theme.palette.secondary[0]};
   }
   &:hover {
     background: ${(props) => props.theme.palette.secondary.main};
@@ -113,7 +114,7 @@ export const StyledBackButton = styled(Button)<{ width?: number | string }>(({ w
   fontSize: 16,
   lineHeight: "19px",
   fontWeight: 700,
-  border: `2px solid ${theme.palette.border.hint}`,
+  border: `2px solid ${theme.isDark ? theme.palette.primary[100] : theme.palette.border.hint}`,
   textTransform: "none",
   ":hover": {
     opacity: 0.8
@@ -142,7 +143,7 @@ export const TextRequired = styled("div")`
 
 export const ButtonEvent = styled(Button)<{ active: number }>(({ theme, active }) => ({
   background: active ? theme.palette.secondary.light : theme.palette.primary[200],
-  color: active ? theme.palette.common.white : theme.palette.secondary.light,
+  color: active ? theme.palette.secondary[0] : theme.palette.secondary.light,
   borderRadius: "6px",
   height: "44px",
   alignItems: "center",
@@ -192,7 +193,7 @@ export const TextLabelReview = styled("div")`
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  color: ${(props) => props.theme.palette.secondary.main};
+  color: ${(props) => (props.theme.isDark ? props.theme.palette.secondary.light : props.theme.palette.secondary.main)};
   opacity: 0.6;
   white-space: nowrap;
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -272,6 +273,13 @@ export const StyledTextField = styled(TextField)`
     border: 1.5px solid ${(props) => props.theme.palette.primary[200]};
     border-radius: 8px;
     background-color: ${(props) => props.theme.palette.secondary[0]};
+    color: ${(props) => props.theme.palette.secondary.main};
+    &::placeholder {
+      ${(props) =>
+        `color: ${props.theme.palette.secondary.main};
+            -webkit-text-fill-color: ${props.theme.palette.secondary.main};
+            `}
+    }
   }
   .Mui-focused {
     border-color: ${(props) => props.theme.palette.secondary.light};

@@ -11,12 +11,14 @@ export const Form = styled("form")<{ home: number; sidebar?: number }>(({ theme,
   height: home ? 60 : 44,
   margin: "auto",
   borderRadius: home ? 30 : 8,
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: theme.palette.secondary[0],
   color: theme.palette.text.primary,
   padding: `0px 0px 0px ${home ? 15 : 0}px`,
   boxSizing: "border-box",
-  marginTop: home ? 30 : 0,
+  marginTop: home ? 0 : 0,
+  marginBottom: home ? 20 : 0,
   border: `1.5px solid ${theme.palette.primary[200]}`,
+  transition: "border ease 0.3s",
   "&:focus-within": {
     borderColor: theme.palette.secondary.light
   },
@@ -63,6 +65,9 @@ export const SelectOption = styled(MenuItem)<{ home: number }>`
   font-size: ${(props) => (props.home ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
   color: ${(props) => props.theme.palette.secondary.main};
   font-weight: var(--font-weight-normal);
+  &:hover {
+    background-color: ${(props) => (props.theme.mode === "dark" ? props.theme.palette.secondary[600] : "")};
+  }
 `;
 
 export const StyledInput = styled(Input)<{ home: number }>`
@@ -72,7 +77,9 @@ export const StyledInput = styled(Input)<{ home: number }>`
   border-radius: 0;
   font-size: ${(props) => (props.home ? `var(--font-size-text-large)` : `var(--font-size-text-small)`)};
   width: 100%;
-  border-left: 2px solid ${(props) => props.theme.palette.border.main};
+  background: ${(props) => props.theme.palette.secondary[0]};
+  color: ${(props) => props.theme.palette.secondary.main};
+  border-left: 2px solid ${(props) => props.theme.palette.primary[200]};
   ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 0px 0px 0px 10px;
   }
@@ -103,7 +110,7 @@ export const OptionsWrapper = styled(Box)<{ home: number }>(({ theme, home }) =>
   left: home ? 145 : 0,
   width: home ? "calc(100% - 280px)" : "100%",
   boxSizing: "border-box",
-  backgroundColor: theme.palette.common.white,
+  backgroundColor: theme.palette.secondary[0],
   textAlign: "left",
   padding: "0 10px",
   borderBottomLeftRadius: 10,
@@ -121,7 +128,7 @@ export const OptionsWrapper = styled(Box)<{ home: number }>(({ theme, home }) =>
 
 export const Option = styled(Button)(({ theme }) => ({
   textTransform: "inherit",
-  color: theme.palette.common.black,
+  color: theme.palette.secondary.light,
   width: "100%",
   justifyContent: "space-between",
   margin: "4px 0"

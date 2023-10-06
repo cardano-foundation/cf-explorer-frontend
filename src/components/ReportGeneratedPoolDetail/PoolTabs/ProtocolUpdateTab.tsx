@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -14,9 +14,11 @@ import { PoolUpdateModal } from "src/components/StakingLifeCycle/SPOLifecycle/Po
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 const ProtocolUpdateTab = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { reportId = "" } = useParams<{ reportId: string }>();
   const [selectedValue, setSelectedValue] = useState<PoolUpdateDetail | null>(null);
   const [params, setParams] = useState({
@@ -66,7 +68,7 @@ const ProtocolUpdateTab = () => {
       render(data) {
         return (
           <ClickAbleLink onClick={() => setSelectedValue(data)}>
-            <EyeIcon />
+            <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
           </ClickAbleLink>
         );
       }

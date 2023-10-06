@@ -1,15 +1,16 @@
+import { Box } from "@mui/material";
 import { useState } from "react";
-import { Box, Skeleton } from "@mui/material";
-import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 
+import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
 import { getShortWallet } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import StyledModal from "src/components/commons/StyledModal";
-import useFetch from "src/commons/hooks/useFetch";
-import { API } from "src/commons/utils/api";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
 import DelegationDraw from "./DelegationDraw";
 import RecentDelegations from "./RecentDelegations";
@@ -106,12 +107,12 @@ export const DelegationCertificateModal = ({ stake, txHash, ...props }: Delegati
               {extra ? (
                 <Box>
                   <Label>{label}</Label>
-                  {data ? content : <Skeleton variant="rectangular" />}
+                  {data ? content : <CommonSkeleton variant="rectangular" />}
                 </Box>
               ) : (
                 <>
                   <Label>{label}</Label>
-                  {data ? content : <Skeleton variant="rectangular" />}
+                  {data ? content : <CommonSkeleton variant="rectangular" />}
                 </>
               )}
               {extra}

@@ -12,7 +12,7 @@ export const ContractDiagramsContainer = styled(Box)<{ isTxPageView?: boolean }>
 
 export const TxHash = styled(Box)`
   text-align: left;
-  background-color: ${({ theme }) => theme.palette.primary[200]};
+  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[200])};
   border-radius: 8px;
   padding: 16px 20px;
 `;
@@ -65,7 +65,7 @@ export const TabElement = styled(Box)`
   padding: 18px 20px;
   border-radius: 5px;
   text-align: left;
-  background: ${({ theme }) => theme.palette.primary[100]};
+  background: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100])};
   color: ${(props) => props.theme.palette.secondary.main};
   text-align: left;
   max-height: 150px;
@@ -91,7 +91,7 @@ export const DataTitle = styled(Typography)`
   color: ${(props) => props.theme.palette.secondary.main};
 `;
 export const DatumnElement = styled(Box)`
-  background: ${({ theme }) => theme.palette.primary[100]};
+  background: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100])};
   color: ${(props) => props.theme.palette.secondary.main};
   word-break: break-word;
   text-align: left;

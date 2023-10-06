@@ -1,15 +1,15 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Box, Dialog, DialogActions, DialogContentText, IconButton } from "@mui/material";
+import { Box, Dialog, DialogActions, DialogContentText, IconButton, useTheme } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useHistory } from "react-router-dom";
 import { useLocalStorage } from "react-use";
+import { IoMdClose } from "react-icons/io";
 
 import useAuth from "src/commons/hooks/useAuth";
 import useFetchList from "src/commons/hooks/useFetchList";
 import useToast from "src/commons/hooks/useToast";
-import { CloseIcon } from "src/commons/resources";
 import { ReactComponent as DeleteBookmark } from "src/commons/resources/icons/deleteBookmark.svg";
 import { ReactComponent as QuestionConfirm } from "src/commons/resources/icons/questionConfirm.svg";
 import { details, routers } from "src/commons/routers";
@@ -24,6 +24,7 @@ import { CancelButton, DeleteButton, StyledTable, TitleTab, WrapTab } from "./St
 
 const Bookmark = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { isLoggedIn } = useAuth();
   const history = useHistory();
   const [bookmarks, setBookmarks] = useLocalStorage<Bookmark[]>("bookmark", []);
@@ -69,14 +70,12 @@ const Bookmark = () => {
     try {
       setLoadingDelete(true);
       const selectedBookmark = data?.find((d) => d.keyword === keyword);
-      if (selectedBookmark?.id) {
-        await deleteBookmark(selectedBookmark?.id);
-        setSelected(null);
-        setLoadingDelete(false);
-        setBookmarks(bookmarks?.filter((r) => r.keyword !== keyword));
-        refresh();
-        toast.success(t("message.bookmark.deleted"));
-      }
+      await deleteBookmark({ keyword, type: selectedBookmark?.type });
+      setSelected(null);
+      setLoadingDelete(false);
+      setBookmarks(bookmarks?.filter((r) => r.keyword !== keyword));
+      refresh();
+      toast.success(t("message.bookmark.deleted"));
     } catch (error) {
       setSelected(null);
       setLoadingDelete(false);
@@ -412,7 +411,7 @@ const Bookmark = () => {
         }}
       >
         <ButtonClose disabled={loadingDelete} onClick={() => setSelected(null)}>
-          <img src={CloseIcon} alt="icon close" />
+          <IoMdClose color={theme.palette.secondary.light} />
         </ButtonClose>
         <Box textAlign={"center"} pt={5} pb={2}>
           <QuestionConfirm />

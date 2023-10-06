@@ -1,13 +1,14 @@
-import { Box, Skeleton, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { JsonViewer } from "@textea/json-viewer";
 import { useTranslation } from "react-i18next";
 
-import CopyButton from "src/components/commons/CopyButton";
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
+import CopyButton from "src/components/commons/CopyButton";
 import StyledModal from "src/components/commons/StyledModal";
 
+import { CommonSkeleton } from "../commons/CustomSkeleton";
 import { ButtonLink, ViewJson } from "./styles";
 
 interface ScriptModalProps {
@@ -35,13 +36,13 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
           {loading ? (
             <>
               <Box data-testid="loading-element" height={40} width="100%" borderRadius={10} overflow="hidden">
-                <Skeleton height={"100%"} width="100%" variant="rectangular" />
+                <CommonSkeleton height={"100%"} width="100%" variant="rectangular" />
               </Box>
               <Box height={20} width="100%" borderRadius={10} overflow="hidden">
-                <Skeleton height={"100%"} width="100%" variant="rectangular" />
+                <CommonSkeleton height={"100%"} width="100%" variant="rectangular" />
               </Box>
               <Box height={150} width="100%" borderRadius={10} overflow="hidden">
-                <Skeleton height={"100%"} width="100%" variant="rectangular" />
+                <CommonSkeleton height={"100%"} width="100%" variant="rectangular" />
               </Box>
             </>
           ) : (
@@ -79,6 +80,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
                       collapseStringsAfterLength={false}
                       style={{ padding: 0, background: "none", color: theme.palette.text.secondary }}
                       rootName={false}
+                      theme={theme.isDark ? "dark" : "light"}
                     />
                   ) : (
                     <Box textAlign={"center"} py={2} color={({ palette }) => palette.secondary.light}>

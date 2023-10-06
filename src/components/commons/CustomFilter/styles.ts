@@ -1,4 +1,4 @@
-import { Box, InputBase, ListItemIcon, styled } from "@mui/material";
+import { Button, Box, InputBase, ListItemIcon, styled } from "@mui/material";
 
 export const Container = styled(Box)`
   width: 100%;
@@ -23,7 +23,8 @@ export const StyledInput = styled(InputBase)`
   }
   .MuiInputBase-input {
     padding: 10px 14px;
-    border: 1.5px solid ${({ theme, error }) => (error ? theme.palette.error.main : theme.palette.border.main)};
+    color: ${({ theme }) => theme.palette.secondary.main};
+    border: 1.5px solid ${({ theme, error }) => (error ? theme.palette.error.main : theme.palette.primary[200])};
     &:focus-within {
       border-color: ${({ theme }) => theme.palette.secondary.light};
     }
@@ -35,3 +36,9 @@ export const StyledInput = styled(InputBase)`
 export const StyledListItemIcon = styled(ListItemIcon)`
   color: inherit;
 `;
+
+export const WrapButton = styled(Button)(({ theme }) => ({
+  "&:disabled": {
+    backgroundColor: theme.isDark ? theme.palette.secondary.main : ""
+  }
+}));

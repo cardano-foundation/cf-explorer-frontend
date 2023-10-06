@@ -1,4 +1,6 @@
-import { Container, Skeleton, styled } from "@mui/material";
+import { Container, styled } from "@mui/material";
+
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
   paddingTop: "30px",
@@ -15,18 +17,17 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
     "& h2": {
       paddingLeft: "0px"
     },
-    paddingTop: "10px",
     marginTop: "0px !important"
   }
 }));
 
-export const AnalyticSkeleton = styled(Skeleton)`
+export const AnalyticSkeleton = styled(CommonSkeleton)`
   height: 300px;
   width: 100%;
   border-radius: 4px;
 `;
 
-export const DataTableSkeleton = styled(Skeleton)`
+export const DataTableSkeleton = styled(CommonSkeleton)`
   height: 300px;
   width: 100%;
   border-radius: 4px;

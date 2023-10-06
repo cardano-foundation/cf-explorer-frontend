@@ -107,7 +107,7 @@ describe("MyProfile component", () => {
   });
   it("rendering component on PC", () => {
     render(<MyProfile />);
-    expect(screen.getByText(mockApiData.email)).toBeInTheDocument();
+    expect(screen.getByText(mockApiData.username)).toBeInTheDocument();
     expect(screen.getByText(mockApiData.lastLogin)).toBeInTheDocument();
   });
 });

@@ -1,13 +1,14 @@
-import { Box, FormGroup } from "@mui/material";
+import { Box, FormGroup, useTheme } from "@mui/material";
 import { useEffect, useReducer, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { IoMdClose } from "react-icons/io";
-import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
 
 import { EmailIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
 import { forgotPassword } from "src/commons/utils/userRequest";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import {
   AlertCustom,
@@ -48,6 +49,7 @@ export default function ForgotPassword() {
   const { t } = useTranslation();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
+  const theme = useTheme();
   const emailInputRef = useRef<HTMLInputElement | null>(null);
   const [formData, setFormData] = useReducer(formReducer, {
     email: {
@@ -56,7 +58,22 @@ export default function ForgotPassword() {
   });
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
 
+  const updateHeight = () => {
+    setViewportHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateHeight);
+    document.body.style.overflow = "hidden";
+    updateHeight();
+
+    return () => {
+      document.body.style.overflow = "unset";
+      window.removeEventListener("resize", updateHeight);
+    };
+  }, []);
   useEffect(() => {
     document.title = t("account.forgotPassword");
   }, [t]);
@@ -159,7 +176,7 @@ export default function ForgotPassword() {
   };
 
   return (
-    <Container>
+    <Container sx={{ height: `${viewportHeight}px` }}>
       <WrapContent>
         <WrapTitle>{t("account.forgotPassword")}</WrapTitle>
         <WrapHintText>
@@ -174,17 +191,17 @@ export default function ForgotPassword() {
                 </Box>
               ) : null}
               <BackButton onClick={() => handleRedirect()}>
-                <HiArrowLongLeft fontSize="16px" />
+                <HiArrowLongLeft fontSize="16px" color={theme.palette.secondary.light} />
                 <BackText>{t("common.back")}</BackText>
               </BackButton>
               <CloseButton saving={0} onClick={() => handleRedirect(true)}>
-                <IoMdClose />
+                <IoMdClose color={theme.palette.secondary.light} />
               </CloseButton>
               <WrapInput>
                 <InputCustom
                   startAdornment={
                     <Box paddingRight={"10px"} paddingTop={"7px"} paddingBottom={"2px"}>
-                      <EmailIcon />
+                      <CustomIcon height={20} fill={theme.palette.secondary.light} icon={EmailIcon} />
                     </Box>
                   }
                   name="email"
@@ -197,14 +214,14 @@ export default function ForgotPassword() {
                   error={Boolean(formData.email.error && formData.email.touched)}
                 />
                 {formData.email.error && formData.email.touched ? (
-                  <FormHelperTextCustom error>{formData.email.error}</FormHelperTextCustom>
+                  <FormHelperTextCustom>{formData.email.error}</FormHelperTextCustom>
                 ) : null}
               </WrapInput>
               <WrapButton
                 variant="contained"
                 fullWidth
                 onClick={handleSubmit}
-                disabled={loading || !!formData.email.error}
+                disabled={loading || !!formData.email.error || !formData.email.value}
               >
                 {t("common.submit")}
               </WrapButton>

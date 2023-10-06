@@ -4,7 +4,7 @@ import { Box, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import { details } from "src/commons/routers";
-import { AddressIcon, BackIcon, TimeIcon } from "src/commons/resources";
+import { AddressIcon, AddressIconDark2, BackDarkIcon, BackIcon, TimeIcon, TimeIconDark } from "src/commons/resources";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { API } from "src/commons/utils/api";
@@ -16,6 +16,7 @@ import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import ADAicon from "src/components/commons/ADAIcon";
 import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
+import CustomIcon from "src/components/commons/CustomIcon";
 import { Capitalize } from "src/components/commons/CustomText/styles";
 
 import {
@@ -117,14 +118,18 @@ const DelegationDraw: React.FC<IDelegationDrawProps> = ({ toggleModal, showBackB
       <StepInfo>
         {showBackButton ? (
           <IconButtonBack data-testid="delegator-delegation-back-button" onClick={handleBack}>
-            <BackIcon />
+            {theme.isDark ? <BackDarkIcon /> : <BackIcon />}
           </IconButtonBack>
         ) : (
           <Box />
         )}
         <InfoGroup>
           <Info>
-            <AddressIcon fill={theme.palette.secondary.light} />
+            <CustomIcon
+              icon={theme.isDark ? AddressIconDark2 : AddressIcon}
+              height={30}
+              fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
+            />
             <CustomTooltip title={txHash}>
               <InfoText>
                 <StyledLink to={details.transaction(txHash)}>{getShortHash(txHash)}</StyledLink>
@@ -134,12 +139,16 @@ const DelegationDraw: React.FC<IDelegationDrawProps> = ({ toggleModal, showBackB
           </Info>
           <Info>
             <StyledADASymbol>
-              <ADAicon />
+              <ADAicon fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light} />
             </StyledADASymbol>
             <InfoText data-testid="delegator-delegation-fee">{formatADAFull(fee)}</InfoText>
           </Info>
           <Info>
-            <TimeIcon fill={theme.palette.secondary.light} />
+            <CustomIcon
+              icon={theme.isDark ? TimeIconDark : TimeIcon}
+              height={30}
+              fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
+            />
             <InfoText>{formatDateTimeLocal(time)}</InfoText>
           </Info>
         </InfoGroup>

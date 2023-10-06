@@ -1,14 +1,14 @@
 name: Run Explorer e2e Tests
 on:
   push:
-  
+
   pull_request:
-  
+
   workflow_dispatch:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3

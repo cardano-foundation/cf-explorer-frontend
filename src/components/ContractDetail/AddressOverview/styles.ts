@@ -1,6 +1,8 @@
 import { alpha, Paper, TextField, styled, Box, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 
+import Card from "src/components/commons/Card";
+
 export const StyledAAmount = styled(Box)`
   display: flex;
   color: ${({ theme }) => theme.palette.secondary.main};
@@ -50,7 +52,7 @@ export const LogoEmpty = styled(Box)`
   height: 25px;
   background: ${(props) => alpha(props.theme.palette.common.white, 0.6)};
   border-radius: 50%;
-  border: 1px solid ${(props) => props.theme.palette.border.main};
+  border: 1px solid ${(props) => props.theme.palette.primary[200]};
 `;
 
 export const GridContainer = styled(Grid)``;
@@ -58,12 +60,13 @@ export const GridItem = styled(Grid)``;
 
 export const RedirectButton = styled(Box)(({ theme }) => ({
   textTransform: "capitalize",
-  backgroundColor: theme.palette.secondary.main,
-  color: theme.palette.common.white,
+  backgroundColor: theme.mode === "light" ? theme.palette.secondary.main : theme.palette.primary.main,
+  color: theme.palette.secondary[0],
   padding: `${theme.spacing(1)} ${theme.spacing(2)} `,
   ":hover": {
-    backgroundColor: alpha(theme.palette.secondary.main, 0.8)
-  }
+    backgroundColor: theme.isDark ? theme.palette.primary.dark : alpha(theme.palette.secondary.main, 0.8)
+  },
+  borderRadius: 8
 }));
 
 export const BannerSuccess = styled(Box)`
@@ -71,11 +74,59 @@ export const BannerSuccess = styled(Box)`
   font-size: 18px;
   line-height: 21px;
   text-align: center;
-  color: ${(props) => props.theme.palette.success[800]};
-  background: ${(props) => props.theme.palette.success[100]};
+  color: ${(props) => (props.theme.isDark ? props.theme.palette.success[700] : props.theme.palette.success[800])};
   border: ${(props) => props.theme.palette.primary[200]};
   border-radius: 10px;
   width: 100%;
   padding: 12px 0px;
   margin: 20px 0px;
+`;
+
+export const TimeDuration = styled("small")(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  display: "block",
+  textAlign: "left",
+  flex: 1,
+  [theme.breakpoints.down("md")]: {
+    marginTop: 8
+  }
+}));
+
+export const CardContainer = styled(Card)`
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    h2 {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+  }
+`;
+
+export const WrapButtonExtra = styled(Box)(({ theme }) => ({
+  display: "flex",
+  gap: 10,
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    width: "100%"
+  }
+}));
+
+export const StyledVerifyButton = styled(Box)(({ theme }) => ({
+  color: theme.palette.success[800],
+  background: theme.palette.success[100],
+  border: `2px solid ${theme.isDark ? theme.palette.warning[800] : theme.palette.success.main}`,
+  cursor: "pointer",
+  borderRadius: 4,
+  padding: "8px 14px",
+  fontWeight: 700,
+  lineHeight: 1.2,
+  fontSize: "14px",
+  height: "34px",
+  boxSizing: "border-box"
+}));
+
+export const VerifyScriptContainer = styled(Box)`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 10px;
 `;

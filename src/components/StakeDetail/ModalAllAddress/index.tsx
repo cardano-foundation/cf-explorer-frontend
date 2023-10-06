@@ -66,6 +66,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
           columns={columns}
           maxHeight={maxHeightCalc}
           total={{ title: t("common.totalEpoch"), count: fetchData.total }}
+          isModal={true}
           pagination={{
             onChange(page, size) {
               setPage(page);

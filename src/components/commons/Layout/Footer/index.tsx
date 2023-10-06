@@ -11,7 +11,7 @@ import FooterMenu from "../Sidebar/FooterMenu";
 const StyledFooter = styled("footer")`
   height: 60px;
   padding: 0px 10px;
-  border-top: 1px solid ${(props) => props.theme.palette.border.main};
+  border-top: 1px solid ${(props) => props.theme.palette.primary[200]};
   ${({ theme }) => theme.breakpoints.down("md")} {
     height: unset;
     padding: 10px;
@@ -31,6 +31,8 @@ const FooterContainer = styled(Container)`
 `;
 
 const Copyright = styled("small")`
+  display: flex;
+  gap: 3px;
   color: ${(props) => props.theme.palette.secondary.light};
   font-family: var(--font-family-title);
   ::first-letter {
@@ -40,8 +42,15 @@ const Copyright = styled("small")`
   }
   ${({ theme }) => theme.breakpoints.down("md")} {
     width: 100%;
-    text-align: center;
+    justify-content: center;
   }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    flex-direction: column;
+  }
+`;
+
+const Version = styled("span")`
+  text-wrap: nowrap;
 `;
 
 const RefContainer = styled(Box)`
@@ -61,12 +70,15 @@ const RefContainer = styled(Box)`
   }
 `;
 
-const DotDivide = styled(Box)`
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: ${(props) => props.theme.palette.primary.main};
-`;
+const DotDivide = styled(Box)(({ theme }) => ({
+  width: "4px",
+  height: "4px",
+  borderRadius: "50%",
+  background: theme.palette.primary.main,
+  [theme.breakpoints.down("sm")]: {
+    display: "none"
+  }
+}));
 
 const LinkTo = styled(Link)`
   color: ${(props) => `${props.theme.palette.primary.main} !important`};
@@ -75,11 +87,14 @@ const LinkTo = styled(Link)`
 const Footer: React.FC = () => {
   const { t } = useTranslation();
   return (
-    <StyledFooter data-testid="footer">
+    <StyledFooter data-testid="footer" id="footer">
       <FooterContainer>
         <FooterMenu bottom={true} />
         <Copyright data-testid="footer-text">
-          &copy; {new Date().getFullYear()} {t("common.copyright")}: {APP_VERSION}
+          &copy; {new Date().getFullYear()} {t("common.copyright")}{" "}
+          <Version>
+            {t("common.version")}: {APP_VERSION}
+          </Version>
         </Copyright>
         <RefContainer>
           <LinkTo to={routers.FAQ} rel="noopener noreferrer">

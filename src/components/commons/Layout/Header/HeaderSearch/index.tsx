@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 import React, { FormEvent, useState, useEffect, useCallback } from "react";
-import { Backdrop, Box, SelectChangeEvent, CircularProgress } from "@mui/material";
+import { Backdrop, Box, SelectChangeEvent, CircularProgress, useTheme } from "@mui/material";
 import { stringify } from "qs";
 import { BiChevronDown } from "react-icons/bi";
 import { GoChevronRight } from "react-icons/go";
@@ -9,16 +9,16 @@ import { RouteComponentProps, useHistory, withRouter } from "react-router-dom";
 import { isNil, isObject, omitBy } from "lodash";
 import { useTranslation } from "react-i18next";
 
-import { HeaderSearchIcon } from "src/commons/resources";
+import { HeaderSearchIconComponent } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { API } from "src/commons/utils/api";
 import defaultAxios from "src/commons/utils/axios";
 import { formatLongText, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import {
   Form,
-  Image,
   Option,
   OptionsWrapper,
   SelectOption,
@@ -86,6 +86,7 @@ const RESULT_SIZE = 5;
 const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, history }) => {
   const [{ search, filter }, setValues] = useState<FormValues>({ ...intitalValue });
   const [showOption, setShowOption] = useState(false);
+  const theme = useTheme();
   const [error, setError] = useState("");
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const [dataSearchAll, setDataSearchAll] = useState<IResponseSearchAll | undefined>();
@@ -217,6 +218,8 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   };
 
   const getKeyIfOnlyOneNonNullResult = (data: IResponseSearchAll | undefined) => {
+    if (data?.validTokenName && data?.validPoolName) return "";
+
     let count = 0;
     let keyName = "";
     for (const key in data) {
@@ -413,6 +416,18 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
         value={filter}
         IconComponent={BiChevronDown}
         home={home ? 1 : 0}
+        MenuProps={{
+          MenuListProps: {
+            sx: {
+              bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+            }
+          },
+          PaperProps: {
+            sx: {
+              bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+            }
+          }
+        }}
       >
         {options.map(({ value, label }) => (
           <SelectOption data-testid="filter-options" key={value} value={value} home={home ? 1 : 0}>
@@ -465,7 +480,13 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
         </SubmitButton>
       ) : (
         <SubmitButton type="submit" home={home ? 1 : 0} disabled={!search.trim()}>
-          <Image src={HeaderSearchIcon} alt="search" home={home ? 1 : 0} />
+          <CustomIcon
+            icon={HeaderSearchIconComponent}
+            stroke={theme.palette.secondary.light}
+            fill={theme.palette.secondary[0]}
+            height={home ? 24 : 20}
+            width={home ? 24 : 20}
+          />
         </SubmitButton>
       )}
     </Form>
@@ -500,7 +521,6 @@ export const OptionsSearch = ({
   totalResult
 }: OptionProps) => {
   const history = useHistory();
-
   const listOptionsTokensAndPools = dataSearchTokensAndPools?.map((i) => {
     return {
       suggestText: (
@@ -560,14 +580,15 @@ export const OptionsSearch = ({
                 cb: () => history.push(addressLink),
                 formatter: getShortWallet
               };
-            case "token":
-              return {
-                suggestText: "Search for a Token by",
-                cb: () => history.push(details.token(encodeURIComponent((value || "").trim().toLocaleLowerCase()))),
-                formatter: getShortWallet
-              };
             case "validTokenName":
               if (data.validTokenName) {
+                if (data.token) {
+                  return {
+                    suggestText: "Search for a Token by",
+                    cb: () => history.push(details.token(data?.token?.fingerprint)),
+                    formatter: formatLongText
+                  };
+                }
                 return {
                   suggestText: "Search for a Token by",
                   cb: () =>
@@ -578,15 +599,15 @@ export const OptionsSearch = ({
                 };
               }
               return;
-            case "pool":
-              return {
-                suggestText: "Search for a Pool by",
-                cb: () =>
-                  history.push(details.delegation(encodeURIComponent((value || "").trim().toLocaleLowerCase()))),
-                formatter: getShortWallet
-              };
             case "validPoolName":
               if (data?.validPoolName) {
+                if (data.pool) {
+                  return {
+                    suggestText: "Search for a Pool by",
+                    cb: () => history.push(details.delegation(data?.pool?.poolId)),
+                    formatter: formatLongText
+                  };
+                }
                 return {
                   suggestText: "Search for a Pool by",
                   cb: () =>

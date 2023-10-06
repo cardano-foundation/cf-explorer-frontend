@@ -91,7 +91,7 @@ const OverviewTab = () => {
             ? isMobile
               ? getShortWallet(userData.address || "")
               : userData?.address
-            : userData?.email
+            : userData?.username || userData?.email
         }
         isTablet={isTablet}
       />
@@ -191,7 +191,6 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
               return (
                 <WalletItem
                   key={wallet.name}
-                  active={0}
                   connecting={0}
                   onClick={() => {
                     setSelectedWallet(wallet.name);

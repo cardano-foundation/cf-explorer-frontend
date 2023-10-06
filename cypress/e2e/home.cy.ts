@@ -55,7 +55,7 @@ describe("Home page function should work", () => {
   it("should navigate to SignIn page", () => {
     cy.getBySelector("header-signin").click();
     cy.title().should("eq", "Sign In | Cardano Blockchain Explorer");
-    cy.getBySelector("signin-title").contains(/^(Sign In)$/i);
+    cy.getBySelector("signin-title").contains("Sign In", { matchCase: false });
   });
 
   it("should change the search option", () => {

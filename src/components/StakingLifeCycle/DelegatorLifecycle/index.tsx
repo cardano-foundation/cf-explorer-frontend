@@ -7,7 +7,6 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DelegationIcon,
   DeredistrationIcon,
-  InfoIcon,
   NextIcon,
   PreviousIcon,
   RegistrationIcon,
@@ -17,6 +16,8 @@ import {
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import {
   DelegationProcessDescription,
@@ -62,6 +63,7 @@ interface Props {
 
 const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: Props) => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const history = useHistory();
   const { isMobile } = useScreen();
   const { palette } = useTheme();
@@ -230,7 +232,6 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
                   {step.icon}
                 </StepButton>
                 <TitleStep
-                  px={2}
                   sx={{
                     color: colorProps.textColor
                   }}
@@ -245,10 +246,11 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       <StepHeader>
         <StyledBox>
           <TabTitle>{stepper[currentStep].title}</TabTitle>
-          <InfoIcon style={{ cursor: "pointer" }} onClick={() => setOpenDescriptionModal(true)} />
+          <InfoSolidIcon onClick={() => setOpenDescriptionModal(true)} />
         </StyledBox>
         <ADATransfersButton onClick={() => setOpen(true)}>
-          <TranferIcon /> {t("common.adaTransfers")}
+          <CustomIcon icon={TranferIcon} width={20} height={20} fill={theme.palette.secondary[0]} />
+          {t("common.adaTransfers")}
         </ADATransfersButton>
       </StepHeader>
       <Box>{stepper[currentStep].description}</Box>
@@ -273,7 +275,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
               setCurrentStep(stepper.findIndex((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1]));
             }}
           >
-            <PreviousIcon />
+            <CustomIcon icon={PreviousIcon} height={30} fill={theme.palette.secondary.main} />
             <ButtonText>
               {t("common.previous")}:{" "}
               {stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid - 1])?.title}
@@ -305,7 +307,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
               ? t("common.viewTabular")
               : stepper.find((step) => step.keyCheckShow === tabsValid[+indexTabsValid + 1])?.title}
           </ButtonText>
-          <NextIcon />
+          <CustomIcon icon={NextIcon} height={30} fill={theme.palette.secondary[0]} />
         </NextButton>
       </StyledGroupButton>
       <ADATransferModal open={open} handleCloseModal={() => setOpen(false)} />

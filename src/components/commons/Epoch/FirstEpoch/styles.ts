@@ -7,6 +7,9 @@ export const Container = styled(Box)(({ theme }) => ({
   "& > div > div:first-of-type": {
     display: "none"
   },
+  "& .MuiGrid-container": {
+    background: theme.palette.secondary[0]
+  },
   [theme.breakpoints.up("lg")]: {
     "& .MuiGrid-container": {
       alignItems: "center"

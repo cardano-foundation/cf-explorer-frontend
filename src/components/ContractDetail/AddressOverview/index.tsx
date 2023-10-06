@@ -1,33 +1,51 @@
 import { Box, Button } from "@mui/material";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
-import VerifyScript from "src/components/VerifyScript";
 import useFetch from "src/commons/hooks/useFetch";
+import { useScreen } from "src/commons/hooks/useScreen";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { exchangeADAToUSD, formatADAFull, getShortWallet } from "src/commons/utils/helper";
-import { RootState } from "src/stores/types";
-import CardAddress from "src/components/share/CardAddress";
-import Card from "src/components/commons/Card";
 import TokenAutocomplete from "src/components/TokenAutocomplete";
 import ADAicon from "src/components/commons/ADAIcon";
-import { useScreen } from "src/commons/hooks/useScreen";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import FormNowMessage from "src/components/commons/FormNowMessage";
+import CardAddress from "src/components/share/CardAddress";
+import { RootState } from "src/stores/types";
+import VerifyScript from "src/components/VerifyScript";
+import { Uppercase } from "src/components/commons/CustomText/styles";
 
-import { GridContainer, GridItem, Pool, RedirectButton, StyledAAmount, BannerSuccess } from "./styles";
+import {
+  BannerSuccess,
+  CardContainer,
+  GridContainer,
+  GridItem,
+  Pool,
+  RedirectButton,
+  StyledAAmount,
+  StyledVerifyButton,
+  TimeDuration,
+  VerifyScriptContainer,
+  WrapButtonExtra
+} from "./styles";
 
 interface Props {
   data: WalletAddress | null;
   loading: boolean;
+  lastUpdated?: number;
 }
 
-const AddressOverview: React.FC<Props> = ({ data, loading }) => {
+const AddressOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
   const { t } = useTranslation();
+  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const { data: dataStake, loading: loadingStake } = useFetch<WalletStake>(
-    data?.stakeAddress ? `${API.STAKE.DETAIL}/${data?.stakeAddress}` : ""
+    data?.stakeAddress ? `${API.STAKE.DETAIL}/${data?.stakeAddress}` : "",
+    undefined,
+    false,
+    blockNo
   );
   const history = useHistory();
   const { adaRate } = useSelector(({ system }: RootState) => system);
@@ -98,19 +116,34 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
   ];
 
   return (
-    <Card
-      title={<VerifyScript verified={!!data?.verifiedContract} setShowBanner={setShowBanner} />}
+    <CardContainer
+      title={
+        <VerifyScriptContainer id="VerifyScriptContainer">
+          <Box>{t("head.page.constactDetails")}</Box>
+          {data?.verifiedContract ? (
+            <StyledVerifyButton>
+              <Uppercase> {t("common.verifiedScript") + " "}</Uppercase>
+            </StyledVerifyButton>
+          ) : null}
+        </VerifyScriptContainer>
+      }
       extra={
-        <RedirectButton
-          width={isMobile ? "100%" : "auto"}
-          component={Button}
-          onClick={() => history.push(details.address(data?.address))}
-        >
-          {t("common.viewAddressDetail")}
-        </RedirectButton>
+        <WrapButtonExtra>
+          {!data?.verifiedContract ? <VerifyScript setShowBanner={setShowBanner} /> : null}
+          <RedirectButton
+            width={isMobile ? "100%" : "auto"}
+            component={Button}
+            onClick={() => history.push(details.address(data?.address))}
+          >
+            {t("common.viewAddressDetail")}
+          </RedirectButton>
+        </WrapButtonExtra>
       }
     >
       {showBanner && <BannerSuccess>{t("message.contracctVarified")}</BannerSuccess>}
+      <TimeDuration>
+        <FormNowMessage time={lastUpdated} />
+      </TimeDuration>
       <GridContainer container spacing={2} mt={2}>
         <GridItem item xs={12} md={6}>
           <Box overflow="hidden" borderRadius={3} height={"100%"}>
@@ -136,7 +169,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading }) => {
           </Box>
         </GridItem>
       </GridContainer>
-    </Card>
+    </CardContainer>
   );
 };
 

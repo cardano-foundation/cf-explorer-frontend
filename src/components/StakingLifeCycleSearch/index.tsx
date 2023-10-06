@@ -1,21 +1,86 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Box, styled, Button, Typography } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useKey } from "react-use";
 import { useTranslation } from "react-i18next";
 
-import { HeaderSearchIcon } from "src/commons/resources";
+import { HeaderSearchIconComponent, WhiteSearchIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import InfoGraphicModal from "src/components/InfoGraphicModal";
 import { useScreen } from "src/commons/hooks/useScreen";
+import { getRandomInt } from "src/commons/utils/helper";
+import { API } from "src/commons/utils/api";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { NETWORK, NETWORKS } from "src/commons/utils/constants";
+import dataMainnet from "src/commons/configs/mainnet.json";
+
+import {
+  StyledContainer,
+  Title,
+  SearchTitle,
+  SearchContainer,
+  StyledInput,
+  SubmitButton,
+  Image,
+  SearchButton,
+  TextOR,
+  ExampleBox,
+  StyledIconQuestion
+} from "./styles";
+// eslint-disable-next-line import/order
+import DropdownMenu from "../commons/DropdownMenu";
+
+const LIMIT_SIZE = 25;
+
+enum BROWSE_VALUES {
+  DELEGATOR = "DELEGATOR",
+  STAKE_POOL = "STAKE_POOL"
+}
+
+import CustomIcon from "../commons/CustomIcon";
+
+const isMainnet = NETWORK === NETWORKS.mainnet;
 
 const StakingLifeCycleSearch = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
+
+  const { data: delegators, initialized: delegatorsInitialzzed } = useFetchList<Delegator>(
+    isMainnet ? "" : API.STAKE.TOP_DELEGATOR,
+    {
+      page: 0,
+      size: LIMIT_SIZE
+    }
+  );
+  const { data: pools, initialized: poolsInitialzzed } = useFetchList<Delegators>(
+    isMainnet ? "" : API.DELEGATION.POOL_LIST,
+    {
+      page: 0,
+      size: LIMIT_SIZE,
+      sort: "",
+      search: ""
+    }
+  );
+
   const history = useHistory();
   const { isMobile } = useScreen();
   const [openInfoModal, setOpenInfoModal] = useState(false);
   const [value, setValue] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const themes = useTheme();
+
+  const BROWSER_OPTIONS = [
+    {
+      label: t("dropdown.browseDelegator"),
+      value: BROWSE_VALUES.DELEGATOR,
+      disabled: isMainnet ? false : !delegatorsInitialzzed
+    },
+    {
+      label: t("dropdown.stakePool"),
+      value: BROWSE_VALUES.STAKE_POOL,
+      disabled: isMainnet ? false : !poolsInitialzzed
+    }
+  ];
 
   const hanldeSearch = () => {
     if (!value) {
@@ -30,8 +95,20 @@ const StakingLifeCycleSearch = () => {
   useKey("enter", hanldeSearch);
 
   useEffect(() => {
-    document.title = "Welcome to Staking Lifecycle | Cardano Blockchain Explorer";
-  }, []);
+    document.title = `${t("common.welcomeStakingLifecycle")} | ${t("head.page.dashboard")}`;
+  }, [t]);
+
+  const handleSelect = (value: string) => {
+    if (value === BROWSE_VALUES.DELEGATOR) {
+      const listStakeAddress = isMainnet ? dataMainnet.stakeAddresses : delegators.map(({ stakeKey }) => stakeKey);
+      const rndIndex = getRandomInt(listStakeAddress.length);
+      history.push(details.staking(listStakeAddress[rndIndex]));
+    } else {
+      const listPools = isMainnet ? dataMainnet.poolIds : pools.map(({ poolId }) => poolId);
+      const rndIndex = getRandomInt(listPools.length);
+      history.push(details.spo(listPools[rndIndex]));
+    }
+  };
 
   return (
     <StyledContainer>
@@ -49,7 +126,11 @@ const StakingLifeCycleSearch = () => {
       </Title>
       <SearchTitle>
         {t("common.searchPoolDesc")}
-        <InfoLink onClick={() => setOpenInfoModal((pre) => !pre)}>{t("common.whatCardano")}</InfoLink>
+        <StyledIconQuestion
+          onClick={() => setOpenInfoModal((pre) => !pre)}
+          color={themes.palette.primary.main}
+          size={20}
+        />
       </SearchTitle>
       <Box>
         <SearchContainer mx={"auto"}>
@@ -67,109 +148,28 @@ const StakingLifeCycleSearch = () => {
             }}
           />
           <SubmitButton onClick={hanldeSearch}>
-            <Image src={HeaderSearchIcon} alt="Search" />
+            <CustomIcon
+              icon={HeaderSearchIconComponent}
+              stroke={theme.palette.secondary.light}
+              fill={theme.palette.secondary[0]}
+              height={22}
+            />
           </SubmitButton>
         </SearchContainer>
-        <Box color={({ palette }) => palette.error[700]}>{error}</Box>
+        <Box color={({ palette }) => palette.error[700]} sx={{ marginBottom: "20px" }}>
+          {error}
+        </Box>
       </Box>
       <InfoGraphicModal open={openInfoModal} onClose={() => setOpenInfoModal(false)} />
+      <ExampleBox bgcolor={"blue"}>
+        <SearchButton onClick={hanldeSearch}>
+          <Image src={WhiteSearchIcon} alt="Search button" /> {t("common.search")}
+        </SearchButton>
+        <TextOR>{t("common.or")}</TextOR>
+        <DropdownMenu options={BROWSER_OPTIONS} title="Browse" handleSelect={handleSelect} />
+      </ExampleBox>
     </StyledContainer>
   );
 };
 
 export default StakingLifeCycleSearch;
-
-export const WrapButton = styled(Button)`
-  background: ${({ theme }) => theme.palette.secondary.main};
-  padding: 12px 97px;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 19px;
-  text-align: center;
-  color: ${({ theme }) => theme.palette.common.white};
-  margin-top: 16px;
-`;
-
-export const StyledContainer = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.down("md")]: {
-    paddingBottom: "50px"
-  },
-  [theme.breakpoints.down("sm")]: {
-    padding: "37px 5px"
-  }
-}));
-
-const SearchContainer = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "start",
-  alignItems: "center",
-  maxWidth: "min(800px,80vw)",
-  background: theme.palette.secondary[0],
-  paddingLeft: 30,
-  borderRadius: 100,
-  marginBottom: 15,
-  height: 58,
-  border: `1.5px solid ${theme.palette.primary[200]}`,
-  "&:focus-within": {
-    borderColor: theme.palette.secondary.light
-  },
-  [theme.breakpoints.down("sm")]: {
-    width: "unset",
-    maxWidth: "unset"
-  }
-}));
-
-const StyledInput = styled("input")`
-  border: none;
-  width: 100%;
-  font-size: var(--font-size-text-small);
-  border-radius: 8px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const SubmitButton = styled(Button)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  box-shadow: none;
-  border-radius: 50%;
-  min-width: 60px;
-  width: 60px;
-  height: 60px;
-`;
-const Image = styled("img")`
-  width: 20px;
-  height: 20px;
-`;
-
-const Title = styled("h1")`
-  text-align: center;
-  ${({ theme }) => theme.breakpoints.down("md")} {
-    font-size: 30px;
-  }
-`;
-
-const SearchTitle = styled(Typography)(({ theme }) => ({
-  fontSize: "18px",
-  fontWeight: 700,
-  margin: "30px 0px 20px 0px",
-  color: theme.palette.secondary.main,
-  [theme.breakpoints.down("md")]: {
-    margin: "60px 0px 20px 0px",
-    padding: "0px 60px"
-  },
-  [theme.breakpoints.down("sm")]: {
-    margin: "0px 0px 20px 0px",
-    padding: "0px 5px"
-  }
-}));
-
-const InfoLink = styled("span")`
-  color: ${(props) => props.theme.palette.primary.main};
-  text-decoration: underline;
-  margin-left: 6px;
-  cursor: pointer;
-`;

@@ -22,6 +22,7 @@ interface Delegators {
   lifetimeBlock?: number;
   lifetimeRos?: number;
   epochBlock?: number;
+  tickerName?: string;
 }
 
 interface DelegationOverview {

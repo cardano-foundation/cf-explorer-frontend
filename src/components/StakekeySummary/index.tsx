@@ -1,7 +1,7 @@
 import { useState } from "react";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
-import { Box, CircularProgress, IconButton, styled } from "@mui/material";
+import { Box, CircularProgress, IconButton, styled, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import { FetchReturnType } from "src/commons/hooks/useFetchList";
@@ -54,7 +54,7 @@ interface IStakekeySummaryProps {
 const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort, pagination, onPagination }) => {
   const { t } = useTranslation();
   const history = useHistory();
-
+  const theme = useTheme();
   const [downloadingReport, setDownloadingReport] = useState<number>();
 
   const downloadFn = async (reportId: number, fileName: string, typeExport: "CSV" | "EXCEL" = "EXCEL") => {
@@ -145,7 +145,7 @@ const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort, p
                 onClick={() => downloadFn(data.id, data.reportName)}
               >
                 <Box>
-                  <CustomIcon icon={DownloadGreenIcon} width={24} />
+                  <CustomIcon icon={DownloadGreenIcon} fill={theme.palette.success[700]} width={24} />
                 </Box>
               </Box>
             ) : (
@@ -192,7 +192,7 @@ const Status = styled("span")<{ status: string }>`
       case "GENERATED":
         return theme.palette.success[100];
       case "IN_PROGRESS":
-        return theme.palette.warning[100];
+        return theme.isDark ? theme.palette.warning[800] : theme.palette.warning[100];
       default:
         return theme.palette.success[100];
     }
@@ -205,7 +205,7 @@ const Status = styled("span")<{ status: string }>`
       case "GENERATED":
         return theme.palette.success[800];
       case "IN_PROGRESS":
-        return theme.palette.warning[800];
+        return theme.isDark ? theme.palette.warning[100] : theme.palette.warning[800];
       default:
         return theme.palette.success[800];
     }

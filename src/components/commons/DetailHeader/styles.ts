@@ -1,4 +1,4 @@
-import { alpha, Box, Grid, MenuItem, Select, Skeleton, styled } from "@mui/material";
+import { alpha, Box, Grid, MenuItem, Select, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
@@ -6,6 +6,7 @@ import { CONFIRMATION_STATUS, TRANSACTION_STATUS } from "src/commons/utils/const
 import breakpoints from "src/themes/breakpoints";
 
 import CopyButton from "../CopyButton";
+import { CommonSkeleton } from "../CustomSkeleton";
 interface CardItemProps {
   length: number;
   wide?: number;
@@ -30,12 +31,8 @@ export const BackButton = styled(Box)`
   gap: 10px;
   cursor: pointer;
   @media screen and (max-width: ${breakpoints.values.md}px) {
-    margin-top: 30px;
     position: relative;
     top: 5px;
-  }
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    margin-top: 0px;
   }
 `;
 
@@ -69,12 +66,13 @@ export const HeaderTitle = styled(Box)`
   color: ${(props) => props.theme.palette.secondary.main};
   font-size: 2.25rem;
   margin: 0.5rem 0;
+  text-transform: capitalize;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 1.5rem;
   }
 `;
 
-export const HeaderTitleSkeleton = styled(Skeleton)`
+export const HeaderTitleSkeleton = styled(CommonSkeleton)`
   height: 1em;
   width: 200px;
   max-width: 100%;
@@ -91,7 +89,7 @@ export const HeaderStatus = styled("small")<{ status?: TransactionStatus | IData
       case TRANSACTION_STATUS.PENDDING:
       case "IN_PROGRESS":
       case "SYNCING":
-        return theme.palette.warning[800];
+        return theme.isDark ? theme.palette.warning[100] : theme.palette.warning[800];
       case "FINISHED":
         return theme.palette.primary.main;
       default:
@@ -107,7 +105,7 @@ export const HeaderStatus = styled("small")<{ status?: TransactionStatus | IData
       case TRANSACTION_STATUS.PENDDING:
       case "IN_PROGRESS":
       case "SYNCING":
-        return theme.palette.warning[100];
+        return theme.isDark ? theme.palette.warning[800] : theme.palette.warning[100];
       case "FINISHED":
         return theme.palette.primary[100];
       default:
@@ -126,7 +124,7 @@ export const StakeKeyStatus = styled("small")<{ status?: StakeStatus }>`
       case "ACTIVE":
         return theme.palette.success[800];
       default:
-        return theme.palette.secondary.light;
+        return theme.isDark ? theme.palette.warning[100] : theme.palette.secondary.light;
     }
   }};
   background-color: ${({ theme, status }) => {
@@ -134,7 +132,7 @@ export const StakeKeyStatus = styled("small")<{ status?: StakeStatus }>`
       case "ACTIVE":
         return theme.palette.success[100];
       default:
-        return alpha(theme.palette.secondary.light, 0.2);
+        return theme.isDark ? theme.palette.warning[800] : alpha(theme.palette.secondary.light, 0.2);
     }
   }};
   text-transform: uppercase;
@@ -171,16 +169,21 @@ export const SlotLeaderCopy = styled(CopyButton)`
   margin-bottom: 3px;
 `;
 
-export const DetailsInfo = styled(Grid)<{ length: number }>`
+export const DetailsInfo = styled(Grid)<{ length: number; isClickAble?: number }>`
   padding: 30px ${(props) => (props.length > 6 ? 25 : 15)}px;
   margin-top: 15px;
-  background: ${(props) => props.theme.palette.background.paper};
+  background: ${(props) => props.theme.palette.secondary[0]};
   border-radius: 15px;
   ${({ theme }) => theme.breakpoints.down("lg")} {
     padding: 30px 25px;
   }
   ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 20px 15px;
+  }
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0m;
+  &:hover {
+    box-shadow: ${({ theme, isClickAble }) =>
+      isClickAble ? "1px 2px 15px 0px " + alpha(theme.palette.secondary.light, 0.25) : ""};
   }
 `;
 
@@ -201,19 +204,19 @@ export const Icon = styled("img")`
   height: 25px;
 `;
 
-export const IconSkeleton = styled(Skeleton)`
+export const IconSkeleton = styled(CommonSkeleton)`
   width: 24px;
   height: 24px;
 `;
 
-export const DetailLabelSkeleton = styled(Skeleton)`
+export const DetailLabelSkeleton = styled(CommonSkeleton)`
   height: 1em;
   width: 50%;
   min-width: 100px;
   border-radius: 4px;
 `;
 
-export const DetailValueSkeleton = styled(Skeleton)`
+export const DetailValueSkeleton = styled(CommonSkeleton)`
   height: 1em;
   width: 50%;
   min-width: 100px;
@@ -407,7 +410,7 @@ export const AllowSearchButton = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   width: 35,
   height: 35,
-  backgroundColor: theme.palette.primary[100],
+  backgroundColor: theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[100],
   top: -10,
   right: 0,
   borderRadius: 4,
@@ -424,10 +427,14 @@ export const StyledSelect = styled(Select)(({ theme }) => ({
   right: 0,
   zIndex: 101,
   backgroundColor: theme.palette.secondary[0],
+  color: theme.palette.secondary.main,
   borderRadius: 8,
   height: 35,
   fieldset: {
     border: "none"
+  },
+  "& .MuiSelect-icon": {
+    color: theme.palette.secondary.main
   }
 }));
 

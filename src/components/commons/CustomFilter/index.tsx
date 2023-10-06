@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Box, Button, ClickAwayListener, IconButton, MenuList } from "@mui/material";
+import { Box, Button, ClickAwayListener, IconButton, MenuList, useTheme } from "@mui/material";
 import moment from "moment";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -8,11 +8,10 @@ import {
   ArrowFromTopIcon,
   CalenderIcon,
   FilterIC,
-  ResetIcon,
-  SearchIcon
+  HeaderSearchIconComponent,
+  ResetIcon
 } from "src/commons/resources";
 
-import DateRangeModal, { DATETIME_PARTTEN } from "./DateRangeModal";
 import CustomIcon from "../CustomIcon";
 import { Option } from "../Filter";
 import {
@@ -23,6 +22,7 @@ import {
   FilterListItemText,
   FilterMenuItem
 } from "../Filter/styles";
+import DateRangeModal, { DATETIME_PARTTEN } from "./DateRangeModal";
 import { AdditionContainer, StyledInput, StyledListItemIcon } from "./styles";
 
 export interface FilterParams {
@@ -49,29 +49,37 @@ const CustomFilter: React.FC<Props> = (props) => {
   const [search, setSearch] = useState("");
   const inputRef = useRef<HTMLInputElement | null>(null);
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const theme = useTheme();
 
   const options: Option[] = [
     {
       label: t("filter.latestFirst"),
-      icon: <CustomIcon icon={ArrowFromTopIcon} fill="currentColor" width={20} />,
+      icon: <CustomIcon icon={ArrowFromTopIcon} fill={theme.palette.secondary.light} width={20} />,
       value: "latest",
       active: filterValue?.sort === `${sortKey},DESC`
     },
     {
       label: t("filter.firstLatest"),
-      icon: <CustomIcon icon={ArrowFromBottomIcon} fill="currentColor" width={20} />,
+      icon: <CustomIcon icon={ArrowFromBottomIcon} fill={theme.palette.secondary.light} width={20} />,
       value: "first",
       active: filterValue?.sort === `${sortKey},ASC`
     },
     {
       label: t("filter.daterange"),
-      icon: <CustomIcon icon={CalenderIcon} fill="currentColor" width={20} />,
+      icon: <CustomIcon icon={CalenderIcon} fill={theme.palette.secondary.light} width={20} />,
       value: "dateRange",
       active: !!(filterValue?.toDate && filterValue?.fromDate)
     },
     {
       label: searchLabel,
-      icon: <CustomIcon icon={SearchIcon} stroke="currentColor" width={22} />,
+      icon: (
+        <CustomIcon
+          icon={HeaderSearchIconComponent}
+          stroke={theme.palette.secondary.light}
+          fill={theme.palette.secondary[0]}
+          height={22}
+        />
+      ),
       value: "search",
       active: !!filterValue?.search
     }
@@ -136,13 +144,12 @@ const CustomFilter: React.FC<Props> = (props) => {
               <CustomIcon
                 icon={FilterIC}
                 width={18}
-                color={(theme) => theme.palette.secondary.light}
-                fill="currentColor"
+                fill={theme.mode === "dark" ? theme.palette.primary.main : theme.palette.secondary.light}
               />
             </FilterIconContainer>
           }
         >
-          Filter
+          {t("common.filter")}
         </FilterButton>
         {open && (
           <FilterContent>
@@ -167,7 +174,12 @@ const CustomFilter: React.FC<Props> = (props) => {
                       }}
                       sx={{ marginLeft: "5px" }}
                     >
-                      <CustomIcon icon={SearchIcon} width={20} />
+                      <CustomIcon
+                        icon={HeaderSearchIconComponent}
+                        stroke={theme.palette.secondary.light}
+                        fill={theme.palette.secondary[0]}
+                        height={22}
+                      />
                     </IconButton>
                   }
                   value={search}
@@ -199,7 +211,7 @@ const CustomFilter: React.FC<Props> = (props) => {
               onClick={handleReset}
             >
               <Box mr={1}>{t("common.reset")}</Box>
-              <ResetIcon />
+              <CustomIcon icon={ResetIcon} fill={theme.palette.primary.main} width={18} />
             </Box>
           </FilterContent>
         )}

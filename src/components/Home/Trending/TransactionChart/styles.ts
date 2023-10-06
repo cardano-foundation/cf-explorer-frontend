@@ -1,6 +1,7 @@
-import { Box, Skeleton as SkeletonMUI, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 
 import { BoxRaised } from "src/components/commons/BoxRaised";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
 import { TypeChart } from ".";
 
@@ -71,7 +72,7 @@ export const Title = styled("h3")`
     content: "";
     width: 50px;
     height: 4px;
-    background: ${({ theme }) => theme.palette.primary[200]};
+    background: ${({ theme }) => (theme.mode === "light" ? theme.palette.primary[200] : theme.palette.primary.main)};
   }
 `;
 
@@ -87,7 +88,7 @@ export const BoxInfo = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("md")]: {
     border: "none",
     padding: 0,
     minHeight: 0,
@@ -102,7 +103,7 @@ export const InfoItem = styled(Box)(({ theme }) => ({
     borderBottom: "none"
   }
 }));
-export const Skeleton = styled(SkeletonMUI)(() => ({
+export const Skeleton = styled(CommonSkeleton)(() => ({
   height: 300,
   borderRadius: 12
 }));
@@ -113,7 +114,7 @@ export const ColorChart = styled(Box)<{ type: TypeChart }>(({ theme, type }) => 
       case "trx":
         return theme.palette.success[700];
       case "simple":
-        return theme.palette.primary[500];
+        return theme.mode === "light" ? theme.palette.primary[500] : theme.palette.primary.main;
       case "complex":
         return theme.palette.warning[700];
 

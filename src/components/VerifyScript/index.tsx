@@ -1,22 +1,20 @@
-import { useCallback, useContext, useState, SetStateAction, Dispatch } from "react";
-import { Box } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { Button } from "@mui/material";
+import { Dispatch, SetStateAction, useCallback, useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 
+import { API } from "src/commons/utils/api";
 import { defaultAxios } from "src/commons/utils/axios";
 import { VerifyScriptContext } from "src/pages/ContractDetail";
-import { API } from "src/commons/utils/api";
 
 import VerifyScriptModal from "./VerifyScriptModal";
 import { StyledVerifyButton, VerifyScriptContainer } from "./styles";
-import { Uppercase } from "../commons/CustomText/styles";
 
 export interface IVerifyScript {
-  verified: boolean;
   setShowBanner?: Dispatch<SetStateAction<boolean>>;
 }
 
-export const VerifyScript = ({ verified, setShowBanner }: IVerifyScript) => {
+export const VerifyScript = ({ setShowBanner }: IVerifyScript) => {
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -26,9 +24,8 @@ export const VerifyScript = ({ verified, setShowBanner }: IVerifyScript) => {
   const { refreshOverviewAddress, refreshScriptTab } = useContext(VerifyScriptContext);
 
   const handleClickVerifyButton = useCallback(() => {
-    if (verified) return;
     setOpenModal(true);
-  }, [verified]);
+  }, []);
 
   const handleCloseModal = useCallback(() => {
     setOpenModal(false);
@@ -64,10 +61,9 @@ export const VerifyScript = ({ verified, setShowBanner }: IVerifyScript) => {
 
   return (
     <>
-      <VerifyScriptContainer>
-        <Box>{t("head.page.constactDetails")}</Box>
-        <StyledVerifyButton onClick={handleClickVerifyButton} verified={+verified}>
-          <Uppercase> {verified ? t("common.verifiedScript") + " " : t("common.verifyScript")}</Uppercase>
+      <VerifyScriptContainer id="VerifyScriptContainer">
+        <StyledVerifyButton component={Button} onClick={handleClickVerifyButton}>
+          {t("common.verifyScript")}
         </StyledVerifyButton>
       </VerifyScriptContainer>
       {openModal && (

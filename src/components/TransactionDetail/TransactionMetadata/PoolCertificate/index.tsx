@@ -9,7 +9,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import Link from "src/components/commons/Link";
 
 import StakeKeyBox from "./StakeKeyBox";
-import { CardHeader, TextLabel, TextValue } from "./styles";
+import { CardHeader, TextLabel, TextValue, Wrapper } from "./styles";
 
 interface IProps {
   data: Transaction["poolCertificates"] | null;
@@ -20,12 +20,12 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
   const theme = useTheme();
 
   return (
-    <>
+    <Wrapper>
       {data
         ?.filter((d) => d.type === "POOL_REGISTRATION")
         ?.map((item, index) => {
           return (
-            <Box px="15px" key={index} mb="15px" bgcolor={theme.palette.background.paper} textAlign="left">
+            <Box px="15px" key={index} mb="15px" bgcolor={theme.palette.secondary[0]} textAlign="left">
               <CardHeader>{t("title.poolRegistrations")}</CardHeader>
               <StakeKeyBox key={index} data={item} />
             </Box>
@@ -35,7 +35,7 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
         ?.filter((d) => d.type === "POOL_DEREGISTRATION")
         ?.map((item, index) => {
           return (
-            <Box px="15px" key={index} mb="15px" bgcolor={theme.palette.background.paper} textAlign="left">
+            <Box px="15px" key={index} mb="15px" bgcolor={theme.palette.secondary[0]} textAlign="left">
               <CardHeader>{t("title.poolDeregistrations")}</CardHeader>
               <Box py={2}>
                 <Grid item xs={12} md={6}>
@@ -63,7 +63,7 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
             </Box>
           );
         })}
-    </>
+    </Wrapper>
   );
 };
 

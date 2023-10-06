@@ -96,7 +96,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, meta
           <Tab
             key={key}
             value={key}
-            style={{ padding: "12px 0px", marginRight: 40, minHeight: 50 }}
+            style={{ padding: "12px 0px", marginRight: 40, minHeight: 50, marginTop: 30 }}
             iconPosition="start"
             label={
               <Box

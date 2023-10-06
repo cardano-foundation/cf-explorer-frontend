@@ -1,24 +1,28 @@
 import { Box, styled } from "@mui/material";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { NETWORKS } from "src/commons/utils/constants";
 
-export const NavbarContainer = styled("nav")<{ vh: number }>(({ theme, vh }) => ({
-  position: "relative",
-  width: "100%",
-  height: "100vh",
-  minHeight: vh,
-  maxHeight: "fill-available",
-  overflow: "hidden",
-  padding: "25px 0px 60px",
-  textAlign: "left",
-  boxSizing: "border-box",
-  background: theme.palette.primary[100],
-  [theme.breakpoints.down("md")]: {
-    backgroundColor: theme.palette.primary[100],
-    padding: "16px 0px"
-  }
-}));
+export const NavbarContainer = styled("nav")<{ vh: number }>(({ theme, vh }) => {
+  const { theme: themeMode } = useSelector(({ theme }: RootState) => theme);
+  return {
+    position: "relative",
+    width: "100%",
+    height: "100vh",
+    minHeight: vh,
+    maxHeight: "fill-available",
+    overflow: "hidden",
+    padding: "25px 0px 60px",
+    textAlign: "left",
+    boxSizing: "border-box",
+    background: themeMode === "light" ? theme.palette.primary[100] : theme.palette.secondary[100],
+    [theme.breakpoints.down("md")]: {
+      backgroundColor: themeMode === "light" ? theme.palette.primary[100] : theme.palette.primary[500],
+      padding: "16px 0px"
+    }
+  };
+});
 
 export const HeaderTop = styled("div")`
   display: flex;
@@ -41,13 +45,13 @@ export const LogoLink = styled(Link)<{ open?: number }>`
   ${({ theme }) => theme.breakpoints.down("md")} {
     height: 44px;
     width: 155px;
-    margin-left: 16px;
+    margin-left: 20px;
     margin-bottom: 16px;
   }
 `;
 
 export const NavBarLogo = styled("img")<{ sidebar: number }>(({ theme }) => ({
-  height: 50,
+  height: 40,
   width: "auto",
   [theme.breakpoints.down("md")]: {
     height: 44

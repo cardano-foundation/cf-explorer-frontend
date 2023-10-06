@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, Store } from "@reduxjs/toolkit";
 
 import breakpoints from "../themes/breakpoints";
-import { SupportedWallets, ThemeType, UserDataType, UserStoreType } from "../types/user";
+import { SupportedWallets, UserDataType, UserStoreType } from "../types/user";
 
 let userStore: Store | undefined;
 
@@ -10,7 +10,6 @@ export const setStoreUser = (store: Store) => {
 };
 
 const initialState: UserStoreType = {
-  theme: "light",
   userData: null,
   chainID: null,
   address: null,
@@ -29,10 +28,6 @@ const storeWallet = createSlice({
   name: "storeUser",
   initialState,
   reducers: {
-    setTheme: (state, action: PayloadAction<ThemeType>) => ({
-      ...state,
-      theme: action.payload
-    }),
     setUserData: (state, action: PayloadAction<UserDataType | null>) => ({
       ...state,
       userData: action.payload
@@ -83,10 +78,6 @@ const storeWallet = createSlice({
     })
   }
 });
-
-export const setTheme = (theme: ThemeType) => {
-  userStore?.dispatch(storeWallet.actions.setTheme(theme));
-};
 
 export const setUserData = (userData: UserDataType | null) => {
   userStore?.dispatch(storeWallet.actions.setUserData(userData));
