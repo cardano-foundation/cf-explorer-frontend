@@ -103,7 +103,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         </Box>
         {data?.logoUrl && (
           <Box
-            bgcolor={theme.palette.secondary[0]}
+            bgcolor={theme.palette.common.white}
             border={`1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`}
             borderRadius={1}
             component={"img"}
