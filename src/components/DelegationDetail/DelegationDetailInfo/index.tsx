@@ -120,7 +120,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               <PoolIdValue>{isMobile ? getShortWallet(data?.hashView) : data?.hashView}</PoolIdValue>
             </Link>
           </CustomTooltip>
-          <CopyButton text={poolId} />
+          <CopyButton text={data?.hashView} />
         </PoolId>
       )}
       {data?.homepage && (
