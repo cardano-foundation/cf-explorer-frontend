@@ -100,7 +100,16 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           </CustomTooltip>
           <BookmarkButton keyword={poolId} type="POOL" />
         </Box>
-        <Box component={"img"} src={data?.logoUrl || ""} width={"64px"} />
+        {data?.logoUrl && (
+          <Box
+            bgcolor={theme.palette.secondary[0]}
+            border={`1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`}
+            borderRadius={1}
+            component={"img"}
+            src={data?.logoUrl || ""}
+            width={"64px"}
+          />
+        )}
       </HeaderContainer>
       <PoolId>
         <PoolIdLabel>{t("common.poolId")}: </PoolIdLabel>
