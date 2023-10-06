@@ -12,7 +12,8 @@ import {
   SearchIcon
 } from "src/commons/resources";
 import { lists, routers } from "src/commons/routers";
-import { setOnDetailView, setSidebar, setTheme } from "src/stores/user";
+import { setOnDetailView, setSidebar } from "src/stores/user";
+import { setTheme } from "src/stores/theme";
 
 import CustomIcon from "../../CustomIcon";
 import TopSearch from "../Sidebar/TopSearch";
@@ -43,7 +44,8 @@ const Header: React.FC<RouteComponentProps> = (props) => {
   const { history } = props;
   const { isMobile } = useScreen();
   const home = history.location.pathname === "/";
-  const { sidebar, theme: themeMode } = useSelector(({ user }: RootState) => user);
+  const { sidebar } = useSelector(({ user }: RootState) => user);
+  const { theme: themeMode } = useSelector(({ theme }: RootState) => theme);
   const [openSearch, setOpenSearch] = React.useState(false);
   const handleToggle = () => setSidebar(!sidebar);
   const theme = useTheme();

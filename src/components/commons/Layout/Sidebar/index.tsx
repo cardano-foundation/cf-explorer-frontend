@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import { useWindowSize } from "react-use";
 
 import { LogoDarkmodeFullIcon, LogoDarkmodeShortIcon, LogoFullIcon, LogoIcon } from "src/commons/resources";
+import { setTheme } from "src/stores/theme";
 import { RootState } from "src/stores/types";
-import { setTheme } from "src/stores/user";
 
 import SelectLanguage from "../Header/SelectLanguage";
 import SelectNetwork from "../Header/SelectNetwork";
@@ -14,7 +14,8 @@ import SidebarMenu from "./SidebarMenu";
 import { HeaderTop, LogoLink, NavBarLogo, NavbarContainer, NavbarMenuBottom, WrapButtonSelect } from "./styles";
 
 const Sidebar: React.FC = () => {
-  const { sidebar, theme } = useSelector(({ user }: RootState) => user);
+  const { sidebar } = useSelector(({ user }: RootState) => user);
+  const { theme } = useSelector(({ theme }: RootState) => theme);
   const { height } = useWindowSize();
   const getLogo = () => {
     if (theme === "light") {

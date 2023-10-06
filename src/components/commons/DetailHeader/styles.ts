@@ -432,6 +432,9 @@ export const StyledSelect = styled(Select)(({ theme }) => ({
   height: 35,
   fieldset: {
     border: "none"
+  },
+  "& .MuiSelect-icon": {
+    color: theme.palette.secondary.main
   }
 }));
 
