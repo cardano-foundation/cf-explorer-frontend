@@ -1,6 +1,7 @@
-import { Box, Card, Grid, Skeleton, styled } from "@mui/material";
+import { Box, Card, Grid, styled } from "@mui/material";
 
 import { AdaLogoIcon } from "src/components/commons/ADAIcon";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import { ThemeType } from "src/types/user";
 
 export const StatisticContainer = styled(Grid)`
@@ -43,7 +44,7 @@ export const EpochProgress = styled("h3")(({ theme }) => ({
   }
 }));
 
-export const ItemSkeleton = styled(Skeleton)`
+export const ItemSkeleton = styled(CommonSkeleton)`
   width: 100%;
   margin-top: 0.5rem;
 `;

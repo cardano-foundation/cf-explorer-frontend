@@ -60,9 +60,9 @@ const TextMenu = styled(Typography)`
 const StyledButtonMenu = styled(Button)`
   height: 51px;
   background-color: ${({ theme }) => theme.palette.primary[100]};
-  border: ${({ theme }) => `1px solid ${theme.palette.primary[200]}`};
+  border: ${({ theme }) =>
+    `2px solid ${theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary[600]}`};
   border-radius: 8px;
-  bordercolor: ${({ theme }) => `1px solid ${theme.palette.primary.main}`};
   &:hover {
     background-color: inherit;
     opacity: 0.8;

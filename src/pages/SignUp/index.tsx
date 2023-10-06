@@ -1,16 +1,17 @@
 import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment, useTheme } from "@mui/material";
 import { useEffect, useReducer, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { IoMdClose } from "react-icons/io";
 import { Link, useHistory } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 
 import useAuth from "src/commons/hooks/useAuth";
 import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessDarkIcon, SuccessIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
-import { signUp } from "src/commons/utils/userRequest";
 import { ACCOUNT_ERROR } from "src/commons/utils/constants";
+import { signUp } from "src/commons/utils/userRequest";
 import CustomIcon from "src/components/commons/CustomIcon";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import {
   BackButton,
@@ -67,6 +68,7 @@ const formReducer = (state: IForm, event: any) => {
 export default function SignUp() {
   const { t } = useTranslation();
   const history = useHistory();
+  const { isMobile } = useScreen();
   const emailTextField = useRef<HTMLInputElement | null>(null);
   const [error, setError] = useState(false);
   const { isLoggedIn } = useAuth();
@@ -76,20 +78,18 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [checkedAgree, setCheckedAgree] = useState(false);
-  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
-
-  const updateHeight = () => {
-    setViewportHeight(window.innerHeight);
-  };
 
   useEffect(() => {
-    window.addEventListener("resize", updateHeight);
-    document.body.style.overflow = "hidden";
-    updateHeight();
-
+    document.body.style.backgroundColor =
+      theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[100];
+    document.body.style.height = isMobile ? "80vh" : "100vh";
+    document.body.style.display = "flex";
+    document.body.style.alignItems = "center";
     return () => {
-      document.body.style.overflow = "unset";
-      window.removeEventListener("resize", updateHeight);
+      document.body.style.backgroundColor = "unset";
+      document.body.style.height = "unset";
+      document.body.style.display = "unset";
+      document.body.style.alignItems = "unset";
     };
   }, []);
   useEffect(() => {
@@ -310,7 +310,7 @@ export default function SignUp() {
   };
 
   return (
-    <Container sx={{ height: `${viewportHeight}px` }}>
+    <Container>
       {!success ? (
         <WrapContent>
           <WrapTitle data-testid="signup-title">{t("page.signUp")}</WrapTitle>

@@ -1,4 +1,4 @@
-import { Box, Skeleton } from "@mui/material";
+import { Box } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
@@ -10,9 +10,10 @@ import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "s
 import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
 import ADAicon from "src/components/commons/ADAIcon";
 import CopyButton from "src/components/commons/CopyButton";
+import CustomModal from "src/components/commons/CustomModal";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ViewMoreThreeDots from "src/components/commons/ViewMoreThreeDots";
-import CustomModal from "src/components/commons/CustomModal";
 
 import { Item, ItemList, Label, LineData, StyledLink, VRFKeyText, Value } from "./styles";
 
@@ -142,12 +143,12 @@ export const RegistrationCertificateModal = ({ poolId, poolUpdateId, ...props }:
               {extra ? (
                 <Box>
                   <Label>{label}</Label>
-                  {data ? content : <Skeleton variant="rectangular" />}
+                  {data ? content : <CommonSkeleton variant="rectangular" />}
                 </Box>
               ) : (
                 <>
                   <Label>{label}</Label>
-                  {data ? content : <Skeleton variant="rectangular" />}
+                  {data ? content : <CommonSkeleton variant="rectangular" />}
                 </>
               )}
               {extra}

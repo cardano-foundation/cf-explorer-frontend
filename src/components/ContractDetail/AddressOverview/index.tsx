@@ -1,31 +1,35 @@
 import { Box, Button } from "@mui/material";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
-import VerifyScript from "src/components/VerifyScript";
 import useFetch from "src/commons/hooks/useFetch";
+import { useScreen } from "src/commons/hooks/useScreen";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { exchangeADAToUSD, formatADAFull, getShortWallet } from "src/commons/utils/helper";
-import { RootState } from "src/stores/types";
-import CardAddress from "src/components/share/CardAddress";
 import TokenAutocomplete from "src/components/TokenAutocomplete";
 import ADAicon from "src/components/commons/ADAIcon";
-import { useScreen } from "src/commons/hooks/useScreen";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import FormNowMessage from "src/components/commons/FormNowMessage";
+import CardAddress from "src/components/share/CardAddress";
+import { RootState } from "src/stores/types";
+import VerifyScript from "src/components/VerifyScript";
+import { Uppercase } from "src/components/commons/CustomText/styles";
 
 import {
+  BannerSuccess,
+  CardContainer,
   GridContainer,
   GridItem,
   Pool,
   RedirectButton,
   StyledAAmount,
-  BannerSuccess,
+  StyledVerifyButton,
   TimeDuration,
-  CardContainer
+  VerifyScriptContainer,
+  WrapButtonExtra
 } from "./styles";
 
 interface Props {
@@ -113,15 +117,27 @@ const AddressOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
 
   return (
     <CardContainer
-      title={<VerifyScript verified={!!data?.verifiedContract} setShowBanner={setShowBanner} />}
+      title={
+        <VerifyScriptContainer id="VerifyScriptContainer">
+          <Box>{t("head.page.constactDetails")}</Box>
+          {data?.verifiedContract ? (
+            <StyledVerifyButton>
+              <Uppercase> {t("common.verifiedScript") + " "}</Uppercase>
+            </StyledVerifyButton>
+          ) : null}
+        </VerifyScriptContainer>
+      }
       extra={
-        <RedirectButton
-          width={isMobile ? "100%" : "auto"}
-          component={Button}
-          onClick={() => history.push(details.address(data?.address))}
-        >
-          {t("common.viewAddressDetail")}
-        </RedirectButton>
+        <WrapButtonExtra>
+          {!data?.verifiedContract ? <VerifyScript setShowBanner={setShowBanner} /> : null}
+          <RedirectButton
+            width={isMobile ? "100%" : "auto"}
+            component={Button}
+            onClick={() => history.push(details.address(data?.address))}
+          >
+            {t("common.viewAddressDetail")}
+          </RedirectButton>
+        </WrapButtonExtra>
       }
     >
       {showBanner && <BannerSuccess>{t("message.contracctVarified")}</BannerSuccess>}
