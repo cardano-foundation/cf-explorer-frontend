@@ -201,7 +201,7 @@ const Bookmark = () => {
       key: "Added On",
       minWidth: 120,
       render: (data) => {
-        return moment(data.createdDate).utc().format("MM/DD/YYYY HH:mm:ss");
+        return moment(data.createdDate).local().format("MM/DD/YYYY HH:mm:ss");
       }
     },
     {
