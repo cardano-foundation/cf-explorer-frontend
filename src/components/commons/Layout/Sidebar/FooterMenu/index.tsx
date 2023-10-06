@@ -1,14 +1,13 @@
-import React from "react";
-import { List, styled, ListItem, Theme } from "@mui/material";
-import { useSelector } from "react-redux";
-import { RiShareLine } from "react-icons/ri";
+import { List, ListItem, Theme, styled } from "@mui/material";
 import { SystemStyleObject } from "@mui/system";
+import { RiShareLine } from "react-icons/ri";
+import { useSelector } from "react-redux";
 
 import { socials } from "src/commons/menus";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 import { RootState } from "src/stores/types";
 import { setSidebar } from "src/stores/user";
-import CustomTooltip from "src/components/commons/CustomTooltip";
-import { ThemeType } from "src/types/user";
+import { ThemeType } from "src/types/theme";
 
 export const Menu = styled(List)<{ open: number; bottom: number; themeMode: ThemeType }>`
   position: absolute;
@@ -93,7 +92,8 @@ type TProps = {
   bottom?: boolean;
 };
 const FooterMenu = ({ bottom = false }: TProps) => {
-  const { sidebar, theme } = useSelector(({ user }: RootState) => user);
+  const { sidebar } = useSelector(({ user }: RootState) => user);
+  const { theme } = useSelector(({ theme }: RootState) => theme);
   return (
     <Menu open={+sidebar} bottom={+bottom} themeMode={theme}>
       {socials.map((item, index) => {
