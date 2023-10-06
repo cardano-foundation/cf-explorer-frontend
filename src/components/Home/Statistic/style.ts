@@ -2,7 +2,7 @@ import { Box, Card, Grid, styled } from "@mui/material";
 
 import { AdaLogoIcon } from "src/components/commons/ADAIcon";
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
-import { ThemeType } from "src/types/user";
+import { ThemeType } from "src/types/theme";
 
 export const StatisticContainer = styled(Grid)`
   margin-bottom: 24px;

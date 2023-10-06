@@ -5,8 +5,8 @@ import { useWindowSize } from "react-use";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { LogoDarkmodeFullIcon, LogoDarkmodeShortIcon, LogoFullIcon, LogoIcon } from "src/commons/resources";
+import { setTheme } from "src/stores/theme";
 import { RootState } from "src/stores/types";
-import { setTheme } from "src/stores/user";
 
 import SelectNetwork from "../Header/SelectNetwork";
 import { SwitchMode } from "../Header/styles";
@@ -14,7 +14,8 @@ import SidebarMenu from "./SidebarMenu";
 import { HeaderTop, LogoLink, NavBarLogo, NavbarContainer, NavbarMenuBottom } from "./styles";
 
 const Sidebar: React.FC = () => {
-  const { sidebar, theme } = useSelector(({ user }: RootState) => user);
+  const { sidebar } = useSelector(({ user }: RootState) => user);
+  const { theme } = useSelector(({ theme }: RootState) => theme);
   const { height } = useWindowSize();
   const { isGalaxyFoldSmall } = useScreen();
   const getLogo = () => {
