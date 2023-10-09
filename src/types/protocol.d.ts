@@ -3,7 +3,7 @@ import { PROTOCOL_TYPE } from "../commons/utils/constants";
 type TProtocolItem = {
   time: string;
   transactionHash: string;
-  value: any;
+  value: string | number;
   status: "UPDATED" | "ADDED" | "NOT_EXIST" | "NOT_CHANGE";
 };
 export type ProtocolTypeKey = keyof typeof PROTOCOL_TYPE;
@@ -79,4 +79,20 @@ interface ProtocolHistory {
   collateralPercent: TProtocolItem[];
   maxCollateralInputs: TProtocolItem[];
   coinsPerUTxOByte: TProtocolItem[];
+}
+
+interface ProtocolFixed {
+  activeSlotsCoeff: number;
+  genDelegs: Record<string, Record<string, string>>;
+  updateQuorum: 0;
+  networkId: string;
+  initialFunds: Record<string, object>;
+  maxLovelaceSupply: number;
+  networkMagic: number;
+  epochLength: number;
+  timestamp: string;
+  slotsPerKESPeriod: number;
+  slotLength: number;
+  maxKESEvolutions: number;
+  securityParam: number;
 }

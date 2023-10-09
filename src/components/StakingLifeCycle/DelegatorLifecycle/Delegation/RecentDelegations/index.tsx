@@ -37,8 +37,8 @@ const RecentDelegations: React.FC<Props> = ({ setShowBackButton }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialized, setShowBackButton]);
 
-  const handleSelect = (delegation: DelegationItem) => {
-    history.push(details.staking(stakeId, "timeline", "delegation", delegation.txHash));
+  const handleSelect = (delegation?: DelegationItem) => {
+    history.push(details.staking(stakeId, "timeline", "delegation", delegation?.txHash));
   };
 
   const isOneItemOnly = data.length === 1 && Object.keys(query).length === 2;

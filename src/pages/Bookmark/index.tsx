@@ -90,12 +90,14 @@ const Bookmark = () => {
 
   useEffect(() => {
     document.title = `${t("account.bookmark")} | ${t("head.page.dashboard")}`;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (!isLoggedIn) {
       history.replace(routers.HOME);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
   const colDynamic: Record<string, Column<Bookmark>> = {
@@ -194,7 +196,7 @@ const Bookmark = () => {
   };
   const columns: Column<Bookmark>[] = [
     {
-      ...colDynamic[activeTab as any]
+      ...colDynamic[activeTab]
     },
     {
       title: t("glossary.addedOn"),

@@ -14,6 +14,7 @@ import {
 } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
+import { IReportStaking } from "src/types/report";
 
 import StakeTab from "../TabularView/StakeTab";
 import DelegationTab from "./StakeyTabs/DelegationTab";

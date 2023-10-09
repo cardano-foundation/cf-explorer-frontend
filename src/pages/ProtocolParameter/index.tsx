@@ -34,7 +34,7 @@ import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import NoRecord from "src/components/commons/NoRecord";
 import Table from "src/components/commons/Table";
-import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "src/types/protocol";
+import { ProtocolFixed, ProtocolHistory, ProtocolTypeKey, TProtocolItem, TProtocolParam } from "src/types/protocol";
 import { Column } from "src/types/table";
 import CustomIcon from "src/components/commons/CustomIcon";
 
@@ -55,9 +55,16 @@ import {
 
 interface IProtocolParamVertical {
   name: string;
-  value: any;
+  value: string;
   epoch?: number;
   timestamp?: string;
+}
+
+interface IVerticalLatestTable {
+  name: string;
+  value: string;
+  epochNo: number;
+  time: string;
 }
 
 const ProtocolParameter: React.FC = () => {
@@ -66,12 +73,14 @@ const ProtocolParameter: React.FC = () => {
   const { histories } = useParams<{ histories?: "histories" }>();
   const history = useHistory();
   const { PROTOCOL_PARAMETER } = API;
-  const { data: dataFixed, initialized: initialFixed } = useFetch<any>(PROTOCOL_PARAMETER.FIXED);
-  const { data: dataLastest, initialized: initialLastest } = useFetch<any>(PROTOCOL_PARAMETER.LASTEST);
+  const { data: dataFixed, initialized: initialFixed } = useFetch<ProtocolFixed>(PROTOCOL_PARAMETER.FIXED);
+  const { data: dataLastest, initialized: initialLastest } = useFetch<Partial<TProtocolParam>>(
+    PROTOCOL_PARAMETER.LASTEST
+  );
 
   const dataFixedVertical =
     isObject(dataFixed) &&
-    Object.entries(dataFixed).map(([name, value]: any) => ({
+    Object.entries(dataFixed).map(([name, value]: [string, string]) => ({
       name,
       value: isObject(value) ? JSON.stringify(value) : value
     }));
@@ -79,12 +88,17 @@ const ProtocolParameter: React.FC = () => {
   const dataLatestVertical =
     isObject(dataLastest) &&
     Object.entries(dataLastest)
-      .map(([name, valueObject]: any) => ({
-        name,
-        value: name === "costModel" ? JSON.stringify(valueObject) : valueObject?.value,
-        epochNo: valueObject?.epochNo,
-        time: valueObject?.time
-      }))
+      .map(([name, valueObject]) => {
+        const convertedObj = valueObject as Partial<
+          TProtocolItem & TProtocolParam["epochChange"] & { epochNo: number; time: string }
+        >;
+        return {
+          name,
+          value: name === "costModel" ? JSON.stringify(valueObject) : convertedObj?.value,
+          epochNo: convertedObj?.epochNo,
+          time: convertedObj?.time
+        };
+      })
       .filter((item) => item.name !== "timestamp");
 
   const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
@@ -97,7 +111,7 @@ const ProtocolParameter: React.FC = () => {
 
   const theme = useTheme();
 
-  const columnsVerticalFixedTable: Column<any>[] = [
+  const columnsVerticalFixedTable: Column<IProtocolParamVertical>[] = [
     {
       title: t("common.parameterName"),
       key: "name",
@@ -128,7 +142,7 @@ const ProtocolParameter: React.FC = () => {
       title: t("common.value"),
       key: "value",
       maxWidth: 400,
-      render: (r: any) => {
+      render: (r) => {
         const k = r.name;
         const isModalType = k === "genDelegs";
         return (
@@ -154,7 +168,7 @@ const ProtocolParameter: React.FC = () => {
     }
   ];
 
-  const columnsVerticalLatestTable: Column<any>[] = [
+  const columnsVerticalLatestTable: Column<IVerticalLatestTable>[] = [
     {
       title: t("common.parameterName"),
       key: "name",
@@ -185,7 +199,7 @@ const ProtocolParameter: React.FC = () => {
       title: t("common.value"),
       key: "value",
       maxWidth: 400,
-      render: (r: any) => {
+      render: (r) => {
         const k = r.name;
         const isModalType = k === "costModel";
         return (
@@ -212,12 +226,12 @@ const ProtocolParameter: React.FC = () => {
     {
       title: t("common.lastUpdatedInEpoch"),
       key: "epochNo",
-      render: (r: any) => <Box>{r?.epochNo}</Box>
+      render: (r) => <Box>{r?.epochNo}</Box>
     },
     {
       title: t("common.timestamp"),
       key: "timestamp",
-      render: (r: any) => (r?.time ? formatDateTimeLocal(r.time) : "")
+      render: (r) => (r?.time ? formatDateTimeLocal(r.time) : "")
     }
   ];
 
@@ -337,11 +351,11 @@ export const ProtocolParameterHistory = () => {
   const { data: dataHistory, loading, initialized } = useFetch<ProtocolHistory>(url);
 
   const [dataHistoryMapping, { push: pushHistory, clear }] = useList<{
-    [key: string]: any;
+    [key: string]: string;
   }>([]);
 
   const [columnTitle, { push: pushColumnTitle, clear: clearColumnTitle }] = useList<string>([]);
-  const [dataTable, setDataTable] = useState<{ [key: string]: any }[]>([]);
+  const [dataTable, setDataTable] = useState<{ [key: string]: string }[]>([]);
   const [columnsTable, setColumnsTable] = useState<Column<TProtocolParam & { params: string }>[]>([]);
 
   const [showFilter, setShowFiter] = useState(false);
@@ -361,11 +375,11 @@ export const ProtocolParameterHistory = () => {
     clear();
     for (const prop in data) {
       if (Object.hasOwn(data, prop)) {
-        const newdata: { [key: string]: any } = {
+        const newdata: { [key: string]: string } = {
           params: prop
         };
         columnTitle.map((t, idx) => {
-          newdata[t] = data[prop as keyof ProtocolHistory][idx];
+          newdata[t] = data[prop as keyof ProtocolHistory][idx] as unknown as string;
         });
         if (newdata) {
           pushHistory(newdata);

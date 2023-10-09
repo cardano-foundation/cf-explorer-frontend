@@ -6,6 +6,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
+import { IPoolReportList } from "src/types/report";
 
 import DeregsitrationTab from "./DeregsitrationTab";
 import PoolRegistrationTab from "./PoolRegistrationTab";

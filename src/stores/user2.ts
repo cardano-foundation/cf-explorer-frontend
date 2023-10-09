@@ -15,7 +15,6 @@ const initialState: UserStoreType = {
   chainID: null,
   address: null,
   wallet: null,
-  provider: null,
   openModal: false,
   sidebar: window.innerWidth >= breakpoints.values.md,
   onDetailView: false,
@@ -47,10 +46,6 @@ const storeWallet = createSlice({
     setAddress: (state, action: PayloadAction<string | null>) => ({
       ...state,
       address: action.payload
-    }),
-    setProvider: (state, action: PayloadAction<any>) => ({
-      ...state,
-      provider: action.payload
     }),
     setOpenModal: (state, action: PayloadAction<boolean>) => ({
       ...state,
@@ -97,10 +92,6 @@ export const setWallet = (wallet: SupportedWallets | null) => {
 
 export const setAddress = (address: string | null) => {
   userStore2?.dispatch(storeWallet.actions.setAddress(address));
-};
-
-export const setProvider = (provider: any) => {
-  userStore2?.dispatch(storeWallet.actions.setProvider(provider));
 };
 
 export const setOpenModal = (openModal: boolean) => {

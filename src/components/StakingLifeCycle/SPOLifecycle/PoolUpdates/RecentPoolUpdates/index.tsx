@@ -44,8 +44,8 @@ const RecentPoolUpdates = ({ onSelect, setShowBackButton }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txHash, data]);
 
-  const handleSelect = (poolUpdated: PoolUpdateItem) => {
-    history.push(details.spo(poolId, "timeline", "pool-updates", poolUpdated.txHash));
+  const handleSelect = (poolUpdated?: PoolUpdateItem) => {
+    history.push(details.spo(poolId, "timeline", "pool-updates", poolUpdated?.txHash));
   };
 
   const isOneItemOnly = data.length === 1 && Object.keys(query).length === 2;

@@ -2,8 +2,9 @@ import { Box, Grid, useTheme } from "@mui/material";
 import moment from "moment";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
 import { useSelector } from "react-redux";
+import { Payload } from "recharts/types/component/DefaultTooltipContent";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -192,14 +193,22 @@ const getPercent = (value: number, total: number) => {
   return toPercent(ratio);
 };
 
-const renderTooltipContent = (o: any, range: Time) => {
+const renderTooltipContent = (o: TooltipProps<string | number | (string | number)[], string | number>, range: Time) => {
   const { payload = [], label } = o;
   const nameTooltips = {
     simpleTransactions: "Simple transactions",
     smartContract: "Smart contracts",
     metadata: "Metadata"
   };
-  const total = (payload || []).reduce((result: number, entry: any) => result + entry.value, 0);
+  const total = (payload || []).reduce(
+    (result: number, entry: Payload<string | number | (string | number)[], string | number>) => {
+      if (typeof entry.value === "number") {
+        return result + entry.value;
+      }
+      return result;
+    },
+    0
+  );
   return (
     <Box key={label}>
       <TooltipBody textAlign={"left"}>
@@ -207,21 +216,26 @@ const renderTooltipContent = (o: any, range: Time) => {
           {getLabel(label, range)}
         </Box>
         {(payload || [])
-          .map((entry: any, index: number) => {
-            return (
-              <Box key={`item-${index}`} mt={1}>
-                <Box fontSize={"0.75rem"} color={({ palette }) => palette.secondary.light}>{`${
-                  nameTooltips[entry.name as keyof typeof nameTooltips]
-                }`}</Box>
-                <Box display={"flex"} alignItems={"center"} mt={1}>
-                  <Box width={"20px"} height={"20px"} bgcolor={entry.fill} borderRadius={"4px"} mr={1} />
-                  <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
-                    {`${numberWithCommas(entry.value)} (${getPercent(entry.value, total)})`}
+          .map(
+            (
+              entry: Payload<string | number | (string | number)[], string | number> & { fill?: string },
+              index: number
+            ) => {
+              return (
+                <Box key={`item-${index}`} mt={1}>
+                  <Box fontSize={"0.75rem"} color={({ palette }) => palette.secondary.light}>{`${
+                    nameTooltips[entry.name as keyof typeof nameTooltips]
+                  }`}</Box>
+                  <Box display={"flex"} alignItems={"center"} mt={1}>
+                    <Box width={"20px"} height={"20px"} bgcolor={entry.fill} borderRadius={"4px"} mr={1} />
+                    <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
+                      {`${numberWithCommas(entry.value as number)} (${getPercent(entry.value as number, total)})`}
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
-            );
-          })
+              );
+            }
+          )
           .reverse()}
       </TooltipBody>
     </Box>
@@ -260,7 +274,7 @@ const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time
             tickLine={{ stroke: themeMode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800] }}
             tickFormatter={toPercent}
           />
-          <Tooltip content={(o: any) => renderTooltipContent(o, range)} />
+          <Tooltip content={(o) => renderTooltipContent(o, range)} />
           <Area
             type="monotone"
             dataKey="simpleTransactions"

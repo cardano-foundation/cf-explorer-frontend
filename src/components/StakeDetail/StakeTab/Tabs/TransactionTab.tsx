@@ -2,6 +2,7 @@ import { Box, useTheme } from "@mui/material";
 import { stringify } from "qs";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import { MouseEvent } from "react";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { DownRedUtxoDarkmode, TransferIcon, UpGreenUtxoDarkmode } from "src/commons/resources";
@@ -27,7 +28,7 @@ const TransactionTab = () => {
 interface TransactionListFullProps {
   underline?: boolean;
   url: string;
-  openDetail?: (_: any, r: Transactions) => void;
+  openDetail?: (_: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => void;
   selected?: string | null;
   showTitle?: boolean;
 }
@@ -46,7 +47,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
   const fetchData = useFetchList<Transactions>(url, pageInfo);
   const theme = useTheme();
 
-  const onClickRow = (e: any, r: Transactions) => {
+  const onClickRow = (e: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
     let parent: Element | null = e.target as Element;
     while (
       parent !== null &&

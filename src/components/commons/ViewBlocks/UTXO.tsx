@@ -9,7 +9,7 @@ import PopperStyled from "../PopperStyled";
 import CustomIcon from "../CustomIcon";
 
 export interface UTXOProps {
-  onClick?: (e: any) => void;
+  onClick?: () => void;
   index?: number;
   hash?: string;
   detail?: (href: string) => string;

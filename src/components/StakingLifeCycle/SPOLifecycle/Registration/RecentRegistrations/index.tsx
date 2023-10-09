@@ -47,8 +47,8 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, setShowBackButton }) =
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txHash, data]);
 
-  const handleSelect = (registration: SPORegistration) => {
-    history.push(details.spo(poolId, "timeline", "registration", registration.txHash));
+  const handleSelect = (registration?: SPORegistration) => {
+    history.push(details.spo(poolId, "timeline", "registration", registration?.txHash));
   };
 
   const isOneItemOnly = data.length === 1 && Object.keys(query).length === 2;

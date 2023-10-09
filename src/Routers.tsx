@@ -67,7 +67,7 @@ const Routes: React.FC = () => {
     } else if (SUPPORTED_LANGUAGES.includes(currentLanguage) && i18n.language !== currentLanguage) {
       changeLanguage(currentLanguage);
     }
-  }, [history, i18n]);
+  }, [history]);
 
   return (
     <Switch>

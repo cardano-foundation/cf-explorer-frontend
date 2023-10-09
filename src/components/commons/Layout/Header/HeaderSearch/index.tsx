@@ -223,7 +223,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     let count = 0;
     let keyName = "";
     for (const key in data) {
-      if (!["validTokenName", "validPoolName"].includes(key) && !!(data as any)[key]) {
+      if (!["validTokenName", "validPoolName"].includes(key) && !!data[key as keyof IResponseSearchAll]) {
         count++;
         keyName = key;
       }

@@ -3,6 +3,7 @@ import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { MouseEvent } from "react";
 
 import receiveImg from "src/commons/resources/images/receiveImg.svg";
 import sendImg from "src/commons/resources/images/sendImg.svg";
@@ -25,7 +26,7 @@ import { Capitalize } from "../commons/CustomText/styles";
 
 interface AddressTransactionListProps {
   underline?: boolean;
-  openDetail?: (_: React.MouseEvent, transaction: Transactions) => void;
+  openDetail?: (_: MouseEvent<Element, globalThis.MouseEvent>, transaction: Transactions) => void;
   selected?: number | null;
   showTabView?: boolean;
   address: string;
@@ -47,7 +48,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   const fetchData = useFetchList<Transactions>(url, { ...pageInfo }, false, blockKey);
-  const onClickRow = (e: React.MouseEvent, transaction: Transactions) => {
+  const onClickRow = (e: MouseEvent<Element, globalThis.MouseEvent>, transaction: Transactions) => {
     let parent: Element | null = e.target as Element;
     while (parent !== null && !parent?.className.includes("MuiPopover-root")) {
       parent = parent?.parentElement;

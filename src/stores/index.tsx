@@ -1,8 +1,11 @@
 import { Store } from "@reduxjs/toolkit";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { applyMiddleware, combineReducers, createStore } from "redux";
+import { Action, CombinedState, Middleware, applyMiddleware, combineReducers, createStore } from "redux";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { PersistPartial } from "redux-persist/es/persistReducer";
+
+import { UserStoreType } from "src/types/user";
 
 import { RootState } from "./types";
 import userReducer, { setStoreUser } from "./user";
@@ -42,9 +45,17 @@ const appReducer = combineReducers({
   toast: toastReducer
 });
 
-const rootReducer = (state: any, action: any) => appReducer(state, action);
+const rootReducer = (
+  state?: CombinedState<{
+    user: UserStoreType & PersistPartial;
+    user2: UserStoreType;
+    system: SystemStoreType;
+    toast: ToastStoreType;
+  }>,
+  action?: Action
+) => appReducer(state, action as Action);
 
-const middleWares: any[] = [];
+const middleWares: Middleware[] = [];
 
 const enhancer = composeWithDevTools(applyMiddleware(...middleWares));
 

@@ -44,8 +44,8 @@ const RecentWithdraws: React.FC<Props> = ({ onSelect, setShowBackButton }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txHash, data]);
 
-  const handleSelect = (withdraw: WithdrawItem) => {
-    history.push(details.staking(stakeId, "timeline", "withdrawal-history", withdraw.txHash));
+  const handleSelect = (withdraw?: WithdrawItem) => {
+    history.push(details.staking(stakeId, "timeline", "withdrawal-history", withdraw?.txHash));
   };
 
   const isOneItemOnly = data.length === 1 && Object.keys(query).length === 2;

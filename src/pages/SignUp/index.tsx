@@ -1,9 +1,10 @@
 import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment, useTheme } from "@mui/material";
-import { useEffect, useReducer, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useReducer, useRef, useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { IoMdClose } from "react-icons/io";
 import { Link, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { AxiosError } from "axios";
 
 import useAuth from "src/commons/hooks/useAuth";
 import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessDarkIcon, SuccessIcon } from "src/commons/resources";
@@ -11,6 +12,13 @@ import { routers } from "src/commons/routers";
 import { signUp } from "src/commons/utils/userRequest";
 import { ACCOUNT_ERROR } from "src/commons/utils/constants";
 import CustomIcon from "src/components/commons/CustomIcon";
+
+interface IAction {
+  name?: string;
+  value?: string;
+  touched?: boolean;
+  error?: string;
+}
 
 import {
   BackButton,
@@ -54,7 +62,8 @@ interface IForm {
     touched?: boolean;
   };
 }
-const formReducer = (state: IForm, event: any) => {
+const formReducer = (state: IForm, event: IAction) => {
+  if (!event.name) return state;
   return {
     ...state,
     [event.name]: {
@@ -206,7 +215,7 @@ export default function SignUp() {
     return error;
   };
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setFormData({
       name: event.target.name,
       value: event.target.value.trim(),
@@ -220,7 +229,6 @@ export default function SignUp() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enableButton, formData]);
 
   const handleKeyDown = (event: any) => {
@@ -287,14 +295,25 @@ export default function SignUp() {
         setSuccess(true);
         return;
       }
-    } catch (error: any) {
-      if (error?.response?.data?.errorCode === ACCOUNT_ERROR.EMAIL_IS_ALREADY_EXIST) {
-        setFormData({
-          name: "email",
-          touched: true,
-          error: t(ACCOUNT_ERROR.EMAIL_IS_ALREADY_EXIST),
-          value: formData.email.value
-        });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error?.response?.data?.errorCode === ACCOUNT_ERROR.EMAIL_IS_ALREADY_EXIST) {
+          setFormData({
+            name: "email",
+            touched: true,
+            error: t(ACCOUNT_ERROR.EMAIL_IS_ALREADY_EXIST),
+            value: formData.email.value
+          });
+        } else {
+          if (ACCOUNT_ERROR.EMAIL_IS_ALREADY_EXIST) {
+            setFormData({
+              name: "email",
+              touched: true,
+              error: t(ACCOUNT_ERROR.EMAIL_IS_ALREADY_EXIST),
+              value: formData.email.value
+            });
+          }
+        }
       }
     } finally {
       setLoading(false);

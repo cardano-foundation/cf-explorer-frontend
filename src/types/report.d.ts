@@ -1,3 +1,5 @@
+import { RatioGroupValue } from "src/components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal/FilledInfoModal";
+
 interface IBodyReportStakeKey {
   stakeKey: string;
   reportName: string;
@@ -90,4 +92,16 @@ interface IReportStaking {
 interface IPoolReportSummary {
   event: string;
   reportName: string;
+}
+
+interface IReportParams {
+  reportType: ReportType;
+  address: string;
+  dateRange: IDateRange;
+  reportName: string;
+  epochRange: IEpochRange;
+  adaTransfers: RatioGroupValue;
+  feesPaid: RatioGroupValue | boolean;
+  poolSize: RatioGroupValue;
+  eventsKey: string[];
 }

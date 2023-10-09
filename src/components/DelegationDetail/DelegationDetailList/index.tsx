@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { parse, stringify } from "qs";
+import QueryString, { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -11,6 +11,12 @@ import Table, { Column } from "src/components/commons/Table";
 import ADAicon from "src/components/commons/ADAIcon";
 
 import { StyledLink } from "./styles";
+
+interface Query {
+  tab: string | string[] | QueryString.ParsedQs | QueryString.ParsedQs[] | undefined;
+  page: number;
+  size: number;
+}
 
 const DelegationEpochList = ({
   data,
@@ -28,7 +34,7 @@ const DelegationEpochList = ({
   const history = useHistory();
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
-  const setQuery = (query: any) => {
+  const setQuery = (query: Query) => {
     history.replace({ search: stringify(query) }, history.location.state);
   };
   const columns: Column<DelegationEpoch>[] = [
@@ -111,7 +117,7 @@ const DelegationStakingDelegatorsList = ({
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
   const history = useHistory();
-  const setQuery = (query: any) => {
+  const setQuery = (query: Query) => {
     history.replace({ search: stringify(query) }, history.location.state);
   };
   const columns: Column<StakingDelegators>[] = [

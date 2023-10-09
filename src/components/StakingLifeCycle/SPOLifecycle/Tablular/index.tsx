@@ -55,8 +55,8 @@ const Tabular = ({ renderTabsSPO }: ITabular) => {
   const { poolId = "", tab = "registration" } = useParams<{ poolId: string; tab: SPOStep }>();
   const history = useHistory();
 
-  const onChangeTab = (tab: any) => {
-    history.replace(details.spo(poolId, "tabular", tab));
+  const onChangeTab = (tab: TabStakeDetail) => {
+    history.replace(details.spo(poolId, "tabular", tab as SPOStep));
   };
 
   return (
