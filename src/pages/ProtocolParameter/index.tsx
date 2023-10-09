@@ -65,6 +65,7 @@ interface IProtocolParamVertical {
 const ProtocolParameter: React.FC = () => {
   const { t } = useTranslation();
   const [costModelScript, setCostModelScript] = useState("");
+  const [titleModal, setTitleModal] = useState("");
   const { histories } = useParams<{ histories?: "histories" }>();
   const history = useHistory();
   const { PROTOCOL_PARAMETER } = API;
@@ -136,7 +137,12 @@ const ProtocolParameter: React.FC = () => {
         return (
           <Box
             component={isModalType ? Button : Box}
-            onClick={() => isModalType && setCostModelScript(r.value)}
+            onClick={() => {
+              if (isModalType) {
+                setCostModelScript(r.value);
+                setTitleModal(k);
+              }
+            }}
             p={0}
             justifyItems={"flex-start"}
             textTransform={"capitalize"}
@@ -193,7 +199,12 @@ const ProtocolParameter: React.FC = () => {
         return (
           <Box
             component={isModalType ? Button : Box}
-            onClick={() => isModalType && setCostModelScript(r.value)}
+            onClick={() => {
+              if (isModalType) {
+                setCostModelScript(r.value);
+                setTitleModal(k);
+              }
+            }}
             p={0}
             justifyItems={"flex-start"}
             textTransform={"capitalize"}
@@ -288,7 +299,7 @@ const ProtocolParameter: React.FC = () => {
         open={!!costModelScript}
         onClose={() => setCostModelScript("")}
         script={costModelScript}
-        title="CostModel"
+        title={titleModal || "CostModel"}
       />
       <ExplainerTextModal
         open={!!explainerText}
