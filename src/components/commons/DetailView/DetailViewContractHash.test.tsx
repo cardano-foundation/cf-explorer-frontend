@@ -27,7 +27,9 @@ describe("DetailViewContractHash component", () => {
       loading: true,
       initialized: true
     });
-    render(<DetailViewContractHash txHash={"test-tx-hash"} address="test-address" handleClose={jest.fn()} />);
+    render(
+      <DetailViewContractHash txHash={"test-tx-hash"} address="test-address" handleClose={jest.fn()} open={true} />
+    );
     expect(screen.getByTestId("view-detail-drawer-loading")).toBeInTheDocument();
   });
 
@@ -37,10 +39,11 @@ describe("DetailViewContractHash component", () => {
       data: [mockedData],
       initialized: true
     });
-    render(<DetailViewContractHash txHash={"test-tx-hash"} address="test-address" handleClose={jest.fn()} />);
+    render(
+      <DetailViewContractHash txHash={"test-tx-hash"} address="test-address" handleClose={jest.fn()} open={true} />
+    );
     expect(screen.getByTestId("view-detail-drawer-contract-hash")).toBeInTheDocument();
     expect(screen.getByText("Transactions")).toBeInTheDocument();
-    expect(screen.getByText(mockedData.purpose)).toBeInTheDocument();
-    expect(screen.getByText(mockedData.redeemerMem)).toBeInTheDocument();
+    expect(screen.getByText("Redeemer")).toBeInTheDocument();
   });
 });

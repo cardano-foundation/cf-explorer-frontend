@@ -5,14 +5,17 @@ import { useWindowSize } from "react-use";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { LogoDarkmodeFullIcon, LogoDarkmodeShortIcon, LogoFullIcon, LogoIcon } from "src/commons/resources";
+import { setTheme } from "src/stores/theme";
 import { RootState } from "src/stores/types";
 
 import SelectNetwork from "../Header/SelectNetwork";
+import { SwitchMode } from "../Header/styles";
 import SidebarMenu from "./SidebarMenu";
 import { HeaderTop, LogoLink, NavBarLogo, NavbarContainer, NavbarMenuBottom } from "./styles";
 
 const Sidebar: React.FC = () => {
-  const { sidebar, theme } = useSelector(({ user }: RootState) => user);
+  const { sidebar } = useSelector(({ user }: RootState) => user);
+  const { theme } = useSelector(({ theme }: RootState) => theme);
   const { height } = useWindowSize();
   const { isGalaxyFoldSmall } = useScreen();
   const getLogo = () => {
@@ -43,12 +46,12 @@ const Sidebar: React.FC = () => {
       </NavbarMenuBottom>
       {isGalaxyFoldSmall && (
         <Box p={"0 14px"}>
-          {/* <SwitchMode
+          <SwitchMode
             checked={theme === "dark"}
             onChange={(e) => {
               setTheme(e.target.checked ? "dark" : "light");
             }}
-          /> */}
+          />
         </Box>
       )}
     </NavbarContainer>

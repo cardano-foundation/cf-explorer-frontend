@@ -55,6 +55,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({
           <>
             <BiChevronUp
               size={30}
+              color={theme.palette.secondary.main}
               style={{ paddingRight: 10, fontSize: "20px", cursor: "pointer" }}
               onClick={() => setOpenDropdown(false)}
             />
@@ -63,6 +64,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({
           <>
             <BiChevronDown
               size={30}
+              color={theme.palette.secondary.main}
               style={{ paddingRight: 10, fontSize: "20px", cursor: "pointer" }}
               onClick={() => setOpenDropdown(true)}
             />
@@ -99,7 +101,6 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({
       }}
     >
       <OptionSelect sx={{ display: "none" }} value="default">
-        {" "}
         {!hideInputLabel ? (isSend ? t("common.sent") + " " : t("common.received")) + " " : ""} {t("tab.viewTokens")}
       </OptionSelect>
       {tokens.map((token, idx) => {
@@ -145,6 +146,7 @@ export const TokenLink: React.FC<{
   const tokenName = token.assetName || token.assetId;
   const shortTokenName = getShortWallet(tokenName);
   const isTokenNameLong = tokenName.length > 20;
+  const theme = useTheme();
 
   return (
     <TokenButton sx={sx} isSummary={isSummary}>
@@ -178,7 +180,7 @@ export const TokenLink: React.FC<{
             </Box>
           ) : null}
           <Box mr={1} mt={"2px"}>
-            <RiArrowRightSLine />
+            <RiArrowRightSLine color={theme.palette.secondary.main} />
           </Box>
         </Box>
       </Box>

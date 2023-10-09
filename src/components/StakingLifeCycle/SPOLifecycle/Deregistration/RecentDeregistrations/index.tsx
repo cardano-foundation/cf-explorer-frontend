@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
-import { Box, Skeleton } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import { useUpdateEffect } from "react-use";
-import { useSelector } from "react-redux";
-import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
+import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import CustomFilter, { FilterParams } from "src/components/commons/CustomFilter";
 import OverviewStaking from "src/components/commons/OverviewStaking";
 import { EmptyRecord, FooterTable } from "src/components/commons/Table";
-import { details } from "src/commons/routers";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
-import { GridBox, WrapFilterDescription, StyledContainer, StyledList } from "./styles";
 import { DescriptionText } from "../../../DelegatorLifecycle/styles";
+import { FilterContainer, StyledList } from "../../styles";
+import { GridBox, StyledContainer, WrapFilterDescription } from "./styles";
 
 interface Props {
   onSelect: (registration: SPODeregistration | null) => void;
@@ -62,7 +63,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect, setShowBackButton })
     <StyledContainer>
       <StyledList>
         <DescriptionText>Recent Deregistration</DescriptionText>
-        <Box display={"flex"} alignItems={"center"} gap={1}>
+        <FilterContainer>
           <WrapFilterDescription>
             Showing {data.length} {data.length > 1 ? "results" : "result"}
           </WrapFilterDescription>
@@ -74,12 +75,12 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect, setShowBackButton })
             }}
             searchLabel={t("common.searchTx")}
           />
-        </Box>
+        </FilterContainer>
       </StyledList>
       <GridBox sidebar={+sidebar}>
         {loading &&
           [...new Array(12)].map((i, ii) => (
-            <Skeleton key={ii} style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
+            <CommonSkeleton key={ii} style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
           ))}
 
         {!loading &&

@@ -16,7 +16,7 @@ interface Props {
 }
 
 const AppContainer: React.FC<Props> = (props) => {
-  const { theme } = useSelector(({ user }: RootState) => user);
+  const { theme } = useSelector(({ theme }: RootState) => theme);
   const { children } = props;
   const location = useLocation();
   const excludedRoutes: string[] = [

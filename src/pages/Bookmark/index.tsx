@@ -70,14 +70,12 @@ const Bookmark = () => {
     try {
       setLoadingDelete(true);
       const selectedBookmark = data?.find((d) => d.keyword === keyword);
-      if (selectedBookmark?.id) {
-        await deleteBookmark(selectedBookmark?.id);
-        setSelected(null);
-        setLoadingDelete(false);
-        setBookmarks(bookmarks?.filter((r) => r.keyword !== keyword));
-        refresh();
-        toast.success(t("message.bookmark.deleted"));
-      }
+      await deleteBookmark({ keyword, type: selectedBookmark?.type });
+      setSelected(null);
+      setLoadingDelete(false);
+      setBookmarks(bookmarks?.filter((r) => r.keyword !== keyword));
+      refresh();
+      toast.success(t("message.bookmark.deleted"));
     } catch (error) {
       setSelected(null);
       setLoadingDelete(false);

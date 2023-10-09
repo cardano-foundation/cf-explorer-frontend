@@ -4,7 +4,7 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 import { Link as LinkDom } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -79,7 +79,7 @@ const HomeStatistic = () => {
   const { currentEpoch, usdMarket, btcMarket, blockNo } = useSelector(({ system }: RootState) => system);
 
   const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS, undefined, false, blockNo);
-  const { theme: themeMode } = useSelector(({ user }: RootState) => user);
+  const { theme: themeMode } = useSelector(({ theme }: RootState) => theme);
   const { total_supply: total = 1 } = usdMarket || {};
   const { liveStake = 0, activeStake = 1 } = data || {};
   const supply = BigNumber(currentEpoch?.circulatingSupply || 0).div(10 ** 6);
@@ -110,6 +110,12 @@ const HomeStatistic = () => {
     last_updated: "",
     market_cap: 0
   });
+  const priceBTC = useRef<number>(0);
+  const [usdLatestUpdated, setUsdLastUpdated] = useState<string>("");
+
+  useEffect(() => {
+    setUsdLastUpdated(usdMarket?.last_updated || "");
+  }, [usdMarket?.last_updated]);
 
   useEffect(() => {
     if (Number(usdMarket?.market_cap) !== Number(marketcap.current.market_cap)) {
@@ -120,6 +126,14 @@ const HomeStatistic = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usdMarket?.market_cap]);
+
+  useEffect(() => {
+    if (Number(btcMarket?.current_price) !== priceBTC.current) {
+      priceBTC.current = Number(btcMarket?.current_price);
+      setUsdLastUpdated(btcMarket?.last_updated || "");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [btcMarket?.current_price, marketcap.current]);
 
   return (
     <StatisticContainer
@@ -164,7 +178,7 @@ const HomeStatistic = () => {
                 </Content>
                 <Content>
                   <TimeDuration data-testid="last-update-ada-price">
-                    <FormNowMessage time={usdMarket.last_updated + "Z"} />
+                    <FormNowMessage time={usdLatestUpdated} />
                   </TimeDuration>
                 </Content>
               </WrapCardContent>
@@ -190,7 +204,7 @@ const HomeStatistic = () => {
                 <Title data-testid="market-cap-value">${numberWithCommas(usdMarket.market_cap)}</Title>
                 <Content>
                   <TimeDuration data-testid="last-update-market-cap">
-                    <FormNowMessage time={marketcap.current.last_updated + "Z"} />
+                    <FormNowMessage time={marketcap.current.last_updated} />
                   </TimeDuration>
                 </Content>
               </WrapCardContent>
@@ -303,7 +317,7 @@ const HomeStatistic = () => {
                   <Box color={({ palette }) => palette.secondary.light}>
                     {t("glossary.activeStake")} (<ADAicon width={10} />){": "}
                     <CustomTooltip title={formatADAFull(activeStake)}>
-                      <span data-testid="active-stake-v-= alue">{formatADA(activeStake)}</span>
+                      <span data-testid="active-stake-value">{formatADA(activeStake)}</span>
                     </CustomTooltip>
                   </Box>
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>

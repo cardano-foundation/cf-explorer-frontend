@@ -1,16 +1,17 @@
 import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment, useTheme } from "@mui/material";
 import { useEffect, useReducer, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { IoMdClose } from "react-icons/io";
 import { Link, useHistory } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 
 import useAuth from "src/commons/hooks/useAuth";
-import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessIcon } from "src/commons/resources";
+import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessDarkIcon, SuccessIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
-import { signUp } from "src/commons/utils/userRequest";
 import { ACCOUNT_ERROR } from "src/commons/utils/constants";
+import { signUp } from "src/commons/utils/userRequest";
 import CustomIcon from "src/components/commons/CustomIcon";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import {
   BackButton,
@@ -67,6 +68,7 @@ const formReducer = (state: IForm, event: any) => {
 export default function SignUp() {
   const { t } = useTranslation();
   const history = useHistory();
+  const { isMobile } = useScreen();
   const emailTextField = useRef<HTMLInputElement | null>(null);
   const [error, setError] = useState(false);
   const { isLoggedIn } = useAuth();
@@ -77,6 +79,19 @@ export default function SignUp() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [checkedAgree, setCheckedAgree] = useState(false);
 
+  useEffect(() => {
+    document.body.style.backgroundColor =
+      theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[100];
+    document.body.style.height = isMobile ? "80vh" : "100vh";
+    document.body.style.display = "flex";
+    document.body.style.alignItems = "center";
+    return () => {
+      document.body.style.backgroundColor = "unset";
+      document.body.style.height = "unset";
+      document.body.style.display = "unset";
+      document.body.style.alignItems = "unset";
+    };
+  }, []);
   useEffect(() => {
     document.title = `${t("page.signUp")} | ${t("head.page.dashboard")}`;
   }, [t]);
@@ -306,7 +321,7 @@ export default function SignUp() {
           <FormGroup>
             <WrapForm>
               <BackButton onClick={() => handleRedirect()}>
-                <HiArrowLongLeft fontSize="16px" />
+                <HiArrowLongLeft fontSize="16px" color={theme.palette.secondary.light} />
                 <BackText>{t("common.back")}</BackText>
               </BackButton>
               <CloseButton saving={0} onClick={() => handleRedirect(true)}>
@@ -410,7 +425,8 @@ export default function SignUp() {
                         opacity: "0.15",
                         "&.Mui-checked": {
                           opacity: "1"
-                        }
+                        },
+                        color: ({ palette }) => palette.secondary.light
                       }}
                       size="medium"
                     />
@@ -454,7 +470,7 @@ export default function SignUp() {
           <WrapForm>
             <FormGroup>
               <Box textAlign={"center"}>
-                <SuccessIcon />
+                {theme.isDark ? <SuccessDarkIcon /> : <SuccessIcon />}
                 <Box paddingY={"15px"}>
                   <Title>{t("account.verifyYourEmail")}</Title>
                 </Box>

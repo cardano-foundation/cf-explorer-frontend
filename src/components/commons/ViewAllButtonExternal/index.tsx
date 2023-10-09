@@ -33,7 +33,7 @@ const ViewAllButtonExternal: React.FC<ViewAllButtonExternalProps> = ({
 
   return (
     <CustomTooltip placement={placement} title={tooltipTitle}>
-      <a href={to as string} target="_blank" rel="noreferrer">
+      <a href={to as string} target="_blank" rel="noreferrer" data-testid="view-all-button">
         <StyledLink>
           <SeeMoreIconHome fill={theme.palette.primary.main} />
         </StyledLink>

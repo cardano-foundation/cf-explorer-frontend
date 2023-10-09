@@ -1,19 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import { useUpdateEffect } from "react-use";
-import { useSelector } from "react-redux";
-import { useTranslation } from "react-i18next";
+
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
 import useFetchList from "../../../../../commons/hooks/useFetchList";
+import { details } from "../../../../../commons/routers";
 import { API } from "../../../../../commons/utils/api";
 import CustomFilter, { FilterParams } from "../../../../commons/CustomFilter";
 import OverviewStaking from "../../../../commons/OverviewStaking";
 import { EmptyRecord, FooterTable } from "../../../../commons/Table";
-import { GridBox, WrapFilterDescription, StyledList, StyledContainer } from "./styles";
 import { DescriptionText } from "../../../DelegatorLifecycle/styles";
-import { details } from "../../../../../commons/routers";
+import { FilterContainer, StyledList } from "../../styles";
+import { GridBox, StyledContainer, WrapFilterDescription } from "./styles";
 
 interface Props {
   onSelect: (registration: SPORegistration | null) => void;
@@ -64,7 +66,7 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, setShowBackButton }) =
     <StyledContainer>
       <StyledList>
         <DescriptionText>{t("common.registrationList")}</DescriptionText>
-        <Box display={"flex"} alignItems={"center"} gap={2}>
+        <FilterContainer>
           <WrapFilterDescription>{t("common.showXResults", { value: data.length })}</WrapFilterDescription>
           <CustomFilter
             filterValue={params}
@@ -74,12 +76,12 @@ const RecentRegistrations: React.FC<Props> = ({ onSelect, setShowBackButton }) =
             }}
             searchLabel={t("common.searchTx")}
           />
-        </Box>
+        </FilterContainer>
       </StyledList>
       <GridBox sidebar={+sidebar}>
         {loading &&
           [...new Array(12)].map((i, ii) => (
-            <Skeleton key={ii} style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
+            <CommonSkeleton key={ii} style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
           ))}
 
         {!loading &&

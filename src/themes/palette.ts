@@ -1,6 +1,6 @@
 import { alpha } from "@mui/material";
 
-import { ThemeType } from "../types/user";
+import { ThemeType } from "../types/theme";
 
 export const createGradient = (deg: number, startColor: string, endColor: string, start = 0, end = 100): string => {
   return `linear-gradient(${deg}deg, ${startColor} ${start}%, ${endColor} ${end}%)`;
@@ -16,6 +16,7 @@ const GREY = {
   300: "#50596D",
   400: "#141520",
   500: "#F6F6F6",
+  600: "#CCCCCC",
   A100: "#A3A3A3",
   A200: "#E7E8E9",
   A400: "#B7B7B7"

@@ -13,6 +13,7 @@ import {
 } from "src/commons/resources";
 import { lists, routers } from "src/commons/routers";
 import { setOnDetailView, setSidebar } from "src/stores/user";
+import { setTheme } from "src/stores/theme";
 
 import CustomIcon from "../../CustomIcon";
 import TopSearch from "../Sidebar/TopSearch";
@@ -31,6 +32,7 @@ import {
   NetworkContainer,
   SearchButton,
   SideBarRight,
+  SwitchMode,
   Title
 } from "./styles";
 
@@ -38,9 +40,10 @@ const HIDDEN_HEADER_SEARCH_PATHS: string[] = [lists.dashboard()];
 
 const Header: React.FC<RouteComponentProps> = (props) => {
   const { history } = props;
-  const { isMobile } = useScreen();
+  const { isMobile, isGalaxyFoldSmall } = useScreen();
   const home = history.location.pathname === "/";
   const { sidebar } = useSelector(({ user }: RootState) => user);
+  const { theme: themeMode } = useSelector(({ theme }: RootState) => theme);
   const [openSearch, setOpenSearch] = React.useState(false);
   const handleToggle = () => setSidebar(!sidebar);
   const theme = useTheme();
@@ -89,14 +92,14 @@ const Header: React.FC<RouteComponentProps> = (props) => {
             {!sidebar && <HeaderLogo src={LogoIcon} alt="logo desktop" />}
           </HeaderLogoLink>
           <SideBarRight>
-            {/* {!isGalaxyFoldSmall && (
+            {!isGalaxyFoldSmall && (
               <SwitchMode
                 checked={themeMode === "dark"}
                 onChange={(e) => {
                   setTheme(e.target.checked ? "dark" : "light");
                 }}
               />
-            )} */}
+            )}
             <NetworkContainer>
               <SelectNetwork />
             </NetworkContainer>

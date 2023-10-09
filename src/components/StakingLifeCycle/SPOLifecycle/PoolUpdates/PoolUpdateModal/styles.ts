@@ -47,7 +47,7 @@ export const ItemList = styled(Box)(({ theme }) => ({
 }));
 
 export const Item = styled(Box)(({ theme, flexDirection }) => ({
-  backgroundColor: theme.palette.secondary[0],
+  backgroundColor: theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0],
   padding: 20,
   flex: 1,
   display: "flex",
@@ -93,7 +93,7 @@ export const StyledLink = styled(Link)(({ theme }) => ({
 }));
 
 export const VRFKeyText = styled(Box)(({ theme }) => ({
-  fontSize: 14,
+  fontSize: 12,
   lineHeight: "22px",
   color: theme.palette.primary.main,
   wordBreak: "break-all",
@@ -109,10 +109,11 @@ export const Value = styled(VRFKeyText)(({ theme }) => ({
   color: theme.palette.secondary.main
 }));
 
-export const StyledAdaLogoIcon = styled(AdaLogoIcon)(() => ({
+export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
   fontSize: 12,
   lineHeight: "16px",
-  marginLeft: 8
+  marginLeft: 8,
+  fill: theme.palette.secondary.main
 }));
 
 export const StyledEmptyIcon = styled("img")(() => ({
@@ -138,7 +139,7 @@ export const CardBox = styled(Box)(() => ({
   flex: 1
 }));
 export const ChangeBox = styled(Box)(() => ({
-  padding: "0px 30px",
+  padding: "0px 15px",
   textAlign: "center"
 }));
 

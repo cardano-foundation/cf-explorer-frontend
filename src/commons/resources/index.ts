@@ -38,9 +38,9 @@ import TokenADA from "./icons/tokenADA.svg";
 import MediumIcon from "./icons/medium.svg";
 import RocketBackground from "./icons/rocket-bg.svg";
 import USDIcon from "./icons/usd.svg";
-import NoteEditIcon from "./icons/note-edit.svg";
-import WithdrawlIcon from "./icons/withdrawl.svg";
-import MintingIconUrl from "./icons/minting.svg";
+import NoteEditIcon, { ReactComponent as NoteEditIconComponent } from "./icons/note-edit.svg";
+import WithdrawlIcon, { ReactComponent as WithdrawlIconComponent } from "./icons/withdrawl.svg";
+import MintingIconUrl, { ReactComponent as MintingIconComponent } from "./icons/minting.svg";
 import HighestIcon, { ReactComponent as HighestIconComponent } from "./icons/highest-icon.svg";
 import LowestIcon, { ReactComponent as LowestIconComponent } from "./icons/lowest-icon.svg";
 import SeeMoreIcon from "./icons/seemore.svg";
@@ -64,6 +64,8 @@ import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 import ProtocolIcon from "./icons/menus/Protocol.svg";
 import PolygonWhiteIconUrl from "./icons/polygon-white.svg";
 import PolygonBlackIconUrl from "./icons/polygon-back.svg";
+import PolygonDarkIconUrl, { ReactComponent as PolygonDarkIcon } from "./icons/polygon-dark.svg";
+import PolygonDarkRedIconUrl, { ReactComponent as PolygonDarkRedIcon } from "./icons/polygon-dark-red.svg";
 import AdaHolderIconUrl from "./images/ada-holder.png";
 import AdaHolderIconDarlUrl from "./images/ada-holder-dark.png";
 import PaymentWalletUrl from "./images/payment-wallet.png";
@@ -89,11 +91,17 @@ import totalOutputUrl, { ReactComponent as TotalOutput } from "./icons/totalOutp
 import CopyIconSquareUrl, { ReactComponent as CopyIconSquare } from "./images/copy.svg";
 import fileGuardUrl, { ReactComponent as FileGuard } from "./icons/file-guard.svg";
 import RocketIconUrl, { ReactComponent as RocketIcon } from "./icons/rocket.svg";
-import DelegationIconUrl from "./icons/delegationIcon.svg";
-import RewardsDistributionIconUrl from "./icons/rewardsDistribution.svg";
-import StakeCertificatesIconUrl from "./icons/stakeCertificateIcon.svg";
-import ProtocolUpdateIconUrl from "./icons/protocolUpdateIcon.svg";
-import InstantaneousHistoryIconUrl from "./icons/instantaneousHistoryIcon.svg";
+import DelegationIconUrl, { ReactComponent as DelegationIconComponent } from "./icons/delegationIcon.svg";
+import RewardsDistributionIconUrl, {
+  ReactComponent as RewardsDistributionComponent
+} from "./icons/rewardsDistribution.svg";
+import StakeCertificatesIconUrl, {
+  ReactComponent as StakeCertificatesComponent
+} from "./icons/stakeCertificateIcon.svg";
+import ProtocolUpdateIconUrl, { ReactComponent as ProtocolUpdateComponent } from "./icons/protocolUpdateIcon.svg";
+import InstantaneousHistoryIconUrl, {
+  ReactComponent as InstantaneousHistoryComponent
+} from "./icons/instantaneousHistoryIcon.svg";
 import MetadataIconUrl from "./icons/metadataIcon2.svg";
 import CurrentEpochHome from "./icons/currentEpochHome.svg";
 import CurrentEpochHomeDark from "./icons/currentEpochHomeDark.svg";
@@ -110,9 +118,16 @@ import sunIcon from "./icons/sun.svg";
 import moonIcon from "./icons/moon.svg";
 import WhiteSearchIcon from "./icons/white-search-icon.svg";
 import WalletRoundedIcon from "./icons/wallet-rounded.svg";
+import SummaryWalletDark from "./icons/summaryWalletDark.svg";
+import UpGreenDarkmode from "./icons/upGreenDark.svg";
+import UpGreenUtxoDarkmode from "./icons/uputxoGreenDark.svg";
+import DownRedDarkmode from "./icons/downRedDark.svg";
+import DownRedUtxoDarkmode from "./icons/downUtxoRedDark.svg";
 import ArrowUpIcon from "./icons/arrow-up.svg";
+import ArrowUpDarkIcon from "./icons/arrow-up-dark.svg";
 import CopyOutlineIcon, { ReactComponent as CopyOutlineIconComponent } from "./icons/copy-outline.svg";
-import ArrowDownIcon from "./icons/arrow-down.svg";
+import ArrowDownIcon from "./icons/arrow-down-red.svg";
+import ArrowDownDarkIcon from "./icons/arrow-down-red-dark.svg";
 
 export {
   LogoFullIcon,
@@ -220,12 +235,16 @@ export {
   CardanoBlueDarkmodeLogo,
   TwitterXIcon,
   NoRecordsIcon,
+  PolygonDarkIconUrl,
+  PolygonDarkRedIconUrl,
   GiftIcon,
   DelegatingIcon,
   LogoDarkmodeFullIcon,
   LogoDarkmodeShortIcon,
   // React component
   ExchangeIcon,
+  PolygonDarkIcon,
+  PolygonDarkRedIcon,
   CubeIconComponent,
   SlotIcon,
   TimeIconComponent,
@@ -254,11 +273,26 @@ export {
   WhiteSearchIcon,
   WalletRoundedIcon,
   ArrowUpIcon,
+  ArrowUpDarkIcon,
   CopyOutlineIcon,
   ArrowDownIcon,
+  ArrowDownDarkIcon,
   RocketIconUrl,
   RocketIcon,
-  CopyOutlineIconComponent
+  CopyOutlineIconComponent,
+  SummaryWalletDark,
+  UpGreenDarkmode,
+  DownRedDarkmode,
+  UpGreenUtxoDarkmode,
+  DownRedUtxoDarkmode,
+  NoteEditIconComponent,
+  WithdrawlIconComponent,
+  DelegationIconComponent,
+  MintingIconComponent,
+  RewardsDistributionComponent,
+  StakeCertificatesComponent,
+  ProtocolUpdateComponent,
+  InstantaneousHistoryComponent
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
@@ -297,6 +331,7 @@ export { ReactComponent as ButtonListIconDark } from "./icons/Staking/buttonList
 export { ReactComponent as InfoIcon } from "./icons/Staking/infoIcon.svg";
 export { ReactComponent as TranferIcon } from "./icons/Staking/tranfer.svg";
 export { ReactComponent as BackIcon } from "./icons/Staking/BackIcon.svg";
+export { ReactComponent as BackDarkIcon } from "./icons/back-dark-icon.svg";
 export { ReactComponent as AddressIcon } from "./icons/Staking/AddressIcon.svg";
 export { ReactComponent as AddressIconDark } from "./icons/Staking/AddressIconDark.svg";
 export { ReactComponent as AddressIconDark2 } from "./icons/Staking/AddressIconDark2.svg";
@@ -345,6 +380,8 @@ export { ReactComponent as UnionTokenIcon } from "./icons/union-token.svg";
 export { ReactComponent as PeopleIcon } from "./icons/people.svg";
 export { ReactComponent as SuccessIcon } from "./icons/success.svg";
 export { ReactComponent as FailIcon } from "./icons/failed.svg";
+export { ReactComponent as SuccessDarkIcon } from "./icons/success-dark.svg";
+export { ReactComponent as FailDarkIcon } from "./icons/failed-dark.svg";
 export { ReactComponent as StakingDelegators } from "./icons/stakingDelegators.svg";
 export { ReactComponent as CertificateIcon } from "./icons/certificate.svg";
 export { ReactComponent as CertificateDarkIcon } from "./icons/certificate-dark.svg";
@@ -388,6 +425,9 @@ export { ReactComponent as TwitterX } from "./icons/TwitterX.svg";
 export { ReactComponent as ExclamationTriangleIcon } from "./icons/exclamation-triangle.svg";
 export { ReactComponent as ADAactive } from "./icons/Staking/ADAactive.svg";
 export { ReactComponent as ADAinactive } from "./icons/Staking/ADAinactive.svg";
+export { ReactComponent as OutlineEye } from "./icons/outline-eye.svg";
+export { ReactComponent as Polygon } from "./icons/polygon.svg";
+export { ReactComponent as PoundSign } from "./icons/pound-sign.svg";
 export { ReactComponent as SeeMoreIconHome } from "./icons/seemore.svg";
 export { ReactComponent as WalletIconComponent } from "./icons/walletIcon.svg";
 export { ReactComponent as CubeIcon } from "./icons/cube.svg";

@@ -19,12 +19,12 @@ describe("StakingLifeCycleSearch", () => {
   it("should component renders", () => {
     render(<StakingLifeCycleSearch />);
     expect(
-      screen.getByText(/search to explore the staking lifecycle events of a delegator or pool\./i)
+      screen.getAllByText(/search to explore the staking lifecycle events of a delegator or pool\./i)[0]
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", {
+      screen.getAllByRole("button", {
         name: /search/i
-      })
+      })[0]
     ).toBeInTheDocument();
   });
 
@@ -34,14 +34,14 @@ describe("StakingLifeCycleSearch", () => {
     mockedUseHistory.mockReturnValue({ push });
     render(<StakingLifeCycleSearch />);
     const textBox = screen.getByRole("textbox");
-    const btnSearch = screen.getByRole("button", {
+    const btnSearch = screen.getAllByRole("button", {
       name: /search/i
     });
     expect(textBox).toBeInTheDocument();
-    expect(btnSearch).toBeInTheDocument();
+    expect(btnSearch[0]).toBeInTheDocument();
 
     userEvent.type(textBox, mockedStateKey);
-    userEvent.click(btnSearch);
+    userEvent.click(btnSearch[0]);
 
     expect(push).toBeCalled();
   });

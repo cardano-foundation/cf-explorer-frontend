@@ -1,4 +1,6 @@
-import { Grid, Skeleton, Button, styled, Box, alpha } from "@mui/material";
+import { Box, Button, Grid, alpha, styled } from "@mui/material";
+
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
 export const BoxInfo = styled(Box)<{ space: number }>(({ theme }) => ({
   background: theme.palette.secondary[0],
@@ -110,7 +112,7 @@ export const ChartBox = styled(Box)(({ theme }) => ({
   fontSize: 12
 }));
 
-export const SkeletonUI = styled(Skeleton)(({ theme }) => ({
+export const SkeletonUI = styled(CommonSkeleton)(({ theme }) => ({
   paddingTop: theme.spacing(3),
   marginRight: theme.spacing(2),
   borderRadius: 10
@@ -146,10 +148,6 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   "&:hover": {
     color: active ? `${theme.palette.secondary[0]} !important` : theme.palette.secondary.main,
     backgroundColor: active ? theme.palette.secondary.light : "none"
-  },
-  [theme.breakpoints.down("lg")]: {
-    backgroundColor: active ? `${theme.palette.primary.main} !important` : "none",
-    color: active ? `${theme.palette.primary.contrastText} !important` : theme.palette.secondary.light
   }
 }));
 

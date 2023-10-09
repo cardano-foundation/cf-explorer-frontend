@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { NETWORKS } from "src/commons/utils/constants";
 
 export const NavbarContainer = styled("nav")<{ vh: number }>(({ theme, vh }) => {
-  const { theme: themeMode } = useSelector(({ user }: RootState) => user);
+  const { theme: themeMode } = useSelector(({ theme }: RootState) => theme);
   return {
     position: "relative",
     width: "100%",

@@ -8,7 +8,6 @@ describe("Top Address Detail Tests", () => {
   it("verify element by address ADA Balance", () => {
     cy.visit("/addresses");
     cy.get('[data-testid="table-common"]').contains("Addresses");
-    //cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("#");
     cy.get(".css-1dz0v3k > tr > :nth-child(2)").contains("Addresses");
     cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Balance");
     cy.get(".css-1dz0v3k > tr > :nth-child(4)").contains("Transaction Count");
@@ -16,9 +15,8 @@ describe("Top Address Detail Tests", () => {
   it.only("verify element by Amount Staked", () => {
     cy.visit("/addresses");
     cy.get('[id*="amount-staked"]').first().click();
-    //cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("#");
     cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("Stake Address");
     cy.get(".css-1dz0v3k > tr > :nth-child(2)").contains("Pool");
-    cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Stake amount");
+    cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Stake amount", { matchCase: false });
   });
 });

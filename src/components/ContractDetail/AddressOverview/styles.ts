@@ -64,8 +64,9 @@ export const RedirectButton = styled(Box)(({ theme }) => ({
   color: theme.palette.secondary[0],
   padding: `${theme.spacing(1)} ${theme.spacing(2)} `,
   ":hover": {
-    backgroundColor: alpha(theme.palette.secondary.main, 0.8)
-  }
+    backgroundColor: theme.isDark ? theme.palette.primary.dark : alpha(theme.palette.secondary.main, 0.8)
+  },
+  borderRadius: 8
 }));
 
 export const BannerSuccess = styled(Box)`
@@ -73,8 +74,7 @@ export const BannerSuccess = styled(Box)`
   font-size: 18px;
   line-height: 21px;
   text-align: center;
-  color: ${(props) => props.theme.palette.success[800]};
-  background: ${(props) => (props.theme.isDark ? "transparent" : props.theme.palette.success[100])};
+  color: ${(props) => (props.theme.isDark ? props.theme.palette.success[700] : props.theme.palette.success[800])};
   border: ${(props) => props.theme.palette.primary[200]};
   border-radius: 10px;
   width: 100%;
@@ -99,4 +99,34 @@ export const CardContainer = styled(Card)`
       margin-top: 0 !important;
     }
   }
+`;
+
+export const WrapButtonExtra = styled(Box)(({ theme }) => ({
+  display: "flex",
+  gap: 10,
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    width: "100%"
+  }
+}));
+
+export const StyledVerifyButton = styled(Box)(({ theme }) => ({
+  color: theme.palette.success[800],
+  background: theme.palette.success[100],
+  border: `2px solid ${theme.isDark ? theme.palette.warning[800] : theme.palette.success.main}`,
+  cursor: "pointer",
+  borderRadius: 4,
+  padding: "8px 14px",
+  fontWeight: 700,
+  lineHeight: 1.2,
+  fontSize: "14px",
+  height: "34px",
+  boxSizing: "border-box"
+}));
+
+export const VerifyScriptContainer = styled(Box)`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 10px;
 `;

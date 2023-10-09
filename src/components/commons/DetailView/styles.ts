@@ -1,10 +1,11 @@
-import { alpha, Box, Button, Drawer, IconButton, Skeleton, styled } from "@mui/material";
+import { alpha, Box, Button, Drawer, IconButton, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 import { CONFIRMATION_STATUS, STAKE_KEY_STATUS, TRANSACTION_STATUS } from "src/commons/utils/constants";
 
 import { BoxRaised } from "../BoxRaised";
+import { CommonSkeleton } from "../CustomSkeleton";
 
 export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
   zIndex: 1302,
@@ -283,7 +284,7 @@ export const DelegatedDetail = styled("small")`
 export const DelegatedEmptyPool = styled("span")`
   color: ${(props) => props.theme.palette.secondary.main};
 `;
-export const DetailLabelSkeleton = styled(Skeleton)`
+export const DetailLabelSkeleton = styled(CommonSkeleton)`
   height: 1em;
   width: 50%;
   min-width: 100px;
@@ -457,16 +458,16 @@ export const SeemoreText = styled("span")`
   font-weight: var(--font-weight-bold);
 `;
 
-export const ProgressSkeleton = styled(Skeleton)`
+export const ProgressSkeleton = styled(CommonSkeleton)`
   width: 150px;
   height: 150px;
   border-radius: 10px;
 `;
-export const IconSkeleton = styled(Skeleton)`
+export const IconSkeleton = styled(CommonSkeleton)`
   width: 24px;
   height: 24px;
 `;
-export const DetailValueSkeleton = styled(Skeleton)`
+export const DetailValueSkeleton = styled(CommonSkeleton)`
   height: 1em;
   width: 50%;
   min-width: 100px;
@@ -500,7 +501,7 @@ export const StakeKeyStatus = styled("small")<{ status: StakeStatus }>`
       case STAKE_KEY_STATUS.ACTIVE:
         return props.theme.palette.success[800];
       default:
-        return props.theme.palette.warning[800];
+        return props.theme.isDark ? props.theme.palette.warning[100] : props.theme.palette.warning[800];
     }
   }};
   background-color: ${(props) => {
@@ -508,7 +509,7 @@ export const StakeKeyStatus = styled("small")<{ status: StakeStatus }>`
       case STAKE_KEY_STATUS.ACTIVE:
         return props.theme.palette.success[100];
       default:
-        return props.theme.palette.warning[100];
+        return props.theme.isDark ? props.theme.palette.warning[800] : props.theme.palette.warning[100];
     }
   }};
   padding: 3px 10px;
@@ -540,14 +541,16 @@ export const TimeDuration = styled("small")(({ theme }) => ({
   padding: 10
 }));
 
-export const ViewDetailDrawerContractHash = styled(ViewDetailDrawer)`
-  width: 100%;
-`;
+export const ViewDetailDrawerContractHash = styled(ViewDetailDrawer)``;
 
-export const ViewDetailContainerContractHash = styled(ViewDetailContainer)`
-  margin-left: 0;
-`;
-export const ViewDetailScrollContractHash = styled(ViewDetailScroll)`
-  padding-top: 0;
-  margin-right: 0;
+export const ViewDetailContainerContractHash = styled(ViewDetailContainer)``;
+export const ViewDetailScrollContractHash = styled(ViewDetailScroll)``;
+
+export const StyledSpendviewDrawer = styled(Drawer)`
+  z-index: 1302;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    top: 76px;
+    height: calc(100vh - 76px);
+    max-width: unset;
+  }
 `;

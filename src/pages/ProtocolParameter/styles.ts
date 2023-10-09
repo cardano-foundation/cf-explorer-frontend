@@ -13,6 +13,23 @@ export const BackText = styled("small")`
   font-weight: var(--font-weight-bold);
 `;
 
+export const Header = styled(Box)(({ theme }) => ({
+  fontWeight: "bold",
+  color: theme.palette.secondary.main,
+  fontSize: "1.25rem",
+  textAlign: "left"
+}));
+
+export const HeaderButton = styled(Button)(({ theme }) => ({
+  textTransform: "capitalize",
+  fontWeight: "bold",
+  fontSize: "0.875rem",
+  [theme.breakpoints.down("sm")]: {
+    whiteSpace: "nowrap",
+    padding: "10px 25px"
+  }
+}));
+
 export const FilterContainer = styled(Box)(({ theme }) => ({
   width: 300,
   backgroundColor: theme.palette.secondary[0],
@@ -24,6 +41,9 @@ export const FilterContainer = styled(Box)(({ theme }) => ({
   boxShadow: "rgba(189, 197, 209, 0.2) 0px 0.5rem 1.2rem",
   [theme.breakpoints.down("md")]: {
     left: "0"
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: 265
   },
   ":hover": {
     backgroundColor: theme.palette.secondary[0]
@@ -112,3 +132,8 @@ export const ColumnProtocol = styled(Box)<{ isLink: number; to: string }>(({ isL
 export const StyledDropdownItem = styled("label")`
   color: ${({ theme }) => theme.palette.secondary.main};
 `;
+
+export const TextDescription = styled("small")(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  whiteSpace: "nowrap"
+}));

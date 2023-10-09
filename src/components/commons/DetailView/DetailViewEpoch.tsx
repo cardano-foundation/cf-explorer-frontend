@@ -1,51 +1,51 @@
-import React, { useEffect, useState } from "react";
-import { CgClose } from "react-icons/cg";
-import { BiChevronRight } from "react-icons/bi";
-import { useSelector } from "react-redux";
-import moment from "moment";
 import { Box, useTheme } from "@mui/material";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { BiChevronRight } from "react-icons/bi";
+import { CgClose } from "react-icons/cg";
+import { useSelector } from "react-redux";
 
-import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
-import { BlockIcon, RocketIconUrl, cubeIconUrl } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
+import { BlockIcon, CubeIconComponent, RocketIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
 import { API } from "src/commons/utils/api";
+import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
 
-import ProgressCircle from "../ProgressCircle";
-import ViewMoreButton from "../ViewMoreButton";
-import CustomTooltip from "../CustomTooltip";
-import ViewAllButton from "../ViewAllButton";
 import ADAicon from "../ADAIcon";
+import CustomIcon from "../CustomIcon";
+import CustomTooltip from "../CustomTooltip";
 import FormNowMessage from "../FormNowMessage";
+import ProgressCircle from "../ProgressCircle";
+import ViewAllButton from "../ViewAllButton";
+import ViewMoreButton from "../ViewMoreButton";
 import {
+  BlockDefault,
   CloseButton,
+  DetailLabel,
+  DetailLabelSkeleton,
+  DetailLink,
+  DetailLinkIcon,
+  DetailLinkRight,
+  DetailValue,
+  DetailValueSkeleton,
+  DetailsInfoItem,
   EpochNumber,
   EpochText,
+  Group,
   HeaderContainer,
-  ViewDetailContainer,
-  DetailsInfoItem,
-  DetailLabel,
-  DetailValue,
-  BlockDefault,
-  DetailLabelSkeleton,
-  DetailValueSkeleton,
   IconSkeleton,
-  ProgressSkeleton,
-  ViewDetailDrawer,
   Item,
   ItemName,
   ItemValue,
   ListItem,
-  Group,
-  DetailLink,
-  DetailLinkIcon,
-  DetailLinkRight,
-  ViewDetailScroll,
-  ViewDetailHeader,
+  ProgressSkeleton,
   TimeDuration,
-  Icon
+  ViewDetailContainer,
+  ViewDetailDrawer,
+  ViewDetailHeader,
+  ViewDetailScroll
 } from "./styles";
 
 type DetailViewEpochProps = {
@@ -203,14 +203,22 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
             </HeaderContainer>
             <ListItem>
               <Item>
-                <Icon src={cubeIconUrl} alt="socket" />
+                <CustomIcon
+                  icon={CubeIconComponent}
+                  height={30}
+                  fill={theme.isDark ? theme.palette.secondary[0] : theme.palette.common.white}
+                />
                 <ItemName>{t("glossary.blocks")}</ItemName>
                 <ItemValue>
                   {currentEpoch?.no === epochNo ? currentEpoch?.blkCount || data.blkCount : data.blkCount}
                 </ItemValue>
               </Item>
               <Item>
-                <Icon src={RocketIconUrl} alt="socket" />
+                <CustomIcon
+                  icon={RocketIcon}
+                  height={30}
+                  fill={theme.isDark ? theme.palette.secondary[0] : theme.palette.common.white}
+                />
                 <ItemName>{t("common.slot")}</ItemName>
                 <ItemValue>
                   {slot}

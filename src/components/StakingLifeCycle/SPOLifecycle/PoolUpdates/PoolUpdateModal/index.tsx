@@ -1,24 +1,25 @@
-import { useEffect, useState } from "react";
-import { Box, Skeleton } from "@mui/material";
 import { TabContext, TabList } from "@mui/lab";
-import { useHistory } from "react-router-dom";
+import { Box } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
 
-import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
-import ViewMoreThreeDots from "src/components/commons/ViewMoreThreeDots";
-import CustomTooltip from "src/components/commons/CustomTooltip";
-import CopyButton from "src/components/commons/CopyButton";
+import { CertUpdate, ChangeIcon, PoolCert } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { formatADAFull, getShortHash, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
-import { CertUpdate, ChangeIcon, PoolCert } from "src/commons/resources";
-import CustomTabTitle from "src/components/commons/CustomTabTitle";
+import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
 import ADAicon from "src/components/commons/ADAIcon";
+import CopyButton from "src/components/commons/CopyButton";
+import CustomModal from "src/components/commons/CustomModal";
+import CustomTabTitle from "src/components/commons/CustomTabTitle";
 import { Uppercase } from "src/components/commons/CustomText/styles";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import ViewMoreThreeDots from "src/components/commons/ViewMoreThreeDots";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
 import {
   CardBox,
   ChangeBox,
-  VRFKeyText,
   HistoryList,
   Item,
   ItemList,
@@ -27,13 +28,13 @@ import {
   MinimumText,
   StyledAdaLogoIcon,
   StyledLink,
-  StyledModal,
   StyledTab,
   StyledTabPanel,
   SupperMinimumText,
   TabContainer,
   UpdateItem,
   UpdateList,
+  VRFKeyText,
   Value
 } from "./styles";
 
@@ -84,7 +85,7 @@ export const PoolUpdateModal = ({ data, open, ...props }: Props) => {
   const isUpdated = data?.previousMargin !== data?.margin || data?.previousPledge !== data?.pledge;
 
   return (
-    <StyledModal open={open} {...props} title={t("common.poolCert")} sx={{ maxHeight: "min(70vh, 800px)" }}>
+    <CustomModal open={open} {...props} title={t("common.poolCert")} sx={{ maxHeight: "min(70vh, 800px)" }}>
       {isUpdated ? (
         <TabContext value={tabActive}>
           <TabContainer>
@@ -105,7 +106,16 @@ export const PoolUpdateModal = ({ data, open, ...props }: Props) => {
                   key={key}
                   value={key}
                   label={
-                    <CustomTabTitle iconProps={{ stroke: "none" }} active={key === tabActive} icon={Icon}>
+                    <CustomTabTitle
+                      iconProps={{
+                        stroke: "none",
+                        sx: {
+                          fill: ({ palette }) => (key === tabActive ? palette.primary.main : palette.secondary.light)
+                        }
+                      }}
+                      active={key === tabActive}
+                      icon={Icon}
+                    >
                       {label}
                     </CustomTabTitle>
                   }
@@ -122,7 +132,7 @@ export const PoolUpdateModal = ({ data, open, ...props }: Props) => {
       ) : (
         <PoolCertificate data={data} />
       )}
-    </StyledModal>
+    </CustomModal>
   );
 };
 export default PoolUpdateModal;
@@ -246,12 +256,12 @@ const PoolCertificate = ({ data }: { data: PoolUpdateDetail | null }) => {
             {extra ? (
               <Box>
                 <Label>{label}</Label>
-                {data ? content : <Skeleton variant="rectangular" />}
+                {data ? content : <CommonSkeleton variant="rectangular" />}
               </Box>
             ) : (
               <>
                 <Label>{label}</Label>
-                {data ? content : <Skeleton variant="rectangular" />}
+                {data ? content : <CommonSkeleton variant="rectangular" />}
               </>
             )}
             {extra}

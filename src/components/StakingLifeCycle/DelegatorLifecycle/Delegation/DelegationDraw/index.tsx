@@ -4,7 +4,7 @@ import { Box, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import { details } from "src/commons/routers";
-import { AddressIcon, AddressIconDark2, BackIcon, TimeIcon, TimeIconDark } from "src/commons/resources";
+import { AddressIcon, AddressIconDark2, BackDarkIcon, BackIcon, TimeIcon, TimeIconDark } from "src/commons/resources";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { API } from "src/commons/utils/api";
@@ -118,7 +118,7 @@ const DelegationDraw: React.FC<IDelegationDrawProps> = ({ toggleModal, showBackB
       <StepInfo>
         {showBackButton ? (
           <IconButtonBack data-testid="delegator-delegation-back-button" onClick={handleBack}>
-            <BackIcon />
+            {theme.isDark ? <BackDarkIcon /> : <BackIcon />}
           </IconButtonBack>
         ) : (
           <Box />
@@ -128,7 +128,7 @@ const DelegationDraw: React.FC<IDelegationDrawProps> = ({ toggleModal, showBackB
             <CustomIcon
               icon={theme.isDark ? AddressIconDark2 : AddressIcon}
               height={30}
-              fill={theme.palette.secondary.light}
+              fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
             />
             <CustomTooltip title={txHash}>
               <InfoText>
@@ -139,7 +139,7 @@ const DelegationDraw: React.FC<IDelegationDrawProps> = ({ toggleModal, showBackB
           </Info>
           <Info>
             <StyledADASymbol>
-              <ADAicon />
+              <ADAicon fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light} />
             </StyledADASymbol>
             <InfoText data-testid="delegator-delegation-fee">{formatADAFull(fee)}</InfoText>
           </Info>
@@ -147,7 +147,7 @@ const DelegationDraw: React.FC<IDelegationDrawProps> = ({ toggleModal, showBackB
             <CustomIcon
               icon={theme.isDark ? TimeIconDark : TimeIcon}
               height={30}
-              fill={theme.palette.secondary.light}
+              fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
             />
             <InfoText>{formatDateTimeLocal(time)}</InfoText>
           </Info>

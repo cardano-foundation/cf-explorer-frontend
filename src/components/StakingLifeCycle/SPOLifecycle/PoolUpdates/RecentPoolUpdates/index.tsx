@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
-import { Box, Skeleton } from "@mui/material";
-import { useUpdateEffect } from "react-use";
-import { useHistory, useParams } from "react-router";
-import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router";
+import { useUpdateEffect } from "react-use";
 
 import useFetchList from "src/commons/hooks/useFetchList";
+import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import CustomFilter, { FilterParams } from "src/components/commons/CustomFilter";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import OverviewStaking from "src/components/commons/OverviewStaking";
 import { EmptyRecord, FooterTable } from "src/components/commons/Table";
-import { details } from "src/commons/routers";
 
-import { GridBox, WrapFilterDescription, StyledList, StyledContainer } from "./styles";
 import { DescriptionText } from "../../../DelegatorLifecycle/styles";
+import { FilterContainer, StyledList } from "../../styles";
+import { GridBox, StyledContainer, WrapFilterDescription } from "./styles";
 
 declare interface Props {
   onSelect: (pool: PoolUpdateItem | null) => void;
@@ -61,9 +62,9 @@ const RecentPoolUpdates = ({ onSelect, setShowBackButton }: Props) => {
     <StyledContainer>
       <StyledList>
         <DescriptionText>{t("common.recentUpdates")}</DescriptionText>
-        <Box display={"flex"} alignItems={"center"} gap={2}>
+        <FilterContainer>
           <WrapFilterDescription>
-            {t("common.showing")} {total} {total > 1 ? t("common.result") : t("common.results")}
+            {t("common.showing")} {total} {total <= 1 ? t("common.result") : t("common.results")}
           </WrapFilterDescription>
           <CustomFilter
             filterValue={params}
@@ -73,12 +74,12 @@ const RecentPoolUpdates = ({ onSelect, setShowBackButton }: Props) => {
             }}
             searchLabel={t("common.searchTx")}
           />
-        </Box>
+        </FilterContainer>
       </StyledList>
       <GridBox sidebar={+sidebar}>
         {loading &&
           [...new Array(12)].map((i, ii) => (
-            <Skeleton key={ii} style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
+            <CommonSkeleton key={ii} style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
           ))}
         {!loading &&
           data.map((item, ii) => {

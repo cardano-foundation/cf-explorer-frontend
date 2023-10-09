@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { CircularProgress, Stack } from "@mui/material";
+import { CircularProgress, Stack, useTheme } from "@mui/material";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 
@@ -33,7 +33,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
   const { t } = useTranslation();
   const toast = useToast();
   const [loading, setLoading] = useState(false);
-
+  const theme = useTheme();
   const history = useHistory();
   const { isMobile } = useScreen();
   const handleGenerateReport = async () => {
@@ -206,7 +206,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
             data-testid="compose-button"
             disabled={loading}
             onClick={handleGenerateReport}
-            sx={{ fontSize: isMobile ? 14 : 16 }}
+            sx={{ fontSize: isMobile ? 14 : 16, background: theme.isDark ? theme.palette.primary.main : "" }}
           >
             {loading && <CircularProgress color="info" size={20} />}
             {t("common.generateReport")}
