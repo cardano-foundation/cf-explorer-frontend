@@ -3,7 +3,7 @@ import jsonBig from "json-bigint";
 
 import i18n from "src/i18n";
 
-import { removeAuthInfo } from "./helper";
+import { handleUpdateRoleUser, removeAuthInfo } from "./helper";
 import { refreshToken } from "./userRequest";
 import { ACCOUNT_ERROR, API_URL, AUTH_API_URL } from "./constants";
 
@@ -25,7 +25,7 @@ defaultAxios.interceptors.request.use(
     return config;
   },
   (error) => {
-    Promise.reject(error);
+    return Promise.reject(error);
   }
 );
 
@@ -50,12 +50,9 @@ defaultAxios.interceptors.response.use(
       error.response?.data?.errorCode === ACCOUNT_ERROR.INVALID_TOKEN ||
       error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED
     ) {
-      removeAuthInfo();
-      if (window.location.href.includes("/account")) {
-        window.location.href = "/";
-      }
+      handleUpdateRoleUser();
     }
-    return Promise.reject(error);
+    return error;
   }
 );
 
@@ -76,7 +73,7 @@ defaultAxiosDownload.interceptors.request.use(
     return config;
   },
   (error) => {
-    Promise.reject(error);
+    return Promise.reject(error);
   }
 );
 
@@ -98,12 +95,9 @@ defaultAxiosDownload.interceptors.response.use(
       return authAxios(originRequest);
     }
     if (error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED) {
-      removeAuthInfo();
-      if (window.location.href.includes("/account")) {
-        window.location.href = "/";
-      }
+      handleUpdateRoleUser();
     }
-    return Promise.reject(error);
+    return error;
   }
 );
 
@@ -142,7 +136,7 @@ authAxios.interceptors.request.use(
     return config;
   },
   (error) => {
-    Promise.reject(error);
+    return Promise.reject(error);
   }
 );
 
@@ -164,10 +158,8 @@ authAxios.interceptors.response.use(
       return authAxios(originRequest);
     }
     if (error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED) {
-      removeAuthInfo();
-      if (window.location.href.includes("/account")) {
-        window.location.href = "/";
-      }
+      handleUpdateRoleUser();
+      return error;
     }
     if (
       error.response?.data?.errorCode === ACCOUNT_ERROR.INVALID_TOKEN ||
@@ -175,7 +167,7 @@ authAxios.interceptors.response.use(
     ) {
       removeAuthInfo();
     }
-    return Promise.reject(error);
+    return error;
   }
 );
 
@@ -194,7 +186,7 @@ uploadAxios.interceptors.request.use(
     return config;
   },
   (error) => {
-    Promise.reject(error);
+    return Promise.reject(error);
   }
 );
 
@@ -216,12 +208,9 @@ uploadAxios.interceptors.response.use(
       return authAxios(originRequest);
     }
     if (error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED) {
-      removeAuthInfo();
-      if (window.location.href.includes("/account")) {
-        window.location.href = "/";
-      }
+      handleUpdateRoleUser();
     }
-    return Promise.reject(error);
+    return error;
   }
 );
 
