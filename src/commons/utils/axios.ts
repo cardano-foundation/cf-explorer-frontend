@@ -175,7 +175,7 @@ authAxios.interceptors.response.use(
     ) {
       removeAuthInfo();
     }
-    return Promise.reject(error);
+    return error;
   }
 );
 

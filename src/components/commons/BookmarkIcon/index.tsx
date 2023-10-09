@@ -51,15 +51,21 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
         }
       } else {
         try {
-          deleteBookmark({
+          const { data, response }: any = await deleteBookmark({
             keyword,
             type,
             network: NETWORK_TYPES[NETWORK]
           });
-          setBookmarks((bookmarks || []).filter((b) => b.keyword !== `${keyword}`));
-          toast.success(t("common.bookmarkHasBeenRemoved"));
+          if (data) {
+            setBookmarks((bookmarks || []).filter((b) => b.keyword !== `${keyword}`));
+            toast.success(t("common.bookmarkHasBeenRemoved"));
+          } else {
+            toast.error(t(response?.data?.errorCode));
+          }
         } catch (error: any) {
-          toast.error(t(error?.response?.data?.errorCode));
+          if (error?.response?.data?.errorCode) {
+            toast.error(t(error?.response?.data?.errorCode));
+          }
         }
       }
     } catch (error: any) {
