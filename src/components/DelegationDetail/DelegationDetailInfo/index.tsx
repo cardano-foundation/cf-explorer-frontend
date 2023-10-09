@@ -62,6 +62,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
   const { t } = useTranslation();
   const theme = useTheme();
   const history = useHistory();
+  const [isErrorImage, setIsErrorImage] = useState(false);
   const [isOpenReward, setOpenReward] = useState<boolean>(false);
   const [isOpenOwner, setOpenOwner] = useState<boolean>(false);
   const { isMobile, isGalaxyFoldSmall } = useScreen();
@@ -101,7 +102,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           </CustomTooltip>
           <BookmarkButton keyword={poolId} type="POOL" />
         </Box>
-        {data?.logoUrl && (
+        {data?.logoUrl && !isErrorImage && (
           <Box
             bgcolor={theme.palette.common.white}
             border={`1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`}
@@ -109,6 +110,9 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             component={"img"}
             src={data?.logoUrl || ""}
             width={"64px"}
+            onError={(e) => {
+              if (e.type === "error") setIsErrorImage(true);
+            }}
           />
         )}
       </HeaderContainer>
