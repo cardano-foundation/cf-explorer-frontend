@@ -33,14 +33,16 @@ import {
   SearchButton,
   SideBarRight,
   SwitchMode,
-  Title
+  Title,
+  WrapButtonSelect
 } from "./styles";
+import SelectLanguage from "./SelectLanguage";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [lists.dashboard()];
 
 const Header: React.FC<RouteComponentProps> = (props) => {
   const { history } = props;
-  const { isMobile, isGalaxyFoldSmall } = useScreen();
+  const { isMobile } = useScreen();
   const home = history.location.pathname === "/";
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { theme: themeMode } = useSelector(({ theme }: RootState) => theme);
@@ -92,14 +94,15 @@ const Header: React.FC<RouteComponentProps> = (props) => {
             {!sidebar && <HeaderLogo src={LogoIcon} alt="logo desktop" />}
           </HeaderLogoLink>
           <SideBarRight>
-            {!isGalaxyFoldSmall && (
+            <WrapButtonSelect>
               <SwitchMode
                 checked={themeMode === "dark"}
                 onChange={(e) => {
                   setTheme(e.target.checked ? "dark" : "light");
                 }}
               />
-            )}
+              <SelectLanguage />
+            </WrapButtonSelect>
             <NetworkContainer>
               <SelectNetwork />
             </NetworkContainer>

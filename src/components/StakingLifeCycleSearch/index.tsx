@@ -13,6 +13,7 @@ import { API } from "src/commons/utils/api";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 import dataMainnet from "src/commons/configs/mainnet.json";
+import defaultAxios from "src/commons/utils/axios";
 
 import {
   StyledContainer,
@@ -82,7 +83,21 @@ const StakingLifeCycleSearch = () => {
     }
   ];
 
-  const hanldeSearch = () => {
+  const handleSearchPoolHash = async (query: string) => {
+    try {
+      const res = await defaultAxios.get(`${API.DELEGATION.POOL_LIST}?page=0&size=1&search=${query}`);
+      const poolId = res?.data?.data?.[0]?.poolId;
+      if (poolId) {
+        history.push(details.spo(poolId, "timeline"));
+      } else {
+        setError(t("message.noResultsFound"));
+      }
+    } catch {
+      setError(t("message.noResultsFound"));
+    }
+  };
+
+  const hanldeSearch = async () => {
     if (!value) {
       setError(t("message.noResultsFound"));
     }
@@ -90,7 +105,9 @@ const StakingLifeCycleSearch = () => {
       history.push(details.staking(value, "timeline"));
     } else if (value.startsWith("pool")) {
       history.push(details.spo(value, "timeline"));
-    } else setError(t("message.noResultsFound"));
+    } else {
+      handleSearchPoolHash(value);
+    }
   };
   useKey("enter", hanldeSearch);
 

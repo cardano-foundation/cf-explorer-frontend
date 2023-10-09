@@ -8,7 +8,7 @@ describe("User check information of stake address registration", () => {
     cy.get('[data-testid="table-common"] tbody tr').eq(0).click();
     cy.get("a").contains("View Details", { matchCase: false }).click();
     cy.get('[data-testid="search-bar"]').should("be.visible");
-    cy.get("div").contains("Stake Address Detail", { matchCase: false }).should("be.visible");
+    cy.get("div").contains("Stake Address Details", { matchCase: false }).should("be.visible");
     cy.get(":nth-child(1) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Delegated to").should("be.visible");
     cy.get(":nth-child(2) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Total Stake").should("be.visible");
     cy.get(":nth-child(3) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root")

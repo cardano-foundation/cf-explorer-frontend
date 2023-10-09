@@ -1,4 +1,5 @@
 import { Typography, useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { OutlineEye, Polygon, PolygonDarkRedIcon } from "src/commons/resources";
 
@@ -11,13 +12,14 @@ interface BurnProps {
 }
 
 const Burn: React.FC<BurnProps> = ({ total, onClick }) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   return (
     <PolygonContainer>
       {theme.isDark ? <PolygonDarkRedIcon /> : <Polygon />}
       <PolygonContent>
         <Typography display="flex" gap="4px" alignItems="center" color={theme.palette.error[700]} fontWeight={500}>
-          Burn{" "}
+          {t("contract.burn")}{" "}
           <CustomBadge bgColor={theme.palette.error[700]} color={theme.isDark ? theme.palette.secondary[100] : ""}>
             {total}
           </CustomBadge>

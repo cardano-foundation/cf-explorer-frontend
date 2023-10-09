@@ -1,5 +1,6 @@
 import { Grid } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import CustomModal from "src/components/commons/CustomModal";
 
@@ -14,23 +15,19 @@ export interface DatumModalProps {
   data?: Data[];
 }
 const DatumModal: React.FC<DatumModalProps> = ({ open = false, onClose, data }) => {
+  const { t } = useTranslation();
   const handleCloseModal = () => onClose?.();
   return (
     <CustomModal
       modalProps={{ style: { zIndex: 1302 } }}
       open={open}
       onClose={handleCloseModal}
-      title="Datum"
+      title={t("contract.datum")}
       width={550}
       modalContainerProps={{ px: "20px" }}
     >
       <ModalContent>
-        <ExplanDropdown title="What is the datum?">
-          Datum is a piece of information that can be associated with a UTXO and is used to carry script state
-          information such as its owner or the timing details which define when the UTXO can be spent. When a script is
-          executed in a spending scenario, it receives not only the transaction as context but also the datum associated
-          with the output being spent.
-        </ExplanDropdown>
+        <ExplanDropdown title={t("explain.datum")}>{t("explain.datum.desc")}</ExplanDropdown>
         <Grid container spacing={2}>
           {data &&
             data.length > 0 &&
