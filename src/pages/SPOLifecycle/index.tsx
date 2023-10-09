@@ -101,8 +101,9 @@ const SPOLifecycle = () => {
   const theme = useTheme();
   const { sidebar } = useSelector(({ user }: RootState) => user);
 
-  const changeMode = (mode: ViewMode) => {
-    history.push(details.spo(poolId, mode, validTab));
+  const changeMode = (newMode: ViewMode) => {
+    if (mode === newMode) return;
+    history.push(details.spo(poolId, newMode, validTab));
   };
 
   if (!initialized && !error) return null;

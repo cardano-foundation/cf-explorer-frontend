@@ -34,6 +34,7 @@ const ParseScriptModal: React.FC<ParseScriptModalProps> = ({ script, subTitle, .
           collapseStringsAfterLength={false}
           style={{ padding: 0, background: "none", color: theme.palette.text.secondary }}
           rootName={false}
+          theme={theme.isDark ? "dark" : "light"}
         />
       </ViewJson>
     </StyledCustomModal>
