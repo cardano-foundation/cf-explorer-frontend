@@ -95,8 +95,9 @@ const DelegatorLifecycle = () => {
     document.title = `${t("slc.stakingDelegationLC")} ${stakeId} | ${t("head.page.dashboard")}`;
   }, [stakeId]);
 
-  const changeMode = (mode: ViewMode) => {
-    history.push(details.staking(stakeId, mode, validTab));
+  const changeMode = (newMode: ViewMode) => {
+    if (mode === newMode) return;
+    history.push(details.staking(stakeId, newMode, validTab));
   };
   if (!initialized && !error) return null;
 
