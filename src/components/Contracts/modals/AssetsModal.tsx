@@ -52,7 +52,7 @@ const AssetsModal: React.FC<AssetsModalProps> = ({ open = false, onClose, data, 
       modalContainerProps={{ px: "20px" }}
     >
       <ModalContent>
-        <StyledList dense={true}>
+        <StyledList>
           <StyledItem style={{ borderBottom: "sold 1px blue" }} secondaryAction={<DataTitle>Quantity</DataTitle>}>
             <ListItemText>
               <DataTitle>Asset Name</DataTitle>
