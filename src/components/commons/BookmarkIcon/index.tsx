@@ -21,14 +21,14 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
   const { openSyncBookmarkModal = false } = useSelector(({ user }: RootState) => user);
 
   const [bookmarks, setBookmarks] = useLocalStorage<Bookmark[]>("bookmark", []);
-  const [bookmark, setBookmark] = useState((bookmarks || []).find((r) => r.keyword === `${keyword}`));
+  const [bookmark, setBookmark] = useState((bookmarks || []).find((r) => r?.keyword === `${keyword}`));
   const theme = useTheme();
   const toast = useToast();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setBookmark(
-      (JSON.parse(localStorage.getItem("bookmark") || "[]") || []).find((r: Bookmark) => r.keyword === `${keyword}`)
+      (JSON.parse(localStorage.getItem("bookmark") || "[]") || []).find((r: Bookmark) => r?.keyword === `${keyword}`)
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openSyncBookmarkModal, bookmarks, keyword]);
@@ -39,13 +39,17 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
       setLoading(true);
       if (!bookmark) {
         if ((bookmarks || [])?.length < 2000) {
-          const { data } = await addBookmark({
+          const { data, response }: any = await addBookmark({
             keyword,
             type,
             network: NETWORK_TYPES[NETWORK]
           });
-          setBookmarks([...(bookmarks || []), data]);
-          toast.success(t("common.bookmarkHasBeenAdded"));
+          if (data) {
+            setBookmarks([...(bookmarks || []), data]);
+            toast.success(t("common.bookmarkHasBeenAdded"));
+          } else {
+            toast.error(t(response?.data?.errorCode));
+          }
         } else {
           toast.error(t("message.bookmark.maximum", { value: 2000 }));
         }
