@@ -3,7 +3,7 @@ import jsonBig from "json-bigint";
 
 import i18n from "src/i18n";
 
-import { handleUpdateRoleUser, removeAuthInfo } from "./helper";
+import { removeAuthInfo } from "./helper";
 import { refreshToken } from "./userRequest";
 import { ACCOUNT_ERROR, API_URL, AUTH_API_URL } from "./constants";
 
@@ -50,7 +50,7 @@ defaultAxios.interceptors.response.use(
       error.response?.data?.errorCode === ACCOUNT_ERROR.INVALID_TOKEN ||
       error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED
     ) {
-      handleUpdateRoleUser();
+      removeAuthInfo();
     }
     return error;
   }
@@ -95,7 +95,7 @@ defaultAxiosDownload.interceptors.response.use(
       return authAxios(originRequest);
     }
     if (error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED) {
-      handleUpdateRoleUser();
+      removeAuthInfo();
     }
     return error;
   }
@@ -158,7 +158,7 @@ authAxios.interceptors.response.use(
       return authAxios(originRequest);
     }
     if (error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED) {
-      handleUpdateRoleUser();
+      removeAuthInfo();
       return error;
     }
     if (
@@ -208,7 +208,7 @@ uploadAxios.interceptors.response.use(
       return authAxios(originRequest);
     }
     if (error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED) {
-      handleUpdateRoleUser();
+      removeAuthInfo();
     }
     return error;
   }
