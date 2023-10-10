@@ -64,7 +64,7 @@ export const BoxInfoItem = styled(Box)(({ theme }) => ({
     width: "100%",
     borderRight: "none",
     minHeight: "0px",
-
+    alignItems: "flex-start",
     "& > div": {
       width: "100%",
       display: "flex",
@@ -96,7 +96,7 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
     width: "100%",
     borderRight: `1px solid ${theme.palette.primary[200]}`,
     minHeight: "0",
-
+    alignItems: "flex-start",
     "& > div": {
       width: "100%",
       display: "flex",
