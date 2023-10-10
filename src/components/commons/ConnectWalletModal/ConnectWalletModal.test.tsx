@@ -8,6 +8,7 @@ import ConnectWalletModal from ".";
 
 jest.mock("@cardano-foundation/cardano-connect-with-wallet", () => ({
   isWalletInstalled: jest.fn(),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   useCardano: jest.fn() as jest.Mock extends (...args: any) => infer R ? R : never,
   NetworkType: {
     MAINNET: "mainnet",

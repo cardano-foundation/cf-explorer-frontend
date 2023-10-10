@@ -4,6 +4,7 @@ import { FormHelperText } from "@mui/material";
 import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { NetworkType } from "@cardano-foundation/cardano-connect-with-wallet-core";
 import { useTranslation } from "react-i18next";
+import { AxiosError } from "axios";
 
 import { authAxios } from "src/commons/utils/axios";
 import { ACCOUNT_ERROR, NETWORK, NETWORKS, NETWORK_TYPES } from "src/commons/utils/constants";
@@ -63,12 +64,16 @@ const RegisterUsernameModal: React.FC<IProps> = ({ open, signature, nonce, setIs
       } else {
         setErrorMessage(t("message.usernameTaken"));
       }
-    } catch (error: any) {
-      const message = t(error.response?.data?.errorCode || ACCOUNT_ERROR.INTERNAL_ERROR);
-      setErrorMessage(message);
-      toast.error(message || "");
-      disconnect();
-      removeAuthInfo();
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const message = t(error.response?.data?.errorCode || ACCOUNT_ERROR.INTERNAL_ERROR);
+        setErrorMessage(message);
+        toast.error(message || "");
+        disconnect();
+        removeAuthInfo();
+      } else {
+        toast.error(ACCOUNT_ERROR.INTERNAL_ERROR);
+      }
     } finally {
       setLoading(false);
     }

@@ -27,7 +27,7 @@ const DelegationLists: React.FC = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(50);
   const [sort, setSort] = useState<string>("");
-  const tableRef = useRef(null);
+  const tableRef = useRef<HTMLDivElement>(null);
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   useEffect(() => {
@@ -203,8 +203,7 @@ const DelegationLists: React.FC = () => {
           onChange: (page, size) => {
             setPage(page);
             setSize(size);
-            /* eslint-disable  @typescript-eslint/no-explicit-any */
-            (tableRef.current as any)?.scrollIntoView();
+            tableRef.current?.scrollIntoView();
           }
         }}
       />

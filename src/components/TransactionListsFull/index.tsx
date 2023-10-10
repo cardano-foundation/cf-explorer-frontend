@@ -1,7 +1,7 @@
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { useRef } from "react";
+import { MouseEvent, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 import Card from "../commons/Card";
@@ -22,7 +22,7 @@ import ADAicon from "../commons/ADAIcon";
 interface TransactionListFullProps {
   underline?: boolean;
   url: string;
-  openDetail?: (_: any, r: Transactions) => void;
+  openDetail?: (_: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => void;
   selected?: number | null;
   showTitle?: boolean;
 }
@@ -41,7 +41,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
   const fetchData = useFetchList<Transactions>(url, pageInfo);
   const mainRef = useRef(document.querySelector("#main"));
 
-  const onClickRow = (_: any, r: Transactions) => {
+  const onClickRow = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
     if (openDetail) return openDetail(_, r);
     history.push(details.transaction(r.hash));
   };

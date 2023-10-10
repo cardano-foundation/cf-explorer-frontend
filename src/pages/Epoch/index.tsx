@@ -130,7 +130,7 @@ const Epoch: React.FC = () => {
     document.title = t("head.page.epochsList");
   }, [t]);
 
-  const openDetail = (_: any, r: IDataEpoch) => {
+  const openDetail = (_: IDataEpoch, r: IDataEpoch) => {
     setOnDetailView(true);
     setSelected(r.no);
   };
@@ -169,7 +169,7 @@ const Epoch: React.FC = () => {
             },
             handleCloseDetailView: handleClose
           }}
-          onClickRow={openDetail}
+          onClickRow={(_, r) => openDetail(r, r)}
           rowKey="no"
           selected={selected}
           showTabView

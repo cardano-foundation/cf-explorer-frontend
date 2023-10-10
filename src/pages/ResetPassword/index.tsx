@@ -1,5 +1,5 @@
 import { Box, FormGroup, IconButton, InputAdornment, useTheme } from "@mui/material";
-import { useEffect, useReducer, useState } from "react";
+import { ChangeEvent, MouseEvent, useEffect, useReducer, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router-dom";
 
@@ -32,7 +32,14 @@ interface IForm {
     touched?: boolean;
   };
 }
-const formReducer = (state: IForm, event: any) => {
+
+interface IEvent {
+  name: string;
+  value?: string;
+  error: string;
+  touched: boolean;
+}
+const formReducer = (state: IForm, event: IEvent) => {
   return {
     ...state,
     [event.name]: {
@@ -133,20 +140,19 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
   }, [path.search]);
 
   useEffect(() => {
+    async function verifyCode() {
+      setIniting(true);
+      const { data } = await verifyCodeResetPassword({ code });
+      if (!data) {
+        setError(true);
+      }
+      setIniting(false);
+    }
     if (!code) return;
     verifyCode();
   }, [code]);
 
-  async function verifyCode() {
-    setIniting(true);
-    const { data } = await verifyCodeResetPassword({ code });
-    if (!data) {
-      setError(true);
-    }
-    setIniting(false);
-  }
-
-  const handleChange = (event: any) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       name: event.target.name,
       value: event.target.value,
@@ -173,22 +179,22 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
   const enableButton = Object.values(formData).every((value) => value.touched) && !hasErrorForm && !loading;
 
   useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter" && !success && !error) {
+        event.preventDefault();
+        handleSubmit();
+      }
+    };
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enableButton, formData, success, error]);
 
-  const handleKeyDown = (event: any) => {
-    if (event.key === "Enter" && !success && !error) {
-      event.preventDefault();
-      handleSubmit(event);
-    }
-  };
-
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
+  const handleSubmit = (event?: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
+    if (event) event.preventDefault();
     if (!enableButton) return;
     let hasErrorField = false;
     const errorPassword = getError("password", formData.password.value);

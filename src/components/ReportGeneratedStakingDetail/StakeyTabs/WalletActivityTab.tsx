@@ -12,6 +12,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
+import { IADATransferReport } from "src/types/report";
 
 const WalletActitityTab = () => {
   const { t } = useTranslation();

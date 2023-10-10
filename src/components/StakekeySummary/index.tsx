@@ -10,6 +10,7 @@ import { defaultAxiosDownload } from "src/commons/utils/axios";
 import { details } from "src/commons/routers";
 import { DownloadGreenIcon } from "src/commons/resources";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
+import { IReportStaking, IStakeKeySummary } from "src/types/report";
 
 import Table, { Column } from "../commons/Table";
 import CustomIcon from "../commons/CustomIcon";
@@ -30,7 +31,7 @@ export function getEventList(data: IReportStaking) {
     .filter((item) => item);
 }
 
-export function getEventType(data: any) {
+export function getEventType(data: string[]) {
   const events = {
     eventDelegation: false,
     eventDeregistration: false,
@@ -39,7 +40,7 @@ export function getEventType(data: any) {
     eventWithdrawal: false
   };
   for (const key in events) {
-    events[key as keyof typeof events] = data.includes(EVENTS[key as keyof typeof EVENTS]?.toUpperCase());
+    events[key as keyof typeof events] = data.includes(EVENTS[key as keyof typeof EVENTS]?.toUpperCase() || "");
   }
   return events;
 }

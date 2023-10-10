@@ -13,6 +13,7 @@ import PoolLifecycle from "src/components/PoolLifecycle";
 import StakekeySummary from "src/components/StakekeySummary";
 import NoRecord from "src/components/commons/NoRecord";
 import CustomTabTitle from "src/components/commons/CustomTabTitle";
+import { IPoolReportList, IStakeKeySummary } from "src/types/report";
 
 import StakingLifeCycleSearch from "../../components/StakingLifeCycleSearch";
 import {

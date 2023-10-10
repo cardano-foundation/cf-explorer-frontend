@@ -236,11 +236,11 @@ export function validateTokenExpired() {
   try {
     const token = localStorage.getItem("token");
     if (!token) return false;
-    const decoded: any = jwtDecode(token);
+    const decoded = jwtDecode<{ name: string; exp: number }>(token);
     const now = moment();
-    const exp = moment(decoded.exp * 1000);
+    const exp = moment(decoded?.exp * 1000);
     return now.isBefore(exp);
-  } catch (err: any) {
+  } catch (e) {
     removeAuthInfo();
   }
 }

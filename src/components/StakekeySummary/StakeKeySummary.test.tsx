@@ -2,6 +2,7 @@ import moment from "moment";
 
 import { render, screen } from "src/test-utils";
 import { FetchReturnType } from "src/commons/hooks/useFetchList";
+import { IStakeKeySummary } from "src/types/report";
 
 import StakekeySummary from ".";
 

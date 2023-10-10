@@ -14,7 +14,7 @@ import DetailHeader from "../../DetailHeader";
 
 interface IProps {
   data: IDataEpoch;
-  onClick: (_: any, r: IDataEpoch, index: number) => void;
+  onClick: (currentEpochData: IDataEpoch, r: IDataEpoch, index: number) => void;
 }
 
 export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) {

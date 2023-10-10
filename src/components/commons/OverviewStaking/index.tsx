@@ -8,22 +8,15 @@ import { OverviewIcon, OverviewTitle, Card } from "./styles";
 import CustomIcon from "../CustomIcon";
 import ADAicon from "../ADAIcon";
 
-interface Props {
+interface Props<T> {
   hash: string;
   amount: number;
   time: string;
-  item?:
-    | SPODeregistration
-    | PoolUpdateItem
-    | RegistrationItem
-    | DelegationItem
-    | WithdrawItem
-    | DeregistrationItem
-    | SPORegistration;
-  onClick: (registration: any) => void;
+  item?: T;
+  onClick: (registration?: T) => void;
 }
 
-const OverviewStaking: React.FC<Props> = ({ item, ...props }) => {
+const OverviewStaking = function <T>({ item, ...props }: Props<T>) {
   const { hash, amount, time, onClick } = props;
   const theme = useTheme();
 
