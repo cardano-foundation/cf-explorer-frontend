@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import { useEffect, useState, useRef, MouseEvent } from "react";
 import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
-import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import { Column } from "src/types/table";
@@ -65,7 +64,7 @@ const BlockList = () => {
     {
       title: <Capitalize>{t("glossary.blockID")}</Capitalize>,
       key: "blockId",
-      minWidth: "150px",
+      minWidth: "50px",
       render: (r) => (
         <CustomTooltip title={r.hash}>
           <StyledLink to={details.block(r.blockNo || r.hash)}>{getShortHash(`${r.hash}`)}</StyledLink>
@@ -73,17 +72,20 @@ const BlockList = () => {
       )
     },
     {
-      title: <Capitalize>{t("glossary.EpochSlot")}</Capitalize>,
-      key: "epoch",
-      minWidth: "150px",
-      render: (r) => (
-        <>
-          <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
-          <Box component={"span"} color={({ palette }) => palette.secondary.light}>
-            {r.epochSlotNo}
-          </Box>
-        </>
-      )
+      title: <Capitalize>{t("glossary.epoch")}</Capitalize>,
+      key: "epochNo",
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>
+    },
+    {
+      title: <Capitalize>{t("glossary.slot")}</Capitalize>,
+      key: "epochSlotNo",
+      minWidth: "100px"
+    },
+    {
+      title: <Capitalize>{t("glossary.absoluteSlot")}</Capitalize>,
+      key: "slotNo",
+      minWidth: "100px"
     },
     {
       title: <Capitalize>{t("createdAt")}</Capitalize>,

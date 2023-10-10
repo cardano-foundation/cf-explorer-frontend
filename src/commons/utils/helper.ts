@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js";
-import jwtDecode, { JwtPayload } from "jwt-decode";
+import jwtDecode from "jwt-decode";
 import { isNil } from "lodash";
 import moment, { DurationInputArg1, DurationInputArg2 } from "moment";
 import { parse } from "qs";
@@ -141,6 +141,15 @@ export const removeAuthInfo = () => {
   setUserData(null);
 };
 
+export const handleUpdateRoleUser = () => {
+  removeAuthInfo();
+  if (window.location.href.includes("/account")) {
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 3000);
+  }
+};
+
 export const handleSignIn = async (username: string, password: string, cbSuccess?: () => void) => {
   try {
     const payload = {
@@ -232,15 +241,17 @@ export const toFixedBigNumber = (value: string | number, dp = 0, rm = BigNumber.
 export const isValidEmail = (email: string) => regexEmail.test(email);
 
 export function validateTokenExpired() {
-  const token = localStorage.getItem("token");
-  if (!token) return false;
-  const decoded = jwtDecode<JwtPayload>(token);
-  const now = moment();
-  if (decoded.exp) {
-    const exp = moment(decoded.exp * 1000);
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) return false;
+    const decoded = jwtDecode<{ name: string; exp: number }>(token);
+    const now = moment();
+    const exp = moment(decoded?.exp * 1000);
     return now.isBefore(exp);
+  } catch (e) {
+    removeAuthInfo();
+    return false;
   }
-  return false;
 }
 
 export const isJson = (str: string) => {

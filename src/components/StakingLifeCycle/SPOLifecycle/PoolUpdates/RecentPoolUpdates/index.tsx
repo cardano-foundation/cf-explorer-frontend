@@ -1,4 +1,3 @@
-import { Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -9,6 +8,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import CustomFilter, { FilterParams } from "src/components/commons/CustomFilter";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import OverviewStaking from "src/components/commons/OverviewStaking";
 import { EmptyRecord, FooterTable } from "src/components/commons/Table";
 
@@ -79,7 +79,7 @@ const RecentPoolUpdates = ({ onSelect, setShowBackButton }: Props) => {
       <GridBox sidebar={+sidebar}>
         {loading &&
           [...new Array(12)].map((i, ii) => (
-            <Skeleton key={ii} style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
+            <CommonSkeleton key={ii} style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
           ))}
         {!loading &&
           data.map((item, ii) => {

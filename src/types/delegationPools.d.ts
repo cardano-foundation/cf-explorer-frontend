@@ -43,6 +43,7 @@ interface DelegationOverview {
   margin: number;
   epochBlock: number;
   lifetimeBlock: number;
+  hashView?: string;
 }
 
 interface DelegationEpoch {

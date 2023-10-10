@@ -17,7 +17,6 @@ import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DropdownTokens, { TokenLink } from "src/components/commons/DropdownTokens";
 import Table, { Column } from "src/components/commons/Table";
-import { SmallText } from "src/components/share/styled";
 import { DownRedUtxoDarkmode, TransferIcon, UpGreenUtxoDarkmode } from "src/commons/resources";
 
 import { Img, StyledLink } from "./styles";
@@ -114,15 +113,24 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
     {
       title: t("glossary.block"),
       key: "block",
-      minWidth: 120,
-      render: (transaction) => (
-        <>
-          <StyledLink to={details.block(transaction.blockNo)}>{transaction.blockNo}</StyledLink>
-          <br />
-          <StyledLink to={details.epoch(transaction.epochNo)}>{transaction.epochNo}</StyledLink>/
-          <SmallText>{transaction.epochSlotNo} </SmallText>
-        </>
-      )
+      minWidth: 50,
+      render: (transaction) => <StyledLink to={details.block(transaction.blockNo)}>{transaction.blockNo}</StyledLink>
+    },
+    {
+      title: t("glossary.epoch"),
+      key: "epochNo",
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>
+    },
+    {
+      title: t("glossary.slot"),
+      key: "epochSlotNo",
+      minWidth: "50px"
+    },
+    {
+      title: t("glossary.absoluteSlot"),
+      key: "slot",
+      minWidth: "100px"
     },
     {
       title: t("common.fees"),

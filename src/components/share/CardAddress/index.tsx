@@ -1,9 +1,10 @@
-import { Box, Skeleton } from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
 
-import NoStakeAddress from "src/components/commons/NoStakeAddress";
 import { details } from "src/commons/routers";
 import CopyButton from "src/components/commons/CopyButton";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
+import NoStakeAddress from "src/components/commons/NoStakeAddress";
 
 import {
   AddressGroup,
@@ -29,7 +30,7 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
   if (loading) {
     return (
       <CardItemStyled padding={0}>
-        <Skeleton variant="rectangular" height={"80%"} width="100%" />
+        <CommonSkeleton variant="rectangular" height={"80%"} width="100%" />
       </CardItemStyled>
     );
   }

@@ -1,9 +1,10 @@
-import { Box, Skeleton, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { Link, useHistory } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 
+import { useScreen } from "src/commons/hooks/useScreen";
 import {
   CalendarIconComponent,
   DelegatorIconComponent,
@@ -15,13 +16,13 @@ import {
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { formatADAFull, formatDateTimeLocal, formatPercent, getShortWallet } from "src/commons/utils/helper";
+import ADAicon from "src/components/commons/ADAIcon";
 import BookmarkButton from "src/components/commons/BookmarkIcon";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomIcon from "src/components/commons/CustomIcon";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DropdownDetail from "src/components/commons/DropdownDetail";
-import ADAicon from "src/components/commons/ADAIcon";
-import { useScreen } from "src/commons/hooks/useScreen";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 
 import {
@@ -78,7 +79,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <PoolIdSkeleton variant="rectangular" />
         </PoolId>
         <Box borderRadius={10} overflow="hidden">
-          <Skeleton variant="rectangular" height={250} width="100%" />
+          <CommonSkeleton variant="rectangular" height={250} width="100%" />
         </Box>
       </HeaderDetailContainer>
     );
@@ -104,6 +105,15 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           </Link>
         </CustomTooltip>
         <CopyButton text={poolId} />
+      </PoolId>
+      <PoolId>
+        <CustomTooltip title={data?.hashView}>
+          <Link to={details.delegation(poolId)}>
+            <PoolIdLabel>{t("common.poolHash")}: </PoolIdLabel>
+            <PoolIdValue>{isMobile ? getShortWallet(data?.hashView) : data?.hashView}</PoolIdValue>
+          </Link>
+        </CustomTooltip>
+        <CopyButton text={data?.hashView} />
       </PoolId>
       <TimeDuration>
         <FormNowMessage time={lastUpdated} />

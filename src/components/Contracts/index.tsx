@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Grid } from "@mui/material";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { InfoIcon } from "src/commons/resources";
 
@@ -14,6 +15,7 @@ export interface ContractsListProps {
 }
 
 const ContractsList: React.FC<ContractsListProps> = ({ data }) => {
+  const { t } = useTranslation();
   const { trxHash } = useParams<{ trxHash: string }>();
   const [openContractInfo, setOpenContactInfo] = useState(false);
   const [detailData, setDetailData] = useState<IContractItemTx>();
@@ -36,7 +38,7 @@ const ContractsList: React.FC<ContractsListProps> = ({ data }) => {
           <Grid item xs={12}>
             <Box display="flex" alignItems="center" gap="4px" flex={1}>
               <UnderlineText onClick={() => setOpenContactInfo(!openContractInfo)}>
-                What are smart contracts?
+                {t("explain.smartContract")}
               </UnderlineText>
               <InfoIcon />
             </Box>

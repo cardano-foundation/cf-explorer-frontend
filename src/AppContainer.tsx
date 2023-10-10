@@ -10,13 +10,12 @@ import themes from "./themes";
 import { SystemLoader } from "./components/SystemLoader";
 import { routers } from "./commons/routers";
 import ToastContainer from "./components/commons/Layout/ToastContainer";
-import SyncBookmarkModal from "./components/commons/Layout/Header/SyncBookmarkModal";
 interface Props {
   children: React.ReactNode;
 }
 
 const AppContainer: React.FC<Props> = (props) => {
-  const { theme } = useSelector(({ user }: RootState) => user);
+  const { theme } = useSelector(({ theme }: RootState) => theme);
   const { children } = props;
   const location = useLocation();
   const excludedRoutes: string[] = [
@@ -30,7 +29,6 @@ const AppContainer: React.FC<Props> = (props) => {
     <ThemeProvider theme={themes[theme]}>
       <Box bgcolor={theme === "light" ? themes[theme].palette.primary[100] : themes[theme].palette.secondary[100]}>
         <SystemLoader />
-        <SyncBookmarkModal />
         <ToastContainer />
         <div data-theme={theme}>
           {excludedRoutes.includes(location.pathname) ? <>{children}</> : <CustomLayout>{children}</CustomLayout>}

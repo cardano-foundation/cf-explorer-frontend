@@ -1,4 +1,3 @@
-import { Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -11,6 +10,7 @@ import { API } from "src/commons/utils/api";
 import CustomFilter, { FilterParams } from "src/components/commons/CustomFilter";
 import OverviewStaking from "src/components/commons/OverviewStaking";
 import { EmptyRecord, FooterTable } from "src/components/commons/Table";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
 import { DescriptionText } from "../../../DelegatorLifecycle/styles";
 import { FilterContainer, StyledList } from "../../styles";
@@ -80,7 +80,7 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect, setShowBackButton })
       <GridBox sidebar={+sidebar}>
         {loading &&
           [...new Array(12)].map((i, ii) => (
-            <Skeleton key={ii} style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
+            <CommonSkeleton key={ii} style={{ borderRadius: 12 }} variant="rectangular" width={300} height={185} />
           ))}
 
         {!loading &&

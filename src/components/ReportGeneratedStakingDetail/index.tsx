@@ -47,7 +47,7 @@ const ReportGeneratedStakingDetailTabs = () => {
   const stackeTabs: ITab[] = [
     {
       icon: RegistrationIcon,
-      label: t("glossary.takeAddressRegistrations"),
+      label: t("glossary.stakeAddressRegistrations"),
       key: "registration",
       mappingKey: "Registration",
       component: <StakingRegistrationTab />
@@ -103,6 +103,7 @@ const ReportGeneratedStakingDetailTabs = () => {
       ];
     }
     return tabs;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [events, reportDetail]);
   const initTab = useMemo(() => (displayedTabs.length ? displayedTabs[0].key : undefined), [displayedTabs]);
 

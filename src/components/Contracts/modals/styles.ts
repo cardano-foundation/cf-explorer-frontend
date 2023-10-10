@@ -7,11 +7,14 @@ export const ModalContent = styled(Box)`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-height: 80vh;
+  max-height: 70vh;
   padding: 4px;
   overflow-y: auto;
   &::-webkit-scrollbar {
     width: 5px;
+  }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    max-height: 70vh;
   }
   &::-webkit-scrollbar-track {
     background: transparent;

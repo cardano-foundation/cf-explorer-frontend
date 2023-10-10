@@ -16,7 +16,7 @@ export const SubTitle = styled(Box)(({ theme }) => ({
 export const ViewJson = styled(Box)(({ theme }) => ({
   overflowY: "auto",
   textAlign: "left",
-  backgroundColor: theme.palette.common.white,
+  backgroundColor: theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white,
   borderRadius: 10,
   padding: theme.spacing(2),
   boxSizing: "border-box",
