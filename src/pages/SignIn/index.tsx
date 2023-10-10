@@ -46,7 +46,15 @@ interface IForm {
     touched?: boolean;
   };
 }
-const formReducer = (state: IForm, event: any) => {
+
+interface IEvent {
+  name: string;
+  value?: string;
+  error: string;
+  touched: boolean;
+}
+
+const formReducer = (state: IForm, event: IEvent) => {
   return {
     ...state,
     [event.name]: {
@@ -134,7 +142,7 @@ export default function SignIn() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
-  const handleKeyDown = (event: any) => {
+  const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === "Enter") {
       event.preventDefault();
       handleSubmit(event);
@@ -169,7 +177,7 @@ export default function SignIn() {
     }
     return error;
   };
-  const handleChange = (event: any) => {
+  const handleChange = (event: { target: { name: string; value: string } }) => {
     setFormData({
       name: event.target.name,
       value: event.target.value.trim(),
@@ -183,7 +191,7 @@ export default function SignIn() {
     setError(Boolean(formData.email.error || formData.password.error));
   }, [formData]);
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement> | KeyboardEvent) => {
     event.preventDefault();
     if (!enableButton) return;
     const errorUsername = getError("email", formData.email.value);

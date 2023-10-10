@@ -41,7 +41,7 @@ interface TProtocolParam {
   maxValSize: TProtocolItem;
   collateralPercent: TProtocolItem;
   maxCollateralInputs: TProtocolItem;
-  coinsPerUtxoSize: TProtocolItem;
+  coinsPerUTxOByte: TProtocolItem;
   timestamp: string;
 }
 

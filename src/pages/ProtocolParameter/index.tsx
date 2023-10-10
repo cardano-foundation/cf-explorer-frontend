@@ -388,45 +388,56 @@ export const ProtocolParameterHistory = () => {
     }
   };
 
-  const columnsMap = columnTitle.map((t) => ({
-    title: t,
-    key: t,
-    render: (r: any) => {
-      return (
-        <ColumnProtocol
-          isLink={
-            r[t as ProtocolTypeKey] !== null
-              ? ["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string)
-                ? 1
+  const columnsMap: Column<Record<string, TProtocolItem> | (TProtocolParam & { params: string })>[] = columnTitle.map(
+    (t) => ({
+      title: t,
+      key: t,
+      render: (r) => {
+        return (
+          <ColumnProtocol
+            isLink={
+              r[t as ProtocolTypeKey] !== null
+                ? ["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string)
+                  ? 1
+                  : 0
                 : 0
-              : 0
-          }
-          component={["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string) ? Link : Box}
-          to={
-            r[t as ProtocolTypeKey]?.transactionHash
-              ? details.transaction(r[t as ProtocolTypeKey]?.transactionHash, "protocols")
-              : "#"
-          }
-        >
-          {r[t]?.status === "ADDED" || (r[t]?.status === "UPDATED" && !r[t]?.transactionHash) ? (
-            <CustomTooltip title="No transaction">
-              <Box>{r[t] ? (r[t]?.value ? r[t]?.value : r[t]?.value === 0 ? 0 : "") : ""}</Box>
-            </CustomTooltip>
-          ) : r[t] ? (
-            r[t]?.value ? (
-              r[t]?.value
-            ) : r[t]?.value === 0 ? (
-              0
+            }
+            component={["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string) ? Link : Box}
+            to={
+              r[t as ProtocolTypeKey]?.transactionHash
+                ? details.transaction(r[t as ProtocolTypeKey]?.transactionHash, "protocols")
+                : "#"
+            }
+          >
+            {r[t as ProtocolTypeKey]?.status === "ADDED" ||
+            (r[t as ProtocolTypeKey]?.status === "UPDATED" && !r[t as ProtocolTypeKey]?.transactionHash) ? (
+              <CustomTooltip title="No transaction">
+                <Box>
+                  {r[t as ProtocolTypeKey]
+                    ? r[t as ProtocolTypeKey]?.value
+                      ? r[t as ProtocolTypeKey]?.value
+                      : r[t as ProtocolTypeKey]?.value === 0
+                      ? 0
+                      : ""
+                    : ""}
+                </Box>
+              </CustomTooltip>
+            ) : r[t as ProtocolTypeKey] ? (
+              r[t as ProtocolTypeKey]?.value ? (
+                r[t as ProtocolTypeKey]?.value
+              ) : r[t as ProtocolTypeKey]?.value === 0 ? (
+                0
+              ) : (
+                ""
+              )
             ) : (
               ""
-            )
-          ) : (
-            ""
-          )}
-        </ColumnProtocol>
-      );
-    }
-  }));
+            )}
+          </ColumnProtocol>
+        );
+      }
+    })
+  );
 
   const columnsFull: Column<TProtocolParam & { params: string }>[] = [
     {

@@ -1,6 +1,8 @@
 import { AxiosResponse } from "axios";
 import { stringify } from "qs";
 
+import { IBodyReportStakeKey, IBodyReportStakePool } from "src/types/report";
+
 import { UserDataType } from "../../types/user";
 import defaultAxios, { authAxios, defaultAxiosDownload } from "./axios";
 import { API } from "./api";

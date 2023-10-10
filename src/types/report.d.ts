@@ -1,7 +1,7 @@
 import { RatioGroupValue } from "src/components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal/FilledInfoModal";
 
 interface IBodyReportStakeKey {
-  stakeKey: string;
+  stakeKey?: string;
   reportName: string;
   fromDate: string;
   toDate: string;

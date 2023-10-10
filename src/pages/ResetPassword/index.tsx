@@ -32,7 +32,14 @@ interface IForm {
     touched?: boolean;
   };
 }
-const formReducer = (state: IForm, event: any) => {
+
+interface IEvent {
+  name: string;
+  value?: string;
+  error: string;
+  touched: boolean;
+}
+const formReducer = (state: IForm, event: IEvent) => {
   return {
     ...state,
     [event.name]: {
@@ -172,7 +179,7 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
   const enableButton = Object.values(formData).every((value) => value.touched) && !hasErrorForm && !loading;
 
   useEffect(() => {
-    const handleKeyDown = (event: any) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Enter" && !success && !error) {
         event.preventDefault();
         handleSubmit();

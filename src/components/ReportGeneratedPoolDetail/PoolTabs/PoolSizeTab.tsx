@@ -12,6 +12,7 @@ import { API } from "src/commons/utils/api";
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
 import ADAicon from "src/components/commons/ADAIcon";
+import { IPoolReportList } from "src/types/report";
 
 const PoolSizeTab = () => {
   const { t } = useTranslation();

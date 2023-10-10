@@ -231,14 +231,14 @@ export default function SignUp() {
     };
   }, [enableButton, formData]);
 
-  const handleKeyDown = (event: any) => {
+  const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === "Enter") {
       event.preventDefault();
       handleSubmit(event);
     }
   };
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement> | KeyboardEvent) => {
     event.preventDefault();
     if (!enableButton) return;
     let hasError = false;
@@ -360,7 +360,7 @@ export default function SignUp() {
                   onChange={handleChange}
                   error={Boolean(formData.email.error && formData.email.touched)}
                   placeholder={t("account.emailAddress")}
-                  onKeyDown={handleKeyDown}
+                  onKeyDown={(e) => handleKeyDown(e as unknown as KeyboardEvent)}
                 />
                 {formData.email.error && formData.email.touched ? (
                   <FormHelperTextCustom>{formData.email.error}</FormHelperTextCustom>
