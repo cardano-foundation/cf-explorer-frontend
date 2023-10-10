@@ -70,22 +70,16 @@ const Bookmark = () => {
     try {
       setLoadingDelete(true);
       const selectedBookmark = data?.find((d) => d.keyword === keyword);
-      const res: any = await deleteBookmark({ keyword, type: selectedBookmark?.type });
-      if (res?.data) {
-        setSelected(null);
-        setLoadingDelete(false);
-        setBookmarks(bookmarks?.filter((r) => r.keyword !== keyword));
-        refresh();
-        toast.success(t("message.bookmark.deleted"));
-      } else {
-        toast.error(t(res?.response?.data?.errorCode));
-      }
-    } catch (error: any) {
+      await deleteBookmark({ keyword, type: selectedBookmark?.type });
       setSelected(null);
       setLoadingDelete(false);
-      if (error?.response?.data?.errorCode) {
-        toast.error(t(error?.response?.data?.errorCode));
-      }
+      setBookmarks(bookmarks?.filter((r) => r.keyword !== keyword));
+      refresh();
+      toast.success(t("message.bookmark.deleted"));
+    } catch (error) {
+      setSelected(null);
+      setLoadingDelete(false);
+      toast.error(t("message.common.somethingWentWrong"));
     }
   };
   const handleChange = (event: React.SyntheticEvent, tab: Bookmark["type"]) => {
@@ -207,7 +201,7 @@ const Bookmark = () => {
       key: "Added On",
       minWidth: 120,
       render: (data) => {
-        return moment(data.createdDate).local().format("MM/DD/YYYY HH:mm:ss");
+        return moment(data.createdDate).utc().format("MM/DD/YYYY HH:mm:ss");
       }
     },
     {

@@ -17,7 +17,6 @@ import useFetch from "src/commons/hooks/useFetch";
 import PoolDetailContext from "src/components/StakingLifeCycle/SPOLifecycle/PoolDetailContext";
 import NoRecord from "src/components/commons/NoRecord";
 import { ChartMode, TableMode } from "src/commons/resources";
-import { ROLE_ELEVATED_GEN_REPORT } from "src/commons/utils/constants";
 
 import {
   BoxContainerStyled,
@@ -108,19 +107,6 @@ const SPOLifecycle = () => {
 
   if (!initialized && !error) return null;
   if (error || !data || !data.poolId) return <NoRecord />;
-
-  const checkDisableGenReport = () => {
-    if (!isLoggedIn) return true;
-    if (dataReportLimit?.limitPer24hours === ROLE_ELEVATED_GEN_REPORT) return false;
-    return dataReportLimit?.isLimitReached;
-  };
-
-  const getTooltip = () => {
-    if (!isLoggedIn) return t("common.pleaseSignIntoUseFeature");
-    if (dataReportLimit?.limitPer24hours === ROLE_ELEVATED_GEN_REPORT) return "";
-    return t("message.report.limitGenerate", { time: dataReportLimit?.limitPer24hours || 0 });
-  };
-
   return (
     <PoolDetailContext.Provider value={data}>
       <StyledContainer ref={containerRef}>
@@ -153,9 +139,19 @@ const SPOLifecycle = () => {
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>
-            <CustomTooltip title={getTooltip()}>
+            <CustomTooltip
+              title={
+                !isLoggedIn
+                  ? t("common.pleaseSignIntoUseFeature")
+                  : t("message.report.limitGenerate", { time: dataReportLimit?.limitPer24hours || 0 })
+              }
+            >
               <ReportButtonContainer>
-                <ButtonReport disabled={checkDisableGenReport()} onClick={() => setOpen(true)} sidebar={+sidebar}>
+                <ButtonReport
+                  disabled={!isLoggedIn || dataReportLimit?.isLimitReached}
+                  onClick={() => setOpen(true)}
+                  sidebar={+sidebar}
+                >
                   {t("common.composeReport")}
                 </ButtonReport>
               </ReportButtonContainer>

@@ -44,7 +44,6 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
       let defaultReportName = `Report_stake_${params.address}_${moment(start).format("MM/DD/yyyy")}_${moment(
         end
       ).format("MM/DD/yyyy")}`;
-      let response;
       if (isPoolReport) {
         defaultReportName = `Report_pool_${params.address}_${params.epochRange[0]}_${params.epochRange[1]}`;
         const paramsStakeKeyReport = {
@@ -56,7 +55,7 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
           event: params?.eventsKey,
           epochRanges: params.epochRange
         };
-        response = await generateStakePoolReport(paramsStakeKeyReport);
+        await generateStakePoolReport(paramsStakeKeyReport);
       } else {
         const events = params?.eventsKey?.map((event: string) => ({ type: event }));
         const paramsStakeKeyReport = {
@@ -68,19 +67,16 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
           isFeesPaid: params.feesPaid === "YES",
           ...getEventType(events.map((item: { type: string }) => item.type))
         };
-        response = await generateStakeKeyReport(paramsStakeKeyReport);
+        await generateStakeKeyReport(paramsStakeKeyReport);
       }
-      if (response?.data) {
-        toast.success(t("message.report.generated"));
-        setTimeout(() => {
-          history.push(lists.dashboard(isPoolReport ? "pool-reports" : "stake-key-reports"));
-        }, 2000);
-      } else {
-        toast.error(t((response as any)?.response?.data?.errorCode));
-      }
+
+      toast.success(t("message.report.generated"));
       handleCloseModal();
+      setTimeout(() => {
+        history.push(lists.dashboard(isPoolReport ? "pool-reports" : "stake-key-reports"));
+      }, 2000);
     } catch (err: any) {
-      handleCloseModal();
+      toast.error(t("message.report.failedGenerate"));
     }
     setLoading(false);
   };
