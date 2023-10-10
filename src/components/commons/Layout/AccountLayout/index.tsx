@@ -42,7 +42,9 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   const fetchUserInfo = useCallback(async () => {
     try {
       const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-      setUserData({ ...response.data, loginType: userData?.loginType || "" });
+      if (response.data) {
+        setUserData({ ...response.data, loginType: userData?.loginType || "" });
+      }
     } catch (error) {
       //To do
     }
