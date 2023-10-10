@@ -236,7 +236,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
           </TitleCard>
         </Box>
       ),
-      value: `${data?.tx?.epochSlot} - ${data?.tx?.slotNo}`
+      value: `${data?.tx?.epochSlot || ""} - ${data?.tx?.slotNo || ""}`
     }
   ];
   return (
