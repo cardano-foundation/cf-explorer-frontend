@@ -58,7 +58,9 @@ const ScriptTab = () => {
       ) : null}
       <Result>
         {data?.isVerified ? (
-          <pre>{JSON.stringify(JSON.parse(data?.data), null, " ")}</pre>
+          <Box component={"pre"} sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+            {JSON.stringify(JSON.parse(data?.data), null, " ")}
+          </Box>
         ) : (
           t("drawer.scriptNotVerified")
         )}
