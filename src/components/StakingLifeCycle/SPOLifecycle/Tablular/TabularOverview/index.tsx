@@ -154,7 +154,9 @@ const TabularOverview: React.FC = () => {
             <Box display="flex" alignItems="center">
               <CardValue>
                 <CustomTooltip title={stakeKeys?.[0]}>
-                  <ClickAbleLink to={details.stake(stakeKeys?.[0] || "#")}>{ownerAccountValue}</ClickAbleLink>
+                  <ClickAbleLink to={details.stake(stakeKeys?.[0] || "#")} sx={{ textWrap: "wrap" }}>
+                    {ownerAccountValue}
+                  </ClickAbleLink>
                 </CustomTooltip>
               </CardValue>
             </Box>

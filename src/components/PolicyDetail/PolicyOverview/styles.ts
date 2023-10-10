@@ -2,6 +2,7 @@ import { alpha, Box, Button, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
+import { TruncateSubTitleContainer } from "src/components/share/styled";
 
 export const Status = styled("span")`
   font-family: var(--font-family-text);
@@ -200,4 +201,11 @@ export const OverViewContainer = styled(Box)(({ theme }) => ({
       height: "auto"
     }
   }
+}));
+
+export const PolicyIdContainer = styled(TruncateSubTitleContainer)(({ theme }) => ({
+  fontWeight: "bold",
+  color: theme.palette.primary.main,
+  textWrap: "nowrap",
+  marginLeft: theme.spacing(2)
 }));

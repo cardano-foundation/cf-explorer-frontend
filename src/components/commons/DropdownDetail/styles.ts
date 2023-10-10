@@ -22,6 +22,9 @@ export const ListDropdownContainer = styled(Box)`
   box-shadow: ${(props) => props.theme.shadow.card};
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    max-height: 350px;
+  }
 `;
 
 export const ButtonClose = styled(IconButton)(({ theme }) => ({
@@ -47,9 +50,8 @@ export const DropdownTitle = styled("h4")(({ theme }) => ({
   }
 }));
 
-export const DropdownList = styled("div")`
+export const DropdownList = styled(Box)`
   margin: 20px;
   overflow: scroll;
-  max-height: 220px;
-  padding-bottom: 30px;
+  max-height: 250px;
 `;
