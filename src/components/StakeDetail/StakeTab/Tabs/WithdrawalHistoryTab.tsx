@@ -39,19 +39,26 @@ const WithdrawalHistoryTab = () => {
     {
       title: t("glossary.block"),
       key: "block",
-      minWidth: "120px",
-      render: (r) => (
-        <Box>
-          <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
-          <Box marginTop="10px">
-            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/{" "}
-            <Box component={"span"} color={({ palette }) => palette.secondary.light}>
-              {r.epochSlotNo}
-            </Box>
-          </Box>
-        </Box>
-      )
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
     },
+    {
+      title: t("glossary.epoch"),
+      key: "epochNo",
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>
+    },
+    {
+      title: t("glossary.slot"),
+      key: "epochSlotNo",
+      minWidth: "50px"
+    },
+    {
+      title: t("glossary.absoluteSlot"),
+      key: "slotNo",
+      minWidth: "100px"
+    },
+
     {
       title: t("glossary.amount"),
       key: "amount",

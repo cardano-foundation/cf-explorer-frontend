@@ -89,8 +89,8 @@ const OverviewTab = () => {
         value={
           userData?.loginType === "connectWallet"
             ? isMobile
-              ? getShortWallet(userData.address || "")
-              : userData?.address
+              ? getShortWallet(userData.username || "")
+              : userData?.username
             : userData?.username || userData?.email
         }
         isTablet={isTablet}
