@@ -145,6 +145,7 @@ export const StakeKeyStatus = styled("small")<{ status?: StakeStatus }>`
 
 export const SlotLeader = styled("p")`
   margin-top: 0px;
+  display: flex;
 `;
 
 export const WrapLeaderValue = styled(Box)`
@@ -158,19 +159,14 @@ export const SlotLeaderValue = styled("span")<{ sidebar?: boolean }>`
   word-break: break-word;
   line-height: 1.5;
   font-weight: bold;
-  ${({ theme }) => theme.breakpoints.between("sm", 760)} {
-    width: 450px !important;
-    display: block;
-  }
-  ${({ theme }) => theme.breakpoints.between("md", 1000)} {
-    display: block;
-    width: ${(props) => (props.sidebar ? "500px" : "100%")};
-  }
 `;
 
 export const SlotLeaderTitle = styled("small")`
   font-family: var(--font-family-text);
   color: ${({ theme }) => theme.palette.secondary.light};
+  align-self: center;
+  margin-right: 8px;
+  text-wrap: nowrap;
 `;
 
 export const SlotLeaderCopy = styled(CopyButton)`

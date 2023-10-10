@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { InfoIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { StyledLink } from "src/components/share/styled";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
@@ -23,7 +22,7 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
   const containerRef = useRef<SVGSVGElement>(null);
   const [open, setOpen] = useState(false);
   const theme = useTheme();
-  const { isMobile, isTablet, isGalaxyFoldSmall } = useScreen();
+  const { isMobile, isTablet } = useScreen();
 
   useEffect(() => {
     document.addEventListener("click", handleDocumentClick);
@@ -73,16 +72,16 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
         <WrapLabel>{t("contract.address")}:</WrapLabel>
         <CustomTooltip title={contractAddress?.value}>
           <StyledLink
-            style={{ fontWeight: "500", textDecoration: "underline", maxWidth: "100%" }}
+            style={{
+              fontWeight: "500",
+              textDecoration: "underline",
+              maxWidth: "100%",
+              display: "contents",
+              flexGrow: 1
+            }}
             to={contractAddress?.detail(contractAddress.value) || "/"}
           >
-            {isGalaxyFoldSmall ? (
-              <Box sx={{ wordBreak: "break-word", textAlign: "left" }}>
-                {getShortHash(contractAddress?.value || "")}
-              </Box>
-            ) : (
-              <DynamicEllipsisText value={contractAddress?.value || ""} />
-            )}
+            <DynamicEllipsisText value={contractAddress?.value || ""} />
           </StyledLink>
         </CustomTooltip>
       </Box>

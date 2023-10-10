@@ -121,5 +121,6 @@ export const CLButton = styled("button")`
 export const WrapLabel = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
   color: theme.palette.secondary.light,
-  textAlign: "left"
+  textAlign: "left",
+  textWrap: "nowrap"
 }));

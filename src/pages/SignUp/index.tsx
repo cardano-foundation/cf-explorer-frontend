@@ -282,7 +282,7 @@ export default function SignUp() {
         email,
         role: "ROLE_USER"
       };
-      const response = await signUp(payload);
+      const response: any = await signUp(payload);
       if (response.status === 200) {
         setSuccess(true);
         return;

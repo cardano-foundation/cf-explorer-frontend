@@ -102,7 +102,6 @@ const Card = ({
                 <Box width={50}>{renderIcon(type)}</Box>
               </Box>
               <WrapInfo>
-                {/* container left */}
                 <Box display="flex" flexDirection="column" justifyContent="center" paddingTop="5px" flexGrow={1}>
                   {type === "down" ? (
                     <WrapUTXOs>
@@ -189,10 +188,11 @@ const Card = ({
                           <Box
                             pr={1}
                             color={({ palette }) => (isFailed ? theme.palette.secondary[600] : palette.secondary.light)}
+                            sx={{ textWrap: "nowrap" }}
                           >
                             {t("common.stakeAddress")}:{" "}
                           </Box>
-                          <Box>
+                          <Box style={{ width: "100%" }}>
                             <Link to={details.stake(item?.stakeAddress)}>
                               <CustomTooltip title={item?.stakeAddress}>
                                 <EllipsisContainer isFailed={isFailed}>
@@ -206,7 +206,6 @@ const Card = ({
                     </Box>
                   )}
                 </Box>
-                {/* container right */}
                 <Box display={"flex"} alignItems={"end"} flexDirection={"column"}>
                   <Box
                     display={"flex"}
