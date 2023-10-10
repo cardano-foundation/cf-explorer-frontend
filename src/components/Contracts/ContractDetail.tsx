@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Typography, useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { BackIcon } from "src/commons/resources";
 import { formatLongText } from "src/commons/utils/helper";
@@ -21,6 +22,7 @@ export interface ContractDetailProps {
 }
 
 const ContractDetail: React.FC<ContractDetailProps> = ({ data, onGoBack, isMobile }) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const details = {
     CERT: {
@@ -54,7 +56,7 @@ const ContractDetail: React.FC<ContractDetailProps> = ({ data, onGoBack, isMobil
           )}
         </Box>
         <Typography fontWeight="500" color={theme.palette.secondary.light}>
-          Contract:{" "}
+          {t("contract.title")}:{" "}
           <CustomTooltip title={contract}>
             <StyledLink style={{ fontWeight: "500", textDecoration: "underline" }} to={detail(contract)}>
               {formatLongText(contract || "")}

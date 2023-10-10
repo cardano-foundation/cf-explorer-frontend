@@ -1,5 +1,6 @@
 import { ListItemText, Typography, useTheme } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import CustomModal from "src/components/commons/CustomModal";
 import { CustomBadge } from "src/components/commons/ViewBlocks/styles";
@@ -17,6 +18,7 @@ export interface AssetsModalProps {
   isBurnType?: boolean;
 }
 const AssetsModal: React.FC<AssetsModalProps> = ({ open = false, onClose, data, isBurned, isBurnType }) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const handleCloseModal = () => onClose?.();
   return (
@@ -33,7 +35,7 @@ const AssetsModal: React.FC<AssetsModalProps> = ({ open = false, onClose, data, 
           fontWeight={500}
           color={theme.palette.secondary.main}
         >
-          {isBurned ? "Burn" : "Assets"}{" "}
+          {isBurned ? t("contract.burn") : t("contract.assets")}{" "}
           <CustomBadge
             bgColor={
               isBurned
@@ -52,10 +54,13 @@ const AssetsModal: React.FC<AssetsModalProps> = ({ open = false, onClose, data, 
       modalContainerProps={{ px: "20px" }}
     >
       <ModalContent>
-        <StyledList>
-          <StyledItem style={{ borderBottom: "sold 1px blue" }} secondaryAction={<DataTitle>Quantity</DataTitle>}>
+        <StyledList dense={true}>
+          <StyledItem
+            style={{ borderBottom: "sold 1px blue" }}
+            secondaryAction={<DataTitle>{t("common.quantity")}</DataTitle>}
+          >
             <ListItemText>
-              <DataTitle>Asset Name</DataTitle>
+              <DataTitle>{t("contract.assetName")}</DataTitle>
             </ListItemText>
           </StyledItem>
           {data &&
