@@ -18,7 +18,7 @@ import { formatADAFull, formatNumberDivByDecimals } from "../../../../commons/ut
 import ADAicon from "../../../commons/ADAIcon";
 import CustomTooltip from "../../../commons/CustomTooltip";
 import DropdownTokens, { TokenLink } from "../../../commons/DropdownTokens";
-import { Icon, TitleText, ValueText, WrapContainerGrid, WrapItemsInfo, WrapTokensInfo } from "./styles";
+import { GridItem, Icon, TitleText, ValueText, WrapContainerGrid, WrapItemsInfo, WrapTokensInfo } from "./styles";
 
 const SummaryItems = ({
   item,
@@ -49,7 +49,7 @@ const SummaryItems = ({
       }}
     >
       <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
-        <Box display="flex" paddingX={2}>
+        <GridItem>
           <Icon src={theme.isDark ? SummaryWalletDark : WalletRoundedIcon} alt="wallet icon" />
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} width={"100%"}>
             <TitleText>{t("common.wallet")}</TitleText>
@@ -78,7 +78,7 @@ const SummaryItems = ({
               </Box>
             </Box>
           </Box>
-        </Box>
+        </GridItem>
       </Grid>
       <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
         <WrapItemsInfo paddingX={2}>

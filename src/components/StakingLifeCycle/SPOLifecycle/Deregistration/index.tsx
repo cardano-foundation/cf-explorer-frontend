@@ -211,7 +211,7 @@ export const DeregistrationCertificateModal = ({
             {data && (
               <Box>
                 <CustomTooltip title={data?.poolView || ""}>
-                  <CustomLink to={details.delegation(data?.poolView || "")}>
+                  <CustomLink to={details.delegation(data?.poolView || "")} sx={{ wordBreak: "break-word" }}>
                     {getShortHash(data?.poolView || "")}
                   </CustomLink>
                 </CustomTooltip>

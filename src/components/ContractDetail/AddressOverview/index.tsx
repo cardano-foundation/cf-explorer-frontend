@@ -58,7 +58,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
       title: t("glossary.adaBalance"),
       value: (
         <StyledAAmount>
-          <Box>{formatADAFull(data?.balance)}</Box>&nbsp;
+          <Box>{formatADAFull(data?.balance)}</Box>
           <ADAicon />
         </StyledAAmount>
       )

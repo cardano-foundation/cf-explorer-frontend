@@ -3,11 +3,10 @@ import { Box, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import sendImg from "src/commons/resources/images/sendImg.svg";
-import { getShortHash } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
-import CopyButton from "src/components/commons/CopyButton";
 import { UpGreenUtxoDarkmode } from "src/commons/resources";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
 import { AddressLink, Header, ItemContainer, StatusIcon, StyledItem, Wrapper } from "./styles";
 
@@ -22,30 +21,32 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
     <Wrapper>
       <Header>{t("common.stakeAddress")}</Header>
       {data?.map((item) => (
-        <StyledItem key={item.address}>
+        <StyledItem key={item.address} overflow={"scroll"}>
           <ItemContainer>
             <Box display="flex" alignItems="center">
               <Box width={50}>
                 <StatusIcon src={theme.isDark ? UpGreenUtxoDarkmode : sendImg} alt="wallet icon" />
               </Box>
               <Box width={"100%"}>
-                <Box>
+                <Box maxWidth={"80vw"}>
                   <Box component={"span"} color={({ palette }) => palette.secondary.light} mr={1}>
                     {t("glossary.from")}:
                   </Box>
                   <CustomTooltip title={item.address}>
-                    <AddressLink to={details.stake(item.address)}>{getShortHash(item.address || "")}</AddressLink>
+                    <AddressLink to={details.stake(item.address)}>
+                      <DynamicEllipsisText value={item.address || ""} isCoppy={true} />
+                    </AddressLink>
                   </CustomTooltip>
-                  <CopyButton text={item.address || ""} />
                 </Box>
-                <Box>
+                <Box maxWidth={"80vw"}>
                   <Box component={"span"} color={({ palette }) => palette.secondary.light} mr={1}>
                     {t("common.poolID")}:
                   </Box>
                   <CustomTooltip title={item.poolId}>
-                    <AddressLink to={details.delegation(item.poolId)}>{getShortHash(item.poolId || "")}</AddressLink>
+                    <AddressLink to={details.delegation(item.poolId)}>
+                      <DynamicEllipsisText value={item.address || ""} isCoppy={true} />
+                    </AddressLink>
                   </CustomTooltip>
-                  <CopyButton text={item.poolId || ""} />
                 </Box>
               </Box>
             </Box>

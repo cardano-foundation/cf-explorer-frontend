@@ -49,6 +49,7 @@ export const DropdownTitle = styled("h4")(({ theme }) => ({
 
 export const DropdownList = styled("div")`
   margin: 20px;
-  overflow-y: auto;
+  overflow: scroll;
   max-height: 220px;
+  padding-bottom: 30px;
 `;

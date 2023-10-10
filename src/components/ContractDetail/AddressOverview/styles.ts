@@ -5,7 +5,9 @@ import Card from "src/components/commons/Card";
 
 export const StyledAAmount = styled(Box)`
   display: flex;
+  align-items: center;
   color: ${({ theme }) => theme.palette.secondary.main};
+  word-break: break-word;
 `;
 
 export const StyledTextField = styled(TextField)`
@@ -97,6 +99,7 @@ export const CardContainer = styled(Card)`
     h2 {
       padding-top: 0 !important;
       margin-top: 0 !important;
+      width: 100%;
     }
   }
 `;
@@ -129,4 +132,5 @@ export const VerifyScriptContainer = styled(Box)`
   align-items: center;
   gap: 20px;
   margin-bottom: 10px;
+  flex-wrap: wrap;
 `;

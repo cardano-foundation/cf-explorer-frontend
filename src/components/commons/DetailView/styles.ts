@@ -237,7 +237,7 @@ export const BlockDefault = styled("small")`
 export const DetailsInfoItem = styled(Box)`
   display: flex;
   justify-content: space-between;
-  rowgap: 5px;
+  column-gap: 8px;
   align-items: baseline;
 `;
 

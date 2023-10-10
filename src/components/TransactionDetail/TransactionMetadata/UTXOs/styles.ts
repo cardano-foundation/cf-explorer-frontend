@@ -130,7 +130,7 @@ export const CustomSelect = styled(Select)`
 export const EllipsisContainer = styled(Box)<{ isFailed?: boolean }>`
   font-weight: bold;
   color: ${({ theme, isFailed }) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)};
-  width: 180px;
+  max-width: 220px;
   ${({ theme }) => theme.breakpoints.up("sm")} {
     width: 40vw;
   }

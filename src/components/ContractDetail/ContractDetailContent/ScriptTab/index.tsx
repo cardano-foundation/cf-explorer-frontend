@@ -19,6 +19,7 @@ const Result = styled(Box)`
   margin-top: 12px;
   over-flow: scroll;
   box-shadow: ${(props) => props.theme.shadow.card};
+  overflow: scroll;
 `;
 
 const StyledBox = styled(Box)`

@@ -137,7 +137,7 @@ const DelegationLists: React.FC = () => {
     },
     {
       title: (
-        <Box component={"span"}>
+        <Box component={"span"} sx={{ textWrap: "nowrap" }}>
           {t("glossary.fixedCost")} (<ADAicon />)
         </Box>
       ),

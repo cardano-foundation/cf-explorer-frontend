@@ -19,7 +19,7 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
   const overviewData = [
     {
       title: (
-        <Box component="span">
+        <Box component="span" sx={{ textWrap: "nowrap" }}>
           {t("glossary.fixedCost")} (<ADAicon />)
         </Box>
       ),

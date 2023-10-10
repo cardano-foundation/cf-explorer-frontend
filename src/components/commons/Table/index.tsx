@@ -336,7 +336,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
               <StyledMenuItem value={50}>50</StyledMenuItem>
               <StyledMenuItem value={100}>100</StyledMenuItem>
             </SelectMui>
-            <Box component={"span"} ml={1} fontSize="0.875rem">
+            <Box component={"span"} ml={1} fontSize="0.875rem" sx={{ textWrap: "nowrap" }}>
               {t("perPage")}
             </Box>
           </Box>

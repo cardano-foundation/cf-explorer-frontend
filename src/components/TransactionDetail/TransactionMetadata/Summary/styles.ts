@@ -131,3 +131,11 @@ export const WrapItemsInfo = styled(Box)(({ theme }) => ({
     }
   }
 }));
+
+export const GridItem = styled(Box)`
+  display: flex;
+  padding: 0 16px;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    padding: 0;
+  }
+`;

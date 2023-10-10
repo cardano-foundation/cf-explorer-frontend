@@ -262,6 +262,7 @@ const Card = ({
         <Box
           fontWeight={"bold"}
           color={({ palette }) => (isFailed ? theme.palette.secondary[600] : palette.secondary.main)}
+          sx={{ textWrap: "nowrap", marginRight: 1 }}
         >
           Total {type === "down" ? t("drawer.input") : t("drawer.ouput")}
         </Box>
@@ -270,7 +271,10 @@ const Card = ({
             fontWeight={"bold"}
             component="span"
             pr={1}
-            sx={{ color: (theme) => (isFailed ? theme.palette.secondary[600] : theme.palette.secondary.main) }}
+            sx={{
+              color: (theme) => (isFailed ? theme.palette.secondary[600] : theme.palette.secondary.main),
+              wordBreak: "break-word"
+            }}
           >
             {isFailed || !totalADA
               ? 0

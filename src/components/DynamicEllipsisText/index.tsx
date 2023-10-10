@@ -27,7 +27,7 @@ const FirstPart = styled(SubPart)`
 const Lastpart = styled(SubPart)`
   direction: rtl;
 `;
-const StyledCopyButton = styled(CopyButton)`
+export const StyledCopyButton = styled(CopyButton)`
   padding: 0;
   margin: 0 5px;
 `;
@@ -99,7 +99,7 @@ const DynamicEllipsisText = ({
     <Container id={randomIdRef.current}>
       <FirstPart>{firstPart}</FirstPart>
       <Lastpart>{lastPart}</Lastpart>
-      {isCoppy && <StyledCopyButton text={value} />}
+      {isCoppy && <StyledCopyButton text={value} data-testId="copy-button" />}
       {afterElm && <StyledAfterElm>{afterElm}</StyledAfterElm>}
     </Container>
   );

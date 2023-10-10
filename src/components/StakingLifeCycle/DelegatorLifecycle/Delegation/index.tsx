@@ -60,6 +60,7 @@ export const DelegationCertificateModal = ({ stake, txHash, ...props }: Delegati
             <StyledLink
               data-testid="delegator-delegation-cetificate-modal-pool-id"
               to={details.delegation(data?.poolId || "")}
+              sx={{ wordBreak: "break-word" }}
             >
               {getShortHash(data?.poolId || "")}
             </StyledLink>
@@ -76,6 +77,7 @@ export const DelegationCertificateModal = ({ stake, txHash, ...props }: Delegati
             <StyledLink
               data-testid="delegator-delegation-cetificate-modal-pool-name"
               to={details.delegation(data?.poolId || "")}
+              sx={{ wordBreak: "break-word" }}
             >
               {data?.poolName || getShortHash(data?.poolId)}
             </StyledLink>
@@ -88,7 +90,11 @@ export const DelegationCertificateModal = ({ stake, txHash, ...props }: Delegati
       content: (
         <LineData>
           <CustomTooltip title={stake}>
-            <StyledLink data-testid="delegator-delegation-cetificate-modal-stake-id" to={details.stake(stake)}>
+            <StyledLink
+              data-testid="delegator-delegation-cetificate-modal-stake-id"
+              to={details.stake(stake)}
+              sx={{ wordBreak: "break-word" }}
+            >
               {getShortHash(stake)}
             </StyledLink>
           </CustomTooltip>

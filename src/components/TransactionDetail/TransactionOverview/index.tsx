@@ -231,7 +231,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       icon: SlotIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard height={24} mr={1}>
+          <TitleCard height={24} mr={1} sx={{ textWrap: "nowrap" }}>
             {`${t("common.slot")} - ${t("glossary.absoluteSlot")}`}
           </TitleCard>
         </Box>
