@@ -1,5 +1,7 @@
-import { alpha, Box, Button, Skeleton, styled } from "@mui/material";
+import { alpha, Box, Button, styled } from "@mui/material";
 import { Link } from "react-router-dom";
+
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
 export const Status = styled("span")`
   font-family: var(--font-family-text);
@@ -44,7 +46,7 @@ export const HeaderTitle = styled("h2")`
   font-size: 2.25rem;
   margin: 0.5rem 0;
 `;
-export const HeaderTitleSkeleton = styled(Skeleton)`
+export const HeaderTitleSkeleton = styled(CommonSkeleton)`
   height: 1em;
   width: 200px;
   max-width: 100%;
@@ -56,7 +58,7 @@ export const SlotLeaderContainer = styled(Box)`
   align-items: center;
 `;
 
-export const SlotLeaderSkeleton = styled(Skeleton)`
+export const SlotLeaderSkeleton = styled(CommonSkeleton)`
   height: 1em;
   width: 50%;
   border-radius: 4px;

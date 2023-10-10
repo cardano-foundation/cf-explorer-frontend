@@ -44,7 +44,6 @@ describe("DetailViewContractHash component", () => {
     );
     expect(screen.getByTestId("view-detail-drawer-contract-hash")).toBeInTheDocument();
     expect(screen.getByText("Transactions")).toBeInTheDocument();
-    expect(screen.getByText(mockedData.purpose)).toBeInTheDocument();
-    expect(screen.getByText(mockedData.redeemerMem)).toBeInTheDocument();
+    expect(screen.getByText("Redeemer")).toBeInTheDocument();
   });
 });

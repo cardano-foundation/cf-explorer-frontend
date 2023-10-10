@@ -8,8 +8,6 @@ export type Wallet = {
   link: string;
   networks: NETWORKS[];
 };
-export declare type ThemeType = "dark" | "light";
-
 export declare interface UserDataType {
   avatar: string;
   email: string;
@@ -23,7 +21,6 @@ export declare interface UserDataType {
 }
 
 export declare interface UserStoreType {
-  theme: ThemeType;
   userData: UserDataType | null;
   wallet: SupportedWallets | null;
   address: string | null;

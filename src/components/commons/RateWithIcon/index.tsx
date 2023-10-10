@@ -3,7 +3,7 @@ import { BigNumber } from "bignumber.js";
 import { useSelector } from "react-redux";
 
 import { DownRedIcon, UpGreenDarkmodeIcon, UpGreenIcon } from "src/commons/resources";
-import { ThemeType } from "src/types/user";
+import { ThemeType } from "src/types/theme";
 
 import CustomTooltip from "../CustomTooltip";
 
@@ -56,7 +56,7 @@ interface Props {
   showIcon?: boolean;
 }
 const RateWithIcon = ({ value, size, multiple = 1, showIcon = true }: Props) => {
-  const { theme: themeMode } = useSelector(({ user }: RootState) => user);
+  const { theme: themeMode } = useSelector(({ theme }: RootState) => theme);
   if (!value) return <PriceNoValue>0</PriceNoValue>;
 
   const multiplied = BigNumber(value).multipliedBy(multiple);

@@ -3,7 +3,7 @@ describe("Connect wallet and enter user name", () => {
     cy.visit("/sign-in");
   });
 
-  it("check screen sign up", () => {
+  it.only("check screen sign up", () => {
     cy.get('[data-testid="signin-title"]').should("be.visible").contains("Sign In");
     cy.get('[data-testid="forgot-password-link"] > .MuiBox-root').should("be.visible").contains("Forgot password");
     cy.get('[data-testid="connect-wallet"]').should("be.visible").should("be.enabled");

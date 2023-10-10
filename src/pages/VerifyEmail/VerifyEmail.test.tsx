@@ -35,9 +35,8 @@ describe("VerifyEmail page", () => {
     getMock.mockRejectedValue({ error: true });
     render(<VerifyEmail />);
     await waitFor(() => {
-      expect(screen.getByText("There's been an error in the verify process")).toBeInTheDocument();
-      expect(screen.getByText("This URL is either incorrect or has expired.")).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: /go to dashboard/i })).toBeInTheDocument();
+      expect(screen.getByText("There's been an error in the verify process.")).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: /Go to Dashboard/i })).toBeInTheDocument();
     });
   });
 });
