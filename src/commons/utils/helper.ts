@@ -141,6 +141,15 @@ export const removeAuthInfo = () => {
   setUserData(null);
 };
 
+export const handleUpdateRoleUser = () => {
+  removeAuthInfo();
+  if (window.location.href.includes("/account")) {
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 3000);
+  }
+};
+
 export const handleSignIn = async (username: string, password: string, cbSuccess?: () => void) => {
   try {
     const payload = {
@@ -232,12 +241,17 @@ export const toFixedBigNumber = (value: string | number, dp = 0, rm = BigNumber.
 export const isValidEmail = (email: string) => regexEmail.test(email);
 
 export function validateTokenExpired() {
-  const token = localStorage.getItem("token");
-  if (!token) return false;
-  const decoded: any = jwtDecode(token);
-  const now = moment();
-  const exp = moment(decoded.exp * 1000);
-  return now.isBefore(exp);
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) return false;
+    const decoded: any = jwtDecode(token);
+    const now = moment();
+    const exp = moment(decoded.exp * 1000);
+    return now.isBefore(exp);
+  } catch (err: any) {
+    removeAuthInfo();
+    return false;
+  }
 }
 
 export const isJson = (str: string) => {

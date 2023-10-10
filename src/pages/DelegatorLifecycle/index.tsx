@@ -17,6 +17,7 @@ import { API } from "src/commons/utils/api";
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 import NoRecord from "src/components/commons/NoRecord";
 import { ChartMode, TableMode } from "src/commons/resources";
+import { ROLE_ELEVATED_GEN_REPORT } from "src/commons/utils/constants";
 
 import {
   BoxContainerStyled,
@@ -103,6 +104,18 @@ const DelegatorLifecycle = () => {
 
   if (error || !data) return <NoRecord />;
 
+  const checkDisableGenReport = () => {
+    if (!isLoggedIn) return true;
+    if (dataReportLimit?.limitPer24hours === ROLE_ELEVATED_GEN_REPORT) return false;
+    return dataReportLimit?.isLimitReached;
+  };
+
+  const getTooltip = () => {
+    if (!isLoggedIn) return t("common.pleaseSignIntoUseFeature");
+    if (dataReportLimit?.limitPer24hours === ROLE_ELEVATED_GEN_REPORT) return "";
+    return t("message.report.limitGenerate", { time: dataReportLimit?.limitPer24hours || 0 });
+  };
+
   return (
     <DelegatorDetailContext.Provider value={data}>
       <StyledContainer>
@@ -135,19 +148,9 @@ const DelegatorLifecycle = () => {
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>
-            <CustomTooltip
-              title={
-                !isLoggedIn
-                  ? t("common.pleaseSignIntoUseFeature")
-                  : t("message.report.limitGenerate", { time: dataReportLimit?.limitPer24hours || 0 })
-              }
-            >
+            <CustomTooltip title={getTooltip()}>
               <ReportButtonContainer>
-                <ButtonReport
-                  disabled={!isLoggedIn || dataReportLimit?.isLimitReached}
-                  onClick={() => setOpen(true)}
-                  sidebar={+sidebar}
-                >
+                <ButtonReport disabled={checkDisableGenReport()} onClick={() => setOpen(true)} sidebar={+sidebar}>
                   {t("common.composeReport")}
                 </ButtonReport>
               </ReportButtonContainer>
