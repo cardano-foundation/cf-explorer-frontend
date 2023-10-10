@@ -62,9 +62,6 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
             </CustomTooltip>
           </>
         );
-      },
-      sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
     {
