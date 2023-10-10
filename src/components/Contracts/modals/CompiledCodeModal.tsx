@@ -1,5 +1,6 @@
 import { Grid } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import CustomModal from "src/components/commons/CustomModal";
 
@@ -14,23 +15,19 @@ export interface CompiledCodeModalProps {
   data?: Data[];
 }
 const CompiledCodeModal: React.FC<CompiledCodeModalProps> = ({ open = false, onClose, data }) => {
+  const { t } = useTranslation();
   const handleCloseModal = () => onClose?.();
   return (
     <CustomModal
       modalProps={{ style: { zIndex: 1302 } }}
       open={open}
       onClose={handleCloseModal}
-      title="Compiled Code"
+      title={t("contract.compiledCode")}
       width={550}
       modalContainerProps={{ px: "20px" }}
     >
       <ModalContent>
-        <ExplanDropdown title="What is compiled code?">
-          On the Cardano blockchain, the compiled code of smart contracts is stored on, and distributed across the
-          decentralised network. It is not possible to modify the rules of existing smart contract and it is also not
-          possible to de-compile the stored smart contract code back from it's compiled state back in to the original
-          source code.
-        </ExplanDropdown>
+        <ExplanDropdown title={t("explain.compiledCode")}>{t("explain.compiledCode.desc")}</ExplanDropdown>
         <Grid container spacing={2}>
           {data &&
             data.length > 0 &&

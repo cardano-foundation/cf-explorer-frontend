@@ -271,6 +271,10 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
                   <CopyButton text={hash} />
                 </DetailValue>
               </DetailsInfoItem>
+              <DetailsInfoItem>
+                <DetailLabel>{t("glossary.absoluteSlot")}</DetailLabel>
+                <DetailValue>{data?.tx?.slotNo}</DetailValue>
+              </DetailsInfoItem>
               {input && (
                 <DetailsInfoItem>
                   <DetailLabel>{t("glossary.input")}</DetailLabel>

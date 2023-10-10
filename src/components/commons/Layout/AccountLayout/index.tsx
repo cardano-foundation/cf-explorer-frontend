@@ -63,9 +63,9 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
       <Box>
         <Box pt={4}>
           {userData?.loginType === "connectWallet" ? (
-            <CustomTooltip title={userData?.address || ""} placement="bottom">
+            <CustomTooltip title={userData?.username || ""} placement="bottom">
               <StyledUsername component={"h4"} pt={1} m="auto">
-                {getShortHash(userData?.address)}
+                {getShortHash(userData?.username)}
               </StyledUsername>
             </CustomTooltip>
           ) : (

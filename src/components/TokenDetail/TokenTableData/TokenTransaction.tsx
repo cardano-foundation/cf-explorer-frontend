@@ -39,8 +39,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
     {
       title: t("glossary.txhash"),
       key: "trxhash",
-      minWidth: "200px",
-
+      minWidth: "150px",
       render: (r) => (
         <>
           <CustomTooltip title={r.hash}>
@@ -52,17 +51,28 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       )
     },
     {
-      title: t("glossary.blockEpochSlot"),
+      title: t("glossary.block"),
       key: "block",
-      minWidth: "200px",
-      render: (r) => (
-        <>
-          <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
-          <br />
-          <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/<SmallText>{r.epochSlotNo} </SmallText>
-        </>
-      )
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
     },
+    {
+      title: t("glossary.epoch"),
+      key: "epoch",
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>
+    },
+    {
+      title: t("glossary.slot"),
+      key: "epochSlotNo",
+      minWidth: "50px"
+    },
+    {
+      title: t("glossary.absoluteSlot"),
+      key: "slot",
+      minWidth: "100px"
+    },
+
     {
       title: t("glossary.address"),
       key: "addresses",

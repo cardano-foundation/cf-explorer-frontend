@@ -127,7 +127,7 @@ interface PoolInfo {
   poolView: string;
   poolSize: number;
   rewardAvailable: number;
-  status: "ACTIVE" | "INACTIVE" | "RETIRING";
+  status: "ACTIVE" | "RETIRED";
   epochNo: number;
   stakeKeys: string[];
   rewardAccounts: string;

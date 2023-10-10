@@ -93,7 +93,7 @@ export const StyledLink = styled(Link)(({ theme }) => ({
 }));
 
 export const VRFKeyText = styled(Box)(({ theme }) => ({
-  fontSize: 14,
+  fontSize: 12,
   lineHeight: "22px",
   color: theme.palette.primary.main,
   wordBreak: "break-word",
@@ -139,7 +139,7 @@ export const CardBox = styled(Box)(() => ({
   flex: 1
 }));
 export const ChangeBox = styled(Box)(() => ({
-  padding: "0px 30px",
+  padding: "0px 15px",
   textAlign: "center"
 }));
 

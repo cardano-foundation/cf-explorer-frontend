@@ -1,39 +1,40 @@
-import { Box, Grid, Skeleton, useTheme } from "@mui/material";
+import { Box, Grid, useTheme } from "@mui/material";
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 
+import useFetch from "src/commons/hooks/useFetch";
 import { SeeMoreIconHome } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 import { formatADAFull, formatDateTimeLocal, handleClicktWithoutAnchor } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
-import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import useFetch from "src/commons/hooks/useFetch";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
 import {
+  Actions,
+  BlockNo,
   Hash,
   Header,
+  HeaderStatus,
   Item,
   ItemDetail,
   ItemHeader,
   PriveValue,
-  Title,
-  TransactionContainer,
-  BlockNo,
-  WalletAddress,
   RowItem,
-  HeaderStatus,
-  Actions,
   TimeDuration,
   TimeDurationSm,
   LatestTransactionItemHeader,
-  RowItemFromTo
+  RowItemFromTo,
+  Title,
+  TransactionContainer,
+  WalletAddress
 } from "./style";
 
 const LatestTransactions: React.FC = () => {
@@ -70,14 +71,14 @@ const LatestTransactions: React.FC = () => {
                   <Grid item xl lg={3} xs={6} key={index}>
                     <Item>
                       <ItemHeader>
-                        <Skeleton variant="circular" width={50} height={40} />
-                        <Skeleton variant="text" width={"100%"} />
+                        <CommonSkeleton variant="circular" width={50} height={40} />
+                        <CommonSkeleton variant="text" width={"100%"} />
                       </ItemHeader>
-                      <Skeleton />
-                      <Skeleton variant="text" height={30} width={"100%"} />
-                      <Skeleton variant="text" height={30} width={"100%"} />
-                      <Skeleton variant="text" height={30} width={"100%"} />
-                      <Skeleton variant="text" height={30} width={"100%"} />
+                      <CommonSkeleton />
+                      <CommonSkeleton variant="text" height={30} width={"100%"} />
+                      <CommonSkeleton variant="text" height={30} width={"100%"} />
+                      <CommonSkeleton variant="text" height={30} width={"100%"} />
+                      <CommonSkeleton variant="text" height={30} width={"100%"} />
                     </Item>
                   </Grid>
                 );

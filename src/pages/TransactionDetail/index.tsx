@@ -1,13 +1,14 @@
+import { Box, Container, styled } from "@mui/material";
 import React, { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { Box, Container, Skeleton, styled } from "@mui/material";
 
-import TransactionOverview from "src/components/TransactionDetail/TransactionOverview";
-import TransactionMetadata from "src/components/TransactionDetail/TransactionMetadata";
 import useFetch from "src/commons/hooks/useFetch";
-import Card from "src/components/commons/Card";
-import NoRecord from "src/components/commons/NoRecord";
 import { API } from "src/commons/utils/api";
+import TransactionMetadata from "src/components/TransactionDetail/TransactionMetadata";
+import TransactionOverview from "src/components/TransactionDetail/TransactionOverview";
+import Card from "src/components/commons/Card";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
+import NoRecord from "src/components/commons/NoRecord";
 
 const StyledContainer = styled(Container)`
   padding: 30px 16px 40px;
@@ -41,8 +42,8 @@ const TransactionDetail: React.FC = () => {
       <Box>
         {!initialized ? (
           <Card>
-            <Skeleton variant="rectangular" style={{ borderRadius: 10, height: 50, marginBottom: 10 }} />
-            <Skeleton variant="rectangular" style={{ borderRadius: 10, minHeight: 350 }} />
+            <CommonSkeleton variant="rectangular" style={{ borderRadius: 10, height: 50, marginBottom: 10 }} />
+            <CommonSkeleton variant="rectangular" style={{ borderRadius: 10, minHeight: 350 }} />
           </Card>
         ) : (
           <TransactionMetadata data={data} loading={!initialized} />

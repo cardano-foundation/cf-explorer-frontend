@@ -14,6 +14,7 @@ import { getInfo, signIn } from "src/commons/utils/userRequest";
 import ConnectWallet from "src/components/commons/Layout/Header/ConnectWallet";
 import { setUserData } from "src/stores/user";
 import CustomIcon from "src/components/commons/CustomIcon";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import {
   AlertCustom,
@@ -62,6 +63,7 @@ export default function SignIn() {
   const theme = useTheme();
   const history = useHistory();
   const toast = useToast();
+  const { isMobile } = useScreen();
   const AUTHENTICATE_ROUTES = [
     routers.SIGN_IN as string,
     routers.SIGN_UP as string,
@@ -83,20 +85,17 @@ export default function SignIn() {
     }
   });
 
-  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
-
-  const updateHeight = () => {
-    setViewportHeight(window.innerHeight);
-  };
-
   useEffect(() => {
-    window.addEventListener("resize", updateHeight);
-    document.body.style.overflow = "hidden";
-    updateHeight();
-
+    document.body.style.backgroundColor =
+      theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[100];
+    document.body.style.height = isMobile ? "80vh" : "100vh";
+    document.body.style.display = "flex";
+    document.body.style.alignItems = "center";
     return () => {
-      document.body.style.overflow = "unset";
-      window.removeEventListener("resize", updateHeight);
+      document.body.style.backgroundColor = "unset";
+      document.body.style.height = "unset";
+      document.body.style.display = "unset";
+      document.body.style.alignItems = "unset";
     };
   }, []);
 
@@ -233,7 +232,7 @@ export default function SignIn() {
     }
   };
   return (
-    <Container sx={{ height: `${viewportHeight}px` }}>
+    <Container>
       <WrapContent>
         <WrapTitle data-testid="signin-title">{t("common.signIn")}</WrapTitle>
         <FormGroup>

@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { isNil } from "lodash";
 
 import {
   TimeIconComponent,
@@ -18,7 +17,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import DetailHeader from "src/components/commons/DetailHeader";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
-import { Subtext, TitleCard, WrapConfirmation } from "./styles";
+import { TitleCard, WrapConfirmation } from "./styles";
 
 interface BlockOverviewProps {
   data: BlockDetail | null;
@@ -108,15 +107,10 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       icon: SlotIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> {t("glossary.Slot")}</TitleCard>
+          <TitleCard mr={1}>{`${t("common.slot")} - ${t("glossary.absoluteSlot")}`}</TitleCard>
         </Box>
       ),
-      value: (
-        <>
-          {data?.epochNo}
-          <Subtext>/{isNil(data?.epochSlotNo) ? null : MAX_SLOT_EPOCH}</Subtext>
-        </>
-      )
+      value: `${data?.epochSlotNo} - ${data?.slotNo}`
     }
   ];
   return (

@@ -74,27 +74,34 @@ const TransactionList: React.FC<TransactionListProps> = ({
     {
       title: t("glossary.block"),
       key: "block",
-      minWidth: 60,
+      minWidth: 50,
       render: (r) => {
         const { blockName, tooltip } = formatNameBlockNo(r.blockNo, r.epochNo) || getShortHash(r.blockHash);
         return (
-          <Box>
-            <Box>
-              <StyledLink to={details.block(r.blockNo || r.blockHash)}>
-                <CustomTooltip title={tooltip}>
-                  <span>{blockName}</span>
-                </CustomTooltip>
-              </StyledLink>
-            </Box>
-            <Box mt={1}>
-              <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
-              <Box color={({ palette }) => palette.secondary.light} component={"span"}>
-                {r.epochSlotNo}
-              </Box>
-            </Box>
-          </Box>
+          <StyledLink to={details.block(r.blockNo || r.blockHash)}>
+            <CustomTooltip title={tooltip}>
+              <span>{blockName}</span>
+            </CustomTooltip>
+          </StyledLink>
         );
       }
+    },
+    {
+      title: t("glossary.epoch"),
+      key: "epochNo",
+      minWidth: 60,
+      render: (r) => <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>
+    },
+    {
+      title: t("glossary.slot"),
+      key: "epochSlotNo",
+      minWidth: 60,
+      render: (r) => r.epochSlotNo
+    },
+    {
+      title: t("glossary.absoluteSlot"),
+      key: "slot",
+      minWidth: 60
     },
     {
       title: t("common.fees"),

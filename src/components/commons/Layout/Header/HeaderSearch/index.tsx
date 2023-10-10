@@ -336,6 +336,11 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       return;
     }
 
+    if (option?.value === "tokens" || option?.value === "delegations/pool-detail-header") {
+      FetchSearchTokensAndPools(search, filter);
+      return;
+    }
+
     if (search && filter === "all") {
       handleSearchAll(search);
       return;
@@ -351,11 +356,6 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     }
 
     callback?.();
-
-    if (option?.value === "tokens" || option?.value === "delegations/pool-detail-header") {
-      FetchSearchTokensAndPools(search, filter);
-      return;
-    }
 
     if (option?.value === "blocks") {
       history.push(details.block(search.trim()));

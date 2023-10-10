@@ -63,22 +63,26 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
     {
       title: t("glossary.block"),
       key: "block",
-      minWidth: 120,
+      minWidth: 50,
       render: (r) => (
-        <Box>
-          <Box>
-            <StyledLink to={details.block(r.blockNo || r.blockHash)}>
-              {r.blockNo || getShortHash(r.blockHash)}
-            </StyledLink>
-          </Box>
-          <Box mt={1}>
-            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
-            <Box color={({ palette }) => palette.secondary.light} component={"span"}>
-              {r.epochSlotNo}
-            </Box>
-          </Box>
-        </Box>
+        <StyledLink to={details.block(r.blockNo || r.blockHash)}>{r.blockNo || getShortHash(r.blockHash)}</StyledLink>
       )
+    },
+    {
+      title: t("glossary.epoch"),
+      key: "epochNo",
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>
+    },
+    {
+      title: t("glossary.slot"),
+      key: "epochSlotNo",
+      minWidth: "50px"
+    },
+    {
+      title: t("glossary.absoluteSlot"),
+      key: "slot",
+      minWidth: "100px"
     },
     {
       title: t("glossary.address"),
