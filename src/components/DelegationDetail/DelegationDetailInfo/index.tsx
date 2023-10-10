@@ -106,6 +106,15 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         </CustomTooltip>
         <CopyButton text={poolId} />
       </PoolId>
+      <PoolId>
+        <CustomTooltip title={data?.hashView}>
+          <Link to={details.delegation(poolId)}>
+            <PoolIdLabel>{t("common.poolHash")}: </PoolIdLabel>
+            <PoolIdValue>{isMobile ? getShortWallet(data?.hashView) : data?.hashView}</PoolIdValue>
+          </Link>
+        </CustomTooltip>
+        <CopyButton text={data?.hashView} />
+      </PoolId>
       <TimeDuration>
         <FormNowMessage time={lastUpdated} />
       </TimeDuration>

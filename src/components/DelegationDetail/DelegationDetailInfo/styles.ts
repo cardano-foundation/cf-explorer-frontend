@@ -47,7 +47,7 @@ export const PoolId = styled("p")`
   margin-top: 0px;
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 
 export const PoolIdSkeleton = styled(CommonSkeleton)`
