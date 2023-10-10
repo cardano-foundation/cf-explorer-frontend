@@ -15,7 +15,13 @@ import {
   UserIconComponent
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { formatADAFull, formatDateTimeLocal, formatPercent, getShortWallet } from "src/commons/utils/helper";
+import {
+  formatADAFull,
+  formatDateTimeLocal,
+  formatPercent,
+  getShortHash,
+  getShortWallet
+} from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import BookmarkButton from "src/components/commons/BookmarkIcon";
 import CopyButton from "src/components/commons/CopyButton";
@@ -119,8 +125,8 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       <PoolId>
         <PoolIdLabel>{t("common.poolId")}: </PoolIdLabel>
         <CustomTooltip title={poolId}>
-          <Link to={details.delegation(poolId)}>
-            <PoolIdValue>{isMobile ? getShortWallet(poolId) : poolId}</PoolIdValue>
+          <Link to={details.delegation(data?.poolView)}>
+            <PoolIdValue>{isMobile ? getShortHash(data?.poolView) : data?.poolView}</PoolIdValue>
           </Link>
         </CustomTooltip>
         <CopyButton text={poolId} />

@@ -19,7 +19,8 @@ import PolicyID from "src/components/commons/ViewBlocks/PolicyID";
 import CompiledCode from "src/components/commons/ViewBlocks/CompiledCode";
 import Burn from "src/components/commons/ViewBlocks/Burn";
 import { details } from "src/commons/routers";
-import { formatNumberDivByDecimals } from "src/commons/utils/helper";
+import { formatNumberDivByDecimals, getShortHash } from "src/commons/utils/helper";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import AssetsModal from "../modals/AssetsModal";
 import RedeemerModal from "../modals/RedeemerModal";
@@ -34,6 +35,7 @@ export interface MintviewsProps {
 const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile }) => {
   const { t } = useTranslation();
   const theme = useTheme();
+  const screen = useScreen();
   const redeemerRef = useRef(null);
   const middleBoxRef = useRef(null);
   const rightBoxRef = useRef(null);
@@ -108,20 +110,20 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
   const mintedAssetsData = useMemo(() => {
     const mintingTokens = (data?.mintingTokens as IContractItemTx["mintingTokens"]) || [];
     return mintingTokens.map((item) => ({
-      title: item.displayName || item.fingerprint,
+      title: item.displayName || screen.isMobile ? getShortHash(item.fingerprint) : item.fingerprint,
       value: formatNumberDivByDecimals(item.quantity, item?.metadata?.decimals || 0),
       link: item.fingerprint
     }));
-  }, [data]);
+  }, [data, screen.isMobile]);
 
   const burnedAssetsData = useMemo(() => {
     const burningTokens = (data?.burningTokens as IContractItemTx["burningTokens"]) || [];
     return burningTokens.map((item) => ({
-      title: item.displayName || item.fingerprint,
+      title: item.displayName || screen.isMobile ? getShortHash(item.fingerprint) : item.fingerprint,
       value: formatNumberDivByDecimals(item.quantity, item?.metadata?.decimals || 0),
       link: item.fingerprint
     }));
-  }, [data]);
+  }, [data, screen]);
   const isMint = data?.mintingTokens && data.mintingTokens?.length > 0;
   return (
     <MintContainer isMobile={+!!isMobile}>

@@ -129,10 +129,10 @@ const SPOLifecycle = () => {
             <LifeCycleTitle>{t("common.slcFor")}</LifeCycleTitle>
             <AddressLine>
               <Label>{t("common.poolID")}:</Label>
-              <CustomTooltip title={poolId}>
-                <StakeId to={details.delegation(poolId)}>{getShortWallet(poolId)}</StakeId>
+              <CustomTooltip title={data.poolView}>
+                <StakeId to={details.delegation(data.poolView)}>{getShortWallet(data.poolView)}</StakeId>
               </CustomTooltip>
-              <CopyButton text={poolId} />
+              <CopyButton text={data.poolView} />
             </AddressLine>
           </LifeCycleHeader>
           <BoxItemStyled sidebar={+sidebar}>
