@@ -128,6 +128,7 @@ import ArrowUpDarkIcon from "./icons/arrow-up-dark.svg";
 import CopyOutlineIcon, { ReactComponent as CopyOutlineIconComponent } from "./icons/copy-outline.svg";
 import ArrowDownIcon from "./icons/arrow-down-red.svg";
 import ArrowDownDarkIcon from "./icons/arrow-down-red-dark.svg";
+import PolicyDark from "./icons/policy-dark.svg";
 
 export {
   LogoFullIcon,
@@ -292,7 +293,8 @@ export {
   RewardsDistributionComponent,
   StakeCertificatesComponent,
   ProtocolUpdateComponent,
-  InstantaneousHistoryComponent
+  InstantaneousHistoryComponent,
+  PolicyDark
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
