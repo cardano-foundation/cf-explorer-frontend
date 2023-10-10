@@ -67,7 +67,7 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
             title={
               <Box px={"4px"}>
                 <Box fontSize="12px" color={({ palette }) => palette.secondary.light}>
-                  {t("glossary.actualPledge")}:
+                  {t("glossary.actualPledge")}
                 </Box>
                 <Box fontSize="14px" color={({ palette }) => palette.secondary.light}>
                   {formatADAFull(data?.totalBalanceOfPoolOwners)} (<ADAicon />)
