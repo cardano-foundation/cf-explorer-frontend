@@ -8,13 +8,7 @@ import { useTranslation } from "react-i18next";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import {
-  exchangeADAToUSD,
-  formatADAFull,
-  getPageInfo,
-  getShortWallet,
-  numberWithCommas
-} from "src/commons/utils/helper";
+import { exchangeADAToUSD, formatADAFull, getPageInfo, getShortHash, numberWithCommas } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -44,11 +38,10 @@ const Transactions: React.FC = () => {
       title: t("common.address"),
       key: "trxhash",
       minWidth: 120,
-
       render: (r) => (
         <div>
           <CustomTooltip title={r.address}>
-            <StyledLink to={details.contract(r.address)}>{getShortWallet(r.address)}</StyledLink>
+            <StyledLink to={details.contract(r.address)}>{getShortHash(r.address)}</StyledLink>
           </CustomTooltip>
         </div>
       )

@@ -2,7 +2,7 @@ import userEvent from "@testing-library/user-event";
 
 import { render, screen } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
-import { getShortWallet } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 
 import Delegation, { DelegationCertificateModal } from "./index";
 
@@ -49,7 +49,7 @@ describe("DelegationCertificateModal", () => {
     const { getByText } = render(
       <DelegationCertificateModal handleCloseModal={onClose} open stake={stakeId} txHash="" />
     );
-    expect(getByText(getShortWallet(stakeId))).toBeInTheDocument();
+    expect(getByText(getShortHash(stakeId))).toBeInTheDocument();
   });
 
   it("render DelegationCertificateModal close button was clicked", () => {

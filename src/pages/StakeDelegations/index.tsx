@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table from "src/components/commons/Table";
@@ -81,7 +81,7 @@ const StakeDelegations = () => {
             <Box key={idx}>
               <CustomTooltip title={stakeKey}>
                 <StyledLink to={{ pathname: details.stake(stakeKey), state: { fromPath } }}>
-                  {getShortWallet(stakeKey)}
+                  {getShortHash(stakeKey)}
                 </StyledLink>
               </CustomTooltip>
             </Box>
@@ -101,7 +101,7 @@ const StakeDelegations = () => {
               <CustomTooltip title={pool.poolName || pool.poolId}>
                 <StyledLink to={details.delegation(pool.poolId)}>
                   <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
-                    {pool.poolName || getShortWallet(pool.poolId)}
+                    {pool.poolName || getShortHash(pool.poolId)}
                   </Box>
                 </StyledLink>
               </CustomTooltip>

@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
-import { formatNumberDivByDecimals, getPageInfo, getShortWallet } from "src/commons/utils/helper";
+import { formatNumberDivByDecimals, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { API } from "src/commons/utils/api";
@@ -49,7 +49,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decim
       render: (r) => (
         <CustomTooltip title={r.address}>
           <StyledLink to={r.addressType === "PAYMENT_ADDRESS" ? details.address(r.address) : details.stake(r.address)}>
-            {getShortWallet(r.address)}
+            {getShortHash(r.address)}
           </StyledLink>
         </CustomTooltip>
       )

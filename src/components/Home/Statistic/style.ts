@@ -99,7 +99,7 @@ export const Title = styled("h3")`
   font-size: 28px !important;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: 16px;
-    word-break: break-all;
+    word-break: break-word;
   }
 `;
 

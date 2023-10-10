@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
-import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DetailViewStakeKey from "src/components/commons/DetailView/DetailViewStakeKey";
@@ -115,7 +115,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
         <>
           <CustomTooltip title={r.stakeKey}>
             <StyledLink to={{ pathname: details.stake(r.stakeKey), state: { fromPath } }}>
-              {getShortWallet(r.stakeKey)}
+              {getShortHash(r.stakeKey)}
             </StyledLink>
           </CustomTooltip>
 

@@ -8,14 +8,7 @@ import { useSelector } from "react-redux";
 import Card from "src/components/commons/Card";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
-import {
-  formatADAFull,
-  formatDateTimeLocal,
-  formatPercent,
-  getPageInfo,
-  getShortHash,
-  getShortWallet
-} from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatPercent, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { API } from "src/commons/utils/api";
@@ -122,7 +115,7 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
     },
     {
       title: (
-        <Box component="span">
+        <Box component="span" sx={{ textWrap: "nowrap" }}>
           {t("glossary.fixedCost")} (<ADAicon />)
         </Box>
       ),
@@ -148,7 +141,7 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
           {pool.stakeKey?.slice(0, 2).map((stakeKey) => (
             <StakeKey key={stakeKey}>
               <CustomTooltip title={stakeKey}>
-                <StyledLink to={details.stake(stakeKey)}>{getShortWallet(stakeKey)}</StyledLink>
+                <StyledLink to={details.stake(stakeKey)}>{getShortHash(stakeKey)}</StyledLink>
               </CustomTooltip>
             </StakeKey>
           ))}

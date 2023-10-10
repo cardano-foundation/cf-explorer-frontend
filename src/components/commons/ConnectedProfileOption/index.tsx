@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import { LinkOff, User2 } from "src/commons/resources/index";
 import { routers } from "src/commons/routers";
-import { getShortWallet, removeAuthInfo } from "src/commons/utils/helper";
+import { getShortHash, removeAuthInfo } from "src/commons/utils/helper";
 import { signOut } from "src/commons/utils/userRequest";
 import { setOnDetailView } from "src/stores/user";
 
@@ -68,7 +68,7 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
   return (
     <Box>
       <StyledButton aria-describedby={id} type="button" onClick={handleClick}>
-        <Span>{getShortWallet(stakeAddress || "")}</Span>
+        <Span>{getShortHash(stakeAddress || "")}</Span>
       </StyledButton>
       <WrapContent
         id={id}

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { BalanceIcon, HashtagIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomIcon from "src/components/commons/CustomIcon";
@@ -43,7 +43,7 @@ const UserInfo = ({
           &nbsp;
           <CustomTooltip title={stake}>
             <StyledLink to={details.stake(stake)}>
-              <TextUserInfo>{getShortWallet(stake || "")}</TextUserInfo>
+              <TextUserInfo>{getShortHash(stake || "")}</TextUserInfo>
             </StyledLink>
           </CustomTooltip>
           <CopyButton text={stake || ""} />
