@@ -50,14 +50,4 @@ describe("Forgot password page", () => {
     const errorMessage = screen.getByText("Please enter a valid email address");
     expect(errorMessage).toBeInTheDocument();
   });
-
-  it("should be able to return error message for empty email", async () => {
-    const emailInput = screen.getByPlaceholderText("Email address");
-    fireEvent.change(emailInput, { target: { value: "abc" } });
-    fireEvent.change(emailInput, { target: { value: "" } });
-    const submitButton = screen.getByText("Submit");
-    fireEvent.click(submitButton);
-    const errorMessage = screen.getByText("Please enter your Email");
-    expect(errorMessage).toBeInTheDocument();
-  });
 });

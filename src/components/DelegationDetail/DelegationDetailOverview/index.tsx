@@ -1,10 +1,11 @@
-import { Box, Grid, Skeleton } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
 import { formatADAFull, formatPercent, numberWithCommas } from "src/commons/utils/helper";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import { Item, StyledContainer, Title, Value } from "./styles";
 
@@ -60,7 +61,7 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
             return (
               <Grid item xs={24} sm={12} md={8} key={ii} xl={6}>
                 <Box borderRadius={10} overflow="hidden">
-                  <Skeleton variant="rectangular" height={115} />
+                  <CommonSkeleton variant="rectangular" height={115} />
                 </Box>
               </Grid>
             );

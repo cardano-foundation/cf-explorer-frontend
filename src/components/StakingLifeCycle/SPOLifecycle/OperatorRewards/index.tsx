@@ -76,7 +76,7 @@ export default OperatorReward;
 const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void }) => {
   const { t } = useTranslation();
   const { poolId = "" } = useParams<{ poolId: string }>();
-  const [sort, setSort] = useState<string>("");
+  const [sort, setSort] = useState<string>("time,DESC");
   const [{ page, size }, setPagination] = useState<{ page: number; size: number }>({ page: 0, size: 50 });
   const fetchData = useFetchList<SPO_REWARD>(API.SPO_LIFECYCLE.REWARD(poolId), { page, size, sort });
 
@@ -122,6 +122,7 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void 
       <StyledTable
         {...fetchData}
         columns={columns}
+        defaultSort="time,DESC"
         total={{ title: t("common.totalEpoch"), count: fetchData.total }}
         maxHeight={"60vh"}
         pagination={{

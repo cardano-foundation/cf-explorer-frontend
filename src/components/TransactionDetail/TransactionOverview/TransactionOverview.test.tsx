@@ -17,7 +17,8 @@ const mockTransaction = {
     confirmation: 10,
     fee: 100,
     totalOutput: 1000,
-    maxEpochSlot: 1000
+    maxEpochSlot: 1000,
+    slotNo: 1000
   },
   summary: {
     stakeAddress: [

@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import { stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -40,18 +39,8 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
     {
       title: t("glossary.block"),
       key: "block",
-      minWidth: "120px",
-      render: (r) => (
-        <Box>
-          <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
-          <Box marginTop="5px">
-            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
-            <Box color={({ palette }) => palette.secondary.light} component={"span"}>
-              {r.epochSlotNo}
-            </Box>
-          </Box>
-        </Box>
-      )
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
     },
     {
       title: t("glossary.poolId"),

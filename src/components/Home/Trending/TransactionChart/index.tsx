@@ -230,7 +230,7 @@ const renderTooltipContent = (o: any, range: Time) => {
 
 const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time }) => {
   const theme = useTheme();
-  const { theme: themeMode } = useSelector(({ user }: RootState) => user);
+  const { theme: themeMode } = useSelector(({ theme }: RootState) => theme);
 
   if (!data) return <></>;
   return (

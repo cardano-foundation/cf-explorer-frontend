@@ -1,9 +1,10 @@
-import { Box, LinearProgress, Skeleton, alpha, styled } from "@mui/material";
+import { Box, LinearProgress, alpha, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import CustomIcon from "src/components/commons/CustomIcon";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
-export const StyledSkeleton = styled(Skeleton)`
+export const StyledSkeleton = styled(CommonSkeleton)`
   border-radius: var(--border-radius);
   min-height: 150px;
 `;

@@ -7,7 +7,6 @@ import {
   ClickAwayListener,
   Container,
   IconButton,
-  Skeleton,
   alpha,
   useTheme
 } from "@mui/material";
@@ -31,12 +30,13 @@ import { formatDateTimeLocal } from "src/commons/utils/helper";
 import ParseScriptModal from "src/components/ParseScriptModal";
 import Card from "src/components/commons/Card";
 import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
+import CustomIcon from "src/components/commons/CustomIcon";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import NoRecord from "src/components/commons/NoRecord";
 import Table from "src/components/commons/Table";
 import { ProtocolHistory, ProtocolTypeKey, TProtocolParam } from "src/types/protocol";
 import { Column } from "src/types/table";
-import CustomIcon from "src/components/commons/CustomIcon";
 
 import { ExplainerTextModal } from "./ExplainerTextModal";
 import { explainerTextGlobalConstants, explainerTextProtocolHistory } from "./explainerText";
@@ -49,6 +49,8 @@ import {
   ButtonFilter,
   ColumnProtocol,
   FilterContainer,
+  Header,
+  HeaderButton,
   StyledDropdownItem,
   TextDescription
 } from "./styles";
@@ -63,6 +65,7 @@ interface IProtocolParamVertical {
 const ProtocolParameter: React.FC = () => {
   const { t } = useTranslation();
   const [costModelScript, setCostModelScript] = useState("");
+  const [titleModal, setTitleModal] = useState("");
   const { histories } = useParams<{ histories?: "histories" }>();
   const history = useHistory();
   const { PROTOCOL_PARAMETER } = API;
@@ -134,7 +137,12 @@ const ProtocolParameter: React.FC = () => {
         return (
           <Box
             component={isModalType ? Button : Box}
-            onClick={() => isModalType && setCostModelScript(r.value)}
+            onClick={() => {
+              if (isModalType) {
+                setCostModelScript(r.value);
+                setTitleModal(k);
+              }
+            }}
             p={0}
             justifyItems={"flex-start"}
             textTransform={"capitalize"}
@@ -191,7 +199,12 @@ const ProtocolParameter: React.FC = () => {
         return (
           <Box
             component={isModalType ? Button : Box}
-            onClick={() => isModalType && setCostModelScript(r.value)}
+            onClick={() => {
+              if (isModalType) {
+                setCostModelScript(r.value);
+                setTitleModal(k);
+              }
+            }}
             p={0}
             justifyItems={"flex-start"}
             textTransform={"capitalize"}
@@ -240,23 +253,14 @@ const ProtocolParameter: React.FC = () => {
             <>
               <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
                 <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                  <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main} fontSize={"1.25rem"}>
-                    {t("common.updatableParameters")}
-                  </Box>
-                  <Box
-                    component={Button}
-                    variant="contained"
-                    textTransform={"capitalize"}
-                    fontWeight={"bold"}
-                    fontSize={"0.875rem"}
-                    onClick={() => history.push(lists.protocolParameters("histories"))}
-                  >
+                  <Header>{t("common.updatableParameters")}</Header>
+                  <HeaderButton variant="contained" onClick={() => history.push(lists.protocolParameters("histories"))}>
                     {t("common.viewUpdateHistory")}
-                  </Box>
+                  </HeaderButton>
                 </Box>
                 {!initialLastest && (
                   <Box
-                    component={Skeleton}
+                    component={CommonSkeleton}
                     mt={2}
                     borderRadius={({ spacing }) => spacing(2)}
                     variant="rectangular"
@@ -277,7 +281,7 @@ const ProtocolParameter: React.FC = () => {
                   </Box>
                   {!initialFixed && (
                     <Box
-                      component={Skeleton}
+                      component={CommonSkeleton}
                       mt={2}
                       borderRadius={({ spacing }) => spacing(2)}
                       variant="rectangular"
@@ -295,7 +299,7 @@ const ProtocolParameter: React.FC = () => {
         open={!!costModelScript}
         onClose={() => setCostModelScript("")}
         script={costModelScript}
-        title="CostModel"
+        title={titleModal || "CostModel"}
       />
       <ExplainerTextModal
         open={!!explainerText}
@@ -482,7 +486,13 @@ export const ProtocolParameterHistory = () => {
 
   if (loading) {
     return (
-      <Box component={Skeleton} mt={2} borderRadius={({ spacing }) => spacing(2)} variant="rectangular" height={400} />
+      <Box
+        component={CommonSkeleton}
+        mt={2}
+        borderRadius={({ spacing }) => spacing(2)}
+        variant="rectangular"
+        height={400}
+      />
     );
   }
 

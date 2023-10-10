@@ -1,4 +1,5 @@
 import { Typography, useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { OutlineEye, Polygon, PolygonDarkIcon } from "src/commons/resources";
 import CustomIcon from "src/components/commons/CustomIcon";
@@ -12,13 +13,14 @@ export interface AssetsProps {
 }
 
 const Assets: React.FC<AssetsProps> = ({ onClick, total, isBurned }) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   return (
     <PolygonContainer>
       {theme.isDark ? <PolygonDarkIcon /> : <Polygon />}
       <PolygonContent>
         <Typography display="flex" alignItems="center" gap={"4px"} fontWeight={500} color={theme.palette.primary.main}>
-          Assets{" "}
+          {t("contract.assets")}{" "}
           <CustomBadge
             bgColor={theme.isDark && isBurned ? theme.palette.primary.main : ""}
             color={theme.isDark && isBurned ? theme.palette.secondary[100] : ""}

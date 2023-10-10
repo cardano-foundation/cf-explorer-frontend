@@ -1,4 +1,6 @@
-import { Grid, Skeleton, Button, styled, Box, alpha } from "@mui/material";
+import { Box, Button, Grid, alpha, styled } from "@mui/material";
+
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
 export const StyledGrid = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.down("lg")]: {
@@ -183,7 +185,7 @@ export const ChartBox = styled(Box)<{ highest: number; lowest: number }>(({ them
   };
 });
 
-export const SkeletonUI = styled(Skeleton)(({ theme }) => ({
+export const SkeletonUI = styled(CommonSkeleton)(({ theme }) => ({
   paddingTop: theme.spacing(3),
   marginRight: theme.spacing(2),
   borderRadius: 10
