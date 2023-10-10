@@ -69,15 +69,6 @@ export const StyledListItemText = styled(ListItemText)`
       text-overflow: ellipsis;
     }
   }
-  ${({ theme }) => theme.breakpoints.down(420)} {
-    & a {
-      display: inline-block;
-      max-width: 130px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  }
 `;
 
 export const TitleModal = styled(Box)`

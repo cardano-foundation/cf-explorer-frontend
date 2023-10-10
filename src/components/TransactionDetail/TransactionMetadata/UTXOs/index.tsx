@@ -275,7 +275,7 @@ const Card = ({
           fontWeight={"bold"}
           color={({ palette }) => (isFailed ? theme.palette.secondary[600] : palette.secondary.main)}
         >
-          Total {type === "down" ? t("drawer.input") : t("drawer.ouput")}
+          {t("common.total")} {type === "down" ? t("drawer.input") : t("drawer.ouput")}
         </Box>
         <div>
           <Box

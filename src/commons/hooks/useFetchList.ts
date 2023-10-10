@@ -8,7 +8,7 @@ import { cleanObject } from "../utils/helper";
 interface Params {
   page?: number;
   size?: number;
-  [key: string]: string | number | Date | string[] | undefined;
+  [key: string]: string | number | Date | string[] | boolean | undefined;
 }
 
 export interface FetchReturnType<T> {
@@ -78,6 +78,7 @@ const useFetchList = <T>(
         setInitialized(true);
       } catch (error) {
         setData([]);
+        setTotal(0);
         setInitialized(true);
         if (error instanceof AxiosError) setError(error?.response?.data?.message || error?.message);
         else if (typeof error === "string") setError(error);
