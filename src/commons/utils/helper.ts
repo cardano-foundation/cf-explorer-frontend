@@ -131,19 +131,11 @@ export const removeAuthInfo = () => {
   localStorage.removeItem("refreshToken");
   localStorage.removeItem("walletId");
   localStorage.removeItem("email");
+  localStorage.removeItem("loginType");
   localStorage.removeItem("persist:user");
   localStorage.setItem("cf-wallet-connected", "false");
   localStorage.removeItem("cf-last-connected-wallet");
   setUserData(null);
-};
-
-export const handleUpdateRoleUser = () => {
-  removeAuthInfo();
-  if (window.location.href.includes("/account")) {
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 3000);
-  }
 };
 
 export const handleSignIn = async (username: string, password: string, cbSuccess?: () => void) => {

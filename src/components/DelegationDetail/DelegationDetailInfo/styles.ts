@@ -24,6 +24,8 @@ export const BackText = styled("small")`
 export const HeaderContainer = styled(Box)`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
 `;
 
 export const HeaderTitle = styled("h2")`
@@ -47,7 +49,13 @@ export const PoolId = styled("p")`
   margin-top: 0px;
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: ${({ theme }) => theme.spacing(1)};
+`;
+export const PoolDescriptionWrapper = styled("p")`
+  margin-top: 0px;
+  display: flex;
+  align-items: baseline;
+  margin-bottom: ${({ theme }) => theme.spacing(1)};
 `;
 
 export const PoolIdSkeleton = styled(CommonSkeleton)`
@@ -59,6 +67,7 @@ export const PoolIdSkeleton = styled(CommonSkeleton)`
 export const PoolIdLabel = styled("small")`
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.secondary.light};
+  min-width: 85px;
 `;
 
 export const PoolIdValue = styled("small")`
@@ -70,6 +79,24 @@ export const PoolIdValue = styled("small")`
   word-break: break-word;
   line-height: 1.5;
   margin-right: 5px;
+`;
+export const PoolHomepage = styled("a")`
+  font-family: var(--font-family-text);
+  font-weight: var(--font-weight-bold);
+  color: ${(props) => props.theme.palette.primary.main} !important;
+  white-space: pre-wrap;
+  display: inline-block;
+  word-break: break-word;
+  line-height: 1.5;
+  margin-left: 2px;
+`;
+export const PoolDescription = styled("small")`
+  white-space: pre-wrap;
+  display: inline-block;
+  word-break: break-word;
+  line-height: 1.5;
+  color: ${(props) => props.theme.palette.secondary.main};
+  margin-left: 2px;
 `;
 
 export const DataContainer = styled("div")(({ theme }) => ({
@@ -204,5 +231,5 @@ export const ButtonViewAll = styled(Button)(({ theme }) => ({
 export const TimeDuration = styled("small")(({ theme }) => ({
   color: theme.palette.secondary.light,
   display: "block",
-  margin: "0px 0px 25px"
+  margin: `${theme.spacing(2)} 0px 25px`
 }));
