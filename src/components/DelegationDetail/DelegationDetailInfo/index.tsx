@@ -38,6 +38,9 @@ import {
   InfoTitle,
   InfoValue,
   Item,
+  PoolDescription,
+  PoolDescriptionWrapper,
+  PoolHomepage,
   PoolId,
   PoolIdLabel,
   PoolIdSkeleton,
@@ -59,6 +62,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
   const { t } = useTranslation();
   const theme = useTheme();
   const history = useHistory();
+  const [isErrorImage, setIsErrorImage] = useState(false);
   const [isOpenReward, setOpenReward] = useState<boolean>(false);
   const [isOpenOwner, setOpenOwner] = useState<boolean>(false);
   const { isMobile, isGalaxyFoldSmall } = useScreen();
@@ -92,29 +96,60 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <BackText>{t("common.back")}</BackText>
       </BackButton>
       <HeaderContainer>
-        <CustomTooltip title={data?.poolName || poolId}>
-          <HeaderTitle>{data?.poolName || poolId}</HeaderTitle>
-        </CustomTooltip>
-        <BookmarkButton keyword={poolId} type="POOL" />
+        <Box display={"flex"} alignItems={"center"} flex={4}>
+          <CustomTooltip title={data?.poolName || poolId}>
+            <HeaderTitle>{data?.poolName || poolId}</HeaderTitle>
+          </CustomTooltip>
+          <BookmarkButton keyword={poolId} type="POOL" />
+        </Box>
+        {data?.logoUrl && !isErrorImage && (
+          <Box
+            bgcolor={theme.palette.common.white}
+            border={`1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`}
+            borderRadius={1}
+            component={"img"}
+            src={data?.logoUrl || ""}
+            width={"64px"}
+            onError={(e) => {
+              if (e.type === "error") setIsErrorImage(true);
+            }}
+          />
+        )}
       </HeaderContainer>
       <PoolId>
+        <PoolIdLabel>{t("common.poolId")}: </PoolIdLabel>
         <CustomTooltip title={poolId}>
           <Link to={details.delegation(poolId)}>
-            <PoolIdLabel>{t("common.poolId")}: </PoolIdLabel>
             <PoolIdValue>{isMobile ? getShortWallet(poolId) : poolId}</PoolIdValue>
           </Link>
         </CustomTooltip>
         <CopyButton text={poolId} />
       </PoolId>
-      <PoolId>
-        <CustomTooltip title={data?.hashView}>
-          <Link to={details.delegation(poolId)}>
-            <PoolIdLabel>{t("common.poolHash")}: </PoolIdLabel>
-            <PoolIdValue>{isMobile ? getShortWallet(data?.hashView) : data?.hashView}</PoolIdValue>
-          </Link>
-        </CustomTooltip>
-        <CopyButton text={data?.hashView} />
-      </PoolId>
+      {data?.hashView && (
+        <PoolId>
+          <PoolIdLabel>{t("common.poolhash")}: </PoolIdLabel>
+          <CustomTooltip title={data?.hashView || ""}>
+            <Link to={details.delegation(poolId)}>
+              <PoolIdValue>{isMobile ? getShortWallet(data?.hashView) : data?.hashView}</PoolIdValue>
+            </Link>
+          </CustomTooltip>
+          <CopyButton text={data?.hashView} />
+        </PoolId>
+      )}
+      {data?.homepage && (
+        <PoolId>
+          <PoolIdLabel>{t("common.poolHomepage")}: </PoolIdLabel>
+          <PoolHomepage href={data?.homepage} target="_blank" rel="noreferrer">
+            {data?.homepage}
+          </PoolHomepage>
+        </PoolId>
+      )}
+      {data?.description && (
+        <PoolDescriptionWrapper>
+          <PoolIdLabel>{t("common.poolDescription")}: </PoolIdLabel>
+          <PoolDescription>{data?.description}</PoolDescription>
+        </PoolDescriptionWrapper>
+      )}
       <TimeDuration>
         <FormNowMessage time={lastUpdated} />
       </TimeDuration>
