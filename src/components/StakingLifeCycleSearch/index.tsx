@@ -83,12 +83,24 @@ const StakingLifeCycleSearch = () => {
     }
   ];
 
-  const handleSearchPoolHash = async (query: string) => {
+  const handleSearchPool = async (query: string) => {
     try {
-      const res = await defaultAxios.get(`${API.DELEGATION.POOL_LIST}?page=0&size=1&search=${query}`);
-      const poolId = res?.data?.data?.[0]?.poolId;
-      if (poolId) {
-        history.push(details.spo(poolId, "timeline"));
+      const { data } = await defaultAxios.get(`${API.SPO_LIFECYCLE.TABS(query)}`);
+      if (data) {
+        history.push(details.spo(query, "timeline"));
+      } else {
+        setError(t("message.noResultsFound"));
+      }
+    } catch {
+      setError(t("message.noResultsFound"));
+    }
+  };
+
+  const handleSearchStakeAddress = async (query: string) => {
+    try {
+      const { data } = await defaultAxios.get(`${API.STAKE_LIFECYCLE.TABS(query)}`);
+      if (data) {
+        history.push(details.staking(query, "timeline"));
       } else {
         setError(t("message.noResultsFound"));
       }
@@ -102,12 +114,10 @@ const StakingLifeCycleSearch = () => {
       setError(t("message.noResultsFound"));
       return;
     }
-    if (value.startsWith("stake")) {
-      history.push(details.staking(value, "timeline"));
-    } else if (value.startsWith("pool")) {
-      history.push(details.spo(value, "timeline"));
+    if (value?.toLowerCase().startsWith("stake")) {
+      handleSearchStakeAddress(value);
     } else {
-      handleSearchPoolHash(value);
+      handleSearchPool(value);
     }
   };
   useKey("enter", hanldeSearch);
