@@ -3,3 +3,8 @@ interface Contracts {
   txCount: number;
   balance: number;
 }
+
+interface IScript {
+  isVerified: boolean;
+  data: string;
+}

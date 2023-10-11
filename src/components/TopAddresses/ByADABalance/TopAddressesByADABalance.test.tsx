@@ -3,7 +3,7 @@ import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 
 import { render } from "src/test-utils";
-import Table from "src/components/commons/Table";
+import Table, { Column } from "src/components/commons/Table";
 import useFetchList from "src/commons/hooks/useFetchList";
 
 import TopAddressesByADABalance from "./index";
@@ -40,17 +40,16 @@ describe("Top addresses by ADA balance view", () => {
   });
 
   it("renders the table with given column and data", () => {
-    const columns = [
-      {
-        title: "Test Column",
-        key: "test",
-        render: (r: any) => <div>{r.test}</div>
-      }
-    ];
-
     const data = [
       {
         test: "Test Data"
+      }
+    ];
+    const columns: Column<{ test: string }>[] = [
+      {
+        title: "Test Column",
+        key: "test",
+        render: (r) => <div>{r.test}</div>
       }
     ];
     render(<Table columns={columns} data={data} />);
@@ -60,11 +59,11 @@ describe("Top addresses by ADA balance view", () => {
   });
 
   it("renders the table with given column and data", () => {
-    const columns = [
+    const columns: Column<{ test: string }>[] = [
       {
         title: "Test Column",
         key: "test",
-        render: (r: any) => <div>{r.test}</div>
+        render: (r) => <div>{r.test}</div>
       }
     ];
 

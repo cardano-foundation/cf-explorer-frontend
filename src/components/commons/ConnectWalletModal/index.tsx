@@ -24,7 +24,7 @@ import {
 import StyledModal from "../StyledModal";
 
 interface IProps {
-  connect: (name: string, onSuccess: () => void, onError: (error: Error) => void) => Promise<any>;
+  connect: (name: string, onSuccess: () => void, onError: (error: Error) => void) => Promise<void>;
   onTriggerSignMessage: () => void;
   isModal?: boolean;
 }

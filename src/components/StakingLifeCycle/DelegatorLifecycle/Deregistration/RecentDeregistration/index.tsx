@@ -38,8 +38,8 @@ const RecentDeregistrations: React.FC<Props> = ({ setShowBackButton }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialized, setShowBackButton]);
 
-  const handleSelect = (deregistration: DeregistrationItem) => {
-    history.push(details.staking(stakeId, "timeline", "deregistration", deregistration.txHash));
+  const handleSelect = (deregistration?: DeregistrationItem) => {
+    history.push(details.staking(stakeId, "timeline", "deregistration", deregistration?.txHash));
   };
 
   const isOneItemOnly = data.length === 1 && Object.keys(query).length === 2;

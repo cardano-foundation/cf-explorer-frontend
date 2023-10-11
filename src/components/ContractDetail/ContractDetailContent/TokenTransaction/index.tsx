@@ -33,7 +33,7 @@ const TokenTransaction: React.FC = () => {
   const fetchData = useFetchList<Transactions>(`${API.ADDRESS.DETAIL}/${params.address}/txs`, pageInfo);
   const [txHashSelected, setTxHashSelected] = useState<string>("");
 
-  const openDetail = (_: any, r: Transactions) => {
+  const openDetail = (_: React.MouseEvent<Element, MouseEvent>, r: Transactions) => {
     setTxHashSelected(r.hash);
     setOnDetailView(true);
   };

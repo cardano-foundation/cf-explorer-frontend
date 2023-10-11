@@ -70,6 +70,7 @@ const Bookmark = () => {
     try {
       setLoadingDelete(true);
       const selectedBookmark = data?.find((d) => d.keyword === keyword);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const res: any = await deleteBookmark({ keyword, type: selectedBookmark?.type });
       if (res?.data) {
         setSelected(null);
@@ -80,6 +81,7 @@ const Bookmark = () => {
       } else {
         toast.error(t(res?.response?.data?.errorCode));
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setSelected(null);
       setLoadingDelete(false);
@@ -96,12 +98,14 @@ const Bookmark = () => {
 
   useEffect(() => {
     document.title = `${t("account.bookmark")} | ${t("head.page.dashboard")}`;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (!isLoggedIn) {
       history.replace(routers.HOME);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
   const colDynamic: Record<string, Column<Bookmark>> = {
@@ -200,7 +204,7 @@ const Bookmark = () => {
   };
   const columns: Column<Bookmark>[] = [
     {
-      ...colDynamic[activeTab as any]
+      ...colDynamic[activeTab]
     },
     {
       title: t("glossary.addedOn"),

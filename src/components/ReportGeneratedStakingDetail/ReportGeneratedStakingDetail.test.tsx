@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
+import { IReportStaking } from "src/types/report";
 
 import ReportGeneratedStakingDetailTabs from ".";
 

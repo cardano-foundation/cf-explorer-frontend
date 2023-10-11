@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import { useTranslation } from "react-i18next";
+import { AxiosError } from "axios";
 
 import useToast from "src/commons/hooks/useToast";
 import { ACCOUNT_ERROR, NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
@@ -72,14 +73,16 @@ const AddPrivateNoteModal: React.FC<IProps> = ({ open, currentNote, handleCloseM
         } finally {
           setLoading(false);
         }
-      } catch (error: any) {
-        const message = t(error.response?.data?.errorCode || ACCOUNT_ERROR.INTERNAL_ERROR);
-        setPrivateNote((prev) => ({ ...prev, error: message }));
-        setLoading(false);
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          const message = t(error.response?.data?.errorCode || ACCOUNT_ERROR.INTERNAL_ERROR);
+          setPrivateNote((prev) => ({ ...prev, error: message }));
+          setLoading(false);
+        }
       }
   };
 
-  const handleChangeTxHash = (e: any) => {
+  const handleChangeTxHash = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     setTxHash({
       value: inputValue.slice(0, 70)

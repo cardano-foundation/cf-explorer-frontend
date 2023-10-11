@@ -24,7 +24,7 @@ const Transactions = () => {
     document.title = `Transactions List | Cardano Blockchain Explorer`;
   }, []);
 
-  const openDetail = (_: any, r: Transactions) => {
+  const openDetail = (_: React.MouseEvent<Element, MouseEvent>, r: Transactions) => {
     setOnDetailView(true);
     setSelected(r.hash);
   };

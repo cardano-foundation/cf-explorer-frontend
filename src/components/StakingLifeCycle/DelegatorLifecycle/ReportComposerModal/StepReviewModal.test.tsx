@@ -2,23 +2,26 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { render } from "src/test-utils";
+import { IReportParams } from "src/types/report";
 
 import StepReviewModal from "./StepReviewModal";
+import { RatioGroupValue } from "./FilledInfoModal";
 
 describe("StepReviewModal", () => {
   test("should render with correct data", () => {
     const mockHandleCloseModal = jest.fn();
     const mockGotoStep = jest.fn();
 
-    const params = {
+    const params: IReportParams = {
       reportName: "Test Report",
       dateRange: ["2023-06-01", "2023-06-10"],
       epochRange: ["50", "60"],
       address: "test-address",
-      poolSize: "YES",
-      adaTransfers: "NO",
+      poolSize: RatioGroupValue.yes,
+      adaTransfers: RatioGroupValue.no,
       eventsKey: ["REGISTRATION", "REWARDS"],
-      reportType: "PoolReport"
+      reportType: "PoolReport",
+      feesPaid: RatioGroupValue.no
     };
 
     render(

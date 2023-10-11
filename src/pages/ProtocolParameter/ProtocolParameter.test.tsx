@@ -3,6 +3,7 @@ import "@testing-library/jest-dom/extend-expect";
 
 import { render } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
+import { Column } from "src/types/table";
 
 import ProtocolParameter, { FilterComponent, TableStyled } from "./index";
 
@@ -30,11 +31,11 @@ describe("ProtocolParameter page", () => {
     expect(screen.getByText("View update history")).toBeInTheDocument();
   });
   it("renders the table with given columns and data", () => {
-    const columns = [
+    const columns: Column<{ test: string }>[] = [
       {
         title: "Test Column",
         key: "test",
-        render: (r: any) => <div>{r.test}</div>
+        render: (r) => <div>{r.test}</div>
       }
     ];
 
