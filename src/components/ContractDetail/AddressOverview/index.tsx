@@ -8,13 +8,13 @@ import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { exchangeADAToUSD, formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import { exchangeADAToUSD, formatADAFull, getShortHash } from "src/commons/utils/helper";
+import { RootState } from "src/stores/types";
+import CardAddress from "src/components/share/CardAddress";
 import TokenAutocomplete from "src/components/TokenAutocomplete";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import FormNowMessage from "src/components/commons/FormNowMessage";
-import CardAddress from "src/components/share/CardAddress";
-import { RootState } from "src/stores/types";
 import VerifyScript from "src/components/VerifyScript";
 import { Uppercase } from "src/components/commons/CustomText/styles";
 
@@ -58,7 +58,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
       title: t("glossary.adaBalance"),
       value: (
         <StyledAAmount>
-          <Box>{formatADAFull(data?.balance)}</Box>&nbsp;
+          <Box>{formatADAFull(data?.balance)}</Box>
           <ADAicon />
         </StyledAAmount>
       )
@@ -105,7 +105,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
               dataStake?.pool?.poolName
             ) : (
               <CustomTooltip title={dataStake?.pool?.poolId || ""} arrow>
-                <span>{getShortWallet(dataStake?.pool?.poolId || "")}</span>
+                <span>{getShortHash(dataStake?.pool?.poolId || "")}</span>
               </CustomTooltip>
             )}
           </Pool>

@@ -1,7 +1,7 @@
 import { Box, Container, Tab, useTheme } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import { parse, stringify } from "qs";
+import QueryString, { parse, stringify } from "qs";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -25,6 +25,12 @@ import FormNowMessage from "src/components/commons/FormNowMessage";
 
 import { TabsContainer, TimeDuration, TitleTab } from "./styles";
 
+interface Query {
+  tab: string | string[] | QueryString.ParsedQs | QueryString.ParsedQs[] | undefined;
+  page: number;
+  size: number;
+}
+
 const TABS: TabPoolDetail[] = ["epochs", "delegators"];
 
 const DelegationDetail: React.FC = () => {
@@ -35,20 +41,20 @@ const DelegationDetail: React.FC = () => {
   const query = parse(search.split("?")[1]);
   const tab: TabPoolDetail = TABS.includes(query.tab as TabPoolDetail) ? (query.tab as TabPoolDetail) : "epochs";
   const pageInfo = getPageInfo(search);
-  const tableRef = useRef(null);
+  const tableRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   const scrollEffect = () => {
     tableRef !== null &&
       tableRef.current &&
-      (tableRef.current as any).scrollIntoView({
+      tableRef.current.scrollIntoView({
         behavior: "smooth",
         block: "start"
       });
   };
 
-  const setQuery = (query: any) => {
+  const setQuery = (query: Query) => {
     history.replace({ search: stringify(query) }, state);
   };
 
@@ -126,7 +132,7 @@ const DelegationDetail: React.FC = () => {
         <TabContext value={tab}>
           <TabsContainer>
             <TabList
-              onChange={(e: any, value: any) => {
+              onChange={(e, value: TabPoolDetail) => {
                 setQuery({ tab: value, page: 1, size: 50 });
                 scrollEffect();
               }}

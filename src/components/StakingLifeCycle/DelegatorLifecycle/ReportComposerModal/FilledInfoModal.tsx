@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Box, FormControl, FormControlLabel, RadioGroup, Stack, Radio } from "@mui/material";
@@ -245,7 +245,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
   const isPoolReport = reportType === ReportType.PoolReport;
 
   // end step 3
-  const onChangeReportName = (e: any) => {
+  const onChangeReportName = (e: ChangeEvent<HTMLInputElement>) => {
     if (/^[a-zA-Z0-9_\s]*$/.test(e.target.value)) {
       const text = e.target.value as string;
       setReportName(text as ReportType);
@@ -345,7 +345,7 @@ const FilledInfoModal: React.FC<IPropsModal> = ({ open, handleCloseModal, savePa
                       aria-labelledby={key}
                       name={key}
                       value={value}
-                      onChange={(e: any) => handleChange(e, key)}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e, key)}
                       data-testid="radio-group-report"
                     >
                       <Stack direction={"row"}>

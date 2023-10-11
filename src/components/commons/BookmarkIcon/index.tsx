@@ -39,6 +39,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
       setLoading(true);
       if (!bookmark) {
         if ((bookmarks || [])?.length < 2000) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const { data, response }: any = await addBookmark({
             keyword,
             type,
@@ -55,6 +56,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
         }
       } else {
         try {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const { data, response }: any = await deleteBookmark({
             keyword,
             type,
@@ -66,12 +68,14 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
           } else {
             toast.error(t(response?.data?.errorCode));
           }
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
           if (error?.response?.data?.errorCode) {
             toast.error(t(error?.response?.data?.errorCode));
           }
         }
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error(t(error?.response?.data?.errorCode));
     } finally {

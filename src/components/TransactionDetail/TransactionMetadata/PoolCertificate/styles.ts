@@ -18,7 +18,7 @@ export const TextValue = styled("div")`
   font-weight: 700;
   font-size: 14px;
   line-height: 16px;
-  word-break: break-all;
+  word-break: break-word;
   color: ${(props) => props.theme.palette.secondary.main};
 `;
 

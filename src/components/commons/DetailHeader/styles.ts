@@ -148,16 +148,24 @@ export const SlotLeader = styled("p")`
 `;
 
 export const WrapLeaderValue = styled(Box)`
-  display: inline-block;
+  display: block;
 `;
 
-export const SlotLeaderValue = styled("span")`
+export const SlotLeaderValue = styled("span")<{ sidebar?: boolean }>`
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.primary.main};
   white-space: pre-wrap;
   word-break: break-word;
   line-height: 1.5;
   font-weight: bold;
+  ${({ theme }) => theme.breakpoints.between("sm", 760)} {
+    width: 450px !important;
+    display: block;
+  }
+  ${({ theme }) => theme.breakpoints.between("md", 1000)} {
+    display: block;
+    width: ${(props) => (props.sidebar ? "500px" : "100%")};
+  }
 `;
 
 export const SlotLeaderTitle = styled("small")`

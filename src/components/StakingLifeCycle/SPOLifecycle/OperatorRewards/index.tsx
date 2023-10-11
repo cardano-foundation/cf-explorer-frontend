@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
-import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, getShortHash } from "src/commons/utils/helper";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import CustomModal from "src/components/commons/CustomModal";
@@ -112,7 +112,7 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void 
       minWidth: "50px",
       render: (r) => (
         <CustomTooltip title={r.rewardAccount}>
-          <StyledLink to={details.stake(r.rewardAccount)}>{getShortWallet(r.rewardAccount || "")}</StyledLink>
+          <StyledLink to={details.stake(r.rewardAccount)}>{getShortHash(r.rewardAccount || "")}</StyledLink>
         </CustomTooltip>
       )
     }

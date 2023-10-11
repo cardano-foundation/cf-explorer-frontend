@@ -8,7 +8,7 @@ import { ReactComponent as rewardIcon } from "src/commons/resources/icons/reward
 import { ReactComponent as rewardWithdrawIcon } from "src/commons/resources/icons/rewardWithdraw.svg";
 import { ReactComponent as totalStakeIcon } from "src/commons/resources/icons/totalStake.svg";
 import { details } from "src/commons/routers";
-import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DetailHeader from "src/components/commons/DetailHeader";
@@ -40,7 +40,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
   const delegateTo = data?.pool
     ? hasTicketOrPoolName
       ? `${tickerName}${tickerName && poolName ? " - " : ""}${poolName}`
-      : getShortWallet(poolId)
+      : getShortHash(poolId)
     : t("drawer.notDelegatedToAnyPool");
   const listOverview = [
     {

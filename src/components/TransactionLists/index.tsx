@@ -1,7 +1,7 @@
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { useState, useRef } from "react";
+import { useState, useRef, MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
@@ -10,8 +10,7 @@ import {
   formatDateTimeLocal,
   formatNameBlockNo,
   getPageInfo,
-  getShortHash,
-  getShortWallet
+  getShortHash
 } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -27,7 +26,7 @@ import { Actions, StyledLink, TimeDuration } from "./styles";
 interface TransactionListProps {
   underline?: boolean;
   url: string;
-  openDetail?: (_: any, r: Transactions) => void;
+  openDetail?: (_: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => void;
   selected?: string | null;
   showTabView?: boolean;
   handleClose: () => void;
@@ -50,7 +49,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
 
   const fetchData = useFetchList<Transactions>(url, { ...pageInfo, sort }, false, blockKey);
   const mainRef = useRef(document.querySelector("#main"));
-  const onClickRow = (_: any, r: Transactions) => {
+  const onClickRow = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
     if (openDetail) return openDetail(_, r);
     history.push(details.transaction(r.hash));
   };
@@ -142,7 +141,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
           {r?.addressesInput?.slice(0, 2).map((address) => (
             <Box key={address}>
               <CustomTooltip title={address}>
-                <StyledLink to={details.address(address)}>{getShortWallet(address)}</StyledLink>
+                <StyledLink to={details.address(address)}>{getShortHash(address)}</StyledLink>
               </CustomTooltip>
             </Box>
           ))}
@@ -159,7 +158,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
           {r?.addressesOutput?.slice(0, 2).map((address) => (
             <Box key={address}>
               <CustomTooltip title={address}>
-                <StyledLink to={details.address(address)}>{getShortWallet(address)}</StyledLink>
+                <StyledLink to={details.address(address)}>{getShortHash(address)}</StyledLink>
               </CustomTooltip>
             </Box>
           ))}

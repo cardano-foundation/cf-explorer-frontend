@@ -62,7 +62,7 @@ export const TitleValue = styled(Box)(({ theme }) => ({
   color: theme.palette.secondary.main
 }));
 export const Value = styled(Box)(({ theme }) => ({
-  wordBreak: "break-all",
+  wordBreak: "break-word",
   width: "100%",
   textAlign: "left",
   background: theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100],

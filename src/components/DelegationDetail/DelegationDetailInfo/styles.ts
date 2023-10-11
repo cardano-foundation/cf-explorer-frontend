@@ -174,7 +174,8 @@ export const InfoValue = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     fontSize: 16
   },
-  color: theme.palette.secondary.main
+  color: theme.palette.secondary.main,
+  maxWidth: "100%"
 }));
 
 export const StyledLinearProgress = styled(LinearProgress)<{ saturation: number }>`

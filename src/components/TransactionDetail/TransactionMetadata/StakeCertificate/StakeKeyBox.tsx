@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import CopyButton from "../../../commons/CopyButton";
 import { TextLabel, TextValue } from "./styles";
-import { getShortWallet } from "../../../../commons/utils/helper";
+import { getShortHash } from "../../../../commons/utils/helper";
 import { details } from "../../../../commons/routers";
 import CustomTooltip from "../../../commons/CustomTooltip";
 
@@ -37,7 +37,7 @@ const StakeKeyBox = ({ data }: TProps) => {
                       component={Link}
                       to={details.stake(value)}
                     >
-                      {getShortWallet(value)}
+                      {getShortHash(value)}
                     </Box>
                   </CustomTooltip>
                   <CopyButton text={originValue} />

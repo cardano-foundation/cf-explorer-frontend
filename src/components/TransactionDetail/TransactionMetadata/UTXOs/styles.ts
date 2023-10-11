@@ -38,7 +38,10 @@ export const WrapUTXOs = styled(Box)(({ theme }) => ({
 }));
 
 export const ItemContent = styled(Box)(() => ({
-  display: "flex"
+  display: "flex",
+  overflowX: "auto",
+  overflowY: "hidden",
+  justifyContent: "space-between"
 }));
 
 export const ItemFooter = styled(Box)(({ theme }) => ({
@@ -88,7 +91,7 @@ export const WrapToken = styled(Box)(({ theme }) => ({
   flexWrap: "wrap",
   width: "auto",
   [theme.breakpoints.down("md")]: {
-    wordBreak: "break-all",
+    wordBreak: "break-word",
     "& > a": {
       whiteSpace: "unset",
       margin: 0
@@ -121,5 +124,20 @@ export const CustomSelect = styled(Select)`
   }
   & .MuiList-root {
     border-radius: 8px;
+  }
+`;
+
+export const EllipsisContainer = styled(Box)<{ isFailed?: boolean }>`
+  font-weight: bold;
+  color: ${({ theme, isFailed }) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)};
+  max-width: 220px;
+  ${({ theme }) => theme.breakpoints.up("sm")} {
+    width: 40vw;
+  }
+  ${({ theme }) => theme.breakpoints.up("md")} {
+    width: 45vw;
+  }
+  ${({ theme }) => theme.breakpoints.up("lg")} {
+    width: 55vw;
   }
 `;

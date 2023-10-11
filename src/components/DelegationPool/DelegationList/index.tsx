@@ -9,7 +9,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { HeaderSearchIconComponent } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatADAFull, formatPercent, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, formatPercent, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
@@ -37,7 +37,7 @@ const DelegationLists: React.FC = () => {
   const [size, setSize] = useState(50);
   const [sort, setSort] = useState<string>("");
   const [isShowRetired, setShowRetired] = useState(false);
-  const tableRef = useRef(null);
+  const tableRef = useRef<HTMLDivElement>(null);
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const DelegationLists: React.FC = () => {
         <CustomTooltip title={r.poolName || r.poolId}>
           <PoolName to={{ pathname: details.delegation(r.poolId), state: { fromPath } }}>
             <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
-              {r.poolName || `${getShortWallet(r.poolId)}`}
+              {r.poolName || `${getShortHash(r.poolId)}`}
             </Box>
           </PoolName>
         </CustomTooltip>
@@ -159,7 +159,7 @@ const DelegationLists: React.FC = () => {
     },
     {
       title: (
-        <Box component={"span"}>
+        <Box component={"span"} sx={{ textWrap: "nowrap" }}>
           {t("glossary.fixedCost")} (<ADAicon />)
         </Box>
       ),
@@ -231,8 +231,7 @@ const DelegationLists: React.FC = () => {
           onChange: (page, size) => {
             setPage(page);
             setSize(size);
-            /* eslint-disable  @typescript-eslint/no-explicit-any */
-            (tableRef.current as any)?.scrollIntoView();
+            tableRef.current?.scrollIntoView();
           }
         }}
       />

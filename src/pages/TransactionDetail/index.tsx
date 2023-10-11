@@ -18,7 +18,7 @@ const StyledContainer = styled(Container)`
   }
 `;
 
-const Transaction: React.FC = () => {
+const TransactionDetail: React.FC = () => {
   const { trxHash } = useParams<{ trxHash: string }>();
   const { state } = useLocation<{ data?: Transaction }>();
   const { data, loading, initialized, error } = useFetch<Transaction>(
@@ -53,4 +53,4 @@ const Transaction: React.FC = () => {
   );
 };
 
-export default Transaction;
+export default TransactionDetail;

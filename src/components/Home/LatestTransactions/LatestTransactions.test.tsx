@@ -7,7 +7,7 @@ import "@testing-library/jest-dom/extend-expect";
 import { render } from "src/test-utils";
 import { details, routers } from "src/commons/routers";
 import useFetch from "src/commons/hooks/useFetch";
-import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 
 import LatestTransactions from ".";
 
@@ -61,8 +61,8 @@ describe("LatestTransactions", () => {
     expect(screen.getByText(mockItem.blockNo)).toBeInTheDocument();
     expect(screen.getByText(mockItem.epochNo)).toBeInTheDocument();
     expect(screen.getByText(mockItem.epochSlotNo)).toBeInTheDocument();
-    expect(screen.getByText(getShortWallet(mockItem.fromAddress[0]))).toBeInTheDocument();
-    expect(screen.getByText(getShortWallet(mockItem.toAddress[0]))).toBeInTheDocument();
+    expect(screen.getByText(getShortHash(mockItem.fromAddress[0]))).toBeInTheDocument();
+    expect(screen.getByText(getShortHash(mockItem.toAddress[0]))).toBeInTheDocument();
     expect(screen.getByText(formatDateTimeLocal(mockItem.time))).toBeInTheDocument();
   });
 
@@ -115,7 +115,7 @@ describe("LatestTransactions", () => {
         <LatestTransactions />
       </Router>
     );
-    const item = screen.getByText(getShortWallet(mockItem.fromAddress[0]));
+    const item = screen.getByText(getShortHash(mockItem.fromAddress[0]));
     await userEvent.click(item);
     await waitFor(async () => {
       expect(history.location.pathname).toBe(details.address(mockItem.fromAddress[0]));
@@ -129,7 +129,7 @@ describe("LatestTransactions", () => {
         <LatestTransactions />
       </Router>
     );
-    const item = screen.getByText(getShortWallet(mockItem.toAddress[0]));
+    const item = screen.getByText(getShortHash(mockItem.toAddress[0]));
     await userEvent.click(item);
     await waitFor(async () => {
       expect(history.location.pathname).toBe(details.address(mockItem.toAddress[0]));

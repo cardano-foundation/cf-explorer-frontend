@@ -4,6 +4,7 @@ import { Router } from "react-router-dom";
 import { fireEvent, render, screen } from "src/test-utils";
 import { FetchReturnType } from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
+import { IPoolReportList } from "src/types/report";
 
 import PoolLifecycle, { IPoolLifecycleProps } from ".";
 

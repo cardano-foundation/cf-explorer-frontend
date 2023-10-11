@@ -41,32 +41,32 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
     try {
       const start = params?.dateRange ? params?.dateRange[0] : null;
       const end = params?.dateRange ? params?.dateRange[1] : null;
-      let defaultReportName = `Report_stake_${params.address}_${moment(start).format("MM/DD/yyyy")}_${moment(
+      let defaultReportName = `Report_stake_${params?.address}_${moment(start).format("MM/DD/yyyy")}_${moment(
         end
       ).format("MM/DD/yyyy")}`;
       let response;
       if (isPoolReport) {
-        defaultReportName = `Report_pool_${params.address}_${params.epochRange[0]}_${params.epochRange[1]}`;
+        defaultReportName = `Report_pool_${params?.address}_${params?.epochRange[0]}_${params?.epochRange[1]}`;
         const paramsStakeKeyReport = {
           ...getPoolEventType(params?.eventsKey),
-          poolId: params.address,
-          reportName: params.reportName || defaultReportName,
-          isPoolSize: params.poolSize === "YES",
-          isFeesPaid: params.feesPaid === "YES",
+          poolId: params?.address,
+          reportName: params?.reportName || defaultReportName,
+          isPoolSize: params?.poolSize === "YES",
+          isFeesPaid: params?.feesPaid === "YES",
           event: params?.eventsKey,
-          epochRanges: params.epochRange
+          epochRanges: params?.epochRange
         };
         response = await generateStakePoolReport(paramsStakeKeyReport);
       } else {
         const events = params?.eventsKey?.map((event: string) => ({ type: event }));
         const paramsStakeKeyReport = {
-          stakeKey: params.address,
-          reportName: params.reportName || defaultReportName,
+          stakeKey: params?.address,
+          reportName: params?.reportName || defaultReportName,
           fromDate: moment(start).format("yyyy/MM/DD hh:mm:ss"),
           toDate: moment(end).format("yyyy/MM/D hh:mm:ss"),
-          isADATransfer: params.adaTransfers === "YES",
-          isFeesPaid: params.feesPaid === "YES",
-          ...getEventType(events.map((item: { type: string }) => item.type))
+          isADATransfer: params?.adaTransfers === "YES",
+          isFeesPaid: params?.feesPaid === "YES",
+          ...getEventType(events?.map((item: { type: string }) => item.type) || [])
         };
         response = await generateStakeKeyReport(paramsStakeKeyReport);
       }
@@ -76,17 +76,21 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
           history.push(lists.dashboard(isPoolReport ? "pool-reports" : "stake-key-reports"));
         }, 2000);
       } else {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         toast.error(t((response as any)?.response?.data?.errorCode));
       }
       handleCloseModal();
-    } catch (err: any) {
+      setTimeout(() => {
+        history.push(lists.dashboard(isPoolReport ? "pool-reports" : "stake-key-reports"));
+      }, 2000);
+    } catch (err) {
       handleCloseModal();
     }
     setLoading(false);
   };
 
-  const [start, end] = params.dateRange || [];
-  const [epochStart, epochEnd] = params.epochRange || [];
+  const [start, end] = params?.dateRange || [];
+  const [epochStart, epochEnd] = params?.epochRange || [];
   const EVENTS_NAME = [
     {
       label: t("common.all"),
@@ -143,14 +147,14 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
     .map(({ label }) => label)
     .join(", ");
 
-  const isPoolReport = params.reportType === ReportType.PoolReport;
+  const isPoolReport = params?.reportType === ReportType.PoolReport;
 
   const list = [
     {
       label: t("report.name"),
       value: (
-        <CustomTooltip title={`${params.reportName}`.replaceAll("-", " ")}>
-          <TextOverFlow>{`${params.reportName}`.replaceAll("-", " ")}</TextOverFlow>
+        <CustomTooltip title={`${params?.reportName}`.replaceAll("-", " ")}>
+          <TextOverFlow>{`${params?.reportName}`.replaceAll("-", " ")}</TextOverFlow>
         </CustomTooltip>
       )
     },
@@ -167,14 +171,14 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
     {
       label: isPoolReport ? t("common.poolID") : t("common.stakeAddressDetails"),
       value: (
-        <CustomTooltip title={params.address}>
-          <TextOverFlow>{params.address}</TextOverFlow>
+        <CustomTooltip title={params?.address}>
+          <TextOverFlow>{params?.address}</TextOverFlow>
         </CustomTooltip>
       )
     },
     {
       label: isPoolReport ? t("glossary.poolSize") : t("common.adaTransfers"),
-      value: <TextOverFlow>{isPoolReport ? params.poolSize : params.adaTransfers}</TextOverFlow>
+      value: <TextOverFlow>{isPoolReport ? params?.poolSize : params?.adaTransfers}</TextOverFlow>
     },
     {
       label: isPoolReport ? t("common.poolReportByEvent") : t("common.stakingLCEvent"),

@@ -1,16 +1,22 @@
 import { Box } from "@mui/material";
-import { parse, stringify } from "qs";
+import QueryString, { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { details } from "src/commons/routers";
-import { formatADAFull, formatDateTimeLocal, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash, numberWithCommas } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import ADAicon from "src/components/commons/ADAIcon";
 
 import { StyledLink } from "./styles";
+
+interface Query {
+  tab: string | string[] | QueryString.ParsedQs | QueryString.ParsedQs[] | undefined;
+  page: number;
+  size: number;
+}
 
 const DelegationEpochList = ({
   data,
@@ -28,7 +34,7 @@ const DelegationEpochList = ({
   const history = useHistory();
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
-  const setQuery = (query: any) => {
+  const setQuery = (query: Query) => {
     history.replace({ search: stringify(query) }, history.location.state);
   };
   const columns: Column<DelegationEpoch>[] = [
@@ -119,7 +125,7 @@ const DelegationStakingDelegatorsList = ({
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
   const history = useHistory();
-  const setQuery = (query: any) => {
+  const setQuery = (query: Query) => {
     history.replace({ search: stringify(query) }, history.location.state);
   };
   const columns: Column<StakingDelegators>[] = [
@@ -136,7 +142,7 @@ const DelegationStakingDelegatorsList = ({
         data.view && (
           <div style={{ display: "flex", alignItems: "center" }}>
             <CustomTooltip title={data.view || ""}>
-              <StyledLink to={details.stake(data.view)}>{getShortWallet(data.view || "")}</StyledLink>
+              <StyledLink to={details.stake(data.view)}>{getShortHash(data.view || "")}</StyledLink>
             </CustomTooltip>
             <CopyButton text={data.view || ""} />
           </div>

@@ -32,8 +32,8 @@ const RecentRegistrations: React.FC<Props> = ({ setShowBackButton }) => {
     stakeId ? API.STAKE_LIFECYCLE.REGISTRATION(stakeId) : "",
     { ...pageInfo, ...params, txHash: params.search }
   );
-  const handleSelect = (registration: RegistrationItem) => {
-    history.push(details.staking(stakeId, "timeline", "registration", registration.txHash));
+  const handleSelect = (registration?: RegistrationItem) => {
+    history.push(details.staking(stakeId, "timeline", "registration", registration?.txHash));
   };
 
   useEffect(() => {

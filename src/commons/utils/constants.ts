@@ -187,7 +187,7 @@ export const PROTOCOL_TYPE = {
   maxValSize: "MAX_VAL_SIZE",
   collateralPercent: "COLLATERAL_PERCENT",
   maxCollateralInputs: "MAX_COLLATERAL_INPUTS",
-  coinsPerUtxoSize: "COINS_PER_UTXO_SIZE"
+  coinsPerUTxOByte: "COINS_PER_UTXO_SIZE"
 };
 
 export const LANGUAGE = "en";
@@ -219,10 +219,11 @@ export const HOTJAR_HJID = process.env.REACT_APP_HOTJAR_HJID;
 export const HOTJAR_HJSV = process.env.REACT_APP_HOTJAR_HJSV;
 
 export enum APP_LANGUAGES {
-  ENGLISH = "en"
+  ENGLISH = "en",
+  FRENCH = "fr"
 }
 
-export const SUPPORTED_LANGUAGES = ["en"];
+export const SUPPORTED_LANGUAGES = ["en", "fr"];
 
 export enum OPTIONS_CHART_ANALYTICS {
   ONE_DAY = "ONE_DAY",

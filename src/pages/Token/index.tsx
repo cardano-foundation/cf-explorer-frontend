@@ -9,7 +9,7 @@ import {
   formatDateTimeLocal,
   formatNumberDivByDecimals,
   getPageInfo,
-  getShortWallet,
+  getShortHash,
   numberWithCommas
 } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
@@ -64,11 +64,11 @@ const Tokens = () => {
       render: (r) =>
         r.displayName && r.displayName.length > 20 ? (
           <CustomTooltip placement={"top"} title={r.displayName}>
-            <AssetName to={details.token(r?.fingerprint ?? "")}>{getShortWallet(r.displayName || "")}</AssetName>
+            <AssetName to={details.token(r?.fingerprint ?? "")}>{getShortHash(r.displayName || "")}</AssetName>
           </CustomTooltip>
         ) : (
           <AssetName to={details.token(r?.fingerprint ?? "")}>
-            {r.displayName || getShortWallet(r.fingerprint || "")}
+            {r.displayName || getShortHash(r.fingerprint || "")}
           </AssetName>
         )
     },
@@ -78,7 +78,7 @@ const Tokens = () => {
       minWidth: "100px",
       render: (r) => (
         <CustomTooltip title={r.policy}>
-          <AssetName to={details.policyDetail(r.policy)}>{getShortWallet(r.policy)}</AssetName>
+          <AssetName to={details.policyDetail(r.policy)}>{getShortHash(r.policy)}</AssetName>
         </CustomTooltip>
       )
     },
@@ -136,7 +136,7 @@ const Tokens = () => {
     }
   ];
 
-  const openDetail = (_: any, r: IToken) => {
+  const openDetail = (_: React.MouseEvent<Element, MouseEvent>, r: IToken) => {
     setOnDetailView(true);
     setSelected(r || null);
   };

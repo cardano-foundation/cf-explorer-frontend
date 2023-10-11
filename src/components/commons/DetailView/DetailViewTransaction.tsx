@@ -25,7 +25,7 @@ import {
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
-import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { RootState } from "src/stores/types";
 
 import ADAicon from "../ADAIcon";
@@ -280,7 +280,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
                   <DetailLabel>{t("glossary.input")}</DetailLabel>
                   <DetailValue>
                     <CustomTooltip title={input} placement="top-start">
-                      <StyledLink to={details.address(input)}>{getShortWallet(input)}</StyledLink>
+                      <StyledLink to={details.address(input)}>{getShortHash(input)}</StyledLink>
                     </CustomTooltip>
                     <CopyButton text={input} />
                   </DetailValue>
@@ -291,7 +291,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
                   <DetailLabel>{t("glossary.output")}</DetailLabel>
                   <DetailValue>
                     <CustomTooltip title={output} placement="top-start">
-                      <StyledLink to={details.address(output)}>{getShortWallet(output)}</StyledLink>
+                      <StyledLink to={details.address(output)}>{getShortHash(output)}</StyledLink>
                     </CustomTooltip>
                     <CopyButton text={output} />
                   </DetailValue>
