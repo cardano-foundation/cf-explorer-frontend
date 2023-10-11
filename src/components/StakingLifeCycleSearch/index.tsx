@@ -100,6 +100,7 @@ const StakingLifeCycleSearch = () => {
   const hanldeSearch = async () => {
     if (!value) {
       setError(t("message.noResultsFound"));
+      return;
     }
     if (value.startsWith("stake")) {
       history.push(details.staking(value, "timeline"));

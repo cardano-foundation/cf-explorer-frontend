@@ -99,7 +99,13 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       <HeaderContainer>
         <Box display={"flex"} alignItems={"center"} flex={4}>
           <CustomTooltip title={data?.poolName || poolId}>
-            <HeaderTitle>{data?.poolName || poolId}</HeaderTitle>
+            <HeaderTitle>
+              {data?.poolName || (
+                <TruncateSubTitleContainer>
+                  <DynamicEllipsisText value={poolId} />
+                </TruncateSubTitleContainer>
+              )}
+            </HeaderTitle>
           </CustomTooltip>
           <BookmarkButton keyword={poolId} type="POOL" />
         </Box>
