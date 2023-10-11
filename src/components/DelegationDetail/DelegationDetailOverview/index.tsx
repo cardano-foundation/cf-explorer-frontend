@@ -75,7 +75,7 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
               </Box>
             }
           >
-            {data && data.pledge < data.totalBalanceOfPoolOwners ? <WarningLight /> : <CheckLightGreen />}
+            {data && data.pledge >= data.totalBalanceOfPoolOwners ? <WarningLight /> : <CheckLightGreen />}
           </CustomTooltip>
         </Box>
       ),
