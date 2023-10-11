@@ -14,7 +14,7 @@ import {
 import {
   formatDateTimeLocal,
   formatNumberDivByDecimals,
-  getShortWallet,
+  getShortHash,
   numberWithCommas,
   tokenRegistry
 } from "src/commons/utils/helper";
@@ -46,7 +46,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
       title: (
         <TokenHeader>
           <CustomTooltip title={data?.displayName || data?.fingerprint || ""}>
-            <span>{data?.displayName || getShortWallet(data?.fingerprint) || ""}</span>
+            <span>{data?.displayName || getShortHash(data?.fingerprint) || ""}</span>
           </CustomTooltip>
           {data?.metadata && data?.metadata?.logo ? (
             <Box component={"img"} width={"auto"} height={36} src={`${data.metadata.logo}`} alt="logo icon" ml={1} />

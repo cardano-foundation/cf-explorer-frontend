@@ -16,7 +16,7 @@ import {
   WalletGreenIcon
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, getShortHash } from "src/commons/utils/helper";
 import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
@@ -93,7 +93,7 @@ const TabularOverview: React.FC = () => {
     return history.push(details.stake(key));
   };
 
-  const ownerAccountValue = getShortWallet(stakeKeys?.[0]);
+  const ownerAccountValue = getShortHash(stakeKeys?.[0]);
   const STATUS = {
     ACTIVE: [t("common.active"), theme.palette.secondary.main],
     RETIRED: [t("common.retired"), theme.palette.error[700]]
@@ -154,7 +154,9 @@ const TabularOverview: React.FC = () => {
             <Box display="flex" alignItems="center">
               <CardValue>
                 <CustomTooltip title={stakeKeys?.[0]}>
-                  <ClickAbleLink to={details.stake(stakeKeys?.[0] || "#")}>{ownerAccountValue}</ClickAbleLink>
+                  <ClickAbleLink to={details.stake(stakeKeys?.[0] || "#")} sx={{ textWrap: "wrap" }}>
+                    {ownerAccountValue}
+                  </ClickAbleLink>
                 </CustomTooltip>
               </CardValue>
             </Box>

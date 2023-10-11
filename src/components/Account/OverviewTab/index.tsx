@@ -11,7 +11,7 @@ import { AxiosError } from "axios";
 import { useScreen } from "src/commons/hooks/useScreen";
 import useToast from "src/commons/hooks/useToast";
 import { ACCOUNT_ERROR, NETWORK, NETWORKS, NETWORK_TYPES, SUPPORTED_WALLETS } from "src/commons/utils/constants";
-import { getShortWallet } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 import { editInfo, getInfo } from "src/commons/utils/userRequest";
 import {
   GroupFlex,
@@ -90,7 +90,7 @@ const OverviewTab = () => {
         value={
           userData?.loginType === "connectWallet"
             ? isMobile
-              ? getShortWallet(userData.username || "")
+              ? getShortHash(userData.username || "")
               : userData?.username
             : userData?.username || userData?.email
         }

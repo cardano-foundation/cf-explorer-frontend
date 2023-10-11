@@ -11,8 +11,9 @@ import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { details } from "src/commons/routers";
 import { RootState } from "src/stores/types";
 import { SearchIcon } from "src/commons/resources";
-import { formatDateTimeLocal, formatNumberDivByDecimals, getShortHash } from "src/commons/utils/helper";
+import { formatDateTimeLocal, formatNumberDivByDecimals } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
 import ProgressCircle from "../ProgressCircle";
 import Bookmark from "../BookmarkIcon";
@@ -30,7 +31,6 @@ import {
   DetailsInfo,
   SlotLeader,
   SlotLeaderValue,
-  SlotLeaderCopy,
   HeaderTitleSkeleton,
   DetailLabelSkeleton,
   DetailValueSkeleton,
@@ -44,8 +44,7 @@ import {
   StyledMenuItem,
   WrapHeader,
   EpochDetail,
-  TimeDuration,
-  WrapLeaderValue
+  TimeDuration
 } from "./styles";
 import NoRecord from "../NoRecord";
 import CustomIcon from "../CustomIcon";
@@ -100,7 +99,10 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
 
   const history = useHistory();
   const theme = useTheme();
-  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+  const { currentEpoch, sidebar } = useSelector(({ system, user }: RootState) => ({
+    currentEpoch: system.currentEpoch,
+    sidebar: user.sidebar
+  }));
   const [openBackdrop, setOpenBackdrop] = useState<{ [x: string]: boolean }>({
     input: false,
     output: false
@@ -111,8 +113,6 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     [EPOCH_STATUS.REWARDING]: t("common.epoch.rewarding"),
     [EPOCH_STATUS.SYNCING]: t("common.epoch.cyncing")
   };
-  const { isMobile } = useScreen();
-
   const getHashLabel = () => {
     if (type === "BLOCK") return t("glossary.blockId");
     if (type === "STAKE_KEY") return t("glossary.stakeAddress");
@@ -204,16 +204,9 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           {hash && (
             <SlotLeader>
               {hashLabel ? <SlotLeaderTitle>{hashLabel}: </SlotLeaderTitle> : ""}
-              <WrapLeaderValue>
-                {isMobile ? (
-                  <CustomTooltip title={hash}>
-                    <SlotLeaderValue>{getShortHash(hash)}</SlotLeaderValue>
-                  </CustomTooltip>
-                ) : (
-                  <SlotLeaderValue>{hash}</SlotLeaderValue>
-                )}
-                <SlotLeaderCopy text={hash} />
-              </WrapLeaderValue>
+              <SlotLeaderValue sidebar={sidebar}>
+                <DynamicEllipsisText value={hash} isCoppy={true} />
+              </SlotLeaderValue>
             </SlotLeader>
           )}
           <TimeDuration>

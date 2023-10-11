@@ -563,7 +563,6 @@
   "common.policyAssetHolders": "Policy Asset Holders",
   "common.address": "Address",
   "common.balance": "Balance",
-  "common.perpage": "Per page",
   "common.results": "Results",
   "common.protocolParameters": "Protocol Parameters",
   "common.updatableParameters": "Updatable Parameters",
@@ -834,5 +833,6 @@
   "explain.mint.desc": "A script with the purpose to control how to mint or burn assets",
   "explain.cert.desc": "A script with the purpose to control how to publish delegation certificates",
   "explain.reward.desc": "A script with the purpose to control how to withdraw consensus rewards",
-  "contract.certificateType": "Certificate Type"
+  "contract.certificateType": "Certificate Type",
+  "glassary.showRetiredPools": "Show Retired Pools"
 }

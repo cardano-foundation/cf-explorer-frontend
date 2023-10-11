@@ -2,7 +2,7 @@ import { Box, styled } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { formatLongText } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
@@ -18,7 +18,7 @@ const PopContent: React.FC<PopContentProps> = ({ hash, num, detail }) => {
   return (
     <Box display="flex" padding="4px" gap="2px">
       <CustomTooltip title={hash}>
-        <Hash to={detail?.(hash) || "/"}>{formatLongText(hash)}</Hash>
+        <Hash to={detail?.(hash) || "/"}>{getShortHash(hash)}</Hash>
       </CustomTooltip>{" "}
       {typeof num === "number" && <TagNumber>#{num}</TagNumber>}
       <CopyButton text={hash} />

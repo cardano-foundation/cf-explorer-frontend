@@ -86,7 +86,7 @@ export const CardValue = styled(Typography)(({ theme }) => ({
   lineHeight: "23px",
   color: theme.palette.secondary.main,
   whiteSpace: "nowrap",
-  wordBreak: "break-all",
+  wordBreak: "break-word",
   width: "100%",
   display: "flex",
   [theme.breakpoints.down("sm")]: {

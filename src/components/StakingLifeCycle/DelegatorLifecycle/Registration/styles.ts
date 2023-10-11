@@ -1,5 +1,5 @@
 import { Box, IconButton as IconButtonMui, styled } from "@mui/material";
-import i18next from "i18next";
+import { t } from "i18next";
 import { Link } from "react-router-dom";
 
 import { AdaLogoIcon } from "src/components/commons/ADAIcon";
@@ -49,7 +49,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
   fontWeight: 700,
   minWidth: "max-content",
   "::after": {
-    content: `"${i18next.t("common.hold").toUpperCase()}"`,
+    content: `"${t("common.hold").toUpperCase()}"`,
     borderRadius: "4px",
     fontWeight: "bold",
     color: theme.palette.common.white,
@@ -65,7 +65,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
 
 export const FeeBox = styled(HoldBox)(() => ({
   "::after": {
-    content: `"${i18next.t("common.fees").toUpperCase()}"`
+    content: `"${t("common.fees").toUpperCase()}"`
   }
 }));
 
@@ -87,7 +87,7 @@ export const HoldBoxMobile = styled(HoldBox)(({ theme }) => ({
 
 export const FeeBoxMobile = styled(HoldBoxMobile)(() => ({
   "::after": {
-    content: `"${i18next.t("common.fees").toUpperCase()}"`
+    content: `"${t("common.fees").toUpperCase()}"`
   }
 }));
 
@@ -171,7 +171,7 @@ export const CertificateShapeMobile = styled(CertificateShape)(() => ({
 
 export const StyledCustomModal = styled(CustomModal)(({ theme }) => ({
   backgroundColor: theme.palette.secondary[0],
-  wordBreak: "break-all"
+  wordBreak: "break-word"
 }));
 
 export const StyledLink = styled(Link)`

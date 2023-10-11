@@ -237,8 +237,8 @@ export const BlockDefault = styled("small")`
 export const DetailsInfoItem = styled(Box)`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
+  column-gap: 8px;
+  align-items: baseline;
 `;
 
 export const WrapDetailInfo = styled(Box)`
@@ -269,6 +269,9 @@ export const DetailValue = styled("small")`
   justify-content: flex-end;
   align-items: center;
   gap: 5px;
+  word-break: break-word;
+  text-align: right;
+  margin-left: 6px;
 `;
 export const DelegatedDetail = styled("small")`
   display: block;

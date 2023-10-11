@@ -9,18 +9,13 @@ import { SeeMoreIconHome } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { TRANSACTION_STATUS } from "src/commons/utils/constants";
-import {
-  formatADAFull,
-  formatDateTimeLocal,
-  getShortHash,
-  getShortWallet,
-  handleClicktWithoutAnchor
-} from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, handleClicktWithoutAnchor } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
 import {
   Actions,
@@ -31,11 +26,12 @@ import {
   Item,
   ItemDetail,
   ItemHeader,
-  LatestTransactionItemHeader,
   PriveValue,
   RowItem,
   TimeDuration,
   TimeDurationSm,
+  LatestTransactionItemHeader,
+  RowItemFromTo,
   Title,
   TransactionContainer,
   WalletAddress
@@ -109,11 +105,13 @@ const LatestTransactions: React.FC = () => {
                       </ItemHeader>
                       <ItemDetail>
                         <Box display="flex" alignItems="center">
-                          <RowItem>
+                          <RowItem sx={{ width: "100%" }}>
                             <small>{t("common.txhash")}: </small>
                             <CustomTooltip title={hash}>
                               <Link to={details.transaction(hash)}>
-                                <Hash>{getShortHash(hash)}</Hash>
+                                <Hash>
+                                  <DynamicEllipsisText value={hash} />
+                                </Hash>
                               </Link>
                             </CustomTooltip>
                           </RowItem>
@@ -136,43 +134,52 @@ const LatestTransactions: React.FC = () => {
                         </RowItem>
                         {fromAddress?.slice(0, 1).map((add) => {
                           return (
-                            <RowItem key={add}>
+                            // from
+                            <RowItemFromTo key={add}>
                               <small>{t("common.from")}: </small>
                               <CustomTooltip title={add}>
                                 <Link to={details.address(add)}>
-                                  <WalletAddress>{getShortWallet(add)}</WalletAddress>
-
-                                  <Box
-                                    component={SeeMoreIconHome}
-                                    ml={1}
-                                    fill={theme.palette.primary.main}
-                                    width={10}
-                                    height={10}
-                                  />
+                                  <WalletAddress>
+                                    <DynamicEllipsisText
+                                      value={add}
+                                      afterElm={
+                                        <Box
+                                          component={SeeMoreIconHome}
+                                          fill={theme.palette.primary.main}
+                                          width={10}
+                                          height={10}
+                                        />
+                                      }
+                                    />
+                                  </WalletAddress>
                                 </Link>
                               </CustomTooltip>
-                            </RowItem>
+                            </RowItemFromTo>
                           );
                         })}
+                        {/* to */}
                         {toAddress?.slice(0, 1).map((add) => {
                           return (
-                            <RowItem key={add} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
-                              <Box>
-                                <small>{t("common.to")}: </small>
-                                <CustomTooltip title={add}>
-                                  <Link to={details.address(add)}>
-                                    <WalletAddress>{getShortWallet(add)}</WalletAddress>
-                                    <Box
-                                      component={SeeMoreIconHome}
-                                      ml={1}
-                                      fill={theme.palette.primary.main}
-                                      width={10}
-                                      height={10}
+                            <RowItemFromTo key={add}>
+                              <small>{t("common.to")}: </small>
+                              <CustomTooltip title={add}>
+                                <Link to={details.address(add)}>
+                                  <WalletAddress>
+                                    <DynamicEllipsisText
+                                      value={add}
+                                      afterElm={
+                                        <Box
+                                          component={SeeMoreIconHome}
+                                          fill={theme.palette.primary.main}
+                                          width={10}
+                                          height={10}
+                                        />
+                                      }
                                     />
-                                  </Link>
-                                </CustomTooltip>
-                              </Box>
-                            </RowItem>
+                                  </WalletAddress>
+                                </Link>
+                              </CustomTooltip>
+                            </RowItemFromTo>
                           );
                         })}
                         <RowItem>

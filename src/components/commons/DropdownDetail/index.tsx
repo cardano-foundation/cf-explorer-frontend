@@ -3,7 +3,7 @@ import { IoMdClose } from "react-icons/io";
 import { useTheme } from "@mui/material";
 
 import { details } from "src/commons/routers";
-import { getShortWallet } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 import { StyledLink } from "src/components/share/styled";
 
 import CopyButton from "../CopyButton";
@@ -32,7 +32,7 @@ const DropdownDetail: React.FC<IDropdownDetailProps> = ({ title, value, close, m
           <InfoValue key={index}>
             <CustomTooltip title={item}>
               <StyledLink to={isStakeDetail ? details.stake(item) : details.address(item)}>
-                {getShortWallet(item)}
+                {getShortHash(item)}
               </StyledLink>
             </CustomTooltip>
             <CopyButton text={item} />

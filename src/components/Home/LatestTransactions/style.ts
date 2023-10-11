@@ -103,6 +103,17 @@ export const RowItem = styled(Box)`
   }
 `;
 
+export const RowItemFromTo = styled(RowItem)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+  a {
+    width: 100%;
+    margin-left: 6px;
+  }
+`;
+
 export const PriceImage = styled("img")`
   height: 25px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -117,7 +128,7 @@ export const PriveValue = styled("span")`
   color: ${(props) => props.theme.palette.secondary.main};
   text-align: end;
   margin-right: 5px;
-  word-break: break-all;
+  word-break: break-word;
 `;
 
 export const ItemDetail = styled("div")`

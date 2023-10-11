@@ -14,16 +14,16 @@ import {
   CubeIconComponent,
   SlotIcon
 } from "src/commons/resources";
-import { formatADAFull, formatDateTimeLocal, formatNameBlockNo, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatNameBlockNo } from "src/commons/utils/helper";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { details } from "src/commons/routers";
 import { RootState } from "src/stores/types";
 import { useScreen } from "src/commons/hooks/useScreen";
 import DetailHeader from "src/components/commons/DetailHeader";
-import CopyButton from "src/components/commons/CopyButton";
 import DropdownDetail from "src/components/commons/DropdownDetail";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
 import { StyledLink, TitleCard } from "./styles";
 
@@ -34,8 +34,11 @@ interface Props {
 
 const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
   const { t } = useTranslation();
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
-  const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
+
+  const { blockNo, epochNo } = useSelector(({ system }: RootState) => ({
+    blockNo: system.blockNo,
+    epochNo: system.currentEpoch?.no
+  }));
 
   const [openListInput, setOpenListInput] = useState(false);
   const [openListOutput, setOpenListOutput] = useState(false);
@@ -101,10 +104,9 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
         <Box position={"relative"}>
           <CustomTooltip title={data?.utxOs?.inputs[0]?.address || ""}>
             <StyledLink to={details.address(data?.utxOs?.inputs[0]?.address || "")}>
-              {getShortWallet(data?.utxOs?.inputs[0]?.address || "")}
+              <DynamicEllipsisText value={data?.utxOs?.inputs[0]?.address || ""} isCoppy={true} />
             </StyledLink>
           </CustomTooltip>
-          <CopyButton text={data?.utxOs?.inputs[0]?.address || ""} />
           {openListInput && (
             <DropdownDetail
               minWidth={isMobile ? 160 : 200}
@@ -144,10 +146,9 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
         <Box position={"relative"}>
           <CustomTooltip title={data?.utxOs?.outputs[0]?.address || ""}>
             <StyledLink to={details.address(data?.utxOs?.outputs[0]?.address || "")}>
-              {getShortWallet(data?.utxOs?.outputs[0]?.address || "")}
+              <DynamicEllipsisText value={data?.utxOs?.outputs[0]?.address || ""} isCoppy={true} />
             </StyledLink>
           </CustomTooltip>
-          <CopyButton text={data?.utxOs?.outputs[0]?.address || ""} />
           {openListOutput && (
             <DropdownDetail
               minWidth={isMobile ? 160 : 200}
@@ -230,12 +231,12 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       icon: SlotIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard height={24} mr={1}>
+          <TitleCard height={24} mr={1} sx={{ textWrap: "nowrap" }}>
             {`${t("common.slot")} - ${t("glossary.absoluteSlot")}`}
           </TitleCard>
         </Box>
       ),
-      value: `${data?.tx?.epochSlot} - ${data?.tx?.slotNo}`
+      value: `${data?.tx?.epochSlot || ""} - ${data?.tx?.slotNo || ""}`
     }
   ];
   return (

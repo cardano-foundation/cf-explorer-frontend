@@ -110,7 +110,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
           <TitleCard mr={1}>{`${t("common.slot")} - ${t("glossary.absoluteSlot")}`}</TitleCard>
         </Box>
       ),
-      value: `${data?.epochSlotNo} - ${data?.slotNo}`
+      value: `${data?.epochSlotNo || ""} - ${data?.slotNo || ""}`
     }
   ];
   return (

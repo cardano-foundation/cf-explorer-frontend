@@ -4,7 +4,7 @@ import { ADAsymbol } from "../../../commons/resources";
 
 const ADAicon = ({ ...props }) => {
   const theme = useTheme();
-  return <ADAsymbol fill={theme.palette.secondary.main} data-testid="ada-icon" width={10} {...props} />;
+  return <ADAsymbol fill={theme.palette.secondary.main} data-testid="ada-icon" width={10} height={11} {...props} />;
 };
 
 export const AdaLogoIcon = styled(ADAsymbol)(() => ({
