@@ -46,7 +46,7 @@ describe("Contracts list view", () => {
       {
         title: "Test Column",
         key: "test",
-        render: (r: any) => <div>{r.test}</div>
+        render: (r: { test: string }) => <div>{r.test}</div>
       }
     ];
 

@@ -1,4 +1,4 @@
-import React, { createContext, useEffect } from "react";
+import React, { createContext, Reducer, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Box, useTheme } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
@@ -13,21 +13,27 @@ import ContractDetailContent from "src/components/ContractDetail/ContractDetailC
 
 import { BackButton, BackText, StyledContainer, WrapHeader } from "./styles";
 
-export const VerifyScriptContext = createContext({
+export interface IVerifyScriptContext {
+  refreshScriptTab?: () => void;
+  refreshOverviewAddress: () => void;
+  dispatch?: React.Dispatch<IAction>;
+}
+
+export const VerifyScriptContext = createContext<IVerifyScriptContext>({
   refreshScriptTab: () => null,
   refreshOverviewAddress: () => null
 });
 
 interface IAction {
   type: string;
-  payload: any;
+  payload: () => void;
 }
 
 export enum CONTRACT_ADDRESS_TYPE {
   SET_REFRESH_SCRIPT_TAB = "SET_REFRESH_SCRIPT_TAB"
 }
 
-const reducer = (state: any, action: IAction) => {
+const reducer = (state: { refreshScriptTab?: () => void }, action: IAction) => {
   if (action.type === CONTRACT_ADDRESS_TYPE.SET_REFRESH_SCRIPT_TAB) {
     return {
       refreshScriptTab: action.payload,
@@ -51,7 +57,7 @@ const ContractDetail: React.FC = () => {
     false,
     blockKey
   );
-  const [stateContext, dispatch] = React.useReducer(reducer, {});
+  const [stateContext, dispatch] = React.useReducer<Reducer<{ refreshScriptTab?: () => void }, IAction>>(reducer, {});
 
   useEffect(() => {
     window.history.replaceState({}, document.title);

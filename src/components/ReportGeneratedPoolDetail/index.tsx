@@ -8,6 +8,7 @@ import { DeredistrationIcon, OperatorRewardIcon, PoolUpdateIcon, RegistrationIco
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import { ReactComponent as WalletIcon } from "src/commons/resources/icons/WalletOutline.svg";
+import { IPoolReportList } from "src/types/report";
 
 import StakeTab from "../TabularView/StakeTab";
 import DeregsitrationTab from "./PoolTabs/DeregsitrationTab";

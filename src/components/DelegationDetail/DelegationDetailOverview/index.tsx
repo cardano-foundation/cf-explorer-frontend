@@ -1,7 +1,8 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, useTheme, alpha } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
+import { CheckLightGreen, WarningLight } from "src/commons/resources";
 import { formatADAFull, formatPercent, numberWithCommas } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
@@ -16,6 +17,7 @@ interface IDelegationDetailOverview {
 
 const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, loading }) => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const overviewData = [
     {
       title: (
@@ -38,7 +40,45 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
           {t("declaredPledge")} (<ADAicon />)
         </Box>
       ),
-      value: formatADAFull(data?.pledge),
+      value: (
+        <Box display={"flex"} alignItems={"center"} gap={1}>
+          {formatADAFull(data?.pledge)}
+          <CustomTooltip
+            wOpacity={false}
+            componentsProps={{
+              transition: {
+                style: {
+                  backgroundColor: theme.isDark ? "black" : "white",
+                  boxShadow: `0px 0px 10px ${alpha(theme.palette.common.white, 0.25)}`,
+                  padding: "10px",
+                  borderRadius: "8px",
+                  border: `1px solid ${theme.palette.primary[200]}`
+                }
+              },
+              arrow: {
+                style: {
+                  color: theme.isDark ? "black" : "white"
+                },
+                sx: {
+                  "&:before": { border: `1px solid ${theme.palette.primary[200]}` }
+                }
+              }
+            }}
+            title={
+              <Box px={"4px"}>
+                <Box fontSize="12px" color={({ palette }) => palette.secondary.light}>
+                  {t("glossary.actualPledge")}
+                </Box>
+                <Box fontSize="14px" color={({ palette }) => palette.secondary.light}>
+                  {formatADAFull(data?.totalBalanceOfPoolOwners)} (<ADAicon />)
+                </Box>
+              </Box>
+            }
+          >
+            {data && data.pledge > data.totalBalanceOfPoolOwners ? <WarningLight /> : <CheckLightGreen />}
+          </CustomTooltip>
+        </Box>
+      ),
       tooltip: ""
     },
     {

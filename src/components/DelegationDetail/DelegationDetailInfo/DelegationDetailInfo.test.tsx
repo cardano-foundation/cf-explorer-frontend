@@ -23,6 +23,7 @@ const mockProps: IDelegationDetailInfo = {
     pledge: 100000,
     cost: 1000,
     margin: 0.03,
+    totalBalanceOfPoolOwners: 1000000,
     epochBlock: 1000,
     lifetimeBlock: 5000
   },
@@ -48,4 +49,3 @@ describe("DelegationDetailInfo component", () => {
     expect(history.location.pathname).toBe(details.stake(mockProps.data?.ownerAccounts[0]));
   });
 });
- 

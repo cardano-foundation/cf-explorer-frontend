@@ -36,6 +36,7 @@ interface DelegationOverview {
   stakeLimit: number;
   delegators: number;
   saturation: number;
+  totalBalanceOfPoolOwners: number;
   reward: number;
   ros: number;
   pledge: number;

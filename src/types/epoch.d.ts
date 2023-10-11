@@ -40,3 +40,9 @@ interface EpochCurrentType {
   circulatingSupply: number;
   blkCount: number;
 }
+
+interface IReportEpochSize {
+  size: number;
+  fee: number;
+  epoch: number;
+}

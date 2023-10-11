@@ -54,7 +54,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
     document.title = `${title} Stake Addresses | Cardano Blockchain Explorer`;
   }, [stakeAddressType]);
 
-  const openDetail = (_: any, r: IStakeKey) => {
+  const openDetail = (_: React.MouseEvent<Element, MouseEvent>, r: IStakeKey) => {
     setOnDetailView(true);
     setSelected(r.txHash);
     setStakeKey(r.stakeKey);

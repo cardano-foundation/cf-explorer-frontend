@@ -24,6 +24,7 @@ const mockData: DelegationOverview = {
   cost: 50000,
   margin: 2.5,
   epochBlock: 5000,
+  totalBalanceOfPoolOwners: 1000000,
   lifetimeBlock: 100000
 };
 

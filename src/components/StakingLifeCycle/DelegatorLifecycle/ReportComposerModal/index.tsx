@@ -1,15 +1,17 @@
 import { Box } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 
+import { IReportParams } from "src/types/report";
+
 import FilledInfoModal from "./FilledInfoModal";
 import StepReviewModal from "./StepReviewModal";
 
 export interface IPropsModal {
   open: boolean;
   handleCloseModal: () => void;
-  saveParams?: (params: any) => void;
+  saveParams?: (params: IReportParams) => void;
   gotoStep?: (step: number) => void;
-  params?: any;
+  params?: IReportParams;
   currentStep?: number;
 }
 
@@ -19,7 +21,7 @@ export enum STEPS {
 }
 
 const ReportComposerModal = ({ open, handleCloseModal }: IPropsModal) => {
-  const [params, setParams] = useState({});
+  const [params, setParams] = useState<IReportParams>();
   const [currentStep, setCurrentStep] = useState<STEPS>();
 
   const gotoStep = useCallback((step?: STEPS) => {

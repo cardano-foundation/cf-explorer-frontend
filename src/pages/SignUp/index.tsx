@@ -1,9 +1,10 @@
 import { Box, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment, useTheme } from "@mui/material";
-import { useEffect, useReducer, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { ChangeEvent, useEffect, useReducer, useRef, useState } from "react";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import { IoMdClose } from "react-icons/io";
 import { Link, useHistory } from "react-router-dom";
+import { AxiosError } from "axios";
+import { useTranslation } from "react-i18next";
+import { IoMdClose } from "react-icons/io";
 
 import useAuth from "src/commons/hooks/useAuth";
 import { EmailIcon, HideIcon, LockIcon, ShowIcon, SuccessDarkIcon, SuccessIcon } from "src/commons/resources";
@@ -12,6 +13,13 @@ import { ACCOUNT_ERROR } from "src/commons/utils/constants";
 import { signUp } from "src/commons/utils/userRequest";
 import CustomIcon from "src/components/commons/CustomIcon";
 import { useScreen } from "src/commons/hooks/useScreen";
+
+interface IAction {
+  name?: string;
+  value?: string;
+  touched?: boolean;
+  error?: string;
+}
 
 import {
   BackButton,
@@ -55,7 +63,8 @@ interface IForm {
     touched?: boolean;
   };
 }
-const formReducer = (state: IForm, event: any) => {
+const formReducer = (state: IForm, event: IAction) => {
+  if (!event.name) return state;
   return {
     ...state,
     [event.name]: {
@@ -206,7 +215,7 @@ export default function SignUp() {
     return error;
   };
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setFormData({
       name: event.target.name,
       value: event.target.value.trim(),
@@ -220,17 +229,16 @@ export default function SignUp() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enableButton, formData]);
 
-  const handleKeyDown = (event: any) => {
+  const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === "Enter") {
       event.preventDefault();
       handleSubmit(event);
     }
   };
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement> | KeyboardEvent) => {
     event.preventDefault();
     if (!enableButton) return;
     let hasError = false;
@@ -282,19 +290,30 @@ export default function SignUp() {
         email,
         role: "ROLE_USER"
       };
-      const response: any = await signUp(payload);
+      const response = await signUp(payload);
       if (response.status === 200) {
         setSuccess(true);
         return;
       }
-    } catch (error: any) {
-      if (error?.response?.data?.errorCode === ACCOUNT_ERROR.EMAIL_IS_ALREADY_EXIST) {
-        setFormData({
-          name: "email",
-          touched: true,
-          error: t(ACCOUNT_ERROR.EMAIL_IS_ALREADY_EXIST),
-          value: formData.email.value
-        });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error?.response?.data?.errorCode === ACCOUNT_ERROR.EMAIL_IS_ALREADY_EXIST) {
+          setFormData({
+            name: "email",
+            touched: true,
+            error: t(ACCOUNT_ERROR.EMAIL_IS_ALREADY_EXIST),
+            value: formData.email.value
+          });
+        } else {
+          if (ACCOUNT_ERROR.EMAIL_IS_ALREADY_EXIST) {
+            setFormData({
+              name: "email",
+              touched: true,
+              error: t(ACCOUNT_ERROR.EMAIL_IS_ALREADY_EXIST),
+              value: formData.email.value
+            });
+          }
+        }
       }
     } finally {
       setLoading(false);
@@ -341,7 +360,7 @@ export default function SignUp() {
                   onChange={handleChange}
                   error={Boolean(formData.email.error && formData.email.touched)}
                   placeholder={t("account.emailAddress")}
-                  onKeyDown={handleKeyDown}
+                  onKeyDown={(e) => handleKeyDown(e as unknown as KeyboardEvent)}
                 />
                 {formData.email.error && formData.email.touched ? (
                   <FormHelperTextCustom>{formData.email.error}</FormHelperTextCustom>

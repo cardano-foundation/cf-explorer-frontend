@@ -92,7 +92,7 @@ type TResetPassword = {
 
 type TVerifyCodeResetPassword = {
   code: string;
-}
+};
 
 interface NonceObject {
   message: "SS_0" | "SS_1";

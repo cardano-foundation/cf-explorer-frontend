@@ -6,6 +6,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { AxiosError } from "axios";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import useToast from "src/commons/hooks/useToast";
@@ -139,10 +140,14 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
       toast.success(t("message.wallet.changeSuccess"));
       setOpen(false);
     } catch (error) {
-      toast.error(
-        t((error as any)?.response && (error as any)?.response?.data && (error as any)?.response?.data?.errorCode) ||
-          ACCOUNT_ERROR.INTERNAL_ERROR
-      );
+      if (error instanceof AxiosError) {
+        toast.error(
+          t(
+            (error.response && error?.response?.data && error?.response?.data?.errorCode) ||
+              ACCOUNT_ERROR.INTERNAL_ERROR
+          )
+        );
+      }
     }
   };
 

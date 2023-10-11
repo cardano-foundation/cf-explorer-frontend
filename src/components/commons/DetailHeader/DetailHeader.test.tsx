@@ -26,7 +26,7 @@ const mockProps: DetailHeaderProps = {
       title: "Item 1",
       value: "Value 1",
       allowSearch: true,
-      dataSearch: ["data1", "data2"],
+      dataSearch: [],
       isSent: true,
       key: "key1",
       hideHeader: false

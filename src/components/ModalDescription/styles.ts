@@ -34,6 +34,7 @@ export const WrapContent = styled(Box)`
     background: transparent;
   }
   &:hover {
+    border-radius: "8px 0px 0px 8px",
     &::-webkit-scrollbar-thumb {
       background: ${(props) => props.theme.palette.secondary.light};
     }

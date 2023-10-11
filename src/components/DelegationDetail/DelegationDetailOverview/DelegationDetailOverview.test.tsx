@@ -19,7 +19,8 @@ const mockData = {
   cost: 50,
   margin: 2,
   epochBlock: 100,
-  lifetimeBlock: 10000
+  lifetimeBlock: 10000,
+  totalBalanceOfPoolOwners: 10000
 };
 
 const mockProps = {

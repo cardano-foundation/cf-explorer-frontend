@@ -46,11 +46,11 @@ const DropdownDetail: React.FC<IDropdownDetailProps> = ({ title, value, close, m
 export default DropdownDetail;
 
 const useOutsideClick = (callback?: () => void) => {
-  const ref = React.useRef();
+  const ref = React.useRef<HTMLElement>();
 
   React.useEffect(() => {
-    const handleClick = (event: any) => {
-      if (ref.current && !(ref.current as any).contains(event.target)) {
+    const handleClick = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
         callback && callback();
       }
     };

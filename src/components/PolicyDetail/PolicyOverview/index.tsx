@@ -6,6 +6,7 @@ import { HiArrowLongLeft } from "react-icons/hi2";
 import policyIcon from "src/commons/resources/icons/policyIcon.svg";
 import ScriptModal from "src/components/ScriptModal";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { PolicyDark } from "src/commons/resources";
 
 import {
   BackButton,
@@ -72,7 +73,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
           data-testid="open-modal-button"
         >
           <Box>
-            <img src={policyIcon} alt="" width={"40%"} />
+            <img src={theme.isDark ? PolicyDark : policyIcon} alt="" width={"40%"} />
           </Box>
           <Box display={"flex"} flexDirection="column" height={"100%"} justifyContent="space-between">
             <Box>Policy Script</Box>

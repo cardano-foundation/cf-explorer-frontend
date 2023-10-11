@@ -136,7 +136,7 @@ const Tokens = () => {
     }
   ];
 
-  const openDetail = (_: any, r: IToken) => {
+  const openDetail = (_: React.MouseEvent<Element, MouseEvent>, r: IToken) => {
     setOnDetailView(true);
     setSelected(r || null);
   };
