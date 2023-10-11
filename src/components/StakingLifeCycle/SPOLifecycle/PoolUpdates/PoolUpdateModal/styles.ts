@@ -120,7 +120,12 @@ export const StyledEmptyIcon = styled("img")(() => ({
   height: 215
 }));
 
-export const UpdateList = styled(ItemList)(() => ({}));
+export const UpdateList = styled(ItemList)`
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    display: flex;
+    flex-direction: column;
+  }
+`;
 
 export const UpdateItem = styled(Item)(() => ({}));
 
