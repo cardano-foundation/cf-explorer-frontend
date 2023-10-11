@@ -48,4 +48,3 @@ describe("DelegationDetailInfo component", () => {
     expect(history.location.pathname).toBe(details.stake(mockProps.data?.ownerAccounts[0]));
   });
 });
- 

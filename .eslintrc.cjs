@@ -35,6 +35,7 @@ module.exports = {
     "no-console": process.env.NODE_ENV === "development" ? "warn" : "error",
     "react/react-in-jsx-scope": "off",
     "react/jsx-no-target-blank": "warn",
+    "react-hooks/exhaustive-deps": "off",
     "react/prop-types": "off",
     "react/no-unescaped-entities": 0,
     "import/no-named-as-default": 0,
