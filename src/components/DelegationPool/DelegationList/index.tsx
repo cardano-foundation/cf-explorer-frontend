@@ -128,7 +128,10 @@ const DelegationLists: React.FC = () => {
             value={r.saturation > 100 ? 100 : get(r, "saturation", 0)}
           />
         </Box>
-      )
+      ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      }
     },
     {
       title: t("glossary.numberOfDelegators"),
