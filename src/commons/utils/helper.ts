@@ -200,7 +200,7 @@ export const tokenRegistry = (policy?: string, name?: string): string => {
   }
 };
 
-export const cleanObject = (obj: { [key: string]: string | number | Date | string[] | undefined }) => {
+export const cleanObject = (obj: { [key: string]: string | number | Date | string[] | boolean | undefined }) => {
   const cleaned: Partial<typeof obj> = {};
   Object.keys(obj).forEach((key) => obj[key] !== undefined && (cleaned[key] = obj[key]));
   return cleaned;
