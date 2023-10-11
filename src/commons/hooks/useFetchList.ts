@@ -78,6 +78,7 @@ const useFetchList = <T>(
         setInitialized(true);
       } catch (error) {
         setData([]);
+        setTotal(0);
         setInitialized(true);
         if (error instanceof AxiosError) setError(error?.response?.data?.message || error?.message);
         else if (typeof error === "string") setError(error);
