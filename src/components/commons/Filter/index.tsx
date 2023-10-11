@@ -16,11 +16,11 @@ import {
 
 export interface FilterProps {
   options?: Option[];
-  onOptionChange?: (value: any, option?: Option) => void;
+  onOptionChange?: (value: string, option?: Option) => void;
 }
 
 export interface Option {
-  value: any;
+  value: string;
   label?: string | React.ReactNode;
   icon: React.ReactNode;
   active?: boolean;

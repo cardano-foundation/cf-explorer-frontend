@@ -3,6 +3,7 @@ import {
   CircularProgress,
   IconButton,
   PaginationRenderItemParams,
+  SelectChangeEvent,
   alpha,
   styled,
   useScrollTrigger,
@@ -307,10 +308,11 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
               onOpen={() => setOpen(true)}
               onClose={() => setOpen(false)}
               size="small"
-              onChange={(e: any) => {
-                setSize(+e.target.value);
+              onChange={(e: SelectChangeEvent<unknown>) => {
+                const value = e.target.value as string;
+                setSize(+value);
                 setPage(1);
-                pagination?.onChange && pagination.onChange(1, +e.target.value);
+                pagination?.onChange && pagination.onChange(1, +value);
                 clearSelection?.();
               }}
               value={size}
@@ -406,16 +408,16 @@ const Table: React.FC<TableProps> = ({
     onSelectionChange
   });
 
-  const tableRef = useRef(null);
+  const tableRef = useRef<HTMLTableElement>(null);
   const wrapperRef = useRef<HTMLElement>(null);
   const { width } = useScreen();
 
-  let heightTable = Math.min((tableRef?.current as any)?.clientHeight || 0, window.innerHeight * 0.5);
+  let heightTable = Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight * 0.5);
 
   if (width >= breakpoints.values.sm && width <= breakpoints.values.lg) {
     const footerHeight = document.getElementById("footer")?.offsetHeight || SPACING_TOP_TABLE;
     heightTable =
-      Math.min((tableRef?.current as any)?.clientHeight || 0, window.innerHeight) - (footerHeight + SPACING_TOP_TABLE);
+      Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight) - (footerHeight + SPACING_TOP_TABLE);
   }
 
   const toggleSelectAll = (isChecked: boolean) => {

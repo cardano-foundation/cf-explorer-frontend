@@ -1,5 +1,6 @@
 import { render, screen } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
+import { IPoolReportList } from "src/types/report";
 
 import ReportGeneratedPoolDetailTabs from ".";
 

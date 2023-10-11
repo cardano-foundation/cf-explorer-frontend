@@ -8,7 +8,7 @@ import { cleanObject } from "../utils/helper";
 interface Params {
   page?: number;
   size?: number;
-  [key: string]: string | number | Date | string[] | undefined;
+  [key: string]: string | number | Date | string[] | boolean | undefined;
 }
 
 export interface FetchReturnType<T> {

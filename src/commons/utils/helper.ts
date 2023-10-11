@@ -200,7 +200,7 @@ export const tokenRegistry = (policy?: string, name?: string): string => {
   }
 };
 
-export const cleanObject = (obj: { [key: string]: string | number | Date | string[] | undefined }) => {
+export const cleanObject = (obj: { [key: string]: string | number | Date | string[] | boolean | undefined }) => {
   const cleaned: Partial<typeof obj> = {};
   Object.keys(obj).forEach((key) => obj[key] !== undefined && (cleaned[key] = obj[key]));
   return cleaned;
@@ -226,13 +226,12 @@ export function validateTokenExpired() {
   try {
     const token = localStorage.getItem("token");
     if (!token) return false;
-    const decoded: any = jwtDecode(token);
+    const decoded = jwtDecode<{ name: string; exp: number }>(token);
     const now = moment();
-    const exp = moment(decoded.exp * 1000);
+    const exp = moment(decoded?.exp * 1000);
     return now.isBefore(exp);
-  } catch (err: any) {
+  } catch (e) {
     removeAuthInfo();
-    return false;
   }
 }
 

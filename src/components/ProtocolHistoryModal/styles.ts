@@ -12,7 +12,7 @@ export const ModalTitle = styled(Box)(() => ({
   marginBottom: "30px"
 }));
 
-export const StyledTableCell: any = styled(TableCell)(() => ({
+export const StyledTableCell = styled(TableCell)(() => ({
   borderColor: "transparent",
   paddingLeft: 0,
   paddingRight: 0

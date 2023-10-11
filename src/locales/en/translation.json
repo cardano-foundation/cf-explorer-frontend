@@ -280,6 +280,7 @@
   "glossary.searchTokens": "Search tokens",
   "glossary.icon": "Icon",
   "glossary.name": "Name",
+  "glossary.actualPledge": "Actual Pledge",
   "common.copy": "Copy",
   "common.copied": "Copied",
   "common.pleaseSignInToSaveYourBookmark": "Please sign in to save your bookmark",
@@ -832,5 +833,6 @@
   "explain.mint.desc": "A script with the purpose to control how to mint or burn assets",
   "explain.cert.desc": "A script with the purpose to control how to publish delegation certificates",
   "explain.reward.desc": "A script with the purpose to control how to withdraw consensus rewards",
-  "contract.certificateType": "Certificate Type"
+  "contract.certificateType": "Certificate Type",
+  "glassary.showRetiredPools": "Show Retired Pools"
 }

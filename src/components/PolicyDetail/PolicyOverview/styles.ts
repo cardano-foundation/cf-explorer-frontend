@@ -120,7 +120,7 @@ export const CardInfoOverview = styled(Box)(({ theme }) => ({
 
 export const CardItem = styled(Box)(({ theme }) => ({
   padding: `${theme.spacing(2)} ${theme.spacing(5)}`,
-  background: theme.palette.background.paper,
+  background: theme.palette.secondary[0],
   borderRadius: 10
 }));
 

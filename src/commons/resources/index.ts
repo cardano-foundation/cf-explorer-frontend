@@ -128,6 +128,7 @@ import ArrowUpDarkIcon from "./icons/arrow-up-dark.svg";
 import CopyOutlineIcon, { ReactComponent as CopyOutlineIconComponent } from "./icons/copy-outline.svg";
 import ArrowDownIcon from "./icons/arrow-down-red.svg";
 import ArrowDownDarkIcon from "./icons/arrow-down-red-dark.svg";
+import PolicyDark from "./icons/policy-dark.svg";
 
 export {
   LogoFullIcon,
@@ -292,7 +293,8 @@ export {
   RewardsDistributionComponent,
   StakeCertificatesComponent,
   ProtocolUpdateComponent,
-  InstantaneousHistoryComponent
+  InstantaneousHistoryComponent,
+  PolicyDark
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
@@ -425,6 +427,8 @@ export { ReactComponent as TwitterX } from "./icons/TwitterX.svg";
 export { ReactComponent as ExclamationTriangleIcon } from "./icons/exclamation-triangle.svg";
 export { ReactComponent as ADAactive } from "./icons/Staking/ADAactive.svg";
 export { ReactComponent as ADAinactive } from "./icons/Staking/ADAinactive.svg";
+export { ReactComponent as WarningLight } from "./icons/warning-light.svg";
+export { ReactComponent as CheckLightGreen } from "./icons/check-light-green.svg";
 export { ReactComponent as OutlineEye } from "./icons/outline-eye.svg";
 export { ReactComponent as Polygon } from "./icons/polygon.svg";
 export { ReactComponent as PoundSign } from "./icons/pound-sign.svg";

@@ -56,25 +56,27 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
   const { tabActive = false } = useParams<{ tabActive: keyof Transaction }>();
   const history = useHistory();
   const theme = useTheme();
-  const tabRef = useRef(null);
+  const tabRef = useRef<HTMLDivElement>(null);
 
   const handleChangeTab = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-    (tabRef as any)?.current.scrollIntoView();
+    tabRef?.current?.scrollIntoView();
     history.replace(details.transaction(data?.tx?.hash, newExpanded ? panel : ""));
   };
 
   const protocolsMergeData: TProtocolMerge[] = useMemo(() => {
     const result = [];
     const protocols = data?.protocols;
-    const previousProtocols: any = data?.previousProtocols;
+    const previousProtocols = data?.previousProtocols;
     for (const [key, value] of Object.entries(protocols || {})) {
-      const oldValue = previousProtocols[key];
-      const pItem: TProtocolMerge = {
-        protocol: key,
-        oldValue,
-        value
-      };
-      result.push(pItem);
+      if (previousProtocols) {
+        const oldValue = previousProtocols[key as keyof TProtocol];
+        const pItem: TProtocolMerge = {
+          protocol: key,
+          oldValue,
+          value
+        };
+        result.push(pItem);
+      }
     }
     return result;
   }, [data?.protocols, data?.previousProtocols]);

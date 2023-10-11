@@ -3,7 +3,7 @@ import { createMemoryHistory } from "history";
 import { Router } from "react-router";
 
 import { render } from "src/test-utils";
-import Table from "src/components/commons/Table";
+import Table, { Column } from "src/components/commons/Table";
 import useFetchList from "src/commons/hooks/useFetchList";
 import DelegationLists from "src/components/DelegationPool/DelegationList";
 import { details } from "src/commons/routers";
@@ -30,18 +30,18 @@ describe("Delegation pools view", () => {
     await mockUseFetch.mockReturnValue({ data: [] });
     render(<DelegationLists />);
     expect(useFetchList).toBeCalled();
-    const inputField: any = screen.getByPlaceholderText("Search Pools");
+    const inputField: HTMLInputElement = screen.getByPlaceholderText("Search Pools");
     expect(inputField).toBeInTheDocument();
     fireEvent.change(inputField, { target: { value: "test" } });
-    expect(inputField.value).toBe("test");
+    expect(inputField?.value).toBe("test");
   });
 
   it("renders the table with given column and data", () => {
-    const columns = [
+    const columns: Column<{ test: string }>[] = [
       {
         title: "Test Column",
         key: "test",
-        render: (r: any) => <div>{r.test}</div>
+        render: (r) => <div>{r.test}</div>
       }
     ];
 

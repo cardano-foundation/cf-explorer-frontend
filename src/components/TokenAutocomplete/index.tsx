@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, useTheme } from "@mui/material";
+import { Autocomplete, Box, Button, StandardTextFieldProps, useTheme } from "@mui/material";
 import { debounce } from "lodash";
 import { useEffect, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
@@ -156,7 +156,15 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
             </Option>
           );
         }}
-        renderInput={(params: any) => <StyledTextField {...params} placeholder={t("glossary.searchToken")} />}
+        renderInput={(params) => {
+          const textFieldProps = params as unknown;
+          return (
+            <StyledTextField
+              {...(textFieldProps as Omit<StandardTextFieldProps, "variant">)}
+              placeholder={t("glossary.searchToken")}
+            />
+          );
+        }}
         popupIcon={<BiChevronDown color={theme.palette.secondary.main} />}
       />
       <ModalToken address={address} open={openModalToken} onClose={() => setOpenModalToken(false)} />

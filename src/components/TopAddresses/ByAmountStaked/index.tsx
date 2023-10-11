@@ -71,7 +71,7 @@ const TopAddressesByAmountStaked = () => {
         <PageSize>
           <SelectMui
             value={pageSize}
-            onChange={(event: any) => setPageSize(event.target.value)}
+            onChange={(event) => setPageSize(event.target.value as string)}
             displayEmpty
             inputProps={{ "aria-label": "Without label" }}
             MenuProps={{

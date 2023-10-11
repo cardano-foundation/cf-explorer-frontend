@@ -49,6 +49,12 @@ import {
 import NoRecord from "../NoRecord";
 import CustomIcon from "../CustomIcon";
 
+interface TokenInfo {
+  assetName?: string;
+  assetId?: string;
+  assetQuantity?: number;
+  metadata?: { decimals?: number };
+}
 export interface DetailHeaderProps {
   type: Bookmark["type"];
   bookmarkData?: string;
@@ -65,7 +71,7 @@ export interface DetailHeaderProps {
     value?: React.ReactNode;
     strokeColor?: string;
     allowSearch?: boolean;
-    dataSearch?: any[];
+    dataSearch?: TokenInfo[];
     isSent?: boolean;
     key?: string;
     hideHeader?: boolean;
@@ -266,7 +272,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                 {item.allowSearch && keyItem && (
                   <AllowSearchButton
                     onClick={() => {
-                      setOpenBackdrop((prev: any) => ({ ...prev, [keyItem]: true }));
+                      setOpenBackdrop((prev) => ({ ...prev, [keyItem]: true }));
                     }}
                   >
                     <SearchIcon stroke={theme.palette.secondary.light} fill={theme.palette.secondary[0]} />
