@@ -18,6 +18,7 @@ const Result = styled(Box)`
   font-size: 16px;
   margin-top: 12px;
   box-shadow: ${(props) => props.theme.shadow.card};
+  overflow: scroll;
 `;
 
 const StyledBox = styled(Box)`

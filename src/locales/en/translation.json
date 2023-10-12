@@ -563,7 +563,6 @@
   "common.policyAssetHolders": "Policy Asset Holders",
   "common.address": "Address",
   "common.balance": "Balance",
-  "common.perpage": "Per page",
   "common.results": "Results",
   "common.protocolParameters": "Protocol Parameters",
   "common.updatableParameters": "Updatable Parameters",

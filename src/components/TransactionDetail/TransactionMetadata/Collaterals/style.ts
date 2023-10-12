@@ -64,7 +64,7 @@ export const WrapToken = styled(Box)(({ theme }) => ({
   flexWrap: "wrap",
   width: "auto",
   [theme.breakpoints.down("md")]: {
-    wordBreak: "break-all",
+    wordBreak: "break-word",
     "& > a": {
       whiteSpace: "unset",
       margin: 0
@@ -119,4 +119,13 @@ export const WrapUTXOs = styled(Box)(({ theme }) => ({
     flexDirection: "column",
     alignItems: "flex-start"
   }
+}));
+
+export const WrapContent = styled(Box)(() => ({
+  display: "flex",
+  width: "100%",
+  gap: "10px",
+  justifyContent: "space-between",
+  overflowX: "auto",
+  overflowY: "hidden"
 }));

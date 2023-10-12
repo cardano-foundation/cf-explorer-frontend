@@ -6,13 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
-import {
-  formatADAFull,
-  formatDateTimeLocal,
-  getPageInfo,
-  getShortHash,
-  getShortWallet
-} from "../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { Label, StyledLink, StyledContainer } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
@@ -104,7 +98,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
                   return (
                     <CustomTooltip key={key} title={tx}>
                       <StyledLink to={details.address(tx)} key={key}>
-                        <Box ml={1}>{getShortWallet(tx)}</Box>
+                        <Box ml={1}>{getShortHash(tx)}</Box>
                       </StyledLink>
                     </CustomTooltip>
                   );
@@ -123,7 +117,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
                   return (
                     <CustomTooltip key={key} title={tx}>
                       <StyledLink to={details.address(tx)} key={key}>
-                        <Box ml={1}>{getShortWallet(tx)}</Box>
+                        <Box ml={1}>{getShortHash(tx)}</Box>
                       </StyledLink>
                     </CustomTooltip>
                   );

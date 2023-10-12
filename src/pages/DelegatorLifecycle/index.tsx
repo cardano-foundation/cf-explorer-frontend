@@ -4,10 +4,8 @@ import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import { getShortWallet } from "src/commons/utils/helper";
 import DelegatorLifecycleComponent from "src/components/StakingLifeCycle/DelegatorLifecycle";
 import Tabular from "src/components/StakingLifeCycle/DelegatorLifecycle/Tabular";
-import CopyButton from "src/components/commons/CopyButton";
 import { details } from "src/commons/routers";
 import ReportComposerModal from "src/components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -18,6 +16,8 @@ import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLif
 import NoRecord from "src/components/commons/NoRecord";
 import { ChartMode, TableMode } from "src/commons/resources";
 import { ROLE_ELEVATED_GEN_REPORT } from "src/commons/utils/constants";
+import { TruncateSubTitleContainer } from "src/components/share/styled";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
 import {
   BoxContainerStyled,
@@ -124,10 +124,11 @@ const DelegatorLifecycle = () => {
             <LifeCycleTitle>{t("slc.stakingDelegationLC")}</LifeCycleTitle>
             <AddressLine>
               <Label>{t("common.stakeAddress")}:</Label>
-              <CustomTooltip title={stakeId}>
-                <StakeId to={details.stake(stakeId)}>{getShortWallet(stakeId)}</StakeId>
-              </CustomTooltip>
-              <CopyButton text={stakeId} />
+              <StakeId to={details.stake(stakeId)}>
+                <TruncateSubTitleContainer>
+                  <DynamicEllipsisText value={stakeId} isCopy isTooltip />
+                </TruncateSubTitleContainer>
+              </StakeId>
             </AddressLine>
           </LifeCycleHeader>
           <BoxItemStyled sidebar={+sidebar}>

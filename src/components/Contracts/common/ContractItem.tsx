@@ -5,9 +5,9 @@ import { useTranslation } from "react-i18next";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { InfoIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { formatLongText } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { StyledLink } from "src/components/share/styled";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { Uppercase } from "src/components/commons/CustomText/styles";
 
 import { CLButton, CLCardContaienr, WrapLabel } from "./styles";
@@ -70,14 +70,18 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
     <CLCardContaienr data-testid="contract-card-item">
       <Box>
         <WrapLabel>{t("contract.address")}:</WrapLabel>
-        <CustomTooltip title={contractAddress?.value}>
-          <StyledLink
-            style={{ fontWeight: "500", textDecoration: "underline" }}
-            to={contractAddress?.detail(contractAddress.value) || "/"}
-          >
-            {formatLongText(contractAddress?.value || "")}
-          </StyledLink>
-        </CustomTooltip>
+        <StyledLink
+          style={{
+            fontWeight: "500",
+            textDecoration: "underline",
+            maxWidth: "100%",
+            display: "contents",
+            flexGrow: 1
+          }}
+          to={contractAddress?.detail(contractAddress.value) || "/"}
+        >
+          <DynamicEllipsisText value={contractAddress?.value || ""} isTooltip />
+        </StyledLink>
       </Box>
       <Box>
         <WrapLabel>{t("contract.purpose")}:</WrapLabel>

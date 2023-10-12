@@ -10,8 +10,7 @@ import {
   formatDateTimeLocal,
   formatNameBlockNo,
   getPageInfo,
-  getShortHash,
-  getShortWallet
+  getShortHash
 } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -142,7 +141,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
           {r?.addressesInput?.slice(0, 2).map((address) => (
             <Box key={address}>
               <CustomTooltip title={address}>
-                <StyledLink to={details.address(address)}>{getShortWallet(address)}</StyledLink>
+                <StyledLink to={details.address(address)}>{getShortHash(address)}</StyledLink>
               </CustomTooltip>
             </Box>
           ))}
@@ -159,7 +158,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
           {r?.addressesOutput?.slice(0, 2).map((address) => (
             <Box key={address}>
               <CustomTooltip title={address}>
-                <StyledLink to={details.address(address)}>{getShortWallet(address)}</StyledLink>
+                <StyledLink to={details.address(address)}>{getShortHash(address)}</StyledLink>
               </CustomTooltip>
             </Box>
           ))}

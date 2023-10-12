@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "src/test-utils";
 import useFetchList from "src/commons/hooks/useFetchList";
-import { getShortWallet } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 
 import ModalAllAddress from ".";
 
@@ -25,7 +25,7 @@ describe("ModalAllAddress component", () => {
     render(<ModalAllAddress {...mockProps} />);
     expect(screen.getByText(/addresses list/i)).toBeInTheDocument();
     expect(screen.getByRole("columnheader", { name: /addresses/i })).toBeInTheDocument();
-    expect(screen.getByText(getShortWallet(mockData.address))).toBeInTheDocument();
+    expect(screen.getByText(getShortHash(mockData.address))).toBeInTheDocument();
   });
 
   it("should modal close", () => {

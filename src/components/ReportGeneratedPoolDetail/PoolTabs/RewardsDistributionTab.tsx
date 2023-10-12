@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
 import { details } from "src/commons/routers";
-import { formatADAFull, formatDateTimeLocal, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { ADAValueLabel } from "src/components/StakingLifeCycle/SPOLifecycle/Tablular/Tabs/styles";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -72,7 +72,7 @@ const RewardsDistributionTab = () => {
       render(data) {
         return (
           <CustomTooltip title={data.rewardAccount}>
-            <StyledLink to={details.stake(data.rewardAccount)}>{getShortWallet(data.rewardAccount)}</StyledLink>
+            <StyledLink to={details.stake(data.rewardAccount)}>{getShortHash(data.rewardAccount)}</StyledLink>
           </CustomTooltip>
         );
       }

@@ -9,7 +9,7 @@ import { details } from "src/commons/routers";
 import {
   formatDateTimeLocal,
   formatNumberDivByDecimals,
-  getShortWallet,
+  getShortHash,
   numberWithCommas
 } from "src/commons/utils/helper";
 
@@ -147,7 +147,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                 <DetailLabel>{t("common.policyID")}</DetailLabel>
                 <DetailValue>
                   <CustomTooltip title={data.policy}>
-                    <StyledLink to={details.policyDetail(data.policy)}>{getShortWallet(data.policy || "")}</StyledLink>
+                    <StyledLink to={details.policyDetail(data.policy)}>{getShortHash(data.policy || "")}</StyledLink>
                   </CustomTooltip>
                   <CopyButton text={data.policy} />
                 </DetailValue>
@@ -156,7 +156,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                 <DetailLabel>{t("common.tokenID")}</DetailLabel>
                 <DetailValue>
                   <CustomTooltip title={tokenId}>
-                    <StyledLink to={details.token(tokenId)}>{getShortWallet(tokenId || "")}</StyledLink>
+                    <StyledLink to={details.token(tokenId)}>{getShortHash(tokenId || "")}</StyledLink>
                   </CustomTooltip>
                   <CopyButton text={tokenId} />
                 </DetailValue>
@@ -168,13 +168,13 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                     <TokenDetailName>
                       {data.displayName && data.displayName.length > 20 ? (
                         <CustomTooltip title={data.displayName}>
-                          <div>{getShortWallet(data.displayName)}</div>
+                          <div>{getShortHash(data.displayName)}</div>
                         </CustomTooltip>
                       ) : data.displayName ? (
                         data.displayName
                       ) : (
                         <CustomTooltip title={data.fingerprint || ""}>
-                          <div>{getShortWallet(data.fingerprint || "")}</div>
+                          <div>{getShortHash(data.fingerprint || "")}</div>
                         </CustomTooltip>
                       )}
                     </TokenDetailName>

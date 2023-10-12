@@ -14,7 +14,7 @@ import { details, routers } from "src/commons/routers";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { API } from "src/commons/utils/api";
 import defaultAxios from "src/commons/utils/axios";
-import { formatLongText, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 import CustomIcon from "src/components/commons/CustomIcon";
 
 import {
@@ -529,12 +529,12 @@ export const OptionsSearch = ({
           {filter === "tokens" ? (
             <ValueOption>
               {(i as TokensSearch)?.displayName?.startsWith("asset") && (i as TokensSearch)?.displayName.length > 43
-                ? getShortWallet((i as TokensSearch)?.fingerprint || "")
+                ? getShortHash((i as TokensSearch)?.fingerprint || "")
                 : (i as TokensSearch)?.displayName}
             </ValueOption>
           ) : (
             <ValueOption>
-              {(i as DelegationPool)?.poolName || getShortWallet((i as DelegationPool)?.poolId || "")}
+              {(i as DelegationPool)?.poolName || getShortHash((i as DelegationPool)?.poolId || "")}
             </ValueOption>
           )}
         </Box>
@@ -557,13 +557,13 @@ export const OptionsSearch = ({
               return {
                 suggestText: "Search for an Epoch",
                 cb: () => history.push(details.epoch((value || "").trim().toLocaleLowerCase())),
-                formatter: formatLongText
+                formatter: getShortHash
               };
             case "block":
               return {
                 suggestText: "Search for a Block by number",
                 cb: () => history.push(details.block((value || "").trim().toLocaleLowerCase())),
-                formatter: formatLongText
+                formatter: getShortHash
               };
             case "tx":
               return {
@@ -578,7 +578,7 @@ export const OptionsSearch = ({
               return {
                 suggestText: "Search for an Address by",
                 cb: () => history.push(addressLink),
-                formatter: getShortWallet
+                formatter: getShortHash
               };
             case "validTokenName":
               if (data.validTokenName) {
@@ -586,7 +586,7 @@ export const OptionsSearch = ({
                   return {
                     suggestText: "Search for a Token by",
                     cb: () => history.push(details.token(data?.token?.fingerprint)),
-                    formatter: formatLongText
+                    formatter: getShortHash
                   };
                 }
                 return {
@@ -595,7 +595,7 @@ export const OptionsSearch = ({
                     history.push(
                       `${routers.TOKEN_LIST}?tokenName=${encodeURIComponent((value || "").trim().toLocaleLowerCase())}`
                     ),
-                  formatter: formatLongText
+                  formatter: getShortHash
                 };
               }
               return;
@@ -605,7 +605,7 @@ export const OptionsSearch = ({
                   return {
                     suggestText: "Search for a Pool by",
                     cb: () => history.push(details.delegation(data?.pool?.poolId)),
-                    formatter: formatLongText
+                    formatter: getShortHash
                   };
                 }
                 return {
@@ -614,7 +614,7 @@ export const OptionsSearch = ({
                     history.push(routers.DELEGATION_POOLS, {
                       tickerNameSearch: encodeURIComponent((value || "").trim().toLocaleLowerCase())
                     }),
-                  formatter: formatLongText
+                  formatter: getShortHash
                 };
               }
               return;
@@ -623,7 +623,7 @@ export const OptionsSearch = ({
                 suggestText: "Search for a Policy by",
                 cb: () =>
                   history.push(details.policyDetail(encodeURIComponent((value || "").trim().toLocaleLowerCase()))),
-                formatter: formatLongText
+                formatter: getShortHash
               };
           }
         })

@@ -2,7 +2,7 @@ import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 import { fireEvent, render, screen, within } from "src/test-utils";
-import { getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 
 import Collaterals from ".";
@@ -71,7 +71,7 @@ describe("Collaterals component", () => {
   it("should component render", () => {
     render(<Collaterals data={mockCollaterals} />);
     const link = screen.getByRole("link", { name: /address-input-1/i });
-    const address = within(link).getByText(new RegExp(getShortWallet(collateralInputResponses[0].address), "i"));
+    const address = within(link).getByText(new RegExp(getShortHash(collateralInputResponses[0].address), "i"));
     expect(address).toBeInTheDocument();
     expect(screen.getByText(getShortHash(collateralInputResponses[0].txHash))).toBeInTheDocument();
   });
@@ -84,7 +84,7 @@ describe("Collaterals component", () => {
       </Router>
     );
     const link = screen.getByRole("link", { name: /address-input-1/i });
-    const address = within(link).getByText(new RegExp(getShortWallet(collateralInputResponses[0].address), "i"));
+    const address = within(link).getByText(new RegExp(getShortHash(collateralInputResponses[0].address), "i"));
     fireEvent.click(address);
     expect(history.location.pathname).toBe(details.address(collateralInputResponses[0].address));
   });

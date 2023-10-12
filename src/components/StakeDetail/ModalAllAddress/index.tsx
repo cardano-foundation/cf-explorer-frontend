@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import Table, { Column } from "src/components/commons/Table";
-import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, getShortHash } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -35,7 +35,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
       render: (r) => (
         <StyledLink to={details.address(r.address)}>
           <CustomTooltip title={r.address || ""} placement="top-start">
-            <Box component={"span"}>{getShortWallet(r.address)}</Box>
+            <Box component={"span"}>{getShortHash(r.address)}</Box>
           </CustomTooltip>
         </StyledLink>
       ),
