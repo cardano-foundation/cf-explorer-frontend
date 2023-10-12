@@ -120,9 +120,8 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       <PoolId>
         <PoolIdLabel>{t("common.poolId")}: </PoolIdLabel>
         <CustomTooltip title={poolId}>
-          <Link to={details.delegation(poolId)}>
-            <PoolIdLabel>{t("common.poolId")}: </PoolIdLabel>
-            <PoolIdValue>{isMobile ? getShortHash(poolId) : poolId}</PoolIdValue>
+          <Link to={details.delegation(data?.poolView)}>
+            <PoolIdValue>{isMobile ? getShortHash(data?.poolView) : data?.poolView}</PoolIdValue>
           </Link>
         </CustomTooltip>
         <CopyButton text={poolId} />
