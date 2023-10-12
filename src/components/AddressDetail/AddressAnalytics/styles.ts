@@ -165,7 +165,7 @@ export const Tab = styled(Button)<{ active: number }>(({ theme, active }) => ({
   textTransform: "lowercase",
   borderRadius: 10,
   border: active ? "none" : `2px solid ${theme.palette.primary[200]}`,
-  marginRight: theme.spacing(1),
+  marginRight: "4px",
   fontWeight: "bold",
   color: active ? `${theme.palette.secondary[0]} !important` : theme.palette.secondary.main,
   backgroundColor: active ? theme.palette.secondary.light : "none",

@@ -295,7 +295,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
   },
   "& .string-value": {
     color: theme.palette.text.secondary,
-    wordBreak: "break-all"
+    wordBreak: "break-word"
   },
   "& .icon-container": {
     display: "none !important"
@@ -307,7 +307,7 @@ export const ButtonLink = styled("a")(({ theme }) => ({
   color: `${theme.palette.primary.main} !important`,
   fontFamily: "Roboto, sans-serif !important",
   textAlign: "left",
-  wordBreak: "break-all",
+  wordBreak: "break-word",
   marginTop: theme.spacing(1),
   fontSize: "14px",
   display: "inline-block",
@@ -346,7 +346,7 @@ export const TokenUrl = styled(Box)(({ theme }) => ({
   color: theme.palette.primary.main,
   fontFamily: "Roboto, sans-serif !important",
   textAlign: "left",
-  wordBreak: "break-all",
+  wordBreak: "break-word",
   fontSize: "12px",
   display: "inline-block",
   textDecoration: "underline !important"
@@ -365,7 +365,7 @@ export const PolicyScriptBtn = styled(Button)(({ theme }) => ({
   textAlign: "left",
   cursor: "pointer",
   fontWeight: "bold",
-  wordBreak: "break-all",
+  wordBreak: "break-word",
   display: "inline-block",
   textDecoration: "underline !important"
 }));

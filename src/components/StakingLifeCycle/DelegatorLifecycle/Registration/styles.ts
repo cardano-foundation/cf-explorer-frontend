@@ -171,7 +171,7 @@ export const CertificateShapeMobile = styled(CertificateShape)(() => ({
 
 export const StyledCustomModal = styled(CustomModal)(({ theme }) => ({
   backgroundColor: theme.palette.secondary[0],
-  wordBreak: "break-all"
+  wordBreak: "break-word"
 }));
 
 export const StyledLink = styled(Link)`

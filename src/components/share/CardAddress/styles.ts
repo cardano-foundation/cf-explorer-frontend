@@ -44,6 +44,7 @@ export const ItemDetail = styled(Box)`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 4px;
 `;
 
 export const LabelItem = styled(Box)`

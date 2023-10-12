@@ -8,10 +8,12 @@ import { DownRedUtxoDarkmode, UpGreenUtxoDarkmode } from "src/commons/resources"
 import receiveImg from "src/commons/resources/images/receiveImg.svg";
 import sendImg from "src/commons/resources/images/sendImg.svg";
 import { details } from "src/commons/routers";
-import { formatADAFull, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { FlexCenter } from "src/components/share/styled";
 
 import {
   BoxHeaderBottom,
@@ -22,6 +24,7 @@ import {
   ItemBox,
   ItemContent,
   ItemFooter,
+  WrapContent,
   WrapUTXOs,
   Wrapper
 } from "./style";
@@ -50,12 +53,9 @@ const Collaterals: React.FC<CollateralProps> = ({ data }) => {
           <Box color={({ palette }) => palette.secondary.main} fontWeight={"bold"}>
             {t("glassary.totalCollateralSpent")}
           </Box>
-          <div>
-            <Box color={({ palette }) => palette.secondary.main} fontWeight={"bold"} component="span" pr={1}>
-              {`+${formatADAFull(totalADA)}`}
-            </Box>
-            <ADAicon />
-          </div>
+          <Box color={({ palette }) => palette.secondary.main} fontWeight={"bold"} component="span" pr={1}>
+            {`+${formatADAFull(totalADA)}`} <ADAicon />
+          </Box>
         </ItemFooter>
       )}
     </Box>
@@ -112,7 +112,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                 </Box>
               ) : null}
             </Box>
-            <Box display={"flex"} width={"100%"} justifyContent={"space-between"}>
+            <WrapContent>
               <Box>
                 {type === "input" && (
                   <WrapUTXOs>
@@ -121,23 +121,28 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                         <Box color={(theme) => theme.palette.secondary.light} pr={1}>
                           {t("tab.utxo")}:
                         </Box>
-                        <Link to={details.transaction(item.txHash)}>
+                        <Link to={details.transaction(item.txHash)} style={{ maxWidth: "45vw" }}>
                           <CustomTooltip title={item.txHash}>
                             <Box
                               component={"span"}
                               fontWeight="bold"
                               fontFamily={"var(--font-family-text)"}
                               color={(theme) => theme.palette.primary.main}
-                              mr={1}
                             >
-                              {getShortHash(item.txHash)}
+                              <DynamicEllipsisText
+                                value={item.txHash}
+                                afterElm={
+                                  <FlexCenter>
+                                    <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
+                                      #{item?.index}
+                                    </Box>
+                                    <CopyButton text={item.txHash} />
+                                  </FlexCenter>
+                                }
+                              />
                             </Box>
                           </CustomTooltip>
                         </Link>
-                        <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
-                          #{item?.index}
-                        </Box>
-                        <CopyButton text={item.txHash} />
                       </Box>
                     </Box>
                   </WrapUTXOs>
@@ -168,24 +173,21 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                       flexWrap="nowrap"
                       width={"auto"}
                     >
-                      <Link to={details.address(item.address)}>
-                        <CustomTooltip title={item.address}>
-                          <Box
-                            fontWeight="bold"
-                            fontFamily={"var(--font-family-text)"}
-                            color={(theme) => theme.palette.primary.main}
-                            mr={1}
-                          >
-                            {getShortWallet(item.address)}
-                          </Box>
-                        </CustomTooltip>
-                      </Link>{" "}
-                      <CopyButton text={item.address} />
+                      <Link to={details.address(item.address)} style={{ maxWidth: "60vw" }}>
+                        <Box
+                          fontWeight="bold"
+                          fontFamily={"var(--font-family-text)"}
+                          color={(theme) => theme.palette.primary.main}
+                          mr={1}
+                        >
+                          <DynamicEllipsisText value={item.address} isCopy isTooltip />
+                        </Box>
+                      </Link>
                     </Box>
                   </Box>
                 </Box>
               </Box>
-              <Box>
+              <Box sx={{ textWrap: "nowrap" }}>
                 <Box
                   component={"span"}
                   whiteSpace="nowrap"
@@ -203,7 +205,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                 </Box>
                 <ADAicon />
               </Box>
-            </Box>
+            </WrapContent>
           </ItemContent>
         </Item>
       ))}

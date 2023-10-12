@@ -3,11 +3,9 @@ import { useHistory } from "react-router-dom";
 import { Box, useTheme } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 
-import { truncateCustom } from "src/commons/utils/helper";
-import { useScreen } from "src/commons/hooks/useScreen";
 import policyIcon from "src/commons/resources/icons/policyIcon.svg";
 import ScriptModal from "src/components/ScriptModal";
-import CopyButton from "src/components/commons/CopyButton";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { PolicyDark } from "src/commons/resources";
 
 import {
@@ -17,6 +15,7 @@ import {
   HeaderContainer,
   HeaderTitle,
   OverViewContainer,
+  PolicyIdContainer,
   SlotLeader,
   SlotLeaderContainer,
   SlotLeaderSkeleton
@@ -31,7 +30,6 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
   const [openModal, setOpenModal] = useState(false);
   const theme = useTheme();
   const history = useHistory();
-  const { isMobile, isTablet } = useScreen();
 
   return (
     <Box data-testid="container">
@@ -50,13 +48,12 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
             ) : (
               <Box>
                 <SlotLeader>
-                  <Box fontWeight={400} color={(theme) => theme.palette.secondary.light}>
+                  <Box fontWeight={400} color={(theme) => theme.palette.secondary.light} sx={{ textWrap: "nowrap" }}>
                     Policy ID:{" "}
                   </Box>{" "}
-                  <Box color={({ palette }) => palette.primary.main} ml={2}>
-                    {isMobile || isTablet ? truncateCustom(data?.policyId ?? "", 5, 5) : data?.policyId}
-                  </Box>{" "}
-                  <CopyButton text={data?.policyId} />
+                  <PolicyIdContainer>
+                    <DynamicEllipsisText value={data?.policyId || ""} isCopy />
+                  </PolicyIdContainer>
                 </SlotLeader>
               </Box>
             )}

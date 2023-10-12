@@ -9,6 +9,7 @@ import { routers } from "src/commons/routers";
 import FooterMenu from "../Sidebar/FooterMenu";
 
 const StyledFooter = styled("footer")`
+  margin-top: 10px;
   height: 60px;
   padding: 0px 10px;
   border-top: 1px solid ${(props) => props.theme.palette.primary[200]};

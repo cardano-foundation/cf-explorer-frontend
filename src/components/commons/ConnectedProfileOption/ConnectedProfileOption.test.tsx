@@ -1,5 +1,5 @@
 import { render, screen } from "src/test-utils";
-import { getShortWallet } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 
 import ConnectedProfileOption from ".";
 
@@ -9,7 +9,7 @@ describe("BookmarkButton component", () => {
   it("should component render", () => {
     render(<ConnectedProfileOption disconnect={jest.fn()} isConnected={true} stakeAddress={stakeKey} />);
     const stakeKeyEl = screen.getByRole("button", {
-      name: getShortWallet(stakeKey)
+      name: getShortHash(stakeKey)
     });
     expect(stakeKeyEl).toBeInTheDocument();
   });

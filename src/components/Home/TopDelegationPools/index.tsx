@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { details, routers } from "src/commons/routers";
-import { formatADAFull, formatPercent, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, formatPercent, getShortHash } from "src/commons/utils/helper";
 import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
 import { Column } from "src/components/commons/Table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -49,7 +49,7 @@ const TopDelegationPools = () => {
         <CustomTooltip title={r.poolName || r.poolId}>
           <PoolName to={details.delegation(r.poolId)}>
             <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
-              {r.poolName || `${getShortWallet(r.poolId)}`}
+              {r.poolName || `${getShortHash(r.poolId)}`}
             </Box>
           </PoolName>
         </CustomTooltip>

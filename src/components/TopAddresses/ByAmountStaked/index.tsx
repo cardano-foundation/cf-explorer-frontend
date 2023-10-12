@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import FormNowMessage from "src/components/commons/FormNowMessage";
@@ -37,7 +37,7 @@ const TopAddressesByAmountStaked = () => {
       key: "addresses",
       render: (r) => (
         <CustomTooltip title={r.stakeKey}>
-          <StyledLink to={details.stake(r.stakeKey)}>{getShortWallet(r.stakeKey)}</StyledLink>
+          <StyledLink to={details.stake(r.stakeKey)}>{getShortHash(r.stakeKey)}</StyledLink>
         </CustomTooltip>
       )
     },
@@ -47,7 +47,7 @@ const TopAddressesByAmountStaked = () => {
       maxWidth: 300,
       render: (r) => (
         <CustomTooltip title={r.poolName || r.poolId}>
-          <StyledLink to={details.delegation(r.poolId)}>{r.poolName || getShortWallet(r.poolId)}</StyledLink>
+          <StyledLink to={details.delegation(r.poolId)}>{r.poolName || getShortHash(r.poolId)}</StyledLink>
         </CustomTooltip>
       )
     },

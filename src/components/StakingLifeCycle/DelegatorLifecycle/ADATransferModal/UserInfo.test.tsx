@@ -1,5 +1,5 @@
 import { render, screen } from "src/test-utils";
-import { getShortWallet } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 
 import UserInfo from "./UserInfo";
 
@@ -12,7 +12,7 @@ describe("UserInfo", () => {
 
     render(<UserInfo total={total} stake={stake} reward={reward} acitve={active} />);
 
-    const stakeElement = screen.getByText(getShortWallet(stake));
+    const stakeElement = screen.getByText(getShortHash(stake));
     const rewardElement = screen.getByText(/Total balance including reward/i);
     const transactionElement = screen.getByText("10 Transactions");
 

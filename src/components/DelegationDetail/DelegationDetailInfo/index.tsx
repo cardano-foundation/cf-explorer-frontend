@@ -15,15 +15,16 @@ import {
   UserIconComponent
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { formatADAFull, formatDateTimeLocal, formatPercent, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatPercent, truncateCustom } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import BookmarkButton from "src/components/commons/BookmarkIcon";
-import CopyButton from "src/components/commons/CopyButton";
 import CustomIcon from "src/components/commons/CustomIcon";
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DropdownDetail from "src/components/commons/DropdownDetail";
 import FormNowMessage from "src/components/commons/FormNowMessage";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { TruncateSubTitleContainer } from "src/components/share/styled";
 
 import {
   BackButton,
@@ -61,11 +62,12 @@ export interface IDelegationDetailInfo {
 const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, poolId, lastUpdated }) => {
   const { t } = useTranslation();
   const theme = useTheme();
+  const { width } = useScreen();
   const history = useHistory();
   const [isErrorImage, setIsErrorImage] = useState(false);
   const [isOpenReward, setOpenReward] = useState<boolean>(false);
   const [isOpenOwner, setOpenOwner] = useState<boolean>(false);
-  const { isMobile, isGalaxyFoldSmall } = useScreen();
+  const { isGalaxyFoldSmall } = useScreen();
 
   if (loading) {
     return (
@@ -89,6 +91,8 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
     );
   }
 
+  const isPoolName = !!data?.poolName;
+
   return (
     <HeaderDetailContainer>
       <BackButton onClick={history.goBack}>
@@ -98,9 +102,21 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       <HeaderContainer>
         <Box display={"flex"} alignItems={"center"} flex={4}>
           <CustomTooltip title={data?.poolName || poolId}>
-            <HeaderTitle>{data?.poolName || poolId}</HeaderTitle>
+            <HeaderTitle>
+              {isPoolName ? (
+                data?.poolName
+              ) : width < 400 ? (
+                truncateCustom(poolId, 4, 4)
+              ) : (
+                <TruncateSubTitleContainer>
+                  <DynamicEllipsisText value={poolId} sxFirstPart={{ maxWidth: "calc(100% - 160px)" }} />
+                </TruncateSubTitleContainer>
+              )}
+            </HeaderTitle>
           </CustomTooltip>
-          <BookmarkButton keyword={poolId} type="POOL" />
+          <Box marginLeft={isPoolName ? 0 : 3}>
+            <BookmarkButton keyword={poolId} type="POOL" />
+          </Box>
         </Box>
         {data?.logoUrl && !isErrorImage && (
           <Box
@@ -118,22 +134,24 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       </HeaderContainer>
       <PoolId>
         <PoolIdLabel>{t("common.poolId")}: </PoolIdLabel>
-        <CustomTooltip title={poolId}>
-          <Link to={details.delegation(poolId)}>
-            <PoolIdValue>{isMobile ? getShortWallet(poolId) : poolId}</PoolIdValue>
-          </Link>
-        </CustomTooltip>
-        <CopyButton text={poolId} />
+        <Link to={details.delegation(poolId)}>
+          <PoolIdValue>
+            <TruncateSubTitleContainer>
+              <DynamicEllipsisText value={poolId} isCopy isTooltip />
+            </TruncateSubTitleContainer>
+          </PoolIdValue>
+        </Link>
       </PoolId>
       {data?.hashView && (
         <PoolId>
           <PoolIdLabel>{t("common.poolhash")}: </PoolIdLabel>
-          <CustomTooltip title={data?.hashView || ""}>
-            <Link to={details.delegation(poolId)}>
-              <PoolIdValue>{isMobile ? getShortWallet(data?.hashView) : data?.hashView}</PoolIdValue>
-            </Link>
-          </CustomTooltip>
-          <CopyButton text={data?.hashView} />
+          <Link to={details.delegation(poolId)}>
+            <PoolIdValue>
+              <TruncateSubTitleContainer>
+                <DynamicEllipsisText value={data?.hashView || ""} isCopy isTooltip />
+              </TruncateSubTitleContainer>
+            </PoolIdValue>
+          </Link>
         </PoolId>
       )}
       {data?.homepage && (
@@ -172,28 +190,23 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
             <CustomIcon fill={theme.palette.secondary.light} height={22} icon={RewardIconComponent} />
             <InfoTitle>
-              <Box>
-                <StyledTitle>{t("rewardAccount")}</StyledTitle>
-                <InfoValue mt={"4px"}>
-                  {data?.rewardAccounts ? (
-                    <>
-                      <CustomTooltip title={data?.rewardAccounts[0] || ""}>
-                        <Box
-                          component={Link}
-                          to={details.stake(data?.rewardAccounts[0] || "")}
-                          style={{ fontFamily: "var(--font-family-text)" }}
-                          color={(theme) => `${theme.palette.primary.main} !important`}
-                        >
-                          {getShortWallet(data?.rewardAccounts[0] || "")}
-                        </Box>
-                      </CustomTooltip>
-                      <CopyButton text={data?.rewardAccounts[0] || ""} />
-                    </>
-                  ) : (
-                    ""
-                  )}
-                </InfoValue>
-              </Box>
+              <StyledTitle>{t("rewardAccount")}</StyledTitle>
+              <InfoValue mt={"4px"}>
+                {data?.rewardAccounts ? (
+                  <>
+                    <Box
+                      component={Link}
+                      to={details.stake(data?.rewardAccounts[0] || "")}
+                      style={{ fontFamily: "var(--font-family-text)" }}
+                      color={(theme) => `${theme.palette.primary.main} !important`}
+                    >
+                      <DynamicEllipsisText value={data?.rewardAccounts[0] || ""} isCopy isTooltip />
+                    </Box>
+                  </>
+                ) : (
+                  ""
+                )}
+              </InfoValue>
               {data?.rewardAccounts && data.rewardAccounts.length > 1 && (
                 <ButtonViewAll
                   sx={{ color: (theme) => theme.palette.common.black }}
@@ -215,26 +228,21 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               />
             )}
           </Item>
-          <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
+          <Item item xs={6} md={3} top={1} sx={{ position: "relative" }} width={"100%"}>
             <CustomIcon fill={theme.palette.secondary.light} height={22} icon={UserIconComponent} />
             <InfoTitle>
-              <Box>
+              <Box width={"100%"}>
                 <StyledTitle>{t("ownerAccount")}</StyledTitle>{" "}
                 <InfoValue mt={"4px"}>
                   {data?.ownerAccounts ? (
-                    <>
-                      <CustomTooltip title={data?.ownerAccounts[0] || ""}>
-                        <Box
-                          component={Link}
-                          color={(theme) => `${theme.palette.primary.main} !important`}
-                          to={details.stake(data?.ownerAccounts[0] || "")}
-                          style={{ fontFamily: "var(--font-family-text)" }}
-                        >
-                          {getShortWallet(data?.ownerAccounts[0] || "")}
-                        </Box>
-                      </CustomTooltip>
-                      <CopyButton text={data?.ownerAccounts[0] || ""} />
-                    </>
+                    <Box
+                      component={Link}
+                      color={(theme) => `${theme.palette.primary.main} !important`}
+                      to={details.stake(data?.ownerAccounts[0] || "")}
+                      style={{ fontFamily: "var(--font-family-text)" }}
+                    >
+                      <DynamicEllipsisText value={data?.ownerAccounts[0] || ""} isCopy isTooltip />
+                    </Box>
                   ) : (
                     ""
                   )}
@@ -271,7 +279,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <InfoTitle>
               <StyledTitle>{t("glossary.poolSize")}</StyledTitle>
             </InfoTitle>
-            <InfoValue sx={{ wordBreak: "break-all" }}>
+            <InfoValue sx={{ wordBreak: "break-word" }}>
               <FlexGap10>
                 {formatADAFull(data?.poolSize)}
                 <ADAicon />

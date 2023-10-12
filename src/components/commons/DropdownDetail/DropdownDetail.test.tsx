@@ -1,7 +1,7 @@
 import userEvent from "@testing-library/user-event";
 
 import { act, render, screen } from "src/test-utils";
-import { getShortWallet } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 
 import DropdownDetail from ".";
 
@@ -17,7 +17,7 @@ describe("DropdownDetail component", () => {
   it("should component render", () => {
     render(<DropdownDetail {...mockProps} />);
     mockProps.value.forEach((item) => {
-      expect(screen.getByText(getShortWallet(item))).toBeInTheDocument();
+      expect(screen.getByText(getShortHash(item))).toBeInTheDocument();
     });
     expect(screen.getByRole("heading", { name: /dropdown title/i })).toBeInTheDocument();
     expect(screen.getByTestId(/icon-close/i)).toBeInTheDocument();

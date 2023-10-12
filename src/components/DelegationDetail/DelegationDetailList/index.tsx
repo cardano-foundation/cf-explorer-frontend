@@ -4,7 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { details } from "src/commons/routers";
-import { formatADAFull, formatDateTimeLocal, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash, numberWithCommas } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
@@ -142,7 +142,7 @@ const DelegationStakingDelegatorsList = ({
         data.view && (
           <div style={{ display: "flex", alignItems: "center" }}>
             <CustomTooltip title={data.view || ""}>
-              <StyledLink to={details.stake(data.view)}>{getShortWallet(data.view || "")}</StyledLink>
+              <StyledLink to={details.stake(data.view)}>{getShortHash(data.view || "")}</StyledLink>
             </CustomTooltip>
             <CopyButton text={data.view || ""} />
           </div>

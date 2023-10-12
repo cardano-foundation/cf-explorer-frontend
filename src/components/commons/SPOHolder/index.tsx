@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import { SPOHolderIconUrl, SPOInfo, SPOKey, PolygonSPOUrl, PolygonSPODarkUrlPng } from "src/commons/resources";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import { getShortWallet } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 
 import PolygonShape from "../PolygonShape";
@@ -56,7 +56,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
                 <Box fontSize="1.125rem" color={({ palette }) => palette.secondary.light}>
                   {t("common.poolId")}:
                 </Box>
-                <PoolNamePopup to={details.delegation(poolView)}>{getShortWallet(poolView || "")}</PoolNamePopup>
+                <PoolNamePopup to={details.delegation(poolView)}>{getShortHash(poolView || "")}</PoolNamePopup>
                 <CopyButton text={poolView} />
               </Box>
               <Box display={"flex"} alignItems={"center"}>
@@ -97,7 +97,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
                 {rewardAccounts.map((item) => (
                   <StakeKeyItem key={item}>
                     <SPOKey fill={theme.palette.primary.main} />
-                    <PoolNamePopup to={details.stake(item)}>{getShortWallet(item)}</PoolNamePopup>
+                    <PoolNamePopup to={details.stake(item)}>{getShortHash(item)}</PoolNamePopup>
                     <CopyButton text={item} />
                   </StakeKeyItem>
                 ))}

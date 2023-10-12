@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import { HeaderSearchIconComponent } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { formatAmount, getShortWallet } from "src/commons/utils/helper";
+import { formatAmount, getShortHash } from "src/commons/utils/helper";
 import ScriptModal from "src/components/ScriptModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { Column } from "src/components/commons/Table";
@@ -44,7 +44,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
                   r.assetName
                 ) : (
                   <CustomTooltip title={r.assetId}>
-                    <Box component={"span"}>{getShortWallet(r.assetId)}</Box>
+                    <Box component={"span"}>{getShortHash(r.assetId)}</Box>
                   </CustomTooltip>
                 )}
               </Box>
