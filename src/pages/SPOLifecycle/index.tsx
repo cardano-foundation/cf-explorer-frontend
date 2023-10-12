@@ -132,7 +132,7 @@ const SPOLifecycle = () => {
               <CustomTooltip title={poolId}>
                 <StakeId to={details.delegation(poolId)}>
                   <TruncateSubTitleContainer>
-                    <DynamicEllipsisText value={poolId} isCoppy={true} />
+                    <DynamicEllipsisText value={poolId} isCopy />
                   </TruncateSubTitleContainer>
                 </StakeId>
               </CustomTooltip>
