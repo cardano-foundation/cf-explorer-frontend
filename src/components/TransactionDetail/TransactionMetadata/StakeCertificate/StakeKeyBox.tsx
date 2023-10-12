@@ -39,7 +39,7 @@ const StakeKeyBox = ({ data }: TProps) => {
                       to={details.stake(value)}
                     >
                       <TruncateSubTitleContainer display={"grid"}>
-                        <DynamicEllipsisText value={value} isCoppy={true} />
+                        <DynamicEllipsisText value={value} isCopy />
                       </TruncateSubTitleContainer>
                     </Box>
                   </CustomTooltip>

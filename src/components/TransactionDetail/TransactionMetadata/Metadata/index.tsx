@@ -32,7 +32,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
           pt={2}
           color={({ palette }) => `${palette.secondary.main}  !important`}
         >
-          <DynamicEllipsisText value={hash || ""} isCoppy={true} />
+          <DynamicEllipsisText value={hash || ""} isCopy />
         </Box>
       </Wrapper>
       {(data || [])?.map((metadata, idx) => (

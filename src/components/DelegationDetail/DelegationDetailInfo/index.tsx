@@ -138,7 +138,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Link to={details.delegation(data?.poolView)}>
             <PoolIdValue>
               <TruncateSubTitleContainer>
-                <DynamicEllipsisText value={data?.poolView || ""} isCoppy={true} />
+                <DynamicEllipsisText value={data?.poolView || ""} isCopy />
               </TruncateSubTitleContainer>
             </PoolIdValue>
           </Link>
@@ -151,7 +151,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <Link to={details.delegation(poolId)}>
               <PoolIdValue>
                 <TruncateSubTitleContainer>
-                  <DynamicEllipsisText value={data?.hashView || ""} isCoppy={true} />
+                  <DynamicEllipsisText value={data?.hashView || ""} isCopy />
                 </TruncateSubTitleContainer>
               </PoolIdValue>
             </Link>
@@ -205,7 +205,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                         style={{ fontFamily: "var(--font-family-text)" }}
                         color={(theme) => `${theme.palette.primary.main} !important`}
                       >
-                        <DynamicEllipsisText value={data?.rewardAccounts[0] || ""} isCoppy={true} />
+                        <DynamicEllipsisText value={data?.rewardAccounts[0] || ""} isCopy />
                       </Box>
                     </CustomTooltip>
                   </>
@@ -248,7 +248,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                         to={details.stake(data?.ownerAccounts[0] || "")}
                         style={{ fontFamily: "var(--font-family-text)" }}
                       >
-                        <DynamicEllipsisText value={data?.ownerAccounts[0] || ""} isCoppy={true} />
+                        <DynamicEllipsisText value={data?.ownerAccounts[0] || ""} isCopy />
                       </Box>
                     </CustomTooltip>
                   ) : (

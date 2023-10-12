@@ -88,7 +88,7 @@ const LatestTransactions: React.FC = () => {
 
                 return (
                   // isTable show 2 item per row else show 1 item per row grid
-                  <Grid item xl lg={3} xs={12} sm={6} key={hash}>
+                  <Grid item xl={3} lg={3} xs={12} sm={6} key={hash}>
                     <Item onClick={(e) => handleClicktWithoutAnchor(e, () => history.push(details.transaction(hash)))}>
                       <ItemHeader>
                         <LatestTransactionItemHeader>

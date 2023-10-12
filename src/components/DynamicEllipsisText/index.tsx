@@ -46,12 +46,12 @@ const MIN_PIXEL = 180;
 const DynamicEllipsisText = ({
   value,
   postfix = 8,
-  isCoppy,
+  isCopy,
   afterElm
 }: {
   value: string;
   postfix?: number;
-  isCoppy?: boolean;
+  isCopy?: boolean;
   afterElm?: React.ReactNode;
 }) => {
   const randomIdRef = useRef(`ELIPSIS_${useId()}`);
@@ -86,7 +86,7 @@ const DynamicEllipsisText = ({
   if (isMin) {
     return (
       <ContainerShortHand id={randomIdRef.current}>
-        {getShortHash(value)} {isCoppy && <CopyButton text={value} />}
+        {getShortHash(value)} {isCopy && <CopyButton text={value} />}
         {afterElm && <StyledAfterElm>{afterElm}</StyledAfterElm>}
       </ContainerShortHand>
     );
@@ -96,7 +96,7 @@ const DynamicEllipsisText = ({
     <Container id={randomIdRef.current}>
       <FirstPart>{firstPart}</FirstPart>
       <Lastpart>{lastPart}</Lastpart>
-      {isCoppy && <CopyButton text={value} data-testId="copy-button" />}
+      {isCopy && <CopyButton text={value} data-testId="copy-button" />}
       {afterElm && <StyledAfterElm className="after-dynamic-text">{afterElm}</StyledAfterElm>}
     </Container>
   );

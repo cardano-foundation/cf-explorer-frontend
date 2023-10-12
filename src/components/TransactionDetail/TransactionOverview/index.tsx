@@ -104,7 +104,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
         <Box position={"relative"}>
           <CustomTooltip title={data?.utxOs?.inputs[0]?.address || ""}>
             <StyledLink to={details.address(data?.utxOs?.inputs[0]?.address || "")}>
-              <DynamicEllipsisText value={data?.utxOs?.inputs[0]?.address || ""} isCoppy={true} />
+              <DynamicEllipsisText value={data?.utxOs?.inputs[0]?.address || ""} isCopy />
             </StyledLink>
           </CustomTooltip>
           {openListInput && (
@@ -146,7 +146,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
         <Box position={"relative"}>
           <CustomTooltip title={data?.utxOs?.outputs[0]?.address || ""}>
             <StyledLink to={details.address(data?.utxOs?.outputs[0]?.address || "")}>
-              <DynamicEllipsisText value={data?.utxOs?.outputs[0]?.address || ""} isCoppy={true} />
+              <DynamicEllipsisText value={data?.utxOs?.outputs[0]?.address || ""} isCopy />
             </StyledLink>
           </CustomTooltip>
           {openListOutput && (
