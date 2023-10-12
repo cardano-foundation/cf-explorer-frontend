@@ -182,7 +182,10 @@ const DelegationLists: React.FC = () => {
       title: t("margin") + " ",
       key: "feePercent",
       minWidth: "120px",
-      render: (r) => `${formatPercent(r.feePercent)}`
+      render: (r) => `${formatPercent(r.feePercent)}`,
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+      }
     }
   ];
   return (
