@@ -106,10 +106,10 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               {isPoolName ? (
                 data?.poolName
               ) : width < 400 ? (
-                truncateCustom(poolId, 4, 6)
+                truncateCustom(poolId, 4, 4)
               ) : (
                 <TruncateSubTitleContainer>
-                  <DynamicEllipsisText value={poolId} />
+                  <DynamicEllipsisText value={poolId} sxFirstPart={{ maxWidth: "calc(100% - 160px)" }} />
                 </TruncateSubTitleContainer>
               )}
             </HeaderTitle>
@@ -134,28 +134,24 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       </HeaderContainer>
       <PoolId>
         <PoolIdLabel>{t("common.poolId")}: </PoolIdLabel>
-        <CustomTooltip title={poolId}>
-          <Link to={details.delegation(data?.poolView)}>
-            <PoolIdValue>
-              <TruncateSubTitleContainer>
-                <DynamicEllipsisText value={data?.poolView || ""} isCopy />
-              </TruncateSubTitleContainer>
-            </PoolIdValue>
-          </Link>
-        </CustomTooltip>
+        <Link to={details.delegation(poolId)}>
+          <PoolIdValue>
+            <TruncateSubTitleContainer>
+              <DynamicEllipsisText value={poolId} isCopy isTooltip />
+            </TruncateSubTitleContainer>
+          </PoolIdValue>
+        </Link>
       </PoolId>
       {data?.hashView && (
         <PoolId>
           <PoolIdLabel>{t("common.poolhash")}: </PoolIdLabel>
-          <CustomTooltip title={data?.hashView || ""}>
-            <Link to={details.delegation(poolId)}>
-              <PoolIdValue>
-                <TruncateSubTitleContainer>
-                  <DynamicEllipsisText value={data?.hashView || ""} isCopy />
-                </TruncateSubTitleContainer>
-              </PoolIdValue>
-            </Link>
-          </CustomTooltip>
+          <Link to={details.delegation(poolId)}>
+            <PoolIdValue>
+              <TruncateSubTitleContainer>
+                <DynamicEllipsisText value={data?.hashView || ""} isCopy isTooltip />
+              </TruncateSubTitleContainer>
+            </PoolIdValue>
+          </Link>
         </PoolId>
       )}
       {data?.homepage && (
@@ -198,16 +194,14 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               <InfoValue mt={"4px"}>
                 {data?.rewardAccounts ? (
                   <>
-                    <CustomTooltip title={data?.rewardAccounts[0] || ""}>
-                      <Box
-                        component={Link}
-                        to={details.stake(data?.rewardAccounts[0] || "")}
-                        style={{ fontFamily: "var(--font-family-text)" }}
-                        color={(theme) => `${theme.palette.primary.main} !important`}
-                      >
-                        <DynamicEllipsisText value={data?.rewardAccounts[0] || ""} isCopy />
-                      </Box>
-                    </CustomTooltip>
+                    <Box
+                      component={Link}
+                      to={details.stake(data?.rewardAccounts[0] || "")}
+                      style={{ fontFamily: "var(--font-family-text)" }}
+                      color={(theme) => `${theme.palette.primary.main} !important`}
+                    >
+                      <DynamicEllipsisText value={data?.rewardAccounts[0] || ""} isCopy isTooltip />
+                    </Box>
                   </>
                 ) : (
                   ""
@@ -241,16 +235,14 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 <StyledTitle>{t("ownerAccount")}</StyledTitle>{" "}
                 <InfoValue mt={"4px"}>
                   {data?.ownerAccounts ? (
-                    <CustomTooltip title={data?.ownerAccounts[0] || ""}>
-                      <Box
-                        component={Link}
-                        color={(theme) => `${theme.palette.primary.main} !important`}
-                        to={details.stake(data?.ownerAccounts[0] || "")}
-                        style={{ fontFamily: "var(--font-family-text)" }}
-                      >
-                        <DynamicEllipsisText value={data?.ownerAccounts[0] || ""} isCopy />
-                      </Box>
-                    </CustomTooltip>
+                    <Box
+                      component={Link}
+                      color={(theme) => `${theme.palette.primary.main} !important`}
+                      to={details.stake(data?.ownerAccounts[0] || "")}
+                      style={{ fontFamily: "var(--font-family-text)" }}
+                    >
+                      <DynamicEllipsisText value={data?.ownerAccounts[0] || ""} isCopy isTooltip />
+                    </Box>
                   ) : (
                     ""
                   )}

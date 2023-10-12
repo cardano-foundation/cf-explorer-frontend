@@ -174,16 +174,14 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                       width={"auto"}
                     >
                       <Link to={details.address(item.address)} style={{ maxWidth: "60vw" }}>
-                        <CustomTooltip title={item.address}>
-                          <Box
-                            fontWeight="bold"
-                            fontFamily={"var(--font-family-text)"}
-                            color={(theme) => theme.palette.primary.main}
-                            mr={1}
-                          >
-                            <DynamicEllipsisText value={item.address} isCopy />
-                          </Box>
-                        </CustomTooltip>
+                        <Box
+                          fontWeight="bold"
+                          fontFamily={"var(--font-family-text)"}
+                          color={(theme) => theme.palette.primary.main}
+                          mr={1}
+                        >
+                          <DynamicEllipsisText value={item.address} isCopy isTooltip />
+                        </Box>
                       </Link>
                     </Box>
                   </Box>
