@@ -64,9 +64,10 @@ export const BoxItemStyled = styled(Box)<{ sidebar?: number }>(({ theme }) => ({
   justifyContent: "flex-end",
   alignItems: "center",
   gap: 20,
-  [theme.breakpoints.down("lg")]: {
+  [theme.breakpoints.down("hd")]: {
     flexDirection: "row",
-    width: "100%"
+    width: "100%",
+    justifyContent: "space-between"
   },
   [theme.breakpoints.down("sm")]: {
     flexDirection: "column",

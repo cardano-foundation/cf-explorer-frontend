@@ -34,7 +34,7 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
                   </Box>
                   <CustomTooltip title={item.address}>
                     <AddressLink to={details.stake(item.address)}>
-                      <DynamicEllipsisText value={item.address || ""} isCoppy={true} />
+                      <DynamicEllipsisText value={item.address || ""} isCopy />
                     </AddressLink>
                   </CustomTooltip>
                 </Box>
@@ -44,7 +44,7 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
                   </Box>
                   <CustomTooltip title={item.poolId}>
                     <AddressLink to={details.delegation(item.poolId)}>
-                      <DynamicEllipsisText value={item.address || ""} isCoppy={true} />
+                      <DynamicEllipsisText value={item.address || ""} isCopy />
                     </AddressLink>
                   </CustomTooltip>
                 </Box>

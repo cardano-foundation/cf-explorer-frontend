@@ -127,7 +127,7 @@ const DelegatorLifecycle = () => {
               <CustomTooltip title={stakeId}>
                 <StakeId to={details.stake(stakeId)}>
                   <TruncateSubTitleContainer>
-                    <DynamicEllipsisText value={stakeId} isCoppy={true} />
+                    <DynamicEllipsisText value={stakeId} isCopy />
                   </TruncateSubTitleContainer>
                 </StakeId>
               </CustomTooltip>
