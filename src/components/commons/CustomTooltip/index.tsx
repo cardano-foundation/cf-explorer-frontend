@@ -13,7 +13,7 @@ export const CustomTooltip = (props: Props) => {
   return (
     <Tooltip
       arrow
-      placement={placement || "top-start"}
+      placement={placement || "top"}
       componentsProps={{
         ...(componentsProps || {}),
         arrow: {

@@ -6,7 +6,6 @@ import sendImg from "src/commons/resources/images/sendImg.svg";
 import { formatADAFull } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import { useScreen } from "src/commons/hooks/useScreen";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
 import { UpGreenUtxoDarkmode } from "src/commons/resources";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
@@ -48,17 +47,15 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                       {t("common.from")}:
                     </Box>
                   ) : null}
-                  <CustomTooltip title={item.stakeAddressFrom}>
-                    <AddressLink
-                      to={
-                        item.stakeAddressFrom.startsWith("addr")
-                          ? details.address(item.stakeAddressFrom)
-                          : details.stake(item.stakeAddressFrom)
-                      }
-                    >
-                      <DynamicEllipsisText value={item.stakeAddressFrom} isCopy />
-                    </AddressLink>
-                  </CustomTooltip>
+                  <AddressLink
+                    to={
+                      item.stakeAddressFrom.startsWith("addr")
+                        ? details.address(item.stakeAddressFrom)
+                        : details.stake(item.stakeAddressFrom)
+                    }
+                  >
+                    <DynamicEllipsisText value={item.stakeAddressFrom} isCopy isTooltip />
+                  </AddressLink>
                 </Box>
                 <Box minWidth="max-content" maxWidth="50%">
                   <Amount>+ {formatADAFull(item?.amount)}</Amount>
@@ -73,13 +70,11 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                   {item?.addressTo.map((address, idx) => {
                     return (
                       <Box minWidth={120} key={idx}>
-                        <CustomTooltip title={address}>
-                          <AddressLink
-                            to={address.startsWith("addr") ? details.address(address) : details.stake(address)}
-                          >
-                            <DynamicEllipsisText value={address} isCopy />
-                          </AddressLink>
-                        </CustomTooltip>
+                        <AddressLink
+                          to={address.startsWith("addr") ? details.address(address) : details.stake(address)}
+                        >
+                          <DynamicEllipsisText value={address} isCopy isTooltip />
+                        </AddressLink>
                       </Box>
                     );
                   })}

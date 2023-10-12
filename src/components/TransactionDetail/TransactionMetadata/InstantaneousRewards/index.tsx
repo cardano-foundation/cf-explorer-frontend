@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 
 import { formatADAFull } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
@@ -43,11 +42,9 @@ const ItemInstantaneousRewards = ({ data }: { data: Transaction["instantaneousRe
                 to={details.stake(item.stakeAddress)}
                 style={{ width: "100%" }}
               >
-                <CustomTooltip title={item.stakeAddress}>
-                  <Title>
-                    <DynamicEllipsisText value={item.stakeAddress} isCopy />
-                  </Title>
-                </CustomTooltip>
+                <Title>
+                  <DynamicEllipsisText value={item.stakeAddress} isCopy isTooltip />
+                </Title>
               </Link>
             </Content>
             <Content>

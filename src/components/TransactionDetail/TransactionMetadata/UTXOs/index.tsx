@@ -12,7 +12,6 @@ import { details } from "src/commons/routers";
 import { formatADAFull } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CopyButton from "src/components/commons/CopyButton";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import DropdownTokens, { TokenLink } from "src/components/commons/DropdownTokens";
 import { DownRedUtxoDarkmode, UpGreenUtxoDarkmode } from "src/commons/resources";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
@@ -114,26 +113,25 @@ const Card = ({
                             {t("tab.utxo")}:
                           </Box>
                           <Link to={details.transaction(item.txHash)} style={{ width: "100%" }}>
-                            <CustomTooltip title={item.txHash}>
-                              <EllipsisContainer isFailed={isFailed}>
-                                <DynamicEllipsisText
-                                  value={item.txHash}
-                                  afterElm={
-                                    <Box display={"flex"} alignItems={"center"}>
-                                      <Box
-                                        fontWeight={"bold"}
-                                        color={({ palette }) =>
-                                          isFailed ? theme.palette.secondary[600] : palette.secondary.main
-                                        }
-                                      >
-                                        #{item?.index}
-                                      </Box>
-                                      <CopyButton text={item.txHash} />
+                            <EllipsisContainer isFailed={isFailed}>
+                              <DynamicEllipsisText
+                                value={item.txHash}
+                                isTooltip
+                                afterElm={
+                                  <Box display={"flex"} alignItems={"center"}>
+                                    <Box
+                                      fontWeight={"bold"}
+                                      color={({ palette }) =>
+                                        isFailed ? theme.palette.secondary[600] : palette.secondary.main
+                                      }
+                                    >
+                                      #{item?.index}
                                     </Box>
-                                  }
-                                />
-                              </EllipsisContainer>
-                            </CustomTooltip>
+                                    <CopyButton text={item.txHash} />
+                                  </Box>
+                                }
+                              />
+                            </EllipsisContainer>
                           </Link>
                         </Box>
                       </Box>
@@ -161,11 +159,9 @@ const Card = ({
                         width={"auto"}
                       >
                         <Link to={details.address(item.address)}>
-                          <CustomTooltip title={item.address}>
-                            <EllipsisContainer isFailed={isFailed}>
-                              <DynamicEllipsisText value={item.address} isCopy />
-                            </EllipsisContainer>
-                          </CustomTooltip>
+                          <EllipsisContainer isFailed={isFailed}>
+                            <DynamicEllipsisText value={item.address} isCopy isTooltip />
+                          </EllipsisContainer>
                         </Link>
                       </Box>
                     </Box>
@@ -194,11 +190,9 @@ const Card = ({
                           </Box>
                           <Box style={{ width: "100%" }}>
                             <Link to={details.stake(item?.stakeAddress)}>
-                              <CustomTooltip title={item?.stakeAddress}>
-                                <EllipsisContainer isFailed={isFailed}>
-                                  <DynamicEllipsisText value={item.stakeAddress} isCopy />
-                                </EllipsisContainer>
-                              </CustomTooltip>
+                              <EllipsisContainer isFailed={isFailed}>
+                                <DynamicEllipsisText value={item.stakeAddress} isCopy isTooltip />
+                              </EllipsisContainer>
                             </Link>
                           </Box>
                         </Box>
