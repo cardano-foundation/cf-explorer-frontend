@@ -163,7 +163,7 @@ const Card = ({
                         <Link to={details.address(item.address)}>
                           <CustomTooltip title={item.address}>
                             <EllipsisContainer isFailed={isFailed}>
-                              <DynamicEllipsisText value={item.address} isCoppy={true} />
+                              <DynamicEllipsisText value={item.address} isCopy />
                             </EllipsisContainer>
                           </CustomTooltip>
                         </Link>
@@ -196,7 +196,7 @@ const Card = ({
                             <Link to={details.stake(item?.stakeAddress)}>
                               <CustomTooltip title={item?.stakeAddress}>
                                 <EllipsisContainer isFailed={isFailed}>
-                                  <DynamicEllipsisText value={item.stakeAddress} isCoppy={true} />
+                                  <DynamicEllipsisText value={item.stakeAddress} isCopy />
                                 </EllipsisContainer>
                               </CustomTooltip>
                             </Link>

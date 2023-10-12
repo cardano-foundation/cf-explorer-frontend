@@ -120,3 +120,14 @@ export const WrapUTXOs = styled(Box)(({ theme }) => ({
     alignItems: "flex-start"
   }
 }));
+
+export const WrapContent = styled(Box)(({ theme }) => ({
+  display: "flex",
+  width: "100%",
+  gap: "10px",
+  justifyContent: "space-between",
+  overflow: "hidden",
+  [theme.breakpoints.down("sm")]: {
+    overflowY: "scroll"
+  }
+}));

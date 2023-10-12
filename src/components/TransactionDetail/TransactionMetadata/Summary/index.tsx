@@ -71,7 +71,7 @@ const SummaryItems = ({
                       fontWeight="bold"
                       fontFamily={"var(--font-family-text)"}
                     >
-                      <DynamicEllipsisText value={item.address} isCoppy={true} />
+                      <DynamicEllipsisText value={item.address} isCopy />
                     </Box>
                   </CustomTooltip>
                 </Link>

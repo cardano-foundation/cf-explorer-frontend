@@ -24,6 +24,7 @@ import {
   ItemBox,
   ItemContent,
   ItemFooter,
+  WrapContent,
   WrapUTXOs,
   Wrapper
 } from "./style";
@@ -111,7 +112,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                 </Box>
               ) : null}
             </Box>
-            <Box display={"flex"} width={"100%"} gap={"10px"} overflow={"scroll"}>
+            <WrapContent>
               <Box>
                 {type === "input" && (
                   <WrapUTXOs>
@@ -180,7 +181,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                             color={(theme) => theme.palette.primary.main}
                             mr={1}
                           >
-                            <DynamicEllipsisText value={item.address} isCoppy={true} />
+                            <DynamicEllipsisText value={item.address} isCopy />
                           </Box>
                         </CustomTooltip>
                       </Link>
@@ -206,7 +207,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                 </Box>
                 <ADAicon />
               </Box>
-            </Box>
+            </WrapContent>
           </ItemContent>
         </Item>
       ))}
