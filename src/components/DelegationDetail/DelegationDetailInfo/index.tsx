@@ -138,7 +138,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Link to={details.delegation(data?.poolView)}>
             <PoolIdValue>
               <TruncateSubTitleContainer>
-                <DynamicEllipsisText value={data?.poolView || ""} isCopy={true} />
+                <DynamicEllipsisText value={data?.poolView || ""} isCopy />
               </TruncateSubTitleContainer>
             </PoolIdValue>
           </Link>
