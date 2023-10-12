@@ -7,6 +7,8 @@ export const TextLabel = styled("div")`
   line-height: 16px;
   color: ${(props) => props.theme.palette.secondary.light};
   width: 130px;
+  text-wrap: nowrap;
+  align-seft: center;
 `;
 
 export const TextValue = styled(Box)`
@@ -15,6 +17,8 @@ export const TextValue = styled(Box)`
   font-size: 14px;
   line-height: 16px;
   color: ${({ theme }) => theme.palette.primary.main};
+  width: 100%;
+  margin-left: 12px;
 `;
 export const Wrapper = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
