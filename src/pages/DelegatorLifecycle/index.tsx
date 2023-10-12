@@ -124,13 +124,11 @@ const DelegatorLifecycle = () => {
             <LifeCycleTitle>{t("slc.stakingDelegationLC")}</LifeCycleTitle>
             <AddressLine>
               <Label>{t("common.stakeAddress")}:</Label>
-              <CustomTooltip title={stakeId}>
-                <StakeId to={details.stake(stakeId)}>
-                  <TruncateSubTitleContainer>
-                    <DynamicEllipsisText value={stakeId} isCopy />
-                  </TruncateSubTitleContainer>
-                </StakeId>
-              </CustomTooltip>
+              <StakeId to={details.stake(stakeId)}>
+                <TruncateSubTitleContainer>
+                  <DynamicEllipsisText value={stakeId} isCopy isTooltip />
+                </TruncateSubTitleContainer>
+              </StakeId>
             </AddressLine>
           </LifeCycleHeader>
           <BoxItemStyled sidebar={+sidebar}>

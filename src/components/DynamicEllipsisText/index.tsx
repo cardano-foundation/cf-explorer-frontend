@@ -1,8 +1,10 @@
-import { Box, styled } from "@mui/material";
+import { Box, SxProps, Theme, styled } from "@mui/material";
 import { useEffect, useId, useRef, useState } from "react";
 
 import CopyButton from "src/components/commons/CopyButton";
 import { getShortHash } from "src/commons/utils/helper";
+
+import CustomTooltip from "../commons/CustomTooltip";
 
 const Container = styled(Box)`
   display: inline-block;
@@ -47,12 +49,18 @@ const DynamicEllipsisText = ({
   value,
   postfix = 8,
   isCopy,
-  afterElm
+  afterElm,
+  isTooltip,
+  sxFirstPart,
+  sxLastPart
 }: {
   value: string;
   postfix?: number;
   isCopy?: boolean;
+  isTooltip?: boolean;
   afterElm?: React.ReactNode;
+  sxFirstPart?: SxProps<Theme>;
+  sxLastPart?: SxProps<Theme>;
 }) => {
   const randomIdRef = useRef(`ELIPSIS_${useId()}`);
 
@@ -94,8 +102,12 @@ const DynamicEllipsisText = ({
 
   return (
     <Container id={randomIdRef.current}>
-      <FirstPart>{firstPart}</FirstPart>
-      <Lastpart>{lastPart}</Lastpart>
+      <CustomTooltip title={isTooltip ? value : ""}>
+        <Box component={"span"}>
+          <FirstPart sx={sxFirstPart}>{firstPart}</FirstPart>
+          <Lastpart sx={sxLastPart}>{lastPart}</Lastpart>
+        </Box>
+      </CustomTooltip>
       {isCopy && <CopyButton text={value} data-testId="copy-button" />}
       {afterElm && <StyledAfterElm className="after-dynamic-text">{afterElm}</StyledAfterElm>}
     </Container>

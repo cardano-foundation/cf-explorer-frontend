@@ -70,20 +70,18 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
     <CLCardContaienr data-testid="contract-card-item">
       <Box>
         <WrapLabel>{t("contract.address")}:</WrapLabel>
-        <CustomTooltip title={contractAddress?.value}>
-          <StyledLink
-            style={{
-              fontWeight: "500",
-              textDecoration: "underline",
-              maxWidth: "100%",
-              display: "contents",
-              flexGrow: 1
-            }}
-            to={contractAddress?.detail(contractAddress.value) || "/"}
-          >
-            <DynamicEllipsisText value={contractAddress?.value || ""} />
-          </StyledLink>
-        </CustomTooltip>
+        <StyledLink
+          style={{
+            fontWeight: "500",
+            textDecoration: "underline",
+            maxWidth: "100%",
+            display: "contents",
+            flexGrow: 1
+          }}
+          to={contractAddress?.detail(contractAddress.value) || "/"}
+        >
+          <DynamicEllipsisText value={contractAddress?.value || ""} isTooltip />
+        </StyledLink>
       </Box>
       <Box>
         <WrapLabel>{t("contract.purpose")}:</WrapLabel>

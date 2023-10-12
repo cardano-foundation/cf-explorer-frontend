@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import sendImg from "src/commons/resources/images/sendImg.svg";
 import { details } from "src/commons/routers";
 import { UpGreenUtxoDarkmode } from "src/commons/resources";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
 import { AddressLink, Header, ItemContainer, StatusIcon, StyledItem, Wrapper } from "./styles";
@@ -32,21 +31,17 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
                   <Box component={"span"} color={({ palette }) => palette.secondary.light} mr={1}>
                     {t("glossary.from")}:
                   </Box>
-                  <CustomTooltip title={item.address}>
-                    <AddressLink to={details.stake(item.address)}>
-                      <DynamicEllipsisText value={item.address || ""} isCopy />
-                    </AddressLink>
-                  </CustomTooltip>
+                  <AddressLink to={details.stake(item.address)}>
+                    <DynamicEllipsisText value={item.address || ""} isCopy isTooltip />
+                  </AddressLink>
                 </Box>
                 <Box maxWidth={"80vw"}>
                   <Box component={"span"} color={({ palette }) => palette.secondary.light} mr={1}>
                     {t("common.poolID")}:
                   </Box>
-                  <CustomTooltip title={item.poolId}>
-                    <AddressLink to={details.delegation(item.poolId)}>
-                      <DynamicEllipsisText value={item.address || ""} isCopy />
-                    </AddressLink>
-                  </CustomTooltip>
+                  <AddressLink to={details.delegation(item.poolId)}>
+                    <DynamicEllipsisText value={item.address || ""} isCopy isTooltip />
+                  </AddressLink>
                 </Box>
               </Box>
             </Box>

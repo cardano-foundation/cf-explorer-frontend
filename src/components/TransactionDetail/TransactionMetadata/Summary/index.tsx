@@ -12,12 +12,11 @@ import {
   WalletRoundedIcon
 } from "src/commons/resources";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { details } from "src/commons/routers";
+import { formatADAFull, formatNumberDivByDecimals } from "src/commons/utils/helper";
+import ADAicon from "src/components/commons/ADAIcon";
+import DropdownTokens, { TokenLink } from "src/components/commons/DropdownTokens";
 
-import { details } from "../../../../commons/routers";
-import { formatADAFull, formatNumberDivByDecimals } from "../../../../commons/utils/helper";
-import ADAicon from "../../../commons/ADAIcon";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import DropdownTokens, { TokenLink } from "../../../commons/DropdownTokens";
 import { GridItem, Icon, TitleText, ValueText, WrapContainerGrid, WrapItemsInfo, WrapTokensInfo } from "./styles";
 
 const SummaryItems = ({
@@ -65,15 +64,13 @@ const SummaryItems = ({
                   to={item.address.startsWith("stake") ? details.stake(item.address) : details.address(item.address)}
                   style={{ width: "100%" }}
                 >
-                  <CustomTooltip title={item.address}>
-                    <Box
-                      color={(theme) => theme.palette.primary.main}
-                      fontWeight="bold"
-                      fontFamily={"var(--font-family-text)"}
-                    >
-                      <DynamicEllipsisText value={item.address} isCopy />
-                    </Box>
-                  </CustomTooltip>
+                  <Box
+                    color={(theme) => theme.palette.primary.main}
+                    fontWeight="bold"
+                    fontFamily={"var(--font-family-text)"}
+                  >
+                    <DynamicEllipsisText value={item.address} isCopy isTooltip />
+                  </Box>
                 </Link>
               </Box>
             </Box>

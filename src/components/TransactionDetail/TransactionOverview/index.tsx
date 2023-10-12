@@ -102,11 +102,9 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       ),
       value: data?.utxOs && data?.utxOs?.inputs?.length > 0 && (
         <Box position={"relative"}>
-          <CustomTooltip title={data?.utxOs?.inputs[0]?.address || ""}>
-            <StyledLink to={details.address(data?.utxOs?.inputs[0]?.address || "")}>
-              <DynamicEllipsisText value={data?.utxOs?.inputs[0]?.address || ""} isCopy />
-            </StyledLink>
-          </CustomTooltip>
+          <StyledLink to={details.address(data?.utxOs?.inputs[0]?.address || "")}>
+            <DynamicEllipsisText value={data?.utxOs?.inputs[0]?.address || ""} isCopy isTooltip />
+          </StyledLink>
           {openListInput && (
             <DropdownDetail
               minWidth={isMobile ? 160 : 200}
@@ -144,11 +142,9 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       ),
       value: data?.utxOs && data?.utxOs?.outputs?.length > 0 && (
         <Box position={"relative"}>
-          <CustomTooltip title={data?.utxOs?.outputs[0]?.address || ""}>
-            <StyledLink to={details.address(data?.utxOs?.outputs[0]?.address || "")}>
-              <DynamicEllipsisText value={data?.utxOs?.outputs[0]?.address || ""} isCopy />
-            </StyledLink>
-          </CustomTooltip>
+          <StyledLink to={details.address(data?.utxOs?.outputs[0]?.address || "")}>
+            <DynamicEllipsisText value={data?.utxOs?.outputs[0]?.address || ""} isCopy isTooltip />
+          </StyledLink>
           {openListOutput && (
             <DropdownDetail
               minWidth={isMobile ? 160 : 200}

@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { details } from "src/commons/routers";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import { FlexCenter, TruncateSubTitleContainer } from "src/components/share/styled";
 
 import { TextLabel, TextValue } from "./styles";
@@ -32,17 +31,15 @@ const StakeKeyBox = ({ data }: TProps) => {
               <FlexCenter key={value} sx={{ paddingBottom: "15px", overflow: "scroll", justifyContent: "flex-start" }}>
                 <TextLabel>{label}: </TextLabel>
                 <TextValue>
-                  <CustomTooltip title={value}>
-                    <Box
-                      color={({ palette }) => `${palette.primary.main} !important`}
-                      component={Link}
-                      to={details.stake(value)}
-                    >
-                      <TruncateSubTitleContainer display={"grid"}>
-                        <DynamicEllipsisText value={value} isCopy />
-                      </TruncateSubTitleContainer>
-                    </Box>
-                  </CustomTooltip>
+                  <Box
+                    color={({ palette }) => `${palette.primary.main} !important`}
+                    component={Link}
+                    to={details.stake(value)}
+                  >
+                    <TruncateSubTitleContainer display={"grid"}>
+                      <DynamicEllipsisText value={value} isCopy isTooltip />
+                    </TruncateSubTitleContainer>
+                  </Box>
                 </TextValue>
               </FlexCenter>
             );
