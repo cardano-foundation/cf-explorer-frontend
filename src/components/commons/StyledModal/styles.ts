@@ -56,4 +56,22 @@ export const WrapTitle = styled(Box)(({ theme }) => ({
 export const ContentContainer = styled(Box)<{ wiithtitle?: number }>`
   max-height: calc(100vh - 160px);
   overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  &:hover {
+    border-radius: "8px 0px 0px 8px";
+    &::-webkit-scrollbar-thumb {
+      background: ${(props) => props.theme.palette.secondary.light};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${(props) => props.theme.palette.primary[100]};
+    }
+  }
 `;

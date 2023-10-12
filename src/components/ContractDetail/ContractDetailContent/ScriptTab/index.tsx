@@ -17,7 +17,6 @@ const Result = styled(Box)`
   font-weight: 400;
   font-size: 16px;
   margin-top: 12px;
-  over-flow: scroll;
   box-shadow: ${(props) => props.theme.shadow.card};
 `;
 
@@ -38,9 +37,8 @@ const ScriptType = styled(Box)`
 const ScriptTab = () => {
   const { t } = useTranslation();
   const { address } = useParams<{ address: string }>();
-  const { data, refresh } = useFetch<any>(API.CONTRACTS.SCRIPT(address));
-  const { dispatch }: any = useContext(VerifyScriptContext);
-
+  const { data, refresh } = useFetch<IScript>(API.CONTRACTS.SCRIPT(address));
+  const { dispatch } = useContext(VerifyScriptContext);
   useEffect(() => {
     if (refresh && dispatch) {
       dispatch({
@@ -60,7 +58,9 @@ const ScriptTab = () => {
       ) : null}
       <Result>
         {data?.isVerified ? (
-          <pre>{JSON.stringify(JSON.parse(data?.data), null, " ")}</pre>
+          <Box component={"pre"} sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+            {JSON.stringify(JSON.parse(data?.data), null, " ")}
+          </Box>
         ) : (
           t("drawer.scriptNotVerified")
         )}

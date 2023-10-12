@@ -1,5 +1,5 @@
 import { Box, FormGroup, useTheme } from "@mui/material";
-import { useEffect, useReducer, useRef, useState } from "react";
+import { ChangeEvent, MouseEvent, useEffect, useReducer, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { IoMdClose } from "react-icons/io";
@@ -35,7 +35,14 @@ interface IForm {
     touched?: boolean;
   };
 }
-const formReducer = (state: IForm, event: any) => {
+
+interface IEvent {
+  name: string;
+  value?: string;
+  error?: boolean | string;
+  touched?: boolean;
+}
+const formReducer = (state: IForm, event: IEvent) => {
   return {
     ...state,
     [event.name]: {
@@ -93,7 +100,7 @@ export default function ForgotPassword() {
     }
     return error;
   };
-  const handleChange = (event: any) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (error) setError(false);
     setFormData({
       name: event.target.name,
@@ -110,10 +117,10 @@ export default function ForgotPassword() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
 
-  const handleKeyDown = (event: any) => {
+  const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      handleSubmit(event);
+      handleSubmit();
     }
   };
 
@@ -146,8 +153,8 @@ export default function ForgotPassword() {
       setLoading(false);
     }
   };
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
+  const handleSubmit = (event?: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
+    event?.preventDefault();
     const error = checkError();
     if (error) return;
     handleForgotPassword(formData.email.value);

@@ -1,5 +1,5 @@
 import { Box, styled, IconButton as IconButtonMui, Typography } from "@mui/material";
-import i18next from "i18next";
+import { t } from "i18next";
 
 export const HoldBox = styled(Box)(({ theme }) => ({
   width: "200px",
@@ -14,7 +14,7 @@ export const HoldBox = styled(Box)(({ theme }) => ({
   position: "relative",
   background: theme.palette.common.white,
   "::after": {
-    content: `"${i18next.t("common.hold").toUpperCase()}"`,
+    content: `"${t("common.hold").toUpperCase()}"`,
     borderRadius: "4px",
     fontWeight: "bold",
     color: theme.palette.common.white,
@@ -39,7 +39,7 @@ export const FeeBox = styled(Box)(({ theme }) => ({
   marginRight: theme.spacing(1),
   position: "relative",
   "::after": {
-    content: `"${i18next.t("common.fees").toUpperCase()}"`,
+    content: `"${t("common.fees").toUpperCase()}"`,
     borderRadius: "4px",
     fontWeight: "bold",
     color: theme.palette.common.white,
@@ -98,7 +98,7 @@ export const NetAmount = styled(Box)(({ theme }) => ({
   position: "relative",
   background: theme.palette.common.white,
   "::after": {
-    content: `"${i18next.t("glossary.netAmount").toUpperCase()}"`,
+    content: `"${t("glossary.netAmount").toUpperCase()}"`,
     borderRadius: "4px",
     fontWeight: "bold",
     color: theme.palette.common.white,
@@ -123,7 +123,7 @@ export const Withdrawn = styled(Box)(({ theme }) => ({
   position: "relative",
   background: theme.palette.common.white,
   "::after": {
-    content: `"${i18next.t("common.withdrawn").toUpperCase()}"`,
+    content: `"${t("common.withdrawn").toUpperCase()}"`,
     borderRadius: "4px",
     fontWeight: "bold",
     color: theme.palette.common.white,

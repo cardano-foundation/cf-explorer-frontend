@@ -25,7 +25,6 @@ export declare interface UserStoreType {
   wallet: SupportedWallets | null;
   address: string | null;
   chainID: string | null;
-  provider: any;
   openModal: boolean;
   sidebar: boolean;
   onDetailView: boolean;

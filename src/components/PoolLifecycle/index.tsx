@@ -14,6 +14,7 @@ import CustomIcon from "src/components/commons/CustomIcon";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { StyledBox } from "src/components/StakekeySummary/styles";
+import { IPoolReportList } from "src/types/report";
 
 export const EVENTS: { [key in keyof IPoolReportList]?: string } = {
   eventDeregistration: "deregistration",
@@ -29,7 +30,7 @@ export function getPoolEventList(data: IPoolReportList) {
     .filter((item) => item);
 }
 
-export function getPoolEventType(data: any) {
+export function getPoolEventType(data: string[]) {
   const events = {
     eventDeregistration: false,
     eventPoolUpdate: false,
@@ -37,7 +38,7 @@ export function getPoolEventType(data: any) {
     eventReward: false
   };
   for (const key in events) {
-    events[key as keyof typeof events] = data.includes(EVENTS[key as keyof typeof EVENTS]);
+    events[key as keyof typeof events] = data.includes(EVENTS[key as keyof typeof EVENTS] || "");
   }
   return events;
 }

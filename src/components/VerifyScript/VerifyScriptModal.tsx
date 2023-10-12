@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { IPropsModal } from "../StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
@@ -16,7 +16,7 @@ const VerifyScriptModal = ({ open, handleCloseModal, onSubmit, error, loading = 
   const { t } = useTranslation();
   const [value, setValue] = useState<string>("");
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value as string);
   };
 

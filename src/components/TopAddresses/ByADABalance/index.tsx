@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { SelectChangeEvent } from "@mui/material/Select/SelectInput";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -75,7 +76,7 @@ const TopAddressesByADABalance = () => {
         <PageSize>
           <SelectMui
             value={pageSize}
-            onChange={(event: any) => setPageSize(event.target.value)}
+            onChange={(event: SelectChangeEvent<unknown>) => setPageSize(event.target.value as string)}
             displayEmpty
             inputProps={{ "aria-label": "Without label" }}
             sx={{ color: ({ palette }) => palette.secondary.main }}

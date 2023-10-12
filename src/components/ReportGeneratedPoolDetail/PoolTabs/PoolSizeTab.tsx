@@ -12,19 +12,20 @@ import { API } from "src/commons/utils/api";
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
 import ADAicon from "src/components/commons/ADAIcon";
+import { IPoolReportList } from "src/types/report";
 
 const PoolSizeTab = () => {
   const { t } = useTranslation();
   const { reportId = "" } = useParams<{ reportId: string }>();
   const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
-  const { loading, ...fetchData } = useFetchList<any>(API.REPORT.PREPORT_EPOCH_SIZE(reportId), {
+  const { loading, ...fetchData } = useFetchList<IReportEpochSize>(API.REPORT.PREPORT_EPOCH_SIZE(reportId), {
     ...pageInfo
   });
   const { data: dataReportDetail, loading: loadingDetail } = useFetch<IPoolReportList>(
     API.REPORT.POOL_REPORTED_DETAIL(reportId)
   );
 
-  const columns: Column<any>[] = [
+  const columns: Column<IReportEpochSize>[] = [
     {
       title: t("glossary.poolSize"),
       key: "size",

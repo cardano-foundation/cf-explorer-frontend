@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, MouseEvent } from "react";
 import { stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -129,7 +129,7 @@ const BlockList = () => {
     }
   ];
 
-  const openDetail = (_: any, r: Block) => {
+  const openDetail = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Block) => {
     setOnDetailView(true);
     setSelected(r.blockNo || r.hash);
   };
