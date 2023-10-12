@@ -68,3 +68,16 @@ export const FlexCenter = styled(Box)`
   justify-content: center;
   align-items: center;
 `;
+
+export const TruncateSubTitleContainer = styled(Box)(({ theme }) => ({
+  maxWidth: "70vw",
+  [theme.breakpoints.up("sm")]: {
+    maxWidth: "60vw"
+  },
+  [theme.breakpoints.up("md")]: {
+    maxWidth: "40vw"
+  },
+  [theme.breakpoints.up("lg")]: {
+    minWidth: "50vw"
+  }
+}));

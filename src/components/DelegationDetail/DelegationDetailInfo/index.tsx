@@ -15,16 +15,16 @@ import {
   UserIconComponent
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { formatADAFull, formatDateTimeLocal, formatPercent, getShortHash } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatPercent, truncateCustom } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import BookmarkButton from "src/components/commons/BookmarkIcon";
-import CopyButton from "src/components/commons/CopyButton";
 import CustomIcon from "src/components/commons/CustomIcon";
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DropdownDetail from "src/components/commons/DropdownDetail";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { TruncateSubTitleContainer } from "src/components/share/styled";
 
 import {
   BackButton,
@@ -62,11 +62,12 @@ export interface IDelegationDetailInfo {
 const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, poolId, lastUpdated }) => {
   const { t } = useTranslation();
   const theme = useTheme();
+  const { width } = useScreen();
   const history = useHistory();
   const [isErrorImage, setIsErrorImage] = useState(false);
   const [isOpenReward, setOpenReward] = useState<boolean>(false);
   const [isOpenOwner, setOpenOwner] = useState<boolean>(false);
-  const { isMobile, isGalaxyFoldSmall } = useScreen();
+  const { isGalaxyFoldSmall } = useScreen();
 
   if (loading) {
     return (
@@ -90,6 +91,8 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
     );
   }
 
+  const isPoolName = !!data?.poolName;
+
   return (
     <HeaderDetailContainer>
       <BackButton onClick={history.goBack}>
@@ -99,9 +102,21 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       <HeaderContainer>
         <Box display={"flex"} alignItems={"center"} flex={4}>
           <CustomTooltip title={data?.poolName || poolId}>
-            <HeaderTitle>{data?.poolName || poolId}</HeaderTitle>
+            <HeaderTitle>
+              {isPoolName ? (
+                data?.poolName
+              ) : width < 400 ? (
+                truncateCustom(poolId, 4, 6)
+              ) : (
+                <TruncateSubTitleContainer>
+                  <DynamicEllipsisText value={poolId} />
+                </TruncateSubTitleContainer>
+              )}
+            </HeaderTitle>
           </CustomTooltip>
-          <BookmarkButton keyword={poolId} type="POOL" />
+          <Box marginLeft={isPoolName ? 0 : 3}>
+            <BookmarkButton keyword={poolId} type="POOL" />
+          </Box>
         </Box>
         {data?.logoUrl && !isErrorImage && (
           <Box
@@ -121,20 +136,26 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <PoolIdLabel>{t("common.poolId")}: </PoolIdLabel>
         <CustomTooltip title={poolId}>
           <Link to={details.delegation(data?.poolView)}>
-            <PoolIdValue>{isMobile ? getShortHash(data?.poolView) : data?.poolView}</PoolIdValue>
+            <PoolIdValue>
+              <TruncateSubTitleContainer>
+                <DynamicEllipsisText value={data?.poolView || ""} isCoppy={true} />
+              </TruncateSubTitleContainer>
+            </PoolIdValue>
           </Link>
         </CustomTooltip>
-        <CopyButton text={poolId} />
       </PoolId>
       {data?.hashView && (
         <PoolId>
           <PoolIdLabel>{t("common.poolhash")}: </PoolIdLabel>
           <CustomTooltip title={data?.hashView || ""}>
             <Link to={details.delegation(poolId)}>
-              <PoolIdValue>{isMobile ? getShortHash(data?.hashView) : data?.hashView}</PoolIdValue>
+              <PoolIdValue>
+                <TruncateSubTitleContainer>
+                  <DynamicEllipsisText value={data?.hashView || ""} isCoppy={true} />
+                </TruncateSubTitleContainer>
+              </PoolIdValue>
             </Link>
           </CustomTooltip>
-          <CopyButton text={data?.hashView} />
         </PoolId>
       )}
       {data?.homepage && (

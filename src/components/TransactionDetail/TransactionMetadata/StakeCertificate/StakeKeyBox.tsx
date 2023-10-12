@@ -2,11 +2,12 @@ import { Box, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import CopyButton from "../../../commons/CopyButton";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { details } from "src/commons/routers";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { FlexCenter, TruncateSubTitleContainer } from "src/components/share/styled";
+
 import { TextLabel, TextValue } from "./styles";
-import { getShortHash } from "../../../../commons/utils/helper";
-import { details } from "../../../../commons/routers";
-import CustomTooltip from "../../../commons/CustomTooltip";
 
 type TProps = {
   data: TStakeCertificated;
@@ -25,10 +26,10 @@ const StakeKeyBox = ({ data }: TProps) => {
   return (
     <Box pt={"15px"}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
-          {leftRow.map(({ label, value, originValue }) => {
+        <Grid item xs={12}>
+          {leftRow.map(({ label, value }) => {
             return (
-              <Box key={label} sx={{ marginBottom: "15px" }}>
+              <FlexCenter key={value} sx={{ paddingBottom: "15px", overflow: "scroll", justifyContent: "flex-start" }}>
                 <TextLabel>{label}: </TextLabel>
                 <TextValue>
                   <CustomTooltip title={value}>
@@ -37,12 +38,13 @@ const StakeKeyBox = ({ data }: TProps) => {
                       component={Link}
                       to={details.stake(value)}
                     >
-                      {getShortHash(value)}
+                      <TruncateSubTitleContainer display={"grid"}>
+                        <DynamicEllipsisText value={value} isCoppy={true} />
+                      </TruncateSubTitleContainer>
                     </Box>
                   </CustomTooltip>
-                  <CopyButton text={originValue} />
                 </TextValue>
-              </Box>
+              </FlexCenter>
             );
           })}
         </Grid>

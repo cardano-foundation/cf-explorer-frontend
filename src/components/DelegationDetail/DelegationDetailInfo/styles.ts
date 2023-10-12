@@ -1,6 +1,7 @@
 import { Box, Button, Grid, LinearProgress, styled } from "@mui/material";
 
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
+import { TruncateSubTitleContainer } from "src/components/share/styled";
 
 export const HeaderDetailContainer = styled(Box)(() => ({
   textAlign: "left",
@@ -232,4 +233,8 @@ export const TimeDuration = styled("small")(({ theme }) => ({
   color: theme.palette.secondary.light,
   display: "block",
   margin: `${theme.spacing(2)} 0px 25px`
+}));
+
+export const PoolIdTitle = styled(TruncateSubTitleContainer)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {}
 }));

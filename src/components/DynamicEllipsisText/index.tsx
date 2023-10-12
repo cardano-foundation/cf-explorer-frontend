@@ -10,11 +10,12 @@ const Container = styled(Box)`
   overflow: hidden;
   width: 100%;
   text-align: left;
+  transform: translateY(2px);
 `;
 
 const SubPart = styled("span")`
   display: inline-block;
-  vertical-align: bottom;
+  vertical-align: middle;
   white-space: nowrap;
   overflow: hidden;
 `;
@@ -26,10 +27,6 @@ const FirstPart = styled(SubPart)`
 `;
 const Lastpart = styled(SubPart)`
   direction: rtl;
-`;
-export const StyledCopyButton = styled(CopyButton)`
-  padding: 0;
-  margin: 0 5px;
 `;
 
 const ContainerShortHand = styled(Box)`
@@ -89,7 +86,7 @@ const DynamicEllipsisText = ({
   if (isMin) {
     return (
       <ContainerShortHand id={randomIdRef.current}>
-        {getShortHash(value)} {isCoppy && <StyledCopyButton text={value} />}
+        {getShortHash(value)} {isCoppy && <CopyButton text={value} />}
         {afterElm && <StyledAfterElm>{afterElm}</StyledAfterElm>}
       </ContainerShortHand>
     );
@@ -99,8 +96,8 @@ const DynamicEllipsisText = ({
     <Container id={randomIdRef.current}>
       <FirstPart>{firstPart}</FirstPart>
       <Lastpart>{lastPart}</Lastpart>
-      {isCoppy && <StyledCopyButton text={value} data-testId="copy-button" />}
-      {afterElm && <StyledAfterElm>{afterElm}</StyledAfterElm>}
+      {isCoppy && <CopyButton text={value} data-testId="copy-button" />}
+      {afterElm && <StyledAfterElm className="after-dynamic-text">{afterElm}</StyledAfterElm>}
     </Container>
   );
 };

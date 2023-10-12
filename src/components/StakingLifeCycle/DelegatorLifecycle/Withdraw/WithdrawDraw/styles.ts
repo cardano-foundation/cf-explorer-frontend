@@ -1,5 +1,5 @@
 import { Box, IconButton as IconButtonMui, alpha, styled } from "@mui/material";
-import i18next from "i18next";
+import { t } from "i18next";
 
 import { AdaLogoIcon } from "src/components/commons/ADAIcon";
 import FeeBox from "src/components/commons/FeeBox";
@@ -207,7 +207,7 @@ export const NetAmountBox = styled(HoldBox)(({ theme }) => ({
   maxWidth: 200,
   minWidth: 180,
   "::after": {
-    content: `"${i18next.t("glossary.netAmount").toUpperCase()}"`,
+    content: `"${t("glossary.netAmount").toUpperCase()}"`,
     background: theme.isDark ? theme.palette.success[100] : theme.palette.success[800]
   },
   [theme.breakpoints.down(1440)]: {
@@ -226,7 +226,7 @@ export const NetAmountBox = styled(HoldBox)(({ theme }) => ({
 
 export const WithdrawnBox = styled(NetAmountBox)(() => ({
   "::after": {
-    content: `"${i18next.t("common.withdrawn").toUpperCase()}"`
+    content: `"${t("common.withdrawn").toUpperCase()}"`
   }
 }));
 

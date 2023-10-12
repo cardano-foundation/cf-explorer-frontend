@@ -1,5 +1,5 @@
 import { Box, IconButton, styled } from "@mui/material";
-import i18next from "i18next";
+import { t } from "i18next";
 import { Link } from "react-router-dom";
 
 import AdaHolder from "src/components/commons/AdaHolder";
@@ -112,7 +112,7 @@ export const MiddleGroup = styled(Box)(({ theme }) => ({
 
 export const FeeBox = styled(HoldBox)(() => ({
   "::after": {
-    content: `"${i18next.t("common.fees").toUpperCase()}"`
+    content: `"${t("common.fees").toUpperCase()}"`
   }
 }));
 

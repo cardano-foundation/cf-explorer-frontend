@@ -4,8 +4,6 @@ import { useSelector } from "react-redux";
 import { CircularProgress, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { getShortHash } from "src/commons/utils/helper";
-import CopyButton from "src/components/commons/CopyButton";
 import SPOLifecycleComponent from "src/components/StakingLifeCycle/SPOLifecycle";
 import ReportComposerModal from "src/components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 import Tabular from "src/components/StakingLifeCycle/SPOLifecycle/Tablular";
@@ -18,6 +16,8 @@ import PoolDetailContext from "src/components/StakingLifeCycle/SPOLifecycle/Pool
 import NoRecord from "src/components/commons/NoRecord";
 import { ChartMode, TableMode } from "src/commons/resources";
 import { ROLE_ELEVATED_GEN_REPORT } from "src/commons/utils/constants";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { TruncateSubTitleContainer } from "src/components/share/styled";
 
 import {
   BoxContainerStyled,
@@ -130,9 +130,12 @@ const SPOLifecycle = () => {
             <AddressLine>
               <Label>{t("common.poolID")}:</Label>
               <CustomTooltip title={poolId}>
-                <StakeId to={details.delegation(poolId)}>{getShortHash(poolId)}</StakeId>
+                <StakeId to={details.delegation(poolId)}>
+                  <TruncateSubTitleContainer>
+                    <DynamicEllipsisText value={poolId} isCoppy={true} />
+                  </TruncateSubTitleContainer>
+                </StakeId>
               </CustomTooltip>
-              <CopyButton text={poolId} />
             </AddressLine>
           </LifeCycleHeader>
           <BoxItemStyled sidebar={+sidebar}>
