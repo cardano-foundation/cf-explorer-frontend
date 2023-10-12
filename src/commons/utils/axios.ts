@@ -52,7 +52,7 @@ defaultAxios.interceptors.response.use(
     ) {
       removeAuthInfo();
     }
-    return error;
+    return Promise.reject(error);
   }
 );
 
@@ -97,7 +97,7 @@ defaultAxiosDownload.interceptors.response.use(
     if (error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED) {
       removeAuthInfo();
     }
-    return error;
+    return Promise.reject(error);
   }
 );
 
@@ -167,7 +167,7 @@ authAxios.interceptors.response.use(
     ) {
       removeAuthInfo();
     }
-    return error;
+    return Promise.reject(error);
   }
 );
 
@@ -210,7 +210,7 @@ uploadAxios.interceptors.response.use(
     if (error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED) {
       removeAuthInfo();
     }
-    return error;
+    return Promise.reject(error);
   }
 );
 

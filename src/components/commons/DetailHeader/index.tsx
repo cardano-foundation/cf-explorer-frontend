@@ -14,6 +14,7 @@ import { SearchIcon } from "src/commons/resources";
 import { formatDateTimeLocal, formatNumberDivByDecimals } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { TruncateSubTitleContainer } from "src/components/share/styled";
 
 import ProgressCircle from "../ProgressCircle";
 import Bookmark from "../BookmarkIcon";
@@ -205,7 +206,9 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
             <SlotLeader>
               {hashLabel ? <SlotLeaderTitle>{hashLabel}: </SlotLeaderTitle> : ""}
               <SlotLeaderValue sidebar={sidebar}>
-                <DynamicEllipsisText value={hash} isCoppy={true} />
+                <TruncateSubTitleContainer>
+                  <DynamicEllipsisText value={hash} isCoppy={true} />
+                </TruncateSubTitleContainer>
               </SlotLeaderValue>
             </SlotLeader>
           )}

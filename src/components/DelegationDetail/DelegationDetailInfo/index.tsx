@@ -15,7 +15,7 @@ import {
   UserIconComponent
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { formatADAFull, formatDateTimeLocal, formatPercent } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatPercent, truncateCustom } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import BookmarkButton from "src/components/commons/BookmarkIcon";
 import CustomIcon from "src/components/commons/CustomIcon";
@@ -62,6 +62,7 @@ export interface IDelegationDetailInfo {
 const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, poolId, lastUpdated }) => {
   const { t } = useTranslation();
   const theme = useTheme();
+  const { width } = useScreen();
   const history = useHistory();
   const [isErrorImage, setIsErrorImage] = useState(false);
   const [isOpenReward, setOpenReward] = useState<boolean>(false);
@@ -90,6 +91,8 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
     );
   }
 
+  const isPoolName = !!data?.poolName;
+
   return (
     <HeaderDetailContainer>
       <BackButton onClick={history.goBack}>
@@ -100,14 +103,20 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <Box display={"flex"} alignItems={"center"} flex={4}>
           <CustomTooltip title={data?.poolName || poolId}>
             <HeaderTitle>
-              {data?.poolName || (
+              {isPoolName ? (
+                data?.poolName
+              ) : width < 400 ? (
+                truncateCustom(poolId, 4, 6)
+              ) : (
                 <TruncateSubTitleContainer>
                   <DynamicEllipsisText value={poolId} />
                 </TruncateSubTitleContainer>
               )}
             </HeaderTitle>
           </CustomTooltip>
-          <BookmarkButton keyword={poolId} type="POOL" />
+          <Box marginLeft={isPoolName ? 0 : 3}>
+            <BookmarkButton keyword={poolId} type="POOL" />
+          </Box>
         </Box>
         {data?.logoUrl && !isErrorImage && (
           <Box
