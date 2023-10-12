@@ -22,8 +22,25 @@ export const ViewJson = styled(Box)(({ theme }) => ({
   boxSizing: "border-box",
   overflow: "auto",
   width: "min(90vw, 800px)",
-
   "& .MuiSvgIcon-root": {
     display: "none !important"
+  },
+  "&::-webkit-scrollbar": {
+    width: "5px"
+  },
+  "&::-webkit-scrollbar-track": {
+    background: "transparent"
+  },
+  "&::-webkit-scrollbar-thumb": {
+    background: "transparent"
+  },
+  "&:hover": {
+    borderRadius: "8px 0px 0px 8px",
+    "&::-webkit-scrollbar-thumb": {
+      background: theme.palette.secondary.light
+    },
+    "&::-webkit-scrollbar-track": {
+      background: theme.palette.primary[100]
+    }
   }
 }));

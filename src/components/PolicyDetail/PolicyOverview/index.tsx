@@ -52,7 +52,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
                     Policy ID:{" "}
                   </Box>{" "}
                   <PolicyIdContainer>
-                    <DynamicEllipsisText value={data?.policyId || ""} isCoppy={true} />
+                    <DynamicEllipsisText value={data?.policyId || ""} isCopy />
                   </PolicyIdContainer>
                 </SlotLeader>
               </Box>

@@ -45,7 +45,7 @@ const ItemInstantaneousRewards = ({ data }: { data: Transaction["instantaneousRe
               >
                 <CustomTooltip title={item.stakeAddress}>
                   <Title>
-                    <DynamicEllipsisText value={item.stakeAddress} isCoppy={true} />
+                    <DynamicEllipsisText value={item.stakeAddress} isCopy />
                   </Title>
                 </CustomTooltip>
               </Link>

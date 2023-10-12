@@ -16,10 +16,11 @@ import {
   WalletGreenIcon
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { formatADAFull, getShortHash } from "src/commons/utils/helper";
+import { formatADAFull } from "src/commons/utils/helper";
 import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
 import PoolDetailContext from "../../PoolDetailContext";
 import {
@@ -67,14 +68,14 @@ const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
     <Grid item sm={sidebar ? 12 : 6} md={6} lg={6} width={"100%"}>
       <CardOverview>
         <Icon component={bg} />
-        <StyledBox>
+        <StyledBox maxWidth={"70%"} flexGrow={1}>
           <WrapIcon>{mainIcon}</WrapIcon>
-          <Box textAlign="start">
+          <Box textAlign="start" width={"100%"}>
             <CardTitle>{title}</CardTitle>
             {value}
           </Box>
         </StyledBox>
-        {action}
+        <Box sx={{ transform: "translateY(-20px)" }}> {action}</Box>
       </CardOverview>
     </Grid>
   );
@@ -93,7 +94,7 @@ const TabularOverview: React.FC = () => {
     return history.push(details.stake(key));
   };
 
-  const ownerAccountValue = getShortHash(stakeKeys?.[0]);
+  const ownerAccountValue = stakeKeys?.[0] || "";
   const STATUS = {
     ACTIVE: [t("common.active"), theme.palette.secondary.main],
     RETIRED: [t("common.retired"), theme.palette.error[700]]
@@ -152,10 +153,10 @@ const TabularOverview: React.FC = () => {
           mainIcon={<OwnerAccountIcon />}
           value={
             <Box display="flex" alignItems="center">
-              <CardValue>
+              <CardValue width={"100%"}>
                 <CustomTooltip title={stakeKeys?.[0]}>
                   <ClickAbleLink to={details.stake(stakeKeys?.[0] || "#")} sx={{ textWrap: "wrap" }}>
-                    {ownerAccountValue}
+                    <DynamicEllipsisText value={ownerAccountValue} />
                   </ClickAbleLink>
                 </CustomTooltip>
               </CardValue>
