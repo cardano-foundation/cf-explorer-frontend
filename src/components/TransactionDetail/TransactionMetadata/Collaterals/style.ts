@@ -121,13 +121,11 @@ export const WrapUTXOs = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const WrapContent = styled(Box)(({ theme }) => ({
+export const WrapContent = styled(Box)(() => ({
   display: "flex",
   width: "100%",
   gap: "10px",
   justifyContent: "space-between",
-  overflow: "hidden",
-  [theme.breakpoints.down("sm")]: {
-    overflowY: "scroll"
-  }
+  overflowX: "auto",
+  overflowY: "hidden"
 }));
