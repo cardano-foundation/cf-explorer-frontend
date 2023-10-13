@@ -66,7 +66,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                 <Box minWidth="1.75rem" color={({ palette }) => palette.secondary.light}>
                   {t("common.to")}:
                 </Box>
-                <Box flex={1}>
+                <Box flex={1} maxWidth={"55vw"}>
                   {item?.addressTo.map((address, idx) => {
                     return (
                       <Box minWidth={120} key={idx}>
