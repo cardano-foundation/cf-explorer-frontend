@@ -24,6 +24,12 @@ export const Span = styled("span")`
   line-height: 1;
 `;
 
+export const LoginLabel = styled(Span)`
+  ${({ theme }) => theme.breakpoints.down(1100)} {
+    display: none;
+  }
+`;
+
 export const Image = styled("img")`
   width: 24px;
   height: 24px;

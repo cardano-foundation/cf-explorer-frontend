@@ -130,12 +130,6 @@ export const HeaderSearchContainer = styled(Box)<{ home?: number }>`
   }
 `;
 
-export const WrapButtonSelect = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.down("md")]: {
-    display: "none"
-  }
-}));
-
 export const SwitchMode = styled(Switch)(({ theme }) => ({
   padding: 8,
   width: 64,
@@ -169,5 +163,11 @@ export const SwitchMode = styled(Switch)(({ theme }) => ({
     height: 18,
     margin: `2px 4px`,
     background: theme.palette.secondary[0]
+  }
+}));
+
+export const WrapButtonSelect = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    display: "none"
   }
 }));

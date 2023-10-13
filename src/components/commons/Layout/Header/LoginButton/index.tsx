@@ -9,7 +9,7 @@ import { RootState } from "src/stores/types";
 import ConnectedProfileOptionNormalLogin from "src/components/commons/ConnectedProfileOptionNormalLogin";
 
 import ConnectWallet from "../ConnectWallet";
-import { Span, StyledButton } from "./styles";
+import { LoginLabel, StyledButton } from "./styles";
 
 const LoginButton = () => {
   const { t } = useTranslation();
@@ -47,7 +47,7 @@ const LoginButton = () => {
         <WalletIconComponent
           stroke={theme.mode === "light" ? theme.palette.secondary[0] : theme.palette.secondary[100]}
         />
-        <Span>{t("common.signIn")}</Span>
+        <LoginLabel>{t("common.signIn")}</LoginLabel>
       </StyledButton>
     </Box>
   );
