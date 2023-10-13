@@ -59,7 +59,7 @@ const TransactionSignatories: React.FC<IProps> = ({ data }) => {
       </Box>
       <Wrapper>
         <TableProtocol
-          height={420}
+          height={(data || [])?.length > 5 ? 420 : 0}
           showPagination={false}
           columns={columns}
           data={data?.map((d, i) => ({ ...d, index: i + 1 }))}
