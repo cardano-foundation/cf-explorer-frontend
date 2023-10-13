@@ -58,7 +58,12 @@ const TransactionSignatories: React.FC<IProps> = ({ data }) => {
         {t("trx.desSignatories")}
       </Box>
       <Wrapper>
-        <TableProtocol columns={columns} data={data?.map((d, i) => ({ ...d, index: i + 1 }))} />
+        <TableProtocol
+          height={(data || [])?.length > 5 ? 420 : 0}
+          showPagination={false}
+          columns={columns}
+          data={data?.map((d, i) => ({ ...d, index: i + 1 }))}
+        />
       </Wrapper>
     </Box>
   );

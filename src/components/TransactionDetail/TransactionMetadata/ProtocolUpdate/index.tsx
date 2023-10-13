@@ -67,7 +67,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
 
   return (
     <Wrapper>
-      <TableProtocol columns={columns} data={data.filter((item) => item.value !== null)} />
+      <TableProtocol columns={columns} showPagination={false} data={data.filter((item) => item.value !== null)} />
       <ParseScriptModal
         open={!!costModelScript}
         onClose={() => setCostModelScript("")}
