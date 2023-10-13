@@ -68,14 +68,14 @@ const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
     <Grid item sm={sidebar ? 12 : 6} md={6} lg={6} width={"100%"}>
       <CardOverview>
         <Icon component={bg} />
-        <StyledBox maxWidth={"70%"} flexGrow={1}>
+        <StyledBox hasAction={!!action} sidebar={!!sidebar} flexGrow={1}>
           <WrapIcon>{mainIcon}</WrapIcon>
-          <Box textAlign="start" width={"100%"}>
+          <Box textAlign="start" width={"100%"} flexGrow={action ? 1 : ""}>
             <CardTitle>{title}</CardTitle>
             {value}
           </Box>
         </StyledBox>
-        <Box sx={{ transform: "translateY(-20px)" }}> {action}</Box>
+        <Box sx={{ position: "absolute", right: "5%", top: "23%" }}> {action}</Box>
       </CardOverview>
     </Grid>
   );
