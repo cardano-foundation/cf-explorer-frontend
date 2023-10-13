@@ -11,6 +11,7 @@ import {
   DelegationHistoryMainIcon,
   DelegationIconUrl,
   FileEditIcon,
+  GitCommitIcon,
   InstantaneousHistoryComponent,
   MetadataIconTx,
   MintingIconComponent,
@@ -129,7 +130,8 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
       label: t("glossary.instantaneousRewards"),
       icon: <InstantaneousHistoryComponent />
     },
-    { key: "metadata", label: t("glossary.metadata"), icon: <MetadataIconTx /> }
+    { key: "metadata", label: t("glossary.metadata"), icon: <MetadataIconTx /> },
+    { key: "signersInformation", label: t("tab.signersInformation"), icon: <GitCommitIcon /> }
   ];
 
   const renderContent = () => {
