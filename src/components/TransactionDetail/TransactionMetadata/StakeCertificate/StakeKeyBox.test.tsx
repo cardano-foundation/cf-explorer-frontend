@@ -14,7 +14,7 @@ describe("StakeKeyBox component", () => {
   it("should component render", () => {
     render(<StakeKeyBox data={mockData} />);
     expect(screen.getByText(/stake address:/i)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: mockData.stakeAddress })).toBeInTheDocument();
+    expect(screen.getAllByTestId(/ellipsis-text/)[0]).toBeInTheDocument();
   });
 
   it("should user goto detail page", () => {
@@ -24,7 +24,7 @@ describe("StakeKeyBox component", () => {
         <StakeKeyBox data={mockData} />
       </Router>
     );
-    fireEvent.click(screen.getByRole("link", { name: mockData.stakeAddress }));
+    fireEvent.click(screen.getAllByTestId(/ellipsis-text/)[0]);
     expect(history.location.pathname).toBe(details.stake(mockData.stakeAddress));
   });
 });
