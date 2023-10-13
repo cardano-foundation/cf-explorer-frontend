@@ -9,6 +9,7 @@ import { useHistory, useParams } from "react-router-dom";
 import {
   CollateralIcon,
   ContractIcon,
+  GitCommitIcon,
   InstantaneousHistoryIcon,
   MetadataIconTx,
   MintingIcon,
@@ -34,6 +35,7 @@ import PoolCertificate from "./PoolCertificate";
 import ProtocolUpdate from "./ProtocolUpdate";
 import StakeCertificate from "./StakeCertificate";
 import Summary from "./Summary";
+import TransactionSignatories from "./TransactionSignatories";
 import UTXO from "./UTXOs";
 import Withdrawals from "./Withdrawals";
 import "./index.css";
@@ -153,6 +155,12 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
       icon: ProtocolUpdateIcon,
       label: t("tab.protocolUpdate"),
       children: <ProtocolUpdate data={protocolsMergeData} />
+    },
+    {
+      key: "signersInformation",
+      icon: GitCommitIcon,
+      label: t("tab.signersInformation"),
+      children: <TransactionSignatories data={data?.signersInformation} />
     },
     {
       key: "instantaneousRewards",
