@@ -180,7 +180,7 @@ const DelegationLists: React.FC = () => {
     },
     {
       title: t("margin") + " ",
-      key: "margin",
+      key: "feePercent",
       minWidth: "120px",
       render: (r) => `${formatPercent(r.feePercent)}`,
       sort: ({ columnKey, sortValue }) => {
