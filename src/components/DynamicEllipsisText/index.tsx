@@ -52,7 +52,8 @@ const DynamicEllipsisText = ({
   afterElm,
   isTooltip,
   sxFirstPart,
-  sxLastPart
+  sxLastPart,
+  sx
 }: {
   value: string;
   postfix?: number;
@@ -61,6 +62,7 @@ const DynamicEllipsisText = ({
   afterElm?: React.ReactNode;
   sxFirstPart?: SxProps<Theme>;
   sxLastPart?: SxProps<Theme>;
+  sx?: SxProps<Theme>;
 }) => {
   const randomIdRef = useRef(`ELIPSIS_${useId()}`);
 
@@ -101,7 +103,7 @@ const DynamicEllipsisText = ({
   }
 
   return (
-    <Container id={randomIdRef.current}>
+    <Container id={randomIdRef.current} sx={sx}>
       <CustomTooltip title={isTooltip ? value : ""}>
         <Box component={"span"} data-testId="ellipsis-text">
           <FirstPart sx={sxFirstPart}>{firstPart}</FirstPart>

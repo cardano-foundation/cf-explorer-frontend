@@ -100,7 +100,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <BackText>{t("common.back")}</BackText>
       </BackButton>
       <HeaderContainer>
-        <Box display={"flex"} alignItems={"center"} flex={4}>
+        <Box display={"flex"} alignItems={"center"}>
           <CustomTooltip title={data?.poolName || poolId}>
             <HeaderTitle>
               {isPoolName ? (
