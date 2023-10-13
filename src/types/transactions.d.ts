@@ -215,6 +215,7 @@ interface Transaction {
   }[];
   protocols?: TProtocol;
   previousProtocols?: TProtocol;
+  signersInformation?: SignersInformation[];
   delegations?: {
     address: string;
     poolId: string;
@@ -250,4 +251,9 @@ type TProtocolMerge = {
   oldValue?: number;
   value?: number;
   protocol: string;
+};
+
+type SignersInformation = {
+  delegateKey?: string;
+  publicKey?: string;
 };

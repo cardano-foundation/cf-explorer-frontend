@@ -134,10 +134,10 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       </HeaderContainer>
       <PoolId>
         <PoolIdLabel>{t("common.poolId")}: </PoolIdLabel>
-        <Link to={details.delegation(poolId)}>
+        <Link to={details.delegation(data?.poolView)}>
           <PoolIdValue>
             <TruncateSubTitleContainer>
-              <DynamicEllipsisText value={poolId} isCopy isTooltip />
+              <DynamicEllipsisText value={data?.poolView || ""} isCopy isTooltip />
             </TruncateSubTitleContainer>
           </PoolIdValue>
         </Link>
@@ -145,7 +145,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       {data?.hashView && (
         <PoolId>
           <PoolIdLabel>{t("common.poolhash")}: </PoolIdLabel>
-          <Link to={details.delegation(poolId)}>
+          <Link to={details.delegation(data?.hashView)}>
             <PoolIdValue>
               <TruncateSubTitleContainer>
                 <DynamicEllipsisText value={data?.hashView || ""} isCopy isTooltip />
