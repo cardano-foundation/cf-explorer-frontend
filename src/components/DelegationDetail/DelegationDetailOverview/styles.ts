@@ -32,3 +32,11 @@ export const Value = styled("span")(({ theme }) => ({
     fontSize: 14
   }
 }));
+
+export const FixedCostBox = styled("span")`
+  ${({ theme }) => theme.breakpoints.down(355)} {
+    & > span {
+      display: block;
+    }
+  }
+`;
