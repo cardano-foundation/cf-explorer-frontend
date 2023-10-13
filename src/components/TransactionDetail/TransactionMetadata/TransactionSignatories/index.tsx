@@ -1,6 +1,7 @@
 import React from "react";
 import { MdInfoOutline } from "react-icons/md";
 import { Box } from "@mui/material";
+import { t } from "i18next";
 
 import { CopyOutline2 } from "src/commons/resources";
 import CopyButton from "src/components/commons/CopyButton";
@@ -52,9 +53,14 @@ const TransactionSignatories: React.FC<IProps> = ({ data }) => {
   ];
 
   return (
-    <Wrapper>
-      <TableProtocol columns={columns} data={data?.map((d, i) => ({ ...d, index: i + 1 }))} />
-    </Wrapper>
+    <Box>
+      <Box color={({ palette }) => palette.secondary.light} textAlign={"left"} mb={1}>
+        {t("trx.desSignatories")}
+      </Box>
+      <Wrapper>
+        <TableProtocol columns={columns} data={data?.map((d, i) => ({ ...d, index: i + 1 }))} />
+      </Wrapper>
+    </Box>
   );
 };
 
