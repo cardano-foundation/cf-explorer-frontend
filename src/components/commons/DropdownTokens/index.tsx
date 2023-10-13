@@ -181,7 +181,6 @@ export const TokenLink: React.FC<{
         <Box
           mr={1}
           color={({ palette }) => palette.secondary.main}
-          className="AAA"
           sx={{ overflow: "hidden", textOverflow: "ellipsis", maxWidth: "90%" }}
         >
           <Box color={({ palette }) => palette.secondary.main}>{renderTokenName(token)}</Box>
