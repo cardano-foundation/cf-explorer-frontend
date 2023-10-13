@@ -34,9 +34,14 @@ export const Value = styled("span")(({ theme }) => ({
 }));
 
 export const FixedCostBox = styled("span")`
-  ${({ theme }) => theme.breakpoints.down(355)} {
-    & > span {
+  ${({ theme }) => theme.breakpoints.down(650)} {
+    & {
       display: block;
+    }
+  }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    & {
+      display: inline;
     }
   }
 `;

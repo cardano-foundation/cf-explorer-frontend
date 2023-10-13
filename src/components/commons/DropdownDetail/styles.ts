@@ -22,6 +22,9 @@ export const ListDropdownContainer = styled(Box)`
   box-shadow: ${(props) => props.theme.shadow.card};
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
+  ${(props) => props.theme.breakpoints.down(1200)} {
+    padding-top: 16px;
+  }
   ${(props) => props.theme.breakpoints.down("sm")} {
     max-height: 350px;
   }
