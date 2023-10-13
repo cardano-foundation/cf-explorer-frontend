@@ -11,6 +11,9 @@ export const SidebarMenuContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     height: "fit-content",
     maxHeight: "calc(100% - 180px)"
+  },
+  [theme.breakpoints.down("md")]: {
+    maxHeight: "calc(100% - 100px)"
   }
 }));
 

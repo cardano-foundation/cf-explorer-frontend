@@ -1,5 +1,43 @@
 # Changelog
 
+## [0.4.26](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.25...v0.4.26) (2023-09-21)
+
+
+### Features
+
+* MET-1485 fix the lang id ([6080bb2](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6080bb2c1ccbb31674815bd1d28c203053ca5733))
+* MET-1485 multiple language for remaining ([3b76c56](https://github.com/cardano-foundation/cf-explorer-frontend/commit/3b76c56e84c571c34ab06e9468c706ff79bd6d82))
+
+
+### Bug Fixes
+
+* add Missing translation ([8c23885](https://github.com/cardano-foundation/cf-explorer-frontend/commit/8c23885640674919515ab01cec1a4ded26ad645a))
+* header axios contain correct language ([78592fe](https://github.com/cardano-foundation/cf-explorer-frontend/commit/78592fee19d8f70a443a4b1b7351f7857f709f63))
+* Merge branch 'develop' of github.com-fe-explorer-cardano:cardano-foundation/cf-explorer-frontend into bugfix/MET-1485-fix-route-change-language ([85350c7](https://github.com/cardano-foundation/cf-explorer-frontend/commit/85350c73d2faeea425b3488f556b8620fd9d7711))
+* Merge branch 'develop' of github.com-fe-explorer-cardano:cardano-foundation/cf-explorer-frontend into bugfix/MET-1531-missing-genesis-block-in-popup ([5e96184](https://github.com/cardano-foundation/cf-explorer-frontend/commit/5e9618482fc35618882d0561572706ae36efa56d))
+* Merge branch 'develop' of github.com-fe-explorer-cardano:cardano-foundation/cf-explorer-frontend into bugfix/MET-1587-resie-ada-icon-in-live-stake ([e0d0239](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e0d0239a5f679cef60c8eb9348036d1e7983db2a))
+* MET-1347 finding 1 input highlight missing token and filter search ([dac980b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/dac980b8f98262803f1e274dcad9cc47e58b0b8c))
+* MET-1485 fix route change language ([e506103](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e506103e2d0ae1ab60ee2cee0e4fdef0c6c414f6))
+* MET-1526 small misspell text ([fc72bac](https://github.com/cardano-foundation/cf-explorer-frontend/commit/fc72bace3ee4a3ea9866f022b11a6a87b09b8164))
+* MET-1531 missing genesis in block detail ([65b64c6](https://github.com/cardano-foundation/cf-explorer-frontend/commit/65b64c63523399f13096fec11a8042ab1557cd3a))
+* MET-1531 missing slot in popup ([6b1d496](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6b1d496e8bd8fd2a875bfa652e6e7e6149966077))
+* MET-1542 update position tooltip top ADA holders ([bf5cf9a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/bf5cf9ac083c60e743b988b3a0d071c0895e23f9))
+* MET-1559 remove default sort in token list ([7d5c3c3](https://github.com/cardano-foundation/cf-explorer-frontend/commit/7d5c3c3506d0563072b79241f9fb4b949f7c0f33))
+* MET-1573 spacing xais charts analytics ([fa02a24](https://github.com/cardano-foundation/cf-explorer-frontend/commit/fa02a241629dae8696139fc8ac0acacbe4e93aaf))
+* MET-1573 update interval chart responsive ([fde6d6b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/fde6d6b361826c86d540e787835b500017447be8))
+* MET-1573 update interval chart responsive ([16b13fd](https://github.com/cardano-foundation/cf-explorer-frontend/commit/16b13fdb6ff0143449ae9a6305cc3acb5fb2354f))
+* MET-1587 add round brackets to the ada symbol ([f37a4d8](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f37a4d8006f672734c6f7467df9fd3e6a11e50ee))
+* MET-1587 resize ada icon in live stake ([515b52d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/515b52d35ea30dc9e5c604b26bdc1912330e8ec0))
+* PR conflict ([847e1be](https://github.com/cardano-foundation/cf-explorer-frontend/commit/847e1bec79d888cc5b0e3e7cd54bc325a06bc967))
+* PR conflict ([e1287d1](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e1287d1128e3f89d2da8847d923d19ea40b273ae))
+* remove redudant character ([f60bf25](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f60bf253d9a34a081874e057228d9fdac292687e))
+* remove redudent import lang momentjs ([1260500](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1260500233a32b78b144190337fdbe5e56d57f28))
+* remove semicolon ui ([0cb9e63](https://github.com/cardano-foundation/cf-explorer-frontend/commit/0cb9e633d623080e130fddda042a9f9515efdbfa))
+* resolve conflict ([5315e76](https://github.com/cardano-foundation/cf-explorer-frontend/commit/5315e76511888b137804e48e7aa94bc9087bd6d1))
+* test fails fix ([063ca46](https://github.com/cardano-foundation/cf-explorer-frontend/commit/063ca4651c4b057937fed73ec5cd54cf1871f568))
+* unit test ([2d69190](https://github.com/cardano-foundation/cf-explorer-frontend/commit/2d691907459ea174801e52a09c94c858da5b1649))
+* unit test fail ([612a965](https://github.com/cardano-foundation/cf-explorer-frontend/commit/612a9656c9682e736ba4701ec7345f33e5c2d1a2))
+
 ## [0.4.25](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.24...v0.4.25) (2023-09-14)
 
 

@@ -165,3 +165,9 @@ export const SwitchMode = styled(Switch)(({ theme }) => ({
     background: theme.palette.secondary[0]
   }
 }));
+
+export const WrapButtonSelect = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    display: "none"
+  }
+}));
