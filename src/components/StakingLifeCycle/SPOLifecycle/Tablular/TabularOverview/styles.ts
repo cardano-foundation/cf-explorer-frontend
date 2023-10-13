@@ -119,12 +119,12 @@ export const StyledBox = styled(Box)<{ hasAction?: boolean; sidebar?: boolean }>
   display: "flex",
   alignItems: "center",
   gap: "12px",
-  maxWidth: "90%",
+  maxWidth: hasAction ? "90%" : "85%",
   [theme.breakpoints.down("lg")]: {
-    maxWidth: hasAction ? (sidebar ? "75%" : "90%") : "100%"
+    maxWidth: hasAction ? (sidebar ? "75%" : "90%") : "85%"
   },
   [theme.breakpoints.down("md")]: {
-    maxWidth: hasAction ? "80%" : "100%"
+    maxWidth: "80%"
   }
 }));
 
