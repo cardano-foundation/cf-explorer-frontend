@@ -36,7 +36,7 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
 
     {
       title: (
-        <Box component="span">
+        <Box component="span" display="flex" gap="4px" flexWrap="wrap" justifyContent="center">
           {t("declaredPledge")}{" "}
           <FixedCostBox>
             (<ADAicon />)

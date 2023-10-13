@@ -29,7 +29,8 @@ export const WrapButtonSelect = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     display: "flex"
   },
-  padding: "0 20px"
+  padding: "0px 20px",
+  boxSizing: "border-box"
 }));
 
 export const HeaderTop = styled("div")`
