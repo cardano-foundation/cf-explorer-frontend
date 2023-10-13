@@ -835,5 +835,6 @@
   "explain.reward.desc": "A script with the purpose to control how to withdraw consensus rewards",
   "contract.certificateType": "Certificate Type",
   "glassary.showRetiredPools": "Show Retired Pools",
-  "trx.desSignatories": "This transaction was signed by the following signer keys"
+  "trx.desSignatories": "This transaction was signed by the following signer keys",
+  "trx.tooltipSignatories": "Genesis delegate key"
 }

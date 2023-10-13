@@ -34,7 +34,7 @@ const TransactionSignatories: React.FC<IProps> = ({ data }) => {
             <WrapperSignerPublicKey>
               {r?.publicKey}{" "}
               {r?.delegateKey ? (
-                <CustomTooltip title={r?.delegateKey} placement={"top"}>
+                <CustomTooltip title={t("trx.tooltipSignatories")} placement={"top"}>
                   <Box pt={"5px"}>
                     <MdInfoOutline />
                   </Box>
