@@ -8,7 +8,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
-import { Item, StyledContainer, Title, Value } from "./styles";
+import { FixedCostBox, Item, StyledContainer, Title, Value } from "./styles";
 
 interface IDelegationDetailOverview {
   data: DelegationOverview | null;
@@ -37,7 +37,10 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
     {
       title: (
         <Box component="span">
-          {t("declaredPledge")} (<ADAicon />)
+          {t("declaredPledge")}{" "}
+          <FixedCostBox>
+            (<ADAicon />)
+          </FixedCostBox>
         </Box>
       ),
       value: (
