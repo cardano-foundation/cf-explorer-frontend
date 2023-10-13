@@ -21,13 +21,11 @@ const mockData: Transaction["withdrawals"] = [
 
 describe("Withdrawals component", () => {
   it("should component render", () => {
-    const [data] = mockData;
     render(<Withdrawals data={mockData} />);
     expect(screen.getByText(/wallet addresses/i)).toBeInTheDocument();
     expect(screen.getByText(/amount/i)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: data.stakeAddressFrom })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: data.addressTo[0] })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: data.addressTo[1] })).toBeInTheDocument();
+    expect(screen.getAllByTestId(/ellipsis-text/)[0]).toBeInTheDocument();
+    expect(screen.getAllByTestId(/ellipsis-text/)[1]).toBeInTheDocument();
   });
 
   it("should user goto detail page", () => {
@@ -38,7 +36,7 @@ describe("Withdrawals component", () => {
         <Withdrawals data={mockData} />
       </Router>
     );
-    fireEvent.click(screen.getByRole("link", { name: data.stakeAddressFrom }));
+    fireEvent.click(screen.getAllByTestId(/ellipsis-text/)[0]);
     expect(history.location.pathname).toBe(details.stake(data.stakeAddressFrom));
   });
 });

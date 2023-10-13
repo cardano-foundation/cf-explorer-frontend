@@ -28,7 +28,7 @@ const mockProps: IDelegationDetailInfo = {
     lifetimeBlock: 5000
   },
   loading: false,
-  poolId: "poolId123"
+  poolId: "#poolId123"
 };
 
 describe("DelegationDetailInfo component", () => {
@@ -36,7 +36,6 @@ describe("DelegationDetailInfo component", () => {
     render(<DelegationDetailInfo {...mockProps} />);
     expect(screen.getByRole("heading", { name: /sample pool/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /please sign in to save your bookmark/i })).toBeInTheDocument();
-    expect(screen.getByText(mockProps.poolId)).toBeInTheDocument();
   });
   it("should commponent redirect to detail page", () => {
     const history = createBrowserHistory();

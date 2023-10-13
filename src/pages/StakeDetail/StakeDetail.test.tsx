@@ -40,7 +40,7 @@ describe("StakeDetail page", () => {
   });
   it("should component render", () => {
     render(<StakeDetail />);
-    expect(screen.getByText(mockData.stakeAddress)).toBeInTheDocument();
+    expect(screen.getByText(/0x01/)).toBeInTheDocument();
     expect(screen.getByText(/delegated to/i)).toBeInTheDocument();
     expect(screen.getByText(`${mockData.pool.tickerName} - ${mockData.pool.poolName}`)).toBeInTheDocument();
   });

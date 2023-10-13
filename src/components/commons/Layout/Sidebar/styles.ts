@@ -24,6 +24,15 @@ export const NavbarContainer = styled("nav")<{ vh: number }>(({ theme, vh }) => 
   };
 });
 
+export const WrapButtonSelect = styled(Box)(({ theme }) => ({
+  display: "none",
+  [theme.breakpoints.down("md")]: {
+    display: "flex"
+  },
+  padding: "0px 20px",
+  boxSizing: "border-box"
+}));
+
 export const HeaderTop = styled("div")`
   display: flex;
   justify-content: space-between;

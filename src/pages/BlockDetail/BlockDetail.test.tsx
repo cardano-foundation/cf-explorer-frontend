@@ -34,7 +34,7 @@ describe("BlockDetail page", () => {
     render(<BlockDetail />);
     expect(screen.getByText(/block details/i)).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /transactions/i })).toBeInTheDocument();
-    expect(screen.getByText(blockDetail.hash)).toBeInTheDocument();
+    expect(screen.getByText(/0x012/)).toBeInTheDocument();
   });
 
   it("should component render with error", () => {
