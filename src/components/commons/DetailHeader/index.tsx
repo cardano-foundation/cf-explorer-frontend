@@ -11,7 +11,7 @@ import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { details } from "src/commons/routers";
 import { RootState } from "src/stores/types";
 import { SearchIcon } from "src/commons/resources";
-import { formatDateTimeLocal, formatNumberDivByDecimals } from "src/commons/utils/helper";
+import { formatDateTimeLocal, formatNumberDivByDecimals, getShortHash } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
@@ -330,9 +330,9 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                             <Box
                               color={({ palette }) => palette.secondary.main}
                               mr={2}
-                              sx={{ maxWidth: "120px", textOverflow: "ellipsis", overflow: "hidden" }}
+                              sx={{ maxWidth: "220px", textOverflow: "ellipsis", overflow: "hidden" }}
                             >
-                              {item.assetName}
+                              {item.assetName || getShortHash(item.assetId)}
                             </Box>
                           </CustomTooltip>
                           <Box color={({ palette }) => palette.secondary.main} fontWeight={500}>

@@ -159,7 +159,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
     {
       key: "signersInformation",
       icon: GitCommitIcon,
-      label: "Transaction Signatories",
+      label: t("tab.signersInformation"),
       children: <TransactionSignatories data={data?.signersInformation} />
     },
     {

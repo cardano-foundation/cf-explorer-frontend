@@ -24,6 +24,7 @@ export const CustomAccordion = styled(Accordion)<{
 }>(({ expanded, customBorderRadius, isDisplayBorderTop, theme }) => ({
   borderRadius: expanded ? "12px" : customBorderRadius,
   background: theme.palette.secondary[0],
+  textAlign: "left",
   boxShadow: expanded || customBorderRadius !== "0" ? "0px 4px 4px rgba(0, 0, 0, 0.05)" : "none",
   "&.MuiAccordion-root:first-of-type": {
     borderTopLeftRadius: "12px",
