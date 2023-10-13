@@ -600,6 +600,7 @@
   "tab.delegations": "Delegations",
   "tab.minting": "Minting",
   "tab.poolCertificates": "Pool certificates",
+  "tab.signersInformation": "Transaction Signatories",
   "tab.stakeCertificates": "Stake Certificates",
   "tab.protocolUpdate": "Protocol Update",
   "glossary.addressList": "Address list",
