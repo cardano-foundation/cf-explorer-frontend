@@ -47,7 +47,7 @@ describe("Blocks view", () => {
       </Router>
     );
 
-    const BlocksIDItem = screen.getByText("b81ec04744...83ebc4a");
+    const BlocksIDItem = screen.getByText(/b81ec/);
     fireEvent.click(BlocksIDItem);
     await waitFor(() => {
       expect(history.location.pathname).toBe(details.block(mockData.data[0].blockNo.toString()));

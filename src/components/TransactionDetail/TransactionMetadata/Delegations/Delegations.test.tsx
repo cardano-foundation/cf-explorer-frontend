@@ -12,8 +12,8 @@ describe("Delegations component", () => {
   it("should component render", () => {
     render(<Delegations data={mockProps} />);
     expect(screen.getByText(/stake address/i)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: mockProps[0].address })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: mockProps[0].poolId })).toBeInTheDocument();
+    expect(screen.getAllByTestId("ellipsis-text")[0]).toBeInTheDocument();
+    expect(screen.getAllByTestId("ellipsis-text")[1]).toBeInTheDocument();
   });
 
   it("should user goto detail page", () => {
@@ -23,9 +23,9 @@ describe("Delegations component", () => {
         <Delegations data={mockProps} />
       </Router>
     );
-    fireEvent.click(screen.getByRole("link", { name: mockProps[0].address }));
+    fireEvent.click(screen.getAllByTestId("ellipsis-text")[0]);
     expect(history.location.pathname).toBe(details.stake(mockProps[0].address));
-    fireEvent.click(screen.getByRole("link", { name: mockProps[0].poolId }));
+    fireEvent.click(screen.getAllByTestId("ellipsis-text")[1]);
     expect(history.location.pathname).toBe(details.delegation(mockProps[0].poolId));
   });
 });

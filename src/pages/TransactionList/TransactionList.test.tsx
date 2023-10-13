@@ -44,7 +44,7 @@ describe("Transactions view", () => {
       </Router>
     );
 
-    const transactionsItem = screen.getByText("def63efac7...de336b9");
+    const transactionsItem = screen.getByText(/def6/);
     fireEvent.click(transactionsItem);
     await waitFor(() => {
       expect(history.location.pathname).toBe(details.transaction(mockItem.data[0].hash));

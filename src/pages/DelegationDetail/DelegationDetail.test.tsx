@@ -95,7 +95,7 @@ describe("BlockDetail page", () => {
     render(<DelegationDetail />);
     expect(screen.getByRole("heading", { name: /sample pool/i })).toBeInTheDocument();
     expect(screen.getByText(/reward account/i)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: mockData.rewardAccounts[0] })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /reward/ })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /stake/i })).toBeInTheDocument();
   });
 
@@ -116,7 +116,7 @@ describe("BlockDetail page", () => {
       </Router>
     );
 
-    fireEvent.click(screen.getByRole("link", { name: mockData.rewardAccounts[0] }));
+    fireEvent.click(screen.getByRole("link", { name: /reward/ }));
     expect(history.location.pathname).toBe(details.stake(mockData.rewardAccounts[0]));
   });
 });

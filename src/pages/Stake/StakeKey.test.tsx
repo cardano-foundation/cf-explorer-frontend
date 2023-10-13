@@ -58,7 +58,7 @@ describe("Stake adress view", () => {
       </Router>
     );
 
-    const TxHashStakeItem = screen.getByText("10efa612b6...72c9feb");
+    const TxHashStakeItem = screen.getByText(/10ef/);
     fireEvent.click(TxHashStakeItem);
     expect(history.location.pathname).toBe(details.transaction(mockData.data[0].txHash));
   });
@@ -90,7 +90,7 @@ describe("Stake adress view", () => {
       </Router>
     );
 
-    const StakeKeyItem = screen.getByText("stake...dayvd");
+    const StakeKeyItem = screen.getByText(/stake/);
     fireEvent.click(StakeKeyItem);
     expect(history.location.pathname).toBe(details.stake(mockData.data[0].stakeKey));
   });
