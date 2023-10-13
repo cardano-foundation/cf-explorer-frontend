@@ -834,5 +834,6 @@
   "explain.cert.desc": "A script with the purpose to control how to publish delegation certificates",
   "explain.reward.desc": "A script with the purpose to control how to withdraw consensus rewards",
   "contract.certificateType": "Certificate Type",
-  "glassary.showRetiredPools": "Show Retired Pools"
+  "glassary.showRetiredPools": "Show Retired Pools",
+  "trx.desSignatories": "This transaction was signed by the following signer keys"
 }
