@@ -101,6 +101,8 @@ const Header: React.FC<RouteComponentProps> = (props) => {
                   setTheme(e.target.checked ? "dark" : "light");
                 }}
               />
+            </WrapButtonSelect>
+            <WrapButtonSelect>
               <SelectLanguage />
             </WrapButtonSelect>
             <NetworkContainer>

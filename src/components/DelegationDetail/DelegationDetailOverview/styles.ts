@@ -14,6 +14,9 @@ export const Item = styled("div")`
   box-shadow: ${(props) => props.theme.shadow.card};
   border-radius: 12px;
   padding: 24px;
+  height: 100%;
+  box-sizing: border-box;
+  justify-content: flex-start;
 `;
 
 export const Title = styled("span")`
@@ -33,11 +36,12 @@ export const Value = styled("span")(({ theme }) => ({
   }
 }));
 
-export const FixedCostBox = styled("span")`
-  ${({ theme }) => theme.breakpoints.down(650)} {
-    & {
-      display: block;
-    }
+export const FixedCostBox = styled(Box)`
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  & > svg {
+    margin-top: -2px;
   }
   ${({ theme }) => theme.breakpoints.down("sm")} {
     & {
