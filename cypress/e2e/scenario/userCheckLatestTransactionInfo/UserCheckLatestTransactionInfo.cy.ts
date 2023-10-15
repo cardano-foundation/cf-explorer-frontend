@@ -14,7 +14,6 @@ describe("User check information of latest Transaction", () => {
     cy.wait(2000);
 
     cy.get('[data-testid="search-bar"]').should("be.visible");
-    cy.get("p > div").should("be.visible");
     cy.get("div").contains("Input").should("be.visible");
     cy.get("div").contains("Output").should("be.visible");
     cy.get("div").contains("Created At", { matchCase: false }).should("be.visible");

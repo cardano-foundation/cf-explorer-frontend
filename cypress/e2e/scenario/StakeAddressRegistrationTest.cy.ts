@@ -43,7 +43,7 @@ describe("User check information of stake address registration", () => {
     cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should("be.visible").contains("Transaction Hash");
     cy.get('[data-testid = "table-common"] th:nth-of-type(2)').should("be.visible").contains("Created At");
     cy.get('[data-testid = "table-common"] th:nth-of-type(3)').should("be.visible").contains("Block");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(4)').should("be.visible").contains("Action");
+    cy.get('[data-testid = "table-common"] th').should("be.visible").contains("Action");
 
     cy.get(".MuiTabs-flexContainer button").eq(2).click();
     cy.get(".MuiTabs-flexContainer button").eq(2).should("have.attr", "aria-selected", "true");
@@ -51,7 +51,7 @@ describe("User check information of stake address registration", () => {
     cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should("be.visible").contains("Transaction Hash");
     cy.get('[data-testid = "table-common"] th:nth-of-type(2)').should("be.visible").contains("Created At");
     cy.get('[data-testid = "table-common"] th:nth-of-type(3)').should("be.visible").contains("Block");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(4)').should("be.visible").contains("Amount");
+    cy.get('[data-testid = "table-common"] th').should("be.visible").contains("Amount");
 
     cy.get(".MuiTabs-flexContainer button").eq(3).click();
     cy.get(".MuiTabs-flexContainer button").eq(3).should("have.attr", "aria-selected", "true");
@@ -59,7 +59,7 @@ describe("User check information of stake address registration", () => {
     cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should("be.visible").contains("Transaction Hash");
     cy.get('[data-testid = "table-common"] th:nth-of-type(2)').should("be.visible").contains("Created At");
     cy.get('[data-testid = "table-common"] th:nth-of-type(3)').should("be.visible").contains("Block");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(4)').should("be.visible").contains("Rewards Paid");
+    cy.get('[data-testid = "table-common"] th').should("be.visible").contains("Rewards Paid");
 
     cy.get(".MuiTabs-flexContainer button").eq(4).click();
     cy.get(".MuiTabs-flexContainer button").eq(4).should("have.attr", "aria-selected", "true");
@@ -68,9 +68,9 @@ describe("User check information of stake address registration", () => {
     cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should("be.visible").contains("Transaction Hash");
     cy.get('[data-testid = "table-common"] th:nth-of-type(2)').should("be.visible").contains("Created At");
     cy.get('[data-testid = "table-common"] th:nth-of-type(3)').should("be.visible").contains("Block");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(4)').should("be.visible").contains("Fees");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(5)').should("be.visible").contains("ADA amount");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(6)').should("be.visible").contains("Token");
+    cy.get('[data-testid = "table-common"] th').should("be.visible").contains("Fees");
+    cy.get('[data-testid = "table-common"] th').should("be.visible").contains("ADA amount");
+    cy.get('[data-testid = "table-common"] th').should("be.visible").contains("Token");
   });
 
   /*

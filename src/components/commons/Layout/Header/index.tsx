@@ -95,6 +95,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
           <SideBarRight>
             <WrapButtonSelect>
               <SwitchMode
+                data-testid="theme-toggle"
                 checked={themeMode === "dark"}
                 onChange={(e) => {
                   setTheme(e.target.checked ? "dark" : "light");

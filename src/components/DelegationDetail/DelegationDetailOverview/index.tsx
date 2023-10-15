@@ -72,13 +72,17 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
                 <Box fontSize="12px" color={({ palette }) => palette.secondary.light}>
                   {t("glossary.actualPledge")}
                 </Box>
-                <Box fontSize="14px" color={({ palette }) => palette.secondary.light}>
+                <Box data-testid="actual-pledge-value" fontSize="14px" color={({ palette }) => palette.secondary.light}>
                   {formatADAFull(data?.totalBalanceOfPoolOwners)} (<ADAicon />)
                 </Box>
               </Box>
             }
           >
-            {data && data.pledge > data.totalBalanceOfPoolOwners ? <WarningLight /> : <CheckLightGreen />}
+            {data && data.pledge > data.totalBalanceOfPoolOwners ? (
+              <WarningLight data-testid="warning-light" />
+            ) : (
+              <CheckLightGreen data-testid="checking-green" />
+            )}
           </CustomTooltip>
         </Box>
       ),
