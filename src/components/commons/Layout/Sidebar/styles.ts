@@ -85,6 +85,9 @@ export const NetworkName = styled("small")<{ network: keyof typeof NETWORKS; sid
       case NETWORKS.preview: {
         return props.theme.palette.secondary.main;
       }
+      case NETWORKS.sanchonet: {
+        return props.theme.palette.secondary.main;
+      }
       default: {
         return props.theme.palette.warning.main;
       }

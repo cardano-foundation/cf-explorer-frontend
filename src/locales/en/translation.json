@@ -61,6 +61,7 @@
   "network.mainnet": "Mainnet",
   "network.preprod": "Preprod",
   "network.preview": "Preview",
+  "network.sanchonet" : "Sanchonet",
   "network.explorer": "Explorer",
   "common.signIn": "Sign In ",
   "common.lastUpdated": "Last updated",
