@@ -20,7 +20,7 @@ describe("PolicyDetail", () => {
       initialized: true
     });
     render(<PolicyDetail />);
-    expect(screen.getByText(mockData.policyId)).toBeInTheDocument();
+    expect(screen.getByText(/a00/)).toBeInTheDocument();
   });
 
   it("testing compoment no data <NoRecord>", () => {

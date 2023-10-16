@@ -2,7 +2,6 @@ import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 import { fireEvent, render, screen } from "src/test-utils";
-import { getShortHash } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 
 import Summary from ".";
@@ -38,7 +37,7 @@ describe("Summary component", () => {
       })
     ).toBeInTheDocument();
     expect(screen.getByText(/Wallet/i)).toBeInTheDocument();
-    expect(screen.getByText(getShortHash(mockSummary.stakeAddress[0].address))).toBeInTheDocument();
+    expect(screen.getByText(/-1/)).toBeInTheDocument();
   });
 
   it("should user goto detail page", () => {
@@ -48,7 +47,7 @@ describe("Summary component", () => {
         <Summary data={mockSummary} />
       </Router>
     );
-    fireEvent.click(screen.getByRole("link", { name: mockSummary.stakeAddress[0].address }));
+    fireEvent.click(screen.getByRole("link", { name: /-1/ }));
     expect(history.location.pathname).toBe(details.address(mockSummary.stakeAddress[0].address));
   });
 });

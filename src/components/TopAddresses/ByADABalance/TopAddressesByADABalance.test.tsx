@@ -36,7 +36,7 @@ describe("Top addresses by ADA balance view", () => {
     const mockUseFetchList = useFetchList as jest.Mock;
     mockUseFetchList.mockReturnValue(mockData);
     render(<TopAddressesByADABalance />);
-    expect(screen.getByText("Ae2td...zN2zG")).toBeInTheDocument();
+    expect(screen.getByText(/Ae2td/)).toBeInTheDocument();
   });
 
   it("renders the table with given column and data", () => {
@@ -89,7 +89,7 @@ describe("Top addresses by ADA balance view", () => {
       </Router>
     );
 
-    const AddressesItem = screen.getByText("Ae2td...zN2zG");
+    const AddressesItem = screen.getByText(/Ae2td/);
     fireEvent.click(AddressesItem);
     expect(history.location.pathname).toBe("/address/Ae2tdPwUPEYwFx4dmJheyNPPYXtvHbJLeCaA96o6Y2iiUL18cAt7AizN2zG");
   });

@@ -11,10 +11,14 @@ export const TableProtocol = styled(Table)(({ theme }) => ({
     width: "90%"
   },
   "& td": {
-    borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`
+    borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
+    paddingTop: "18px",
+    paddingBottom: "18px"
   },
   "& th": {
-    borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`
+    borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
+    paddingTop: "15px",
+    paddingBottom: "14px"
   },
   "& tr:last-child th": {
     borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`

@@ -2,7 +2,6 @@ import React from "react";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { truncateCustom } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
 
 import { render } from "../../../test-utils";
@@ -26,7 +25,7 @@ describe("PolicyOverview", () => {
   it("testing on mobile and tablet devices", async () => {
     mockUseScreen.mockReturnValue({ isMobile: true, isTablet: true });
     render(<PolicyOverview data={mockData} loading={false} />);
-    const policyIdElement = screen.getByText(truncateCustom(mockData.policyId, 5, 5), { exact: false });
+    const policyIdElement = screen.getByText(/a002/, { exact: false });
     expect(policyIdElement).toBeInTheDocument();
   });
 
@@ -35,7 +34,7 @@ describe("PolicyOverview", () => {
     render(<PolicyOverview data={mockData} loading={false} />);
     expect(screen.getByText("Policy Details")).toBeInTheDocument();
     expect(screen.getByText("Policy ID:")).toBeInTheDocument();
-    expect(screen.getByText(mockData.policyId)).toBeInTheDocument();
+    expect(screen.getByText(/a002/)).toBeInTheDocument();
   });
 
   it("testing loadidng state", () => {

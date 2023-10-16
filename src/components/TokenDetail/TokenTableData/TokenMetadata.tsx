@@ -28,7 +28,6 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson }) => {
           displayDataTypes={false}
           enableClipboard={false}
           collapseStringsAfterLength={false}
-          style={{ padding: 0, background: "none", color: theme.palette.text.primary }}
           rootName={false}
           theme={theme.isDark ? "dark" : "light"}
         />
