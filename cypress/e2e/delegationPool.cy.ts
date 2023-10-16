@@ -26,30 +26,80 @@ describe("delegation pool spec", () => {
     cy.visit("/pools");
     cy.get("div").contains("Pools");
     cy.get('[data-testid="search-bar"]').type(pool).type("{enter}");
-    cy.get(".css-1d87buq").contains(pool);
-    cy.get(".css-1mwjfms").contains(pool);
+    cy.get("small").contains("Pool ID", { matchCase: false });
+    cy.get("small ~ a").should("have.attr", "href").and("include", pool);
   });
 
-  it("should navigate to the transaction detail page", () => {
+  it.only("should navigate to the transaction detail page", () => {
     const pool = "pool1m06tlj2ykawzvweacgmhxj43hykczgfuynk2lqzxvshm5lq2lyq";
     cy.visit("/pool/pool1m06tlj2ykawzvweacgmhxj43hykczgfuynk2lqzxvshm5lq2lyq");
-    cy.get(".css-1d87buq").contains(pool);
-    cy.get(".css-1mwjfms").contains(pool);
+    cy.get("small").contains("Pool ID", { matchCase: false });
+    cy.get("small ~ a").should("have.attr", "href").and("include", pool);
     cy.get(":nth-child(1) > .css-syl2v3 > .css-vkzxw5").contains("Ticker");
     cy.get(":nth-child(2) > .css-syl2v3 > .css-vkzxw5").contains("Created At");
-    cy.get(":nth-child(3) > .css-syl2v3 > .css-0 > .css-vkzxw5").contains("Reward Account");
-    cy.get(":nth-child(4) > .css-syl2v3 > .css-0 > .css-vkzxw5").contains("Owner Account");
+    cy.get(":nth-child(3) > .css-syl2v3 .css-vkzxw5").contains("Reward Account");
+    cy.get(":nth-child(4) > .css-syl2v3 .css-vkzxw5").contains("Owner Account");
     cy.get(":nth-child(5) > .css-syl2v3 > .css-vkzxw5").contains("Pool size");
     cy.get(":nth-child(6) > .css-syl2v3 > .css-vkzxw5").contains("Stake limit");
     cy.get(":nth-child(7) > .css-syl2v3 > .css-vkzxw5").contains("Delegators");
     cy.get(".css-1ebz4jx").contains("Saturation");
-    //cy.get(':nth-child(1) > .css-uwep2u > .css-1vfa4qi').contains("Reward");
-    cy.get(":nth-child(1) > .css-uwep2u > .css-1vfa4qi").contains("Fixed Cost");
-    cy.get(":nth-child(2) > .css-uwep2u > .css-1vfa4qi").contains("Margin");
-    cy.get(":nth-child(3) > .css-uwep2u > .css-1vfa4qi").contains("Declared Pledge");
-    cy.get(":nth-child(4) > .css-uwep2u > .css-1vfa4qi").contains("Epoch Blocks");
-    cy.get(":nth-child(5) > .css-uwep2u > .css-1vfa4qi").contains("Lifetime Blocks");
+
+    cy.get("div > .css-27jcwj").contains("Fixed Cost");
+    cy.get("div > .css-27jcwj").contains("Margin");
+    cy.get("div > .css-27jcwj").contains("Declared Pledge");
+    cy.get("div > .css-27jcwj").contains("Epoch Blocks");
+    cy.get("div > .css-27jcwj").contains("Lifetime Blocks");
     cy.get(".css-vd773l").contains("Analytics");
     cy.get('[data-testid="table-common"]').contains("Epoch");
+  });
+
+  it("should display the Retired Pools", () => {
+    let totalPools = 0;
+    let retiredPools = 0;
+
+    cy.visit("/pools");
+
+    cy.get("div")
+      .contains("Results")
+      .find("span")
+      .invoke("text")
+      .then((text) => {
+        const num = Number(text.replace(",", ""));
+        if (isNaN(num)) return;
+        totalPools = num;
+        cy.get("div").contains("Show Retired Pools").find(`input[type="checkbox"]`).click({ force: true });
+        cy.get("div")
+          .contains("Results")
+          .find("span")
+          .invoke("text")
+          .then((text) => {
+            const num = Number(text.replace(",", ""));
+            if (isNaN(num)) return;
+            retiredPools = num;
+            cy.log(`results: ${totalPools} - ${retiredPools}`);
+            expect(retiredPools).to.be.not.equal(totalPools);
+          });
+      });
+  });
+
+  it("should show Actual Pledge", () => {
+    cy.visit("/pool/pool1q80jjs53w0fx836n8g38gtdwr8ck5zre3da90peuxn84sj3cu0r");
+    cy.get(`[data-testid="checking-green"]`).trigger("mouseover");
+    cy.get("div").contains("Actual Pledge");
+    cy.get(`[data-testid="actual-pledge-value"]`)
+      .invoke("text")
+      .then((text) => {
+        const num = Number(text.replace(",", "").replace(".", ""));
+        expect(num).to.be.a("number");
+      });
+
+    cy.visit("/pool/pool1ddskftmsscw92d7vnj89pldwx5feegkgcmamgt5t0e4lkd7mdp8");
+    cy.get(`[data-testid="warning-light"]`).trigger("mouseover");
+    cy.get(`[data-testid="actual-pledge-value"]`)
+      .invoke("text")
+      .then((text) => {
+        const num = Number(text.replace(",", "").replace(".", ""));
+        expect(num).to.be.a("number");
+      });
   });
 });

@@ -6,7 +6,7 @@ describe("address detail spec", () => {
     cy.get('[data-testid="menu-button-blockchain"]').click();
     cy.get('[data-testid="submenu-button-transactions"]').click();
     cy.get('[data-testid="transactions-card"]').contains("Transactions");
-    cy.get(":nth-child(1) > :nth-child(6) > :nth-child(1) > :nth-child(1) > .css-1l62pou").click();
+    cy.get(`[data-testid="table-common"] tbody tr:nth-child(1) td:nth-child(8) a`).eq(0).click();
     cy.get(".css-19nq3tn").contains("Address Details");
   });
 

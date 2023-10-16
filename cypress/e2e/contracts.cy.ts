@@ -30,11 +30,11 @@ describe("contracts spec", () => {
     cy.get(".css-12n155v").contains(address);
   });
 
-  it.only("should navigate to the contract detail page", () => {
+  it("should navigate to the contract detail page", () => {
     cy.visit("/contracts");
     cy.get("h2").contains("Smart Contracts");
     cy.get(":nth-child(1) > :nth-child(1) > div > .css-1l62pou").click();
-    cy.get(".css-1msjg76 > .css-0").contains("Contract Details");
+    cy.get("h2").contains("Contract Details");
     cy.get(":nth-child(1) > .css-1heutcx > .css-k6svam > .css-1xc8op").contains("Address");
     cy.get(":nth-child(2) > .css-1heutcx > .css-k6svam > .css-1xc8op").contains("Stake Address");
     cy.get('[id*="T-transaction"]').contains("Transaction");

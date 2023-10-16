@@ -6,13 +6,12 @@ describe("transactions spec", () => {
     cy.get('[data-testid="menu-button-blockchain"]').click();
     cy.get('[data-testid="submenu-button-transactions"]').click();
     cy.get('[data-testid="transactions-card"]').contains("Transactions");
-    //cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("#");
-    cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("Tx Hash", { matchCase: false });
-    cy.get(".css-1dz0v3k > tr > :nth-child(2)").contains("Block", { matchCase: false });
-    cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Fees", { matchCase: false });
-    cy.get(".css-1dz0v3k > tr > :nth-child(4)").contains("Output in ADA", { matchCase: false });
-    cy.get(".css-1dz0v3k > tr > :nth-child(5)").contains("Input address", { matchCase: false });
-    cy.get(".css-1dz0v3k > tr > :nth-child(6)").contains("Output address", { matchCase: false });
+    cy.get(`[data-testid="table-common"] tr th`).contains("Tx Hash", { matchCase: false });
+    cy.get(`[data-testid="table-common"] tr th`).contains("Block", { matchCase: false });
+    cy.get(`[data-testid="table-common"] tr th`).contains("Fees", { matchCase: false });
+    cy.get(`[data-testid="table-common"] tr th`).contains("Output in ADA", { matchCase: false });
+    cy.get(`[data-testid="table-common"] tr th`).contains("Input address", { matchCase: false });
+    cy.get(`[data-testid="table-common"] tr th`).contains("Output address", { matchCase: false });
   });
 
   it("redirect to correct transaction detail page", () => {

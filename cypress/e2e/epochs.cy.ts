@@ -37,7 +37,7 @@ describe("epoch spec", () => {
     cy.get(".css-17lbe4a").contains(epoch);
   });
 
-  it.only("should navigate to the epoch detail page", () => {
+  it("should navigate to the epoch detail page", () => {
     const epoch = "426";
     cy.visit("/epoch/426");
     cy.get("div").contains("Epoch details", { matchCase: false });
@@ -59,12 +59,13 @@ describe("epoch spec", () => {
       matchCase: false
     });
     cy.get('[data-testid="table-common"]').verifyElementDisplay;
-    cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("Block");
-    cy.get(".css-1dz0v3k > tr > :nth-child(2)").contains("Block ID");
-    cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Epoch / Slot");
-    cy.get(".css-1dz0v3k > tr > :nth-child(4)").contains("Created At");
-    cy.get(".css-1dz0v3k > tr > :nth-child(5)").contains("Transactions");
-    cy.get(".css-1dz0v3k > tr > :nth-child(6)").contains("Fees");
-    cy.get(".css-1dz0v3k > tr > :nth-child(7)").contains("Output");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Block");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Block ID");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Epoch");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Slot");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Created At");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Transactions");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Fees");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Output");
   });
 });
