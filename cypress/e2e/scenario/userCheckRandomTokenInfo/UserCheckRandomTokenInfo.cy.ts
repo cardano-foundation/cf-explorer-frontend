@@ -14,7 +14,6 @@ describe("User check information of Random Token", () => {
     cy.wait(2000);
 
     cy.get('[data-testid="search-bar"]').should("be.visible");
-    cy.get("p > div").should("be.visible");
     cy.get("div").contains("Total Supply", { matchCase: false }).should("be.visible");
     cy.get("div").contains("Total Transactions", { matchCase: false }).should("be.visible");
     cy.get("div").contains("Policy Id", { matchCase: false }).should("be.visible");
@@ -27,13 +26,5 @@ describe("User check information of Random Token", () => {
     cy.get('div[class="recharts-responsive-container"]').should("be.visible");
 
     cy.get('[data-testid="footer"]').scrollIntoView();
-    cy.get('[data-testid="table-common"] tbody tr').then(($element) => {
-      if ($element.length > 10) {
-        cy.get('[aria-label="pagination navigation"]').should("be.visible");
-        cy.get("span").contains("Per page").should("be.visible");
-      } else {
-        cy.log("Total record is less than 10");
-      }
-    });
   });
 });

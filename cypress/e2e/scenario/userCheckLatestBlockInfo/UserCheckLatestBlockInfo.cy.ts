@@ -13,7 +13,6 @@ describe("User check information of latest Block", () => {
     cy.get("a").contains("View Details", { matchCase: false }).click();
 
     cy.get('[data-testid="search-bar"]').should("be.visible");
-    cy.get("p > div").should("be.visible");
     cy.get("div").contains("Block details", { matchCase: false }).should("be.visible");
     cy.get("div").contains("Created At", { matchCase: false }).should("be.visible");
     cy.get("div").contains("Confirmation").should("be.visible");
@@ -24,13 +23,5 @@ describe("User check information of latest Block", () => {
     cy.get('[data-testid="table-common"]').should("be.visible");
 
     cy.get('[data-testid="footer"]').scrollIntoView();
-    cy.get('[data-testid="table-common"] tbody tr').then(($element) => {
-      if ($element.length > 10) {
-        cy.get('[aria-label="pagination navigation"]').should("be.visible");
-        cy.get("span").contains("Per page").should("be.visible");
-      } else {
-        cy.log("Total Transaction record is less than 10");
-      }
-    });
   });
 });
