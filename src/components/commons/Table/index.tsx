@@ -403,7 +403,8 @@ const Table: React.FC<TableProps> = ({
   maxHeight,
   isShowingResult,
   isModal,
-  height
+  height,
+  minHeight
 }) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange
@@ -455,7 +456,7 @@ const Table: React.FC<TableProps> = ({
       <Wrapper
         ref={wrapperRef}
         maxHeight={maxHeight}
-        minHeight={(!data || data.length === 0) && !loading ? 360 : loading ? 400 : 150}
+        minHeight={minHeight ? minHeight : (!data || data.length === 0) && !loading ? 360 : loading ? 400 : 15}
         height={height || heightTable}
         className={data && data.length !== 0 ? "table-wrapper" : "hide-scroll"}
         loading={loading ? 1 : 0}

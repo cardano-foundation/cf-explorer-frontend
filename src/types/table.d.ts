@@ -100,6 +100,7 @@ export interface TableProps<T extends ColumnType = any> {
    * @deprecated: This props is deprecated. Please pass maxHeight attribute to tableWrapperProps.
    */
   maxHeight?: number | string;
+  minHeight?: number | string;
   height?: number | string;
   tableWrapperProps?: BoxProps;
   isModal?: boolean;
