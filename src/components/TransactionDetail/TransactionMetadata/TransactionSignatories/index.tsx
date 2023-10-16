@@ -25,7 +25,7 @@ const TransactionSignatories: React.FC<IProps> = ({ data }) => {
       }
     },
     {
-      title: "Signer Public Key Hash",
+      title: t("trx.signerPublicKeyHas"),
       key: "publicKey",
       minWidth: "40px",
       render: (r) => {
@@ -35,7 +35,7 @@ const TransactionSignatories: React.FC<IProps> = ({ data }) => {
               {r?.publicKey}{" "}
               {r?.delegateKey ? (
                 <CustomTooltip title={t("trx.tooltipSignatories")} placement={"top"}>
-                  <Box pt={"5px"}>
+                  <Box>
                     <MdInfoOutline />
                   </Box>
                 </CustomTooltip>
@@ -59,7 +59,7 @@ const TransactionSignatories: React.FC<IProps> = ({ data }) => {
       </Box>
       <Wrapper>
         <TableProtocol
-          height={(data || [])?.length > 5 ? 420 : 0}
+          height={(data || [])?.length > 5 ? 350 : 0}
           showPagination={false}
           columns={columns}
           data={data?.map((d, i) => ({ ...d, index: i + 1 }))}
