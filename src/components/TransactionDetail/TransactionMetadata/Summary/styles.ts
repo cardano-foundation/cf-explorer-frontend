@@ -103,7 +103,7 @@ export const TitleText = styled(Box)(({ theme }) => ({
 }));
 
 export const ValueText = styled(Box)(({ theme }) => ({
-  whiteSpace: "nowrap",
+  wordBreak: "break-all",
   color: theme.palette.secondary.main
 }));
 
