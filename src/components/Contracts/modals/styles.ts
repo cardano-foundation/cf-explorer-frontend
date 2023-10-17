@@ -9,10 +9,6 @@ export const ModalContent = styled(Box)`
   gap: 12px;
   max-height: 70vh;
   padding: 4px;
-  overflow-y: auto;
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
   ${({ theme }) => theme.breakpoints.down("sm")} {
     max-height: 70vh;
   }
@@ -37,7 +33,7 @@ export const StyledList = styled(List)`
   background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white)};
   border-radius: 8px;
   box-shadow: 1px 2px 4px 0px rgba(67, 70, 86, 0.2);
-  overflow: hidden;
+  overflow-y: auto;
   padding: 0px;
 `;
 
