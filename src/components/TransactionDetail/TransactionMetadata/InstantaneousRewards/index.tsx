@@ -34,9 +34,9 @@ const ItemInstantaneousRewards = ({ data }: { data: Transaction["instantaneousRe
   return (
     <Box>
       {data?.map((item) => (
-        <Item key={item.stakeAddress} overflow={"scroll"}>
+        <Item key={item.stakeAddress} overflow={"auto"}>
           <ItemContent>
-            <Content sx={{ width: "60vw" }} className="kkkk">
+            <Content sx={{ width: "60vw" }}>
               <Link
                 data-testid={`stake-item-${item.stakeAddress}`}
                 to={details.stake(item.stakeAddress)}
