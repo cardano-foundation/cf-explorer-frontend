@@ -132,7 +132,7 @@ export const EllipsisContainer = styled(Box)<{ isFailed?: boolean }>`
   color: ${({ theme, isFailed }) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)};
   max-width: 220px;
   ${({ theme }) => theme.breakpoints.up("sm")} {
-    max-width: 40vw;
+    max-width: 60vw;
   }
   ${({ theme }) => theme.breakpoints.up("md")} {
     max-width: 45vw;
