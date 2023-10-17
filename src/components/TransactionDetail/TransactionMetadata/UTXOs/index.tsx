@@ -104,7 +104,7 @@ const Card = ({
                 <Box display="flex" flexDirection="column" justifyContent="center" paddingTop="5px" flexGrow={1}>
                   {type === "down" ? (
                     <WrapUTXOs>
-                      <Box mr={3} minWidth={200}>
+                      <Box mr={3} minWidth={200} width={"100%"}>
                         <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
                           <Box
                             color={(theme) => (isFailed ? theme.palette.secondary[600] : theme.palette.secondary.light)}
@@ -156,9 +156,9 @@ const Card = ({
                         justifyContent="flex-start"
                         alignItems={"center"}
                         flexWrap="nowrap"
-                        width={"auto"}
+                        width={"100%"}
                       >
-                        <Link to={details.address(item.address)}>
+                        <Link to={details.address(item.address)} style={{ width: "100%" }}>
                           <EllipsisContainer isFailed={isFailed}>
                             <DynamicEllipsisText value={item.address} isCopy isTooltip />
                           </EllipsisContainer>
@@ -174,7 +174,7 @@ const Card = ({
                       flexDirection={isMobile ? "column" : "row"}
                       paddingTop="5px"
                     >
-                      <Box mr={3} minWidth={180}>
+                      <Box mr={3} minWidth={180} width={"100%"}>
                         <Box
                           display={"flex"}
                           flexDirection={isMobile ? "column" : "row"}
@@ -189,7 +189,7 @@ const Card = ({
                             {t("common.stakeAddress")}:{" "}
                           </Box>
                           <Box style={{ width: "100%" }}>
-                            <Link to={details.stake(item?.stakeAddress)}>
+                            <Link to={details.stake(item?.stakeAddress)} style={{ width: "100%" }}>
                               <EllipsisContainer isFailed={isFailed}>
                                 <DynamicEllipsisText value={item.stakeAddress} isCopy isTooltip />
                               </EllipsisContainer>

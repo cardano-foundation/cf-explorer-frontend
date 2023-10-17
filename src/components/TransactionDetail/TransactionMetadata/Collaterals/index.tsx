@@ -28,6 +28,7 @@ import {
   WrapUTXOs,
   Wrapper
 } from "./style";
+import { EllipsisContainer } from "../UTXOs/styles";
 
 interface CollateralProps {
   data: Transaction["collaterals"] | null;
@@ -112,16 +113,16 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                 </Box>
               ) : null}
             </Box>
-            <WrapContent>
-              <Box>
+            <WrapContent flexGrow={1}>
+              <Box flexGrow={1}>
                 {type === "input" && (
                   <WrapUTXOs>
-                    <Box mr={3} minWidth={200}>
-                      <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
+                    <Box mr={3} minWidth={200} width={"100%"}>
+                      <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} width={"100%"}>
                         <Box color={(theme) => theme.palette.secondary.light} pr={1}>
                           {t("tab.utxo")}:
                         </Box>
-                        <Link to={details.transaction(item.txHash)} style={{ maxWidth: "45vw" }}>
+                        <Link to={details.transaction(item.txHash)} style={{ width: "100%" }}>
                           <CustomTooltip title={item.txHash}>
                             <Box
                               component={"span"}
@@ -129,17 +130,19 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                               fontFamily={"var(--font-family-text)"}
                               color={(theme) => theme.palette.primary.main}
                             >
-                              <DynamicEllipsisText
-                                value={item.txHash}
-                                afterElm={
-                                  <FlexCenter>
-                                    <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
-                                      #{item?.index}
-                                    </Box>
-                                    <CopyButton text={item.txHash} />
-                                  </FlexCenter>
-                                }
-                              />
+                              <EllipsisContainer>
+                                <DynamicEllipsisText
+                                  value={item.txHash}
+                                  afterElm={
+                                    <FlexCenter>
+                                      <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
+                                        #{item?.index}
+                                      </Box>
+                                      <CopyButton text={item.txHash} />
+                                    </FlexCenter>
+                                  }
+                                />
+                              </EllipsisContainer>
                             </Box>
                           </CustomTooltip>
                         </Link>
@@ -165,22 +168,24 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                       {type === "input" ? "From" : "To"}:
                     </Box>
                   ) : null}
-                  <Box display={"flex"} justifyContent="space-between" flex={"1"} alignItems={"center"}>
+                  <Box display={"flex"} justifyContent="space-between" flex={"1"} alignItems={"center"} width={"100%"}>
                     <Box
                       display={"flex"}
                       justifyContent="flex-start"
                       alignItems={"center"}
                       flexWrap="nowrap"
-                      width={"auto"}
+                      width={"100%"}
                     >
-                      <Link to={details.address(item.address)} style={{ maxWidth: "60vw" }}>
+                      <Link to={details.address(item.address)} style={{ width: "100%" }}>
                         <Box
                           fontWeight="bold"
                           fontFamily={"var(--font-family-text)"}
                           color={(theme) => theme.palette.primary.main}
                           mr={1}
                         >
-                          <DynamicEllipsisText value={item.address} isCopy isTooltip />
+                          <EllipsisContainer>
+                            <DynamicEllipsisText value={item.address} isCopy isTooltip />
+                          </EllipsisContainer>
                         </Box>
                       </Link>
                     </Box>
