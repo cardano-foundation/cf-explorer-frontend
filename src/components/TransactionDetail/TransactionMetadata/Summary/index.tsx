@@ -94,14 +94,14 @@ const SummaryItems = ({
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
             <TitleText>{type === "down" ? `${t("tab.adaSent")}` : `${t("tab.adaReceived")}`}</TitleText>
             <Box display="flex" alignItems="center">
-              <ValueText mr={1}>
+              <ValueText>
                 {item.value
                   ? type === "down"
                     ? `${formatADAFull(item.value).replace("-", "")}`
                     : `+${formatADAFull(item.value)}`
                   : t("common.na")}
+                {item.value ? <Box component={ADAicon} ml={1} display={"inline"} /> : null}
               </ValueText>
-              {item.value ? <ADAicon /> : null}
             </Box>
           </Box>
         </WrapItemsInfo>
