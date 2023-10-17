@@ -16,7 +16,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["cypress", "node","cypress-xpath"],
+    "types": ["cypress", "node"],
     "noImplicitAny": true
   },
   "paths": {
