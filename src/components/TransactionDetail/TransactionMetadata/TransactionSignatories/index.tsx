@@ -3,8 +3,6 @@ import { MdInfoOutline } from "react-icons/md";
 import { Box } from "@mui/material";
 import { t } from "i18next";
 
-import { CopyOutline2 } from "src/commons/resources";
-import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { Column } from "src/components/commons/Table";
 
@@ -19,7 +17,8 @@ const TransactionSignatories: React.FC<IProps> = ({ data }) => {
     {
       title: "#",
       key: "index",
-      maxWidth: "40px",
+      minWidth: "10px",
+      maxWidth: "20px",
       render: (r) => {
         return <div>{r.index}</div>;
       }
@@ -41,11 +40,6 @@ const TransactionSignatories: React.FC<IProps> = ({ data }) => {
                 </CustomTooltip>
               ) : null}
             </WrapperSignerPublicKey>
-            <CopyButton
-              text={r.publicKey}
-              customIcon={CopyOutline2}
-              style={{ cursor: "pointer", verticalAlign: "text-bottom" }}
-            />
           </WrapperRowContent>
         );
       }
@@ -59,7 +53,7 @@ const TransactionSignatories: React.FC<IProps> = ({ data }) => {
       </Box>
       <Wrapper>
         <TableProtocol
-          height={(data || [])?.length > 5 ? 350 : 0}
+          height={(data || [])?.length > 5 ? 320 : 0}
           showPagination={false}
           columns={columns}
           data={data?.map((d, i) => ({ ...d, index: i + 1 }))}
