@@ -79,10 +79,11 @@ export const FoldCard = styled(Box)`
   gap: 8px;
   box-shadow: ${(props) => props.theme.shadow.card};
   border-radius: 6px;
-  background-color: ${({ theme }) => theme.palette.background.paper};
+  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0])};
 `;
 export const FoldCardName = styled(Box)`
   font-weight: 500;
+  color: ${({ theme }) => theme.palette.secondary.main} !important;
   & a {
     color: ${({ theme }) => theme.palette.primary.main} !important;
     font-weight: 400;
@@ -90,6 +91,7 @@ export const FoldCardName = styled(Box)`
 `;
 export const FoldCardValue = styled(Box)`
   font-weight: 500;
+  color: ${({ theme }) => theme.palette.secondary.main} !important;
   & span {
     font-weight: 400;
     line-break: anywhere;
