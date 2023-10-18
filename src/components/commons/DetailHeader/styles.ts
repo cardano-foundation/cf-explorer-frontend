@@ -449,6 +449,29 @@ export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   justifyContent: "space-between",
   ":hover": {
     background: theme.palette.primary[200]
+  },
+  "&:after": {
+    content: `""`,
+    display: "none"
+  },
+  [theme.breakpoints.down(355)]: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+    width: "100dvw",
+    height: "unset",
+    position: "relative",
+    "&:after": {
+      display: "block",
+      width: "calc(100% - 60px)",
+      height: 1,
+      background: theme.palette.border.hint,
+      position: "absolute",
+      bottom: 0,
+      left: 14
+    },
+    "&:last-child:after": {
+      display: "none"
+    }
   }
 }));
 

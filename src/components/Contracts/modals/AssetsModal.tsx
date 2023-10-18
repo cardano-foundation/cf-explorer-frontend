@@ -1,13 +1,23 @@
 import { ListItemText, Typography, useTheme } from "@mui/material";
-import React from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import CustomModal from "src/components/commons/CustomModal";
 import { CustomBadge } from "src/components/commons/ViewBlocks/styles";
 import { details } from "src/commons/routers";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import { DataTitle } from "../common/styles";
-import { ModalContent, StyledItem, StyledLink, StyledList, StyledListItemText } from "./styles";
+import {
+  FoldCard,
+  FoldCardName,
+  FoldCardValue,
+  ModalContent,
+  StyledItem,
+  StyledLink,
+  StyledList,
+  StyledListItemText
+} from "./styles";
 
 type Data = { title: string; value: string | number; link?: string };
 export interface AssetsModalProps {
@@ -19,8 +29,56 @@ export interface AssetsModalProps {
 }
 const AssetsModal: React.FC<AssetsModalProps> = ({ open = false, onClose, data, isBurned, isBurnType }) => {
   const { t } = useTranslation();
+  const { isMobile, isGalaxyFoldSmall } = useScreen();
   const theme = useTheme();
   const handleCloseModal = () => onClose?.();
+
+  const renderContent = useMemo(() => {
+    if (isMobile && data) {
+      return (
+        data.length > 0 &&
+        data.map((item) => (
+          <FoldCard key={item.title}>
+            <FoldCardName>
+              Asset Name: <StyledLink to={details.token(item.link)}>{item.title}</StyledLink>
+            </FoldCardName>
+            <FoldCardValue>
+              Quantity: <Typography component="span">{item.value}</Typography>{" "}
+            </FoldCardValue>
+          </FoldCard>
+        ))
+      );
+    }
+    return (
+      <StyledList dense={true}>
+        <StyledItem
+          style={{ borderBottom: "sold 1px blue" }}
+          secondaryAction={<DataTitle>{t("common.quantity")}</DataTitle>}
+        >
+          <ListItemText>
+            <DataTitle>{t("contract.assetName")}</DataTitle>
+          </ListItemText>
+        </StyledItem>
+        {data &&
+          data.length > 0 &&
+          data.map((item) => (
+            <StyledItem
+              key={item.title}
+              secondaryAction={
+                <Typography style={{ color: isBurned ? theme.palette.error[700] : theme.palette.secondary.light }}>
+                  {item.value}
+                </Typography>
+              }
+            >
+              <StyledListItemText color={theme.palette.primary.main}>
+                <StyledLink to={details.token(item.link)}>{item.title}</StyledLink>
+              </StyledListItemText>
+            </StyledItem>
+          ))}
+      </StyledList>
+    );
+  }, [isMobile, data]);
+
   return (
     <CustomModal
       modalProps={{ style: { zIndex: 1302 } }}
@@ -50,37 +108,16 @@ const AssetsModal: React.FC<AssetsModalProps> = ({ open = false, onClose, data, 
           </CustomBadge>
         </Typography>
       }
-      width={550}
-      modalContainerProps={{ px: "20px" }}
+      width="100%"
+      style={{ maxWidth: "unset" }}
+      modalContainerProps={{
+        px: "20px",
+        width: "100% !important",
+        maxWidth: "550px !important",
+        style: isGalaxyFoldSmall ? { width: "unset", padding: "20px 8px" } : {}
+      }}
     >
-      <ModalContent>
-        <StyledList>
-          <StyledItem
-            style={{ borderBottom: "sold 1px blue" }}
-            secondaryAction={<DataTitle>{t("common.quantity")}</DataTitle>}
-          >
-            <ListItemText>
-              <DataTitle>{t("contract.assetName")}</DataTitle>
-            </ListItemText>
-          </StyledItem>
-          {data &&
-            data.length > 0 &&
-            data.map((item) => (
-              <StyledItem
-                key={item.title}
-                secondaryAction={
-                  <Typography style={{ color: isBurned ? theme.palette.error[700] : theme.palette.secondary.light }}>
-                    {item.value}
-                  </Typography>
-                }
-              >
-                <StyledListItemText color={theme.palette.primary.main}>
-                  <StyledLink to={details.token(item.link)}>{item.title}</StyledLink>
-                </StyledListItemText>
-              </StyledItem>
-            ))}
-        </StyledList>
-      </ModalContent>
+      <ModalContent>{renderContent}</ModalContent>
     </CustomModal>
   );
 };
