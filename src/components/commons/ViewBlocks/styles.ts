@@ -78,8 +78,10 @@ export const CustomBadge = styled("span")<{ bgColor?: string; color?: string }>`
   justify-content: center;
   line-height: 4px;
   font-size: 12px;
-  width: 19px;
-  height: 19px;
+  width: fit-content;
+  min-width: 16px;
+  padding: 2px;
+  aspect-ratio: 1;
   border-radius: 50%;
   background-color: ${(props) =>
     props.bgColor
