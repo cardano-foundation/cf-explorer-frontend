@@ -61,14 +61,6 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       render: (r) => <Box color={({ palette }) => palette.secondary.light}>{formatDateTimeLocal(r.time || "")}</Box>
     },
     {
-      title: t("glossary.block"),
-      key: "block",
-      minWidth: 50,
-      render: (r) => (
-        <StyledLink to={details.block(r.blockNo || r.blockHash)}>{r.blockNo || getShortHash(r.blockHash)}</StyledLink>
-      )
-    },
-    {
       title: t("glossary.address"),
       key: "address",
       minWidth: 120,
