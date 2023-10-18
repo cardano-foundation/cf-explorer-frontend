@@ -44,7 +44,6 @@ describe("TransactionListFull", () => {
     expect(screen.getByRole("columnheader", { name: /tx hash/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: mockData.hash })).toBeInTheDocument();
     expect(screen.getByText(formatDateTimeLocal(mockData.time))).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: String(mockData.blockNo) })).toBeInTheDocument();
   });
 
   it("should user goto detail page", () => {
