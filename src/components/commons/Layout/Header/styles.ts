@@ -132,37 +132,75 @@ export const HeaderSearchContainer = styled(Box)<{ home?: number }>`
 
 export const SwitchMode = styled(Switch)(({ theme }) => ({
   padding: 8,
-  width: 64,
-  height: 40,
+  width: 76,
+  height: 44,
+  "& .MuiButtonBase-root": {
+    width: 60,
+    paddingLeft: 0,
+    paddingRight: theme.isDark ? 0 : "9px"
+  },
   "& .MuiSwitch-track": {
-    background: theme.palette.secondary.main,
-    opacity: 1,
+    background: theme.isDark ? `${theme.palette.secondary[0]} !important` : theme.palette.primary[100],
+    opacity: `1 !important`,
+    border: `1px solid ${theme.palette.primary[200]}`,
     borderRadius: 80 / 2,
-    "&:before, &:after": {
+    position: "relative",
+    "&:before": {
       content: '""',
       position: "absolute",
       top: "50%",
-      transform: "translateY(-50%)",
-      width: 20,
-      height: 20
-    },
-    "&:before": {
-      backgroundImage: `url(${moonIcon})`,
-      left: 12,
-      opacity: 1
+      left: "7%",
+      transform: "translateY(-42%)  scale(0.8)",
+      width: 23,
+      display: theme.isDark ? "block" : "none",
+      height: 26,
+      backgroundRepeat: "no-repeat",
+      backgroundImage: `url(${sunIcon})`
     },
     "&:after": {
-      backgroundImage: `url(${sunIcon})`,
-      right: 12,
-      opacity: 1
+      content: '""',
+      position: "absolute",
+      top: "54%",
+      display: theme.isDark ? "none" : "block",
+      transform: "translateY(-50%) scale(0.8)",
+      width: 23,
+      height: 26,
+      backgroundRepeat: "no-repeat",
+      backgroundImage: `url(${moonIcon})`,
+      right: "5%"
     }
   },
   "& .MuiSwitch-thumb": {
     boxShadow: "none",
-    width: 18,
-    height: 18,
+    width: 24,
+    height: 24,
     margin: `2px 4px`,
-    background: theme.palette.secondary[0]
+    position: "relative",
+    background: theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light,
+    "&:before": {
+      content: '""',
+      display: theme.isDark ? "none" : "block",
+      position: "absolute",
+      top: "50%",
+      left: "7%",
+      transform: "translateY(-42%)  scale(0.8)",
+      width: 23,
+      height: 26,
+      backgroundRepeat: "no-repeat",
+      backgroundImage: `url(${sunIcon})`
+    },
+    "&:after": {
+      content: '""',
+      position: "absolute",
+      top: "54%",
+      transform: "translateY(-50%) scale(0.8)",
+      width: 23,
+      height: 26,
+      display: theme.isDark ? "block" : "none",
+      backgroundRepeat: "no-repeat",
+      backgroundImage: `url(${moonIcon})`,
+      right: "-1%"
+    }
   }
 }));
 
