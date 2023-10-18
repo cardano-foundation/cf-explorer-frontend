@@ -74,3 +74,28 @@ export const StyledListItemText = styled(ListItemText)`
 export const TitleModal = styled(Box)`
   color: ${({ theme }) => theme.palette.secondary.light};
 `;
+
+export const FoldCard = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 12px 8px;
+  gap: 8px;
+  box-shadow: ${(props) => props.theme.shadow.card};
+  border-radius: 6px;
+  background-color: ${({ theme }) => theme.palette.background.paper};
+`;
+export const FoldCardName = styled(Box)`
+  font-weight: 500;
+  & a {
+    color: ${({ theme }) => theme.palette.primary.main} !important;
+    font-weight: 400;
+  }
+`;
+export const FoldCardValue = styled(Box)`
+  font-weight: 500;
+  & span {
+    font-weight: 400;
+    line-break: anywhere;
+  }
+`;
