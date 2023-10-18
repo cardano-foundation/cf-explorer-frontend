@@ -26,8 +26,7 @@ export const TableProtocol = styled(Table)(({ theme }) => ({
 }));
 
 export const UpdatedValue = styled(Box)(() => ({
-  width: "100%",
-  maxWidth: 300,
+  width: "fit-content",
   overflow: "hidden",
   whiteSpace: "nowrap",
   textOverflow: "ellipsis",

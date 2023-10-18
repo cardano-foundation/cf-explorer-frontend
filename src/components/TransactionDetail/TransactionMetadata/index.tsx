@@ -157,16 +157,16 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
       children: <ProtocolUpdate data={protocolsMergeData} />
     },
     {
-      key: "signersInformation",
-      icon: GitCommitIcon,
-      label: t("tab.signersInformation"),
-      children: <TransactionSignatories data={data?.signersInformation} />
-    },
-    {
       key: "instantaneousRewards",
       icon: InstantaneousHistoryIcon,
       label: `${t("glossary.instantaneousRewards")} (${data?.instantaneousRewards?.length || 0})`,
       children: <InstantaneousRewards data={data?.instantaneousRewards} />
+    },
+    {
+      key: "signersInformation",
+      icon: GitCommitIcon,
+      label: t("tab.signersInformation"),
+      children: <TransactionSignatories data={data?.signersInformation} />
     },
     {
       key: "metadata",
