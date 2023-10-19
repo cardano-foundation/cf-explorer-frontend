@@ -414,12 +414,11 @@ const Table: React.FC<TableProps> = ({
   const wrapperRef = useRef<HTMLElement>(null);
   const { width } = useScreen();
 
-  let heightTable = Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight * 0.5);
+  let heightTable = window.innerHeight * 0.5;
 
   if (width >= breakpoints.values.sm) {
     const footerHeight = document.getElementById("footer")?.offsetHeight || SPACING_TOP_TABLE;
-    heightTable =
-      Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight) - (footerHeight + SPACING_TOP_TABLE);
+    heightTable = window.innerHeight - (footerHeight + SPACING_TOP_TABLE);
   }
 
   const toggleSelectAll = (isChecked: boolean) => {
