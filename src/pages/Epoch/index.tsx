@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
-import { EPOCH_STATUS } from "src/commons/utils/constants";
+import { EPOCH_STATUS, NETWORK, NETWORKS } from "src/commons/utils/constants";
 import { formatADAFull, formatDateTimeLocal, getPageInfo } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import Card from "src/components/commons/Card";
@@ -158,7 +158,12 @@ const Epoch: React.FC = () => {
         <Table
           {...fetchData}
           data={fetchData.currentPage === 0 ? [...fetchData.data.slice(1)] : fetchData.data}
-          columns={columns}
+          columns={columns.filter((column) => {
+            if (NETWORK === NETWORKS.sanchonet) {
+              return column.key !== "rDistributed";
+            }
+            return true;
+          })}
           total={{ title: t("common.totalEpochs"), count: fetchData.total }}
           pagination={{
             ...pageInfo,

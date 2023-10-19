@@ -14,6 +14,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import CustomIcon from "src/components/commons/CustomIcon";
+import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 
 import {
   AntSwitch,
@@ -227,7 +228,12 @@ const DelegationLists: React.FC = () => {
       </TopSearchContainer>
       <Table
         {...fetchData}
-        columns={columns}
+        columns={columns.filter((column) => {
+          if (NETWORK === NETWORKS.sanchonet) {
+            return column.key !== "saturation" && column.key !== "poolSize";
+          }
+          return true;
+        })}
         total={{ count: fetchData.total, title: "Total", isDataOverSize: fetchData.isDataOverSize }}
         onClickRow={(_, r: Delegators) => history.push(details.delegation(r.poolId), { fromPath })}
         pagination={{
