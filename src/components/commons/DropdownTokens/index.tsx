@@ -151,11 +151,7 @@ export const TokenLink: React.FC<{
     let elm: React.ReactElement | string;
     if (tokenName) {
       if (tokenName.length > 20) {
-        elm = (
-          <CustomTooltip title={tokenName}>
-            <>{getShortHash(tokenName)}</>
-          </CustomTooltip>
-        );
+        elm = getShortHash(tokenName);
       } else {
         elm = tokenName;
       }
@@ -183,7 +179,13 @@ export const TokenLink: React.FC<{
           color={({ palette }) => palette.secondary.main}
           sx={{ overflow: "hidden", textOverflow: "ellipsis", maxWidth: "90%" }}
         >
-          <Box color={({ palette }) => palette.secondary.main}>{renderTokenName(token)}</Box>
+          <Box
+            color={({ palette }) => palette.secondary.main}
+            component={token?.assetName && token?.assetName.length > 20 ? CustomTooltip : Box}
+            title={token?.assetName}
+          >
+            {renderTokenName(token)}
+          </Box>
         </Box>
         <Box display={"flex"} alignItems={"center"}>
           {!hideValue ? (
