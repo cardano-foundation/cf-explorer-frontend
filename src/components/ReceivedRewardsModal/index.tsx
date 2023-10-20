@@ -108,23 +108,22 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       <ModalContainer>
         <ModalTitle>
           {type === RECEIVED_REWARDS.LEADER
-            ? t("glossary.operatorReward")
+            ? t("common.TotalOperatorRewardsReceived")
             : type === RECEIVED_REWARDS.MEMBER
-            ? t("slc.delegator.reward")
+            ? t("common.TotalDelegatorRewardsReceived")
             : t("glossary.receivedRewared")}
         </ModalTitle>
         <ModalContent>
-          {type == RECEIVED_REWARDS.ALL ? (
-            <RewardBalanceHeader>
-              <RewardBalance>
-                {theme.isDark ? <WalletIconRewardGreenDark /> : <WalletIconRewardGreen />}
-                <RewardBalanceTitle>
-                  {t("glossary.rewardBalance")}: {formatADAFull(reward)}
-                </RewardBalanceTitle>
-                <ADAicon />
-              </RewardBalance>
-            </RewardBalanceHeader>
-          ) : null}
+          <RewardBalanceHeader>
+            <RewardBalance>
+              {theme.isDark ? <WalletIconRewardGreenDark /> : <WalletIconRewardGreen />}
+              <RewardBalanceTitle>
+                {type === RECEIVED_REWARDS.ALL ? t("slc.totalRewardsReceived") : t("slc.amountReceived")}:{" "}
+                {formatADAFull(reward)}
+              </RewardBalanceTitle>
+              <ADAicon />
+            </RewardBalance>
+          </RewardBalanceHeader>
           <TableContainer>
             <Table
               {...fetchData}
