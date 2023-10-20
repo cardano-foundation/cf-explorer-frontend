@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useContext, useMemo, useRef, useState } from "react";
 import { Box, styled, useTheme } from "@mui/material";
 import { useParams } from "react-router-dom";
 import moment from "moment";
@@ -21,6 +21,7 @@ import { RewardBalance, RewardBalanceTitle } from "src/components/ReceivedReward
 import { WalletIconRewardGreen, WalletIconRewardGreenDark } from "src/commons/resources";
 
 import { StyledLink, DrawContainer, ADAAmount, StyledEpoch, HoldContainer, HoldBoxTitle } from "./styles";
+import PoolDetailContext from "../PoolDetailContext";
 
 const OperatorReward = () => {
   const { t } = useTranslation();
@@ -63,6 +64,7 @@ const OperatorReward = () => {
 export default OperatorReward;
 
 const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void }) => {
+  const data = useContext(PoolDetailContext);
   const { t } = useTranslation();
   const { poolId = "" } = useParams<{ poolId: string }>();
   const theme = useTheme();
@@ -112,7 +114,7 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void 
       <RewardBalance>
         {theme.isDark ? <WalletIconRewardGreenDark /> : <WalletIconRewardGreen />}
         <RewardBalanceTitle>
-          {t("slc.amountReceived")}: {formatADAFull(132230000)}
+          {t("slc.amountReceived")}: {formatADAFull(data?.rewardAvailable || 0)}
         </RewardBalanceTitle>
         <ADAicon />
       </RewardBalance>

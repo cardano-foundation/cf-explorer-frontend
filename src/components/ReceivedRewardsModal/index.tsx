@@ -9,7 +9,7 @@ import { WalletIconRewardGreen, WalletIconRewardGreenDark } from "src/commons/re
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { RECEIVED_REWARDS, REWARD_TYPES, REWARD_TYPES_LABEL } from "src/commons/utils/constants";
-import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 
 import ADAicon from "../commons/ADAIcon";
 import StyledModal from "../commons/StyledModal";
@@ -31,6 +31,8 @@ interface ReceivedReward {
   epoch: number;
   time: string;
   type: string;
+  poolView: string;
+  poolHash: string;
 }
 
 export interface ReceivedRewardsModalProps {
@@ -73,6 +75,13 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
     },
     {
       key: "epoch",
+      title: t("common.poolId"),
+      render(data) {
+        return <EpochRow to={details.epoch(data.poolView)}>{getShortHash(data.poolView)}</EpochRow>;
+      }
+    },
+    {
+      key: "poolView",
       title: t("common.Epoch"),
       render(data) {
         return <EpochRow to={details.epoch(data.epoch)}>{data.epoch}</EpochRow>;
