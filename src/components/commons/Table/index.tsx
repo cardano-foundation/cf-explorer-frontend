@@ -416,7 +416,7 @@ const Table: React.FC<TableProps> = ({
 
   let heightTable = Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight * 0.5);
 
-  if (width >= breakpoints.values.sm) {
+  if (width >= breakpoints.values.sm && (data || []).length > 10) {
     const footerHeight = document.getElementById("footer")?.offsetHeight || SPACING_TOP_TABLE;
     heightTable =
       Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight) - (footerHeight + SPACING_TOP_TABLE);
