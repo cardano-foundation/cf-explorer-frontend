@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from "react";
-import { Box, styled } from "@mui/material";
+import { Box, styled, useTheme } from "@mui/material";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
@@ -14,12 +14,13 @@ import Table, { Column } from "src/components/commons/Table";
 import useFetchList from "src/commons/hooks/useFetchList";
 import ADAicon from "src/components/commons/ADAIcon";
 import CardanoBlockchain from "src/components/commons/CardanoBlockchain";
-import SPOHolder from "src/components/commons/SPOHolder";
 import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
-import { ADAactiveFlip } from "src/components/commons/AdaActiveFlip";
+import SPOHolderBox from "src/components/commons/SPOHolderBox";
+import { RewardBalance, RewardBalanceTitle } from "src/components/ReceivedRewardsModal/styles";
+import { WalletIconRewardGreen, WalletIconRewardGreenDark } from "src/commons/resources";
 
-import { StyledLink, DrawContainer, ADAOperator, ADATitle, ADAAmount, StyledEpoch } from "./styles";
+import { StyledLink, DrawContainer, ADAAmount, StyledEpoch, HoldContainer, HoldBoxTitle } from "./styles";
 
 const OperatorReward = () => {
   const { t } = useTranslation();
@@ -27,7 +28,6 @@ const OperatorReward = () => {
   const { poolId = "" } = useParams<{ poolId: string }>();
   const { data } = useFetch<PoolInfo>(API.SPO_LIFECYCLE.SPO_POOL_INFO(poolId));
   const SPOHolderRef = useRef(null);
-  const operatorRef = useRef(null);
   const cardanoBlockchainRef = useRef(null);
 
   const paths = useMemo((): LineArrowItem[] => {
@@ -35,18 +35,10 @@ const OperatorReward = () => {
       {
         start: cardanoBlockchainRef,
         startPosition: { 0: ["center", "bottom"], sm: ["right", "middle"] },
-        end: operatorRef,
-        endPosition: { 0: ["center", "top"], sm: ["left", "middle"] },
-        startOffset: { 0: [0], sm: [-10] },
-        endOffset: { 0: [0, -2], sm: [50] },
-        arrow: { 0: "top", sm: "left" }
-      },
-      {
-        start: operatorRef,
-        startPosition: { 0: ["center", "bottom"], sm: ["right", "middle"] },
         end: SPOHolderRef,
         endPosition: { 0: ["center", "top"], sm: ["left", "middle"] },
-        startOffset: { 0: [0, -14], sm: [-40] },
+        startOffset: { 0: [0] },
+        endOffset: { 0: [0] },
         arrow: { 0: "top", sm: "left" }
       }
     ];
@@ -56,17 +48,14 @@ const OperatorReward = () => {
     <Box>
       <DrawContainer>
         <CardanoBlockchain ref={cardanoBlockchainRef} />
-        <ADAOperator ref={operatorRef} onClick={() => setOpenModal(true)}>
-          <ADAactiveFlip />
-          <ADATitle>{t("common.operatorRewards")}</ADATitle>
-        </ADAOperator>
-        <SPOHolder
-          ref={SPOHolderRef}
-          data={{ poolName: data?.poolName, poolView: data?.poolView, stakeKeys: data?.rewardAccounts }}
-        />
+        <HoldContainer onClick={() => setOpenModal(true)} ref={SPOHolderRef}>
+          <HoldBoxTitle>{t("common.rewardAccount")}</HoldBoxTitle>
+          <SPOHolderBox
+            data={{ poolName: data?.poolName, poolView: data?.poolView, stakeKeys: data?.rewardAccounts }}
+          />
+        </HoldContainer>
         <DrawPath paths={paths} />
       </DrawContainer>
-
       <OperatorRewardModal open={openModal} onClose={() => setOpenModal(false)} />
     </Box>
   );
@@ -76,6 +65,7 @@ export default OperatorReward;
 const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void }) => {
   const { t } = useTranslation();
   const { poolId = "" } = useParams<{ poolId: string }>();
+  const theme = useTheme();
   const [sort, setSort] = useState<string>("time,DESC");
   const [{ page, size }, setPagination] = useState<{ page: number; size: number }>({ page: 0, size: 50 });
   const fetchData = useFetchList<SPO_REWARD>(API.SPO_LIFECYCLE.REWARD(poolId), { page, size, sort });
@@ -118,7 +108,14 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void 
     }
   ];
   return (
-    <CustomModal {...props} title={t("common.operatorRewards")}>
+    <CustomModal {...props} title={t("common.TotalOperatorRewardsReceived")}>
+      <RewardBalance>
+        {theme.isDark ? <WalletIconRewardGreenDark /> : <WalletIconRewardGreen />}
+        <RewardBalanceTitle>
+          {t("slc.amountReceived")}: {formatADAFull(132230000)}
+        </RewardBalanceTitle>
+        <ADAicon />
+      </RewardBalance>
       <StyledTable
         {...fetchData}
         columns={columns}
