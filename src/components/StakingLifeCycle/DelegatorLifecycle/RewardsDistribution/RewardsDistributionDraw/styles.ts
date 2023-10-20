@@ -14,23 +14,7 @@ export const DrawContainer = styled(Box)(({ theme }) => ({
   marginTop: 35,
   [theme.breakpoints.down("lg")]: {
     flexDirection: "column",
-    alignItems: "center",
-    margin: "auto",
-    maxWidth: 540,
-    minWidth: 540,
-    gap: 50
-  },
-  [theme.breakpoints.down("sm")]: {
-    maxWidth: 320,
-    minWidth: 320
-  },
-  ">div": {
-    zIndex: 2
-  },
-  [theme.breakpoints.down(355)]: {
-    maxWidth: "unset",
-    minWidth: "unset",
-    width: "100%"
+    gap: 55
   }
 }));
 
@@ -42,7 +26,6 @@ export const StyledCardanoBlockchain = styled(CardanoBlockchain)(() => ({
 
 export const RectBox = styled(Box)<{ disabled?: number }>(({ disabled, theme }) => ({
   width: "100%",
-  maxWidth: 270,
   display: "flex",
   alignItems: "center",
   boxShadow: "0px 10px 25px rgba(0, 0, 0, 0.03)",
@@ -55,9 +38,7 @@ export const RectBox = styled(Box)<{ disabled?: number }>(({ disabled, theme }) 
   "& > image": {
     opacity: disabled ? 0.5 : 1
   },
-  [theme.breakpoints.down("lg")]: {
-    flexDirection: "column"
-  }
+  cursor: disabled ? "not-allowed" : "pointer"
 }));
 
 export const DisableAbleLabel = styled(Typography)<{ disabled?: number }>(({ theme, disabled }) => ({
@@ -69,10 +50,7 @@ export const DisableAbleLabel = styled(Typography)<{ disabled?: number }>(({ the
     ? theme.palette.secondary[600]
     : theme.palette.secondary.main,
   textAlign: "left",
-  flex: 1,
-  [theme.breakpoints.down("lg")]: {
-    textAlign: "center"
-  }
+  flex: 1
 }));
 
 export const RewardAccountCcontainer = styled(RectBox)(({ theme }) => ({
@@ -92,7 +70,7 @@ export const RewardAccountCcontainer = styled(RectBox)(({ theme }) => ({
 
 export const HolderWrapper = styled(Box)(({ theme }) => ({
   padding: "20px 35px",
-  border: `1.5px dashed ${theme.palette.primary[200]}`,
+  border: `1.5px solid ${theme.palette.primary[200]}`,
   background: alpha(theme.palette.secondary.light, 0.03),
   borderRadius: 25,
   width: "100%",
@@ -101,19 +79,14 @@ export const HolderWrapper = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   gap: 25,
+  cursor: "pointer",
   [theme.breakpoints.down("xl")]: {
-    maxWidth: 310,
-    padding: 20,
-    gap: 30
+    maxWidth: 340,
+    padding: "20px 35px"
   },
-  [theme.breakpoints.down("lg")]: {
-    maxWidth: 328,
-    padding: "24px 34px",
-    flexDirection: "row-reverse"
-  },
-  [theme.breakpoints.down(355)]: {
-    gap: 20,
-    padding: "24px 24px"
+  [theme.breakpoints.down("sm")]: {
+    maxWidth: 340,
+    padding: "20px"
   }
 }));
 
@@ -122,8 +95,7 @@ export const AdaAmountWrapper = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   gap: 55,
   [theme.breakpoints.down("lg")]: {
-    flexDirection: "row-reverse",
-    gap: 75
+    flexDirection: "row-reverse"
   }
 }));
 
@@ -237,4 +209,12 @@ export const RewardsModalContent = styled(Box)`
       background: ${({ theme }) => theme.palette.primary[100]};
     }
   }
+`;
+
+export const RewardAccountTitle = styled(Typography)`
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+  color: ${({ theme }) => theme.palette.secondary.main};
 `;

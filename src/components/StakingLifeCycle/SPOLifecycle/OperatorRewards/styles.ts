@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, Typography, alpha, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledEpoch = styled(Link)`
@@ -17,22 +17,13 @@ export const DrawContainer = styled(Box)(({ theme }) => ({
   alignItems: "center",
   height: "max-content",
   position: "relative",
+  width: "100%",
+  maxWidth: 820,
+  margin: "0 auto",
   marginTop: 35,
   [theme.breakpoints.down("sm")]: {
     flexDirection: "column",
-    alignItems: "center",
-    margin: "auto",
-    maxWidth: 320,
-    minWidth: 320,
-    gap: "65px"
-  },
-  ">div": {
-    zIndex: 2
-  },
-  [theme.breakpoints.down(355)]: {
-    maxWidth: 320,
-    minWidth: "unset",
-    width: "100%"
+    gap: 60
   }
 }));
 
@@ -53,7 +44,28 @@ export const ADATitle = styled(Box)(({ theme }) => ({
   alignItems: "flex-end",
   fontWeight: 700
 }));
+
 export const ADAAmount = styled(Box)`
   color: ${(props) =>
     props.theme.isDark ? props.theme.palette.success[700] : props.theme.palette.success[800]} !important;
+`;
+
+export const HoldContainer = styled(Box)`
+  padding: 20px 27px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  border: 1.5px solid ${({ theme }) => theme.palette.primary[200]};
+  border-radius: 25px;
+  gap: 20px;
+  width: 100%;
+  max-width: 324px;
+  background: ${({ theme }) => alpha(theme.palette.secondary.light, 0.03)};
+`;
+
+export const HoldBoxTitle = styled(Typography)`
+  font-size: 18px;
+  color: ${({ theme }) => theme.palette.secondary.main};
+  font-weight: bold;
 `;
