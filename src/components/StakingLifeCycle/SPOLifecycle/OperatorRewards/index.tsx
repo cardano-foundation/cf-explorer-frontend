@@ -116,7 +116,7 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void 
         <RewardBalanceTitle>
           {t("slc.amountReceived")}: {formatADAFull(data?.rewardAvailable || 0)}
         </RewardBalanceTitle>
-        <ADAicon />3
+        <ADAicon />
       </RewardBalance>
       <StyledTable
         {...fetchData}
