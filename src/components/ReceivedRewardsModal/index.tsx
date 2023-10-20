@@ -75,16 +75,16 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
     },
     {
       key: "epoch",
-      title: t("common.poolId"),
-      render(data) {
-        return <EpochRow to={details.epoch(data.poolView)}>{getShortHash(data.poolView)}</EpochRow>;
-      }
-    },
-    {
-      key: "poolView",
       title: t("common.Epoch"),
       render(data) {
         return <EpochRow to={details.epoch(data.epoch)}>{data.epoch}</EpochRow>;
+      }
+    },
+    {
+      key: "epoch",
+      title: t("common.poolId"),
+      render(data) {
+        return <EpochRow to={details.epoch(data.poolView)}>{getShortHash(data.poolView)}</EpochRow>;
       }
     },
     {
