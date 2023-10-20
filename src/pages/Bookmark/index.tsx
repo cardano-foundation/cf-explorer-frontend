@@ -1,7 +1,7 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Dialog, DialogActions, DialogContentText, IconButton, useTheme } from "@mui/material";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useHistory } from "react-router-dom";
 import { useLocalStorage } from "react-use";
@@ -107,7 +107,15 @@ const Bookmark = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
-
+  const heightTable = useMemo(() => {
+    if (data) {
+      if (data.length >= 10) return 650;
+      if (data.length >= 6) return data.length * 68;
+      return 0;
+    } else {
+      return 0;
+    }
+  }, [JSON.stringify(data)]);
   const colDynamic: Record<string, Column<Bookmark>> = {
     ADDRESS: {
       title: t("common.address"),
@@ -242,6 +250,7 @@ const Bookmark = () => {
           total={{ title: "Total", count: total }}
           columns={columns}
           data={data || []}
+          height={heightTable}
           loading={loading}
           pagination={{
             total: total,
@@ -264,6 +273,7 @@ const Bookmark = () => {
           columns={columns}
           total={{ title: "Total", count: total }}
           data={data || []}
+          height={heightTable}
           loading={loading}
           pagination={{
             total: total,
@@ -287,6 +297,7 @@ const Bookmark = () => {
           columns={columns}
           data={data || []}
           loading={loading}
+          height={heightTable}
           pagination={{
             total: total,
             page,
@@ -316,6 +327,7 @@ const Bookmark = () => {
           }}
           columns={columns}
           data={data || []}
+          height={heightTable}
           error={error}
           loading={loading}
         />
@@ -329,6 +341,7 @@ const Bookmark = () => {
           error={error}
           columns={columns}
           data={data || []}
+          height={heightTable}
           loading={loading}
           total={{ title: "Total", count: total }}
           pagination={{
@@ -352,6 +365,7 @@ const Bookmark = () => {
           columns={columns}
           data={data || []}
           loading={loading}
+          height={heightTable}
           total={{ title: "Total", count: total }}
           pagination={{
             total: total,

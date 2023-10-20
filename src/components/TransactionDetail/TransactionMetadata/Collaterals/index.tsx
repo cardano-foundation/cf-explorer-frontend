@@ -11,7 +11,6 @@ import { details } from "src/commons/routers";
 import { formatADAFull } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CopyButton from "src/components/commons/CopyButton";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { FlexCenter } from "src/components/share/styled";
 
@@ -123,28 +122,27 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                           {t("tab.utxo")}:
                         </Box>
                         <Link to={details.transaction(item.txHash)} style={{ width: "100%" }}>
-                          <CustomTooltip title={item.txHash}>
-                            <Box
-                              component={"span"}
-                              fontWeight="bold"
-                              fontFamily={"var(--font-family-text)"}
-                              color={(theme) => theme.palette.primary.main}
-                            >
-                              <EllipsisContainer>
-                                <DynamicEllipsisText
-                                  value={item.txHash}
-                                  afterElm={
-                                    <FlexCenter>
-                                      <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
-                                        #{item?.index}
-                                      </Box>
-                                      <CopyButton text={item.txHash} />
-                                    </FlexCenter>
-                                  }
-                                />
-                              </EllipsisContainer>
-                            </Box>
-                          </CustomTooltip>
+                          <Box
+                            component={"span"}
+                            fontWeight="bold"
+                            fontFamily={"var(--font-family-text)"}
+                            color={(theme) => theme.palette.primary.main}
+                          >
+                            <EllipsisContainer>
+                              <DynamicEllipsisText
+                                value={item.txHash}
+                                afterElm={
+                                  <FlexCenter>
+                                    <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
+                                      #{item?.index}
+                                    </Box>
+                                    <CopyButton text={item.txHash} />
+                                  </FlexCenter>
+                                }
+                                isTooltip
+                              />
+                            </EllipsisContainer>
+                          </Box>
                         </Link>
                       </Box>
                     </Box>
