@@ -20,7 +20,7 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
     <Wrapper>
       <Header>{t("common.stakeAddress")}</Header>
       {data?.map((item) => (
-        <StyledItem key={item.address} overflow={"scroll"}>
+        <StyledItem key={item.address} overflow={"auto"}>
           <ItemContainer>
             <Box display="flex" alignItems="center">
               <Box width={50}>
