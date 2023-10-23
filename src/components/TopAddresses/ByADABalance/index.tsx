@@ -8,11 +8,11 @@ import { SelectChangeEvent } from "@mui/material/Select/SelectInput";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatADAFull, getShortHash, numberWithCommas } from "src/commons/utils/helper";
+import { formatADAFull, numberWithCommas } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import Table, { Column } from "src/components/commons/Table";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
 import { Actions, PageSize, PerPage, SelectMui, StyledLink, StyledMenuItem, TimeDuration } from "./styles";
 
@@ -34,14 +34,12 @@ const TopAddressesByADABalance = () => {
     {
       title: t("glossary.address"),
       key: "address",
-      minWidth: 120,
-
+      minWidth: 170,
+      maxWidth: "35vw",
       render: (r) => (
-        <div>
-          <CustomTooltip title={r.address}>
-            <StyledLink to={details.address(r.address)}>{getShortHash(r.address)}</StyledLink>
-          </CustomTooltip>
-        </div>
+        <StyledLink to={details.address(r.address)}>
+          <DynamicEllipsisText value={r.address} isTooltip />
+        </StyledLink>
       )
     },
     {
