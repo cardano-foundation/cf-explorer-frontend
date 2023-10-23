@@ -82,7 +82,7 @@ const DelegatorLifecycle = () => {
   const { data: dataReportLimit } = useFetch<IReportLimit>(API.REPORT.REPORT_LIMIT);
 
   useEffect(() => {
-    if (listTabs && listTabs[tabsValid[tab]]) {
+    if (listTabs && listTabs[tabsValid[tab] as keyof ListStakeKeyResponse]) {
       setCurrentStep(tabList[validTab]);
       return;
     }
@@ -115,9 +115,16 @@ const DelegatorLifecycle = () => {
     if (dataReportLimit?.limitPer24hours === ROLE_ELEVATED_GEN_REPORT) return "";
     return t("message.report.limitGenerate", { time: dataReportLimit?.limitPer24hours || 0 });
   };
+  const distributeTotal = listTabs as unknown as DistributionTotal;
 
   return (
-    <DelegatorDetailContext.Provider value={data}>
+    <DelegatorDetailContext.Provider
+      value={{
+        ...data,
+        totalDelegatorRewards: distributeTotal?.totalDelegatorRewards || 0,
+        totalOperatorRewards: distributeTotal?.totalOperatorRewards || 0
+      }}
+    >
       <StyledContainer>
         <BoxContainerStyled>
           <LifeCycleHeader sidebar={+sidebar}>
