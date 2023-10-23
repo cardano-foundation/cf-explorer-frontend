@@ -138,6 +138,7 @@ const Title = styled(Typography)`
 
 const SubTitle = styled(Typography)`
   font-size: 16px;
+  text-align: left;
   color: ${({ theme }) => theme.palette.secondary.light};
 `;
 

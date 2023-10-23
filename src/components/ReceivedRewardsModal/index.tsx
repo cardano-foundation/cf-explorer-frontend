@@ -1,5 +1,5 @@
 import { Box, useTheme } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
@@ -25,6 +25,8 @@ import {
   RewardBalanceTitle,
   TableContainer
 } from "./styles";
+import DelegatorDetailContext from "../StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
+import CustomTooltip from "../commons/CustomTooltip";
 
 interface ReceivedReward {
   amount: string;
@@ -44,6 +46,7 @@ export interface ReceivedRewardsModalProps {
 
 const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = false, onClose, reward = 0, type }) => {
   const { t } = useTranslation();
+  const contextData = useContext(DelegatorDetailContext);
   const [params, setParams] = useState({ page: 0, size: 50 });
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [sort, setSort] = useState<string>("");
@@ -75,9 +78,20 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
     },
     {
       key: "epoch",
+      title: t("common.Epoch"),
+      render(data) {
+        return <EpochRow to={details.epoch(data.epoch)}>{data.epoch}</EpochRow>;
+      }
+    },
+    {
+      key: "poolId",
       title: t("common.poolId"),
       render(data) {
-        return <EpochRow to={details.epoch(data.poolView)}>{getShortHash(data.poolView)}</EpochRow>;
+        return (
+          <CustomTooltip title={data.poolView}>
+            <EpochRow to={details.epoch(data.poolView)}>{getShortHash(data.poolView)}</EpochRow>
+          </CustomTooltip>
+        );
       }
     },
     {
@@ -105,7 +119,14 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       }
     }
   ];
-
+  const getTotal = () => {
+    if (type === RECEIVED_REWARDS.LEADER) {
+      return contextData?.totalOperatorRewards || 0;
+    } else if (type === RECEIVED_REWARDS.MEMBER) {
+      return contextData?.totalDelegatorRewards || 0;
+    }
+    return reward;
+  };
   return (
     <StyledModal
       open={open}
@@ -128,7 +149,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
               {theme.isDark ? <WalletIconRewardGreenDark /> : <WalletIconRewardGreen />}
               <RewardBalanceTitle>
                 {type === RECEIVED_REWARDS.ALL ? t("slc.totalRewardsReceived") : t("slc.amountReceived")}:{" "}
-                {formatADAFull(reward)}
+                {formatADAFull(getTotal())}
               </RewardBalanceTitle>
               <ADAicon />
             </RewardBalance>

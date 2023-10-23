@@ -18,7 +18,7 @@ const mockTabsRenderConfig = {
   hasRegistration: true,
   hasWithdrawal: true,
   hashRewards: false
-};
+} as ListStakeKeyResponse;
 
 describe("Tabular", () => {
   beforeEach(() => {
