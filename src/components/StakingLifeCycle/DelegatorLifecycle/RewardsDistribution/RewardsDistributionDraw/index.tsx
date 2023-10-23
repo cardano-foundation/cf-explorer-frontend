@@ -63,8 +63,10 @@ const RewardsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({
         <ADAHolderRect
           onClick={(e) => {
             e.stopPropagation();
-            setTypeRewardModal(RECEIVED_REWARDS.MEMBER);
-            toggleRewardModal();
+            if (isADAHolder) {
+              setTypeRewardModal(RECEIVED_REWARDS.MEMBER);
+              toggleRewardModal();
+            }
           }}
           ref={adaHolderRef}
           disabled={!isADAHolder}
