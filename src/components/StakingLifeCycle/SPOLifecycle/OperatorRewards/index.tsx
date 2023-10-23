@@ -19,8 +19,17 @@ import { LineArrowItem } from "src/components/commons/LineArrow";
 import SPOHolderBox from "src/components/commons/SPOHolderBox";
 import { RewardBalance, RewardBalanceTitle } from "src/components/ReceivedRewardsModal/styles";
 import { WalletIconRewardGreen, WalletIconRewardGreenDark } from "src/commons/resources";
+import { useScreen } from "src/commons/hooks/useScreen";
 
-import { StyledLink, DrawContainer, ADAAmount, StyledEpoch, HoldContainer, HoldBoxTitle } from "./styles";
+import {
+  StyledLink,
+  DrawContainer,
+  ADAAmount,
+  StyledEpoch,
+  HoldContainer,
+  HoldBoxTitle,
+  ModalContainer
+} from "./styles";
 import PoolDetailContext from "../PoolDetailContext";
 
 const OperatorReward = () => {
@@ -65,6 +74,7 @@ export default OperatorReward;
 
 const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void }) => {
   const data = useContext(PoolDetailContext);
+  const { isGalaxyFoldSmall, isMobile } = useScreen();
   const { t } = useTranslation();
   const { poolId = "" } = useParams<{ poolId: string }>();
   const theme = useTheme();
@@ -110,28 +120,30 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void 
     }
   ];
   return (
-    <CustomModal {...props} title={t("common.TotalOperatorRewardsReceived")}>
-      <RewardBalance>
-        {theme.isDark ? <WalletIconRewardGreenDark /> : <WalletIconRewardGreen />}
-        <RewardBalanceTitle>
-          {t("slc.amountReceived")}: {formatADAFull(data?.rewardAvailable || 0)}
-        </RewardBalanceTitle>
-        <ADAicon />
-      </RewardBalance>
-      <StyledTable
-        {...fetchData}
-        columns={columns}
-        defaultSort="time,DESC"
-        total={{ title: t("common.totalEpoch"), count: fetchData.total }}
-        maxHeight={"60vh"}
-        pagination={{
-          page,
-          size,
-          total: fetchData.total,
-          onChange: (page, size) => setPagination({ page: page - 1, size })
-        }}
-        isModal
-      />
+    <CustomModal {...props} title={t("common.TotalOperatorRewardsReceived")} width={600}>
+      <ModalContainer>
+        <RewardBalance>
+          {theme.isDark ? <WalletIconRewardGreenDark /> : <WalletIconRewardGreen />}
+          <RewardBalanceTitle>
+            {t("slc.amountReceived")}: {formatADAFull(data?.rewardAvailable || 0)}
+          </RewardBalanceTitle>
+          <ADAicon />
+        </RewardBalance>
+        <StyledTable
+          {...fetchData}
+          columns={columns}
+          defaultSort="time,DESC"
+          total={{ title: t("common.totalEpoch"), count: fetchData.total }}
+          maxHeight={`calc(70vh - ${isMobile ? (isGalaxyFoldSmall ? "270px" : "230px") : "208px"})`}
+          pagination={{
+            page,
+            size,
+            total: fetchData.total,
+            onChange: (page, size) => setPagination({ page: page - 1, size })
+          }}
+          isModal
+        />
+      </ModalContainer>
     </CustomModal>
   );
 };

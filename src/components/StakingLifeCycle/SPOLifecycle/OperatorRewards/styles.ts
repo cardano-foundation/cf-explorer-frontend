@@ -69,3 +69,6 @@ export const HoldBoxTitle = styled(Typography)`
   color: ${({ theme }) => theme.palette.secondary.main};
   font-weight: bold;
 `;
+export const ModalContainer = styled(Box)`
+  width: min(100%, 810px);
+`;
