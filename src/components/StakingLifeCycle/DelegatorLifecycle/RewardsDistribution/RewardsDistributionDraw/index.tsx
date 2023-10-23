@@ -84,7 +84,14 @@ const RewardsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({
             <ADAOperatorRewardRect ref={operatorRewardRef} disabled={!isRewardPool} />
           </OperatorRewardWrapper>
           <IconWrapper>
-            <InfoSolidIcon width="35px" height="35px" onClick={() => setOpenRewardsModal(!openRewardsModal)} />
+            <InfoSolidIcon
+              width="35px"
+              height="35px"
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpenRewardsModal(!openRewardsModal);
+              }}
+            />
           </IconWrapper>
         </OperatorRewardContainer>
       </HolderWrapper>
