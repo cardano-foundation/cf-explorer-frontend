@@ -39,7 +39,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                 </Box>
               ) : null}
             </Box>
-            <Box width="100%" sx={{ overflowX: "scroll", overflowY: "hidden" }}>
+            <Box width="100%" sx={{ overflowX: "auto", overflowY: "hidden" }}>
               <Box flex={1} display="flex" columnGap={2} justifyContent="space-between">
                 <Box minWidth={120}>
                   {!isMobile ? (
