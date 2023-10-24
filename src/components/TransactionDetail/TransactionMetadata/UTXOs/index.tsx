@@ -113,7 +113,7 @@ const Card = ({
         {items?.map((item, index) => (
           <Item key={index}>
             <ItemContent>
-              <WrapIcon>{renderIcon(type)}</WrapIcon>
+              <WrapIcon type={type}>{renderIcon(type)}</WrapIcon>
               <WrapInfo>
                 <WrapLeftSide className="WrapLeftSide">
                   {type === "down" ? (
@@ -127,7 +127,7 @@ const Card = ({
                             {t("tab.utxo")}:
                           </Box>
                           <Link to={details.transaction(item.txHash)} style={{ width: "100%" }}>
-                            <EllipsisContainer isFailed={isFailed}>
+                            <EllipsisContainer isFailed={isFailed} sx={{ transform: "translateY(-3px)" }}>
                               <DynamicEllipsisText
                                 value={item.txHash}
                                 isTooltip
@@ -138,6 +138,7 @@ const Card = ({
                                       color={({ palette }) =>
                                         isFailed ? theme.palette.secondary[600] : palette.secondary.main
                                       }
+                                      sx={{ transform: "translateY(2px)" }}
                                     >
                                       #{item?.index}
                                     </Box>

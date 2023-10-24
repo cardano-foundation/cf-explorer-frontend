@@ -55,11 +55,11 @@ export const WrapRightSide = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const WrapIcon = styled(Box)(({ theme }) => ({
+export const WrapIcon = styled(Box)<{ type: string }>(({ theme, type }) => ({
   display: "flex",
   alignItems: "center",
   [theme.breakpoints.down("sm")]: {
-    height: 100
+    height: type === "up" ? 34 : 100
   }
 }));
 
@@ -200,15 +200,15 @@ export const CustomSelect = styled(Select)`
 export const EllipsisContainer = styled(Box)<{ isFailed?: boolean }>`
   font-weight: bold;
   color: ${({ theme, isFailed }) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)};
-  max-width: 55vw;
-  ${({ theme }) => theme.breakpoints.up(450)} {
-    max-width: 68vw;
+  max-width: 70vw;
+  ${({ theme }) => theme.breakpoints.up(420)} {
+    max-width: 48vw;
   }
   ${({ theme }) => theme.breakpoints.up("sm")} {
-    max-width: 45vw;
+    max-width: 56vw;
   }
   ${({ theme }) => theme.breakpoints.up("md")} {
-    max-width: 40vw;
+    max-width: 47vw;
   }
   ${({ theme }) => theme.breakpoints.up("lg")} {
     max-width: 55vw;

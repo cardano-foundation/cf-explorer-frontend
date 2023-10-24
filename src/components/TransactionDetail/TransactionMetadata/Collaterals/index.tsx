@@ -133,7 +133,11 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                                   value={item.txHash}
                                   afterElm={
                                     <FlexCenter>
-                                      <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
+                                      <Box
+                                        fontWeight={"bold"}
+                                        color={({ palette }) => palette.secondary.main}
+                                        sx={{ transform: "translateY(3px)" }}
+                                      >
                                         #{item?.index}
                                       </Box>
                                       <CopyButton text={item.txHash} />

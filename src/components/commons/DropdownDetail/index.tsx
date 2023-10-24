@@ -3,11 +3,9 @@ import { IoMdClose } from "react-icons/io";
 import { useTheme } from "@mui/material";
 
 import { details } from "src/commons/routers";
-import { getShortHash } from "src/commons/utils/helper";
 import { StyledLink } from "src/components/share/styled";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
-import CopyButton from "../CopyButton";
-import CustomTooltip from "../CustomTooltip";
 import { ButtonClose, DropdownList, DropdownTitle, InfoValue, ListDropdownContainer } from "./styles";
 
 interface IDropdownDetailProps {
@@ -30,12 +28,9 @@ const DropdownDetail: React.FC<IDropdownDetailProps> = ({ title, value, close, m
       <DropdownList>
         {value.map((item, index) => (
           <InfoValue key={index}>
-            <CustomTooltip title={item}>
-              <StyledLink to={isStakeDetail ? details.stake(item) : details.address(item)}>
-                {getShortHash(item)}
-              </StyledLink>
-            </CustomTooltip>
-            <CopyButton text={item} />
+            <StyledLink to={isStakeDetail ? details.stake(item) : details.address(item)}>
+              <DynamicEllipsisText value={item} isCopy isTooltip />
+            </StyledLink>
           </InfoValue>
         ))}
       </DropdownList>
