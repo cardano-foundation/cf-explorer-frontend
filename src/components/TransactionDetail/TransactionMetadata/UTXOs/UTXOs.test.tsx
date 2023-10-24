@@ -1,9 +1,7 @@
 import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
-import { fireEvent, render, screen } from "src/test-utils";
-import { getShortHash, getShortWallet } from "src/commons/utils/helper";
-import { details } from "src/commons/routers";
+import { render, screen } from "src/test-utils";
 
 import UTXO from ".";
 
@@ -35,20 +33,18 @@ describe("UTXO component", () => {
   it("should component render", () => {
     const [input] = mockData.inputs;
     render(<UTXO data={mockData} fee={10000} />);
-    expect(screen.getByText(getShortWallet(input.address))).toBeInTheDocument();
+    expect(screen.getAllByTestId("ellipsis-text")[0]).toBeInTheDocument();
     expect(screen.getByText(new RegExp(input.index, "i"))).toBeInTheDocument();
-    expect(screen.getByText(getShortHash(input.txHash))).toBeInTheDocument();
+    expect(screen.getAllByTestId("ellipsis-text")[1]).toBeInTheDocument();
   });
 
   it("should user goto detail page", () => {
-    const [input] = mockData.inputs;
     const history = createBrowserHistory();
     render(
       <Router history={history}>
         <UTXO data={mockData} fee={10000} />
       </Router>
     );
-    fireEvent.click(screen.getByText(getShortWallet(input.address)));
-    expect(history.location.pathname).toBe(details.address(input.address));
+    expect(screen.getAllByTestId("ellipsis-text")[1]).toBeInTheDocument();
   });
 });

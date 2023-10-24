@@ -4,8 +4,6 @@ import { useSelector } from "react-redux";
 import { CircularProgress, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { getShortWallet } from "src/commons/utils/helper";
-import CopyButton from "src/components/commons/CopyButton";
 import SPOLifecycleComponent from "src/components/StakingLifeCycle/SPOLifecycle";
 import ReportComposerModal from "src/components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 import Tabular from "src/components/StakingLifeCycle/SPOLifecycle/Tablular";
@@ -17,6 +15,9 @@ import useFetch from "src/commons/hooks/useFetch";
 import PoolDetailContext from "src/components/StakingLifeCycle/SPOLifecycle/PoolDetailContext";
 import NoRecord from "src/components/commons/NoRecord";
 import { ChartMode, TableMode } from "src/commons/resources";
+import { ROLE_ELEVATED_GEN_REPORT } from "src/commons/utils/constants";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { TruncateSubTitleContainer } from "src/components/share/styled";
 
 import {
   BoxContainerStyled,
@@ -100,12 +101,26 @@ const SPOLifecycle = () => {
   const theme = useTheme();
   const { sidebar } = useSelector(({ user }: RootState) => user);
 
-  const changeMode = (mode: ViewMode) => {
-    history.push(details.spo(poolId, mode, validTab));
+  const changeMode = (newMode: ViewMode) => {
+    if (mode === newMode) return;
+    history.push(details.spo(poolId, newMode, validTab));
   };
 
   if (!initialized && !error) return null;
   if (error || !data || !data.poolId) return <NoRecord />;
+
+  const checkDisableGenReport = () => {
+    if (!isLoggedIn) return true;
+    if (dataReportLimit?.limitPer24hours === ROLE_ELEVATED_GEN_REPORT) return false;
+    return dataReportLimit?.isLimitReached;
+  };
+
+  const getTooltip = () => {
+    if (!isLoggedIn) return t("common.pleaseSignIntoUseFeature");
+    if (dataReportLimit?.limitPer24hours === ROLE_ELEVATED_GEN_REPORT) return "";
+    return t("message.report.limitGenerate", { time: dataReportLimit?.limitPer24hours || 0 });
+  };
+
   return (
     <PoolDetailContext.Provider value={data}>
       <StyledContainer ref={containerRef}>
@@ -114,10 +129,11 @@ const SPOLifecycle = () => {
             <LifeCycleTitle>{t("common.slcFor")}</LifeCycleTitle>
             <AddressLine>
               <Label>{t("common.poolID")}:</Label>
-              <CustomTooltip title={poolId}>
-                <StakeId to={details.delegation(poolId)}>{getShortWallet(poolId)}</StakeId>
-              </CustomTooltip>
-              <CopyButton text={poolId} />
+              <StakeId to={details.delegation(data.poolView)}>
+                <TruncateSubTitleContainer>
+                  <DynamicEllipsisText value={data.poolView} isCopy isTooltip />
+                </TruncateSubTitleContainer>
+              </StakeId>
             </AddressLine>
           </LifeCycleHeader>
           <BoxItemStyled sidebar={+sidebar}>
@@ -138,19 +154,9 @@ const SPOLifecycle = () => {
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>
-            <CustomTooltip
-              title={
-                !isLoggedIn
-                  ? t("common.pleaseSignIntoUseFeature")
-                  : t("message.report.limitGenerate", { time: dataReportLimit?.limitPer24hours || 0 })
-              }
-            >
+            <CustomTooltip title={getTooltip()}>
               <ReportButtonContainer>
-                <ButtonReport
-                  disabled={!isLoggedIn || dataReportLimit?.isLimitReached}
-                  onClick={() => setOpen(true)}
-                  sidebar={+sidebar}
-                >
+                <ButtonReport disabled={checkDisableGenReport()} onClick={() => setOpen(true)} sidebar={+sidebar}>
                   {t("common.composeReport")}
                 </ButtonReport>
               </ReportButtonContainer>

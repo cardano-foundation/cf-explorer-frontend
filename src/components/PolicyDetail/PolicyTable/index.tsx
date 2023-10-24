@@ -13,7 +13,7 @@ import {
   formatDateTimeLocal,
   formatNumberDivByDecimals,
   getPageInfo,
-  getShortWallet
+  getShortHash
 } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
@@ -65,7 +65,7 @@ const PolicyTable = () => {
       minWidth: "100px",
       render: (r) => (
         <CustomTooltip title={r.fingerprint}>
-          <LinkComponent to={details.token(r.fingerprint)}>{getShortWallet(r.fingerprint || "")}</LinkComponent>
+          <LinkComponent to={details.token(r.fingerprint)}>{getShortHash(r.fingerprint || "")}</LinkComponent>
         </CustomTooltip>
       )
     },
@@ -99,7 +99,7 @@ const PolicyTable = () => {
       minWidth: "50px",
       render: (r) => (
         <CustomTooltip title={r.address}>
-          <LinkComponent to={details.address(r.address)}>{getShortWallet(r.address || "")}</LinkComponent>
+          <LinkComponent to={details.address(r.address)}>{getShortHash(r.address || "")}</LinkComponent>
         </CustomTooltip>
       )
     },
@@ -115,7 +115,7 @@ const PolicyTable = () => {
       minWidth: "100px",
       render: (r) => (
         <CustomTooltip title={r.fingerprint}>
-          <LinkComponent to={details.token(r.fingerprint)}>{getShortWallet(r.fingerprint || "")}</LinkComponent>
+          <LinkComponent to={details.token(r.fingerprint)}>{getShortHash(r.fingerprint || "")}</LinkComponent>
         </CustomTooltip>
       )
     },

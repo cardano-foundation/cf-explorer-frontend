@@ -25,7 +25,7 @@ export default function BasicPopover({ button, content }: PopoverProps) {
   return (
     <div>
       {button ? (
-        cloneElement(button as ReactElement<any>, {
+        cloneElement(button as ReactElement, {
           "aria-describedby": id,
           onClick: handleClick
         })

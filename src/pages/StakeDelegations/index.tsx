@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table from "src/components/commons/Table";
@@ -35,7 +35,7 @@ const StakeDelegations = () => {
   const columns: Column<StakeDelegationItem>[] = [
     {
       title: t("glossary.txHash"),
-      minWidth: 200,
+      minWidth: "150px",
       key: "txHash",
       render: (r) => (
         <CustomTooltip title={r.txHash}>
@@ -46,36 +46,42 @@ const StakeDelegations = () => {
     {
       title: t("glossary.createdAt"),
       key: "createdat",
-      minWidth: "200px",
+      minWidth: "150px",
       render: (r) => formatDateTimeLocal(r.time)
     },
     {
       title: t("glossary.block"),
       key: "blockNo",
-      minWidth: "200px",
-      render: (r) => (
-        <>
-          <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
-          <Box mt={1}>
-            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
-            <Box color={({ palette }) => palette.secondary.light} component={"span"}>
-              {r.epochSlotNo}
-            </Box>
-          </Box>
-        </>
-      )
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
+    },
+    {
+      title: t("glossary.epoch"),
+      key: "epochNo",
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>
+    },
+    {
+      title: t("glossary.slot"),
+      key: "epochSlotNo",
+      minWidth: "50px"
+    },
+    {
+      title: t("glossary.absoluteSlot"),
+      key: "slotNo",
+      minWidth: "100px"
     },
     {
       title: t("glossary.stakeAddress"),
       key: "stakeAddress",
-      minWidth: "200px",
+      minWidth: "150px",
       render: (r) => (
         <>
           {r.stakeKeys.slice(0, 2).map((stakeKey, idx) => (
             <Box key={idx}>
               <CustomTooltip title={stakeKey}>
                 <StyledLink to={{ pathname: details.stake(stakeKey), state: { fromPath } }}>
-                  {getShortWallet(stakeKey)}
+                  {getShortHash(stakeKey)}
                 </StyledLink>
               </CustomTooltip>
             </Box>
@@ -95,7 +101,7 @@ const StakeDelegations = () => {
               <CustomTooltip title={pool.poolName || pool.poolId}>
                 <StyledLink to={details.delegation(pool.poolId)}>
                   <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
-                    {pool.poolName || getShortWallet(pool.poolId)}
+                    {pool.poolName || getShortHash(pool.poolId)}
                   </Box>
                 </StyledLink>
               </CustomTooltip>

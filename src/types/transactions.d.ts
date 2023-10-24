@@ -163,6 +163,7 @@ interface Transaction {
     fee: number;
     totalOutput: number;
     maxEpochSlot: number;
+    slotNo: number;
   };
   summary: {
     stakeAddress: {
@@ -214,6 +215,7 @@ interface Transaction {
   }[];
   protocols?: TProtocol;
   previousProtocols?: TProtocol;
+  signersInformation?: SignersInformation[];
   delegations?: {
     address: string;
     poolId: string;
@@ -249,4 +251,9 @@ type TProtocolMerge = {
   oldValue?: number;
   value?: number;
   protocol: string;
+};
+
+type SignersInformation = {
+  delegateKey?: string;
+  publicKey?: string;
 };

@@ -13,6 +13,7 @@ const mockProps = {
 
 jest.mock("@cardano-foundation/cardano-connect-with-wallet", () => ({
   isWalletInstalled: jest.fn(),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   useCardano: jest.fn() as jest.Mock extends (...args: any) => infer R ? R : never,
   NetworkType: {
     MAINNET: "mainnet",
@@ -49,13 +50,13 @@ beforeEach(() => {
 describe("ConnectWallet component", () => {
   it("should component render", () => {
     render(<ConnectWallet {...mockProps} />);
-    expect(screen.getByRole("button", { name: /examp\.\.\.dress/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /examp/i })).toBeInTheDocument();
   });
 
   it("should component open the modal", async () => {
     render(<ConnectWallet {...mockProps} />);
     await waitFor(() => {
-      fireEvent.click(screen.getByRole("button", { name: /examp\.\.\.dress/i }));
+      fireEvent.click(screen.getByRole("button", { name: /exam/i }));
       expect(screen.getByRole("heading", { name: /account/i })).toBeInTheDocument();
       expect(screen.getByRole("heading", { name: /sign out/i })).toBeInTheDocument();
     });

@@ -1,10 +1,9 @@
-import { Box } from "@mui/material";
 import { stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
-import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import Table, { Column } from "src/components/commons/Table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
@@ -40,18 +39,8 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
     {
       title: t("glossary.block"),
       key: "block",
-      minWidth: "120px",
-      render: (r) => (
-        <Box>
-          <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
-          <Box marginTop="5px">
-            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
-            <Box color={({ palette }) => palette.secondary.light} component={"span"}>
-              {r.epochSlotNo}
-            </Box>
-          </Box>
-        </Box>
-      )
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
     },
     {
       title: t("glossary.poolId"),
@@ -59,7 +48,7 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
       minWidth: "120px",
       render: (r) => (
         <CustomTooltip title={r.poolId || ""}>
-          <StyledLink to={details.delegation(r.poolId)}>{getShortWallet(r.poolId || "")}</StyledLink>
+          <StyledLink to={details.delegation(r.poolId)}>{getShortHash(r.poolId || "")}</StyledLink>
         </CustomTooltip>
       )
     },
@@ -75,10 +64,10 @@ const DelegationHistoryTab = ({ isMobile = false }) => {
         } catch {
           // To Do
         }
-        const name = poolData.name?.length > 30 ? getShortWallet(poolData.name) : poolData.name;
+        const name = poolData.name?.length > 30 ? getShortHash(poolData.name) : poolData.name;
         return (
           <CustomTooltip title={poolData.name || r.poolId}>
-            <StyledLink to={details.delegation(r.poolId)}>{name || getShortWallet(r.poolId)}</StyledLink>
+            <StyledLink to={details.delegation(r.poolId)}>{name || getShortHash(r.poolId)}</StyledLink>
           </CustomTooltip>
         );
       }

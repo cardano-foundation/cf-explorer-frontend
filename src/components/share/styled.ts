@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { alpha, FormHelperText, FormLabel, InputBase, styled } from "@mui/material";
+import { alpha, Box, FormHelperText, FormLabel, InputBase, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledLink = styled(Link)`
@@ -62,3 +62,22 @@ export const StyledDarkLoadingButton = styled(LoadingButton)`
     background: ${(props) => alpha(props.theme.palette.secondary.main, 0.44)};
   }
 `;
+
+export const FlexCenter = styled(Box)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const TruncateSubTitleContainer = styled(Box)(({ theme }) => ({
+  maxWidth: "70vw",
+  [theme.breakpoints.up("sm")]: {
+    maxWidth: "60vw"
+  },
+  [theme.breakpoints.up("md")]: {
+    maxWidth: "40vw"
+  },
+  [theme.breakpoints.up("lg")]: {
+    minWidth: "50vw"
+  }
+}));

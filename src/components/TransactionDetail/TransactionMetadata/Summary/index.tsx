@@ -8,18 +8,16 @@ import {
   ArrowDownIcon,
   ArrowUpDarkIcon,
   ArrowUpIcon,
-  CopyOutlineIconComponent,
   SummaryWalletDark,
   WalletRoundedIcon
 } from "src/commons/resources";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { details } from "src/commons/routers";
+import { formatADAFull, formatNumberDivByDecimals } from "src/commons/utils/helper";
+import ADAicon from "src/components/commons/ADAIcon";
+import DropdownTokens, { TokenLink } from "src/components/commons/DropdownTokens";
 
-import { details } from "../../../../commons/routers";
-import { formatADAFull, formatNumberDivByDecimals, getShortWallet } from "../../../../commons/utils/helper";
-import ADAicon from "../../../commons/ADAIcon";
-import CopyButton from "../../../commons/CopyButton";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import DropdownTokens, { TokenLink } from "../../../commons/DropdownTokens";
-import { Icon, TitleText, ValueText, WrapContainerGrid, WrapItemsInfo, WrapTokensInfo } from "./styles";
+import { GridItem, Icon, TitleText, ValueText, WrapContainerGrid, WrapItemsInfo, WrapTokensInfo } from "./styles";
 
 const SummaryItems = ({
   item,
@@ -50,34 +48,34 @@ const SummaryItems = ({
       }}
     >
       <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
-        <Box display="flex" paddingX={2}>
+        <GridItem>
           <Icon src={theme.isDark ? SummaryWalletDark : WalletRoundedIcon} alt="wallet icon" />
-          <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
+          <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} width={"100%"}>
             <TitleText>{t("common.wallet")}</TitleText>
             <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
-              <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} flexWrap={"nowrap"}>
+              <Box
+                display={"flex"}
+                justifyContent="flex-start"
+                alignItems={"center"}
+                flexWrap={"nowrap"}
+                width={"100%"}
+              >
                 <Link
                   to={item.address.startsWith("stake") ? details.stake(item.address) : details.address(item.address)}
+                  style={{ width: "100%" }}
                 >
-                  <CustomTooltip title={item.address}>
-                    <Box
-                      color={(theme) => theme.palette.primary.main}
-                      fontWeight="bold"
-                      fontFamily={"var(--font-family-text)"}
-                    >
-                      {getShortWallet(item.address)}
-                    </Box>
-                  </CustomTooltip>
+                  <Box
+                    color={(theme) => theme.palette.primary.main}
+                    fontWeight="bold"
+                    fontFamily={"var(--font-family-text)"}
+                  >
+                    <DynamicEllipsisText value={item.address} isCopy isTooltip />
+                  </Box>
                 </Link>
-                <CopyButton
-                  text={item.address}
-                  customIcon={CopyOutlineIconComponent}
-                  style={{ cursor: "pointer", verticalAlign: "text-bottom" }}
-                />
               </Box>
             </Box>
           </Box>
-        </Box>
+        </GridItem>
       </Grid>
       <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
         <WrapItemsInfo paddingX={2}>
@@ -96,14 +94,14 @@ const SummaryItems = ({
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
             <TitleText>{type === "down" ? `${t("tab.adaSent")}` : `${t("tab.adaReceived")}`}</TitleText>
             <Box display="flex" alignItems="center">
-              <ValueText mr={1}>
+              <ValueText>
                 {item.value
                   ? type === "down"
                     ? `${formatADAFull(item.value).replace("-", "")}`
                     : `+${formatADAFull(item.value)}`
                   : t("common.na")}
+                {item.value ? <Box component={ADAicon} ml={1} display={"inline"} /> : null}
               </ValueText>
-              {item.value ? <ADAicon /> : null}
             </Box>
           </Box>
         </WrapItemsInfo>

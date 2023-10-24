@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, useTheme } from "@mui/material";
+import { Autocomplete, Box, Button, StandardTextFieldProps, useTheme } from "@mui/material";
 import { debounce } from "lodash";
 import { useEffect, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
@@ -10,7 +10,7 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import { HeaderSearchIconComponent } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatNumberDivByDecimals, getShortWallet } from "src/commons/utils/helper";
+import { formatNumberDivByDecimals, getShortHash } from "src/commons/utils/helper";
 
 import CustomModal from "../commons/CustomModal";
 import CustomTooltip from "../commons/CustomTooltip";
@@ -145,7 +145,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
                       textOverflow={"ellipsis"}
                       maxWidth="150px"
                     >
-                      {option.displayName || getShortWallet(option.fingerprint || "")}
+                      {option.displayName || getShortHash(option.fingerprint || "")}
                     </Box>
                   </CustomTooltip>
                 </Box>
@@ -156,7 +156,15 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
             </Option>
           );
         }}
-        renderInput={(params: any) => <StyledTextField {...params} placeholder={t("glossary.searchToken")} />}
+        renderInput={(params) => {
+          const textFieldProps = params as unknown;
+          return (
+            <StyledTextField
+              {...(textFieldProps as Omit<StandardTextFieldProps, "variant">)}
+              placeholder={t("glossary.searchToken")}
+            />
+          );
+        }}
         popupIcon={<BiChevronDown color={theme.palette.secondary.main} />}
       />
       <ModalToken address={address} open={openModalToken} onClose={() => setOpenModalToken(false)} />
@@ -193,11 +201,11 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
       render: (r) =>
         r.displayName && r.displayName.length > 20 ? (
           <CustomTooltip placement={"top"} title={r.displayName}>
-            <AssetName to={details.token(r?.fingerprint ?? "")}>{getShortWallet(r.displayName || "")}</AssetName>
+            <AssetName to={details.token(r?.fingerprint ?? "")}>{getShortHash(r.displayName || "")}</AssetName>
           </CustomTooltip>
         ) : (
           <AssetName to={details.token(r?.fingerprint ?? "")}>
-            {r.displayName || getShortWallet(r.fingerprint || "")}
+            {r.displayName || getShortHash(r.fingerprint || "")}
           </AssetName>
         )
     },

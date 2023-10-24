@@ -7,7 +7,8 @@ import { Link, useHistory } from "react-router-dom";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { details } from "src/commons/routers";
-import { formatNumberDivByDecimals, getShortWallet } from "src/commons/utils/helper";
+import { formatNumberDivByDecimals, getShortHash } from "src/commons/utils/helper";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
 import CustomTooltip from "../CustomTooltip";
 import { CustomSelect, OptionSelect, TokenButton } from "./styles";
@@ -106,7 +107,7 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({
       {tokens.map((token, idx) => {
         const isNegative = token.assetQuantity <= 0;
         const tokenName = token.assetName || token.assetId;
-        const shortTokenName = getShortWallet(tokenName);
+        const shortTokenName = getShortHash(tokenName);
         const isTokenNameLong = tokenName.length > 20;
         return (
           <OptionSelect key={idx} onClick={() => handleClickItem(details.token(token?.assetId))}>
@@ -143,10 +144,26 @@ export const TokenLink: React.FC<{
   sx?: SxProps<Theme>;
   hideValue?: boolean;
 }> = ({ token, isSuccess, sx, hideValue, isSummary }) => {
-  const tokenName = token.assetName || token.assetId;
-  const shortTokenName = getShortWallet(tokenName);
-  const isTokenNameLong = tokenName.length > 20;
   const theme = useTheme();
+
+  const renderTokenName = (token: Token) => {
+    const tokenName = token.assetName;
+    let elm: React.ReactElement | string;
+    if (tokenName) {
+      if (tokenName.length > 20) {
+        elm = (
+          <CustomTooltip title={tokenName}>
+            <>{getShortHash(tokenName)}</>
+          </CustomTooltip>
+        );
+      } else {
+        elm = tokenName;
+      }
+    } else {
+      elm = <DynamicEllipsisText value={token.assetId} isTooltip />;
+    }
+    return elm;
+  };
 
   return (
     <TokenButton sx={sx} isSummary={isSummary}>
@@ -156,18 +173,17 @@ export const TokenLink: React.FC<{
         display={"flex"}
         alignItems={"center"}
         justifyContent={"space-between"}
-        pl={2}
+        pl={1}
         width={"100%"}
         height={38}
+        flex={1}
       >
-        <Box mr={2} color={({ palette }) => palette.secondary.main}>
-          {isTokenNameLong ? (
-            <CustomTooltip title={tokenName} placement="top">
-              <Box color={({ palette }) => palette.secondary.main}>{shortTokenName}</Box>
-            </CustomTooltip>
-          ) : (
-            tokenName
-          )}
+        <Box
+          mr={1}
+          color={({ palette }) => palette.secondary.main}
+          sx={{ overflow: "hidden", textOverflow: "ellipsis", maxWidth: "90%" }}
+        >
+          <Box color={({ palette }) => palette.secondary.main}>{renderTokenName(token)}</Box>
         </Box>
         <Box display={"flex"} alignItems={"center"}>
           {!hideValue ? (

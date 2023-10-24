@@ -6,11 +6,12 @@ import { ReactElement, useEffect, useState } from "react";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { AxiosError } from "axios";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import useToast from "src/commons/hooks/useToast";
 import { ACCOUNT_ERROR, NETWORK, NETWORKS, NETWORK_TYPES, SUPPORTED_WALLETS } from "src/commons/utils/constants";
-import { getShortWallet } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 import { editInfo, getInfo } from "src/commons/utils/userRequest";
 import {
   GroupFlex,
@@ -89,8 +90,8 @@ const OverviewTab = () => {
         value={
           userData?.loginType === "connectWallet"
             ? isMobile
-              ? getShortWallet(userData.address || "")
-              : userData?.address
+              ? getShortHash(userData.username || "")
+              : userData?.username
             : userData?.username || userData?.email
         }
         isTablet={isTablet}
@@ -139,10 +140,14 @@ export const ConnectWalletModal: React.FC<ConnectWalletModal> = ({ open, setOpen
       toast.success(t("message.wallet.changeSuccess"));
       setOpen(false);
     } catch (error) {
-      toast.error(
-        t((error as any)?.response && (error as any)?.response?.data && (error as any)?.response?.data?.errorCode) ||
-          ACCOUNT_ERROR.INTERNAL_ERROR
-      );
+      if (error instanceof AxiosError) {
+        toast.error(
+          t(
+            (error.response && error?.response?.data && error?.response?.data?.errorCode) ||
+              ACCOUNT_ERROR.INTERNAL_ERROR
+          )
+        );
+      }
     }
   };
 

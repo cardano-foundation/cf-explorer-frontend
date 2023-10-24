@@ -2,7 +2,6 @@ import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 import { fireEvent, render, screen } from "src/test-utils";
-import { getShortWallet } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 
 import PoolCertificate from ".";
@@ -33,9 +32,9 @@ describe("PoolCertificate component", () => {
   it("should component render", () => {
     render(<PoolCertificate data={[mockProps]} />);
     expect(screen.getByText(/pool registrations/i)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: getShortWallet(mockProps.poolId) })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: getShortWallet(mockProps.poolOwners[0]) })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: getShortWallet(mockProps.poolOwners[1]) })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /pool-id/ })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /owner-1/ })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /owner-2/ })).toBeInTheDocument();
   });
 
   it("should user goto detail page", () => {
@@ -45,11 +44,11 @@ describe("PoolCertificate component", () => {
         <PoolCertificate data={[mockProps]} />
       </Router>
     );
-    fireEvent.click(screen.getByRole("link", { name: getShortWallet(mockProps.poolId) }));
+    fireEvent.click(screen.getByRole("link", { name: /pool-id/ }));
     expect(history.location.pathname).toBe(details.delegation(mockProps.poolId));
-    fireEvent.click(screen.getByRole("link", { name: getShortWallet(mockProps.poolOwners[0]) }));
+    fireEvent.click(screen.getByRole("link", { name: /owner-1/ }));
     expect(history.location.pathname).toBe(details.stake(mockProps.poolOwners[0]));
-    fireEvent.click(screen.getByRole("link", { name: getShortWallet(mockProps.poolOwners[1]) }));
+    fireEvent.click(screen.getByRole("link", { name: /owner-2/ }));
     expect(history.location.pathname).toBe(details.stake(mockProps.poolOwners[1]));
   });
 });

@@ -8,13 +8,7 @@ import { useSelector } from "react-redux";
 import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
-import {
-  formatADAFull,
-  formatDateTimeLocal,
-  getPageInfo,
-  getShortHash,
-  getShortWallet
-} from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import Table, { Column } from "src/components/commons/Table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { API } from "src/commons/utils/api";
@@ -45,8 +39,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
     {
       title: t("glossary.txhash"),
       key: "trxhash",
-      minWidth: "200px",
-
+      minWidth: "150px",
       render: (r) => (
         <>
           <CustomTooltip title={r.hash}>
@@ -58,17 +51,28 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
       )
     },
     {
-      title: t("glossary.blockEpochSlot"),
+      title: t("glossary.block"),
       key: "block",
-      minWidth: "200px",
-      render: (r) => (
-        <>
-          <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
-          <br />
-          <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/<SmallText>{r.epochSlotNo} </SmallText>
-        </>
-      )
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
     },
+    {
+      title: t("glossary.epoch"),
+      key: "epoch",
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>
+    },
+    {
+      title: t("glossary.slot"),
+      key: "epochSlotNo",
+      minWidth: "50px"
+    },
+    {
+      title: t("glossary.absoluteSlot"),
+      key: "slot",
+      minWidth: "100px"
+    },
+
     {
       title: t("glossary.address"),
       key: "addresses",
@@ -80,9 +84,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
               <Label>{t("drawer.input")}: </Label>
               <div>
                 <CustomTooltip title={r.addressesInput[0]}>
-                  <StyledLink to={details.address(r.addressesInput[0])}>
-                    {getShortWallet(r.addressesInput[0])}
-                  </StyledLink>
+                  <StyledLink to={details.address(r.addressesInput[0])}>{getShortHash(r.addressesInput[0])}</StyledLink>
                 </CustomTooltip>
                 <br />
                 {r.addressesInput.length > 1 && <StyledLink to={details.transaction(r.hash)}>...</StyledLink>}
@@ -93,7 +95,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
               <div>
                 <CustomTooltip title={r.addressesOutput[0]}>
                   <StyledLink to={details.address(r.addressesOutput[0])}>
-                    {getShortWallet(r.addressesOutput[0])}
+                    {getShortHash(r.addressesOutput[0])}
                   </StyledLink>
                 </CustomTooltip>
                 <br />

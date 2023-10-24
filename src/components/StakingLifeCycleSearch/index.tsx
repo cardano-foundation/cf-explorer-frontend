@@ -13,6 +13,7 @@ import { API } from "src/commons/utils/api";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 import dataMainnet from "src/commons/configs/mainnet.json";
+import defaultAxios from "src/commons/utils/axios";
 
 import {
   StyledContainer,
@@ -82,15 +83,42 @@ const StakingLifeCycleSearch = () => {
     }
   ];
 
-  const hanldeSearch = () => {
-    if (!value) {
+  const handleSearchPool = async (query: string) => {
+    try {
+      const { data } = await defaultAxios.get(`${API.SPO_LIFECYCLE.TABS(query)}`);
+      if (data) {
+        history.push(details.spo(query, "timeline"));
+      } else {
+        setError(t("message.noResultsFound"));
+      }
+    } catch {
       setError(t("message.noResultsFound"));
     }
-    if (value.startsWith("stake")) {
-      history.push(details.staking(value, "timeline"));
-    } else if (value.startsWith("pool")) {
-      history.push(details.spo(value, "timeline"));
-    } else setError(t("message.noResultsFound"));
+  };
+
+  const handleSearchStakeAddress = async (query: string) => {
+    try {
+      const { data } = await defaultAxios.get(`${API.STAKE_LIFECYCLE.TABS(query)}`);
+      if (data) {
+        history.push(details.staking(query, "timeline"));
+      } else {
+        setError(t("message.noResultsFound"));
+      }
+    } catch {
+      setError(t("message.noResultsFound"));
+    }
+  };
+
+  const hanldeSearch = async () => {
+    if (!value) {
+      setError(t("message.noResultsFound"));
+      return;
+    }
+    if (value?.toLowerCase().startsWith("stake")) {
+      handleSearchStakeAddress(value);
+    } else {
+      handleSearchPool(value);
+    }
   };
   useKey("enter", hanldeSearch);
 

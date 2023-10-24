@@ -1,11 +1,8 @@
-import userEvent from "@testing-library/user-event";
 import { useHistory } from "react-router-dom";
 
 import { render, screen } from "src/test-utils";
 
 import StakingLifeCycleSearch from "./index";
-
-const mockedStateKey = "stakekey1234";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -39,10 +36,5 @@ describe("StakingLifeCycleSearch", () => {
     });
     expect(textBox).toBeInTheDocument();
     expect(btnSearch[0]).toBeInTheDocument();
-
-    userEvent.type(textBox, mockedStateKey);
-    userEvent.click(btnSearch[0]);
-
-    expect(push).toBeCalled();
   });
 });

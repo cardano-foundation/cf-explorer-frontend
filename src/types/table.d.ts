@@ -94,12 +94,14 @@ export interface TableProps<T extends ColumnType = any> {
   tableTitle?: string | React.ReactNode | React.ReactElement;
   fliterOptions?: Option[];
   renderAction?: (items, clearSelection: () => void) => React.ReactElement;
-  onFilterChange?: (value: any, option?: Option) => void;
+  onFilterChange?: (value: string, option?: Option) => void;
   isShowingResult?: boolean;
   /**
    * @deprecated: This props is deprecated. Please pass maxHeight attribute to tableWrapperProps.
    */
   maxHeight?: number | string;
+  minHeight?: number | string;
+  height?: number | string;
   tableWrapperProps?: BoxProps;
   isModal?: boolean;
 }
@@ -119,5 +121,5 @@ export interface TableTopHeaderProps {
   isModal?: boolean;
   isSelectAll?: boolean;
   totalShowingResult?: number | boolean;
-  onFilterChange?: (value: any, option?: Option) => void;
+  onFilterChange?: (value: string, option?: Option) => void;
 }

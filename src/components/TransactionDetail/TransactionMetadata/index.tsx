@@ -9,6 +9,7 @@ import { useHistory, useParams } from "react-router-dom";
 import {
   CollateralIcon,
   ContractIcon,
+  GitCommitIcon,
   InstantaneousHistoryIcon,
   MetadataIconTx,
   MintingIcon,
@@ -34,6 +35,7 @@ import PoolCertificate from "./PoolCertificate";
 import ProtocolUpdate from "./ProtocolUpdate";
 import StakeCertificate from "./StakeCertificate";
 import Summary from "./Summary";
+import TransactionSignatories from "./TransactionSignatories";
 import UTXO from "./UTXOs";
 import Withdrawals from "./Withdrawals";
 import "./index.css";
@@ -56,25 +58,27 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
   const { tabActive = false } = useParams<{ tabActive: keyof Transaction }>();
   const history = useHistory();
   const theme = useTheme();
-  const tabRef = useRef(null);
+  const tabRef = useRef<HTMLDivElement>(null);
 
   const handleChangeTab = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-    (tabRef as any)?.current.scrollIntoView();
+    tabRef?.current?.scrollIntoView();
     history.replace(details.transaction(data?.tx?.hash, newExpanded ? panel : ""));
   };
 
   const protocolsMergeData: TProtocolMerge[] = useMemo(() => {
     const result = [];
     const protocols = data?.protocols;
-    const previousProtocols: any = data?.previousProtocols;
+    const previousProtocols = data?.previousProtocols;
     for (const [key, value] of Object.entries(protocols || {})) {
-      const oldValue = previousProtocols[key];
-      const pItem: TProtocolMerge = {
-        protocol: key,
-        oldValue,
-        value
-      };
-      result.push(pItem);
+      if (previousProtocols) {
+        const oldValue = previousProtocols[key as keyof TProtocol];
+        const pItem: TProtocolMerge = {
+          protocol: key,
+          oldValue,
+          value
+        };
+        result.push(pItem);
+      }
     }
     return result;
   }, [data?.protocols, data?.previousProtocols]);
@@ -157,6 +161,12 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
       icon: InstantaneousHistoryIcon,
       label: `${t("glossary.instantaneousRewards")} (${data?.instantaneousRewards?.length || 0})`,
       children: <InstantaneousRewards data={data?.instantaneousRewards} />
+    },
+    {
+      key: "signersInformation",
+      icon: GitCommitIcon,
+      label: t("tab.signersInformation"),
+      children: <TransactionSignatories data={data?.signersInformation} />
     },
     {
       key: "metadata",

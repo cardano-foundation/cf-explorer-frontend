@@ -5,7 +5,7 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     "& > div:first-of-type": {
       padding: "0 16px",
-      wordBreak: "break-all"
+      wordBreak: "break-word"
     }
   }
 }));

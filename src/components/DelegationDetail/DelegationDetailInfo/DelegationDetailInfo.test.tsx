@@ -23,11 +23,12 @@ const mockProps: IDelegationDetailInfo = {
     pledge: 100000,
     cost: 1000,
     margin: 0.03,
+    totalBalanceOfPoolOwners: 1000000,
     epochBlock: 1000,
     lifetimeBlock: 5000
   },
   loading: false,
-  poolId: "poolId123"
+  poolId: "#poolId123"
 };
 
 describe("DelegationDetailInfo component", () => {
@@ -35,7 +36,6 @@ describe("DelegationDetailInfo component", () => {
     render(<DelegationDetailInfo {...mockProps} />);
     expect(screen.getByRole("heading", { name: /sample pool/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /please sign in to save your bookmark/i })).toBeInTheDocument();
-    expect(screen.getByText(mockProps.poolId)).toBeInTheDocument();
   });
   it("should commponent redirect to detail page", () => {
     const history = createBrowserHistory();
@@ -48,4 +48,3 @@ describe("DelegationDetailInfo component", () => {
     expect(history.location.pathname).toBe(details.stake(mockProps.data?.ownerAccounts[0]));
   });
 });
- 

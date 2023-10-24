@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { Typography, useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { Polygon, PolygonDarkIcon, PoundSign } from "src/commons/resources";
 import PopContent from "src/components/Contracts/common/PopContent";
@@ -9,12 +10,13 @@ import PopperStyled from "../PopperStyled";
 import CustomIcon from "../CustomIcon";
 
 export interface UTXOProps {
-  onClick?: (e: any) => void;
+  onClick?: () => void;
   index?: number;
   hash?: string;
   detail?: (href: string) => string;
 }
 const UTXO: React.FC<UTXOProps> = React.forwardRef((props, ref) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const anchorEl = useRef();
   return (
@@ -31,7 +33,7 @@ const UTXO: React.FC<UTXOProps> = React.forwardRef((props, ref) => {
               fontWeight={500}
               color={theme.palette.primary.main}
             >
-              UTXO
+              {t("tab.utxo")}
             </Typography>
             <CircleBox
               ref={ref}

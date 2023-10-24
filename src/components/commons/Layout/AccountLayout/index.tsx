@@ -9,7 +9,7 @@ import { ReactComponent as ReportDiscord } from "src/commons/resources/icons/rep
 import { ReactComponent as ReportMail } from "src/commons/resources/icons/reportMail.svg";
 import { routers } from "src/commons/routers";
 import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
-import { getShortWallet } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 import { getInfo } from "src/commons/utils/userRequest";
 import { RootState } from "src/stores/types";
 import { setUserData } from "src/stores/user";
@@ -42,7 +42,9 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
   const fetchUserInfo = useCallback(async () => {
     try {
       const response = await getInfo({ network: NETWORK_TYPES[NETWORK] });
-      setUserData({ ...response.data, loginType: userData?.loginType || "" });
+      if (response.data) {
+        setUserData({ ...response.data, loginType: userData?.loginType || "" });
+      }
     } catch (error) {
       //To do
     }
@@ -63,9 +65,9 @@ const AccountLayout: React.FC<Props> = ({ children }) => {
       <Box>
         <Box pt={4}>
           {userData?.loginType === "connectWallet" ? (
-            <CustomTooltip title={userData?.address || ""} placement="bottom">
+            <CustomTooltip title={userData?.username || ""} placement="bottom">
               <StyledUsername component={"h4"} pt={1} m="auto">
-                {getShortWallet(userData?.address)}
+                {getShortHash(userData?.username)}
               </StyledUsername>
             </CustomTooltip>
           ) : (

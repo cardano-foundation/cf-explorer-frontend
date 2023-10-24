@@ -3,10 +3,9 @@ import { Box, Grid, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import CopyButton from "src/components/commons/CopyButton";
-import { getShortWallet } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import Link from "src/components/commons/Link";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
 import StakeKeyBox from "./StakeKeyBox";
 import { CardHeader, TextLabel, TextValue, Wrapper } from "./styles";
@@ -43,11 +42,9 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
                     <Box display="flex" alignItems="center">
                       <TextLabel>{t("common.poolID")}: </TextLabel>
                       <TextValue>
-                        <CustomTooltip title={item.poolId}>
-                          <span>
-                            <Link to={details.delegation(item.poolId || "")}>{getShortWallet(item.poolId)}</Link>
-                          </span>
-                        </CustomTooltip>
+                        <Link to={details.delegation(item.poolId || "")}>
+                          <DynamicEllipsisText value={item.poolId} isTooltip />
+                        </Link>
                         <CopyButton text={item.poolId} />
                       </TextValue>
                     </Box>

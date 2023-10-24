@@ -84,7 +84,7 @@ export const StyledLink = styled(Link)(({ theme }) => ({
   fontSize: 14,
   lineHeight: "22px",
   color: `${theme.palette.primary.main} !important`,
-  wordBreak: "break-all",
+  wordBreak: "break-word",
   fontWeight: 500,
   marginRight: 5,
   [theme.breakpoints.down("sm")]: {
@@ -96,7 +96,7 @@ export const VRFKeyText = styled(Box)(({ theme }) => ({
   fontSize: 12,
   lineHeight: "22px",
   color: theme.palette.primary.main,
-  wordBreak: "break-all",
+  wordBreak: "break-word",
   fontWeight: 500,
   display: "inline",
   marginRight: 5,
@@ -120,7 +120,12 @@ export const StyledEmptyIcon = styled("img")(() => ({
   height: 215
 }));
 
-export const UpdateList = styled(ItemList)(() => ({}));
+export const UpdateList = styled(ItemList)`
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    display: flex;
+    flex-direction: column;
+  }
+`;
 
 export const UpdateItem = styled(Item)(() => ({}));
 

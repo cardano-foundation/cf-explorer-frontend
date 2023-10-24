@@ -4,10 +4,8 @@ import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import { getShortWallet } from "src/commons/utils/helper";
 import DelegatorLifecycleComponent from "src/components/StakingLifeCycle/DelegatorLifecycle";
 import Tabular from "src/components/StakingLifeCycle/DelegatorLifecycle/Tabular";
-import CopyButton from "src/components/commons/CopyButton";
 import { details } from "src/commons/routers";
 import ReportComposerModal from "src/components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -17,6 +15,9 @@ import { API } from "src/commons/utils/api";
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 import NoRecord from "src/components/commons/NoRecord";
 import { ChartMode, TableMode } from "src/commons/resources";
+import { ROLE_ELEVATED_GEN_REPORT } from "src/commons/utils/constants";
+import { TruncateSubTitleContainer } from "src/components/share/styled";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
 import {
   BoxContainerStyled,
@@ -95,12 +96,25 @@ const DelegatorLifecycle = () => {
     document.title = `${t("slc.stakingDelegationLC")} ${stakeId} | ${t("head.page.dashboard")}`;
   }, [stakeId]);
 
-  const changeMode = (mode: ViewMode) => {
-    history.push(details.staking(stakeId, mode, validTab));
+  const changeMode = (newMode: ViewMode) => {
+    if (mode === newMode) return;
+    history.push(details.staking(stakeId, newMode, validTab));
   };
   if (!initialized && !error) return null;
 
   if (error || !data) return <NoRecord />;
+
+  const checkDisableGenReport = () => {
+    if (!isLoggedIn) return true;
+    if (dataReportLimit?.limitPer24hours === ROLE_ELEVATED_GEN_REPORT) return false;
+    return dataReportLimit?.isLimitReached;
+  };
+
+  const getTooltip = () => {
+    if (!isLoggedIn) return t("common.pleaseSignIntoUseFeature");
+    if (dataReportLimit?.limitPer24hours === ROLE_ELEVATED_GEN_REPORT) return "";
+    return t("message.report.limitGenerate", { time: dataReportLimit?.limitPer24hours || 0 });
+  };
 
   return (
     <DelegatorDetailContext.Provider value={data}>
@@ -110,10 +124,11 @@ const DelegatorLifecycle = () => {
             <LifeCycleTitle>{t("slc.stakingDelegationLC")}</LifeCycleTitle>
             <AddressLine>
               <Label>{t("common.stakeAddress")}:</Label>
-              <CustomTooltip title={stakeId}>
-                <StakeId to={details.stake(stakeId)}>{getShortWallet(stakeId)}</StakeId>
-              </CustomTooltip>
-              <CopyButton text={stakeId} />
+              <StakeId to={details.stake(stakeId)}>
+                <TruncateSubTitleContainer>
+                  <DynamicEllipsisText value={stakeId} isCopy isTooltip />
+                </TruncateSubTitleContainer>
+              </StakeId>
             </AddressLine>
           </LifeCycleHeader>
           <BoxItemStyled sidebar={+sidebar}>
@@ -134,19 +149,9 @@ const DelegatorLifecycle = () => {
                 </ButtonSwitch>
               </SwitchGroup>
             </BoxSwitchContainer>
-            <CustomTooltip
-              title={
-                !isLoggedIn
-                  ? t("common.pleaseSignIntoUseFeature")
-                  : t("message.report.limitGenerate", { time: dataReportLimit?.limitPer24hours || 0 })
-              }
-            >
+            <CustomTooltip title={getTooltip()}>
               <ReportButtonContainer>
-                <ButtonReport
-                  disabled={!isLoggedIn || dataReportLimit?.isLimitReached}
-                  onClick={() => setOpen(true)}
-                  sidebar={+sidebar}
-                >
+                <ButtonReport disabled={checkDisableGenReport()} onClick={() => setOpen(true)} sidebar={+sidebar}>
                   {t("common.composeReport")}
                 </ButtonReport>
               </ReportButtonContainer>

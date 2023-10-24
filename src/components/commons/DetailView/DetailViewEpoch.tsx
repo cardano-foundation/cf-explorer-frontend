@@ -70,7 +70,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
   );
 
   useEffect(() => {
-    if (!epochNo) {
+    if (epochNo === undefined || epochNo === null) {
       setUrlFetch("");
     } else {
       setUrlFetch(`${API.EPOCH.DETAIL}/${epochNo}`);
@@ -95,7 +95,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
   }, [data, callback]);
 
   const renderContent = () => {
-    if (!data || loading || !epochNo) {
+    if (!data || loading) {
       return (
         <>
           <ViewDetailHeader>
@@ -291,7 +291,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
   };
 
   return (
-    <ViewDetailDrawer anchor="right" open={Boolean(open && epochNo)} variant="temporary" onClose={handleClose}>
+    <ViewDetailDrawer anchor="right" open={Boolean(open ?? epochNo)} variant="temporary" onClose={handleClose}>
       {renderContent()}
     </ViewDetailDrawer>
   );

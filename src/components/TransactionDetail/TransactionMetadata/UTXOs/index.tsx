@@ -9,14 +9,14 @@ import receiveImgFail from "src/commons/resources/images/receiveImgFail.svg";
 import sendImg from "src/commons/resources/images/sendImg.svg";
 import sendImgFail from "src/commons/resources/images/sendImgFail.svg";
 import { details } from "src/commons/routers";
-import { formatADAFull, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CopyButton from "src/components/commons/CopyButton";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import DropdownTokens, { TokenLink } from "src/components/commons/DropdownTokens";
 import { DownRedUtxoDarkmode, UpGreenUtxoDarkmode } from "src/commons/resources";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
-import { Header, Img, Item, ItemContent, ItemFooter, WrapInfo, WrapUTXOs } from "./styles";
+import { EllipsisContainer, Header, Img, Item, ItemContent, ItemFooter, WrapInfo, WrapUTXOs } from "./styles";
 
 interface Props {
   data: Transaction["utxOs"] | null;
@@ -96,15 +96,15 @@ const Card = ({
       <Box fontSize={14}>
         {items?.map((item, index) => (
           <Item key={index}>
-            <ItemContent sx={{ overflowX: "auto", overflowY: "hidden" }}>
+            <ItemContent>
               <Box display="flex" alignItems="center">
                 <Box width={50}>{renderIcon(type)}</Box>
               </Box>
               <WrapInfo>
-                <Box width={"100%"} display="flex" flexDirection="column" justifyContent="center" paddingTop="5px">
+                <Box display="flex" flexDirection="column" justifyContent="center" paddingTop="5px" flexGrow={1}>
                   {type === "down" ? (
                     <WrapUTXOs>
-                      <Box mr={3} minWidth={200}>
+                      <Box mr={3} minWidth={200} width={"100%"}>
                         <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
                           <Box
                             color={(theme) => (isFailed ? theme.palette.secondary[600] : theme.palette.secondary.light)}
@@ -112,28 +112,27 @@ const Card = ({
                           >
                             {t("tab.utxo")}:
                           </Box>
-                          <Link to={details.transaction(item.txHash)}>
-                            <CustomTooltip title={item.txHash}>
-                              <Box
-                                component={"span"}
-                                fontWeight="bold"
-                                fontFamily={"var(--font-family-text)"}
-                                color={(theme) =>
-                                  isFailed ? theme.palette.secondary[600] : theme.palette.primary.main
+                          <Link to={details.transaction(item.txHash)} style={{ width: "100%" }}>
+                            <EllipsisContainer isFailed={isFailed}>
+                              <DynamicEllipsisText
+                                value={item.txHash}
+                                isTooltip
+                                afterElm={
+                                  <Box display={"flex"} alignItems={"center"}>
+                                    <Box
+                                      fontWeight={"bold"}
+                                      color={({ palette }) =>
+                                        isFailed ? theme.palette.secondary[600] : palette.secondary.main
+                                      }
+                                    >
+                                      #{item?.index}
+                                    </Box>
+                                    <CopyButton text={item.txHash} />
+                                  </Box>
                                 }
-                                mr={1}
-                              >
-                                {getShortHash(item.txHash)}
-                              </Box>
-                            </CustomTooltip>
+                              />
+                            </EllipsisContainer>
                           </Link>
-                          <Box
-                            fontWeight={"bold"}
-                            color={({ palette }) => (isFailed ? theme.palette.secondary[600] : palette.secondary.main)}
-                          >
-                            #{item?.index}
-                          </Box>
-                          <CopyButton text={item.txHash} />
                         </Box>
                       </Box>
                     </WrapUTXOs>
@@ -157,21 +156,13 @@ const Card = ({
                         justifyContent="flex-start"
                         alignItems={"center"}
                         flexWrap="nowrap"
-                        width={"auto"}
+                        width={"100%"}
                       >
-                        <Link to={details.address(item.address)}>
-                          <CustomTooltip title={item.address}>
-                            <Box
-                              color={(theme) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)}
-                              fontWeight="bold"
-                              fontFamily={"var(--font-family-text)"}
-                              mr={1}
-                            >
-                              {getShortWallet(item.address)}
-                            </Box>
-                          </CustomTooltip>
+                        <Link to={details.address(item.address)} style={{ width: "100%" }}>
+                          <EllipsisContainer isFailed={isFailed}>
+                            <DynamicEllipsisText value={item.address} isCopy isTooltip />
+                          </EllipsisContainer>
                         </Link>
-                        <CopyButton text={item.address} />
                       </Box>
                     </Box>
                   </Box>
@@ -183,7 +174,7 @@ const Card = ({
                       flexDirection={isMobile ? "column" : "row"}
                       paddingTop="5px"
                     >
-                      <Box mr={3} minWidth={180}>
+                      <Box mr={3} minWidth={180} width={"100%"}>
                         <Box
                           display={"flex"}
                           flexDirection={isMobile ? "column" : "row"}
@@ -193,26 +184,16 @@ const Card = ({
                           <Box
                             pr={1}
                             color={({ palette }) => (isFailed ? theme.palette.secondary[600] : palette.secondary.light)}
+                            sx={{ textWrap: "nowrap" }}
                           >
                             {t("common.stakeAddress")}:{" "}
                           </Box>
-                          <Box>
-                            <Link to={details.stake(item?.stakeAddress)}>
-                              <CustomTooltip title={item?.stakeAddress}>
-                                <Box
-                                  component={"span"}
-                                  fontWeight="bold"
-                                  fontFamily={"var(--font-family-text)"}
-                                  color={(theme) =>
-                                    isFailed ? theme.palette.secondary[600] : theme.palette.primary.main
-                                  }
-                                  mr={1}
-                                >
-                                  {getShortWallet(item?.stakeAddress)}
-                                </Box>
-                              </CustomTooltip>
+                          <Box style={{ width: "100%" }}>
+                            <Link to={details.stake(item?.stakeAddress)} style={{ width: "100%" }}>
+                              <EllipsisContainer isFailed={isFailed}>
+                                <DynamicEllipsisText value={item.stakeAddress} isCopy isTooltip />
+                              </EllipsisContainer>
                             </Link>
-                            <CopyButton text={item?.stakeAddress} />
                           </Box>
                         </Box>
                       </Box>
@@ -274,15 +255,19 @@ const Card = ({
         <Box
           fontWeight={"bold"}
           color={({ palette }) => (isFailed ? theme.palette.secondary[600] : palette.secondary.main)}
+          sx={{ textWrap: "nowrap", marginRight: 1 }}
         >
-          Total {type === "down" ? t("drawer.input") : t("drawer.ouput")}
+          {t("common.total")} {type === "down" ? t("drawer.input") : t("drawer.ouput")}
         </Box>
         <div>
           <Box
             fontWeight={"bold"}
             component="span"
             pr={1}
-            sx={{ color: (theme) => (isFailed ? theme.palette.secondary[600] : theme.palette.secondary.main) }}
+            sx={{
+              color: (theme) => (isFailed ? theme.palette.secondary[600] : theme.palette.secondary.main),
+              wordBreak: "break-word"
+            }}
           >
             {isFailed || !totalADA
               ? 0

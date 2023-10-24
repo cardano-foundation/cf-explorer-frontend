@@ -103,7 +103,7 @@ export const TitleText = styled(Box)(({ theme }) => ({
 }));
 
 export const ValueText = styled(Box)(({ theme }) => ({
-  whiteSpace: "nowrap",
+  wordBreak: "break-all",
   color: theme.palette.secondary.main
 }));
 
@@ -131,3 +131,11 @@ export const WrapItemsInfo = styled(Box)(({ theme }) => ({
     }
   }
 }));
+
+export const GridItem = styled(Box)`
+  display: flex;
+  padding: 0 16px;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    padding: 0;
+  }
+`;

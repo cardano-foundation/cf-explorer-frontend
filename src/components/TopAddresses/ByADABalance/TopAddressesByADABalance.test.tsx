@@ -3,7 +3,7 @@ import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 
 import { render } from "src/test-utils";
-import Table from "src/components/commons/Table";
+import Table, { Column } from "src/components/commons/Table";
 import useFetchList from "src/commons/hooks/useFetchList";
 
 import TopAddressesByADABalance from "./index";
@@ -36,21 +36,20 @@ describe("Top addresses by ADA balance view", () => {
     const mockUseFetchList = useFetchList as jest.Mock;
     mockUseFetchList.mockReturnValue(mockData);
     render(<TopAddressesByADABalance />);
-    expect(screen.getByText("Ae2td...zN2zG")).toBeInTheDocument();
+    expect(screen.getByText(/Ae2td/)).toBeInTheDocument();
   });
 
   it("renders the table with given column and data", () => {
-    const columns = [
-      {
-        title: "Test Column",
-        key: "test",
-        render: (r: any) => <div>{r.test}</div>
-      }
-    ];
-
     const data = [
       {
         test: "Test Data"
+      }
+    ];
+    const columns: Column<{ test: string }>[] = [
+      {
+        title: "Test Column",
+        key: "test",
+        render: (r) => <div>{r.test}</div>
       }
     ];
     render(<Table columns={columns} data={data} />);
@@ -60,11 +59,11 @@ describe("Top addresses by ADA balance view", () => {
   });
 
   it("renders the table with given column and data", () => {
-    const columns = [
+    const columns: Column<{ test: string }>[] = [
       {
         title: "Test Column",
         key: "test",
-        render: (r: any) => <div>{r.test}</div>
+        render: (r) => <div>{r.test}</div>
       }
     ];
 
@@ -90,7 +89,7 @@ describe("Top addresses by ADA balance view", () => {
       </Router>
     );
 
-    const AddressesItem = screen.getByText("Ae2td...zN2zG");
+    const AddressesItem = screen.getByText(/Ae2td/);
     fireEvent.click(AddressesItem);
     expect(history.location.pathname).toBe("/address/Ae2tdPwUPEYwFx4dmJheyNPPYXtvHbJLeCaA96o6Y2iiUL18cAt7AizN2zG");
   });

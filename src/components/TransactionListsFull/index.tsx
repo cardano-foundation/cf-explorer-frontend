@@ -1,18 +1,12 @@
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { useRef } from "react";
+import { MouseEvent, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
-import {
-  formatADAFull,
-  formatDateTimeLocal,
-  getPageInfo,
-  getShortHash,
-  getShortWallet
-} from "../../commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { Label, StyledLink, StyledContainer } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
@@ -22,7 +16,7 @@ import ADAicon from "../commons/ADAIcon";
 interface TransactionListFullProps {
   underline?: boolean;
   url: string;
-  openDetail?: (_: any, r: Transactions) => void;
+  openDetail?: (_: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => void;
   selected?: number | null;
   showTitle?: boolean;
 }
@@ -41,7 +35,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
   const fetchData = useFetchList<Transactions>(url, pageInfo);
   const mainRef = useRef(document.querySelector("#main"));
 
-  const onClickRow = (_: any, r: Transactions) => {
+  const onClickRow = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
     if (openDetail) return openDetail(_, r);
     history.push(details.transaction(r.hash));
   };
@@ -67,26 +61,6 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       render: (r) => <Box color={({ palette }) => palette.secondary.light}>{formatDateTimeLocal(r.time || "")}</Box>
     },
     {
-      title: t("glossary.block"),
-      key: "block",
-      minWidth: 120,
-      render: (r) => (
-        <Box>
-          <Box>
-            <StyledLink to={details.block(r.blockNo || r.blockHash)}>
-              {r.blockNo || getShortHash(r.blockHash)}
-            </StyledLink>
-          </Box>
-          <Box mt={1}>
-            <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>/
-            <Box color={({ palette }) => palette.secondary.light} component={"span"}>
-              {r.epochSlotNo}
-            </Box>
-          </Box>
-        </Box>
-      )
-    },
-    {
       title: t("glossary.address"),
       key: "address",
       minWidth: 120,
@@ -100,7 +74,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
                   return (
                     <CustomTooltip key={key} title={tx}>
                       <StyledLink to={details.address(tx)} key={key}>
-                        <Box ml={1}>{getShortWallet(tx)}</Box>
+                        <Box ml={1}>{getShortHash(tx)}</Box>
                       </StyledLink>
                     </CustomTooltip>
                   );
@@ -119,7 +93,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
                   return (
                     <CustomTooltip key={key} title={tx}>
                       <StyledLink to={details.address(tx)} key={key}>
-                        <Box ml={1}>{getShortWallet(tx)}</Box>
+                        <Box ml={1}>{getShortHash(tx)}</Box>
                       </StyledLink>
                     </CustomTooltip>
                   );

@@ -12,7 +12,7 @@ import { ReactComponent as TransactionIcon } from "src/commons/resources/icons/e
 import { ReactComponent as StakeKeyHistoryIcon } from "src/commons/resources/icons/stateKeyHistory.svg";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, getShortHash } from "src/commons/utils/helper";
 import ModalAllAddress from "src/components/StakeDetail/ModalAllAddress";
 
 import ADAicon from "../ADAIcon";
@@ -154,7 +154,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
     const poolName = data.pool?.poolName
       ? `${data.pool.tickerName || ""} - ${data.pool.poolName}`
       : data.pool?.poolId
-      ? getShortWallet(data.pool.poolId)
+      ? getShortHash(data.pool.poolId)
       : "-";
 
     const poolNameToolTip = data.pool?.poolName

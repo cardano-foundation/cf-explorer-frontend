@@ -3,6 +3,7 @@ import {
   CircularProgress,
   IconButton,
   PaginationRenderItemParams,
+  SelectChangeEvent,
   alpha,
   styled,
   useScrollTrigger,
@@ -61,7 +62,7 @@ import {
 } from "./styles";
 import { Lowercase } from "../CustomText/styles";
 
-const SPACING_TOP_TABLE = 250;
+const SPACING_TOP_TABLE = 300;
 
 type TEmptyRecord = {
   className?: string;
@@ -307,10 +308,11 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
               onOpen={() => setOpen(true)}
               onClose={() => setOpen(false)}
               size="small"
-              onChange={(e: any) => {
-                setSize(+e.target.value);
+              onChange={(e: SelectChangeEvent<unknown>) => {
+                const value = e.target.value as string;
+                setSize(+value);
                 setPage(1);
-                pagination?.onChange && pagination.onChange(1, +e.target.value);
+                pagination?.onChange && pagination.onChange(1, +value);
                 clearSelection?.();
               }}
               value={size}
@@ -336,7 +338,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
               <StyledMenuItem value={50}>50</StyledMenuItem>
               <StyledMenuItem value={100}>100</StyledMenuItem>
             </SelectMui>
-            <Box component={"span"} ml={1} fontSize="0.875rem">
+            <Box component={"span"} ml={1} fontSize="0.875rem" sx={{ textWrap: "nowrap" }}>
               {t("perPage")}
             </Box>
           </Box>
@@ -400,22 +402,24 @@ const Table: React.FC<TableProps> = ({
   onFilterChange,
   maxHeight,
   isShowingResult,
-  isModal
+  isModal,
+  height,
+  minHeight
 }) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange
   });
 
-  const tableRef = useRef(null);
+  const tableRef = useRef<HTMLTableElement>(null);
   const wrapperRef = useRef<HTMLElement>(null);
   const { width } = useScreen();
 
-  let heightTable = Math.min((tableRef?.current as any)?.clientHeight || 0, window.innerHeight * 0.5);
+  let heightTable = Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight * 0.5);
 
-  if (width >= breakpoints.values.sm && width <= breakpoints.values.lg) {
+  if (width >= breakpoints.values.sm && (data || []).length > 10) {
     const footerHeight = document.getElementById("footer")?.offsetHeight || SPACING_TOP_TABLE;
     heightTable =
-      Math.min((tableRef?.current as any)?.clientHeight || 0, window.innerHeight) - (footerHeight + SPACING_TOP_TABLE);
+      Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight) - (footerHeight + SPACING_TOP_TABLE);
   }
 
   const toggleSelectAll = (isChecked: boolean) => {
@@ -452,8 +456,8 @@ const Table: React.FC<TableProps> = ({
       <Wrapper
         ref={wrapperRef}
         maxHeight={maxHeight}
-        minHeight={(!data || data.length === 0) && !loading ? 360 : loading ? 400 : 150}
-        height={heightTable}
+        minHeight={minHeight ? minHeight : (!data || data.length === 0) && !loading ? 360 : loading ? 400 : 15}
+        height={height || heightTable}
         className={data && data.length !== 0 ? "table-wrapper" : "hide-scroll"}
         loading={loading ? 1 : 0}
         {...tableWrapperProps}

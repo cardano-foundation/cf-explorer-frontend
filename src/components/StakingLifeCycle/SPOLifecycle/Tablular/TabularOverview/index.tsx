@@ -16,10 +16,11 @@ import {
   WalletGreenIcon
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { formatADAFull, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull } from "src/commons/utils/helper";
 import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
 import PoolDetailContext from "../../PoolDetailContext";
 import {
@@ -67,14 +68,14 @@ const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
     <Grid item sm={sidebar ? 12 : 6} md={6} lg={6} width={"100%"}>
       <CardOverview>
         <Icon component={bg} />
-        <StyledBox>
+        <StyledBox hasAction={!!action} sidebar={!!sidebar} flexGrow={1}>
           <WrapIcon>{mainIcon}</WrapIcon>
-          <Box textAlign="start">
+          <Box textAlign="start" width={"100%"} flexGrow={action ? 1 : ""}>
             <CardTitle>{title}</CardTitle>
             {value}
           </Box>
         </StyledBox>
-        {action}
+        <Box sx={{ position: "absolute", right: "5%", top: "23%" }}> {action}</Box>
       </CardOverview>
     </Grid>
   );
@@ -93,11 +94,10 @@ const TabularOverview: React.FC = () => {
     return history.push(details.stake(key));
   };
 
-  const ownerAccountValue = getShortWallet(stakeKeys?.[0]);
+  const ownerAccountValue = stakeKeys?.[0] || "";
   const STATUS = {
     ACTIVE: [t("common.active"), theme.palette.secondary.main],
-    INACTIVE: [t("common.incactive"), "rgb(255,0,0)"],
-    RETIRING: [t("common.retiring"), theme.palette.error[700]]
+    RETIRED: [t("common.retired"), theme.palette.error[700]]
   };
 
   return (
@@ -153,9 +153,11 @@ const TabularOverview: React.FC = () => {
           mainIcon={<OwnerAccountIcon />}
           value={
             <Box display="flex" alignItems="center">
-              <CardValue>
+              <CardValue width={"100%"}>
                 <CustomTooltip title={stakeKeys?.[0]}>
-                  <ClickAbleLink to={details.stake(stakeKeys?.[0] || "#")}>{ownerAccountValue}</ClickAbleLink>
+                  <ClickAbleLink to={details.stake(stakeKeys?.[0] || "#")} sx={{ textWrap: "wrap" }}>
+                    <DynamicEllipsisText value={ownerAccountValue} />
+                  </ClickAbleLink>
                 </CustomTooltip>
               </CardValue>
             </Box>

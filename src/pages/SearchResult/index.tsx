@@ -83,7 +83,7 @@ const SearchResult = () => {
     document.title = loading ? `Search For ${value}...` : `No Record Found: ${value} | Cardano Blockchain Explorer`;
   }, [loading, value]);
 
-  const handleFilterByPool = (data: any) => {
+  const handleFilterByPool = (data: { data: Delegators[]; totalItems: number }) => {
     if (data?.totalItems === 1) {
       history.replace(details.delegation(data?.data?.[0]?.poolId));
     } else if (data?.totalItems > 1) {

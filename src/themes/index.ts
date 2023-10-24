@@ -81,6 +81,8 @@ declare module "@mui/material" {
     lg: true;
     xl: true;
     laptop: true;
+    hd: true;
+    fhd: true;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-interface

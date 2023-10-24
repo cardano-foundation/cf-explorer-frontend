@@ -39,6 +39,7 @@ const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, p
   }, [copied]);
 
   const onCopy = (e: React.MouseEvent) => {
+    e.preventDefault();
     if (!copied) {
       copyToClipboard(text);
       setCopied(true);

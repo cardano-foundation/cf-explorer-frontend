@@ -1,5 +1,5 @@
 import { Box, styled, IconButton as IconButtonMui } from "@mui/material";
-import i18next from "i18next";
+import { t } from "i18next";
 
 import CertificateShape from "src/components/commons/CertificateShape";
 import FeeBox from "src/components/commons/FeeBox";
@@ -137,7 +137,7 @@ export const StyledCertificateShape = styled(CertificateShape)(({ theme }) => ({
 
 export const StyledHoldBox = styled(HoldBox)(({ theme }) => ({
   "::after": {
-    content: `"${i18next.t("glossary.poolHold").toUpperCase()}"`
+    content: `"${t("glossary.poolHold").toUpperCase()}"`
   },
   [theme.breakpoints.down("sm")]: {
     minWidth: "calc(100% - 16px)"

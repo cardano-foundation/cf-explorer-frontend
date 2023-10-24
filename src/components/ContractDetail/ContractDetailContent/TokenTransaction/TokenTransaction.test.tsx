@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "src/test-utils";
 import useFetchList from "src/commons/hooks/useFetchList";
-import { getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 
 import TokenTransaction from ".";
 
@@ -41,8 +41,8 @@ describe("TokenTransaction component", () => {
   it("should component render", () => {
     render(<TokenTransaction />);
     expect(screen.getByText(getShortHash(mockData.hash))).toBeInTheDocument();
-    expect(screen.getByText(getShortWallet(mockData.addressesInput[0]))).toBeInTheDocument();
-    expect(screen.getByText(getShortWallet(mockData.addressesOutput[0]))).toBeInTheDocument();
+    expect(screen.getByText(getShortHash(mockData.addressesInput[0]))).toBeInTheDocument();
+    expect(screen.getByText(getShortHash(mockData.addressesOutput[0]))).toBeInTheDocument();
   });
 
   it("when user select a row", () => {

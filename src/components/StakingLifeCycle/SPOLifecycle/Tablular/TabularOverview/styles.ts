@@ -115,10 +115,17 @@ export const DotsIcon = styled(Box)`
   }
 `;
 
-export const StyledBox = styled(Box)(() => ({
+export const StyledBox = styled(Box)<{ hasAction?: boolean; sidebar?: boolean }>(({ hasAction, sidebar, theme }) => ({
   display: "flex",
   alignItems: "center",
-  gap: "12px"
+  gap: "12px",
+  maxWidth: hasAction ? "90%" : "85%",
+  [theme.breakpoints.down("lg")]: {
+    maxWidth: hasAction ? (sidebar ? "75%" : "90%") : "85%"
+  },
+  [theme.breakpoints.down("md")]: {
+    maxWidth: "80%"
+  }
 }));
 
 export const WrapStatus = styled(Box)(() => ({

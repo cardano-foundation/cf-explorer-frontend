@@ -35,11 +35,12 @@ module.exports = {
     "no-console": process.env.NODE_ENV === "development" ? "warn" : "error",
     "react/react-in-jsx-scope": "off",
     "react/jsx-no-target-blank": "warn",
+    "react-hooks/exhaustive-deps": "off",
     "react/prop-types": "off",
     "react/no-unescaped-entities": 0,
     "import/no-named-as-default": 0,
     "@typescript-eslint/no-unused-vars": process.env.NODE_ENV === "development" ? "warn" : "error",
-    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-explicit-any": "error",
     "import/order": [
       "error",
       {

@@ -10,7 +10,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { EyeIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import CustomFilter, { FilterParams } from "src/components/commons/CustomFilter";
@@ -69,7 +69,7 @@ const DelegationTab = () => {
       minWidth: "120px",
       render: (r) => (
         <CustomTooltip title={r.poolName || r.poolId}>
-          <StyledLink to={details.delegation(r.poolId)}>{r.poolName || getShortWallet(r.poolId)}</StyledLink>
+          <StyledLink to={details.delegation(r.poolId)}>{r.poolName || getShortHash(r.poolId)}</StyledLink>
         </CustomTooltip>
       )
     },

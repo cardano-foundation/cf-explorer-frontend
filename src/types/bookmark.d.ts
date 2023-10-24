@@ -8,3 +8,8 @@ declare interface Bookmark {
   urlPage?: string;
   network: NETWORK_TYPES;
 }
+
+interface BookmarkResp {
+  passNumber: number;
+  failNumber: number;
+}

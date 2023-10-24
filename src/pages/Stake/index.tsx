@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
-import { formatDateTimeLocal, getPageInfo, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DetailViewStakeKey from "src/components/commons/DetailView/DetailViewStakeKey";
@@ -54,7 +54,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
     document.title = `${title} Stake Addresses | Cardano Blockchain Explorer`;
   }, [stakeAddressType]);
 
-  const openDetail = (_: any, r: IStakeKey) => {
+  const openDetail = (_: React.MouseEvent<Element, MouseEvent>, r: IStakeKey) => {
     setOnDetailView(true);
     setSelected(r.txHash);
     setStakeKey(r.stakeKey);
@@ -89,17 +89,24 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
     {
       title: t("glossary.block"),
       key: "block",
-      render: (r) => (
-        <>
-          <StyledLink to={details.block(r.block)}>{r.block}</StyledLink>
-          <div style={{ display: "flex", marginTop: "6px" }}>
-            <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>/
-            <Box component={"span"} color={({ palette }) => palette.secondary.light}>
-              {r.epochSlotNo}
-            </Box>
-          </div>
-        </>
-      )
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.block(r.block)}>{r.block}</StyledLink>
+    },
+    {
+      title: t("glossary.epoch"),
+      key: "epoch",
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>
+    },
+    {
+      title: t("glossary.slot"),
+      key: "epochSlotNo",
+      minWidth: "50px"
+    },
+    {
+      title: t("glossary.absoluteSlot"),
+      key: "slotNo",
+      minWidth: "100px"
     },
     {
       title: t("glossary.stakeAddress"),
@@ -108,7 +115,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
         <>
           <CustomTooltip title={r.stakeKey}>
             <StyledLink to={{ pathname: details.stake(r.stakeKey), state: { fromPath } }}>
-              {getShortWallet(r.stakeKey)}
+              {getShortHash(r.stakeKey)}
             </StyledLink>
           </CustomTooltip>
 

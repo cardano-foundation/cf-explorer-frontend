@@ -1,12 +1,14 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { InfoIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { formatLongText } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { StyledLink } from "src/components/share/styled";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { Uppercase } from "src/components/commons/CustomText/styles";
 
 import { CLButton, CLCardContaienr, WrapLabel } from "./styles";
 
@@ -16,6 +18,7 @@ export interface ContractItemProps {
 }
 
 const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
+  const { t } = useTranslation();
   const containerRef = useRef<SVGSVGElement>(null);
   const [open, setOpen] = useState(false);
   const theme = useTheme();
@@ -33,25 +36,25 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
       case "SPEND":
         return {
           value: data.address,
-          explain: "A script with the purpose to control how to spend outputs",
+          explain: t("explain.spend.desc"),
           detail: details.contract
         };
       case "MINT":
         return {
           value: data.scriptHash,
-          explain: "A script with the purpose to control how to mint or burn assets",
+          explain: t("explain.mint.desc"),
           detail: details.policyDetail
         };
       case "CERT":
         return {
           value: data.stakeAddress,
-          explain: "A script with the purpose to control how to publish delegation certificates",
+          explain: t("explain.cert.desc"),
           detail: details.stake
         };
       case "REWARD":
         return {
           value: data.stakeAddress,
-          explain: "A script with the purpose to control how to withdraw consensus rewards",
+          explain: t("explain.reward.desc"),
           detail: details.stake
         };
     }
@@ -66,24 +69,28 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
   return (
     <CLCardContaienr data-testid="contract-card-item">
       <Box>
-        <WrapLabel>Contract Address:</WrapLabel>
-        <CustomTooltip title={contractAddress?.value}>
-          <StyledLink
-            style={{ fontWeight: "500", textDecoration: "underline" }}
-            to={contractAddress?.detail(contractAddress.value) || "/"}
-          >
-            {formatLongText(contractAddress?.value || "")}
-          </StyledLink>
-        </CustomTooltip>
+        <WrapLabel>{t("contract.address")}:</WrapLabel>
+        <StyledLink
+          style={{
+            fontWeight: "500",
+            textDecoration: "underline",
+            maxWidth: "100%",
+            display: "contents",
+            flexGrow: 1
+          }}
+          to={contractAddress?.detail(contractAddress.value) || "/"}
+        >
+          <DynamicEllipsisText value={contractAddress?.value || ""} isTooltip />
+        </StyledLink>
       </Box>
       <Box>
-        <WrapLabel>Purpose:</WrapLabel>
+        <WrapLabel>{t("contract.purpose")}:</WrapLabel>
         <Typography>{data.purpose}</Typography>
         {!!data?.burningTokens?.length && (
           <span>
             (
             <Typography component="span" color={theme.palette.error[700]}>
-              BURN
+              <Uppercase>{t("contract.burn")}</Uppercase>
             </Typography>
             )
           </span>
@@ -99,7 +106,7 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
         )}
       </Box>
       <Box>
-        <CLButton onClick={() => onClick?.(data)}>View Contract</CLButton>
+        <CLButton onClick={() => onClick?.(data)}>{t("contract.viewContract")}</CLButton>
       </Box>
     </CLCardContaienr>
   );

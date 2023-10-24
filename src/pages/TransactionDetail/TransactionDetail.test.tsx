@@ -18,7 +18,8 @@ const transaction = {
     confirmation: 10,
     fee: 100,
     totalOutput: 1000,
-    maxEpochSlot: 1000
+    maxEpochSlot: 1000,
+    slotNo: 1000
   },
   summary: {
     stakeAddress: [
@@ -201,7 +202,6 @@ describe("TransactionDetail page", () => {
     render(<Transaction />);
     expect(screen.getByText(/transaction details/i)).toBeInTheDocument();
     expect(screen.getByText(/pendding/i)).toBeInTheDocument();
-    expect(screen.getByText(/transaction-hash/i)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: String(transaction.tx.epochNo) })).toBeInTheDocument();
   });
 

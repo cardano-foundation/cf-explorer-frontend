@@ -13,6 +13,8 @@ import { RootState } from "src/stores/types";
 import { SearchIcon } from "src/commons/resources";
 import { formatDateTimeLocal, formatNumberDivByDecimals, getShortHash } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { TruncateSubTitleContainer } from "src/components/share/styled";
 
 import ProgressCircle from "../ProgressCircle";
 import Bookmark from "../BookmarkIcon";
@@ -30,7 +32,6 @@ import {
   DetailsInfo,
   SlotLeader,
   SlotLeaderValue,
-  SlotLeaderCopy,
   HeaderTitleSkeleton,
   DetailLabelSkeleton,
   DetailValueSkeleton,
@@ -44,12 +45,17 @@ import {
   StyledMenuItem,
   WrapHeader,
   EpochDetail,
-  TimeDuration,
-  WrapLeaderValue
+  TimeDuration
 } from "./styles";
 import NoRecord from "../NoRecord";
 import CustomIcon from "../CustomIcon";
 
+interface TokenInfo {
+  assetName?: string;
+  assetId?: string;
+  assetQuantity?: number;
+  metadata?: { decimals?: number };
+}
 export interface DetailHeaderProps {
   type: Bookmark["type"];
   bookmarkData?: string;
@@ -66,7 +72,7 @@ export interface DetailHeaderProps {
     value?: React.ReactNode;
     strokeColor?: string;
     allowSearch?: boolean;
-    dataSearch?: any[];
+    dataSearch?: TokenInfo[];
     isSent?: boolean;
     key?: string;
     hideHeader?: boolean;
@@ -94,7 +100,10 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
 
   const history = useHistory();
   const theme = useTheme();
-  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+  const { currentEpoch, sidebar } = useSelector(({ system, user }: RootState) => ({
+    currentEpoch: system.currentEpoch,
+    sidebar: user.sidebar
+  }));
   const [openBackdrop, setOpenBackdrop] = useState<{ [x: string]: boolean }>({
     input: false,
     output: false
@@ -105,8 +114,6 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     [EPOCH_STATUS.REWARDING]: t("common.epoch.rewarding"),
     [EPOCH_STATUS.SYNCING]: t("common.epoch.cyncing")
   };
-  const { isMobile } = useScreen();
-
   const getHashLabel = () => {
     if (type === "BLOCK") return t("glossary.blockId");
     if (type === "STAKE_KEY") return t("glossary.stakeAddress");
@@ -198,16 +205,11 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           {hash && (
             <SlotLeader>
               {hashLabel ? <SlotLeaderTitle>{hashLabel}: </SlotLeaderTitle> : ""}
-              <WrapLeaderValue>
-                {isMobile ? (
-                  <CustomTooltip title={hash}>
-                    <SlotLeaderValue>{getShortHash(hash)}</SlotLeaderValue>
-                  </CustomTooltip>
-                ) : (
-                  <SlotLeaderValue>{hash}</SlotLeaderValue>
-                )}
-                <SlotLeaderCopy text={hash} />
-              </WrapLeaderValue>
+              <SlotLeaderValue sidebar={sidebar}>
+                <TruncateSubTitleContainer>
+                  <DynamicEllipsisText value={hash} isCopy />
+                </TruncateSubTitleContainer>
+              </SlotLeaderValue>
             </SlotLeader>
           )}
           <TimeDuration>
@@ -273,7 +275,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                 {item.allowSearch && keyItem && (
                   <AllowSearchButton
                     onClick={() => {
-                      setOpenBackdrop((prev: any) => ({ ...prev, [keyItem]: true }));
+                      setOpenBackdrop((prev) => ({ ...prev, [keyItem]: true }));
                     }}
                   >
                     <SearchIcon stroke={theme.palette.secondary.light} fill={theme.palette.secondary[0]} />
@@ -328,9 +330,9 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                             <Box
                               color={({ palette }) => palette.secondary.main}
                               mr={2}
-                              sx={{ maxWidth: "120px", textOverflow: "ellipsis", overflow: "hidden" }}
+                              sx={{ maxWidth: "220px", textOverflow: "ellipsis", overflow: "hidden" }}
                             >
-                              {item.assetName}
+                              {item.assetName || getShortHash(item.assetId)}
                             </Box>
                           </CustomTooltip>
                           <Box color={({ palette }) => palette.secondary.main} fontWeight={500}>

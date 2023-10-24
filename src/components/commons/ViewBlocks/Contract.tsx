@@ -1,5 +1,6 @@
 import { Typography, useTheme } from "@mui/material";
 import React, { useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Polygon, PolygonDarkIcon, PoundSign } from "src/commons/resources";
 import PopContent from "src/components/Contracts/common/PopContent";
@@ -14,6 +15,7 @@ interface ContractProps {
 }
 
 const Contract: React.FC<ContractProps> = ({ hash, detail }) => {
+  const { t } = useTranslation();
   const anchorEl = useRef();
   const theme = useTheme();
   return (
@@ -24,7 +26,7 @@ const Contract: React.FC<ContractProps> = ({ hash, detail }) => {
           {theme.isDark ? <PolygonDarkIcon /> : <Polygon />}
           <PolygonContent>
             <Typography fontWeight={500} color={theme.palette.primary.main}>
-              Contract
+              {t("contract.title")}
             </Typography>
             <CircleBox
               onClick={() =>

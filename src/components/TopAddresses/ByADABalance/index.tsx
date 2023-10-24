@@ -3,15 +3,16 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { SelectChangeEvent } from "@mui/material/Select/SelectInput";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatADAFull, getShortWallet, numberWithCommas } from "src/commons/utils/helper";
+import { formatADAFull, numberWithCommas } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import Table, { Column } from "src/components/commons/Table";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
 import { Actions, PageSize, PerPage, SelectMui, StyledLink, StyledMenuItem, TimeDuration } from "./styles";
 
@@ -33,14 +34,12 @@ const TopAddressesByADABalance = () => {
     {
       title: t("glossary.address"),
       key: "address",
-      minWidth: 120,
-
+      minWidth: 170,
+      maxWidth: "35vw",
       render: (r) => (
-        <div>
-          <CustomTooltip title={r.address}>
-            <StyledLink to={details.address(r.address)}>{getShortWallet(r.address)}</StyledLink>
-          </CustomTooltip>
-        </div>
+        <StyledLink to={details.address(r.address)}>
+          <DynamicEllipsisText value={r.address} isTooltip />
+        </StyledLink>
       )
     },
     {
@@ -75,7 +74,7 @@ const TopAddressesByADABalance = () => {
         <PageSize>
           <SelectMui
             value={pageSize}
-            onChange={(event: any) => setPageSize(event.target.value)}
+            onChange={(event: SelectChangeEvent<unknown>) => setPageSize(event.target.value as string)}
             displayEmpty
             inputProps={{ "aria-label": "Without label" }}
             sx={{ color: ({ palette }) => palette.secondary.main }}

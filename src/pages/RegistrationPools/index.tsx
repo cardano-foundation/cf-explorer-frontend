@@ -8,14 +8,7 @@ import { useSelector } from "react-redux";
 import Card from "src/components/commons/Card";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
-import {
-  formatADAFull,
-  formatDateTimeLocal,
-  formatPercent,
-  getPageInfo,
-  getShortHash,
-  getShortWallet
-} from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatPercent, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { API } from "src/commons/utils/api";
@@ -62,9 +55,6 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
             </CustomTooltip>
           </>
         );
-      },
-      sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
     {
@@ -75,16 +65,24 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
     {
       title: t("glossary.block"),
       key: "block",
-      render: (pool) => (
-        <>
-          <StyledLink to={details.block(pool.block)}>{pool.block}</StyledLink>
-          <br />
-          <StyledLink to={details.epoch(pool.epoch)}>{pool.epoch}</StyledLink>/{" "}
-          <Box component={"span"} color={({ palette }) => palette.secondary.light}>
-            {pool.slotNo}
-          </Box>
-        </>
-      )
+      minWidth: "50px",
+      render: (pool) => <StyledLink to={details.block(pool.block)}>{pool.block}</StyledLink>
+    },
+    {
+      title: t("glossary.epoch"),
+      key: "epoch",
+      minWidth: "50px",
+      render: (r) => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>
+    },
+    {
+      title: t("glossary.slot"),
+      key: "epochSlotNo",
+      minWidth: "50px"
+    },
+    {
+      title: t("glossary.absoluteSlot"),
+      key: "slotNo",
+      minWidth: "100px"
     },
     {
       title: t("glossary.pool"),
@@ -114,7 +112,7 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
     },
     {
       title: (
-        <Box component="span">
+        <Box component="span" sx={{ textWrap: "nowrap" }}>
           {t("glossary.fixedCost")} (<ADAicon />)
         </Box>
       ),
@@ -140,7 +138,7 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
           {pool.stakeKey?.slice(0, 2).map((stakeKey) => (
             <StakeKey key={stakeKey}>
               <CustomTooltip title={stakeKey}>
-                <StyledLink to={details.stake(stakeKey)}>{getShortWallet(stakeKey)}</StyledLink>
+                <StyledLink to={details.stake(stakeKey)}>{getShortHash(stakeKey)}</StyledLink>
               </CustomTooltip>
             </StakeKey>
           ))}

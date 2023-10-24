@@ -11,6 +11,7 @@ import {
   DelegationHistoryMainIcon,
   DelegationIconUrl,
   FileEditIcon,
+  GitCommitIcon,
   InstantaneousHistoryComponent,
   MetadataIconTx,
   MintingIconComponent,
@@ -25,7 +26,7 @@ import {
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
-import { formatADAFull, formatDateTimeLocal, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { RootState } from "src/stores/types";
 
 import ADAicon from "../ADAIcon";
@@ -129,7 +130,8 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
       label: t("glossary.instantaneousRewards"),
       icon: <InstantaneousHistoryComponent />
     },
-    { key: "metadata", label: t("glossary.metadata"), icon: <MetadataIconTx /> }
+    { key: "metadata", label: t("glossary.metadata"), icon: <MetadataIconTx /> },
+    { key: "signersInformation", label: t("tab.signersInformation"), icon: <GitCommitIcon /> }
   ];
 
   const renderContent = () => {
@@ -271,12 +273,16 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
                   <CopyButton text={hash} />
                 </DetailValue>
               </DetailsInfoItem>
+              <DetailsInfoItem>
+                <DetailLabel>{t("glossary.absoluteSlot")}</DetailLabel>
+                <DetailValue>{data?.tx?.slotNo}</DetailValue>
+              </DetailsInfoItem>
               {input && (
                 <DetailsInfoItem>
                   <DetailLabel>{t("glossary.input")}</DetailLabel>
                   <DetailValue>
                     <CustomTooltip title={input} placement="top-start">
-                      <StyledLink to={details.address(input)}>{getShortWallet(input)}</StyledLink>
+                      <StyledLink to={details.address(input)}>{getShortHash(input)}</StyledLink>
                     </CustomTooltip>
                     <CopyButton text={input} />
                   </DetailValue>
@@ -287,7 +293,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
                   <DetailLabel>{t("glossary.output")}</DetailLabel>
                   <DetailValue>
                     <CustomTooltip title={output} placement="top-start">
-                      <StyledLink to={details.address(output)}>{getShortWallet(output)}</StyledLink>
+                      <StyledLink to={details.address(output)}>{getShortHash(output)}</StyledLink>
                     </CustomTooltip>
                     <CopyButton text={output} />
                   </DetailValue>

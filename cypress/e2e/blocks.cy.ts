@@ -19,13 +19,14 @@ describe("block spec", () => {
 
   it("should have enough column", () => {
     cy.visit("/blocks");
-    cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("Block");
-    cy.get(".css-1dz0v3k > tr > :nth-child(2)").contains("Block ID");
-    cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Epoch / Slot", { matchCase: false });
-    cy.get(".css-1dz0v3k > tr > :nth-child(4)").contains("Created At");
-    cy.get(".css-1dz0v3k > tr > :nth-child(5)").contains("Transactions");
-    cy.get(".css-1dz0v3k > tr > :nth-child(6)").contains("Fees");
-    cy.get(".css-1dz0v3k > tr > :nth-child(7)").contains("Output");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Block");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Block ID");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Epoch", { matchCase: false });
+    cy.get(`[data-testid="table-common"] tr th`).contains("Slot", { matchCase: false });
+    cy.get(`[data-testid="table-common"] tr th`).contains("Created At");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Transactions");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Fees");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Output");
   });
 
   it("should have block search bar", () => {
@@ -45,11 +46,11 @@ describe("block spec", () => {
     cy.get(":nth-child(6) > .css-seof3k").contains(block);
     cy.get(":nth-child(7) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Slot");
     cy.get('[data-testid="table-common"]').verifyElementDisplay;
-    cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("Tx Hash", { matchCase: false });
-    cy.get(".css-1dz0v3k > tr > :nth-child(2)").contains("Created At");
-    cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Block");
-    cy.get(".css-1dz0v3k > tr > :nth-child(4)").contains("Addresses");
-    cy.get(".css-1dz0v3k > tr > :nth-child(5)").contains("Fees");
-    cy.get(".css-1dz0v3k > tr > :nth-child(6)").contains("Output in ADA");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Tx Hash", { matchCase: false });
+    cy.get(`[data-testid="table-common"] tr th`).contains("Created At");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Block");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Addresses");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Fees");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Output in ADA");
   });
 });

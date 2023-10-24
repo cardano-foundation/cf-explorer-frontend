@@ -1,13 +1,14 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, useTheme, alpha } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
+import { CheckLightGreen, WarningLight } from "src/commons/resources";
 import { formatADAFull, formatPercent, numberWithCommas } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
-import { Item, StyledContainer, Title, Value } from "./styles";
+import { FixedCostBox, Item, StyledContainer, Title, Value } from "./styles";
 
 interface IDelegationDetailOverview {
   data: DelegationOverview | null;
@@ -16,10 +17,11 @@ interface IDelegationDetailOverview {
 
 const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, loading }) => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const overviewData = [
     {
       title: (
-        <Box component="span">
+        <Box component="span" sx={{ textWrap: "nowrap" }}>
           {t("glossary.fixedCost")} (<ADAicon />)
         </Box>
       ),
@@ -34,11 +36,56 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
 
     {
       title: (
-        <Box component="span">
-          {t("declaredPledge")} (<ADAicon />)
+        <Box component="span" display="flex" gap="4px" flexWrap="wrap" justifyContent="center">
+          {t("declaredPledge")}{" "}
+          <FixedCostBox>
+            (<ADAicon />)
+          </FixedCostBox>
         </Box>
       ),
-      value: formatADAFull(data?.pledge),
+      value: (
+        <Box display={"flex"} alignItems={"center"} gap={1}>
+          {formatADAFull(data?.pledge)}
+          <CustomTooltip
+            wOpacity={false}
+            componentsProps={{
+              transition: {
+                style: {
+                  backgroundColor: theme.isDark ? "black" : "white",
+                  boxShadow: `0px 0px 10px ${alpha(theme.palette.common.white, 0.25)}`,
+                  padding: "10px",
+                  borderRadius: "8px",
+                  border: `1px solid ${theme.palette.primary[200]}`
+                }
+              },
+              arrow: {
+                style: {
+                  color: theme.isDark ? "black" : "white"
+                },
+                sx: {
+                  "&:before": { border: `1px solid ${theme.palette.primary[200]}` }
+                }
+              }
+            }}
+            title={
+              <Box px={"4px"}>
+                <Box fontSize="12px" color={({ palette }) => palette.secondary.light}>
+                  {t("glossary.actualPledge")}
+                </Box>
+                <Box data-testid="actual-pledge-value" fontSize="14px" color={({ palette }) => palette.secondary.light}>
+                  {formatADAFull(data?.totalBalanceOfPoolOwners)} (<ADAicon />)
+                </Box>
+              </Box>
+            }
+          >
+            {data && data.pledge > data.totalBalanceOfPoolOwners ? (
+              <WarningLight data-testid="warning-light" />
+            ) : (
+              <CheckLightGreen data-testid="checking-green" />
+            )}
+          </CustomTooltip>
+        </Box>
+      ),
       tooltip: ""
     },
     {

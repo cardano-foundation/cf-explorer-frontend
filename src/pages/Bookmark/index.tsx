@@ -1,7 +1,7 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Dialog, DialogActions, DialogContentText, IconButton, useTheme } from "@mui/material";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useHistory } from "react-router-dom";
 import { useLocalStorage } from "react-use";
@@ -14,7 +14,7 @@ import { ReactComponent as DeleteBookmark } from "src/commons/resources/icons/de
 import { ReactComponent as QuestionConfirm } from "src/commons/resources/icons/questionConfirm.svg";
 import { details, routers } from "src/commons/routers";
 import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
-import { formatBlockHashById, getShortHash, getShortWallet } from "src/commons/utils/helper";
+import { formatBlockHashById, getShortHash } from "src/commons/utils/helper";
 import { deleteBookmark } from "src/commons/utils/userRequest";
 import { ButtonClose } from "src/components/ScriptModal/styles";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -70,16 +70,24 @@ const Bookmark = () => {
     try {
       setLoadingDelete(true);
       const selectedBookmark = data?.find((d) => d.keyword === keyword);
-      await deleteBookmark({ keyword, type: selectedBookmark?.type });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const res: any = await deleteBookmark({ keyword, type: selectedBookmark?.type });
+      if (res?.data) {
+        setSelected(null);
+        setLoadingDelete(false);
+        setBookmarks(bookmarks?.filter((r) => r.keyword !== keyword));
+        refresh();
+        toast.success(t("message.bookmark.deleted"));
+      } else {
+        toast.error(t(res?.response?.data?.errorCode));
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       setSelected(null);
       setLoadingDelete(false);
-      setBookmarks(bookmarks?.filter((r) => r.keyword !== keyword));
-      refresh();
-      toast.success(t("message.bookmark.deleted"));
-    } catch (error) {
-      setSelected(null);
-      setLoadingDelete(false);
-      toast.error(t("message.common.somethingWentWrong"));
+      if (error?.response?.data?.errorCode) {
+        toast.error(t(error?.response?.data?.errorCode));
+      }
     }
   };
   const handleChange = (event: React.SyntheticEvent, tab: Bookmark["type"]) => {
@@ -90,14 +98,24 @@ const Bookmark = () => {
 
   useEffect(() => {
     document.title = `${t("account.bookmark")} | ${t("head.page.dashboard")}`;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (!isLoggedIn) {
       history.replace(routers.HOME);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
-
+  const heightTable = useMemo(() => {
+    if (data) {
+      if (data.length >= 10) return 650;
+      if (data.length >= 6) return data.length * 68;
+      return 0;
+    } else {
+      return 0;
+    }
+  }, [JSON.stringify(data)]);
   const colDynamic: Record<string, Column<Bookmark>> = {
     ADDRESS: {
       title: t("common.address"),
@@ -110,7 +128,7 @@ const Bookmark = () => {
           color={(theme) => `${theme.palette.primary.main} !important`}
         >
           <CustomTooltip title={data.keyword}>
-            <Box component={"span"}>{getShortWallet(data.keyword)}</Box>
+            <Box component={"span"}>{getShortHash(data.keyword)}</Box>
           </CustomTooltip>
         </Box>
       )
@@ -170,7 +188,7 @@ const Bookmark = () => {
           color={(theme) => `${theme.palette.primary.main} !important`}
         >
           <CustomTooltip title={data.keyword}>
-            <Box component={"span"}>{getShortWallet(data.keyword)}</Box>
+            <Box component={"span"}>{getShortHash(data.keyword)}</Box>
           </CustomTooltip>
         </Box>
       )
@@ -186,7 +204,7 @@ const Bookmark = () => {
           color={(theme) => `${theme.palette.primary.main} !important`}
         >
           <CustomTooltip title={data.keyword}>
-            <Box component={"span"}>{getShortWallet(data.keyword)}</Box>
+            <Box component={"span"}>{getShortHash(data.keyword)}</Box>
           </CustomTooltip>
         </Box>
       )
@@ -194,14 +212,14 @@ const Bookmark = () => {
   };
   const columns: Column<Bookmark>[] = [
     {
-      ...colDynamic[activeTab as any]
+      ...colDynamic[activeTab]
     },
     {
       title: t("glossary.addedOn"),
       key: "Added On",
       minWidth: 120,
       render: (data) => {
-        return moment(data.createdDate).utc().format("MM/DD/YYYY HH:mm:ss");
+        return moment(data.createdDate).local().format("MM/DD/YYYY HH:mm:ss");
       }
     },
     {
@@ -232,6 +250,7 @@ const Bookmark = () => {
           total={{ title: "Total", count: total }}
           columns={columns}
           data={data || []}
+          height={heightTable}
           loading={loading}
           pagination={{
             total: total,
@@ -254,6 +273,7 @@ const Bookmark = () => {
           columns={columns}
           total={{ title: "Total", count: total }}
           data={data || []}
+          height={heightTable}
           loading={loading}
           pagination={{
             total: total,
@@ -277,6 +297,7 @@ const Bookmark = () => {
           columns={columns}
           data={data || []}
           loading={loading}
+          height={heightTable}
           pagination={{
             total: total,
             page,
@@ -306,6 +327,7 @@ const Bookmark = () => {
           }}
           columns={columns}
           data={data || []}
+          height={heightTable}
           error={error}
           loading={loading}
         />
@@ -319,6 +341,7 @@ const Bookmark = () => {
           error={error}
           columns={columns}
           data={data || []}
+          height={heightTable}
           loading={loading}
           total={{ title: "Total", count: total }}
           pagination={{
@@ -342,6 +365,7 @@ const Bookmark = () => {
           columns={columns}
           data={data || []}
           loading={loading}
+          height={heightTable}
           total={{ title: "Total", count: total }}
           pagination={{
             total: total,
@@ -363,7 +387,7 @@ const Bookmark = () => {
         return getShortHash(keyword);
       case "ADDRESS":
       case "STAKE_KEY":
-        return getShortWallet(keyword);
+        return getShortHash(keyword);
 
       default:
         return keyword;

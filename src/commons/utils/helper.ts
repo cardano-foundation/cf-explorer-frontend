@@ -17,12 +17,9 @@ export const alphaNumeric = /[^0-9a-zA-Z]/;
 // eslint-disable-next-line no-useless-escape
 export const regexEmail = /^[\w\.\+\-]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-export const getShortWallet = (address = "") => {
-  return address ? `${address.slice(0, 5)}...${address.slice(-5)}` : "";
-};
-
 export const getShortHash = (address = "") => {
-  return address ? `${address.slice(0, 10)}...${address.slice(-7)}` : "";
+  if (address?.length <= 18) return address;
+  return address ? `${address.slice(0, 10)}...${address.slice(-8)}` : "";
 };
 
 export const LARGE_NUMBER_ABBREVIATIONS = ["", "K", "M", "B", "T", "q", "Q", "s", "S"];
@@ -135,6 +132,7 @@ export const removeAuthInfo = () => {
   localStorage.removeItem("refreshToken");
   localStorage.removeItem("walletId");
   localStorage.removeItem("email");
+  localStorage.removeItem("loginType");
   localStorage.removeItem("persist:user");
   localStorage.setItem("cf-wallet-connected", "false");
   localStorage.removeItem("cf-last-connected-wallet");
@@ -203,18 +201,12 @@ export const tokenRegistry = (policy?: string, name?: string): string => {
   }
 };
 
-export const cleanObject = (obj: { [key: string]: string | number | Date | string[] | undefined }) => {
+export const cleanObject = (obj: { [key: string]: string | number | Date | string[] | boolean | undefined }) => {
   const cleaned: Partial<typeof obj> = {};
   Object.keys(obj).forEach((key) => obj[key] !== undefined && (cleaned[key] = obj[key]));
   return cleaned;
 };
 
-export const formatLongText = (text: string): string => {
-  if (text?.length > 10) {
-    return `${text.slice(0, 5)}...${text.slice(-5)}`;
-  }
-  return text;
-};
 export const getHostname = (url: string): string => {
   let hostname = "";
   try {
@@ -232,12 +224,17 @@ export const toFixedBigNumber = (value: string | number, dp = 0, rm = BigNumber.
 export const isValidEmail = (email: string) => regexEmail.test(email);
 
 export function validateTokenExpired() {
-  const token = localStorage.getItem("token");
-  if (!token) return false;
-  const decoded: any = jwtDecode(token);
-  const now = moment();
-  const exp = moment(decoded.exp * 1000);
-  return now.isBefore(exp);
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) return false;
+    const decoded = jwtDecode<{ name: string; exp: number }>(token);
+    const now = moment();
+    const exp = moment(decoded?.exp * 1000);
+    return now.isBefore(exp);
+  } catch (e) {
+    removeAuthInfo();
+    return false;
+  }
 }
 
 export const isJson = (str: string) => {

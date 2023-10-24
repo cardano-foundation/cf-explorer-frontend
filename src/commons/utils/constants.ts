@@ -187,7 +187,7 @@ export const PROTOCOL_TYPE = {
   maxValSize: "MAX_VAL_SIZE",
   collateralPercent: "COLLATERAL_PERCENT",
   maxCollateralInputs: "MAX_COLLATERAL_INPUTS",
-  coinsPerUtxoSize: "COINS_PER_UTXO_SIZE"
+  coinsPerUTxOByte: "COINS_PER_UTXO_SIZE"
 };
 
 export const LANGUAGE = "en";
@@ -230,3 +230,5 @@ export enum OPTIONS_CHART_ANALYTICS {
   ONE_MONTH = "ONE_MONTH",
   THREE_MONTH = "THREE_MONTH"
 }
+
+export const ROLE_ELEVATED_GEN_REPORT = -1;

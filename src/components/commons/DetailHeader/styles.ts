@@ -145,13 +145,14 @@ export const StakeKeyStatus = styled("small")<{ status?: StakeStatus }>`
 
 export const SlotLeader = styled("p")`
   margin-top: 0px;
+  display: flex;
 `;
 
 export const WrapLeaderValue = styled(Box)`
-  display: inline-block;
+  display: block;
 `;
 
-export const SlotLeaderValue = styled("span")`
+export const SlotLeaderValue = styled("span")<{ sidebar?: boolean }>`
   font-family: var(--font-family-text);
   color: ${(props) => props.theme.palette.primary.main};
   white-space: pre-wrap;
@@ -163,6 +164,9 @@ export const SlotLeaderValue = styled("span")`
 export const SlotLeaderTitle = styled("small")`
   font-family: var(--font-family-text);
   color: ${({ theme }) => theme.palette.secondary.light};
+  align-self: center;
+  margin-right: 8px;
+  text-wrap: nowrap;
 `;
 
 export const SlotLeaderCopy = styled(CopyButton)`
@@ -445,6 +449,29 @@ export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   justifyContent: "space-between",
   ":hover": {
     background: theme.palette.primary[200]
+  },
+  "&:after": {
+    content: `""`,
+    display: "none"
+  },
+  [theme.breakpoints.down(355)]: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+    width: "100dvw",
+    height: "unset",
+    position: "relative",
+    "&:after": {
+      display: "block",
+      width: "calc(100% - 60px)",
+      height: 1,
+      background: theme.palette.border.hint,
+      position: "absolute",
+      bottom: 0,
+      left: 14
+    },
+    "&:last-child:after": {
+      display: "none"
+    }
   }
 }));
 
