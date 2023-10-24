@@ -28,9 +28,9 @@ import {
   WrapContent,
   WrapUTXOs,
   Wrapper,
-  StyledContainerInfo
+  StyledContainerInfo,
+  EllipsisContainer
 } from "./style";
-import { EllipsisContainer } from "../UTXOs/styles";
 
 interface CollateralProps {
   data: Transaction["collaterals"] | null;
