@@ -115,7 +115,7 @@ const Card = ({
             <ItemContent>
               <WrapIcon type={type}>{renderIcon(type)}</WrapIcon>
               <WrapInfo>
-                <WrapLeftSide className="WrapLeftSide">
+                <WrapLeftSide>
                   {type === "down" ? (
                     <WrapUTXOs>
                       <Box mr={3} minWidth={200} width={"100%"}>
@@ -215,7 +215,7 @@ const Card = ({
                   )}
                 </WrapLeftSide>
                 <Box sx={{ flexBasis: "100%", width: 0 }}></Box>
-                <WrapRightSide className="WrapRightSide">
+                <WrapRightSide>
                   <Box
                     display={"flex"}
                     justifyContent="flex-start"
@@ -243,7 +243,7 @@ const Card = ({
                     </Box>
                     <ADAIconAmount />
                   </Box>
-                  <WrapTokenLink className="WrapTokenLink">
+                  <WrapTokenLink>
                     {item.tokens && item.tokens.length === 1 && (
                       <WrapTokenDropdown>
                         <TokenLink isSuccess={!isFailed} token={item.tokens[0]} />
