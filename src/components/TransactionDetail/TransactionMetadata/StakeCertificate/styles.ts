@@ -6,7 +6,7 @@ export const TextLabel = styled("div")`
   font-size: 14px;
   line-height: 16px;
   color: ${(props) => props.theme.palette.secondary.light};
-  width: 130px;
+  min-width: 100px;
   text-wrap: nowrap;
   align-seft: center;
 `;

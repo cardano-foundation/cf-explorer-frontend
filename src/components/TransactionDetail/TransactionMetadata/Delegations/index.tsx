@@ -7,8 +7,7 @@ import { details } from "src/commons/routers";
 import { UpGreenUtxoDarkmode } from "src/commons/resources";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
-import { AddressLink, Header, ItemContainer, StatusIcon, StyledItem, Wrapper } from "./styles";
-import { EllipsisContainer } from "../UTXOs/styles";
+import { AddressLink, Header, ItemContainer, StatusIcon, StyledItem, Wrapper, EllipsisContainer } from "./styles";
 
 interface DelegationProps {
   data: Transaction["delegations"] | null;
