@@ -4,7 +4,7 @@ export const TextLabel = styled("div")(({ theme }) => ({
   display: "inline-block",
   fontWeight: 400,
   fontSize: 14,
-  lineHeight: "16px",
+  lineHeight: "30px",
   color: theme.palette.secondary.light,
   width: 130,
   flexShrink: 0,

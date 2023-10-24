@@ -94,7 +94,7 @@ const StakeKeyBox = ({ data }: TProps) => {
           <Box display="flex" flexDirection="column" gap="15px">
             {(rightRow || []).map(({ label, value }) => {
               return (
-                <Box key={label} display="flex">
+                <Box key={label} display="flex" alignItems={"center"}>
                   <TextLabel>{label}: </TextLabel>
                   <TextRightValue>{value}</TextRightValue>
                 </Box>

@@ -194,6 +194,7 @@ const Card = ({
                           flexDirection={isMobile ? "column" : "row"}
                           justifyContent="flex-start"
                           alignItems={isMobile ? "flex-start" : "center"}
+                          flex={1}
                         >
                           <Box
                             pr={1}
@@ -214,7 +215,6 @@ const Card = ({
                     </Box>
                   )}
                 </WrapLeftSide>
-                <Box sx={{ flexBasis: "100%", width: 0 }}></Box>
                 <WrapRightSide>
                   <Box
                     display={"flex"}
@@ -245,12 +245,12 @@ const Card = ({
                   </Box>
                   <WrapTokenLink>
                     {item.tokens && item.tokens.length === 1 && (
-                      <WrapTokenDropdown>
+                      <WrapTokenDropdown className="WrapTokenDropdown == 1">
                         <TokenLink isSuccess={!isFailed} token={item.tokens[0]} />
                       </WrapTokenDropdown>
                     )}
                     {item.tokens && item.tokens.length > 1 && (
-                      <WrapTokenDropdown>
+                      <WrapTokenDropdown className="WrapTokenDropdown > 1">
                         <DropdownTokens
                           isSuccess={!isFailed}
                           tokens={item.tokens}
