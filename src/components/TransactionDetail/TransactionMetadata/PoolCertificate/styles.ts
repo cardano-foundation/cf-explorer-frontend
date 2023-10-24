@@ -4,12 +4,13 @@ export const TextLabel = styled("div")(({ theme }) => ({
   display: "inline-block",
   fontWeight: 400,
   fontSize: 14,
-  lineHeight: "16px",
+  lineHeight: "30px",
   color: theme.palette.secondary.light,
   width: 130,
   flexShrink: 0,
   [theme.breakpoints.down("sm")]: {
-    width: 110
+    width: "fit-content",
+    marginRight: "8px"
   }
 }));
 
@@ -65,3 +66,9 @@ export const ValueItemMultiple = styled(Box)(({ theme }) => ({
     width: "100%%"
   }
 }));
+
+export const EllipsisContainer = styled(Box)<{ isFailed?: boolean }>`
+  font-weight: bold;
+  color: ${({ theme, isFailed }) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)};
+  max-width: 80vw;
+`;

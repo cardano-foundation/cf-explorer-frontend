@@ -29,9 +29,9 @@ import {
   WrapContent,
   WrapUTXOs,
   Wrapper,
-  StyledContainerInfo
+  StyledContainerInfo,
+  EllipsisContainer
 } from "./style";
-import { EllipsisContainer } from "../UTXOs/styles";
 
 interface CollateralProps {
   data: Transaction["collaterals"] | null;
@@ -93,9 +93,9 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
     <Box>
       {data?.map((item) => (
         <Item key={item.address} fontSize={14}>
-          <ItemContent className="ItemContent">
+          <ItemContent>
             <Box display="flex" alignItems="center">
-              <Box className="LOGOOOO">
+              <Box>
                 <Img
                   src={
                     type === "input"
@@ -110,8 +110,8 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                 />
               </Box>
             </Box>
-            <StyledContainerInfo className="StyledContainerInfo">
-              <WrapContent className="WrapContent" flexGrow={1}>
+            <StyledContainerInfo>
+              <WrapContent flexGrow={1}>
                 {type === "input" && (
                   <WrapUTXOs>
                     <Box mr={3} minWidth={200} width={"100%"}>
@@ -128,12 +128,16 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                               color={(theme) => theme.palette.primary.main}
                               width={"100%"}
                             >
-                              <EllipsisContainer className="EllipsisContainer" sx={{ transform: "translateY(-2px)" }}>
+                              <EllipsisContainer sx={{ transform: "translateY(-2px)" }}>
                                 <DynamicEllipsisText
                                   value={item.txHash}
                                   afterElm={
                                     <FlexCenter>
-                                      <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
+                                      <Box
+                                        fontWeight={"bold"}
+                                        color={({ palette }) => palette.secondary.main}
+                                        sx={{ transform: "translateY(3px)" }}
+                                      >
                                         #{item?.index}
                                       </Box>
                                       <CopyButton text={item.txHash} />
