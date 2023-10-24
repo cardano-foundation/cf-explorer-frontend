@@ -113,9 +113,9 @@ const Card = ({
         {items?.map((item, index) => (
           <Item key={index}>
             <ItemContent>
-              <WrapIcon>{renderIcon(type)}</WrapIcon>
+              <WrapIcon type={type}>{renderIcon(type)}</WrapIcon>
               <WrapInfo>
-                <WrapLeftSide className="WrapLeftSide">
+                <WrapLeftSide>
                   {type === "down" ? (
                     <WrapUTXOs>
                       <Box mr={3} minWidth={200} width={"100%"}>
@@ -127,7 +127,7 @@ const Card = ({
                             {t("tab.utxo")}:
                           </Box>
                           <Link to={details.transaction(item.txHash)} style={{ width: "100%" }}>
-                            <EllipsisContainer isFailed={isFailed}>
+                            <EllipsisContainer isFailed={isFailed} sx={{ transform: "translateY(-3px)" }}>
                               <DynamicEllipsisText
                                 value={item.txHash}
                                 isTooltip
@@ -138,6 +138,7 @@ const Card = ({
                                       color={({ palette }) =>
                                         isFailed ? theme.palette.secondary[600] : palette.secondary.main
                                       }
+                                      sx={{ transform: "translateY(2px)" }}
                                     >
                                       #{item?.index}
                                     </Box>
@@ -214,7 +215,7 @@ const Card = ({
                   )}
                 </WrapLeftSide>
                 <Box sx={{ flexBasis: "100%", width: 0 }}></Box>
-                <WrapRightSide className="WrapRightSide">
+                <WrapRightSide>
                   <Box
                     display={"flex"}
                     justifyContent="flex-start"
@@ -242,7 +243,7 @@ const Card = ({
                     </Box>
                     <ADAIconAmount />
                   </Box>
-                  <WrapTokenLink className="WrapTokenLink">
+                  <WrapTokenLink>
                     {item.tokens && item.tokens.length === 1 && (
                       <WrapTokenDropdown>
                         <TokenLink isSuccess={!isFailed} token={item.tokens[0]} />
