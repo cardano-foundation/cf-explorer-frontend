@@ -52,3 +52,21 @@ export const AddressLink = styled(Link)`
   color: ${(props) => props.theme.palette.primary.main} !important;
   margin-right: 8px;
 `;
+
+export const EllipsisContainer = styled(Box)<{ isFailed?: boolean }>`
+  font-weight: bold;
+  color: ${({ theme, isFailed }) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)};
+  max-width: 58vw;
+  ${({ theme }) => theme.breakpoints.up(420)} {
+    max-width: 68vw;
+  }
+  ${({ theme }) => theme.breakpoints.up("sm")} {
+    max-width: 57vw;
+  }
+  ${({ theme }) => theme.breakpoints.up("md")} {
+    max-width: 47vw;
+  }
+  ${({ theme }) => theme.breakpoints.up("lg")} {
+    max-width: 55vw;
+  }
+`;
