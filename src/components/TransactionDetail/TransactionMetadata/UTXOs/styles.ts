@@ -1,9 +1,13 @@
 import { Select, alpha, Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export const Img = styled("img")(() => ({
+export const Img = styled("img")(({ theme }) => ({
   paddingRight: "10px",
-  width: "35px"
+  width: "35px",
+  [theme.breakpoints.down("sm")]: {
+    width: 30,
+    paddingRight: "8px"
+  }
 }));
 
 export const Header = styled(Box)(({ theme }) => ({
@@ -18,10 +22,45 @@ export const Header = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const WrapInfo = styled(Box)(() => ({
+export const WrapInfo = styled(Box)(({ theme }) => ({
   display: "flex",
   width: "100%",
-  alignItems: "center"
+  alignItems: "center",
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column"
+  }
+}));
+
+export const WrapLeftSide = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  paddingTop: "5px",
+  flexGrow: 1,
+  [theme.breakpoints.down("sm")]: {
+    alignItems: "baseline",
+    width: "100%"
+  }
+}));
+
+export const WrapRightSide = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "end",
+  width: "100%",
+  [theme.breakpoints.down("sm")]: {
+    alignItems: "baseline",
+    marginTop: "18px",
+    marginLeft: "-45px"
+  }
+}));
+
+export const WrapIcon = styled(Box)<{ type: string }>(({ theme, type }) => ({
+  display: "flex",
+  alignItems: "center",
+  [theme.breakpoints.down("sm")]: {
+    height: type === "up" ? 34 : 100
+  }
 }));
 
 export const WrapUTXOs = styled(Box)(({ theme }) => ({
@@ -42,6 +81,37 @@ export const ItemContent = styled(Box)(() => ({
   overflowX: "auto",
   overflowY: "hidden",
   justifyContent: "space-between"
+}));
+
+export const WrapTokenLink = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  [theme.breakpoints.down("sm")]: {
+    width: "100%"
+  }
+}));
+
+export const AmountHeader = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    display: "none"
+  }
+}));
+
+export const AmountMobile = styled(Box)(({ theme }) => ({
+  display: "none",
+  color: theme.palette.secondary.light,
+  marginRight: theme.spacing(1),
+  fontWeight: "bold",
+  [theme.breakpoints.down("sm")]: {
+    display: "block"
+  }
+}));
+
+export const WrapTokenDropdown = styled(Box)(({ theme }) => ({
+  marginTop: "16px",
+  [theme.breakpoints.down("sm")]: {
+    width: "100%"
+  }
 }));
 
 export const ItemFooter = styled(Box)(({ theme }) => ({
@@ -80,7 +150,7 @@ export const Item = styled(Box)(({ theme }) => ({
     borderBottom: "none"
   },
   [theme.breakpoints.down("sm")]: {
-    margin: "0 15px"
+    margin: "0 5px"
   }
 }));
 
@@ -130,14 +200,17 @@ export const CustomSelect = styled(Select)`
 export const EllipsisContainer = styled(Box)<{ isFailed?: boolean }>`
   font-weight: bold;
   color: ${({ theme, isFailed }) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)};
-  max-width: 220px;
+  max-width: 70vw;
+  ${({ theme }) => theme.breakpoints.up(420)} {
+    max-width: 48vw;
+  }
   ${({ theme }) => theme.breakpoints.up("sm")} {
-    max-width: 60vw;
+    max-width: 56vw;
   }
   ${({ theme }) => theme.breakpoints.up("md")} {
-    max-width: 45vw;
+    max-width: 47vw;
   }
   ${({ theme }) => theme.breakpoints.up("lg")} {
-    max-width: 60vw;
+    max-width: 55vw;
   }
 `;

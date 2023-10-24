@@ -3,7 +3,6 @@ import { SxProps } from "@mui/system";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { useScreen } from "src/commons/hooks/useScreen";
 import { DownRedUtxoDarkmode, UpGreenUtxoDarkmode } from "src/commons/resources";
 import receiveImg from "src/commons/resources/images/receiveImg.svg";
 import sendImg from "src/commons/resources/images/sendImg.svg";
@@ -23,9 +22,13 @@ import {
   ItemBox,
   ItemContent,
   ItemFooter,
+  TitleAmountMobile,
+  WrapAmountHeader,
+  StyleAmount,
   WrapContent,
   WrapUTXOs,
-  Wrapper
+  Wrapper,
+  StyledContainerInfo
 } from "./style";
 import { EllipsisContainer } from "../UTXOs/styles";
 
@@ -70,7 +73,7 @@ const Card = ({ type, items, sx }: { type: "input" | "output"; items?: Collatera
         <BoxHeaderTop>{type === "input" ? t("drawer.input") : t("drawer.ouput")}</BoxHeaderTop>
         <BoxHeaderBottom>
           <Box>{t("glossary.address")}</Box>
-          <Box>{t("glossary.amount")}</Box>
+          <WrapAmountHeader>{t("glossary.amount")}</WrapAmountHeader>
         </BoxHeaderBottom>
       </Header>
       <ItemBox>
@@ -85,14 +88,13 @@ export default Collaterals;
 const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "input" | "output" }) => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const { isTablet } = useScreen();
   return (
     <Box>
       {data?.map((item) => (
         <Item key={item.address} fontSize={14}>
-          <ItemContent>
+          <ItemContent className="ItemContent">
             <Box display="flex" alignItems="center">
-              <Box width={50}>
+              <Box className="LOGOOOO">
                 <Img
                   src={
                     type === "input"
@@ -106,14 +108,9 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                   alt="send icon"
                 />
               </Box>
-              {isTablet ? (
-                <Box color={({ palette }) => palette.secondary.light}>
-                  {type === "input" ? t("common.from") : t("common.to")}:
-                </Box>
-              ) : null}
             </Box>
-            <WrapContent flexGrow={1}>
-              <Box flexGrow={1}>
+            <StyledContainerInfo className="StyledContainerInfo">
+              <WrapContent className="WrapContent" flexGrow={1}>
                 {type === "input" && (
                   <WrapUTXOs>
                     <Box mr={3} minWidth={200} width={"100%"}>
@@ -127,13 +124,18 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                             fontWeight="bold"
                             fontFamily={"var(--font-family-text)"}
                             color={(theme) => theme.palette.primary.main}
+                            width={"100%"}
                           >
-                            <EllipsisContainer>
+                            <EllipsisContainer className="EllipsisContainer" sx={{ transform: "translateY(-2px)" }}>
                               <DynamicEllipsisText
                                 value={item.txHash}
                                 afterElm={
                                   <FlexCenter>
-                                    <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
+                                    <Box
+                                      fontWeight={"bold"}
+                                      color={({ palette }) => palette.secondary.main}
+                                      sx={{ transform: "translateY(3px)" }}
+                                    >
                                       #{item?.index}
                                     </Box>
                                     <CopyButton text={item.txHash} />
@@ -148,25 +150,17 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                     </Box>
                   </WrapUTXOs>
                 )}
-                <Box
-                  display={"flex"}
-                  pl={type === "input" ? 2 : 0}
-                  justifyContent="space-between"
-                  alignItems={"center"}
-                >
-                  {!isTablet ? (
-                    <Box
-                      color={({ palette }) => palette.secondary.light}
-                      display={"flex"}
-                      alignItems="center"
-                      justifyContent={"flex-start"}
-                      pr={1}
-                      mr={1}
-                    >
-                      {type === "input" ? "From" : "To"}:
-                    </Box>
-                  ) : null}
-                  <Box display={"flex"} justifyContent="space-between" flex={"1"} alignItems={"center"} width={"100%"}>
+                <Box color={({ palette }) => palette.secondary.light} display="flex" alignItems={"center"}>
+                  {type === "input" ? t("common.from") : t("common.to")}:&nbsp;
+                  <Box
+                    display={"flex"}
+                    justifyContent="space-between"
+                    flex={"1"}
+                    alignItems={"center"}
+                    width={"100%"}
+                    flexWrap={"wrap"}
+                    gap="4px"
+                  >
                     <Box
                       display={"flex"}
                       justifyContent="flex-start"
@@ -189,8 +183,11 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                     </Box>
                   </Box>
                 </Box>
-              </Box>
-              <Box sx={{ textWrap: "nowrap" }}>
+              </WrapContent>
+              <StyleAmount>
+                <Box color={theme.palette.secondary.light} fontWeight={"bold"}>
+                  <TitleAmountMobile> {t("glossary.amount")}&nbsp;</TitleAmountMobile>
+                </Box>
                 <Box
                   component={"span"}
                   whiteSpace="nowrap"
@@ -204,11 +201,10 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                   fontWeight="bold"
                   mr={1}
                 >
-                  {type === "input" ? `-${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
+                  {type === "input" ? `-${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`} <ADAicon />
                 </Box>
-                <ADAicon />
-              </Box>
-            </WrapContent>
+              </StyleAmount>
+            </StyledContainerInfo>
           </ItemContent>
         </Item>
       ))}

@@ -16,7 +16,23 @@ import DropdownTokens, { TokenLink } from "src/components/commons/DropdownTokens
 import { DownRedUtxoDarkmode, UpGreenUtxoDarkmode } from "src/commons/resources";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
-import { EllipsisContainer, Header, Img, Item, ItemContent, ItemFooter, WrapInfo, WrapUTXOs } from "./styles";
+import {
+  AmountHeader,
+  AmountMobile,
+  EllipsisContainer,
+  Header,
+  Img,
+  Item,
+  ItemContent,
+  ItemFooter,
+  WrapIcon,
+  WrapInfo,
+  WrapLeftSide,
+  WrapRightSide,
+  WrapTokenDropdown,
+  WrapTokenLink,
+  WrapUTXOs
+} from "./styles";
 
 interface Props {
   data: Transaction["utxOs"] | null;
@@ -90,18 +106,16 @@ const Card = ({
         </Box>
         <Box color={(theme) => theme.palette.secondary.light} display="flex" justifyContent="space-between">
           <Box>{t("glossary.address")}</Box>
-          <Box>{t("glossary.amount")}</Box>
+          <AmountHeader>{t("glossary.amount")}</AmountHeader>
         </Box>
       </Header>
       <Box fontSize={14}>
         {items?.map((item, index) => (
           <Item key={index}>
             <ItemContent>
-              <Box display="flex" alignItems="center">
-                <Box width={50}>{renderIcon(type)}</Box>
-              </Box>
+              <WrapIcon type={type}>{renderIcon(type)}</WrapIcon>
               <WrapInfo>
-                <Box display="flex" flexDirection="column" justifyContent="center" paddingTop="5px" flexGrow={1}>
+                <WrapLeftSide className="WrapLeftSide">
                   {type === "down" ? (
                     <WrapUTXOs>
                       <Box mr={3} minWidth={200} width={"100%"}>
@@ -113,7 +127,7 @@ const Card = ({
                             {t("tab.utxo")}:
                           </Box>
                           <Link to={details.transaction(item.txHash)} style={{ width: "100%" }}>
-                            <EllipsisContainer isFailed={isFailed}>
+                            <EllipsisContainer isFailed={isFailed} sx={{ transform: "translateY(-3px)" }}>
                               <DynamicEllipsisText
                                 value={item.txHash}
                                 isTooltip
@@ -124,6 +138,7 @@ const Card = ({
                                       color={({ palette }) =>
                                         isFailed ? theme.palette.secondary[600] : palette.secondary.main
                                       }
+                                      sx={{ transform: "translateY(2px)" }}
                                     >
                                       #{item?.index}
                                     </Box>
@@ -145,7 +160,6 @@ const Card = ({
                       alignItems="center"
                       justifyContent={"flex-start"}
                       pr={1}
-                      pl={type === "down" ? 2 : 0}
                       color={(theme) => (isFailed ? theme.palette.secondary[600] : theme.palette.secondary.light)}
                     >
                       {type === "down" ? t("glossary.from") : t("glossary.to")}:
@@ -199,8 +213,9 @@ const Card = ({
                       </Box>
                     </Box>
                   )}
-                </Box>
-                <Box display={"flex"} alignItems={"end"} flexDirection={"column"}>
+                </WrapLeftSide>
+                <Box sx={{ flexBasis: "100%", width: 0 }}></Box>
+                <WrapRightSide className="WrapRightSide">
                   <Box
                     display={"flex"}
                     justifyContent="flex-start"
@@ -208,6 +223,7 @@ const Card = ({
                     flexWrap="nowrap"
                     width={"auto"}
                   >
+                    <AmountMobile>{t("glossary.amount")}</AmountMobile>
                     <Box
                       component={"span"}
                       whiteSpace="nowrap"
@@ -227,14 +243,14 @@ const Card = ({
                     </Box>
                     <ADAIconAmount />
                   </Box>
-                  <Box display={"flex"} alignItems={"center"}>
+                  <WrapTokenLink className="WrapTokenLink">
                     {item.tokens && item.tokens.length === 1 && (
-                      <Box mt={2}>
+                      <WrapTokenDropdown>
                         <TokenLink isSuccess={!isFailed} token={item.tokens[0]} />
-                      </Box>
+                      </WrapTokenDropdown>
                     )}
                     {item.tokens && item.tokens.length > 1 && (
-                      <Box mt={2}>
+                      <WrapTokenDropdown>
                         <DropdownTokens
                           isSuccess={!isFailed}
                           tokens={item.tokens}
@@ -242,10 +258,10 @@ const Card = ({
                           hideInputLabel
                           hideMathChar
                         />
-                      </Box>
+                      </WrapTokenDropdown>
                     )}
-                  </Box>
-                </Box>
+                  </WrapTokenLink>
+                </WrapRightSide>
               </WrapInfo>
             </ItemContent>
           </Item>

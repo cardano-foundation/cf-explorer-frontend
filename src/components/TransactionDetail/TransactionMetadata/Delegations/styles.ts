@@ -6,6 +6,9 @@ export const Wrapper = styled(Box)`
   padding: 25px;
   border: 1px solid ${({ theme }) => (theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200])};
   border-radius: ${({ theme }) => theme.spacing(2)};
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    padding: 15px;
+  }
 `;
 export const Header = styled(Box)`
   display: flex;
