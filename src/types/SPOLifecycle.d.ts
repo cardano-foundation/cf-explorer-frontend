@@ -10,6 +10,7 @@ interface PoolInfo {
   poolName: string;
   poolView: string;
   stakeKeys: string[];
+  rewardAvailable?: number;
 }
 
 interface PoolUpdateDetail {

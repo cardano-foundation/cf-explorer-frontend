@@ -58,6 +58,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
       handleCloseModal={props.onClose}
       title={t("common.addressList")}
       width={"600px"}
+      height={"auto"}
       contentStyle={{ overflowY: "unset" }}
     >
       <WrapContent>

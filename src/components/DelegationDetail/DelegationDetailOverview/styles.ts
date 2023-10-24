@@ -43,4 +43,9 @@ export const FixedCostBox = styled(Box)`
   & > svg {
     margin-top: -2px;
   }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    & {
+      display: inline;
+    }
+  }
 `;
