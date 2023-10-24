@@ -99,7 +99,7 @@ export const Headline = styled(Typography)<{ collapsed?: number }>`
   color: ${(props) => props.theme.palette.secondary.main};
   flex: 1;
   text-align: left;
-  padding-top: 20px;
+  margin-top: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
