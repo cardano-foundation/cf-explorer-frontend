@@ -68,6 +68,7 @@ const SummaryItems = ({
                     color={(theme) => theme.palette.primary.main}
                     fontWeight="bold"
                     fontFamily={"var(--font-family-text)"}
+                    fontSize="14px"
                   >
                     <DynamicEllipsisText value={item.address} isCopy isTooltip />
                   </Box>
