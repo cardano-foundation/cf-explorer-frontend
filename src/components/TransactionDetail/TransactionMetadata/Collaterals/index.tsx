@@ -163,19 +163,13 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                     flexWrap={"wrap"}
                     gap="4px"
                   >
-                    <Box
-                      display={"flex"}
-                      justifyContent="flex-start"
-                      alignItems={"center"}
-                      flexWrap="nowrap"
-                      width={"100%"}
-                    >
+                    <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} width={"100%"}>
                       <Link to={details.address(item.address)} style={{ width: "100%" }}>
                         <Box
                           fontWeight="bold"
                           fontFamily={"var(--font-family-text)"}
                           color={(theme) => theme.palette.primary.main}
-                          mr={1}
+                          width={"100%"}
                         >
                           <EllipsisContainer>
                             <DynamicEllipsisText value={item.address} isCopy isTooltip />

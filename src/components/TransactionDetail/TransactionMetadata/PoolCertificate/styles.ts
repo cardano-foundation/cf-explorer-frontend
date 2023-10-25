@@ -71,4 +71,22 @@ export const EllipsisContainer = styled(Box)<{ isFailed?: boolean }>`
   font-weight: bold;
   color: ${({ theme, isFailed }) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)};
   max-width: 80vw;
+  ${({ theme }) => theme.breakpoints.down(355)} {
+    width: 200px;
+  }
 `;
+
+export const WrapRightSide = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down(355)]: {
+    overflow: "scroll"
+  }
+}));
+
+export const LeftRowContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: "15px",
+  [theme.breakpoints.down(355)]: {
+    overflow: "scroll"
+  }
+}));
