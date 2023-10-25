@@ -57,6 +57,9 @@ export const ItemContent = styled(Box)(({ theme }) => ({
   alignItems: "flex-start",
   [theme.breakpoints.down("md")]: {
     overflow: "scroll"
+  },
+  [theme.breakpoints.between(420, "sm")]: {
+    overflow: "hidden"
   }
 }));
 
