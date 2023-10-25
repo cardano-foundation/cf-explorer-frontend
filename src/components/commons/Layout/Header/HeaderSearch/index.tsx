@@ -630,7 +630,7 @@ export const OptionsSearch = ({
               return;
             case "pool": {
               if (data.validPoolName) return;
-              if (!data?.pool) {
+              if (data?.pool) {
                 setShowOption(false);
                 return {
                   suggestText: "Search for a Pool by",
@@ -653,7 +653,7 @@ export const OptionsSearch = ({
             }
             case "token": {
               if (data.validTokenName) return;
-              if (!data?.validTokenName) {
+              if (data?.token) {
                 setShowOption(false);
                 return {
                   suggestText: "Search for a Token by",
