@@ -28,7 +28,7 @@ const StakeKeyBox = ({ data }: TProps) => {
         <Grid item xs={12}>
           {leftRow.map(({ label, value }) => {
             return (
-              <FlexCenter key={value} sx={{ paddingBottom: "15px", overflow: "scroll", justifyContent: "flex-start" }}>
+              <FlexCenter key={value} sx={{ paddingBottom: "15px", overflow: "auto", justifyContent: "flex-start" }}>
                 <TextLabel>{label}: </TextLabel>
                 <TextValue>
                   <Box

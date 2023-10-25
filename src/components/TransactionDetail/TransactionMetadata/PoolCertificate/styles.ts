@@ -63,7 +63,7 @@ export const ValueItemMultiple = styled(Box)(({ theme }) => ({
   display: "flex",
   width: "80%",
   [theme.breakpoints.up("sm")]: {
-    width: "100%%"
+    width: "100%"
   }
 }));
 

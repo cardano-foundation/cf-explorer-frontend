@@ -7,12 +7,13 @@ import { useSelector } from "react-redux";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatADAFull, getShortHash } from "src/commons/utils/helper";
+import { formatADAFull } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import Table from "src/components/commons/Table";
 import { Column } from "src/types/table";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
 import { Actions, PageSize, PerPage, SelectMui, StyledLink, StyledMenuItem, TimeDuration } from "./styles";
 
@@ -33,23 +34,34 @@ const TopAddressesByAmountStaked = () => {
   const columns: Column<TopDelegator>[] = [
     {
       title: t("common.stakeAddress"),
-      minWidth: 200,
+      minWidth: 170,
       key: "addresses",
+      maxWidth: "30vw",
       render: (r) => (
-        <CustomTooltip title={r.stakeKey}>
-          <StyledLink to={details.stake(r.stakeKey)}>{getShortHash(r.stakeKey)}</StyledLink>
-        </CustomTooltip>
+        <StyledLink to={details.address(r.stakeKey)}>
+          <DynamicEllipsisText value={r.stakeKey} isTooltip />
+        </StyledLink>
       )
     },
     {
       title: t("glossary.pool"),
       key: "pool",
-      maxWidth: 300,
-      render: (r) => (
-        <CustomTooltip title={r.poolName || r.poolId}>
-          <StyledLink to={details.delegation(r.poolId)}>{r.poolName || getShortHash(r.poolId)}</StyledLink>
-        </CustomTooltip>
-      )
+      minWidth: 170,
+      maxWidth: "30vw",
+      render: (r) => {
+        if (r.poolName) {
+          return (
+            <CustomTooltip title={r.poolName}>
+              <StyledLink to={details.delegation(r.poolId)}>{r.poolName}</StyledLink>
+            </CustomTooltip>
+          );
+        }
+        return (
+          <StyledLink to={details.address(r.stakeKey)}>
+            <DynamicEllipsisText value={r.stakeKey} isTooltip />
+          </StyledLink>
+        );
+      }
     },
     {
       title: t("stakeAmount"),
