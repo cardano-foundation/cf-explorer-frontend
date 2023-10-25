@@ -457,6 +457,7 @@ const Table: React.FC<TableProps> = ({
         maxHeight={maxHeight}
         minHeight={minHeight ? minHeight : (!data || data.length === 0) && !loading ? 360 : loading ? 400 : 15}
         height={height || heightTable}
+        isModal={+!!isModal}
         className={data && data.length !== 0 ? "table-wrapper" : "hide-scroll"}
         loading={loading ? 1 : 0}
         {...tableWrapperProps}
