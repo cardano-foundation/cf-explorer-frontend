@@ -41,7 +41,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
             </Box>
             <Box width="100%" sx={{ overflowX: "scroll", overflowY: "hidden" }}>
               <Box flex={1} display="flex" columnGap={2} justifyContent="space-between">
-                <Box minWidth={120}>
+                <Box display="flex" alignItems="center" fontSize="14px" minWidth={120}>
                   {!isMobile ? (
                     <Box component={"span"} mr={1} color={({ palette }) => palette.secondary.light}>
                       {t("common.from")}:
@@ -62,11 +62,11 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                   <ADAicon />
                 </Box>
               </Box>
-              <Box display={"flex"} flexDirection={isMobile ? "column" : "row"} columnGap={2}>
+              <Box display="flex" alignItems="center" flexDirection={isMobile ? "column" : "row"} columnGap={2}>
                 <Box minWidth="1.75rem" color={({ palette }) => palette.secondary.light}>
                   {t("common.to")}:
                 </Box>
-                <Box flex={1} maxWidth={"55vw"}>
+                <Box fontSize="14px" flex={1} maxWidth={"55vw"}>
                   {item?.addressTo.map((address, idx) => {
                     return (
                       <Box minWidth={120} key={idx}>

@@ -6,7 +6,7 @@ import { Column } from "src/components/commons/Table";
 import ParseScriptModal from "src/components/ParseScriptModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
-import { TableProtocol, UpdatedValue, Wrapper } from "./styles";
+import { LimitCell, TableProtocol, UpdatedValue, Wrapper } from "./styles";
 
 interface IProps {
   data: TProtocolMerge[];
@@ -38,7 +38,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
               onClick={() => r.protocol === "costModel" && setCostModelScript(r.oldValue?.toString() || "")}
               color={({ palette }) => (r.protocol === "costModel" ? palette.primary.main : "unset")}
             >
-              {r.oldValue}
+              <LimitCell> {r.oldValue}</LimitCell>
             </UpdatedValue>
           </CustomTooltip>
         );
@@ -57,7 +57,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
               onClick={() => r.protocol === "costModel" && setCostModelScript(r.value?.toString() || "")}
               color={({ palette }) => (r.protocol === "costModel" ? palette.primary.main : "unset")}
             >
-              {r.value}
+              <LimitCell>{r.value}</LimitCell>
             </UpdatedValue>
           </CustomTooltip>
         );
