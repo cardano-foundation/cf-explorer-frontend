@@ -4,9 +4,9 @@ import { useTranslation } from "react-i18next";
 
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { details } from "src/commons/routers";
-import { FlexCenter, TruncateSubTitleContainer } from "src/components/share/styled";
+import { FlexCenter } from "src/components/share/styled";
 
-import { TextLabel, TextValue } from "./styles";
+import { EllipsisContainer, TextLabel, TextValue } from "./styles";
 
 type TProps = {
   data: TStakeCertificated;
@@ -36,9 +36,9 @@ const StakeKeyBox = ({ data }: TProps) => {
                     component={Link}
                     to={details.stake(value)}
                   >
-                    <TruncateSubTitleContainer display={"grid"}>
+                    <EllipsisContainer>
                       <DynamicEllipsisText value={value} isCopy isTooltip />
-                    </TruncateSubTitleContainer>
+                    </EllipsisContainer>
                   </Box>
                 </TextValue>
               </FlexCenter>
