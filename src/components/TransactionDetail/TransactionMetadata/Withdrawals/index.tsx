@@ -57,7 +57,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                           : details.stake(item.stakeAddressFrom)
                       }
                     >
-                      <EllipsisContainer>
+                      <EllipsisContainer fontSize={14}>
                         <DynamicEllipsisText value={item.stakeAddressFrom} isCopy isTooltip />
                       </EllipsisContainer>
                     </AddressLink>
@@ -74,7 +74,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                           <AddressLink
                             to={address.startsWith("addr") ? details.address(address) : details.stake(address)}
                           >
-                            <EllipsisContainer>
+                            <EllipsisContainer fontSize={14}>
                               <DynamicEllipsisText value={address} isCopy isTooltip />
                             </EllipsisContainer>
                           </AddressLink>
