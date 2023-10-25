@@ -591,6 +591,7 @@ export const OptionsSearch = ({
             case "validTokenName":
               if (data.validTokenName) {
                 if (data.token) {
+                  setShowOption(false);
                   return {
                     suggestText: "Search for a Token by",
                     cb: () => history.push(details.token(data?.token?.fingerprint)),
@@ -610,6 +611,7 @@ export const OptionsSearch = ({
             case "validPoolName":
               if (data?.validPoolName) {
                 if (data.pool) {
+                  setShowOption(false);
                   return {
                     suggestText: "Search for a Pool by",
                     cb: () => history.push(details.delegation(data?.pool?.poolId)),
@@ -627,7 +629,8 @@ export const OptionsSearch = ({
               }
               return;
             case "pool": {
-              if (!data?.validPoolName) {
+              if (data.validPoolName) return;
+              if (data?.pool) {
                 setShowOption(false);
                 return {
                   suggestText: "Search for a Pool by",
@@ -649,7 +652,8 @@ export const OptionsSearch = ({
               };
             }
             case "token": {
-              if (!data?.validTokenName) {
+              if (data.validTokenName) return;
+              if (data?.token) {
                 setShowOption(false);
                 return {
                   suggestText: "Search for a Token by",
