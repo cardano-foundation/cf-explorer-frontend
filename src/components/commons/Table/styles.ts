@@ -144,10 +144,10 @@ export const WrappModalScrollBar = styled(Box)(
 `
 );
 
-export const Wrapper = styled(Box)<{ loading?: number }>(
-  ({ theme, loading }) => `
+export const Wrapper = styled(Box)<{ loading?: number; isModal?: number }>(
+  ({ theme, loading, isModal }) => `
   overflow: auto;
-  background: ${theme.palette.secondary[0]};
+  background: ${isModal ? theme.palette.secondary[100] : theme.palette.secondary[0]};
   padding: ${theme.spacing(1)};
   padding-top: 0;
   border-radius: ${theme.spacing(1.5)};
