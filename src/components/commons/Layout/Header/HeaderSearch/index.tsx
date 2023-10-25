@@ -627,39 +627,46 @@ export const OptionsSearch = ({
               }
               return;
             case "pool": {
-              if (data.pool && data.pool?.name) {
+              if (!data?.validPoolName) {
+                setShowOption(false);
                 return {
                   suggestText: "Search for a Pool by",
-                  cb: () =>
-                    history.push(routers.DELEGATION_POOLS, {
-                      tickerNameSearch: encodeURIComponent((value || "").trim().toLocaleLowerCase())
-                    }),
+                  cb: () => {
+                    history.push(details.delegation(data?.pool?.poolId));
+                  },
                   formatter: getShortHash,
-                  value: data.pool?.name
+                  value: data.pool && data.pool?.name ? data.pool.name : ""
                 };
               }
               return {
                 suggestText: "Search for a Pool by",
-                cb: () => history.push(details.delegation(data?.pool?.poolId)),
-                formatter: getShortHash
+                cb: () =>
+                  history.push(routers.DELEGATION_POOLS, {
+                    tickerNameSearch: encodeURIComponent((value || "").trim().toLocaleLowerCase())
+                  }),
+                formatter: getShortHash,
+                value: data.pool && data.pool?.name ? data.pool.name : ""
               };
             }
             case "token": {
-              if (data.token && data.token?.name) {
+              if (!data?.validTokenName) {
+                setShowOption(false);
                 return {
                   suggestText: "Search for a Token by",
-                  cb: () =>
-                    history.push(
-                      `${routers.TOKEN_LIST}?tokenName=${encodeURIComponent((value || "").trim().toLocaleLowerCase())}`
-                    ),
+                  cb: () => history.push(details.token(data?.token?.fingerprint)),
                   formatter: getShortHash,
-                  value: data.token?.name
+                  value: data.token && data.token?.name ? data.token?.name : ""
                 };
               }
+
               return {
                 suggestText: "Search for a Token by",
-                cb: () => history.push(details.token(data?.token?.fingerprint)),
-                formatter: getShortHash
+                cb: () =>
+                  history.push(
+                    `${routers.TOKEN_LIST}?tokenName=${encodeURIComponent((value || "").trim().toLocaleLowerCase())}`
+                  ),
+                formatter: getShortHash,
+                value: data.token && data.token?.name ? data.token?.name : ""
               };
             }
             case "policy":
