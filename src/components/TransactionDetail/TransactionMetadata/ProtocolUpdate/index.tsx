@@ -30,6 +30,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
       isHiddenBorder: true,
       key: "previousValue",
       minWidth: "40px",
+      maxWidth: "40vw",
       render: (r) => {
         return (
           <CustomTooltip title={r.protocol === "costModel" ? "" : r.oldValue}>
@@ -48,6 +49,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
       title: t("common.updatedValue"),
       key: "updatedValue",
       minWidth: "40px",
+      maxWidth: "40vw",
       isHiddenBorder: true,
       render: (r) => {
         return (

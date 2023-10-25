@@ -127,7 +127,11 @@ const Card = ({
                             {t("tab.utxo")}:
                           </Box>
                           <Link to={details.transaction(item.txHash)} style={{ width: "100%" }}>
-                            <EllipsisContainer isFailed={isFailed} sx={{ transform: "translateY(-3px)" }}>
+                            <EllipsisContainer
+                              isFailed={isFailed}
+                              sx={{ transform: "translateY(-3px)" }}
+                              hasToken={item?.tokens?.length >= 1}
+                            >
                               <DynamicEllipsisText
                                 value={item.txHash}
                                 isTooltip
@@ -173,7 +177,7 @@ const Card = ({
                         width={"100%"}
                       >
                         <Link to={details.address(item.address)} style={{ width: "100%" }}>
-                          <EllipsisContainer isFailed={isFailed}>
+                          <EllipsisContainer isFailed={isFailed} hasToken={item?.tokens?.length >= 1}>
                             <DynamicEllipsisText value={item.address} isCopy isTooltip />
                           </EllipsisContainer>
                         </Link>
@@ -199,13 +203,13 @@ const Card = ({
                           <Box
                             pr={1}
                             color={({ palette }) => (isFailed ? theme.palette.secondary[600] : palette.secondary.light)}
-                            sx={{ textWrap: "nowrap" }}
+                            sx={{ minWidth: "100px" }}
                           >
                             {t("common.stakeAddress")}:{" "}
                           </Box>
                           <Box style={{ width: "100%" }}>
                             <Link to={details.stake(item?.stakeAddress)} style={{ width: "100%" }}>
-                              <EllipsisContainer isFailed={isFailed}>
+                              <EllipsisContainer isFailed={isFailed} hasToken={item?.tokens?.length >= 1}>
                                 <DynamicEllipsisText value={item.stakeAddress} isCopy isTooltip />
                               </EllipsisContainer>
                             </Link>
@@ -245,18 +249,19 @@ const Card = ({
                   </Box>
                   <WrapTokenLink>
                     {item.tokens && item.tokens.length === 1 && (
-                      <WrapTokenDropdown className="WrapTokenDropdown == 1">
+                      <WrapTokenDropdown>
                         <TokenLink isSuccess={!isFailed} token={item.tokens[0]} />
                       </WrapTokenDropdown>
                     )}
                     {item.tokens && item.tokens.length > 1 && (
-                      <WrapTokenDropdown className="WrapTokenDropdown > 1">
+                      <WrapTokenDropdown>
                         <DropdownTokens
                           isSuccess={!isFailed}
                           tokens={item.tokens}
                           type={type}
                           hideInputLabel
                           hideMathChar
+                          sx={{ width: "100%" }}
                         />
                       </WrapTokenDropdown>
                     )}

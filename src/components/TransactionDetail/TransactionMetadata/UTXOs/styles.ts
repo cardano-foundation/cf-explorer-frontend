@@ -17,7 +17,7 @@ export const Header = styled(Box)(({ theme }) => ({
   fontSize: "12px",
   color: theme.palette.text.primary,
   borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("lg")]: {
     margin: "0 15px"
   }
 }));
@@ -26,7 +26,7 @@ export const WrapInfo = styled(Box)(({ theme }) => ({
   display: "flex",
   width: "100%",
   alignItems: "center",
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("lg")]: {
     flexDirection: "column"
   }
 }));
@@ -37,7 +37,7 @@ export const WrapLeftSide = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   paddingTop: "5px",
   flexGrow: 1,
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("lg")]: {
     alignItems: "baseline",
     width: "100%"
   }
@@ -47,7 +47,7 @@ export const WrapRightSide = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "end",
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("lg")]: {
     alignItems: "baseline",
     marginTop: "18px",
     marginLeft: "-45px",
@@ -58,8 +58,8 @@ export const WrapRightSide = styled(Box)(({ theme }) => ({
 export const WrapIcon = styled(Box)<{ type: string }>(({ theme, type }) => ({
   display: "flex",
   alignItems: "center",
-  [theme.breakpoints.down("sm")]: {
-    height: type === "up" ? 34 : 100
+  [theme.breakpoints.down("lg")]: {
+    height: type === "up" ? 60 : 100
   }
 }));
 
@@ -86,13 +86,14 @@ export const ItemContent = styled(Box)(() => ({
 export const WrapTokenLink = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  [theme.breakpoints.down("sm")]: {
+  alignSelf: "stretch",
+  [theme.breakpoints.down("md")]: {
     width: "100%"
   }
 }));
 
 export const AmountHeader = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("lg")]: {
     display: "none"
   }
 }));
@@ -102,16 +103,14 @@ export const AmountMobile = styled(Box)(({ theme }) => ({
   color: theme.palette.secondary.light,
   marginRight: theme.spacing(1),
   fontWeight: "bold",
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("lg")]: {
     display: "block"
   }
 }));
 
-export const WrapTokenDropdown = styled(Box)(({ theme }) => ({
+export const WrapTokenDropdown = styled(Box)(() => ({
   marginTop: "16px",
-  [theme.breakpoints.down("sm")]: {
-    width: "100%"
-  }
+  width: "100%"
 }));
 
 export const ItemFooter = styled(Box)(({ theme }) => ({
@@ -197,20 +196,26 @@ export const CustomSelect = styled(Select)`
   }
 `;
 
-export const EllipsisContainer = styled(Box)<{ isFailed?: boolean }>`
+export const EllipsisContainer = styled(Box)<{ isFailed?: boolean; hasToken?: boolean }>`
   font-weight: bold;
   color: ${({ theme, isFailed }) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)};
-  max-width: 58vw;
+  max-width: 65vw;
   ${({ theme }) => theme.breakpoints.up(420)} {
-    max-width: 70vw;
-  }
-  ${({ theme }) => theme.breakpoints.up("sm")} {
-    max-width: 57vw;
+    max-width: 56vw;
   }
   ${({ theme }) => theme.breakpoints.up("md")} {
-    max-width: 47vw;
+    max-width: 36vw;
+  }
+  ${({ theme }) => theme.breakpoints.up(1100)} {
+    max-width: 50vw;
   }
   ${({ theme }) => theme.breakpoints.up("lg")} {
+    max-width: ${(props) => (props.hasToken ? "calc(50vw - 240px)" : "50vw")};
+  }
+  ${({ theme }) => theme.breakpoints.up("laptop")} {
+    max-width: 48vw;
+  }
+  ${({ theme }) => theme.breakpoints.up("xl")} {
     max-width: 55vw;
   }
 `;

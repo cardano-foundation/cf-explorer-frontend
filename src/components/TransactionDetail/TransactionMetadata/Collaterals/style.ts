@@ -52,9 +52,12 @@ export const ItemBox = styled(Box)(() => ({
   }
 }));
 
-export const ItemContent = styled(Box)(() => ({
+export const ItemContent = styled(Box)(({ theme }) => ({
   display: "flex",
-  alignItems: "flex-start"
+  alignItems: "flex-start",
+  [theme.breakpoints.down("md")]: {
+    overflow: "scroll"
+  }
 }));
 
 export const WrapToken = styled(Box)(({ theme }) => ({
@@ -169,7 +172,7 @@ export const StyledContainerInfo = styled(Box)(({ theme }) => ({
 export const EllipsisContainer = styled(Box)<{ isFailed?: boolean }>`
   font-weight: bold;
   color: ${({ theme, isFailed }) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)};
-  max-width: 55vw;
+  max-width: 65vw;
   ${({ theme }) => theme.breakpoints.up(420)} {
     max-width: 66vw;
   }
