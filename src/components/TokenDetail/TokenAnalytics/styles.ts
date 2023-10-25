@@ -46,7 +46,7 @@ export const BoxInfoItemRight = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("lg")]: {
     alignItems: "flex-start",
     borderRight: `1px solid ${alpha(theme.palette.secondary.main, 0.1)}`,
-    height: "100%",
+    height: "auto",
     borderBottom: "none",
     width: "100%",
     minHeight: "160px"
