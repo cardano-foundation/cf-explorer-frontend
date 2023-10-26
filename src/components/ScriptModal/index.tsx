@@ -30,7 +30,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
           fontWeight="bold"
           fontFamily={'"Roboto", sans-serif '}
         >
-          {t("common.policyID")}
+          {t("common.scriptHash")}
         </Box>
         <Box display={"flex"} flexDirection={"column"} gap={2} mt={2}>
           {loading ? (
