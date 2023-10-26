@@ -52,22 +52,22 @@ const Item = ({ data }: { data: ReferenceInput }) => {
           <DynamicEllipsisText value={data.txHash || ""} isTooltip />
         </UTXOReference>
       </Box>
-      {data.datumHash && (
-        <Box>
-          <TitleReference>Datum Hash:</TitleReference>
+      <Box>
+        <TitleReference>Datum Hash:</TitleReference>
+        {data.datumHash && (
           <ValueReference>
             {data.datumHash.length > 20 ? <DynamicEllipsisText value={data.datumHash} isTooltip /> : data.datumHash}
           </ValueReference>
-        </Box>
-      )}
-      {data.datum && (
-        <Box>
-          <TitleReference>Datum:</TitleReference>
+        )}
+      </Box>
+      <Box>
+        <TitleReference>Datum:</TitleReference>
+        {data.datum && (
           <ValueReference>
             {data.datum.length > 20 ? <DynamicEllipsisText value={data.datum} isTooltip /> : data.datum}
           </ValueReference>
-        </Box>
-      )}
+        )}
+      </Box>
     </DataCardBox>
   );
 };
