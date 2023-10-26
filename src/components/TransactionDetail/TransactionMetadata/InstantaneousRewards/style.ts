@@ -1,5 +1,4 @@
 import { alpha, Box, styled } from "@mui/material";
-import { Link } from "react-router-dom";
 
 export const Wrapper = styled(Box)`
   background: ${(props) => props.theme.palette.secondary[0]};
@@ -23,20 +22,6 @@ export const Img = styled("img")(() => ({
   width: "35px"
 }));
 
-export const TokenLink = styled(Link)(({ theme }) => ({
-  margin: "0px 4px",
-  textTransform: "uppercase",
-  borderRadius: "2px",
-  padding: "2px 10px",
-  backgroundColor: alpha(theme.palette.secondary.light, 0.2),
-  color: theme.palette.secondary.light,
-  fontSize: "var(--font-size-text)",
-  lineHeight: "1.5rem",
-  fontWeight: "bold",
-  display: "inline",
-  whiteSpace: "nowrap"
-}));
-
 export const Item = styled(Box)(({ theme }) => ({
   textAlign: "left",
   padding: "10px 0px",
@@ -54,7 +39,8 @@ export const ItemBox = styled(Box)(() => ({
 export const ItemContent = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
-  justifyContent: "space-between"
+  justifyContent: "space-between",
+  fontSize: "var(--font-size-text-small)"
 }));
 
 export const WrapToken = styled(Box)(({ theme }) => ({

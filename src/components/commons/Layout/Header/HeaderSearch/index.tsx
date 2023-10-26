@@ -155,7 +155,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     },
     {
       value: "policies",
-      label: t("filter.policyId"),
+      label: t("filter.scriptHash"),
       paths: [routers.POLICY_DETAIL],
       detail: details.policyDetail
     }
