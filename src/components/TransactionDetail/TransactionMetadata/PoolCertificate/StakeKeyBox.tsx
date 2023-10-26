@@ -6,7 +6,15 @@ import Link from "src/components/commons/Link";
 import { AdaValue } from "src/components/commons/ADAValue";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
-import { TextLabel, TextRightValue, TextValue, ValueItem, ValueItemMultiple } from "./styles";
+import {
+  EllipsisContainer,
+  LeftRowContainer,
+  TextLabel,
+  TextRightValue,
+  TextValue,
+  ValueItem,
+  ValueItemMultiple
+} from "./styles";
 
 type TProps = {
   data: TPoolCertificated;
@@ -17,20 +25,36 @@ const StakeKeyBox = ({ data }: TProps) => {
   const leftRow = [
     {
       label: t("common.poolID"),
-      value: <DynamicEllipsisText value={data.poolId} isTooltip isCopy />,
+      value: (
+        <EllipsisContainer>
+          <DynamicEllipsisText value={data.poolId} isTooltip isCopy />
+        </EllipsisContainer>
+      ),
       isHyperLink: true,
       originValue: data.poolId,
       linkTo: details.delegation(data.poolId)
     },
     {
       label: t("common.vrfKey"),
-      value: data?.vrfKey ? <DynamicEllipsisText value={data.vrfKey} isTooltip isCopy /> : "",
+      value: data?.vrfKey ? (
+        <EllipsisContainer>
+          <DynamicEllipsisText value={data.vrfKey} isTooltip isCopy />{" "}
+        </EllipsisContainer>
+      ) : (
+        ""
+      ),
       isHyperLink: false,
       originValue: data.vrfKey
     },
     {
       label: t("common.rewardAccount"),
-      value: data.rewardAccount ? <DynamicEllipsisText value={data.rewardAccount} isTooltip isCopy /> : "",
+      value: data.rewardAccount ? (
+        <EllipsisContainer>
+          <DynamicEllipsisText value={data.rewardAccount} isTooltip isCopy />{" "}
+        </EllipsisContainer>
+      ) : (
+        ""
+      ),
       isHyperLink: true,
       originValue: data.rewardAccount,
       linkTo: details.stake(data.rewardAccount)
@@ -63,7 +87,7 @@ const StakeKeyBox = ({ data }: TProps) => {
     <Box py={"15px"}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Box display="flex" flexDirection="column" gap="15px">
+          <LeftRowContainer>
             {(leftRow || []).map(({ label, value, isHyperLink, linkTo, isMultipleValue }) => {
               return (
                 <Box key={label + value} display="flex" alignItems="flex-start">
@@ -74,7 +98,9 @@ const StakeKeyBox = ({ data }: TProps) => {
                         <ValueItemMultiple key={item}>
                           <TextValue>
                             <Link to={details.stake(item || "")}>
-                              <DynamicEllipsisText value={item} isTooltip isCopy />
+                              <EllipsisContainer>
+                                <DynamicEllipsisText value={item} isTooltip isCopy />
+                              </EllipsisContainer>
                             </Link>
                           </TextValue>
                         </ValueItemMultiple>
@@ -88,13 +114,13 @@ const StakeKeyBox = ({ data }: TProps) => {
                 </Box>
               );
             })}
-          </Box>
+          </LeftRowContainer>
         </Grid>
         <Grid item xs={12} md={6}>
           <Box display="flex" flexDirection="column" gap="15px">
             {(rightRow || []).map(({ label, value }) => {
               return (
-                <Box key={label} display="flex">
+                <Box key={label} display="flex" alignItems={"center"}>
                   <TextLabel>{label}: </TextLabel>
                   <TextRightValue>{value}</TextRightValue>
                 </Box>

@@ -4,12 +4,13 @@ export const TextLabel = styled("div")(({ theme }) => ({
   display: "inline-block",
   fontWeight: 400,
   fontSize: 14,
-  lineHeight: "16px",
+  lineHeight: "30px",
   color: theme.palette.secondary.light,
   width: 130,
   flexShrink: 0,
   [theme.breakpoints.down("sm")]: {
-    width: 110
+    width: "fit-content",
+    marginRight: "8px"
   }
 }));
 
@@ -63,5 +64,29 @@ export const ValueItemMultiple = styled(Box)(({ theme }) => ({
   width: "80%",
   [theme.breakpoints.up("sm")]: {
     width: "100%"
+  }
+}));
+
+export const EllipsisContainer = styled(Box)<{ isFailed?: boolean }>`
+  font-weight: bold;
+  color: ${({ theme, isFailed }) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)};
+  max-width: 80vw;
+  ${({ theme }) => theme.breakpoints.down(355)} {
+    width: 200px;
+  }
+`;
+
+export const WrapRightSide = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down(355)]: {
+    overflow: "scroll"
+  }
+}));
+
+export const LeftRowContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: "15px",
+  [theme.breakpoints.down(355)]: {
+    overflow: "scroll"
   }
 }));

@@ -6,9 +6,10 @@ export const TextLabel = styled("div")`
   font-size: 14px;
   line-height: 16px;
   color: ${(props) => props.theme.palette.secondary.light};
-  width: 130px;
+  min-width: 100px;
   text-wrap: nowrap;
   align-seft: center;
+  margin-bottom: -4px;
 `;
 
 export const TextValue = styled(Box)`
@@ -25,3 +26,16 @@ export const Wrapper = styled(Box)(({ theme }) => ({
   borderRadius: theme.spacing(2),
   overflow: "hidden"
 }));
+
+export const EllipsisContainer = styled(Box)<{ isFailed?: boolean }>`
+  font-weight: bold;
+  line-height: 18px;
+  word-break: normal;
+  color: ${({ theme, isFailed }) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)};
+  width: 250px;
+  display: grid;
+  ${({ theme }) => theme.breakpoints.up(420)} {
+    max-width: 60vw;
+    width: auto;
+  }
+`;

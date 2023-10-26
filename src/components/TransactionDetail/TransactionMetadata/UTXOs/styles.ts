@@ -1,9 +1,13 @@
 import { Select, alpha, Box, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export const Img = styled("img")(() => ({
+export const Img = styled("img")(({ theme }) => ({
   paddingRight: "10px",
-  width: "35px"
+  width: "35px",
+  [theme.breakpoints.down("sm")]: {
+    width: 30,
+    paddingRight: "8px"
+  }
 }));
 
 export const Header = styled(Box)(({ theme }) => ({
@@ -13,15 +17,50 @@ export const Header = styled(Box)(({ theme }) => ({
   fontSize: "12px",
   color: theme.palette.text.primary,
   borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("lg")]: {
     margin: "0 15px"
   }
 }));
 
-export const WrapInfo = styled(Box)(() => ({
+export const WrapInfo = styled(Box)(({ theme }) => ({
   display: "flex",
   width: "100%",
-  alignItems: "center"
+  alignItems: "center",
+  [theme.breakpoints.down("lg")]: {
+    flexDirection: "column"
+  }
+}));
+
+export const WrapLeftSide = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  paddingTop: "5px",
+  flexGrow: 1,
+  [theme.breakpoints.down("lg")]: {
+    alignItems: "baseline",
+    width: "100%"
+  }
+}));
+
+export const WrapRightSide = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "end",
+  [theme.breakpoints.down("lg")]: {
+    alignItems: "baseline",
+    marginTop: "18px",
+    marginLeft: "-45px",
+    width: "100%"
+  }
+}));
+
+export const WrapIcon = styled(Box)<{ type: string }>(({ theme, type }) => ({
+  display: "flex",
+  alignItems: "center",
+  [theme.breakpoints.down("lg")]: {
+    height: type === "up" ? 60 : 100
+  }
 }));
 
 export const WrapUTXOs = styled(Box)(({ theme }) => ({
@@ -42,6 +81,36 @@ export const ItemContent = styled(Box)(() => ({
   overflowX: "auto",
   overflowY: "hidden",
   justifyContent: "space-between"
+}));
+
+export const WrapTokenLink = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  alignSelf: "stretch",
+  [theme.breakpoints.down("md")]: {
+    width: "100%"
+  }
+}));
+
+export const AmountHeader = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("lg")]: {
+    display: "none"
+  }
+}));
+
+export const AmountMobile = styled(Box)(({ theme }) => ({
+  display: "none",
+  color: theme.palette.secondary.light,
+  marginRight: theme.spacing(1),
+  fontWeight: "bold",
+  [theme.breakpoints.down("lg")]: {
+    display: "block"
+  }
+}));
+
+export const WrapTokenDropdown = styled(Box)(() => ({
+  marginTop: "16px",
+  width: "100%"
 }));
 
 export const ItemFooter = styled(Box)(({ theme }) => ({
@@ -80,7 +149,7 @@ export const Item = styled(Box)(({ theme }) => ({
     borderBottom: "none"
   },
   [theme.breakpoints.down("sm")]: {
-    margin: "0 15px"
+    margin: "0 5px"
   }
 }));
 
@@ -127,17 +196,26 @@ export const CustomSelect = styled(Select)`
   }
 `;
 
-export const EllipsisContainer = styled(Box)<{ isFailed?: boolean }>`
+export const EllipsisContainer = styled(Box)<{ isFailed?: boolean; hasToken?: boolean }>`
   font-weight: bold;
   color: ${({ theme, isFailed }) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)};
-  max-width: 220px;
-  ${({ theme }) => theme.breakpoints.up("sm")} {
-    max-width: 60vw;
+  max-width: 65vw;
+  ${({ theme }) => theme.breakpoints.up(420)} {
+    max-width: 56vw;
   }
   ${({ theme }) => theme.breakpoints.up("md")} {
-    max-width: 45vw;
+    max-width: 36vw;
+  }
+  ${({ theme }) => theme.breakpoints.up(1100)} {
+    max-width: 50vw;
   }
   ${({ theme }) => theme.breakpoints.up("lg")} {
-    max-width: 60vw;
+    max-width: ${(props) => (props.hasToken ? "calc(50vw - 240px)" : "50vw")};
+  }
+  ${({ theme }) => theme.breakpoints.up("laptop")} {
+    max-width: 48vw;
+  }
+  ${({ theme }) => theme.breakpoints.up("xl")} {
+    max-width: 55vw;
   }
 `;
