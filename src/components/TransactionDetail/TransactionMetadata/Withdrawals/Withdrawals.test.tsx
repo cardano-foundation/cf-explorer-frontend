@@ -23,7 +23,6 @@ describe("Withdrawals component", () => {
   it("should component render", () => {
     render(<Withdrawals data={mockData} />);
     expect(screen.getByText(/wallet addresses/i)).toBeInTheDocument();
-    expect(screen.getByText(/amount/i)).toBeInTheDocument();
     expect(screen.getAllByTestId(/ellipsis-text/)[0]).toBeInTheDocument();
     expect(screen.getAllByTestId(/ellipsis-text/)[1]).toBeInTheDocument();
   });

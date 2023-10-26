@@ -6,6 +6,9 @@ export const Wrapper = styled(Box)`
   padding: 25px;
   border: 1px solid ${({ theme }) => (theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200])};
   border-radius: ${({ theme }) => theme.spacing(2)};
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    padding: 15px;
+  }
 `;
 export const Header = styled(Box)`
   display: flex;
@@ -23,9 +26,13 @@ export const StyledItem = styled(Box)`
   padding: 10px 0;
   font-size: var(--font-size-text);
   border-bottom: 1px solid ${({ theme }) => (theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200])};
+  overflow: scroll;
   &:last-child {
     border-bottom: none;
     padding: 10px 0 0;
+  }
+  ${({ theme }) => theme.breakpoints.between(420, "sm")} {
+    overflow: hidden;
   }
 `;
 
@@ -48,4 +55,22 @@ export const AddressLink = styled(Link)`
   font-family: var(--font-size-text);
   color: ${(props) => props.theme.palette.primary.main} !important;
   margin-right: 8px;
+`;
+
+export const EllipsisContainer = styled(Box)<{ isFailed?: boolean }>`
+  font-weight: bold;
+  color: ${({ theme, isFailed }) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)};
+  max-width: 58vw;
+  ${({ theme }) => theme.breakpoints.up(420)} {
+    max-width: 59vw;
+  }
+  ${({ theme }) => theme.breakpoints.up("sm")} {
+    max-width: 57vw;
+  }
+  ${({ theme }) => theme.breakpoints.up("md")} {
+    max-width: 47vw;
+  }
+  ${({ theme }) => theme.breakpoints.up("lg")} {
+    max-width: 55vw;
+  }
 `;

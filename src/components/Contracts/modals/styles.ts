@@ -7,10 +7,15 @@ export const ModalContent = styled(Box)`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-height: 70vh;
+  max-height: 70dvh;
   padding: 4px;
+  overflow: auto;
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    max-height: 70vh;
+    max-height: 70dvh;
+  }
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
   }
   &::-webkit-scrollbar-track {
     background: transparent;
@@ -19,7 +24,6 @@ export const ModalContent = styled(Box)`
     background: transparent;
   }
   &:hover {
-    border-radius: 8px 0px 0px 8px;
     &::-webkit-scrollbar-thumb {
       background: ${({ theme }) => theme.palette.secondary.light};
     }

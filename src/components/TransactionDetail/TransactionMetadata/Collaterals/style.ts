@@ -10,9 +10,13 @@ export const Wrapper = styled(Box)<{ type?: "input" | "output" }>(({ theme, type
   borderEndStartRadius: type === "output" ? 0 : theme.spacing(2)
 }));
 
-export const Img = styled("img")(() => ({
+export const Img = styled("img")(({ theme }) => ({
   paddingRight: "10px",
-  width: "35px"
+  width: "35px",
+  [theme.breakpoints.down("md")]: {
+    width: 30,
+    paddingRight: "8px"
+  }
 }));
 
 export const TokenLink = styled(Link)(({ theme }) => ({
@@ -38,7 +42,7 @@ export const Item = styled(Box)(({ theme }) => ({
     borderBottom: "none"
   },
   [theme.breakpoints.down("sm")]: {
-    margin: "0 15px"
+    margin: "0 5px"
   }
 }));
 export const ItemBox = styled(Box)(() => ({
@@ -50,10 +54,12 @@ export const ItemBox = styled(Box)(() => ({
 
 export const ItemContent = styled(Box)(({ theme }) => ({
   display: "flex",
-  alignItems: "center",
+  alignItems: "flex-start",
   [theme.breakpoints.down("md")]: {
-    flexDirection: "column",
-    alignItems: "flex-start"
+    overflow: "scroll"
+  },
+  [theme.breakpoints.between(420, "sm")]: {
+    overflow: "hidden"
   }
 }));
 
@@ -121,11 +127,65 @@ export const WrapUTXOs = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const WrapContent = styled(Box)(() => ({
+export const WrapContent = styled(Box)(({ theme }) => ({
   display: "flex",
+  flexDirection: "column",
   width: "100%",
   gap: "10px",
   justifyContent: "space-between",
   overflowX: "auto",
-  overflowY: "hidden"
+  overflowY: "hidden",
+  [theme.breakpoints.down("md")]: {
+    gap: 0
+  }
 }));
+
+export const WrapAmountHeader = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    display: "none"
+  }
+}));
+
+export const StyleAmount = styled(Box)(({ theme }) => ({
+  textWrap: "nowrap",
+  [theme.breakpoints.down("sm")]: {
+    display: "flex",
+    gap: 20,
+    marginTop: 20,
+    marginLeft: "-30px"
+  }
+}));
+
+export const TitleAmountMobile = styled(Box)(({ theme }) => ({
+  display: "none",
+  [theme.breakpoints.down("sm")]: {
+    display: "inline-block",
+    marginLeft: 5
+  }
+}));
+
+export const StyledContainerInfo = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flex: 1,
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column"
+  }
+}));
+
+export const EllipsisContainer = styled(Box)<{ isFailed?: boolean }>`
+  font-weight: bold;
+  color: ${({ theme, isFailed }) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)};
+  max-width: 65vw;
+  ${({ theme }) => theme.breakpoints.up(420)} {
+    max-width: 66vw;
+  }
+  ${({ theme }) => theme.breakpoints.up("sm")} {
+    max-width: 57vw;
+  }
+  ${({ theme }) => theme.breakpoints.up("md")} {
+    max-width: 47vw;
+  }
+  ${({ theme }) => theme.breakpoints.up("lg")} {
+    max-width: 55vw;
+  }
+`;

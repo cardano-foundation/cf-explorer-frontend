@@ -39,3 +39,12 @@ export const Wrapper = styled(Box)(({ theme }) => ({
   borderRadius: theme.spacing(2),
   overflow: "hidden"
 }));
+
+export const LimitCell = styled(Box)`
+  display: inline-block;
+  width: 100%;
+  max-width: 320px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
