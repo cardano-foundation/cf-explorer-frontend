@@ -58,3 +58,16 @@ export const ContractSideViewContent = styled(Box)`
 `;
 
 export const ContractSideViewHeader = styled(Box)``;
+
+export const EmptyBox = styled(Box)`
+  width: 195px;
+  height: 100px;
+  visibility: hidden;
+  background-color: transparent;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    display: none;
+  }
+  ${({ theme }) => theme.breakpoints.up("lg")} {
+    display: none;
+  }
+`;
