@@ -838,5 +838,9 @@
   "glassary.showRetiredPools": "Show Retired Pools",
   "trx.desSignatories": "This transaction was signed by the following signer keys",
   "trx.tooltipSignatories": "Genesis delegate key",
-  "trx.signerPublicKeyHas": "Signer Public Key Hash"
+  "trx.signerPublicKeyHas": "Signer Public Key Hash",
+  "contract.referenceInput": "Reference Inputs",
+  "trx.referenceInput": "Reference Inputs Available",
+  "explain.referenceInput": "What are Reference Inputs",
+  "explain.referenceInput.desc": "Reference input allows looking at an output without spending it. This will facilitate access to information (datum) stored on the blockchain without the need for spending and re-creating unspent transaction outputs (UTXOs). For more information please see "
 }
