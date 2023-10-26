@@ -1,5 +1,7 @@
 import { createContext } from "react";
 
-const DelegatorDetailContext = createContext<IStakeKeyDetail | null>(null);
+type TContextDelegator = { totalDelegatorRewards: number; totalOperatorRewards: number } & IStakeKeyDetail;
+
+const DelegatorDetailContext = createContext<TContextDelegator | null>(null);
 
 export default DelegatorDetailContext;

@@ -11,6 +11,7 @@ import ReceivedRewardsModal from "src/components/ReceivedRewardsModal";
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
 import RewarsDistributionDraw from "./RewardsDistributionDraw";
+import { DrawingContainer } from "./styles";
 
 const RewardsDistribution = () => {
   const [openReceivedRewardsModal, setOpenReceivedRewardsModal] = useState(false);
@@ -31,10 +32,15 @@ const RewardsDistribution = () => {
       <ReceivedRewardsModal
         reward={data?.rewardAvailable || 0}
         type={type}
-        onClose={() => setOpenReceivedRewardsModal(false)}
+        onClose={() => {
+          setOpenReceivedRewardsModal(false);
+          setType(RECEIVED_REWARDS.ALL);
+        }}
         open={openReceivedRewardsModal}
       />
-      <RewarsDistributionDraw data={data} toggleRewardModal={toggleModal} setTypeRewardModal={setType} />
+      <DrawingContainer>
+        <RewarsDistributionDraw data={data} toggleRewardModal={toggleModal} setTypeRewardModal={setType} />
+      </DrawingContainer>
     </Box>
   );
 };
