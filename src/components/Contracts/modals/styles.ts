@@ -116,3 +116,7 @@ export const UTXOReference = styled(Link)(({ theme }) => ({
   fontSize: 16,
   fontWeight: "bold"
 }));
+export const ExternalLink = styled("a")(({ theme }) => ({
+  color: `${theme.palette.primary.main} !important`,
+  textDecoration: "underline !important"
+}));

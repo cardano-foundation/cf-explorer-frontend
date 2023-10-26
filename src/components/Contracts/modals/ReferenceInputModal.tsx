@@ -6,7 +6,7 @@ import CustomModal from "src/components/commons/CustomModal";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { details } from "src/commons/routers";
 
-import { ModalContent, TitleReference, UTXOReference, ValueReference } from "./styles";
+import { ExternalLink, ModalContent, TitleReference, UTXOReference, ValueReference } from "./styles";
 import ExplanDropdown from "../common/ExplanDropdown";
 import { ReferenceCount } from "../styles";
 import { DataCardBox, DataReferenceValue } from "../common/styles";
@@ -30,7 +30,12 @@ const ReferenceInputModal: React.FC<ReferenceInputModal> = ({ data, ...props }) 
       modalContainerProps={{ px: "20px" }}
     >
       <ModalContent>
-        <ExplanDropdown title={t("explain.referenceInput")}>{t("explain.referenceInput.desc")}</ExplanDropdown>
+        <ExplanDropdown title={t("explain.referenceInput")}>
+          {t("explain.referenceInput.desc")}
+          <ExternalLink href="https://cips.cardano.org/cips/cip31/" target="_blank" rel="noreferrer">
+            Cardano Improvement Proposal 31 (CIP 31).
+          </ExternalLink>
+        </ExplanDropdown>
         <DataReferenceValue>
           {data.map((i, ii) => (
             <Box component={Item} data={i} key={ii} />
