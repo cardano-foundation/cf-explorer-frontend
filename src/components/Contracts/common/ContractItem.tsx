@@ -35,27 +35,27 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
     switch (data.purpose) {
       case "SPEND":
         return {
-          value: data.address,
+          value: data.scriptHash,
           explain: t("explain.spend.desc"),
-          detail: details.contract
+          detail: details.smartcontractDetail
         };
       case "MINT":
         return {
           value: data.scriptHash,
           explain: t("explain.mint.desc"),
-          detail: details.policyDetail
+          detail: details.smartcontractDetail
         };
       case "CERT":
         return {
-          value: data.stakeAddress,
+          value: data.scriptHash,
           explain: t("explain.cert.desc"),
-          detail: details.stake
+          detail: details.smartcontractDetail
         };
       case "REWARD":
         return {
-          value: data.stakeAddress,
+          value: data.scriptHash,
           explain: t("explain.reward.desc"),
-          detail: details.stake
+          detail: details.smartcontractDetail
         };
     }
   }, [data]);
