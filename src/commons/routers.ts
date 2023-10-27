@@ -28,6 +28,7 @@ export const routers = {
   STAKE_DETAIL: "/stake-address/:stakeId/:tabActive?",
   CONTRACT_LIST: "/contracts",
   CONTRACT_DETAIL: "/contracts/:address/:tabActive?",
+  SMART_CONTRACT: "/smart-contract/:address/:tabActive?",
   POLICY_DETAIL: "/policy/:policyId",
   NFT_DETAIL: "/nft/:nftId",
   TOP_DELEGATOR: "/top-delegator",
@@ -69,6 +70,8 @@ export const details = {
   policyDetail: (policyId?: string) => routers.POLICY_DETAIL.replace(":policyId", policyId ?? ""),
   contract: (address?: string, tab = "transaction") =>
     routers.CONTRACT_DETAIL.replace(":address", address ?? "").replace(":tabActive?", tab),
+  smartContract: (address?: string, tab = "associated") =>
+    routers.SMART_CONTRACT.replace(":address", address ?? "").replace(":tabActive?", tab),
   staking: (stakeId: string, mode: ViewMode = "timeline", tab: DelegationStep = "registration", txHash?: string) =>
     routers.DELEGATOR_LIFECYCLE.replace(":stakeId", stakeId)
       .replace(":mode?", mode)

@@ -13,6 +13,7 @@ import BlockDetail from "./pages/BlockDetail";
 import BlockList from "./pages/BlockList";
 import Bookmark from "./pages/Bookmark";
 import ContractDetail from "./pages/ContractDetail";
+import SmartContractDetail from "./pages/SmartContractDetail";
 import ContractList from "./pages/ContractList";
 import DelegationDetail from "./pages/DelegationDetail";
 import DelegationPools from "./pages/DelegationPools";
@@ -94,6 +95,7 @@ const Routes: React.FC = () => {
       <Route path={routers.STAKE_DETAIL} exact component={StakeDetail} />
       <Route path={routers.CONTRACT_LIST} exact component={ContractList} />
       <Route path={routers.CONTRACT_DETAIL} exact component={ContractDetail} />
+      <Route path={routers.SMART_CONTRACT} exact component={SmartContractDetail} />
       <Route path={routers.ADDRESS_DETAIL} exact component={AddressWalletDetail} />
       <Route path={routers.POLICY_DETAIL} exact component={PolicyDetail} />
       <Route path={routers.ADDRESS_LIST} exact component={TopAddresses} />
