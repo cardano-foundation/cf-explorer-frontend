@@ -245,6 +245,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       }?page=0&size=${RESULT_SIZE}&${stringify(search)}`;
       const res = await defaultAxios.get(url);
       setTotalResult(res?.data && res.data?.totalItems ? res.data?.totalItems : 0);
+
       setDataSearchTokensAndPools(res?.data && res?.data?.data ? res?.data?.data : undefined);
       if (res?.data && res.data?.totalItems > 0) {
         if (filter === "tokens") {
@@ -522,21 +523,28 @@ export const OptionsSearch = ({
 }: OptionProps) => {
   const history = useHistory();
   const listOptionsTokensAndPools = dataSearchTokensAndPools?.map((i) => {
+    const renderName = () => {
+      if (filter === "tokens") {
+        return (
+          <ValueOption>
+            {(i as TokensSearch)?.displayName?.startsWith("asset") && (i as TokensSearch)?.displayName.length > 43
+              ? getShortHash((i as TokensSearch)?.fingerprint || "")
+              : (i as TokensSearch)?.displayName}
+          </ValueOption>
+        );
+      }
+      if (filter === "delegations/pool-detail-header") {
+        return (
+          <ValueOption>
+            {(i as DelegationPool)?.poolName || getShortHash((i as DelegationPool)?.poolId || "")}
+          </ValueOption>
+        );
+      }
+    };
     return {
       suggestText: (
         <Box>
-          Search for a {filter === "tokens" ? "token" : "pool"}{" "}
-          {filter === "tokens" ? (
-            <ValueOption>
-              {(i as TokensSearch)?.displayName?.startsWith("asset") && (i as TokensSearch)?.displayName.length > 43
-                ? getShortHash((i as TokensSearch)?.fingerprint || "")
-                : (i as TokensSearch)?.displayName}
-            </ValueOption>
-          ) : (
-            <ValueOption>
-              {(i as DelegationPool)?.poolName || getShortHash((i as DelegationPool)?.poolId || "")}
-            </ValueOption>
-          )}
+          Search for a {filter === "tokens" ? "token" : "pool"} {renderName()}
         </Box>
       ),
       cb: () =>
@@ -583,6 +591,7 @@ export const OptionsSearch = ({
             case "validTokenName":
               if (data.validTokenName) {
                 if (data.token) {
+                  setShowOption(false);
                   return {
                     suggestText: "Search for a Token by",
                     cb: () => history.push(details.token(data?.token?.fingerprint)),
@@ -602,6 +611,7 @@ export const OptionsSearch = ({
             case "validPoolName":
               if (data?.validPoolName) {
                 if (data.pool) {
+                  setShowOption(false);
                   return {
                     suggestText: "Search for a Pool by",
                     cb: () => history.push(details.delegation(data?.pool?.poolId)),
@@ -618,6 +628,51 @@ export const OptionsSearch = ({
                 };
               }
               return;
+            case "pool": {
+              if (data.validPoolName) return;
+              if (data?.pool) {
+                setShowOption(false);
+                return {
+                  suggestText: "Search for a Pool by",
+                  cb: () => {
+                    history.push(details.delegation(data?.pool?.poolId));
+                  },
+                  formatter: getShortHash,
+                  value: data.pool && data.pool?.name ? data.pool.name : ""
+                };
+              }
+              return {
+                suggestText: "Search for a Pool by",
+                cb: () =>
+                  history.push(routers.DELEGATION_POOLS, {
+                    tickerNameSearch: encodeURIComponent((value || "").trim().toLocaleLowerCase())
+                  }),
+                formatter: getShortHash,
+                value: data.pool && data.pool?.name ? data.pool.name : ""
+              };
+            }
+            case "token": {
+              if (data.validTokenName) return;
+              if (data?.token) {
+                setShowOption(false);
+                return {
+                  suggestText: "Search for a Token by",
+                  cb: () => history.push(details.token(data?.token?.fingerprint)),
+                  formatter: getShortHash,
+                  value: data.token && data.token?.name ? data.token?.name : ""
+                };
+              }
+
+              return {
+                suggestText: "Search for a Token by",
+                cb: () =>
+                  history.push(
+                    `${routers.TOKEN_LIST}?tokenName=${encodeURIComponent((value || "").trim().toLocaleLowerCase())}`
+                  ),
+                formatter: getShortHash,
+                value: data.token && data.token?.name ? data.token?.name : ""
+              };
+            }
             case "policy":
               return {
                 suggestText: "Search for a Policy by",
@@ -696,7 +751,8 @@ export const OptionsSearch = ({
             return (
               <Option key={i} onClick={() => item?.cb?.()} data-testid="option-search-epoch">
                 <Box>
-                  {item?.suggestText} <ValueOption> {item?.formatter?.(value) || value}</ValueOption>
+                  {item?.suggestText}{" "}
+                  <ValueOption> {item?.formatter?.(item?.value || value) || item?.value || value}</ValueOption>
                 </Box>
                 <GoChevronRight />
               </Option>
