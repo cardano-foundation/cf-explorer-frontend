@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from "react";
-import { Box, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import DrawPath from "src/components/commons/DrawPath";
@@ -23,6 +23,7 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import AssetsModal from "../modals/AssetsModal";
 import RedeemerModal from "../modals/RedeemerModal";
 import CompiledCodeModal from "../modals/CompiledCodeModal";
+import { EmptyBox } from "../styles";
 
 export interface MintviewsProps {
   isBurned?: boolean;
@@ -163,6 +164,7 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
         <Contract hash={data?.scriptHash} detail={details.smartcontractDetail} />
         <CompiledCode onClick={() => setOpenCompiledCode(!openCompiledCode)} />
       </MiddleBox>
+
       {isBurned ? (
         <RightBox ref={rightBoxRef}>
           {isMint ? (
@@ -177,13 +179,17 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
               </MintRrounded>
             </MintBlueBox>
           ) : (
-            <Burn total={data?.burningTokens?.length} onClick={() => setOpenBurnedAssets(!openBurnedAssets)} />
+            <>
+              <EmptyBox />
+              <Burn total={data?.burningTokens?.length} onClick={() => setOpenBurnedAssets(!openBurnedAssets)} />
+            </>
           )}
         </RightBox>
       ) : (
-        <Box ref={rightBoxRef}>
+        <RightBox ref={rightBoxRef}>
+          <EmptyBox />
           <Assets onClick={() => setOpenAssets(!openAssets)} total={data?.mintingTokens?.length} />
-        </Box>
+        </RightBox>
       )}
       <DrawPath
         paths={isMobile ? mobilePaths : paths}
