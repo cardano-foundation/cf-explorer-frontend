@@ -9,6 +9,10 @@ export const ModalContent = styled(Box)`
   gap: 12px;
   max-height: 70dvh;
   padding: 4px;
+`;
+
+export const SlotContainer = styled(Box)`
+  flex: 1;
   overflow: auto;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     max-height: 70dvh;
