@@ -24,9 +24,4 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .idea/
-
-cypress/videos
-cypress/screenshots
-cypress/screenshots
-cypress/e2e/Dynamic
 *__pycache__*
