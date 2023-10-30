@@ -1,17 +1,18 @@
-import { Typography, useTheme } from "@mui/material";
+import { BoxProps, Typography, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { forwardRef } from "react";
 
 import { OutlineEye, Polygon, PolygonDarkRedIcon } from "src/commons/resources";
 
 import CustomIcon from "../CustomIcon";
 import { CircleBox, CustomBadge, PolygonContainer, PolygonContent } from "./styles";
 
-interface BurnProps {
+interface BurnProps extends BoxProps {
   total?: number;
   onClick: () => void;
 }
 
-const Burn: React.FC<BurnProps> = ({ total, onClick }) => {
+const Burn: React.FC<BurnProps> = forwardRef(({ total, onClick }) => {
   const { t } = useTranslation();
   const theme = useTheme();
   return (
@@ -30,6 +31,7 @@ const Burn: React.FC<BurnProps> = ({ total, onClick }) => {
       </PolygonContent>
     </PolygonContainer>
   );
-};
+});
+Burn.displayName = "Burn";
 
 export default Burn;

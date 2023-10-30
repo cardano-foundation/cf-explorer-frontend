@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import {
-  Rrounded,
   MiddleBox,
   MintContainer,
   RightBox,
@@ -15,7 +14,6 @@ import {
 import Redeemer from "src/components/commons/ViewBlocks/Redeemer";
 import Contract from "src/components/commons/ViewBlocks/Contract";
 import Assets from "src/components/commons/ViewBlocks/Assets";
-import PolicyID from "src/components/commons/ViewBlocks/PolicyID";
 import CompiledCode from "src/components/commons/ViewBlocks/CompiledCode";
 import Burn from "src/components/commons/ViewBlocks/Burn";
 import { details } from "src/commons/routers";
@@ -25,6 +23,7 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import AssetsModal from "../modals/AssetsModal";
 import RedeemerModal from "../modals/RedeemerModal";
 import CompiledCodeModal from "../modals/CompiledCodeModal";
+import { EmptyBox } from "../styles";
 
 export interface MintviewsProps {
   isBurned?: boolean;
@@ -162,39 +161,35 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
       />
       <Redeemer ref={redeemerRef} onClick={() => setOpenRedeemer(!openRedeemer)} />
       <MiddleBox ref={middleBoxRef}>
-        <Contract hash={data?.scriptHash} detail={details.policyDetail} />
+        <Contract hash={data?.scriptHash} detail={details.smartcontractDetail} />
         <CompiledCode onClick={() => setOpenCompiledCode(!openCompiledCode)} />
       </MiddleBox>
+
       {isBurned ? (
         <RightBox ref={rightBoxRef}>
-          <MintBlueBox isBurned={isBurned}>
-            <MintRrounded>
-              {isMint ? (
-                <>
-                  <Assets
-                    onClick={() => setOpenAssets(!openAssets)}
-                    total={data?.mintingTokens?.length}
-                    isBurned={isBurned}
-                  />
-                  <Burn total={data?.burningTokens?.length} onClick={() => setOpenBurnedAssets(!openBurnedAssets)} />
-                </>
-              ) : (
-                <>
-                  <Burn total={data?.burningTokens?.length} onClick={() => setOpenBurnedAssets(!openBurnedAssets)} />
-                  <PolicyID hash={data?.scriptHash} detail={details.policyDetail} />
-                </>
-              )}
-            </MintRrounded>
-            {isMint && <PolicyID hash={data?.scriptHash} detail={details.policyDetail} />}
-          </MintBlueBox>
+          {isMint ? (
+            <MintBlueBox isBurned={isBurned}>
+              <MintRrounded>
+                <Assets
+                  onClick={() => setOpenAssets(!openAssets)}
+                  total={data?.mintingTokens?.length}
+                  isBurned={isBurned}
+                />
+                <Burn total={data?.burningTokens?.length} onClick={() => setOpenBurnedAssets(!openBurnedAssets)} />
+              </MintRrounded>
+            </MintBlueBox>
+          ) : (
+            <>
+              <EmptyBox />
+              <Burn total={data?.burningTokens?.length} onClick={() => setOpenBurnedAssets(!openBurnedAssets)} />
+            </>
+          )}
         </RightBox>
       ) : (
-        <MintBlueBox ref={rightBoxRef}>
-          <Rrounded>
-            <Assets onClick={() => setOpenAssets(!openAssets)} total={data?.mintingTokens?.length} />
-            <PolicyID hash={data?.scriptHash} detail={details.policyDetail} />
-          </Rrounded>
-        </MintBlueBox>
+        <RightBox ref={rightBoxRef}>
+          <EmptyBox />
+          <Assets onClick={() => setOpenAssets(!openAssets)} total={data?.mintingTokens?.length} />
+        </RightBox>
       )}
       <DrawPath
         paths={isMobile ? mobilePaths : paths}
