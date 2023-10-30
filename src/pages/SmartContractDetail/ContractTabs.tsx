@@ -1,7 +1,8 @@
-import { Box, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import React, { useRef } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { useHistory, useParams } from "react-router-dom";
+import { t } from "i18next";
 
 import { SummaryIcon, UtxoIcon } from "src/commons/resources";
 import { CustomAccordion } from "src/components/TransactionDetail/TransactionMetadata/styles";
@@ -9,7 +10,7 @@ import { details } from "src/commons/routers";
 
 import TabAssociated from "./TabAssociated";
 import TabTransactions from "./TabTransactions";
-import { StyledAccordionDetails, StyledAccordionSummary, StyledContractTabs, StyledTabName } from "./styles";
+import { StyledAccordionDetails, StyledAccordionSummary, StyledContractTabs, StyledTabName, TitleTab } from "./styles";
 
 interface TTab {
   key: string;
@@ -18,8 +19,8 @@ interface TTab {
   children: React.ReactNode;
 }
 
-const ContractTabs = () => {
-  const { tabActive = false } = useParams<{ tabActive: keyof Transaction }>();
+const ContractTabs = ({ setVersion }: { setVersion: (v: string) => void }) => {
+  const { tabActive = false, address } = useParams<{ tabActive: keyof Transaction; address: string }>();
   const history = useHistory();
 
   const theme = useTheme();
@@ -27,22 +28,20 @@ const ContractTabs = () => {
 
   const handleChangeTab = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     tabRef?.current?.scrollIntoView();
-    history.replace(
-      details.smartContract("af2e27f580f7f08e93190a81f72462f153026d06450924726645891b", newExpanded ? panel : "")
-    );
+    history.replace(details.smartContract(address, newExpanded ? panel : ""));
   };
 
   const data: TTab[] = [
     {
       key: "associated",
       icon: SummaryIcon,
-      label: <StyledTabName>Associated Addresses</StyledTabName>,
-      children: <TabAssociated />
+      label: <StyledTabName>{t("AssociatedAddresses")}</StyledTabName>,
+      children: <TabAssociated setVersion={setVersion} />
     },
     {
       key: "transactions",
       icon: UtxoIcon,
-      label: <StyledTabName>Transactions</StyledTabName>,
+      label: <StyledTabName>{t("glossary.transactions")}</StyledTabName>,
       children: <TabTransactions />
     }
   ];
@@ -58,10 +57,9 @@ const ContractTabs = () => {
   };
 
   return (
-    <StyledContractTabs ref={tabRef} className="StyledContractTabs">
+    <StyledContractTabs ref={tabRef}>
       {data?.map(({ key, icon: Icon, label, children }, index) => (
         <CustomAccordion
-          className="CustomAccordion"
           key={key}
           expanded={tabActive === key}
           customBorderRadius={needBorderRadius(key)}
@@ -69,7 +67,6 @@ const ContractTabs = () => {
           onChange={handleChangeTab(key)}
         >
           <StyledAccordionSummary
-            className="AccordionSummary"
             expandIcon={
               <IoIosArrowDown
                 style={{
@@ -81,7 +78,7 @@ const ContractTabs = () => {
             }
           >
             <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.secondary.light} />
-            <Box>{label}</Box>
+            <TitleTab active={key === tabActive}>{label}</TitleTab>
           </StyledAccordionSummary>
           <StyledAccordionDetails>{children}</StyledAccordionDetails>
         </CustomAccordion>

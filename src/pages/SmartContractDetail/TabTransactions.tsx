@@ -1,7 +1,8 @@
 import { Box } from "@mui/material";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { stringify } from "qs";
+import { useState } from "react";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
@@ -10,26 +11,38 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
 import { Column } from "src/types/table";
 import Table from "src/components/commons/Table";
+import CustomModal from "src/components/commons/CustomModal";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
 import { StyledLink } from "../BlockList/styles";
+import { ButtonViewModal, ContentModal, StyledAddressModal, SubTitleModal, TitleModal } from "./styles";
 
 const TabTransactions = () => {
   const { search } = useLocation();
   const pageInfo = getPageInfo(search);
   const { t } = useTranslation();
   const history = useHistory();
+  const { address } = useParams<{ address: string }>();
 
-  const fetchData = useFetchList<Transactions>(
-    `${API.ADDRESS.DETAIL}/addr1z8snz7c4974vzdpxu65ruphl3zjdvtxw8strf2c2tmqnxz2j2c79gy9l76sdg0xwhd7r0c0kna0tycz4y5s6mlenh8pq0xmsha/txs`,
-    pageInfo
-  );
+  const fetchData = useFetchList<ScriptContractTransactions>(API.SCRIPTS.SCRIPT_TXS_DETAIL(address));
+  const [open, setOpen] = useState(false);
+  const [associatedAdd, setAssociatedAdd] = useState<string[]>([]);
 
-  const columns: Column<Transactions>[] = [
+  const handleCloseModal = () => {
+    setOpen(false);
+    setAssociatedAdd([]);
+  };
+
+  const handleOpenModal = (data: string[]) => {
+    setOpen(true);
+    setAssociatedAdd(data);
+  };
+
+  const columns: Column<ScriptContractTransactions>[] = [
     {
       title: t("glossary.txhash"),
       key: "hash",
       minWidth: "150px",
-
       render: (r) => (
         <>
           <CustomTooltip title={r.hash}>
@@ -63,8 +76,23 @@ const TabTransactions = () => {
     },
     {
       title: t("glossary.absoluteSlot"),
-      key: "slot",
+      key: "absoluteSlot",
       minWidth: "100px"
+    },
+    {
+      title: t("glossary.address"),
+      key: "slot",
+      minWidth: "100px",
+      render: (r) =>
+        r?.addresses?.length > 0 && (
+          <ButtonViewModal onClick={() => handleOpenModal(r.addresses)}>{t("ViewAddresses")}</ButtonViewModal>
+        )
+    },
+    {
+      title: t("contract.purpose"),
+      key: "slot",
+      minWidth: "100px",
+      render: (r) => r.scriptPurposeTypes.join(", ")
     }
   ];
 
@@ -82,6 +110,19 @@ const TabTransactions = () => {
           onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
         }}
       />
+      <CustomModal open={open} onClose={handleCloseModal} width={600}>
+        <TitleModal>{t("AssociatedAddresses")}</TitleModal>
+        <ContentModal>
+          <SubTitleModal>{t("AssociatedAddresses")}:</SubTitleModal>
+          <StyledAddressModal>
+            {associatedAdd.map((add: string) => (
+              <StyledLink to={details.address(add)} key={add}>
+                <DynamicEllipsisText value={add} isTooltip sxFirstPart={{ maxWidth: "calc(100% - 80px)" }} />
+              </StyledLink>
+            ))}
+          </StyledAddressModal>
+        </ContentModal>
+      </CustomModal>
     </Box>
   );
 };

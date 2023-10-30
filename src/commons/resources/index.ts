@@ -440,3 +440,5 @@ export { ReactComponent as CubeIcon } from "./icons/cube.svg";
 export { ReactComponent as USDIconComponent } from "./icons/usdIcon.svg";
 export { ReactComponent as FileEditIcon } from "./icons/file-edit.svg";
 export { ReactComponent as BrowserIcon } from "./icons/browser-icon.svg";
+export { ReactComponent as NativeScriptIcon } from "./icons/nativeScripts.svg";
+export { ReactComponent as SmartContractsIcon } from "./icons/smartContract.svg";

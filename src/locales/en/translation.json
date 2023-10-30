@@ -33,6 +33,7 @@
   "glossary.txTypes": "Transaction Types",
   "glossary.metadata": "Metadata",
   "glossary.withoutSC": "Without smart contracts",
+  "glossary.nativeScriptAndSC": "Native Scripts & Smart Contracts",
   "glossary.smartContracts": "Smart Contracts",
   "glossary.simpleTxs": "Simple transactions",
   "time.24h": "24h",
@@ -842,5 +843,13 @@
   "common.TotalDelegatorRewardsReceived": "Total delegator rewards received",
   "common.TotalOperatorRewardsReceived": "Total operator rewards received",
   "slc.totalRewardsReceived": "Total rewards received",
-  "slc.amountReceived": "Amount received"
+  "slc.amountReceived": "Amount received",
+  "ScriptHash": "Script Hash",
+  "NumberOfTokens": "Number of Tokens",
+  "NumberOfAssetHolders": "Number of Asset Holders",
+  "NativeScripts": "Native Scripts",
+  "AssociatedAddresses": "Associated Addresses",
+  "SmartContractDetails": "Smart Contract Details",
+  "Version": "Version",
+  "ViewAddresses": "View Addresses"
 }
