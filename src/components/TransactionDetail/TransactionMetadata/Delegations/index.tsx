@@ -42,7 +42,7 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
                   </AddressLink>
                 </Box>
                 <Box display={"flex"} alignItems={"center"}>
-                  <Box component={"span"} color={({ palette }) => palette.secondary.light} minWidth={"60px"}>
+                  <Box component={"span"} color={({ palette }) => palette.secondary.light} minWidth={"fit-content"}>
                     {t("common.poolID")}:&nbsp;
                   </Box>
                   <AddressLink to={details.delegation(item.poolId)} style={{ width: "100%" }}>

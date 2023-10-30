@@ -73,7 +73,7 @@ const Tokens = () => {
         )
     },
     {
-      title: t("glossary.policyId"),
+      title: t("glossary.scriptHash"),
       key: "policy",
       minWidth: "100px",
       render: (r) => (
