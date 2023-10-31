@@ -29,7 +29,12 @@ export const API = {
   POLICY: "policies",
   POOL: "pools",
 
-  TOKEN: { LIST: "tokens", TOKEN_TRX: "tokens/:tokenId/txs", ANALYTICS: "tokens/analytics" },
+  TOKEN: {
+    LIST: "tokens",
+    TOKEN_TRX: "tokens/:tokenId/txs",
+    ANALYTICS: "tokens/analytics",
+    NATIVE_SCRIPT: (scriptHash: string) => "scripts/native-scripts/" + scriptHash
+  },
   TRANSACTION: {
     CURRENT: "txs/current",
     DETAIL: "txs",

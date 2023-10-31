@@ -843,5 +843,9 @@
   "common.TotalDelegatorRewardsReceived": "Total delegator rewards received",
   "common.TotalOperatorRewardsReceived": "Total operator rewards received",
   "slc.totalRewardsReceived": "Total rewards received",
-  "slc.amountReceived": "Amount received"
+  "slc.amountReceived": "Amount received",
+  "common.smartContractDetails": "Smart Contract Details",
+  "common.associatedAddresses": "Associated Addresses",
+  "common.viewAddresses": "View Addresses",
+  "common.nativeScriptDetails": "Native Script Details"
 }

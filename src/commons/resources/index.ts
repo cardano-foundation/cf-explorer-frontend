@@ -440,3 +440,8 @@ export { ReactComponent as CubeIcon } from "./icons/cube.svg";
 export { ReactComponent as USDIconComponent } from "./icons/usdIcon.svg";
 export { ReactComponent as FileEditIcon } from "./icons/file-edit.svg";
 export { ReactComponent as BrowserIcon } from "./icons/browser-icon.svg";
+export { ReactComponent as MintingBurningPolicyIcon } from "./icons/minting-burning-policy.svg";
+export { ReactComponent as AssociatedAddressesIcon } from "./icons/associated-address-ic.svg";
+export { ReactComponent as ScriptTabIcon } from "./icons/script-ic.svg";
+export { ReactComponent as AssetHoldersIcon } from "./icons/asset-holders-ic.svg";
+export { ReactComponent as TokenTabIcon } from "./icons/token-tab-ic.svg";
