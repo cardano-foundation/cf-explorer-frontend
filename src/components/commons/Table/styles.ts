@@ -272,11 +272,35 @@ export const TableCustomTitle = styled(Box)`
   text-align: left;
 `;
 
-export const StyledPagination = styled(Pagination)(() => ({
+export const StyledPagination = styled(Pagination)(({ theme }) => ({
   "ul li > button": {
     width: 24,
     height: 24,
     padding: 0
+  },
+  [theme.breakpoints.down(430)]: {
+    width: "80%",
+    "ul li:nth-child(1)": {
+      order: 5
+    },
+    "ul li:nth-child(2)": {
+      order: 6
+    },
+    "ul li:nth-child(3)": {
+      order: 1,
+      width: "100%",
+      marginBottom: "8px",
+      "& div": {
+        textAlign: "left"
+      }
+    },
+    "ul li:nth-child(10)": {
+      order: 7,
+      marginLeft: "auto"
+    },
+    "ul li:nth-child(11)": {
+      order: 8
+    }
   }
 }));
 
