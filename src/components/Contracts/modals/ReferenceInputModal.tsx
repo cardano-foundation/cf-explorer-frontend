@@ -14,7 +14,7 @@ import { ReferenceCount } from "../styles";
 import { DataCardBox, DataReferenceValue } from "../common/styles";
 
 interface ReferenceInputModal {
-  data: IContractItemTx | null;
+  data?: IContractItemTx;
   open: boolean;
   onClose: () => void;
 }
@@ -61,8 +61,12 @@ const Item = ({ data, showTooltip }: { data: ReferenceInput; showTooltip: boolea
       <Box>
         <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
           <TitleReference>UTXO:</TitleReference>
-          {showTooltip && (
-            <Box component={CustomTooltip} title={"Can be used by all contracts"}>
+          {showTooltip ? (
+            <Box component={CustomTooltip} title={t("contract.referenceInput.canOnlyBeUsedByThisContract")}>
+              <InfoIcon />
+            </Box>
+          ) : (
+            <Box component={CustomTooltip} title={t("contract.referenceInput.canBeUsedByAllContract")}>
               <InfoIcon />
             </Box>
           )}

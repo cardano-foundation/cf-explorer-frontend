@@ -846,5 +846,7 @@
   "common.TotalDelegatorRewardsReceived": "Total delegator rewards received",
   "common.TotalOperatorRewardsReceived": "Total operator rewards received",
   "slc.totalRewardsReceived": "Total rewards received",
-  "slc.amountReceived": "Amount received"
+  "slc.amountReceived": "Amount received",
+  "contract.referenceInput.canOnlyBeUsedByThisContract": "Can only be used by this contract",
+  "contract.referenceInput.canBeUsedByAllContract": "Can be used by all contracts"
 }
