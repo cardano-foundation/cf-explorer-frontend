@@ -213,7 +213,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
         return;
       case "scriptHash":
         if (data?.isNativeScript) {
-          history.push(details.nativeScript(data?.scriptHash as string));
+          history.push(details.nativeScriptDetail(data?.scriptHash as string));
           return;
         } else {
           history.push(details.smartcontractDetail(data?.scriptHash as string));
