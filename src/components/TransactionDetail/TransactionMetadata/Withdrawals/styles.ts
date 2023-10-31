@@ -28,7 +28,7 @@ export const StyledItem = styled(Box)`
   background-color: ${({ theme }) => theme.palette.secondary[0]};
   text-align: left;
   padding: 10px 0;
-  font-size: var(--font-size-text);
+  font-size: var(--font-size-text-small);
   border-bottom: 1px solid ${({ theme }) => (theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200])};
 `;
 
@@ -117,7 +117,8 @@ export const FromContainer = styled(Box)(() => ({
   minWidth: 120,
   display: "flex",
   justifyContent: "flex-start",
-  alignItems: "center"
+  alignItems: "center",
+  width: "100%"
 }));
 
 export const ToContainer = styled(Box)(({ theme }) => ({
