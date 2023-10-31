@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import { JsonViewerKeyRenderer } from "@textea/json-viewer";
-import { isNumber } from "lodash";
 import { useEffect } from "react";
 
 const useDisableJsonKey = (data: unknown): { trigger: () => void; keyRenderer: JsonViewerKeyRenderer } => {
@@ -24,7 +23,8 @@ const useDisableJsonKey = (data: unknown): { trigger: () => void; keyRenderer: J
     return <Box data-row-id="json-row" />;
   };
   keyRenderer.when = ({ path }) => {
-    return isNumber(path[path.length - 1]);
+    const num = Number(path[path.length - 1]);
+    return !isNaN(num);
   };
   return { keyRenderer, trigger };
 };
