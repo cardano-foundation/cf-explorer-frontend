@@ -106,7 +106,7 @@ const DynamicEllipsisText = ({
 
   return (
     <Container id={randomIdRef.current} sx={sx}>
-      <CustomTooltip title={isTooltip ? value : ""}>
+      <CustomTooltip title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}>
         <Box component={"span"} data-testId="ellipsis-text">
           <FirstPart sx={sxFirstPart}>{firstPart}</FirstPart>
           <Lastpart sx={sxLastPart}>{lastPart}</Lastpart>
@@ -119,3 +119,27 @@ const DynamicEllipsisText = ({
 };
 
 export default DynamicEllipsisText;
+
+export const ScrollTooltipContent = styled(Box)`
+  max-height: 40vh;
+  overflow: auto;
+  padding: 0 ${({ theme }) => theme.spacing(1)};
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: ${({ theme }) => theme.palette.primary[100]};
+  }
+  &::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.palette.secondary.light};
+  }
+  &:hover {
+    border-radius: 8px 0px 0px 8px;
+    &::-webkit-scrollbar-thumb {
+      background: ${({ theme }) => theme.palette.secondary.light};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${({ theme }) => theme.palette.primary[100]};
+    }
+  }
+`;

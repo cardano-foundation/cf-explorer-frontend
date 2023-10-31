@@ -1,7 +1,7 @@
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { MouseEvent, useRef } from "react";
+import { MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 
 import Card from "../commons/Card";
@@ -33,7 +33,6 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
   const history = useHistory();
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<Transactions>(url, pageInfo);
-  const mainRef = useRef(document.querySelector("#main"));
 
   const onClickRow = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
     if (openDetail) return openDetail(_, r);
@@ -145,7 +144,6 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
             total: fetchData.total,
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
-              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
           onClickRow={onClickRow}
