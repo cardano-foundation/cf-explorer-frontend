@@ -28,7 +28,7 @@ const TabNativeScripts = () => {
       minWidth: "170px",
       maxWidth: "30vw",
       render: (r) => (
-        <StyledLink to={details.policyDetail(r.scriptHash)}>
+        <StyledLink to={details.nativeScriptDetail(r.scriptHash)}>
           <DynamicEllipsisText value={r.scriptHash} isTooltip />
         </StyledLink>
       )

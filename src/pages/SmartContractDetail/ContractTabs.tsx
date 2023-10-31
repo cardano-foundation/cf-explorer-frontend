@@ -4,13 +4,20 @@ import { IoIosArrowDown } from "react-icons/io";
 import { useHistory, useParams } from "react-router-dom";
 import { t } from "i18next";
 
-import { SummaryIcon, UtxoIcon } from "src/commons/resources";
+import { UtxoIcon } from "src/commons/resources";
 import { CustomAccordion } from "src/components/TransactionDetail/TransactionMetadata/styles";
 import { details } from "src/commons/routers";
 
 import TabAssociated from "./TabAssociated";
 import TabTransactions from "./TabTransactions";
-import { StyledAccordionDetails, StyledAccordionSummary, StyledContractTabs, StyledTabName, TitleTab } from "./styles";
+import {
+  StyledAccordionDetails,
+  StyledAccordionSummary,
+  StyledAssociatedIcon,
+  StyledContractTabs,
+  StyledTabName,
+  TitleTab
+} from "./styles";
 
 interface TTab {
   key: string;
@@ -34,7 +41,7 @@ const ContractTabs = ({ setVersion }: { setVersion: (v: string) => void }) => {
   const data: TTab[] = [
     {
       key: "associated",
-      icon: SummaryIcon,
+      icon: StyledAssociatedIcon,
       label: <StyledTabName>{t("AssociatedAddresses")}</StyledTabName>,
       children: <TabAssociated setVersion={setVersion} />
     },

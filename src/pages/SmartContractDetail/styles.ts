@@ -1,4 +1,7 @@
 import { AccordionDetails, AccordionSummary, Box, Container, styled } from "@mui/material";
+import { Link } from "react-router-dom";
+
+import { AssociatedIcon } from "src/commons/resources";
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
   padding: "30px 16px 0px",
@@ -124,8 +127,12 @@ export const StyledAccordionSummary = styled(AccordionSummary)(() => ({
   padding: "25px 25px 0 25px"
 }));
 
-export const StyledAccordionDetails = styled(AccordionDetails)(() => ({
-  padding: "5px 25px 16px 25px"
+export const StyledAccordionDetails = styled(AccordionDetails)(({ theme }) => ({
+  padding: "5px 25px 16px 25px",
+  [theme.breakpoints.down(340)]: {
+    paddingLeft: 15,
+    paddingRight: 15
+  }
 }));
 
 export const StyledSubNameTab = styled(AccordionDetails)(({ theme }) => ({
@@ -187,3 +194,13 @@ export const StyledAddressModal = styled(Box)(({ theme }) => ({
   fontWeight: 700,
   lineHeight: 1.6
 }));
+
+export const StyledLink = styled(Link)`
+  font-family: var(--font-family-text) !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
+  font-weight: 700;
+`;
+
+export const StyledAssociatedIcon = styled(AssociatedIcon)`
+  transform: translateY(5px);
+`;

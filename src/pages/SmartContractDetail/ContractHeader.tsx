@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import ButtonBack from "src/components/commons/ButtonBack";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import Card from "src/components/commons/Card";
+import { SCRIPT_TYPE, ScriptTypeLabel } from "src/commons/utils/constants";
 
 import { DetailHeader, EllipsisContainer, SubHeaderLabel, SubHeaderValue } from "./styles";
 
@@ -24,7 +25,8 @@ const ContractHeader = ({ version }: { version: string | undefined }) => {
           </EllipsisContainer>
         </Box>
         <Box display={"flex"}>
-          <SubHeaderLabel> {t("Version")}: &nbsp;</SubHeaderLabel> <SubHeaderValue>{version}</SubHeaderValue>
+          <SubHeaderLabel> {t("Version")}: &nbsp;</SubHeaderLabel>{" "}
+          <SubHeaderValue>{ScriptTypeLabel[version as SCRIPT_TYPE]}</SubHeaderValue>
         </Box>
       </Box>
     </DetailHeader>

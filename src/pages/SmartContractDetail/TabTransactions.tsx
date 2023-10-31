@@ -24,7 +24,7 @@ const TabTransactions = () => {
   const history = useHistory();
   const { address } = useParams<{ address: string }>();
 
-  const fetchData = useFetchList<ScriptContractTransactions>(API.SCRIPTS.SCRIPT_TXS_DETAIL(address));
+  const fetchData = useFetchList<ScriptContractTransactions>(API.SCRIPTS.SCRIPT_TXS_DETAIL(address), pageInfo);
   const [open, setOpen] = useState(false);
   const [associatedAdd, setAssociatedAdd] = useState<string[]>([]);
 
@@ -44,11 +44,9 @@ const TabTransactions = () => {
       key: "hash",
       minWidth: "150px",
       render: (r) => (
-        <>
-          <CustomTooltip title={r.hash}>
-            <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
-          </CustomTooltip>
-        </>
+        <CustomTooltip title={r.hash}>
+          <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
+        </CustomTooltip>
       )
     },
     {
@@ -103,7 +101,6 @@ const TabTransactions = () => {
         columns={columns}
         total={{ count: fetchData.total, title: t("common.totalTxs") }}
         rowKey="hash"
-        height={380}
         pagination={{
           ...pageInfo,
           total: fetchData.total,
@@ -111,9 +108,9 @@ const TabTransactions = () => {
         }}
       />
       <CustomModal open={open} onClose={handleCloseModal} width={600}>
-        <TitleModal>{t("AssociatedAddresses")}</TitleModal>
+        <TitleModal>{t("glossary.address")}</TitleModal>
         <ContentModal>
-          <SubTitleModal>{t("AssociatedAddresses")}:</SubTitleModal>
+          <SubTitleModal>{t("glossary.address")}:</SubTitleModal>
           <StyledAddressModal>
             {associatedAdd.map((add: string) => (
               <StyledLink to={details.address(add)} key={add}>

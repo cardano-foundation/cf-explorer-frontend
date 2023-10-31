@@ -199,8 +199,15 @@ export const StyledAccordionSummary = styled(AccordionSummary)(() => ({
   padding: "18px 25px 18px 25px"
 }));
 
-export const StyledAccordionDetails = styled(AccordionDetails)(() => ({
-  padding: "5px 25px 16px 25px"
+export const StyledAccordionDetails = styled(AccordionDetails)(({ theme }) => ({
+  padding: "5px 25px 16px 25px",
+  [theme.breakpoints.down(340)]: {
+    paddingLeft: 15,
+    paddingRight: 15
+  },
+  [theme.breakpoints.down(400)]: {
+    padding: "5px 10px 16px 10px"
+  }
 }));
 
 export const StyledSubNameTab = styled(AccordionDetails)(({ theme }) => ({

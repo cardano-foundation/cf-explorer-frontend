@@ -8,13 +8,14 @@ import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { EmptyRecord } from "src/components/commons/Table";
+import { details } from "src/commons/routers";
 
-import { StyledAddress, StyledSubNameTab } from "./styles";
+import { StyledSubNameTab, StyledLink } from "./styles";
 
 const TabAssociated = ({ setVersion }: { setVersion: (v: string) => void }) => {
   const { address } = useParams<{ address: string }>();
   const { t } = useTranslation();
-  const { data } = useFetch<ScriptAssociatedAddress>(API.SCRIPTS.ASSOCIATED_ADDRESS(address));
+  const { data, loading } = useFetch<ScriptAssociatedAddress>(API.SCRIPTS.ASSOCIATED_ADDRESS(address));
 
   useEffect(() => {
     if (data?.scriptType) {
@@ -26,11 +27,11 @@ const TabAssociated = ({ setVersion }: { setVersion: (v: string) => void }) => {
     <Box>
       <StyledSubNameTab>{t("AssociatedAddresses")}:</StyledSubNameTab>
       <Box>
-        {get(data, "associatedAddresses", []).length > 0 ? (
+        {loading || get(data, "associatedAddresses", []).length > 0 ? (
           data?.associatedAddresses.map((address: string) => (
-            <StyledAddress key={address}>
+            <StyledLink to={details.address(address)} key={address}>
               <DynamicEllipsisText value={address} />
-            </StyledAddress>
+            </StyledLink>
           ))
         ) : (
           <EmptyRecord />

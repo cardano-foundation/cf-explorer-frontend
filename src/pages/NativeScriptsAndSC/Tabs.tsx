@@ -47,7 +47,7 @@ const Tabs = () => {
     {
       key: "smart-contracts",
       icon: SmartContractsIcon,
-      label: t("SmartContracts"),
+      label: t("glossary.smartContracts"),
       children: <TabSmartContracts />
     }
   ];

@@ -12,6 +12,7 @@ import { Column } from "src/types/table";
 import Table from "src/components/commons/Table";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import CustomModal from "src/components/commons/CustomModal";
+import { SCRIPT_TYPE, ScriptTypeLabel } from "src/commons/utils/constants";
 
 import { ButtonViewModal, ContentModal, StyledAddressModal, StyledLink, SubTitleModal, TitleModal } from "./styles";
 
@@ -50,7 +51,8 @@ const TabSmartContracts = () => {
     },
     {
       title: t("Version"),
-      key: "version"
+      key: "version",
+      render: (r) => <Box>{ScriptTypeLabel[r.version as SCRIPT_TYPE]}</Box>
     },
     {
       title: t("AssociatedAddresses"),
