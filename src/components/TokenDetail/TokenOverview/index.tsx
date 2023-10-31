@@ -73,7 +73,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
       icon: SlotIcon
     },
     {
-      title: <WrapTitle>{t("glossary.policyId")}</WrapTitle>,
+      title: <WrapTitle>{t("glossary.scriptHash")}</WrapTitle>,
       icon: FileGuard,
       strokeColor: "#000",
       value: (

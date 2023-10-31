@@ -81,7 +81,7 @@ const Rewardviews: React.FC<RewardviewsProps> = ({ data, isMobile }) => {
       <Center>
         <Redeemer ref={redeemerRef} onClick={() => setOpenRedeemer(!openRedeemer)} />
         <MiddleBox ref={middleBoxRef}>
-          <Contract hash={data?.stakeAddress} detail={details.stake} />
+          <Contract hash={data?.scriptHash} detail={details.smartcontractDetail} />
           <CompiledCode onClick={() => setOpenCompiledCode(!openCompiledCode)} />
         </MiddleBox>
       </Center>

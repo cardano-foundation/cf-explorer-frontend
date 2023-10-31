@@ -48,6 +48,7 @@ export const routers = {
   POLICY: "/privacy-policy",
   FAQ: "/faq",
   TERMS_OF_SERVICE: "/terms-of-service",
+  SMARTCONTRACT_DETAIL: "/smartcontract/:id",
   NOT_FOUND: "/*"
 } as const;
 
@@ -89,7 +90,8 @@ export const details = {
       .replace(":txHash?", txHash ?? ""),
   generated_staking_detail: (reportId: string) =>
     routers.REPORT_GENERATED_STAKING_DETAIL.replace(":reportId", reportId),
-  generated_pool_detail: (reportId: string) => routers.REPORT_GENERATED_POOL_DETAIL.replace(":reportId", reportId)
+  generated_pool_detail: (reportId: string) => routers.REPORT_GENERATED_POOL_DETAIL.replace(":reportId", reportId),
+  smartcontractDetail: (id: string) => routers.SMARTCONTRACT_DETAIL.replace(":id", id)
 };
 
 export const listRouters = [
