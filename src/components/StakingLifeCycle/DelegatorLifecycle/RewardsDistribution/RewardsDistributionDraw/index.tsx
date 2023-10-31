@@ -55,7 +55,7 @@ const RewardsDistributionDraw: React.FC<IRewarsDistributionDrawProps> = ({
   }, [isRewardPool, isADAHolder]);
 
   return (
-    <DrawContainer>
+    <DrawContainer data-testid="RewardsDistributionDraw">
       <StakePoolOperatorRewardsModal open={openRewardsModal} onClose={() => setOpenRewardsModal(false)} />
       <StyledCardanoBlockchain ref={cardanoBlockchainRef} />
       <HolderWrapper onClick={toggleRewardModal} ref={holderGroupRef}>

@@ -36,6 +36,7 @@ import {
   Title,
   WrapButtonSelect
 } from "./styles";
+import SelectLanguage from "./SelectLanguage";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [lists.dashboard()];
 
@@ -101,6 +102,9 @@ const Header: React.FC<RouteComponentProps> = (props) => {
                   setTheme(e.target.checked ? "dark" : "light");
                 }}
               />
+            </WrapButtonSelect>
+            <WrapButtonSelect>
+              <SelectLanguage />
             </WrapButtonSelect>
             <NetworkContainer>
               <SelectNetwork />

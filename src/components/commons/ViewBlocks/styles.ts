@@ -169,7 +169,8 @@ export const MintBlueBox = styled(BlueBox)<{ isBurned?: boolean }>(({ isBurned, 
       : theme.palette.secondary[0]
     : isBurned
     ? theme.palette.primary[200]
-    : theme.palette.common.white
+    : theme.palette.common.white,
+  padding: "unset"
 }));
 
 export const MintRrounded = styled(Rrounded)`

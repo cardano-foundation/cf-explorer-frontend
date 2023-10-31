@@ -231,6 +231,11 @@ export const SelectMui = styled(CustomSelect)(({ theme }) => ({
   background: "transparent",
   "& >svg": {
     top: "calc(50% - 9px)"
+  },
+  [theme.breakpoints.down(400)]: {
+    "& > div": {
+      padding: "2.45px 7px"
+    }
   }
 }));
 
@@ -281,5 +286,22 @@ export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   background: theme.palette.secondary[0] + " !important",
   "&:hover, &.Mui-selected": {
     backgroundColor: theme.palette.primary[200] + " !important"
+  }
+}));
+
+export const StyledResult = styled(Typography)(({ theme }) => ({
+  marginLeft: "20px",
+  fontSize: "0.875rem",
+  [theme.breakpoints.down(400)]: {
+    marginLeft: "8px"
+  }
+}));
+
+export const StyledPerPage = styled(Typography)(({ theme }) => ({
+  marginLeft: theme.spacing(1),
+  fontSize: "0.875rem",
+  textWrap: "nowrap",
+  [theme.breakpoints.down(400)]: {
+    marginLeft: "4px"
   }
 }));

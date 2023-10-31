@@ -26,7 +26,7 @@ const PolicyID: React.FC<PolicyIDProps> = ({ hash, detail }) => {
           {theme.isDark ? <PolygonDarkIcon /> : <Polygon />}
           <PolygonContent>
             <Typography whiteSpace={"nowrap"} fontWeight={500} color={theme.palette.primary.main}>
-              {t("filter.policyId")}
+              {t("filter.scriptHash")}
             </Typography>
             <CircleBox
               onClick={() =>

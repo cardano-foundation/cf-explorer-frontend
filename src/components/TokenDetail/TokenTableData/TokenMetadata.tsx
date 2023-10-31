@@ -4,6 +4,7 @@ import { JsonViewer } from "@textea/json-viewer";
 import { useTranslation } from "react-i18next";
 
 import { isJson } from "src/commons/utils/helper";
+import useDisableJsonKey from "src/commons/hooks/useDisableJsonKey";
 
 import { ViewJson } from "./styles";
 
@@ -14,6 +15,8 @@ interface ITokenMetadataProps {
 const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson }) => {
   const { t } = useTranslation();
   const theme = useTheme();
+  const { keyRenderer } = useDisableJsonKey(metadataJson);
+
   return (
     <ViewJson>
       {!metadataJson ? (
@@ -30,6 +33,7 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson }) => {
           collapseStringsAfterLength={false}
           rootName={false}
           theme={theme.isDark ? "dark" : "light"}
+          keyRenderer={keyRenderer}
         />
       )}
     </ViewJson>
