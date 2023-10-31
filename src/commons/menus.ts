@@ -49,7 +49,6 @@ export const menus: Menu[] = [
         key: "glossary.nativeScriptAndSC",
         href: details.nativeScriptsAndSC()
       },
-      { title: "Smart Contracts", key: "glossary.smartContracts", href: routers.CONTRACT_LIST },
       { title: "Pools", key: "head.page.pool", href: routers.DELEGATION_POOLS, isSpecialPath: true },
       { title: "Top ADA Holders", key: "glossary.topAdaHolder", href: routers.ADDRESS_LIST }
     ]
