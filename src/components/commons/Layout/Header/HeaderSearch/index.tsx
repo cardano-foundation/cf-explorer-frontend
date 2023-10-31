@@ -61,25 +61,26 @@ interface Props extends RouteComponentProps {
 
 interface IResponseSearchAll {
   epoch?: number;
-  block?: "string";
-  tx?: "string";
+  block?: string;
+  tx?: string;
   token?: {
-    name: "string";
-    fingerprint: "string";
+    name: string;
+    fingerprint: string;
   };
   validTokenName?: boolean;
   address?: {
-    address: "string";
+    address: string;
     stakeAddress: true;
     paymentAddress: true;
   };
   pool?: {
-    name: "string";
-    poolId: "string";
-    icon: "string";
+    name: string;
+    poolId: string;
+    icon: string;
   };
   validPoolName?: true;
-  policy?: "string";
+  scriptHash?: string;
+  isNativeScript?: boolean;
 }
 const RESULT_SIZE = 5;
 
@@ -210,9 +211,14 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       case "tx":
         history.push(details.transaction(data?.tx as string));
         return;
-      case "policy":
-        history.push(details.policyDetail(data?.policy as string));
-        return;
+      case "scriptHash":
+        if (data?.isNativeScript) {
+          history.push(details.nativeScript(data?.scriptHash as string));
+          return;
+        } else {
+          history.push(details.smartcontractDetail(data?.scriptHash as string));
+          return;
+        }
       default:
     }
   };
@@ -223,7 +229,10 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     let count = 0;
     let keyName = "";
     for (const key in data) {
-      if (!["validTokenName", "validPoolName"].includes(key) && !!data[key as keyof IResponseSearchAll]) {
+      if (
+        !["validTokenName", "validPoolName", "isNativeScript"].includes(key) &&
+        !!data[key as keyof IResponseSearchAll]
+      ) {
         count++;
         keyName = key;
       }
