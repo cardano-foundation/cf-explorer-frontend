@@ -46,6 +46,8 @@ import {
   ShowedResults,
   StyledMenuItem,
   StyledPagination,
+  StyledPerPage,
+  StyledResult,
   TBody,
   TCol,
   TFooter,
@@ -338,22 +340,20 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
               <StyledMenuItem value={50}>50</StyledMenuItem>
               <StyledMenuItem value={100}>100</StyledMenuItem>
             </SelectMui>
-            <Box component={"span"} ml={1} fontSize="0.875rem" sx={{ textWrap: "nowrap" }}>
-              {t("perPage")}
-            </Box>
+            <StyledPerPage>{t("perPage")}</StyledPerPage>
           </Box>
         ) : (
           ""
         )}
         {total && total.count ? (
-          <Box ml={"20px"} fontSize="0.875rem">
+          <StyledResult>
             <TotalNumber>{numberWithCommas(total.count)}</TotalNumber>{" "}
             {total.isDataOverSize
               ? t("glossary.mostRelavant")
               : total.count > 1
               ? t("common.results")
               : t("common.result")}
-          </Box>
+          </StyledResult>
         ) : (
           ""
         )}
