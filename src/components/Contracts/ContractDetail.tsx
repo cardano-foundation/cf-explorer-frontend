@@ -73,7 +73,7 @@ const ContractDetail: React.FC<ContractDetailProps> = ({ data, onGoBack, isMobil
         </Box>
       )}
       <ReferenceInputModal
-        data={data?.referenceInputs || []}
+        data={data || null}
         open={openReferenceInputModal}
         onClose={() => setOpenReferenceInputModal(false)}
       />

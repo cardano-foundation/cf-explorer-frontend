@@ -5,6 +5,8 @@ import { t } from "i18next";
 import CustomModal from "src/components/commons/CustomModal";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { details } from "src/commons/routers";
+import { InfoIcon } from "src/commons/resources";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import { ExternalLink, ModalContent, TitleReference, UTXOReference, ValueReference } from "./styles";
 import ExplanDropdown from "../common/ExplanDropdown";
@@ -12,11 +14,15 @@ import { ReferenceCount } from "../styles";
 import { DataCardBox, DataReferenceValue } from "../common/styles";
 
 interface ReferenceInputModal {
-  data: ReferenceInput[];
+  data: IContractItemTx | null;
   open: boolean;
   onClose: () => void;
 }
 const ReferenceInputModal: React.FC<ReferenceInputModal> = ({ data, ...props }) => {
+  if (!data) {
+    return <Box></Box>;
+  }
+  const { referenceInputs } = data;
   return (
     <CustomModal
       {...props}
@@ -24,7 +30,7 @@ const ReferenceInputModal: React.FC<ReferenceInputModal> = ({ data, ...props }) 
       title={
         <Box display={"flex"} alignItems={"center"}>
           <Box>{t("contract.referenceInput")} </Box>
-          <ReferenceCount style={{ display: "block" }}>{(data || []).length}</ReferenceCount>
+          <ReferenceCount style={{ display: "block" }}>{(referenceInputs || []).length}</ReferenceCount>
         </Box>
       }
       modalContainerProps={{ px: "20px" }}
@@ -37,9 +43,10 @@ const ReferenceInputModal: React.FC<ReferenceInputModal> = ({ data, ...props }) 
           </ExternalLink>
         </ExplanDropdown>
         <DataReferenceValue>
-          {data.map((i, ii) => (
-            <Box component={Item} data={i} key={ii} />
-          ))}
+          {(referenceInputs || []).map((referenceInputs, index) => {
+            const showTooltip = referenceInputs.scriptHash === data?.scriptHash;
+            return <Box showTooltip={showTooltip} component={Item} data={referenceInputs} key={index} />;
+          })}
         </DataReferenceValue>
       </ModalContent>
     </CustomModal>
@@ -48,11 +55,18 @@ const ReferenceInputModal: React.FC<ReferenceInputModal> = ({ data, ...props }) 
 
 export default ReferenceInputModal;
 
-const Item = ({ data }: { data: ReferenceInput }) => {
+const Item = ({ data, showTooltip }: { data: ReferenceInput; showTooltip: boolean }) => {
   return (
     <DataCardBox my={1}>
       <Box>
-        <TitleReference>UTXO:</TitleReference>
+        <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+          <TitleReference>UTXO:</TitleReference>
+          {showTooltip && (
+            <Box component={CustomTooltip} title={"Can be used by all contracts"}>
+              <InfoIcon />
+            </Box>
+          )}
+        </Box>
         <UTXOReference to={details.transaction(data.txHash)}>
           <DynamicEllipsisText value={data.txHash || ""} isTooltip />
         </UTXOReference>
