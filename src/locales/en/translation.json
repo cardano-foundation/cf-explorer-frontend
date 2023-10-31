@@ -850,6 +850,8 @@
   "common.TotalOperatorRewardsReceived": "Total operator rewards received",
   "slc.totalRewardsReceived": "Total rewards received",
   "slc.amountReceived": "Amount received",
+  "contract.referenceInput.canOnlyBeUsedByThisContract": "Can only be used by this contract",
+  "contract.referenceInput.canBeUsedByAllContract": "Can be used by all contracts",
   "ScriptHash": "Script Hash",
   "NumberOfTokens": "Number of Tokens",
   "NumberOfAssetHolders": "Number of Asset Holders",
