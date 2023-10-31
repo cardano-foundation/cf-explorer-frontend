@@ -63,7 +63,7 @@ const TabSmartContracts = () => {
   ];
 
   return (
-    <Box>
+    <Box data-testid="TabSmartContracts">
       <Table
         {...fetchData}
         columns={columns}

@@ -97,7 +97,7 @@ const TabTransactions = () => {
   ];
 
   return (
-    <Box>
+    <Box data-testid="TabTransactions">
       <Table
         {...fetchData}
         columns={columns}

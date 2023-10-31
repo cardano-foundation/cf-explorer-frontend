@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { get } from "lodash";
+import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -12,6 +13,7 @@ import { StyledAddress, StyledSubNameTab } from "./styles";
 
 const TabAssociated = ({ setVersion }: { setVersion: (v: string) => void }) => {
   const { address } = useParams<{ address: string }>();
+  const { t } = useTranslation();
   const { data } = useFetch<ScriptAssociatedAddress>(API.SCRIPTS.ASSOCIATED_ADDRESS(address));
 
   useEffect(() => {
@@ -22,7 +24,7 @@ const TabAssociated = ({ setVersion }: { setVersion: (v: string) => void }) => {
 
   return (
     <Box>
-      <StyledSubNameTab>Associated Addresses:</StyledSubNameTab>
+      <StyledSubNameTab>{t("AssociatedAddresses")}:</StyledSubNameTab>
       <Box>
         {get(data, "associatedAddresses", []).length > 0 ? (
           data?.associatedAddresses.map((address: string) => (

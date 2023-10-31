@@ -44,7 +44,7 @@ const TabNativeScripts = () => {
   ];
 
   return (
-    <Box>
+    <Box data-testid="TabNativeScripts">
       <Table
         {...fetchData}
         columns={columns}
