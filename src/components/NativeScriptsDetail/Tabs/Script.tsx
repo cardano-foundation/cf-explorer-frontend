@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { JsonViewer } from "@textea/json-viewer";
 import { useTheme } from "@mui/material";
+
+import useDisableJsonKey from "src/commons/hooks/useDisableJsonKey";
 
 import { Center, Container, Key, Value, VerifyScriptButton } from "./styles";
 
@@ -13,6 +15,12 @@ const Script: React.FC = () => {
     if (script) return JSON.parse(script);
     return {};
   };
+  const data = getScriptData();
+  const { keyRenderer, trigger } = useDisableJsonKey(data);
+  useEffect(() => {
+    trigger();
+  }, [data]);
+
   return (
     <Container>
       {!script && (
@@ -32,6 +40,7 @@ const Script: React.FC = () => {
             collapseStringsAfterLength={false}
             rootName={false}
             theme={theme.isDark ? "dark" : "light"}
+            keyRenderer={keyRenderer}
           />
         </>
       )}
