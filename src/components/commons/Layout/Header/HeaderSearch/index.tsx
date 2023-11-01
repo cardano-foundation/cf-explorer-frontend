@@ -216,7 +216,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           history.push(details.nativeScriptDetail(data?.scriptHash as string));
           return;
         } else {
-          history.push(details.smartcontractDetail(data?.scriptHash as string));
+          history.push(details.smartContract(data?.scriptHash as string));
           return;
         }
       default:
