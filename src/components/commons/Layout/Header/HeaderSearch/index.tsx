@@ -323,6 +323,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
               history.push(details.smartContract(data.scriptHash || ""));
             }
           });
+        setShowOption(false);
       } catch (error) {
         showResultNotFound();
         setShowOption(true);
