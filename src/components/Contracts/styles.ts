@@ -78,3 +78,16 @@ export const ReferenceCount = styled("span")(({ theme }) => ({
   textAlign: "center",
   lineHeight: "20px"
 }));
+
+export const EmptyBox = styled(Box)`
+  width: 195px;
+  height: 100px;
+  visibility: hidden;
+  background-color: transparent;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    display: none;
+  }
+  ${({ theme }) => theme.breakpoints.up("lg")} {
+    display: none;
+  }
+`;

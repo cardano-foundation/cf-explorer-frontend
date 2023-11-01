@@ -29,23 +29,23 @@ const ContractDetail: React.FC<ContractDetailProps> = ({ data, onGoBack, isMobil
   const details = {
     CERT: {
       component: <Certviews data={data} isMobile={isMobile} />,
-      contract: data?.stakeAddress,
-      detail: routerDetals.stake
+      contract: data?.scriptHash,
+      detail: routerDetals.smartcontractDetail
     },
     MINT: {
       component: <Mintviews data={data} isBurned={!!data?.burningTokens?.length} isMobile={isMobile} />,
       contract: data?.scriptHash,
-      detail: routerDetals.policyDetail
+      detail: routerDetals.smartcontractDetail
     },
     REWARD: {
       component: <Rewardviews data={data} isMobile={isMobile} />,
-      contract: data?.stakeAddress,
-      detail: routerDetals.stake
+      contract: data?.scriptHash,
+      detail: routerDetals.smartcontractDetail
     },
     SPEND: {
       component: <Spendviews data={data} isMobile={isMobile} />,
       contract: data?.address,
-      detail: routerDetals.contract
+      detail: routerDetals.smartcontractDetail
     }
   };
   const { component, contract, detail } = details[(data?.purpose as ContractDetailProps["view"]) || "SPEND"];
@@ -60,7 +60,7 @@ const ContractDetail: React.FC<ContractDetailProps> = ({ data, onGoBack, isMobil
         <Typography fontWeight="500" color={theme.palette.secondary.light}>
           {t("contract.title")}:{" "}
           <CustomTooltip title={contract}>
-            <StyledLink style={{ fontWeight: "500", textDecoration: "underline" }} to={detail(contract)}>
+            <StyledLink style={{ fontWeight: "500", textDecoration: "underline" }} to={detail(contract || "")}>
               {getShortHash(contract || "")}
             </StyledLink>
           </CustomTooltip>

@@ -48,6 +48,7 @@ import TopDelegators from "./pages/TopDelegators";
 import TransactionDetail from "./pages/TransactionDetail";
 import TransactionList from "./pages/TransactionList";
 import VerifyEmail from "./pages/VerifyEmail";
+import SmartContractDetail from "./pages/SmartContractDetail";
 
 const StakeAddressRegistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.REGISTRATION} />;
 const StakeAddressDeregistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.DEREREGISTRATION} />;
@@ -110,6 +111,7 @@ const Routes: React.FC = () => {
       <Route path={routers.FAQ} exact component={FAQ} />
       <Route path={routers.POLICY} exact component={Policy} />
       <Route path={routers.TERMS_OF_SERVICE} exact component={TermOfServices} />
+      <Route path={routers.SMARTCONTRACT_DETAIL} exact component={SmartContractDetail} />
       <Route path={routers.ACCOUNT}>
         <AccountLayout>
           <Switch>

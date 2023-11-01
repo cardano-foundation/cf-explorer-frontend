@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import CustomModal from "src/components/commons/CustomModal";
 
-import { ModalContent } from "./styles";
+import { ModalContent, SlotContainer } from "./styles";
 import ExplanDropdown from "../common/ExplanDropdown";
 import DataCard from "../common/DataCard";
 
@@ -28,15 +28,17 @@ const RedeemerModal: React.FC<RedeemerModalProps> = ({ open = false, onClose, da
     >
       <ModalContent>
         <ExplanDropdown title={t("explain.redeemer")}>{t("explain.redeemer.desc")}</ExplanDropdown>
-        <Grid container spacing={2}>
-          {data &&
-            data.length > 0 &&
-            data.map((item) => (
-              <Grid item xs={12} md={6} key={item.title}>
-                <DataCard title={item.title} value={item.value} />
-              </Grid>
-            ))}
-        </Grid>
+        <SlotContainer>
+          <Grid container spacing={2}>
+            {data &&
+              data.length > 0 &&
+              data.map((item) => (
+                <Grid item xs={12} md={6} key={item.title}>
+                  <DataCard title={item.title} value={item.value} />
+                </Grid>
+              ))}
+          </Grid>
+        </SlotContainer>
       </ModalContent>
     </CustomModal>
   );

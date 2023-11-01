@@ -1,5 +1,5 @@
 import { stringify } from "qs";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -39,7 +39,6 @@ const Epoch: React.FC = () => {
     [EPOCH_STATUS.SYNCING]: t("common.epoch.cyncing")
   };
 
-  const mainRef = useRef(document.querySelector("#main"));
   const columns: Column<IDataEpoch>[] = [
     {
       title: <Capitalize>{t("glossary.epoch")}</Capitalize>,
@@ -165,7 +164,6 @@ const Epoch: React.FC = () => {
             total: fetchData.total,
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
-              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             },
             handleCloseDetailView: handleClose
           }}

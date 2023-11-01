@@ -13,7 +13,7 @@ interface StakePoolOperatorRewardsModalProps {
 const StakePoolOperatorRewardsModal: React.FC<StakePoolOperatorRewardsModalProps> = ({ open = false, onClose }) => {
   const { t } = useTranslation();
   return (
-    <CustomModal open={open} onClose={() => onClose?.()} title="Operator Rewards (SPO)">
+    <CustomModal open={open} onClose={() => onClose?.()} title={t("slc.operatorRewards")}>
       <RewardsModalContent>
         <Typography>{t("explain.operatorRewardSPO")}</Typography>
       </RewardsModalContent>
