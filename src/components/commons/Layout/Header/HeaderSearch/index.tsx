@@ -79,8 +79,11 @@ interface IResponseSearchAll {
     icon: string;
   };
   validPoolName?: true;
-  scriptHash?: string;
-  isNativeScript?: boolean;
+  script: {
+    scriptHash?: string;
+    nativeScript?: boolean;
+    smartContract?: boolean;
+  };
 }
 const RESULT_SIZE = 5;
 
@@ -157,7 +160,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     {
       value: "policies",
       label: t("filter.scriptHash"),
-      paths: [routers.POLICY_DETAIL],
+      paths: [routers.SMART_CONTRACT, routers.NATIVE_SCRIPT_DETAIL],
       detail: details.policyDetail
     }
   ];
@@ -211,12 +214,12 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       case "tx":
         history.push(details.transaction(data?.tx as string));
         return;
-      case "scriptHash":
-        if (data?.isNativeScript) {
-          history.push(details.nativeScriptDetail(data?.scriptHash as string));
+      case "script":
+        if (data?.script?.nativeScript) {
+          history.push(details.nativeScriptDetail(data?.script?.scriptHash as string));
           return;
         } else {
-          history.push(details.smartContract(data?.scriptHash as string));
+          history.push(details.smartContract(data?.script?.scriptHash as string));
           return;
         }
       default:
@@ -304,6 +307,31 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
     const option = options.find((item) => item.value === (filterParams || filter));
+
+    if (option?.value === "policies") {
+      try {
+        setLoading(true);
+        const url = URL_FETCH_DETAIL["policies"](search);
+        await defaultAxios
+          .get(url)
+          .then((res) => res.data)
+          .then((data: { nativeScript: boolean; scriptHash: string; smartContract: boolean }) => {
+            if (data.nativeScript) {
+              history.push(details.nativeScriptDetail(data.scriptHash || ""));
+            }
+            if (data.smartContract) {
+              history.push(details.smartContract(data.scriptHash || ""));
+            }
+          });
+      } catch (error) {
+        showResultNotFound();
+        setShowOption(true);
+        return;
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
 
     if (!["all", "tokens", "delegations/pool-detail-header"].includes(option?.value || "")) {
       setLoading(true);
