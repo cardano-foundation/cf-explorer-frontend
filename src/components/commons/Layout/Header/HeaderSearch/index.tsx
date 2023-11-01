@@ -211,7 +211,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
         history.push(details.transaction(data?.tx as string));
         return;
       case "policy":
-        history.push(details.policyDetail(data?.policy as string));
+        history.push(details.nativeScriptDetail(data?.policy as string));
         return;
       default:
     }
@@ -677,7 +677,9 @@ export const OptionsSearch = ({
               return {
                 suggestText: "Search for a Policy by",
                 cb: () =>
-                  history.push(details.policyDetail(encodeURIComponent((value || "").trim().toLocaleLowerCase()))),
+                  history.push(
+                    details.nativeScriptDetail(encodeURIComponent((value || "").trim().toLocaleLowerCase()))
+                  ),
                 formatter: getShortHash
               };
           }

@@ -29,7 +29,8 @@ import {
   WrapUTXOs,
   Wrapper,
   StyledContainerInfo,
-  EllipsisContainer
+  EllipsisContainer,
+  RowItemContent
 } from "./style";
 
 interface CollateralProps {
@@ -114,7 +115,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                 {type === "input" && (
                   <WrapUTXOs>
                     <Box mr={3} minWidth={200} width={"100%"}>
-                      <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} width={"100%"}>
+                      <RowItemContent>
                         <Box color={(theme) => theme.palette.secondary.light} pr={1}>
                           {t("tab.utxo")}:
                         </Box>
@@ -137,11 +138,12 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                                   </FlexCenter>
                                 }
                                 isTooltip
+                                customTruncateFold={[4, 8]}
                               />
                             </EllipsisContainer>
                           </Box>
                         </Link>
-                      </Box>
+                      </RowItemContent>
                     </Box>
                   </WrapUTXOs>
                 )}
@@ -165,7 +167,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                           width={"100%"}
                         >
                           <EllipsisContainer>
-                            <DynamicEllipsisText value={item.address} isCopy isTooltip />
+                            <DynamicEllipsisText value={item.address} isCopy isTooltip customTruncateFold={[9, 8]} />
                           </EllipsisContainer>
                         </Box>
                       </Link>

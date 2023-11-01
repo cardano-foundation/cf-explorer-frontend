@@ -32,10 +32,21 @@ export const EllipsisContainer = styled(Box)<{ isFailed?: boolean }>`
   line-height: 18px;
   word-break: normal;
   color: ${({ theme, isFailed }) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)};
-  width: 250px;
+  max-width: 50vw;
   display: grid;
   ${({ theme }) => theme.breakpoints.up(420)} {
     max-width: 60vw;
     width: auto;
   }
 `;
+
+export const StyledItem = styled(Box)(({ theme }) => ({
+  display: "flex",
+  paddingBottom: "15px",
+  overflow: "auto",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  [theme.breakpoints.down(388)]: {
+    alignItems: "baseline"
+  }
+}));

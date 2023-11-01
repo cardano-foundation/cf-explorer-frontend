@@ -76,8 +76,8 @@ export const details = {
   smartContract: (address?: string, tab = "associated") =>
     routers.SMART_CONTRACT.replace(":address", address ?? "").replace(":tabActive?", tab),
   nativeScriptsAndSC: (tab = "native-scripts") => routers.NATIVE_SCRIPTS_AND_SC.replace(":tabActive?", tab),
-  nativeScriptDetail: (id: string, tabActive = "") =>
-    routers.NATIVE_SCRIPT_DETAIL.replace(":id", id).replace(":tabActive", tabActive),
+  nativeScriptDetail: (id?: string, tabActive = "") =>
+    routers.NATIVE_SCRIPT_DETAIL.replace(":id", id ?? "").replace(":tabActive", tabActive),
   staking: (stakeId: string, mode: ViewMode = "timeline", tab: DelegationStep = "registration", txHash?: string) =>
     routers.DELEGATOR_LIFECYCLE.replace(":stakeId", stakeId)
       .replace(":mode?", mode)
