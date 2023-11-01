@@ -167,6 +167,7 @@ export const TokenLink: React.FC<{
         component={Link}
         to={details.token(token.assetId)}
         display={"flex"}
+        flexWrap={"wrap"}
         alignItems={"center"}
         justifyContent={"space-between"}
         pl={1}

@@ -149,6 +149,7 @@ const Card = ({
                                     <CopyButton text={item.txHash} />
                                   </Box>
                                 }
+                                customTruncateFold={[4, 8]}
                               />
                             </EllipsisContainer>
                           </Link>
@@ -178,7 +179,7 @@ const Card = ({
                       >
                         <Link to={details.address(item.address)} style={{ width: "100%" }}>
                           <EllipsisContainer isFailed={isFailed} hasToken={item?.tokens?.length >= 1}>
-                            <DynamicEllipsisText value={item.address} isCopy isTooltip />
+                            <DynamicEllipsisText value={item.address} isCopy isTooltip customTruncateFold={[6, 8]} />
                           </EllipsisContainer>
                         </Link>
                       </Box>
@@ -205,12 +206,17 @@ const Card = ({
                             color={({ palette }) => (isFailed ? theme.palette.secondary[600] : palette.secondary.light)}
                             sx={{ minWidth: "100px" }}
                           >
-                            {t("common.stakeAddress")}:{" "}
+                            {t("common.stakeAddress")}:&nbsp;
                           </Box>
                           <Box style={{ width: "100%" }}>
                             <Link to={details.stake(item?.stakeAddress)} style={{ width: "100%" }}>
                               <EllipsisContainer isFailed={isFailed} hasToken={item?.tokens?.length >= 1}>
-                                <DynamicEllipsisText value={item.stakeAddress} isCopy isTooltip />
+                                <DynamicEllipsisText
+                                  value={item.stakeAddress}
+                                  isCopy
+                                  isTooltip
+                                  customTruncateFold={[8, 8]}
+                                />
                               </EllipsisContainer>
                             </Link>
                           </Box>
@@ -250,7 +256,7 @@ const Card = ({
                   <WrapTokenLink>
                     {item.tokens && item.tokens.length === 1 && (
                       <WrapTokenDropdown>
-                        <TokenLink isSuccess={!isFailed} token={item.tokens[0]} />
+                        <TokenLink isSuccess={!isFailed} token={item.tokens[0]} sx={{ minWidth: 200 }} />
                       </WrapTokenDropdown>
                     )}
                     {item.tokens && item.tokens.length > 1 && (

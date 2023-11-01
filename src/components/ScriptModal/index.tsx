@@ -53,7 +53,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
           ) : (
             <>
               <Box>
-                <ButtonLink to={details.policyDetail(data?.policyId || "")}>{data?.policyId || ""}</ButtonLink>
+                <ButtonLink to={details.nativeScriptDetail(data?.policyId || "")}>{data?.policyId || ""}</ButtonLink>
                 <CopyButton text={data?.policyId || ""} />
               </Box>
               <Box>

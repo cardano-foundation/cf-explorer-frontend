@@ -76,11 +76,14 @@ export const WrapUTXOs = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const ItemContent = styled(Box)(() => ({
+export const ItemContent = styled(Box)(({ theme }) => ({
   display: "flex",
   overflowX: "auto",
   overflowY: "hidden",
-  justifyContent: "space-between"
+  justifyContent: "space-between",
+  [theme.breakpoints.down(430)]: {
+    overflowX: "hidden"
+  }
 }));
 
 export const WrapTokenLink = styled(Box)(({ theme }) => ({
@@ -199,7 +202,7 @@ export const CustomSelect = styled(Select)`
 export const EllipsisContainer = styled(Box)<{ isFailed?: boolean; hasToken?: boolean }>`
   font-weight: bold;
   color: ${({ theme, isFailed }) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)};
-  max-width: 65vw;
+  max-width: 52vw;
   ${({ theme }) => theme.breakpoints.up(420)} {
     max-width: 56vw;
   }

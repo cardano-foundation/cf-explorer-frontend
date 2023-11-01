@@ -147,7 +147,9 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                 <DetailLabel>{t("common.scriptHash")}</DetailLabel>
                 <DetailValue>
                   <CustomTooltip title={data.policy}>
-                    <StyledLink to={details.policyDetail(data.policy)}>{getShortHash(data.policy || "")}</StyledLink>
+                    <StyledLink to={details.nativeScriptDetail(data.policy)}>
+                      {getShortHash(data.policy || "")}
+                    </StyledLink>
                   </CustomTooltip>
                   <CopyButton text={data.policy} />
                 </DetailValue>
