@@ -121,8 +121,8 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
               onClick={() =>
                 history.push(
                   data.associatedSmartContract
-                    ? details.smartContract(data?.address)
-                    : details.nativeScriptDetail(data?.address)
+                    ? details.smartContract(data?.scriptHash || "")
+                    : details.nativeScriptDetail(data?.scriptHash || "")
                 )
               }
             >
