@@ -61,25 +61,29 @@ interface Props extends RouteComponentProps {
 
 interface IResponseSearchAll {
   epoch?: number;
-  block?: "string";
-  tx?: "string";
+  block?: string;
+  tx?: string;
   token?: {
-    name: "string";
-    fingerprint: "string";
+    name: string;
+    fingerprint: string;
   };
   validTokenName?: boolean;
   address?: {
-    address: "string";
+    address: string;
     stakeAddress: true;
     paymentAddress: true;
   };
   pool?: {
-    name: "string";
-    poolId: "string";
-    icon: "string";
+    name: string;
+    poolId: string;
+    icon: string;
   };
   validPoolName?: true;
-  policy?: "string";
+  script: {
+    scriptHash?: string;
+    nativeScript?: boolean;
+    smartContract?: boolean;
+  };
 }
 const RESULT_SIZE = 5;
 
@@ -156,7 +160,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     {
       value: "policies",
       label: t("filter.scriptHash"),
-      paths: [routers.POLICY_DETAIL],
+      paths: [routers.SMART_CONTRACT, routers.NATIVE_SCRIPT_DETAIL],
       detail: details.policyDetail
     }
   ];
@@ -210,9 +214,14 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       case "tx":
         history.push(details.transaction(data?.tx as string));
         return;
-      case "policy":
-        history.push(details.nativeScriptDetail(data?.policy as string));
-        return;
+      case "script":
+        if (data?.script?.nativeScript) {
+          history.push(details.nativeScriptDetail(data?.script?.scriptHash as string));
+          return;
+        } else {
+          history.push(details.smartContract(data?.script?.scriptHash as string));
+          return;
+        }
       default:
     }
   };
@@ -223,7 +232,10 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     let count = 0;
     let keyName = "";
     for (const key in data) {
-      if (!["validTokenName", "validPoolName"].includes(key) && !!data[key as keyof IResponseSearchAll]) {
+      if (
+        !["validTokenName", "validPoolName", "isNativeScript"].includes(key) &&
+        !!data[key as keyof IResponseSearchAll]
+      ) {
         count++;
         keyName = key;
       }
@@ -295,6 +307,32 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
     const option = options.find((item) => item.value === (filterParams || filter));
+
+    if (option?.value === "policies") {
+      try {
+        setLoading(true);
+        const url = URL_FETCH_DETAIL["policies"](search);
+        await defaultAxios
+          .get(url)
+          .then((res) => res.data)
+          .then((data: { nativeScript: boolean; scriptHash: string; smartContract: boolean }) => {
+            if (data.nativeScript) {
+              history.push(details.nativeScriptDetail(data.scriptHash || ""));
+            }
+            if (data.smartContract) {
+              history.push(details.smartContract(data.scriptHash || ""));
+            }
+          });
+        setShowOption(false);
+      } catch (error) {
+        showResultNotFound();
+        setShowOption(true);
+        return;
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
 
     if (!["all", "tokens", "delegations/pool-detail-header"].includes(option?.value || "")) {
       setLoading(true);

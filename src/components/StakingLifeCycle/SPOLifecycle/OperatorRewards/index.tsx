@@ -125,9 +125,14 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void 
         <RewardBalance>
           {theme.isDark ? <WalletIconRewardGreenDark /> : <WalletIconRewardGreen />}
           <RewardBalanceTitle>
-            {t("slc.amountReceived")}: {formatADAFull(data?.rewardAvailable || 0)}
+            <Box display={"inline-block"}>
+              {t("slc.amountReceived")}:{" "}
+              <Box display={"inline-block"} mr={1}>
+                {formatADAFull(data?.rewardAvailable || 0)}
+              </Box>
+              <ADAicon />
+            </Box>
           </RewardBalanceTitle>
-          <ADAicon />
         </RewardBalance>
         <StyledTable
           {...fetchData}

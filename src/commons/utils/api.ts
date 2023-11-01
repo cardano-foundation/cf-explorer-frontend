@@ -26,10 +26,16 @@ export const API = {
     DETAIL: "epochs",
     LIST: "epochs"
   },
-  POLICY: "policies",
+  POLICY: "scripts/search",
   POOL: "pools",
 
-  TOKEN: { LIST: "tokens", TOKEN_TRX: "tokens/:tokenId/txs", ANALYTICS: "tokens/analytics" },
+  TOKEN: {
+    LIST: "tokens",
+    TOKEN_TRX: "tokens/:tokenId/txs",
+    ANALYTICS: "tokens/analytics",
+    NATIVE_SCRIPT: (scriptHash: string) => "scripts/native-scripts/" + scriptHash,
+    VERIFY_SCRIPT: (scriptHash: string) => `scripts/native-scripts/${scriptHash}/verify`
+  },
   TRANSACTION: {
     CURRENT: "txs/current",
     DETAIL: "txs",
