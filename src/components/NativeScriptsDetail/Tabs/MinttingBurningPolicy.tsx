@@ -1,5 +1,5 @@
-import React from "react";
 import { Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
@@ -10,12 +10,11 @@ import { AssociatedValue, Container, DataRow, Key, Value } from "./styles";
 import { useNativeScriptDetail } from ".";
 
 const MinttingBurningPolicy = () => {
+  const { t } = useTranslation();
   const { before, after, keyHashes } = useNativeScriptDetail();
 
   const getType = () => {
     const types: string[] = [];
-    if (keyHashes?.length === 1) types.push("Single issuer");
-    if (Number(keyHashes?.length) > 1) types.push("Multi Signaturer");
     if (before || after) types.push("Time locked");
     return types.join(" + ");
   };
@@ -25,7 +24,7 @@ const MinttingBurningPolicy = () => {
       <>
         {before && (
           <>
-            before{" "}
+            {t("common.before")}{" "}
             <Typography display={"inline"} fontWeight={700}>
               "{formatDateTimeLocal(before)}"
             </Typography>
@@ -33,7 +32,7 @@ const MinttingBurningPolicy = () => {
         )}
         {after && (
           <>
-            before{" "}
+            {t("common.after")}{" "}
             <Typography display={"inline"} fontWeight={700}>
               "{formatDateTimeLocal(after)}"
             </Typography>
@@ -46,13 +45,13 @@ const MinttingBurningPolicy = () => {
   return (
     <Container>
       <DataRow>
-        <Key>Type:</Key>
+        <Key>{t("common.type")}:</Key>
         <Value>{getType()}</Value>
       </DataRow>
       <DataRow>
-        <Key>Conditions:</Key>
+        <Key>{t("common.cond")}:</Key>
         <Value>
-          Allowed by
+          {t("common.allowedBy")}
           {keyHashes?.map((key) => (
             <AssociatedValue key={key}>
               <TruncateSubTitleContainer>

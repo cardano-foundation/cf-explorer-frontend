@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
+import { useMemo } from "react";
 
 import CustomAccordion, { TTab } from "src/components/commons/CustomAccordion";
 import AssociatedAddress from "src/components/NativeScriptsDetail/Tabs/AssociatedAddress";
@@ -20,7 +21,7 @@ import { StyledContainer } from "./styles";
 import { useNativeScriptDetail } from "./Tabs";
 const NativeScriptsDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const { associatedAddress, loading } = useNativeScriptDetail();
+  const { associatedAddress, loading, keyHashes } = useNativeScriptDetail();
   const { t } = useTranslation();
 
   const smartcontractTabs: TTab[] = [
@@ -55,7 +56,14 @@ const NativeScriptsDetail = () => {
       label: "Asset Holders"
     }
   ];
-  const hiddenKeys = associatedAddress?.length ? [] : ["associatedAddresses"];
+
+  const hiddenKeys = useMemo(() => {
+    const keys: string[] = [];
+    if (!associatedAddress?.length) keys.push("associatedAddresses");
+    if (!keyHashes?.length) keys.push("mintingBurningPolicy");
+    return keys;
+  }, [associatedAddress, keyHashes]);
+
   return (
     <StyledContainer>
       <HeaderOverview data={{ scriptHash: id }} />

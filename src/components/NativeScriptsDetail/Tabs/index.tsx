@@ -7,7 +7,9 @@ import { API } from "src/commons/utils/api";
 export type TNativeScriptProviderProps = {
   children: ReactNode;
 };
-export const NativeScriptContext = createContext<INativeScriptDetail & { loading: boolean }>({ loading: false });
+export const NativeScriptContext = createContext<INativeScriptDetail & { loading: boolean; refresh?: () => void }>({
+  loading: false
+});
 
 export const useNativeScriptDetail = () => {
   const data = useContext(NativeScriptContext);
@@ -16,9 +18,9 @@ export const useNativeScriptDetail = () => {
 
 const NativeScriptProvider: React.FC<TNativeScriptProviderProps> = ({ children }) => {
   const { id } = useParams<{ id: string }>();
-  const { data, loading } = useFetch<INativeScriptDetail>(API.TOKEN.NATIVE_SCRIPT(id ? id : ""));
+  const { data, loading, refresh } = useFetch<INativeScriptDetail>(API.TOKEN.NATIVE_SCRIPT(id ? id : ""));
 
-  return <NativeScriptContext.Provider value={{ ...data, loading }}>{children}</NativeScriptContext.Provider>;
+  return <NativeScriptContext.Provider value={{ ...data, loading, refresh }}>{children}</NativeScriptContext.Provider>;
 };
 
 export default NativeScriptProvider;

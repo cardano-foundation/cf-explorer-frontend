@@ -847,5 +847,12 @@
   "common.smartContractDetails": "Smart Contract Details",
   "common.associatedAddresses": "Associated Addresses",
   "common.viewAddresses": "View Addresses",
-  "common.nativeScriptDetails": "Native Script Details"
+  "common.nativeScriptDetails": "Native Script Details",
+  "common.unknownServerError": "Unknown server error",
+  "common.type": "Type",
+  "common.allowedBy": "Allowed by",
+  "common.before": "before",
+  "common.after": "after",
+  "common.cond": "Conditions",
+  "common.verifyScriptDesc": "This script has not been verified. To verify, please click the button below."
 }
