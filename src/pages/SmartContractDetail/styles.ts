@@ -39,6 +39,9 @@ export const DetailHeader = styled(Box)`
 
 export const DetailContainer = styled(Box)<{ isMobile?: number }>`
   margin: 0 25px;
+  ${({ theme }) => theme.breakpoints.down(350)} {
+    margin: 0 15px;
+  }
 `;
 
 export const DetailContent = styled(Box)`

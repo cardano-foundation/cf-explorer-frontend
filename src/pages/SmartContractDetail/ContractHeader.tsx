@@ -19,9 +19,9 @@ const ContractHeader = ({ version }: { version: string | undefined }) => {
       <Card title={t("SmartContractDetails")} titleSx={{ marginTop: "18px" }} />
       <Box sx={{ width: "100%" }}>
         <Box display={"flex"}>
-          <SubHeaderLabel minWidth={95}>{t("ScriptHash")}: &nbsp;</SubHeaderLabel>
+          <SubHeaderLabel minWidth={90}>{t("ScriptHash")}: &nbsp;</SubHeaderLabel>
           <EllipsisContainer>
-            <DynamicEllipsisText value={address} isCopy isTooltip />
+            <DynamicEllipsisText value={address} isCopy isTooltip sx={{ minWidth: 190 }} />
           </EllipsisContainer>
         </Box>
         <Box display={"flex"}>
