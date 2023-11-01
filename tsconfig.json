@@ -22,6 +22,6 @@
   "paths": {
     "src/*": ["./*"]
   },
-  "include": ["src/**/*", "public/**/*", "**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*", "public/**/*", "**/*.ts", "./custom.d.ts", "**/*spec.ts"],
+  "exclude": ["node_modules", "tests"]
 }

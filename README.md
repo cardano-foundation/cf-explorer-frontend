@@ -83,19 +83,83 @@ To run your tests, execute the following command:
 
  - `npm run jest-test-one [file_relative_path]` to test a file with `[file_relative_path]` being relative path of file. Ex: `npm run jest-test-one src\commons\utils\helper.test.ts`
 
-## E2e test with Cypress
-This app we use `Cypress` for e2e testing.
+## Web automation test with Playwright
+### Pre-installed on local:
 
-You can run it with following commands:
+-   [allure commandline](https://docs.qameta.io/allure-report/#_installing_a_commandline)
+-   npm and node js
+-   add .env to root folder with APPLICATION_URL property pointing to chosen environment e.g.
 
-Open Launchpad:
-Run `npm run cypress:open` to open Cypress launchpad.
+```
+APPLICATION_URL=https://beta.explorer.cardano.org/en
+API_URL=<url>
+USERNAME=<login>
+PASSWORD=<password>
+# in what mode playwright should run the browser, by default true
+HEADLESS= true or false 
+```
 
-On opening Cypress, your testing journey begins with the Launchpad. Its job is to guide you through the decisions and configuration tasks you need to complete before you start writing your first test.
+### Test run in local:
 
+1. Install all packages locally
 
-To run e2e test with all specs, try this command:
-`npm run cypress:run`
+```
+npm install
+```
+
+2. Install browsers
+
+```
+npx playwright install
+```
+
+3. Run tests for chosen project e.g.
+```
+npm run chrome
+```
+or
+```
+npm run firefox
+```
+---
+
+### Test run with allure report
+
+1. Run tests in root folder
+
+```
+ALLURE_RESULTS_DIR=.reports/chrome/allure-results npx playwright test --project='chrome'
+```
+
+-   there is also shorter command from package.json scripts to run all tests
+
+```
+npm run chrome
+```
+
+-   to run specific single test file
+
+```
+npm run chrome -- sing-in.spec.ts
+```
+or
+```
+npm run chrome -- -g "User can go to Sign Up page"
+```
+
+-   more examples [here](https://playwright.dev/docs/running-tests)
+
+2. Generate report
+
+```
+allure generate .reports/chrome/allure-results -o .reports/chrome/allure-report --clean
+```
+
+3. Open report
+
+```
+allure open .reports/chrome/allure-report
+```
 
 ## Build into production
 

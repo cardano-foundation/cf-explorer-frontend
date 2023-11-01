@@ -7,6 +7,9 @@
 
 # testing
 /coverage
+.auth/
+.logs/
+.reports/
 
 # production
 /build
