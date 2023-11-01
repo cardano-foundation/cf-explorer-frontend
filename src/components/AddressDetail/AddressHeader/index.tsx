@@ -120,7 +120,9 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
               component={Button}
               onClick={() =>
                 history.push(
-                  data.associatedSmartContract ? details.contract(data?.address) : details.nativeScript(data?.address)
+                  data.associatedSmartContract
+                    ? details.smartContract(data?.address)
+                    : details.nativeScriptDetail(data?.address)
                 )
               }
             >
