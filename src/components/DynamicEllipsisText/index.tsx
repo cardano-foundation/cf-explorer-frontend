@@ -96,7 +96,7 @@ const DynamicEllipsisText = ({
   if (isMin) {
     return (
       <CustomTooltip title={isTooltip ? value : ""}>
-        <ContainerShortHand id={randomIdRef.current} data-testId="ellipsis-text">
+        <ContainerShortHand id={randomIdRef.current} data-testId="ellipsis-text" sx={sx}>
           {getShortHash(value)} {isCopy && <CopyButton text={value} />}
           {afterElm && <StyledAfterElm>{afterElm}</StyledAfterElm>}
         </ContainerShortHand>
