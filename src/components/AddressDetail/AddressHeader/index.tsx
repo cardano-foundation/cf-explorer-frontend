@@ -114,13 +114,19 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
             <TitleText>{t("address.title.addressDetail")}</TitleText>
             <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
           </Box>
-          {data?.isContract && (
+          {(data?.associatedSmartContract || data?.associatedNativeScript) && (
             <RedirectButton
               width={isMobile ? "100%" : "auto"}
               component={Button}
-              onClick={() => history.push(details.contract(data?.address))}
+              onClick={() =>
+                history.push(
+                  data.associatedSmartContract
+                    ? details.smartContract(data?.address)
+                    : details.nativeScriptDetail(data?.address)
+                )
+              }
             >
-              {t("address.viewContractDetail")}
+              {data.associatedSmartContract ? t("address.viewContractDetail") : t("address.viewNativeScriptDetail")}
             </RedirectButton>
           )}
         </Box>

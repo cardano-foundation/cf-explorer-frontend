@@ -58,7 +58,7 @@ import NamiIcon from "./icons/nami.svg";
 import EternlIcon from "./icons/eternl.svg";
 import YoroiIcon from "./icons/yoroi.svg";
 import TyphonIcon from "./icons/typhon.svg";
-import EmptyIcon from "./images/noData.png";
+import EmptyIcon from "./icons/noData.svg";
 import EmptyDarkIcon from "./icons/EmptyIconDark.svg";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 import ProtocolIcon from "./icons/menus/Protocol.svg";
@@ -445,3 +445,6 @@ export { ReactComponent as AssociatedAddressesIcon } from "./icons/associated-ad
 export { ReactComponent as ScriptTabIcon } from "./icons/script-ic.svg";
 export { ReactComponent as AssetHoldersIcon } from "./icons/asset-holders-ic.svg";
 export { ReactComponent as TokenTabIcon } from "./icons/token-tab-ic.svg";
+export { ReactComponent as NativeScriptIcon } from "./icons/nativeScripts.svg";
+export { ReactComponent as SmartContractsIcon } from "./icons/smartContract.svg";
+export { ReactComponent as AssociatedIcon } from "./icons/associated.svg";
