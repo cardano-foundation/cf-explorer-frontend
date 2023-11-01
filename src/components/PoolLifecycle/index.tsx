@@ -194,7 +194,7 @@ const Status = styled("span")<{ status: string }>`
       case "GENERATED":
         return theme.palette.success[100];
       case "IN_PROGRESS":
-        return theme.palette.warning[100];
+        return theme.isDark ? theme.palette.warning[800] : theme.palette.warning[100];
       default:
         return theme.palette.success[100];
     }
@@ -203,11 +203,11 @@ const Status = styled("span")<{ status: string }>`
     switch (status) {
       case "EXPIRED":
       case "FAILED":
-        return theme.palette.error[700];
+        return theme.palette.error[800];
       case "GENERATED":
         return theme.palette.success[800];
       case "IN_PROGRESS":
-        return theme.palette.warning[800];
+        return theme.isDark ? theme.palette.warning[100] : theme.palette.warning[800];
       default:
         return theme.palette.success[800];
     }
