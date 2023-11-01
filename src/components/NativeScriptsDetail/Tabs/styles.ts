@@ -92,12 +92,12 @@ export const Value = styled(Typography)`
   display: inline;
 `;
 
-export const VerifyScriptButton = styled("button")`
+export const VerifyScriptButton = styled("button")<{ loading?: number }>`
   all: unset;
   font-size: 14px;
   color: ${({ theme }) => theme.palette.secondary[0]};
   text-transform: uppercase;
-  background-color: ${({ theme }) => theme.palette.primary.main};
+  background-color: ${({ theme, loading }) => (loading ? theme.palette.secondary[600] : theme.palette.primary.main)};
   padding: 12px 14px;
   border-radius: 8px;
   cursor: pointer;

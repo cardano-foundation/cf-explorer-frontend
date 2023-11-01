@@ -23,7 +23,13 @@ export type TCustomAccordionProps = {
 
 export const CustomAccordion: React.FC<TCustomAccordionProps> = ({ tabs, hiddenKeys = [], loading = false }) => {
   const { tabActive = "0", id } = useParams<{ tabActive: string; id: string }>();
-  const indexExpand = tabs.findIndex((item) => item.key === tabActive);
+
+  const getTabs = useMemo(() => {
+    if (!hiddenKeys.length) return tabs;
+    return tabs.filter((tab) => !hiddenKeys.includes(tab.key));
+  }, [tabs, hiddenKeys]);
+
+  const indexExpand = getTabs.findIndex((item) => item.key === tabActive);
   const history = useHistory();
   const tabRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
@@ -40,13 +46,7 @@ export const CustomAccordion: React.FC<TCustomAccordionProps> = ({ tabs, hiddenK
     return "0";
   };
 
-  const getTabs = useMemo(() => {
-    if (!hiddenKeys.length) return tabs;
-    return tabs.filter((tab) => !hiddenKeys.includes(tab.key));
-  }, [tabs, hiddenKeys]);
-
   if (loading) return <LoadingSkeleton />;
-
   return (
     <Box>
       {getTabs.map(({ key, icon: Icon, children, label }, index) => (

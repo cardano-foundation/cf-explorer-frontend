@@ -69,7 +69,7 @@ type TEmptyRecord = {
   isModal?: boolean;
 };
 export const EmptyRecord: React.FC<TEmptyRecord> = ({ className, isModal }) => (
-  <Empty className={className} isModal={+(isModal || 0)}>
+  <Empty className={className} ismodal={+(isModal || 0)}>
     <NoRecord p={`${0} !important`} />
   </Empty>
 );
@@ -124,7 +124,7 @@ const TableHeader = <T extends ColumnType>({
     <THead>
       <tr>
         {selectable && (
-          <THeader isModal={+(isModal || 0)}>
+          <THeader ismodal={+(isModal || 0)}>
             <TableCheckBox checked={isSelectAll} onChange={(e) => toggleSelectAll?.(e.target.checked)} />
           </THeader>
         )}
@@ -134,7 +134,7 @@ const TableHeader = <T extends ColumnType>({
             style={
               column.fixed ? { position: "sticky", left: column.leftFixed ? column.leftFixed : "-8px", zIndex: 10 } : {}
             }
-            isModal={+(isModal || 0)}
+            ismodal={+(isModal || 0)}
           >
             {column.title}
             {column.sort && (
@@ -172,14 +172,14 @@ const TableRow = <T extends ColumnType>({
   return (
     <TRow onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row))} {...selectedProps}>
       {selectable && (
-        <TCol isModal={+(isModal || 0)}>
+        <TCol ismodal={+(isModal || 0)}>
           <TableCheckBox checked={isSelected?.(row)} onChange={() => toggleSelection?.(row)} />
         </TCol>
       )}
       {columns.map((column, idx) => {
         return (
           <TCol
-            isModal={+(isModal || 0)}
+            ismodal={+(isModal || 0)}
             className="tb-col"
             key={idx}
             ref={colRef}
@@ -458,7 +458,7 @@ const Table: React.FC<TableProps> = ({
         maxHeight={maxHeight}
         minHeight={minHeight ? minHeight : (!data || data.length === 0) && !loading ? 360 : loading ? 400 : 15}
         height={height || heightTable}
-        isModal={+!!isModal}
+        ismodal={+!!isModal}
         className={data && data.length !== 0 ? "table-wrapper" : "hide-scroll"}
         loading={loading ? 1 : 0}
         {...tableWrapperProps}

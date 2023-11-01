@@ -23,9 +23,9 @@ const AssociatedAddress: React.FC<TAssociatedAddressProps> = () => {
   };
   return (
     <Container>
-      <AssociatedAddressTitle>{t("common.associatedAddresses")}</AssociatedAddressTitle>
+      <AssociatedAddressTitle>{t("common.associatedAddresses")}:</AssociatedAddressTitle>
       {!associatedAddress.length && <EmptyRecord />}
-      {associatedAddress.length &&
+      {associatedAddress.length > 0 &&
         associatedAddress.map((item) => (
           <React.Fragment key={item}>
             <AddressLink to={getUrl(item)}>
