@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
 
-import { Header, Key, ScriptHashLink, Title } from "./styles";
+import { Header, Key, ScriptHashLabel, Title } from "./styles";
 
 export type HeaderOverviewProps = {
   data?: {
@@ -19,12 +19,12 @@ const HeaderOverview: React.FC<HeaderOverviewProps> = ({ data }) => {
     <Header>
       <Title>{t("common.nativeScriptDetails")}</Title>
       <Box display="flex" gap={1}>
-        <Key>Script Hash:</Key>
-        <ScriptHashLink to="">
+        <Key>{t("common.scriptHash")}:</Key>
+        <ScriptHashLabel>
           <TruncateSubTitleContainer>
-            <DynamicEllipsisText isCopy value={data?.scriptHash || ""} />
+            <DynamicEllipsisText isTooltip isCopy value={data?.scriptHash || ""} />
           </TruncateSubTitleContainer>
-        </ScriptHashLink>
+        </ScriptHashLabel>
       </Box>
     </Header>
   );

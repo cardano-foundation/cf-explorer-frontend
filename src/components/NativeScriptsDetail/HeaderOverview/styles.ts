@@ -31,3 +31,13 @@ export const ScriptHashLink = styled(StyledLink)`
   font-size: 16px;
   font-weight: 700;
 `;
+
+export const ScriptHashLabel = styled(Typography)`
+  font-size: 16px;
+  font-weight: 700;
+  display: inline-block;
+  font-family: var(--font-family-text) !important;
+  font-size: var(--font-size-text-small);
+  color: ${(props) => props.theme.palette.primary.main} !important;
+  margin-bottom: 5px;
+`;

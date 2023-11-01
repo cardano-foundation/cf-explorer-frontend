@@ -33,7 +33,8 @@ export const API = {
     LIST: "tokens",
     TOKEN_TRX: "tokens/:tokenId/txs",
     ANALYTICS: "tokens/analytics",
-    NATIVE_SCRIPT: (scriptHash: string) => "scripts/native-scripts/" + scriptHash
+    NATIVE_SCRIPT: (scriptHash: string) => "scripts/native-scripts/" + scriptHash,
+    VERIFY_SCRIPT: (scriptHash: string) => `scripts/native-scripts/${scriptHash}/verify`
   },
   TRANSACTION: {
     CURRENT: "txs/current",

@@ -1,15 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { JsonViewer } from "@textea/json-viewer";
 import { useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import useDisableJsonKey from "src/commons/hooks/useDisableJsonKey";
 
 import { Center, Container, Key, Value, VerifyScriptButton } from "./styles";
+import VerifyFormModal from "../Modals/VerifyFormModal";
 
 import { useNativeScriptDetail } from ".";
 
 const Script: React.FC = () => {
-  const { script } = useNativeScriptDetail();
+  const { t } = useTranslation();
+  const { script, refresh } = useNativeScriptDetail();
+  const [open, setOpen] = useState(false);
+
   const theme = useTheme();
   const getScriptData = () => {
     if (script) return JSON.parse(script);
@@ -25,15 +30,16 @@ const Script: React.FC = () => {
     <Container>
       {!script && (
         <Center>
-          <Value>This script has not been verified. To verify, please click the button below.</Value>
-          <VerifyScriptButton>Verify SCRIPT</VerifyScriptButton>
+          <VerifyFormModal open={open} onClose={() => setOpen(false)} onReload={refresh} />
+          <Value>{t("common.verifyScriptDesc")}</Value>
+          <VerifyScriptButton onClick={() => setOpen(true)}>Verify SCRIPT</VerifyScriptButton>
         </Center>
       )}
       {script && (
         <>
-          <Key>Script:</Key>
+          <Key>{t("common.script")}:</Key>
           <JsonViewer
-            value={getScriptData()}
+            value={data}
             displayObjectSize={false}
             displayDataTypes={false}
             enableClipboard={false}
