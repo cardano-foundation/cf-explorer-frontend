@@ -11,7 +11,7 @@ import {
   StakingLifecycleIcon,
   TwitterX
 } from "./resources";
-import { lists, routers } from "./routers";
+import { details, lists, routers } from "./routers";
 
 interface Menu {
   title: string;
@@ -44,7 +44,11 @@ export const menus: Menu[] = [
       { title: "Blocks", key: "glossary.blocks", href: routers.BLOCK_LIST },
       { title: "Transactions", key: "glossary.transactions", href: routers.TRANSACTION_LIST },
       { title: "Native Tokens", key: "glossary.nativeTokens", href: routers.TOKEN_LIST },
-      { title: "Smart Contracts", key: "glossary.smartContracts", href: routers.CONTRACT_LIST },
+      {
+        title: "Native Scripts & Smart Contracts",
+        key: "glossary.nativeScriptAndSC",
+        href: details.nativeScriptsAndSC()
+      },
       { title: "Pools", key: "head.page.pool", href: routers.DELEGATION_POOLS, isSpecialPath: true },
       { title: "Top ADA Holders", key: "glossary.topAdaHolder", href: routers.ADDRESS_LIST }
     ]

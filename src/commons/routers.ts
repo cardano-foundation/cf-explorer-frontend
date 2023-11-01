@@ -28,6 +28,9 @@ export const routers = {
   STAKE_DETAIL: "/stake-address/:stakeId/:tabActive?",
   CONTRACT_LIST: "/contracts",
   CONTRACT_DETAIL: "/contracts/:address/:tabActive?",
+  SMART_CONTRACT: "/smart-contract/:address/:tabActive?",
+  NATIVE_SCRIPTS_AND_SC: "/native-scripts-sc/:tabActive?",
+  NATIVE_SCRIPT_DETAIL: "/native-script/:id/:tabActive?",
   POLICY_DETAIL: "/policy/:policyId",
   NFT_DETAIL: "/nft/:nftId",
   TOP_DELEGATOR: "/top-delegator",
@@ -70,6 +73,11 @@ export const details = {
   policyDetail: (policyId?: string) => routers.POLICY_DETAIL.replace(":policyId", policyId ?? ""),
   contract: (address?: string, tab = "transaction") =>
     routers.CONTRACT_DETAIL.replace(":address", address ?? "").replace(":tabActive?", tab),
+  smartContract: (address?: string, tab = "associated") =>
+    routers.SMART_CONTRACT.replace(":address", address ?? "").replace(":tabActive?", tab),
+  nativeScriptsAndSC: (tab = "native-scripts") => routers.NATIVE_SCRIPTS_AND_SC.replace(":tabActive?", tab),
+  nativeScriptDetail: (id: string, tabActive = "") =>
+    routers.NATIVE_SCRIPT_DETAIL.replace(":id", id).replace(":tabActive", tabActive),
   staking: (stakeId: string, mode: ViewMode = "timeline", tab: DelegationStep = "registration", txHash?: string) =>
     routers.DELEGATOR_LIFECYCLE.replace(":stakeId", stakeId)
       .replace(":mode?", mode)
