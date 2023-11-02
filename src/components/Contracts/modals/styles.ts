@@ -105,3 +105,22 @@ export const FoldCardValue = styled(Box)`
     line-break: anywhere;
   }
 `;
+
+export const TitleReference = styled(Box)(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  fontWeight: "bold",
+  fontSize: 16
+}));
+export const ValueReference = styled(Box)(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  fontSize: 16
+}));
+export const UTXOReference = styled(Link)(({ theme }) => ({
+  color: `${theme.palette.primary.main} !important`,
+  fontSize: 16,
+  fontWeight: "bold"
+}));
+export const ExternalLink = styled("a")(({ theme }) => ({
+  color: `${theme.palette.primary.main} !important`,
+  textDecoration: "underline !important"
+}));

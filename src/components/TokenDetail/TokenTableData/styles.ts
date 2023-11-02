@@ -109,6 +109,7 @@ export const ViewJson = styled(Box)(({ theme }) => ({
   padding: theme.spacing(2),
   marginBottom: theme.spacing(3),
   maxHeight: "50vh",
+  wordBreak: "break-all",
   [theme.breakpoints.up("md")]: {
     "& .MuiSvgIcon-root": {
       display: "none !important"

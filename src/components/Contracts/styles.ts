@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, Button, styled } from "@mui/material";
 
 export const DetailHeader = styled(Box)`
   display: flex;
@@ -58,6 +58,26 @@ export const ContractSideViewContent = styled(Box)`
 `;
 
 export const ContractSideViewHeader = styled(Box)``;
+
+export const ReferenceButton = styled(Button)(({ theme }) => ({
+  textTransform: "capitalize",
+  border: `1px solid ${theme.palette.primary.main}`,
+  borderRadius: theme.spacing(1),
+  padding: `${theme.spacing(1)} ${theme.spacing(2)}`,
+  fontSize: 16
+}));
+
+export const ReferenceCount = styled("span")(({ theme }) => ({
+  width: "19px",
+  height: "19px",
+  borderRadius: "50%",
+  backgroundColor: theme.isDark ? theme.palette.secondary[600] : theme.palette.secondary.light,
+  fontSize: 12,
+  marginLeft: theme.spacing(1),
+  color: theme.isDark ? theme.palette.secondary.light : theme.palette.primary[100],
+  textAlign: "center",
+  lineHeight: "20px"
+}));
 
 export const EmptyBox = styled(Box)`
   width: 195px;

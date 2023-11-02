@@ -26,7 +26,7 @@ export const API = {
     DETAIL: "epochs",
     LIST: "epochs"
   },
-  POLICY: "policies",
+  POLICY: "scripts/search",
   POOL: "pools",
 
   TOKEN: {
@@ -125,7 +125,13 @@ export const API = {
     SCRIPT: (address: string) => `contracts/${address}/script`
   },
   STORIES: (query: { [key: string]: string | number }) => `news?${stringify(query)}`,
-  SEARCH_ALL: (query: string) => `/search?${stringify({ query })}`
+  SEARCH_ALL: (query: string) => `/search?${stringify({ query })}`,
+  SCRIPTS: {
+    SMART_CONTRACTS: "scripts/smart-contracts",
+    NATIVE_SCRIPTS: "scripts/native-scripts",
+    ASSOCIATED_ADDRESS: (scriptHash: string) => `scripts/smart-contracts/${scriptHash}`,
+    SCRIPT_TXS_DETAIL: (scriptHash: string) => `scripts/smart-contracts/${scriptHash}/txs`
+  }
 };
 
 export const USER_API = {

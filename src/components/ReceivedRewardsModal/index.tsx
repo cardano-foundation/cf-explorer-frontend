@@ -102,6 +102,17 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       }
     },
     {
+      key: "poolId",
+      title: t("common.poolId"),
+      render(data) {
+        return (
+          <CustomTooltip title={data.poolView}>
+            <EpochRow to={details.epoch(data.poolView)}>{getShortHash(data.poolView)}</EpochRow>
+          </CustomTooltip>
+        );
+      }
+    },
+    {
       key: "time",
       title: t("common.Date"),
       sort: ({ sortValue }) => {
@@ -148,10 +159,14 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
             <RewardBalance>
               {theme.isDark ? <WalletIconRewardGreenDark /> : <WalletIconRewardGreen />}
               <RewardBalanceTitle>
-                {type === RECEIVED_REWARDS.ALL ? t("slc.totalRewardsReceived") : t("slc.amountReceived")}:{" "}
-                {formatADAFull(getTotal())}
+                <Box display={"inline-block"}>
+                  {type === RECEIVED_REWARDS.ALL ? t("slc.totalRewardsReceived") : t("slc.amountReceived")}:{" "}
+                  <Box display={"inline-block"} mr={1}>
+                    {formatADAFull(getTotal())}
+                  </Box>
+                  <ADAicon />
+                </Box>
               </RewardBalanceTitle>
-              <ADAicon />
             </RewardBalance>
           </RewardBalanceHeader>
           <TableContainer>

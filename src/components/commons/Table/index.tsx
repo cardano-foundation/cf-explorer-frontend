@@ -46,6 +46,8 @@ import {
   ShowedResults,
   StyledMenuItem,
   StyledPagination,
+  StyledPerPage,
+  StyledResult,
   TBody,
   TCol,
   TFooter,
@@ -338,22 +340,20 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
               <StyledMenuItem value={50}>50</StyledMenuItem>
               <StyledMenuItem value={100}>100</StyledMenuItem>
             </SelectMui>
-            <Box component={"span"} ml={1} fontSize="0.875rem" sx={{ textWrap: "nowrap" }}>
-              {t("perPage")}
-            </Box>
+            <StyledPerPage>{t("perPage")}</StyledPerPage>
           </Box>
         ) : (
           ""
         )}
         {total && total.count ? (
-          <Box ml={"20px"} fontSize="0.875rem">
+          <StyledResult>
             <TotalNumber>{numberWithCommas(total.count)}</TotalNumber>{" "}
             {total.isDataOverSize
               ? t("glossary.mostRelavant")
               : total.count > 1
               ? t("common.results")
               : t("common.result")}
-          </Box>
+          </StyledResult>
         ) : (
           ""
         )}
@@ -416,10 +416,13 @@ const Table: React.FC<TableProps> = ({
 
   let heightTable = Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight * 0.5);
 
-  if (width >= breakpoints.values.sm && (data || []).length > 10) {
+  if (width >= breakpoints.values.sm && (data || []).length >= 9) {
     const footerHeight = document.getElementById("footer")?.offsetHeight || SPACING_TOP_TABLE;
-    heightTable =
-      Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight) - (footerHeight + SPACING_TOP_TABLE);
+    const spaceTop =
+      Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight) - (footerHeight + SPACING_TOP_TABLE) < 200
+        ? 0
+        : SPACING_TOP_TABLE;
+    heightTable = window.innerHeight - (footerHeight + spaceTop);
   }
 
   const toggleSelectAll = (isChecked: boolean) => {
