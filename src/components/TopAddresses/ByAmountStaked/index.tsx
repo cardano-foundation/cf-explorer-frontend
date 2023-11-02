@@ -38,7 +38,7 @@ const TopAddressesByAmountStaked = () => {
       key: "addresses",
       maxWidth: "30vw",
       render: (r) => (
-        <StyledLink to={details.address(r.stakeKey)}>
+        <StyledLink to={details.stake(r.stakeKey)}>
           <DynamicEllipsisText value={r.stakeKey} isTooltip />
         </StyledLink>
       )

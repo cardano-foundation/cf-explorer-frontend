@@ -19,6 +19,9 @@ interface WalletAddress {
   stakeAddress: string;
   isContract: boolean;
   verifiedContract?: boolean;
+  associatedNativeScript?: boolean;
+  associatedSmartContract?: boolean;
+  scriptHash?: string;
 }
 
 interface WalletStake {
