@@ -27,6 +27,7 @@ export const API = {
     LIST: "epochs"
   },
   POLICY: "policies",
+  SCRIPTS_SEARCH: "scripts/search",
   POOL: "pools",
 
   TOKEN: { LIST: "tokens", TOKEN_TRX: "tokens/:tokenId/txs", ANALYTICS: "tokens/analytics" },
