@@ -91,7 +91,9 @@ export const details = {
   generated_staking_detail: (reportId: string) =>
     routers.REPORT_GENERATED_STAKING_DETAIL.replace(":reportId", reportId),
   generated_pool_detail: (reportId: string) => routers.REPORT_GENERATED_POOL_DETAIL.replace(":reportId", reportId),
-  smartcontractDetail: (id: string) => routers.SMARTCONTRACT_DETAIL.replace(":id", id)
+  smartcontractDetail: (id: string) => routers.SMARTCONTRACT_DETAIL.replace(":id", id),
+  nativeScript: (address?: string, tab = "transaction") =>
+    routers.NATIVE_SCRIPTS_AND_SC.replace(":address", address ?? "").replace(":tabActive?", tab)
 };
 
 export const listRouters = [
