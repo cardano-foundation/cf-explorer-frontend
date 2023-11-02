@@ -180,6 +180,9 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       const keyDetail = getKeyIfOnlyOneNonNullResult(res?.data);
       if (keyDetail) {
         handleRedirectDetail(keyDetail, res?.data);
+        setLoading(false);
+        setShowOption(false);
+        return;
       }
       setShowOption(true);
       setLoading(false);
