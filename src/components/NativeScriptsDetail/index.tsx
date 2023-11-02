@@ -81,7 +81,7 @@ const NativeScriptsDetail = () => {
         </BackButton>
       </Box>
       <VerifyFormModal open={open} onClose={() => setOpen(false)} onReload={refresh} />
-      <HeaderOverview data={{ scriptHash: id }} />
+      <HeaderOverview onVerifyScriptOpen={() => setOpen(true)} data={{ scriptHash: id }} />
       <CustomAccordion loading={loading} tabs={smartcontractTabs} hiddenKeys={hiddenKeys} />
     </StyledContainer>
   );
