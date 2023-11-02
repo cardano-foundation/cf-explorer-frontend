@@ -18,7 +18,7 @@ export type HeaderOverviewProps = {
 
 const HeaderOverview: React.FC<HeaderOverviewProps> = ({ data, onVerifyScriptOpen }) => {
   const { t } = useTranslation();
-  const { script } = useNativeScriptDetail();
+  const { script, initialized } = useNativeScriptDetail();
   return (
     <Header>
       <Box flex={1}>
@@ -32,7 +32,7 @@ const HeaderOverview: React.FC<HeaderOverviewProps> = ({ data, onVerifyScriptOpe
           </ScriptHashLabel>
         </Box>
       </Box>
-      {!script && (
+      {!script && initialized && (
         <VerifyScriptButton onClick={() => onVerifyScriptOpen?.()}>{t("common.verifyScript")}</VerifyScriptButton>
       )}
     </Header>

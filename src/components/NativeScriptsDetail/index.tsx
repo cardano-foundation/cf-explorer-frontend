@@ -80,7 +80,14 @@ const NativeScriptsDetail = () => {
           <BackText>{t("common.back")}</BackText>
         </BackButton>
       </Box>
-      <VerifyFormModal open={open} onClose={() => setOpen(false)} onReload={refresh} />
+      <VerifyFormModal
+        open={open}
+        onClose={() => setOpen(false)}
+        onReload={() => {
+          setOpen(false);
+          refresh?.();
+        }}
+      />
       <HeaderOverview onVerifyScriptOpen={() => setOpen(true)} data={{ scriptHash: id }} />
       <CustomAccordion loading={loading} tabs={smartcontractTabs} hiddenKeys={hiddenKeys} />
     </StyledContainer>
