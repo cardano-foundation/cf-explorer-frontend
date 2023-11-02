@@ -27,7 +27,7 @@ const StakeKeyBox = ({ data }: TProps) => {
       label: t("common.poolID"),
       value: (
         <EllipsisContainer>
-          <DynamicEllipsisText value={data.poolId} isTooltip isCopy />
+          <DynamicEllipsisText value={data.poolId} isTooltip isCopy customTruncateFold={[7, 8]} />
         </EllipsisContainer>
       ),
       isHyperLink: true,
@@ -38,7 +38,7 @@ const StakeKeyBox = ({ data }: TProps) => {
       label: t("common.vrfKey"),
       value: data?.vrfKey ? (
         <EllipsisContainer>
-          <DynamicEllipsisText value={data.vrfKey} isTooltip isCopy />{" "}
+          <DynamicEllipsisText value={data.vrfKey} isTooltip isCopy customTruncateFold={[7, 8]} />
         </EllipsisContainer>
       ) : (
         ""
@@ -50,7 +50,7 @@ const StakeKeyBox = ({ data }: TProps) => {
       label: t("common.rewardAccount"),
       value: data.rewardAccount ? (
         <EllipsisContainer>
-          <DynamicEllipsisText value={data.rewardAccount} isTooltip isCopy />{" "}
+          <DynamicEllipsisText value={data.rewardAccount} isTooltip isCopy customTruncateFold={[5, 5]} />
         </EllipsisContainer>
       ) : (
         ""
@@ -90,7 +90,7 @@ const StakeKeyBox = ({ data }: TProps) => {
           <LeftRowContainer>
             {(leftRow || []).map(({ label, value, isHyperLink, linkTo, isMultipleValue }) => {
               return (
-                <Box key={label + value} display="flex" alignItems="flex-start">
+                <Box key={label + value} display="flex" alignItems="center">
                   <TextLabel>{label}: </TextLabel>
                   {isMultipleValue ? (
                     <Box width={"100%"}>
@@ -99,7 +99,7 @@ const StakeKeyBox = ({ data }: TProps) => {
                           <TextValue>
                             <Link to={details.stake(item || "")}>
                               <EllipsisContainer>
-                                <DynamicEllipsisText value={item} isTooltip isCopy />
+                                <DynamicEllipsisText value={item} isTooltip isCopy customTruncateFold={[5, 6]} />
                               </EllipsisContainer>
                             </Link>
                           </TextValue>
@@ -107,7 +107,7 @@ const StakeKeyBox = ({ data }: TProps) => {
                       ))}
                     </Box>
                   ) : (
-                    <ValueItem>
+                    <ValueItem className="ValueItem">
                       <TextValue>{isHyperLink && linkTo ? <Link to={linkTo}>{value}</Link> : value}</TextValue>
                     </ValueItem>
                   )}
