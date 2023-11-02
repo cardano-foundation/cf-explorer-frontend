@@ -19,7 +19,7 @@ const AssetHolders = () => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<TokenPolicys>(`${API.POLICY}/${id}/holders`, pageInfo);
+  const fetchData = useFetchList<TokenPolicys>(API.TOKEN.TOKEN_HOLDERS(id), pageInfo);
   const columnsAssetHolders: Column<PolicyHolder>[] = [
     {
       title: t("common.address"),
