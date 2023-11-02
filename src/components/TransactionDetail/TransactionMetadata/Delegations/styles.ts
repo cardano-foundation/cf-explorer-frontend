@@ -26,7 +26,7 @@ export const StyledItem = styled(Box)`
   padding: 10px 0;
   font-size: var(--font-size-text-small);
   border-bottom: 1px solid ${({ theme }) => (theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200])};
-  overflow: scroll;
+  overflow: auto;
   &:last-child {
     border-bottom: none;
     padding: 10px 0 0;
