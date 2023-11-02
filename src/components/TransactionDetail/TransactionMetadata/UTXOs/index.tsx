@@ -149,7 +149,7 @@ const Card = ({
                                     <CopyButton text={item.txHash} />
                                   </Box>
                                 }
-                                customTruncateFold={[4, 8]}
+                                customTruncateFold={[5, 6]}
                               />
                             </EllipsisContainer>
                           </Link>
@@ -215,7 +215,7 @@ const Card = ({
                                   value={item.stakeAddress}
                                   isCopy
                                   isTooltip
-                                  customTruncateFold={[8, 8]}
+                                  customTruncateFold={[7, 8]}
                                 />
                               </EllipsisContainer>
                             </Link>
