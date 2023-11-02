@@ -77,13 +77,6 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       }
     },
     {
-      key: "epoch",
-      title: t("common.Epoch"),
-      render(data) {
-        return <EpochRow to={details.epoch(data.epoch)}>{data.epoch}</EpochRow>;
-      }
-    },
-    {
       key: "poolId",
       title: t("common.poolId"),
       render(data) {
@@ -99,17 +92,6 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       title: t("common.Epoch"),
       render(data) {
         return <EpochRow to={details.epoch(data.epoch)}>{data.epoch}</EpochRow>;
-      }
-    },
-    {
-      key: "poolId",
-      title: t("common.poolId"),
-      render(data) {
-        return (
-          <CustomTooltip title={data.poolView}>
-            <EpochRow to={details.epoch(data.poolView)}>{getShortHash(data.poolView)}</EpochRow>
-          </CustomTooltip>
-        );
       }
     },
     {
@@ -143,6 +125,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       open={open}
       handleCloseModal={() => {
         onClose?.();
+        setParams({ page: 0, size: 50 });
       }}
       width={600}
     >
