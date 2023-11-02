@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { stringify } from "qs";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -19,15 +19,14 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table from "src/components/commons/Table";
 import { Column } from "src/types/table";
 
-import { useNativeScriptDetail } from ".";
-
 const Token = () => {
   const { t } = useTranslation();
-  const { scriptHash } = useNativeScriptDetail();
+  const { id } = useParams<{ id: string }>();
+
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<TokenPolicys>(`${API.POLICY}/${scriptHash}/tokens`, pageInfo);
+  const fetchData = useFetchList<TokenPolicys>(`${API.POLICY}/${id}/tokens`, pageInfo);
   const columnsToken: Column<TokenPolicys>[] = [
     {
       title: t("common.tokenName"),

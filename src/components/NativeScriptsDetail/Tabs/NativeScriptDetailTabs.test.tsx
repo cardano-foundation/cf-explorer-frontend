@@ -4,6 +4,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import AssetHolders from "./AssetHolders";
 import AssociatedAddress from "./AssociatedAddress";
 import MinttingBurningPolicy from "./MinttingBurningPolicy";
+import Script from "./Script";
 
 import { NativeScriptContext } from ".";
 
@@ -82,5 +83,16 @@ describe("MinttingBurningPolicy component", () => {
     expect(screen.getByText(/conditions:/i)).toBeInTheDocument();
     expect(screen.getByText(/allowed by/i)).toBeInTheDocument();
     expect(screen.getByText(/421d2150828730433df35f93088bfc223f9ab3b74ad8333c/i)).toBeInTheDocument();
+  });
+});
+
+describe("Script component", () => {
+  it("should component render", () => {
+    render(
+      <NativeScriptContext.Provider value={data}>
+        <Script />
+      </NativeScriptContext.Provider>
+    );
+    screen.logTestingPlaygroundURL();
   });
 });

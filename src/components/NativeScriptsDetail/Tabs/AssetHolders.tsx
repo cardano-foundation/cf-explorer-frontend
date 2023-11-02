@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
 
@@ -13,15 +13,13 @@ import Table from "src/components/commons/Table";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 
-import { useNativeScriptDetail } from ".";
-
 const AssetHolders = () => {
   const { t } = useTranslation();
-  const { scriptHash } = useNativeScriptDetail();
+  const { id } = useParams<{ id: string }>();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<TokenPolicys>(`${API.POLICY}/${scriptHash}/holders`, pageInfo);
+  const fetchData = useFetchList<TokenPolicys>(`${API.POLICY}/${id}/holders`, pageInfo);
   const columnsAssetHolders: Column<PolicyHolder>[] = [
     {
       title: t("common.address"),
