@@ -132,6 +132,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       open={open}
       handleCloseModal={() => {
         onClose?.();
+        setParams({ page: 0, size: 50 });
       }}
       width={600}
     >
