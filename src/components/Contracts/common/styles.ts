@@ -100,7 +100,7 @@ export const CLCardContaienr = styled(Box)`
     width: 100%;
     display: flex;
     gap: 4px;
-    align-items: center;
+    align-items: flex-start;
   }
 `;
 
