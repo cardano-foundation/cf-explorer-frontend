@@ -5,6 +5,11 @@ import { StyledLink } from "../Tabs/styles";
 export const Header = styled(Box)`
   text-align: left;
   margin-bottom: 20px;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+  flex-wrap: wrap;
 `;
 
 export const Title = styled(Typography)`

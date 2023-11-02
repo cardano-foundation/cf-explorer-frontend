@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { JsonViewer } from "@textea/json-viewer";
 import { useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
@@ -6,14 +6,16 @@ import { useTranslation } from "react-i18next";
 import useDisableJsonKey from "src/commons/hooks/useDisableJsonKey";
 
 import { Center, Container, Key, Value, VerifyScriptButton } from "./styles";
-import VerifyFormModal from "../Modals/VerifyFormModal";
 
 import { useNativeScriptDetail } from ".";
 
-const Script: React.FC = () => {
+export type TScriptProps = {
+  onVerifyScriptOpen?: () => void;
+};
+
+const Script: React.FC<TScriptProps> = ({ onVerifyScriptOpen }) => {
   const { t } = useTranslation();
-  const { script, refresh } = useNativeScriptDetail();
-  const [open, setOpen] = useState(false);
+  const { script } = useNativeScriptDetail();
 
   const theme = useTheme();
   const getScriptData = () => {
@@ -30,9 +32,8 @@ const Script: React.FC = () => {
     <Container>
       {!script && (
         <Center>
-          <VerifyFormModal open={open} onClose={() => setOpen(false)} onReload={refresh} />
           <Value>{t("common.verifyScriptDesc")}</Value>
-          <VerifyScriptButton onClick={() => setOpen(true)}>Verify SCRIPT</VerifyScriptButton>
+          <VerifyScriptButton onClick={() => onVerifyScriptOpen?.()}>Verify SCRIPT</VerifyScriptButton>
         </Center>
       )}
       {script && (

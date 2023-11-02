@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useHistory, useParams } from "react-router-dom";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Box, useTheme } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 
@@ -22,13 +22,15 @@ import AssetHolders from "src/components/NativeScriptsDetail/Tabs/AssetHolders";
 import { StyledContainer } from "./styles";
 import { useNativeScriptDetail } from "./Tabs";
 import { BackButton, BackText } from "../AddressDetail/AddressHeader/styles";
+import VerifyFormModal from "./Modals/VerifyFormModal";
 
 const NativeScriptsDetail = () => {
   const history = useHistory();
   const { id } = useParams<{ id: string }>();
-  const { associatedAddress, loading, keyHashes } = useNativeScriptDetail();
+  const { associatedAddress, loading, keyHashes, refresh } = useNativeScriptDetail();
   const { t } = useTranslation();
   const theme = useTheme();
+  const [open, setOpen] = useState(false);
 
   const smartcontractTabs: TTab[] = [
     {
@@ -46,7 +48,7 @@ const NativeScriptsDetail = () => {
     {
       key: "script",
       icon: ScriptTabIcon,
-      children: <Script />,
+      children: <Script onVerifyScriptOpen={() => setOpen(true)} />,
       label: "Script"
     },
     {
@@ -78,8 +80,8 @@ const NativeScriptsDetail = () => {
           <BackText>{t("common.back")}</BackText>
         </BackButton>
       </Box>
-
-      <HeaderOverview data={{ scriptHash: id }} />
+      <VerifyFormModal open={open} onClose={() => setOpen(false)} onReload={refresh} />
+      <HeaderOverview onVerifyScriptOpen={() => setOpen(true)} data={{ scriptHash: id }} />
       <CustomAccordion loading={loading} tabs={smartcontractTabs} hiddenKeys={hiddenKeys} />
     </StyledContainer>
   );
