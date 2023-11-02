@@ -130,10 +130,10 @@ export const API = {
   STORIES: (query: { [key: string]: string | number }) => `news?${stringify(query)}`,
   SEARCH_ALL: (query: string) => `/search?${stringify({ query })}`,
   SCRIPTS: {
-    SMART_CONTRACTS: "scripts/smart-contracts",
+    SMART_CONTRACTS: "scripts/contracts",
     NATIVE_SCRIPTS: "scripts/native-scripts",
-    ASSOCIATED_ADDRESS: (scriptHash: string) => `scripts/smart-contracts/${scriptHash}`,
-    SCRIPT_TXS_DETAIL: (scriptHash: string) => `scripts/smart-contracts/${scriptHash}/txs`
+    ASSOCIATED_ADDRESS: (scriptHash: string) => `scripts/contracts/${scriptHash}`,
+    SCRIPT_TXS_DETAIL: (scriptHash: string) => `scripts/contracts/${scriptHash}/txs`
   }
 };
 
