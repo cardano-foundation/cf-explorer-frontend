@@ -69,7 +69,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
                   fontWeight="bold"
                   color={({ palette }) => palette.secondary.main}
                 >
-                  {data?.totalToken || 0}
+                  {data?.numberOfTokens || 0}
                 </Box>
               </Box>
               <Box>

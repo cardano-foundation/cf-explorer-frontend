@@ -119,7 +119,7 @@ const Spendviews: React.FC<SpendViewProps> = ({ data, isMobile }) => {
         </SpendRounded>
       </SpendBlueBox>
       <MiddleBox ref={rightBoxRef}>
-        <Contract hash={data?.scriptHash} detail={details.smartcontractDetail} />
+        <Contract hash={data?.scriptHash} detail={details.smartContract} />
         <CompiledCode onClick={() => setOpenCompiledCode(!openCompiledCode)} />
       </MiddleBox>
       <DrawPath
