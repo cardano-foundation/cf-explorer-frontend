@@ -20,7 +20,7 @@ interface ScriptModalProps {
 }
 const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
   const { t } = useTranslation();
-  const { data, loading } = useFetch<PolicyDetail>(policy && `${API.POLICY}/${policy && policy}`);
+  const { data, loading } = useFetch<INativeScriptDetail>(API.TOKEN.NATIVE_SCRIPT(policy ? policy : ""));
   const theme = useTheme();
   useEffect(() => trigger(), [props.open]);
   const { keyRenderer, trigger } = useDisableJsonKey(data);
@@ -53,8 +53,10 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
           ) : (
             <>
               <Box>
-                <ButtonLink to={details.nativeScriptDetail(data?.policyId || "")}>{data?.policyId || ""}</ButtonLink>
-                <CopyButton text={data?.policyId || ""} />
+                <ButtonLink to={details.nativeScriptDetail(data?.scriptHash || "")}>
+                  {data?.scriptHash || ""}
+                </ButtonLink>
+                <CopyButton text={data?.scriptHash || ""} />
               </Box>
               <Box>
                 <Box component={"span"} color={({ palette }) => palette.secondary.light}>
@@ -67,7 +69,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
                   fontWeight="bold"
                   color={({ palette }) => palette.secondary.main}
                 >
-                  {data?.totalToken || 0}
+                  {data?.numberOfTokens || 0}
                 </Box>
               </Box>
               <Box>
@@ -75,10 +77,10 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
                   {t("common.policyScript")}:
                 </Box>
                 <ViewJson>
-                  {data?.policyScript ? (
+                  {data?.script ? (
                     <JsonViewer
                       data-testid="JsonViewer"
-                      value={data.policyScript ? JSON.parse(data.policyScript) : {}}
+                      value={data.script ? JSON.parse(data.script) : {}}
                       displayObjectSize={false}
                       displayDataTypes={false}
                       enableClipboard={false}

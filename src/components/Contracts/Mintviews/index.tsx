@@ -161,7 +161,7 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
       />
       <Redeemer ref={redeemerRef} onClick={() => setOpenRedeemer(!openRedeemer)} />
       <MiddleBox ref={middleBoxRef}>
-        <Contract hash={data?.scriptHash} detail={details.smartcontractDetail} />
+        <Contract hash={data?.scriptHash} detail={details.smartContract} />
         <CompiledCode onClick={() => setOpenCompiledCode(!openCompiledCode)} />
       </MiddleBox>
 
