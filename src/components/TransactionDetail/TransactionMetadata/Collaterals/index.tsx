@@ -167,7 +167,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                           width={"100%"}
                         >
                           <EllipsisContainer>
-                            <DynamicEllipsisText value={item.address} isCopy isTooltip customTruncateFold={[9, 8]} />
+                            <DynamicEllipsisText value={item.address} isCopy isTooltip customTruncateFold={[8, 8]} />
                           </EllipsisContainer>
                         </Box>
                       </Link>
