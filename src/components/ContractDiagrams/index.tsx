@@ -38,7 +38,7 @@ export const ContractDiagrams = ({ item, txHash, handleClose }: IContractDiagram
   const theme = useTheme();
   const linkToPage = () => {
     if (txHash) return details.transaction(txHash);
-    return item.address ? details.contract(item.address) : details.policyDetail(item.scriptHash);
+    return item.address ? details.contract(item.address) : details.nativeScriptDetail(item.scriptHash);
   };
 
   return (

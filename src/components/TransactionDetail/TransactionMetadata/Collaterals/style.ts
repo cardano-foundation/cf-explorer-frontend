@@ -58,7 +58,7 @@ export const ItemContent = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
     overflow: "scroll"
   },
-  [theme.breakpoints.between(420, "sm")]: {
+  [theme.breakpoints.down(430)]: {
     overflow: "hidden"
   }
 }));
@@ -175,7 +175,7 @@ export const StyledContainerInfo = styled(Box)(({ theme }) => ({
 export const EllipsisContainer = styled(Box)<{ isFailed?: boolean }>`
   font-weight: bold;
   color: ${({ theme, isFailed }) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)};
-  max-width: 65vw;
+  max-width: 50vw;
   ${({ theme }) => theme.breakpoints.up(420)} {
     max-width: 66vw;
   }
@@ -189,3 +189,10 @@ export const EllipsisContainer = styled(Box)<{ isFailed?: boolean }>`
     max-width: 55vw;
   }
 `;
+
+export const RowItemContent = styled(Box)(() => ({
+  display: "flex",
+  justifyContent: "flex-start",
+  alignItems: "baseline",
+  width: "100%"
+}));

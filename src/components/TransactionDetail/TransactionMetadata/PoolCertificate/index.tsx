@@ -43,7 +43,7 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
                       <TextValue>
                         <Link to={details.delegation(item.poolId || "")}>
                           <EllipsisContainer>
-                            <DynamicEllipsisText value={item.poolId} isTooltip isCopy />
+                            <DynamicEllipsisText value={item.poolId} isTooltip isCopy customTruncateFold={[8, 8]} />
                           </EllipsisContainer>
                         </Link>
                       </TextValue>
