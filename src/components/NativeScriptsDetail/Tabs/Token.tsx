@@ -26,7 +26,7 @@ const Token = () => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<TokenPolicys>(`${API.POLICY}/${id}/tokens`, pageInfo);
+  const fetchData = useFetchList<TokenPolicys>(API.TOKEN.TOKENS_SCRIPTED(id), pageInfo);
   const columnsToken: Column<TokenPolicys>[] = [
     {
       title: t("common.tokenName"),
