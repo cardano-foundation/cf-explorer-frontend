@@ -50,7 +50,7 @@ const URL_FETCH_DETAIL = {
   txs: (trx: string) => `${API.TRANSACTION.DETAIL}/${trx}`,
   addresses: (address: string) => `${API.ADDRESS.DETAIL}/${address}`,
   stake: (stake: string) => `${API.STAKE.DETAIL}/${stake}`,
-  policies: (policy: string) => `${API.POLICY}/${policy}`
+  policies: (policy: string) => `${API.SCRIPTS_SEARCH}/${policy}`
 };
 
 interface Props extends RouteComponentProps {
