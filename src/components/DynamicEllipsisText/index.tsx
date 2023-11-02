@@ -2,7 +2,8 @@ import { Box, SxProps, Theme, styled } from "@mui/material";
 import { useEffect, useId, useRef, useState } from "react";
 
 import CopyButton from "src/components/commons/CopyButton";
-import { getShortHash } from "src/commons/utils/helper";
+import { getShortHash, truncateCustom } from "src/commons/utils/helper";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import CustomTooltip from "../commons/CustomTooltip";
 
@@ -40,6 +41,9 @@ const StyledAfterElm = styled(Box)`
   display: inline-block;
   vertical-align: bottom;
   margin-left: 10px;
+  ${({ theme }) => theme.breakpoints.down(430)} {
+    margin-left: 3px;
+  }
 `;
 
 // The number of pixels required to display the shortened address in one row
@@ -53,7 +57,8 @@ const DynamicEllipsisText = ({
   isTooltip,
   sxFirstPart,
   sxLastPart,
-  sx
+  sx,
+  customTruncateFold
 }: {
   value: string;
   postfix?: number;
@@ -63,10 +68,12 @@ const DynamicEllipsisText = ({
   sxFirstPart?: SxProps<Theme>;
   sxLastPart?: SxProps<Theme>;
   sx?: SxProps<Theme>;
+  customTruncateFold?: [number, number];
 }) => {
   const randomIdRef = useRef(`ELIPSIS_${useId()}`);
 
   const [isMin, setIsMin] = useState<boolean>(false);
+  const { isGalaxyFoldSmall } = useScreen();
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
@@ -95,9 +102,12 @@ const DynamicEllipsisText = ({
 
   if (isMin) {
     return (
-      <CustomTooltip title={isTooltip ? value : ""}>
+      <CustomTooltip title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}>
         <ContainerShortHand id={randomIdRef.current} data-testid="ellipsis-text" sx={sx}>
-          {getShortHash(value)} {isCopy && <CopyButton text={value} />}
+          {customTruncateFold?.length === 2 && isGalaxyFoldSmall
+            ? truncateCustom(value, customTruncateFold[0], customTruncateFold[1])
+            : getShortHash(value)}
+          {isCopy && <CopyButton text={value} />}
           {afterElm && <StyledAfterElm>{afterElm}</StyledAfterElm>}
         </ContainerShortHand>
       </CustomTooltip>

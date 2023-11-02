@@ -98,7 +98,7 @@ export const AmountMobileTitle = styled(Box)(({ theme }) => ({
 export const EllipsisContainer = styled(Box)<{ isFailed?: boolean }>`
   font-weight: bold;
   color: ${({ theme, isFailed }) => (isFailed ? theme.palette.secondary[600] : theme.palette.primary.main)};
-  max-width: 60vw;
+  max-width: 51vw;
   ${({ theme }) => theme.breakpoints.up(420)} {
     max-width: 62vw;
   }

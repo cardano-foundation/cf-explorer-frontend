@@ -718,7 +718,9 @@ export const OptionsSearch = ({
               return {
                 suggestText: "Search for a Policy by",
                 cb: () =>
-                  history.push(details.policyDetail(encodeURIComponent((value || "").trim().toLocaleLowerCase()))),
+                  history.push(
+                    details.nativeScriptDetail(encodeURIComponent((value || "").trim().toLocaleLowerCase()))
+                  ),
                 formatter: getShortHash
               };
           }

@@ -102,6 +102,17 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       }
     },
     {
+      key: "poolId",
+      title: t("common.poolId"),
+      render(data) {
+        return (
+          <CustomTooltip title={data.poolView}>
+            <EpochRow to={details.epoch(data.poolView)}>{getShortHash(data.poolView)}</EpochRow>
+          </CustomTooltip>
+        );
+      }
+    },
+    {
       key: "time",
       title: t("common.Date"),
       sort: ({ sortValue }) => {

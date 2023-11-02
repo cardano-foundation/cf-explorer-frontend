@@ -29,7 +29,8 @@ import {
   WrapUTXOs,
   Wrapper,
   StyledContainerInfo,
-  EllipsisContainer
+  EllipsisContainer,
+  RowItemContent
 } from "./style";
 
 interface CollateralProps {
@@ -114,7 +115,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                 {type === "input" && (
                   <WrapUTXOs>
                     <Box mr={3} minWidth={200} width={"100%"}>
-                      <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} width={"100%"}>
+                      <RowItemContent>
                         <Box color={(theme) => theme.palette.secondary.light} pr={1}>
                           {t("tab.utxo")}:
                         </Box>
@@ -124,24 +125,30 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                             fontWeight="bold"
                             fontFamily={"var(--font-family-text)"}
                             color={(theme) => theme.palette.primary.main}
+                            width={"100%"}
                           >
-                            <EllipsisContainer>
+                            <EllipsisContainer sx={{ transform: "translateY(-2px)" }}>
                               <DynamicEllipsisText
                                 value={item.txHash}
                                 afterElm={
                                   <FlexCenter>
-                                    <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
+                                    <Box
+                                      fontWeight={"bold"}
+                                      color={({ palette }) => palette.secondary.main}
+                                      sx={{ transform: "translateY(3px)" }}
+                                    >
                                       #{item?.index}
                                     </Box>
                                     <CopyButton text={item.txHash} />
                                   </FlexCenter>
                                 }
                                 isTooltip
+                                customTruncateFold={[4, 8]}
                               />
                             </EllipsisContainer>
                           </Box>
                         </Link>
-                      </Box>
+                      </RowItemContent>
                     </Box>
                   </WrapUTXOs>
                 )}
@@ -165,7 +172,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                           width={"100%"}
                         >
                           <EllipsisContainer>
-                            <DynamicEllipsisText value={item.address} isCopy isTooltip />
+                            <DynamicEllipsisText value={item.address} isCopy isTooltip customTruncateFold={[8, 8]} />
                           </EllipsisContainer>
                         </Box>
                       </Link>

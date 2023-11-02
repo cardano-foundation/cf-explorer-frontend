@@ -169,7 +169,7 @@ const SummaryItems = ({
             </Box>
           </Box>
           {tokensReceived && tokensReceived.length === 1 && (
-            <Box display={"flex"} alignItems={"center"} mt={1}>
+            <Box display={"flex"} alignItems={"center"} mt={1} className="CONTAINERRR">
               <TokenLink
                 token={tokensReceived[0]}
                 isSummary={true}
