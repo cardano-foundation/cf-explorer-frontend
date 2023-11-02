@@ -103,7 +103,7 @@ const DynamicEllipsisText = ({
   if (isMin) {
     return (
       <CustomTooltip title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}>
-        <ContainerShortHand id={randomIdRef.current} data-testId="ellipsis-text" sx={sx}>
+        <ContainerShortHand id={randomIdRef.current} data-testid="ellipsis-text" sx={sx}>
           {customTruncateFold?.length === 2 && isGalaxyFoldSmall
             ? truncateCustom(value, customTruncateFold[0], customTruncateFold[1])
             : getShortHash(value)}
@@ -117,12 +117,12 @@ const DynamicEllipsisText = ({
   return (
     <Container id={randomIdRef.current} sx={sx}>
       <CustomTooltip title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}>
-        <Box component={"span"} data-testId="ellipsis-text">
+        <Box component={"span"} data-testid="ellipsis-text">
           <FirstPart sx={sxFirstPart}>{firstPart}</FirstPart>
           <Lastpart sx={sxLastPart}>{lastPart}</Lastpart>
         </Box>
       </CustomTooltip>
-      {isCopy && <CopyButton text={value} data-testId="copy-button" />}
+      {isCopy && <CopyButton text={value} data-testid="copy-button" />}
       {afterElm && <StyledAfterElm className="after-dynamic-text">{afterElm}</StyledAfterElm>}
     </Container>
   );
