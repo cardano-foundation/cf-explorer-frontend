@@ -186,6 +186,9 @@ export const SpendContainer = styled(MintContainer)<{ isMobile?: number }>`
   ${({ theme }) => theme.breakpoints.down("lg")} {
     flex-wrap: nowrap;
   }
+  ${({ theme }) => theme.breakpoints.down("lg")} {
+    flex-direction: column !important;
+  }
   flex-direction: ${({ isMobile }) => (isMobile ? "column" : "row")};
   gap: ${({ isMobile }) => (isMobile ? "60px" : "unset")};
   padding: 0px;

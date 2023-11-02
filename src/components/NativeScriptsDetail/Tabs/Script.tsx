@@ -33,7 +33,7 @@ const Script: React.FC<TScriptProps> = ({ onVerifyScriptOpen }) => {
       {!script && (
         <Center>
           <Value>{t("common.verifyScriptDesc")}</Value>
-          <VerifyScriptButton onClick={() => onVerifyScriptOpen?.()}>Verify SCRIPT</VerifyScriptButton>
+          <VerifyScriptButton onClick={() => onVerifyScriptOpen?.()}>{t("common.verifyScript")}</VerifyScriptButton>
         </Center>
       )}
       {script && (

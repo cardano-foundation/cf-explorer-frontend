@@ -33,7 +33,7 @@ const ContractSideView: React.FC<ContractSideView> = ({ data, txHash, handleClos
           ) : null}
         </ContractHeader>
         <TxHash>
-          <Link to={details.smartcontractDetail(data?.scriptHash || "")}>
+          <Link to={details.smartContract(data?.scriptHash || "")}>
             <ContractAddress data-testid={`contract-hash-${data?.scriptHash}`}>{data?.scriptHash}</ContractAddress>
           </Link>
         </TxHash>

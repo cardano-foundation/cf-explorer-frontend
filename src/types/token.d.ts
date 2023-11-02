@@ -63,4 +63,5 @@ interface INativeScriptDetail {
   before?: string;
   associatedAddress?: string[];
   script?: string;
+  numberOfTokens?: number;
 }

@@ -16,7 +16,8 @@ const data = {
   conditionType: "all",
   keyHashes: ["421d2150828730433df35f93088bfc223f9ab3b74ad8333c160625f7"],
   script: "",
-  scriptHash: ""
+  scriptHash: "",
+  initialized: true
 };
 
 const holdersData = {
