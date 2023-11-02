@@ -49,7 +49,6 @@ export const routers = {
   FAQ: "/faq",
   TERMS_OF_SERVICE: "/terms-of-service",
   SMARTCONTRACT_DETAIL: "/smartcontract/:id",
-  NATIVE_SCRIPT_DETAIL: "/native-script/:id/:tabActive?",
   NOT_FOUND: "/*"
 } as const;
 
@@ -93,8 +92,8 @@ export const details = {
     routers.REPORT_GENERATED_STAKING_DETAIL.replace(":reportId", reportId),
   generated_pool_detail: (reportId: string) => routers.REPORT_GENERATED_POOL_DETAIL.replace(":reportId", reportId),
   smartcontractDetail: (id: string) => routers.SMARTCONTRACT_DETAIL.replace(":id", id),
-  nativeScriptDetail: (id: string, tabActive = "") =>
-    routers.NATIVE_SCRIPT_DETAIL.replace(":id", id).replace(":tabActive", tabActive)
+  nativeScript: (address?: string, tab = "transaction") =>
+    routers.NATIVE_SCRIPTS_AND_SC.replace(":address", address ?? "").replace(":tabActive?", tab)
 };
 
 export const listRouters = [

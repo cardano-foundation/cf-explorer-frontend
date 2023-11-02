@@ -27,6 +27,7 @@ export const API = {
     LIST: "epochs"
   },
   POLICY: "policies",
+  SCRIPTS_SEARCH: "scripts/search",
   POOL: "pools",
 
   TOKEN: {
