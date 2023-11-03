@@ -69,7 +69,7 @@ export const Amount = styled("span")`
 
 export const ContainerInfo = styled(Box)(({ theme }) => ({
   width: "100%",
-  overflowX: "scroll",
+  overflowX: "auto",
   overflowY: "hidden",
   display: "flex",
   [theme.breakpoints.down("sm")]: {
