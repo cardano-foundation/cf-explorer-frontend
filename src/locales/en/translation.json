@@ -870,5 +870,7 @@
   "AssociatedAddresses": "Associated Addresses",
   "SmartContractDetails": "Smart Contract Details",
   "Version": "Version",
-  "ViewAddresses": "View Addresses"
+  "ViewAddresses": "View Addresses",
+  "token.timelock": "Time locked",
+  "token.oneTimeMint": "One time mint"
 }
