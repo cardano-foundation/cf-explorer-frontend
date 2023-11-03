@@ -27,7 +27,7 @@ const MinttingBurningPolicy = () => {
           <>
             {t("common.before")}{" "}
             <Typography display={"inline"} fontWeight={700}>
-              "{formatDateTimeLocal(before)}"
+              "{formatDateTimeLocal(before)}"{" "}
             </Typography>
           </>
         )}
@@ -35,7 +35,7 @@ const MinttingBurningPolicy = () => {
           <>
             {t("common.after")}{" "}
             <Typography display={"inline"} fontWeight={700}>
-              "{formatDateTimeLocal(after)}"
+              "{formatDateTimeLocal(after)}"{" "}
             </Typography>
           </>
         )}
