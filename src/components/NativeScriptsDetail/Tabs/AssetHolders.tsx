@@ -27,7 +27,9 @@ const AssetHolders = () => {
       minWidth: "50px",
       render: (r) => (
         <CustomTooltip title={r.address}>
-          <LinkComponent to={details.address(r.address)}>{getShortHash(r.address || "")}</LinkComponent>
+          <LinkComponent to={r.address.startsWith("stake") ? details.stake(r.address) : details.address(r.address)}>
+            {getShortHash(r.address || "")}
+          </LinkComponent>
         </CustomTooltip>
       )
     },

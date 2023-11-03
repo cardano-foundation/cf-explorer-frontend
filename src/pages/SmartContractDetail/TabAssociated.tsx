@@ -29,7 +29,10 @@ const TabAssociated = ({ setVersion }: { setVersion: (v: string) => void }) => {
       <Box>
         {loading || get(data, "associatedAddresses", []).length > 0 ? (
           data?.associatedAddresses.map((address: string) => (
-            <StyledLink to={details.address(address)} key={address}>
+            <StyledLink
+              to={address.startsWith("stake") ? details.stake(address) : details.address(address)}
+              key={address}
+            >
               <DynamicEllipsisText value={address} />
             </StyledLink>
           ))
