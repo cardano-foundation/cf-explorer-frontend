@@ -11,11 +11,12 @@ import { useNativeScriptDetail } from ".";
 
 const MinttingBurningPolicy = () => {
   const { t } = useTranslation();
-  const { before, after, keyHashes } = useNativeScriptDetail();
+  const { before, after, keyHashes, isOneTimeMint } = useNativeScriptDetail();
 
   const getType = () => {
     const types: string[] = [];
-    if (before || after) types.push("Time locked");
+    if (before || after) types.push(t("token.timelock"));
+    if (isOneTimeMint) types.push(t("token.oneTimeMint"));
     return types.join(" + ");
   };
 

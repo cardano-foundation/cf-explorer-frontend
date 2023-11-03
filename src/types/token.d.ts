@@ -64,4 +64,5 @@ interface INativeScriptDetail {
   associatedAddress?: string[];
   script?: string;
   numberOfTokens?: number;
+  isOneTimeMint?: boolean;
 }
