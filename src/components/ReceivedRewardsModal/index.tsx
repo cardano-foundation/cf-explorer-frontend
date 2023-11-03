@@ -77,6 +77,13 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       }
     },
     {
+      key: "epoch",
+      title: t("common.Epoch"),
+      render(data) {
+        return <EpochRow to={details.epoch(data.epoch)}>{data.epoch}</EpochRow>;
+      }
+    },
+    {
       key: "poolId",
       title: t("common.poolId"),
       render(data) {
