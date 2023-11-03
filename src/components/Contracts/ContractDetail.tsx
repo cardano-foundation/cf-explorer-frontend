@@ -30,22 +30,22 @@ const ContractDetail: React.FC<ContractDetailProps> = ({ data, onGoBack, isMobil
     CERT: {
       component: <Certviews data={data} isMobile={isMobile} />,
       contract: data?.scriptHash,
-      detail: routerDetals.smartcontractDetail
+      detail: routerDetals.smartContract
     },
     MINT: {
       component: <Mintviews data={data} isBurned={!!data?.burningTokens?.length} isMobile={isMobile} />,
       contract: data?.scriptHash,
-      detail: routerDetals.smartcontractDetail
+      detail: routerDetals.smartContract
     },
     REWARD: {
       component: <Rewardviews data={data} isMobile={isMobile} />,
       contract: data?.scriptHash,
-      detail: routerDetals.smartcontractDetail
+      detail: routerDetals.smartContract
     },
     SPEND: {
       component: <Spendviews data={data} isMobile={isMobile} />,
-      contract: data?.address,
-      detail: routerDetals.smartcontractDetail
+      contract: data?.scriptHash,
+      detail: routerDetals.smartContract
     }
   };
   const { component, contract, detail } = details[(data?.purpose as ContractDetailProps["view"]) || "SPEND"];

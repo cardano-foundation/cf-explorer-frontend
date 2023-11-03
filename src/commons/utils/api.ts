@@ -30,7 +30,15 @@ export const API = {
   SCRIPTS_SEARCH: "scripts/search",
   POOL: "pools",
 
-  TOKEN: { LIST: "tokens", TOKEN_TRX: "tokens/:tokenId/txs", ANALYTICS: "tokens/analytics" },
+  TOKEN: {
+    LIST: "tokens",
+    TOKEN_TRX: "tokens/:tokenId/txs",
+    ANALYTICS: "tokens/analytics",
+    NATIVE_SCRIPT: (scriptHash: string) => "scripts/native-scripts/" + scriptHash,
+    VERIFY_SCRIPT: (scriptHash: string) => `scripts/native-scripts/${scriptHash}/verify`,
+    TOKENS_SCRIPTED: (scriptHash: string) => `scripts/native-scripts/${scriptHash}/tokens`,
+    TOKEN_HOLDERS: (scriptHash: string) => `scripts/native-scripts/${scriptHash}/holders`
+  },
   TRANSACTION: {
     CURRENT: "txs/current",
     DETAIL: "txs",

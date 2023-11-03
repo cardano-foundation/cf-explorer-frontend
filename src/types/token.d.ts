@@ -53,3 +53,16 @@ interface TokensSearch {
   txCount: number;
   volumeIn24h: string;
 }
+
+interface INativeScriptDetail {
+  scriptHash?: string;
+  conditionType?: string;
+  required?: number;
+  keyHashes?: string[];
+  after?: string;
+  before?: string;
+  associatedAddress?: string[];
+  script?: string;
+  numberOfTokens?: number;
+  isOneTimeMint?: boolean;
+}
