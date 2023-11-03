@@ -37,7 +37,8 @@ export const API = {
     NATIVE_SCRIPT: (scriptHash: string) => "scripts/native-scripts/" + scriptHash,
     VERIFY_SCRIPT: (scriptHash: string) => `scripts/native-scripts/${scriptHash}/verify`,
     TOKENS_SCRIPTED: (scriptHash: string) => `scripts/native-scripts/${scriptHash}/tokens`,
-    TOKEN_HOLDERS: (scriptHash: string) => `scripts/native-scripts/${scriptHash}/holders`
+    TOKEN_HOLDERS: (scriptHash: string) => `scripts/native-scripts/${scriptHash}/holders`,
+    POLICIES: (scriptHash: string) => `/policies/${scriptHash}`
   },
   TRANSACTION: {
     CURRENT: "txs/current",
