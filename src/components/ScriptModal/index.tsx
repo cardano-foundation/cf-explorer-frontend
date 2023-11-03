@@ -18,9 +18,17 @@ interface ScriptModalProps {
   onClose: () => void;
   policy: string;
 }
+
+type TScriptHashDetail = {
+  policyId: string;
+  nativeScript: boolean;
+  smartContract: boolean;
+  totalToken: number;
+  policyScript: string;
+};
 const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
   const { t } = useTranslation();
-  const { data, loading } = useFetch<INativeScriptDetail>(API.TOKEN.NATIVE_SCRIPT(policy ? policy : ""));
+  const { data, loading } = useFetch<TScriptHashDetail>(API.TOKEN.POLICIES(policy ? policy : ""));
   const theme = useTheme();
   useEffect(() => trigger(), [props.open]);
   const { keyRenderer, trigger } = useDisableJsonKey(data);
@@ -53,10 +61,16 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
           ) : (
             <>
               <Box>
-                <ButtonLink to={details.nativeScriptDetail(data?.scriptHash || "")}>
-                  {data?.scriptHash || ""}
+                <ButtonLink
+                  to={
+                    data?.nativeScript
+                      ? details.nativeScriptDetail(data?.policyId || "associated")
+                      : details.smartContract(data?.policyId, "")
+                  }
+                >
+                  {data?.policyId || ""}
                 </ButtonLink>
-                <CopyButton text={data?.scriptHash || ""} />
+                <CopyButton text={data?.policyId || ""} />
               </Box>
               <Box>
                 <Box component={"span"} color={({ palette }) => palette.secondary.light}>
@@ -69,7 +83,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
                   fontWeight="bold"
                   color={({ palette }) => palette.secondary.main}
                 >
-                  {data?.numberOfTokens || 0}
+                  {data?.totalToken || 0}
                 </Box>
               </Box>
               <Box>
@@ -77,10 +91,10 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
                   {t("common.policyScript")}:
                 </Box>
                 <ViewJson>
-                  {data?.script ? (
+                  {data?.policyScript ? (
                     <JsonViewer
                       data-testid="JsonViewer"
-                      value={data.script ? JSON.parse(data.script) : {}}
+                      value={data.policyScript ? JSON.parse(data.policyScript) : {}}
                       displayObjectSize={false}
                       displayDataTypes={false}
                       enableClipboard={false}
