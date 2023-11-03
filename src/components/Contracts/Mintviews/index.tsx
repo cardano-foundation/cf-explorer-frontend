@@ -109,7 +109,7 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
   const mintedAssetsData = useMemo(() => {
     const mintingTokens = (data?.mintingTokens as IContractItemTx["mintingTokens"]) || [];
     return mintingTokens.map((item) => ({
-      title: item.displayName || screen.isMobile ? getShortHash(item.fingerprint) : item.fingerprint,
+      title: !item.displayName || screen.isMobile ? getShortHash(item.fingerprint) : item.displayName,
       value: formatNumberDivByDecimals(item.quantity, item?.metadata?.decimals || 0),
       link: item.fingerprint
     }));
@@ -118,7 +118,7 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
   const burnedAssetsData = useMemo(() => {
     const burningTokens = (data?.burningTokens as IContractItemTx["burningTokens"]) || [];
     return burningTokens.map((item) => ({
-      title: item.displayName || screen.isMobile ? getShortHash(item.fingerprint) : item.fingerprint,
+      title: !item.displayName || screen.isMobile ? getShortHash(item.fingerprint) : item.displayName,
       value: formatNumberDivByDecimals(item.quantity, item?.metadata?.decimals || 0),
       link: item.fingerprint
     }));
