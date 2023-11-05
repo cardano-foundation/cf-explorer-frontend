@@ -37,31 +37,31 @@ const NativeScriptsDetail = () => {
       key: "mintingBurningPolicy",
       icon: MintingBurningPolicyIcon,
       children: <MinttingBurningPolicy />,
-      label: "Minting/ Burning Policy"
+      label: <Box data-testid="ns.mintBurnPolicy">Minting/ Burning Policy</Box>
     },
     {
       key: "associatedAddresses",
       icon: AssociatedAddressesIcon,
       children: <AssociatedAddress />,
-      label: t("common.associatedAddresses")
+      label: <Box data-testid="ns.AssociatedAddresses">{t("common.associatedAddresses")}</Box>
     },
     {
       key: "script",
       icon: ScriptTabIcon,
       children: <Script onVerifyScriptOpen={() => setOpen(true)} />,
-      label: "Script"
+      label: <Box data-testid="ns.script"> Script</Box>
     },
     {
       key: "token",
       icon: TokenTabIcon,
       children: <Token />,
-      label: "Token"
+      label: <Box data-testid="ns.token"> Token</Box>
     },
     {
       key: "assetHolders",
       icon: AssetHoldersIcon,
       children: <AssetHolders />,
-      label: "Asset Holders"
+      label: <Box data-testid="ns.assetHolders"> Asset Holders</Box>
     }
   ];
 

@@ -42,13 +42,13 @@ const ContractTabs = ({ setVersion }: { setVersion: (v: string) => void }) => {
     {
       key: "associated",
       icon: StyledAssociatedIcon,
-      label: <StyledTabName>{t("AssociatedAddresses")}</StyledTabName>,
+      label: <StyledTabName data-testid="sc.AssociatedAddresses">{t("AssociatedAddresses")}</StyledTabName>,
       children: <TabAssociated setVersion={setVersion} />
     },
     {
       key: "transactions",
       icon: UtxoIcon,
-      label: <StyledTabName>{t("glossary.transactions")}</StyledTabName>,
+      label: <StyledTabName data-testid="sc.transaction">{t("glossary.transactions")}</StyledTabName>,
       children: <TabTransactions />
     }
   ];
