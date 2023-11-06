@@ -27,15 +27,15 @@ const MinttingBurningPolicy = () => {
           <>
             {t("common.before")}{" "}
             <Typography display={"inline"} fontWeight={700} data-testid="ns.time">
-              "{formatDateTimeLocal(before)}"
+              "{formatDateTimeLocal(before)}"{" "}
             </Typography>
           </>
         )}
         {after && (
           <>
             {t("common.after")}{" "}
-            <Typography display={"inline"} fontWeight={700} data-testid="ns.time">
-              "{formatDateTimeLocal(after)}"
+            <Typography display={"inline"} fontWeight={700}>
+              "{formatDateTimeLocal(after)}"{" "}
             </Typography>
           </>
         )}
