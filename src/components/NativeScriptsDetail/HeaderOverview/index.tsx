@@ -22,9 +22,9 @@ const HeaderOverview: React.FC<HeaderOverviewProps> = ({ data, onVerifyScriptOpe
   return (
     <Header>
       <Box flex={1}>
-        <Title>{t("common.nativeScriptDetails")}</Title>
+        <Title data-testid="ns.title">{t("common.nativeScriptDetails")}</Title>
         <Box display="flex" gap={1}>
-          <Key>{t("common.scriptHash")}:</Key>
+          <Key data-testid="ns.scriptHash">{t("common.scriptHash")}:</Key>
           <ScriptHashLabel>
             <TruncateSubTitleContainer>
               <DynamicEllipsisText isTooltip isCopy value={data?.scriptHash || ""} />

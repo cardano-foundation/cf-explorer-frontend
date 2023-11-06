@@ -1,0 +1,30 @@
+describe("NativeScript Detail", () => {
+  it("should navigate to the nativeScript detail page", () => {
+    cy.visit(`/en/native-script/ed73836b3a978dce1a0227194b9b8fbb560d66838eee422c49d902b8`);
+    cy.get("[data-testid='ns.title'").contains("Native Script Details");
+    cy.get('[data-testid="ns.scriptHash"]').contains("Script Hash", { matchCase: false });
+    cy.get('[data-testid="ns.mintBurnPolicy"]').click();
+    cy.url().should("include", "/mintingBurningPolicy", { matchCase: false });
+    cy.get('[data-testid="ns.type"]').contains("Time locked", { matchCase: false });
+    cy.get('[data-testid="ns.time"]').contains("09/12/2023 03:38:02", { matchCase: false });
+    cy.get('[data-testid="ns.AssociatedAddresses"]').click();
+    cy.url().should("include", "/associated", { matchCase: false });
+    cy.get('[data-testid="sc.subNameTab"]').contains("Associated Addresses", { matchCase: false });
+    cy.get('[data-testid="ns.script"]').click();
+    cy.url().should("include", "/script", { matchCase: false });
+    cy.get('[data-testid="sc.scriptTab"]').contains("Script", { matchCase: false });
+    cy.get('[data-testid="ns.token"]').click();
+    cy.url().should("include", "/token", { matchCase: false });
+    cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Token Name");
+    cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Token ID");
+    cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Created At");
+    cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Total Supply");
+    cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Total Transactions");
+    cy.get('[data-testid="ns.assetHolders"]').click();
+    cy.url().should("include", "/assetHolders", { matchCase: false });
+    cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Address");
+    cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Token Name");
+    cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Token ID");
+    cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Balance");
+  });
+});
