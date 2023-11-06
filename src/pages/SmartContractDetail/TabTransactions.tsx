@@ -113,7 +113,7 @@ const TabTransactions = () => {
           <SubTitleModal>{t("glossary.address")}:</SubTitleModal>
           <StyledAddressModal>
             {associatedAdd.map((add: string) => (
-              <StyledLink to={details.address(add)} key={add}>
+              <StyledLink to={add.startsWith("stake") ? details.stake(add) : details.address(add)} key={add}>
                 <DynamicEllipsisText value={add} isTooltip sxFirstPart={{ maxWidth: "calc(100% - 80px)" }} />
               </StyledLink>
             ))}

@@ -25,11 +25,14 @@ const TabAssociated = ({ setVersion }: { setVersion: (v: string) => void }) => {
 
   return (
     <Box>
-      <StyledSubNameTab>{t("AssociatedAddresses")}:</StyledSubNameTab>
+      <StyledSubNameTab data-testid="sc.subNameTab">{t("AssociatedAddresses")}:</StyledSubNameTab>
       <Box>
         {loading || get(data, "associatedAddresses", []).length > 0 ? (
           data?.associatedAddresses.map((address: string) => (
-            <StyledLink to={details.address(address)} key={address}>
+            <StyledLink
+              to={address.startsWith("stake") ? details.stake(address) : details.address(address)}
+              key={address}
+            >
               <DynamicEllipsisText value={address} />
             </StyledLink>
           ))
