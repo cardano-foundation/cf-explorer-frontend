@@ -23,7 +23,7 @@ const AssociatedAddress: React.FC<TAssociatedAddressProps> = () => {
   };
   return (
     <Container>
-      <AssociatedAddressTitle>{t("common.associatedAddresses")}:</AssociatedAddressTitle>
+      <AssociatedAddressTitle data-testid="sc.subNameTab">{t("common.associatedAddresses")}:</AssociatedAddressTitle>
       {!associatedAddress.length && <EmptyRecord />}
       {associatedAddress.length > 0 &&
         associatedAddress.map((item) => (

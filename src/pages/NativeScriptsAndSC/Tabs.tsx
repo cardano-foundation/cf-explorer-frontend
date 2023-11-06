@@ -1,4 +1,4 @@
-import { useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import React, { useRef } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { useHistory, useParams } from "react-router-dom";
@@ -41,13 +41,13 @@ const Tabs = () => {
     {
       key: "native-scripts",
       icon: NativeScriptIcon,
-      label: t("NativeScripts"),
+      label: <Box data-testid="nativeScriptsTab">{t("NativeScripts")}</Box>,
       children: <TabNativeScripts />
     },
     {
       key: "smart-contracts",
       icon: SmartContractsIcon,
-      label: t("glossary.smartContracts"),
+      label: <Box data-testid="smartContractTab">{t("glossary.smartContracts")}</Box>,
       children: <TabSmartContracts />
     }
   ];
