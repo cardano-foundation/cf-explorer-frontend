@@ -1,30 +1,49 @@
-describe("NativeScript Detail", () => {
-  it("should navigate to the nativeScript detail page", () => {
-    cy.visit(`/en/native-script/ed73836b3a978dce1a0227194b9b8fbb560d66838eee422c49d902b8`);
-    cy.get("[data-testid='ns.title'").contains("Native Script Details");
-    cy.get('[data-testid="ns.scriptHash"]').contains("Script Hash", { matchCase: false });
-    cy.get('[data-testid="ns.mintBurnPolicy"]').click();
-    cy.url().should("include", "/mintingBurningPolicy", { matchCase: false });
-    cy.get('[data-testid="ns.type"]').contains("Time locked", { matchCase: false });
-    cy.get('[data-testid="ns.time"]').contains("09/12/2023 03:38:02", { matchCase: false });
-    cy.get('[data-testid="ns.AssociatedAddresses"]').click();
-    cy.url().should("include", "/associated", { matchCase: false });
-    cy.get('[data-testid="sc.subNameTab"]').contains("Associated Addresses", { matchCase: false });
-    cy.get('[data-testid="ns.script"]').click();
-    cy.url().should("include", "/script", { matchCase: false });
-    cy.get('[data-testid="sc.scriptTab"]').contains("Script", { matchCase: false });
-    cy.get('[data-testid="ns.token"]').click();
-    cy.url().should("include", "/token", { matchCase: false });
-    cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Token Name");
-    cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Token ID");
-    cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Created At");
-    cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Total Supply");
-    cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Total Transactions");
-    cy.get('[data-testid="ns.assetHolders"]').click();
-    cy.url().should("include", "/assetHolders", { matchCase: false });
-    cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Address");
-    cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Token Name");
-    cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Token ID");
-    cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Balance");
+const scriptHash = "6cbfab6e294c4616de42fce9616909ffcecdae584c293ce233627da6";
+describe("Native Script Details", () => {
+  it("should the page render", () => {
+    cy.visit(`en/native-script/${scriptHash}`);
+    cy.get("p").contains("Native Script Details", { matchCase: false });
+    cy.get(`[data-testid="ellipsis-text"]`).contains(scriptHash.slice(-10));
+    cy.get("button").contains("Verify Script", { matchCase: false });
+    cy.get(".MuiAccordionSummary-content").contains("Script", { matchCase: false });
+    cy.get(".MuiAccordionSummary-content").contains("Token", { matchCase: false });
+    cy.get(".MuiAccordionSummary-content").contains("Asset Holders", { matchCase: false });
+  });
+
+  it("should the script tab render", () => {
+    cy.visit(`en/native-script/${scriptHash}`);
+    cy.get("p").contains("Native Script Details", { matchCase: false });
+    cy.get(`[data-testid="ellipsis-text"]`).contains(scriptHash.slice(-10));
+    cy.get("button").contains("Verify Script", { matchCase: false });
+    cy.get(".MuiAccordionSummary-content").contains("Script", { matchCase: false }).click();
+    cy.get("p").contains("This script has not been verified. To verify, please click the button below", {
+      matchCase: false
+    });
+    cy.get(".MuiCollapse-wrapperInner button").contains("Verify Script", { matchCase: false });
+  });
+
+  it("should the token tab render", () => {
+    cy.visit(`en/native-script/${scriptHash}`);
+    cy.get("p").contains("Native Script Details", { matchCase: false });
+    cy.get(`[data-testid="ellipsis-text"]`).contains(scriptHash.slice(-10));
+    cy.get("button").contains("Verify Script", { matchCase: false });
+    cy.get(".MuiAccordionSummary-content").contains("Token", { matchCase: false }).click();
+    cy.get("table tr th").contains("Token Name");
+    cy.get("table tr th").contains("Token ID");
+    cy.get("table tr th").contains("Created At");
+    cy.get("table tr th").contains("Total Supply");
+    cy.get("table tr th").contains("Total Transactions");
+  });
+
+  it("should the token tab render", () => {
+    cy.visit(`en/native-script/${scriptHash}`);
+    cy.get("p").contains("Native Script Details", { matchCase: false });
+    cy.get(`[data-testid="ellipsis-text"]`).contains(scriptHash.slice(-10));
+    cy.get("button").contains("Verify Script", { matchCase: false });
+    cy.get(".MuiAccordionSummary-content").contains("Asset Holders", { matchCase: false }).click();
+    cy.get("table tr th").contains("Address");
+    cy.get("table tr th").contains("Token Name");
+    cy.get("table tr th").contains("Token ID");
+    cy.get("table tr th").contains("Balance");
   });
 });
