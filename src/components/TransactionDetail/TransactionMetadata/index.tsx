@@ -25,6 +25,7 @@ import {
 import { details } from "src/commons/routers";
 import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 import ContractsList from "src/components/Contracts";
+import { CustomAccordion } from "src/components/share/styled";
 
 import Collaterals from "./Collaterals";
 import Delegations from "./Delegations";
@@ -39,7 +40,7 @@ import TransactionSignatories from "./TransactionSignatories";
 import UTXO from "./UTXOs";
 import Withdrawals from "./Withdrawals";
 import "./index.css";
-import { CustomAccordion, TitleTab } from "./styles";
+import { TitleTab } from "./styles";
 
 interface TransactionMetadataProps {
   data: Transaction | null;
