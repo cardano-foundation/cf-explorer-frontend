@@ -95,7 +95,7 @@ const DelegationLists: React.FC = () => {
       ),
       key: "poolSize",
       minWidth: "120px",
-      render: (r) => <Box component={"span"}>{formatADAFull(r.poolSize)}</Box>,
+      render: (r) => <Box component={"span"}>{r.poolSize ? formatADAFull(r.poolSize) : "N/A"}</Box>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }

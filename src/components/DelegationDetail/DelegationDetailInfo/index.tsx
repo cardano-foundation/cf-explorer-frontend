@@ -281,8 +281,8 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             </InfoTitle>
             <InfoValue sx={{ wordBreak: "break-word" }}>
               <FlexGap10>
-                {formatADAFull(data?.poolSize)}
-                <ADAicon />
+                {data?.poolSize ? formatADAFull(data?.poolSize) : "N/A"}
+                {data?.poolSize ? <ADAicon /> : ""}
               </FlexGap10>
             </InfoValue>
           </Item>
