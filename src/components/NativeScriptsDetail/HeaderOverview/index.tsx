@@ -6,19 +6,15 @@ import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
 
 import { Header, Key, ScriptHashLabel, Title } from "./styles";
-import { VerifyScriptButton } from "../Tabs/styles";
-import { useNativeScriptDetail } from "../Tabs";
 
 export type HeaderOverviewProps = {
   data?: {
     scriptHash: string;
   };
-  onVerifyScriptOpen?: () => void;
 };
 
-const HeaderOverview: React.FC<HeaderOverviewProps> = ({ data, onVerifyScriptOpen }) => {
+const HeaderOverview: React.FC<HeaderOverviewProps> = ({ data }) => {
   const { t } = useTranslation();
-  const { script, initialized } = useNativeScriptDetail();
   return (
     <Header>
       <Box flex={1}>
@@ -32,9 +28,6 @@ const HeaderOverview: React.FC<HeaderOverviewProps> = ({ data, onVerifyScriptOpe
           </ScriptHashLabel>
         </Box>
       </Box>
-      {!script && initialized && (
-        <VerifyScriptButton onClick={() => onVerifyScriptOpen?.()}>{t("common.verifyScript")}</VerifyScriptButton>
-      )}
     </Header>
   );
 };
