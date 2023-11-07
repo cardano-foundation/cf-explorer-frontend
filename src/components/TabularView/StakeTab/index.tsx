@@ -1,15 +1,13 @@
-import React, { useState } from "react";
-import { Tab, Box, useTheme } from "@mui/material";
-import { TabContext, TabPanel } from "@mui/lab";
-import { useTranslation } from "react-i18next";
+import React, { useRef } from "react";
+import { Box, useTheme, AccordionSummary, AccordionDetails } from "@mui/material";
+import { IoIosArrowDown } from "react-icons/io";
 
-import CustomTooltip from "src/components/commons/CustomTooltip";
-import CustomTabTitle from "src/components/commons/CustomTabTitle";
+import { CustomAccordion } from "src/components/share/styled";
 
-import { StyledTabList } from "./styles";
+import { TitleTab } from "./styles";
 
 export interface StakeTabItem {
-  icon: React.FC;
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
   label: React.ReactNode;
   key: string;
   component: React.ReactNode;
@@ -18,77 +16,64 @@ export interface StakeTabItem {
 export interface StackTabProps {
   checkshow?: boolean;
   tabs: StakeTabItem[];
-  initTab?: string;
+  tabActive?: string;
   onChangeTab?: (tab: TabStakeDetail) => void;
   tabsRenderConfig?: ListStakeKeyResponse | ListTabResponseSPO;
 }
 
-const StakeTab: React.FC<StackTabProps> = ({
-  tabs,
-  initTab = "registration",
-  onChangeTab,
-  tabsRenderConfig,
-  checkshow
-}) => {
-  const { t } = useTranslation();
-  const [tabActive, setTabActive] = useState<string>(initTab);
+const StakeTab: React.FC<StackTabProps> = ({ tabs, tabActive, onChangeTab, tabsRenderConfig, checkshow }) => {
+  const tabRef = useRef<HTMLDivElement>();
   const theme = useTheme();
 
-  const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
-    if (checkshow && tabsRenderConfig && !tabsRenderConfig[tabs.find((t) => t.key === tab)?.keyCheckShow || ""]) return;
-    setTabActive(tab);
-    onChangeTab?.(tab);
+  const indexExpand = tabs.findIndex((item) => item.key === tabActive);
+
+  const needBorderRadius = (currentKey: string) => {
+    if (!tabActive) return "0";
+    const indexCurrent = tabs.findIndex((item) => item.key === currentKey);
+    if (indexExpand - 1 >= 0 && indexExpand - 1 === indexCurrent) return "0 0 12px 12px";
+    if (indexExpand + 1 < tabs.length && indexExpand + 1 === indexCurrent) return "12px 12px 0 0";
+    return "0";
   };
 
+  const handleChangeTab = (panel: TabStakeDetail) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+    tabRef?.current?.scrollIntoView();
+    onChangeTab?.(newExpanded ? panel : "");
+    if (checkshow && tabsRenderConfig && !tabsRenderConfig[tabs.find((t) => t.key === tabActive)?.keyCheckShow || ""])
+      return;
+  };
   return (
     <Box mt={4}>
-      <TabContext value={tabActive}>
-        <Box sx={{ borderBottom: (theme) => `1px solid ${theme.palette.primary[200]}` }} marginBottom="15px">
-          <StyledTabList
-            onChange={handleChange}
-            TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
-            scrollButtons="auto"
-            variant="scrollable"
-            visibleScrollbar={true}
-          >
-            {tabs.map(({ icon: Icon, key, label, keyCheckShow }) => (
-              <Tab
-                key={key}
-                value={key}
-                style={{ padding: "12px 0px", marginRight: 40 }}
-                label={
-                  <CustomTooltip
-                    title={
-                      !checkshow || (tabsRenderConfig && tabsRenderConfig[keyCheckShow || ""])
-                        ? undefined
-                        : t("common.noRecordAtTime")
-                    }
-                  >
-                    <CustomTabTitle
-                      disabled={!(!checkshow || (tabsRenderConfig && tabsRenderConfig[keyCheckShow || ""]))}
-                      labelProps={{ fontSize: "1.125rem !important" }}
-                      iconProps={{
-                        fill: key === "poolSize" ? "none" : "currentColor",
-                        stroke: key === "poolSize" ? "currentColor" : "none",
-                        width: 25
-                      }}
-                      active={key === tabActive}
-                      icon={Icon}
-                    >
-                      {label}
-                    </CustomTabTitle>
-                  </CustomTooltip>
-                }
+      {tabs.map(({ key, icon: Icon, label, component }, index) => (
+        <CustomAccordion
+          key={key}
+          expanded={tabActive === key}
+          customBorderRadius={needBorderRadius(key)}
+          isDisplayBorderTop={tabActive !== key && key !== tabs[0].key && index !== indexExpand + 1}
+          onChange={handleChangeTab(key as TabStakeDetail)}
+        >
+          <AccordionSummary
+            expandIcon={
+              <IoIosArrowDown
+                style={{
+                  width: "21px",
+                  height: "21px"
+                }}
+                color={key === tabActive ? theme.palette.primary.main : theme.palette.secondary.light}
               />
-            ))}
-          </StyledTabList>
-        </Box>
-        {tabs.map((item) => (
-          <TabPanel key={item.key} value={item.key} style={{ padding: 0 }}>
-            {item.component}
-          </TabPanel>
-        ))}
-      </TabContext>
+            }
+            sx={{
+              paddingX: theme.spacing(3),
+              paddingY: theme.spacing(1)
+            }}
+          >
+            <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.secondary.light} />
+            <TitleTab pl={1} active={+(key === tabActive)}>
+              {label}
+            </TitleTab>
+          </AccordionSummary>
+          <AccordionDetails>{component}</AccordionDetails>
+        </CustomAccordion>
+      ))}
     </Box>
   );
 };

@@ -25,7 +25,7 @@ const TabAssociated = ({ setVersion }: { setVersion: (v: string) => void }) => {
 
   return (
     <Box>
-      <StyledSubNameTab>{t("AssociatedAddresses")}:</StyledSubNameTab>
+      <StyledSubNameTab data-testid="sc.subNameTab">{t("AssociatedAddresses")}:</StyledSubNameTab>
       <Box>
         {loading || get(data, "associatedAddresses", []).length > 0 ? (
           data?.associatedAddresses.map((address: string) => (

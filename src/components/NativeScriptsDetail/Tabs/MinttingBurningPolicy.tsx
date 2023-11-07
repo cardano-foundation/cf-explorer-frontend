@@ -26,7 +26,7 @@ const MinttingBurningPolicy = () => {
         {before && (
           <>
             {t("common.before")}{" "}
-            <Typography display={"inline"} fontWeight={700}>
+            <Typography display={"inline"} fontWeight={700} data-testid="ns.time">
               "{formatDateTimeLocal(before)}"{" "}
             </Typography>
           </>
@@ -45,7 +45,7 @@ const MinttingBurningPolicy = () => {
 
   return (
     <Container>
-      <DataRow>
+      <DataRow data-testid="ns.type">
         <Key>{t("common.type")}:</Key>
         <Value>{getType()}</Value>
       </DataRow>

@@ -38,7 +38,7 @@ const Script: React.FC<TScriptProps> = ({ onVerifyScriptOpen }) => {
       )}
       {script && (
         <>
-          <Key>{t("common.script")}:</Key>
+          <Key data-testid="sc.scriptTab">{t("common.script")}:</Key>
           <JsonViewer
             value={data}
             displayObjectSize={false}

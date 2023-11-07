@@ -1,4 +1,4 @@
-import { useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import React, { useRef } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { useHistory, useParams } from "react-router-dom";
@@ -6,16 +6,11 @@ import { useTranslation } from "react-i18next";
 
 import { NativeScriptIcon, SmartContractsIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
+import { CustomAccordion } from "src/components/share/styled";
 
 import TabNativeScripts from "./TabNativeScripts";
 import TabSmartContracts from "./TabSmartContracts";
-import {
-  StyledAccordionDetails,
-  StyledAccordionSummary,
-  StyledContractTabs,
-  TitleTab,
-  CustomAccordion
-} from "./styles";
+import { StyledAccordionDetails, StyledAccordionSummary, StyledContractTabs, TitleTab } from "./styles";
 
 interface TTab {
   key: string;
@@ -41,13 +36,13 @@ const Tabs = () => {
     {
       key: "native-scripts",
       icon: NativeScriptIcon,
-      label: t("NativeScripts"),
+      label: <Box data-testid="nativeScriptsTab">{t("NativeScripts")}</Box>,
       children: <TabNativeScripts />
     },
     {
       key: "smart-contracts",
       icon: SmartContractsIcon,
-      label: t("glossary.smartContracts"),
+      label: <Box data-testid="smartContractTab">{t("glossary.smartContracts")}</Box>,
       children: <TabSmartContracts />
     }
   ];

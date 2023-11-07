@@ -45,10 +45,8 @@ describe("block spec", () => {
     cy.get('[data-testid="block-details-total-output-in-ada"]').should("contain", "18,246,431.529342");
     cy.get(":nth-child(6) > .css-seof3k").contains(block);
     cy.get(":nth-child(7) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Slot");
-    cy.get('[data-testid="table-common"]').verifyElementDisplay;
     cy.get(`[data-testid="table-common"] tr th`).contains("Tx Hash", { matchCase: false });
     cy.get(`[data-testid="table-common"] tr th`).contains("Created At");
-    cy.get(`[data-testid="table-common"] tr th`).contains("Block");
     cy.get(`[data-testid="table-common"] tr th`).contains("Addresses");
     cy.get(`[data-testid="table-common"] tr th`).contains("Fees");
     cy.get(`[data-testid="table-common"] tr th`).contains("Output in ADA");

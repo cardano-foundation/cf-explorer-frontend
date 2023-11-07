@@ -5,8 +5,8 @@ import { useHistory, useParams } from "react-router-dom";
 import { t } from "i18next";
 
 import { UtxoIcon } from "src/commons/resources";
-import { CustomAccordion } from "src/components/TransactionDetail/TransactionMetadata/styles";
 import { details } from "src/commons/routers";
+import { CustomAccordion } from "src/components/share/styled";
 
 import TabAssociated from "./TabAssociated";
 import TabTransactions from "./TabTransactions";
@@ -42,13 +42,13 @@ const ContractTabs = ({ setVersion }: { setVersion: (v: string) => void }) => {
     {
       key: "associated",
       icon: StyledAssociatedIcon,
-      label: <StyledTabName>{t("AssociatedAddresses")}</StyledTabName>,
+      label: <StyledTabName data-testid="sc.AssociatedAddresses">{t("AssociatedAddresses")}</StyledTabName>,
       children: <TabAssociated setVersion={setVersion} />
     },
     {
       key: "transactions",
       icon: UtxoIcon,
-      label: <StyledTabName>{t("glossary.transactions")}</StyledTabName>,
+      label: <StyledTabName data-testid="sc.transaction">{t("glossary.transactions")}</StyledTabName>,
       children: <TabTransactions />
     }
   ];

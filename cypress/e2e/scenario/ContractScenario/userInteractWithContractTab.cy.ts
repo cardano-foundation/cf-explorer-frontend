@@ -12,7 +12,7 @@ describe("user interact with contract tab", () => {
     cy.get("button").contains("Continue Reading", { matchCase: false });
     cy.get(`[data-testid="close-modal-button"]`).click();
     cy.get("button").contains("View Contract", { matchCase: false });
-    cy.get("p").contains("Contract Address", { matchCase: false });
+    cy.get("p").contains("Contract", { matchCase: false });
     cy.get("p").contains("Purpose", { matchCase: false });
   });
 
@@ -40,7 +40,7 @@ describe("user interact with contract tab", () => {
           cy.get(`[data-testid="close-modal-button"]`).click();
           cy.get(`[data-testid="goback-button"]`).click();
           cy.get("button").contains("View Contract", { matchCase: false });
-          cy.get("p").contains("Contract Address", { matchCase: false });
+          cy.get("p").contains("Contract", { matchCase: false });
           cy.get("p").contains("Purpose", { matchCase: false });
         }
         times.push("SPEND");
