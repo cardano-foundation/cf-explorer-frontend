@@ -88,7 +88,7 @@ const NativeScriptsDetail = () => {
           refresh?.();
         }}
       />
-      <HeaderOverview onVerifyScriptOpen={() => setOpen(true)} data={{ scriptHash: id }} />
+      <HeaderOverview data={{ scriptHash: id }} />
       <CustomAccordion loading={loading} tabs={smartcontractTabs} hiddenKeys={hiddenKeys} />
     </StyledContainer>
   );
