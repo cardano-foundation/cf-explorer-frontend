@@ -1,5 +1,70 @@
 # Changelog
 
+## [0.4.29](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.28...v0.4.29) (2023-11-08)
+
+
+### Features
+
+* MET-1475 update router ([cf84bab](https://github.com/cardano-foundation/cf-explorer-frontend/commit/cf84bab4aebd97ad32ca8a789829f9e3f02a29a3))
+* MET-1491 update tooltip ([e5de38f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e5de38fd4dd0350af124d66d78ac71f39c685251))
+* MET-1633 Metadata representation of array adds numbers of the index of the array (support ticket CF-182) ([489efe5](https://github.com/cardano-foundation/cf-explorer-frontend/commit/489efe5a1f417468cda0af61c313bf13275c0a59))
+* MET-1718 update cypress UI test for script page and detail ([d296c8e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d296c8e069f9d2822895e17049f6954b580dbcfc))
+* MET-1730 responsive device fold ([66d821b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/66d821bf37c8e1cb3aaf4ee0b3d3ff51abcc0fc0))
+* MET-1733 search contract ([e503dd4](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e503dd47503bd8d8dcb2fbe85c6611b296fc4c15))
+* MET-1733 search native script and smart contract ([1b60553](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1b605539678af7c6d4de98027215cbf796fe218c))
+* MET-1733 update path api ([5ebaa5e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/5ebaa5ed7be9b52756848809978313f190df35c7))
+* MET-1733 update router ([fb1c2d9](https://github.com/cardano-foundation/cf-explorer-frontend/commit/fb1c2d97c4ae25e03fe1119305f41c9c19d66c83))
+* MET-1733 update search ([264de01](https://github.com/cardano-foundation/cf-explorer-frontend/commit/264de0150cce63e48dd024a2008865c4769151cd))
+* MET-1733 update search ([4a62cf9](https://github.com/cardano-foundation/cf-explorer-frontend/commit/4a62cf99086b4ef6a1e0f205ae44d7125fd17b7d))
+* MET-1742 native script detail ([e227444](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e227444c569a8505b396c457ad61f3b2b707209b))
+* MET-1742 native script details ([3380728](https://github.com/cardano-foundation/cf-explorer-frontend/commit/33807288c8c7f49f29cb44224771477dc189cd85))
+* MET-1742 Native Script Details Page ([75fda9e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/75fda9e9b9fc67108eafb62f4b293cdced97563d))
+* MET-1742 Native Script Details Page ([b705f67](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b705f679a2e3c8a3e21628be81eb3932d8ce07f3))
+* MET-1742 native token detail ([fd37ecd](https://github.com/cardano-foundation/cf-explorer-frontend/commit/fd37ecd2f61e22d6e781ee5da99eb589b1a6e89f))
+* MET-1742 update script tab ([e932204](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e93220499b8f3cadbc4f705cc48962ef106bcb25))
+* MET-1743 integate api ([2fabe83](https://github.com/cardano-foundation/cf-explorer-frontend/commit/2fabe83dd2031471b40adf26f222a3e5ad6488b1))
+* MET-1743 remove contract tab ([efa7cb0](https://github.com/cardano-foundation/cf-explorer-frontend/commit/efa7cb0056619d931f61f940942fbc10866f7355))
+* MET-1743 unit test ([19367b3](https://github.com/cardano-foundation/cf-explorer-frontend/commit/19367b3db890902339ec06667af2d16c55bdc041))
+* MET-1745 update color ([d659b4b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d659b4be34fc55501e7d88f377009c9713f6ffa5))
+* remove backbutton ([697cefa](https://github.com/cardano-foundation/cf-explorer-frontend/commit/697cefa11ea82a9d9cc68dd10ea6d87b4b889744))
+* Sprint 4 - Cypress UI testing ([031aee6](https://github.com/cardano-foundation/cf-explorer-frontend/commit/031aee67cb8f5348a726f8992605a0f500a3deea))
+* update responsive fold 2 table ([f40e569](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f40e5693f4ba216ab01e8c7f97b18e168860f345))
+
+
+### Bug Fixes
+
+* height table ([48ccd78](https://github.com/cardano-foundation/cf-explorer-frontend/commit/48ccd789930e46847eae70ff5f4a6d2a65e06c32))
+* hyperlink to stake address detail ([6a3d9bf](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6a3d9bff922eece7340e33492b4f6b31154bb504))
+* Merge branch 'conflict/feature/MET-1743-new-design-smart-contract-detail-page' into sota_testing ([98fba3a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/98fba3ab13031a040743ca1cd8586ee7e981375e))
+* Merge branch 'develop' into feature/MET-1742-native-script-details-page ([43fc2fd](https://github.com/cardano-foundation/cf-explorer-frontend/commit/43fc2fda93d9fa080d2aad180862e15f09f29e06))
+* Merge branch 'develop' into feature/MET-1742-native-script-details-page ([6850c99](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6850c9959825028fa6e2d381808360a502cc5c90))
+* Merge branch 'develop' into feature/MET-1742-native-script-details-page ([d1f1330](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d1f133076e84b6efc0e2d7ef734775e504630c7a))
+* Merge branch 'develop' of github.com-fe-explorer-cardano:cardano-foundation/cf-explorer-frontend into feat/MET-1491-add-reference-input ([1a2751c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1a2751c7d1ebfa69b4fb047bc9d13b97f25c9478))
+* Merge branch 'develop' of github.com-fe-explorer-cardano:cardano-foundation/cf-explorer-frontend into feature/MET-1730-update-responsive-device-fold ([109151f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/109151fe0bcb50174e20ee51ea311de4cb489455))
+* Merge branch 'develop' of github.com-fe-explorer-cardano:cardano-foundation/cf-explorer-frontend into feature/MET-1743-new-design-smart-contract-detail-page ([d7a2f82](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d7a2f821c628315459840aa3db2e2ddca12e7823))
+* Merge branch 'develop', remote-tracking branch 'origin' into feature/MET-1742-native-script-details-page ([00a0eea](https://github.com/cardano-foundation/cf-explorer-frontend/commit/00a0eea3f60d9f659dbc61d6ebbfe44a58c24347))
+* Merge branch 'feat/MET-1733-search-contract' of github.com-fe-explorer-cardano:cardano-foundation/cf-explorer-frontend into feat/MET-1733-search-contract ([6c64b48](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6c64b48d2a8c2a64f4c28cbf987b992940936cb1))
+* merge main to develop ([9cd4a31](https://github.com/cardano-foundation/cf-explorer-frontend/commit/9cd4a31615615d823937c76ef81e5cc41e3ff6b5))
+* MET-1475 update color ([9a5cfe6](https://github.com/cardano-foundation/cf-explorer-frontend/commit/9a5cfe6b4aae489a37a49dcf21bd964a25bd1a11))
+* MET-1491 add tooltip ([9b15802](https://github.com/cardano-foundation/cf-explorer-frontend/commit/9b158026f0af9a6c03bc777fc735b6d4ac0197fa))
+* MET-1706 color wrong ([f97bb90](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f97bb906497f05d5e8d3119652ba374059559863))
+* MET-1706 fix scroll delegation ([1b3392a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1b3392aea6c3088e7dca1904bb480774e90e931a))
+* MET-1706 fix show scroll trx detail ([f3109f5](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f3109f5bdbeb9ddea75102f43280af82a7b9e723))
+* MET-1706 update color ([25cf72f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/25cf72fbabc256576c89abfb8ba355d107ad8658))
+* MET-1706 update column ([0ffcd13](https://github.com/cardano-foundation/cf-explorer-frontend/commit/0ffcd13aecf0f8fc64fa16f1f33f996bd28bbb52))
+* MET-1706 update reward distribution ([639a08f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/639a08f95d606246cb10d1eb06fb64a1ea847745))
+* MET-1733 fix show notfound data ([46e78ad](https://github.com/cardano-foundation/cf-explorer-frontend/commit/46e78ad1e76b4a5acec290a3b53a16429fa338e6))
+* MET-1735 fix text overflow in metedata tab token ([4d5ea7b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/4d5ea7bcec4bb8db54330974fe274eae65a196cc))
+* MET-1742 remove verify button on top left ([de72e98](https://github.com/cardano-foundation/cf-explorer-frontend/commit/de72e98299285b0b6854253f5c2794289099b3a3))
+* MET-1742 update-hyperlink ([781f38d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/781f38d47112bddf077d864a8a5e0a5c452f9be9))
+* MET-1743 redirect stake wrong ([1048538](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1048538909f09504c1c9b9b76c53d651e690caa2))
+* MET-1745 update address hash ([efa6b85](https://github.com/cardano-foundation/cf-explorer-frontend/commit/efa6b85b80798ef2fc59c3fad0330a7656403d64))
+* MET-1762 fix bugs for smartcontract graph ([d416cf9](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d416cf9711cd614dd82619c4042163cfa41e9960))
+* replace api script ([939a411](https://github.com/cardano-foundation/cf-explorer-frontend/commit/939a411444d05314d66aeff2958911a265871e0b))
+* responsive contract item ([6d2cf90](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6d2cf9066d481a4c9bd32f8b9d09c125c2436dd2))
+* responsive paging fold 2 ([cb1c0ff](https://github.com/cardano-foundation/cf-explorer-frontend/commit/cb1c0ffc0941277699efb02e908045a68c789e29))
+* update ui no records ([7d1f647](https://github.com/cardano-foundation/cf-explorer-frontend/commit/7d1f6477ca05a85a5cd189a31a52da102f2e5c19))
+
 ## [0.4.28](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.27...v0.4.28) (2023-10-24)
 
 
