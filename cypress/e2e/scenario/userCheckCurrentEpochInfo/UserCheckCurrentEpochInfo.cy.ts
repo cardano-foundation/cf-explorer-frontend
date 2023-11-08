@@ -6,8 +6,6 @@ describe("User check information of current Epoch", () => {
     cy.get('[data-testid="search-bar"]').should("be.visible");
     cy.get('[data-test-id="CircularProgressbarWithChildren"]').should("be.visible");
     cy.get('[data-testid="table-common"]').should("be.visible");
-    cy.get('[aria-label="pagination navigation"]').should("be.visible");
-    cy.get("span").contains("Per page").should("be.visible");
 
     cy.get('[data-test-id="CircularProgressbarWithChildren"]').click();
     cy.get("a").contains("View Details", { matchCase: false }).should("be.visible");
@@ -27,8 +25,8 @@ describe("User check information of current Epoch", () => {
     cy.get('[data-testid="footer"]').scrollIntoView();
     cy.get('[data-testid="table-common"] tbody tr').then(($element) => {
       if ($element.length > 10) {
+        cy.get('[aria-label="pagination navigation"]').scrollIntoView();
         cy.get('[aria-label="pagination navigation"]').should("be.visible");
-        cy.get("span").contains("Per page").should("be.visible");
       } else {
         cy.log("Total Transaction record is less than 10");
       }

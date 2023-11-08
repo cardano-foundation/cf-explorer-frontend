@@ -2,14 +2,14 @@ import { Box, Checkbox, Typography, styled, Pagination, MenuItem, alpha } from "
 
 import CustomSelect from "../CustomSelect";
 
-export const Empty = styled(Box)<{ isModal?: number }>`
+export const Empty = styled(Box)<{ ismodal?: number }>`
   text-align: center;
   padding: 30px 0;
   position: relative;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  background: ${({ isModal, theme }) =>
-    theme.isDark && isModal ? theme.palette.secondary[100] : theme.palette.secondary[0]};
+  background: ${({ ismodal, theme }) =>
+    theme.isDark && ismodal ? theme.palette.secondary[100] : theme.palette.secondary[0]};
 `;
 
 export const EmtyImage = styled("img")`
@@ -35,7 +35,7 @@ export const THead = styled("thead")(({ theme }) => ({
   }
 }));
 
-export const THeader = styled("th")<{ isModal?: number }>`
+export const THeader = styled("th")<{ ismodal?: number }>`
   text-align: left;
   font-family: var(--font-family-text);
   font-weight: var(--font-weight-bold);
@@ -44,8 +44,8 @@ export const THeader = styled("th")<{ isModal?: number }>`
   color: ${({ theme }) => theme.palette.secondary.main};
   position: sticky;
   top: 0;
-  background-color: ${({ theme, isModal }) =>
-    isModal && theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0]};
+  background-color: ${({ theme, ismodal }) =>
+    ismodal && theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0]};
   z-index: 2;
 `;
 
@@ -70,7 +70,7 @@ export const TCol = styled("td")<{
   maxWidth?: number | string;
   hiddenBorder?: boolean;
   selected?: number;
-  isModal?: number;
+  ismodal?: number;
 }>`
   width: ${({ width }) => (typeof width === "number" ? `${width}px` : width || "max-content")};
   min-width: ${({ minWidth }) => (typeof minWidth === "number" ? `${minWidth}px` : minWidth || "80px")};
@@ -84,7 +84,7 @@ export const TCol = styled("td")<{
   background: ${(props) =>
     props.selected
       ? props.theme.palette.primary[100]
-      : props.isModal && props.theme.isDark
+      : props.ismodal && props.theme.isDark
       ? props.theme.palette.secondary[100]
       : props.theme.palette.secondary[0]};
 `;
@@ -144,10 +144,10 @@ export const WrappModalScrollBar = styled(Box)(
 `
 );
 
-export const Wrapper = styled(Box)<{ loading?: number }>(
-  ({ theme, loading }) => `
+export const Wrapper = styled(Box)<{ loading?: number; ismodal?: number }>(
+  ({ theme, loading, ismodal }) => `
   overflow: auto;
-  background: ${theme.palette.secondary[0]};
+  background: ${ismodal ? theme.palette.secondary[100] : theme.palette.secondary[0]};
   padding: ${theme.spacing(1)};
   padding-top: 0;
   border-radius: ${theme.spacing(1.5)};
@@ -231,6 +231,11 @@ export const SelectMui = styled(CustomSelect)(({ theme }) => ({
   background: "transparent",
   "& >svg": {
     top: "calc(50% - 9px)"
+  },
+  [theme.breakpoints.down(400)]: {
+    "& > div": {
+      padding: "2.45px 7px"
+    }
   }
 }));
 
@@ -267,11 +272,35 @@ export const TableCustomTitle = styled(Box)`
   text-align: left;
 `;
 
-export const StyledPagination = styled(Pagination)(() => ({
+export const StyledPagination = styled(Pagination)(({ theme }) => ({
   "ul li > button": {
     width: 24,
     height: 24,
     padding: 0
+  },
+  [theme.breakpoints.down(430)]: {
+    width: "80%",
+    "ul li:nth-child(1)": {
+      order: 5
+    },
+    "ul li:nth-child(2)": {
+      order: 6
+    },
+    "ul li:nth-child(3)": {
+      order: 1,
+      width: "100%",
+      marginBottom: "8px",
+      "& div": {
+        textAlign: "left"
+      }
+    },
+    "ul li:nth-child(10)": {
+      order: 7,
+      marginLeft: "auto"
+    },
+    "ul li:nth-child(11)": {
+      order: 8
+    }
   }
 }));
 
@@ -281,5 +310,22 @@ export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   background: theme.palette.secondary[0] + " !important",
   "&:hover, &.Mui-selected": {
     backgroundColor: theme.palette.primary[200] + " !important"
+  }
+}));
+
+export const StyledResult = styled(Typography)(({ theme }) => ({
+  marginLeft: "20px",
+  fontSize: "0.875rem",
+  [theme.breakpoints.down(400)]: {
+    marginLeft: "8px"
+  }
+}));
+
+export const StyledPerPage = styled(Typography)(({ theme }) => ({
+  marginLeft: theme.spacing(1),
+  fontSize: "0.875rem",
+  textWrap: "nowrap",
+  [theme.breakpoints.down(400)]: {
+    marginLeft: "4px"
   }
 }));

@@ -27,9 +27,19 @@ export const API = {
     LIST: "epochs"
   },
   POLICY: "policies",
+  SCRIPTS_SEARCH: "scripts/search",
   POOL: "pools",
 
-  TOKEN: { LIST: "tokens", TOKEN_TRX: "tokens/:tokenId/txs", ANALYTICS: "tokens/analytics" },
+  TOKEN: {
+    LIST: "tokens",
+    TOKEN_TRX: "tokens/:tokenId/txs",
+    ANALYTICS: "tokens/analytics",
+    NATIVE_SCRIPT: (scriptHash: string) => "scripts/native-scripts/" + scriptHash,
+    VERIFY_SCRIPT: (scriptHash: string) => `scripts/native-scripts/${scriptHash}/verify`,
+    TOKENS_SCRIPTED: (scriptHash: string) => `scripts/native-scripts/${scriptHash}/tokens`,
+    TOKEN_HOLDERS: (scriptHash: string) => `scripts/native-scripts/${scriptHash}/holders`,
+    POLICIES: (scriptHash: string) => `/policies/${scriptHash}`
+  },
   TRANSACTION: {
     CURRENT: "txs/current",
     DETAIL: "txs",
@@ -119,7 +129,13 @@ export const API = {
     SCRIPT: (address: string) => `contracts/${address}/script`
   },
   STORIES: (query: { [key: string]: string | number }) => `news?${stringify(query)}`,
-  SEARCH_ALL: (query: string) => `/search?${stringify({ query })}`
+  SEARCH_ALL: (query: string) => `/search?${stringify({ query })}`,
+  SCRIPTS: {
+    SMART_CONTRACTS: "scripts/contracts",
+    NATIVE_SCRIPTS: "scripts/native-scripts",
+    ASSOCIATED_ADDRESS: (scriptHash: string) => `scripts/contracts/${scriptHash}`,
+    SCRIPT_TXS_DETAIL: (scriptHash: string) => `scripts/contracts/${scriptHash}/txs`
+  }
 };
 
 export const USER_API = {

@@ -40,12 +40,12 @@ const Spendviews: React.FC<SpendViewProps> = ({ data, isMobile }) => {
       {
         start: leftBoxRef,
         end: rightBoxRef,
-        startPosition: { 0: ["center", "bottom"], sm: ["right", "middle"] },
-        endPosition: { 0: ["center", "top"], sm: ["left", "middle"] },
-        arrow: { 0: "top", sm: "left" },
+        startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
+        endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
+        arrow: { 0: "top", lg: "left" },
         fold: { sm: "horizontal", lg: "none" },
-        startOffset: { 0: [0, 0], sm: [0, 0] },
-        endOffset: { 0: [0, -16], sm: [0, 0] }
+        startOffset: { 0: [0, 0], lg: [0, 0] },
+        endOffset: { 0: [0, -16], lg: [0, 0] }
       }
     ];
   }, []);
@@ -119,7 +119,7 @@ const Spendviews: React.FC<SpendViewProps> = ({ data, isMobile }) => {
         </SpendRounded>
       </SpendBlueBox>
       <MiddleBox ref={rightBoxRef}>
-        <Contract hash={data?.address} detail={details.address} />
+        <Contract hash={data?.scriptHash} detail={details.smartContract} />
         <CompiledCode onClick={() => setOpenCompiledCode(!openCompiledCode)} />
       </MiddleBox>
       <DrawPath

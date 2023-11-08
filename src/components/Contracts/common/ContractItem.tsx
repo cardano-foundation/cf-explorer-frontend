@@ -35,27 +35,27 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
     switch (data.purpose) {
       case "SPEND":
         return {
-          value: data.address,
+          value: data.scriptHash,
           explain: t("explain.spend.desc"),
-          detail: details.contract
+          detail: details.smartContract
         };
       case "MINT":
         return {
           value: data.scriptHash,
           explain: t("explain.mint.desc"),
-          detail: details.policyDetail
+          detail: details.smartContract
         };
       case "CERT":
         return {
-          value: data.stakeAddress,
+          value: data.scriptHash,
           explain: t("explain.cert.desc"),
-          detail: details.stake
+          detail: details.smartContract
         };
       case "REWARD":
         return {
-          value: data.stakeAddress,
+          value: data.scriptHash,
           explain: t("explain.reward.desc"),
-          detail: details.stake
+          detail: details.smartContract
         };
     }
   }, [data]);
@@ -69,7 +69,7 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
   return (
     <CLCardContaienr data-testid="contract-card-item">
       <Box>
-        <WrapLabel>{t("contract.address")}:</WrapLabel>
+        <WrapLabel>{t("glossary.contract")}:</WrapLabel>
         <StyledLink
           style={{
             fontWeight: "500",

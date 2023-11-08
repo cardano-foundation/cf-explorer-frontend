@@ -10,7 +10,9 @@ const tabConfig: ListStakeKeyResponse = {
   hasDelegation: true,
   hasRegistration: true,
   hasWithdrawal: true,
-  hashRewards: true
+  hashRewards: true,
+  totalDelegatorRewards: true,
+  totalOperatorRewards: true
 };
 
 describe("DelegatorLifecycle timeline view", () => {

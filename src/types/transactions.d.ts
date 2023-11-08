@@ -145,8 +145,19 @@ interface IContractItemTx {
   utxoHash?: string;
   utxoIndex?: number;
   redeemerCertType?: "DELEGATION" | "STAKE_DEREGISTRATION";
+  referenceInputs?: ReferenceInput[];
 }
-
+interface ReferenceInput {
+  address: string;
+  index: number;
+  script: string;
+  scriptHash: string;
+  txHash: string;
+  value: number;
+  datumHash: string;
+  datum: string;
+  scriptType: string;
+}
 interface DMetadata {
   decimals: number;
 }

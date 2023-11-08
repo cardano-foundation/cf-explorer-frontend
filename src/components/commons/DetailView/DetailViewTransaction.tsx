@@ -9,7 +9,7 @@ import useFetch from "src/commons/hooks/useFetch";
 import {
   CubeIconComponent,
   DelegationHistoryMainIcon,
-  DelegationIconUrl,
+  DelegationIconComponent,
   FileEditIcon,
   GitCommitIcon,
   InstantaneousHistoryComponent,
@@ -107,7 +107,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
     {
       key: "delegations",
       label: t("tab.delegations"),
-      icon: <DetailLinkImage src={DelegationIconUrl} alt="contact" />
+      icon: <DelegationIconComponent />
     },
     { key: "mints", label: t("tab.minting"), icon: <MintingIconComponent /> },
     {

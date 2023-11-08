@@ -7,10 +7,19 @@ export const ModalContent = styled(Box)`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-height: 70vh;
+  max-height: 70dvh;
   padding: 4px;
+`;
+
+export const SlotContainer = styled(Box)`
+  flex: 1;
+  overflow: auto;
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    max-height: 70vh;
+    max-height: 70dvh;
+  }
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
   }
   &::-webkit-scrollbar-track {
     background: transparent;
@@ -19,7 +28,6 @@ export const ModalContent = styled(Box)`
     background: transparent;
   }
   &:hover {
-    border-radius: 8px 0px 0px 8px;
     &::-webkit-scrollbar-thumb {
       background: ${({ theme }) => theme.palette.secondary.light};
     }
@@ -97,3 +105,22 @@ export const FoldCardValue = styled(Box)`
     line-break: anywhere;
   }
 `;
+
+export const TitleReference = styled(Box)(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  fontWeight: "bold",
+  fontSize: 16
+}));
+export const ValueReference = styled(Box)(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  fontSize: 16
+}));
+export const UTXOReference = styled(Link)(({ theme }) => ({
+  color: `${theme.palette.primary.main} !important`,
+  fontSize: 16,
+  fontWeight: "bold"
+}));
+export const ExternalLink = styled("a")(({ theme }) => ({
+  color: `${theme.palette.primary.main} !important`,
+  textDecoration: "underline !important"
+}));

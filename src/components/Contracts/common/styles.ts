@@ -100,7 +100,7 @@ export const CLCardContaienr = styled(Box)`
     width: 100%;
     display: flex;
     gap: 4px;
-    align-items: center;
+    align-items: flex-start;
   }
 `;
 
@@ -123,3 +123,30 @@ export const WrapLabel = styled(Typography)(({ theme }) => ({
   color: theme.palette.secondary.light,
   textAlign: "left"
 }));
+
+export const DataReferenceValue = styled(Typography)`
+  font-weight: 400;
+  color: ${({ theme }) => (theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light)};
+  font-feature-settings: "clig" off, "liga" off;
+  line-height: normal;
+  line-break: anywhere;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  &:hover {
+    border-radius: 8px 0px 0px 8px;
+    &::-webkit-scrollbar-thumb {
+      background: ${({ theme }) => theme.palette.secondary.light};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${({ theme }) => theme.palette.primary[100]};
+    }
+  }
+`;

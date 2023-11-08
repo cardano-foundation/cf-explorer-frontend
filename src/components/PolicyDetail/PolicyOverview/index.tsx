@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Box, useTheme } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
+import { useTranslation } from "react-i18next";
 
 import policyIcon from "src/commons/resources/icons/policyIcon.svg";
 import ScriptModal from "src/components/ScriptModal";
@@ -30,6 +31,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
   const [openModal, setOpenModal] = useState(false);
   const theme = useTheme();
   const history = useHistory();
+  const { t } = useTranslation();
 
   return (
     <Box data-testid="container">
@@ -37,10 +39,10 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
         <Box>
           <BackButton onClick={history.goBack}>
             <HiArrowLongLeft color={theme.palette.secondary.light} />
-            <BackText>Back</BackText>
+            <BackText>{t("common.back")}</BackText>
           </BackButton>
           <HeaderContainer>
-            <HeaderTitle>Policy Details</HeaderTitle>
+            <HeaderTitle>{t("common.policyDetails")}</HeaderTitle>
           </HeaderContainer>
           <SlotLeaderContainer>
             {loading ? (
@@ -49,7 +51,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
               <Box>
                 <SlotLeader>
                   <Box fontWeight={400} color={(theme) => theme.palette.secondary.light} sx={{ textWrap: "nowrap" }}>
-                    Policy ID:{" "}
+                    {t("common.scriptHash")}:&nbsp;
                   </Box>{" "}
                   <PolicyIdContainer>
                     <DynamicEllipsisText value={data?.policyId || ""} isCopy />
@@ -76,7 +78,7 @@ const PolicyOverview: React.FC<Props> = ({ data, loading }) => {
             <img src={theme.isDark ? PolicyDark : policyIcon} alt="" width={"40%"} />
           </Box>
           <Box display={"flex"} flexDirection="column" height={"100%"} justifyContent="space-between">
-            <Box>Policy Script</Box>
+            <Box>{t("common.policyScript")}</Box>
           </Box>
         </CardItem>
       </OverViewContainer>

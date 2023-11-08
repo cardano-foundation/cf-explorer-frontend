@@ -14,7 +14,9 @@ const ADAHolderRect: React.FC<Props> = forwardRef(({ disabled, ...props }, boxRe
   return (
     <RectBox disabled={+!!disabled} {...props} ref={boxRef}>
       <FacingImg src={theme.isDark ? AdaHolderIconDarlUrl : AdaHolderIconUrl} />
-      <DisableAbleLabel disabled={+!!disabled}>{t("common.adaHolder")}</DisableAbleLabel>
+      <DisableAbleLabel disabled={+!!disabled}>
+        {t("common.adaHolder")} <br /> Reward
+      </DisableAbleLabel>
     </RectBox>
   );
 });
