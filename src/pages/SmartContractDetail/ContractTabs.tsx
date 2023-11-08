@@ -5,8 +5,8 @@ import { useHistory, useParams } from "react-router-dom";
 import { t } from "i18next";
 
 import { UtxoIcon } from "src/commons/resources";
-import { CustomAccordion } from "src/components/TransactionDetail/TransactionMetadata/styles";
 import { details } from "src/commons/routers";
+import { CustomAccordion } from "src/components/share/styled";
 
 import TabAssociated from "./TabAssociated";
 import TabTransactions from "./TabTransactions";

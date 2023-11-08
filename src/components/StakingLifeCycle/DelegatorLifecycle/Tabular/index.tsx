@@ -32,7 +32,7 @@ interface ITabularProps {
 
 const Tabular = ({ tabsRenderConfig }: ITabularProps) => {
   const { t } = useTranslation();
-  const { stakeId = "", tab = "registration" } = useParams<{ stakeId: string; tab: DelegationStep }>();
+  const { stakeId = "", tab = "" } = useParams<{ stakeId: string; tab: DelegationStep }>();
   const history = useHistory();
   const tabs: ITabularTab[] = [
     {
@@ -74,7 +74,7 @@ const Tabular = ({ tabsRenderConfig }: ITabularProps) => {
   if (!tabsRenderConfig) return null;
 
   const onChangeTab = (tab: TabStakeDetail) => {
-    history.replace(details.staking(stakeId, "tabular", tab as TTabularTabKey));
+    history.replace(details.staking(stakeId, "tabular", tab as TTabularTabKey).replaceAll("//", ""));
   };
 
   return (
@@ -83,7 +83,7 @@ const Tabular = ({ tabsRenderConfig }: ITabularProps) => {
       <StakeTab
         tabsRenderConfig={tabsRenderConfig}
         tabs={tabs}
-        initTab={tab}
+        tabActive={tab}
         onChangeTab={onChangeTab}
         checkshow={true}
       />
