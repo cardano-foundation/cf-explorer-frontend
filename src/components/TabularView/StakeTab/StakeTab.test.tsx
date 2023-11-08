@@ -29,12 +29,8 @@ describe("StakeTab", () => {
   it("should component renders", () => {
     render(<StakeTab tabs={tabs} />);
 
-    const tab1 = screen.getByRole("tab", {
-      name: /registrationicon\.svg registration/i
-    });
-    const tab2 = screen.getByRole("tab", {
-      name: /rewardswithdrawalicon\.svg withdrawal history/i
-    });
+    const tab1 = screen.getByText("Registration");
+    const tab2 = screen.getByText("Withdrawal History");
 
     expect(tab1).toBeInTheDocument();
     expect(tab2).toBeInTheDocument();
@@ -42,20 +38,12 @@ describe("StakeTab", () => {
 
   it("should component change tab", async () => {
     render(<StakeTab tabs={tabs} />);
-    const tab1 = screen.getByRole("tab", {
-      name: /registrationicon\.svg registration/i
-    });
-    const tab2 = screen.getByRole("tab", {
-      name: /rewardswithdrawalicon\.svg withdrawal history/i
-    });
+    const tab1 = screen.getByText("Registration");
+    const tab2 = screen.getByText("Withdrawal History");
 
     expect(tab1).toBeInTheDocument();
     expect(tab2).toBeInTheDocument();
-    expect(
-      screen.getByRole("columnheader", {
-        name: /certificate/i
-      })
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Certi/i)).toBeInTheDocument();
     await userEvent.click(tab2);
     await waitFor(() => {
       expect(screen.getByText(/withdrawn\/fees/i)).toBeInTheDocument();

@@ -41,39 +41,51 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, tabActive, onChangeTab, tabsR
     if (checkshow && tabsRenderConfig && !tabsRenderConfig[tabs.find((t) => t.key === tabActive)?.keyCheckShow || ""])
       return;
   };
+
+  const getColorTab = (key: string, tabActive: string | undefined): string => {
+    if (key === tabActive) return theme.palette.primary.main;
+    return theme.palette.secondary.light;
+  };
+
   return (
     <Box mt={4}>
-      {tabs.map(({ key, icon: Icon, label, component }, index) => (
-        <CustomAccordion
-          key={key}
-          expanded={tabActive === key}
-          customBorderRadius={needBorderRadius(key)}
-          isDisplayBorderTop={tabActive !== key && key !== tabs[0].key && index !== indexExpand + 1}
-          onChange={handleChangeTab(key as TabStakeDetail)}
-        >
-          <AccordionSummary
-            expandIcon={
-              <IoIosArrowDown
-                style={{
-                  width: "21px",
-                  height: "21px"
-                }}
-                color={key === tabActive ? theme.palette.primary.main : theme.palette.secondary.light}
-              />
-            }
-            sx={{
-              paddingX: theme.spacing(3),
-              paddingY: theme.spacing(1)
-            }}
+      {tabs.map(({ key, icon: Icon, label, component }, index) => {
+        const colorActive = getColorTab(key, tabActive);
+        return (
+          <CustomAccordion
+            key={key}
+            expanded={tabActive === key}
+            customBorderRadius={needBorderRadius(key)}
+            isDisplayBorderTop={tabActive !== key && key !== tabs[0].key && index !== indexExpand + 1}
+            onChange={handleChangeTab(key as TabStakeDetail)}
           >
-            <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.secondary.light} />
-            <TitleTab pl={1} active={+(key === tabActive)}>
-              {label}
-            </TitleTab>
-          </AccordionSummary>
-          <AccordionDetails>{component}</AccordionDetails>
-        </CustomAccordion>
-      ))}
+            <AccordionSummary
+              expandIcon={
+                <IoIosArrowDown
+                  style={{
+                    width: "21px",
+                    height: "21px"
+                  }}
+                  color={colorActive}
+                />
+              }
+              sx={{
+                paddingX: theme.spacing(3),
+                paddingY: theme.spacing(1)
+              }}
+            >
+              <Icon
+                fill={key === "poolSize" ? "none" : colorActive}
+                stroke={key === "poolSize" ? colorActive : "none"}
+              />
+              <TitleTab pl={1} active={+(key === tabActive)}>
+                {label}
+              </TitleTab>
+            </AccordionSummary>
+            <AccordionDetails>{component}</AccordionDetails>
+          </CustomAccordion>
+        );
+      })}
     </Box>
   );
 };

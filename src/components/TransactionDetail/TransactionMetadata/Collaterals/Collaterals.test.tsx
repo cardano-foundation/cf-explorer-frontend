@@ -69,7 +69,7 @@ describe("Collaterals component", () => {
   const { collateralInputResponses } = mockCollaterals;
   it("should component render", () => {
     render(<Collaterals data={mockCollaterals} />);
-    const link = screen.getByRole("link", { name: /address-input-1/i });
+    const link = screen.getByRole("link", { name: /input-1/i });
     const address = within(link).getByTestId("ellipsis-text");
     expect(address).toBeInTheDocument();
   });
@@ -81,7 +81,7 @@ describe("Collaterals component", () => {
         <Collaterals data={mockCollaterals} />
       </Router>
     );
-    const link = screen.getByRole("link", { name: /address-input-1/i });
+    const link = screen.getByRole("link", { name: /input-1/i });
     const address = within(link).getByTestId("ellipsis-text");
     fireEvent.click(address);
     expect(history.location.pathname).toBe(details.address(collateralInputResponses[0].address));
