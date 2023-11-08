@@ -413,8 +413,8 @@ const Table: React.FC<TableProps> = ({
   const tableRef = useRef<HTMLTableElement>(null);
   const wrapperRef = useRef<HTMLElement>(null);
   const { width } = useScreen();
-
-  let heightTable = Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight * 0.5);
+  const scrollHeight = 5;
+  let heightTable = Math.min((tableRef?.current?.clientHeight || 0) + scrollHeight, window.innerHeight * 0.5);
 
   if (width >= breakpoints.values.sm && (data || []).length >= 9) {
     const footerHeight = document.getElementById("footer")?.offsetHeight || SPACING_TOP_TABLE;
