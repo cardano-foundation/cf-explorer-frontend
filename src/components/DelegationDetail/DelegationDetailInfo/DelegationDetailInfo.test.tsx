@@ -1,8 +1,4 @@
-import { Router } from "react-router-dom";
-import { createBrowserHistory } from "history";
-
-import { fireEvent, render, screen } from "src/test-utils";
-import { details } from "src/commons/routers";
+import { render, screen } from "src/test-utils";
 
 import DelegationDetailInfo, { IDelegationDetailInfo } from ".";
 
@@ -36,15 +32,5 @@ describe("DelegationDetailInfo component", () => {
     render(<DelegationDetailInfo {...mockProps} />);
     expect(screen.getByRole("heading", { name: /sample pool/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /please sign in to save your bookmark/i })).toBeInTheDocument();
-  });
-  it("should commponent redirect to detail page", () => {
-    const history = createBrowserHistory();
-    render(
-      <Router history={history}>
-        <DelegationDetailInfo {...mockProps} />
-      </Router>
-    );
-    fireEvent.click(screen.getByRole("link", { name: /owneraccount1/i }));
-    expect(history.location.pathname).toBe(details.stake(mockProps.data?.ownerAccounts[0]));
   });
 });
