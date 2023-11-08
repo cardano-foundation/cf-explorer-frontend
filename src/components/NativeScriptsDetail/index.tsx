@@ -18,6 +18,7 @@ import MinttingBurningPolicy from "src/components/NativeScriptsDetail/Tabs/Mintt
 import Script from "src/components/NativeScriptsDetail/Tabs/Script";
 import Token from "src/components/NativeScriptsDetail/Tabs/Token";
 import AssetHolders from "src/components/NativeScriptsDetail/Tabs/AssetHolders";
+import { details } from "src/commons/routers";
 
 import { StyledContainer } from "./styles";
 import { useNativeScriptDetail } from "./Tabs";
@@ -72,6 +73,10 @@ const NativeScriptsDetail = () => {
     return keys;
   }, [associatedAddress, keyHashes]);
 
+  const onTabChange = (tab: string) => {
+    history.replace(details.nativeScriptDetail(id, tab));
+  };
+
   return (
     <StyledContainer>
       <Box display="flex" justifyContent="flex-start">
@@ -89,7 +94,7 @@ const NativeScriptsDetail = () => {
         }}
       />
       <HeaderOverview data={{ scriptHash: id }} />
-      <CustomAccordion loading={loading} tabs={smartcontractTabs} hiddenKeys={hiddenKeys} />
+      <CustomAccordion loading={loading} tabs={smartcontractTabs} hiddenKeys={hiddenKeys} onTabChange={onTabChange} />
     </StyledContainer>
   );
 };
