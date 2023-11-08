@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { isEmpty } from "lodash";
 
 import { getShortHash } from "src/commons/utils/helper";
 import CIPBadge from "src/components/commons/CIPBadge";
@@ -17,12 +18,43 @@ export type TCIP25ComplianceModalProps = {
   version?: Transaction["metadata"][0]["metadataCIP25"];
 };
 
+const DEFAULT_CIP25_REQUIRE = [
+  {
+    format: "",
+    index: "1",
+    property: "policy_ID",
+    valid: false,
+    value: ""
+  },
+  {
+    format: "",
+    index: "2",
+    property: "asset_name",
+    valid: false,
+    value: ""
+  },
+  {
+    format: "",
+    index: "3",
+    property: "name",
+    valid: false,
+    value: ""
+  },
+  {
+    format: "",
+    index: "4",
+    property: "image",
+    valid: false,
+    value: ""
+  }
+];
+
 const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
   const { data, version } = props;
   const { t } = useTranslation();
 
   const tokenMaps = useMemo(() => {
-    if (!data) return [];
+    if (isEmpty(data)) return [{ requireProperties: DEFAULT_CIP25_REQUIRE, tokenName: null, optionalProperties: [] }];
     const tokens = Object.entries(data).map(([, value]) => value);
     return tokens;
   }, [data]);
@@ -92,15 +124,21 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
       title={t("token.CIP25Compliance")}
     >
       <ModalContent>
-        {tokenMaps.map((token) => (
-          <React.Fragment key={token.tokenName}>
-            <TokenLabel>
-              {t("glossary.Token")}: {token.tokenName}
-            </TokenLabel>
+        {tokenMaps.map((token, index) => (
+          <React.Fragment key={index}>
+            {token.tokenName && (
+              <TokenLabel>
+                {t("glossary.Token")}: {token.tokenName}
+              </TokenLabel>
+            )}
             <CIPModalSubtitle>{t("token.requiredProperties")}</CIPModalSubtitle>
             <Table data={token.requireProperties} columns={columns} />
-            <CIPModalSubtitle>{t("token.optionalProperties")}</CIPModalSubtitle>
-            <Table height="unset" data={mixedoptionalProperties(token.optionalProperties)} columns={columns} />
+            {token.optionalProperties.length > 0 && (
+              <>
+                <CIPModalSubtitle>{t("token.optionalProperties")}</CIPModalSubtitle>
+                <Table height="unset" data={mixedoptionalProperties(token.optionalProperties)} columns={columns} />
+              </>
+            )}
             <CIPModalSubtitle>{t("token.otherProperties")}</CIPModalSubtitle>
             <OtherPropetiesContent>
               <Typography>{t("token.otherProperties.desc")}</Typography>
