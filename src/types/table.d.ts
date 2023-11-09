@@ -50,6 +50,7 @@ export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & 
 };
 
 export interface TableProps<T extends ColumnType = any> {
+  isFullTableHeight?: boolean;
   columns: Column<T>[];
   data?: T[];
   className?: string;
