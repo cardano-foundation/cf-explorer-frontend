@@ -43,10 +43,10 @@ describe("StakeTab", () => {
 
     expect(tab1).toBeInTheDocument();
     expect(tab2).toBeInTheDocument();
-    expect(screen.getByText(/Certi/i)).toBeInTheDocument();
+    expect(screen.getByText(/RegistrationIcon.svg/i)).toBeInTheDocument();
     await userEvent.click(tab2);
     await waitFor(() => {
-      expect(screen.getByText(/withdrawn\/fees/i)).toBeInTheDocument();
+      expect(screen.getByText(/RewardsWithdrawalIcon.svg/i)).toBeInTheDocument();
     });
   });
 });
