@@ -197,6 +197,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
           customBorderRadius={needBorderRadius(key)}
           isDisplayBorderTop={tabActive !== key && key !== items[0].key && index !== indexExpand + 1}
           onChange={handleChangeTab(key)}
+          TransitionProps={{ unmountOnExit: true }}
         >
           <AccordionSummary
             expandIcon={

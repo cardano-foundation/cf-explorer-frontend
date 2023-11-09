@@ -152,6 +152,7 @@ const DelegationDetail: React.FC = () => {
             customBorderRadius={needBorderRadius(key)}
             isDisplayBorderTop={tab !== key && key !== tabs[0].key && index !== indexExpand + 1}
             onChange={handleChangeTab(key)}
+            TransitionProps={{ unmountOnExit: true }}
           >
             <AccordionSummary
               expandIcon={

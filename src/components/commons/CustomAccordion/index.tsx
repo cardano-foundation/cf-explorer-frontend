@@ -61,6 +61,7 @@ export const CustomAccordion: React.FC<TCustomAccordionProps> = ({
           isDisplayBorderTop={tabActive !== key && index !== indexExpand + 1}
           onChange={handleChangeTab(key)}
           ref={tabRef}
+          TransitionProps={{ unmountOnExit: true }}
         >
           <AccordionSummary
             expandIcon={
