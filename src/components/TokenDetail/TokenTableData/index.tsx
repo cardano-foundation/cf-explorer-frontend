@@ -96,6 +96,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, meta
           customBorderRadius={needBorderRadius(key)}
           isDisplayBorderTop={tabActive !== key && key !== tabs[0].key && index !== indexExpand + 1}
           onChange={handleChangeTab(key)}
+          TransitionProps={{ unmountOnExit: true }}
         >
           <AccordionSummary
             expandIcon={
