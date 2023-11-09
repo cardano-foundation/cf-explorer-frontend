@@ -132,7 +132,7 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
               </TokenLabel>
             )}
             <CIPModalSubtitle>{t("token.requiredProperties")}</CIPModalSubtitle>
-            <Table data={token.requireProperties} columns={columns} />
+            <Table isFullTableHeight={true} data={token.requireProperties} columns={columns} />
             {token.optionalProperties.length > 0 && (
               <>
                 <CIPModalSubtitle>{t("token.optionalProperties")}</CIPModalSubtitle>
