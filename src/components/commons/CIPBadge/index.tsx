@@ -12,9 +12,10 @@ export type TCIPBadgeProps = {
 
 const CIPBadge: React.FC<TCIPBadgeProps> = ({ type }) => {
   const { t } = useTranslation();
+  const success = type === "success";
   return (
-    <BadgeContainer>
-      {type === "warning" ? <WarningCIPIcon /> : <CheckedCIPIcon />}
+    <BadgeContainer success={+success}>
+      {success ? <CheckedCIPIcon /> : <WarningCIPIcon />}
       <CIPLabel>{t("token.CIP-25")}</CIPLabel>
     </BadgeContainer>
   );
