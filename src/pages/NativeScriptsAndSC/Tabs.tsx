@@ -67,6 +67,7 @@ const Tabs = () => {
             customBorderRadius={needBorderRadius(key)}
             isDisplayBorderTop={tabActive !== key && key !== data[0].key && index !== indexExpand + 1}
             onChange={handleChangeTab(key)}
+            TransitionProps={{ unmountOnExit: true }}
           >
             <StyledAccordionSummary
               expandIcon={
