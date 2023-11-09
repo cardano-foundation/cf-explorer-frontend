@@ -97,11 +97,11 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
         )}
         {isMobile || isTablet ? (
           <CustomTooltip title={contractAddress?.explain} open={open}>
-            <InfoIcon ref={containerRef} onClick={() => setOpen(!open)} />
+            <InfoIcon style={{ marginTop: "3.3px" }} ref={containerRef} onClick={() => setOpen(!open)} />
           </CustomTooltip>
         ) : (
           <CustomTooltip title={contractAddress?.explain}>
-            <InfoIcon />
+            <InfoIcon style={{ marginTop: "3.3px" }} />
           </CustomTooltip>
         )}
       </Box>
