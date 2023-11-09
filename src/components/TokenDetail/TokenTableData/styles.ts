@@ -208,6 +208,7 @@ export const OtherPropetiesContent = styled(Box)`
   color: ${({ theme }) => theme.palette.secondary[600]};
   border-radius: 6px;
   margin-top: 14px;
+  margin-bottom: 30px;
 `;
 
 export const TokenLabel = styled(Typography)`
