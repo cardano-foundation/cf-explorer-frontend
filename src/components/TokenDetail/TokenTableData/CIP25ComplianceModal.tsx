@@ -20,28 +20,28 @@ export type TCIP25ComplianceModalProps = {
 
 const DEFAULT_CIP25_REQUIRE = [
   {
-    format: "",
+    format: "text",
     index: "1",
     property: "policy_ID",
     valid: false,
     value: ""
   },
   {
-    format: "",
+    format: "utf-8",
     index: "2",
     property: "asset_name",
     valid: false,
     value: ""
   },
   {
-    format: "",
+    format: "string",
     index: "3",
     property: "name",
     valid: false,
     value: ""
   },
   {
-    format: "",
+    format: "uri | array",
     index: "4",
     property: "image",
     valid: false,
