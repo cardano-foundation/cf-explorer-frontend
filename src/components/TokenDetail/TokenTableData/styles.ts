@@ -171,7 +171,8 @@ export const ModalContent = styled(Box)`
   display: flex;
   flex-direction: column;
   overflow: auto;
-  height: 78vh;
+  max-height: 78dvh;
+  height: auto;
   box-sizing: border-box;
   width: 100%;
   &::-webkit-scrollbar {
@@ -201,14 +202,17 @@ export const CIPModalSubtitle = styled(Typography)`
 `;
 
 export const OtherPropetiesContent = styled(Box)`
-  background-color: ${({ theme }) => theme.palette.secondary[0]};
+  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0])};
   padding: 14px;
   font-size: 14px;
   font-weight: 700;
-  color: ${({ theme }) => theme.palette.secondary[600]};
   border-radius: 6px;
   margin-top: 14px;
   margin-bottom: 30px;
+`;
+
+export const OtherPropetiesDesc = styled(Typography)`
+  color: ${({ theme }) => (theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600])} !important;
 `;
 
 export const TokenLabel = styled(Typography)`
