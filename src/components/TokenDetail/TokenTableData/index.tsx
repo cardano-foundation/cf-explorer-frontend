@@ -1,48 +1,45 @@
+import { Box, useTheme } from "@mui/material";
 import React from "react";
-import { useHistory, useParams } from "react-router-dom";
-import { Box, Tab, useTheme } from "@mui/material";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { useTranslation } from "react-i18next";
+import { useHistory, useParams } from "react-router-dom";
 
-import { useScreen } from "src/commons/hooks/useScreen";
+import { details } from "src/commons/routers";
+import CustomAccordion, { TTab } from "src/components/commons/CustomAccordion";
 
-import TokenTransaction from "./TokenTransaction";
-import { TitleTab } from "./styles";
-import TokenTopHolder from "./TokenTopHolder";
-import TokenMinting from "./TokenMinting";
+import { MetadataIcon, PeopleIcon, TransactionIcon, UnionTokenIcon } from "../../../commons/resources";
 import TokenMetaData from "./TokenMetadata";
-import { details } from "../../../commons/routers";
-import { UnionTokenIcon, PeopleIcon, TransactionIcon, MetadataIcon } from "../../../commons/resources";
-import CustomIcon from "../../commons/CustomIcon";
+import TokenMinting from "./TokenMinting";
+import TokenTopHolder from "./TokenTopHolder";
+import TokenTransaction from "./TokenTransaction";
 
 interface ITokenTableData {
   totalSupply?: number;
   metadata?: ITokenMetadata;
   metadataJson?: string;
   setCurrentHolder?: (holders: number) => void;
+  loading?: boolean;
+  metadataCIP25?: Transaction["metadata"][0]["metadataCIP25"];
 }
 
-const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, metadataJson, setCurrentHolder }) => {
+const TokenTableData: React.FC<ITokenTableData> = ({
+  totalSupply,
+  metadata,
+  metadataJson,
+  setCurrentHolder,
+  loading,
+  metadataCIP25
+}) => {
   const { t } = useTranslation();
+  const { tokenId } = useParams<{ tokenId: string }>();
   const history = useHistory();
-  const { tabActive = "transactions", tokenId } = useParams<{
-    tabActive: keyof Transaction | "topHolders";
-    tokenId: string;
-  }>();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const theme = useTheme();
-  const { isTablet, isMobile } = useScreen();
-  const tabs: {
-    key: string;
-    label: string;
-    children: React.ReactNode;
-    icon: React.ReactElement;
-  }[] = [
+  const tabs: TTab[] = [
     {
       key: "transactions",
       label: t("glossary.transactions"),
       children: <TokenTransaction tokenId={tokenId} />,
-      icon: <CustomIcon icon={TransactionIcon} width={20} fill="currentColor" />
+      icon: TransactionIcon
     },
     {
       key: "topHolders",
@@ -55,70 +52,29 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, meta
           setCurrentHolder={setCurrentHolder}
         />
       ),
-      icon: <CustomIcon icon={PeopleIcon} width={20} fill="currentColor" />
+      icon: PeopleIcon
     },
     {
       key: "tokenMint",
       label: t("tab.minting"),
       children: <TokenMinting tokenId={tokenId} metadata={metadata} />,
-      icon: <CustomIcon icon={UnionTokenIcon} width={20} fill="currentColor" />
+      icon: UnionTokenIcon
     },
     {
       key: "metadata",
       label: t("glossary.metadata"),
-      children: <TokenMetaData metadataJson={metadataJson} />,
-      icon: <CustomIcon icon={MetadataIcon} width={20} fill="currentColor" />
+      children: <TokenMetaData metadataJson={metadataJson} metadataCIP25={metadataCIP25} />,
+      icon: MetadataIcon
     }
   ];
 
-  const handleChange = (event: React.SyntheticEvent, tab: keyof Transaction) => {
+  const handleTabChange = (tab: string) => {
     history.replace(details.token(tokenId, tab));
   };
   return (
-    <TabContext value={tabActive}>
-      <TabList
-        onChange={handleChange}
-        variant="scrollable"
-        TabIndicatorProps={{
-          sx: {
-            background: (theme) => theme.palette.primary.main,
-            color: (theme) => theme.palette.primary.main,
-            height: 3
-          }
-        }}
-        sx={({ palette }) =>
-          isTablet
-            ? { borderBottom: `1px solid ${palette.primary[200]}`, width: isMobile ? "calc(100% - 30px)" : "auto" }
-            : {}
-        }
-      >
-        {tabs?.map(({ key, label, icon }) => (
-          <Tab
-            key={key}
-            value={key}
-            style={{ padding: "12px 0px", marginRight: 40, minHeight: 50, marginTop: 30 }}
-            iconPosition="start"
-            label={
-              <Box
-                display={"flex"}
-                alignItems="center"
-                color={tabActive === key ? theme.palette.primary.main : theme.palette.secondary.light}
-              >
-                {icon}
-                <TitleTab pl={1} active={key === tabActive}>
-                  {label}
-                </TitleTab>
-              </Box>
-            }
-          />
-        ))}
-      </TabList>
-      {tabs.map((item) => (
-        <TabPanel key={item.key} value={item.key} style={{ padding: 0, paddingTop: 12 }}>
-          {item.children}
-        </TabPanel>
-      ))}
-    </TabContext>
+    <Box mt={3}>
+      <CustomAccordion tabs={tabs} onTabChange={handleTabChange} loading={loading} />
+    </Box>
   );
 };
 

@@ -15,6 +15,7 @@ import {
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import { IReportStaking } from "src/types/report";
+import { details } from "src/commons/routers";
 
 import StakeTab from "../TabularView/StakeTab";
 import DelegationTab from "./StakeyTabs/DelegationTab";
@@ -41,10 +42,10 @@ export const StakingDetailContext = createContext({ stakeKey: "", reportName: ""
 const ReportGeneratedStakingDetailTabs = () => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const { reportId } = useParams<{ reportId: string }>();
+  const { reportId, tabActive } = useParams<{ reportId: string; tabActive: string }>();
   const history = useHistory();
   const reportDetail = useFetch<IReportStaking>(API.REPORT.STAKING_REPORTED_DETAIL(reportId));
-  const stackeTabs: ITab[] = [
+  const stakeTabs: ITab[] = [
     {
       icon: RegistrationIcon,
       label: t("glossary.stakeAddressRegistrations"),
@@ -89,7 +90,7 @@ const ReportGeneratedStakingDetailTabs = () => {
   }, [reportDetail]);
 
   const displayedTabs = useMemo(() => {
-    let tabs = stackeTabs.filter((tab) => events.includes(tab.mappingKey));
+    let tabs = stakeTabs.filter((tab) => events.includes(tab.mappingKey));
     if (reportDetail.data?.isADATransfer) {
       tabs = [
         ...tabs,
@@ -105,11 +106,14 @@ const ReportGeneratedStakingDetailTabs = () => {
     return tabs;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [events, reportDetail]);
-  const initTab = useMemo(() => (displayedTabs.length ? displayedTabs[0].key : undefined), [displayedTabs]);
 
   if ((reportDetail.initialized && !reportDetail.data) || reportDetail.error) {
     return <NoRecord />;
   }
+
+  const onChangeTab = (tab: string) => {
+    history.replace(details.generated_staking_detail(reportId, tab));
+  };
 
   return (
     <Box>
@@ -136,7 +140,7 @@ const ReportGeneratedStakingDetailTabs = () => {
                 {`${reportDetail.data?.reportName}`.replaceAll("-", " ")}{" "}
               </Headline>
             </CustomTooltip>
-            <StakeTab tabs={displayedTabs} initTab={initTab} />
+            <StakeTab tabs={displayedTabs} tabActive={tabActive} onChangeTab={onChangeTab} />
           </>
         )}
       </StakingDetailContext.Provider>

@@ -1,8 +1,8 @@
-import React from "react";
-import { Tab, Box, useTheme } from "@mui/material";
-import { TabContext, TabPanel } from "@mui/lab";
+import React, { useRef } from "react";
+import { Box, useTheme, AccordionSummary, AccordionDetails } from "@mui/material";
 import { useHistory, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { IoIosArrowDown } from "react-icons/io";
 
 import {
   DelegationHistoryIcon,
@@ -13,24 +13,22 @@ import {
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { useScreen } from "src/commons/hooks/useScreen";
+import { CustomAccordion } from "src/components/share/styled";
 
 import DelegationHistoryTab from "./Tabs/DelegationHistoryTab";
 import StakeHistoryTab from "./Tabs/StakeHistoryTab";
 import WithdrawalHistoryTab from "./Tabs/WithdrawalHistoryTab";
 import InstantaneousTab from "./Tabs/InstantaneousTab";
 import TransactionTab from "./Tabs/TransactionTab";
-import { StyledTabList, TitleTab, WrapperTabList } from "./styles";
+import { TitleTab } from "./styles";
 
 const StakeTab = () => {
   const { t } = useTranslation();
-  const { stakeId, tabActive = "delegation" } = useParams<{ stakeId: string; tabActive?: TabStakeDetail }>();
+  const tabRef = useRef<HTMLDivElement>();
+  const { stakeId, tabActive } = useParams<{ stakeId: string; tabActive?: TabStakeDetail }>();
   const history = useHistory();
   const theme = useTheme();
   const { isMobile } = useScreen();
-
-  const handleChange = (event: React.SyntheticEvent, tab: TabStakeDetail) => {
-    history.replace({ pathname: details.stake(stakeId || "", tab) }, history.location.state);
-  };
 
   const tabs: {
     icon: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -70,40 +68,55 @@ const StakeTab = () => {
     }
   ];
 
+  const indexExpand = tabs.findIndex((item) => item.key === tabActive);
+
+  const needBorderRadius = (currentKey: string) => {
+    if (!tabActive) return "0";
+    const indexCurrent = tabs.findIndex((item) => item.key === currentKey);
+    if (indexExpand - 1 >= 0 && indexExpand - 1 === indexCurrent) return "0 0 12px 12px";
+    if (indexExpand + 1 < tabs.length && indexExpand + 1 === indexCurrent) return "12px 12px 0 0";
+    return "0";
+  };
+
+  const handleChangeTab = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+    tabRef?.current?.scrollIntoView();
+    history.replace(details.stake(stakeId, newExpanded ? panel : ""));
+  };
+
   return (
-    <Box>
-      <TabContext value={tabActive}>
-        <WrapperTabList>
-          <StyledTabList
-            onChange={handleChange}
-            TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
-            scrollButtons="auto"
-            variant="scrollable"
-            visibleScrollbar={true}
-          >
-            {tabs.map(({ icon: Icon, key, label }) => (
-              <Tab
-                key={key}
-                value={key}
-                style={{ padding: "12px 0px", marginRight: 40 }}
-                label={
-                  <Box display={"flex"} alignItems="center">
-                    <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.secondary.light} />
-                    <TitleTab pl={1} active={key === tabActive}>
-                      {label}
-                    </TitleTab>
-                  </Box>
-                }
+    <Box ref={tabRef} mt={"30px"}>
+      {tabs.map(({ key, icon: Icon, label, component }, index) => (
+        <CustomAccordion
+          key={key}
+          expanded={tabActive === key}
+          customBorderRadius={needBorderRadius(key)}
+          isDisplayBorderTop={tabActive !== key && key !== tabs[0].key && index !== indexExpand + 1}
+          onChange={handleChangeTab(key)}
+          TransitionProps={{ unmountOnExit: true }}
+        >
+          <AccordionSummary
+            expandIcon={
+              <IoIosArrowDown
+                style={{
+                  width: "21px",
+                  height: "21px"
+                }}
+                color={key === tabActive ? theme.palette.primary.main : theme.palette.secondary.light}
               />
-            ))}
-          </StyledTabList>
-        </WrapperTabList>
-        {tabs.map((item) => (
-          <TabPanel key={item.key} value={item.key} style={{ padding: 0 }}>
-            {item.component}
-          </TabPanel>
-        ))}
-      </TabContext>
+            }
+            sx={{
+              paddingX: theme.spacing(3),
+              paddingY: theme.spacing(1)
+            }}
+          >
+            <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.secondary.light} />
+            <TitleTab pl={1} active={key === tabActive}>
+              {label}
+            </TitleTab>
+          </AccordionSummary>
+          <AccordionDetails>{component}</AccordionDetails>
+        </CustomAccordion>
+      ))}
     </Box>
   );
 };
