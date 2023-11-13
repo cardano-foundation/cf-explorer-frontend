@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { JsonViewerKeyRenderer } from "@textea/json-viewer";
 import { useEffect } from "react";
-
+const MAX_INDEX = 1000;
 const useDisableJsonKey = (data: unknown): { trigger: () => void; keyRenderer: JsonViewerKeyRenderer } => {
   const trigger = () => {
     setTimeout(() => {
@@ -24,7 +24,7 @@ const useDisableJsonKey = (data: unknown): { trigger: () => void; keyRenderer: J
   };
   keyRenderer.when = ({ path }) => {
     const num = Number(path[path.length - 1]);
-    return !isNaN(num);
+    return !isNaN(num) && num < MAX_INDEX;
   };
   return { keyRenderer, trigger };
 };
