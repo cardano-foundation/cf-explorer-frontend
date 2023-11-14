@@ -13,7 +13,7 @@ import {
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { useScreen } from "src/commons/hooks/useScreen";
-import { CustomAccordion } from "src/components/share/styled";
+import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 
 import DelegationHistoryTab from "./Tabs/DelegationHistoryTab";
 import StakeHistoryTab from "./Tabs/StakeHistoryTab";
@@ -86,7 +86,7 @@ const StakeTab = () => {
   return (
     <Box ref={tabRef} mt={"30px"}>
       {tabs.map(({ key, icon: Icon, label, component }, index) => (
-        <CustomAccordion
+        <StyledAccordion
           key={key}
           expanded={tabActive === key}
           customBorderRadius={needBorderRadius(key)}
@@ -115,7 +115,7 @@ const StakeTab = () => {
             </TitleTab>
           </AccordionSummary>
           <AccordionDetails>{component}</AccordionDetails>
-        </CustomAccordion>
+        </StyledAccordion>
       ))}
     </Box>
   );

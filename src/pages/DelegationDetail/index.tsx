@@ -24,7 +24,7 @@ import { setSpecialPath } from "src/stores/system";
 import { routers } from "src/commons/routers";
 import { getPageInfo } from "src/commons/utils/helper";
 import FormNowMessage from "src/components/commons/FormNowMessage";
-import { CustomAccordion } from "src/components/share/styled";
+import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 
 import { TimeDuration, TitleTab } from "./styles";
 
@@ -146,7 +146,7 @@ const DelegationDetail: React.FC = () => {
       <DelegationDetailChart poolId={poolId} />
       <Box ref={tableRef} mt={"30px"}>
         {tabs.map(({ key, icon: Icon, label, component }, index) => (
-          <CustomAccordion
+          <StyledAccordion
             key={key}
             expanded={tab === key}
             customBorderRadius={needBorderRadius(key)}
@@ -180,7 +180,7 @@ const DelegationDetail: React.FC = () => {
               </TimeDuration>
               {component}
             </AccordionDetails>
-          </CustomAccordion>
+          </StyledAccordion>
         ))}
       </Box>
     </Container>

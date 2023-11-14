@@ -8,7 +8,7 @@ import { IoIosArrowDown } from "react-icons/io";
 
 import { details } from "src/commons/routers";
 import { UnionTokenIcon, PeopleIcon, TransactionIcon, MetadataIcon } from "src/commons/resources";
-import { CustomAccordion } from "src/components/share/styled";
+import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 
 import TokenTransaction from "./TokenTransaction";
 import TokenTopHolder from "./TokenTopHolder";
@@ -90,7 +90,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, meta
   return (
     <Box ref={tabRef} mt={"30px"}>
       {tabs.map(({ key, icon: Icon, label, children }, index) => (
-        <CustomAccordion
+        <StyledAccordion
           key={key}
           expanded={tabActive === key}
           customBorderRadius={needBorderRadius(key)}
@@ -119,7 +119,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, meta
             </TitleTab>
           </AccordionSummary>
           <AccordionDetails>{children}</AccordionDetails>
-        </CustomAccordion>
+        </StyledAccordion>
       ))}
     </Box>
   );

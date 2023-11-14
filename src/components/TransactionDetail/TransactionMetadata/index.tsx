@@ -25,7 +25,7 @@ import {
 import { details } from "src/commons/routers";
 import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 import ContractsList from "src/components/Contracts";
-import { CustomAccordion } from "src/components/share/styled";
+import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 
 import Collaterals from "./Collaterals";
 import Delegations from "./Delegations";
@@ -191,7 +191,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
   return (
     <Box mt={4} ref={tabRef}>
       {items?.map(({ key, icon: Icon, label, children }, index) => (
-        <CustomAccordion
+        <StyledAccordion
           key={key}
           expanded={tabActive === key}
           customBorderRadius={needBorderRadius(key)}
@@ -221,7 +221,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
             </TitleTab>
           </AccordionSummary>
           <AccordionDetails>{children}</AccordionDetails>
-        </CustomAccordion>
+        </StyledAccordion>
       ))}
     </Box>
   );
