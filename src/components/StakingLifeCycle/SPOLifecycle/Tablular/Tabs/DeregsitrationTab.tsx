@@ -1,7 +1,8 @@
 import { Box, IconButton, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import { stringify } from "qs";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { EyeIcon } from "src/commons/resources";
@@ -13,6 +14,7 @@ import CustomIcon from "src/components/commons/CustomIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 
 import { DeregistrationCertificateModal } from "../../Deregistration";
 
@@ -20,12 +22,10 @@ const DeregsitrationTab = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const { poolId = "" } = useParams<{ poolId: string }>();
-  const [params, setParams] = useState({
-    page: 0,
-    size: 50
-  });
+  const history = useHistory();
 
-  const [sort, setSort] = useState<string>("");
+  const { pageInfo, setSort } = usePageInfo();
+
   const [selected, setSelected] = useState<SPODeregistration | null>(null);
 
   const columns: Column<SPODeregistrationTabpular>[] = [
@@ -71,8 +71,7 @@ const DeregsitrationTab = () => {
   const fetchData = useFetchList<SPODeregistrationTabpular>(
     poolId ? API.SPO_LIFECYCLE.SPO_DEREGISTRATION(poolId) : "",
     {
-      ...params,
-      sort
+      ...pageInfo
     }
   );
 
@@ -86,9 +85,11 @@ const DeregsitrationTab = () => {
           count: fetchData.total
         }}
         pagination={{
-          ...params,
+          ...pageInfo,
           total: fetchData.total,
-          onChange: (page, size) => setParams({ page: page - 1, size })
+          onChange: (page, size) => {
+            history.replace({ search: stringify({ ...pageInfo, page, size }) });
+          }
         }}
       />
       <DeregistrationCertificateModal data={selected} open={!!selected} handleCloseModal={() => setSelected(null)} />
