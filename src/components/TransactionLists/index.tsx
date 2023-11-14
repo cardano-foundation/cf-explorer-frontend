@@ -1,19 +1,14 @@
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { useState, useRef, MouseEvent } from "react";
+import { useRef, MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
-import {
-  formatADAFull,
-  formatDateTimeLocal,
-  formatNameBlockNo,
-  getPageInfo,
-  getShortHash
-} from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatNameBlockNo, getShortHash } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import useFetchList from "src/commons/hooks/useFetchList";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 
 import CustomTooltip from "../commons/CustomTooltip";
 import SelectedIcon from "../commons/SelectedIcon";
@@ -41,13 +36,11 @@ const TransactionList: React.FC<TransactionListProps> = ({
   handleClose
 }) => {
   const { t } = useTranslation();
-  const { search } = useLocation();
   const history = useHistory();
-  const pageInfo = getPageInfo(search);
-  const [sort, setSort] = useState<string>("");
+  const { pageInfo, setSort } = usePageInfo();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
-  const fetchData = useFetchList<Transactions>(url, { ...pageInfo, sort }, false, blockKey);
+  const fetchData = useFetchList<Transactions>(url, { ...pageInfo }, false, blockKey);
   const mainRef = useRef(document.querySelector("#main"));
   const onClickRow = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
     if (openDetail) return openDetail(_, r);
@@ -188,7 +181,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
           total: fetchData.total,
           onChange: (page, size) => {
             mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-            history.replace({ search: stringify({ page, size }) });
+            history.replace({ search: stringify({ ...pageInfo, page, size }) });
           },
           handleCloseDetailView: handleClose,
           hideLastPage: true

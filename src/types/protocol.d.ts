@@ -2,7 +2,7 @@ import { PROTOCOL_TYPE } from "../commons/utils/constants";
 
 type TProtocolItem = {
   time: string;
-  transactionHash: string;
+  transactionHashs: string[];
   value: string | number;
   status: "UPDATED" | "ADDED" | "NOT_EXIST" | "NOT_CHANGE";
 };

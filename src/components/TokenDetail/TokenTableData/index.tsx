@@ -1,4 +1,4 @@
-import { useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useParams } from "react-router-dom";
@@ -71,7 +71,11 @@ const TokenTableData: React.FC<ITokenTableData> = ({
   const handleTabChange = (tab: string) => {
     history.replace(details.token(tokenId, tab));
   };
-  return <CustomAccordion tabs={tabs} onTabChange={handleTabChange} loading={loading} />;
+  return (
+    <Box mt={3}>
+      <CustomAccordion tabs={tabs} onTabChange={handleTabChange} loading={loading} />
+    </Box>
+  );
 };
 
 export default TokenTableData;

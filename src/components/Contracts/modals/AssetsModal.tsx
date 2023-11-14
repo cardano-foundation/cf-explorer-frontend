@@ -78,7 +78,7 @@ const AssetsModal: React.FC<AssetsModalProps> = ({ open = false, onClose, data, 
                     item.title
                   ) : (
                     <CustomTooltip title={item.title}>
-                      <Typography>{getShortHash(item.title)}</Typography>
+                      <Typography display="inline-block">{getShortHash(item.title)}</Typography>
                     </CustomTooltip>
                   )}
                 </StyledLink>
