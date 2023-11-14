@@ -28,6 +28,7 @@ export const API = {
   },
   POLICY: "policies",
   POOL: "pools",
+  POOL_CERTIFICATES_HISTORY: "pools/certificates-history",
 
   TOKEN: { LIST: "tokens", TOKEN_TRX: "tokens/:tokenId/txs", ANALYTICS: "tokens/analytics" },
   TRANSACTION: {

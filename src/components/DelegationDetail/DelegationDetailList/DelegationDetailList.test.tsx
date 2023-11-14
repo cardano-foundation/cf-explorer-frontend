@@ -3,9 +3,8 @@ import { createBrowserHistory } from "history";
 
 import { fireEvent, render, screen } from "src/test-utils";
 import { details } from "src/commons/routers";
-import { POOL_ACTION_TYPE } from "src/commons/utils/constants";
 
-import { DelegationCertificatesHistory, DelegationEpochList, DelegationStakingDelegatorsList } from ".";
+import { DelegationEpochList, DelegationStakingDelegatorsList } from ".";
 
 const mockEpochList = {
   data: [
@@ -55,42 +54,6 @@ const mockStakingDelegators = {
   scrollEffect: jest.fn()
 };
 
-const mockCertificatesHistory = {
-  data: [
-    {
-      txHash: "addr1z8snz7c4974vzdpxu65ruphl3zjdvtxw8strf2c2tmqnxz2j2c79gy9l76sdg0xwhd7r0c0kna0tycz4y5s6mlenh8pq0xmsha",
-      createdAt: "2020/07/29 21:58:11",
-      block: 9441048,
-      epoch: 443,
-      slot: 443,
-      absoluteSlot: 106249559,
-      actions: ["POOL REGISTRATION" as POOL_ACTION_TYPE]
-    },
-    {
-      txHash: "addr1z8jd97ct35n4s5ss8lt4sq0zclw0dmf7yak8fj46m0jm3dswtf6nj8t35qph4n6m04gawl49yvsxytfjpjpcfhehpcvqwwrrlu",
-      createdAt: "2020/07/29 21:58:11",
-      block: 9441048,
-      epoch: 443,
-      slot: 443,
-      absoluteSlot: 106249559,
-      actions: ["POOL UPDATE" as POOL_ACTION_TYPE]
-    },
-    {
-      txHash: "addr1zxem3j9xw7gyqnry0mfdhku7grrzu0707dc9fs68zwkln5sm5kjdmrpmng059yellupyvwgay2v0lz6663swmds7hp0qul0eqc",
-      createdAt: "2020/07/29 21:58:11",
-      block: 9441048,
-      epoch: 443,
-      slot: 443,
-      absoluteSlot: 106249559,
-      actions: ["POOL UPDATE" as POOL_ACTION_TYPE, "POOL DEREGISTRATION" as POOL_ACTION_TYPE]
-    }
-  ],
-  loading: false,
-  initialized: true,
-  total: 10,
-  scrollEffect: jest.fn()
-};
-
 describe("Epoch List component", () => {
   beforeEach(() => {
     render(<DelegationEpochList {...mockEpochList} />);
@@ -119,27 +82,5 @@ describe("DelegationDetailList component", () => {
     );
     fireEvent.click(screen.getByRole("link", { name: /view 1/i }));
     expect(history.location.pathname).toBe(details.stake(mockStakingDelegators.data[0].view));
-  });
-});
-
-describe("Certificates History Component", () => {
-  it("should component render", () => {
-    render(<DelegationCertificatesHistory {...mockCertificatesHistory} />);
-    expect(screen.getByTestId("table-common")).toBeInTheDocument();
-    expect(
-      screen.getByRole("link", {
-        name: "addr1z8snz7c4974vzdpxu65ruphl3zjdvtxw8strf2c2tmqnxz2j2c79gy9l76sdg0xwhd7r0c0kna0tycz4y5s6mlenh8pq0xmsha"
-      })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("link", {
-        name: "addr1z8jd97ct35n4s5ss8lt4sq0zclw0dmf7yak8fj46m0jm3dswtf6nj8t35qph4n6m04gawl49yvsxytfjpjpcfhehpcvqwwrrlu"
-      })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("link", {
-        name: "addr1zxem3j9xw7gyqnry0mfdhku7grrzu0707dc9fs68zwkln5sm5kjdmrpmng059yellupyvwgay2v0lz6663swmds7hp0qul0eqc"
-      })
-    ).toBeInTheDocument();
   });
 });

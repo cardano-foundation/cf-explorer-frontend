@@ -23,7 +23,6 @@ import { setSpecialPath } from "src/stores/system";
 import { routers } from "src/commons/routers";
 import { getPageInfo } from "src/commons/utils/helper";
 import FormNowMessage from "src/components/commons/FormNowMessage";
-import { POOL_ACTION_TYPE } from "src/commons/utils/constants";
 
 import { TabsContainer, TimeDuration, TitleTab } from "./styles";
 
@@ -34,54 +33,6 @@ interface Query {
 }
 
 const TABS: TabPoolDetail[] = ["epochs", "delegators", "certificatesHistory"];
-
-const mockCertificatesHistory: CertificateHistory[] = [
-  {
-    txHash: "addr1z8snz7c4974vzdpxu65ruphl3zjdvtxw8strf2c2tmqnxz2j2c79gy9l76sdg0xwhd7r0c0kna0tycz4y5s6mlenh8pq0xmsha",
-    createdAt: "2020/07/29 21:58:11",
-    block: 9441048,
-    epoch: 443,
-    slot: 443,
-    absoluteSlot: 106249559,
-    actions: [POOL_ACTION_TYPE.POOL_REGISTRATION]
-  },
-  {
-    txHash: "addr1z8jd97ct35n4s5ss8lt4sq0zclw0dmf7yak8fj46m0jm3dswtf6nj8t35qph4n6m04gawl49yvsxytfjpjpcfhehpcvqwwrrlu",
-    createdAt: "2020/07/29 21:58:11",
-    block: 9441048,
-    epoch: 443,
-    slot: 443,
-    absoluteSlot: 106249559,
-    actions: [POOL_ACTION_TYPE.POOL_UPDATE]
-  },
-  {
-    txHash: "addr1zxem3j9xw7gyqnry0mfdhku7grrzu0707dc9fs68zwkln5sm5kjdmrpmng059yellupyvwgay2v0lz6663swmds7hp0qul0eqc",
-    createdAt: "2020/07/29 21:58:11",
-    block: 9441048,
-    epoch: 443,
-    slot: 443,
-    absoluteSlot: 106249559,
-    actions: [POOL_ACTION_TYPE.POOL_UPDATE]
-  },
-  {
-    txHash: "addr1zxem3j9xw7gyqnry0mfdhku7grrzu0707dc9fs68zwkln5sm5kjdmrpmng059yellupyvwgay2v0lz6663swmds7hp0qul0eqe",
-    createdAt: "2020/07/29 21:58:11",
-    block: 9441048,
-    epoch: 443,
-    slot: 443,
-    absoluteSlot: 106249559,
-    actions: [POOL_ACTION_TYPE.POOL_DE_REGISTRATION]
-  },
-  {
-    txHash: "addr1zxem3j9xw7gyqnry0mfdhku7grrzu0707dc9fs68zwkln5sm5kjdmrpmng059yellupyvwgay2v0lz6663swmds7hp0qul0eqd",
-    createdAt: "2020/07/29 21:58:11",
-    block: 9441048,
-    epoch: 443,
-    slot: 443,
-    absoluteSlot: 106249559,
-    actions: [POOL_ACTION_TYPE.POOL_DE_REGISTRATION]
-  }
-];
 
 const DelegationDetail: React.FC = () => {
   const { t } = useTranslation();
@@ -131,9 +82,9 @@ const DelegationDetail: React.FC = () => {
     tab === "delegators" ? blockKey : undefined
   );
 
-  const fetchDataCertificatesHistory = useFetchList<StakingDelegators>(
-    API.DELEGATION.POOL_DETAIL("delegators"),
-    { poolView: poolId, ...pageInfo },
+  const fetchDataCertificatesHistory = useFetchList<CertificateHistory>(
+    `${API.POOL_CERTIFICATES_HISTORY}/${poolId}`,
+    { ...pageInfo },
     false,
     tab === "certificatesHistory" ? blockKey : undefined
   );
@@ -184,11 +135,7 @@ const DelegationDetail: React.FC = () => {
       key: "certificatesHistory",
       component: (
         <div ref={tableRef}>
-          <DelegationCertificatesHistory
-            {...fetchDataCertificatesHistory}
-            data={mockCertificatesHistory}
-            scrollEffect={scrollEffect}
-          />
+          <DelegationCertificatesHistory {...fetchDataCertificatesHistory} scrollEffect={scrollEffect} />
         </div>
       )
     }

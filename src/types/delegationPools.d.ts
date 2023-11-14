@@ -73,12 +73,12 @@ interface StakingDelegators {
 
 interface CertificateHistory {
   txHash: string;
-  createdAt: string;
-  block: number;
-  epoch: number;
-  slot: number;
-  absoluteSlot: number;
+  blockNo: number;
+  epochSlotNo: number;
+  slotNo: number;
   actions: PoolActionType[];
+  epochNo: number;
+  createdAt: string;
 }
 
 interface AnalyticsDelegators {

@@ -25,7 +25,6 @@ import DropdownDetail from "src/components/commons/DropdownDetail";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
-import { POOL_STATUS } from "src/commons/utils/constants";
 
 import {
   HeaderStatus,
@@ -119,9 +118,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <BookmarkButton keyword={poolId} type="POOL" />
           </Box>
           <Box marginLeft={width < 400 ? 0 : 1}>
-            <HeaderStatus status={data?.poolStatus ?? POOL_STATUS.ACTIVE}>
-              {data?.poolStatus ?? POOL_STATUS.ACTIVE}
-            </HeaderStatus>
+            <HeaderStatus status={data?.poolStatus}>{data?.poolStatus}</HeaderStatus>
           </Box>
         </Box>
         {data?.logoUrl && !isErrorImage && (

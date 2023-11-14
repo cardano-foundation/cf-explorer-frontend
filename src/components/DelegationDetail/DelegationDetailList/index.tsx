@@ -3,6 +3,7 @@ import QueryString, { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
+import { POOL_ACTION_TYPE } from "src/commons/utils/constants";
 import { details } from "src/commons/routers";
 import { formatADAFull, formatDateTimeLocal, getShortHash, numberWithCommas } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
@@ -11,7 +12,6 @@ import Table, { Column } from "src/components/commons/Table";
 import ADAicon from "src/components/commons/ADAIcon";
 
 import { PoolActionMark, StyledLink } from "./styles";
-
 interface Query {
   tab: string | string[] | QueryString.ParsedQs | QueryString.ParsedQs[] | undefined;
   page: number;
@@ -213,6 +213,11 @@ const DelegationCertificatesHistory = ({
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
   const history = useHistory();
+  const statusLabelOf: Record<POOL_ACTION_TYPE, string> = {
+    POOL_REGISTRATION: "POOL REGISTRATION",
+    POOL_UPDATE: "POOL UPDATE",
+    POOL_DEREGISTRATION: "POOL DEREGISTRATION"
+  };
 
   const setQuery = (query: Query) => {
     history.replace({ search: stringify(query) }, history.location.state);
@@ -239,25 +244,25 @@ const DelegationCertificatesHistory = ({
       title: t("certificatesHistory.block"),
       key: "block",
       minWidth: "100px",
-      render: (data) => <StyledLink to={details.block(data.block)}>{data.block}</StyledLink>
+      render: (data) => <StyledLink to={details.block(data.blockNo)}>{data.blockNo}</StyledLink>
     },
     {
       title: t("epoch"),
       key: "value",
       minWidth: "80px",
-      render: (data) => <StyledLink to={details.block(data.epoch)}>{data.epoch}</StyledLink>
+      render: (data) => <StyledLink to={details.block(data.epochNo)}>{data.epochNo}</StyledLink>
     },
     {
       title: t("common.slot"),
       key: "slot",
       minWidth: "90px",
-      render: (data) => <>{data.slot}</>
+      render: (data) => <>{data.epochSlotNo}</>
     },
     {
       title: t("certificatesHistory.absoluteSlot"),
       key: "absoluteSlot",
       minWidth: "130px",
-      render: (data) => <>{data.absoluteSlot}</>
+      render: (data) => <>{data.slotNo}</>
     },
     {
       title: t("common.action"),
@@ -268,7 +273,7 @@ const DelegationCertificatesHistory = ({
           {data.actions &&
             data.actions.map((action, idx) => (
               <PoolActionMark key={data.txHash + data.actions[idx]} actionType={action}>
-                {action}
+                {statusLabelOf[action]}
               </PoolActionMark>
             ))}
         </Box>
