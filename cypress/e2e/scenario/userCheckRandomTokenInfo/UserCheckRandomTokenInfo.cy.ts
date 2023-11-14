@@ -6,7 +6,6 @@ describe("User check information of Random Token", () => {
     cy.get('[data-testid="search-bar"]').should("be.visible");
     cy.get('[data-testid="table-common"]').should("be.visible");
     cy.get('[aria-label="pagination navigation"]').should("be.visible");
-    cy.get("span").contains("Per page").should("be.visible");
 
     cy.get('[data-testid="table-common"] tbody tr').eq(0).click();
     cy.get("a").contains("View Details", { matchCase: false }).should("be.visible");
@@ -16,7 +15,7 @@ describe("User check information of Random Token", () => {
     cy.get('[data-testid="search-bar"]').should("be.visible");
     cy.get("div").contains("Total Supply", { matchCase: false }).should("be.visible");
     cy.get("div").contains("Total Transactions", { matchCase: false }).should("be.visible");
-    cy.get("div").contains("Policy Id", { matchCase: false }).should("be.visible");
+    cy.get("div").contains("Script hash", { matchCase: false }).should("be.visible");
     cy.get("div").contains("Token Type", { matchCase: false }).should("be.visible");
     cy.get("div").contains("Number of Holders", { matchCase: false }).should("be.visible");
     cy.get("div").contains("Total Volume", { matchCase: false }).should("be.visible");

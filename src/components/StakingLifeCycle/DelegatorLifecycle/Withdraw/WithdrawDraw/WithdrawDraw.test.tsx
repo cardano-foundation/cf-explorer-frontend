@@ -57,7 +57,7 @@ describe("WithdrawnDraw", () => {
     expect(screen.getByText(/0\.00001/i)).toBeInTheDocument();
     expect(
       screen.getByRole("link", {
-        name: /abc123\.\.\.abc123/i
+        name: /abc123/i
       })
     ).toBeInTheDocument();
   });

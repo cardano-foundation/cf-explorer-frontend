@@ -24,7 +24,9 @@ interface ITokenMetadata {
   url?: string;
 }
 
-interface IToken extends ITokenOverview, ITokenMetadata {}
+interface IToken extends ITokenOverview, ITokenMetadata {
+  metadataCIP25?: Transaction["metadata"][0]["metadataCIP25"];
+}
 
 interface ITokenTopHolderTable {
   address: string;
@@ -52,4 +54,17 @@ interface TokensSearch {
   totalVolume: string;
   txCount: number;
   volumeIn24h: string;
+}
+
+interface INativeScriptDetail {
+  scriptHash?: string;
+  conditionType?: string;
+  required?: number;
+  keyHashes?: string[];
+  after?: string;
+  before?: string;
+  associatedAddress?: string[];
+  script?: string;
+  numberOfTokens?: number;
+  isOneTimeMint?: boolean;
 }

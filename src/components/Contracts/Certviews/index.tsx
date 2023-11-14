@@ -95,7 +95,7 @@ const Certviews: React.FC<CertviewsProps> = ({ data, isMobile }) => {
           </LongButton>
         </CertRrounded>
         <MiddleBox ref={middleRef}>
-          <Contract hash={data?.stakeAddress} detail={details.stake} />
+          <Contract hash={data?.scriptHash} detail={details.smartContract} />
           <CompiledCode onClick={() => setOpenCompiledCode(!openCompiledCode)} />
         </MiddleBox>
       </Center>

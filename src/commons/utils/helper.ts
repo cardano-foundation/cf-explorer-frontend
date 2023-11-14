@@ -119,11 +119,12 @@ export const isExternalLink = (href?: string) => {
 
 export const formatPercent = (percent?: number) => `${Math.round((percent || 0) * 100 * 100) / 100}%`;
 
-export const getPageInfo = (search: string): { page: number; size: number } => {
+export const getPageInfo = (search: string): { page: number; size: number; sort: string } => {
   const query = parse(search.split("?")[1]);
   const page = Number(query.page) > 0 ? Number(query.page) - 1 : 0;
   const size = Number(query.size) > 0 ? Number(query.size) : 50;
-  return { page, size };
+  const sort = (query.sort || "") as string;
+  return { ...query, page, size, sort };
 };
 
 export const removeAuthInfo = () => {
@@ -233,7 +234,6 @@ export function validateTokenExpired() {
     return now.isBefore(exp);
   } catch (e) {
     removeAuthInfo();
-    return false;
   }
 }
 

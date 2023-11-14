@@ -202,7 +202,7 @@ const Status = styled("span")<{ status: string }>`
     switch (status) {
       case "EXPIRED":
       case "FAILED":
-        return theme.palette.error[700];
+        return theme.palette.error[800];
       case "GENERATED":
         return theme.palette.success[800];
       case "IN_PROGRESS":

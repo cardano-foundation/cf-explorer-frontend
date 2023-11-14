@@ -4,7 +4,7 @@ import { BiChevronRight } from "react-icons/bi";
 import { CgClose } from "react-icons/cg";
 import { useTheme } from "@mui/material";
 
-import { PeopleIcon, TransactionIcon, UnionTokenIcon } from "src/commons/resources";
+import { MetadataIcon, PeopleIcon, TransactionIcon, UnionTokenIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import {
   formatDateTimeLocal,
@@ -144,10 +144,12 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
           <ViewDetailScroll>
             <Group>
               <DetailsInfoItem>
-                <DetailLabel>{t("common.policyID")}</DetailLabel>
+                <DetailLabel>{t("common.scriptHash")}</DetailLabel>
                 <DetailValue>
                   <CustomTooltip title={data.policy}>
-                    <StyledLink to={details.policyDetail(data.policy)}>{getShortHash(data.policy || "")}</StyledLink>
+                    <StyledLink to={details.nativeScriptDetail(data.policy)}>
+                      {getShortHash(data.policy || "")}
+                    </StyledLink>
                   </CustomTooltip>
                   <CopyButton text={data.policy} />
                 </DetailValue>
@@ -244,6 +246,21 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                     <UnionTokenIcon />
                   </DetailLinkIcon>
                   <DetailLinkName>{t("glossary.tokentMint")}</DetailLinkName>
+                </DetailLabel>
+                <DetailValue>
+                  <DetailLinkRight>
+                    <BiChevronRight size={24} />
+                  </DetailLinkRight>
+                </DetailValue>
+              </DetailLink>
+            </Group>
+            <Group>
+              <DetailLink to={details.token(tokenId, "metadata")}>
+                <DetailLabel>
+                  <DetailLinkIcon>
+                    <MetadataIcon />
+                  </DetailLinkIcon>
+                  <DetailLinkName>{t("glossary.metadata")}</DetailLinkName>
                 </DetailLabel>
                 <DetailValue>
                   <DetailLinkRight>

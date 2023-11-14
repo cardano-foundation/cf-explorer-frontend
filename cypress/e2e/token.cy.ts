@@ -8,7 +8,7 @@ describe("token spec", () => {
     cy.get("h2").contains("Native Tokens");
     cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("Icon");
     cy.get(".css-1dz0v3k > tr > :nth-child(2)").contains("Asset Name", { matchCase: false });
-    cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Policy ID", { matchCase: false });
+    cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Script hash", { matchCase: false });
     cy.get(".css-1dz0v3k > tr > :nth-child(4)").contains("Total Transactions", { matchCase: false });
     cy.get(".css-1dz0v3k > tr > :nth-child(5)").contains("Number of Holders", { matchCase: false });
     cy.get(".css-1dz0v3k > tr > :nth-child(6)").contains("Total Volume", { matchCase: false });
@@ -34,7 +34,7 @@ describe("token spec", () => {
     cy.get(".css-1kxgysv").contains(tokenId);
     cy.get(".css-1s8g7c7 > span").contains(tokenName);
     cy.get(":nth-child(2) > .css-13ne0mf > .MuiBox-root").contains("Total Supply", { matchCase: false });
-    cy.get(":nth-child(3) > .css-13ne0mf > .MuiBox-root").contains("Policy Id", { matchCase: false });
+    cy.get(":nth-child(3) > .css-13ne0mf > .MuiBox-root").contains("Script Hash", { matchCase: false });
     cy.get(":nth-child(4) > .css-13ne0mf > .MuiBox-root").contains("Total Transactions", { matchCase: false });
     cy.get(":nth-child(5) > .css-13ne0mf > .MuiBox-root").contains("Token Type", { matchCase: false });
     cy.get(":nth-child(6) > .css-13ne0mf > .MuiBox-root").contains("Number of Holders", { matchCase: false });

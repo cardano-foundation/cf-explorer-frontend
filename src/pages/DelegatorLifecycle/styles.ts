@@ -48,7 +48,8 @@ export const AddressLine = styled(Box)(({ theme }) => ({
 
 export const Label = styled("small")(({ theme }) => ({
   color: theme.palette.secondary.light,
-  lineHeight: 1
+  lineHeight: 1,
+  whiteSpace: "nowrap"
 }));
 
 export const StakeId = styled(Link)(({ theme }) => ({

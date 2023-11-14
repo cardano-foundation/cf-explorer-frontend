@@ -13,6 +13,8 @@ import BlockDetail from "./pages/BlockDetail";
 import BlockList from "./pages/BlockList";
 import Bookmark from "./pages/Bookmark";
 import ContractDetail from "./pages/ContractDetail";
+import SmartContractDetail from "./pages/SmartContractDetail";
+import NativeScriptAndSC from "./pages/NativeScriptsAndSC";
 import ContractList from "./pages/ContractList";
 import DelegationDetail from "./pages/DelegationDetail";
 import DelegationPools from "./pages/DelegationPools";
@@ -48,6 +50,7 @@ import TopDelegators from "./pages/TopDelegators";
 import TransactionDetail from "./pages/TransactionDetail";
 import TransactionList from "./pages/TransactionList";
 import VerifyEmail from "./pages/VerifyEmail";
+import NativeScriptsDetailPage from "./pages/NativeScriptDetail";
 
 const StakeAddressRegistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.REGISTRATION} />;
 const StakeAddressDeregistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.DEREREGISTRATION} />;
@@ -94,6 +97,8 @@ const Routes: React.FC = () => {
       <Route path={routers.STAKE_DETAIL} exact component={StakeDetail} />
       <Route path={routers.CONTRACT_LIST} exact component={ContractList} />
       <Route path={routers.CONTRACT_DETAIL} exact component={ContractDetail} />
+      <Route path={routers.SMART_CONTRACT} exact component={SmartContractDetail} />
+      <Route path={routers.NATIVE_SCRIPTS_AND_SC} exact component={NativeScriptAndSC} />
       <Route path={routers.ADDRESS_DETAIL} exact component={AddressWalletDetail} />
       <Route path={routers.POLICY_DETAIL} exact component={PolicyDetail} />
       <Route path={routers.ADDRESS_LIST} exact component={TopAddresses} />
@@ -110,6 +115,8 @@ const Routes: React.FC = () => {
       <Route path={routers.FAQ} exact component={FAQ} />
       <Route path={routers.POLICY} exact component={Policy} />
       <Route path={routers.TERMS_OF_SERVICE} exact component={TermOfServices} />
+      <Route path={routers.NATIVE_SCRIPT_DETAIL} exact component={NativeScriptsDetailPage} />
+
       <Route path={routers.ACCOUNT}>
         <AccountLayout>
           <Switch>

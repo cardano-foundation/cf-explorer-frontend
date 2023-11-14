@@ -26,6 +26,7 @@ export const RewardBalanceTitle = styled(Typography)`
   font-size: 14px;
   font-weight: 500;
   line-height: 1;
+  color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
 export const RewardBalance = styled(Box)`

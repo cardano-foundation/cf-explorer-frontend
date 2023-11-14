@@ -169,7 +169,8 @@ export const MintBlueBox = styled(BlueBox)<{ isBurned?: boolean }>(({ isBurned, 
       : theme.palette.secondary[0]
     : isBurned
     ? theme.palette.primary[200]
-    : theme.palette.common.white
+    : theme.palette.common.white,
+  padding: "unset"
 }));
 
 export const MintRrounded = styled(Rrounded)`
@@ -184,6 +185,9 @@ export const SpendContainer = styled(MintContainer)<{ isMobile?: number }>`
   justify-content: space-between;
   ${({ theme }) => theme.breakpoints.down("lg")} {
     flex-wrap: nowrap;
+  }
+  ${({ theme }) => theme.breakpoints.down("lg")} {
+    flex-direction: column !important;
   }
   flex-direction: ${({ isMobile }) => (isMobile ? "column" : "row")};
   gap: ${({ isMobile }) => (isMobile ? "60px" : "unset")};

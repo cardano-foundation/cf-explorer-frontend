@@ -99,3 +99,10 @@ export const RewarWallet = styled(Box)(() => ({
   alignItems: "center",
   transform: "translateX(-50%)"
 }));
+
+export const DrawingContainer = styled(Box)`
+  box-sizing: border-box;
+  max-width: 730px;
+  width: 100%;
+  margin: 0 auto;
+`;

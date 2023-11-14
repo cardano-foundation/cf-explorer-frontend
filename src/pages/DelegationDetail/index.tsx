@@ -1,10 +1,12 @@
-import { Box, Container, Tab, useTheme } from "@mui/material";
+import { Box, Container, useTheme } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import QueryString, { parse, stringify } from "qs";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import { IoIosArrowDown } from "react-icons/io";
 
 import useFetch from "src/commons/hooks/useFetch";
 import DelegationDetailInfo from "src/components/DelegationDetail/DelegationDetailInfo";
@@ -23,8 +25,9 @@ import { setSpecialPath } from "src/stores/system";
 import { routers } from "src/commons/routers";
 import { getPageInfo } from "src/commons/utils/helper";
 import FormNowMessage from "src/components/commons/FormNowMessage";
+import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 
-import { TabsContainer, TimeDuration, TitleTab } from "./styles";
+import { TimeDuration, TitleTab } from "./styles";
 
 interface Query {
   tab: string | string[] | QueryString.ParsedQs | QueryString.ParsedQs[] | undefined;
@@ -45,6 +48,12 @@ const DelegationDetail: React.FC = () => {
   const tableRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
+
+  useEffect(() => {
+    if (Object.keys(query).length === 0) {
+      setQuery({ tab: "epochs", page: 1, size: 50 });
+    }
+  }, [Object.keys(query).length]);
 
   const scrollEffect = () => {
     tableRef !== null &&
@@ -113,11 +122,7 @@ const DelegationDetail: React.FC = () => {
       icon: StakeKeyHistoryIcon,
       label: t("epoch"),
       key: "epochs",
-      component: (
-        <div ref={tableRef}>
-          <DelegationEpochList {...fetchDataEpochs} scrollEffect={scrollEffect} />
-        </div>
-      )
+      component: <DelegationEpochList {...fetchDataEpochs} scrollEffect={scrollEffect} />
     },
     {
       icon: StakingDelegators,
@@ -141,40 +146,57 @@ const DelegationDetail: React.FC = () => {
     }
   ];
 
+  const indexExpand = tabs.findIndex((item) => item.key === tab);
+
+  const needBorderRadius = (currentKey: string) => {
+    if (!tab) return "0";
+    const indexCurrent = tabs.findIndex((item) => item.key === currentKey);
+    if (indexExpand - 1 >= 0 && indexExpand - 1 === indexCurrent) return "0 0 12px 12px";
+    if (indexExpand + 1 < tabs.length && indexExpand + 1 === indexCurrent) return "12px 12px 0 0";
+    return "0";
+  };
+
+  const handleChangeTab = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+    tableRef?.current?.scrollIntoView();
+    setQuery({ tab: newExpanded ? panel : "", page: 1, size: 50 });
+  };
+
   return (
     <Container>
       <DelegationDetailInfo data={data} loading={loading} poolId={poolId} lastUpdated={lastUpdated} />
       <DelegationDetailOverview data={data} loading={loading} />
       <DelegationDetailChart poolId={poolId} />
-      <Box sx={{ mt: 4, [theme.breakpoints.down("sm")]: { my: 2 } }}>
-        <TabContext value={tab}>
-          <TabsContainer>
-            <TabList
-              onChange={(e, value: TabPoolDetail) => {
-                setQuery({ tab: value, page: 1, size: 50 });
-                scrollEffect();
-              }}
-              TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
-            >
-              {tabs.map(({ icon: Icon, key, label }) => (
-                <Tab
-                  key={key}
-                  value={key}
-                  style={{ padding: "12px 0px", marginRight: 40 }}
-                  label={
-                    <Box display={"flex"} alignItems="center">
-                      <Icon fill={key === tab ? theme.palette.primary.main : theme.palette.secondary.light} />
-                      <TitleTab pl={1} active={+(key === tab)}>
-                        {label}
-                      </TitleTab>
-                    </Box>
-                  }
+      <Box ref={tableRef} mt={"30px"}>
+        {tabs.map(({ key, icon: Icon, label, component }, index) => (
+          <StyledAccordion
+            key={key}
+            expanded={tab === key}
+            customBorderRadius={needBorderRadius(key)}
+            isDisplayBorderTop={tab !== key && key !== tabs[0].key && index !== indexExpand + 1}
+            onChange={handleChangeTab(key)}
+            TransitionProps={{ unmountOnExit: true }}
+          >
+            <AccordionSummary
+              expandIcon={
+                <IoIosArrowDown
+                  style={{
+                    width: "21px",
+                    height: "21px"
+                  }}
+                  color={key === tab ? theme.palette.primary.main : theme.palette.secondary.light}
                 />
-              ))}
-            </TabList>
-          </TabsContainer>
-          {tabs.map((item) => (
-            <TabPanel key={item.key} value={item.key} style={{ padding: 0 }}>
+              }
+              sx={{
+                paddingX: theme.spacing(3),
+                paddingY: theme.spacing(1)
+              }}
+            >
+              <Icon fill={key === tab ? theme.palette.primary.main : theme.palette.secondary.light} />
+              <TitleTab pl={1} active={+(key === tab)}>
+                {label}
+              </TitleTab>
+            </AccordionSummary>
+            <AccordionDetails>
               <TimeDuration>
                 <FormNowMessage
                   time={
@@ -187,10 +209,10 @@ const DelegationDetail: React.FC = () => {
                   }
                 />
               </TimeDuration>
-              {item.component}
-            </TabPanel>
-          ))}
-        </TabContext>
+              {component}
+            </AccordionDetails>
+          </StyledAccordion>
+        ))}
       </Box>
     </Container>
   );

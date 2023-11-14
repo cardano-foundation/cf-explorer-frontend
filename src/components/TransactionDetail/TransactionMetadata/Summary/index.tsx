@@ -68,6 +68,7 @@ const SummaryItems = ({
                     color={(theme) => theme.palette.primary.main}
                     fontWeight="bold"
                     fontFamily={"var(--font-family-text)"}
+                    fontSize="14px"
                   >
                     <DynamicEllipsisText value={item.address} isCopy isTooltip />
                   </Box>
@@ -168,7 +169,7 @@ const SummaryItems = ({
             </Box>
           </Box>
           {tokensReceived && tokensReceived.length === 1 && (
-            <Box display={"flex"} alignItems={"center"} mt={1}>
+            <Box display={"flex"} alignItems={"center"} mt={1} className="CONTAINERRR">
               <TokenLink
                 token={tokensReceived[0]}
                 isSummary={true}
