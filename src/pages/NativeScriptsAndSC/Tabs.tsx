@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import { NativeScriptIcon, SmartContractsIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { CustomAccordion } from "src/components/share/styled";
+import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 
 import TabNativeScripts from "./TabNativeScripts";
 import TabSmartContracts from "./TabSmartContracts";
@@ -61,7 +61,7 @@ const Tabs = () => {
     <StyledContractTabs ref={tabRef}>
       {data?.map(({ key, icon: Icon, label, children }, index) => {
         return (
-          <CustomAccordion
+          <StyledAccordion
             key={key}
             expanded={tabActive === key}
             customBorderRadius={needBorderRadius(key)}
@@ -84,7 +84,7 @@ const Tabs = () => {
               <TitleTab active={key === tabActive}>{label}</TitleTab>
             </StyledAccordionSummary>
             <StyledAccordionDetails>{children}</StyledAccordionDetails>
-          </CustomAccordion>
+          </StyledAccordion>
         );
       })}
     </StyledContractTabs>

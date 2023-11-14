@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Box, useTheme, AccordionSummary, AccordionDetails } from "@mui/material";
 import { IoIosArrowDown } from "react-icons/io";
 
-import { CustomAccordion } from "src/components/share/styled";
+import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 
 import { TitleTab } from "./styles";
 
@@ -52,7 +52,7 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, tabActive, onChangeTab, tabsR
       {tabs.map(({ key, icon: Icon, label, component }, index) => {
         const colorActive = getColorTab(key, tabActive);
         return (
-          <CustomAccordion
+          <StyledAccordion
             key={key}
             expanded={tabActive === key}
             customBorderRadius={needBorderRadius(key)}
@@ -84,7 +84,7 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, tabActive, onChangeTab, tabsR
               </TitleTab>
             </AccordionSummary>
             <AccordionDetails>{component}</AccordionDetails>
-          </CustomAccordion>
+          </StyledAccordion>
         );
       })}
     </Box>

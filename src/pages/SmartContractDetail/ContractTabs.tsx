@@ -6,7 +6,7 @@ import { t } from "i18next";
 
 import { UtxoIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { CustomAccordion } from "src/components/share/styled";
+import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 
 import TabAssociated from "./TabAssociated";
 import TabTransactions from "./TabTransactions";
@@ -66,7 +66,7 @@ const ContractTabs = ({ setVersion }: { setVersion: (v: string) => void }) => {
   return (
     <StyledContractTabs ref={tabRef}>
       {data?.map(({ key, icon: Icon, label, children }, index) => (
-        <CustomAccordion
+        <StyledAccordion
           key={key}
           expanded={tabActive === key}
           customBorderRadius={needBorderRadius(key)}
@@ -89,7 +89,7 @@ const ContractTabs = ({ setVersion }: { setVersion: (v: string) => void }) => {
             <TitleTab active={key === tabActive}>{label}</TitleTab>
           </StyledAccordionSummary>
           <StyledAccordionDetails>{children}</StyledAccordionDetails>
-        </CustomAccordion>
+        </StyledAccordion>
       ))}
     </StyledContractTabs>
   );

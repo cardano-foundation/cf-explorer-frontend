@@ -8,7 +8,6 @@ import { details } from "src/commons/routers";
 import {
   formatDateTimeLocal,
   formatNumberDivByDecimals,
-  getPageInfo,
   getShortHash,
   numberWithCommas
 } from "src/commons/utils/helper";
@@ -21,26 +20,26 @@ import { API } from "src/commons/utils/api";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DetailViewToken from "src/components/commons/DetailView/DetailViewToken";
 import SelectedIcon from "src/components/commons/SelectedIcon";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 
 import { AssetName, Logo, StyledContainer, TimeDuration } from "./styles";
 
 const Tokens = () => {
   const { t } = useTranslation();
-  const [sort, setSort] = useState<string>();
   const { onDetailView } = useSelector(({ user }: RootState) => user);
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   const [selected, setSelected] = useState<IToken | null>(null);
   const { search } = useLocation();
   const history = useHistory();
-  const pageInfo = getPageInfo(search);
+  const { pageInfo, setSort } = usePageInfo();
 
   const queries = new URLSearchParams(search);
 
   const mainRef = useRef(document.querySelector("#main"));
   const { data, lastUpdated, ...fetchData } = useFetchList<ITokenOverview>(
     API.TOKEN.LIST,
-    { ...pageInfo, sort, query: queries.get("tokenName") || "" },
+    { ...pageInfo, query: queries.get("tokenName") || "" },
     false,
     blockKey
   );
@@ -166,7 +165,9 @@ const Tokens = () => {
             total: fetchData.total,
             onChange: (page, size) => {
               mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-              history.replace({ search: stringify({ page, size, tokenName: queries.get("tokenName") || "" }) });
+              history.replace({
+                search: stringify({ ...pageInfo, page, size, tokenName: queries.get("tokenName") || "" })
+              });
             },
             handleCloseDetailView: handleClose,
             hideLastPage: true
