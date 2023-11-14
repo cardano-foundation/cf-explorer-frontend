@@ -1,3 +1,6 @@
+type PoolStatus = import("src/commons/utils/constants").POOL_STATUS;
+type PoolActionType = import("src/commons/utils/constants").POOL_ACTION_TYPE;
+
 interface OverViewDelegation {
   countDownEndTime: number;
   delegators: number;
@@ -29,6 +32,7 @@ interface DelegationOverview {
   poolName: string;
   tickerName: string;
   poolView: string;
+  poolStatus: PoolStatus;
   createDate: string;
   rewardAccounts: string[];
   ownerAccounts: string[];
@@ -66,6 +70,17 @@ interface StakingDelegators {
   time: string;
   fee: number;
 }
+
+interface CertificateHistory {
+  txHash: string;
+  createdAt: string;
+  block: number;
+  epoch: number;
+  slot: number;
+  absoluteSlot: number;
+  actions: PoolActionType[];
+}
+
 interface AnalyticsDelegators {
   epochChart: {
     highest: number;
@@ -89,4 +104,4 @@ interface AnalyticsDelegators {
   };
 }
 
-type TabPoolDetail = "epochs" | "delegators";
+type TabPoolDetail = "epochs" | "delegators" | "certificatesHistory";

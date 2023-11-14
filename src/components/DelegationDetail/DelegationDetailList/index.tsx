@@ -10,7 +10,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import ADAicon from "src/components/commons/ADAIcon";
 
-import { StyledLink } from "./styles";
+import { PoolActionMark, StyledLink } from "./styles";
 
 interface Query {
   tab: string | string[] | QueryString.ParsedQs | QueryString.ParsedQs[] | undefined;
@@ -197,4 +197,101 @@ const DelegationStakingDelegatorsList = ({
   );
 };
 
-export { DelegationEpochList, DelegationStakingDelegatorsList };
+const DelegationCertificatesHistory = ({
+  data,
+  initialized,
+  loading,
+  total
+}: {
+  data: CertificateHistory[] | null;
+  loading: boolean;
+  initialized: boolean;
+  total: number;
+  scrollEffect: () => void;
+}) => {
+  const { t } = useTranslation();
+  const { search } = useLocation();
+  const query = parse(search.split("?")[1]);
+  const history = useHistory();
+
+  const setQuery = (query: Query) => {
+    history.replace({ search: stringify(query) }, history.location.state);
+  };
+  const columns: Column<CertificateHistory>[] = [
+    {
+      title: t("certificatesHistory.txHash"),
+      key: "txHash",
+      minWidth: "180px",
+      render: (data) =>
+        data.txHash && (
+          <CustomTooltip title={data.txHash || ""}>
+            <StyledLink to={details.stake(data.txHash)}>{getShortHash(data.txHash || "")}</StyledLink>
+          </CustomTooltip>
+        )
+    },
+    {
+      title: t("common.createdAt"),
+      key: "createdAt",
+      minWidth: "180px",
+      render: (data) => formatDateTimeLocal(data.createdAt || "")
+    },
+    {
+      title: t("certificatesHistory.block"),
+      key: "block",
+      minWidth: "100px",
+      render: (data) => <StyledLink to={details.block(data.block)}>{data.block}</StyledLink>
+    },
+    {
+      title: t("epoch"),
+      key: "value",
+      minWidth: "80px",
+      render: (data) => <StyledLink to={details.block(data.epoch)}>{data.epoch}</StyledLink>
+    },
+    {
+      title: t("common.slot"),
+      key: "slot",
+      minWidth: "90px",
+      render: (data) => <>{data.slot}</>
+    },
+    {
+      title: t("certificatesHistory.absoluteSlot"),
+      key: "absoluteSlot",
+      minWidth: "130px",
+      render: (data) => <>{data.absoluteSlot}</>
+    },
+    {
+      title: t("common.action"),
+      key: "fees",
+      minWidth: "210px",
+      render: (data) => (
+        <Box display={"flex"} flexDirection={"column"} gap={0.5}>
+          {data.actions &&
+            data.actions.map((action, idx) => (
+              <PoolActionMark key={data.txHash + data.actions[idx]} actionType={action}>
+                {action}
+              </PoolActionMark>
+            ))}
+        </Box>
+      )
+    }
+  ];
+
+  return (
+    <Table
+      columns={columns}
+      data={data ? data : []}
+      total={{ count: total, title: t("glossary.totalTokenList") }}
+      loading={loading}
+      initialized={initialized}
+      pagination={{
+        onChange: (page, size) => {
+          setQuery({ tab: query.tab, page, size });
+        },
+        page: query.page ? +query.page - 1 : 0,
+        total: total
+      }}
+    />
+  );
+};
+
+export { DelegationEpochList, DelegationStakingDelegatorsList, DelegationCertificatesHistory };
