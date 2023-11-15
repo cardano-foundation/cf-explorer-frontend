@@ -103,7 +103,7 @@ export const HeaderStatus = styled("small")<{ status?: PoolStatus }>`
   color: ${({ status, theme }) => {
     switch (status) {
       case POOL_STATUS.RETIRED:
-        return theme.palette.error[700];
+        return theme.palette.error[800];
       case POOL_STATUS.RETIRING:
         return theme.palette.warning[800];
       case POOL_STATUS.ACTIVE:
