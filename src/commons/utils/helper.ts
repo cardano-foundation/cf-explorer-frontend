@@ -119,12 +119,13 @@ export const isExternalLink = (href?: string) => {
 
 export const formatPercent = (percent?: number) => `${Math.round((percent || 0) * 100 * 100) / 100}%`;
 
-export const getPageInfo = (search: string): { page: number; size: number; sort: string } => {
+export const getPageInfo = (search: string): { page: number; size: number; sort: string; retired: string } => {
   const query = parse(search.split("?")[1]);
   const page = Number(query.page) > 0 ? Number(query.page) - 1 : 0;
   const size = Number(query.size) > 0 ? Number(query.size) : 50;
   const sort = (query.sort || "") as string;
-  return { ...query, page, size, sort };
+  const retired = query.retired as string;
+  return { ...query, retired, page, size, sort };
 };
 
 export const removeAuthInfo = () => {

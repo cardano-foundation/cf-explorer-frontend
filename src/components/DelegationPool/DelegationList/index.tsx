@@ -36,7 +36,7 @@ const DelegationLists: React.FC = () => {
   const [value, setValue] = useState("");
   const [search, setSearch] = useState(decodeURIComponent(tickerNameSearch));
   const { pageInfo, setSort } = usePageInfo();
-  const [isShowRetired, setShowRetired] = useState(false);
+  const isShowRetired = pageInfo?.retired;
   const tableRef = useRef<HTMLDivElement>(null);
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   useEffect(() => {
@@ -221,7 +221,12 @@ const DelegationLists: React.FC = () => {
         </SearchContainer>
         <ShowRetiredPools>
           {t("glassary.showRetiredPools")}
-          <AntSwitch checked={isShowRetired} onChange={(e) => setShowRetired(e.target.checked)} />
+          <AntSwitch
+            checked={isShowRetired === "true"}
+            onChange={(e) =>
+              history.replace({ search: stringify({ ...pageInfo, page: 0, retired: e.target.checked }) })
+            }
+          />
         </ShowRetiredPools>
       </TopSearchContainer>
       <Table
