@@ -419,8 +419,7 @@ export const ProtocolParameterHistory = () => {
             }
           >
             {(r[t as ProtocolTypeKey]?.status === "ADDED" || r[t as ProtocolTypeKey]?.status === "UPDATED") &&
-            r[t as ProtocolTypeKey]?.transactionHashs &&
-            r[t as ProtocolTypeKey]?.transactionHashs.length === 0 ? (
+            !r[t as ProtocolTypeKey]?.transactionHashs ? (
               <CustomTooltip title="No transaction">
                 <Box>
                   {r[t as ProtocolTypeKey]
