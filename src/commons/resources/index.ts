@@ -79,6 +79,7 @@ import RewardAccountIconDarkUrl from "./images/reward-box-icon-dark.png";
 import DelegationToIconUrl from "./images/delegation-to.png";
 import RewardWithdrawnIconUrl from "./images/reward-withdrawn.png";
 import timeIconUrl, { ReactComponent as TimeIconComponent } from "./icons/time.svg";
+import timelineUrl, { ReactComponent as TimelineIconComponent } from "./icons/timeline.svg";
 import exchageIconUrl, { ReactComponent as ExchageIcon } from "./icons/Union.svg";
 import exchageAltIconUrl, { ReactComponent as ExchageAltIcon } from "./icons/exchangeArrow.svg";
 import outputIconUrl, { ReactComponent as OutputIcon } from "./icons/outputIcon.svg";
@@ -207,6 +208,7 @@ export {
   DelegationToIconUrl,
   RewardWithdrawnIconUrl,
   timeIconUrl,
+  timelineUrl,
   exchageIconUrl,
   exchageAltIconUrl,
   ExchageAltIcon,
@@ -249,6 +251,7 @@ export {
   CubeIconComponent,
   SlotIcon,
   TimeIconComponent,
+  TimelineIconComponent,
   OutputIcon,
   User2Component,
   ExchageIcon,
