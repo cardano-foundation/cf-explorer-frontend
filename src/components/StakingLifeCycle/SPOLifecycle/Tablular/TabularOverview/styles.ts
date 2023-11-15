@@ -133,3 +133,7 @@ export const WrapStatus = styled(Box)(() => ({
   alignItems: "center",
   minWidth: 140
 }));
+
+export const WrapIconToStyle = styled(Box)(({ theme }) => ({
+  color: theme.isDark ? theme.palette.secondary[800] : theme.palette.primary.iconBorder
+}));

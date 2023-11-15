@@ -30,6 +30,7 @@ export const API = {
   POLICY: "policies",
   SCRIPTS_SEARCH: "scripts/search",
   POOL: "pools",
+  POOL_CERTIFICATES_HISTORY: "pools/certificates-history",
 
   TOKEN: {
     LIST: "tokens",

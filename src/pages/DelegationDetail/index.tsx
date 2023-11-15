@@ -13,13 +13,14 @@ import DelegationDetailInfo from "src/components/DelegationDetail/DelegationDeta
 import DelegationDetailOverview from "src/components/DelegationDetail/DelegationDetailOverview";
 import DelegationDetailChart from "src/components/DelegationDetail/DelegationDetailChart";
 import {
+  DelegationCertificatesHistory,
   DelegationEpochList,
   DelegationStakingDelegatorsList
 } from "src/components/DelegationDetail/DelegationDetailList";
 import useFetchList from "src/commons/hooks/useFetchList";
 import NoRecord from "src/components/commons/NoRecord";
 import { API } from "src/commons/utils/api";
-import { StakingDelegators, StakeKeyHistoryIcon } from "src/commons/resources";
+import { StakingDelegators, StakeKeyHistoryIcon, TimelineIconComponent } from "src/commons/resources";
 import { setSpecialPath } from "src/stores/system";
 import { routers } from "src/commons/routers";
 import { getPageInfo } from "src/commons/utils/helper";
@@ -34,7 +35,7 @@ interface Query {
   size: number;
 }
 
-const TABS: TabPoolDetail[] = ["epochs", "delegators"];
+const TABS: TabPoolDetail[] = ["epochs", "delegators", "certificatesHistory"];
 
 const DelegationDetail: React.FC = () => {
   const { t } = useTranslation();
@@ -42,7 +43,7 @@ const DelegationDetail: React.FC = () => {
   const { search, state } = useLocation<{ fromPath?: SpecialPath }>();
   const history = useHistory();
   const query = parse(search.split("?")[1]);
-  const tab: TabPoolDetail = TABS.includes(query.tab as TabPoolDetail) ? (query.tab as TabPoolDetail) : "";
+  const tab: TabPoolDetail = TABS.includes(query.tab as TabPoolDetail) ? (query.tab as TabPoolDetail) : "epochs";
   const pageInfo = getPageInfo(search);
   const tableRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
@@ -90,6 +91,13 @@ const DelegationDetail: React.FC = () => {
     tab === "delegators" ? blockKey : undefined
   );
 
+  const fetchDataCertificatesHistory = useFetchList<CertificateHistory>(
+    `${API.POOL_CERTIFICATES_HISTORY}/${poolId}`,
+    { ...pageInfo },
+    false,
+    tab === "certificatesHistory" ? blockKey : undefined
+  );
+
   useEffect(() => {
     document.title = `Delegation Pool ${poolId} | Cardano Blockchain Explorer`;
     window.scrollTo(0, 0);
@@ -120,7 +128,21 @@ const DelegationDetail: React.FC = () => {
       icon: StakingDelegators,
       label: t("stakingDelegators"),
       key: "delegators",
-      component: <DelegationStakingDelegatorsList {...fetchDataDelegators} scrollEffect={scrollEffect} />
+      component: (
+        <div ref={tableRef}>
+          <DelegationStakingDelegatorsList {...fetchDataDelegators} scrollEffect={scrollEffect} />
+        </div>
+      )
+    },
+    {
+      icon: TimelineIconComponent,
+      label: t("certificatesHistory"),
+      key: "certificatesHistory",
+      component: (
+        <div ref={tableRef}>
+          <DelegationCertificatesHistory {...fetchDataCertificatesHistory} scrollEffect={scrollEffect} />
+        </div>
+      )
     }
   ];
 
@@ -176,7 +198,16 @@ const DelegationDetail: React.FC = () => {
             </AccordionSummary>
             <AccordionDetails>
               <TimeDuration>
-                <FormNowMessage time={(tab === "epochs" ? fetchDataEpochs : fetchDataDelegators).lastUpdated} />
+                <FormNowMessage
+                  time={
+                    (tab === "epochs"
+                      ? fetchDataEpochs
+                      : tab === "delegators"
+                      ? fetchDataDelegators
+                      : fetchDataCertificatesHistory
+                    ).lastUpdated
+                  }
+                />
               </TimeDuration>
               {component}
             </AccordionDetails>
