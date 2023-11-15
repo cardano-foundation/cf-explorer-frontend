@@ -4,16 +4,15 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
+import CustomIcon from "src/components/commons/CustomIcon";
 import {
-  BgBlue,
-  BgCardWhite,
-  BgGreen,
-  BgPink,
   OwnerAccountIcon,
-  PoolSizeIcon,
   RewardsAvailableIcon,
-  StatusIcon,
-  WalletGreenIcon
+  WalletGreenIcon,
+  StatusDarkIcon,
+  StatusLightIcon,
+  PoolSizeDarkIcon,
+  PoolSizeLightIcon
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { formatADAFull } from "src/commons/utils/helper";
@@ -33,7 +32,8 @@ import {
   ViewMoreButton,
   WrapIcon,
   WrapStatus,
-  WrapWalletIcon
+  WrapWalletIcon,
+  WrapIconToStyle
 } from "./styles";
 
 export const GreenWalletIcon = (props: BoxProps) => {
@@ -56,18 +56,11 @@ type TGridItem = {
   mainIcon: React.ReactNode;
 };
 
-const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
-  const bg = {
-    blue: BgBlue,
-    green: BgGreen,
-    red: BgPink,
-    white: BgCardWhite
-  }[bgType];
+const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   return (
     <Grid item sm={sidebar ? 12 : 6} md={6} lg={6} width={"100%"}>
       <CardOverview>
-        <Icon component={bg} />
         <StyledBox hasAction={!!action} sidebar={!!sidebar} flexGrow={1}>
           <WrapIcon>{mainIcon}</WrapIcon>
           <Box textAlign="start" width={"100%"} flexGrow={action ? 1 : ""}>
@@ -106,7 +99,13 @@ const TabularOverview: React.FC = () => {
         <GridItem
           title={t("glossary.poolSize")}
           bgType="white"
-          mainIcon={<PoolSizeIcon />}
+          mainIcon={
+            theme.isDark ? (
+              <img src={PoolSizeDarkIcon} alt="pool size icon" height={80} width={80} />
+            ) : (
+              <img src={PoolSizeLightIcon} alt="pool size icon" height={80} width={80} />
+            )
+          }
           value={
             <Box display="flex" alignItems="center">
               <CardValue>
@@ -118,7 +117,13 @@ const TabularOverview: React.FC = () => {
         <GridItem
           title={t("common.status")}
           bgType="white"
-          mainIcon={<StatusIcon />}
+          mainIcon={
+            theme.isDark ? (
+              <img src={StatusDarkIcon} alt="status icon" height={80} width={80} />
+            ) : (
+              <img src={StatusLightIcon} alt="status icon" height={80} width={80} />
+            )
+          }
           value={
             <WrapStatus>
               <CardValue
@@ -138,7 +143,11 @@ const TabularOverview: React.FC = () => {
         <GridItem
           title={t("glossary.rewardsAvailable")}
           bgType="white"
-          mainIcon={<RewardsAvailableIcon />}
+          mainIcon={
+            <WrapIconToStyle>
+              <CustomIcon icon={RewardsAvailableIcon} height={80} width={80} />
+            </WrapIconToStyle>
+          }
           value={
             <Box display="flex" alignItems="center">
               <CardValue>
@@ -150,7 +159,11 @@ const TabularOverview: React.FC = () => {
         <GridItem
           title={t("common.ownerAccount")}
           bgType="white"
-          mainIcon={<OwnerAccountIcon />}
+          mainIcon={
+            <WrapIconToStyle>
+              <CustomIcon icon={OwnerAccountIcon} height={80} width={80} />
+            </WrapIconToStyle>
+          }
           value={
             <Box display="flex" alignItems="center">
               <CardValue width={"100%"}>
