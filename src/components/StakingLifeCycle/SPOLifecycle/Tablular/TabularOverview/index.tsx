@@ -63,7 +63,7 @@ const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
       <CardOverview>
         <StyledBox hasAction={!!action} sidebar={!!sidebar} flexGrow={1}>
           <WrapIcon>{mainIcon}</WrapIcon>
-          <Box textAlign="start" width={"100%"} flexGrow={action ? 1 : ""}>
+          <Box textAlign="start" width={"calc(100% - 100px)"} flexGrow={action ? 1 : ""}>
             <CardTitle>{title}</CardTitle>
             {value}
           </Box>
@@ -108,8 +108,8 @@ const TabularOverview: React.FC = () => {
           }
           value={
             <Box display="flex" alignItems="center">
-              <CardValue>
-                {formatADAFull(poolSize)} <ADAicon />
+              <CardValue display="flex" alignItems="center">
+                {formatADAFull(poolSize)} <ADAicon width={15} height={20} />
               </CardValue>
             </Box>
           }
@@ -150,9 +150,8 @@ const TabularOverview: React.FC = () => {
           }
           value={
             <Box display="flex" alignItems="center">
-              <CardValue>
-                {formatADAFull(rewardAvailable)} <ADAicon />
-              </CardValue>
+              <CardValue>{formatADAFull(rewardAvailable)} </CardValue>
+              <ADAicon width={15} height={20} style={{ overflow: "inherit" }} />
             </Box>
           }
         />
@@ -169,7 +168,12 @@ const TabularOverview: React.FC = () => {
               <CardValue width={"100%"}>
                 <CustomTooltip title={stakeKeys?.[0]}>
                   <ClickAbleLink to={details.stake(stakeKeys?.[0] || "#")} sx={{ textWrap: "wrap" }}>
-                    <DynamicEllipsisText value={ownerAccountValue} />
+                    <DynamicEllipsisText
+                      value={ownerAccountValue}
+                      postfix={3}
+                      sx={{ wordBreak: "inherit" }}
+                      sxFirstPart={{ maxWidth: "70px" }}
+                    />
                   </ClickAbleLink>
                 </CustomTooltip>
               </CardValue>

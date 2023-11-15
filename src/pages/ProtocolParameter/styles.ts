@@ -24,7 +24,7 @@ export const HeaderButton = styled(Button)(({ theme }) => ({
   textTransform: "capitalize",
   fontWeight: "bold",
   fontSize: "0.875rem",
-  color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary[0],
+  color: theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0],
   [theme.breakpoints.down("sm")]: {
     whiteSpace: "nowrap",
     padding: "10px 25px"
