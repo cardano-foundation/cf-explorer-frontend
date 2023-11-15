@@ -1,17 +1,25 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import QueryString, { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { POOL_ACTION_TYPE } from "src/commons/utils/constants";
 import { details } from "src/commons/routers";
+import {
+  PoolResgistrationHistory,
+  PoolDeresgistrationHistory,
+  PoolUpdateHistory,
+  PoolResgistrationHistoryDark,
+  PoolUpdateHistoryDark,
+  PoolDeresgistrationHistoryDark
+} from "src/commons/resources";
 import { formatADAFull, formatDateTimeLocal, getShortHash, numberWithCommas } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import ADAicon from "src/components/commons/ADAIcon";
 
-import { PoolActionMark, StyledLink } from "./styles";
+import { StyledLink } from "./styles";
 interface Query {
   tab: string | string[] | QueryString.ParsedQs | QueryString.ParsedQs[] | undefined;
   page: number;
@@ -213,15 +221,36 @@ const DelegationCertificatesHistory = ({
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
   const history = useHistory();
-  const statusLabelOf: Record<POOL_ACTION_TYPE, string> = {
-    POOL_REGISTRATION: "POOL REGISTRATION",
-    POOL_UPDATE: "POOL UPDATE",
-    POOL_DEREGISTRATION: "POOL DEREGISTRATION"
-  };
+  const theme = useTheme();
 
   const setQuery = (query: Query) => {
     history.replace({ search: stringify(query) }, history.location.state);
   };
+
+  const renderAction = (type: POOL_ACTION_TYPE) => {
+    if (type === POOL_ACTION_TYPE.POOL_REGISTRATION) {
+      return (
+        <CustomTooltip title="Pool Registration">
+          {theme.isDark ? <PoolResgistrationHistoryDark /> : <PoolResgistrationHistory />}
+        </CustomTooltip>
+      );
+    }
+    if (type === POOL_ACTION_TYPE.POOL_UPDATE) {
+      return (
+        <CustomTooltip title="Pool Update">
+          {theme.isDark ? <PoolUpdateHistoryDark /> : <PoolUpdateHistory />}
+        </CustomTooltip>
+      );
+    }
+    if (type === POOL_ACTION_TYPE.POOL_DE_REGISTRATION) {
+      return (
+        <CustomTooltip title="Pool Deregistration">
+          {theme.isDark ? <PoolDeresgistrationHistoryDark /> : <PoolDeresgistrationHistory />}
+        </CustomTooltip>
+      );
+    }
+  };
+
   const columns: Column<CertificateHistory>[] = [
     {
       title: t("certificatesHistory.txHash"),
@@ -230,7 +259,9 @@ const DelegationCertificatesHistory = ({
       render: (data) =>
         data.txHash && (
           <CustomTooltip title={data.txHash || ""}>
-            <StyledLink to={details.stake(data.txHash)}>{getShortHash(data.txHash || "")}</StyledLink>
+            <StyledLink to={details.transaction(data.txHash, "poolCertificates")}>
+              {getShortHash(data.txHash || "")}
+            </StyledLink>
           </CustomTooltip>
         )
     },
@@ -269,13 +300,8 @@ const DelegationCertificatesHistory = ({
       key: "fees",
       minWidth: "210px",
       render: (data) => (
-        <Box display={"flex"} flexDirection={"column"} gap={0.5}>
-          {data.actions &&
-            data.actions.map((action, idx) => (
-              <PoolActionMark key={data.txHash + data.actions[idx]} actionType={action}>
-                {statusLabelOf[action]}
-              </PoolActionMark>
-            ))}
+        <Box display={"flex"} gap={2}>
+          {data.actions && data.actions.map((action) => renderAction(action))}
         </Box>
       )
     }

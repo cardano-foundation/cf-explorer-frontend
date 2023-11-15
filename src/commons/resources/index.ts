@@ -127,6 +127,12 @@ import DownRedUtxoDarkmode from "./icons/downUtxoRedDark.svg";
 import ArrowUpIcon from "./icons/arrow-up.svg";
 import ArrowUpDarkIcon from "./icons/arrow-up-dark.svg";
 import CopyOutlineIcon, { ReactComponent as CopyOutlineIconComponent } from "./icons/copy-outline.svg";
+import { ReactComponent as PoolResgistrationHistory } from "./icons/poolResgistrationHistory.svg";
+import { ReactComponent as PoolResgistrationHistoryDark } from "./icons/poolResgistrationHistoryDark.svg";
+import { ReactComponent as PoolDeresgistrationHistory } from "./icons/poolDeresgistrationHistory.svg";
+import { ReactComponent as PoolDeresgistrationHistoryDark } from "./icons/poolDeresgistrationHistoryDark.svg";
+import { ReactComponent as PoolUpdateHistory } from "./icons/poolUpdateHistory.svg";
+import { ReactComponent as PoolUpdateHistoryDark } from "./icons/poolUpdateHistoryDark.svg";
 import ArrowDownIcon from "./icons/arrow-down-red.svg";
 import ArrowDownDarkIcon from "./icons/arrow-down-red-dark.svg";
 import PolicyDark from "./icons/policy-dark.svg";
@@ -305,6 +311,12 @@ export {
   ProtocolUpdateComponent,
   InstantaneousHistoryComponent,
   PolicyDark,
+  PoolResgistrationHistory,
+  PoolDeresgistrationHistory,
+  PoolUpdateHistory,
+  PoolResgistrationHistoryDark,
+  PoolDeresgistrationHistoryDark,
+  PoolUpdateHistoryDark,
   StatusDarkIcon,
   StatusLightIcon,
   PoolSizeDarkIcon,
