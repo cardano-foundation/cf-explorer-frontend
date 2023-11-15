@@ -108,9 +108,8 @@ const TabularOverview: React.FC = () => {
           }
           value={
             <Box display="flex" alignItems="center">
-              <CardValue display="flex" alignItems="center">
-                {formatADAFull(poolSize)} <ADAicon width={15} height={20} />
-              </CardValue>
+              <CardValue>{formatADAFull(poolSize)} </CardValue>
+              <ADAicon width={15} height={20} style={{ overflow: "inherit" }} />
             </Box>
           }
         />
@@ -168,12 +167,7 @@ const TabularOverview: React.FC = () => {
               <CardValue width={"100%"}>
                 <CustomTooltip title={stakeKeys?.[0]}>
                   <ClickAbleLink to={details.stake(stakeKeys?.[0] || "#")} sx={{ textWrap: "wrap" }}>
-                    <DynamicEllipsisText
-                      value={ownerAccountValue}
-                      postfix={3}
-                      sx={{ wordBreak: "inherit" }}
-                      sxFirstPart={{ maxWidth: "70px" }}
-                    />
+                    <DynamicEllipsisText value={ownerAccountValue} postfix={5} isNoLimitPixel={true} />
                   </ClickAbleLink>
                 </CustomTooltip>
               </CardValue>
