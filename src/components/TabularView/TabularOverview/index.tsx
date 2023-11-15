@@ -6,10 +6,13 @@ import { useSelector } from "react-redux";
 import {
   DelegatingIcon,
   PaymentWalletUrl,
+  PaymentWalletDarkUrl,
   RewardAccountIconDarkUrl,
   RewardAccountIconUrl,
   RewardWithdrawnIconUrl,
-  TransactionIcon
+  TransactionIcon,
+  DelegatingToDarkIcon,
+  RewardsWithdrawDarkIcon
 } from "src/commons/resources/index";
 import { details } from "src/commons/routers";
 import { formatADAFull, getShortHash } from "src/commons/utils/helper";
@@ -89,7 +92,7 @@ const TabularOverview: React.FC = () => {
       <Grid item xs={12} sm={6}>
         <GridItem
           title={t("common.paymentWallet")}
-          iconUrl={PaymentWalletUrl}
+          iconUrl={theme.isDark ? PaymentWalletDarkUrl : PaymentWalletUrl}
           value={<CardAmount amount={Math.max(totalStake || 0, 0)} />}
           action={
             <TransferButton
@@ -110,7 +113,7 @@ const TabularOverview: React.FC = () => {
       <Grid item xs={12} sm={6}>
         <GridItem
           title={t("rewardAccount")}
-          iconSize={{ width: "74px", height: "80px" }}
+          iconSize={{ width: "80px", height: "80px" }}
           iconUrl={theme.isDark ? RewardAccountIconDarkUrl : RewardAccountIconUrl}
           value={<CardAmount amount={Math.max(rewardAvailable || 0, 0)} />}
         />
@@ -118,14 +121,14 @@ const TabularOverview: React.FC = () => {
       <Grid item xs={12} sm={6}>
         <GridItem
           title={t("slc.rewardsWithdrawn")}
-          iconUrl={RewardWithdrawnIconUrl}
+          iconUrl={theme.isDark ? RewardsWithdrawDarkIcon : RewardWithdrawnIconUrl}
           value={<CardAmount amount={rewardWithdrawn} />}
         />
       </Grid>
       <Grid item xs={12} sm={6}>
         <GridItem
           title={t("slc.delegatingTo")}
-          iconUrl={iconUrl || DelegatingIcon}
+          iconUrl={theme.isDark ? iconUrl || DelegatingToDarkIcon : iconUrl || DelegatingIcon}
           value={
             pool?.poolId ? (
               <StyledBoxDelegating to={details.delegation(pool?.poolId)}>

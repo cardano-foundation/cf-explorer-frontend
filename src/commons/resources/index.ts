@@ -117,7 +117,7 @@ import GiftIcon from "./images/gift-icon.png";
 import DelegatingIcon from "./icons/delegating-icon.svg";
 import sunIcon from "./icons/sun.svg";
 import moonIcon from "./icons/moon.svg";
-import WhiteSearchIcon from "./icons/white-search-icon.svg";
+import WhiteSearchIcon, { ReactComponent as WhiteSearchIconComponent } from "./icons/white-search-icon.svg";
 import WalletRoundedIcon from "./icons/wallet-rounded.svg";
 import SummaryWalletDark from "./icons/summaryWalletDark.svg";
 import UpGreenDarkmode from "./icons/upGreenDark.svg";
@@ -136,6 +136,12 @@ import { ReactComponent as PoolUpdateHistoryDark } from "./icons/poolUpdateHisto
 import ArrowDownIcon from "./icons/arrow-down-red.svg";
 import ArrowDownDarkIcon from "./icons/arrow-down-red-dark.svg";
 import PolicyDark from "./icons/policy-dark.svg";
+import StatusDarkIcon from "./images/StatusDark.png";
+import StatusLightIcon from "./images/StatusLight.png";
+import PoolSizeDarkIcon from "./images/PoolSizeDark.png";
+import PoolSizeLightIcon from "./images/PoolSizeLight.png";
+import DelegatingToDarkIcon from "./images/DelegatingToDark.png";
+import RewardsWithdrawDarkIcon from "./images/RewardsWithdrawDark.png";
 
 export {
   LogoFullIcon,
@@ -281,6 +287,7 @@ export {
   MenuIconComponent,
   EmptyDarkIcon,
   WhiteSearchIcon,
+  WhiteSearchIconComponent,
   WalletRoundedIcon,
   ArrowUpIcon,
   ArrowUpDarkIcon,
@@ -309,7 +316,13 @@ export {
   PoolUpdateHistory,
   PoolResgistrationHistoryDark,
   PoolDeresgistrationHistoryDark,
-  PoolUpdateHistoryDark
+  PoolUpdateHistoryDark,
+  StatusDarkIcon,
+  StatusLightIcon,
+  PoolSizeDarkIcon,
+  PoolSizeLightIcon,
+  DelegatingToDarkIcon,
+  RewardsWithdrawDarkIcon
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
