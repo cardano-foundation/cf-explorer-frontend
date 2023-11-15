@@ -192,7 +192,7 @@ const StakingLifeCycleSearch = () => {
         <SearchButton onClick={hanldeSearch}>
           <CustomIcon
             icon={WhiteSearchIconComponent}
-            fill={theme.isDark ? theme.palette.secondary[0] : theme.palette.secondary[0]}
+            fill={theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0]}
             height={20}
             width={20}
           />

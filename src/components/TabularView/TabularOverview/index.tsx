@@ -113,7 +113,6 @@ const TabularOverview: React.FC = () => {
       <Grid item xs={12} sm={6}>
         <GridItem
           title={t("rewardAccount")}
-          iconSize={{ width: "80px", height: "80px" }}
           iconUrl={theme.isDark ? RewardAccountIconDarkUrl : RewardAccountIconUrl}
           value={<CardAmount amount={Math.max(rewardAvailable || 0, 0)} />}
         />

@@ -115,7 +115,8 @@ export const BoxValue = styled(CardValue)(() => ({
   textOverflow: "ellipsis",
   overflow: "hidden",
   textAlign: "left",
-  width: "max-content"
+  width: "max-content",
+  fontSize: "24px"
 }));
 
 export const StyledBoxDelegating = styled(Link)(() => ({

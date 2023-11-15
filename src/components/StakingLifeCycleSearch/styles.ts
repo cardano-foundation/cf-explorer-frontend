@@ -106,7 +106,7 @@ export const SearchButton = styled(Button)`
   height: 51px;
   display: flex;
   gap: 8px;
-  color: ${(props) => (props.theme.isDark ? props.theme.palette.secondary[0] : props.theme.palette.primary[100])};
+  color: ${(props) => (props.theme.isDark ? props.theme.palette.secondary[100] : props.theme.palette.secondary[0])};
   background: ${(props) => props.theme.palette.primary.main};
   width: 100%;
   border-radius: 8px;
