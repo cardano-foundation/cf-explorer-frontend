@@ -63,7 +63,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                           value={item.stakeAddressFrom}
                           isCopy
                           isTooltip
-                          customTruncateFold={[8, 8]}
+                          customTruncateFold={[8, 6]}
                         />
                       </EllipsisContainer>
                     </AddressLink>
@@ -81,7 +81,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                             to={address.startsWith("addr") ? details.address(address) : details.stake(address)}
                           >
                             <EllipsisContainer fontSize={14}>
-                              <DynamicEllipsisText value={address} isCopy isTooltip customTruncateFold={[8, 8]} />
+                              <DynamicEllipsisText value={address} isCopy isTooltip customTruncateFold={[8, 6]} />
                             </EllipsisContainer>
                           </AddressLink>
                         </Box>
