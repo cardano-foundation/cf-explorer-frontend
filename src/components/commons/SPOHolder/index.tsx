@@ -147,7 +147,8 @@ export const PoolName = styled(Box)(({ theme }) => ({
   maxWidth: "70%",
   whiteSpace: "nowrap",
   overflow: "hidden",
-  textOverflow: "ellipsis"
+  textOverflow: "ellipsis",
+  height: 24
 }));
 export const ButtonSPO = styled(Box)(() => ({
   position: "absolute",
