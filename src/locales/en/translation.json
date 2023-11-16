@@ -874,5 +874,12 @@
   "Version": "Version",
   "ViewAddresses": "View Addresses",
   "token.timelock": "Time locked",
-  "token.oneTimeMint": "One time mint"
+  "token.oneTimeMint": "One time mint",
+  "notice": "Important: Scope & Limitations",
+  "notice.title": "Scope & Limitations",
+  "notice.value.a": "a. Functionality coverage: Existing Explorer user interface is being used to display Sanchonet data",
+  "notice.value.b": "b. Functionality not covered",
+  "notice.value.b1": "i. Any new functionality specific to Sanchonet",
+  "notice.value.b2": "ii.Rewards data is not available at present, and may impact stake address balances when reward balance is nonzero",
+  "notice.value.c": "c. Limited support and maintenance: Any issues including network maintenance (e.g. network restarts) will be dealt with on a best effort basis"
 }

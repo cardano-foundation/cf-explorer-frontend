@@ -129,6 +129,7 @@ import CopyOutlineIcon, { ReactComponent as CopyOutlineIconComponent } from "./i
 import ArrowDownIcon from "./icons/arrow-down-red.svg";
 import ArrowDownDarkIcon from "./icons/arrow-down-red-dark.svg";
 import PolicyDark from "./icons/policy-dark.svg";
+import { ReactComponent as Sanchonet } from "./icons/sanchonet.svg";
 
 export {
   LogoFullIcon,
@@ -294,10 +295,12 @@ export {
   StakeCertificatesComponent,
   ProtocolUpdateComponent,
   InstantaneousHistoryComponent,
-  PolicyDark
+  PolicyDark,
+  Sanchonet
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
+export { ReactComponent as Notice } from "./icons/notice.svg";
 export { ReactComponent as EyeIcon } from "./icons/eye.svg";
 export { ReactComponent as StartPage } from "./icons/startPagePagination.svg";
 export { ReactComponent as EndPage } from "./icons/endPagePagination.svg";
