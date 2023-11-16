@@ -142,7 +142,7 @@ const TabularOverview: React.FC = () => {
                         value={delegatingToValue}
                         postfix={5}
                         isNoLimitPixel={true}
-                        sxFirstPart={{ maxWidth: isMobile ? "calc(100% - 37px)" : "calc(100% - 63.4px)" }}
+                        sxFirstPart={{ maxWidth: isMobile ? "calc(100% - 50px)" : "calc(100% - 75px)" }}
                       />
                     </BoxStyled>
                   </CustomTooltip>

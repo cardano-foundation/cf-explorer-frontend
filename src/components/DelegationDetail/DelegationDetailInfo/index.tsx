@@ -15,7 +15,7 @@ import {
   UserIconComponent
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { formatADAFull, formatDateTimeLocal, formatPercent, truncateCustom } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatPercent } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import BookmarkButton from "src/components/commons/BookmarkIcon";
 import CustomIcon from "src/components/commons/CustomIcon";
@@ -103,43 +103,78 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <Box display={"flex"} alignItems={"center"} width={"inherit"}>
           <CustomTooltip title={data?.poolName || poolId}>
             <HeaderTitle>
-              {isPoolName ? (
+              {/* {isPoolName ? (
                 data?.poolName
               ) : width < 400 ? (
-                truncateCustom(poolId, 4, 2)
-              ) : (
-                <TruncateSubTitleContainer>
-                  <DynamicEllipsisText
-                    value={poolId}
-                    sxFirstPart={{ maxWidth: "calc(100% - 120px)" }}
-                    postfix={5}
-                    isNoLimitPixel={true}
-                  />
-                </TruncateSubTitleContainer>
-              )}
+                truncateCustom(poolId, 4, 4)
+              ) : ( */}
+              <TruncateSubTitleContainer>
+                <DynamicEllipsisText
+                  value={poolId}
+                  sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 130px)" : "calc(100% - 50px)" }}
+                  postfix={5}
+                  isNoLimitPixel={true}
+                />
+              </TruncateSubTitleContainer>
+              {/* )} */}
             </HeaderTitle>
           </CustomTooltip>
-          <Box marginLeft={isPoolName ? 0 : 3}>
-            <BookmarkButton keyword={poolId} type="POOL" />
-          </Box>
-          <Box marginLeft={width < 400 ? 0 : 1}>
-            <HeaderStatus status={data?.poolStatus}>{data?.poolStatus}</HeaderStatus>
-          </Box>
+          {width > 600 && (
+            <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} flex={"1"}>
+              <Box display={"flex"} alignItems={"center"}>
+                <Box marginLeft={isPoolName ? 0 : 3}>
+                  <BookmarkButton keyword={poolId} type="POOL" />
+                </Box>
+                <Box marginLeft={width < 400 ? 0 : 1}>
+                  <HeaderStatus status={data?.poolStatus}>{data?.poolStatus}</HeaderStatus>
+                </Box>
+              </Box>
+              {data?.logoUrl && !isErrorImage && (
+                <Box
+                  bgcolor={theme.palette.common.white}
+                  border={`1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`}
+                  borderRadius={1}
+                  justifySelf={"end"}
+                  marginLeft={"10px"}
+                  component={"img"}
+                  src={data?.logoUrl || ""}
+                  width={"64px"}
+                  onError={(e) => {
+                    if (e.type === "error") setIsErrorImage(true);
+                  }}
+                />
+              )}
+            </Box>
+          )}
         </Box>
-        {data?.logoUrl && !isErrorImage && (
-          <Box
-            bgcolor={theme.palette.common.white}
-            border={`1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`}
-            borderRadius={1}
-            component={"img"}
-            src={data?.logoUrl || ""}
-            width={"64px"}
-            onError={(e) => {
-              if (e.type === "error") setIsErrorImage(true);
-            }}
-          />
-        )}
       </HeaderContainer>
+      {width < 600 && (
+        <Box display={"flex"} alignItems={"center"} justifyContent={"flex-end"} marginBottom={"10px"} flex={"1"}>
+          <Box display={"flex"} alignItems={"center"}>
+            <Box marginLeft={isPoolName ? 0 : 3}>
+              <BookmarkButton keyword={poolId} type="POOL" />
+            </Box>
+            <Box marginLeft={width < 400 ? 0 : 1}>
+              <HeaderStatus status={data?.poolStatus}>{data?.poolStatus}</HeaderStatus>
+            </Box>
+          </Box>
+          {data?.logoUrl && !isErrorImage && (
+            <Box
+              bgcolor={theme.palette.common.white}
+              border={`1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`}
+              borderRadius={1}
+              justifySelf={"end"}
+              marginLeft={"10px"}
+              component={"img"}
+              src={data?.logoUrl || ""}
+              width={"64px"}
+              onError={(e) => {
+                if (e.type === "error") setIsErrorImage(true);
+              }}
+            />
+          )}
+        </Box>
+      )}
       <PoolId>
         <PoolIdLabel>{t("common.poolId")}: </PoolIdLabel>
         <Link to={details.delegation(data?.poolView)}>

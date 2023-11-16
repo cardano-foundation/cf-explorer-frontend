@@ -36,6 +36,12 @@ export const HeaderTitle = styled("h2")`
   margin: 0.5rem 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  @media (max-width: 600px) {
+    width: 100%;
+    & > div > div {
+      overflow: unset;
+    }
+  }
 `;
 
 export const HeaderTitleSkeleton = styled(CommonSkeleton)`
