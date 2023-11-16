@@ -109,7 +109,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 truncateCustom(poolId, 4, 4)
               ) : (
                 <TruncateSubTitleContainer>
-                  <DynamicEllipsisText value={poolId} sxFirstPart={{ maxWidth: "calc(100% - 180px)" }} />
+                  <DynamicEllipsisText value={poolId} sxFirstPart={{ maxWidth: "calc(100% - 145px)" }} />
                 </TruncateSubTitleContainer>
               )}
             </HeaderTitle>

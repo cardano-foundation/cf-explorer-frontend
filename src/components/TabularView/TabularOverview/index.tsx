@@ -15,10 +15,11 @@ import {
   RewardsWithdrawDarkIcon
 } from "src/commons/resources/index";
 import { details } from "src/commons/routers";
-import { formatADAFull, getShortHash } from "src/commons/utils/helper";
+import { formatADAFull } from "src/commons/utils/helper";
 import ADATransferModal from "src/components/StakingLifeCycle/DelegatorLifecycle/ADATransferModal";
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
 import {
   BoxStyled,
@@ -83,7 +84,8 @@ const TabularOverview: React.FC = () => {
   const { totalStake, rewardAvailable, rewardWithdrawn, pool } = data ?? {};
   const { tickerName, poolName, poolId, iconUrl } = pool ?? {};
   const delegatingToValue =
-    tickerName || poolName ? `${tickerName && tickerName + " -"}  ${poolName && poolName}` : getShortHash(poolId || "");
+    tickerName || poolName ? `${tickerName && tickerName + " -"}  ${poolName && poolName}` : poolId || "";
+
   const delegatingTovalueTooltip =
     tickerName || poolName ? `${tickerName && tickerName + " -"}  ${poolName && poolName}` : poolId;
   const [open, setOpen] = useState(false);
@@ -133,7 +135,9 @@ const TabularOverview: React.FC = () => {
               <StyledBoxDelegating to={details.delegation(pool?.poolId)}>
                 <CardValueDelegating>
                   <CustomTooltip title={delegatingTovalueTooltip}>
-                    <BoxStyled>{delegatingToValue}</BoxStyled>
+                    <BoxStyled>
+                      <DynamicEllipsisText value={delegatingToValue} postfix={5} isNoLimitPixel={true} />
+                    </BoxStyled>
                   </CustomTooltip>
                 </CardValueDelegating>
               </StyledBoxDelegating>
