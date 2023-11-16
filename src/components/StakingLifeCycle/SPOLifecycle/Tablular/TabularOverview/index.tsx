@@ -20,6 +20,7 @@ import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import PoolDetailContext from "../../PoolDetailContext";
 import {
@@ -82,6 +83,7 @@ const TabularOverview: React.FC = () => {
   const [open, setOpen] = useState(false);
   const history = useHistory();
   const theme = useTheme();
+  const { isMobile } = useScreen();
 
   const onOwnerItemClick = (key: string) => {
     return history.push(details.stake(key));
@@ -109,7 +111,7 @@ const TabularOverview: React.FC = () => {
           value={
             <Box display="flex" alignItems="center">
               <CardValue>{formatADAFull(poolSize)} </CardValue>
-              <ADAicon width={15} height={20} style={{ overflow: "inherit" }} />
+              <ADAicon width={isMobile ? 10 : 15} height={isMobile ? 11 : 20} style={{ overflow: "inherit" }} />
             </Box>
           }
         />
@@ -150,7 +152,7 @@ const TabularOverview: React.FC = () => {
           value={
             <Box display="flex" alignItems="center">
               <CardValue>{formatADAFull(rewardAvailable)} </CardValue>
-              <ADAicon width={15} height={20} style={{ overflow: "inherit" }} />
+              <ADAicon width={isMobile ? 10 : 15} height={isMobile ? 11 : 20} style={{ overflow: "inherit" }} />
             </Box>
           }
         />

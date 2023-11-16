@@ -49,7 +49,7 @@ export const CardValue = styled(Typography)<{ color?: string }>(({ theme, ...res
   fontSize: 24,
   color: rest.color ? rest.color : theme.palette.secondary.main,
   [theme.breakpoints.down("sm")]: {
-    fontSize: 20,
+    fontSize: "14px",
     lineHeight: "23px"
   }
 }));
@@ -87,7 +87,7 @@ export const ClickAbleLink = styled(Link)(({ theme }) => ({
   fontWeight: "bold",
   fontSize: 24,
   [theme.breakpoints.down("sm")]: {
-    fontSize: 20,
+    fontSize: 14,
     lineHeight: "16px"
   }
 }));
