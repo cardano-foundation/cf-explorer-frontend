@@ -281,8 +281,8 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             </InfoTitle>
             <InfoValue sx={{ wordBreak: "break-word" }}>
               <FlexGap10>
-                {formatADAFull(data?.poolSize)}
-                <ADAicon />
+                {data?.poolSize != null ? formatADAFull(data?.poolSize) : t("common.notAvailable")}
+                {data?.poolSize != null ? <ADAicon /> : ""}
               </FlexGap10>
             </InfoValue>
           </Item>
@@ -292,10 +292,14 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               <StyledTitle>{t("stakeLimit")}</StyledTitle>
             </InfoTitle>
             <InfoValue>
-              <FlexGap10>
-                {formatADAFull(data?.stakeLimit)}
-                <ADAicon />
-              </FlexGap10>
+              {data?.stakeLimit != null ? (
+                <FlexGap10>
+                  {formatADAFull(data?.stakeLimit)}
+                  <ADAicon />
+                </FlexGap10>
+              ) : (
+                t("common.notAvailable")
+              )}
             </InfoValue>
           </Item>
           <Item item xs={6} md={3}>
@@ -327,7 +331,11 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 >
                   {t("saturation")}
                 </Box>
-                <Box fontSize={16}>{formatPercent(data?.saturation ? data?.saturation / 100 : 0)}</Box>
+                {data?.saturation != null ? (
+                  <Box fontSize={16}>{formatPercent(data?.saturation ? data?.saturation / 100 : 0)}</Box>
+                ) : (
+                  t("common.notAvailable")
+                )}
               </Box>
             </InfoValue>
           </Item>

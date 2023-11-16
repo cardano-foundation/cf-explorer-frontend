@@ -11,7 +11,8 @@ export const STORAGE_KEYS = {
 export enum NETWORKS {
   mainnet = "mainnet",
   preprod = "preprod",
-  preview = "preview"
+  preview = "preview",
+  sanchonet = "sanchonet"
 }
 
 export const SUPPORTED_WALLETS: Wallet[] = [
@@ -67,12 +68,14 @@ export const NETWORK_NAMES = JSON.parse(
 export enum NETWORK_TYPES {
   mainnet = "MAIN_NET",
   preprod = "PRE_PROD",
-  preview = "PREVIEW"
+  preview = "PREVIEW",
+  sanchonet = "SANCHONET"
 }
 export const FRONT_END_NETWORK = {
   mainnet: process.env.REACT_APP_MAINNET_APP_URL || get(window, "env.REACT_APP_MAINNET_APP_URL"),
   preprod: process.env.REACT_APP_PREPROD_APP_URL || get(window, "env.REACT_APP_PREPROD_APP_URL"),
-  preview: process.env.REACT_APP_PREVIEW_APP_URL || get(window, "env.REACT_APP_PREVIEW_APP_URL")
+  preview: process.env.REACT_APP_PREVIEW_APP_URL || get(window, "env.REACT_APP_PREVIEW_APP_URL"),
+  sanchonet: process.env.REACT_APP_SANCHONET_APP_URL || get(window, "env.REACT_APP_SANCHONET_APP_URL")
 };
 
 export const NETWORK: NETWORKS =

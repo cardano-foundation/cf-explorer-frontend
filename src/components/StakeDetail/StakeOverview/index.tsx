@@ -87,8 +87,14 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
       ),
       value: (
         <StyledFlexValue>
-          <Box component={"span"}>{formatADAFull(data?.rewardAvailable)}</Box>
-          <ADAicon />
+          {data?.rewardAvailable != null ? (
+            <>
+              <Box component={"span"}>{formatADAFull(data?.rewardAvailable)}</Box>
+              <ADAicon />
+            </>
+          ) : (
+            t("common.notAvailable")
+          )}
         </StyledFlexValue>
       )
     },
@@ -101,8 +107,14 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
       ),
       value: (
         <StyledFlexValue>
-          {formatADAFull(data?.rewardWithdrawn)}
-          <ADAicon />
+          {data?.rewardWithdrawn != null ? (
+            <>
+              {formatADAFull(data?.rewardWithdrawn)}
+              <ADAicon />
+            </>
+          ) : (
+            t("common.notAvailable")
+          )}
         </StyledFlexValue>
       )
     }

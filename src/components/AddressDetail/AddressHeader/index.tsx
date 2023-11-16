@@ -93,12 +93,15 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     },
     {
       title: t("glossary.rewardBalance"),
-      value: (
-        <Box>
-          {formatADAFull(dataStake?.rewardAvailable)}&nbsp;
-          <ADAicon />
-        </Box>
-      )
+      value:
+        dataStake?.rewardAvailable != null ? (
+          <Box>
+            {formatADAFull(dataStake?.rewardAvailable)}&nbsp;
+            <ADAicon />
+          </Box>
+        ) : (
+          t("common.notAvailable")
+        )
     }
   ];
 
