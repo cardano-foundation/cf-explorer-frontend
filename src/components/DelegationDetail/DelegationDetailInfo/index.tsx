@@ -100,16 +100,21 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <BackText>{t("common.back")}</BackText>
       </BackButton>
       <HeaderContainer>
-        <Box display={"flex"} alignItems={"center"}>
+        <Box display={"flex"} alignItems={"center"} width={"inherit"}>
           <CustomTooltip title={data?.poolName || poolId}>
             <HeaderTitle>
               {isPoolName ? (
                 data?.poolName
               ) : width < 400 ? (
-                truncateCustom(poolId, 4, 4)
+                truncateCustom(poolId, 4, 2)
               ) : (
                 <TruncateSubTitleContainer>
-                  <DynamicEllipsisText value={poolId} sxFirstPart={{ maxWidth: "calc(100% - 145px)" }} />
+                  <DynamicEllipsisText
+                    value={poolId}
+                    sxFirstPart={{ maxWidth: "calc(100% - 120px)" }}
+                    postfix={5}
+                    isNoLimitPixel={true}
+                  />
                 </TruncateSubTitleContainer>
               )}
             </HeaderTitle>
