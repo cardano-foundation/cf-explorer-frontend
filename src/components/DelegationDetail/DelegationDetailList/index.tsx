@@ -281,7 +281,7 @@ const DelegationCertificatesHistory = ({
       title: t("epoch"),
       key: "value",
       minWidth: "80px",
-      render: (data) => <StyledLink to={details.block(data.epochNo)}>{data.epochNo}</StyledLink>
+      render: (data) => <StyledLink to={details.epoch(data.epochNo)}>{data.epochNo}</StyledLink>
     },
     {
       title: t("common.slot"),
