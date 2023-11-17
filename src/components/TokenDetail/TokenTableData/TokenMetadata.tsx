@@ -36,6 +36,7 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson, metadataCI
           />
         )}
       </CIPHeader>
+
       <ViewJson>
         {!metadataJson ? (
           <Box textAlign={"left"} color={({ palette }) => palette.secondary.light}>
