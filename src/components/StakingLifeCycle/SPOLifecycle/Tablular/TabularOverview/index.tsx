@@ -169,7 +169,12 @@ const TabularOverview: React.FC = () => {
               <CardValue width={"100%"}>
                 <CustomTooltip title={stakeKeys?.[0]}>
                   <ClickAbleLink to={details.stake(stakeKeys?.[0] || "#")} sx={{ textWrap: "wrap" }}>
-                    <DynamicEllipsisText value={ownerAccountValue} postfix={5} isNoLimitPixel={true} />
+                    <DynamicEllipsisText
+                      value={ownerAccountValue}
+                      postfix={5}
+                      isNoLimitPixel={true}
+                      sxFirstPart={{ maxWidth: isMobile ? "calc(100% - 50px)" : "calc(100% - 75px)" }}
+                    />
                   </ClickAbleLink>
                 </CustomTooltip>
               </CardValue>
