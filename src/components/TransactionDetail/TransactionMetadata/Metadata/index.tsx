@@ -24,10 +24,13 @@ import {
   TitleValue,
   Wrapper
 } from "./styles";
+
 interface MetadataProps {
   data?: Transaction["metadata"];
   hash?: Transaction["metadataHash"] | null;
 }
+
+const CIPLabel = 721;
 
 const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
   const { t } = useTranslation();
@@ -55,18 +58,20 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
           <RowMetadata>
             <Title>{t("common.metadatumLabel")}</Title>
             <TitleValue>{metadata.label || ""}</TitleValue>
-            <CIPHeader>
-              <CIPHeaderTitle>
-                {t("cip25.compliance")}{" "}
-                <InfoSolidIcon onClick={() => setSelectedIndex(idx)} width="16px" height="16px" />{" "}
-              </CIPHeaderTitle>
-              {isNil(metadata.metadataCIP25.valid) && (
-                <CIPBadge
-                  tooltipTitle={metadata.metadataCIP25.valid ? "passed" : "needs review"}
-                  type={metadata.metadataCIP25.valid ? "success" : "warning"}
-                />
-              )}
-            </CIPHeader>
+            {String(metadata.label) === String(CIPLabel) && (
+              <CIPHeader>
+                <CIPHeaderTitle>
+                  {t("cip25.compliance")}{" "}
+                  <InfoSolidIcon onClick={() => setSelectedIndex(idx)} width="16px" height="16px" />{" "}
+                </CIPHeaderTitle>
+                {!isNil(metadata.metadataCIP25.valid) && (
+                  <CIPBadge
+                    tooltipTitle={metadata.metadataCIP25.valid ? "passed" : "needs review"}
+                    type={metadata.metadataCIP25.valid ? "success" : "warning"}
+                  />
+                )}
+              </CIPHeader>
+            )}
           </RowMetadata>
           <RowMetadata>
             <JSONTitle>{t("common.value")}</JSONTitle>
