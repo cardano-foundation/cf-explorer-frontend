@@ -69,6 +69,7 @@ const DeregistrationTab = () => {
             <Box display="flex" mt={1} alignItems="center" lineHeight="1">
               {formatADAFull(new BigNumber(r.deposit).times(-1).toString())}&nbsp;
               <ADAicon width={9} />/{formatADAFull(r.fee)}
+              &nbsp;
               <ADAicon width={9} />
             </Box>
           </TableSubTitle>

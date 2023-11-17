@@ -123,7 +123,7 @@ export const BoxValue = styled(CardValue)(() => ({
 }));
 
 export const StyledBoxDelegating = styled(Link)(() => ({
-  width: "max-content",
+  width: "inherit",
   maxWidth: "100%",
   display: "flex",
   justifyContent: "flex-start",

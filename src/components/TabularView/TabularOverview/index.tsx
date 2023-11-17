@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
+import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DelegatingIcon,
   PaymentWalletUrl,
@@ -80,6 +81,7 @@ const GridItem = ({ title, action, value, iconUrl, iconSize }: TGridItem) => {
 const TabularOverview: React.FC = () => {
   const { t } = useTranslation();
   const theme = useTheme();
+  const { isMobile } = useScreen();
   const data = useContext(DelegatorDetailContext);
   const { totalStake, rewardAvailable, rewardWithdrawn, pool } = data ?? {};
   const { tickerName, poolName, poolId, iconUrl } = pool ?? {};
@@ -136,7 +138,12 @@ const TabularOverview: React.FC = () => {
                 <CardValueDelegating>
                   <CustomTooltip title={delegatingTovalueTooltip}>
                     <BoxStyled>
-                      <DynamicEllipsisText value={delegatingToValue} postfix={5} isNoLimitPixel={true} />
+                      <DynamicEllipsisText
+                        value={delegatingToValue}
+                        postfix={5}
+                        isNoLimitPixel={true}
+                        sxFirstPart={{ maxWidth: isMobile ? "calc(100% - 50px)" : "calc(100% - 75px)" }}
+                      />
                     </BoxStyled>
                   </CustomTooltip>
                 </CardValueDelegating>
