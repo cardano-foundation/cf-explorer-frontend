@@ -22,20 +22,22 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson, metadataCI
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const { keyRenderer } = useDisableJsonKey(metadataJson);
-
+  const isShowCIP25 = metadataCIP25?.tokenMap && Object.keys(metadataCIP25?.tokenMap).length > 0;
   return (
     <MetaDataWraper>
-      <CIPHeader>
-        <CIPHeaderTitle>
-          CIP Compliance <InfoSolidIcon onClick={() => setOpen(true)} width="16px" height="16px" />{" "}
-        </CIPHeaderTitle>
-        {!isNil(metadataCIP25?.valid) && (
-          <CIPBadge
-            tooltipTitle={metadataCIP25?.valid ? "passed" : "needs review"}
-            type={metadataCIP25?.valid ? "success" : "warning"}
-          />
-        )}
-      </CIPHeader>
+      {isShowCIP25 && (
+        <CIPHeader>
+          <CIPHeaderTitle>
+            CIP Compliance <InfoSolidIcon onClick={() => setOpen(true)} width="16px" height="16px" />{" "}
+          </CIPHeaderTitle>
+          {!isNil(metadataCIP25?.valid) && (
+            <CIPBadge
+              tooltipTitle={metadataCIP25?.valid ? "passed" : "needs review"}
+              type={metadataCIP25?.valid ? "success" : "warning"}
+            />
+          )}
+        </CIPHeader>
+      )}
 
       <ViewJson>
         {!metadataJson ? (
