@@ -36,7 +36,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
       <SPOTitle>{t("common.spo")}</SPOTitle>
       <Box>
         <CustomTooltip title={poolName}>
-          <PoolName> {poolName}</PoolName>
+          <PoolName>{poolName}</PoolName>
         </CustomTooltip>
         <CustomTooltip
           wOpacity={false}
