@@ -8,7 +8,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { EyeIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { getShortHash } from "src/commons/utils/helper";
+import { formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { AdaValue } from "src/components/commons/ADAValue";
 import CustomIcon from "src/components/commons/CustomIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -47,7 +47,7 @@ const DeregsitrationTab = () => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       },
       render(data) {
-        return data.time;
+        return formatDateTimeLocal(data.time);
       }
     },
     {
