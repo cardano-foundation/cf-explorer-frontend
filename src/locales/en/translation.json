@@ -872,5 +872,6 @@
   "Version": "Version",
   "ViewAddresses": "View Addresses",
   "token.timelock": "Time locked",
-  "token.oneTimeMint": "One time mint"
+  "token.oneTimeMint": "One time mint",
+  "protocol.trxModalSubTitle": "Confirmed by transactions"
 }
