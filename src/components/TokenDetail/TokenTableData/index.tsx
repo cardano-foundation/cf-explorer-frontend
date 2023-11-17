@@ -1,19 +1,20 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { Box, Tab, useTheme } from "@mui/material";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { Box, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import { IoIosArrowDown } from "react-icons/io";
 
-import { useScreen } from "src/commons/hooks/useScreen";
+import { details } from "src/commons/routers";
+import { UnionTokenIcon, PeopleIcon, TransactionIcon, MetadataIcon } from "src/commons/resources";
+import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 
 import TokenTransaction from "./TokenTransaction";
-import { TitleTab } from "./styles";
 import TokenTopHolder from "./TokenTopHolder";
 import TokenMinting from "./TokenMinting";
 import TokenMetaData from "./TokenMetadata";
-import { details } from "../../../commons/routers";
-import { UnionTokenIcon, PeopleIcon, TransactionIcon, MetadataIcon } from "../../../commons/resources";
-import CustomIcon from "../../commons/CustomIcon";
+import { TitleTab } from "./styles";
 
 interface ITokenTableData {
   totalSupply?: number;
@@ -24,25 +25,25 @@ interface ITokenTableData {
 
 const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, metadataJson, setCurrentHolder }) => {
   const { t } = useTranslation();
+  const tabRef = useRef<HTMLDivElement>(null);
   const history = useHistory();
-  const { tabActive = "transactions", tokenId } = useParams<{
+  const { tabActive, tokenId } = useParams<{
     tabActive: keyof Transaction | "topHolders";
     tokenId: string;
   }>();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const theme = useTheme();
-  const { isTablet, isMobile } = useScreen();
+
   const tabs: {
     key: string;
     label: string;
     children: React.ReactNode;
-    icon: React.ReactElement;
+    icon: React.FC<React.SVGProps<SVGSVGElement>>;
   }[] = [
     {
       key: "transactions",
       label: t("glossary.transactions"),
       children: <TokenTransaction tokenId={tokenId} />,
-      icon: <CustomIcon icon={TransactionIcon} width={20} fill="currentColor" />
+      icon: TransactionIcon
     },
     {
       key: "topHolders",
@@ -55,70 +56,72 @@ const TokenTableData: React.FC<ITokenTableData> = ({ totalSupply, metadata, meta
           setCurrentHolder={setCurrentHolder}
         />
       ),
-      icon: <CustomIcon icon={PeopleIcon} width={20} fill="currentColor" />
+      icon: PeopleIcon
     },
     {
       key: "tokenMint",
       label: t("tab.minting"),
       children: <TokenMinting tokenId={tokenId} metadata={metadata} />,
-      icon: <CustomIcon icon={UnionTokenIcon} width={20} fill="currentColor" />
+      icon: UnionTokenIcon
     },
     {
       key: "metadata",
       label: t("glossary.metadata"),
       children: <TokenMetaData metadataJson={metadataJson} />,
-      icon: <CustomIcon icon={MetadataIcon} width={20} fill="currentColor" />
+      icon: MetadataIcon
     }
   ];
 
-  const handleChange = (event: React.SyntheticEvent, tab: keyof Transaction) => {
-    history.replace(details.token(tokenId, tab));
+  const indexExpand = tabs.findIndex((item) => item.key === tabActive);
+
+  const needBorderRadius = (currentKey: string) => {
+    if (!tabActive) return "0";
+    const indexCurrent = tabs.findIndex((item) => item.key === currentKey);
+    if (indexExpand - 1 >= 0 && indexExpand - 1 === indexCurrent) return "0 0 12px 12px";
+    if (indexExpand + 1 < tabs.length && indexExpand + 1 === indexCurrent) return "12px 12px 0 0";
+    return "0";
   };
+
+  const handleChangeTab = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+    tabRef?.current?.scrollIntoView();
+    history.replace(details.token(tokenId, newExpanded ? panel : ""));
+  };
+
   return (
-    <TabContext value={tabActive}>
-      <TabList
-        onChange={handleChange}
-        variant="scrollable"
-        TabIndicatorProps={{
-          sx: {
-            background: (theme) => theme.palette.primary.main,
-            color: (theme) => theme.palette.primary.main,
-            height: 3
-          }
-        }}
-        sx={({ palette }) =>
-          isTablet
-            ? { borderBottom: `1px solid ${palette.primary[200]}`, width: isMobile ? "calc(100% - 30px)" : "auto" }
-            : {}
-        }
-      >
-        {tabs?.map(({ key, label, icon }) => (
-          <Tab
-            key={key}
-            value={key}
-            style={{ padding: "12px 0px", marginRight: 40, minHeight: 50, marginTop: 30 }}
-            iconPosition="start"
-            label={
-              <Box
-                display={"flex"}
-                alignItems="center"
-                color={tabActive === key ? theme.palette.primary.main : theme.palette.secondary.light}
-              >
-                {icon}
-                <TitleTab pl={1} active={key === tabActive}>
-                  {label}
-                </TitleTab>
-              </Box>
+    <Box ref={tabRef} mt={"30px"}>
+      {tabs.map(({ key, icon: Icon, label, children }, index) => (
+        <StyledAccordion
+          key={key}
+          expanded={tabActive === key}
+          customBorderRadius={needBorderRadius(key)}
+          isDisplayBorderTop={tabActive !== key && key !== tabs[0].key && index !== indexExpand + 1}
+          onChange={handleChangeTab(key)}
+          TransitionProps={{ unmountOnExit: true }}
+        >
+          <AccordionSummary
+            expandIcon={
+              <IoIosArrowDown
+                style={{
+                  width: "21px",
+                  height: "21px"
+                }}
+                color={key === tabActive ? theme.palette.primary.main : theme.palette.secondary.light}
+              />
             }
-          />
-        ))}
-      </TabList>
-      {tabs.map((item) => (
-        <TabPanel key={item.key} value={item.key} style={{ padding: 0, paddingTop: 12 }}>
-          {item.children}
-        </TabPanel>
+            sx={{
+              paddingX: theme.spacing(3),
+              paddingY: theme.spacing(1)
+            }}
+          >
+            <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.secondary.light} />
+            <TitleTab pl={1} active={key === tabActive}>
+              {label}
+            </TitleTab>
+          </AccordionSummary>
+          <AccordionDetails>{children}</AccordionDetails>
+        </StyledAccordion>
       ))}
-    </TabContext>
+    </Box>
   );
 };
 

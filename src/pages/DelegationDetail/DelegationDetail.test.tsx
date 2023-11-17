@@ -103,7 +103,7 @@ describe("BlockDetail page", () => {
     render(<DelegationDetail />);
     expect(screen.getByText(/highest stake/i)).toBeInTheDocument();
     expect(screen.getByText(/lowest stake/i)).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: /delegator/i }));
+    fireEvent.click(screen.getAllByRole("button", { name: /delegator/i })[0]);
     expect(screen.getByText(/highest number of delegators/i)).toBeInTheDocument();
     expect(screen.getByText(/lowest number of delegators/i)).toBeInTheDocument();
   });

@@ -5,8 +5,8 @@ import { useHistory, useParams } from "react-router-dom";
 import { t } from "i18next";
 
 import { UtxoIcon } from "src/commons/resources";
-import { CustomAccordion } from "src/components/TransactionDetail/TransactionMetadata/styles";
 import { details } from "src/commons/routers";
+import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 
 import TabAssociated from "./TabAssociated";
 import TabTransactions from "./TabTransactions";
@@ -66,12 +66,13 @@ const ContractTabs = ({ setVersion }: { setVersion: (v: string) => void }) => {
   return (
     <StyledContractTabs ref={tabRef}>
       {data?.map(({ key, icon: Icon, label, children }, index) => (
-        <CustomAccordion
+        <StyledAccordion
           key={key}
           expanded={tabActive === key}
           customBorderRadius={needBorderRadius(key)}
           isDisplayBorderTop={tabActive !== key && key !== data[0].key && index !== indexExpand + 1}
           onChange={handleChangeTab(key)}
+          TransitionProps={{ unmountOnExit: true }}
         >
           <StyledAccordionSummary
             expandIcon={
@@ -88,7 +89,7 @@ const ContractTabs = ({ setVersion }: { setVersion: (v: string) => void }) => {
             <TitleTab active={key === tabActive}>{label}</TitleTab>
           </StyledAccordionSummary>
           <StyledAccordionDetails>{children}</StyledAccordionDetails>
-        </CustomAccordion>
+        </StyledAccordion>
       ))}
     </StyledContractTabs>
   );
