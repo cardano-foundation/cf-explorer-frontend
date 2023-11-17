@@ -12,6 +12,7 @@ import { formatADAFull, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DetailHeader from "src/components/commons/DetailHeader";
+import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 
 import ModalAllAddress from "../ModalAllAddress";
 import { ButtonModal, StyledFlexValue, StyledLinkTo, TitleCard, TitleNoPool, TitleValue } from "./styles";
@@ -67,7 +68,10 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
       ),
       value: (
         <Box>
-          <StyledFlexValue>
+          <StyledFlexValue
+            component={NETWORK === NETWORKS.sanchonet ? CustomTooltip : Box}
+            title={t("sanchonet.toltipTotalStake")}
+          >
             <Box component={"span"}>{formatADAFull(data?.totalStake)}</Box>
             <ADAicon />
           </StyledFlexValue>

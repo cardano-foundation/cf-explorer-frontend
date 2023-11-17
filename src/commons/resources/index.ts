@@ -129,6 +129,7 @@ import CopyOutlineIcon, { ReactComponent as CopyOutlineIconComponent } from "./i
 import ArrowDownIcon from "./icons/arrow-down-red.svg";
 import ArrowDownDarkIcon from "./icons/arrow-down-red-dark.svg";
 import PolicyDark from "./icons/policy-dark.svg";
+import NAIcon from "./icons/NAIcon.svg";
 import { ReactComponent as Sanchonet } from "./icons/sanchonet.svg";
 
 export {
@@ -296,7 +297,8 @@ export {
   ProtocolUpdateComponent,
   InstantaneousHistoryComponent,
   PolicyDark,
-  Sanchonet
+  Sanchonet,
+  NAIcon
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";

@@ -292,8 +292,10 @@ const HomeStatistic = () => {
                   </Box>
                 </Box>
                 <Box>
-                  <CustomTooltip title={liveStake ? formatADAFull(liveStake) : "N/A"}>
-                    <Title data-testid="live-stake-value">{liveStake ? formatADA(liveStake) : "N/A"}</Title>
+                  <CustomTooltip title={liveStake ? formatADAFull(liveStake) : t("common.notAvailable")}>
+                    <Title data-testid="live-stake-value">
+                      {liveStake ? formatADA(liveStake) : t("common.notAvailable")}
+                    </Title>
                   </CustomTooltip>
                   <Progress>
                     <CustomTooltip title={"Total staked to Circulating supply ratio"}>
@@ -316,8 +318,10 @@ const HomeStatistic = () => {
                 <Box>
                   <Box color={({ palette }) => palette.secondary.light}>
                     {t("glossary.activeStake")} (<ADAicon width={10} />){": "}
-                    <CustomTooltip title={activeStake ? formatADAFull(activeStake) : "N/A"}>
-                      <span data-testid="active-stake-value">{activeStake ? formatADA(activeStake) : "N/A"}</span>
+                    <CustomTooltip title={activeStake ? formatADAFull(activeStake) : t("common.notAvailable")}>
+                      <span data-testid="active-stake-value">
+                        {activeStake ? formatADA(activeStake) : t("common.notAvailable")}
+                      </span>
                     </CustomTooltip>
                   </Box>
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>

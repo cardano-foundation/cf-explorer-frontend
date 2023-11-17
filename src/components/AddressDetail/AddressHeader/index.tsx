@@ -18,6 +18,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import { useScreen } from "src/commons/hooks/useScreen";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 
 import { BackButton, BackText, RedirectButton, StyledBoxCard, TimeDuration, TitleText, WrapHeader } from "./styles";
 
@@ -66,7 +67,11 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     {
       title: t("drawer.totalStake"),
       value: (
-        <Box>
+        <Box
+          placement="top-start"
+          component={NETWORK === NETWORKS.sanchonet ? CustomTooltip : Box}
+          title={t("sanchonet.toltipTotalStake")}
+        >
           {formatADAFull(dataStake?.totalStake)}&nbsp;
           <ADAicon />
         </Box>

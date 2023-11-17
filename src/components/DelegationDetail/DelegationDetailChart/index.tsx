@@ -12,7 +12,7 @@ import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/
 import CustomIcon from "src/components/commons/CustomIcon";
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import { TooltipBody } from "src/components/commons/Layout/styles";
-import NoRecord from "src/components/commons/NoRecord";
+import NotAvailable from "src/components/commons/NotAvailable";
 
 import {
   AnalyticsTitle,
@@ -82,14 +82,14 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
     if (!loading && data?.delegatorChart === null) {
       return (
         <Box style={{ height: "400px" }}>
-          <NoRecord />
+          <NotAvailable />
         </Box>
       );
     }
     if ((!loading && data?.epochChart === null) || data === null) {
       return (
         <Box style={{ height: "400px" }}>
-          <NoRecord />
+          <NotAvailable />
         </Box>
       );
     }

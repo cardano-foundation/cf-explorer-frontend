@@ -875,6 +875,7 @@
   "ViewAddresses": "View Addresses",
   "token.timelock": "Time locked",
   "token.oneTimeMint": "One time mint",
+  "sanchonet.toltipTotalStake": "Does not include reward balance",
   "notice": "Important: Scope & Limitations",
   "notice.title": "Scope & Limitations",
   "notice.value.a": "a. Functionality coverage: Existing Explorer user interface is being used to display Sanchonet data",

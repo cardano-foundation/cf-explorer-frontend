@@ -31,6 +31,7 @@ import CustomIcon from "src/components/commons/CustomIcon";
 import Card from "src/components/commons/Card";
 import { TooltipBody } from "src/components/commons/Layout/styles";
 import NoRecord from "src/components/commons/NoRecord";
+import NotAvailable from "src/components/commons/NotAvailable";
 
 import {
   BoxInfo,
@@ -168,7 +169,7 @@ const StakeAnalytics: React.FC = () => {
     if (convertRewardChart?.length === 0 && tab === "REWARD") {
       return (
         <Box>
-          <NoRecord />
+          <NotAvailable />
         </Box>
       );
     }

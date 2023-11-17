@@ -94,7 +94,7 @@ const DelegationEpochList = ({
   return (
     <Table
       columns={columns}
-      data={data || []}
+      data={data}
       total={{ count: total, title: t("glossary.totalTokenList") }}
       loading={loading}
       initialized={initialized}
@@ -156,7 +156,11 @@ const DelegationStakingDelegatorsList = ({
       ),
       key: "value",
       minWidth: "120px",
-      render: (data) => <Box component={"span"}>{formatADAFull(data.totalStake)}</Box>
+      render: (data) => (
+        <Box component={"span"}>
+          {data.totalStake != null ? formatADAFull(data.totalStake) : t("common.notAvailable")}
+        </Box>
+      )
     },
     {
       title: t("stakedTime"),

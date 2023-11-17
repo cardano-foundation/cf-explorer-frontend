@@ -51,7 +51,7 @@ export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & 
 
 export interface TableProps<T extends ColumnType = any> {
   columns: Column<T>[];
-  data?: T[];
+  data?: T[] | null;
   className?: string;
   emptyClassName?: string;
   style?: React.CSSProperties;
