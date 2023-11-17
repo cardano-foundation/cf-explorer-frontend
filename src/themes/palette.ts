@@ -8,7 +8,8 @@ export const createGradient = (deg: number, startColor: string, endColor: string
 
 const COMMON = {
   black: "#000000",
-  white: "#FFFFFF"
+  white: "#FFFFFF",
+  dark: "#181818"
 };
 
 const GREY = {

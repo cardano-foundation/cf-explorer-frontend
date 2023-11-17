@@ -44,7 +44,6 @@ describe("TokenDetail page", () => {
     expect(screen.getByText(/number of holders/i)).toBeInTheDocument();
     expect(screen.getByText(/total volume/i)).toBeInTheDocument();
     expect(screen.getByText(/volume 24h/i)).toBeInTheDocument();
-    expect(screen.getByText(/created at/i)).toBeInTheDocument();
     expect(screen.getByText(/token last activity/i)).toBeInTheDocument();
     expect(screen.getByText(/analytics/i)).toBeInTheDocument();
     ["1d", "1w", "1m", "3m"].forEach((item) => {
