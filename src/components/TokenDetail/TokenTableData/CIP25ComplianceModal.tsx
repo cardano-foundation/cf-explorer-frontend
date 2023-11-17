@@ -23,28 +23,28 @@ const DEFAULT_CIP25_REQUIRE = [
     format: "text",
     index: "1",
     property: "policy_ID",
-    valid: false,
+    valid: null,
     value: ""
   },
   {
     format: "utf-8",
     index: "2",
     property: "asset_name",
-    valid: false,
+    valid: null,
     value: ""
   },
   {
     format: "string",
     index: "3",
     property: "name",
-    valid: false,
+    valid: null,
     value: ""
   },
   {
     format: "uri | array",
     index: "4",
     property: "image",
-    valid: false,
+    valid: null,
     value: ""
   }
 ];
