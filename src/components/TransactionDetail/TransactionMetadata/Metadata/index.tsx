@@ -1,6 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { isNil } from "lodash";
 
 import { SeeMoreIconHome } from "src/commons/resources";
 import { isJson } from "src/commons/utils/helper";
@@ -59,7 +60,12 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
                 {t("cip25.compliance")}{" "}
                 <InfoSolidIcon onClick={() => setSelectedIndex(idx)} width="16px" height="16px" />{" "}
               </CIPHeaderTitle>
-              <CIPBadge type={metadata.metadataCIP25.valid ? "success" : "warning"} />
+              {isNil(metadata.metadataCIP25.valid) && (
+                <CIPBadge
+                  tooltipTitle={metadata.metadataCIP25.valid ? "passed" : "needs review"}
+                  type={metadata.metadataCIP25.valid ? "success" : "warning"}
+                />
+              )}
             </CIPHeader>
           </RowMetadata>
           <RowMetadata>

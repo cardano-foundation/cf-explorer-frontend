@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, useTheme } from "@mui/material";
 import { JsonViewer } from "@textea/json-viewer";
 import { useTranslation } from "react-i18next";
+import { isNil } from "lodash";
 
 import { isJson } from "src/commons/utils/helper";
 import useDisableJsonKey from "src/commons/hooks/useDisableJsonKey";
@@ -28,7 +29,12 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson, metadataCI
         <CIPHeaderTitle>
           CIP Compliance <InfoSolidIcon onClick={() => setOpen(true)} width="16px" height="16px" />{" "}
         </CIPHeaderTitle>
-        <CIPBadge type={metadataCIP25?.valid ? "success" : "warning"} />
+        {!isNil(metadataCIP25?.valid) && (
+          <CIPBadge
+            tooltipTitle={metadataCIP25?.valid ? "passed" : "needs review"}
+            type={metadataCIP25?.valid ? "success" : "warning"}
+          />
+        )}
       </CIPHeader>
       <ViewJson>
         {!metadataJson ? (

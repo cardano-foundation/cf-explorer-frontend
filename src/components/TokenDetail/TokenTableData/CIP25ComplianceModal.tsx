@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { isEmpty } from "lodash";
+import { isEmpty, isNil } from "lodash";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -107,7 +107,10 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
     {
       title: t("cip.compliance"),
       key: "compliance",
-      render: (r) => <CIPBadge type={r.valid ? "success" : "warning"} />
+      render: (r) =>
+        !isNil(r.valid) && (
+          <CIPBadge tooltipTitle={r.valid ? "passed" : "needs review"} type={r.valid ? "success" : "warning"} />
+        )
     }
   ];
   const mixedoptionalProperties = (optionalProperties: TTCIP25Properties[]) => {
