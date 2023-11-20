@@ -66,7 +66,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
                 </CIPHeaderTitle>
                 {!isNil(metadata.metadataCIP25.valid) && (
                   <CIPBadge
-                    tooltipTitle={metadata.metadataCIP25.valid ? "passed" : "needs review"}
+                    tooltipTitle={metadata.metadataCIP25.valid ? t("common.passed") : t("common.needsReview")}
                     type={metadata.metadataCIP25.valid ? "success" : "warning"}
                   />
                 )}

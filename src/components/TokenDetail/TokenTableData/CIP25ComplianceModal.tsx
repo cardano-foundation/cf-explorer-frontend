@@ -109,7 +109,10 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
       key: "compliance",
       render: (r) =>
         !isNil(r.valid) && (
-          <CIPBadge tooltipTitle={r.valid ? "passed" : "needs review"} type={r.valid ? "success" : "warning"} />
+          <CIPBadge
+            tooltipTitle={r.valid ? t("common.passed") : t("common.needsReview")}
+            type={r.valid ? "success" : "warning"}
+          />
         )
     }
   ];

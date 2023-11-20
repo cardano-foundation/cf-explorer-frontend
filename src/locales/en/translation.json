@@ -888,5 +888,7 @@
   "token.requiredProperties": "Required Properties",
   "token.optionalProperties": "Optional Properties",
   "token.otherProperties": "Other Properties",
-  "token.otherProperties.desc": "Any metadata that doesn't fall into the \"required\" or \"optional\" categories according to the CIP-25 specification is not verified for compliance and therefore won't be displayed in this view."
+  "token.otherProperties.desc": "Any metadata that doesn't fall into the \"required\" or \"optional\" categories according to the CIP-25 specification is not verified for compliance and therefore won't be displayed in this view.",
+  "common.passed": "Passed",
+  "common.needsReview": "Needs review"
 }
