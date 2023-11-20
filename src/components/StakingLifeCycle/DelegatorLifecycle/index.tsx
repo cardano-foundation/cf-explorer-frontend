@@ -208,7 +208,13 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
               id={`step-${idx}`}
               key={idx}
               component={tabsRenderConfig[step.keyCheckShow] ? "span" : CustomTooltip}
-              title={tabsRenderConfig[step.keyCheckShow] ? undefined : t("common.noRecordAtTime")}
+              title={
+                tabsRenderConfig[step.keyCheckShow]
+                  ? undefined
+                  : tabsRenderConfig[step.keyCheckShow] != null
+                  ? t("common.noRecordAtTime")
+                  : t("common.notAvailable")
+              }
               onClick={() => handleChangeTab(step, idx)}
               sx={{
                 borderColor: colorProps.background

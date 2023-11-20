@@ -21,6 +21,7 @@ import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import PoolDetailContext from "../../PoolDetailContext";
 import {
@@ -83,7 +84,7 @@ const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
 
 const TabularOverview: React.FC = () => {
   const { t } = useTranslation();
-
+  const { isMobile } = useScreen();
   const data = useContext(PoolDetailContext);
   const { stakeKeys, poolSize, epochNo, status, rewardAvailable } = data ?? {};
   const [open, setOpen] = useState(false);
@@ -109,9 +110,10 @@ const TabularOverview: React.FC = () => {
           mainIcon={<PoolSizeIcon />}
           value={
             <Box display="flex" alignItems="center">
-              <CardValue>
-                {formatADAFull(poolSize)} <ADAicon />
-              </CardValue>
+              <CardValue>{poolSize !== null ? formatADAFull(poolSize) : t("common.notAvailable")} </CardValue>
+              {rewardAvailable != null && (
+                <ADAicon width={isMobile ? 10 : 15} height={isMobile ? 11 : 20} style={{ overflow: "inherit" }} />
+              )}
             </Box>
           }
         />
@@ -142,8 +144,11 @@ const TabularOverview: React.FC = () => {
           value={
             <Box display="flex" alignItems="center">
               <CardValue>
-                {formatADAFull(rewardAvailable)} <ADAicon />
+                {rewardAvailable != null ? formatADAFull(rewardAvailable) : t("common.notAvailable")}{" "}
               </CardValue>
+              {rewardAvailable != null && (
+                <ADAicon width={isMobile ? 10 : 15} height={isMobile ? 11 : 20} style={{ overflow: "inherit" }} />
+              )}
             </Box>
           }
         />

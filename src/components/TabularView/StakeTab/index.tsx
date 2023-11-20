@@ -61,7 +61,9 @@ const StakeTab: React.FC<StackTabProps> = ({
                     title={
                       !checkshow || (tabsRenderConfig && tabsRenderConfig[keyCheckShow || ""])
                         ? undefined
-                        : t("common.noRecordAtTime")
+                        : (tabsRenderConfig && tabsRenderConfig[keyCheckShow || ""]) != null
+                        ? t("common.noRecordAtTime")
+                        : t("common.notAvailable")
                     }
                   >
                     <CustomTabTitle
