@@ -54,6 +54,7 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson, metadataCI
             collapseStringsAfterLength={false}
             rootName={false}
             theme={theme.isDark ? "dark" : "light"}
+            style={{ background: theme.isDark ? theme.palette.common.dark : theme.palette.primary[100] }}
             keyRenderer={keyRenderer}
           />
         )}
