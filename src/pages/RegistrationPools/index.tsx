@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { stringify } from "qs";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -8,13 +8,14 @@ import { useSelector } from "react-redux";
 import Card from "src/components/commons/Card";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
-import { formatADAFull, formatDateTimeLocal, formatPercent, getPageInfo, getShortHash } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatPercent, getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { API } from "src/commons/utils/api";
 import NoRecord from "src/components/commons/NoRecord";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import ADAicon from "src/components/commons/ADAIcon";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 
 import { RegistrationContainer, StakeKey, StyledLink, StyledPoolLink, TimeDuration } from "./styles";
 
@@ -30,13 +31,11 @@ interface Props {
 const RegistrationPools: React.FC<Props> = ({ poolType }) => {
   const { t } = useTranslation();
   const history = useHistory();
-  const { search } = useLocation();
-  const pageInfo = getPageInfo(search);
-  const [sort, setSort] = useState<string>("");
+  const { pageInfo, setSort } = usePageInfo();
   const mainRef = useRef(document.querySelector("#main"));
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
-  const fetchData = useFetchList<Registration>(`${API.POOL}/${poolType}`, { ...pageInfo, sort }, false, blockKey);
+  const fetchData = useFetchList<Registration>(`${API.POOL}/${poolType}`, { ...pageInfo }, false, blockKey);
 
   useEffect(() => {
     const title = poolType === POOL_TYPE.REGISTRATION ? "Registration" : "Deregistration";
@@ -166,7 +165,7 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
           pagination={{
             ...pageInfo,
             onChange: (page, size) => {
-              history.replace({ search: stringify({ page, size }) });
+              history.replace({ search: stringify({ ...pageInfo, page, size }) });
               mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             },
             total: fetchData.total
