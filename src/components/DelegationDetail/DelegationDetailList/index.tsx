@@ -297,11 +297,13 @@ const DelegationCertificatesHistory = ({
       title: t("common.action"),
       key: "fees",
       minWidth: "210px",
-      render: (data) => (
-        <Box display={"flex"} gap={2}>
-          {data.actions && data.actions.map((action) => renderAction(action))}
-        </Box>
-      )
+      render: (data) => {
+        return (
+          <Box display={"flex"} gap={2}>
+            {data.actions && [...new Set(data.actions)].map((action) => renderAction(action))}
+          </Box>
+        );
+      }
     }
   ];
 
