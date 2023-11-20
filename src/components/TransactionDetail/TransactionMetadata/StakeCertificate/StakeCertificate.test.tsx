@@ -15,7 +15,7 @@ describe("StakeCertificate component", () => {
     render(<StakeCertificate data={[mockData]} />);
     expect(screen.getByText(/stake address registrations/i)).toBeInTheDocument();
     expect(screen.getByText(/stake address:/i)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /stake-/ })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /stake/ })).toBeInTheDocument();
   });
 
   it("should user goto detail page", () => {
@@ -25,7 +25,7 @@ describe("StakeCertificate component", () => {
         <StakeCertificate data={[mockData]} />
       </Router>
     );
-    fireEvent.click(screen.getByRole("link", { name: /stake-/ }));
+    fireEvent.click(screen.getByRole("link", { name: /stake/ }));
     expect(history.location.pathname).toBe(details.stake(mockData.stakeAddress));
   });
 });
