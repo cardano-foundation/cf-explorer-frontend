@@ -873,5 +873,17 @@
   "ViewAddresses": "View Addresses",
   "token.timelock": "Time locked",
   "token.oneTimeMint": "One time mint",
+  "token.CIP25Compliance": "CIP 25 Compliance",
+  "cip25.property": "Property",
+  "cip25.format": "Format",
+  "cip.compliance": "Compliance",
+  "cip25.compliance": "CIP Compliance",
+  "token.CIP-25": "CIP-25",
+  "token.requiredProperties": "Required Properties",
+  "token.optionalProperties": "Optional Properties",
+  "token.otherProperties": "Other Properties",
+  "token.otherProperties.desc": "Any metadata that doesn't fall into the \"required\" or \"optional\" categories according to the CIP-25 specification is not verified for compliance and therefore won't be displayed in this view.",
+  "common.passed": "Passed",
+  "common.needsReview": "Needs Review",
   "protocol.trxModalSubTitle": "Confirmed by transactions"
 }
