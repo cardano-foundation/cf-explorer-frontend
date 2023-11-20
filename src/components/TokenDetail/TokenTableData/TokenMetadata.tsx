@@ -32,7 +32,7 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson, metadataCI
           </CIPHeaderTitle>
           {!isNil(metadataCIP25?.valid) && (
             <CIPBadge
-              tooltipTitle={metadataCIP25?.valid ? "passed" : "needs review"}
+              tooltipTitle={metadataCIP25?.valid ? t("common.passed") : t("common.needsReview")}
               type={metadataCIP25?.valid ? "success" : "warning"}
             />
           )}
