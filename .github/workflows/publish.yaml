@@ -26,6 +26,8 @@ jobs:
     steps:
       - name: ⬇️ Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-tags: true
 
       - name: 🫡 Setup node
         uses: actions/setup-node@v1
