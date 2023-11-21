@@ -121,7 +121,11 @@ const DelegationDetail: React.FC = () => {
       icon: StakeKeyHistoryIcon,
       label: t("epoch"),
       key: "epochs",
-      component: <DelegationEpochList {...fetchDataEpochs} scrollEffect={scrollEffect} />
+      component: (
+        <div ref={tableRef}>
+          <DelegationEpochList {...fetchDataEpochs} scrollEffect={scrollEffect} />
+        </div>
+      )
     },
     {
       icon: StakingDelegators,
@@ -159,7 +163,7 @@ const DelegationDetail: React.FC = () => {
       if (newExpanded) {
         setTimeout(() => {
           tableRef?.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        }, 100);
+        }, 150);
         // Remove the event listener after the scroll
         tableRef?.current?.removeEventListener("transitionend", handleTransitionEnd);
       }
