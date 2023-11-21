@@ -34,7 +34,15 @@ export const CustomAccordion: React.FC<TCustomAccordionProps> = ({ tabs, hiddenK
   const tabRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const handleChangeTab = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-    tabRef?.current?.scrollIntoView();
+    const handleTransitionEnd = () => {
+      if (newExpanded) {
+        setTimeout(() => {
+          tabRef?.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }, 0);
+        tabRef?.current?.removeEventListener("transitionend", handleTransitionEnd);
+      }
+    };
+    tabRef?.current?.addEventListener("transitionend", handleTransitionEnd);
     history.replace(details.nativeScriptDetail(id, newExpanded ? panel : ""));
   };
 
