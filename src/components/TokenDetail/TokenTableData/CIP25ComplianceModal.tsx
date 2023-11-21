@@ -1,15 +1,24 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { isEmpty, isNil } from "lodash";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
+import { CheckedCIPIcon, WarningCIPIcon } from "src/commons/resources";
+import { CIP25_DOCS_URL } from "src/commons/utils/constants";
 import { getShortHash } from "src/commons/utils/helper";
-import CIPBadge from "src/components/commons/CIPBadge";
 import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
+import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
 
-import { CIPModalSubtitle, ModalContent, OtherPropetiesContent, OtherPropetiesDesc, TokenLabel } from "./styles";
+import {
+  CIPLabel,
+  CIPModalSubtitle,
+  ModalContent,
+  OtherPropetiesContent,
+  OtherPropetiesDesc,
+  TokenLabel
+} from "./styles";
 
 export type TCIP25ComplianceModalProps = {
   open: boolean;
@@ -109,10 +118,11 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
       key: "compliance",
       render: (r) =>
         !isNil(r.valid) && (
-          <CIPBadge
-            tooltipTitle={r.valid ? t("common.passed") : t("common.needsReview")}
-            type={r.valid ? "success" : "warning"}
-          />
+          <Box pl={3}>
+            <CustomTooltip title={r.valid ? t("common.passed") : t("common.needsReview")}>
+              <Box display="inline-block">{r.valid ? <CheckedCIPIcon /> : <WarningCIPIcon />}</Box>
+            </CustomTooltip>
+          </Box>
         )
     }
   ];
@@ -126,7 +136,11 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
       modalContainerProps={{ style: { maxWidth: 920 } }}
       open={props.open}
       onClose={props.onClose}
-      title={t("token.CIP25Compliance")}
+      title={
+        <CIPLabel>
+          {t("token.CIP25Compliance")} <ViewAllButtonExternal tooltipTitle={t("cip25.viewDocs")} to={CIP25_DOCS_URL} />
+        </CIPLabel>
+      }
     >
       <ModalContent>
         {tokenMaps.map((token, index) => (
