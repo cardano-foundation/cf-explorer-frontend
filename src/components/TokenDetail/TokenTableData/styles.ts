@@ -221,3 +221,9 @@ export const TokenLabel = styled(Typography)`
   font-weight: 400;
   margin-bottom: 12px;
 `;
+
+export const CIPLabel = styled(Box)`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`;
