@@ -6,7 +6,7 @@ import CustomModal from "src/components/commons/CustomModal";
 
 import ExplanDropdown from "../common/ExplanDropdown";
 import DataCard from "../common/DataCard";
-import { ModalContent } from "./styles";
+import { ModalContent, SlotContainer } from "./styles";
 
 type Data = { title: string; value?: string };
 export interface CompiledCodeModalProps {
@@ -28,15 +28,17 @@ const CompiledCodeModal: React.FC<CompiledCodeModalProps> = ({ open = false, onC
     >
       <ModalContent>
         <ExplanDropdown title={t("explain.compiledCode")}>{t("explain.compiledCode.desc")}</ExplanDropdown>
-        <Grid container spacing={2}>
-          {data &&
-            data.length > 0 &&
-            data.map((item) => (
-              <Grid item xs={12} key={item.title}>
-                <DataCard title={item.title} value={item.value} />
-              </Grid>
-            ))}
-        </Grid>
+        <SlotContainer>
+          <Grid container spacing={2}>
+            {data &&
+              data.length > 0 &&
+              data.map((item) => (
+                <Grid item xs={12} key={item.title}>
+                  <DataCard title={item.title} value={item.value} />
+                </Grid>
+              ))}
+          </Grid>
+        </SlotContainer>
       </ModalContent>
     </CustomModal>
   );

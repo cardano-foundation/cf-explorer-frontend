@@ -145,12 +145,30 @@ interface IContractItemTx {
   utxoHash?: string;
   utxoIndex?: number;
   redeemerCertType?: "DELEGATION" | "STAKE_DEREGISTRATION";
+  referenceInputs?: ReferenceInput[];
 }
-
+interface ReferenceInput {
+  address: string;
+  index: number;
+  script: string;
+  scriptHash: string;
+  txHash: string;
+  value: number;
+  datumHash: string;
+  datum: string;
+  scriptType: string;
+}
 interface DMetadata {
   decimals: number;
 }
 
+type TTCIP25Properties = {
+  index: string;
+  property: string;
+  format: string;
+  value: string;
+  valid: boolean;
+};
 interface Transaction {
   tx: {
     hash: string;
@@ -235,7 +253,24 @@ interface Transaction {
   metadata: {
     label: number;
     value: string;
+    metadataCIP25: {
+      tokenMap?: TokenMap;
+      valid?: boolean;
+      version?: TTCIP25Properties;
+    };
   }[];
+}
+
+interface TokenMap
+  extends Record<
+    string,
+    {
+      optionalProperties: TTCIP25Properties[];
+      requireProperties: TTCIP25Properties[];
+      tokenName: string;
+    }
+  > {
+  valid?: boolean;
 }
 
 interface CollateralResponses {

@@ -68,7 +68,6 @@ export const ViewDetailScroll = styled(Box)(({ theme }) => ({
   marginRight: "16px",
   overflowX: "hidden",
   overflow: "hidden",
-  paddingTop: "15px",
   [theme.breakpoints.down("sm")]: {
     marginRight: "0px",
     overflowY: "auto",

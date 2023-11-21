@@ -7,7 +7,7 @@ export const TitleTab = styled(Box)<{ active: number }>(({ active, theme }) => (
   textTransform: "capitalize",
   fontFamily: '"Roboto", sans-serif',
   fontSize: "1.125rem",
-  color: active ? theme.palette.primary.main : theme.palette.secondary[600]
+  color: active ? theme.palette.primary.main : theme.palette.secondary.light
 }));
 
 export const LabelStatus = styled(Box)(({ theme }) => ({
@@ -99,7 +99,7 @@ export const Headline = styled(Typography)<{ collapsed?: number }>`
   color: ${(props) => props.theme.palette.secondary.main};
   flex: 1;
   text-align: left;
-  padding-top: 20px;
+  margin-top: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

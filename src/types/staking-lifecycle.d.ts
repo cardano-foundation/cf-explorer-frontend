@@ -12,3 +12,8 @@ declare interface ListStakeKeyResponse {
   hasWithdrawal: boolean;
   hashRewards: boolean;
 }
+
+declare type DistributionTotal = {
+  totalDelegatorRewards: number;
+  totalOperatorRewards: number;
+};

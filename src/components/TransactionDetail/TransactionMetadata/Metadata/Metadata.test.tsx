@@ -2,7 +2,7 @@ import { render, screen } from "src/test-utils";
 
 import Metadata from ".";
 
-const metaData = [{ label: 1, value: "First Metadata" }];
+const metaData = [{ label: 1, value: "First Metadata", metadataCIP25: {} }];
 
 describe("Metadata component", () => {
   it("should component render", () => {

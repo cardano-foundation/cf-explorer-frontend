@@ -32,8 +32,8 @@ describe("PolicyOverview", () => {
   it("testing rendering policy details", () => {
     mockUseScreen.mockReturnValue({ isMobile: false, isTablet: false });
     render(<PolicyOverview data={mockData} loading={false} />);
-    expect(screen.getByText("Policy Details")).toBeInTheDocument();
-    expect(screen.getByText("Policy ID:")).toBeInTheDocument();
+    expect(screen.getByText(/Policy Details/)).toBeInTheDocument();
+    expect(screen.getByText(/Script Hash/)).toBeInTheDocument();
     expect(screen.getByText(/a002/)).toBeInTheDocument();
   });
 

@@ -51,7 +51,7 @@ const Copyright = styled("small")`
 `;
 
 const Version = styled("span")`
-  text-wrap: nowrap;
+  white-space: nowrap;
 `;
 
 const RefContainer = styled(Box)`

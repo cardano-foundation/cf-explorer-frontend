@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import CustomModal from "src/components/commons/CustomModal";
 
-import { ModalContent } from "./styles";
+import { ModalContent, SlotContainer } from "./styles";
 import ExplanDropdown from "../common/ExplanDropdown";
 import DataCard from "../common/DataCard";
 
@@ -28,15 +28,17 @@ const DatumModal: React.FC<DatumModalProps> = ({ open = false, onClose, data }) 
     >
       <ModalContent>
         <ExplanDropdown title={t("explain.datum")}>{t("explain.datum.desc")}</ExplanDropdown>
-        <Grid container spacing={2}>
-          {data &&
-            data.length > 0 &&
-            data.map((item) => (
-              <Grid item xs={12} key={item.title}>
-                <DataCard title={item.title} value={item.value} />
-              </Grid>
-            ))}
-        </Grid>
+        <SlotContainer>
+          <Grid container spacing={2}>
+            {data &&
+              data.length > 0 &&
+              data.map((item) => (
+                <Grid item xs={12} key={item.title}>
+                  <DataCard title={item.title} value={item.value} />
+                </Grid>
+              ))}
+          </Grid>
+        </SlotContainer>
       </ModalContent>
     </CustomModal>
   );

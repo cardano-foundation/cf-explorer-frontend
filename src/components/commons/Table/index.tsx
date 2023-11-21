@@ -46,6 +46,8 @@ import {
   ShowedResults,
   StyledMenuItem,
   StyledPagination,
+  StyledPerPage,
+  StyledResult,
   TBody,
   TCol,
   TFooter,
@@ -69,7 +71,7 @@ type TEmptyRecord = {
   isModal?: boolean;
 };
 export const EmptyRecord: React.FC<TEmptyRecord> = ({ className, isModal }) => (
-  <Empty className={className} isModal={+(isModal || 0)}>
+  <Empty className={className} ismodal={+(isModal || 0)}>
     <NoRecord p={`${0} !important`} />
   </Empty>
 );
@@ -124,7 +126,7 @@ const TableHeader = <T extends ColumnType>({
     <THead>
       <tr>
         {selectable && (
-          <THeader isModal={+(isModal || 0)}>
+          <THeader ismodal={+(isModal || 0)}>
             <TableCheckBox checked={isSelectAll} onChange={(e) => toggleSelectAll?.(e.target.checked)} />
           </THeader>
         )}
@@ -134,7 +136,7 @@ const TableHeader = <T extends ColumnType>({
             style={
               column.fixed ? { position: "sticky", left: column.leftFixed ? column.leftFixed : "-8px", zIndex: 10 } : {}
             }
-            isModal={+(isModal || 0)}
+            ismodal={+(isModal || 0)}
           >
             {column.title}
             {column.sort && (
@@ -172,14 +174,14 @@ const TableRow = <T extends ColumnType>({
   return (
     <TRow onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row))} {...selectedProps}>
       {selectable && (
-        <TCol isModal={+(isModal || 0)}>
+        <TCol ismodal={+(isModal || 0)}>
           <TableCheckBox checked={isSelected?.(row)} onChange={() => toggleSelection?.(row)} />
         </TCol>
       )}
       {columns.map((column, idx) => {
         return (
           <TCol
-            isModal={+(isModal || 0)}
+            ismodal={+(isModal || 0)}
             className="tb-col"
             key={idx}
             ref={colRef}
@@ -338,22 +340,20 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
               <StyledMenuItem value={50}>50</StyledMenuItem>
               <StyledMenuItem value={100}>100</StyledMenuItem>
             </SelectMui>
-            <Box component={"span"} ml={1} fontSize="0.875rem" sx={{ textWrap: "nowrap" }}>
-              {t("perPage")}
-            </Box>
+            <StyledPerPage>{t("perPage")}</StyledPerPage>
           </Box>
         ) : (
           ""
         )}
         {total && total.count ? (
-          <Box ml={"20px"} fontSize="0.875rem">
+          <StyledResult>
             <TotalNumber>{numberWithCommas(total.count)}</TotalNumber>{" "}
             {total.isDataOverSize
               ? t("glossary.mostRelavant")
               : total.count > 1
               ? t("common.results")
               : t("common.result")}
-          </Box>
+          </StyledResult>
         ) : (
           ""
         )}
@@ -404,7 +404,8 @@ const Table: React.FC<TableProps> = ({
   isShowingResult,
   isModal,
   height,
-  minHeight
+  minHeight,
+  isFullTableHeight = false
 }) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange
@@ -413,13 +414,17 @@ const Table: React.FC<TableProps> = ({
   const tableRef = useRef<HTMLTableElement>(null);
   const wrapperRef = useRef<HTMLElement>(null);
   const { width } = useScreen();
+  const scrollHeight = 5;
+  let heightTable = Math.min((tableRef?.current?.clientHeight || 0) + scrollHeight, window.innerHeight * 0.5);
+  const tableFullHeight = (tableRef?.current?.clientHeight || 0) + scrollHeight;
 
-  let heightTable = Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight * 0.5);
-
-  if (width >= breakpoints.values.sm && (data || []).length > 10) {
+  if (width >= breakpoints.values.sm && (data || []).length >= 9) {
     const footerHeight = document.getElementById("footer")?.offsetHeight || SPACING_TOP_TABLE;
-    heightTable =
-      Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight) - (footerHeight + SPACING_TOP_TABLE);
+    const spaceTop =
+      Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight) - (footerHeight + SPACING_TOP_TABLE) < 200
+        ? 0
+        : SPACING_TOP_TABLE;
+    heightTable = window.innerHeight - (footerHeight + spaceTop);
   }
 
   const toggleSelectAll = (isChecked: boolean) => {
@@ -457,7 +462,8 @@ const Table: React.FC<TableProps> = ({
         ref={wrapperRef}
         maxHeight={maxHeight}
         minHeight={minHeight ? minHeight : (!data || data.length === 0) && !loading ? 360 : loading ? 400 : 15}
-        height={height || heightTable}
+        height={height || (isFullTableHeight ? tableFullHeight : heightTable)}
+        ismodal={+!!isModal}
         className={data && data.length !== 0 ? "table-wrapper" : "hide-scroll"}
         loading={loading ? 1 : 0}
         {...tableWrapperProps}

@@ -3,7 +3,6 @@ import { SxProps } from "@mui/system";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { useScreen } from "src/commons/hooks/useScreen";
 import { DownRedUtxoDarkmode, UpGreenUtxoDarkmode } from "src/commons/resources";
 import receiveImg from "src/commons/resources/images/receiveImg.svg";
 import sendImg from "src/commons/resources/images/sendImg.svg";
@@ -11,7 +10,6 @@ import { details } from "src/commons/routers";
 import { formatADAFull } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CopyButton from "src/components/commons/CopyButton";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { FlexCenter } from "src/components/share/styled";
 
@@ -24,11 +22,16 @@ import {
   ItemBox,
   ItemContent,
   ItemFooter,
+  TitleAmountMobile,
+  WrapAmountHeader,
+  StyleAmount,
   WrapContent,
   WrapUTXOs,
-  Wrapper
+  Wrapper,
+  StyledContainerInfo,
+  EllipsisContainer,
+  RowItemContent
 } from "./style";
-import { EllipsisContainer } from "../UTXOs/styles";
 
 interface CollateralProps {
   data: Transaction["collaterals"] | null;
@@ -71,7 +74,7 @@ const Card = ({ type, items, sx }: { type: "input" | "output"; items?: Collatera
         <BoxHeaderTop>{type === "input" ? t("drawer.input") : t("drawer.ouput")}</BoxHeaderTop>
         <BoxHeaderBottom>
           <Box>{t("glossary.address")}</Box>
-          <Box>{t("glossary.amount")}</Box>
+          <WrapAmountHeader>{t("glossary.amount")}</WrapAmountHeader>
         </BoxHeaderBottom>
       </Header>
       <ItemBox>
@@ -86,14 +89,13 @@ export default Collaterals;
 const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "input" | "output" }) => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const { isTablet } = useScreen();
   return (
     <Box>
       {data?.map((item) => (
         <Item key={item.address} fontSize={14}>
           <ItemContent>
             <Box display="flex" alignItems="center">
-              <Box width={50}>
+              <Box>
                 <Img
                   src={
                     type === "input"
@@ -107,92 +109,76 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                   alt="send icon"
                 />
               </Box>
-              {isTablet ? (
-                <Box color={({ palette }) => palette.secondary.light}>
-                  {type === "input" ? t("common.from") : t("common.to")}:
-                </Box>
-              ) : null}
             </Box>
-            <WrapContent flexGrow={1}>
-              <Box flexGrow={1}>
+            <StyledContainerInfo>
+              <WrapContent flexGrow={1}>
                 {type === "input" && (
                   <WrapUTXOs>
                     <Box mr={3} minWidth={200} width={"100%"}>
-                      <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} width={"100%"}>
+                      <RowItemContent>
                         <Box color={(theme) => theme.palette.secondary.light} pr={1}>
                           {t("tab.utxo")}:
                         </Box>
                         <Link to={details.transaction(item.txHash)} style={{ width: "100%" }}>
-                          <CustomTooltip title={item.txHash}>
-                            <Box
-                              component={"span"}
-                              fontWeight="bold"
-                              fontFamily={"var(--font-family-text)"}
-                              color={(theme) => theme.palette.primary.main}
-                            >
-                              <EllipsisContainer>
-                                <DynamicEllipsisText
-                                  value={item.txHash}
-                                  afterElm={
-                                    <FlexCenter>
-                                      <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
-                                        #{item?.index}
-                                      </Box>
-                                      <CopyButton text={item.txHash} />
-                                    </FlexCenter>
-                                  }
-                                />
-                              </EllipsisContainer>
-                            </Box>
-                          </CustomTooltip>
+                          <Box
+                            component={"span"}
+                            fontWeight="bold"
+                            fontFamily={"var(--font-family-text)"}
+                            color={(theme) => theme.palette.primary.main}
+                          >
+                            <EllipsisContainer>
+                              <DynamicEllipsisText
+                                value={item.txHash}
+                                afterElm={
+                                  <FlexCenter>
+                                    <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
+                                      #{item?.index}
+                                    </Box>
+                                    <CopyButton text={item.txHash} />
+                                  </FlexCenter>
+                                }
+                                isTooltip
+                                customTruncateFold={[4, 8]}
+                              />
+                            </EllipsisContainer>
+                          </Box>
                         </Link>
-                      </Box>
+                      </RowItemContent>
                     </Box>
                   </WrapUTXOs>
                 )}
-                <Box
-                  display={"flex"}
-                  pl={type === "input" ? 2 : 0}
-                  justifyContent="space-between"
-                  alignItems={"center"}
-                >
-                  {!isTablet ? (
-                    <Box
-                      color={({ palette }) => palette.secondary.light}
-                      display={"flex"}
-                      alignItems="center"
-                      justifyContent={"flex-start"}
-                      pr={1}
-                      mr={1}
-                    >
-                      {type === "input" ? "From" : "To"}:
-                    </Box>
-                  ) : null}
-                  <Box display={"flex"} justifyContent="space-between" flex={"1"} alignItems={"center"} width={"100%"}>
-                    <Box
-                      display={"flex"}
-                      justifyContent="flex-start"
-                      alignItems={"center"}
-                      flexWrap="nowrap"
-                      width={"100%"}
-                    >
+                <Box color={({ palette }) => palette.secondary.light} display="flex" alignItems={"center"}>
+                  {type === "input" ? t("common.from") : t("common.to")}:&nbsp;
+                  <Box
+                    display={"flex"}
+                    justifyContent="space-between"
+                    flex={"1"}
+                    alignItems={"center"}
+                    width={"100%"}
+                    flexWrap={"wrap"}
+                    gap="4px"
+                  >
+                    <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} width={"100%"}>
                       <Link to={details.address(item.address)} style={{ width: "100%" }}>
                         <Box
                           fontWeight="bold"
                           fontFamily={"var(--font-family-text)"}
                           color={(theme) => theme.palette.primary.main}
-                          mr={1}
+                          width={"100%"}
                         >
                           <EllipsisContainer>
-                            <DynamicEllipsisText value={item.address} isCopy isTooltip />
+                            <DynamicEllipsisText value={item.address} isCopy isTooltip customTruncateFold={[8, 8]} />
                           </EllipsisContainer>
                         </Box>
                       </Link>
                     </Box>
                   </Box>
                 </Box>
-              </Box>
-              <Box sx={{ textWrap: "nowrap" }}>
+              </WrapContent>
+              <StyleAmount>
+                <Box color={theme.palette.secondary.light} fontWeight={"bold"}>
+                  <TitleAmountMobile> {t("glossary.amount")}&nbsp;</TitleAmountMobile>
+                </Box>
                 <Box
                   component={"span"}
                   whiteSpace="nowrap"
@@ -206,11 +192,10 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                   fontWeight="bold"
                   mr={1}
                 >
-                  {type === "input" ? `-${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`}
+                  {type === "input" ? `-${formatADAFull(item.value)}` : `+${formatADAFull(item.value)}`} <ADAicon />
                 </Box>
-                <ADAicon />
-              </Box>
-            </WrapContent>
+              </StyleAmount>
+            </StyledContainerInfo>
           </ItemContent>
         </Item>
       ))}

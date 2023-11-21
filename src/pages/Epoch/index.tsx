@@ -1,13 +1,13 @@
 import { stringify } from "qs";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import { EPOCH_STATUS } from "src/commons/utils/constants";
-import { formatADAFull, formatDateTimeLocal, getPageInfo } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import Card from "src/components/commons/Card";
 import DetailViewEpoch from "src/components/commons/DetailView/DetailViewEpoch";
@@ -16,20 +16,20 @@ import SelectedIcon from "src/components/commons/SelectedIcon";
 import Table, { Column } from "src/components/commons/Table";
 import { setOnDetailView } from "src/stores/user";
 import { Capitalize } from "src/components/commons/CustomText/styles";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 
 import { Blocks, BlueText, EpochNumber, Output, StatusTableRow, StyledBox, StyledContainer } from "./styles";
 
 const Epoch: React.FC = () => {
   const { t } = useTranslation();
   const [selected, setSelected] = useState<number | null>(null);
-  const { search } = useLocation();
   const history = useHistory();
   const { onDetailView } = useSelector(({ user }: RootState) => user);
   const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
-  const pageInfo = getPageInfo(search);
-  const [sort, setSort] = useState<string>("");
+  const { pageInfo, setSort } = usePageInfo();
+
   const [key, setKey] = useState(0);
-  const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, { ...pageInfo, sort }, false, epochNo);
+  const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, { ...pageInfo }, false, epochNo);
   const fetchDataLatestEpoch = useFetchList<IDataEpoch>(API.EPOCH.LIST, { page: 0, size: 1 }, false, key);
 
   const EPOCH_STATUS_MAPPING = {
@@ -39,7 +39,6 @@ const Epoch: React.FC = () => {
     [EPOCH_STATUS.SYNCING]: t("common.epoch.cyncing")
   };
 
-  const mainRef = useRef(document.querySelector("#main"));
   const columns: Column<IDataEpoch>[] = [
     {
       title: <Capitalize>{t("glossary.epoch")}</Capitalize>,
@@ -164,8 +163,7 @@ const Epoch: React.FC = () => {
             ...pageInfo,
             total: fetchData.total,
             onChange: (page, size) => {
-              history.replace({ search: stringify({ page, size }) });
-              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+              history.replace({ search: stringify({ ...pageInfo, page, size }) });
             },
             handleCloseDetailView: handleClose
           }}

@@ -30,6 +30,7 @@ describe("StakingLifeCycleSearch", () => {
     const mockedUseHistory = useHistory as jest.Mock;
     mockedUseHistory.mockReturnValue({ push });
     render(<StakingLifeCycleSearch />);
+    screen.logTestingPlaygroundURL();
     const textBox = screen.getByRole("textbox");
     const btnSearch = screen.getAllByRole("button", {
       name: /search/i

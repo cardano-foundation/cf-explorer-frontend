@@ -6,7 +6,6 @@ describe("User check information of latest Transaction", () => {
     cy.get('[data-testid="search-bar"]').should("be.visible");
     cy.get('[data-testid="table-common"]').should("be.visible");
     cy.get('[aria-label="pagination navigation"]').should("be.visible");
-    cy.get("span").contains("Per page").should("be.visible");
 
     cy.get('[data-testid="table-common"] tbody tr').eq(0).click();
     cy.get("a").contains("View Details", { matchCase: false }).should("be.visible");

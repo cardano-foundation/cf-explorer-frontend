@@ -244,3 +244,17 @@ export enum OPTIONS_CHART_ANALYTICS {
 }
 
 export const ROLE_ELEVATED_GEN_REPORT = -1;
+
+export enum SCRIPT_TYPE {
+  MULTISIG = "MULTISIG",
+  TIMELOCK = "TIMELOCK",
+  PLUTUSV1 = "PLUTUSV1",
+  PLUTUSV2 = "PLUTUSV2"
+}
+
+export const ScriptTypeLabel = {
+  [SCRIPT_TYPE.MULTISIG]: "Multisig",
+  [SCRIPT_TYPE.TIMELOCK]: "Timelock",
+  [SCRIPT_TYPE.PLUTUSV1]: "Plutus v1",
+  [SCRIPT_TYPE.PLUTUSV2]: "Plutus v2"
+};
