@@ -43,7 +43,7 @@ const DelegationDetail: React.FC = () => {
   const { search, state } = useLocation<{ fromPath?: SpecialPath }>();
   const history = useHistory();
   const query = parse(search.split("?")[1]);
-  const tab: TabPoolDetail = TABS.includes(query.tab as TabPoolDetail) ? (query.tab as TabPoolDetail) : "epochs";
+  const tab: TabPoolDetail = TABS.includes(query.tab as TabPoolDetail) ? (query.tab as TabPoolDetail) : "";
   const pageInfo = getPageInfo(search);
   const tableRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
