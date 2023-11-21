@@ -86,6 +86,11 @@ export const StyledInput = styled(Input)<{ home: number }>`
   & > input {
     padding: ${(props) => (props.home ? 5 : 0)}px;
   }
+
+  input[type="search"]::-webkit-search-cancel-button {
+    filter: ${({ theme }) => (theme.mode === "dark" ? "brightness(0) invert(0.8)" : "brightness(0) invert(0.4)")};
+    cursor: pointer;
+  }
 `;
 
 export const SubmitButton = styled(Button)<{ home: number }>`

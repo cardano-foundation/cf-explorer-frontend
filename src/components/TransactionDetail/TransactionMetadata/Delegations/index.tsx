@@ -47,7 +47,7 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
                   </Box>
                   <AddressLink to={details.delegation(item.poolId)} style={{ width: "100%" }}>
                     <EllipsisContainer>
-                      <DynamicEllipsisText value={item.address || ""} isCopy isTooltip customTruncateFold={[5, 6]} />
+                      <DynamicEllipsisText value={item.poolId || ""} isCopy isTooltip customTruncateFold={[5, 6]} />
                     </EllipsisContainer>
                   </AddressLink>
                 </Box>

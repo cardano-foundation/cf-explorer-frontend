@@ -47,6 +47,8 @@ export const WrapRightSide = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "end",
+  width: "min(250px, 100%)",
+  boxSizing: "border-box",
   [theme.breakpoints.down("lg")]: {
     alignItems: "baseline",
     marginTop: "18px",
@@ -113,7 +115,8 @@ export const AmountMobile = styled(Box)(({ theme }) => ({
 
 export const WrapTokenDropdown = styled(Box)(() => ({
   marginTop: "16px",
-  width: "100%"
+  width: "100%",
+  boxSizing: "border-box"
 }));
 
 export const ItemFooter = styled(Box)(({ theme }) => ({

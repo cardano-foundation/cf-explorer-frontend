@@ -4,9 +4,34 @@ import { createBrowserHistory } from "history";
 import { fireEvent, render, screen } from "src/test-utils";
 import { details } from "src/commons/routers";
 
-import { DelegationStakingDelegatorsList } from ".";
+import { DelegationEpochList, DelegationStakingDelegatorsList } from ".";
 
-const mockProps = {
+const mockEpochList = {
+  data: [
+    {
+      epoch: 447,
+      block: 61,
+      stakeAmount: 65904_430,
+      delegator: 26689,
+      fee: 582.382668,
+      ros: 123
+    },
+    {
+      epoch: 446,
+      block: 58,
+      stakeAmount: 14904_430,
+      delegator: null,
+      fee: 321.31,
+      ros: 321
+    }
+  ],
+  loading: false,
+  initialized: true,
+  total: 10,
+  scrollEffect: jest.fn()
+};
+
+const mockStakingDelegators = {
   data: [
     {
       address: "0x123456789",
@@ -28,9 +53,21 @@ const mockProps = {
   total: 10,
   scrollEffect: jest.fn()
 };
+
+describe("Epoch List component", () => {
+  beforeEach(() => {
+    render(<DelegationEpochList {...mockEpochList} />);
+  });
+
+  it("should component render", () => {
+    expect(screen.getByText("447")).toBeInTheDocument();
+    expect(screen.getByText("446")).toBeInTheDocument();
+  });
+});
+
 describe("DelegationDetailList component", () => {
   it("should component render", () => {
-    render(<DelegationStakingDelegatorsList {...mockProps} />);
+    render(<DelegationStakingDelegatorsList {...mockStakingDelegators} />);
     expect(screen.getByRole("link", { name: /view 1/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /view 2/i })).toBeInTheDocument();
     expect(screen.getByText(/result/i)).toBeInTheDocument();
@@ -40,10 +77,10 @@ describe("DelegationDetailList component", () => {
     const history = createBrowserHistory();
     render(
       <Router history={history}>
-        <DelegationStakingDelegatorsList {...mockProps} />
+        <DelegationStakingDelegatorsList {...mockStakingDelegators} />
       </Router>
     );
     fireEvent.click(screen.getByRole("link", { name: /view 1/i }));
-    expect(history.location.pathname).toBe(details.stake(mockProps.data[0].view));
+    expect(history.location.pathname).toBe(details.stake(mockStakingDelegators.data[0].view));
   });
 });
