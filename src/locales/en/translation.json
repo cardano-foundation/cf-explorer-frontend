@@ -885,5 +885,6 @@
   "token.otherProperties.desc": "Any metadata that doesn't fall into the \"required\" or \"optional\" categories according to the CIP-25 specification is not verified for compliance and therefore won't be displayed in this view.",
   "common.passed": "Passed",
   "common.needsReview": "Needs Review",
-  "protocol.trxModalSubTitle": "Confirmed by transactions"
+  "protocol.trxModalSubTitle": "Confirmed by transactions",
+  "cip25.viewDocs": "View cip25 documenent"
 }
