@@ -2,7 +2,12 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "es5",
-    "lib": ["es5", "dom", "dom.iterable", "esnext"],
+    "lib": [
+      "es5",
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -16,12 +21,24 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["cypress", "node"],
-    "noImplicitAny": true
+    "types": [
+      "cypress",
+      "node"
+    ],
+    "noImplicitAny": true,
+    "downlevelIteration": true
   },
   "paths": {
-    "src/*": ["./*"]
+    "src/*": [
+      "./*"
+    ]
   },
-  "include": ["src/**/*", "public/**/*", "**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src/**/*",
+    "public/**/*",
+    "**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

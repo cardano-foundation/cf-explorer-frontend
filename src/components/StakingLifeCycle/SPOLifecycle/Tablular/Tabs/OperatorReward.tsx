@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { stringify } from "qs";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -11,18 +11,15 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
 import ADAicon from "src/components/commons/ADAIcon";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 
 import { AmountADARow } from "./styles";
 
 const OperatorRewardTab = () => {
   const { t } = useTranslation();
   const { poolId = "" } = useParams<{ poolId: string }>();
-  const [params, setParams] = useState({
-    page: 0,
-    size: 50
-  });
-
-  const [sort, setSort] = useState<string>("time,DESC");
+  const history = useHistory();
+  const { pageInfo, setSort } = usePageInfo();
 
   const columns: Column<SPO_REWARD>[] = [
     {
@@ -67,8 +64,7 @@ const OperatorRewardTab = () => {
   ];
 
   const fetchData = useFetchList<SPO_REWARD>(poolId ? API.SPO_LIFECYCLE.REWARD(poolId) : "", {
-    ...params,
-    sort
+    ...pageInfo
   });
 
   return (
@@ -82,9 +78,11 @@ const OperatorRewardTab = () => {
           count: fetchData.total
         }}
         pagination={{
-          ...params,
+          ...pageInfo,
           total: fetchData.total,
-          onChange: (page, size) => setParams({ page: page - 1, size })
+          onChange: (page, size) => {
+            history.replace({ search: stringify({ ...pageInfo, page, size }) });
+          }
         }}
       />
     </Box>

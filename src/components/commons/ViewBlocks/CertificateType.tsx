@@ -9,8 +9,8 @@ const CertificateType: React.FC<{ redeemerCertType?: IContractItemTx["redeemerCe
 }) => {
   const { t } = useTranslation();
   const certType = {
-    DELEGATION: "Stake Registration",
-    STAKE_DEREGISTRATION: "Stake Address Deregistrations"
+    DELEGATION: "Stake Delegation",
+    STAKE_DEREGISTRATION: "Stake Address Deregistration"
   };
   return (
     <CertificateTypeBox>

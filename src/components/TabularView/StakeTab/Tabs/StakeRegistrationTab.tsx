@@ -1,35 +1,36 @@
 import { Box, IconButton, useTheme } from "@mui/material";
 import BigNumber from "bignumber.js";
 import { useState } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { stringify } from "qs";
 
 import { AdaValue } from "src/components/commons/ADAValue";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomIcon from "src/components/commons/CustomIcon";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { EyeIcon } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
+import { RegistrationCertificateModal } from "src/components/StakingLifeCycle/DelegatorLifecycle/Registration";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import Table, { Column } from "src/components/commons/Table";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 
-import useFetchList from "../../../../commons/hooks/useFetchList";
-import { EyeIcon } from "../../../../commons/resources";
-import { details } from "../../../../commons/routers";
-import { API } from "../../../../commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "../../../../commons/utils/helper";
-import { RegistrationCertificateModal } from "../../../StakingLifeCycle/DelegatorLifecycle/Registration";
-import CustomTooltip from "../../../commons/CustomTooltip";
-import Table, { Column } from "../../../commons/Table";
 import { StyledLink, TableSubTitle } from "../styles";
 
 const StakeRegistrationTab = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const { stakeId } = useParams<{ stakeId: string }>();
-  const { search } = useLocation();
   const history = useHistory();
-  const [sort, setSort] = useState<string>("");
-  const [pageInfo, setPageInfo] = useState(getPageInfo(search));
+
+  const { pageInfo, setSort } = usePageInfo();
+
   const [openModal, setOpenModal] = useState(false);
   const fetchData = useFetchList<RegistrationItem>(stakeId ? API.STAKE_LIFECYCLE.REGISTRATION(stakeId) : "", {
-    ...pageInfo,
-    sort
+    ...pageInfo
   });
 
   const columns: Column<RegistrationItem>[] = [
@@ -95,7 +96,9 @@ const StakeRegistrationTab = () => {
         pagination={{
           ...pageInfo,
           total: fetchData.total,
-          onChange: (page, size) => setPageInfo((pre) => ({ ...pre, page: page - 1, size }))
+          onChange: (page, size) => {
+            history.replace({ search: stringify({ ...pageInfo, page, size }) });
+          }
         }}
         onClickRow={(e, r: RegistrationItem) => history.push(details.transaction(r.txHash))}
       />
