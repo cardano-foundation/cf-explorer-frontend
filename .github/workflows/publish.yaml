@@ -38,24 +38,29 @@ jobs:
         id: metadata
         run: |
           DOCKER_IMAGE_NAME=$(basename ${GITHUB_REPOSITORY})
-          echo "DOCKER_IMAGE_NAME=${DOCKER_IMAGE_NAME}" >> "$GITHUB_ENV"
+          echo "DOCKER_IMAGE_NAME=${DOCKER_IMAGE_NAME}" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
 
           if [ ${{github.event_name}} == "pull_request" ]
           then
             PR_NUMBER=$(echo $GITHUB_REF | awk -F/ '{ print $3 }')
-            echo "ARTIFACT_VERSION=$(sed -n 's/.*\"version\": *\"\([^\"]*\)\".*/\1/p' package.json)-PR${PR_NUMBER}" >> $GITHUB_ENV
-            echo "DOCKER_LATEST_IMAGE_TAG=" >> $GITHUB_ENV
+            echo "ARTIFACT_VERSION=$(sed -n 's/.*\"version\": *\"\([^\"]*\)\".*/\1/p' package.json)-PR${PR_NUMBER}" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
+            echo "DOCKER_LATEST_IMAGE_TAG=" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
           else
             CURRENT_VERSION="$(sed -n 's/.*\"version\": *\"\([^\"]*\)\".*/\1/p' package.json)"
-            echo "ARTIFACT_VERSION=${CURRENT_VERSION}" >> $GITHUB_ENV
+            echo "ARTIFACT_VERSION=${CURRENT_VERSION}" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
 
             BRANCH=${GITHUB_REF##*/}
+            echo "BRANCH=$BRANCH" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
+
+            # if tag for this is version is already there, skip docker build
+            git tag -l | grep -q "^v${CURRENT_VERSION} " && echo "SKIP_DOCKER_PUSH=true" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
+
             if [[ "${BRANCH}" == "develop" ]]
             then
-              echo "ARTIFACT_VERSION=${CURRENT_VERSION}-develop" >> $GITHUB_ENV
-              echo "DOCKER_LATEST_IMAGE_TAG=" >> $GITHUB_ENV
+              echo "ARTIFACT_VERSION=${CURRENT_VERSION}-develop" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
+              echo "DOCKER_LATEST_IMAGE_TAG=" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
             else
-              echo "DOCKER_LATEST_IMAGE_TAG=${{ env.PRIVATE_DOCKER_REGISTRY_URL }}/${DOCKER_IMAGE_NAME}:latest" >> "$GITHUB_ENV"
+              echo "DOCKER_LATEST_IMAGE_TAG=${{ env.PRIVATE_DOCKER_REGISTRY_URL }}/${DOCKER_IMAGE_NAME}:latest" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
             fi
 
           fi
@@ -72,6 +77,9 @@ jobs:
 
       - name: 🔨 Build and Push docker image
         uses: docker/build-push-action@v4
+        if: |
+          ( steps.metadata.outputs.BRANCH == 'main' && steps.metadata.outputs.SKIP_DOCKER_PUSH != 'true' ) ||
+          github.event_name == 'pull_request'
         with:
           file: ./Dockerfile
           context: .
