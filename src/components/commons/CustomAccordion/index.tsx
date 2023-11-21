@@ -1,8 +1,9 @@
 import { AccordionDetails, AccordionSummary, Box, useTheme } from "@mui/material";
 import React, { useMemo, useRef } from "react";
 import { IoIosArrowDown } from "react-icons/io";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
+import { details } from "src/commons/routers";
 import { SkeletonUI } from "src/components/AddressDetail/AddressAnalytics/styles";
 
 import { IconWrapper, StyledAccordion, TitleTab } from "./styles";
@@ -21,13 +22,8 @@ export type TCustomAccordionProps = {
   onTabChange?: (tab: TTab["key"]) => void;
 };
 
-export const CustomAccordion: React.FC<TCustomAccordionProps> = ({
-  tabs,
-  hiddenKeys = [],
-  loading = false,
-  onTabChange
-}) => {
-  const { tabActive = "0" } = useParams<{ tabActive: string; id: string }>();
+export const CustomAccordion: React.FC<TCustomAccordionProps> = ({ tabs, hiddenKeys = [], loading = false }) => {
+  const { tabActive = "0", id } = useParams<{ tabActive: string; id: string }>();
 
   const getTabs = useMemo(() => {
     if (!hiddenKeys.length) return tabs;
@@ -36,10 +32,19 @@ export const CustomAccordion: React.FC<TCustomAccordionProps> = ({
 
   const indexExpand = getTabs.findIndex((item) => item.key === tabActive);
   const tabRef = useRef<HTMLDivElement>(null);
+  const history = useHistory();
   const theme = useTheme();
   const handleChangeTab = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-    tabRef?.current?.scrollIntoView();
-    onTabChange?.(newExpanded ? panel : "");
+    const handleTransitionEnd = () => {
+      if (newExpanded) {
+        setTimeout(() => {
+          tabRef?.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }, 0);
+        tabRef?.current?.removeEventListener("transitionend", handleTransitionEnd);
+      }
+    };
+    tabRef?.current?.addEventListener("transitionend", handleTransitionEnd);
+    history.replace(details.nativeScriptDetail(id, newExpanded ? panel : ""));
   };
 
   const needBorderRadius = (currentKey: string) => {

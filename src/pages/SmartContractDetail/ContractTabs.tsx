@@ -34,7 +34,15 @@ const ContractTabs = ({ setVersion }: { setVersion: (v: string) => void }) => {
   const tabRef = useRef<HTMLDivElement>(null);
 
   const handleChangeTab = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-    tabRef?.current?.scrollIntoView();
+    const handleTransitionEnd = () => {
+      if (newExpanded) {
+        setTimeout(() => {
+          tabRef?.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }, 0);
+        tabRef?.current?.removeEventListener("transitionend", handleTransitionEnd);
+      }
+    };
+    tabRef?.current?.addEventListener("transitionend", handleTransitionEnd);
     history.replace(details.smartContract(address, newExpanded ? panel : ""));
   };
 
@@ -72,7 +80,6 @@ const ContractTabs = ({ setVersion }: { setVersion: (v: string) => void }) => {
           customBorderRadius={needBorderRadius(key)}
           isDisplayBorderTop={tabActive !== key && key !== data[0].key && index !== indexExpand + 1}
           onChange={handleChangeTab(key)}
-          TransitionProps={{ unmountOnExit: true }}
         >
           <StyledAccordionSummary
             expandIcon={
