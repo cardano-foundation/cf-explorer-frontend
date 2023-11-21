@@ -267,12 +267,14 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           res.data?.totalItems === 1
             ? history.push(details.token(encodeURIComponent((res?.data?.data[0] as TokensSearch)?.fingerprint)))
             : history.push(`${routers.TOKEN_LIST}?tokenName=${(search.query || "").toLocaleLowerCase()}`);
+          handleSetSearchValueDefault();
         } else {
           res.data?.totalItems === 1
             ? history.push(details.delegation((res?.data?.data[0] as DelegationPool)?.poolId))
             : history.push(routers.DELEGATION_POOLS, {
                 tickerNameSearch: (search.search || "").toLocaleLowerCase()
               });
+          handleSetSearchValueDefault();
         }
       } else {
         setShowOption(true);
@@ -320,10 +322,12 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           .then((res) => res.data)
           .then((data: { nativeScript: boolean; scriptHash: string; smartContract: boolean }) => {
             if (data.nativeScript) {
-              history.push(details.nativeScriptDetail(data.scriptHash || ""));
+              history.push(details.nativeScriptDetail(data.scriptHash || "", "script"));
+              handleSetSearchValueDefault();
             }
             if (data.smartContract) {
-              history.push(details.smartContract(data.scriptHash || ""));
+              history.push(details.smartContract(data.scriptHash || "associated"));
+              handleSetSearchValueDefault();
             }
           });
         setShowOption(false);
@@ -367,9 +371,11 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     if (option?.value === "lifecycle") {
       if (search.startsWith("stake")) {
         history.push(details.staking(search, "timeline"));
+        handleSetSearchValueDefault();
         callback?.();
       } else if (search.startsWith("pool")) {
         history.push(details.spo(search, "timeline"));
+        handleSetSearchValueDefault();
         callback?.();
       } else {
         showResultNotFound();
@@ -391,9 +397,11 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     if (option?.value === "addresses") {
       if (search.startsWith("stake")) {
         history.push(details.stake(search));
+        handleSetSearchValueDefault();
         callback?.();
         return;
       }
+      handleSetSearchValueDefault();
       history.push(details.address(search));
     }
 
@@ -401,17 +409,20 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
 
     if (option?.value === "blocks") {
       history.push(details.block(search.trim()));
+      handleSetSearchValueDefault();
       callback?.();
       return;
     }
     if (option?.value === "epochs") {
       history.push(details.epoch(search.trim()));
+      handleSetSearchValueDefault();
       callback?.();
       return;
     }
 
     if (option?.value === "all" && search.startsWith("stake")) {
       history.push(details.stake(search));
+      handleSetSearchValueDefault();
       callback?.();
       return;
     }
@@ -424,6 +435,9 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     }
   };
 
+  const handleSetSearchValueDefault = () => {
+    setValues(({ filter }) => ({ filter, search: "" }));
+  };
   const handleChangeFilter = (e: SelectChangeEvent<unknown>) => {
     setValues({ search, filter: e.target.value as Option["value"] });
     setError("");

@@ -25,6 +25,7 @@ import {
 import { details } from "src/commons/routers";
 import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 import ContractsList from "src/components/Contracts";
+import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 
 import Collaterals from "./Collaterals";
 import Delegations from "./Delegations";
@@ -39,7 +40,7 @@ import TransactionSignatories from "./TransactionSignatories";
 import UTXO from "./UTXOs";
 import Withdrawals from "./Withdrawals";
 import "./index.css";
-import { CustomAccordion, CustomBadge, TitleTab } from "./styles";
+import { CustomBadge, TitleTab } from "./styles";
 
 interface TransactionMetadataProps {
   data: Transaction | null;
@@ -213,12 +214,13 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
   return (
     <Box mt={4} ref={tabRef}>
       {items?.map(({ key, icon: Icon, label, children }, index) => (
-        <CustomAccordion
+        <StyledAccordion
           key={key}
           expanded={tabActive === key}
           customBorderRadius={needBorderRadius(key)}
           isDisplayBorderTop={tabActive !== key && key !== items[0].key && index !== indexExpand + 1}
           onChange={handleChangeTab(key)}
+          TransitionProps={{ unmountOnExit: true }}
         >
           <AccordionSummary
             expandIcon={
@@ -242,7 +244,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
             </TitleTab>
           </AccordionSummary>
           <AccordionDetails>{children}</AccordionDetails>
-        </CustomAccordion>
+        </StyledAccordion>
       ))}
     </Box>
   );

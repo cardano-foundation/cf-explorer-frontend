@@ -43,8 +43,8 @@ export default function ProtocolHistoryModal({ open, protocolType, handleCloseMo
               {data?.map((item, idx) => (
                 <TableRow key={idx}>
                   <StyledTableCell>
-                    <LinkComponent to={details.transaction(item.transactionHash)}>
-                      {getShortHash(item.transactionHash)}
+                    <LinkComponent to={details.transaction(item.transactionHashs[0])}>
+                      {getShortHash(item.transactionHashs[0])}
                     </LinkComponent>
                   </StyledTableCell>
                   <StyledTableCell>{formatDateTime(item.time)}</StyledTableCell>

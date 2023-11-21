@@ -51,7 +51,8 @@ const primary = {
   500: "#5C8DFF",
   main: "#0033AD",
   dark: "#001F66",
-  contrastText: "#fff"
+  contrastText: "#fff",
+  iconBorder: "#3F3D56"
 };
 const primaryDarkmode = {
   100: "#6C6F89",
@@ -59,7 +60,8 @@ const primaryDarkmode = {
   500: "#061322",
   main: "#66BDFF",
   dark: "#3DABFF",
-  contrastText: "#fff"
+  contrastText: "#fff",
+  iconBorder: "#6C6F89"
 };
 
 const secondary = {
@@ -74,9 +76,9 @@ const secondary = {
   contrastText: COMMON.white,
   900: "#eff1f8"
 };
+
 const secondaryDark = {
   dark: GREY[300],
-
   0: "#24262E",
   100: "#131316",
   600: "#6C6F89",

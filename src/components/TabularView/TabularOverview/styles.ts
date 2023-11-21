@@ -90,13 +90,16 @@ export const CardValue = styled(Typography)(({ theme }) => ({
   width: "100%",
   display: "flex",
   [theme.breakpoints.down("sm")]: {
-    fontSize: 20,
-    lineHeight: "23px"
+    fontSize: 14,
+    lineHeight: "23px",
+    alignItems: "center"
   }
 }));
+
 export const CardValueDelegating = styled(CardValue)(() => ({
   width: "100%"
 }));
+
 export const BoxStyled = styled(CardValue)(({ theme }) => ({
   display: "block",
   lineHeight: "28px",
@@ -105,7 +108,7 @@ export const BoxStyled = styled(CardValue)(({ theme }) => ({
   textAlign: "left",
   color: theme.palette.primary.main,
   [theme.breakpoints.down("sm")]: {
-    fontSize: 20,
+    fontSize: 14,
     lineHeight: "23px",
     whiteSpace: "nowrap"
   }
@@ -115,7 +118,8 @@ export const BoxValue = styled(CardValue)(() => ({
   textOverflow: "ellipsis",
   overflow: "hidden",
   textAlign: "left",
-  width: "max-content"
+  width: "max-content",
+  fontSize: "24px"
 }));
 
 export const StyledBoxDelegating = styled(Link)(() => ({
@@ -139,7 +143,7 @@ export const StyledAdaLogoIcon = styled(AdaLogoIcon)(({ theme }) => ({
   paddingTop: 2,
   [theme.breakpoints.down("sm")]: {
     marginLeft: 5,
-    fontSize: 16
+    fontSize: 11
   }
 }));
 
@@ -153,5 +157,8 @@ export const TransferButton = styled(Button)(({ theme }) => ({
   borderRadius: 8,
   textTransform: "unset",
   boxShadow: "none",
-  width: "max-content"
+  width: "max-content",
+  [theme.breakpoints.down("sm")]: {
+    whiteSpace: "nowrap"
+  }
 }));

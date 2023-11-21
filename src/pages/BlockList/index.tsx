@@ -1,19 +1,13 @@
 import { useSelector } from "react-redux";
 import { useEffect, useState, useRef, MouseEvent } from "react";
 import { stringify } from "qs";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { Column } from "src/types/table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
-import {
-  formatADAFull,
-  formatDateTimeLocal,
-  formatNameBlockNo,
-  getPageInfo,
-  getShortHash
-} from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatNameBlockNo, getShortHash } from "src/commons/utils/helper";
 import { setOnDetailView } from "src/stores/user";
 import DetailViewBlock from "src/components/commons/DetailView/DetailViewBlock";
 import Card from "src/components/commons/Card";
@@ -25,20 +19,19 @@ import ADAicon from "src/components/commons/ADAIcon";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { Capitalize } from "src/components/commons/CustomText/styles";
 import FormNowMessage from "src/components/commons/FormNowMessage";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 
 import { PriceWrapper, BlueText, StyledContainer, StyledLink, Actions, TimeDuration } from "./styles";
 
 const BlockList = () => {
   const { t } = useTranslation();
-  const { search } = useLocation();
   const history = useHistory();
   const { onDetailView } = useSelector(({ user }: RootState) => user);
   const blockNo = useSelector(({ system }: RootState) => system.blockNo);
-  const [sort, setSort] = useState<string>("");
+  const { pageInfo, setSort } = usePageInfo();
   const [selected, setSelected] = useState<number | string | null>(null);
-  const pageInfo = getPageInfo(search);
 
-  const fetchData = useFetchList<Block>(API.BLOCK.LIST, { ...pageInfo, sort }, false, blockNo);
+  const fetchData = useFetchList<Block>(API.BLOCK.LIST, { ...pageInfo }, false, blockNo);
   const mainRef = useRef(document.querySelector("#main"));
 
   useEffect(() => {
@@ -159,7 +152,7 @@ const BlockList = () => {
             ...pageInfo,
             total: fetchData.total,
             onChange: (page, size) => {
-              history.replace({ search: stringify({ page, size }) });
+              history.replace({ search: stringify({ ...pageInfo, page, size }) });
               mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             },
             handleCloseDetailView: handleClose
