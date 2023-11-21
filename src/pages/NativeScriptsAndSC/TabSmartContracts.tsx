@@ -63,7 +63,6 @@ const TabSmartContracts = () => {
         )
     }
   ];
-
   return (
     <Box data-testid="TabSmartContracts">
       <Table
