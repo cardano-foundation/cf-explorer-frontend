@@ -1,4 +1,4 @@
-import { Box, Typography, styled } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography, styled } from "@mui/material";
 
 export const UnderlineText = styled(Typography)`
   text-decoration-line: underline;
@@ -7,30 +7,8 @@ export const UnderlineText = styled(Typography)`
   cursor: pointer;
 `;
 
-export const ExplanDropdownHeader = styled(Box)`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  box-sizing: border-box;
-  width: 100%;
-`;
-
 export const ArrowIconContainer = styled(Box)<{ open?: number }>`
   rotate: ${({ open }) => (open ? 0 : 180)}deg;
-`;
-
-export const ExplanDropdownContainer = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  box-sizing: border-box;
-  width: 100%;
-  gap: 20px;
-`;
-
-export const ExplanDropdownContent = styled(Box)`
-  color: ${({ theme }) => theme.palette.secondary.light};
 `;
 
 export const DataCardBox = styled(Box)`
@@ -149,4 +127,29 @@ export const DataReferenceValue = styled(Typography)`
       background: ${({ theme }) => theme.palette.primary[100]};
     }
   }
+`;
+
+export const StyledAccordion = styled(Accordion)`
+  background: transparent;
+  box-shadow: none;
+
+  &.muiaccordion-root:last-of-type: {
+    box-shadow: none;
+  }
+`;
+
+export const StyledAccordionSummary = styled(AccordionSummary)`
+  padding-left: 0;
+  padding-right: 0;
+  min-height: unset;
+
+  & > div:first-child {
+    margin: 0;
+  }
+`;
+
+export const StyledAccordionDetails = styled(AccordionDetails)`
+  padding-left: 0;
+  padding-right: 0;
+  color: ${({ theme }) => theme.palette.secondary.light};
 `;

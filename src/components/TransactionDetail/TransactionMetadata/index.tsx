@@ -39,7 +39,7 @@ import TransactionSignatories from "./TransactionSignatories";
 import UTXO from "./UTXOs";
 import Withdrawals from "./Withdrawals";
 import "./index.css";
-import { CustomAccordion, TitleTab } from "./styles";
+import { CustomAccordion, CustomBadge, TitleTab } from "./styles";
 
 interface TransactionMetadataProps {
   data: Transaction | null;
@@ -101,17 +101,40 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
     {
       key: "contracts",
       icon: ContractIcon,
-      label: `${t("glossary.contracts")}(${data?.contracts?.length || 0})`,
+      label: (
+        <Box display={"flex"} alignItems={"center"}>
+          {t("glossary.contracts")}
+          {data?.contracts?.length && data?.contracts?.length > 0 && (
+            <CustomBadge
+              bgColor={theme.isDark ? theme.palette.primary.main : ""}
+              color={theme.isDark ? theme.palette.secondary[100] : ""}
+            >
+              {data?.contracts?.length}
+            </CustomBadge>
+          )}
+        </Box>
+      ),
       children: <ContractsList data={data?.contracts} />
     },
     {
       key: "collaterals",
       icon: CollateralIcon,
-      label: `${t("glossary.collateral")}(${
-        data?.collaterals?.collateralInputResponses?.length === data?.collaterals?.collateralOutputResponses?.length
-          ? 1
-          : data?.collaterals?.collateralInputResponses?.length
-      })`,
+      label: (
+        <Box display={"flex"} alignItems={"center"}>
+          {t("glossary.collateral")}
+          {data?.contracts?.length && data?.contracts?.length > 0 && (
+            <CustomBadge
+              bgColor={theme.isDark ? theme.palette.primary.main : ""}
+              color={theme.isDark ? theme.palette.secondary[100] : ""}
+            >
+              {data?.collaterals?.collateralInputResponses?.length ===
+              data?.collaterals?.collateralOutputResponses?.length
+                ? 1
+                : data?.collaterals?.collateralInputResponses?.length}
+            </CustomBadge>
+          )}
+        </Box>
+      ),
       children: <Collaterals data={data?.collaterals} />
     },
     {

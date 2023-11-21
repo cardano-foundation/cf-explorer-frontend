@@ -16,7 +16,7 @@ const Burn: React.FC<BurnProps> = forwardRef(({ total, onClick }) => {
   const { t } = useTranslation();
   const theme = useTheme();
   return (
-    <PolygonContainer>
+    <PolygonContainer onClick={onClick}>
       {theme.isDark ? <PolygonDarkRedIcon /> : <Polygon />}
       <PolygonContent>
         <Typography display="flex" gap="4px" alignItems="center" color={theme.palette.error[700]} fontWeight={500}>
@@ -25,7 +25,7 @@ const Burn: React.FC<BurnProps> = forwardRef(({ total, onClick }) => {
             {total}
           </CustomBadge>
         </Typography>
-        <CircleBox onClick={onClick} bgColor={theme.palette.error[700]}>
+        <CircleBox bgColor={theme.palette.error[700]}>
           <CustomIcon icon={OutlineEye} width={21} fill={theme.palette.secondary[100]} />
         </CircleBox>
       </PolygonContent>

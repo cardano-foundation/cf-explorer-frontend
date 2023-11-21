@@ -40,7 +40,7 @@ const ContractsList: React.FC<ContractsListProps> = ({ data }) => {
               <UnderlineText onClick={() => setOpenContactInfo(!openContractInfo)}>
                 {t("explain.smartContract")}
               </UnderlineText>
-              <InfoIcon />
+              <InfoIcon onClick={() => setOpenContactInfo(!openContractInfo)} cursor={"pointer"} />
             </Box>
           </Grid>
           {data &&
