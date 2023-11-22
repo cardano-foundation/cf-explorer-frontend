@@ -16,14 +16,14 @@ export const StyledSelect = styled(Select)(({ theme }) => ({
     padding: "6.5px 12px",
     fontWeight: "var(--font-weight-bold)",
     cursor: "pointer",
-    color: theme.palette.secondary.main
+    color: theme.palette.secondary["light"]
   },
   "& > fieldset": {
     top: 0,
     border: "none !important"
   },
   "& > svg": {
-    color: theme.palette.text.secondary,
+    color: theme.palette.secondary["light"],
     fontSize: "20px"
   }
 }));
