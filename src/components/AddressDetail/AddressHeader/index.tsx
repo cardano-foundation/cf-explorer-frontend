@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
 
+import { InfoIcon } from "src/commons/resources";
 import { exchangeADAToUSD, formatADAFull, getShortHash } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import useFetch from "src/commons/hooks/useFetch";
@@ -67,13 +68,14 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     {
       title: t("drawer.totalStake"),
       value: (
-        <Box
-          placement="top-start"
-          component={NETWORK === NETWORKS.sanchonet ? CustomTooltip : Box}
-          title={t("sanchonet.toltipTotalStake")}
-        >
-          {formatADAFull(dataStake?.totalStake)}&nbsp;
+        <Box display={"flex"} alignItems={"center"} gap={"5px"}>
+          {formatADAFull(dataStake?.totalStake)}
           <ADAicon />
+          {NETWORK === NETWORKS.sanchonet && (
+            <CustomTooltip placement="top-start" title={t("sanchonet.toltipTotalStake")}>
+              <InfoIcon />
+            </CustomTooltip>
+          )}
         </Box>
       )
     },
