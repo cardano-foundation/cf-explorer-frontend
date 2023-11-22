@@ -26,7 +26,7 @@ const TabAssociated = ({ setVersion }: { setVersion: (v: string) => void }) => {
   return (
     <Box>
       <StyledSubNameTab data-testid="sc.subNameTab">{t("AssociatedAddresses")}:</StyledSubNameTab>
-      <Box>
+      <Box maxHeight={380} overflow="auto">
         {loading || get(data, "associatedAddresses", []).length > 0 ? (
           data?.associatedAddresses.map((address: string) => (
             <StyledLink
