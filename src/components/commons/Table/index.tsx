@@ -423,7 +423,7 @@ const Table: React.FC<TableProps> = ({
   const data = currentData;
 
   const onCallBackHeight = (rowHeight: number) => {
-    if (!maxHeightTable) setMaxHeightTable(rowHeight * 9);
+    if (!maxHeightTable) setMaxHeightTable(rowHeight > 70 ? rowHeight * 5 : rowHeight * 9);
   };
 
   const toggleSelectAll = (isChecked: boolean) => {
