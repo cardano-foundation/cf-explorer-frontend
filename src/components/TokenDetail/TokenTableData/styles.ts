@@ -185,7 +185,6 @@ export const ModalContent = styled(Box)`
     background: transparent;
   }
   &:hover {
-    border-radius: 8px 0px 0px 8px;
     &::-webkit-scrollbar-thumb {
       background: ${({ theme }) => theme.palette.secondary.light};
     }
