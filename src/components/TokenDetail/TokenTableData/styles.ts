@@ -171,7 +171,7 @@ export const ModalContent = styled(Box)`
   display: flex;
   flex-direction: column;
   overflow: auto;
-  max-height: 78dvh;
+  max-height: 72dvh;
   height: auto;
   box-sizing: border-box;
   width: 100%;
@@ -185,7 +185,6 @@ export const ModalContent = styled(Box)`
     background: transparent;
   }
   &:hover {
-    border-radius: 8px 0px 0px 8px;
     &::-webkit-scrollbar-thumb {
       background: ${({ theme }) => theme.palette.secondary.light};
     }
@@ -220,4 +219,10 @@ export const TokenLabel = styled(Typography)`
   color: ${({ theme }) => theme.palette.secondary.light};
   font-weight: 400;
   margin-bottom: 12px;
+`;
+
+export const CIPLabel = styled(Box)`
+  display: flex;
+  align-items: center;
+  gap: 12px;
 `;
