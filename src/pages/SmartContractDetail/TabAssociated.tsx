@@ -41,7 +41,9 @@ const TabAssociated = ({ setVersion }: { setVersion: (v: string) => void }) => {
   return (
     <Box>
       <StyledSubNameTab data-testid="sc.subNameTab">{t("AssociatedAddresses")}:</StyledSubNameTab>
-      <Box>{renderData()}</Box>
+      <Box maxHeight={380} overflow="auto">
+        {renderData()}
+      </Box>
     </Box>
   );
 };
