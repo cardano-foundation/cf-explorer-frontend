@@ -79,6 +79,7 @@ import RewardAccountIconDarkUrl from "./images/reward-box-icon-dark.png";
 import DelegationToIconUrl from "./images/delegation-to.png";
 import RewardWithdrawnIconUrl from "./images/reward-withdrawn.png";
 import timeIconUrl, { ReactComponent as TimeIconComponent } from "./icons/time.svg";
+import timelineUrl, { ReactComponent as TimelineIconComponent } from "./icons/timeline.svg";
 import exchageIconUrl, { ReactComponent as ExchageIcon } from "./icons/Union.svg";
 import exchageAltIconUrl, { ReactComponent as ExchageAltIcon } from "./icons/exchangeArrow.svg";
 import outputIconUrl, { ReactComponent as OutputIcon } from "./icons/outputIcon.svg";
@@ -126,6 +127,12 @@ import DownRedUtxoDarkmode from "./icons/downUtxoRedDark.svg";
 import ArrowUpIcon from "./icons/arrow-up.svg";
 import ArrowUpDarkIcon from "./icons/arrow-up-dark.svg";
 import CopyOutlineIcon, { ReactComponent as CopyOutlineIconComponent } from "./icons/copy-outline.svg";
+import { ReactComponent as PoolResgistrationHistory } from "./icons/poolResgistrationHistory.svg";
+import { ReactComponent as PoolResgistrationHistoryDark } from "./icons/poolResgistrationHistoryDark.svg";
+import { ReactComponent as PoolDeresgistrationHistory } from "./icons/poolDeresgistrationHistory.svg";
+import { ReactComponent as PoolDeresgistrationHistoryDark } from "./icons/poolDeresgistrationHistoryDark.svg";
+import { ReactComponent as PoolUpdateHistory } from "./icons/poolUpdateHistory.svg";
+import { ReactComponent as PoolUpdateHistoryDark } from "./icons/poolUpdateHistoryDark.svg";
 import ArrowDownIcon from "./icons/arrow-down-red.svg";
 import ArrowDownDarkIcon from "./icons/arrow-down-red-dark.svg";
 import PolicyDark from "./icons/policy-dark.svg";
@@ -207,6 +214,7 @@ export {
   DelegationToIconUrl,
   RewardWithdrawnIconUrl,
   timeIconUrl,
+  timelineUrl,
   exchageIconUrl,
   exchageAltIconUrl,
   ExchageAltIcon,
@@ -249,6 +257,7 @@ export {
   CubeIconComponent,
   SlotIcon,
   TimeIconComponent,
+  TimelineIconComponent,
   OutputIcon,
   User2Component,
   ExchageIcon,
@@ -294,7 +303,13 @@ export {
   StakeCertificatesComponent,
   ProtocolUpdateComponent,
   InstantaneousHistoryComponent,
-  PolicyDark
+  PolicyDark,
+  PoolResgistrationHistory,
+  PoolDeresgistrationHistory,
+  PoolUpdateHistory,
+  PoolResgistrationHistoryDark,
+  PoolDeresgistrationHistoryDark,
+  PoolUpdateHistoryDark
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";

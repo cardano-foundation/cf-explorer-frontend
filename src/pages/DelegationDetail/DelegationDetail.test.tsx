@@ -4,12 +4,14 @@ import { createBrowserHistory } from "history";
 import { fireEvent, render, screen } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
+import { POOL_STATUS } from "src/commons/utils/constants";
 
 import DelegationDetail from ".";
 
 const mockData: DelegationOverview = {
   poolName: "Sample Pool",
   tickerName: "SP",
+  poolStatus: POOL_STATUS.ACTIVE,
   poolView: "http://example.com/sample-pool",
   createDate: "2023-07-20",
   rewardAccounts: ["reward_account_1", "reward_account_2"],
