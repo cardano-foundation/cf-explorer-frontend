@@ -23,7 +23,12 @@ const UTXO: React.FC<UTXOProps> = React.forwardRef((props, ref) => {
     <PopperStyled
       placement="top"
       render={({ handleClick }) => (
-        <PolygonContainer ref={anchorEl}>
+        <PolygonContainer
+          ref={anchorEl}
+          onClick={() =>
+            typeof anchorEl !== "function" && anchorEl?.current && handleClick(anchorEl.current as HTMLElement)
+          }
+        >
           {theme.isDark ? <PolygonDarkIcon /> : <Polygon />}
           <PolygonContent>
             <Typography
@@ -35,12 +40,7 @@ const UTXO: React.FC<UTXOProps> = React.forwardRef((props, ref) => {
             >
               {t("tab.utxo")}
             </Typography>
-            <CircleBox
-              ref={ref}
-              onClick={() =>
-                typeof anchorEl !== "function" && anchorEl?.current && handleClick(anchorEl.current as HTMLElement)
-              }
-            >
+            <CircleBox ref={ref}>
               <CustomIcon
                 icon={PoundSign}
                 height={23}
