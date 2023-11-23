@@ -171,7 +171,7 @@ export const ModalContent = styled(Box)`
   display: flex;
   flex-direction: column;
   overflow: auto;
-  max-height: 78dvh;
+  max-height: 72dvh;
   height: auto;
   box-sizing: border-box;
   width: 100%;

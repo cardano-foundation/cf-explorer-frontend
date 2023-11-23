@@ -311,18 +311,18 @@ export {
   ProtocolUpdateComponent,
   InstantaneousHistoryComponent,
   PolicyDark,
-  PoolResgistrationHistory,
-  PoolDeresgistrationHistory,
-  PoolUpdateHistory,
-  PoolResgistrationHistoryDark,
-  PoolDeresgistrationHistoryDark,
-  PoolUpdateHistoryDark,
   StatusDarkIcon,
   StatusLightIcon,
   PoolSizeDarkIcon,
   PoolSizeLightIcon,
   DelegatingToDarkIcon,
-  RewardsWithdrawDarkIcon
+  RewardsWithdrawDarkIcon,
+  PoolResgistrationHistory,
+  PoolDeresgistrationHistory,
+  PoolUpdateHistory,
+  PoolResgistrationHistoryDark,
+  PoolDeresgistrationHistoryDark,
+  PoolUpdateHistoryDark
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";

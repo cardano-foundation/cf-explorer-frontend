@@ -25,7 +25,7 @@ jobs:
           echo "REACT_APP_NETWORK_NAMES=\"{\"mainnet\":\"Mainnet\",\"preprod\":\"Preprod\"}\"" >> .env
 
       - name: 🫡 Setup node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: 16
 
