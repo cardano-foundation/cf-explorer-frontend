@@ -27,6 +27,7 @@ import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
 
 import {
+  HeaderStatus,
   BackButton,
   BackText,
   ButtonViewAll,
@@ -62,12 +63,11 @@ export interface IDelegationDetailInfo {
 const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, poolId, lastUpdated }) => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const { width } = useScreen();
+  const { width, isGalaxyFoldSmall } = useScreen();
   const history = useHistory();
   const [isErrorImage, setIsErrorImage] = useState(false);
   const [isOpenReward, setOpenReward] = useState<boolean>(false);
   const [isOpenOwner, setOpenOwner] = useState<boolean>(false);
-  const { isGalaxyFoldSmall } = useScreen();
 
   if (loading) {
     return (
@@ -109,13 +109,16 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 truncateCustom(poolId, 4, 4)
               ) : (
                 <TruncateSubTitleContainer>
-                  <DynamicEllipsisText value={poolId} sxFirstPart={{ maxWidth: "calc(100% - 165px)" }} />
+                  <DynamicEllipsisText value={poolId} sxFirstPart={{ maxWidth: "calc(100% - 180px)" }} />
                 </TruncateSubTitleContainer>
               )}
             </HeaderTitle>
           </CustomTooltip>
           <Box marginLeft={isPoolName ? 0 : 3}>
             <BookmarkButton keyword={poolId} type="POOL" />
+          </Box>
+          <Box marginLeft={width < 400 ? 0 : 1}>
+            <HeaderStatus status={data?.poolStatus}>{data?.poolStatus}</HeaderStatus>
           </Box>
         </Box>
         {data?.logoUrl && !isErrorImage && (

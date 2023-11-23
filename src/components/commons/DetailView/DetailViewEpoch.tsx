@@ -188,7 +188,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
         </ViewDetailHeader>
         <ViewDetailContainer>
           <ViewDetailScroll>
-            <HeaderContainer>
+            <HeaderContainer pt={1}>
               <ProgressCircle
                 size={150}
                 pathLineCap="butt"

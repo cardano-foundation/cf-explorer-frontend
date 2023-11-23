@@ -6,16 +6,11 @@ import { useTranslation } from "react-i18next";
 
 import { NativeScriptIcon, SmartContractsIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
+import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 
 import TabNativeScripts from "./TabNativeScripts";
 import TabSmartContracts from "./TabSmartContracts";
-import {
-  StyledAccordionDetails,
-  StyledAccordionSummary,
-  StyledContractTabs,
-  TitleTab,
-  CustomAccordion
-} from "./styles";
+import { StyledAccordionDetails, StyledAccordionSummary, StyledContractTabs, TitleTab } from "./styles";
 
 interface TTab {
   key: string;
@@ -66,12 +61,13 @@ const Tabs = () => {
     <StyledContractTabs ref={tabRef}>
       {data?.map(({ key, icon: Icon, label, children }, index) => {
         return (
-          <CustomAccordion
+          <StyledAccordion
             key={key}
             expanded={tabActive === key}
             customBorderRadius={needBorderRadius(key)}
             isDisplayBorderTop={tabActive !== key && key !== data[0].key && index !== indexExpand + 1}
             onChange={handleChangeTab(key)}
+            TransitionProps={{ unmountOnExit: true }}
           >
             <StyledAccordionSummary
               expandIcon={
@@ -88,7 +84,7 @@ const Tabs = () => {
               <TitleTab active={key === tabActive}>{label}</TitleTab>
             </StyledAccordionSummary>
             <StyledAccordionDetails>{children}</StyledAccordionDetails>
-          </CustomAccordion>
+          </StyledAccordion>
         );
       })}
     </StyledContractTabs>

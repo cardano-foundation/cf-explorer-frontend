@@ -1,5 +1,6 @@
 import { Box, Button, Grid, LinearProgress, styled } from "@mui/material";
 
+import { POOL_STATUS } from "src/commons/utils/constants";
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
 
@@ -96,6 +97,44 @@ export const PoolDescription = styled("small")`
   line-height: 1.5;
   color: ${(props) => props.theme.palette.secondary.main};
   margin-left: 2px;
+`;
+
+export const HeaderStatus = styled("small")<{ status?: PoolStatus }>`
+  color: ${({ status, theme }) => {
+    switch (status) {
+      case POOL_STATUS.RETIRED:
+        return theme.palette.error[800];
+      case POOL_STATUS.RETIRING:
+        return theme.palette.warning[800];
+      case POOL_STATUS.ACTIVE:
+        return theme.palette.success[800];
+      default:
+        return theme.palette.success[800];
+    }
+  }};
+  background-color: ${({ status, theme }) => {
+    switch (status) {
+      case POOL_STATUS.RETIRED:
+        return theme.palette.error[100];
+      case POOL_STATUS.RETIRING:
+        return theme.palette.warning[100];
+      case POOL_STATUS.ACTIVE:
+        return theme.palette.success[100];
+      default:
+        return theme.palette.success[100];
+    }
+  }};
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  padding: 5px 7px;
+  border-radius: 2px;
+  font-size: 0.8125rem;
+  line-height: 1;
+  width: min-content;
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    padding: 3px 3px;
+    font-size: 0.75rem;
+  }
 `;
 
 export const DataContainer = styled("div")(({ theme }) => ({

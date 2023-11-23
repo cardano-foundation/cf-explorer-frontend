@@ -404,7 +404,8 @@ const Table: React.FC<TableProps> = ({
   isShowingResult,
   isModal,
   height,
-  minHeight
+  minHeight,
+  isFullTableHeight = false
 }) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange
@@ -413,8 +414,9 @@ const Table: React.FC<TableProps> = ({
   const tableRef = useRef<HTMLTableElement>(null);
   const wrapperRef = useRef<HTMLElement>(null);
   const { width } = useScreen();
-
-  let heightTable = Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight * 0.5);
+  const scrollHeight = 5;
+  let heightTable = Math.min((tableRef?.current?.clientHeight || 0) + scrollHeight, window.innerHeight * 0.5);
+  const tableFullHeight = (tableRef?.current?.clientHeight || 0) + scrollHeight;
 
   if (width >= breakpoints.values.sm && (data || []).length >= 9) {
     const footerHeight = document.getElementById("footer")?.offsetHeight || SPACING_TOP_TABLE;
@@ -460,7 +462,7 @@ const Table: React.FC<TableProps> = ({
         ref={wrapperRef}
         maxHeight={maxHeight}
         minHeight={minHeight ? minHeight : (!data || data.length === 0) && !loading ? 360 : loading ? 400 : 15}
-        height={height || heightTable}
+        height={height || (isFullTableHeight ? tableFullHeight : heightTable)}
         ismodal={+!!isModal}
         className={data && data.length !== 0 ? "table-wrapper" : "hide-scroll"}
         loading={loading ? 1 : 0}
