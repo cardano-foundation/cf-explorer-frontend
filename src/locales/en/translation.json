@@ -721,7 +721,7 @@
   "CC_20": "Wallet is already exist",
   "CC_21": "The verify code is invalid",
   "CC_22": "User is not ready to active",
-  "CC_23": "Email is already exist",
+  "CC_23": "Email already exist",
   "CC_24": "Username or password is invalid",
   "INVALID_PARAM": "Invalid param",
   "INTERNAL_ERROR": "Something went wrong",
@@ -872,5 +872,6 @@
   "Version": "Version",
   "ViewAddresses": "View Addresses",
   "token.timelock": "Time locked",
-  "token.oneTimeMint": "One time mint"
+  "token.oneTimeMint": "One time mint",
+  "common.severUnknownErrorMsg": "Something went wrong on our side, please try again later or report an issue"
 }
