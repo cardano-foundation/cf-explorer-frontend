@@ -135,6 +135,7 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
     <CustomModal
       modalContainerProps={{ style: { maxWidth: 920 } }}
       open={props.open}
+      style={{ maxHeight: "unset" }}
       onClose={props.onClose}
       title={
         <CIPLabel>
