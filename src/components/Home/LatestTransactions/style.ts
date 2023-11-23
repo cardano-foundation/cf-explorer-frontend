@@ -1,4 +1,4 @@
-import { Box, styled, Card } from "@mui/material";
+import { Box, styled, Card, alpha } from "@mui/material";
 
 import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 
@@ -80,7 +80,7 @@ export const Item = styled(Card)`
   cursor: pointer;
   height: calc(100% - 56px);
   &:hover {
-    box-shadow: ${(props) => props.theme.shadow.cardHover};
+    box-shadow: ${({ theme }) => "1px 2px 15px 0px " + alpha(theme.palette.secondary.light, 0.25)};
   }
   ${({ theme }) => theme.breakpoints.down("md")} {
     padding: 20px 15px;
