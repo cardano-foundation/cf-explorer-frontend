@@ -141,20 +141,7 @@ const LatestStories = () => {
           );
         })}
 
-        {!data.length &&
-          new Array(4).fill(0).map((_, index) => (
-            <Item key={index}>
-              <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={132} />
-              <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={15} mt={1} width="70%" />
-              <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={15} mt={1} width="80%" />
-              <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={80} mt={1} />
-              <FooterCard>
-                <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={20} width="60%" />
-              </FooterCard>
-            </Item>
-          ))}
-
-        {data.length < total &&
+        {(data.length < total || !data.length) &&
           new Array(4).fill(0).map((_, index) => (
             <Item key={index}>
               <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={132} />
