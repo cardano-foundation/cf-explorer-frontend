@@ -137,8 +137,10 @@ export const SwitchMode = styled(Switch)(({ theme }) => ({
   "& .MuiButtonBase-root": {
     width: 60,
     paddingLeft: 0,
+    backgroundColor: "transparent!important",
     paddingRight: theme.isDark ? 0 : "9px"
   },
+
   "& .MuiSwitch-track": {
     background: theme.isDark ? `${theme.palette.secondary[0]} !important` : theme.palette.primary[100],
     opacity: `1 !important`,
@@ -170,6 +172,7 @@ export const SwitchMode = styled(Switch)(({ theme }) => ({
       right: "5%"
     }
   },
+
   "& .MuiSwitch-thumb": {
     boxShadow: "none",
     width: 24,

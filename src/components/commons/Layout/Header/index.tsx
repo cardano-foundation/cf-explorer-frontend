@@ -97,6 +97,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
               <SwitchMode
                 data-testid="theme-toggle"
                 checked={themeMode === "dark"}
+                disableRipple
                 onChange={(e) => {
                   setTheme(e.target.checked ? "dark" : "light");
                 }}

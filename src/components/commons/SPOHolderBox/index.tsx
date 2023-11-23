@@ -166,7 +166,8 @@ const IconGroup = styled(Box)`
 `;
 
 export const ButtonSPO = styled(Box)(() => ({
-  padding: 0
+  padding: 0,
+  background: "transparent"
 }));
 
 export const StakeKeyItem = styled(Box)(() => ({
