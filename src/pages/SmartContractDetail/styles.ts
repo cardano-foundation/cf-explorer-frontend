@@ -127,7 +127,7 @@ export const StyledContractTabs = styled(Box)(() => ({
 }));
 
 export const StyledAccordionSummary = styled(AccordionSummary)(() => ({
-  padding: "25px 25px 0 25px"
+  padding: "8px 24px"
 }));
 
 export const StyledAccordionDetails = styled(AccordionDetails)(({ theme }) => ({
@@ -146,8 +146,7 @@ export const StyledSubNameTab = styled(AccordionDetails)(({ theme }) => ({
 }));
 
 export const StyledTabName = styled(AccordionDetails)(() => ({
-  padding: "0 0 8px 0",
-  paddingLeft: "5px",
+  padding: 0,
   fontSize: 18,
   fontWeight: 700
 }));

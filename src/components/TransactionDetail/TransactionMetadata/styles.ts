@@ -44,3 +44,23 @@ export const CustomAccordion = styled(Accordion)<{
     background: "transparent"
   }
 }));
+
+export const CustomBadge = styled("span")<{ bgColor?: string; color?: string }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  width: 20px;
+  height: 20px;
+  padding-top: 1px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  margin-left: 6px;
+  background-color: ${(props) =>
+    props.bgColor
+      ? props.bgColor
+      : props.theme.isDark
+      ? props.theme.palette.secondary[600]
+      : props.theme.palette.secondary.light};
+  color: ${(props) => (props.color ? props.color : props.theme.palette.common.white)};
+`;

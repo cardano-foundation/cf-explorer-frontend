@@ -12,9 +12,9 @@ const Redeemer: React.FC<RedeemerProps> = forwardRef(({ onClick, ...rest }, ref)
   const { t } = useTranslation();
   const theme = useTheme();
   return (
-    <SquareBox {...rest} ref={ref}>
+    <SquareBox {...rest} ref={ref} onClick={onClick}>
       <PrimaryText>{t("contract.redeemer")}</PrimaryText>
-      <CircleBoxOutline onClick={onClick}>
+      <CircleBoxOutline>
         <FiEye color={theme.palette.primary.main} />
       </CircleBoxOutline>
     </SquareBox>

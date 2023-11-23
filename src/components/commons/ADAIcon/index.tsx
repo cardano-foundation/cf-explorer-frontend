@@ -11,6 +11,7 @@ export const AdaLogoIcon = styled(ADAsymbol)(() => ({
   display: "inline-block",
   width: "auto",
   height: "1em",
+  overflow: "inherit",
   g: { fill: "currentColor" }
 }));
 

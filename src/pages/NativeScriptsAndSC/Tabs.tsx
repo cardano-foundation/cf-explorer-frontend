@@ -6,16 +6,11 @@ import { useTranslation } from "react-i18next";
 
 import { NativeScriptIcon, SmartContractsIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
+import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 
 import TabNativeScripts from "./TabNativeScripts";
 import TabSmartContracts from "./TabSmartContracts";
-import {
-  StyledAccordionDetails,
-  StyledAccordionSummary,
-  StyledContractTabs,
-  TitleTab,
-  CustomAccordion
-} from "./styles";
+import { StyledAccordionDetails, StyledAccordionSummary, StyledContractTabs, TitleTab } from "./styles";
 
 interface TTab {
   key: string;
@@ -33,7 +28,15 @@ const Tabs = () => {
   const tabRef = useRef<HTMLDivElement>(null);
 
   const handleChangeTab = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-    tabRef?.current?.scrollIntoView();
+    const handleTransitionEnd = () => {
+      if (newExpanded) {
+        setTimeout(() => {
+          tabRef?.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }, 0);
+        tabRef?.current?.removeEventListener("transitionend", handleTransitionEnd);
+      }
+    };
+    tabRef?.current?.addEventListener("transitionend", handleTransitionEnd);
     history.replace(details.nativeScriptsAndSC(newExpanded ? panel : ""));
   };
 
@@ -66,7 +69,7 @@ const Tabs = () => {
     <StyledContractTabs ref={tabRef}>
       {data?.map(({ key, icon: Icon, label, children }, index) => {
         return (
-          <CustomAccordion
+          <StyledAccordion
             key={key}
             expanded={tabActive === key}
             customBorderRadius={needBorderRadius(key)}
@@ -88,7 +91,7 @@ const Tabs = () => {
               <TitleTab active={key === tabActive}>{label}</TitleTab>
             </StyledAccordionSummary>
             <StyledAccordionDetails>{children}</StyledAccordionDetails>
-          </CustomAccordion>
+          </StyledAccordion>
         );
       })}
     </StyledContractTabs>

@@ -52,17 +52,23 @@ const Tabular = ({ renderTabsSPO }: ITabular) => {
       keyCheckShow: "isDeRegistration"
     }
   ];
-  const { poolId = "", tab = "registration" } = useParams<{ poolId: string; tab: SPOStep }>();
+  const { poolId = "", tab } = useParams<{ poolId: string; tab: SPOStep }>();
   const history = useHistory();
 
   const onChangeTab = (tab: TabStakeDetail) => {
-    history.replace(details.spo(poolId, "tabular", tab as SPOStep));
+    history.replace(details.spo(poolId, "tabular", tab as SPOStep).replaceAll("//", ""));
   };
 
   return (
     <Box mt={5}>
       <TabularOverview />
-      <StakeTab tabsRenderConfig={renderTabsSPO} tabs={tabs} initTab={tab} onChangeTab={onChangeTab} checkshow={true} />
+      <StakeTab
+        tabsRenderConfig={renderTabsSPO}
+        tabs={tabs}
+        tabActive={tab}
+        onChangeTab={onChangeTab}
+        checkshow={true}
+      />
     </Box>
   );
 };

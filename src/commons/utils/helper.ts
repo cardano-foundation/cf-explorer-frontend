@@ -119,11 +119,13 @@ export const isExternalLink = (href?: string) => {
 
 export const formatPercent = (percent?: number) => `${Math.round((percent || 0) * 100 * 100) / 100}%`;
 
-export const getPageInfo = (search: string): { page: number; size: number } => {
+export const getPageInfo = (search: string): { page: number; size: number; sort: string; retired: string } => {
   const query = parse(search.split("?")[1]);
   const page = Number(query.page) > 0 ? Number(query.page) - 1 : 0;
   const size = Number(query.size) > 0 ? Number(query.size) : 50;
-  return { page, size };
+  const sort = (query.sort || "") as string;
+  const retired = query.retired as string;
+  return { ...query, retired, page, size, sort };
 };
 
 export const removeAuthInfo = () => {
@@ -233,7 +235,6 @@ export function validateTokenExpired() {
     return now.isBefore(exp);
   } catch (e) {
     removeAuthInfo();
-    return false;
   }
 }
 
@@ -331,4 +332,9 @@ export const getIntervalAnalyticChart = (rangeTime: OPTIONS_CHART_ANALYTICS): Ax
     default:
       return "preserveEnd";
   }
+};
+
+export const isAssetId = (text: string) => {
+  if (text.startsWith("asset") && text.length === 44) return true;
+  return false;
 };

@@ -33,7 +33,7 @@ const PriceValue = styled("span")<{ sign: number; themeMode: ThemeType }>`
         : theme.palette.success[700]
       : themeMode === "light"
       ? theme.palette.error[700]
-      : theme.palette.error[100]};
+      : theme.palette.error[700]};
   font-weight: var(--font-weight-bold);
 `;
 

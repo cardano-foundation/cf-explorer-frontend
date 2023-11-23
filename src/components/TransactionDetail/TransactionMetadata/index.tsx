@@ -25,6 +25,7 @@ import {
 import { details } from "src/commons/routers";
 import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 import ContractsList from "src/components/Contracts";
+import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 
 import Collaterals from "./Collaterals";
 import Delegations from "./Delegations";
@@ -39,7 +40,7 @@ import TransactionSignatories from "./TransactionSignatories";
 import UTXO from "./UTXOs";
 import Withdrawals from "./Withdrawals";
 import "./index.css";
-import { CustomAccordion, TitleTab } from "./styles";
+import { CustomBadge, TitleTab } from "./styles";
 
 interface TransactionMetadataProps {
   data: Transaction | null;
@@ -61,7 +62,16 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
   const tabRef = useRef<HTMLDivElement>(null);
 
   const handleChangeTab = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-    tabRef?.current?.scrollIntoView();
+    const handleTransitionEnd = () => {
+      if (newExpanded) {
+        setTimeout(() => {
+          tabRef?.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }, 0);
+        tabRef?.current?.removeEventListener("transitionend", handleTransitionEnd);
+      }
+    };
+    tabRef?.current?.addEventListener("transitionend", handleTransitionEnd);
+
     history.replace(details.transaction(data?.tx?.hash, newExpanded ? panel : ""));
   };
 
@@ -101,17 +111,40 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
     {
       key: "contracts",
       icon: ContractIcon,
-      label: `${t("glossary.contracts")}(${data?.contracts?.length || 0})`,
+      label: (
+        <Box display={"flex"} alignItems={"center"}>
+          {t("glossary.contracts")}
+          {data?.contracts?.length && data?.contracts?.length > 0 && (
+            <CustomBadge
+              bgColor={theme.isDark ? theme.palette.primary.main : ""}
+              color={theme.isDark ? theme.palette.secondary[100] : ""}
+            >
+              {data?.contracts?.length}
+            </CustomBadge>
+          )}
+        </Box>
+      ),
       children: <ContractsList data={data?.contracts} />
     },
     {
       key: "collaterals",
       icon: CollateralIcon,
-      label: `${t("glossary.collateral")}(${
-        data?.collaterals?.collateralInputResponses?.length === data?.collaterals?.collateralOutputResponses?.length
-          ? 1
-          : data?.collaterals?.collateralInputResponses?.length
-      })`,
+      label: (
+        <Box display={"flex"} alignItems={"center"}>
+          {t("glossary.collateral")}
+          {data?.contracts?.length && data?.contracts?.length > 0 && (
+            <CustomBadge
+              bgColor={theme.isDark ? theme.palette.primary.main : ""}
+              color={theme.isDark ? theme.palette.secondary[100] : ""}
+            >
+              {data?.collaterals?.collateralInputResponses?.length ===
+              data?.collaterals?.collateralOutputResponses?.length
+                ? 1
+                : data?.collaterals?.collateralInputResponses?.length}
+            </CustomBadge>
+          )}
+        </Box>
+      ),
       children: <Collaterals data={data?.collaterals} />
     },
     {
@@ -190,7 +223,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
   return (
     <Box mt={4} ref={tabRef}>
       {items?.map(({ key, icon: Icon, label, children }, index) => (
-        <CustomAccordion
+        <StyledAccordion
           key={key}
           expanded={tabActive === key}
           customBorderRadius={needBorderRadius(key)}
@@ -219,7 +252,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
             </TitleTab>
           </AccordionSummary>
           <AccordionDetails>{children}</AccordionDetails>
-        </CustomAccordion>
+        </StyledAccordion>
       ))}
     </Box>
   );

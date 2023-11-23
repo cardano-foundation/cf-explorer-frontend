@@ -176,11 +176,13 @@ const transaction = {
   metadata: [
     {
       label: 1,
-      value: "value-1"
+      value: "value-1",
+      metadataCIP25: {}
     },
     {
       label: 2,
-      value: "value-2"
+      value: "value-2",
+      metadataCIP25: {}
     }
   ]
 } as Transaction;
