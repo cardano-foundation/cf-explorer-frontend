@@ -1,4 +1,4 @@
-import { Box, styled, Card } from "@mui/material";
+import { Box, styled, Card, alpha } from "@mui/material";
 import Slider from "react-slick";
 
 export const LatestStoriesContainer = styled(Box)`
@@ -60,7 +60,7 @@ export const Item = styled(Card)`
   border-radius: 12px;
   box-sizing: border-box;
   &:hover {
-    box-shadow: ${(props) => props.theme.shadow.cardHover};
+    box-shadow: ${({ theme }) => "1px 2px 15px 0px " + alpha(theme.palette.secondary.light, 0.25)};
   }
 `;
 
