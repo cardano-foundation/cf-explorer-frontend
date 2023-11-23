@@ -165,6 +165,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
         </>
       );
     }
+
     const slot =
       data.no === currentEpoch?.no
         ? moment(formatDateTimeLocal(data.endTime)).diff(moment()) >= 0
@@ -172,7 +173,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
           : data.maxSlot || MAX_SLOT_EPOCH
         : data.maxSlot || MAX_SLOT_EPOCH;
 
-    const progress = +Math.min((slot / MAX_SLOT_EPOCH) * 100, 100).toFixed(0);
+    const progress = +Math.min((slot / data.maxSlot) * 100, 100).toFixed(0);
     return (
       <>
         <ViewDetailHeader>
