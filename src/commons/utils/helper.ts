@@ -5,8 +5,8 @@ import moment, { DurationInputArg1, DurationInputArg2 } from "moment";
 import { parse } from "qs";
 import { AxisInterval } from "recharts/types/util/types";
 
-import breakpoints from "src/themes/breakpoints";
 import { setUserData } from "src/stores/user";
+import breakpoints from "src/themes/breakpoints";
 
 import { APP_LANGUAGES, MAX_SLOT_EPOCH, NETWORK, NETWORKS, NETWORK_TYPES, OPTIONS_CHART_ANALYTICS } from "./constants";
 import { getInfo, signIn } from "./userRequest";
@@ -337,4 +337,8 @@ export const getIntervalAnalyticChart = (rangeTime: OPTIONS_CHART_ANALYTICS): Ax
 export const isAssetId = (text: string) => {
   if (text.startsWith("asset") && text.length === 44) return true;
   return false;
+};
+
+export const removeDuplicate = <T>(arr: T[]) => {
+  return arr.filter((c, index) => arr.indexOf(c) === index);
 };
