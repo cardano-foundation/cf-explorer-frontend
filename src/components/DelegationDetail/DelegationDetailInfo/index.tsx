@@ -137,14 +137,18 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <Box display={"flex"} alignItems={"center"} width={"inherit"}>
           <CustomTooltip title={data?.poolName || poolId}>
             <HeaderTitle>
-              <TruncateSubTitleContainer>
-                <DynamicEllipsisText
-                  value={data?.poolName || poolId}
-                  sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 130px)" : "calc(100% - 50px)" }}
-                  postfix={5}
-                  isNoLimitPixel={true}
-                />
-              </TruncateSubTitleContainer>
+              {data?.poolName ? (
+                data?.poolName
+              ) : (
+                <TruncateSubTitleContainer>
+                  <DynamicEllipsisText
+                    value={data?.poolName || poolId}
+                    sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 130px)" : "calc(100% - 50px)" }}
+                    postfix={5}
+                    isNoLimitPixel={true}
+                  />
+                </TruncateSubTitleContainer>
+              )}
             </HeaderTitle>
           </CustomTooltip>
           {width > 600 && <HeaderBookmark justifyStyle={"space-between"} />}
