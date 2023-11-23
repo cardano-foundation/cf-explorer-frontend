@@ -67,7 +67,13 @@ const StakeHistoryTab = ({ isMobile = false }) => {
         const label = r.action ? r.action.split(" ").join("") : "";
         return (
           <LabelStatus
-            color={(theme) => (r.action === "Registered" ? theme.palette.error[700] : theme.palette.secondary.light)}
+            color={(theme) =>
+              r.action === "Registered"
+                ? theme.isDark
+                  ? theme.palette.error[800]
+                  : theme.palette.error[700]
+                : theme.palette.secondary.light
+            }
             sx={{
               background: (theme) => (r.action === "Registered" ? theme.palette.error[100] : theme.palette.primary[200])
             }}

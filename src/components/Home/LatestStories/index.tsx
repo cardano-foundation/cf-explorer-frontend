@@ -105,53 +105,53 @@ const LatestStories = () => {
           { breakpoint: breakpoints.values.sm, settings: { slidesToShow: 1.5, slidesToScroll: 1 } }
         ]}
       >
-        {data.map(({ meta_image, banner_image, title, news_item_content, resource_href }) => {
-          const { date, default_content, author } = news_item_content;
-
-          const authorName = getAuthorName(author);
-
-          return (
-            <a
-              key={date}
-              href={resource_href}
-              target="_blank"
-              rel="noreferrer"
-              onClick={(e) => drag.current && e.preventDefault()}
-            >
-              <Item>
-                <Image src={meta_image || banner_image} alt={title} />
-                <Detail>
-                  <WrapHeader>
-                    <CustomTooltip title={authorName}>
-                      <Author>{authorName}</Author>
-                    </CustomTooltip>
-                    <ResourceHref>{getHostname(resource_href)}</ResourceHref>
-                  </WrapHeader>
-                  <ItemTitle>{title} </ItemTitle>
-                  <Description>{default_content}</Description>
-                  <FooterCard>
-                    <Time>
-                      <TimeIcon src={CalenderPaleIcon} alt="calender pale" />
-                      {formatDateTime(date)}
-                    </Time>
-                  </FooterCard>
-                </Detail>
+        {loading || !data.length
+          ? new Array(4).fill(0).map((_, index) => (
+              <Item key={index}>
+                <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={132} />
+                <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={15} mt={1} width="70%" />
+                <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={15} mt={1} width="80%" />
+                <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={80} mt={1} />
+                <FooterCard>
+                  <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={20} width="60%" />
+                </FooterCard>
               </Item>
-            </a>
-          );
-        })}
-        {(loading || !data.length) &&
-          new Array(4).fill(0).map((_, index) => (
-            <Item key={index}>
-              <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={132} />
-              <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={15} mt={1} width="70%" />
-              <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={15} mt={1} width="80%" />
-              <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={80} mt={1} />
-              <FooterCard>
-                <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={20} width="60%" />
-              </FooterCard>
-            </Item>
-          ))}
+            ))
+          : data.map(({ meta_image, banner_image, title, news_item_content, resource_href }) => {
+              const { date, default_content, author } = news_item_content;
+
+              const authorName = getAuthorName(author);
+
+              return (
+                <a
+                  key={date}
+                  href={resource_href}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={(e) => drag.current && e.preventDefault()}
+                >
+                  <Item>
+                    <Image src={meta_image || banner_image} alt={title} />
+                    <Detail>
+                      <WrapHeader>
+                        <CustomTooltip title={authorName}>
+                          <Author>{authorName}</Author>
+                        </CustomTooltip>
+                        <ResourceHref>{getHostname(resource_href)}</ResourceHref>
+                      </WrapHeader>
+                      <ItemTitle>{title} </ItemTitle>
+                      <Description>{default_content}</Description>
+                      <FooterCard>
+                        <Time>
+                          <TimeIcon src={CalenderPaleIcon} alt="calender pale" />
+                          {formatDateTime(date)}
+                        </Time>
+                      </FooterCard>
+                    </Detail>
+                  </Item>
+                </a>
+              );
+            })}
       </StyledSlider>
     </LatestStoriesContainer>
   );

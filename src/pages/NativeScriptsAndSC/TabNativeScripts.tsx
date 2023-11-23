@@ -50,7 +50,8 @@ const TabNativeScripts = () => {
         columns={columns}
         total={{ count: fetchData.total, title: t("common.totalTxs") }}
         rowKey="scriptHash"
-        height={380}
+        height="unset"
+        maxHeight={380}
         pagination={{
           ...pageInfo,
           total: fetchData.total,

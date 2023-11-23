@@ -79,6 +79,7 @@ import RewardAccountIconDarkUrl from "./images/reward-box-icon-dark.png";
 import DelegationToIconUrl from "./images/delegation-to.png";
 import RewardWithdrawnIconUrl from "./images/reward-withdrawn.png";
 import timeIconUrl, { ReactComponent as TimeIconComponent } from "./icons/time.svg";
+import timelineUrl, { ReactComponent as TimelineIconComponent } from "./icons/timeline.svg";
 import exchageIconUrl, { ReactComponent as ExchageIcon } from "./icons/Union.svg";
 import exchageAltIconUrl, { ReactComponent as ExchageAltIcon } from "./icons/exchangeArrow.svg";
 import outputIconUrl, { ReactComponent as OutputIcon } from "./icons/outputIcon.svg";
@@ -116,7 +117,7 @@ import GiftIcon from "./images/gift-icon.png";
 import DelegatingIcon from "./icons/delegating-icon.svg";
 import sunIcon from "./icons/sun.svg";
 import moonIcon from "./icons/moon.svg";
-import WhiteSearchIcon from "./icons/white-search-icon.svg";
+import WhiteSearchIcon, { ReactComponent as WhiteSearchIconComponent } from "./icons/white-search-icon.svg";
 import WalletRoundedIcon from "./icons/wallet-rounded.svg";
 import SummaryWalletDark from "./icons/summaryWalletDark.svg";
 import UpGreenDarkmode from "./icons/upGreenDark.svg";
@@ -126,9 +127,21 @@ import DownRedUtxoDarkmode from "./icons/downUtxoRedDark.svg";
 import ArrowUpIcon from "./icons/arrow-up.svg";
 import ArrowUpDarkIcon from "./icons/arrow-up-dark.svg";
 import CopyOutlineIcon, { ReactComponent as CopyOutlineIconComponent } from "./icons/copy-outline.svg";
+import { ReactComponent as PoolResgistrationHistory } from "./icons/poolResgistrationHistory.svg";
+import { ReactComponent as PoolResgistrationHistoryDark } from "./icons/poolResgistrationHistoryDark.svg";
+import { ReactComponent as PoolDeresgistrationHistory } from "./icons/poolDeresgistrationHistory.svg";
+import { ReactComponent as PoolDeresgistrationHistoryDark } from "./icons/poolDeresgistrationHistoryDark.svg";
+import { ReactComponent as PoolUpdateHistory } from "./icons/poolUpdateHistory.svg";
+import { ReactComponent as PoolUpdateHistoryDark } from "./icons/poolUpdateHistoryDark.svg";
 import ArrowDownIcon from "./icons/arrow-down-red.svg";
 import ArrowDownDarkIcon from "./icons/arrow-down-red-dark.svg";
 import PolicyDark from "./icons/policy-dark.svg";
+import StatusDarkIcon from "./images/StatusDark.png";
+import StatusLightIcon from "./images/StatusLight.png";
+import PoolSizeDarkIcon from "./images/PoolSizeDark.png";
+import PoolSizeLightIcon from "./images/PoolSizeLight.png";
+import DelegatingToDarkIcon from "./images/DelegatingToDark.png";
+import RewardsWithdrawDarkIcon from "./images/RewardsWithdrawDark.png";
 
 export {
   LogoFullIcon,
@@ -207,6 +220,7 @@ export {
   DelegationToIconUrl,
   RewardWithdrawnIconUrl,
   timeIconUrl,
+  timelineUrl,
   exchageIconUrl,
   exchageAltIconUrl,
   ExchageAltIcon,
@@ -249,6 +263,7 @@ export {
   CubeIconComponent,
   SlotIcon,
   TimeIconComponent,
+  TimelineIconComponent,
   OutputIcon,
   User2Component,
   ExchageIcon,
@@ -272,6 +287,7 @@ export {
   MenuIconComponent,
   EmptyDarkIcon,
   WhiteSearchIcon,
+  WhiteSearchIconComponent,
   WalletRoundedIcon,
   ArrowUpIcon,
   ArrowUpDarkIcon,
@@ -294,7 +310,19 @@ export {
   StakeCertificatesComponent,
   ProtocolUpdateComponent,
   InstantaneousHistoryComponent,
-  PolicyDark
+  PolicyDark,
+  PoolResgistrationHistory,
+  PoolDeresgistrationHistory,
+  PoolUpdateHistory,
+  PoolResgistrationHistoryDark,
+  PoolDeresgistrationHistoryDark,
+  PoolUpdateHistoryDark,
+  StatusDarkIcon,
+  StatusLightIcon,
+  PoolSizeDarkIcon,
+  PoolSizeLightIcon,
+  DelegatingToDarkIcon,
+  RewardsWithdrawDarkIcon
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
@@ -447,3 +475,5 @@ export { ReactComponent as TokenTabIcon } from "./icons/token-tab-ic.svg";
 export { ReactComponent as NativeScriptIcon } from "./icons/nativeScripts.svg";
 export { ReactComponent as SmartContractsIcon } from "./icons/smartContract.svg";
 export { ReactComponent as AssociatedIcon } from "./icons/associated.svg";
+export { ReactComponent as WarningCIPIcon } from "./icons/warning-cip25.svg";
+export { ReactComponent as CheckedCIPIcon } from "./icons/complied-cip25.svg";

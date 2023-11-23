@@ -55,6 +55,7 @@ import {
   StyledDropdownItem,
   TextDescription
 } from "./styles";
+import TxsProtocolModal from "./TxsProtocolModal";
 
 interface IProtocolParamVertical {
   name: string;
@@ -334,6 +335,7 @@ export const ProtocolParameterHistory = () => {
   const theme = useTheme();
   const [initing, setIniting] = useState(true);
   const [filterParams, setFilterParams] = useState<string[]>([]);
+  const [selectTxs, setSelectTxs] = useState<string[] | null>(null);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
   const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
   const historyUrlBase = PROTOCOL_PARAMETER.HISTORY;
@@ -407,15 +409,18 @@ export const ProtocolParameterHistory = () => {
                   : 0
                 : 0
             }
+            onClick={() => {
+              setSelectTxs(r[t as ProtocolTypeKey]?.transactionHashs || null);
+            }}
             component={["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string) ? Link : Box}
             to={
-              r[t as ProtocolTypeKey]?.transactionHash
-                ? details.transaction(r[t as ProtocolTypeKey]?.transactionHash, "protocols")
+              r[t as ProtocolTypeKey]?.transactionHashs && r[t as ProtocolTypeKey]?.transactionHashs.length === 1
+                ? details.transaction(r[t as ProtocolTypeKey]?.transactionHashs[0], "protocols")
                 : "#"
             }
           >
-            {r[t as ProtocolTypeKey]?.status === "ADDED" ||
-            (r[t as ProtocolTypeKey]?.status === "UPDATED" && !r[t as ProtocolTypeKey]?.transactionHash) ? (
+            {(r[t as ProtocolTypeKey]?.status === "ADDED" || r[t as ProtocolTypeKey]?.status === "UPDATED") &&
+            !r[t as ProtocolTypeKey]?.transactionHashs ? (
               <CustomTooltip title="No transaction">
                 <Box>
                   {r[t as ProtocolTypeKey]
@@ -643,6 +648,7 @@ export const ProtocolParameterHistory = () => {
         handleCloseModal={() => setExplainerText(null)}
         explainerText={explainerText || { content: "", title: "" }}
       />
+      <TxsProtocolModal open={!!selectTxs} onClose={() => setSelectTxs(null)} txs={selectTxs} />
     </Box>
   );
 };

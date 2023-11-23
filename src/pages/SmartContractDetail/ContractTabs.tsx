@@ -5,8 +5,8 @@ import { useHistory, useParams } from "react-router-dom";
 import { t } from "i18next";
 
 import { UtxoIcon } from "src/commons/resources";
-import { CustomAccordion } from "src/components/TransactionDetail/TransactionMetadata/styles";
 import { details } from "src/commons/routers";
+import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 
 import TabAssociated from "./TabAssociated";
 import TabTransactions from "./TabTransactions";
@@ -34,7 +34,15 @@ const ContractTabs = ({ setVersion }: { setVersion: (v: string) => void }) => {
   const tabRef = useRef<HTMLDivElement>(null);
 
   const handleChangeTab = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-    tabRef?.current?.scrollIntoView();
+    const handleTransitionEnd = () => {
+      if (newExpanded) {
+        setTimeout(() => {
+          tabRef?.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }, 0);
+        tabRef?.current?.removeEventListener("transitionend", handleTransitionEnd);
+      }
+    };
+    tabRef?.current?.addEventListener("transitionend", handleTransitionEnd);
     history.replace(details.smartContract(address, newExpanded ? panel : ""));
   };
 
@@ -66,7 +74,7 @@ const ContractTabs = ({ setVersion }: { setVersion: (v: string) => void }) => {
   return (
     <StyledContractTabs ref={tabRef}>
       {data?.map(({ key, icon: Icon, label, children }, index) => (
-        <CustomAccordion
+        <StyledAccordion
           key={key}
           expanded={tabActive === key}
           customBorderRadius={needBorderRadius(key)}
@@ -88,7 +96,7 @@ const ContractTabs = ({ setVersion }: { setVersion: (v: string) => void }) => {
             <TitleTab active={key === tabActive}>{label}</TitleTab>
           </StyledAccordionSummary>
           <StyledAccordionDetails>{children}</StyledAccordionDetails>
-        </CustomAccordion>
+        </StyledAccordion>
       ))}
     </StyledContractTabs>
   );

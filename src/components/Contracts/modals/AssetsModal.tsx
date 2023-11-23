@@ -6,6 +6,8 @@ import CustomModal from "src/components/commons/CustomModal";
 import { CustomBadge } from "src/components/commons/ViewBlocks/styles";
 import { details } from "src/commons/routers";
 import { useScreen } from "src/commons/hooks/useScreen";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { getShortHash } from "src/commons/utils/helper";
 
 import { DataTitle } from "../common/styles";
 import {
@@ -19,7 +21,7 @@ import {
   StyledListItemText
 } from "./styles";
 
-type Data = { title: string; value: string | number; link?: string };
+type Data = { title: string; value: string | number; link?: string; showTooltip?: boolean };
 export interface AssetsModalProps {
   open?: boolean;
   onClose?: () => void;
@@ -71,7 +73,15 @@ const AssetsModal: React.FC<AssetsModalProps> = ({ open = false, onClose, data, 
               }
             >
               <StyledListItemText color={theme.palette.primary.main}>
-                <StyledLink to={details.token(item.link)}>{item.title}</StyledLink>
+                <StyledLink to={details.token(item.link)}>
+                  {!item.showTooltip ? (
+                    item.title
+                  ) : (
+                    <CustomTooltip title={item.title}>
+                      <Typography display="inline-block">{getShortHash(item.title)}</Typography>
+                    </CustomTooltip>
+                  )}
+                </StyledLink>
               </StyledListItemText>
             </StyledItem>
           ))}

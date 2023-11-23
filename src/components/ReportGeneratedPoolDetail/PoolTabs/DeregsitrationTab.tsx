@@ -7,7 +7,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { EyeIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { getShortHash } from "src/commons/utils/helper";
+import { formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { DeregistrationCertificateModal } from "src/components/StakingLifeCycle/SPOLifecycle/Deregistration";
 import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
 import { AdaValue } from "src/components/commons/ADAValue";
@@ -46,7 +46,7 @@ const DeregsitrationTab = () => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       },
       render(data) {
-        return data.time;
+        return formatDateTimeLocal(data.time);
       }
     },
     {
