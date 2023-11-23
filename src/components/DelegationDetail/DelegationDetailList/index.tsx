@@ -13,7 +13,13 @@ import {
   PoolUpdateHistoryDark,
   PoolDeresgistrationHistoryDark
 } from "src/commons/resources";
-import { formatADAFull, formatDateTimeLocal, getShortHash, numberWithCommas } from "src/commons/utils/helper";
+import {
+  formatADAFull,
+  formatDateTimeLocal,
+  getShortHash,
+  numberWithCommas,
+  removeDuplicate
+} from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
@@ -302,7 +308,7 @@ const DelegationCertificatesHistory = ({
       render: (data) => {
         return (
           <Box display={"flex"} gap={2}>
-            {data.actions && [...new Set(data.actions)].map((action) => renderAction(action))}
+            {data.actions && removeDuplicate(data.actions).map((action: POOL_ACTION_TYPE) => renderAction(action))}
           </Box>
         );
       }
