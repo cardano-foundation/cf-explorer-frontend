@@ -34,16 +34,16 @@ const NativeScriptsDetail = () => {
 
   const smartcontractTabs: TTab[] = [
     {
-      key: "mintingBurningPolicy",
-      icon: MintingBurningPolicyIcon,
-      children: <MinttingBurningPolicy />,
-      label: <Box data-testid="ns.mintBurnPolicy">Minting/ Burning Policy</Box>
-    },
-    {
       key: "associatedAddresses",
       icon: AssociatedAddressesIcon,
       children: <AssociatedAddress />,
       label: <Box data-testid="ns.AssociatedAddresses">{t("common.associatedAddresses")}</Box>
+    },
+    {
+      key: "mintingBurningPolicy",
+      icon: MintingBurningPolicyIcon,
+      children: <MinttingBurningPolicy />,
+      label: <Box data-testid="ns.mintBurnPolicy">Minting/ Burning Policy</Box>
     },
     {
       key: "script",
@@ -67,7 +67,7 @@ const NativeScriptsDetail = () => {
 
   const hiddenKeys = useMemo(() => {
     const keys: string[] = [];
-    if (!associatedAddress?.length) keys.push("associatedAddresses");
+    // if (!associatedAddress?.length) keys.push("associatedAddresses");
     if (!keyHashes?.length) keys.push("mintingBurningPolicy");
     return keys;
   }, [associatedAddress, keyHashes]);
