@@ -7,7 +7,6 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import CustomIcon from "src/components/commons/CustomIcon";
 import {
   DeredistrationIcon,
-  InfoIcon,
   NextIcon,
   OperatorRewardIcon,
   PoolUpdateIcon,
@@ -16,6 +15,7 @@ import {
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 
 import {
   DeregistrationSPOProcessDescription,
@@ -215,7 +215,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
       </Box>
       <StepHeader>
         <WrapTitle alignItems={"center"} display={"flex"} gap={1}>
-          {stepper[currentStep]?.title} <InfoIcon onClick={() => setOpenDescriptionModal(true)} cursor={"pointer"} />
+          {stepper[currentStep]?.title} <InfoSolidIcon onClick={() => setOpenDescriptionModal(true)} />
         </WrapTitle>
       </StepHeader>
       <Box>{stepper[currentStep]?.description}</Box>

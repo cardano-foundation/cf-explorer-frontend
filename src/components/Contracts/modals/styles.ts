@@ -9,11 +9,32 @@ export const ModalContent = styled(Box)`
   gap: 12px;
   max-height: 70dvh;
   padding: 4px;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background: ${({ theme }) => theme.palette.secondary.light};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${({ theme }) => theme.palette.primary[100]};
+    }
+  }
 `;
 
 export const SlotContainer = styled(Box)`
   flex: 1;
   overflow: auto;
+  min-height: 20vh;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     max-height: 70dvh;
   }

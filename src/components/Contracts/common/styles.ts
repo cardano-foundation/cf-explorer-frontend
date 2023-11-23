@@ -94,6 +94,11 @@ export const CLButton = styled("button")`
   border-radius: 8px;
   cursor: pointer;
   font-family: "Roboto", monospace;
+  transition: 0.3s ease-out;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.primary.dark};
+  }
 `;
 
 export const ContractAddressLabel = styled(Typography)`
