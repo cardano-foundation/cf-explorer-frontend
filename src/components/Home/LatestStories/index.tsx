@@ -141,7 +141,7 @@ const LatestStories = () => {
           );
         })}
 
-        {data.length < total &&
+        {(data.length < total || !data.length) &&
           new Array(4).fill(0).map((_, index) => (
             <Item key={index}>
               <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={132} />
