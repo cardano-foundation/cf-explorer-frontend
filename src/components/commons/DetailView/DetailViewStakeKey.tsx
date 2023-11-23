@@ -74,7 +74,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
       icon: <DelegationHistoryMainIcon style={{ padding: "2px 4px 2px 2px" }} />
     },
     {
-      key: "stake-address",
+      key: "stake-key",
       label: t("drawer.stakeAddressHistory"),
       icon: (
         <StakeKeyHistoryIcon

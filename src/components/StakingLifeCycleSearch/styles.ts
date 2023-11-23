@@ -39,6 +39,11 @@ export const StyledInput = styled("input")`
   text-overflow: ellipsis;
   background: ${({ theme }) => theme.palette.secondary[0]};
   color: ${({ theme }) => theme.palette.secondary.light};
+
+  &::-webkit-search-cancel-button {
+    filter: ${({ theme }) => (theme.mode === "dark" ? "brightness(0) invert(0.8)" : "brightness(0) invert(0.4)")};
+    cursor: pointer;
+  }
 `;
 
 export const SubmitButton = styled(Button)`

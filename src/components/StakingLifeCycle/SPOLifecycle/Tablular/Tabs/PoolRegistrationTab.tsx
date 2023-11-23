@@ -1,7 +1,8 @@
 import { Box, IconButton, useTheme } from "@mui/material";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { stringify } from "qs";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { EyeIcon } from "src/commons/resources";
@@ -15,6 +16,7 @@ import { StyledLink } from "src/components/share/styled";
 import { AdaValue } from "src/components/commons/ADAValue";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomIcon from "src/components/commons/CustomIcon";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 
 import { RegistrationCertificateModal } from "../../Registration/RegistrationCertificateModal";
 
@@ -22,12 +24,10 @@ const PoolRegistrationTab = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const { poolId = "" } = useParams<{ poolId: string }>();
-  const [params, setParams] = useState({
-    page: 0,
-    size: 50
-  });
 
-  const [sort, setSort] = useState<string>("");
+  const history = useHistory();
+  const { pageInfo, setSort } = usePageInfo();
+
   const [selected, setSelected] = useState<number | null>(null);
 
   const columns: Column<SPORegistrationTabpular>[] = [
@@ -91,8 +91,7 @@ const PoolRegistrationTab = () => {
   const fetchData = useFetchList<SPORegistrationTabpular>(
     poolId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_LIST(poolId) : "",
     {
-      ...params,
-      sort
+      ...pageInfo
     }
   );
 
@@ -106,9 +105,11 @@ const PoolRegistrationTab = () => {
           count: fetchData.total
         }}
         pagination={{
-          ...params,
+          ...pageInfo,
           total: fetchData.total,
-          onChange: (page, size) => setParams({ page: page - 1, size })
+          onChange: (page, size) => {
+            history.replace({ search: stringify({ ...pageInfo, page, size }) });
+          }
         }}
       />
       <RegistrationCertificateModal

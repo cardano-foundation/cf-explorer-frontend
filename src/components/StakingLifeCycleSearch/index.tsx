@@ -163,6 +163,7 @@ const StakingLifeCycleSearch = () => {
       <Box>
         <SearchContainer mx={"auto"}>
           <StyledInput
+            type="search"
             placeholder={t("slc.typeStakeOrPool")}
             onChange={(e) => {
               setValue(e.target.value.trim());
