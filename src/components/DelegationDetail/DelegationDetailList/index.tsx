@@ -13,7 +13,13 @@ import {
   PoolUpdateHistoryDark,
   PoolDeresgistrationHistoryDark
 } from "src/commons/resources";
-import { formatADAFull, formatDateTimeLocal, getShortHash, numberWithCommas } from "src/commons/utils/helper";
+import {
+  formatADAFull,
+  formatDateTimeLocal,
+  getShortHash,
+  numberWithCommas,
+  removeDuplicate
+} from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
@@ -259,7 +265,9 @@ const DelegationCertificatesHistory = ({
       render: (data) =>
         data.txHash && (
           <CustomTooltip title={data.txHash || ""}>
-            <StyledLink to={details.transaction(data.txHash)}>{getShortHash(data.txHash || "")}</StyledLink>
+            <StyledLink to={details.transaction(data.txHash, "poolCertificates")}>
+              {getShortHash(data.txHash || "")}
+            </StyledLink>
           </CustomTooltip>
         )
     },
@@ -279,7 +287,7 @@ const DelegationCertificatesHistory = ({
       title: t("epoch"),
       key: "value",
       minWidth: "80px",
-      render: (data) => <StyledLink to={details.block(data.epochNo)}>{data.epochNo}</StyledLink>
+      render: (data) => <StyledLink to={details.epoch(data.epochNo)}>{data.epochNo}</StyledLink>
     },
     {
       title: t("common.slot"),
@@ -300,7 +308,7 @@ const DelegationCertificatesHistory = ({
       render: (data) => {
         return (
           <Box display={"flex"} gap={2}>
-            {data.actions && [...new Set(data.actions)].map((action) => renderAction(action))}
+            {data.actions && removeDuplicate(data.actions).map((action: POOL_ACTION_TYPE) => renderAction(action))}
           </Box>
         );
       }

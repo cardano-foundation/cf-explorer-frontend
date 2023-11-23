@@ -55,7 +55,7 @@ const LatestStories = () => {
 
   const onAfterChange: Settings["afterChange"] = (currentSlide) => {
     drag.current = false;
-    if (currentSlide >= data.length - 4 && data.length < total && !loading) {
+    if (currentSlide >= data.length && !loading) {
       setOffset(data.length);
     }
   };
@@ -140,7 +140,8 @@ const LatestStories = () => {
             </a>
           );
         })}
-        {(loading || !data.length) &&
+
+        {data.length < total &&
           new Array(4).fill(0).map((_, index) => (
             <Item key={index}>
               <Box component={CommonSkeleton} variant="rectangular" borderRadius={2} height={132} />

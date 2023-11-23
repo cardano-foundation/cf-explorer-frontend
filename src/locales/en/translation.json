@@ -726,7 +726,7 @@
   "CC_20": "Wallet is already exist",
   "CC_21": "The verify code is invalid",
   "CC_22": "User is not ready to active",
-  "CC_23": "Email is already exist",
+  "CC_23": "Email already exist",
   "CC_24": "Username or password is invalid",
   "INVALID_PARAM": "Invalid param",
   "INTERNAL_ERROR": "Something went wrong",
@@ -878,6 +878,7 @@
   "ViewAddresses": "View Addresses",
   "token.timelock": "Time locked",
   "token.oneTimeMint": "One time mint",
+  "protocol.trxModalSubTitle": "Confirmed by transactions",
   "token.CIP25Compliance": "CIP 25 Compliance",
   "cip25.property": "Property",
   "cip25.format": "Format",
@@ -890,6 +891,6 @@
   "token.otherProperties.desc": "Any metadata that doesn't fall into the \"required\" or \"optional\" categories according to the CIP-25 specification is not verified for compliance and therefore won't be displayed in this view.",
   "common.passed": "Passed",
   "common.needsReview": "Needs Review",
-  "protocol.trxModalSubTitle": "Confirmed by transactions",
-  "cip25.viewDocs": "View cip25 documenent"
+  "cip25.viewDocs": "View cip25 documenent",
+  "common.severUnknownErrorMsg": "Something went wrong on our side, please try again later or report an issue"
 }

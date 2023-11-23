@@ -85,3 +85,26 @@ export const StyledAdaLogoIcon = styled(AdaLogoIcon)(() => ({
   lineHeight: "16px",
   marginBottom: ".125rem"
 }));
+
+export const ModalContent = styled(Box)`
+  overflow: auto;
+  max-height: 70vh;
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background: ${({ theme }) => theme.palette.secondary.light};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${({ theme }) => theme.palette.primary[100]};
+    }
+  }
+`;

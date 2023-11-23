@@ -85,7 +85,6 @@ const LatestTransactions: React.FC = () => {
               })
             : data?.map((item) => {
                 const { hash, fromAddress, toAddress, blockNo, amount, status, time, epochNo, epochSlotNo } = item;
-
                 return (
                   // isTable show 2 item per row else show 1 item per row grid
                   <Grid item xl={3} lg={3} xs={12} sm={6} key={hash}>

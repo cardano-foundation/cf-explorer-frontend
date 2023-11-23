@@ -1,14 +1,14 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { IoIosArrowUp } from "react-icons/io";
 
-import { InfoIcon } from "src/commons/resources";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 
 import {
   ArrowIconContainer,
-  ExplanDropdownContainer,
-  ExplanDropdownContent,
-  ExplanDropdownHeader,
+  StyledAccordion,
+  StyledAccordionDetails,
+  StyledAccordionSummary,
   UnderlineText
 } from "./styles";
 
@@ -18,25 +18,25 @@ export interface ExplanDropdownProps {
   children?: React.ReactNode;
 }
 const ExplanDropdown: React.FC<ExplanDropdownProps> = ({ title, content, children }) => {
-  const [open, setOpen] = useState(false);
   const theme = useTheme();
   return (
-    <ExplanDropdownContainer>
-      <ExplanDropdownHeader onClick={() => setOpen(!open)}>
-        <Box display="flex" alignItems="center" gap="4px" flex={1}>
+    <StyledAccordion>
+      <StyledAccordionSummary
+        expandIcon={
+          <ArrowIconContainer>
+            <IoIosArrowUp color={theme.palette.secondary.light} />
+          </ArrowIconContainer>
+        }
+      >
+        <Box display={"flex"} alignItems={"center"} gap={1}>
           <UnderlineText>{title}</UnderlineText>
-          <InfoIcon />
+          <InfoSolidIcon />
         </Box>
-        <ArrowIconContainer open={+open}>
-          <IoIosArrowUp color={theme.palette.secondary.light} />
-        </ArrowIconContainer>
-      </ExplanDropdownHeader>
-      {open && (
-        <ExplanDropdownContent>
-          <Typography component="p">{content ?? children}</Typography>
-        </ExplanDropdownContent>
-      )}
-    </ExplanDropdownContainer>
+      </StyledAccordionSummary>
+      <StyledAccordionDetails>
+        <Typography component="p">{content ?? children}</Typography>
+      </StyledAccordionDetails>
+    </StyledAccordion>
   );
 };
 

@@ -2,10 +2,12 @@ import { Box, FormGroup, IconButton, InputAdornment, useTheme } from "@mui/mater
 import { ChangeEvent, MouseEvent, useEffect, useReducer, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router-dom";
+import { AxiosError } from "axios";
 
 import { FailDarkIcon, FailIcon, HideIcon, LockIcon, ShowIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
 import { resetPassword, verifyCodeResetPassword } from "src/commons/utils/userRequest";
+import { ACCOUNT_ERROR } from "src/commons/utils/constants";
 
 import {
   Container,
@@ -61,6 +63,7 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
   const [hasErrorForm, setHasErrorForm] = useState(false);
   const [initing, setIniting] = useState(true);
   const [error, setError] = useState(false);
+  const [serverError, setServerError] = useState("");
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useReducer(formReducer, {
     confirmPassword: {
@@ -170,6 +173,12 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
         setError(true);
       }
     } catch (error) {
+      const err = error as AxiosError;
+      if (err.response?.status === 500) {
+        setServerError(t(ACCOUNT_ERROR.SERVER_UNKNOWN_ERROR));
+      } else {
+        setServerError("");
+      }
       setError(true);
     } finally {
       setLoading(false);
@@ -306,7 +315,7 @@ export default function ResetPassword({ codeVerify = "" }: { codeVerify?: string
               <Title>{t("account.resetPasswordFail")}</Title>
               <Box>
                 <Label mb={1}>{t("account.error.verify")}</Label>
-                <Label>{t("account.expired.link")}</Label>
+                <Label>{serverError ? serverError : t("account.expired.link")}</Label>
               </Box>
               <WrapButton variant="contained" fullWidth onClick={() => history.replace(routers.HOME)}>
                 {t("account.goToDashboard")}
