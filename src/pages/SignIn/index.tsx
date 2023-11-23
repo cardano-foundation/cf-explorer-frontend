@@ -3,18 +3,19 @@ import { useEffect, useReducer, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IoMdClose } from "react-icons/io";
 import { useHistory } from "react-router-dom";
+import { AxiosError } from "axios";
 
 import useAuth from "src/commons/hooks/useAuth";
+import { useScreen } from "src/commons/hooks/useScreen";
 import useToast from "src/commons/hooks/useToast";
 import { HideIcon, LockIcon, ShowIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
-import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
+import { ACCOUNT_ERROR, NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
 import { isValidEmail, removeAuthInfo } from "src/commons/utils/helper";
 import { getInfo, signIn } from "src/commons/utils/userRequest";
+import CustomIcon from "src/components/commons/CustomIcon";
 import ConnectWallet from "src/components/commons/Layout/Header/ConnectWallet";
 import { setUserData } from "src/stores/user";
-import CustomIcon from "src/components/commons/CustomIcon";
-import { useScreen } from "src/commons/hooks/useScreen";
 
 import {
   AlertCustom,
@@ -82,8 +83,8 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const { isLoggedIn } = useAuth();
-  const [invalidInfomation, setInvalidInfomation] = useState(false);
   const [error, setError] = useState(false);
+  const [serverErr, setServerErr] = useState("");
   const [formData, setFormData] = useReducer(formReducer, {
     email: {
       value: ""
@@ -183,7 +184,7 @@ export default function SignIn() {
       touched: event.target.value.trim() !== "",
       error: getError(event.target.name, event.target.value.trim())
     });
-    setInvalidInfomation(false);
+    if (serverErr) setServerErr("");
   };
 
   useEffect(() => {
@@ -233,7 +234,15 @@ export default function SignIn() {
       setUserData({ ...userInfo.data, loginType: "normal" });
       handleLoginSuccess();
     } catch (error) {
-      setInvalidInfomation(true);
+      const err = error as AxiosError<{ errorMessage: string; errorCode: string }>;
+      if (err.response?.status === 500) {
+        setServerErr(t(ACCOUNT_ERROR.SERVER_UNKNOWN_ERROR));
+      } else if (err.response?.data.errorCode === "CC_24") {
+        setServerErr(t("message.unableSignIn"));
+      } else {
+        setServerErr(err?.response?.data.errorMessage || "");
+      }
+      //todo: Implemenent others error
       removeAuthInfo();
     } finally {
       setLoading(false);
@@ -248,10 +257,10 @@ export default function SignIn() {
             <CloseButton saving={0} onClick={() => handleRedirectBack()}>
               <IoMdClose color={theme.palette.secondary.light} />
             </CloseButton>
-            {invalidInfomation ? (
-              <Box pt={"24px"}>
+            {serverErr ? (
+              <Box textAlign="left" pt={"24px"}>
                 <AlertCustom variant={theme.isDark ? "filled" : "standard"} severity="error">
-                  {t("message.unableSignIn")}
+                  {serverErr}
                 </AlertCustom>
               </Box>
             ) : null}

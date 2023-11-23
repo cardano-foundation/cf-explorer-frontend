@@ -40,6 +40,7 @@ import {
   WrapSignUp,
   WrapTitle
 } from "./styles";
+import { AlertCustom } from "../ForgotPassword/styles";
 
 interface IError {
   value: string;
@@ -346,6 +347,13 @@ export default function SignUp() {
                 <IoMdClose color={theme.palette.secondary.light} />
               </CloseButton>
               <WrapInput>
+                {serverErr ? (
+                  <Box textAlign="left" pb="24px">
+                    <AlertCustom variant={theme.isDark ? "filled" : "standard"} severity="error">
+                      {serverErr}
+                    </AlertCustom>
+                  </Box>
+                ) : null}
                 <InputCustom
                   inputRef={emailTextField}
                   startAdornment={
@@ -471,7 +479,6 @@ export default function SignUp() {
                   }
                 />
               </Box>
-              <Box mb={1}>{serverErr && <FormHelperTextCustom>{serverErr}</FormHelperTextCustom>}</Box>
               <WrapButton
                 data-testid="signup-button"
                 variant="contained"
