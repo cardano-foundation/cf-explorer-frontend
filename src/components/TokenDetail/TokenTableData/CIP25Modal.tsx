@@ -138,7 +138,7 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
       style={{ maxHeight: "unset" }}
       onClose={props.onClose}
       title={
-        <CIPLabel>
+        <CIPLabel data-testid="token-CIP25Compliance">
           {t("token.CIP25Compliance")} <ViewAllButtonExternal tooltipTitle={t("cip25.viewDocs")} to={CIP25_DOCS_URL} />
         </CIPLabel>
       }
@@ -147,7 +147,7 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
         {tokenMaps.map((token, index) => (
           <React.Fragment key={index}>
             {token.tokenName && (
-              <TokenLabel>
+              <TokenLabel data-testid="token-CIP25-name">
                 {t("glossary.Token")}: {token.tokenName}
               </TokenLabel>
             )}
@@ -162,7 +162,9 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
             />
             {token.optionalProperties.length > 0 && (
               <>
-                <CIPModalSubtitle>{t("token.optionalProperties")}</CIPModalSubtitle>
+                <CIPModalSubtitle data-testid="token-CIP25-optional-properties">
+                  {t("token.optionalProperties")}
+                </CIPModalSubtitle>
                 <Table
                   isModal
                   maxHeight="unset"
@@ -172,7 +174,7 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
                 />
               </>
             )}
-            <CIPModalSubtitle>{t("token.otherProperties")}</CIPModalSubtitle>
+            <CIPModalSubtitle data-testid="token-CIP25-other-properties">{t("token.otherProperties")}</CIPModalSubtitle>
             <OtherPropetiesContent>
               <OtherPropetiesDesc>{t("token.cip25otherProperties.desc")}</OtherPropetiesDesc>
             </OtherPropetiesContent>
