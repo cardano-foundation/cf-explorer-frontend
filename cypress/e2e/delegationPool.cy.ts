@@ -30,7 +30,7 @@ describe("delegation pool spec", () => {
     cy.get("small ~ a").should("have.attr", "href").and("include", pool);
   });
 
-  it.only("should navigate to the transaction detail page", () => {
+  it("should navigate to the transaction detail page", () => {
     const pool = "pool1m06tlj2ykawzvweacgmhxj43hykczgfuynk2lqzxvshm5lq2lyq";
     cy.visit("/pool/pool1m06tlj2ykawzvweacgmhxj43hykczgfuynk2lqzxvshm5lq2lyq");
     cy.get("small").contains("Pool ID", { matchCase: false });
@@ -101,5 +101,18 @@ describe("delegation pool spec", () => {
         const num = Number(text.replace(",", "").replace(".", ""));
         expect(num).to.be.a("number");
       });
+  });
+
+  it("Pool Certificates History", () => {
+    cy.visit("/pool/pool1m06tlj2ykawzvweacgmhxj43hykczgfuynk2lqzxvshm5lq2lyq");
+    cy.get(`[data-testid="certificatesHistory"]`).click();
+
+    cy.get(`[data-testid="table-common"] tr th`).contains("Tx Hash");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Created At");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Block");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Epoch");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Slot");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Absolute Slot");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Action");
   });
 });
