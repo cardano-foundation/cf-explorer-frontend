@@ -138,7 +138,7 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
       style={{ maxHeight: "unset" }}
       onClose={props.onClose}
       title={
-        <CIPLabel>
+        <CIPLabel data-testid="token-CIP25Compliance">
           {t("token.CIP25Compliance")} <ViewAllButtonExternal tooltipTitle={t("cip25.viewDocs")} to={CIP25_DOCS_URL} />
         </CIPLabel>
       }
@@ -147,15 +147,19 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
         {tokenMaps.map((token, index) => (
           <React.Fragment key={index}>
             {token.tokenName && (
-              <TokenLabel>
+              <TokenLabel data-testid="token-CIP25-name">
                 {t("glossary.Token")}: {token.tokenName}
               </TokenLabel>
             )}
-            <CIPModalSubtitle>{t("token.requiredProperties")}</CIPModalSubtitle>
+            <CIPModalSubtitle data-testid="token-CIP25-required-properties">
+              {t("token.requiredProperties")}
+            </CIPModalSubtitle>
             <Table isModal isFullTableHeight={true} data={token.requireProperties} columns={columns} />
             {token.optionalProperties.length > 0 && (
               <>
-                <CIPModalSubtitle>{t("token.optionalProperties")}</CIPModalSubtitle>
+                <CIPModalSubtitle data-testid="token-CIP25-optional-properties">
+                  {t("token.optionalProperties")}
+                </CIPModalSubtitle>
                 <Table
                   isModal
                   height="unset"
@@ -164,7 +168,7 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
                 />
               </>
             )}
-            <CIPModalSubtitle>{t("token.otherProperties")}</CIPModalSubtitle>
+            <CIPModalSubtitle data-testid="token-CIP25-other-properties">{t("token.otherProperties")}</CIPModalSubtitle>
             <OtherPropetiesContent>
               <OtherPropetiesDesc>{t("token.otherProperties.desc")}</OtherPropetiesDesc>
             </OtherPropetiesContent>
