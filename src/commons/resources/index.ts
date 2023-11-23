@@ -330,7 +330,6 @@ export { ReactComponent as BgGreen } from "./images/bg-green.svg";
 export { ReactComponent as PigSave } from "./images/pig-save.svg";
 export { ReactComponent as ButtonListIcon } from "./icons/Staking/buttonList.svg";
 export { ReactComponent as ButtonListIconDark } from "./icons/Staking/buttonListDark.svg";
-export { ReactComponent as InfoIcon } from "./icons/Staking/infoIcon.svg";
 export { ReactComponent as TranferIcon } from "./icons/Staking/tranfer.svg";
 export { ReactComponent as BackIcon } from "./icons/Staking/BackIcon.svg";
 export { ReactComponent as BackDarkIcon } from "./icons/back-dark-icon.svg";

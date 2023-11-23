@@ -2,7 +2,7 @@ import { Box, Typography, useTheme } from "@mui/material";
 import React from "react";
 import { IoIosArrowUp } from "react-icons/io";
 
-import { InfoIcon } from "src/commons/resources";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 
 import {
   ArrowIconContainer,
@@ -30,7 +30,7 @@ const ExplanDropdown: React.FC<ExplanDropdownProps> = ({ title, content, childre
       >
         <Box display={"flex"} alignItems={"center"} gap={1}>
           <UnderlineText>{title}</UnderlineText>
-          <InfoIcon />
+          <InfoSolidIcon />
         </Box>
       </StyledAccordionSummary>
       <StyledAccordionDetails>

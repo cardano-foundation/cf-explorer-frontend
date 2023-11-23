@@ -22,7 +22,8 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import { useList, useUpdateEffect } from "react-use";
 
 import useFetch from "src/commons/hooks/useFetch";
-import { DateRangeIcon, FilterIcon, InfoIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
+import { DateRangeIcon, FilterIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import { details, lists } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { PROTOCOL_TYPE } from "src/commons/utils/constants";
@@ -134,7 +135,7 @@ const ProtocolParameter: React.FC = () => {
                   })
                 }
               >
-                <InfoIcon style={{ cursor: "pointer" }} />
+                <InfoSolidIcon />
               </Box>
             )}
           </Box>
@@ -196,7 +197,7 @@ const ProtocolParameter: React.FC = () => {
                   })
                 }
               >
-                <InfoIcon style={{ cursor: "pointer" }} />
+                <InfoSolidIcon />
               </Box>
             )}
           </Box>
@@ -463,7 +464,7 @@ export const ProtocolParameterHistory = () => {
                   })
                 }
               >
-                <InfoIcon style={{ cursor: "pointer" }} />
+                <InfoSolidIcon />
               </Box>
             )}
           </Box>
@@ -550,7 +551,7 @@ export const ProtocolParameterHistory = () => {
                 </Box>
               }
             >
-              <InfoIcon style={{ cursor: "pointer" }} />
+              <InfoSolidIcon />
             </CustomTooltip>
           </Box>
         }

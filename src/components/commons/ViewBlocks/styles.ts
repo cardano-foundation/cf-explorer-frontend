@@ -38,12 +38,22 @@ export const CircleBox = styled(Box)<{ bgColor?: string }>`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: 0.3s ease-out;
+
+  &:hover {
+    background-color: ${(props) => props.bgColor ?? props.theme.palette.primary.dark};
+  }
 `;
 
 export const CircleBoxOutline = styled(CircleBox)`
   box-sizing: border-box;
   background-color: ${(props) =>
     props.theme.isDark ? props.theme.palette.secondary[100] : props.theme.palette.common.white};
+
+  &:hover {
+    background-color: ${(props) =>
+      props.theme.isDark ? props.theme.palette.secondary[100] : props.theme.palette.common.white};
+  }
 `;
 
 export const PolygonContainer = styled(Box)`
