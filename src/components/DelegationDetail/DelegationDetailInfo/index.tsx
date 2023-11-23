@@ -139,7 +139,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <HeaderTitle>
               <TruncateSubTitleContainer>
                 <DynamicEllipsisText
-                  value={poolId}
+                  value={data?.poolName || poolId}
                   sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 130px)" : "calc(100% - 50px)" }}
                   postfix={5}
                   isNoLimitPixel={true}
