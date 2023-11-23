@@ -34,6 +34,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const { isTablet } = useScreen();
 
   const isActiveMenu = (href: string, isSpecialPath?: boolean): boolean => {
+    if (href === "/" && pathname.includes("reset-password")) return true;
     if (href === pathname) return true;
     if (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1])) {
       if (isSpecialPath) return href === specialPath;
