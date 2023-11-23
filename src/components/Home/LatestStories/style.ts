@@ -1,7 +1,5 @@
-import { Box, styled } from "@mui/material";
+import { Box, styled, Card } from "@mui/material";
 import Slider from "react-slick";
-
-import { BoxRaised } from "../../commons/BoxRaised";
 
 export const LatestStoriesContainer = styled(Box)`
   text-align: center;
@@ -50,13 +48,16 @@ export const StyledSlider = styled(Slider)`
   }
 `;
 
-export const Item = styled(BoxRaised)`
+export const Item = styled(Card)`
   position: relative;
   height: 377px;
   text-align: left;
   cursor: pointer;
   overflow: hidden;
   padding: 20px 15px;
+  background: ${(props) => props.theme.palette.secondary[0]};
+  box-shadow: ${(props) => props.theme.shadow.card};
+  border-radius: 12px;
   box-sizing: border-box;
   &:hover {
     box-shadow: ${(props) => props.theme.shadow.cardHover};

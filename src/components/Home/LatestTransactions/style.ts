@@ -1,6 +1,5 @@
-import { Box, styled } from "@mui/material";
+import { Box, styled, Card } from "@mui/material";
 
-import { BoxRaised } from "src/components/commons/BoxRaised";
 import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 
 export const TransactionContainer = styled(Box)`
@@ -68,10 +67,13 @@ export const TimeDurationSm = styled("small")(({ theme }) => ({
   }
 }));
 
-export const Item = styled(BoxRaised)`
+export const Item = styled(Card)`
   display: block;
   position: relative;
   padding: 20px;
+  background: ${(props) => props.theme.palette.secondary[0]};
+  box-shadow: ${(props) => props.theme.shadow.card};
+  border-radius: 12px;
   margin-bottom: 20px;
   border-radius: 10px;
   font-family: var(--font-family-text);
