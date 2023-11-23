@@ -363,6 +363,8 @@ export const DetailLinkName = styled("h4")`
   margin: 0;
   font-size: var(--font-size-text-large);
   color: ${(props) => props.theme.palette.secondary.main};
+  display: flex;
+  align-items: center;
 `;
 export const DetailLinkRight = styled("span")`
   color: ${(props) => props.theme.palette.secondary.light};

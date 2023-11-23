@@ -25,6 +25,7 @@ import {
 import { details } from "src/commons/routers";
 import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 import ContractsList from "src/components/Contracts";
+import { CustomNumberBadge } from "src/components/commons/CustomNumberBadge";
 
 import Collaterals from "./Collaterals";
 import Delegations from "./Delegations";
@@ -39,7 +40,7 @@ import TransactionSignatories from "./TransactionSignatories";
 import UTXO from "./UTXOs";
 import Withdrawals from "./Withdrawals";
 import "./index.css";
-import { CustomAccordion, CustomBadge, TitleTab } from "./styles";
+import { CustomAccordion, TitleTab } from "./styles";
 
 interface TransactionMetadataProps {
   data: Transaction | null;
@@ -104,14 +105,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
       label: (
         <Box display={"flex"} alignItems={"center"}>
           {t("glossary.contracts")}
-          {data?.contracts?.length && data?.contracts?.length > 0 && (
-            <CustomBadge
-              bgColor={theme.isDark ? theme.palette.primary.main : ""}
-              color={theme.isDark ? theme.palette.secondary[100] : ""}
-            >
-              {data?.contracts?.length}
-            </CustomBadge>
-          )}
+          <CustomNumberBadge value={data?.contracts?.length} />
         </Box>
       ),
       children: <ContractsList data={data?.contracts} />
@@ -122,17 +116,14 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
       label: (
         <Box display={"flex"} alignItems={"center"}>
           {t("glossary.collateral")}
-          {data?.contracts?.length && data?.contracts?.length > 0 && (
-            <CustomBadge
-              bgColor={theme.isDark ? theme.palette.primary.main : ""}
-              color={theme.isDark ? theme.palette.secondary[100] : ""}
-            >
-              {data?.collaterals?.collateralInputResponses?.length ===
+          <CustomNumberBadge
+            value={
+              data?.collaterals?.collateralInputResponses?.length ===
               data?.collaterals?.collateralOutputResponses?.length
                 ? 1
-                : data?.collaterals?.collateralInputResponses?.length}
-            </CustomBadge>
-          )}
+                : data?.collaterals?.collateralInputResponses?.length
+            }
+          />
         </Box>
       ),
       children: <Collaterals data={data?.collaterals} />
@@ -140,19 +131,34 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
     {
       key: "notes",
       icon: NoteIcon,
-      label: `${t("tab.notes")}(${data?.notes?.length || 0})`,
+      label: (
+        <Box display={"flex"} alignItems={"center"}>
+          {t("tab.notes")}
+          <CustomNumberBadge value={data?.notes?.length} />
+        </Box>
+      ),
       children: ""
     },
     {
       key: "withdrawals",
       icon: WithdrawalIcon,
-      label: `${t("tab.withdrawal")}(${data?.withdrawals?.length || 0})`,
+      label: (
+        <Box display={"flex"} alignItems={"center"}>
+          {t("tab.withdrawal")}
+          <CustomNumberBadge value={data?.withdrawals?.length} />
+        </Box>
+      ),
       children: <Withdrawals data={data?.withdrawals} />
     },
     {
       key: "delegations",
       icon: TransactionDelegationIcon,
-      label: `${t("tab.delegations")}(${data?.delegations?.length || 0})`,
+      label: (
+        <Box display={"flex"} alignItems={"center"}>
+          {t("tab.delegations")}
+          <CustomNumberBadge value={data?.delegations?.length} />
+        </Box>
+      ),
       children: <Delegations data={data?.delegations} />
     },
     {
@@ -164,13 +170,23 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
     {
       key: "poolCertificates",
       icon: RewardsDistributionIcon,
-      label: `${t("tab.poolCertificates")} (${data?.poolCertificates?.length || 0})`,
+      label: (
+        <Box display={"flex"} alignItems={"center"}>
+          {t("tab.poolCertificates")}
+          <CustomNumberBadge value={data?.poolCertificates?.length} />
+        </Box>
+      ),
       children: <PoolCertificate data={data?.poolCertificates} />
     },
     {
       key: "stakeCertificates",
       icon: StakeCertificates,
-      label: `${t("tab.stakeCertificates")} (${data?.stakeCertificates?.length || 0})`,
+      label: (
+        <Box display={"flex"} alignItems={"center"}>
+          {t("tab.stakeCertificates")}
+          <CustomNumberBadge value={data?.stakeCertificates?.length} />
+        </Box>
+      ),
       children: <StakeCertificate data={data?.stakeCertificates} />
     },
     {
@@ -182,7 +198,12 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
     {
       key: "instantaneousRewards",
       icon: InstantaneousHistoryIcon,
-      label: `${t("glossary.instantaneousRewards")} (${data?.instantaneousRewards?.length || 0})`,
+      label: (
+        <Box display={"flex"} alignItems={"center"}>
+          {t("glossary.instantaneousRewards")}
+          <CustomNumberBadge value={data?.instantaneousRewards?.length} />
+        </Box>
+      ),
       children: <InstantaneousRewards data={data?.instantaneousRewards} />
     },
     {
