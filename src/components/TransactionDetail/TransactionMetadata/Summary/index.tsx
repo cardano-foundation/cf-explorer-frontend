@@ -175,7 +175,7 @@ const SummaryItems = ({
             <Icon
               src={
                 theme.isDark
-                  ? tokensSent.length === 0
+                  ? tokensReceived.length === 0
                     ? DisableArrowUpDarkIcon
                     : ArrowUpDarkIcon
                   : tokensReceived.length === 0
