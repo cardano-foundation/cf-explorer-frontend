@@ -1,4 +1,5 @@
 import { Box, FormGroup, useTheme } from "@mui/material";
+import { AxiosError } from "axios";
 import { ChangeEvent, MouseEvent, useEffect, useReducer, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { HiArrowLongLeft } from "react-icons/hi2";
@@ -7,6 +8,7 @@ import { useHistory } from "react-router-dom";
 
 import { EmailIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
+import { ACCOUNT_ERROR } from "src/commons/utils/constants";
 import { forgotPassword } from "src/commons/utils/userRequest";
 import CustomIcon from "src/components/commons/CustomIcon";
 
@@ -65,6 +67,7 @@ export default function ForgotPassword() {
   });
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [serverError, setServerError] = useState("");
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
 
   const updateHeight = () => {
@@ -102,6 +105,7 @@ export default function ForgotPassword() {
   };
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (error) setError(false);
+    if (serverError) setServerError("");
     setFormData({
       name: event.target.name,
       value: event.target.value.trim(),
@@ -141,8 +145,15 @@ export default function ForgotPassword() {
         });
       }
     } catch (error) {
-      setError(true);
+      const err = error as AxiosError;
       if (emailInputRef.current) emailInputRef.current.focus();
+      if (err.response?.status === 500) {
+        setServerError(t(ACCOUNT_ERROR.SERVER_UNKNOWN_ERROR));
+      } else {
+        setError(true);
+        setServerError("");
+      }
+      //todo: handle others errors
       setFormData({
         name: "email",
         value: formData.email.value,
@@ -192,11 +203,21 @@ export default function ForgotPassword() {
         <FormGroup>
           {!success ? (
             <WrapForm>
-              {error ? (
-                <Box pt={"24px"}>
-                  <AlertCustom severity="error">{t("validation.email.invalid")}.</AlertCustom>
+              {serverError ? (
+                <Box textAlign="left" pt={"24px"}>
+                  <AlertCustom variant={theme.isDark ? "filled" : "standard"} severity="error">
+                    {serverError}
+                  </AlertCustom>
                 </Box>
-              ) : null}
+              ) : (
+                error && (
+                  <Box textAlign="left" pt={"24px"}>
+                    <AlertCustom variant={theme.isDark ? "filled" : "standard"} severity="error">
+                      {t("validation.email.invalid")}
+                    </AlertCustom>
+                  </Box>
+                )
+              )}
               <BackButton onClick={() => handleRedirect()}>
                 <HiArrowLongLeft fontSize="16px" color={theme.palette.secondary.light} />
                 <BackText>{t("common.back")}</BackText>
