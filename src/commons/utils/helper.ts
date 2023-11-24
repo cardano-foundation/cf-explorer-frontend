@@ -332,3 +332,8 @@ export const getIntervalAnalyticChart = (rangeTime: OPTIONS_CHART_ANALYTICS): Ax
       return "preserveEnd";
   }
 };
+
+export const isAssetId = (text: string) => {
+  const assetIdLength = 44;
+  return text.startsWith("asset") && text.length === assetIdLength;
+};
