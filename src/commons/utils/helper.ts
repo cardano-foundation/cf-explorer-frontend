@@ -335,6 +335,5 @@ export const getIntervalAnalyticChart = (rangeTime: OPTIONS_CHART_ANALYTICS): Ax
 
 export const isAssetId = (text: string) => {
   const assetIdLength = 44;
-  if (text.startsWith("asset") && text.length === assetIdLength) return true;
-  return false;
+  return text.startsWith("asset") && text.length === assetIdLength;
 };
