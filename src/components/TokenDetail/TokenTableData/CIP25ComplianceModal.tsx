@@ -159,6 +159,7 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
                 <Table
                   isModal
                   height="unset"
+                  isFullTableHeight={true}
                   data={mixedoptionalProperties(token.optionalProperties)}
                   columns={columns}
                 />
