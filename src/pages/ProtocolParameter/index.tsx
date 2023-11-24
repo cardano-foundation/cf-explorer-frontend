@@ -556,7 +556,9 @@ export const ProtocolParameterHistory = () => {
                 </Box>
               }
             >
-              <InfoSolidIcon />
+              <Box>
+                <InfoSolidIcon />
+              </Box>
             </CustomTooltip>
           </Box>
         }
