@@ -8,6 +8,7 @@ import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { EmptyRecord } from "src/components/commons/Table";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import { details } from "src/commons/routers";
 
 import { StyledSubNameTab, StyledLink } from "./styles";
@@ -23,23 +24,24 @@ const TabAssociated = ({ setVersion }: { setVersion: (v: string) => void }) => {
     }
   }, [data?.scriptType]);
 
+  const renderData = () => {
+    if (loading) {
+      return <Box component={CommonSkeleton} variant="rectangular" width={"100%"} height={"80px"} borderRadius={2} />;
+    }
+    if (get(data, "associatedAddresses", []).length > 0) {
+      return data?.associatedAddresses.map((address: string) => (
+        <StyledLink to={address.startsWith("stake") ? details.stake(address) : details.address(address)} key={address}>
+          <DynamicEllipsisText value={address} />
+        </StyledLink>
+      ));
+    }
+    return <EmptyRecord />;
+  };
+
   return (
     <Box>
       <StyledSubNameTab data-testid="sc.subNameTab">{t("AssociatedAddresses")}:</StyledSubNameTab>
-      <Box maxHeight={380} overflow="auto">
-        {loading || get(data, "associatedAddresses", []).length > 0 ? (
-          data?.associatedAddresses.map((address: string) => (
-            <StyledLink
-              to={address.startsWith("stake") ? details.stake(address) : details.address(address)}
-              key={address}
-            >
-              <DynamicEllipsisText value={address} />
-            </StyledLink>
-          ))
-        ) : (
-          <EmptyRecord />
-        )}
-      </Box>
+      <Box>{renderData()}</Box>
     </Box>
   );
 };
