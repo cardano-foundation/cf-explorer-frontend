@@ -6,7 +6,7 @@ import CustomModal from "src/components/commons/CustomModal";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { details } from "src/commons/routers";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
+import { InfoIcon } from "src/components/commons/DetailHeader/styles";
 
 import { ExternalLink, ModalContent, TitleReference, UTXOReference, ValueReference } from "./styles";
 import ExplanDropdown from "../common/ExplanDropdown";
@@ -63,11 +63,15 @@ const Item = ({ data, showTooltip }: { data: ReferenceInput; showTooltip: boolea
           <TitleReference>UTXO:</TitleReference>
           {showTooltip ? (
             <Box component={CustomTooltip} title={t("contract.referenceInput.canOnlyBeUsedByThisContract")}>
-              <InfoSolidIcon />
+              <Box typeof="span">
+                <InfoIcon />
+              </Box>
             </Box>
           ) : (
             <Box component={CustomTooltip} title={t("contract.referenceInput.canBeUsedByAllContract")}>
-              <InfoSolidIcon />
+              <Box typeof="span">
+                <InfoIcon />
+              </Box>
             </Box>
           )}
         </Box>

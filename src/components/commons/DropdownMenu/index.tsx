@@ -59,13 +59,13 @@ const TextMenu = styled(Typography)`
 
 const StyledButtonMenu = styled(Button)`
   height: 51px;
-  background-color: ${({ theme }) => theme.palette.primary[100]};
-  border: ${({ theme }) =>
-    `2px solid ${theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary[600]}`};
+  background-color: ${({ theme }) => (theme.isDark ? "transparent" : theme.palette.primary[100])};
+  border: ${({ theme }) => `2px solid ${theme.palette.primary[200]}`};
   border-radius: 8px;
   &:hover {
     background-color: inherit;
     opacity: 0.8;
+    border-color: ${({ theme }) => theme.palette.secondary[600]};
   }
   ${({ theme }) => theme.breakpoints.down("sm")} {
     width: 100% !important;
@@ -125,7 +125,7 @@ export default function DropdownMenu(props: IDropdownMenuProps) {
         }
       >
         <Box display={"flex"} gap={1} justifyContent={"center"} alignItems={"center"}>
-          <BrowserIcon />
+          <BrowserIcon fill={theme.palette.secondary.light} />
           <TextMenu>{title}</TextMenu>
         </Box>
       </StyledButtonMenu>

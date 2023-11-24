@@ -891,5 +891,5 @@
   "common.passed": "Passed",
   "common.needsReview": "Needs Review",
   "protocol.trxModalSubTitle": "Confirmed by transactions",
-  "cip25.viewDocs": "View cip25 documenent"
+  "cip25.viewDocs": "View CIP 25 document"
 }

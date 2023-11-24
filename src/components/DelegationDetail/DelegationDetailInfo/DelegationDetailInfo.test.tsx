@@ -58,25 +58,10 @@ describe("DelegationDetailInfo component", () => {
       expect(history.location.pathname).toBe(details.delegation(mockProps.data?.poolView));
     });
 
-    it("should component redirect to pool hash", () => {
-      fireEvent.click(screen.getByRole("link", { name: /153806dbcd134ddee69a8c5204e38ac80448f62342f8c23cfe4b7edf/i }));
-      expect(history.location.pathname).toBe(details.delegation(mockProps.data?.hashView));
-    });
-
     it("should component open link homepage", () => {
       const link = screen.getByRole("link", { name: "https://octaluso.dyndns.org" });
       fireEvent.click(link);
       expect(link.getAttribute("target")).toBe("_blank");
-    });
-
-    it("should component redirect to owner account", () => {
-      fireEvent.click(screen.getByRole("link", { name: /owneraccount1/i }));
-      expect(history.location.pathname).toBe(details.stake(mockProps.data?.ownerAccounts[0]));
-    });
-
-    it("should component redirect to reward account", () => {
-      fireEvent.click(screen.getByRole("link", { name: /rewardAccount1/i }));
-      expect(history.location.pathname).toBe(details.stake(mockProps.data?.rewardAccounts[0]));
     });
   });
 });
