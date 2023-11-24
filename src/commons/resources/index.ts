@@ -129,6 +129,10 @@ import CopyOutlineIcon, { ReactComponent as CopyOutlineIconComponent } from "./i
 import ArrowDownIcon from "./icons/arrow-down-red.svg";
 import ArrowDownDarkIcon from "./icons/arrow-down-red-dark.svg";
 import PolicyDark from "./icons/policy-dark.svg";
+import DisableArrowUpLightIcon from "./icons/disable-arrow-up-light.svg";
+import DisableArrowDownLightIcon from "./icons/disable-arrow-down-light.svg";
+import DisableArrowUpDarkIcon from "./icons/disable-arrow-up-dark.svg";
+import DisableArrowDownDarkIcon from "./icons/disable-arrow-down-dark.svg";
 
 export {
   LogoFullIcon,
@@ -242,6 +246,10 @@ export {
   DelegatingIcon,
   LogoDarkmodeFullIcon,
   LogoDarkmodeShortIcon,
+  DisableArrowUpDarkIcon,
+  DisableArrowDownDarkIcon,
+  DisableArrowUpLightIcon,
+  DisableArrowDownLightIcon,
   // React component
   ExchangeIcon,
   PolygonDarkIcon,
