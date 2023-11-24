@@ -34,6 +34,7 @@ export type TableHeaderProps<T extends ColumnType> = Pick<
 
 export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & {
   row: T;
+  screen?: string;
   dataLength?: number;
   index: number;
   onClickRow?: (e: React.MouseEvent, record: T) => void;
@@ -52,6 +53,7 @@ export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & 
 export interface TableProps<T extends ColumnType = any> {
   columns: Column<T>[];
   data?: T[];
+  screen?: string;
   className?: string;
   emptyClassName?: string;
   style?: React.CSSProperties;

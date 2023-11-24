@@ -69,6 +69,7 @@ const TabSmartContracts = () => {
       <Table
         {...fetchData}
         columns={columns}
+        screen="smartContracts"
         total={{ count: fetchData.total, title: t("common.totalTxs") }}
         rowKey="scriptHash"
         height={400}
