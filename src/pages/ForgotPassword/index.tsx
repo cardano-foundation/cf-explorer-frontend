@@ -205,12 +205,16 @@ export default function ForgotPassword() {
             <WrapForm>
               {serverError ? (
                 <Box textAlign="left" pt={"24px"}>
-                  <AlertCustom severity="error">{serverError}</AlertCustom>
+                  <AlertCustom variant={theme.isDark ? "filled" : "standard"} severity="error">
+                    {serverError}
+                  </AlertCustom>
                 </Box>
               ) : (
                 error && (
                   <Box textAlign="left" pt={"24px"}>
-                    <AlertCustom severity="error">{t("validation.email.invalid")}</AlertCustom>
+                    <AlertCustom variant={theme.isDark ? "filled" : "standard"} severity="error">
+                      {t("validation.email.invalid")}
+                    </AlertCustom>
                   </Box>
                 )
               )}
