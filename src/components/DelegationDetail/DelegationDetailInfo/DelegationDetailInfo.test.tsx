@@ -39,29 +39,34 @@ describe("DelegationDetailInfo component", () => {
   it("should component render", () => {
     render(<DelegationDetailInfo {...mockProps} />);
     expect(screen.getByRole("heading", { name: /sample pool/i })).toBeInTheDocument();
+    expect(screen.getByText(/reward account/i)).toBeInTheDocument();
+    expect(screen.getByText(/owner account/i)).toBeInTheDocument();
+    expect(screen.getByText(/owner account/i)).toBeInTheDocument();
+    expect(screen.getByText(/owner account/i)).toBeInTheDocument();
+    expect(screen.getByText(/saturation/i)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /please sign in to save your bookmark/i })).toBeInTheDocument();
     expect(screen.getByText("ACTIVE")).toBeInTheDocument();
     expect(screen.getByText("pool1abc")).toBeInTheDocument();
   });
+});
 
-  describe("should commponent redirect to detail page", () => {
-    const history = createBrowserHistory();
-    beforeEach(() => {
-      render(
-        <Router history={history}>
-          <DelegationDetailInfo {...mockProps} />
-        </Router>
-      );
-    });
-    it("should component redirect to pool id", () => {
-      fireEvent.click(screen.getByRole("link", { name: /pool1abc/i }));
-      expect(history.location.pathname).toBe(details.delegation(mockProps.data?.poolView));
-    });
+describe("should commponent redirect to detail page", () => {
+  const history = createBrowserHistory();
+  beforeEach(() => {
+    render(
+      <Router history={history}>
+        <DelegationDetailInfo {...mockProps} />
+      </Router>
+    );
+  });
+  it("should component redirect to pool id", () => {
+    fireEvent.click(screen.getByRole("link", { name: /pool1abc/i }));
+    expect(history.location.pathname).toBe(details.delegation(mockProps.data?.poolView));
+  });
 
-    it("should component open link homepage", () => {
-      const link = screen.getByRole("link", { name: "https://octaluso.dyndns.org" });
-      fireEvent.click(link);
-      expect(link.getAttribute("target")).toBe("_blank");
-    });
+  it("should component open link homepage", () => {
+    const link = screen.getByRole("link", { name: "https://octaluso.dyndns.org" });
+    fireEvent.click(link);
+    expect(link.getAttribute("target")).toBe("_blank");
   });
 });

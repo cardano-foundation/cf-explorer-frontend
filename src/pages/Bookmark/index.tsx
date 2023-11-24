@@ -111,9 +111,9 @@ const Bookmark = () => {
     if (data) {
       if (data.length >= 10) return 650;
       if (data.length >= 6) return data.length * 68;
-      return 0;
+      return "unset";
     } else {
-      return 0;
+      return "unset";
     }
   }, [JSON.stringify(data)]);
   const colDynamic: Record<string, Column<Bookmark>> = {

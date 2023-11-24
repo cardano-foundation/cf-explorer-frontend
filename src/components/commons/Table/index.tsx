@@ -158,6 +158,7 @@ const TableHeader = <T extends ColumnType>({
 const TableRow = <T extends ColumnType>({
   row,
   columns,
+  screen,
   index,
   onClickRow,
   showTabView,
@@ -171,6 +172,7 @@ const TableRow = <T extends ColumnType>({
 }: TableRowProps<T>) => {
   const colRef = useRef(null);
   const theme = useTheme();
+  const { isMobile } = useScreen();
   return (
     <TRow onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row))} {...selectedProps}>
       {selectable && (
@@ -179,6 +181,8 @@ const TableRow = <T extends ColumnType>({
         </TCol>
       )}
       {columns.map((column, idx) => {
+        const isFirstColumn = idx === 0;
+        const isNativeScriptsOrSmartContracts = screen === "nativeScripts" || screen === "smartContracts";
         return (
           <TCol
             ismodal={+(isModal || 0)}
@@ -189,7 +193,10 @@ const TableRow = <T extends ColumnType>({
             maxWidth={column.maxWidth}
             hiddenBorder={column.isHiddenBorder && dataLength === index + 1}
             selected={+selected}
-            style={column.fixed ? { position: "sticky", left: column.leftFixed ? column.leftFixed : "-8px" } : {}}
+            style={{
+              ...(column.fixed ? { position: "sticky", left: column.leftFixed ? column.leftFixed : "-8px" } : {}),
+              ...(isFirstColumn && isNativeScriptsOrSmartContracts && !isMobile ? { width: "50%" } : {})
+            }}
           >
             {column.render ? column.render(row, index) : row[column.key]}
           </TCol>
@@ -217,6 +224,7 @@ const TableRow = <T extends ColumnType>({
 const TableBody = <T extends ColumnType>({
   data,
   columns,
+  screen,
   rowKey,
   onClickRow,
   showTabView,
@@ -251,6 +259,7 @@ const TableBody = <T extends ColumnType>({
           row={row}
           key={index}
           columns={columns}
+          screen={screen}
           index={index}
           dataLength={data.length}
           onClickRow={onClickRow}
@@ -378,6 +387,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
 const Table: React.FC<TableProps> = ({
   columns,
   data,
+  screen,
   total,
   pagination,
   className,
@@ -482,6 +492,7 @@ const Table: React.FC<TableProps> = ({
           />
           <TableBody
             columns={columns}
+            screen={screen}
             data={data}
             onClickRow={onClickRow}
             showTabView={showTabView}

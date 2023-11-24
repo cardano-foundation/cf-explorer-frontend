@@ -142,6 +142,10 @@ import PoolSizeDarkIcon from "./images/PoolSizeDark.png";
 import PoolSizeLightIcon from "./images/PoolSizeLight.png";
 import DelegatingToDarkIcon from "./images/DelegatingToDark.png";
 import RewardsWithdrawDarkIcon from "./images/RewardsWithdrawDark.png";
+import DisableArrowUpLightIcon from "./icons/disable-arrow-up-light.svg";
+import DisableArrowDownLightIcon from "./icons/disable-arrow-down-light.svg";
+import DisableArrowUpDarkIcon from "./icons/disable-arrow-up-dark.svg";
+import DisableArrowDownDarkIcon from "./icons/disable-arrow-down-dark.svg";
 
 export {
   LogoFullIcon,
@@ -256,6 +260,10 @@ export {
   DelegatingIcon,
   LogoDarkmodeFullIcon,
   LogoDarkmodeShortIcon,
+  DisableArrowUpDarkIcon,
+  DisableArrowDownDarkIcon,
+  DisableArrowUpLightIcon,
+  DisableArrowDownLightIcon,
   // React component
   ExchangeIcon,
   PolygonDarkIcon,
