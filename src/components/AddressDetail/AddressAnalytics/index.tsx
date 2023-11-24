@@ -209,7 +209,7 @@ const AddressAnalytics: React.FC = () => {
                     interval={getIntervalAnalyticChart(rangeTime)}
                   >
                     <Label
-                      value={rangeTime === "ONE_DAY" ? "(UTC)" : "As of 00:00 UTC"}
+                      value={rangeTime === "ONE_DAY" ? "(UTC)" : "(As of 00:00 UTC)"}
                       offset={-12}
                       position="insideBottom"
                     />
