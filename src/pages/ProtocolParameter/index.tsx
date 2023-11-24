@@ -555,7 +555,9 @@ export const ProtocolParameterHistory = () => {
                 </Box>
               }
             >
-              <InfoIcon style={{ cursor: "pointer" }} />
+              <Box display={"inline-block"}>
+                <InfoIcon style={{ cursor: "pointer" }} />
+              </Box>
             </CustomTooltip>
           </Box>
         }

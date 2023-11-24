@@ -63,11 +63,15 @@ const Item = ({ data, showTooltip }: { data: ReferenceInput; showTooltip: boolea
           <TitleReference>UTXO:</TitleReference>
           {showTooltip ? (
             <Box component={CustomTooltip} title={t("contract.referenceInput.canOnlyBeUsedByThisContract")}>
-              <InfoIcon />
+              <Box typeof="span">
+                <InfoIcon />
+              </Box>
             </Box>
           ) : (
             <Box component={CustomTooltip} title={t("contract.referenceInput.canBeUsedByAllContract")}>
-              <InfoIcon />
+              <Box typeof="span">
+                <InfoIcon />
+              </Box>
             </Box>
           )}
         </Box>
