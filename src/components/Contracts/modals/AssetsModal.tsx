@@ -74,12 +74,12 @@ const AssetsModal: React.FC<AssetsModalProps> = ({ open = false, onClose, data, 
             >
               <StyledListItemText color={theme.palette.primary.main}>
                 <StyledLink to={details.token(item.link)}>
-                  {!item.showTooltip ? (
-                    item.title
-                  ) : (
+                  {item.showTooltip ? (
                     <CustomTooltip title={item.title}>
                       <Typography display="inline-block">{getShortHash(item.title)}</Typography>
                     </CustomTooltip>
+                  ) : (
+                    item.title
                   )}
                 </StyledLink>
               </StyledListItemText>

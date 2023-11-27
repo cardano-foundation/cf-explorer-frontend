@@ -265,6 +265,8 @@ export {
   LogoDarkmodeShortIcon,
   DisableArrowUpDarkIcon,
   DisableArrowDownDarkIcon,
+  DisableArrowUpLightIcon,
+  DisableArrowDownLightIcon,
   DeregistrationDarkIcon,
   DeregistrationLightIcon,
   RegistrationDarkIcon,
@@ -335,9 +337,7 @@ export {
   PoolUpdateHistory,
   PoolResgistrationHistoryDark,
   PoolDeresgistrationHistoryDark,
-  PoolUpdateHistoryDark,
-  DisableArrowUpLightIcon,
-  DisableArrowDownLightIcon
+  PoolUpdateHistoryDark
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";

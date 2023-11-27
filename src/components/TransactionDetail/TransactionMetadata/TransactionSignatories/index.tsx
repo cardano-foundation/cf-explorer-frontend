@@ -3,8 +3,8 @@ import { Box } from "@mui/material";
 import { t } from "i18next";
 
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import { Column } from "src/components/commons/Table";
 import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
+import { Column } from "src/components/commons/Table";
 
 import { TableProtocol, Wrapper, WrapperRowContent, WrapperSignerPublicKey } from "./styles";
 

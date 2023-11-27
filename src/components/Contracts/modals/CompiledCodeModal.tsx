@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 

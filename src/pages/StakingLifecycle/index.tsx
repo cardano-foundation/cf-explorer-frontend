@@ -42,7 +42,7 @@ const StakingLifecycle: React.FC = () => {
   const history = useHistory();
   const { userData } = useSelector(({ user }: RootState) => user);
   const [{ page, size }, setPagi] = useState<{ page: number; size: number; sort?: string }>(DEFAULT_PAGINING);
-  const [params, setParams] = useState<FilterParams>({});
+  const [params, setParams] = useState<FilterParams | null>({});
   const { tab } = useParams<{ tab?: LifecycleReportType }>();
 
   const validTab: LifecycleReportType = tab || "stake-key-reports";
@@ -50,7 +50,7 @@ const StakingLifecycle: React.FC = () => {
     page,
     size,
     ...params,
-    reportName: params.search
+    reportName: params?.search
   };
 
   useEffect(() => {

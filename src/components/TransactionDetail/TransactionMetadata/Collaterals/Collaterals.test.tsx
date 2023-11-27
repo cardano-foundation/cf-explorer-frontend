@@ -1,7 +1,7 @@
 import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
-import { fireEvent, render, screen, within } from "src/test-utils";
+import { fireEvent, render, screen } from "src/test-utils";
 import { details } from "src/commons/routers";
 
 import Collaterals from ".";
@@ -69,9 +69,9 @@ describe("Collaterals component", () => {
   const { collateralInputResponses } = mockCollaterals;
   it("should component render", () => {
     render(<Collaterals data={mockCollaterals} />);
-    const link = screen.getByRole("link", { name: /input-1/i });
-    const address = within(link).getByTestId("ellipsis-text");
-    expect(address).toBeInTheDocument();
+    screen.logTestingPlaygroundURL();
+    const link = screen.getByText(/-input-1/i);
+    expect(link).toBeInTheDocument();
   });
 
   it("should user goto detail page", () => {
@@ -81,9 +81,8 @@ describe("Collaterals component", () => {
         <Collaterals data={mockCollaterals} />
       </Router>
     );
-    const link = screen.getByRole("link", { name: /input-1/i });
-    const address = within(link).getByTestId("ellipsis-text");
-    fireEvent.click(address);
+    const link = screen.getByText(/-input-1/i);
+    fireEvent.click(link);
     expect(history.location.pathname).toBe(details.address(collateralInputResponses[0].address));
   });
 });
