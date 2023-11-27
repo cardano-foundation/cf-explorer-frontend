@@ -48,11 +48,13 @@ export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & 
   toggleSelection?: (row: T) => void;
   isSelected?: (item: T) => boolean;
   isModal?: boolean;
+  onCallBackHeight?: (height: number) => void;
 };
 
 export interface TableProps<T extends ColumnType = any> {
   isFullTableHeight?: boolean;
   columns: Column<T>[];
+  screen?: string;
   data?: T[];
   screen?: string;
   className?: string;
@@ -107,6 +109,7 @@ export interface TableProps<T extends ColumnType = any> {
   height?: number | string;
   tableWrapperProps?: BoxProps;
   isModal?: boolean;
+  onCallBackHeight?: (height: number) => void;
 }
 
 export interface FooterTableProps {

@@ -25,8 +25,8 @@ import {
 import { details } from "src/commons/routers";
 import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 import ContractsList from "src/components/Contracts";
-import { CustomNumberBadge } from "src/components/commons/CustomNumberBadge";
 import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
+import { CustomNumberBadge } from "src/components/commons/CustomNumberBadge";
 
 import Collaterals from "./Collaterals";
 import Delegations from "./Delegations";
@@ -63,7 +63,16 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
   const tabRef = useRef<HTMLDivElement>(null);
 
   const handleChangeTab = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-    tabRef?.current?.scrollIntoView();
+    const handleTransitionEnd = () => {
+      if (newExpanded) {
+        setTimeout(() => {
+          tabRef?.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }, 0);
+        tabRef?.current?.removeEventListener("transitionend", handleTransitionEnd);
+      }
+    };
+    tabRef?.current?.addEventListener("transitionend", handleTransitionEnd);
+
     history.replace(details.transaction(data?.tx?.hash, newExpanded ? panel : ""));
   };
 
@@ -241,7 +250,6 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
           customBorderRadius={needBorderRadius(key)}
           isDisplayBorderTop={tabActive !== key && key !== items[0].key && index !== indexExpand + 1}
           onChange={handleChangeTab(key)}
-          TransitionProps={{ unmountOnExit: true }}
         >
           <AccordionSummary
             expandIcon={

@@ -1,7 +1,14 @@
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "@mui/material";
 
+import {
+  DeregistrationDarkIcon,
+  DeregistrationLightIcon,
+  RegistrationDarkIcon,
+  RegistrationLightIcon
+} from "src/commons/resources";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import Table, { Column } from "src/components/commons/Table";
@@ -9,7 +16,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 
-import { LabelStatus, StyledLink } from "../styles";
+import { StyledLink } from "../styles";
 
 const StakeHistoryTab = ({ isMobile = false }) => {
   const { t } = useTranslation();
@@ -17,6 +24,7 @@ const StakeHistoryTab = ({ isMobile = false }) => {
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
+  const theme = useTheme();
 
   const fetchData = useFetchList<StakeHistory>(`${API.STAKE.DETAIL}/${stakeId}/stake-history`, pageInfo);
 
@@ -66,20 +74,13 @@ const StakeHistoryTab = ({ isMobile = false }) => {
       render: (r) => {
         const label = r.action ? r.action.split(" ").join("") : "";
         return (
-          <LabelStatus
-            color={(theme) =>
-              r.action === "Registered"
-                ? theme.isDark
-                  ? theme.palette.error[800]
-                  : theme.palette.error[700]
-                : theme.palette.secondary.light
-            }
-            sx={{
-              background: (theme) => (r.action === "Registered" ? theme.palette.error[100] : theme.palette.primary[200])
-            }}
-          >
-            {label === "Registered" ? t("glossary.registered") : t("glossary.deregistered")}
-          </LabelStatus>
+          <CustomTooltip title={label === "Registered" ? t("tab.Registration") : t("tab.Deregistration")}>
+            {label === "Registered" ? (
+              <img src={theme.isDark ? RegistrationDarkIcon : RegistrationLightIcon} alt="registered" />
+            ) : (
+              <img src={theme.isDark ? DeregistrationDarkIcon : DeregistrationLightIcon} alt="deregistered" />
+            )}
+          </CustomTooltip>
         );
       }
     }
