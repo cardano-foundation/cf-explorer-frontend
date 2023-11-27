@@ -1,6 +1,5 @@
-import { Box, styled } from "@mui/material";
+import { Box, styled, Card, alpha } from "@mui/material";
 
-import { BoxRaised } from "src/components/commons/BoxRaised";
 import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 
 export const TransactionContainer = styled(Box)`
@@ -68,17 +67,20 @@ export const TimeDurationSm = styled("small")(({ theme }) => ({
   }
 }));
 
-export const Item = styled(BoxRaised)`
+export const Item = styled(Card)`
   display: block;
   position: relative;
   padding: 20px;
+  background: ${(props) => props.theme.palette.secondary[0]};
+  box-shadow: ${(props) => props.theme.shadow.card};
+  border-radius: 12px;
   margin-bottom: 20px;
   border-radius: 10px;
   font-family: var(--font-family-text);
   cursor: pointer;
   height: calc(100% - 56px);
   &:hover {
-    box-shadow: ${(props) => props.theme.shadow.cardHover};
+    box-shadow: ${({ theme }) => "1px 2px 15px 0px " + alpha(theme.palette.secondary.light, 0.25)};
   }
   ${({ theme }) => theme.breakpoints.down("md")} {
     padding: 20px 15px;

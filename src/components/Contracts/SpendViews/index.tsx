@@ -96,21 +96,19 @@ const Spendviews: React.FC<SpendViewProps> = ({ data, isMobile }) => {
       <SpendBlueBox ref={leftBoxRef}>
         <UTXO hash={data?.utxoHash} index={data?.utxoIndex} detail={details.transaction} />
         <SpendRounded>
-          <LongButton>
+          <LongButton onClick={() => setOpenRedeemer(!openRedeemer)}>
             {t("contract.redeemer")}
             <CustomIcon
               style={{ cursor: "pointer" }}
-              onClick={() => setOpenRedeemer(!openRedeemer)}
               icon={OutlineEye}
               width={22}
               fill={theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white}
             />
           </LongButton>
-          <LongButton>
-            Datum
+          <LongButton onClick={() => setOpenDatum(!openDatum)}>
+            {t("contract.datum")}
             <CustomIcon
               style={{ cursor: "pointer" }}
-              onClick={() => setOpenDatum(!openDatum)}
               icon={OutlineEye}
               width={22}
               fill={theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white}

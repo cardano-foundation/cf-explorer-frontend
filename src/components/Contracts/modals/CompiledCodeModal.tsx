@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -6,7 +6,7 @@ import CustomModal from "src/components/commons/CustomModal";
 
 import ExplanDropdown from "../common/ExplanDropdown";
 import DataCard from "../common/DataCard";
-import { ModalContent, SlotContainer } from "./styles";
+import { ModalContent } from "./styles";
 
 type Data = { title: string; value?: string };
 export interface CompiledCodeModalProps {
@@ -28,7 +28,7 @@ const CompiledCodeModal: React.FC<CompiledCodeModalProps> = ({ open = false, onC
     >
       <ModalContent>
         <ExplanDropdown title={t("explain.compiledCode")}>{t("explain.compiledCode.desc")}</ExplanDropdown>
-        <SlotContainer>
+        <Box flex={1}>
           <Grid container spacing={2}>
             {data &&
               data.length > 0 &&
@@ -38,7 +38,7 @@ const CompiledCodeModal: React.FC<CompiledCodeModalProps> = ({ open = false, onC
                 </Grid>
               ))}
           </Grid>
-        </SlotContainer>
+        </Box>
       </ModalContent>
     </CustomModal>
   );

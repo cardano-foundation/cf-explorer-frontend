@@ -78,6 +78,11 @@ export const TruncateSubTitleContainer = styled(Box)(({ theme }) => ({
     maxWidth: "40vw"
   },
   [theme.breakpoints.up("lg")]: {
-    minWidth: "50vw"
+    "@media (min-width: 1200px) and (max-width: 2400px)": {
+      minWidth: "50vw"
+    },
+    "@media (max-width: 1200px)": {
+      minWidth: "initial"
+    }
   }
 }));

@@ -5,8 +5,8 @@ import { t } from "i18next";
 import CustomModal from "src/components/commons/CustomModal";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { details } from "src/commons/routers";
-import { InfoIcon } from "src/commons/resources";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import { InfoIcon } from "src/components/commons/DetailHeader/styles";
 
 import { ExternalLink, ModalContent, TitleReference, UTXOReference, ValueReference } from "./styles";
 import ExplanDropdown from "../common/ExplanDropdown";
@@ -63,11 +63,15 @@ const Item = ({ data, showTooltip }: { data: ReferenceInput; showTooltip: boolea
           <TitleReference>UTXO:</TitleReference>
           {showTooltip ? (
             <Box component={CustomTooltip} title={t("contract.referenceInput.canOnlyBeUsedByThisContract")}>
-              <InfoIcon />
+              <Box typeof="span">
+                <InfoIcon />
+              </Box>
             </Box>
           ) : (
             <Box component={CustomTooltip} title={t("contract.referenceInput.canBeUsedByAllContract")}>
-              <InfoIcon />
+              <Box typeof="span">
+                <InfoIcon />
+              </Box>
             </Box>
           )}
         </Box>

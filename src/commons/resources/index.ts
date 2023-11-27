@@ -117,7 +117,7 @@ import GiftIcon from "./images/gift-icon.png";
 import DelegatingIcon from "./icons/delegating-icon.svg";
 import sunIcon from "./icons/sun.svg";
 import moonIcon from "./icons/moon.svg";
-import WhiteSearchIcon from "./icons/white-search-icon.svg";
+import WhiteSearchIcon, { ReactComponent as WhiteSearchIconComponent } from "./icons/white-search-icon.svg";
 import WalletRoundedIcon from "./icons/wallet-rounded.svg";
 import SummaryWalletDark from "./icons/summaryWalletDark.svg";
 import UpGreenDarkmode from "./icons/upGreenDark.svg";
@@ -136,6 +136,16 @@ import { ReactComponent as PoolUpdateHistoryDark } from "./icons/poolUpdateHisto
 import ArrowDownIcon from "./icons/arrow-down-red.svg";
 import ArrowDownDarkIcon from "./icons/arrow-down-red-dark.svg";
 import PolicyDark from "./icons/policy-dark.svg";
+import StatusDarkIcon from "./images/StatusDark.png";
+import StatusLightIcon from "./images/StatusLight.png";
+import PoolSizeDarkIcon from "./images/PoolSizeDark.png";
+import PoolSizeLightIcon from "./images/PoolSizeLight.png";
+import DelegatingToDarkIcon from "./images/DelegatingToDark.png";
+import RewardsWithdrawDarkIcon from "./images/RewardsWithdrawDark.png";
+import DisableArrowUpLightIcon from "./icons/disable-arrow-up-light.svg";
+import DisableArrowDownLightIcon from "./icons/disable-arrow-down-light.svg";
+import DisableArrowUpDarkIcon from "./icons/disable-arrow-up-dark.svg";
+import DisableArrowDownDarkIcon from "./icons/disable-arrow-down-dark.svg";
 
 export {
   LogoFullIcon,
@@ -250,6 +260,10 @@ export {
   DelegatingIcon,
   LogoDarkmodeFullIcon,
   LogoDarkmodeShortIcon,
+  DisableArrowUpDarkIcon,
+  DisableArrowDownDarkIcon,
+  DisableArrowUpLightIcon,
+  DisableArrowDownLightIcon,
   // React component
   ExchangeIcon,
   PolygonDarkIcon,
@@ -281,6 +295,7 @@ export {
   MenuIconComponent,
   EmptyDarkIcon,
   WhiteSearchIcon,
+  WhiteSearchIconComponent,
   WalletRoundedIcon,
   ArrowUpIcon,
   ArrowUpDarkIcon,
@@ -304,6 +319,12 @@ export {
   ProtocolUpdateComponent,
   InstantaneousHistoryComponent,
   PolicyDark,
+  StatusDarkIcon,
+  StatusLightIcon,
+  PoolSizeDarkIcon,
+  PoolSizeLightIcon,
+  DelegatingToDarkIcon,
+  RewardsWithdrawDarkIcon,
   PoolResgistrationHistory,
   PoolDeresgistrationHistory,
   PoolUpdateHistory,
@@ -345,7 +366,6 @@ export { ReactComponent as BgGreen } from "./images/bg-green.svg";
 export { ReactComponent as PigSave } from "./images/pig-save.svg";
 export { ReactComponent as ButtonListIcon } from "./icons/Staking/buttonList.svg";
 export { ReactComponent as ButtonListIconDark } from "./icons/Staking/buttonListDark.svg";
-export { ReactComponent as InfoIcon } from "./icons/Staking/infoIcon.svg";
 export { ReactComponent as TranferIcon } from "./icons/Staking/tranfer.svg";
 export { ReactComponent as BackIcon } from "./icons/Staking/BackIcon.svg";
 export { ReactComponent as BackDarkIcon } from "./icons/back-dark-icon.svg";

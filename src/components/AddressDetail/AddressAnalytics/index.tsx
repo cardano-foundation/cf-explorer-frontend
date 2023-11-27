@@ -208,7 +208,11 @@ const AddressAnalytics: React.FC = () => {
                     dx={-15}
                     interval={getIntervalAnalyticChart(rangeTime)}
                   >
-                    <Label value="(UTC)" offset={-12} position="insideBottom" />
+                    <Label
+                      value={rangeTime === "ONE_DAY" ? "(UTC)" : "(As of 00:00 UTC)"}
+                      offset={-12}
+                      position="insideBottom"
+                    />
                   </XAxis>
                   <YAxis
                     tickFormatter={formatPriceValue}
