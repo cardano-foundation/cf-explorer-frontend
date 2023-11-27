@@ -32,6 +32,7 @@ export const WrapContent = styled(Box)`
   gap: 5px;
   align-items: center;
   justify-content: center;
+  padding: 30px 0;
 `;
 
 export const WrapTitle = styled(Box)`
