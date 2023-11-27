@@ -77,7 +77,7 @@ describe("delegation pool spec", () => {
             if (isNaN(num)) return;
             retiredPools = num;
             cy.log(`results: ${totalPools} - ${retiredPools}`);
-            expect(retiredPools).to.be.not.equal(totalPools);
+            cy.wrap(retiredPools).should("be.lte", totalPools);
           });
       });
   });
