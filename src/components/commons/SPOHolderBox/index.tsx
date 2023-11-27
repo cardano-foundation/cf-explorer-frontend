@@ -133,8 +133,6 @@ const Container = styled(Box)`
   border-radius: 12px;
   gap: 12px;
   align-items: center;
-  cursor: default;
-  cursor: pointer;
 `;
 
 const Title = styled(Typography)`
