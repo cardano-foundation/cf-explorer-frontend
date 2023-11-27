@@ -65,7 +65,7 @@ const Card = ({
   const totalADA =
     items &&
     items.reduce((prv, item) => {
-      return prv + item.value;
+      return prv + +item.value;
     }, 0);
 
   const { isMobile } = useScreen();
