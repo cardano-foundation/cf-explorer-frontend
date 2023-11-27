@@ -367,6 +367,8 @@
   "common.lowestReward": "Lowest Reward",
   "tab.DelegationHistory": "Delegation History",
   "tab.stakeAddressHistory": "Stake Address History",
+  "tab.Registration": "Registration",
+  "tab.Deregistration": "Deregistration",
   "tab.withdrawalHistory": "Withdrawal History",
   "tab.instantaneousRewards": "Instantaneous Rewards",
   "tab.transactions": "Transactions",

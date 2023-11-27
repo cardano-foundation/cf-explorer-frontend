@@ -146,7 +146,10 @@ import DisableArrowUpLightIcon from "./icons/disable-arrow-up-light.svg";
 import DisableArrowDownLightIcon from "./icons/disable-arrow-down-light.svg";
 import DisableArrowUpDarkIcon from "./icons/disable-arrow-up-dark.svg";
 import DisableArrowDownDarkIcon from "./icons/disable-arrow-down-dark.svg";
-
+import DeregistrationDarkIcon from "./icons/deregistration-icon-dark.svg";
+import DeregistrationLightIcon from "./icons/deregistration-icon-light.svg";
+import RegistrationDarkIcon from "./icons/registration-icon-dark.svg";
+import RegistrationLightIcon from "./icons/registration-icon-light.svg";
 export {
   LogoFullIcon,
   LogoIcon,
@@ -264,6 +267,10 @@ export {
   DisableArrowDownDarkIcon,
   DisableArrowUpLightIcon,
   DisableArrowDownLightIcon,
+  DeregistrationDarkIcon,
+  DeregistrationLightIcon,
+  RegistrationDarkIcon,
+  RegistrationLightIcon,
   // React component
   ExchangeIcon,
   PolygonDarkIcon,
