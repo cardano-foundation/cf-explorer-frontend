@@ -55,6 +55,12 @@ const ReferenceInputModal: React.FC<ReferenceInputModal> = ({ data, ...props }) 
 
 export default ReferenceInputModal;
 
+const DatumData = ({ data }: { data: string }) => {
+  if (!data) return <ValueReference>{t("common.notAvailable")}</ValueReference>;
+
+  return <ValueReference>{data.length > 20 ? <DynamicEllipsisText value={data} isTooltip /> : data}</ValueReference>;
+};
+
 const Item = ({ data, showTooltip }: { data: ReferenceInput; showTooltip: boolean }) => {
   return (
     <DataCardBox my={1}>
@@ -81,19 +87,11 @@ const Item = ({ data, showTooltip }: { data: ReferenceInput; showTooltip: boolea
       </Box>
       <Box>
         <TitleReference>Datum Hash:</TitleReference>
-        {data.datumHash && (
-          <ValueReference>
-            {data.datumHash.length > 20 ? <DynamicEllipsisText value={data.datumHash} isTooltip /> : data.datumHash}
-          </ValueReference>
-        )}
+        <DatumData data={data.datumHash} />
       </Box>
       <Box>
         <TitleReference>Datum:</TitleReference>
-        {data.datum && (
-          <ValueReference>
-            {data.datum.length > 20 ? <DynamicEllipsisText value={data.datum} isTooltip /> : data.datum}
-          </ValueReference>
-        )}
+        <DatumData data={data.datum} />
       </Box>
     </DataCardBox>
   );
