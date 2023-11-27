@@ -33,20 +33,20 @@ describe("token spec", () => {
     cy.get(".css-d1xa0j > .MuiBox-root").contains(tokenName);
     cy.get(".css-1kxgysv").contains(tokenId);
     cy.get(".css-1s8g7c7 > span").contains(tokenName);
-    cy.get(":nth-child(2) > .css-13ne0mf > .MuiBox-root").contains("Total Supply", { matchCase: false });
-    cy.get(":nth-child(3) > .css-13ne0mf > .MuiBox-root").contains("Script Hash", { matchCase: false });
-    cy.get(":nth-child(4) > .css-13ne0mf > .MuiBox-root").contains("Total Transactions", { matchCase: false });
-    cy.get(":nth-child(5) > .css-13ne0mf > .MuiBox-root").contains("Token Type", { matchCase: false });
-    cy.get(":nth-child(6) > .css-13ne0mf > .MuiBox-root").contains("Number of Holders", { matchCase: false });
-    cy.get(":nth-child(7) > .css-13ne0mf > .MuiBox-root").contains("Total Volume", { matchCase: false });
-    cy.get(":nth-child(8) > .css-13ne0mf > .MuiBox-root").contains("Volume 24H", { matchCase: false });
-    cy.get(":nth-child(9) > .css-13ne0mf > .MuiBox-root").contains("Created At", { matchCase: false });
-    cy.get(":nth-child(10) > .css-13ne0mf > .MuiBox-root").contains("Token Last Activity", { matchCase: false });
-    cy.get(".css-12euw8y").contains("Analytics");
-    cy.get(".css-tedkql").contains("Transactions");
-    cy.get("button[id*='topHolders'] div div").last().contains("Top Holders", { matchCase: false });
-    cy.get("button[id*='tokenMint'] div div").last().contains("Minting");
-    cy.get("button[id*='metadata'] div div").last().contains("Metadata");
+    cy.get("div").contains("Total Supply", { matchCase: false });
+    cy.get("div").contains("Script Hash", { matchCase: false });
+    cy.get("div").contains("Total Transactions", { matchCase: false });
+    cy.get("div").contains("Token Type", { matchCase: false });
+    cy.get("div").contains("Number of Holders", { matchCase: false });
+    cy.get("div").contains("Total Volume", { matchCase: false });
+    cy.get("div").contains("Volume 24H", { matchCase: false });
+    cy.get("div").contains("Created At", { matchCase: false });
+    cy.get("div").contains("Token Last Activity", { matchCase: false });
+    cy.get("div").contains("Analytics");
+    cy.get("div").contains("Transactions");
+    cy.get(".MuiAccordionSummary-content").contains("Top Holders", { matchCase: false });
+    cy.get(".MuiAccordionSummary-content").contains("Minting");
+    cy.get(".MuiAccordionSummary-content").contains("Metadata");
   });
 
   it("check metadata tab - CIP 25", () => {
