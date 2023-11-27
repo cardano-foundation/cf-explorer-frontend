@@ -30,8 +30,14 @@ const SPOHolderBox: React.FC<ISPOProps> = React.forwardRef(({ data, ...props }, 
 
   const theme = useTheme();
   const rewardAccounts = isArray(stakeKeys) ? stakeKeys : [stakeKeys];
+
+  const onViewPoolDetail = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    history.push(details.delegation(poolView));
+  };
+
   return (
-    <Container {...props} ref={boxRef} onClick={(e) => e.stopPropagation()}>
+    <Container {...props} ref={boxRef}>
       <Image src={SPOHolderIconUrl} alt="SPO image" />
       <Content>
         <Title>{t("common.spo")}</Title>
@@ -67,13 +73,7 @@ const SPOHolderBox: React.FC<ISPOProps> = React.forwardRef(({ data, ...props }, 
               </Box>
             }
           >
-            <ButtonSPO
-              ref={SPOInfoRef}
-              component={IconButton}
-              onClick={() => {
-                SPOInfoRef?.current && history.push(details.delegation(poolView));
-              }}
-            >
+            <ButtonSPO ref={SPOInfoRef} component={IconButton} onClick={onViewPoolDetail}>
               <SPOInfo fill={theme.palette.primary.main} />
             </ButtonSPO>
           </CustomTooltip>
@@ -103,7 +103,13 @@ const SPOHolderBox: React.FC<ISPOProps> = React.forwardRef(({ data, ...props }, 
               )
             }
           >
-            <ButtonSPO ref={SPOKeyRef} component={IconButton}>
+            <ButtonSPO
+              ref={SPOKeyRef}
+              component={IconButton}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
               <SPOKey fill={theme.palette.primary.main} />
             </ButtonSPO>
           </CustomTooltip>
@@ -127,7 +133,6 @@ const Container = styled(Box)`
   border-radius: 12px;
   gap: 12px;
   align-items: center;
-  cursor: default;
 `;
 
 const Title = styled(Typography)`
@@ -166,7 +171,8 @@ const IconGroup = styled(Box)`
 `;
 
 export const ButtonSPO = styled(Box)(() => ({
-  padding: 0
+  padding: 0,
+  background: "transparent"
 }));
 
 export const StakeKeyItem = styled(Box)(() => ({

@@ -6,6 +6,7 @@ export const SquareBox = styled(Box)`
   width: 100%;
   max-width: 138px;
   aspect-ratio: 1/1;
+  cursor: pointer;
 
   display: flex;
   align-items: center;
@@ -13,6 +14,11 @@ export const SquareBox = styled(Box)`
   flex-direction: column;
   border-radius: 8px;
   gap: 12px;
+  transition: 0.3s ease-out;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.primary.dark};
+  }
 `;
 
 export const PrimaryText = styled(Typography)`
@@ -32,17 +38,28 @@ export const CircleBox = styled(Box)<{ bgColor?: string }>`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: 0.3s ease-out;
+
+  &:hover {
+    background-color: ${(props) => props.bgColor ?? props.theme.palette.primary.dark};
+  }
 `;
 
 export const CircleBoxOutline = styled(CircleBox)`
   box-sizing: border-box;
   background-color: ${(props) =>
     props.theme.isDark ? props.theme.palette.secondary[100] : props.theme.palette.common.white};
+
+  &:hover {
+    background-color: ${(props) =>
+      props.theme.isDark ? props.theme.palette.secondary[100] : props.theme.palette.common.white};
+  }
 `;
 
 export const PolygonContainer = styled(Box)`
   box-sizing: border-box;
   position: relative;
+  cursor: pointer;
 `;
 
 export const PolygonContent = styled(Box)`
@@ -69,6 +86,11 @@ export const CompiledCodeButton = styled(Box)`
   width: 100%;
   max-width: 170px;
   white-space: nowrap;
+  transition: 0.3s ease-out;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.primary.dark};
+  }
 `;
 
 export const CustomBadge = styled("span")<{ bgColor?: string; color?: string }>`
@@ -210,6 +232,12 @@ export const LongButton = styled("button")`
   gap: 12px;
   width: 100%;
   box-sizing: border-box;
+  cursor: pointer;
+  transition: 0.3s ease-out;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.primary.dark};
+  }
 `;
 
 export const SpendRounded = styled(Rrounded)`

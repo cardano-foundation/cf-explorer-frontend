@@ -96,6 +96,18 @@ export enum STAKE_KEY_STATUS {
   DEACTIVATED = "DEACTIVATED"
 }
 
+export enum POOL_STATUS {
+  ACTIVE = "ACTIVE",
+  RETIRED = "RETIRED",
+  RETIRING = "RETIRING"
+}
+
+export enum POOL_ACTION_TYPE {
+  POOL_REGISTRATION = "POOL_REGISTRATION",
+  POOL_UPDATE = "POOL_UPDATE",
+  POOL_DE_REGISTRATION = "POOL_DEREGISTRATION"
+}
+
 export enum RECEIVED_REWARDS {
   LEADER = "LEADER",
   MEMBER = "MEMBER",
@@ -247,3 +259,5 @@ export const ScriptTypeLabel = {
   [SCRIPT_TYPE.PLUTUSV1]: "Plutus v1",
   [SCRIPT_TYPE.PLUTUSV2]: "Plutus v2"
 };
+
+export const CIP25_DOCS_URL = "https://cips.cardano.org/cips/cip25";

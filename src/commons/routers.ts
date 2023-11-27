@@ -43,8 +43,8 @@ export const routers = {
   STAKING_LIFECYCLE: "/staking-lifecycle/:tab?",
   DELEGATOR_LIFECYCLE: "/staking-lifecycle/delegator/:stakeId/:mode?/:tab?/:txHash?",
   SPO_LIFECYCLE: "/staking-lifecycle/spo/:poolId/:mode?/:tab?/:txHash?",
-  REPORT_GENERATED_STAKING_DETAIL: "/staking-lifecycle/staking-report-generated/:reportId",
-  REPORT_GENERATED_POOL_DETAIL: "/staking-lifecycle/pool-report-generated/:reportId",
+  REPORT_GENERATED_STAKING_DETAIL: "/staking-lifecycle/staking-report-generated/:reportId/:tabActive?",
+  REPORT_GENERATED_POOL_DETAIL: "/staking-lifecycle/pool-report-generated/:reportId/:tabActive?",
   POLICY: "/privacy-policy",
   FAQ: "/faq",
   TERMS_OF_SERVICE: "/terms-of-service",
@@ -88,9 +88,10 @@ export const details = {
       .replace(":mode?", mode)
       .replace(":tab?", tab)
       .replace(":txHash?", txHash ?? ""),
-  generated_staking_detail: (reportId: string) =>
-    routers.REPORT_GENERATED_STAKING_DETAIL.replace(":reportId", reportId),
-  generated_pool_detail: (reportId: string) => routers.REPORT_GENERATED_POOL_DETAIL.replace(":reportId", reportId),
+  generated_staking_detail: (reportId: string, tabActive = "registration") =>
+    routers.REPORT_GENERATED_STAKING_DETAIL.replace(":reportId", reportId).replace(":tabActive", tabActive),
+  generated_pool_detail: (reportId: string, tabActive = "registration") =>
+    routers.REPORT_GENERATED_POOL_DETAIL.replace(":reportId", reportId).replace(":tabActive", tabActive),
   smartcontractDetail: (id: string) => routers.SMARTCONTRACT_DETAIL.replace(":id", id),
   nativeScript: (address?: string, tab = "transaction") =>
     routers.NATIVE_SCRIPTS_AND_SC.replace(":address", address ?? "").replace(":tabActive?", tab)

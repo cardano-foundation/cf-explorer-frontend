@@ -17,7 +17,7 @@ const Assets: React.FC<AssetsProps> = forwardRef(({ onClick, total, isBurned }, 
   const { t } = useTranslation();
   const theme = useTheme();
   return (
-    <PolygonContainer ref={ref}>
+    <PolygonContainer ref={ref} onClick={() => onClick?.()}>
       {theme.isDark ? <PolygonDarkIcon /> : <Polygon />}
       <PolygonContent>
         <Typography display="flex" alignItems="center" gap={"4px"} fontWeight={500} color={theme.palette.primary.main}>
@@ -29,7 +29,7 @@ const Assets: React.FC<AssetsProps> = forwardRef(({ onClick, total, isBurned }, 
             {total}
           </CustomBadge>
         </Typography>
-        <CircleBox onClick={() => onClick?.()}>
+        <CircleBox>
           <CustomIcon icon={OutlineEye} width={21} fill={theme.palette.secondary[100]} />
         </CircleBox>
       </PolygonContent>

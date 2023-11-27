@@ -1,29 +1,33 @@
-import { Box, Container, Tab, useTheme } from "@mui/material";
+import { Box, Container, useTheme } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import QueryString, { parse, stringify } from "qs";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import { IoIosArrowDown } from "react-icons/io";
 
 import useFetch from "src/commons/hooks/useFetch";
 import DelegationDetailInfo from "src/components/DelegationDetail/DelegationDetailInfo";
 import DelegationDetailOverview from "src/components/DelegationDetail/DelegationDetailOverview";
 import DelegationDetailChart from "src/components/DelegationDetail/DelegationDetailChart";
 import {
+  DelegationCertificatesHistory,
   DelegationEpochList,
   DelegationStakingDelegatorsList
 } from "src/components/DelegationDetail/DelegationDetailList";
 import useFetchList from "src/commons/hooks/useFetchList";
 import NoRecord from "src/components/commons/NoRecord";
 import { API } from "src/commons/utils/api";
-import { StakingDelegators, StakeKeyHistoryIcon } from "src/commons/resources";
+import { StakingDelegators, StakeKeyHistoryIcon, TimelineIconComponent } from "src/commons/resources";
 import { setSpecialPath } from "src/stores/system";
 import { routers } from "src/commons/routers";
 import { getPageInfo } from "src/commons/utils/helper";
 import FormNowMessage from "src/components/commons/FormNowMessage";
+import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 
-import { TabsContainer, TimeDuration, TitleTab } from "./styles";
+import { TimeDuration, TitleTab } from "./styles";
 
 interface Query {
   tab: string | string[] | QueryString.ParsedQs | QueryString.ParsedQs[] | undefined;
@@ -31,7 +35,7 @@ interface Query {
   size: number;
 }
 
-const TABS: TabPoolDetail[] = ["epochs", "delegators"];
+const TABS: TabPoolDetail[] = ["epochs", "delegators", "certificatesHistory"];
 
 const DelegationDetail: React.FC = () => {
   const { t } = useTranslation();
@@ -39,11 +43,17 @@ const DelegationDetail: React.FC = () => {
   const { search, state } = useLocation<{ fromPath?: SpecialPath }>();
   const history = useHistory();
   const query = parse(search.split("?")[1]);
-  const tab: TabPoolDetail = TABS.includes(query.tab as TabPoolDetail) ? (query.tab as TabPoolDetail) : "epochs";
+  const tab: TabPoolDetail = TABS.includes(query.tab as TabPoolDetail) ? (query.tab as TabPoolDetail) : "";
   const pageInfo = getPageInfo(search);
   const tableRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
+
+  useEffect(() => {
+    if (Object.keys(query).length === 0) {
+      setQuery({ tab: "epochs", page: 1, size: 50 });
+    }
+  }, [Object.keys(query).length]);
 
   const scrollEffect = () => {
     tableRef !== null &&
@@ -81,6 +91,13 @@ const DelegationDetail: React.FC = () => {
     tab === "delegators" ? blockKey : undefined
   );
 
+  const fetchDataCertificatesHistory = useFetchList<CertificateHistory>(
+    `${API.POOL_CERTIFICATES_HISTORY}/${poolId}`,
+    { ...pageInfo },
+    false,
+    tab === "certificatesHistory" ? blockKey : undefined
+  );
+
   useEffect(() => {
     document.title = `Delegation Pool ${poolId} | Cardano Blockchain Explorer`;
     window.scrollTo(0, 0);
@@ -105,11 +122,7 @@ const DelegationDetail: React.FC = () => {
       icon: StakeKeyHistoryIcon,
       label: t("epoch"),
       key: "epochs",
-      component: (
-        <div ref={tableRef}>
-          <DelegationEpochList {...fetchDataEpochs} scrollEffect={scrollEffect} />
-        </div>
-      )
+      component: <DelegationEpochList {...fetchDataEpochs} scrollEffect={scrollEffect} />
     },
     {
       icon: StakingDelegators,
@@ -120,50 +133,86 @@ const DelegationDetail: React.FC = () => {
           <DelegationStakingDelegatorsList {...fetchDataDelegators} scrollEffect={scrollEffect} />
         </div>
       )
+    },
+    {
+      icon: TimelineIconComponent,
+      label: t("certificatesHistory"),
+      key: "certificatesHistory",
+      component: (
+        <div ref={tableRef}>
+          <DelegationCertificatesHistory {...fetchDataCertificatesHistory} scrollEffect={scrollEffect} />
+        </div>
+      )
     }
   ];
+
+  const indexExpand = tabs.findIndex((item) => item.key === tab);
+
+  const needBorderRadius = (currentKey: string) => {
+    if (!tab) return "0";
+    const indexCurrent = tabs.findIndex((item) => item.key === currentKey);
+    if (indexExpand - 1 >= 0 && indexExpand - 1 === indexCurrent) return "0 0 12px 12px";
+    if (indexExpand + 1 < tabs.length && indexExpand + 1 === indexCurrent) return "12px 12px 0 0";
+    return "0";
+  };
+
+  const handleChangeTab = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+    tableRef?.current?.scrollIntoView();
+    setQuery({ tab: newExpanded ? panel : "", page: 1, size: 50 });
+  };
 
   return (
     <Container>
       <DelegationDetailInfo data={data} loading={loading} poolId={poolId} lastUpdated={lastUpdated} />
       <DelegationDetailOverview data={data} loading={loading} />
       <DelegationDetailChart poolId={poolId} />
-      <Box sx={{ mt: 4, [theme.breakpoints.down("sm")]: { my: 2 } }}>
-        <TabContext value={tab}>
-          <TabsContainer>
-            <TabList
-              onChange={(e, value: TabPoolDetail) => {
-                setQuery({ tab: value, page: 1, size: 50 });
-                scrollEffect();
+      <Box ref={tableRef} mt={"30px"}>
+        {tabs.map(({ key, icon: Icon, label, component }, index) => (
+          <StyledAccordion
+            key={key}
+            expanded={tab === key}
+            customBorderRadius={needBorderRadius(key)}
+            isDisplayBorderTop={tab !== key && key !== tabs[0].key && index !== indexExpand + 1}
+            onChange={handleChangeTab(key)}
+            TransitionProps={{ unmountOnExit: true }}
+          >
+            <AccordionSummary
+              expandIcon={
+                <IoIosArrowDown
+                  style={{
+                    width: "21px",
+                    height: "21px"
+                  }}
+                  color={key === tab ? theme.palette.primary.main : theme.palette.secondary.light}
+                />
+              }
+              sx={{
+                paddingX: theme.spacing(3),
+                paddingY: theme.spacing(1)
               }}
-              TabIndicatorProps={{ style: { background: theme.palette.primary.main } }}
             >
-              {tabs.map(({ icon: Icon, key, label }) => (
-                <Tab
-                  key={key}
-                  value={key}
-                  style={{ padding: "12px 0px", marginRight: 40 }}
-                  label={
-                    <Box display={"flex"} alignItems="center">
-                      <Icon fill={key === tab ? theme.palette.primary.main : theme.palette.secondary.light} />
-                      <TitleTab pl={1} active={+(key === tab)}>
-                        {label}
-                      </TitleTab>
-                    </Box>
+              <Icon fill={key === tab ? theme.palette.primary.main : theme.palette.secondary.light} />
+              <TitleTab pl={1} active={+(key === tab)}>
+                {label}
+              </TitleTab>
+            </AccordionSummary>
+            <AccordionDetails>
+              <TimeDuration>
+                <FormNowMessage
+                  time={
+                    (tab === "epochs"
+                      ? fetchDataEpochs
+                      : tab === "delegators"
+                      ? fetchDataDelegators
+                      : fetchDataCertificatesHistory
+                    ).lastUpdated
                   }
                 />
-              ))}
-            </TabList>
-          </TabsContainer>
-          {tabs.map((item) => (
-            <TabPanel key={item.key} value={item.key} style={{ padding: 0 }}>
-              <TimeDuration>
-                <FormNowMessage time={(tab === "epochs" ? fetchDataEpochs : fetchDataDelegators).lastUpdated} />
               </TimeDuration>
-              {item.component}
-            </TabPanel>
-          ))}
-        </TabContext>
+              {component}
+            </AccordionDetails>
+          </StyledAccordion>
+        ))}
       </Box>
     </Container>
   );

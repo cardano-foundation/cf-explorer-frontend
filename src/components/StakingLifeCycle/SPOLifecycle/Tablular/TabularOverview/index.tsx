@@ -4,16 +4,15 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
+import CustomIcon from "src/components/commons/CustomIcon";
 import {
-  BgBlue,
-  BgCardWhite,
-  BgGreen,
-  BgPink,
   OwnerAccountIcon,
-  PoolSizeIcon,
   RewardsAvailableIcon,
-  StatusIcon,
-  WalletGreenIcon
+  WalletGreenIcon,
+  StatusDarkIcon,
+  StatusLightIcon,
+  PoolSizeDarkIcon,
+  PoolSizeLightIcon
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { formatADAFull } from "src/commons/utils/helper";
@@ -21,6 +20,7 @@ import ViewMoreAddressModal from "src/components/ViewMoreAddressModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import PoolDetailContext from "../../PoolDetailContext";
 import {
@@ -33,7 +33,8 @@ import {
   ViewMoreButton,
   WrapIcon,
   WrapStatus,
-  WrapWalletIcon
+  WrapWalletIcon,
+  WrapIconToStyle
 } from "./styles";
 
 export const GreenWalletIcon = (props: BoxProps) => {
@@ -56,21 +57,14 @@ type TGridItem = {
   mainIcon: React.ReactNode;
 };
 
-const GridItem = ({ title, action, value, bgType, mainIcon }: TGridItem) => {
-  const bg = {
-    blue: BgBlue,
-    green: BgGreen,
-    red: BgPink,
-    white: BgCardWhite
-  }[bgType];
+const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   return (
     <Grid item sm={sidebar ? 12 : 6} md={6} lg={6} width={"100%"}>
       <CardOverview>
-        <Icon component={bg} />
         <StyledBox hasAction={!!action} sidebar={!!sidebar} flexGrow={1}>
           <WrapIcon>{mainIcon}</WrapIcon>
-          <Box textAlign="start" width={"100%"} flexGrow={action ? 1 : ""}>
+          <Box textAlign="start" width={"calc(100% - 100px)"} flexGrow={action ? 1 : ""}>
             <CardTitle>{title}</CardTitle>
             {value}
           </Box>
@@ -89,6 +83,7 @@ const TabularOverview: React.FC = () => {
   const [open, setOpen] = useState(false);
   const history = useHistory();
   const theme = useTheme();
+  const { isMobile } = useScreen();
 
   const onOwnerItemClick = (key: string) => {
     return history.push(details.stake(key));
@@ -106,19 +101,30 @@ const TabularOverview: React.FC = () => {
         <GridItem
           title={t("glossary.poolSize")}
           bgType="white"
-          mainIcon={<PoolSizeIcon />}
+          mainIcon={
+            theme.isDark ? (
+              <img src={PoolSizeDarkIcon} alt="pool size icon" height={80} width={80} />
+            ) : (
+              <img src={PoolSizeLightIcon} alt="pool size icon" height={80} width={80} />
+            )
+          }
           value={
             <Box display="flex" alignItems="center">
-              <CardValue>
-                {formatADAFull(poolSize)} <ADAicon />
-              </CardValue>
+              <CardValue>{formatADAFull(poolSize)} </CardValue>
+              <ADAicon width={isMobile ? 10 : 15} height={isMobile ? 11 : 20} style={{ overflow: "inherit" }} />
             </Box>
           }
         />
         <GridItem
           title={t("common.status")}
           bgType="white"
-          mainIcon={<StatusIcon />}
+          mainIcon={
+            theme.isDark ? (
+              <img src={StatusDarkIcon} alt="status icon" height={80} width={80} />
+            ) : (
+              <img src={StatusLightIcon} alt="status icon" height={80} width={80} />
+            )
+          }
           value={
             <WrapStatus>
               <CardValue
@@ -138,25 +144,37 @@ const TabularOverview: React.FC = () => {
         <GridItem
           title={t("glossary.rewardsAvailable")}
           bgType="white"
-          mainIcon={<RewardsAvailableIcon />}
+          mainIcon={
+            <WrapIconToStyle>
+              <CustomIcon icon={RewardsAvailableIcon} height={80} width={80} />
+            </WrapIconToStyle>
+          }
           value={
             <Box display="flex" alignItems="center">
-              <CardValue>
-                {formatADAFull(rewardAvailable)} <ADAicon />
-              </CardValue>
+              <CardValue>{formatADAFull(rewardAvailable)} </CardValue>
+              <ADAicon width={isMobile ? 10 : 15} height={isMobile ? 11 : 20} style={{ overflow: "inherit" }} />
             </Box>
           }
         />
         <GridItem
           title={t("common.ownerAccount")}
           bgType="white"
-          mainIcon={<OwnerAccountIcon />}
+          mainIcon={
+            <WrapIconToStyle>
+              <CustomIcon icon={OwnerAccountIcon} height={80} width={80} />
+            </WrapIconToStyle>
+          }
           value={
             <Box display="flex" alignItems="center">
               <CardValue width={"100%"}>
                 <CustomTooltip title={stakeKeys?.[0]}>
                   <ClickAbleLink to={details.stake(stakeKeys?.[0] || "#")} sx={{ textWrap: "wrap" }}>
-                    <DynamicEllipsisText value={ownerAccountValue} />
+                    <DynamicEllipsisText
+                      value={ownerAccountValue}
+                      postfix={5}
+                      isNoLimitPixel={true}
+                      sxFirstPart={{ maxWidth: isMobile ? "calc(100% - 50px)" : "calc(100% - 75px)" }}
+                    />
                   </ClickAbleLink>
                 </CustomTooltip>
               </CardValue>

@@ -4,7 +4,7 @@ import { Box, useTheme } from "@mui/material";
 import { useKey } from "react-use";
 import { useTranslation } from "react-i18next";
 
-import { HeaderSearchIconComponent, WhiteSearchIcon } from "src/commons/resources";
+import { HeaderSearchIconComponent, WhiteSearchIconComponent } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import InfoGraphicModal from "src/components/InfoGraphicModal";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -22,7 +22,6 @@ import {
   SearchContainer,
   StyledInput,
   SubmitButton,
-  Image,
   SearchButton,
   TextOR,
   ExampleBox,
@@ -192,7 +191,13 @@ const StakingLifeCycleSearch = () => {
       <InfoGraphicModal open={openInfoModal} onClose={() => setOpenInfoModal(false)} />
       <ExampleBox bgcolor={"blue"}>
         <SearchButton onClick={hanldeSearch}>
-          <Image src={WhiteSearchIcon} alt="Search button" /> {t("common.search")}
+          <CustomIcon
+            icon={WhiteSearchIconComponent}
+            fill={theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0]}
+            height={20}
+            width={20}
+          />
+          {t("common.search")}
         </SearchButton>
         <TextOR>{t("common.or")}</TextOR>
         <DropdownMenu options={BROWSER_OPTIONS} title="Browse" handleSelect={handleSelect} />

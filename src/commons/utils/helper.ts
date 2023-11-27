@@ -5,8 +5,8 @@ import moment, { DurationInputArg1, DurationInputArg2 } from "moment";
 import { parse } from "qs";
 import { AxisInterval } from "recharts/types/util/types";
 
-import breakpoints from "src/themes/breakpoints";
 import { setUserData } from "src/stores/user";
+import breakpoints from "src/themes/breakpoints";
 
 import { APP_LANGUAGES, MAX_SLOT_EPOCH, NETWORK, NETWORKS, NETWORK_TYPES, OPTIONS_CHART_ANALYTICS } from "./constants";
 import { getInfo, signIn } from "./userRequest";
@@ -119,11 +119,13 @@ export const isExternalLink = (href?: string) => {
 
 export const formatPercent = (percent?: number) => `${Math.round((percent || 0) * 100 * 100) / 100}%`;
 
-export const getPageInfo = (search: string): { page: number; size: number } => {
+export const getPageInfo = (search: string): { page: number; size: number; sort: string; retired: string } => {
   const query = parse(search.split("?")[1]);
   const page = Number(query.page) > 0 ? Number(query.page) - 1 : 0;
   const size = Number(query.size) > 0 ? Number(query.size) : 50;
-  return { page, size };
+  const sort = (query.sort || "") as string;
+  const retired = query.retired as string;
+  return { ...query, retired, page, size, sort };
 };
 
 export const removeAuthInfo = () => {
@@ -334,6 +336,10 @@ export const getIntervalAnalyticChart = (rangeTime: OPTIONS_CHART_ANALYTICS): Ax
 };
 
 export const isAssetId = (text: string) => {
-  const assetIdLength = 44;
-  return text.startsWith("asset") && text.length === assetIdLength;
+  if (text.startsWith("asset") && text.length === 44) return true;
+  return false;
+};
+
+export const removeDuplicate = <T>(arr: T[]) => {
+  return arr.filter((c, index) => arr.indexOf(c) === index);
 };

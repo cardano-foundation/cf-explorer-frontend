@@ -29,11 +29,6 @@ jobs:
         with:
           fetch-tags: true
 
-      - name: 🫡 Setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16
-
       - name: Set extra environment and metadata
         id: metadata
         run: |
