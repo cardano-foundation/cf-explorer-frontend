@@ -12,6 +12,7 @@ import {
 import { useTranslation } from "react-i18next";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
+import breakpoints from "src/themes/breakpoints";
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DownIcon,
@@ -62,6 +63,8 @@ import {
   Wrapper
 } from "./styles";
 import { Lowercase } from "../CustomText/styles";
+
+const SPACING_TOP_TABLE = 300;
 
 type TEmptyRecord = {
   className?: string;
@@ -432,6 +435,19 @@ const Table: React.FC<TableProps> = ({
   const wrapperRef = useRef<HTMLElement>(null);
   const data = currentData;
 
+  const { width } = useScreen();
+
+  let heightTable = Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight * 0.5);
+
+  if (width >= breakpoints.values.sm && (data || []).length >= 9) {
+    const footerHeight = document.getElementById("footer")?.offsetHeight || SPACING_TOP_TABLE;
+    const spaceTop =
+      Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight) - (footerHeight + SPACING_TOP_TABLE) < 200
+        ? 0
+        : SPACING_TOP_TABLE;
+    heightTable = window.innerHeight - (footerHeight + spaceTop);
+  }
+
   const onCallBackHeight = (rowHeight: number) => {
     if (!maxHeightTable) setMaxHeightTable(rowHeight > 70 ? rowHeight * 5 : rowHeight * 9);
   };
@@ -471,7 +487,7 @@ const Table: React.FC<TableProps> = ({
         ref={wrapperRef}
         maxHeight={maxHeight || maxHeightTable}
         minHeight={minHeight ? minHeight : (!data || data.length === 0) && !loading ? 360 : loading ? 400 : 15}
-        height={height}
+        height={height || heightTable}
         ismodal={+!!isModal}
         className={data && data.length !== 0 ? "table-wrapper" : "hide-scroll"}
         loading={loading ? 1 : 0}
