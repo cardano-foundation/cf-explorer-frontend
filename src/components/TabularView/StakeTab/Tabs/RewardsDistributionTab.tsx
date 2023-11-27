@@ -76,7 +76,9 @@ const RewardsDistributionTab = () => {
             searchLabel=""
             sortKey="id"
             filterValue={omit(pageInfo, ["page", "size"])}
-            onChange={(params) => history.replace({ search: stringify({ ...pageInfo, page: 0, ...params }) })}
+            onChange={(params) =>
+              history.replace({ search: params ? stringify({ ...pageInfo, page: 0, ...params }) : "" })
+            }
           />
         </Box>
       </WrapperDelegationTab>

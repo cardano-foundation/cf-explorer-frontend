@@ -1,13 +1,12 @@
 import { Box } from "@mui/material";
-import { useState } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { stringify } from "qs";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
-import { FilterParams } from "src/components/commons/CustomFilter";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
 import { AdaValue } from "src/components/commons/ADAValue";
@@ -15,22 +14,18 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
 import ADAicon from "src/components/commons/ADAIcon";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 
 const WithdrawalHistoryTab = () => {
   const { t } = useTranslation();
   const { reportId } = useParams<{ reportId: string }>();
-  const { search } = useLocation();
   const history = useHistory();
-  const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
-  const [sort, setSort] = useState<string>("");
-  const [params] = useState<FilterParams>({});
+
+  const { pageInfo, setSort } = usePageInfo();
   const fetchData = useFetchList<WithdrawalHistoryItem>(
     reportId ? API.REPORT.SREPORT_DETAIL_WITHDRAWALS(reportId) : "",
     {
-      ...pageInfo,
-      ...params,
-      txHash: params.search,
-      sort: sort || params.sort
+      ...pageInfo
     }
   );
   const { total } = fetchData;
@@ -94,8 +89,9 @@ const WithdrawalHistoryTab = () => {
         total={{ title: t("common.total"), count: fetchData.total }}
         pagination={{
           ...pageInfo,
+          page: pageInfo.page,
           total: fetchData.total,
-          onChange: (page, size) => setPageInfo((pre) => ({ ...pre, page: page - 1, size }))
+          onChange: (page, size) => history.replace({ search: stringify({ ...pageInfo, page, size }) })
         }}
         onClickRow={(e, r: DeregistrationItem) => history.push(details.transaction(r.txHash))}
       />

@@ -1,33 +1,27 @@
 import { Box, useTheme } from "@mui/material";
-import { useState } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { stringify } from "qs";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, getPageInfo } from "src/commons/utils/helper";
-import { FilterParams } from "src/components/commons/CustomFilter";
+import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
 import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
 import ADAicon from "src/components/commons/ADAIcon";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 
 import { ADAValueLabel } from "../styles";
 
 const RewardsDistributionTab = () => {
   const { t } = useTranslation();
   const { reportId } = useParams<{ reportId: string }>();
-  const { search } = useLocation();
   const history = useHistory();
-  const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
-  const [sort, setSort] = useState<string>("");
-  const [params] = useState<FilterParams>({});
+  const { pageInfo, setSort } = usePageInfo();
   const fetchData = useFetchList<RewardDistributionItem>(reportId ? API.REPORT.SREPORT_DETAIL_REWARDS(reportId) : "", {
-    ...pageInfo,
-    ...params,
-    txHash: params.search,
-    sort: sort || params.sort
+    ...pageInfo
   });
   const theme = useTheme();
   const { total } = fetchData;
@@ -90,8 +84,9 @@ const RewardsDistributionTab = () => {
         total={{ title: "Total", count: fetchData.total }}
         pagination={{
           ...pageInfo,
+          page: pageInfo.page,
           total: fetchData.total,
-          onChange: (page, size) => setPageInfo((pre) => ({ ...pre, page: page - 1, size }))
+          onChange: (page, size) => history.replace({ search: stringify({ ...pageInfo, page, size }) })
         }}
         onClickRow={(e, r: RewardDistributionItem) => history.push(details.epoch(r.epoch))}
       />
