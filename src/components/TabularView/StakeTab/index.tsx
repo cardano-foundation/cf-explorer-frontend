@@ -36,7 +36,15 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, tabActive, onChangeTab, tabsR
   };
 
   const handleChangeTab = (panel: TabStakeDetail) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-    tabRef?.current?.scrollIntoView();
+    const handleTransitionEnd = () => {
+      if (newExpanded) {
+        setTimeout(() => {
+          tabRef?.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }, 100);
+        tabRef?.current?.removeEventListener("transitionend", handleTransitionEnd);
+      }
+    };
+    tabRef?.current?.addEventListener("transitionend", handleTransitionEnd);
     onChangeTab?.(newExpanded ? panel : "");
     if (checkshow && tabsRenderConfig && !tabsRenderConfig[tabs.find((t) => t.key === tabActive)?.keyCheckShow || ""])
       return;
@@ -48,7 +56,7 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, tabActive, onChangeTab, tabsR
   };
 
   return (
-    <Box mt={4}>
+    <Box ref={tabRef} mt={4}>
       {tabs.map(({ key, icon: Icon, label, component }, index) => {
         const colorActive = getColorTab(key, tabActive);
         return (
@@ -58,7 +66,6 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, tabActive, onChangeTab, tabsR
             customBorderRadius={needBorderRadius(key)}
             isDisplayBorderTop={tabActive !== key && key !== tabs[0].key && index !== indexExpand + 1}
             onChange={handleChangeTab(key as TabStakeDetail)}
-            TransitionProps={{ unmountOnExit: true }}
           >
             <AccordionSummary
               expandIcon={
