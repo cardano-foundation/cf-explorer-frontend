@@ -1,17 +1,17 @@
 import { Box } from "@mui/material";
-import React from "react";
 import { t } from "i18next";
+import React from "react";
 
-import CustomModal from "src/components/commons/CustomModal";
-import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { details } from "src/commons/routers";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { InfoIcon } from "src/components/commons/DetailHeader/styles";
 
-import { ExternalLink, ModalContent, TitleReference, UTXOReference, ValueReference } from "./styles";
 import ExplanDropdown from "../common/ExplanDropdown";
-import { ReferenceCount } from "../styles";
 import { DataCardBox, DataReferenceValue } from "../common/styles";
+import { ReferenceCount } from "../styles";
+import { ExternalLink, IconWrapper, ModalContent, TitleReference, UTXOReference, ValueReference } from "./styles";
 
 interface ReferenceInputModal {
   data?: IContractItemTx;
@@ -45,7 +45,7 @@ const ReferenceInputModal: React.FC<ReferenceInputModal> = ({ data, ...props }) 
         <DataReferenceValue>
           {(referenceInputs || []).map((referenceInputs, index) => {
             const showTooltip = referenceInputs.scriptHash === data?.scriptHash;
-            return <Box showTooltip={showTooltip} component={Item} data={referenceInputs} key={index} />;
+            return <Box showTooltip={showTooltip} my={1} component={Item} data={referenceInputs} key={index} />;
           })}
         </DataReferenceValue>
       </ModalContent>
@@ -63,21 +63,21 @@ const DatumData = ({ data }: { data: string }) => {
 
 const Item = ({ data, showTooltip }: { data: ReferenceInput; showTooltip: boolean }) => {
   return (
-    <DataCardBox my={1}>
+    <DataCardBox mb={1} sx={{ ":last-child": { marginBottom: "3px" } }}>
       <Box>
         <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
           <TitleReference>UTXO:</TitleReference>
           {showTooltip ? (
             <Box component={CustomTooltip} title={t("contract.referenceInput.canOnlyBeUsedByThisContract")}>
-              <Box typeof="span">
+              <IconWrapper index={data.index} typeof="span">
                 <InfoIcon />
-              </Box>
+              </IconWrapper>
             </Box>
           ) : (
             <Box component={CustomTooltip} title={t("contract.referenceInput.canBeUsedByAllContract")}>
-              <Box typeof="span">
+              <IconWrapper index={data.index} typeof="span">
                 <InfoIcon />
-              </Box>
+              </IconWrapper>
             </Box>
           )}
         </Box>
