@@ -38,7 +38,15 @@ export const CustomAccordion: React.FC<TCustomAccordionProps> = ({
   const tabRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const handleChangeTab = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-    tabRef?.current?.scrollIntoView();
+    const handleTransitionEnd = () => {
+      if (newExpanded) {
+        setTimeout(() => {
+          tabRef?.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }, 0);
+        tabRef?.current?.removeEventListener("transitionend", handleTransitionEnd);
+      }
+    };
+    tabRef?.current?.addEventListener("transitionend", handleTransitionEnd);
     onTabChange?.(newExpanded ? panel : "");
   };
 
@@ -52,7 +60,7 @@ export const CustomAccordion: React.FC<TCustomAccordionProps> = ({
 
   if (loading) return <LoadingSkeleton />;
   return (
-    <Box>
+    <Box ref={tabRef}>
       {getTabs.map(({ key, icon: Icon, children, label }, index) => (
         <StyledAccordion
           key={key}
@@ -60,8 +68,6 @@ export const CustomAccordion: React.FC<TCustomAccordionProps> = ({
           customBorderRadius={needBorderRadius(key)}
           isDisplayBorderTop={tabActive !== key && index !== indexExpand + 1}
           onChange={handleChangeTab(key)}
-          ref={tabRef}
-          TransitionProps={{ unmountOnExit: true }}
         >
           <AccordionSummary
             expandIcon={
