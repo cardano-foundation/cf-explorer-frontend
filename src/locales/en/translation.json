@@ -677,6 +677,7 @@
   "desc.DeregistrationSPOProcessDescription.1st": "If a stake pool wishes to cease operation, it can announce this intention by posting a stake pool retirement certificate.",
   "desc.DeregistrationSPOProcessDescription.2st": "The Stake Pool Retirement Certificate contains the public key hash of the pool and the epoch number, starting from which the stake pool will cease operation.",
   "desc.DeregistrationSPOProcessDescription.3st": "After the retirement epoch, any stake delegated to this stake pool will be disregarded and will not participate in the consensus mechanism.",
+  "desc.DeregistrationSPOProcessDescription.4th": "If a pool update posted before the deregistration epoch, it will override the deregistration.",
   "common.rewardsActivity": "Rewards Activity",
   "glossary.txType": "Transaction Type",
   "sklc.registrationCertificate": "Registration certificate",

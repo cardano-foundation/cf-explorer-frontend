@@ -18,6 +18,7 @@ export function DeregistrationSPOProcessDescription({ open, handleCloseModal }: 
             <Typography>{t("desc.DeregistrationSPOProcessDescription.1st")}</Typography>
             <Typography mt={1}>{t("desc.DeregistrationSPOProcessDescription.2st")}</Typography>
             <Typography mt={1}>{t("desc.DeregistrationSPOProcessDescription.3st")}</Typography>
+            <Typography mt={1}>{t("desc.DeregistrationSPOProcessDescription.4th")}</Typography>
           </NormalDescription>
         </ContentContainer>
       </WrapContent>
