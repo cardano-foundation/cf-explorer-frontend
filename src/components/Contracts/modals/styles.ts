@@ -134,7 +134,8 @@ export const TitleReference = styled(Box)(({ theme }) => ({
 }));
 export const ValueReference = styled(Box)(({ theme }) => ({
   color: theme.palette.secondary.light,
-  fontSize: 16
+  fontSize: 16,
+  marginTop: 4
 }));
 export const UTXOReference = styled(Link)(({ theme }) => ({
   color: `${theme.palette.primary.main} !important`,
