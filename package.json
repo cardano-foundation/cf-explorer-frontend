@@ -128,5 +128,6 @@
     "start-server-and-test": "^2.0.0",
     "string-format": "^2.0.0",
     "wait-on": "^7.0.1"
-  }
+  },
+  "proxy": "https://tokens.cardano.org"
 }
