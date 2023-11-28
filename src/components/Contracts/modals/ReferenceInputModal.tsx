@@ -1,17 +1,17 @@
 import { Box } from "@mui/material";
-import React from "react";
 import { t } from "i18next";
+import React from "react";
 
-import CustomModal from "src/components/commons/CustomModal";
-import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { details } from "src/commons/routers";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { InfoIcon } from "src/components/commons/DetailHeader/styles";
 
-import { ExternalLink, ModalContent, TitleReference, UTXOReference, ValueReference } from "./styles";
 import ExplanDropdown from "../common/ExplanDropdown";
-import { ReferenceCount } from "../styles";
 import { DataCardBox, DataReferenceValue } from "../common/styles";
+import { ReferenceCount } from "../styles";
+import { ExternalLink, IconWrapper, ModalContent, TitleReference, UTXOReference, ValueReference } from "./styles";
 
 interface ReferenceInputModal {
   data?: IContractItemTx;
@@ -63,15 +63,15 @@ const Item = ({ data, showTooltip }: { data: ReferenceInput; showTooltip: boolea
           <TitleReference>UTXO:</TitleReference>
           {showTooltip ? (
             <Box component={CustomTooltip} title={t("contract.referenceInput.canOnlyBeUsedByThisContract")}>
-              <Box typeof="span">
+              <IconWrapper index={data.index} typeof="span">
                 <InfoIcon />
-              </Box>
+              </IconWrapper>
             </Box>
           ) : (
             <Box component={CustomTooltip} title={t("contract.referenceInput.canBeUsedByAllContract")}>
-              <Box typeof="span">
+              <IconWrapper index={data.index} typeof="span">
                 <InfoIcon />
-              </Box>
+              </IconWrapper>
             </Box>
           )}
         </Box>

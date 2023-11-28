@@ -1,4 +1,4 @@
-import { Box, List, ListItem, ListItemText, styled } from "@mui/material";
+import { Box, List, ListItem, ListItemText, Typography, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const ModalContent = styled(Box)`
@@ -145,3 +145,25 @@ export const ExternalLink = styled("a")(({ theme }) => ({
   color: `${theme.palette.primary.main} !important`,
   textDecoration: "underline !important"
 }));
+
+export const Index = styled(Typography)`
+  font-size: 16px;
+  font-weight: bold;
+`;
+
+export const IconWrapper = styled(Box)<{ index?: number }>`
+  position: relative;
+  &::after {
+    content: ${({ index }) => `"#${index}"`};
+    display: inline-block;
+    position: absolute;
+    width: 30px;
+    text-align: right;
+    font-size: 16px;
+    font-weight: 700;
+    color: ${({ theme }) => theme.palette.secondary.light};
+    top: 28px;
+    right: 0px;
+    cursor: unset;
+  }
+`;
