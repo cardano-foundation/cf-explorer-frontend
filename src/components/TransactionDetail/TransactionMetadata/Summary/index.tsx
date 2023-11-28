@@ -104,7 +104,10 @@ const SummaryItems = ({
             <TitleText
               style={
                 item.value === 0
-                  ? { color: theme.isDark ? theme.palette.secondary[800] : theme.palette.secondary[600] }
+                  ? {
+                      color: theme.isDark ? theme.palette.secondary[800] : theme.palette.secondary[600],
+                      paddingBottom: 0
+                    }
                   : {}
               }
             >
@@ -142,7 +145,10 @@ const SummaryItems = ({
               <TitleText
                 style={
                   tokensSent.length === 0
-                    ? { color: theme.isDark ? theme.palette.secondary[800] : theme.palette.secondary[600] }
+                    ? {
+                        color: theme.isDark ? theme.palette.secondary[800] : theme.palette.secondary[600],
+                        paddingBottom: 0
+                      }
                     : {}
                 }
               >
@@ -204,7 +210,10 @@ const SummaryItems = ({
               <TitleText
                 style={
                   tokensReceived.length === 0
-                    ? { color: theme.isDark ? theme.palette.secondary[800] : theme.palette.secondary[600] }
+                    ? {
+                        color: theme.isDark ? theme.palette.secondary[800] : theme.palette.secondary[600],
+                        paddingBottom: 0
+                      }
                     : {}
                 }
               >
