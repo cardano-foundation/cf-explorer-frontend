@@ -33,8 +33,8 @@ export interface FilterParams {
 }
 
 export interface Props {
-  onChange?: (params: FilterParams) => void;
-  filterValue?: FilterParams;
+  onChange?: (params: FilterParams | null) => void;
+  filterValue?: FilterParams | null;
   sortKey?: string;
   excludes?: string[];
   searchLabel: string;
@@ -127,7 +127,7 @@ const CustomFilter: React.FC<Props> = (props) => {
   }, [open]);
 
   const handleReset = () => {
-    onChange?.({});
+    onChange?.(null);
     setOpen(false);
     setSearch("");
   };
