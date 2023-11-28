@@ -45,7 +45,7 @@ const ReferenceInputModal: React.FC<ReferenceInputModal> = ({ data, ...props }) 
         <DataReferenceValue>
           {(referenceInputs || []).map((referenceInputs, index) => {
             const showTooltip = referenceInputs.scriptHash === data?.scriptHash;
-            return <Box showTooltip={showTooltip} component={Item} data={referenceInputs} key={index} />;
+            return <Box showTooltip={showTooltip} my={1} component={Item} data={referenceInputs} key={index} />;
           })}
         </DataReferenceValue>
       </ModalContent>
@@ -63,7 +63,7 @@ const DatumData = ({ data }: { data: string }) => {
 
 const Item = ({ data, showTooltip }: { data: ReferenceInput; showTooltip: boolean }) => {
   return (
-    <DataCardBox my={1}>
+    <DataCardBox mb={1} sx={{ ":last-child": { marginBottom: "3px" } }}>
       <Box>
         <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
           <TitleReference>UTXO:</TitleReference>
