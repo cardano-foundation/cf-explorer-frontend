@@ -155,7 +155,7 @@ export const Index = styled(Typography)`
 export const IconWrapper = styled(Box)<{ index?: number }>`
   position: relative;
   &::after {
-    content: "#1";
+    content: ${({ index }) => `"#${index}"`};
     display: inline-block;
     position: absolute;
     width: 30px;

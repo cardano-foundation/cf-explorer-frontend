@@ -62,7 +62,6 @@ const DatumData = ({ data }: { data: string }) => {
 };
 
 const Item = ({ data, showTooltip }: { data: ReferenceInput; showTooltip: boolean }) => {
-  const index = data.index + 1;
   return (
     <DataCardBox my={1}>
       <Box>
@@ -70,14 +69,14 @@ const Item = ({ data, showTooltip }: { data: ReferenceInput; showTooltip: boolea
           <TitleReference>UTXO:</TitleReference>
           {showTooltip ? (
             <Box component={CustomTooltip} title={t("contract.referenceInput.canOnlyBeUsedByThisContract")}>
-              <IconWrapper index={index} typeof="span">
-                <InfoSolidIcon height="22px" width="22px" />
+              <IconWrapper index={data.index} typeof="span">
+                <InfoSolidIcon width="22px" height="22px" />
               </IconWrapper>
             </Box>
           ) : (
             <Box component={CustomTooltip} title={t("contract.referenceInput.canBeUsedByAllContract")}>
-              <IconWrapper index={index} typeof="span">
-                <InfoSolidIcon height="22px" width="22px" />
+              <IconWrapper index={data.index} typeof="span">
+                <InfoSolidIcon width="22px" height="22px" />
               </IconWrapper>
             </Box>
           )}
