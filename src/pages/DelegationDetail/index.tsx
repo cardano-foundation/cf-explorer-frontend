@@ -136,7 +136,7 @@ const DelegationDetail: React.FC = () => {
     },
     {
       icon: TimelineIconComponent,
-      label: t("certificatesHistory"),
+      label: <Box data-testid="certificatesHistory">{t("certificatesHistory")}</Box>,
       key: "certificatesHistory",
       component: (
         <div ref={tableRef}>

@@ -62,7 +62,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({
     },
     {
       key: "metadata",
-      label: t("glossary.metadata"),
+      label: <Box data-testid="token-metadata">{t("glossary.metadata")}</Box>,
       children: <TokenMetaData metadataJson={metadataJson} metadataCIP25={metadataCIP25} />,
       icon: MetadataIcon
     }

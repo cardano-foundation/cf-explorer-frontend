@@ -17,7 +17,7 @@ describe("Stake key detail", () => {
   });
 
   it("should have enough columns of Staking Address tab", () => {
-    cy.get(".MuiTabs-flexContainer button").eq(1).scrollIntoView().click();
+    cy.get(".MuiAccordionSummary-content").eq(1).scrollIntoView().click();
 
     cy.get("table tr th").contains("Transaction Hash");
     cy.get("table tr th").contains("Created At");
@@ -26,7 +26,7 @@ describe("Stake key detail", () => {
   });
 
   it("should have enough columns of Withdrawal History tab", () => {
-    cy.get(".MuiTabs-flexContainer button").eq(2).scrollIntoView().click();
+    cy.get(".MuiAccordionSummary-content").eq(2).click();
 
     cy.get("table tr th").contains("Transaction Hash");
     cy.get("table tr th").contains("Created At");
@@ -35,7 +35,7 @@ describe("Stake key detail", () => {
   });
 
   it("should have enough columns of Instantaneous Rewards tab", () => {
-    cy.get(".MuiTabs-flexContainer button").eq(3).scrollIntoView().click();
+    cy.get(".MuiAccordionSummary-content").eq(3).click();
 
     cy.get("table tr th").contains("Transaction Hash");
     cy.get("table tr th").contains("Created At");
@@ -44,7 +44,7 @@ describe("Stake key detail", () => {
   });
 
   it("should have enough columns of Transactions tab", () => {
-    cy.get(".MuiTabs-flexContainer button").eq(4).scrollIntoView().click();
+    cy.get(".MuiAccordionSummary-content").eq(4).click();
 
     cy.get("table tr th").contains("Transaction Hash");
     cy.get("table tr th").contains("Created At");

@@ -27,8 +27,9 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson, metadataCI
     <MetaDataWraper>
       {isShowCIP25 && (
         <CIPHeader>
-          <CIPHeaderTitle>
-            CIP Compliance <InfoSolidIcon onClick={() => setOpen(true)} width="16px" height="16px" />{" "}
+          <CIPHeaderTitle data-testid="token-metadata-des">
+            CIP Compliance{" "}
+            <InfoSolidIcon data-testid="token-metadata-info" onClick={() => setOpen(true)} width="16px" height="16px" />{" "}
           </CIPHeaderTitle>
           {!isNil(metadataCIP25?.valid) && (
             <CIPBadge
