@@ -167,5 +167,6 @@ export const PoolNamePopup = styled(Link)(({ theme }) => ({
   overflow: "hidden",
   textOverflow: "ellipsis",
   flex: 1,
-  textAlign: "left"
+  textAlign: "left",
+  pointerEvents: "auto"
 }));
