@@ -895,5 +895,6 @@
   "common.passed": "Passed",
   "common.needsReview": "Needs Review",
   "common.severUnknownErrorMsg": "Something went wrong on our side, please try again later or report an issue",
-  "cip25.viewDocs": "View CIP 25 document"
+  "cip25.viewDocs": "View CIP 25 document",
+  "outputs.label": "Outputs"
 }
