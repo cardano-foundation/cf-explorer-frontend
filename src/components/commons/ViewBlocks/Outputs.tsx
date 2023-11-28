@@ -1,9 +1,9 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import React, { useRef } from "react";
+import React, { createRef, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 
-import { EyeIcon, Polygon, PolygonDarkIcon } from "src/commons/resources";
+import { OutlineEye, Polygon, PolygonDarkIcon } from "src/commons/resources";
 
 import CustomIcon from "../CustomIcon";
 import PopperStyled from "../PopperStyled";
@@ -16,15 +16,20 @@ interface ContractProps {
 
 const Outputs: React.FC<ContractProps> = ({ title, link }) => {
   const { t } = useTranslation();
+  const popoverRef = createRef<{ trickerClose: () => void }>();
   const history = useHistory();
   const anchorEl = useRef();
   const theme = useTheme();
 
   const goToDetail = () => {
-    if (link) history.replace(link);
+    if (link) {
+      history.replace(link);
+      popoverRef.current?.trickerClose();
+    }
   };
   return (
     <PopperStyled
+      ref={popoverRef}
       placement="top"
       render={({ handleClick }) => (
         <PolygonContainer
@@ -39,11 +44,7 @@ const Outputs: React.FC<ContractProps> = ({ title, link }) => {
               {t("outputs.label")}
             </Typography>
             <CircleBox>
-              <CustomIcon
-                icon={EyeIcon}
-                height={23}
-                fill={theme.isDark ? theme.palette.common.black : theme.palette.common.white}
-              />
+              <CustomIcon icon={OutlineEye} width={21} fill={theme.palette.secondary[100]} />
             </CircleBox>
           </PolygonContent>
         </PolygonContainer>

@@ -85,8 +85,8 @@ const Certviews: React.FC<CertviewsProps> = ({ data, isMobile }) => {
 
   const detailInfo =
     data?.redeemerCertType === "DELEGATION"
-      ? { title: "View delegation tab", tab: "stakeCertificates" }
-      : { title: "View stake certificate tab", tab: "delegations" };
+      ? { title: "View delegation tab", tab: "delegations" }
+      : { title: "View stake certificate tab", tab: "stakeCertificates" };
   return (
     <CertContainer>
       <RedeemerModal
