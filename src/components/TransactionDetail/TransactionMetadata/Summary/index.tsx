@@ -101,7 +101,15 @@ const SummaryItems = ({
             alt="send icon"
           />
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
-            <TitleText>{type === "down" ? `${t("tab.adaSent")}` : `${t("tab.adaReceived")}`}</TitleText>
+            <TitleText
+              style={
+                item.value === 0
+                  ? { color: theme.isDark ? theme.palette.secondary[800] : theme.palette.secondary[600] }
+                  : {}
+              }
+            >
+              {type === "down" ? `${t("tab.adaSent")}` : `${t("tab.adaReceived")}`}
+            </TitleText>
             <Box display="flex" alignItems="center">
               <ValueText>
                 {item.value
@@ -131,7 +139,15 @@ const SummaryItems = ({
               alt="send icon"
             />
             <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
-              <TitleText>{t("tab.tokensSent")}</TitleText>
+              <TitleText
+                style={
+                  tokensSent.length === 0
+                    ? { color: theme.isDark ? theme.palette.secondary[800] : theme.palette.secondary[600] }
+                    : {}
+                }
+              >
+                {t("tab.tokensSent")}
+              </TitleText>
               <ValueText alignSelf={"flex-start"}>
                 {tokensSent.length === 0
                   ? ""
@@ -185,7 +201,15 @@ const SummaryItems = ({
               alt="send icon"
             />
             <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
-              <TitleText>{t("tab.tokensReceived")}</TitleText>
+              <TitleText
+                style={
+                  tokensReceived.length === 0
+                    ? { color: theme.isDark ? theme.palette.secondary[800] : theme.palette.secondary[600] }
+                    : {}
+                }
+              >
+                {t("tab.tokensReceived")}
+              </TitleText>
               <ValueText alignSelf={"flex-start"}>
                 {tokensReceived.length === 0
                   ? ""
