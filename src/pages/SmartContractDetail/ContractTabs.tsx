@@ -5,8 +5,8 @@ import { useHistory, useParams } from "react-router-dom";
 import { t } from "i18next";
 
 import { UtxoIcon } from "src/commons/resources";
-import { details } from "src/commons/routers";
 import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
+import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import useFetch from "src/commons/hooks/useFetch";
 
