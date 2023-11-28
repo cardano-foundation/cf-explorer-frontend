@@ -203,7 +203,7 @@ export const MintRrounded = styled(Rrounded)`
 
 export const SpendContainer = styled(MintContainer)<{ isMobile?: number }>`
   width: 100%;
-  max-width: 780px;
+  max-width: 920px;
   justify-content: space-between;
   ${({ theme }) => theme.breakpoints.down("lg")} {
     flex-wrap: nowrap;
@@ -263,7 +263,7 @@ export const RewardContainer = styled(MintContainer)`
   align-items: center;
 `;
 export const Center = styled(Box)<{ isMoble?: number }>`
-  max-width: 620px;
+  max-width: 900px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -271,6 +271,10 @@ export const Center = styled(Box)<{ isMoble?: number }>`
   flex-direction: ${({ isMoble }) => (isMoble ? "column" : "row")};
   gap: ${({ isMoble }) => (isMoble ? "60px" : "unset")};
   ${({ theme }) => theme.breakpoints.down("sm")} {
+    flex-direction: column;
+    gap: 60px;
+  }
+  ${({ theme }) => theme.breakpoints.down("lg")} {
     flex-direction: column;
     gap: 60px;
   }
@@ -308,3 +312,11 @@ export const CertRrounded = styled(Rrounded)(({ theme }) => ({
     width: "280"
   }
 }));
+
+export const OutputsUTXOLink = styled(Typography)`
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: underline !important;
+  color: ${({ theme }) => theme.palette.primary.main} !important;
+  cursor: pointer;
+`;
