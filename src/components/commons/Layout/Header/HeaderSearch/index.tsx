@@ -230,8 +230,6 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   };
 
   const getKeyIfOnlyOneNonNullResult = (data: IResponseSearchAll | undefined) => {
-    if (data?.validTokenName && data?.validPoolName) return "";
-
     let count = 0;
     let keyName = "";
     for (const key in data) {
