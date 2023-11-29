@@ -152,19 +152,19 @@ export const Index = styled(Typography)`
   font-weight: bold;
 `;
 
-export const IconWrapper = styled(Box)<{ index?: number }>`
+export const UTXOWapper = styled(Box)<{ index?: number }>`
   position: relative;
   &::after {
     content: ${({ index }) => `"#${index}"`};
     display: inline-block;
     position: absolute;
-    width: 30px;
-    text-align: right;
+    width: 40px;
+    text-align: left;
     font-size: 16px;
     font-weight: 700;
     color: ${({ theme }) => theme.palette.secondary.light};
-    top: 28px;
-    right: 0px;
+    top: 3px;
+    right: 16px;
     cursor: unset;
   }
 `;
