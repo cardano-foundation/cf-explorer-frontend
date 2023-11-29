@@ -159,12 +159,12 @@ export const UTXOWapper = styled(Box)<{ index?: number }>`
     display: inline-block;
     position: absolute;
     width: 40px;
-    text-align: right;
+    text-align: left;
     font-size: 16px;
     font-weight: 700;
     color: ${({ theme }) => theme.palette.secondary.light};
     top: 3px;
-    right: 1px;
+    right: 16px;
     cursor: unset;
   }
 `;
