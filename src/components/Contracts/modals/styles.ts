@@ -152,7 +152,7 @@ export const Index = styled(Typography)`
   font-weight: bold;
 `;
 
-export const IconWrapper = styled(Box)<{ index?: number }>`
+export const UTXOWapper = styled(Box)<{ index?: number }>`
   position: relative;
   &::after {
     content: ${({ index }) => `"#${index}"`};
