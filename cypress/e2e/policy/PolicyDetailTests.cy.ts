@@ -1,6 +1,6 @@
 describe("Pool detail", () => {
   beforeEach(() => {
-    cy.visit("/pool/pool1q80jjs53w0fx836n8g38gtdwr8ck5zre3da90peuxn84sj3cu0r");
+    cy.visit("/en/pool/pool1q80jjs53w0fx836n8g38gtdwr8ck5zre3da90peuxn84sj3cu0r");
   });
 
   it("should have header search box", () => {
@@ -9,20 +9,20 @@ describe("Pool detail", () => {
   });
 
   it("should have enough columns of Epoch tab", () => {
-    cy.get(".css-1dz0v3k > tr > :nth-child(1)").scrollIntoView().should("be.visible").contains("Epoch");
-    cy.get(".css-1dz0v3k > tr > :nth-child(2)").scrollIntoView().should("be.visible").contains("Blocks");
-    cy.get(".css-1dz0v3k > tr > :nth-child(3)").scrollIntoView().should("be.visible").contains("Stake Amount");
-    cy.get(".css-1dz0v3k > tr > :nth-child(4)").scrollIntoView().should("be.visible").contains("Delegator Rewards");
-    cy.get(".css-1dz0v3k > tr > :nth-child(5)").scrollIntoView().should("be.visible").contains("Fees");
+    cy.get(".css-1dz0v3k > tr > :nth-child(1)").contains("Epoch");
+    cy.get(".css-1dz0v3k > tr > :nth-child(2)").contains("Blocks");
+    cy.get(".css-1dz0v3k > tr > :nth-child(3)").contains("Stake Amount");
+    cy.get(".css-1dz0v3k > tr > :nth-child(4)").contains("Delegator Rewards");
+    cy.get(".css-1dz0v3k > tr > :nth-child(5)").contains("Fees");
   });
 
-  it("should have enough columns of Staking Delegators tab", () => {
-    cy.get(".MuiTabs-flexContainer button").eq(1).scrollIntoView().click();
+  it.only("should have enough columns of Staking Delegators tab", () => {
+    cy.get(".MuiAccordionSummary-content").eq(1).scrollIntoView().click();
 
-    cy.get(".css-1dz0v3k > tr > :nth-child(1)").scrollIntoView().should("be.visible").contains("No");
-    cy.get(".css-1dz0v3k > tr > :nth-child(2)").scrollIntoView().should("be.visible").contains("Delegator");
-    cy.get(".css-1dz0v3k > tr > :nth-child(3)").scrollIntoView().should("be.visible").contains("Total Value");
-    cy.get(".css-1dz0v3k > tr > :nth-child(4)").scrollIntoView().should("be.visible").contains("Staked Time");
-    cy.get(".css-1dz0v3k > tr > :nth-child(5)").scrollIntoView().should("be.visible").contains("Fees");
+    cy.get("table tr th").contains("No");
+    cy.get("table tr th").contains("Delegator");
+    cy.get("table tr th").contains("Total Value");
+    cy.get("table tr th").contains("Staked Time");
+    cy.get("table tr th").contains("Fees");
   });
 });

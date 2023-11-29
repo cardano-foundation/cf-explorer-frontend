@@ -175,6 +175,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       <Table
         {...fetchData}
         columns={columns}
+        maxHeight={"unset"}
         total={{ count: fetchData.total, title: t("common.totalTxs") }}
         pagination={{
           ...pageInfo,

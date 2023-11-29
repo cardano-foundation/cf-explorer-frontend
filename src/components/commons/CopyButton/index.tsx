@@ -13,6 +13,7 @@ const Button = styled(IconButton)`
   width: 23px;
   height: 23px;
   font-size: var(--font-size-text-large);
+  pointer-events: auto;
 `;
 
 interface CopyButtonProps extends IconButtonProps {
