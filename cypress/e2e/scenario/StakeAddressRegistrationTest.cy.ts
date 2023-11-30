@@ -3,74 +3,68 @@ describe("User check information of stake address registration", () => {
     cy.visit("/");
     cy.get('[data-testid="menu-button-operational_certificates"]').click();
     cy.get('[data-testid="submenu-button-stake_address_registration"]').click();
-    cy.get('[data-testid="search-bar"]').should("be.visible");
-    cy.get('[data-testid="table-common"]').should("be.visible");
+    cy.get('[data-testid="search-bar"]');
+    cy.get('[data-testid="table-common"]');
     cy.get('[data-testid="table-common"] tbody tr').eq(0).click();
     cy.get("a").contains("View Details", { matchCase: false }).click();
-    cy.get('[data-testid="search-bar"]').should("be.visible");
-    cy.get("div").contains("Stake Address Details", { matchCase: false }).should("be.visible");
-    cy.get(":nth-child(1) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Delegated to").should("be.visible");
-    cy.get(":nth-child(2) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Total Stake").should("be.visible");
-    cy.get(":nth-child(3) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root")
-      .contains("Rewards available")
-      .should("be.visible");
-    cy.get(":nth-child(4) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root")
-      .contains(" Rewards withdrawn")
-      .should("be.visible");
-    cy.get(".css-12euw8y").contains("Analytics").should("be.visible");
-    cy.get(".css-z5mtf5 > .css-0 > .css-ovbrb").contains("Highest Balance").should("be.visible");
-    cy.get(".css-1u4aebp > .css-0 > .css-ovbrb").contains("Lowest Balance").should("be.visible");
-    cy.get("div").contains("Delegation History").should("be.visible");
-    cy.get("div").contains("Stake Address History").should("be.visible");
-    cy.get("div").contains("Withdrawal History").should("be.visible");
-    cy.get("div").contains("Instantaneous Rewards").should("be.visible");
-    cy.get("div").contains("Transactions").should("be.visible");
+    cy.get('[data-testid="search-bar"]');
+    cy.get("div").contains("Stake Address Details", { matchCase: false });
+    cy.get(":nth-child(1) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Delegated to");
+    cy.get(":nth-child(2) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Total Stake");
+    cy.get(":nth-child(3) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Rewards available");
+
+    cy.get(":nth-child(4) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains(" Rewards withdrawn");
+
+    cy.get(".css-12euw8y").contains("Analytics");
+    cy.get(".css-z5mtf5 > .css-0 > .css-ovbrb").contains("Highest Balance");
+    cy.get(".css-1u4aebp > .css-0 > .css-ovbrb").contains("Lowest Balance");
+    cy.get(".MuiAccordionSummary-root").contains("Delegation History");
+    cy.get(".MuiAccordionSummary-root").contains("Stake Address History");
+    cy.get(".MuiAccordionSummary-root").contains("Withdrawal History");
+    cy.get(".MuiAccordionSummary-root").contains("Instantaneous Rewards");
+    cy.get(".MuiAccordionSummary-root").contains("Transactions");
     cy.get('[data-testid="footer"]').scrollIntoView();
-    cy.get('[data-testid="table-common"]').should("be.visible");
+    cy.get('[data-testid="table-common"]');
     cy.wait(2000);
 
-    cy.get(".MuiTabs-flexContainer button").eq(0).should("have.attr", "aria-selected", "true");
-    cy.get('[data-testid="table-common"]').should("be.visible");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should("be.visible").contains("Transaction Hash");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(2)').should("be.visible").contains("Created At");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(3)').should("be.visible").contains("Block");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(4)').should("be.visible").contains("Pool ID");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(5)').should("be.visible").contains("Pool Name");
+    cy.get(".MuiAccordionSummary-root").eq(0);
+    cy.get('[data-testid="table-common"]');
+    cy.get('[data-testid = "table-common"] th:nth-of-type(1)').contains("Transaction Hash");
+    cy.get('[data-testid = "table-common"] th:nth-of-type(2)').contains("Created At");
+    cy.get('[data-testid = "table-common"] th:nth-of-type(3)').contains("Block");
+    cy.get('[data-testid = "table-common"] th:nth-of-type(4)').contains("Pool ID");
+    cy.get('[data-testid = "table-common"] th:nth-of-type(5)').contains("Pool Name");
 
-    cy.get(".MuiTabs-flexContainer button").eq(1).click();
-    cy.get(".MuiTabs-flexContainer button").eq(1).should("have.attr", "aria-selected", "true");
-    cy.get('[data-testid="table-common"]').should("be.visible");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should("be.visible").contains("Transaction Hash");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(2)').should("be.visible").contains("Created At");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(3)').should("be.visible").contains("Block");
-    cy.get('[data-testid = "table-common"] th').should("be.visible").contains("Action");
+    cy.get(".MuiAccordionSummary-root").eq(1).click();
+    cy.get('[data-testid="table-common"]');
+    cy.get('[data-testid = "table-common"] th:nth-of-type(1)').contains("Transaction Hash");
+    cy.get('[data-testid = "table-common"] th:nth-of-type(2)').contains("Created At");
+    cy.get('[data-testid = "table-common"] th:nth-of-type(3)').contains("Block");
+    cy.get('[data-testid = "table-common"] th').contains("Action");
 
-    cy.get(".MuiTabs-flexContainer button").eq(2).click();
-    cy.get(".MuiTabs-flexContainer button").eq(2).should("have.attr", "aria-selected", "true");
-    cy.get('[data-testid="table-common"]').should("be.visible");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should("be.visible").contains("Transaction Hash");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(2)').should("be.visible").contains("Created At");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(3)').should("be.visible").contains("Block");
-    cy.get('[data-testid = "table-common"] th').should("be.visible").contains("Amount");
+    cy.get(".MuiAccordionSummary-root").eq(2).click();
+    cy.get('[data-testid="table-common"]');
+    cy.get('[data-testid = "table-common"] th:nth-of-type(1)').contains("Transaction Hash");
+    cy.get('[data-testid = "table-common"] th:nth-of-type(2)').contains("Created At");
+    cy.get('[data-testid = "table-common"] th:nth-of-type(3)').contains("Block");
+    cy.get('[data-testid = "table-common"] th').contains("Amount");
 
-    cy.get(".MuiTabs-flexContainer button").eq(3).click();
-    cy.get(".MuiTabs-flexContainer button").eq(3).should("have.attr", "aria-selected", "true");
-    cy.get('[data-testid="table-common"]').should("be.visible");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should("be.visible").contains("Transaction Hash");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(2)').should("be.visible").contains("Created At");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(3)').should("be.visible").contains("Block");
-    cy.get('[data-testid = "table-common"] th').should("be.visible").contains("Rewards Paid");
+    cy.get(".MuiAccordionSummary-root").eq(3).click();
+    cy.get('[data-testid="table-common"]');
+    cy.get('[data-testid = "table-common"] th:nth-of-type(1)').contains("Transaction Hash");
+    cy.get('[data-testid = "table-common"] th:nth-of-type(2)').contains("Created At");
+    cy.get('[data-testid = "table-common"] th:nth-of-type(3)').contains("Block");
+    cy.get('[data-testid = "table-common"] th').contains("Rewards Paid");
 
-    cy.get(".MuiTabs-flexContainer button").eq(4).click();
-    cy.get(".MuiTabs-flexContainer button").eq(4).should("have.attr", "aria-selected", "true");
-    cy.get('[data-testid="table-common"]').should("be.visible");
+    cy.get(".MuiAccordionSummary-root").eq(4).click();
+    cy.get('[data-testid="table-common"]');
     //cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should('be.visible').contains('#');
-    cy.get('[data-testid = "table-common"] th:nth-of-type(1)').should("be.visible").contains("Transaction Hash");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(2)').should("be.visible").contains("Created At");
-    cy.get('[data-testid = "table-common"] th:nth-of-type(3)').should("be.visible").contains("Block");
-    cy.get('[data-testid = "table-common"] th').should("be.visible").contains("Fees");
-    cy.get('[data-testid = "table-common"] th').should("be.visible").contains("ADA amount");
-    cy.get('[data-testid = "table-common"] th').should("be.visible").contains("Token");
+    cy.get('[data-testid = "table-common"] th:nth-of-type(1)').contains("Transaction Hash");
+    cy.get('[data-testid = "table-common"] th:nth-of-type(2)').contains("Created At");
+    cy.get('[data-testid = "table-common"] th:nth-of-type(3)').contains("Block");
+    cy.get('[data-testid = "table-common"] th').contains("Fees");
+    cy.get('[data-testid = "table-common"] th').contains("ADA amount");
+    cy.get('[data-testid = "table-common"] th').contains("Token");
   });
 
   /*

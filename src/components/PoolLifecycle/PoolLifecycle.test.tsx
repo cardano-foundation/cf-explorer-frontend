@@ -72,6 +72,8 @@ describe("PoolLifecycle component", () => {
     );
     const { reportHistory } = mockProps.fetchData.data[0];
     fireEvent.click(screen.getByText(/in progress/i));
-    expect(history.location.pathname).toBe(details.generated_pool_detail(reportHistory.id.toString()));
+    expect(history.location.pathname).toBe(
+      details.generated_pool_detail(reportHistory.id.toString())?.replace("?", "")
+    );
   });
 });

@@ -22,7 +22,8 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import { useList, useUpdateEffect } from "react-use";
 
 import useFetch from "src/commons/hooks/useFetch";
-import { DateRangeIcon, FilterIcon, InfoIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
+import { DateRangeIcon, FilterIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import { details, lists } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { PROTOCOL_TYPE } from "src/commons/utils/constants";
@@ -36,6 +37,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import NoRecord from "src/components/commons/NoRecord";
 import Table from "src/components/commons/Table";
 import { ProtocolFixed, ProtocolHistory, ProtocolTypeKey, TProtocolItem, TProtocolParam } from "src/types/protocol";
+import { InfoIcon } from "src/components/commons/DetailHeader/styles";
 import { Column } from "src/types/table";
 
 import { ExplainerTextModal } from "./ExplainerTextModal";
@@ -54,6 +56,7 @@ import {
   StyledDropdownItem,
   TextDescription
 } from "./styles";
+import TxsProtocolModal from "./TxsProtocolModal";
 
 interface IProtocolParamVertical {
   name: string;
@@ -134,7 +137,7 @@ const ProtocolParameter: React.FC = () => {
                   })
                 }
               >
-                <InfoIcon style={{ cursor: "pointer" }} />
+                <InfoSolidIcon />
               </Box>
             )}
           </Box>
@@ -196,7 +199,7 @@ const ProtocolParameter: React.FC = () => {
                   })
                 }
               >
-                <InfoIcon style={{ cursor: "pointer" }} />
+                <InfoSolidIcon />
               </Box>
             )}
           </Box>
@@ -333,6 +336,7 @@ export const ProtocolParameterHistory = () => {
   const theme = useTheme();
   const [initing, setIniting] = useState(true);
   const [filterParams, setFilterParams] = useState<string[]>([]);
+  const [selectTxs, setSelectTxs] = useState<string[] | null>(null);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
   const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
   const historyUrlBase = PROTOCOL_PARAMETER.HISTORY;
@@ -406,15 +410,18 @@ export const ProtocolParameterHistory = () => {
                   : 0
                 : 0
             }
+            onClick={() => {
+              setSelectTxs(r[t as ProtocolTypeKey]?.transactionHashs || null);
+            }}
             component={["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string) ? Link : Box}
             to={
-              r[t as ProtocolTypeKey]?.transactionHash
-                ? details.transaction(r[t as ProtocolTypeKey]?.transactionHash, "protocols")
+              r[t as ProtocolTypeKey]?.transactionHashs && r[t as ProtocolTypeKey]?.transactionHashs.length === 1
+                ? details.transaction(r[t as ProtocolTypeKey]?.transactionHashs[0], "protocols")
                 : "#"
             }
           >
-            {r[t as ProtocolTypeKey]?.status === "ADDED" ||
-            (r[t as ProtocolTypeKey]?.status === "UPDATED" && !r[t as ProtocolTypeKey]?.transactionHash) ? (
+            {(r[t as ProtocolTypeKey]?.status === "ADDED" || r[t as ProtocolTypeKey]?.status === "UPDATED") &&
+            !r[t as ProtocolTypeKey]?.transactionHashs ? (
               <CustomTooltip title="No transaction">
                 <Box>
                   {r[t as ProtocolTypeKey]
@@ -463,7 +470,7 @@ export const ProtocolParameterHistory = () => {
                   })
                 }
               >
-                <InfoIcon style={{ cursor: "pointer" }} />
+                <InfoSolidIcon />
               </Box>
             )}
           </Box>
@@ -550,7 +557,9 @@ export const ProtocolParameterHistory = () => {
                 </Box>
               }
             >
-              <InfoIcon style={{ cursor: "pointer" }} />
+              <Box display={"inline-block"}>
+                <InfoIcon style={{ cursor: "pointer" }} />
+              </Box>
             </CustomTooltip>
           </Box>
         }
@@ -642,6 +651,7 @@ export const ProtocolParameterHistory = () => {
         handleCloseModal={() => setExplainerText(null)}
         explainerText={explainerText || { content: "", title: "" }}
       />
+      <TxsProtocolModal open={!!selectTxs} onClose={() => setSelectTxs(null)} txs={selectTxs} />
     </Box>
   );
 };

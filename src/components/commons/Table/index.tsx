@@ -168,13 +168,22 @@ const TableRow = <T extends ColumnType>({
   selectable,
   toggleSelection,
   isSelected,
-  isModal
+  isModal,
+  onCallBackHeight
 }: TableRowProps<T>) => {
   const colRef = useRef(null);
   const theme = useTheme();
   const { isMobile } = useScreen();
+
+  const rowRef = useRef<HTMLTableRowElement>(null);
+
+  useEffect(() => {
+    onCallBackHeight?.(rowRef?.current?.clientHeight || 0);
+  }),
+    [rowRef.current];
+
   return (
-    <TRow onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row))} {...selectedProps}>
+    <TRow ref={rowRef} onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row))} {...selectedProps}>
       {selectable && (
         <TCol ismodal={+(isModal || 0)}>
           <TableCheckBox checked={isSelected?.(row)} onChange={() => toggleSelection?.(row)} />
@@ -235,7 +244,8 @@ const TableBody = <T extends ColumnType>({
   selectable,
   toggleSelection,
   isSelected,
-  isModal
+  isModal,
+  onCallBackHeight
 }: TableProps<T>) => {
   return (
     <TBody>
@@ -270,6 +280,7 @@ const TableBody = <T extends ColumnType>({
           toggleSelection={toggleSelection}
           isSelected={isSelected}
           isModal={isModal}
+          onCallBackHeight={onCallBackHeight}
         />
       ))}
     </TBody>
@@ -414,17 +425,20 @@ const Table: React.FC<TableProps> = ({
   isShowingResult,
   isModal,
   height,
-  minHeight
+  minHeight,
+  isFullTableHeight = false
 }) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange
   });
 
   const tableRef = useRef<HTMLTableElement>(null);
+  const [maxHeightTable, setMaxHeightTable] = useState<number>(0);
   const wrapperRef = useRef<HTMLElement>(null);
   const { width } = useScreen();
-
-  let heightTable = Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight * 0.5);
+  const scrollHeight = 5;
+  let heightTable = Math.min((tableRef?.current?.clientHeight || 0) + scrollHeight, window.innerHeight * 0.5);
+  const tableFullHeight = (tableRef?.current?.clientHeight || 0) + scrollHeight;
 
   if (width >= breakpoints.values.sm && (data || []).length >= 9) {
     const footerHeight = document.getElementById("footer")?.offsetHeight || SPACING_TOP_TABLE;
@@ -434,6 +448,10 @@ const Table: React.FC<TableProps> = ({
         : SPACING_TOP_TABLE;
     heightTable = window.innerHeight - (footerHeight + spaceTop);
   }
+
+  const onCallBackHeight = (rowHeight: number) => {
+    if (!maxHeightTable) setMaxHeightTable(rowHeight * 9);
+  };
 
   const toggleSelectAll = (isChecked: boolean) => {
     if (data && isChecked) {
@@ -468,9 +486,9 @@ const Table: React.FC<TableProps> = ({
       />
       <Wrapper
         ref={wrapperRef}
-        maxHeight={maxHeight}
+        maxHeight={maxHeight || maxHeightTable}
         minHeight={minHeight ? minHeight : (!data || data.length === 0) && !loading ? 360 : loading ? 400 : 15}
-        height={height || heightTable}
+        height={height || (isFullTableHeight ? tableFullHeight : heightTable)}
         ismodal={+!!isModal}
         className={data && data.length !== 0 ? "table-wrapper" : "hide-scroll"}
         loading={loading ? 1 : 0}
@@ -503,6 +521,7 @@ const Table: React.FC<TableProps> = ({
             toggleSelection={toggleSelection}
             isSelected={isSelected}
             isModal={isModal}
+            onCallBackHeight={onCallBackHeight}
           />
         </TableFullWidth>
         {loading && !initialized && <TableSekeleton />}

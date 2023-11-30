@@ -4,12 +4,14 @@ import { createBrowserHistory } from "history";
 import { fireEvent, render, screen } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
+import { POOL_STATUS } from "src/commons/utils/constants";
 
 import DelegationDetail from ".";
 
 const mockData: DelegationOverview = {
   poolName: "Sample Pool",
   tickerName: "SP",
+  poolStatus: POOL_STATUS.ACTIVE,
   poolView: "http://example.com/sample-pool",
   createDate: "2023-07-20",
   rewardAccounts: ["reward_account_1", "reward_account_2"],
@@ -103,7 +105,7 @@ describe("BlockDetail page", () => {
     render(<DelegationDetail />);
     expect(screen.getByText(/highest stake/i)).toBeInTheDocument();
     expect(screen.getByText(/lowest stake/i)).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: /delegator/i }));
+    fireEvent.click(screen.getAllByRole("button", { name: /delegator/i })[0]);
     expect(screen.getByText(/highest number of delegators/i)).toBeInTheDocument();
     expect(screen.getByText(/lowest number of delegators/i)).toBeInTheDocument();
   });
