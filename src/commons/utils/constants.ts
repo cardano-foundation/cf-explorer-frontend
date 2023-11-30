@@ -115,6 +115,7 @@ export enum RECEIVED_REWARDS {
 }
 
 export const AUTH_API_URL = process.env.REACT_APP_AUTH_API_URL || get(window, "env.REACT_APP_AUTH_API_URL");
+export const ADA_HANDLE_API = process.env.REACT_APP_ADA_HANDLE_API || get(window, "env.REACT_APP_ADA_HANDLE_API");
 export const API_URL = process.env.REACT_APP_API_URL || get(window, "env.REACT_APP_API_URL");
 export const WS_URL = process.env.REACT_APP_WS_URL || get(window, "env.REACT_APP_WS_URL");
 export const CARDANO_NEWS_URL = process.env.REACT_APP_CARDANO_NEWS_URL || get(window, "env.REACT_APP_CARDANO_NEWS_URL");

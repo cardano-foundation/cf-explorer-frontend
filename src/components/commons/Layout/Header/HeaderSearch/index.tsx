@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { RouteComponentProps, useHistory, withRouter } from "react-router-dom";
 import { isNil, isObject, omitBy } from "lodash";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
 
 import { HeaderSearchIconComponent } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
@@ -165,6 +166,14 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     }
   ];
 
+  const adaHandleSearch = async (query: string) => {
+    try {
+      return await axios.get(API.ADAHanlde(query)).then((data) => data.data);
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
   const showResultNotFound = () => {
     setError(t("message.noResultsFound"));
     setShowErrorMobile?.(true);
@@ -176,6 +185,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     try {
       setLoading(true);
       const res = await defaultAxios.get(API.SEARCH_ALL(query));
+      await adaHandleSearch(query);
       setDataSearchAll(res?.data);
       const keyDetail = getKeyIfOnlyOneNonNullResult(res?.data);
       if (keyDetail) {

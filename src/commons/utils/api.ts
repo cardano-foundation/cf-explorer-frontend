@@ -136,7 +136,8 @@ export const API = {
     NATIVE_SCRIPTS: "scripts/native-scripts",
     ASSOCIATED_ADDRESS: (scriptHash: string) => `scripts/contracts/${scriptHash}`,
     SCRIPT_TXS_DETAIL: (scriptHash: string) => `scripts/contracts/${scriptHash}/txs`
-  }
+  },
+  ADAHanlde: (name: string) => `/addresses/by-ada-handle/${name}`
 };
 
 export const USER_API = {
