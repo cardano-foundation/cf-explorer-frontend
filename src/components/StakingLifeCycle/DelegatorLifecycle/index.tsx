@@ -16,8 +16,8 @@ import {
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import CustomIcon from "src/components/commons/CustomIcon";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 
 import {
   DelegationProcessDescription,

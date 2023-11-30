@@ -48,15 +48,17 @@ const TabNativeScripts = () => {
       <Table
         {...fetchData}
         columns={columns}
+        screen="smartContracts"
         total={{ count: fetchData.total, title: t("common.totalTxs") }}
         rowKey="scriptHash"
-        height={380}
+        height="unset"
         pagination={{
           ...pageInfo,
           total: fetchData.total,
           onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
         }}
         style={{ transform: "translateY(-20px)" }}
+        maxHeight={380}
       />
     </Box>
   );

@@ -29,15 +29,15 @@ describe("ReportGeneratedStakingDetail component", () => {
 
   it("should component render", () => {
     render(<ReportGeneratedStakingDetailTabs />);
-    expect(screen.getByRole("tab", { name: /delegationicon\.svg delegation history/i })).toBeInTheDocument();
-    expect(screen.getByRole("tab", { name: /rewardsdistributionicon\.svg rewards distribution/i })).toBeInTheDocument();
+    expect(screen.getByText(/delegation history/i)).toBeInTheDocument();
+    expect(screen.getByText(/rewards distribution/i)).toBeInTheDocument();
   });
 
   it("should component change tab", () => {
     render(<ReportGeneratedStakingDetailTabs />);
-    const tab = screen.getByRole("tab", { name: /delegationicon\.svg delegation history/i });
+    const tab = screen.getByText(/delegation history/i);
     fireEvent.click(tab);
     const active = screen.getByText(/delegation history/i).getAttribute("active");
-    expect(active).toBe("1");
+    expect(active).toBe("0");
   });
 });

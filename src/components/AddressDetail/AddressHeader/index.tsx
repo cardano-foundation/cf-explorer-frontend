@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
 
-import { InfoIcon } from "src/commons/resources";
 import { exchangeADAToUSD, formatADAFull, getShortHash } from "src/commons/utils/helper";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import Card from "src/components/commons/Card";
 import useFetch from "src/commons/hooks/useFetch";
 import CardAddress from "src/components/share/CardAddress";
@@ -73,7 +73,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           <ADAicon />
           {NETWORK === NETWORKS.sanchonet && (
             <CustomTooltip placement="top-start" title={t("sanchonet.toltipTotalStake")}>
-              <InfoIcon />
+              <InfoSolidIcon />
             </CustomTooltip>
           )}
         </Box>

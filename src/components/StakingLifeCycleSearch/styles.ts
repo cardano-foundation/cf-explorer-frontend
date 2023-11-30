@@ -39,6 +39,11 @@ export const StyledInput = styled("input")`
   text-overflow: ellipsis;
   background: ${({ theme }) => theme.palette.secondary[0]};
   color: ${({ theme }) => theme.palette.secondary.light};
+
+  &::-webkit-search-cancel-button {
+    filter: ${({ theme }) => (theme.mode === "dark" ? "brightness(0) invert(0.8)" : "brightness(0) invert(0.4)")};
+    cursor: pointer;
+  }
 `;
 
 export const SubmitButton = styled(Button)`
@@ -106,7 +111,7 @@ export const SearchButton = styled(Button)`
   height: 51px;
   display: flex;
   gap: 8px;
-  color: ${(props) => props.theme.palette.primary[100]};
+  color: ${(props) => (props.theme.isDark ? props.theme.palette.secondary[100] : props.theme.palette.secondary[0])};
   background: ${(props) => props.theme.palette.primary.main};
   width: 100%;
   border-radius: 8px;

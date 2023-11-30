@@ -15,7 +15,7 @@ import {
   UserIconComponent
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { formatADAFull, formatDateTimeLocal, formatPercent, truncateCustom } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatPercent } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import BookmarkButton from "src/components/commons/BookmarkIcon";
 import CustomIcon from "src/components/commons/CustomIcon";
@@ -27,6 +27,7 @@ import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
 
 import {
+  HeaderStatus,
   BackButton,
   BackText,
   ButtonViewAll,
@@ -62,12 +63,11 @@ export interface IDelegationDetailInfo {
 const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, poolId, lastUpdated }) => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const { width } = useScreen();
+  const { width, isGalaxyFoldSmall } = useScreen();
   const history = useHistory();
   const [isErrorImage, setIsErrorImage] = useState(false);
   const [isOpenReward, setOpenReward] = useState<boolean>(false);
   const [isOpenOwner, setOpenOwner] = useState<boolean>(false);
-  const { isGalaxyFoldSmall } = useScreen();
 
   if (loading) {
     return (
@@ -93,29 +93,19 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
 
   const isPoolName = !!data?.poolName;
 
-  return (
-    <HeaderDetailContainer>
-      <BackButton onClick={history.goBack}>
-        <HiArrowLongLeft color={theme.palette.secondary.light} />
-        <BackText>{t("common.back")}</BackText>
-      </BackButton>
-      <HeaderContainer>
-        <Box display={"flex"} alignItems={"center"}>
-          <CustomTooltip title={data?.poolName || poolId}>
-            <HeaderTitle>
-              {isPoolName ? (
-                data?.poolName
-              ) : width < 400 ? (
-                truncateCustom(poolId, 4, 4)
-              ) : (
-                <TruncateSubTitleContainer>
-                  <DynamicEllipsisText value={poolId} sxFirstPart={{ maxWidth: "calc(100% - 165px)" }} />
-                </TruncateSubTitleContainer>
-              )}
-            </HeaderTitle>
-          </CustomTooltip>
+  interface HeaderBookmarkProps {
+    justifyStyle: string;
+  }
+
+  const HeaderBookmark: React.FC<HeaderBookmarkProps> = ({ justifyStyle }) => {
+    return (
+      <Box display="flex" alignItems="center" justifyContent={justifyStyle} flex="1">
+        <Box display="flex" alignItems="center">
           <Box marginLeft={isPoolName ? 0 : 3}>
             <BookmarkButton keyword={poolId} type="POOL" />
+          </Box>
+          <Box marginLeft={width < 400 ? 0 : 1}>
+            <HeaderStatus status={data?.poolStatus}>{data?.poolStatus}</HeaderStatus>
           </Box>
         </Box>
         {data?.logoUrl && !isErrorImage && (
@@ -123,15 +113,48 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             bgcolor={theme.palette.common.white}
             border={`1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`}
             borderRadius={1}
-            component={"img"}
+            justifySelf="end"
+            marginLeft="10px"
+            component="img"
             src={data?.logoUrl || ""}
-            width={"64px"}
+            width="64px"
             onError={(e) => {
               if (e.type === "error") setIsErrorImage(true);
             }}
           />
         )}
+      </Box>
+    );
+  };
+
+  return (
+    <HeaderDetailContainer>
+      <BackButton onClick={history.goBack}>
+        <HiArrowLongLeft color={theme.palette.secondary.light} />
+        <BackText>{t("common.back")}</BackText>
+      </BackButton>
+      <HeaderContainer>
+        <Box display={"flex"} alignItems={"center"} width={"inherit"}>
+          <CustomTooltip title={data?.poolName || poolId}>
+            <HeaderTitle>
+              {data?.poolName ? (
+                data?.poolName
+              ) : (
+                <TruncateSubTitleContainer>
+                  <DynamicEllipsisText
+                    value={data?.poolName || poolId}
+                    sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 130px)" : "calc(100% - 50px)" }}
+                    postfix={5}
+                    isNoLimitPixel={true}
+                  />
+                </TruncateSubTitleContainer>
+              )}
+            </HeaderTitle>
+          </CustomTooltip>
+          {width > 600 && <HeaderBookmark justifyStyle={"space-between"} />}
+        </Box>
       </HeaderContainer>
+      {width < 600 && <HeaderBookmark justifyStyle={"flex-end"} />}
       <PoolId>
         <PoolIdLabel>{t("common.poolId")}: </PoolIdLabel>
         <Link to={details.delegation(data?.poolView)}>

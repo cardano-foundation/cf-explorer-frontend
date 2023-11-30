@@ -34,6 +34,7 @@ export type TableHeaderProps<T extends ColumnType> = Pick<
 
 export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & {
   row: T;
+  screen?: string;
   dataLength?: number;
   index: number;
   onClickRow?: (e: React.MouseEvent, record: T) => void;
@@ -47,11 +48,14 @@ export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & 
   toggleSelection?: (row: T) => void;
   isSelected?: (item: T) => boolean;
   isModal?: boolean;
+  onCallBackHeight?: (height: number) => void;
 };
 
 export interface TableProps<T extends ColumnType = any> {
+  isFullTableHeight?: boolean;
   columns: Column<T>[];
   data?: T[] | null;
+  screen?: string;
   className?: string;
   emptyClassName?: string;
   style?: React.CSSProperties;
@@ -104,6 +108,7 @@ export interface TableProps<T extends ColumnType = any> {
   height?: number | string;
   tableWrapperProps?: BoxProps;
   isModal?: boolean;
+  onCallBackHeight?: (height: number) => void;
 }
 
 export interface FooterTableProps {

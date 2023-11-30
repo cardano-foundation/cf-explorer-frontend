@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { stringify } from "qs";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { HeaderSearchIconComponent } from "src/commons/resources";
@@ -14,6 +15,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import CustomIcon from "src/components/commons/CustomIcon";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 
 import {
   AntSwitch,
@@ -33,15 +35,12 @@ const DelegationLists: React.FC = () => {
   const { tickerNameSearch = "" } = history.location.state || {};
   const [value, setValue] = useState("");
   const [search, setSearch] = useState(decodeURIComponent(tickerNameSearch));
-  const [page, setPage] = useState(1);
-  const [size, setSize] = useState(50);
-  const [sort, setSort] = useState<string>("");
-  const [isShowRetired, setShowRetired] = useState(false);
+  const { pageInfo, setSort } = usePageInfo();
+  const isShowRetired = pageInfo?.retired;
   const tableRef = useRef<HTMLDivElement>(null);
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
-
   useEffect(() => {
-    if (tickerNameSearch !== search) setPage(1);
+    if (tickerNameSearch !== search) history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
     if (tickerNameSearch) {
       setSearch(decodeURIComponent(tickerNameSearch));
     }
@@ -50,7 +49,7 @@ const DelegationLists: React.FC = () => {
 
   const fetchData = useFetchList<Delegators>(
     API.DELEGATION.POOL_LIST,
-    { page: page - 1, size, search, sort, isShowRetired },
+    { ...pageInfo, search, isShowRetired },
     false,
     blockKey
   );
@@ -58,7 +57,7 @@ const DelegationLists: React.FC = () => {
 
   useEffect(() => {
     if (fetchData.initialized) {
-      history.replace({ state: undefined });
+      history.replace({ search: stringify({ ...pageInfo }), state: undefined });
     }
   }, [fetchData.initialized, history]);
 
@@ -204,13 +203,13 @@ const DelegationLists: React.FC = () => {
             onKeyUp={(e) => {
               if (e.key === "Enter") {
                 setSearch(value);
-                setPage(1);
+                history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
               }
             }}
           />
           <SubmitButton
             onClick={() => {
-              setPage(1);
+              history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
               history.push(routers.DELEGATION_POOLS, {
                 tickerNameSearch: (value || "").toLocaleLowerCase()
               });
@@ -227,7 +226,12 @@ const DelegationLists: React.FC = () => {
         </SearchContainer>
         <ShowRetiredPools>
           {t("glassary.showRetiredPools")}
-          <AntSwitch checked={isShowRetired} onChange={(e) => setShowRetired(e.target.checked)} />
+          <AntSwitch
+            checked={isShowRetired === "true"}
+            onChange={(e) =>
+              history.replace({ search: stringify({ ...pageInfo, page: 0, retired: e.target.checked }) })
+            }
+          />
         </ShowRetiredPools>
       </TopSearchContainer>
       <Table
@@ -236,12 +240,10 @@ const DelegationLists: React.FC = () => {
         total={{ count: fetchData.total, title: "Total", isDataOverSize: fetchData.isDataOverSize }}
         onClickRow={(_, r: Delegators) => history.push(details.delegation(r.poolId), { fromPath })}
         pagination={{
-          page: page - 1,
-          size,
+          ...pageInfo,
           total: fetchData.total,
           onChange: (page, size) => {
-            setPage(page);
-            setSize(size);
+            history.replace({ search: stringify({ ...pageInfo, page, size }) });
             tableRef.current?.scrollIntoView();
           }
         }}

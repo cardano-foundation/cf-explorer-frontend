@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { Box, useTheme } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import { stringify } from "qs";
 import { useTranslation } from "react-i18next";
 
 import Table, { Column } from "src/components/commons/Table";
@@ -12,17 +12,13 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 
 const RewardsDistributionTab = () => {
   const { t } = useTranslation();
   const { reportId = "" } = useParams<{ reportId: string }>();
-  const [params, setParams] = useState({
-    page: 0,
-    size: 50
-  });
-
-  const [sort, setSort] = useState<string>("");
-
+  const history = useHistory();
+  const { pageInfo, setSort } = usePageInfo();
   const theme = useTheme();
 
   const columns: Column<SPO_REWARD>[] = [
@@ -80,8 +76,7 @@ const RewardsDistributionTab = () => {
   ];
 
   const fetchData = useFetchList<SPO_REWARD>(reportId ? API.REPORT.PREPORT_REWARD_DISTRIBUTIONS(reportId) : "", {
-    ...params,
-    sort
+    ...pageInfo
   });
 
   return (
@@ -94,9 +89,10 @@ const RewardsDistributionTab = () => {
           count: fetchData.total
         }}
         pagination={{
-          ...params,
+          ...pageInfo,
+          page: pageInfo.page,
           total: fetchData.total,
-          onChange: (page, size) => setParams({ page: page - 1, size })
+          onChange: (page, size) => history.replace({ search: stringify({ ...pageInfo, page, size }) })
         }}
       />
     </Box>

@@ -12,7 +12,7 @@ import { formatADAFull, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DetailHeader from "src/components/commons/DetailHeader";
-import { InfoIcon } from "src/commons/resources";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 
 import ModalAllAddress from "../ModalAllAddress";
@@ -74,7 +74,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
             <ADAicon />
             {NETWORK === NETWORKS.sanchonet && (
               <CustomTooltip title={t("sanchonet.toltipTotalStake")}>
-                <InfoIcon />
+                <InfoSolidIcon />
               </CustomTooltip>
             )}
           </StyledFlexValue>

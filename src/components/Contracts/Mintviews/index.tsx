@@ -1,28 +1,28 @@
-import { useMemo, useRef, useState } from "react";
 import { useTheme } from "@mui/material";
+import { useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { useScreen } from "src/commons/hooks/useScreen";
+import { details } from "src/commons/routers";
+import { formatNumberDivByDecimals, isAssetId } from "src/commons/utils/helper";
 import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
+import Assets from "src/components/commons/ViewBlocks/Assets";
+import Burn from "src/components/commons/ViewBlocks/Burn";
+import CompiledCode from "src/components/commons/ViewBlocks/CompiledCode";
+import Contract from "src/components/commons/ViewBlocks/Contract";
+import Redeemer from "src/components/commons/ViewBlocks/Redeemer";
 import {
   MiddleBox,
-  MintContainer,
-  RightBox,
   MintBlueBox,
-  MintRrounded
+  MintContainer,
+  MintRrounded,
+  RightBox
 } from "src/components/commons/ViewBlocks/styles";
-import Redeemer from "src/components/commons/ViewBlocks/Redeemer";
-import Contract from "src/components/commons/ViewBlocks/Contract";
-import Assets from "src/components/commons/ViewBlocks/Assets";
-import CompiledCode from "src/components/commons/ViewBlocks/CompiledCode";
-import Burn from "src/components/commons/ViewBlocks/Burn";
-import { details } from "src/commons/routers";
-import { formatNumberDivByDecimals, getShortHash } from "src/commons/utils/helper";
-import { useScreen } from "src/commons/hooks/useScreen";
 
 import AssetsModal from "../modals/AssetsModal";
-import RedeemerModal from "../modals/RedeemerModal";
 import CompiledCodeModal from "../modals/CompiledCodeModal";
+import RedeemerModal from "../modals/RedeemerModal";
 import { EmptyBox } from "../styles";
 
 export interface MintviewsProps {
@@ -109,18 +109,20 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
   const mintedAssetsData = useMemo(() => {
     const mintingTokens = (data?.mintingTokens as IContractItemTx["mintingTokens"]) || [];
     return mintingTokens.map((item) => ({
-      title: !item.displayName ? getShortHash(item.fingerprint) : item.displayName,
+      title: item.displayName ? item.displayName : item.fingerprint,
       value: formatNumberDivByDecimals(item.quantity, item?.metadata?.decimals || 0),
-      link: item.fingerprint
+      link: item.fingerprint,
+      showTooltip: !item.displayName || isAssetId(item.displayName)
     }));
   }, [data, screen.isMobile]);
 
   const burnedAssetsData = useMemo(() => {
     const burningTokens = (data?.burningTokens as IContractItemTx["burningTokens"]) || [];
     return burningTokens.map((item) => ({
-      title: !item.displayName ? getShortHash(item.fingerprint) : item.displayName,
+      title: item.displayName ? item.displayName : item.fingerprint,
       value: formatNumberDivByDecimals(item.quantity, item?.metadata?.decimals || 0),
-      link: item.fingerprint
+      link: item.fingerprint,
+      showTooltip: !item.displayName || isAssetId(item.displayName)
     }));
   }, [data, screen]);
   const isMint = data?.mintingTokens && data.mintingTokens?.length > 0;

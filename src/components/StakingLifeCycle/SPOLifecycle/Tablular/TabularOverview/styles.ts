@@ -31,17 +31,27 @@ export const WrapIcon = styled(Box)(() => ({
 
 export const CardTitle = styled(Typography)(({ theme }) => ({
   fontWeight: theme.typography.fontWeightBold,
-  fontSize: 14,
+  fontSize: 16,
+  whiteSpace: "nowrap",
   color: theme.palette.secondary.light,
-  marginBottom: 4
+  marginBottom: 4,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 14,
+    lineHeight: "16px"
+  }
 }));
 
 export const CardValue = styled(Typography)<{ color?: string }>(({ theme, ...rest }) => ({
-  overflowWrap: "anywhere",
   whiteSpace: "break-spaces",
+  textOverflow: "ellipsis",
+  overflow: "hidden",
   fontWeight: theme.typography.fontWeightBold,
-  fontSize: 16,
-  color: rest.color ? rest.color : theme.palette.secondary.main
+  fontSize: 24,
+  color: rest.color ? rest.color : theme.palette.secondary.main,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "14px",
+    lineHeight: "23px"
+  }
 }));
 
 export const TransferButton = styled(Button)(({ theme }) => ({
@@ -70,12 +80,17 @@ export const WrapWalletIcon = styled(Box)`
   }
 `;
 
-export const ClickAbleLink = styled(Link)`
-  color: ${({ theme }) => theme.palette.primary.main} !important;
-  cursor: pointer;
-  white-space: nowrap;
-  font-weight: bold;
-`;
+export const ClickAbleLink = styled(Link)(({ theme }) => ({
+  color: theme.palette.primary.main + " !important",
+  cursor: "pointer",
+  whiteSpace: "nowrap",
+  fontWeight: "bold",
+  fontSize: 24,
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 14,
+    lineHeight: "16px"
+  }
+}));
 
 export const ViewMoreButton = styled(IconButton)`
   padding: 14px;
@@ -119,12 +134,12 @@ export const StyledBox = styled(Box)<{ hasAction?: boolean; sidebar?: boolean }>
   display: "flex",
   alignItems: "center",
   gap: "12px",
-  maxWidth: hasAction ? "90%" : "85%",
+  maxWidth: hasAction ? "calc(100% - 32px)" : "100%",
   [theme.breakpoints.down("lg")]: {
-    maxWidth: hasAction ? (sidebar ? "75%" : "90%") : "85%"
+    maxWidth: hasAction ? (sidebar ? "85%" : "90%") : "100%"
   },
   [theme.breakpoints.down("md")]: {
-    maxWidth: "80%"
+    maxWidth: "100%"
   }
 }));
 
@@ -132,4 +147,8 @@ export const WrapStatus = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
   minWidth: 140
+}));
+
+export const WrapIconToStyle = styled(Box)(({ theme }) => ({
+  color: theme.isDark ? theme.palette.secondary[800] : theme.palette.primary.iconBorder
 }));

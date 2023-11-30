@@ -134,8 +134,8 @@ export const ChartBox = styled(Box)<{ highest: number; lowest: number }>(({ them
       [`&:nth-of-type(${lowest})`]: {
         filter: "url(#lowest)",
         text: {
-          fill: isEqual ? theme.palette.primary.main : theme.palette.error[700],
-          color: isEqual ? theme.palette.primary.main : theme.palette.error[700]
+          fill: isEqual ? theme.palette.primary.main : theme.palette.error[800],
+          color: isEqual ? theme.palette.primary.main : theme.palette.error[800]
         }
       },
       [`&:nth-of-type(${highest})`]: {

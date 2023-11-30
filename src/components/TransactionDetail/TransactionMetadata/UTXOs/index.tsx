@@ -256,7 +256,7 @@ const Card = ({
                   <WrapTokenLink>
                     {item.tokens && item.tokens.length === 1 && (
                       <WrapTokenDropdown>
-                        <TokenLink isSuccess={!isFailed} token={item.tokens[0]} sx={{ minWidth: 200 }} />
+                        <TokenLink isSuccess={!isFailed} token={item.tokens[0]} sx={{ minWidth: "calc(100% - 2px)" }} />
                       </WrapTokenDropdown>
                     )}
                     {item.tokens && item.tokens.length > 1 && (

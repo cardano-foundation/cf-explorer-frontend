@@ -1,4 +1,4 @@
-import { Box, Card, Grid, styled } from "@mui/material";
+import { Box, Card, Grid, styled, alpha } from "@mui/material";
 
 import { AdaLogoIcon } from "src/components/commons/ADAIcon";
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
@@ -27,7 +27,7 @@ export const Item = styled(Card)<{ smallItem?: boolean; themeMode?: ThemeType }>
   border-radius: 12px;
   text-align: left;
   &:hover {
-    box-shadow: ${(props) => props.theme.shadow.cardHover};
+    box-shadow: ${({ theme }) => "1px 2px 15px 0px " + alpha(theme.palette.secondary.light, 0.25)};
   }
   ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 15px;
