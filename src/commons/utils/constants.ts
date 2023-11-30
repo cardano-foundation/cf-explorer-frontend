@@ -81,7 +81,8 @@ export const FRONT_END_NETWORK = {
 export const NETWORK: NETWORKS =
   (process.env.REACT_APP_NETWORK as NETWORKS) || get(window, "env.REACT_APP_NETWORK") || NETWORKS.mainnet;
 
-export const MAX_SLOT_EPOCH = NETWORK?.toLowerCase() === NETWORKS.preview ? 86400 : 432000;
+export const MAX_SLOT_EPOCH =
+  NETWORK?.toLowerCase() === NETWORKS.preview || NETWORK?.toLowerCase() === NETWORKS.sanchonet ? 86400 : 432000;
 
 export enum TRANSACTION_STATUS {
   FAILED = "FAILED",
