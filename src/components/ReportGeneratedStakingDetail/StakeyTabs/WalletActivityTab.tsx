@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { Box, styled } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { stringify } from "qs";
 
 import Table, { Column } from "src/components/commons/Table";
 import { Amount, Status } from "src/components/StakingLifeCycle/DelegatorLifecycle/ADATransferModal/styles";
@@ -13,15 +13,15 @@ import { API } from "src/commons/utils/api";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
 import { IADATransferReport } from "src/types/report";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 
 const WalletActitityTab = () => {
   const { t } = useTranslation();
-  const [sort, setSort] = useState<string>("");
+  const { pageInfo, setSort } = usePageInfo();
   const { reportId = "" } = useParams<{ reportId: string }>();
-  const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
+  const history = useHistory();
   const fetchData = useFetchList<WalletActivityIF>(API.REPORT.SREPORT_WALLET_ACTIVITY(reportId), {
-    ...pageInfo,
-    sort
+    ...pageInfo
   });
   const columns: Column<IADATransferReport>[] = [
     {
@@ -75,8 +75,9 @@ const WalletActitityTab = () => {
         total={{ title: t("common.totalEpoch"), count: fetchData.total }}
         pagination={{
           ...pageInfo,
+          page: pageInfo.page,
           total: fetchData.total,
-          onChange: (page, size) => setPageInfo({ page: page - 1, size })
+          onChange: (page, size) => history.replace({ search: stringify({ ...pageInfo, page, size }) })
         }}
       />
     </Box>

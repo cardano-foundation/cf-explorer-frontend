@@ -42,7 +42,7 @@ const StakingLifecycle: React.FC = () => {
   const history = useHistory();
   const { userData } = useSelector(({ user }: RootState) => user);
   const [{ page, size }, setPagi] = useState<{ page: number; size: number; sort?: string }>(DEFAULT_PAGINING);
-  const [params, setParams] = useState<FilterParams | null>({});
+  const [params, setParams] = useState<FilterParams | null>({ sort: "" });
   const { tab } = useParams<{ tab?: LifecycleReportType }>();
 
   const validTab: LifecycleReportType = tab || "stake-key-reports";
@@ -57,7 +57,18 @@ const StakingLifecycle: React.FC = () => {
     document.title = `${t("common.savedReports")} | ${t("head.page.dashboard")}`;
   }, [t]);
 
-  const handleSort = (sort?: string) => setParams({ ...params, sort });
+  const handleSort = (sort?: string) => {
+    setParams({ ...params, sort });
+    localStorage.setItem("sort", sort || "");
+  };
+
+  useEffect(() => {
+    document.title = `${t("common.savedReports")} | ${t("head.page.dashboard")}`;
+    const savedSort = localStorage.getItem("sort");
+    if (savedSort) {
+      setParams({ ...params, sort: savedSort });
+    }
+  }, [t]);
 
   const handleChange = (e: React.SyntheticEvent, newValue: LifecycleReportType) => {
     setParams({});
