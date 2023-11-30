@@ -74,7 +74,9 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
             <ADAicon />
             {NETWORK === NETWORKS.sanchonet && (
               <CustomTooltip title={t("sanchonet.toltipTotalStake")}>
-                <InfoSolidIcon />
+                <Box display={"inline-block"}>
+                  <InfoSolidIcon />
+                </Box>
               </CustomTooltip>
             )}
           </StyledFlexValue>

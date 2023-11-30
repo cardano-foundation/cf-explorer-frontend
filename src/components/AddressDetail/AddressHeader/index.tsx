@@ -73,7 +73,9 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           <ADAicon />
           {NETWORK === NETWORKS.sanchonet && (
             <CustomTooltip placement="top-start" title={t("sanchonet.toltipTotalStake")}>
-              <InfoSolidIcon />
+              <Box display={"inline-block"}>
+                <InfoSolidIcon />
+              </Box>
             </CustomTooltip>
           )}
         </Box>
