@@ -148,7 +148,11 @@ const TokenAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                     color={theme.palette.secondary.light}
                     interval={getIntervalAnalyticChart(rangeTime)}
                   >
-                    <Label value="(UTC)" offset={-12} position="insideBottom" />
+                    <Label
+                      value={rangeTime === "ONE_DAY" ? "(UTC)" : "(As of 00:00 UTC)"}
+                      offset={-12}
+                      position="insideBottom"
+                    />
                   </XAxis>
                   <YAxis tickFormatter={formatPriceValue} tickLine={false} color={theme.palette.secondary.light} />
                   <Tooltip content={renderTooltip} cursor={false} />

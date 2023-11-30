@@ -64,8 +64,8 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
                 <ButtonLink
                   to={
                     data?.nativeScript
-                      ? details.nativeScriptDetail(data?.policyId || "associated")
-                      : details.smartContract(data?.policyId, "")
+                      ? details.nativeScriptDetail(data?.policyId)
+                      : details.smartContract(data?.policyId)
                   }
                 >
                   {data?.policyId || ""}

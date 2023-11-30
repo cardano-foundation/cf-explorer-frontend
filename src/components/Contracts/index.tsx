@@ -3,12 +3,11 @@ import { Box, Grid } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { InfoIcon } from "src/commons/resources";
-
 import ContractItem from "./common/ContractItem";
 import { UnderlineText } from "./common/styles";
 import SmartContractsInfoModal from "./modals/SmartContractsInfoModal";
 import ContractDetail from "./ContractDetail";
+import InfoSolidIcon from "../commons/InfoSolidIcon";
 
 export interface ContractsListProps {
   data?: IContractItemTx[];
@@ -40,7 +39,7 @@ const ContractsList: React.FC<ContractsListProps> = ({ data }) => {
               <UnderlineText onClick={() => setOpenContactInfo(!openContractInfo)}>
                 {t("explain.smartContract")}
               </UnderlineText>
-              <InfoIcon />
+              <InfoSolidIcon onClick={() => setOpenContactInfo(!openContractInfo)} />
             </Box>
           </Grid>
           {data &&

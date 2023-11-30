@@ -68,7 +68,6 @@ export const ViewDetailScroll = styled(Box)(({ theme }) => ({
   marginRight: "16px",
   overflowX: "hidden",
   overflow: "hidden",
-  paddingTop: "15px",
   [theme.breakpoints.down("sm")]: {
     marginRight: "0px",
     overflowY: "auto",
@@ -363,6 +362,8 @@ export const DetailLinkName = styled("h4")`
   margin: 0;
   font-size: var(--font-size-text-large);
   color: ${(props) => props.theme.palette.secondary.main};
+  display: flex;
+  align-items: center;
 `;
 export const DetailLinkRight = styled("span")`
   color: ${(props) => props.theme.palette.secondary.light};
@@ -484,7 +485,8 @@ export const StakeKeyHeader = styled(BoxRaised)`
   padding: 17px 20px;
   gap: 20px;
   margin: 10px 0px;
-  background-color: ${({ theme }) => theme.palette.primary[200]};
+  background-color: ${({ theme }) =>
+    theme.mode === "dark" ? theme.palette.secondary[100] : theme.palette.primary[200]};
 `;
 
 export const StakeKeyLink = styled(StyledLink)`

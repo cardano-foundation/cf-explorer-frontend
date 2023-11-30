@@ -40,28 +40,18 @@ import {
   WrapSignUp,
   WrapTitle
 } from "./styles";
+import { AlertCustom } from "../ForgotPassword/styles";
 
+interface IError {
+  value: string;
+  error?: string;
+  touched?: boolean;
+}
 interface IForm {
-  password: {
-    value: string;
-    error?: string;
-    touched?: boolean;
-  };
-  email: {
-    value: string;
-    error?: string;
-    touched?: boolean;
-  };
-  confirmPassword: {
-    value: string;
-    error?: string;
-    touched?: boolean;
-  };
-  confirmEmail: {
-    value: string;
-    error?: string;
-    touched?: boolean;
-  };
+  password: IError;
+  email: IError;
+  confirmPassword: IError;
+  confirmEmail: IError;
 }
 const formReducer = (state: IForm, event: IAction) => {
   if (!event.name) return state;
@@ -87,6 +77,7 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [checkedAgree, setCheckedAgree] = useState(false);
+  const [serverErr, setServerErr] = useState("");
 
   useEffect(() => {
     document.body.style.backgroundColor =
@@ -222,6 +213,7 @@ export default function SignUp() {
       touched: event.target.value.trim() !== "",
       error: getError(event.target.name, event.target.value)
     });
+    if (serverErr) setServerErr("");
   };
 
   useEffect(() => {
@@ -297,7 +289,9 @@ export default function SignUp() {
       }
     } catch (error) {
       if (error instanceof AxiosError) {
-        if (error?.response?.data?.errorCode === ACCOUNT_ERROR.EMAIL_IS_ALREADY_EXIST) {
+        if (error.response?.status === 500) {
+          setServerErr(t(ACCOUNT_ERROR.SERVER_UNKNOWN_ERROR));
+        } else if (error?.response?.data?.errorCode === ACCOUNT_ERROR.EMAIL_IS_ALREADY_EXIST) {
           setFormData({
             name: "email",
             touched: true,
@@ -314,6 +308,12 @@ export default function SignUp() {
             });
           }
         }
+      } else {
+        setFormData({
+          name: "email",
+          touched: true,
+          error: t(ACCOUNT_ERROR.SERVER_UNKNOWN_ERROR)
+        });
       }
     } finally {
       setLoading(false);
@@ -347,6 +347,13 @@ export default function SignUp() {
                 <IoMdClose color={theme.palette.secondary.light} />
               </CloseButton>
               <WrapInput>
+                {serverErr ? (
+                  <Box textAlign="left" pb="24px">
+                    <AlertCustom variant={theme.isDark ? "filled" : "standard"} severity="error">
+                      {serverErr}
+                    </AlertCustom>
+                  </Box>
+                ) : null}
                 <InputCustom
                   inputRef={emailTextField}
                   startAdornment={

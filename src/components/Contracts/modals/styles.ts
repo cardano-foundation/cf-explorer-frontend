@@ -1,4 +1,4 @@
-import { Box, List, ListItem, ListItemText, styled } from "@mui/material";
+import { Box, List, ListItem, ListItemText, Typography, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const ModalContent = styled(Box)`
@@ -9,11 +9,32 @@ export const ModalContent = styled(Box)`
   gap: 12px;
   max-height: 70dvh;
   padding: 4px;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background: ${({ theme }) => theme.palette.secondary.light};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${({ theme }) => theme.palette.primary[100]};
+    }
+  }
 `;
 
 export const SlotContainer = styled(Box)`
   flex: 1;
   overflow: auto;
+  min-height: 20vh;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     max-height: 70dvh;
   }
@@ -113,7 +134,8 @@ export const TitleReference = styled(Box)(({ theme }) => ({
 }));
 export const ValueReference = styled(Box)(({ theme }) => ({
   color: theme.palette.secondary.light,
-  fontSize: 16
+  fontSize: 16,
+  marginTop: 4
 }));
 export const UTXOReference = styled(Link)(({ theme }) => ({
   color: `${theme.palette.primary.main} !important`,
@@ -124,3 +146,25 @@ export const ExternalLink = styled("a")(({ theme }) => ({
   color: `${theme.palette.primary.main} !important`,
   textDecoration: "underline !important"
 }));
+
+export const Index = styled(Typography)`
+  font-size: 16px;
+  font-weight: bold;
+`;
+
+export const UTXOWapper = styled(Box)<{ index?: number }>`
+  position: relative;
+  &::after {
+    content: ${({ index }) => `"#${index}"`};
+    display: inline-block;
+    position: absolute;
+    width: 40px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 700;
+    color: ${({ theme }) => theme.palette.secondary.light};
+    top: 3px;
+    right: 16px;
+    cursor: unset;
+  }
+`;

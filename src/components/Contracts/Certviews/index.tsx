@@ -83,11 +83,10 @@ const Certviews: React.FC<CertviewsProps> = ({ data, isMobile }) => {
       <Center isMoble={+!!isMobile}>
         <CertRrounded ref={certRef}>
           <CertificateType redeemerCertType={data?.redeemerCertType} />
-          <LongButton>
+          <LongButton onClick={() => setOpenRedeemer(!openRedeemer)}>
             {t("contract.redeemer")}
             <CustomIcon
               style={{ cursor: "pointer" }}
-              onClick={() => setOpenRedeemer(!openRedeemer)}
               icon={OutlineEye}
               width={22}
               fill={theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white}

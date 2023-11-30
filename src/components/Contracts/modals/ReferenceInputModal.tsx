@@ -1,17 +1,17 @@
 import { Box } from "@mui/material";
-import React from "react";
 import { t } from "i18next";
+import React from "react";
 
-import CustomModal from "src/components/commons/CustomModal";
-import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { SmallInfoIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { InfoIcon } from "src/commons/resources";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
-import { ExternalLink, ModalContent, TitleReference, UTXOReference, ValueReference } from "./styles";
 import ExplanDropdown from "../common/ExplanDropdown";
-import { ReferenceCount } from "../styles";
 import { DataCardBox, DataReferenceValue } from "../common/styles";
+import { ReferenceCount } from "../styles";
+import { ExternalLink, ModalContent, TitleReference, UTXOReference, UTXOWapper, ValueReference } from "./styles";
 
 interface ReferenceInputModal {
   data?: IContractItemTx;
@@ -45,7 +45,7 @@ const ReferenceInputModal: React.FC<ReferenceInputModal> = ({ data, ...props }) 
         <DataReferenceValue>
           {(referenceInputs || []).map((referenceInputs, index) => {
             const showTooltip = referenceInputs.scriptHash === data?.scriptHash;
-            return <Box showTooltip={showTooltip} component={Item} data={referenceInputs} key={index} />;
+            return <Box showTooltip={showTooltip} my={1} component={Item} data={referenceInputs} key={index} />;
           })}
         </DataReferenceValue>
       </ModalContent>
@@ -55,41 +55,45 @@ const ReferenceInputModal: React.FC<ReferenceInputModal> = ({ data, ...props }) 
 
 export default ReferenceInputModal;
 
+const DatumData = ({ data }: { data: string }) => {
+  if (!data) return <ValueReference>{t("common.notAvailable")}</ValueReference>;
+
+  return <ValueReference>{data.length > 20 ? <DynamicEllipsisText value={data} isTooltip /> : data}</ValueReference>;
+};
+
 const Item = ({ data, showTooltip }: { data: ReferenceInput; showTooltip: boolean }) => {
   return (
-    <DataCardBox my={1}>
+    <DataCardBox mb={1} sx={{ ":last-child": { marginBottom: "3px" } }}>
       <Box>
         <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
           <TitleReference>UTXO:</TitleReference>
           {showTooltip ? (
             <Box component={CustomTooltip} title={t("contract.referenceInput.canOnlyBeUsedByThisContract")}>
-              <InfoIcon />
+              <Box typeof="span">
+                <SmallInfoIcon />
+              </Box>
             </Box>
           ) : (
             <Box component={CustomTooltip} title={t("contract.referenceInput.canBeUsedByAllContract")}>
-              <InfoIcon />
+              <Box typeof="span">
+                <SmallInfoIcon />
+              </Box>
             </Box>
           )}
         </Box>
-        <UTXOReference to={details.transaction(data.txHash)}>
-          <DynamicEllipsisText value={data.txHash || ""} isTooltip />
-        </UTXOReference>
+        <UTXOWapper index={data.index}>
+          <UTXOReference to={details.transaction(data.txHash)}>
+            <DynamicEllipsisText value={data.txHash || ""} isTooltip />
+          </UTXOReference>
+        </UTXOWapper>
       </Box>
       <Box>
         <TitleReference>Datum Hash:</TitleReference>
-        {data.datumHash && (
-          <ValueReference>
-            {data.datumHash.length > 20 ? <DynamicEllipsisText value={data.datumHash} isTooltip /> : data.datumHash}
-          </ValueReference>
-        )}
+        <DatumData data={data.datumHash} />
       </Box>
       <Box>
         <TitleReference>Datum:</TitleReference>
-        {data.datum && (
-          <ValueReference>
-            {data.datum.length > 20 ? <DynamicEllipsisText value={data.datum} isTooltip /> : data.datum}
-          </ValueReference>
-        )}
+        <DatumData data={data.datum} />
       </Box>
     </DataCardBox>
   );

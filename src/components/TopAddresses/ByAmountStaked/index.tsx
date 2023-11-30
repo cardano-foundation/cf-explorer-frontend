@@ -57,8 +57,8 @@ const TopAddressesByAmountStaked = () => {
           );
         }
         return (
-          <StyledLink to={details.address(r.stakeKey)}>
-            <DynamicEllipsisText value={r.stakeKey} isTooltip />
+          <StyledLink to={details.delegation(r.poolId)}>
+            <DynamicEllipsisText value={r.poolId} isTooltip />
           </StyledLink>
         );
       }

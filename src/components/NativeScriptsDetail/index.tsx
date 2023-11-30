@@ -18,6 +18,7 @@ import MinttingBurningPolicy from "src/components/NativeScriptsDetail/Tabs/Mintt
 import Script from "src/components/NativeScriptsDetail/Tabs/Script";
 import Token from "src/components/NativeScriptsDetail/Tabs/Token";
 import AssetHolders from "src/components/NativeScriptsDetail/Tabs/AssetHolders";
+import { details } from "src/commons/routers";
 
 import { StyledContainer } from "./styles";
 import { useNativeScriptDetail } from "./Tabs";
@@ -34,16 +35,16 @@ const NativeScriptsDetail = () => {
 
   const smartcontractTabs: TTab[] = [
     {
-      key: "mintingBurningPolicy",
-      icon: MintingBurningPolicyIcon,
-      children: <MinttingBurningPolicy />,
-      label: <Box data-testid="ns.mintBurnPolicy">Minting/ Burning Policy</Box>
-    },
-    {
       key: "associatedAddresses",
       icon: AssociatedAddressesIcon,
       children: <AssociatedAddress />,
       label: <Box data-testid="ns.AssociatedAddresses">{t("common.associatedAddresses")}</Box>
+    },
+    {
+      key: "mintingBurningPolicy",
+      icon: MintingBurningPolicyIcon,
+      children: <MinttingBurningPolicy />,
+      label: <Box data-testid="ns.mintBurnPolicy">Minting/ Burning Policy</Box>
     },
     {
       key: "script",
@@ -67,10 +68,14 @@ const NativeScriptsDetail = () => {
 
   const hiddenKeys = useMemo(() => {
     const keys: string[] = [];
-    if (!associatedAddress?.length) keys.push("associatedAddresses");
+    // if (!associatedAddress?.length) keys.push("associatedAddresses");
     if (!keyHashes?.length) keys.push("mintingBurningPolicy");
     return keys;
   }, [associatedAddress, keyHashes]);
+
+  const onTabChange = (tab: string) => {
+    history.replace(details.nativeScriptDetail(id, tab));
+  };
 
   return (
     <StyledContainer>
@@ -89,7 +94,7 @@ const NativeScriptsDetail = () => {
         }}
       />
       <HeaderOverview data={{ scriptHash: id }} />
-      <CustomAccordion loading={loading} tabs={smartcontractTabs} hiddenKeys={hiddenKeys} />
+      <CustomAccordion loading={loading} tabs={smartcontractTabs} hiddenKeys={hiddenKeys} onTabChange={onTabChange} />
     </StyledContainer>
   );
 };

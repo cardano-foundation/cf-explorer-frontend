@@ -6,11 +6,11 @@ describe("block spec", () => {
     cy.get('[data-testid="submenu-button-top_ada_holders"]').click();
     cy.get("button").contains("By Amount Staked").click();
     cy.get("table td").eq(2).click();
-    cy.get("button").contains("Delegation History").should("be.visible");
-    cy.get("button").contains("Stake Address History").should("be.visible");
-    cy.get("button").contains("Withdrawal History").should("be.visible");
-    cy.get("button").contains("Instantaneous Rewards").should("be.visible");
-    cy.get("button").contains("Transactions").should("be.visible");
+    cy.get(".MuiAccordionSummary-root").contains("Delegation History");
+    cy.get(".MuiAccordionSummary-root").contains("Stake Address History");
+    cy.get(".MuiAccordionSummary-root").contains("Withdrawal History");
+    cy.get(".MuiAccordionSummary-root").contains("Instantaneous Rewards");
+    cy.get(".MuiAccordionSummary-root").contains("Transactions");
 
     cy.get('[data-testid="table-common"] tr th').contains("Transaction Hash");
     cy.get('[data-testid="table-common"] tr th').contains("Created At");
@@ -18,25 +18,25 @@ describe("block spec", () => {
     cy.get('[data-testid="table-common"] tr th').contains("Pool ID");
     cy.get('[data-testid="table-common"] tr th').contains("Pool Name");
 
-    cy.get("button").contains("Stake Address History").click();
+    cy.get(".MuiAccordionSummary-root").contains("Stake Address History").click();
     cy.get('[data-testid="table-common"] tr th').contains("Transaction Hash");
     cy.get('[data-testid="table-common"] tr th').contains("Created At");
     cy.get('[data-testid="table-common"] tr th').contains("Block");
     cy.get('[data-testid="table-common"] tr th').contains("Action");
 
-    cy.get("button").contains("Withdrawal History").click();
+    cy.get(".MuiAccordionSummary-root").contains("Withdrawal History").click();
     cy.get('[data-testid="table-common"] th').contains("Transaction Hash");
     cy.get('[data-testid="table-common"] th').contains("Created At");
     cy.get('[data-testid="table-common"] th').contains("Block");
     cy.get('[data-testid="table-common"] th').contains("Amount");
 
-    cy.get("button").contains("Instantaneous Rewards").click();
+    cy.get(".MuiAccordionSummary-root").contains("Instantaneous Rewards").click();
     cy.get('[data-testid="table-common"] th').contains("Transaction Hash");
     cy.get('[data-testid="table-common"] th').contains("Created At");
     cy.get('[data-testid="table-common"] th').contains("Block");
     cy.get('[data-testid="table-common"] th').contains("Rewards Paid");
 
-    cy.get("button").contains("Transactions").click();
+    cy.get(".MuiAccordionSummary-root").contains("Transactions").click();
     cy.get('[data-testid="table-common"] th').contains("Transaction Hash");
     cy.get('[data-testid="table-common"] th').contains("Created At");
     cy.get('[data-testid="table-common"] th').contains("Block");

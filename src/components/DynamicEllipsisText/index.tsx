@@ -25,7 +25,7 @@ const SubPart = styled("span")`
 
 const FirstPart = styled(SubPart)`
   max-width: calc(100% - 130px);
-  min-width: 95px;
+  min-width: 50px;
   text-overflow: ellipsis;
 `;
 const Lastpart = styled(SubPart)`
@@ -58,7 +58,8 @@ const DynamicEllipsisText = ({
   sxFirstPart,
   sxLastPart,
   sx,
-  customTruncateFold
+  customTruncateFold,
+  isNoLimitPixel
 }: {
   value: string;
   postfix?: number;
@@ -69,6 +70,7 @@ const DynamicEllipsisText = ({
   sxLastPart?: SxProps<Theme>;
   sx?: SxProps<Theme>;
   customTruncateFold?: [number, number];
+  isNoLimitPixel?: boolean;
 }) => {
   const randomIdRef = useRef(`ELIPSIS_${useId()}`);
 
@@ -100,7 +102,7 @@ const DynamicEllipsisText = ({
   const firstPart = value?.slice(0, value?.length - postfix);
   const lastPart = value?.slice(-postfix);
 
-  if (isMin) {
+  if (isMin && !isNoLimitPixel) {
     return (
       <CustomTooltip title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}>
         <ContainerShortHand id={randomIdRef.current} data-testid="ellipsis-text" sx={sx}>

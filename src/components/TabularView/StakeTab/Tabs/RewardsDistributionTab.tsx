@@ -1,31 +1,31 @@
 import { Box } from "@mui/material";
-import { useContext, useState } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useContext } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { stringify } from "qs";
+import { omit } from "lodash";
 
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 import ADAicon from "src/components/commons/ADAIcon";
 import { GreenWalletIcon } from "src/components/commons/GreenWalletIcon";
 import { AdaValue } from "src/components/commons/ADAValue";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
+import CustomFilter from "src/components/commons/CustomFilter";
+import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
+import Table, { Column } from "src/components/commons/Table";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 
-import useFetchList from "../../../../commons/hooks/useFetchList";
-import { details } from "../../../../commons/routers";
-import { API } from "../../../../commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, getPageInfo } from "../../../../commons/utils/helper";
-import CustomFilter, { FilterParams } from "../../../commons/CustomFilter";
-import { WrapFilterDescription } from "../../../StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
-import Table, { Column } from "../../../commons/Table";
 import { AmountADARow, StyledLink, WrapWalletLabel, WrapperDelegationTab } from "../styles";
 
 const RewardsDistributionTab = () => {
   const { t } = useTranslation();
   const detailData = useContext(DelegatorDetailContext);
   const { stakeId } = useParams<{ stakeId: string }>();
-  const [sort, setSort] = useState<string>("");
-  const { search } = useLocation();
   const history = useHistory();
-  const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
-  const [params, setParams] = useState<FilterParams>({});
+  const { pageInfo, setSort } = usePageInfo();
 
   const columns: Column<RewardDistributionItem>[] = [
     {
@@ -55,12 +55,9 @@ const RewardsDistributionTab = () => {
   ];
 
   const fetchData = useFetchList<RewardDistributionItem>(stakeId ? API.STAKE_LIFECYCLE.RECEIVED_REWARD(stakeId) : "", {
-    ...pageInfo,
-    ...params,
-    sort: sort || params.sort
+    ...pageInfo
   });
   const { total } = fetchData;
-
   return (
     <>
       <WrapperDelegationTab>
@@ -78,11 +75,10 @@ const RewardsDistributionTab = () => {
             excludes={["search"]}
             searchLabel=""
             sortKey="id"
-            filterValue={params}
-            onChange={(params) => {
-              setParams(params);
-              setPageInfo((pre) => ({ ...pre, page: 0 }));
-            }}
+            filterValue={omit(pageInfo, ["page", "size"])}
+            onChange={(params) =>
+              history.replace({ search: params ? stringify({ ...pageInfo, page: 0, ...params }) : "" })
+            }
           />
         </Box>
       </WrapperDelegationTab>
@@ -93,7 +89,9 @@ const RewardsDistributionTab = () => {
         pagination={{
           ...pageInfo,
           total: fetchData.total,
-          onChange: (page, size) => setPageInfo((pre) => ({ ...pre, page: page - 1, size }))
+          onChange: (page, size) => {
+            history.replace({ search: stringify({ ...pageInfo, page, size }) });
+          }
         }}
         onClickRow={(e, r: RewardDistributionItem) => history.push(details.epoch(r.epoch))}
       />

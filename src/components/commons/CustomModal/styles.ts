@@ -54,8 +54,26 @@ export const WrapTitle = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const ContentContainer = styled(Box)(() => ({
+export const ContentContainer = styled(Box)(({ theme }) => ({
   maxWidth: "min(90vw, 1200px)",
   maxHeight: "min(90vh, 800px)",
-  overflowY: "auto"
+  overflowY: "auto",
+  "&::-webkit-scrollbar": {
+    width: "5px",
+    height: "5px"
+  },
+  "&::-webkit-scrollbar-track": {
+    background: "transparent"
+  },
+  "&::-webkit-scrollbar-thumb": {
+    background: "transparent"
+  },
+  "&:hover": {
+    "&::-webkit-scrollbar-thumb": {
+      background: theme.palette.secondary.light
+    },
+    "&::-webkit-scrollbar-track": {
+      background: theme.palette.primary[100]
+    }
+  }
 }));
