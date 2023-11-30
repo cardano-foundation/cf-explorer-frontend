@@ -23,7 +23,7 @@ export const StyledAccordion = styled(Accordion)<{
     width: "calc(100% - 40px)",
     margin: "0 auto",
     height: "1px",
-    borderBottom: `2px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
+    borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
     background: "transparent"
   }
 }));

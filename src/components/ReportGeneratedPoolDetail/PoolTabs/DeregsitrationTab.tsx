@@ -1,13 +1,15 @@
 import { Box, IconButton, useTheme } from "@mui/material";
+import { stringify } from "qs";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 import { EyeIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { getShortHash } from "src/commons/utils/helper";
+import { formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { DeregistrationCertificateModal } from "src/components/StakingLifeCycle/SPOLifecycle/Deregistration";
 import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
 import { AdaValue } from "src/components/commons/ADAValue";
@@ -20,12 +22,9 @@ const DeregsitrationTab = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const { reportId = "" } = useParams<{ reportId: string }>();
-  const [params, setParams] = useState({
-    page: 0,
-    size: 50
-  });
+  const history = useHistory();
+  const { pageInfo, setSort } = usePageInfo();
   const [selected, setSelected] = useState<SPODeregistration | null>(null);
-  const [sort, setSort] = useState<string>("");
 
   const columns: Column<SPODeregistrationTabpular>[] = [
     {
@@ -46,7 +45,7 @@ const DeregsitrationTab = () => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       },
       render(data) {
-        return data.time;
+        return formatDateTimeLocal(data.time);
       }
     },
     {
@@ -78,8 +77,7 @@ const DeregsitrationTab = () => {
   const fetchData = useFetchList<SPODeregistrationTabpular>(
     reportId ? API.REPORT.PREPORT_DEREGSITRATION(reportId) : "",
     {
-      ...params,
-      sort
+      ...pageInfo
     }
   );
 
@@ -93,9 +91,10 @@ const DeregsitrationTab = () => {
           count: fetchData.total
         }}
         pagination={{
-          ...params,
+          ...pageInfo,
+          page: pageInfo.page,
           total: fetchData.total,
-          onChange: (page, size) => setParams({ page: page - 1, size })
+          onChange: (page, size) => history.replace({ search: stringify({ ...pageInfo, page, size }) })
         }}
       />
       <DeregistrationCertificateModal data={selected} open={!!selected} handleCloseModal={() => setSelected(null)} />

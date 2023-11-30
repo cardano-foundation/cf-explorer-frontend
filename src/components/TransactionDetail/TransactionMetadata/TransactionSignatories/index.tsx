@@ -1,9 +1,9 @@
 import React from "react";
-import { MdInfoOutline } from "react-icons/md";
 import { Box } from "@mui/material";
 import { t } from "i18next";
 
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import { Column } from "src/components/commons/Table";
 
 import { TableProtocol, Wrapper, WrapperRowContent, WrapperSignerPublicKey } from "./styles";
@@ -35,7 +35,7 @@ const TransactionSignatories: React.FC<IProps> = ({ data }) => {
               {r?.delegateKey ? (
                 <CustomTooltip title={t("trx.tooltipSignatories")} placement={"top"}>
                   <Box>
-                    <MdInfoOutline />
+                    <InfoSolidIcon />
                   </Box>
                 </CustomTooltip>
               ) : null}

@@ -3,10 +3,10 @@ import { Box, Button, Divider, FormHelperText, IconButton, Input, alpha, styled 
 import { User2RC } from "src/commons/resources";
 
 export const Container = styled(Box)`
-  display: flex;
-  min-width: 100vw;
-  justify-content: center;
-  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-item: center;
 `;
 
 export const CloseButton = styled(IconButton)<{ saving: number }>`
@@ -32,6 +32,7 @@ export const WrapContent = styled(Box)`
   gap: 5px;
   align-items: center;
   justify-content: center;
+  padding: 30px 0;
 `;
 
 export const WrapTitle = styled(Box)`

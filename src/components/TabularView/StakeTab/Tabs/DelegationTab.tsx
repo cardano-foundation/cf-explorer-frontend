@@ -1,7 +1,9 @@
 import { Box, IconButton, useTheme } from "@mui/material";
 import { useContext, useState } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { stringify } from "qs";
+import { omit } from "lodash";
 
 import { GreenWalletIcon } from "src/components/commons/GreenWalletIcon";
 import DelegatorDetailContext from "src/components/StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
@@ -10,13 +12,14 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { EyeIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
+import { formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
-import CustomFilter, { FilterParams } from "src/components/commons/CustomFilter";
+import CustomFilter from "src/components/commons/CustomFilter";
 import { DelegationCertificateModal } from "src/components/StakingLifeCycle/DelegatorLifecycle/Delegation";
 import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import CustomIcon from "src/components/commons/CustomIcon";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 
 import { StyledLink, WrapperDelegationTab, WrapWalletLabel } from "../styles";
 
@@ -25,16 +28,12 @@ const DelegationTab = () => {
   const theme = useTheme();
   const detailData = useContext(DelegatorDetailContext);
   const { stakeId } = useParams<{ stakeId: string }>();
-  const { search } = useLocation();
   const history = useHistory();
-  const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
-  const [sort, setSort] = useState<string>("");
+  const { pageInfo, setSort } = usePageInfo();
+
   const [selected, setSelected] = useState<string>("");
-  const [params, setParams] = useState<FilterParams>({});
   const fetchData = useFetchList<DelegationItem>(stakeId ? API.STAKE_LIFECYCLE.DELEGATION(stakeId) : "", {
-    ...pageInfo,
-    ...params,
-    sort: sort || params.sort
+    ...pageInfo
   });
 
   const columns: Column<DelegationItem>[] = [
@@ -103,10 +102,10 @@ const DelegationTab = () => {
             {Math.min(total, pageInfo.size) <= 1 ? t("common.result") : t("common.results")}
           </WrapFilterDescription>
           <CustomFilter
-            filterValue={params}
+            filterValue={omit(pageInfo, ["page", "size"])}
             onChange={(params) => {
-              setParams(params);
-              setPageInfo((pre) => ({ ...pre, page: 0 }));
+              const newParams = omit({ ...params, txHash: params?.search }, ["search"]);
+              history.replace({ search: stringify({ page: 1, ...newParams }) });
             }}
             searchLabel={t("common.searchTx")}
           />
@@ -120,7 +119,7 @@ const DelegationTab = () => {
           ...pageInfo,
           page: pageInfo.page,
           total: fetchData.total,
-          onChange: (page, size) => setPageInfo((pre) => ({ ...pre, page: page - 1, size }))
+          onChange: (page, size) => history.replace({ search: stringify({ ...pageInfo, page, size }) })
         }}
         onClickRow={(e, r: DelegationItem) => history.push(details.transaction(r.txHash))}
       />

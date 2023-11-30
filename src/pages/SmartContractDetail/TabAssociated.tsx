@@ -1,45 +1,40 @@
 import { Box } from "@mui/material";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
 import { get } from "lodash";
 import { useTranslation } from "react-i18next";
 
-import useFetch from "src/commons/hooks/useFetch";
-import { API } from "src/commons/utils/api";
-import DynamicEllipsisText from "src/components/DynamicEllipsisText";
-import { EmptyRecord } from "src/components/commons/Table";
 import { details } from "src/commons/routers";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
+import { EmptyRecord } from "src/components/commons/Table";
 
-import { StyledSubNameTab, StyledLink } from "./styles";
+import { StyledLink, StyledSubNameTab } from "./styles";
 
-const TabAssociated = ({ setVersion }: { setVersion: (v: string) => void }) => {
-  const { address } = useParams<{ address: string }>();
+export type TTabAssociatedProps = {
+  data?: ScriptAssociatedAddress | null;
+  loading: boolean;
+};
+
+const TabAssociated: React.FC<TTabAssociatedProps> = ({ data, loading }) => {
   const { t } = useTranslation();
-  const { data, loading } = useFetch<ScriptAssociatedAddress>(API.SCRIPTS.ASSOCIATED_ADDRESS(address));
 
-  useEffect(() => {
-    if (data?.scriptType) {
-      setVersion(data?.scriptType);
+  const renderData = () => {
+    if (loading) {
+      return <Box component={CommonSkeleton} variant="rectangular" width={"100%"} height={"80px"} borderRadius={2} />;
     }
-  }, [data?.scriptType]);
+    if (get(data, "associatedAddresses", []).length > 0) {
+      return data?.associatedAddresses.map((address: string) => (
+        <StyledLink to={address.startsWith("stake") ? details.stake(address) : details.address(address)} key={address}>
+          <DynamicEllipsisText value={address} />
+        </StyledLink>
+      ));
+    }
+    return <EmptyRecord />;
+  };
 
   return (
     <Box>
       <StyledSubNameTab data-testid="sc.subNameTab">{t("AssociatedAddresses")}:</StyledSubNameTab>
-      <Box>
-        {loading || get(data, "associatedAddresses", []).length > 0 ? (
-          data?.associatedAddresses.map((address: string) => (
-            <StyledLink
-              to={address.startsWith("stake") ? details.stake(address) : details.address(address)}
-              key={address}
-            >
-              <DynamicEllipsisText value={address} />
-            </StyledLink>
-          ))
-        ) : (
-          <EmptyRecord />
-        )}
-      </Box>
+      <Box>{renderData()}</Box>
     </Box>
   );
 };

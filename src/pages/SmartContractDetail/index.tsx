@@ -6,7 +6,6 @@ import ContractTabs from "./ContractTabs";
 
 const SmartContractDetail = () => {
   const [version, setVersion] = useState<string | undefined>();
-
   return (
     <DetailContainer>
       <ContractHeader version={version} />

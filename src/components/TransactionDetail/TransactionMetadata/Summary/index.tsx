@@ -9,7 +9,11 @@ import {
   ArrowUpDarkIcon,
   ArrowUpIcon,
   SummaryWalletDark,
-  WalletRoundedIcon
+  WalletRoundedIcon,
+  DisableArrowUpLightIcon,
+  DisableArrowDownLightIcon,
+  DisableArrowUpDarkIcon,
+  DisableArrowDownDarkIcon
 } from "src/commons/resources";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { details } from "src/commons/routers";
@@ -82,25 +86,40 @@ const SummaryItems = ({
         <WrapItemsInfo paddingX={2}>
           <Icon
             src={
-              type === "up"
+              item.value > 0
                 ? theme.isDark
                   ? ArrowUpDarkIcon
                   : ArrowUpIcon
+                : item.value < 0
+                ? theme.isDark
+                  ? ArrowDownDarkIcon
+                  : ArrowDownIcon
                 : theme.isDark
-                ? ArrowDownDarkIcon
-                : ArrowDownIcon
+                ? DisableArrowUpDarkIcon
+                : DisableArrowUpLightIcon
             }
             alt="send icon"
           />
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
-            <TitleText>{type === "down" ? `${t("tab.adaSent")}` : `${t("tab.adaReceived")}`}</TitleText>
+            <TitleText
+              style={
+                item.value === 0
+                  ? {
+                      color: theme.isDark ? theme.palette.secondary[800] : theme.palette.secondary[600],
+                      paddingBottom: 0
+                    }
+                  : {}
+              }
+            >
+              {type === "down" ? `${t("tab.adaSent")}` : `${t("tab.adaReceived")}`}
+            </TitleText>
             <Box display="flex" alignItems="center">
               <ValueText>
                 {item.value
                   ? type === "down"
                     ? `${formatADAFull(item.value).replace("-", "")}`
                     : `+${formatADAFull(item.value)}`
-                  : t("common.na")}
+                  : ""}
                 {item.value ? <Box component={ADAicon} ml={1} display={"inline"} /> : null}
               </ValueText>
             </Box>
@@ -110,12 +129,34 @@ const SummaryItems = ({
       <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
         <WrapTokensInfo paddingX={2}>
           <Box display={"flex"}>
-            <Icon src={theme.isDark ? ArrowDownDarkIcon : ArrowDownIcon} alt="send icon" />
+            <Icon
+              src={
+                theme.isDark
+                  ? tokensSent.length === 0
+                    ? DisableArrowDownDarkIcon
+                    : ArrowDownDarkIcon
+                  : tokensSent.length === 0
+                  ? DisableArrowDownLightIcon
+                  : ArrowDownIcon
+              }
+              alt="send icon"
+            />
             <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
-              <TitleText>{t("tab.tokensSent")}</TitleText>
+              <TitleText
+                style={
+                  tokensSent.length === 0
+                    ? {
+                        color: theme.isDark ? theme.palette.secondary[800] : theme.palette.secondary[600],
+                        paddingBottom: 0
+                      }
+                    : {}
+                }
+              >
+                {t("tab.tokensSent")}
+              </TitleText>
               <ValueText alignSelf={"flex-start"}>
                 {tokensSent.length === 0
-                  ? t("common.na")
+                  ? ""
                   : tokensSent.length === 1
                   ? formatNumberDivByDecimals(
                       tokensSent[0]?.assetQuantity || 0,
@@ -153,12 +194,34 @@ const SummaryItems = ({
       <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
         <WrapTokensInfo paddingX={2}>
           <Box display={"flex"}>
-            <Icon src={theme.isDark ? ArrowUpDarkIcon : ArrowUpIcon} alt="send icon" />
+            <Icon
+              src={
+                theme.isDark
+                  ? tokensReceived.length === 0
+                    ? DisableArrowUpDarkIcon
+                    : ArrowUpDarkIcon
+                  : tokensReceived.length === 0
+                  ? DisableArrowUpLightIcon
+                  : ArrowUpIcon
+              }
+              alt="send icon"
+            />
             <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
-              <TitleText>{t("tab.tokensReceived")}</TitleText>
+              <TitleText
+                style={
+                  tokensReceived.length === 0
+                    ? {
+                        color: theme.isDark ? theme.palette.secondary[800] : theme.palette.secondary[600],
+                        paddingBottom: 0
+                      }
+                    : {}
+                }
+              >
+                {t("tab.tokensReceived")}
+              </TitleText>
               <ValueText alignSelf={"flex-start"}>
                 {tokensReceived.length === 0
-                  ? t("common.na")
+                  ? ""
                   : tokensReceived.length === 1
                   ? `+${formatNumberDivByDecimals(
                       tokensReceived[0]?.assetQuantity || 0,

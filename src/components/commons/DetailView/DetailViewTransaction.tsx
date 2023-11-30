@@ -29,6 +29,7 @@ import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { RootState } from "src/stores/types";
 
+import { CustomNumberBadge } from "../CustomNumberBadge";
 import ADAicon from "../ADAIcon";
 import CopyButton from "../CopyButton";
 import CustomIcon from "../CustomIcon";
@@ -338,7 +339,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
                       <DetailLinkIcon>{icon}</DetailLinkIcon>
                       <DetailLinkName>
                         {label}
-                        {Array.isArray(value) ? `(${value.length})` : null}
+                        <CustomNumberBadge value={Array.isArray(value) ? value.length : null} />
                       </DetailLinkName>
                     </DetailLabel>
                     <DetailValue>

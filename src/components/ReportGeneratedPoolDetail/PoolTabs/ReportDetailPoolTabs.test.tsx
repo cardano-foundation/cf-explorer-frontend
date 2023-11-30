@@ -37,8 +37,9 @@ describe("DeregsitrationTab component", () => {
 
   it("should component render", () => {
     render(<DeregsitrationTab />);
+    screen.logTestingPlaygroundURL();
     expect(screen.getByRole("link", { name: mockData.txHash })).toBeInTheDocument();
-    expect(screen.getByRole("cell", { name: mockData.time, hidden: true }));
+    expect(screen.getByRole("columnheader", { name: /transaction hash/i }));
     expect(screen.getByRole("button", { name: /eye\.svg/i, hidden: true })).toBeInTheDocument();
   });
 

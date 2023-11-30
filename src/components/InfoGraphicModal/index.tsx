@@ -1,7 +1,7 @@
 import { useTheme } from "@mui/material";
 import { useEffect } from "react";
 
-import InfoGraphicImage from "src/commons/resources/images/infographic.png";
+import InfoGraphicImage from "src/commons/resources/images/explaning-staking.png";
 
 import { Image } from "./styles";
 import CustomModal from "../commons/CustomModal";
