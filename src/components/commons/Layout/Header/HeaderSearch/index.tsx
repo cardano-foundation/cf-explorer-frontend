@@ -168,7 +168,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
 
   const adaHandleSearch = async (query: string) => {
     try {
-      return await axios.get(API.ADAHanlde(query)).then((data) => data.data);
+      return await axios.get(API.ADAHandle(query)).then((data) => data.data);
     } catch (error) {
       // console.log(error);
     }

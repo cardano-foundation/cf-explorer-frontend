@@ -95,6 +95,7 @@ const Routes: React.FC = () => {
       <Route path={routers.STAKE_ADDRESS_REGISTRATION} exact component={StakeAddressRegistration} />
       <Route path={routers.STAKE_ADDRESS_DEREGISTRATION} exact component={StakeAddressDeregistration} />
       <Route path={routers.STAKE_DETAIL} exact component={StakeDetail} />
+      <Route path={routers.STAKE_DETAIL_ADA_HANDLE} exact component={StakeDetail} />
       <Route path={routers.CONTRACT_LIST} exact component={ContractList} />
       <Route path={routers.CONTRACT_DETAIL} exact component={ContractDetail} />
       <Route path={routers.SMART_CONTRACT} exact component={SmartContractDetail} />
