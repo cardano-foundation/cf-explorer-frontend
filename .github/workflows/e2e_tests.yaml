@@ -34,6 +34,7 @@ jobs:
         with:
           start: npm start
           wait-on: "http://localhost:3000"
+          wait-on-timeout: 360
 
       - name: 📹 Archive test videos
         uses: actions/upload-artifact@v3
