@@ -31,6 +31,9 @@ jobs:
 
       - name: 🎳 Run tests
         uses: cypress-io/github-action@v6
+        with:
+          start: npm start
+          wait-on: "http://localhost:3000"
 
       - name: 📹 Archive test videos
         uses: actions/upload-artifact@v3
