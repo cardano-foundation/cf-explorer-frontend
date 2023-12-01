@@ -31,6 +31,7 @@ import {
 const DelegationLists: React.FC = () => {
   const { t } = useTranslation();
   const theme = useTheme();
+
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const { tickerNameSearch = "" } = history.location.state || {};
   const [value, setValue] = useState("");
@@ -40,7 +41,13 @@ const DelegationLists: React.FC = () => {
   const tableRef = useRef<HTMLDivElement>(null);
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   useEffect(() => {
-    if (tickerNameSearch !== search) history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
+    if (tickerNameSearch !== search)
+      history.replace({
+        search: stringify({
+          ...pageInfo,
+          page: 1
+        })
+      });
     if (tickerNameSearch) {
       setSearch(decodeURIComponent(tickerNameSearch));
     }
@@ -204,7 +211,12 @@ const DelegationLists: React.FC = () => {
           />
           <SubmitButton
             onClick={() => {
-              history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
+              history.replace({
+                search: stringify({
+                  ...pageInfo,
+                  page: 1
+                })
+              });
               history.push(routers.DELEGATION_POOLS, {
                 tickerNameSearch: (value || "").toLocaleLowerCase()
               });
@@ -222,10 +234,10 @@ const DelegationLists: React.FC = () => {
         <ShowRetiredPools>
           {t("glassary.showRetiredPools")}
           <AntSwitch
-            checked={isShowRetired === "true"}
-            onChange={(e) =>
-              history.replace({ search: stringify({ ...pageInfo, page: 0, retired: e.target.checked }) })
-            }
+            checked={isShowRetired === undefined ? true : isShowRetired === "true"}
+            onChange={(e) => {
+              history.replace({ search: stringify({ ...pageInfo, page: 0, retired: e.target.checked }) });
+            }}
           />
         </ShowRetiredPools>
       </TopSearchContainer>
