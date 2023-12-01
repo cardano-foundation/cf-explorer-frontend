@@ -3,14 +3,15 @@ import { isEmpty, isNil } from "lodash";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { CheckedCIPIcon, WarningCIPIcon } from "src/commons/resources";
-import { CIP25_DOCS_URL } from "src/commons/utils/constants";
+import { CIP60WarningIcon, CheckedCIPIcon } from "src/commons/resources";
+import { CIP60_DOCS_URL } from "src/commons/utils/constants";
 import { getShortHash } from "src/commons/utils/helper";
 import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
 
+import CustomIcon from "../commons/CustomIcon";
 import {
   CIPLabel,
   CIPModalSubtitle,
@@ -32,33 +33,33 @@ const DEFAULT_CIP25_REQUIRE = [
     format: "text",
     index: "1",
     property: "policy_ID",
-    valid: null,
+    valid: false,
     value: ""
   },
   {
     format: "utf-8",
     index: "2",
     property: "asset_name",
-    valid: null,
+    valid: false,
     value: ""
   },
   {
     format: "string",
     index: "3",
     property: "name",
-    valid: null,
+    valid: false,
     value: ""
   },
   {
     format: "uri | array",
     index: "4",
     property: "image",
-    valid: null,
+    valid: true,
     value: ""
   }
 ];
 
-const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
+const CIP60Modal: React.FC<TCIP25ComplianceModalProps> = (props) => {
   const { data, version } = props;
   const { t } = useTranslation();
   const tokenMaps = useMemo(() => {
@@ -91,25 +92,23 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
       key: "value",
       render: (r) =>
         r.format === "raw bytes" ? (
-          <CustomTooltip title={r.value}>
+          <CustomTooltip title={""}>
             <Typography display="inline-block" fontSize={14}>
               {getShortHash(r.value)}
             </Typography>
           </CustomTooltip>
         ) : (
-          <CustomTooltip title={r.value}>
-            <CustomTooltip title={r.value}>
-              <Typography
-                textOverflow="ellipsis"
-                overflow="hidden"
-                whiteSpace="nowrap"
-                display="inline-block"
-                maxWidth={120}
-                fontSize={14}
-              >
-                {r.value}
-              </Typography>
-            </CustomTooltip>
+          <CustomTooltip title={JSON.stringify(r.value)}>
+            <Typography
+              textOverflow="ellipsis"
+              overflow="hidden"
+              whiteSpace="nowrap"
+              display="inline-block"
+              maxWidth={120}
+              fontSize={14}
+            >
+              {JSON.stringify(r.value)}
+            </Typography>
           </CustomTooltip>
         )
     },
@@ -120,7 +119,9 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
         !isNil(r.valid) && (
           <Box pl={3}>
             <CustomTooltip title={r.valid ? t("common.passed") : t("common.needsReview")}>
-              <Box display="inline-block">{r.valid ? <CheckedCIPIcon /> : <WarningCIPIcon />}</Box>
+              <Box display="inline-block">
+                {r.valid ? <CheckedCIPIcon /> : <CustomIcon icon={CIP60WarningIcon} height={20} width={20} />}
+              </Box>
             </CustomTooltip>
           </Box>
         )
@@ -139,7 +140,7 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
       onClose={props.onClose}
       title={
         <CIPLabel>
-          {t("token.CIP25Compliance")} <ViewAllButtonExternal tooltipTitle={t("cip25.viewDocs")} to={CIP25_DOCS_URL} />
+          {t("token.cip60Title")} <ViewAllButtonExternal tooltipTitle={t("cip60.viewDocs")} to={CIP60_DOCS_URL} />
         </CIPLabel>
       }
     >
@@ -183,4 +184,4 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
   );
 };
 
-export default CIP25ComplianceModal;
+export default CIP60Modal;

@@ -63,6 +63,7 @@ const TokenDetail: React.FC = () => {
           metadataJson={data?.metadataJson}
           loading={loading}
           metadataCIP25={data?.metadataCIP25}
+          metadataCIP60={data?.metadataCIP60}
         />
       </StyledContainer>
     </OverviewMetadataTokenContext.Provider>
