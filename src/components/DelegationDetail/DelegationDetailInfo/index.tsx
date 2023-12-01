@@ -321,7 +321,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                   <ADAicon />
                 </FlexGap10>
               ) : (
-                t("common.notAvailable")
+                <FlexGap10>{t("common.notAvailable")}</FlexGap10>
               )}
             </InfoValue>
           </Item>
@@ -343,12 +343,12 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 display="flex"
                 flexDirection={isGalaxyFoldSmall ? "column" : "row"}
                 justifyContent="space-between"
-                alignItems={isGalaxyFoldSmall ? "flex-start" : "flex-end"}
+                alignItems={isGalaxyFoldSmall ? "flex-start" : "center"}
                 marginTop="9px"
+                mt={1}
               >
                 <Box
                   component={"span"}
-                  mt={1}
                   color={({ palette }) => palette.secondary.light}
                   style={{ fontSize: "14px", fontWeight: "400" }}
                 >
@@ -357,7 +357,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 {data?.saturation != null ? (
                   <Box fontSize={16}>{formatPercent(data?.saturation ? data?.saturation / 100 : 0)}</Box>
                 ) : (
-                  t("common.notAvailable")
+                  <FlexGap10> {t("common.notAvailable")}</FlexGap10>
                 )}
               </Box>
             </InfoValue>
