@@ -30,7 +30,7 @@ jobs:
         run: npm ci
 
       - name: 🎳 Run tests
-        run: npm test
+        uses: cypress-io/github-action@v6
 
       - name: 📹 Archive test videos
         uses: actions/upload-artifact@v3
