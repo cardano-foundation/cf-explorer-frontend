@@ -896,5 +896,9 @@
   "common.needsReview": "Needs Review",
   "common.severUnknownErrorMsg": "Something went wrong on our side, please try again later or report an issue",
   "cip25.viewDocs": "View CIP 25 document",
-  "outputs.label": "Outputs"
+  "outputs.label": "Outputs",
+  "token.cip60Title": "CIP 60 Compliance",
+  "token.cip60": "CIP-60",
+  "cip60.viewDocs": "View CIP 60 document",
+  "cip60.notCompliance": "This token is not compliant with CIP 60. See the details"
 }
