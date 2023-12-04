@@ -32,27 +32,26 @@ const DelegationLists: React.FC = () => {
   const { t } = useTranslation();
   const theme = useTheme();
 
-  const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
+  const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath; retired?: boolean }>();
   const tickerNameSearchValue = new URLSearchParams(document.location.search).get("search") || "";
-  const { tickerNameSearch = "" } = history.location.state || {};
-  const [value, setValue] = useState("");
+  const { tickerNameSearch = "", retired = false } = history.location.state || {};
+  const [value, setValue] = useState(tickerNameSearchValue);
   const [search, setSearch] = useState(decodeURIComponent(tickerNameSearch));
   const { pageInfo, setSort } = usePageInfo();
-  const isShowRetired = pageInfo?.retired;
+  const isShowRetired = pageInfo?.retired || retired;
   const tableRef = useRef<HTMLDivElement>(null);
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   useEffect(() => {
     if (tickerNameSearch !== search) {
       history.replace({
-        search: stringify({ ...pageInfo, page: 1, search: (value || "").toLocaleLowerCase() })
+        search: stringify({ ...pageInfo, page: 1, search: (value || "").toLocaleLowerCase(), retired: isShowRetired })
       });
     }
     if (tickerNameSearch) {
       setSearch(tickerNameSearch || "");
       setValue(tickerNameSearch || "");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tickerNameSearch]);
 
   const fetchData = useFetchList<Delegators>(
@@ -198,6 +197,7 @@ const DelegationLists: React.FC = () => {
   ];
 
   const handleSearch = () => {
+    setSearch(value);
     history.replace({
       search: stringify({
         ...pageInfo,
@@ -213,7 +213,7 @@ const DelegationLists: React.FC = () => {
           <StyledInput
             placeholder={t("common.searchPools")}
             onChange={(e) => setValue(e.target.value)}
-            value={value || tickerNameSearchValue}
+            value={value}
             onKeyUp={(e) => {
               if (e.key === "Enter") {
                 handleSearch();
