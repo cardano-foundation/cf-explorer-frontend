@@ -8,7 +8,7 @@ import { stringify } from "qs";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { HeaderSearchIconComponent } from "src/commons/resources";
-import { details, routers } from "src/commons/routers";
+import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatADAFull, formatPercent, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
@@ -32,7 +32,7 @@ const DelegationLists: React.FC = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
-  const { tickerNameSearch = "" } = history.location.state || {};
+  const tickerNameSearch = new URLSearchParams(document.location.search).get("search") || "";
   const [value, setValue] = useState("");
   const [search, setSearch] = useState(decodeURIComponent(tickerNameSearch));
   const {
@@ -42,10 +42,8 @@ const DelegationLists: React.FC = () => {
   const tableRef = useRef<HTMLDivElement>(null);
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   useEffect(() => {
-    if (tickerNameSearch !== search) history.replace({ search: stringify({ ...rest, retired, page: 1 }) });
-    if (tickerNameSearch) {
-      setSearch(decodeURIComponent(tickerNameSearch));
-    }
+    setSearch(tickerNameSearch || "");
+    setValue(tickerNameSearch || "");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tickerNameSearch]);
 
@@ -200,15 +198,19 @@ const DelegationLists: React.FC = () => {
             onKeyUp={(e) => {
               if (e.key === "Enter") {
                 setSearch(value);
-                history.replace({ search: stringify({ ...rest, retired, page: 1 }) });
+                history.replace({ search: stringify({ ...rest, retired, page: 1, search: value }) });
               }
             }}
           />
           <SubmitButton
             onClick={() => {
-              history.replace({ search: stringify({ ...rest, retired, page: 1 }) });
-              history.push(routers.DELEGATION_POOLS, {
-                tickerNameSearch: (value || "").toLocaleLowerCase()
+              history.replace({
+                search: stringify({
+                  ...rest,
+                  retired,
+                  page: 1,
+                  search: (value || "").toLocaleLowerCase()
+                })
               });
             }}
           >
@@ -225,7 +227,9 @@ const DelegationLists: React.FC = () => {
           {t("glassary.showRetiredPools")}
           <AntSwitch
             checked={retired === "true"}
-            onChange={(e) => history.replace({ search: stringify({ ...rest, page: 0, retired: e.target.checked }) })}
+            onChange={(e) => {
+              history.replace({ search: stringify({ ...rest, page: 0, retired: e.target.checked }) });
+            }}
           />
         </ShowRetiredPools>
       </TopSearchContainer>
