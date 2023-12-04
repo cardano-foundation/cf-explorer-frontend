@@ -129,5 +129,5 @@
     "string-format": "^2.0.0",
     "wait-on": "^7.0.1"
   },
-  "proxy": "https://tokens.cardano.org"
+  "proxy": "https://adahandle-resolver.dev.cf-explorer-mainnet.eu-west-1.metadata.dev.cf-deployments.org/api/v1"
 }

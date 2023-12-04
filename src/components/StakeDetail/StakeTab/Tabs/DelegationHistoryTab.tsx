@@ -1,5 +1,5 @@
 import { stringify } from "qs";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -11,13 +11,18 @@ import { API } from "src/commons/utils/api";
 
 import { StyledLink } from "../styles";
 
-const DelegationHistoryTab = ({ isMobile = false }) => {
+const DelegationHistoryTab: React.FC<{ stakeAddress?: string; isMobile?: boolean }> = ({
+  isMobile = false,
+  stakeAddress
+}) => {
   const { t } = useTranslation();
-  const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<DelegationHistory>(`${API.STAKE.DETAIL}/${stakeId}/delegation-history`, pageInfo);
+  const fetchData = useFetchList<DelegationHistory>(
+    stakeAddress ? `${API.STAKE.DETAIL}/${stakeAddress}/delegation-history` : "",
+    pageInfo
+  );
 
   const columns: Column<DelegationHistory>[] = [
     {
