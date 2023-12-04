@@ -17,6 +17,7 @@ import { API } from "src/commons/utils/api";
 import defaultAxios from "src/commons/utils/axios";
 import { getShortHash } from "src/commons/utils/helper";
 import CustomIcon from "src/components/commons/CustomIcon";
+import { API_ADA_HANDLE_API } from "src/commons/utils/constants";
 
 import {
   Form,
@@ -171,7 +172,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
 
   const adaHandleSearch = async (query: string) => {
     try {
-      return await axios.get(API.ADAHandle(query)).then((data) => data.data);
+      return await axios.get(API_ADA_HANDLE_API + API.ADAHandle(query)).then((data) => data.data);
     } catch (error) {
       return error;
     }
