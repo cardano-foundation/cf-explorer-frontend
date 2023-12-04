@@ -18,6 +18,7 @@ import {
   CIPHeaderTitle,
   Header,
   MetaDataJSONValue,
+  MetaDataJSONValueText,
   MetaDataValue,
   MetadataContent,
   MetadataHeader,
@@ -98,7 +99,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
           <MetadataContent>
             <MetadataJSONTitle>{t("common.value")}</MetadataJSONTitle>
             <MetaDataJSONValue>
-              {metadata.value || ""}
+              <MetaDataJSONValueText>{metadata.value || ""}</MetaDataJSONValueText>
               <StyledButton onClick={() => setSelectedText(metadata)}>
                 <SeeMoreIconHome fill={theme.palette.primary.main} />
               </StyledButton>
