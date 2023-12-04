@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import { API } from "../utils/api";
+import { API_ADA_HANDLE_API } from "../utils/constants";
 
 const useADAHandle = (name: string) => {
   const [data, setData] = useState<{ stakeAddress: string; paymentAddress: string } | null>(null);
@@ -12,7 +13,7 @@ const useADAHandle = (name: string) => {
   const mution = async () => {
     setLoading(true);
     await axios
-      .get(API.ADAHandle(name))
+      .get(API_ADA_HANDLE_API + API.ADAHandle(name))
       .then((data) => setData(data.data))
       .catch((error) => setError(error))
       .finally(() => {
