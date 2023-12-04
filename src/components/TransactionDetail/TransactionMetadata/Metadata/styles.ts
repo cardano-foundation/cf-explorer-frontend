@@ -205,7 +205,18 @@ export const MetaDataJSONValue = styled(MetaDataValue)`
   display: inline-block;
   overflow-wrap: anywhere;
   padding: 16px 58px 16px 8px;
+  box-sizing: border-box;
   background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100])};
   border-radius: 6px;
   position: relative;
+`;
+
+export const MetaDataJSONValueText = styled(MetaDataValue)`
+  position: relative;
+  max-height: 4em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 `;
