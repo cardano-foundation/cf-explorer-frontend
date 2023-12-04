@@ -76,7 +76,6 @@ const WalletActitityTab = () => {
         pagination={{
           ...pageInfo,
           total: fetchData.total,
-          // onChange: (page, size) => setPageInfo({ page: page - 1, size })
           onChange: (page, size) => history.replace({ search: stringify({ ...pageInfo, page, size }) })
         }}
       />
