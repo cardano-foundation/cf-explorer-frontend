@@ -7,7 +7,7 @@ import { isJson } from "src/commons/utils/helper";
 import CIP60Modal from "src/components/CIPComplianceModal/CIP60Modal";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import ParseScriptModal from "src/components/ParseScriptModal";
-import CIP25ComplianceModal from "src/components/TokenDetail/TokenTableData/CIP25ComplianceModal";
+import CIP25Modal from "src/components/TokenDetail/TokenTableData/CIP25Modal";
 import { SeeMoreIconHome } from "src/commons/resources";
 import CIP25Badge from "src/components/commons/CIP25Badge";
 import CIP60Badge from "src/components/commons/CIP60Badge";
@@ -115,7 +115,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
         title={`${t("common.key")}: ${selectedText?.label || 0}`}
         subTitle={t("common.value")}
       />
-      <CIP25ComplianceModal
+      <CIP25Modal
         data={data?.[selectedIndedx || 0].metadataCIP25.tokenMap}
         open={typeof selectedIndedx === "number" && cip === CIP.CIP25}
         version={data?.[selectedIndedx || 0].metadataCIP25.version}

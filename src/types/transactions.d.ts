@@ -162,13 +162,14 @@ interface DMetadata {
   decimals: number;
 }
 
-type TTCIP25Properties = {
+type TTCIPProperties = {
   index: string;
   property: string;
   format: string;
   value: string;
   valid: boolean;
 };
+
 interface Transaction {
   tx: {
     hash: string;

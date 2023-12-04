@@ -11,7 +11,7 @@ import CIP60Badge from "src/components/commons/CIP60Badge";
 import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import CIP25Badge from "src/components/commons/CIP25Badge";
 
-import CIP25ComplianceModal from "./CIP25ComplianceModal";
+import CIP25Modal from "./CIP25Modal";
 import { CIPHeader, CIPHeaderTitle, MetaDataWraper, ViewJson } from "./styles";
 
 interface ITokenMetadataProps {
@@ -32,10 +32,11 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson, metadataCI
       {isShowCIP25 && (
         <CIPHeader>
           <CIPHeaderTitle>
-            CIP Compliance <InfoSolidIcon onClick={() => setOpen(true)} width="16px" height="16px" />{" "}
+            {t("cip25.compliance")} <InfoSolidIcon width="16px" height="16px" />{" "}
           </CIPHeaderTitle>
           {!isNil(metadataCIP25?.valid) && (
             <CIP25Badge
+              onClick={() => setOpen(true)}
               tooltipTitle={metadataCIP25?.valid ? t("common.passed") : t("common.needsReview")}
               type={metadataCIP25?.valid ? "success" : "warning"}
             />
@@ -66,7 +67,7 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson, metadataCI
           />
         )}
       </ViewJson>
-      <CIP25ComplianceModal
+      <CIP25Modal
         data={metadataCIP25?.tokenMap}
         version={metadataCIP25?.version}
         open={open}
