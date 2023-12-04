@@ -42,8 +42,12 @@ const DelegationLists: React.FC = () => {
   const tableRef = useRef<HTMLDivElement>(null);
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   useEffect(() => {
-    setSearch(tickerNameSearch || "");
-    setValue(tickerNameSearch || "");
+    if (tickerNameSearch !== search)
+      history.replace({ search: stringify({ ...rest, retired, page: 1, search: (value || "").toLocaleLowerCase() }) });
+    if (tickerNameSearch) {
+      setSearch(tickerNameSearch || "");
+      setValue(tickerNameSearch || "");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tickerNameSearch]);
 
