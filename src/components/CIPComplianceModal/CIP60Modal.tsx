@@ -21,7 +21,7 @@ import {
   TokenLabel
 } from "./styles";
 
-export type TCIP25ComplianceModalProps = {
+export type TCIP60ComplianceModalProps = {
   open: boolean;
   onClose: () => void;
   data?: Transaction["metadata"][0]["metadataCIP25"]["tokenMap"];
@@ -33,33 +33,54 @@ const DEFAULT_CIP25_REQUIRE = [
     format: "text",
     index: "1",
     property: "policy_ID",
-    valid: false,
+    valid: null,
     value: ""
   },
   {
     format: "utf-8",
     index: "2",
     property: "asset_name",
-    valid: false,
+    valid: null,
     value: ""
   },
   {
     format: "string",
     index: "3",
     property: "name",
-    valid: false,
+    valid: null,
     value: ""
   },
   {
-    format: "uri | array",
+    format: "string / [* string]",
     index: "4",
     property: "image",
-    valid: true,
+    valid: null,
+    value: ""
+  },
+  {
+    format: "number",
+    index: "5",
+    property: "music_metadata_version",
+    valid: null,
+    value: ""
+  },
+  {
+    format: "Single / Multiple",
+    index: "4",
+    property: "release_type",
+    valid: null,
+    value: ""
+  },
+  {
+    format: "[* files_details]",
+    index: "4",
+    property: "files",
+    valid: null,
     value: ""
   }
 ];
 
-const CIP60Modal: React.FC<TCIP25ComplianceModalProps> = (props) => {
+const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
   const { data, version } = props;
   const { t } = useTranslation();
   const tokenMaps = useMemo(() => {
@@ -68,7 +89,12 @@ const CIP60Modal: React.FC<TCIP25ComplianceModalProps> = (props) => {
     return tokens;
   }, [data]);
 
-  const columns: Column<TTCIP25Properties>[] = [
+  const versionTooltip = (row: TTCIPProperties) => {
+    if (row.property !== "version") return t("common.needsReview");
+    return (Number(row.value) !== 1 || Number(row.value)) !== 2 ? t("cip.versionCheck") : "";
+  };
+
+  const columns: Column<TTCIPProperties>[] = [
     {
       title: "#",
       key: "index",
@@ -99,15 +125,8 @@ const CIP60Modal: React.FC<TCIP25ComplianceModalProps> = (props) => {
           </CustomTooltip>
         ) : (
           <CustomTooltip title={JSON.stringify(r.value)}>
-            <Typography
-              textOverflow="ellipsis"
-              overflow="hidden"
-              whiteSpace="nowrap"
-              display="inline-block"
-              maxWidth={120}
-              fontSize={14}
-            >
-              {JSON.stringify(r.value)}
+            <Typography style={{ lineBreak: "anywhere" }} display="inline-block" maxWidth={120} fontSize={14}>
+              {r.value && JSON.stringify(r.value)}
             </Typography>
           </CustomTooltip>
         )
@@ -118,7 +137,7 @@ const CIP60Modal: React.FC<TCIP25ComplianceModalProps> = (props) => {
       render: (r) =>
         !isNil(r.valid) && (
           <Box pl={3}>
-            <CustomTooltip title={r.valid ? t("common.passed") : t("common.needsReview")}>
+            <CustomTooltip title={r.valid ? t("common.passed") : versionTooltip(r)}>
               <Box display="inline-block">
                 {r.valid ? <CheckedCIPIcon /> : <CustomIcon icon={CIP60WarningIcon} height={20} width={20} />}
               </Box>
@@ -127,7 +146,7 @@ const CIP60Modal: React.FC<TCIP25ComplianceModalProps> = (props) => {
         )
     }
   ];
-  const mixedoptionalProperties = (optionalProperties: TTCIP25Properties[]) => {
+  const mixedoptionalProperties = (optionalProperties: TTCIPProperties[]) => {
     if (version) return [...optionalProperties, version];
     return optionalProperties;
   };
@@ -175,7 +194,7 @@ const CIP60Modal: React.FC<TCIP25ComplianceModalProps> = (props) => {
             )}
             <CIPModalSubtitle>{t("token.otherProperties")}</CIPModalSubtitle>
             <OtherPropetiesContent>
-              <OtherPropetiesDesc>{t("token.otherProperties.desc")}</OtherPropetiesDesc>
+              <OtherPropetiesDesc>{t("token.cip60otherProperties.desc")}</OtherPropetiesDesc>
             </OtherPropetiesContent>
           </React.Fragment>
         ))}
