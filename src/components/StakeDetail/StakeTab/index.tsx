@@ -22,10 +22,10 @@ import InstantaneousTab from "./Tabs/InstantaneousTab";
 import TransactionTab from "./Tabs/TransactionTab";
 import { TitleTab } from "./styles";
 
-const StakeTab = () => {
+const StakeTab: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) => {
   const { t } = useTranslation();
   const tabRef = useRef<HTMLDivElement>();
-  const { stakeId, tabActive } = useParams<{ stakeId: string; tabActive?: TabStakeDetail }>();
+  const { tabActive, stakeId } = useParams<{ stakeId: string; tabActive?: TabStakeDetail }>();
   const history = useHistory();
   const theme = useTheme();
   const { isMobile } = useScreen();
@@ -40,31 +40,31 @@ const StakeTab = () => {
       icon: DelegationHistoryIcon,
       label: t("tab.DelegationHistory"),
       key: "delegation",
-      component: <DelegationHistoryTab isMobile={isMobile} />
+      component: <DelegationHistoryTab stakeAddress={stakeAddress} isMobile={isMobile} />
     },
     {
       icon: StakeKeyHistoryIcon,
       label: t("tab.stakeAddressHistory"),
       key: "stake-key",
-      component: <StakeHistoryTab isMobile={isMobile} />
+      component: <StakeHistoryTab stakeAddress={stakeAddress} isMobile={isMobile} />
     },
     {
       icon: WithdrawalHistoryIcon,
       label: t("tab.withdrawalHistory"),
       key: "withdrawal",
-      component: <WithdrawalHistoryTab />
+      component: <WithdrawalHistoryTab stakeAddress={stakeAddress} />
     },
     {
       icon: InstantaneousHistoryIcon,
       label: t("tab.instantaneousRewards"),
       key: "instantaneous",
-      component: <InstantaneousTab />
+      component: <InstantaneousTab stakeAddress={stakeAddress} />
     },
     {
       icon: TransactionIcon,
       label: t("tab.transactions"),
       key: "transactions",
-      component: <TransactionTab />
+      component: <TransactionTab stakeAddress={stakeAddress} />
     }
   ];
 

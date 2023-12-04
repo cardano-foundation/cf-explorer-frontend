@@ -26,7 +26,6 @@ export const routers = {
   STAKE_ADDRESS_DELEGATIONS: "/stake-address-delegations",
   INSTANTANEOUS_REWARDS: "/instantaneous-rewards",
   STAKE_DETAIL: "/stake-address/:stakeId/:tabActive?",
-  STAKE_DETAIL_ADA_HANDLE: "/stake-address/ada-handle/:stakeId/:tabActive?",
   CONTRACT_LIST: "/contracts",
   CONTRACT_DETAIL: "/contracts/:address/:tabActive?",
   SMART_CONTRACT: "/smart-contract/:address/:tabActive?",
@@ -70,8 +69,6 @@ export const details = {
     routers.TOKEN_DETAIL.replace(":tokenId", tokenId ?? "").replace(":tabActive?", tab),
   stake: (stakeId?: string, tab = "delegation") =>
     routers.STAKE_DETAIL.replace(":stakeId", stakeId ?? "").replace(":tabActive?", tab),
-  stakeADAHanlde: (stakeId?: string, tab = "delegation") =>
-    routers.STAKE_DETAIL_ADA_HANDLE.replace(":stakeId", stakeId ?? "").replace(":tabActive?", tab),
   nft: (nftId?: string) => routers.NFT_DETAIL.replace(":nftId", nftId ?? ""),
   policyDetail: (policyId?: string) => routers.POLICY_DETAIL.replace(":policyId", policyId ?? ""),
   contract: (address?: string, tab = "transaction") =>

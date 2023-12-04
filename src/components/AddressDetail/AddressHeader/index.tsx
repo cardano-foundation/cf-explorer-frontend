@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { Grid, Box, useTheme, Button } from "@mui/material";
 import { useSelector } from "react-redux";
 import { HiArrowLongLeft } from "react-icons/hi2";
@@ -24,12 +24,17 @@ import { BackButton, BackText, RedirectButton, StyledBoxCard, TimeDuration, Titl
 interface Props {
   data: WalletAddress | null;
   loading: boolean;
+  adaHanldeData?: {
+    stakeAddress: string;
+    paymentAddress: string;
+  } | null;
 }
-const AddressHeader: React.FC<Props> = ({ data, loading }) => {
+const AddressHeader: React.FC<Props> = ({ data, loading, adaHanldeData }) => {
   const { t } = useTranslation();
   const [stakeKey, setStakeKey] = useState("");
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const adaRate = useSelector(({ system }: RootState) => system.adaRate);
+  const { address } = useParams<{ address: string }>();
 
   const {
     data: dataStake,
@@ -111,7 +116,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
         </BackButton>
         <Box width={"100%"} display={"flex"} flexWrap={"wrap"} alignItems={"center"} justifyContent={"space-between"}>
           <Box component={"h2"} lineHeight={1} mt={2} display={"flex"} alignItems={"center"}>
-            <TitleText>{t("address.title.addressDetail")}</TitleText>
+            <TitleText>{adaHanldeData ? <Box>{address} Details</Box> : t("address.title.addressDetail")}</TitleText>
             <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
           </Box>
           {(data?.associatedSmartContract || data?.associatedNativeScript) && (
