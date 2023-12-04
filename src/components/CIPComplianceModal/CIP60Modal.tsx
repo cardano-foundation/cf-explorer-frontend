@@ -84,13 +84,27 @@ const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
   const { data, version } = props;
   const { t } = useTranslation();
   const tokenMaps = useMemo(() => {
-    if (isEmpty(data)) return [{ requireProperties: DEFAULT_CIP25_REQUIRE, tokenName: null, optionalProperties: [] }];
-    const tokens = Object.entries(data).map(([, value]) => value);
-    return tokens;
+    if (isEmpty(data)) {
+      return [{ requireProperties: DEFAULT_CIP25_REQUIRE, tokenName: null, optionalProperties: [] }];
+    } else {
+      return Object.keys(data).map((key) => {
+        if (
+          (data[key].requireProperties?.[0]["property"] === "music_metadata_version" &&
+            Number(data[key].requireProperties?.[0]["value"]) !== 1) ||
+          Number(data[key].requireProperties?.[0]["value"]) !== 2
+        )
+          return {
+            requireProperties: [...DEFAULT_CIP25_REQUIRE, ...data[key].requireProperties],
+            tokenName: data[key].tokenName,
+            optionalProperties: []
+          };
+        return data[key];
+      });
+    }
   }, [data]);
 
   const versionTooltip = (row: TTCIPProperties) => {
-    if (row.property !== "version") return t("common.needsReview");
+    if (row.property !== "music_metadata_version") return t("common.needsReview");
     return (Number(row.value) !== 1 || Number(row.value)) !== 2 ? t("cip.versionCheck") : "";
   };
 
@@ -180,7 +194,7 @@ const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
               data={token.requireProperties}
               columns={columns}
             />
-            {token.optionalProperties.length > 0 && (
+            {token.optionalProperties?.length > 0 && (
               <>
                 <CIPModalSubtitle>{t("token.optionalProperties")}</CIPModalSubtitle>
                 <Table
