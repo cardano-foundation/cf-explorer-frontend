@@ -247,7 +247,12 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const FetchSearchTokensAndPools = async (query: string, filter: FilterParams) => {
     try {
       setLoading(true);
-      const search: { query?: string; search?: string } = {};
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const entries = urlParams.entries();
+      const params = Object.fromEntries(entries);
+      const search: { query?: string; search?: string; retired?: boolean } = { ...params };
+
       if (filter === "tokens") {
         search.query = query.trim();
       } else {
@@ -270,7 +275,8 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           res.data?.totalItems === 1
             ? history.push(details.delegation((res?.data?.data[0] as DelegationPool)?.poolId))
             : history.push(routers.DELEGATION_POOLS, {
-                tickerNameSearch: (search.search || "").toLocaleLowerCase()
+                tickerNameSearch: (search.search || "").toLocaleLowerCase(),
+                retired: params && params.retired
               });
           handleSetSearchValueDefault();
         }
