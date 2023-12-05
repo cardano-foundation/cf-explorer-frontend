@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { JsonViewerKeyRenderer } from "@textea/json-viewer";
+import { isNumber } from "lodash";
 import { useEffect } from "react";
 const MAX_INDEX = 1000;
 const useDisableJsonKey = (data: unknown): { trigger: () => void; keyRenderer: JsonViewerKeyRenderer } => {
@@ -7,15 +8,16 @@ const useDisableJsonKey = (data: unknown): { trigger: () => void; keyRenderer: J
     setTimeout(() => {
       const elements = document.querySelectorAll("[data-row-id='json-row']");
       elements.forEach((element) => {
-        const visibleElemet = element.parentNode?.parentNode?.querySelector("& > div");
+        const visibleElemet = element.parentNode?.parentNode?.querySelector("div:not([data-row-id='json-row'])");
         (visibleElemet as HTMLElement).style.display = "none";
       });
     }, 50);
   };
   useEffect(() => {
     const elements = document.querySelectorAll("[data-row-id='json-row']");
+
     elements.forEach((element) => {
-      const visibleElemet = element.parentNode?.parentNode?.querySelector("& > div");
+      const visibleElemet = element.parentNode?.parentNode?.querySelector("div:not([data-row-id='json-row'])");
       (visibleElemet as HTMLElement).style.display = "none";
     });
   }, [data]);
@@ -23,8 +25,8 @@ const useDisableJsonKey = (data: unknown): { trigger: () => void; keyRenderer: J
     return <Box data-row-id="json-row" />;
   };
   keyRenderer.when = ({ path }) => {
-    const num = Number(path[path.length - 1]);
-    return !isNaN(num) && num < MAX_INDEX;
+    const num = path[path.length - 1];
+    return isNumber(num) && num < MAX_INDEX;
   };
   return { keyRenderer, trigger };
 };
