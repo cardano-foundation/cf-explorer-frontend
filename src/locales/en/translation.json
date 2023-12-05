@@ -498,6 +498,7 @@
   "common.poolDescription": "Description",
   "common.poolName": "Pool Name ",
   "glossary.epoch": "Epoch",
+  "glossary.upcomingEpoch": "Upcoming Epoch",
   "common.rewardAccount": "Reward Account",
   "slc.previousPoolUpdates": "Previous: Pool Updates",
   "slc.deregistration": "Deregistration",
