@@ -39,7 +39,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
               onClick={() => r.protocol === "costModel" && setCostModelScript(r.oldValue?.toString() || "")}
               color={({ palette }) => (r.protocol === "costModel" ? palette.primary.main : "unset")}
             >
-              <LimitCell> {r.oldValue}</LimitCell>
+              {r.oldValue && <LimitCell> {r.oldValue}</LimitCell>}
             </UpdatedValue>
           </CustomTooltip>
         );
