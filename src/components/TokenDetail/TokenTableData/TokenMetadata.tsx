@@ -45,7 +45,7 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson, metadataCI
             <CIP60Badge
               onClick={() => setOpenCIP60(true)}
               type={metadataCIP60?.valid ? "success" : "warning"}
-              tooltipTitle={metadataCIP25?.valid ? t("common.passed") : t("cip60.notCompliance")}
+              tooltipTitle={metadataCIP60?.valid ? t("common.passed") : t("cip60.notCompliance")}
             />
           )}
         </CIPHeader>
