@@ -377,16 +377,14 @@ export const ProtocolParameterHistory = () => {
 
   const getTitleColumn = (data: ProtocolHistory | null) => {
     data &&
-      (isShowUpcomingEpoch ? data.epochChanges : data.epochChanges.slice(1) || [])?.map(
-        ({ endEpoch, startEpoch }, index) => {
-          if (index === 0 && isShowUpcomingEpoch) {
-            return pushColumnTitle(`${t("glossary.upcomingEpoch")} ${startEpoch}`);
-          }
-          return endEpoch === startEpoch
-            ? pushColumnTitle(`${t("glossary.epoch")} ${startEpoch}`)
-            : pushColumnTitle(`${t("glossary.epoch")} ${endEpoch} - ${startEpoch}`);
+      (data.epochChanges || [])?.map(({ endEpoch, startEpoch }, index) => {
+        if (index === 0 && isShowUpcomingEpoch) {
+          return pushColumnTitle(`${t("glossary.upcomingEpoch")} ${startEpoch}`);
         }
-      );
+        return endEpoch === startEpoch
+          ? pushColumnTitle(`${t("glossary.epoch")} ${startEpoch}`)
+          : pushColumnTitle(`${t("glossary.epoch")} ${endEpoch} - ${startEpoch}`);
+      });
   };
 
   const getDataColumn = (data: ProtocolHistory | null) => {
@@ -397,10 +395,7 @@ export const ProtocolParameterHistory = () => {
           params: prop
         };
         columnTitle.map((t, idx) => {
-          const mapDataForEachColumn = isShowUpcomingEpoch
-            ? data[prop as keyof ProtocolHistory]
-            : data[prop as keyof ProtocolHistory].slice(1);
-          newdata[t] = mapDataForEachColumn[idx] as unknown as string;
+          newdata[t] = data[prop as keyof ProtocolHistory][idx] as unknown as string;
         });
         if (newdata) {
           pushHistory(newdata);
