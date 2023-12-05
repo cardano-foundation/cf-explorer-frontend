@@ -84,12 +84,12 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
                   )}
                   {!isNil(metadata.metadataCIP60.valid) && (
                     <CIP60Badge
-                      tooltipTitle={metadata.metadataCIP25.valid ? t("common.passed") : t("cip60.notCompliance")}
+                      tooltipTitle={metadata.metadataCIP60.valid ? t("common.passed") : t("cip60.notCompliance")}
                       onClick={() => {
                         setSelectedIndex(idx);
                         setCip(CIP.CIP60);
                       }}
-                      type={metadata.metadataCIP25.valid ? "success" : "warning"}
+                      type={metadata.metadataCIP60.valid ? "success" : "warning"}
                     />
                   )}
                 </CIPChips>
