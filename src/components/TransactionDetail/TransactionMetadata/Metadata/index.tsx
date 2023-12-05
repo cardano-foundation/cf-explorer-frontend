@@ -89,7 +89,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
                         setSelectedIndex(idx);
                         setCip(CIP.CIP60);
                       }}
-                      type={"warning"}
+                      type={metadata.metadataCIP25.valid ? "success" : "warning"}
                     />
                   )}
                 </CIPChips>
