@@ -11,7 +11,7 @@ import {
   useTheme
 } from "@mui/material";
 import { isEmpty, isObject } from "lodash";
-import moment from "moment";
+// import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { BsFillCheckCircleFill } from "react-icons/bs";
@@ -20,6 +20,7 @@ import { ImArrowDown2, ImArrowUp2 } from "react-icons/im";
 import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { useList, useUpdateEffect } from "react-use";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { DateRangeIcon, FilterIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
@@ -330,32 +331,37 @@ export default ProtocolParameter;
 
 export const ProtocolParameterHistory = () => {
   const { t } = useTranslation();
-  const { PROTOCOL_PARAMETER } = API;
-  const TOTAL_PARAMETER = 29;
+  // const { PROTOCOL_PARAMETER } = API;
+  // const TOTAL_PARAMETER = 29;
   const theme = useTheme();
   const [initing, setIniting] = useState(true);
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [selectTxs, setSelectTxs] = useState<string[] | null>(null);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
   const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
-  const historyUrlBase = PROTOCOL_PARAMETER.HISTORY;
-  let historyUrlParams = "";
-  if (filterParams.length === 0 || filterParams.length === TOTAL_PARAMETER) {
-    historyUrlParams = "ALL";
-  } else {
-    const filterParamValues = filterParams.map((f) => PROTOCOL_TYPE[f as keyof typeof PROTOCOL_TYPE]);
-    historyUrlParams = filterParamValues.join(",");
-  }
 
-  let dateRangeQueryParams = "";
-  if (!isEmpty(dateRangeFilter)) {
-    const endDate = moment(dateRangeFilter.toDate).endOf("D").utc().format("X");
-    const startDate = moment(dateRangeFilter.fromDate).startOf("D").utc().format("X");
-    dateRangeQueryParams = `?endTime=${endDate}&startTime=${startDate}`;
-  }
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+  const currentEpochNo = currentEpoch?.no || 0;
+  // const historyUrlBase = PROTOCOL_PARAMETER.HISTORY;
+  // let historyUrlParams = "";
+  // if (filterParams.length === 0 || filterParams.length === TOTAL_PARAMETER) {
+  //   historyUrlParams = "ALL";
+  // } else {
+  //   const filterParamValues = filterParams.map((f) => PROTOCOL_TYPE[f as keyof typeof PROTOCOL_TYPE]);
+  //   historyUrlParams = filterParamValues.join(",");
+  // }
 
-  const url = `${historyUrlBase}/${historyUrlParams}${dateRangeQueryParams}`;
-  const { data: dataHistory, loading, initialized } = useFetch<ProtocolHistory>(url);
+  // let dateRangeQueryParams = "";
+  // if (!isEmpty(dateRangeFilter)) {
+  //   const endDate = moment(dateRangeFilter.toDate).endOf("D").utc().format("X");
+  //   const startDate = moment(dateRangeFilter.fromDate).startOf("D").utc().format("X");
+  //   dateRangeQueryParams = `?endTime=${endDate}&startTime=${startDate}`;
+  // }
+
+  // const url = `${historyUrlBase}/${historyUrlParams}${dateRangeQueryParams}`;
+  const apiUrl = "http://10.4.21.127:8080/api/v1/protocols/histories/filter/ALL";
+  const { data: dataHistory, loading, initialized } = useFetch<ProtocolHistory>(apiUrl);
+  const [isShowUpcomingEpoch, setIsShowUpcomingEpoch] = useState<boolean>(false);
 
   const [dataHistoryMapping, { push: pushHistory, clear }] = useList<{
     [key: string]: string;
@@ -369,13 +375,19 @@ export const ProtocolParameterHistory = () => {
   const [resetFilter, setResetFilter] = useState<boolean>(false);
   const [sortTimeFilter, setSortTimeFilter] = useState<"FirstLast" | "LastFirst" | "">("");
   const [totalEpoch, setTotalEpoch] = useState<number>(0);
+
   const getTitleColumn = (data: ProtocolHistory | null) => {
     data &&
-      (data.epochChanges || [])?.map(({ endEpoch, startEpoch }) => {
-        return endEpoch === startEpoch
-          ? pushColumnTitle(`${t("glossary.epoch")} ${startEpoch}`)
-          : pushColumnTitle(`${t("glossary.epoch")} ${endEpoch} - ${startEpoch}`);
-      });
+      (isShowUpcomingEpoch ? data.epochChanges : data.epochChanges.slice(1) || [])?.map(
+        ({ endEpoch, startEpoch }, index) => {
+          if (index === 0 && isShowUpcomingEpoch) {
+            return pushColumnTitle(`${t("glossary.upcomingEpoch")} ${startEpoch}`);
+          }
+          return endEpoch === startEpoch
+            ? pushColumnTitle(`${t("glossary.epoch")} ${startEpoch}`)
+            : pushColumnTitle(`${t("glossary.epoch")} ${endEpoch} - ${startEpoch}`);
+        }
+      );
   };
 
   const getDataColumn = (data: ProtocolHistory | null) => {
@@ -386,7 +398,10 @@ export const ProtocolParameterHistory = () => {
           params: prop
         };
         columnTitle.map((t, idx) => {
-          newdata[t] = data[prop as keyof ProtocolHistory][idx] as unknown as string;
+          const mapDataForEachColumn = isShowUpcomingEpoch
+            ? data[prop as keyof ProtocolHistory]
+            : data[prop as keyof ProtocolHistory].slice(1);
+          newdata[t] = mapDataForEachColumn[idx] as unknown as string;
         });
         if (newdata) {
           pushHistory(newdata);
@@ -496,6 +511,21 @@ export const ProtocolParameterHistory = () => {
       setColumnsTable([...columnsFull]);
     }
   }, [JSON.stringify(columnTitle), JSON.stringify(dataHistory)]);
+
+  useEffect(() => {
+    if (dataHistory) {
+      setIsShowUpcomingEpoch(currentEpochNo < dataHistory?.epochChanges[0].endEpoch);
+    }
+  }, [dataHistory, currentEpochNo]);
+
+  useEffect(() => {
+    if (dataHistory) {
+      clear();
+      clearColumnTitle();
+      getTitleColumn(dataHistory);
+      getDataColumn(dataHistory);
+    }
+  }, [isShowUpcomingEpoch]);
 
   useUpdateEffect(() => {
     setDataTable([...dataHistoryMapping].slice(1));
