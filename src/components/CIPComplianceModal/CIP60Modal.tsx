@@ -88,10 +88,10 @@ const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
       return [{ requireProperties: DEFAULT_CIP25_REQUIRE, tokenName: null, optionalProperties: [] }];
     } else {
       return Object.keys(data).map((key) => {
-        const isValidVersion =
+        const inValidVersion =
           Number(data[key].requireProperties?.[0]["value"]) !== 1 ||
           Number(data[key].requireProperties?.[0]["value"]) !== 2;
-        if (data[key].requireProperties?.[0]["property"] === "music_metadata_version" && !isValidVersion) {
+        if (data[key].requireProperties?.[0]["property"] === "music_metadata_version" && inValidVersion) {
           return {
             requireProperties: [...DEFAULT_CIP25_REQUIRE, ...data[key].requireProperties],
             tokenName: data[key].tokenName,
