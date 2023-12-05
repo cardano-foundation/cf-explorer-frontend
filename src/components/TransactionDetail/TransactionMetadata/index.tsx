@@ -72,7 +72,6 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
       }
     };
     tabRef?.current?.addEventListener("transitionend", handleTransitionEnd);
-
     history.replace(details.transaction(data?.tx?.hash, newExpanded ? panel : ""));
   };
 

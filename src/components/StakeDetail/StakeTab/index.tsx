@@ -88,7 +88,6 @@ const StakeTab: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) => {
       }
     };
     tabRef?.current?.addEventListener("transitionend", handleTransitionEnd);
-
     history.replace(details.stake(stakeId, newExpanded ? panel : ""));
   };
 

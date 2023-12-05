@@ -139,7 +139,7 @@ const DelegationDetail: React.FC = () => {
     },
     {
       icon: TimelineIconComponent,
-      label: t("certificatesHistory"),
+      label: <Box data-testid="certificatesHistory">{t("certificatesHistory")}</Box>,
       key: "certificatesHistory",
       component: (
         <div ref={tableRef}>
@@ -171,7 +171,6 @@ const DelegationDetail: React.FC = () => {
 
     // Attach the transitionend event listener to wait for the expansion animation
     tableRef?.current?.addEventListener("transitionend", handleTransitionEnd);
-
     setQuery({ tab: newExpanded ? panel : "", page: 1, size: 50 });
   };
 

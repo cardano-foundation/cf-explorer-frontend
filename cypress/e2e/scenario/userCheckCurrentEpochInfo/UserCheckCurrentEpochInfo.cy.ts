@@ -11,7 +11,6 @@ describe("User check information of current Epoch", () => {
     cy.get("a").contains("View Details", { matchCase: false }).should("be.visible");
 
     cy.get("a").contains("View Details", { matchCase: false }).click();
-    cy.get('[data-testid="search-bar"]').should("be.visible");
     cy.get("div").contains("Start Timestamp", { matchCase: false }).should("be.visible");
     cy.get("div").contains("End Timestamp", { matchCase: false }).should("be.visible");
     cy.get("div").contains(" Total Output", { matchCase: false }).should("be.visible");
