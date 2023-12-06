@@ -173,7 +173,7 @@ const DelegationLists: React.FC = () => {
           {t("glossary.fixedCost")} (<ADAicon />)
         </Box>
       ),
-      key: "pu.fixedCost",
+      key: "fee",
       minWidth: "120px",
       render: (r) => (
         <Box component="span">
