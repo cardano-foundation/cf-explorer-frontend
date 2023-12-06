@@ -575,6 +575,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       />
       {showOption && (
         <OptionsSearch
+          handleSetSearchValueDefault={handleSetSearchValueDefault}
           showResultNotFound={showResultNotFound}
           error={error}
           home={home}
@@ -618,6 +619,7 @@ interface OptionProps {
   dataSearchTokensAndPools?: TokensSearch[] | DelegationPool[];
   showResultNotFound: () => void;
   setShowOption: (show: boolean) => void;
+  handleSetSearchValueDefault: () => void;
   filter: FilterParams;
   totalResult: number;
   ADAHandleOption:
@@ -639,7 +641,8 @@ export const OptionsSearch = ({
   filter,
   dataSearchTokensAndPools,
   totalResult,
-  ADAHandleOption
+  ADAHandleOption,
+  handleSetSearchValueDefault
 }: OptionProps) => {
   const history = useHistory();
   const listOptionsTokensAndPools = dataSearchTokensAndPools?.map((i) => {
@@ -882,6 +885,7 @@ export const OptionsSearch = ({
               <Option
                 onClick={() => {
                   setShowOption(false);
+                  handleSetSearchValueDefault();
                   filter === "tokens"
                     ? history.push(`${routers.TOKEN_LIST}?tokenName=${(value || "").toLocaleLowerCase()}`)
                     : history.push(routers.DELEGATION_POOLS, {
@@ -922,6 +926,7 @@ export const OptionsSearch = ({
                 key={i}
                 onClick={() => {
                   setShowOption(false);
+                  handleSetSearchValueDefault();
                   item?.cb?.();
                 }}
                 data-testid="option-search-epoch"
@@ -942,6 +947,7 @@ export const OptionsSearch = ({
               data-testid="option-search-epoch"
               onClick={() => {
                 setShowOption(false);
+                handleSetSearchValueDefault();
                 if (ADAHandleOption?.stakeAddress) {
                   history.push(details.stake(value));
                 } else {
