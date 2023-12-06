@@ -636,35 +636,7 @@ export const ProtocolParameterHistory = () => {
           </Box>
         }
       >
-        {initialized && !!dataHistory ? (
-          columnsTable?.length === 1 &&
-          !initing &&
-          !loading && (
-            <Box textAlign={"center"}>
-              <NoRecord />
-              <Box
-                component={Button}
-                width={"200px"}
-                textTransform={"capitalize"}
-                onClick={() => {
-                  setResetFilter(true);
-                  setShowFiter(false);
-                }}
-                mx={"auto"}
-                display={"flex"}
-                alignItems={"center"}
-                mt={3}
-                mb={2}
-                color={`${theme.palette.primary.main} !important`}
-              >
-                <Box mr={1}>Reset</Box>
-                <ResetIcon />
-              </Box>
-            </Box>
-          )
-        ) : (
-          <></>
-        )}
+        {initialized && !!dataHistory ? columnsTable?.length === 1 && !initing && !loading && <NoRecord /> : <></>}
         {columnsTable?.length > 1 && initialized && (
           <TableStyled maxHeight={"unset"} columns={columnsTable} data={dataTable} loading={loading} />
         )}
