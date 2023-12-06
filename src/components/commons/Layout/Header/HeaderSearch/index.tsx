@@ -194,6 +194,8 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       setDataSearchAll(res?.data);
       const keyDetail = getKeyIfOnlyOneNonNullResult(res?.data);
       if (adaHanlde && (!keyDetail || keyDetail === "address")) {
+        setLoading(false);
+        setShowOption(false);
         if (adaHanlde?.stakeAddress) {
           history.push(details.stake(search));
           return;
