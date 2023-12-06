@@ -17,15 +17,17 @@ const AddressWalletDetail = () => {
   const { state } = useLocation<{ data?: WalletAddress }>();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
-  const [{ data: adaHandle, loading: adaHandleLoading }] = useADAHandle(address);
+  const [{ data: adaHandle, loading: adaHandleLoading, initialized: ADAHandleInitialized }] = useADAHandle(address);
 
   useEffect(() => {
-    if (adaHandle?.paymentAddress) {
-      setAddressWallet(adaHandle?.paymentAddress);
-    } else {
-      setAddressWallet(address);
+    if (ADAHandleInitialized) {
+      if (adaHandle?.paymentAddress) {
+        setAddressWallet(adaHandle?.paymentAddress);
+      } else {
+        setAddressWallet(address);
+      }
     }
-  }, [JSON.stringify(adaHandle), adaHandleLoading]);
+  }, [JSON.stringify(adaHandle), adaHandleLoading, address]);
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
