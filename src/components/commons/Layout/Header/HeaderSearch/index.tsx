@@ -189,7 +189,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     try {
       setLoading(true);
       const res = await defaultAxios.get(API.SEARCH_ALL(query));
-      const adaHanlde = await axios.get(API_ADA_HANDLE_API + API.ADAHandle(search)).then((data) => data.data);
+      const adaHanlde = await adaHandleSearch(search);
       setADAHanldeOption(adaHanlde);
       setDataSearchAll(res?.data);
       if (!adaHanlde.paymentAddress) {
@@ -826,8 +826,15 @@ export const OptionsSearch = ({
     [];
 
   useEffect(() => {
-    if (listOptions.length === 0 && isObject(data) && Object.keys(data).length > 0 && filter === "all")
+    if (
+      listOptions.length === 0 &&
+      isObject(data) &&
+      Object.keys(data).length > 0 &&
+      filter === "all" &&
+      !ADAHandleOption
+    ) {
       showResultNotFound();
+    }
     if (
       (listOptionsTokensAndPools || []).length === 0 &&
       dataSearchTokensAndPools &&
