@@ -192,8 +192,17 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       const adaHanlde = await adaHandleSearch(search);
       setADAHanldeOption(adaHanlde);
       setDataSearchAll(res?.data);
+      const keyDetail = getKeyIfOnlyOneNonNullResult(res?.data);
+      if (adaHanlde && (!keyDetail || keyDetail === "address")) {
+        if (adaHanlde?.stakeAddress) {
+          history.push(details.stake(search));
+          return;
+        } else {
+          history.push(details.address(search));
+        }
+      }
+
       if (!adaHanlde.paymentAddress) {
-        const keyDetail = getKeyIfOnlyOneNonNullResult(res?.data);
         if (keyDetail) {
           handleRedirectDetail(keyDetail, res?.data);
           setLoading(false);
@@ -201,6 +210,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           return;
         }
       }
+
       setShowOption(true);
       setLoading(false);
     } catch {
@@ -381,6 +391,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       setLoading(true);
       const dataHanlde = await adaHandleSearch(search);
       if (dataHanlde) {
+        handleSetSearchValueDefault();
         if (dataHanlde.stakeAddress) {
           history.push(details.stake(search));
         } else {
@@ -680,8 +691,8 @@ export const OptionsSearch = ({
               };
             case "address":
               const addressLink = objValue?.stakeAddress
-                ? details.stake((value || "").trim().toLocaleLowerCase())
-                : details.address((value || "").trim().toLocaleLowerCase());
+                ? `${details.stake((value || "").trim().toLocaleLowerCase())}&isAddress=true`
+                : `${details.address((value || "").trim().toLocaleLowerCase())}&isAddress=true`;
               return {
                 suggestText: "Search for an Address by",
                 cb: () => history.push(addressLink),
@@ -921,7 +932,8 @@ export const OptionsSearch = ({
               }}
             >
               <Box>
-                Search {""} <ValueOption>{value || ""}</ValueOption> in ADA handle
+                Search {""} <ValueOption>{value.length > 15 ? getShortHash(value) : value || ""}</ValueOption> in ADA
+                handle
               </Box>
               <GoChevronRight />
             </Option>
