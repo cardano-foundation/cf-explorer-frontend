@@ -189,14 +189,17 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     try {
       setLoading(true);
       const res = await defaultAxios.get(API.SEARCH_ALL(query));
-      setADAHanldeOption(await adaHandleSearch(search));
+      const adaHanlde = await axios.get(API_ADA_HANDLE_API + API.ADAHandle(search)).then((data) => data.data);
+      setADAHanldeOption(adaHanlde);
       setDataSearchAll(res?.data);
-      const keyDetail = getKeyIfOnlyOneNonNullResult(res?.data);
-      if (keyDetail) {
-        handleRedirectDetail(keyDetail, res?.data);
-        setLoading(false);
-        setShowOption(false);
-        return;
+      if (!adaHanlde.paymentAddress) {
+        const keyDetail = getKeyIfOnlyOneNonNullResult(res?.data);
+        if (keyDetail) {
+          handleRedirectDetail(keyDetail, res?.data);
+          setLoading(false);
+          setShowOption(false);
+          return;
+        }
       }
       setShowOption(true);
       setLoading(false);
@@ -400,8 +403,8 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
             callback?.();
             return;
           }
-          handleSetSearchValueDefault();
           history.push(details.address(search));
+          handleSetSearchValueDefault();
         } catch (error) {
           showResultNotFound();
           setShowOption(true);
@@ -690,7 +693,7 @@ export const OptionsSearch = ({
             case "validTokenName":
               if (data.validTokenName) {
                 if (data.token) {
-                  setShowOption(false);
+                  // setShowOption(false);
                   return {
                     suggestText: (
                       <Box>
@@ -720,7 +723,7 @@ export const OptionsSearch = ({
             case "validPoolName":
               if (data?.validPoolName) {
                 if (data.pool) {
-                  setShowOption(false);
+                  // setShowOption(false);
                   return {
                     suggestText: (
                       <Box>

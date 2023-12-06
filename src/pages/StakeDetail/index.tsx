@@ -21,15 +21,17 @@ const StakeDetail: React.FC = () => {
   const { stakeId } = useParams<{ stakeId: string }>();
   const { state } = useLocation<{ fromPath?: SpecialPath }>();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
-  const [{ data: adaHandle, loading: adaHandleLoading }] = useADAHandle(stakeId);
+  const [{ data: adaHandle, loading: adaHandleLoading, initialized: ADAHandleInitialized }] = useADAHandle(stakeId);
 
   useEffect(() => {
-    if (adaHandle?.stakeAddress) {
-      setStakeAddress(adaHandle?.stakeAddress);
-    } else {
-      setStakeAddress(stakeId);
+    if (ADAHandleInitialized) {
+      if (adaHandle?.stakeAddress) {
+        setStakeAddress(adaHandle?.stakeAddress);
+      } else {
+        setStakeAddress(stakeId);
+      }
     }
-  }, [JSON.stringify(adaHandle)]);
+  }, [JSON.stringify(adaHandle), stakeId]);
 
   const status = useFetch<ListStakeKeyResponse>(
     stakeAddress ? API.STAKE_LIFECYCLE.TABS(stakeAddress) : "",
