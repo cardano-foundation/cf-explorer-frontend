@@ -35,12 +35,14 @@ const DelegationLists: React.FC = () => {
   const { tickerNameSearch = "" } = history.location.state || {};
   const [value, setValue] = useState("");
   const [search, setSearch] = useState(decodeURIComponent(tickerNameSearch));
-  const { pageInfo, setSort } = usePageInfo();
-  const isShowRetired = pageInfo?.retired;
+  const {
+    pageInfo: { retired = "false", ...rest },
+    setSort
+  } = usePageInfo();
   const tableRef = useRef<HTMLDivElement>(null);
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   useEffect(() => {
-    if (tickerNameSearch !== search) history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
+    if (tickerNameSearch !== search) history.replace({ search: stringify({ ...rest, retired, page: 1 }) });
     if (tickerNameSearch) {
       setSearch(decodeURIComponent(tickerNameSearch));
     }
@@ -49,7 +51,7 @@ const DelegationLists: React.FC = () => {
 
   const fetchData = useFetchList<Delegators>(
     API.DELEGATION.POOL_LIST,
-    { ...pageInfo, search, isShowRetired },
+    { ...rest, search, isShowRetired: retired },
     false,
     blockKey
   );
@@ -57,7 +59,7 @@ const DelegationLists: React.FC = () => {
 
   useEffect(() => {
     if (fetchData.initialized) {
-      history.replace({ search: stringify({ ...pageInfo }), state: undefined });
+      history.replace({ search: stringify({ ...rest, retired }), state: undefined });
     }
   }, [fetchData.initialized, history]);
 
@@ -198,13 +200,13 @@ const DelegationLists: React.FC = () => {
             onKeyUp={(e) => {
               if (e.key === "Enter") {
                 setSearch(value);
-                history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
+                history.replace({ search: stringify({ ...rest, retired, page: 1 }) });
               }
             }}
           />
           <SubmitButton
             onClick={() => {
-              history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
+              history.replace({ search: stringify({ ...rest, retired, page: 1 }) });
               history.push(routers.DELEGATION_POOLS, {
                 tickerNameSearch: (value || "").toLocaleLowerCase()
               });
@@ -222,10 +224,8 @@ const DelegationLists: React.FC = () => {
         <ShowRetiredPools>
           {t("glassary.showRetiredPools")}
           <AntSwitch
-            checked={isShowRetired === "true"}
-            onChange={(e) =>
-              history.replace({ search: stringify({ ...pageInfo, page: 0, retired: e.target.checked }) })
-            }
+            checked={retired === "true"}
+            onChange={(e) => history.replace({ search: stringify({ ...rest, page: 0, retired: e.target.checked }) })}
           />
         </ShowRetiredPools>
       </TopSearchContainer>
@@ -235,10 +235,10 @@ const DelegationLists: React.FC = () => {
         total={{ count: fetchData.total, title: "Total", isDataOverSize: fetchData.isDataOverSize }}
         onClickRow={(_, r: Delegators) => history.push(details.delegation(r.poolId), { fromPath })}
         pagination={{
-          ...pageInfo,
+          ...rest,
           total: fetchData.total,
           onChange: (page, size) => {
-            history.replace({ search: stringify({ ...pageInfo, page, size }) });
+            history.replace({ search: stringify({ ...rest, retired, page, size }) });
             tableRef.current?.scrollIntoView();
           }
         }}
