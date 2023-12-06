@@ -507,10 +507,10 @@ export const ProtocolParameterHistory = () => {
   }, [JSON.stringify(columnTitle), JSON.stringify(dataHistory)]);
 
   useEffect(() => {
-    if (dataHistory) {
+    if (dataHistory && dataHistory?.epochChanges?.length > 0) {
       setIsShowUpcomingEpoch(currentEpochNo < dataHistory?.epochChanges[0].endEpoch);
     }
-  }, [dataHistory, currentEpochNo]);
+  }, [dataHistory, currentEpochNo, dataHistory?.epochChanges?.length]);
 
   useEffect(() => {
     if (dataHistory) {
