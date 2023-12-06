@@ -193,7 +193,13 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       setADAHanldeOption(adaHanlde);
       setDataSearchAll(res?.data);
       const keyDetail = getKeyIfOnlyOneNonNullResult(res?.data);
-      if (adaHanlde && (!keyDetail || keyDetail === "address")) {
+      if (
+        adaHanlde &&
+        (!keyDetail || keyDetail === "address") &&
+        res.data &&
+        !res.data.validPoolName &&
+        !res.data.validTokenName
+      ) {
         setLoading(false);
         setShowOption(false);
         if (adaHanlde?.stakeAddress) {
