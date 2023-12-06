@@ -200,6 +200,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
         !res.data.validPoolName &&
         !res.data.validTokenName
       ) {
+        handleSetSearchValueDefault();
         setLoading(false);
         setShowOption(false);
         if (adaHanlde?.stakeAddress) {
@@ -212,6 +213,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
 
       if (!adaHanlde.paymentAddress) {
         if (keyDetail) {
+          handleSetSearchValueDefault();
           handleRedirectDetail(keyDetail, res?.data);
           setLoading(false);
           setShowOption(false);
@@ -920,7 +922,14 @@ export const OptionsSearch = ({
         <>
           {listOptions.map((item, i: number) => {
             return (
-              <Option key={i} onClick={() => item?.cb?.()} data-testid="option-search-epoch">
+              <Option
+                key={i}
+                onClick={() => {
+                  setShowOption(false);
+                  item?.cb?.();
+                }}
+                data-testid="option-search-epoch"
+              >
                 <Box>
                   {item?.suggestText}
                   {typeof item?.suggestText === "string" && (
@@ -936,6 +945,7 @@ export const OptionsSearch = ({
               key="ADAHandleOption"
               data-testid="option-search-epoch"
               onClick={() => {
+                setShowOption(false);
                 if (ADAHandleOption?.stakeAddress) {
                   history.push(details.stake(value));
                 } else {
