@@ -476,6 +476,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     setValues({ search, filter: e.target.value as Option["value"] });
     setError("");
     setShowErrorMobile?.(false);
+    setADAHanldeOption(undefined);
   };
 
   const handleChangeSearch = (e?: React.ChangeEvent) => {
