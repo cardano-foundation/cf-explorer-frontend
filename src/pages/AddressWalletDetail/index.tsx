@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { styled, Container } from "@mui/material";
+import { styled, Container, CircularProgress, Box } from "@mui/material";
 import { useSelector } from "react-redux";
 
 import AddressTransactionList from "src/components/AddressTransactionList";
@@ -9,17 +9,25 @@ import AddressAnalytics from "src/components/AddressDetail/AddressAnalytics";
 import useFetch from "src/commons/hooks/useFetch";
 import NoRecord from "src/components/commons/NoRecord";
 import { API } from "src/commons/utils/api";
+import useADAHandle from "src/commons/hooks/useADAHandle";
 
 const AddressWalletDetail = () => {
   const { address } = useParams<{ address: string }>();
+  const [addressWallet, setAddressWallet] = useState("");
   const { state } = useLocation<{ data?: WalletAddress }>();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
-  const { data, loading, initialized, error } = useFetch<WalletAddress>(
-    state?.data ? "" : `${API.ADDRESS.DETAIL}/${address}`,
-    state?.data,
-    false,
-    blockKey
-  );
+
+  const [{ data: adaHandle, loading: adaHandleLoading, initialized: ADAHandleInitialized }] = useADAHandle(address);
+
+  useEffect(() => {
+    if (ADAHandleInitialized) {
+      if (adaHandle?.paymentAddress) {
+        setAddressWallet(adaHandle?.paymentAddress);
+      } else {
+        setAddressWallet(address);
+      }
+    }
+  }, [JSON.stringify(adaHandle), adaHandleLoading, address]);
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
@@ -27,17 +35,30 @@ const AddressWalletDetail = () => {
     document.documentElement.scrollTop = 0;
   }, [address]);
 
+  const { data, loading, initialized, error } = useFetch<WalletAddress>(
+    addressWallet ? `${API.ADDRESS.DETAIL}/${addressWallet}` : "",
+    state?.data,
+    false,
+    blockKey
+  );
+
   if (!initialized && !state?.data) {
     return null;
   }
-
-  if ((initialized && !data) || error) return <NoRecord />;
+  if (adaHandleLoading) {
+    return (
+      <Box>
+        <CircularProgress />
+      </Box>
+    );
+  }
+  if (initialized && (!data || error) && !loading) return <NoRecord />;
 
   return (
     <ContainerBox>
-      <AddressHeader data={data} loading={loading} />
-      <AddressAnalytics />
-      <AddressTransactionList address={address} />
+      <AddressHeader adaHanldeData={adaHandle} data={data} loading={loading} />
+      <AddressAnalytics address={addressWallet} />
+      <AddressTransactionList address={addressWallet} />
     </ContainerBox>
   );
 };
