@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Box, CircularProgress } from "@mui/material";
+import QueryString from "qs";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -19,13 +20,14 @@ const StakeDetail: React.FC = () => {
   const mainRef = useRef(document.querySelector("#main"));
   const [stakeAddress, setStakeAddress] = useState("");
   const { stakeId } = useParams<{ stakeId: string }>();
-  const { state } = useLocation<{ fromPath?: SpecialPath }>();
+  const { state, search } = useLocation<{ fromPath?: SpecialPath }>();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const [{ data: adaHandle, loading: adaHandleLoading, initialized: ADAHandleInitialized }] = useADAHandle(stakeId);
+  const queryParams = QueryString.parse(search.slice(1, search.length));
 
   useEffect(() => {
     if (ADAHandleInitialized) {
-      if (adaHandle?.stakeAddress) {
+      if (adaHandle?.stakeAddress && queryParams?.isADAHanlde) {
         setStakeAddress(adaHandle?.stakeAddress);
       } else {
         setStakeAddress(stakeId);
