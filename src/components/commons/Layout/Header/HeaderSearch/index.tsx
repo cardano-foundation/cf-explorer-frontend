@@ -288,7 +288,12 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const FetchSearchTokensAndPools = async (query: string, filter: FilterParams) => {
     try {
       setLoading(true);
-      const search: { query?: string; search?: string } = {};
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const entries = urlParams.entries();
+      const params = Object.fromEntries(entries);
+      const search: { query?: string; search?: string; retired?: boolean } = { ...params };
+
       if (filter === "tokens") {
         search.query = query.trim();
       } else {

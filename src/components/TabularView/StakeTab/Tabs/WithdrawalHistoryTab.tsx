@@ -96,7 +96,7 @@ const WithdrawalHistoryTab = () => {
             sortKey="id"
             filterValue={omit(pageInfo, ["page", "size"])}
             onChange={(params) => {
-              const newParams = omit({ ...params, txHash: params.search }, ["search"]);
+              const newParams = omit({ ...params, txHash: params?.search }, ["search"]);
               history.replace({ search: stringify({ page: 1, ...newParams }) });
             }}
             searchLabel={t("common.searchTx")}

@@ -19,6 +19,7 @@ interface ITokenTableData {
   setCurrentHolder?: (holders: number) => void;
   loading?: boolean;
   metadataCIP25?: Transaction["metadata"][0]["metadataCIP25"];
+  metadataCIP60?: Transaction["metadata"][0]["metadataCIP25"];
 }
 
 const TokenTableData: React.FC<ITokenTableData> = ({
@@ -27,7 +28,8 @@ const TokenTableData: React.FC<ITokenTableData> = ({
   metadataJson,
   setCurrentHolder,
   loading,
-  metadataCIP25
+  metadataCIP25,
+  metadataCIP60
 }) => {
   const { t } = useTranslation();
   const { tokenId } = useParams<{ tokenId: string }>();
@@ -63,7 +65,9 @@ const TokenTableData: React.FC<ITokenTableData> = ({
     {
       key: "metadata",
       label: t("glossary.metadata"),
-      children: <TokenMetaData metadataJson={metadataJson} metadataCIP25={metadataCIP25} />,
+      children: (
+        <TokenMetaData metadataJson={metadataJson} metadataCIP25={metadataCIP25} metadataCIP60={metadataCIP60} />
+      ),
       icon: MetadataIcon
     }
   ];

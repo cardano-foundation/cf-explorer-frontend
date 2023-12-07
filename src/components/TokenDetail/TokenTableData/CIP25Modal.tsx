@@ -20,7 +20,7 @@ import {
   TokenLabel
 } from "./styles";
 
-export type TCIP25ComplianceModalProps = {
+export type TCIP25ModalProps = {
   open: boolean;
   onClose: () => void;
   data?: Transaction["metadata"][0]["metadataCIP25"]["tokenMap"];
@@ -58,7 +58,7 @@ const DEFAULT_CIP25_REQUIRE = [
   }
 ];
 
-const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
+const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
   const { data, version } = props;
   const { t } = useTranslation();
   const tokenMaps = useMemo(() => {
@@ -67,7 +67,7 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
     return tokens;
   }, [data]);
 
-  const columns: Column<TTCIP25Properties>[] = [
+  const columns: Column<TTCIPProperties>[] = [
     {
       title: "#",
       key: "index",
@@ -126,7 +126,7 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
         )
     }
   ];
-  const mixedoptionalProperties = (optionalProperties: TTCIP25Properties[]) => {
+  const mixedoptionalProperties = (optionalProperties: TTCIPProperties[]) => {
     if (version) return [...optionalProperties, version];
     return optionalProperties;
   };
@@ -138,7 +138,7 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
       style={{ maxHeight: "unset" }}
       onClose={props.onClose}
       title={
-        <CIPLabel>
+        <CIPLabel data-testid="token-CIP25Compliance">
           {t("token.CIP25Compliance")} <ViewAllButtonExternal tooltipTitle={t("cip25.viewDocs")} to={CIP25_DOCS_URL} />
         </CIPLabel>
       }
@@ -147,15 +147,24 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
         {tokenMaps.map((token, index) => (
           <React.Fragment key={index}>
             {token.tokenName && (
-              <TokenLabel>
+              <TokenLabel data-testid="token-CIP25-name">
                 {t("glossary.Token")}: {token.tokenName}
               </TokenLabel>
             )}
             <CIPModalSubtitle>{t("token.requiredProperties")}</CIPModalSubtitle>
-            <Table isModal isFullTableHeight={true} data={token.requireProperties} columns={columns} />
+            <Table
+              isModal
+              maxHeight="unset"
+              height="auto"
+              isFullTableHeight={true}
+              data={token.requireProperties}
+              columns={columns}
+            />
             {token.optionalProperties.length > 0 && (
               <>
-                <CIPModalSubtitle>{t("token.optionalProperties")}</CIPModalSubtitle>
+                <CIPModalSubtitle data-testid="token-CIP25-optional-properties">
+                  {t("token.optionalProperties")}
+                </CIPModalSubtitle>
                 <Table
                   isModal
                   maxHeight="unset"
@@ -165,9 +174,9 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
                 />
               </>
             )}
-            <CIPModalSubtitle>{t("token.otherProperties")}</CIPModalSubtitle>
+            <CIPModalSubtitle data-testid="token-CIP25-other-properties">{t("token.otherProperties")}</CIPModalSubtitle>
             <OtherPropetiesContent>
-              <OtherPropetiesDesc>{t("token.otherProperties.desc")}</OtherPropetiesDesc>
+              <OtherPropetiesDesc>{t("token.cip25otherProperties.desc")}</OtherPropetiesDesc>
             </OtherPropetiesContent>
           </React.Fragment>
         ))}
@@ -176,4 +185,4 @@ const CIP25ComplianceModal: React.FC<TCIP25ComplianceModalProps> = (props) => {
   );
 };
 
-export default CIP25ComplianceModal;
+export default CIP25Modal;

@@ -7,17 +7,18 @@ import CustomTooltip from "../CustomTooltip";
 
 export type TCIPType = "success" | "warning";
 
-export type TCIPBadgeProps = {
+export type TCIP25BadgeProps = {
   type: TCIPType;
   tooltipTitle?: string;
+  onClick?: () => void;
 };
 
-const CIPBadge: React.FC<TCIPBadgeProps> = ({ type, tooltipTitle }) => {
+const CIP25Badge: React.FC<TCIP25BadgeProps> = ({ type, tooltipTitle, onClick }) => {
   const { t } = useTranslation();
   const success = type === "success";
   return (
     <CustomTooltip title={tooltipTitle}>
-      <BadgeContainer success={+success}>
+      <BadgeContainer data-testid="clickable-cip25-badge" onClick={onClick} success={+success}>
         {success ? <CheckedCIPIcon /> : <WarningCIPIcon />}
         <CIPLabel>{t("token.CIP-25")}</CIPLabel>
       </BadgeContainer>
@@ -25,4 +26,4 @@ const CIPBadge: React.FC<TCIPBadgeProps> = ({ type, tooltipTitle }) => {
   );
 };
 
-export default CIPBadge;
+export default CIP25Badge;

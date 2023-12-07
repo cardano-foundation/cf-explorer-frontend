@@ -492,3 +492,5 @@ export { ReactComponent as SmartContractsIcon } from "./icons/smartContract.svg"
 export { ReactComponent as AssociatedIcon } from "./icons/associated.svg";
 export { ReactComponent as WarningCIPIcon } from "./icons/warning-cip25.svg";
 export { ReactComponent as CheckedCIPIcon } from "./icons/complied-cip25.svg";
+export { ReactComponent as SmallInfoIcon } from "./icons/small-info-icon.svg";
+export { ReactComponent as CIP60WarningIcon } from "./icons/cip60-warning.svg";

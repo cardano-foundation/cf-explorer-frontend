@@ -63,7 +63,15 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
   const tabRef = useRef<HTMLDivElement>(null);
 
   const handleChangeTab = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-    tabRef?.current?.scrollIntoView();
+    const handleTransitionEnd = () => {
+      if (newExpanded) {
+        setTimeout(() => {
+          tabRef?.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }, 0);
+        tabRef?.current?.removeEventListener("transitionend", handleTransitionEnd);
+      }
+    };
+    tabRef?.current?.addEventListener("transitionend", handleTransitionEnd);
     history.replace(details.transaction(data?.tx?.hash, newExpanded ? panel : ""));
   };
 
@@ -241,7 +249,6 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
           customBorderRadius={needBorderRadius(key)}
           isDisplayBorderTop={tabActive !== key && key !== items[0].key && index !== indexExpand + 1}
           onChange={handleChangeTab(key)}
-          TransitionProps={{ unmountOnExit: true }}
         >
           <AccordionSummary
             expandIcon={
