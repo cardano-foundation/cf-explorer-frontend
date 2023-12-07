@@ -308,23 +308,21 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
         if (filter === "tokens") {
           if (res.data?.totalItems === 1) {
             history.push(details.token(encodeURIComponent((res?.data?.data[0] as TokensSearch)?.fingerprint)));
-            callback?.();
-            handleSetSearchValueDefault();
           } else {
             history.push(`${routers.TOKEN_LIST}?tokenName=${(search.query || "").toLocaleLowerCase()}`);
-            handleSetSearchValueDefault();
           }
+          handleSetSearchValueDefault();
+          callback?.();
         } else {
           if (res.data?.totalItems === 1) {
             history.push(details.delegation((res?.data?.data[0] as DelegationPool)?.poolId));
-            callback?.();
-            handleSetSearchValueDefault();
           } else {
             history.push(routers.DELEGATION_POOLS, {
               tickerNameSearch: (search.search || "").toLocaleLowerCase()
             });
-            handleSetSearchValueDefault();
           }
+          callback?.();
+          handleSetSearchValueDefault();
         }
       } else {
         setShowOption(true);
