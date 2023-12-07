@@ -214,8 +214,8 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
 
       if (!adaHanlde.paymentAddress) {
         if (keyDetail) {
-          handleSetSearchValueDefault();
           callback?.();
+          handleSetSearchValueDefault();
           handleRedirectDetail(keyDetail, res?.data);
           setLoading(false);
           setShowOption(false);
@@ -308,18 +308,25 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       setDataSearchTokensAndPools(res?.data && res?.data?.data ? res?.data?.data : undefined);
       if (res?.data && res.data?.totalItems > 0) {
         if (filter === "tokens") {
-          res.data?.totalItems === 1
-            ? history.push(details.token(encodeURIComponent((res?.data?.data[0] as TokensSearch)?.fingerprint)))
-            : history.push(`${routers.TOKEN_LIST}?tokenName=${(search.query || "").toLocaleLowerCase()}`);
-          handleSetSearchValueDefault();
+          if (res.data?.totalItems === 1) {
+            history.push(details.token(encodeURIComponent((res?.data?.data[0] as TokensSearch)?.fingerprint)));
+            callback?.();
+            handleSetSearchValueDefault();
+          } else {
+            history.push(`${routers.TOKEN_LIST}?tokenName=${(search.query || "").toLocaleLowerCase()}`);
+            handleSetSearchValueDefault();
+          }
         } else {
-          res.data?.totalItems === 1
-            ? history.push(details.delegation((res?.data?.data[0] as DelegationPool)?.poolId))
-            : history.push(routers.DELEGATION_POOLS, {
-                tickerNameSearch: (search.search || "").toLocaleLowerCase(),
-                retired: params && params.retired
-              });
-          handleSetSearchValueDefault();
+          if (res.data?.totalItems === 1) {
+            history.push(details.delegation((res?.data?.data[0] as DelegationPool)?.poolId));
+            callback?.();
+            handleSetSearchValueDefault();
+          } else {
+            history.push(routers.DELEGATION_POOLS, {
+              tickerNameSearch: (search.search || "").toLocaleLowerCase()
+            });
+            handleSetSearchValueDefault();
+          }
         }
       } else {
         setShowOption(true);
@@ -366,6 +373,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           .get(url)
           .then((res) => res.data)
           .then((data: { nativeScript: boolean; scriptHash: string; smartContract: boolean }) => {
+            callback?.();
             if (data.nativeScript) {
               history.push(details.nativeScriptDetail(data.scriptHash || "", "script"));
               handleSetSearchValueDefault();
@@ -882,7 +890,7 @@ export const OptionsSearch = ({
             {(listOptionsTokensAndPools || [])?.map((item, i: number) => {
               return (
                 <Option key={i} onClick={() => item?.cb?.()} data-testid="option-search-epoch">
-                  <Box>{item?.suggestText} </Box>
+                  <Box textAlign={"left"}>{item?.suggestText} </Box>
                   <GoChevronRight />
                 </Option>
               );
@@ -939,7 +947,7 @@ export const OptionsSearch = ({
                 }}
                 data-testid="option-search-epoch"
               >
-                <Box>
+                <Box textAlign={"left"}>
                   {item?.suggestText}
                   {typeof item?.suggestText === "string" && (
                     <ValueOption> {item?.formatter?.(item?.value || value) || item?.value || value}</ValueOption>
@@ -964,7 +972,7 @@ export const OptionsSearch = ({
                 }
               }}
             >
-              <Box>
+              <Box textAlign={"left"}>
                 Search {""} <ValueOption>{value.length > 15 ? getShortHash(value) : value || ""}</ValueOption> in ADA
                 handle
               </Box>
