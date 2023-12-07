@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useImperativeHandle, forwardRef, ForwardRefRenderFunction } from "react";
 import { Box, Popper, PopperPlacementType, styled, useTheme } from "@mui/material";
 
 import { CloseLineIcon } from "src/commons/resources";
@@ -36,7 +36,7 @@ type Props = {
   placement?: PopperPlacementType;
 };
 
-const PopperStyled = (props: Props) => {
+const PopperStyled: ForwardRefRenderFunction<{ trickerClose: () => void }, Props> = (props, ref) => {
   const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLElement) | null>(null);
   const { render, content, showCloseButton = true } = props;
   const refElement = useRef<HTMLDivElement>(null);
@@ -48,6 +48,16 @@ const PopperStyled = (props: Props) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        trickerClose: handleClose
+      };
+    },
+    []
+  );
 
   const handleClickOutside = (event: MouseEvent) => {
     if (refElement.current && !(event.target instanceof Node && refElement.current.contains(event.target))) {
@@ -97,4 +107,4 @@ const PopperStyled = (props: Props) => {
   );
 };
 
-export default PopperStyled;
+export default forwardRef(PopperStyled);

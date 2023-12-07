@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import { Grid, Box, useTheme, Button } from "@mui/material";
 import { useSelector } from "react-redux";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
+import QueryString from "qs";
 
 import { exchangeADAToUSD, formatADAFull, getShortHash } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
@@ -24,12 +25,19 @@ import { BackButton, BackText, RedirectButton, StyledBoxCard, TimeDuration, Titl
 interface Props {
   data: WalletAddress | null;
   loading: boolean;
+  adaHanldeData?: {
+    stakeAddress: string;
+    paymentAddress: string;
+  } | null;
 }
-const AddressHeader: React.FC<Props> = ({ data, loading }) => {
+const AddressHeader: React.FC<Props> = ({ data, loading, adaHanldeData }) => {
   const { t } = useTranslation();
   const [stakeKey, setStakeKey] = useState("");
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const adaRate = useSelector(({ system }: RootState) => system.adaRate);
+  const { address } = useParams<{ address: string }>();
+  const { search } = useLocation();
+  const queryParams = QueryString.parse(search.slice(1, search.length));
 
   const {
     data: dataStake,
@@ -110,9 +118,32 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           <BackText>{t("common.back")}</BackText>
         </BackButton>
         <Box width={"100%"} display={"flex"} flexWrap={"wrap"} alignItems={"center"} justifyContent={"space-between"}>
-          <Box component={"h2"} lineHeight={1} mt={2} display={"flex"} alignItems={"center"}>
-            <TitleText>{t("address.title.addressDetail")}</TitleText>
-            <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
+          <Box
+            textAlign={"left"}
+            component={"h2"}
+            lineHeight={1}
+            mt={2}
+            display={"flex"}
+            alignItems={"center"}
+            flexWrap={"wrap"}
+          >
+            <TitleText>
+              {adaHanldeData && queryParams?.isADAHanlde ? (
+                <Box sx={{ wordBreak: "break-all" }}>
+                  {address} Details
+                  <Box display={"inline-block"}>
+                    <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
+                  </Box>
+                </Box>
+              ) : (
+                <Box>
+                  {t("address.title.addressDetail")}
+                  <Box display={"inline-block"}>
+                    <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
+                  </Box>
+                </Box>
+              )}
+            </TitleText>
           </Box>
           {(data?.associatedSmartContract || data?.associatedNativeScript) && (
             <RedirectButton

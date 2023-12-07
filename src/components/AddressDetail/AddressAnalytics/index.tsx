@@ -1,7 +1,6 @@
 import { BigNumber } from "bignumber.js";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 import React, { useMemo, useState } from "react";
 import { Box, Grid, alpha, useTheme } from "@mui/material";
 import {
@@ -58,7 +57,7 @@ interface AnalyticsExpanded extends AnalyticsData {
   lowest: number;
 }
 
-const AddressAnalytics: React.FC = () => {
+const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
   const { t } = useTranslation();
   const options = [
     { value: OPTIONS_CHART_ANALYTICS.ONE_DAY, label: t("time.1d") },
@@ -67,7 +66,6 @@ const AddressAnalytics: React.FC = () => {
     { value: OPTIONS_CHART_ANALYTICS.THREE_MONTH, label: t("time.3m") }
   ];
   const [rangeTime, setRangeTime] = useState<OPTIONS_CHART_ANALYTICS>(OPTIONS_CHART_ANALYTICS.ONE_DAY);
-  const { address } = useParams<{ address: string }>();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const theme = useTheme();
   const { data, loading } = useFetch<AddressAnalyticsData>(

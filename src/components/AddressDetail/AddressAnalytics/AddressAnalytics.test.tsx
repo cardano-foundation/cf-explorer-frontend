@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import { useTheme } from "@mui/material";
 import { useSelector } from "react-redux";
 
@@ -90,17 +89,15 @@ const mockData = {
 };
 
 describe("Address Analytics component test", () => {
-  const mockUseParams = useParams as jest.Mock;
   const mockUseFetch = useFetch as jest.Mock;
   const mockUseTheme = useTheme as jest.Mock;
   const mockUseSelector = useSelector as jest.Mock;
   beforeEach(() => {
     jest.resetAllMocks();
-    mockUseParams.mockReturnValue({ address: mockAddress });
     mockUseFetch.mockResolvedValue({ data: mockData, loading: false });
     mockUseTheme.mockReturnValue(themes.light);
     mockUseSelector.mockReturnValue("123");
-    render(<AddressAnalytics />);
+    render(<AddressAnalytics address={mockAddress} />);
   });
 
   it("should component render", () => {
