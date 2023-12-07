@@ -36,10 +36,16 @@ jobs:
           pip3 install numpy requests
           python3 CypressDynamicScript.py
 
+      - name: 🏂 Install serve globally
+        run: npm install -g serve
+
+      - name: 🚧 Build the project
+        run: npm run build
+
       - name: 🎳 Run tests
         uses: cypress-io/github-action@v6
         with:
-          start: npm start
+          start: serve -s build -l 3000
           wait-on: "http://localhost:3000"
           wait-on-timeout: 360
 
