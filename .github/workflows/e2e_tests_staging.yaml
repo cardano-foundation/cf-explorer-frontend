@@ -35,10 +35,13 @@ jobs:
       - name: 🚧 Build the project
         run: npm run build
 
+      - name: 👻 Add empty env.global.js file
+        run: touch build/static/js/env.global.js
+
       - name: 🎳 Run tests
         uses: cypress-io/github-action@v6
         with:
-          start: serve -s build -l 3000
+          start: serve -s build -L
           wait-on: "http://localhost:3000"
           wait-on-timeout: 360
 
