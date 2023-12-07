@@ -158,6 +158,7 @@ export const CIPHeader = styled(Box)`
   align-items: center;
   gap: 8px;
   margin-bottom: 12px;
+  flex-wrap: wrap;
 `;
 
 export const CIPHeaderTitle = styled(Box)`
@@ -208,6 +209,9 @@ export const OtherPropetiesContent = styled(Box)`
   border-radius: 6px;
   margin-top: 14px;
   margin-bottom: 30px;
+  &:last-child {
+    margin-bottom: 0px;
+  }
 `;
 
 export const OtherPropetiesDesc = styled(Typography)`

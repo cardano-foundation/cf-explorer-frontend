@@ -1,8 +1,9 @@
 import { Box } from "@mui/material";
 import { JsonViewerKeyRenderer } from "@textea/json-viewer";
+import { isNumber } from "lodash";
 import { useEffect } from "react";
 const MAX_INDEX = 1000;
-const useDisableJsonKey = (data: unknown): { trigger: () => void; keyRenderer: JsonViewerKeyRenderer } => {
+const useDisableJsonKey = <T,>(data: T): { trigger: () => void; keyRenderer: JsonViewerKeyRenderer } => {
   const trigger = () => {
     setTimeout(() => {
       const elements = document.querySelectorAll("[data-row-id='json-row']");
@@ -22,9 +23,10 @@ const useDisableJsonKey = (data: unknown): { trigger: () => void; keyRenderer: J
   const keyRenderer: JsonViewerKeyRenderer = () => {
     return <Box data-row-id="json-row" />;
   };
+
   keyRenderer.when = ({ path }) => {
-    const num = Number(path[path.length - 1]);
-    return !isNaN(num) && num < MAX_INDEX;
+    const num = path[path.length - 1];
+    return isNumber(num) && num < MAX_INDEX;
   };
   return { keyRenderer, trigger };
 };
