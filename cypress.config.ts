@@ -10,12 +10,12 @@ export default defineConfig({
     hideXHRInCommandLog: true,
     viewportWidth: 1920,
     viewportHeight: 1080,
-    defaultCommandTimeout: 9000000,
-    pageLoadTimeout: 9000000,
-    execTimeout: 9000000,
-    taskTimeout: 9000000,
-    requestTimeout: 9000000,
-    responseTimeout: 9000000,
+    defaultCommandTimeout: 120000,
+    pageLoadTimeout: 120000,
+    execTimeout: 120000,
+    taskTimeout: 120000,
+    requestTimeout: 120000,
+    responseTimeout: 120000,
     setupNodeEvents() {
       // implement node event listeners here
     }
