@@ -1,7 +1,8 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import QueryString from "qs";
 
 import { ReactComponent as delegatedIcon } from "src/commons/resources/icons/delegated.svg";
 import { ReactComponent as rewardIcon } from "src/commons/resources/icons/reward.svg";
@@ -29,11 +30,12 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated, adaHanldeD
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const { stakeId } = useParams<{ stakeId: string }>();
-
+  const { search } = useLocation();
   const poolName = data?.pool?.poolName || "";
   const tickerName = data?.pool?.tickerName || "";
   const poolId = data?.pool?.poolId || "";
   const hasTicketOrPoolName = tickerName || poolName;
+  const queryParams = QueryString.parse(search.slice(1, search.length));
 
   const delegateTooltip = data?.pool
     ? hasTicketOrPoolName
@@ -116,7 +118,13 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated, adaHanldeD
     <DetailHeader
       type="STAKE_KEY"
       bookmarkData={data?.stakeAddress || ""}
-      title={adaHanldeData ? <Box textTransform={"none"}>{stakeId} Details</Box> : t("head.page.stakeAddressDetail")}
+      title={
+        adaHanldeData && queryParams?.isADAHanlde ? (
+          <Box textTransform={"none"}>{stakeId} Details</Box>
+        ) : (
+          t("head.page.stakeAddressDetail")
+        )
+      }
       hash={data?.stakeAddress}
       stakeKeyStatus={data?.status}
       listItem={listOverview}
