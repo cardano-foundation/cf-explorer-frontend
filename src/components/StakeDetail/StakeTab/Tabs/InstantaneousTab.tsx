@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { useTranslation } from "react-i18next";
 
@@ -13,9 +13,8 @@ import ADAicon from "src/components/commons/ADAIcon";
 
 import { StyledLink } from "../styles";
 
-const InstantaneousTab = () => {
+const InstantaneousTab: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) => {
   const { t } = useTranslation();
-  const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -71,7 +70,10 @@ const InstantaneousTab = () => {
       )
     }
   ];
-  const fetchData = useFetchList<Instantaneous>(`${API.STAKE.DETAIL}/${stakeId}/instantaneous-rewards`, pageInfo);
+  const fetchData = useFetchList<Instantaneous>(
+    stakeAddress ? `${API.STAKE.DETAIL}/${stakeAddress}/instantaneous-rewards` : "",
+    pageInfo
+  );
 
   return (
     <Table

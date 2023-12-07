@@ -1,6 +1,8 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Box, CircularProgress } from "@mui/material";
+import QueryString from "qs";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -10,18 +12,38 @@ import StakeTab from "src/components/StakeDetail/StakeTab";
 import StakeAnalytics from "src/components/StakeDetail/StakeAnalytics";
 import { setSpecialPath } from "src/stores/system";
 import { routers } from "src/commons/routers";
+import useADAHandle from "src/commons/hooks/useADAHandle";
 
 import { StyledContainer } from "./styles";
 
 const StakeDetail: React.FC = () => {
   const mainRef = useRef(document.querySelector("#main"));
+  const [stakeAddress, setStakeAddress] = useState("");
   const { stakeId } = useParams<{ stakeId: string }>();
-  const { state } = useLocation<{ fromPath?: SpecialPath }>();
+  const { state, search } = useLocation<{ fromPath?: SpecialPath }>();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
-  const status = useFetch<ListStakeKeyResponse>(API.STAKE_LIFECYCLE.TABS(stakeId), undefined, false, blockKey);
+  const [{ data: adaHandle, loading: adaHandleLoading, initialized: ADAHandleInitialized }] = useADAHandle(stakeId);
+  const queryParams = QueryString.parse(search.slice(1, search.length));
+
+  useEffect(() => {
+    if (ADAHandleInitialized) {
+      if (adaHandle?.stakeAddress && queryParams?.isADAHanlde) {
+        setStakeAddress(adaHandle?.stakeAddress);
+      } else {
+        setStakeAddress(stakeId);
+      }
+    }
+  }, [JSON.stringify(adaHandle), stakeId]);
+
+  const status = useFetch<ListStakeKeyResponse>(
+    stakeAddress ? API.STAKE_LIFECYCLE.TABS(stakeAddress) : "",
+    undefined,
+    false,
+    blockKey
+  );
 
   const { data, loading, initialized, error, lastUpdated } = useFetch<IStakeKeyDetail>(
-    `${API.STAKE.DETAIL}/${stakeId}`,
+    stakeAddress ? `${API.STAKE.DETAIL}/${stakeAddress}` : "",
     undefined,
     false,
     blockKey
@@ -40,12 +62,20 @@ const StakeDetail: React.FC = () => {
     if (status.data?.hasRegistration) return setSpecialPath(routers.STAKE_ADDRESS_REGISTRATION);
   }, [state, status]);
 
-  if ((initialized && !data) || error) return <NoRecord />;
+  if (adaHandleLoading) {
+    return (
+      <Box>
+        <CircularProgress />
+      </Box>
+    );
+  }
+  if (initialized && (!data || error) && !loading) return <NoRecord />;
+
   return (
     <StyledContainer>
-      <StakeKeyOverview data={data} loading={loading} lastUpdated={lastUpdated} />
-      <StakeAnalytics />
-      <StakeTab />
+      <StakeKeyOverview adaHanldeData={adaHandle} data={data} loading={loading} lastUpdated={lastUpdated} />
+      <StakeAnalytics stakeAddress={stakeAddress} />
+      <StakeTab stakeAddress={stakeAddress} />
     </StyledContainer>
   );
 };
