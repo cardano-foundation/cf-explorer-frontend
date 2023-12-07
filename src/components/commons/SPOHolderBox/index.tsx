@@ -36,6 +36,10 @@ const SPOHolderBox: React.FC<ISPOProps> = React.forwardRef(({ data, ...props }, 
     history.push(details.delegation(poolView));
   };
 
+  const stopPropagation = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
   return (
     <Container {...props} ref={boxRef}>
       <Image src={SPOHolderIconUrl} alt="SPO image" />
@@ -56,7 +60,7 @@ const SPOHolderBox: React.FC<ISPOProps> = React.forwardRef(({ data, ...props }, 
               arrow: { style: { color: theme.isDark ? "black" : "white" } }
             }}
             title={
-              <Box>
+              <Box onClick={stopPropagation}>
                 <Box display={"flex"} alignItems={"center"}>
                   <Box fontSize="1.125rem" color={({ palette }) => palette.secondary.light}>
                     {t("common.poolId")}:
@@ -78,6 +82,7 @@ const SPOHolderBox: React.FC<ISPOProps> = React.forwardRef(({ data, ...props }, 
             </ButtonSPO>
           </CustomTooltip>
           <CustomTooltip
+            leaveDelay={100}
             wOpacity={false}
             componentsProps={{
               transition: {
@@ -91,7 +96,7 @@ const SPOHolderBox: React.FC<ISPOProps> = React.forwardRef(({ data, ...props }, 
             }}
             title={
               rewardAccounts.length > 0 && (
-                <StakeKeyItemList>
+                <StakeKeyItemList onClick={stopPropagation}>
                   {rewardAccounts.map((item) => (
                     <StakeKeyItem key={item}>
                       <SPOKey fill={theme.palette.primary.main} />
@@ -103,13 +108,7 @@ const SPOHolderBox: React.FC<ISPOProps> = React.forwardRef(({ data, ...props }, 
               )
             }
           >
-            <ButtonSPO
-              ref={SPOKeyRef}
-              component={IconButton}
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            >
+            <ButtonSPO ref={SPOKeyRef} component={IconButton} onClick={stopPropagation}>
               <SPOKey fill={theme.palette.primary.main} />
             </ButtonSPO>
           </CustomTooltip>

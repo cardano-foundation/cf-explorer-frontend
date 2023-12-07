@@ -79,7 +79,15 @@ const StakeTab: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) => {
   };
 
   const handleChangeTab = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-    tabRef?.current?.scrollIntoView();
+    const handleTransitionEnd = () => {
+      if (newExpanded) {
+        setTimeout(() => {
+          tabRef?.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }, 100);
+        tabRef?.current?.removeEventListener("transitionend", handleTransitionEnd);
+      }
+    };
+    tabRef?.current?.addEventListener("transitionend", handleTransitionEnd);
     history.replace(details.stake(stakeId, newExpanded ? panel : ""));
   };
 
@@ -92,7 +100,6 @@ const StakeTab: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) => {
           customBorderRadius={needBorderRadius(key)}
           isDisplayBorderTop={tabActive !== key && key !== tabs[0].key && index !== indexExpand + 1}
           onChange={handleChangeTab(key)}
-          TransitionProps={{ unmountOnExit: true }}
         >
           <AccordionSummary
             expandIcon={

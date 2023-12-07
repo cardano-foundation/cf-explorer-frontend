@@ -69,7 +69,11 @@ const RecentPoolUpdates = ({ onSelect, setShowBackButton }: Props) => {
           <CustomFilter
             filterValue={params}
             onChange={(params) => {
-              setParams(params);
+              if (params) {
+                setParams(params);
+              } else {
+                setParams({});
+              }
               setPageInfo((pre) => ({ ...pre, page: 0 }));
             }}
             searchLabel={t("common.searchTx")}

@@ -165,7 +165,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     {
       value: "policies",
       label: t("filter.scriptHash"),
-      paths: [routers.SMART_CONTRACT, routers.NATIVE_SCRIPT_DETAIL],
+      paths: [routers.SMART_CONTRACT, routers.NATIVE_SCRIPT_DETAIL, routers.NATIVE_SCRIPTS_AND_SC],
       detail: details.policyDetail
     }
   ];
@@ -269,8 +269,6 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   };
 
   const getKeyIfOnlyOneNonNullResult = (data: IResponseSearchAll | undefined) => {
-    if (data?.validTokenName && data?.validPoolName) return "";
-
     let count = 0;
     let keyName = "";
     for (const key in data) {
@@ -288,7 +286,12 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const FetchSearchTokensAndPools = async (query: string, filter: FilterParams) => {
     try {
       setLoading(true);
-      const search: { query?: string; search?: string } = {};
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const entries = urlParams.entries();
+      const params = Object.fromEntries(entries);
+      const search: { query?: string; search?: string; retired?: boolean } = { ...params };
+
       if (filter === "tokens") {
         search.query = query.trim();
       } else {

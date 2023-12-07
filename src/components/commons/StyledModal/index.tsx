@@ -34,7 +34,10 @@ const StyledModal: React.FC<IProps> = ({
       open={open}
       onClose={handleCloseModal}
       sx={{
-        zIndex: 1305
+        zIndex: 1305,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
       }}
     >
       <ModalContainer

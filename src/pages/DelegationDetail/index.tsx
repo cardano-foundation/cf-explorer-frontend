@@ -43,12 +43,11 @@ const DelegationDetail: React.FC = () => {
   const { search, state } = useLocation<{ fromPath?: SpecialPath }>();
   const history = useHistory();
   const query = parse(search.split("?")[1]);
-  const tab: TabPoolDetail = TABS.includes(query.tab as TabPoolDetail) ? (query.tab as TabPoolDetail) : "";
+  const tab: TabPoolDetail | "" = TABS.includes(query.tab as TabPoolDetail) ? (query.tab as TabPoolDetail) : "";
   const pageInfo = getPageInfo(search);
   const tableRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
-
   useEffect(() => {
     if (Object.keys(query).length === 0) {
       setQuery({ tab: "epochs", page: 1, size: 50 });
@@ -122,7 +121,11 @@ const DelegationDetail: React.FC = () => {
       icon: StakeKeyHistoryIcon,
       label: t("epoch"),
       key: "epochs",
-      component: <DelegationEpochList {...fetchDataEpochs} scrollEffect={scrollEffect} />
+      component: (
+        <div ref={tableRef}>
+          <DelegationEpochList {...fetchDataEpochs} scrollEffect={scrollEffect} />
+        </div>
+      )
     },
     {
       icon: StakingDelegators,
@@ -136,7 +139,7 @@ const DelegationDetail: React.FC = () => {
     },
     {
       icon: TimelineIconComponent,
-      label: t("certificatesHistory"),
+      label: <Box data-testid="certificatesHistory">{t("certificatesHistory")}</Box>,
       key: "certificatesHistory",
       component: (
         <div ref={tableRef}>
@@ -147,7 +150,6 @@ const DelegationDetail: React.FC = () => {
   ];
 
   const indexExpand = tabs.findIndex((item) => item.key === tab);
-
   const needBorderRadius = (currentKey: string) => {
     if (!tab) return "0";
     const indexCurrent = tabs.findIndex((item) => item.key === currentKey);
@@ -157,7 +159,18 @@ const DelegationDetail: React.FC = () => {
   };
 
   const handleChangeTab = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-    tableRef?.current?.scrollIntoView();
+    const handleTransitionEnd = () => {
+      if (newExpanded) {
+        setTimeout(() => {
+          tableRef?.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }, 150);
+        // Remove the event listener after the scroll
+        tableRef?.current?.removeEventListener("transitionend", handleTransitionEnd);
+      }
+    };
+
+    // Attach the transitionend event listener to wait for the expansion animation
+    tableRef?.current?.addEventListener("transitionend", handleTransitionEnd);
     setQuery({ tab: newExpanded ? panel : "", page: 1, size: 50 });
   };
 
@@ -174,7 +187,6 @@ const DelegationDetail: React.FC = () => {
             customBorderRadius={needBorderRadius(key)}
             isDisplayBorderTop={tab !== key && key !== tabs[0].key && index !== indexExpand + 1}
             onChange={handleChangeTab(key)}
-            TransitionProps={{ unmountOnExit: true }}
           >
             <AccordionSummary
               expandIcon={
