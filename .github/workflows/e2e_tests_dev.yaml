@@ -1,9 +1,12 @@
-name: Run Explorer e2e Tests
+name: Run E2E Tests on Development Environment
 on:
   push:
-
+    branches:
+      - [0-9]+.[0-9]+.[0-9]+
   pull_request:
-
+    branches:
+      - [0-9]+.[0-9]+.[0-9]+
+    types: [opened, synchronize]
   workflow_dispatch:
 
 jobs:
@@ -23,7 +26,7 @@ jobs:
           echo "REACT_APP_MAINNET_API_URL=${secrets.DEV_EXPLORER_API_MAINNET_URL}" >> .env
           echo "REACT_APP_AUTH_API_URL=${secrets.DEV_EXPLORER_AUTH_API_URL}" >> .env
           echo "REACT_APP_NETWORK=mainnet" >> .env
-          echo "REACT_APP_JSD_WIDGET_KEY=${secrets.DEV_EXPLORER_JSD_WIDGET_KEY}" >> .env
+          echo "REACT_APP_JSD_WIDGET_KEY=${secrets.EXPLORER_JSD_WIDGET_KEY}" >> .env
 
       - name: 🫡 Setup node
         uses: actions/setup-node@v4

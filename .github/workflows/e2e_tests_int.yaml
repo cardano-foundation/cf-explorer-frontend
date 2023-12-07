@@ -1,5 +1,12 @@
-name: Run Explorer e2e Tests
+name: Run E2E Tests on Integration Environment
 on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize]
   workflow_dispatch:
 
 jobs:
@@ -13,11 +20,11 @@ jobs:
         run: |
           echo "PORT=3000" > .env
           echo "REACT_APP_VERSION=$npm_package_version" >> .env
-          echo "REACT_APP_API_URL=${secrets.EXPLORER_API_MAINNET_URL}" >> .env
-          echo "REACT_APP_MAINNET_APP_URL=${secrets.EXPLORER_API_MAINNET_URL}" >> .env
+          echo "REACT_APP_API_URL=${secrets.INT_EXPLORER_API_MAINNET_URL}" >> .env
+          echo "REACT_APP_MAINNET_APP_URL=${secrets.INT_EXPLORER_API_MAINNET_URL}" >> .env
           echo 'REACT_APP_NETWORK_NAMES="{"mainnet":"Mainnet","preprod":"Preprod"}"' >> .env
-          echo "REACT_APP_MAINNET_API_URL=${secrets.EXPLORER_API_MAINNET_URL}" >> .env
-          echo "REACT_APP_AUTH_API_URL=${secrets.EXPLORER_AUTH_API_URL}" >> .env
+          echo "REACT_APP_MAINNET_API_URL=${secrets.INT_EXPLORER_API_MAINNET_URL}" >> .env
+          echo "REACT_APP_AUTH_API_URL=${secrets.INT_EXPLORER_AUTH_API_URL}" >> .env
           echo "REACT_APP_NETWORK=mainnet" >> .env
           echo "REACT_APP_JSD_WIDGET_KEY=${secrets.EXPLORER_JSD_WIDGET_KEY}" >> .env
 
