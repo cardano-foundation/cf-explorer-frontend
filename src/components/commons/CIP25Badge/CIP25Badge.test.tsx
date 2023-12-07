@@ -24,7 +24,7 @@ describe("CIP25Badge", () => {
   it("should component with faalse element render", () => {
     render(<CIP25Badge {...props} type="warning" />);
     expect(screen.getByText("CIP-25")).toBeInTheDocument();
-    fireEvent.click(screen.getByTestId("clickable-cip25-badge"));
+    fireEvent.click(screen.getByTestId("token-metadata-badge"));
     expect(fn).toBeCalled();
   });
 });

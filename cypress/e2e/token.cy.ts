@@ -52,15 +52,15 @@ describe("token spec", () => {
   it("check metadata tab - CIP 25", () => {
     const tokenName = "HOSKY";
     cy.visit("/token/asset17q7r59zlc3dgw0venc80pdv566q6yguw03f0d9/transactions");
-    cy.get('[data-testid="token-metadata"]').click();
+    cy.get("div .MuiAccordion-root").contains("Metadata", { matchCase: false }).click();
     cy.get('[data-testid="token-metadata-des"]').contains("CIP Compliance");
     cy.get('[data-testid="token-metadata-badge"]').trigger("mouseover", "bottom");
-    cy.get('[data-testid="token-metadata-info"]').click();
+    cy.get('[data-testid="token-metadata-badge"]').click();
     cy.get('[data-testid="token-CIP25Compliance"]').contains("CIP 25 Compliance");
     cy.get('[data-testid="token-CIP25-name"]').contains("Token: " + tokenName);
-    cy.get('[data-testid="token-CIP25-required-properties"]').contains("Required Properties");
-    cy.get('[data-testid="token-CIP25-optional-properties"]').contains("Optional Properties");
-    cy.get('[data-testid="token-CIP25-other-properties"]').contains("Other Properties");
+    cy.get("p").contains("Required Properties").should("be.visible");
+    cy.get("p").contains("Optional Properties").should("be.visible");
+    cy.get("p").contains("Other Properties").should("be.visible");
 
     cy.get(`[data-testid="table-common"] tr th`).contains("Property");
     cy.get(`[data-testid="table-common"] tr th`).contains("Format");
