@@ -1,17 +1,14 @@
-name: Run Smoke Tests
+name: Run Explorer e2e Tests
 on:
   push:
-    branches:
-      - main
+
   pull_request:
-    branches:
-      - main
-    types: [opened, synchronize]
+
   workflow_dispatch:
 
 jobs:
-  smoke-test:
-    runs-on: self-hosted
+  test:
+    runs-on: ubuntu-latest
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
@@ -20,9 +17,13 @@ jobs:
         run: |
           echo "PORT=3000" > .env
           echo "REACT_APP_VERSION=$npm_package_version" >> .env
-          echo "REACT_APP_API_URL=${EXPLORER_API_MAINNET_URL}" >> .env
-          echo "REACT_APP_MAINNET_APP_URL=${EXPLORER_API_MAINNET_URL}" >> .env
-          echo "REACT_APP_NETWORK_NAMES=\"{\"mainnet\":\"Mainnet\",\"preprod\":\"Preprod\"}\"" >> .env
+          echo "REACT_APP_API_URL=${secrets.DEV_EXPLORER_API_MAINNET_URL}" >> .env
+          echo "REACT_APP_MAINNET_APP_URL=${secrets.DEV_EXPLORER_API_MAINNET_URL}" >> .env
+          echo 'REACT_APP_NETWORK_NAMES="{"mainnet":"Mainnet","preprod":"Preprod"}"' >> .env
+          echo "REACT_APP_MAINNET_API_URL=${secrets.DEV_EXPLORER_API_MAINNET_URL}" >> .env
+          echo "REACT_APP_AUTH_API_URL=${secrets.DEV_EXPLORER_AUTH_API_URL}" >> .env
+          echo "REACT_APP_NETWORK=mainnet" >> .env
+          echo "REACT_APP_JSD_WIDGET_KEY=${secrets.DEV_EXPLORER_JSD_WIDGET_KEY}" >> .env
 
       - name: 🫡 Setup node
         uses: actions/setup-node@v4
@@ -32,17 +33,12 @@ jobs:
       - name: 🧘‍♀️ Download dependencies
         run: npm ci
 
-      - name: Generate test script
-        run: |
-          cd cypress/smoke
-          which pip || ( sudo apt update -qq && sudo apt install -y python3-pip )
-          pip3 install numpy requests
-          python3 CypressDynamicScript.py
-
       - name: 🎳 Run tests
-        run: npm test
-        env:
-          DANGEROUSLY_DISABLE_HOST_CHECK: true
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm start
+          wait-on: "http://localhost:3000"
+          wait-on-timeout: 360
 
       - name: 📹 Archive test videos
         uses: actions/upload-artifact@v3
@@ -57,5 +53,3 @@ jobs:
         with:
           name: screenshots
           path: ./cypress/screenshots
-    env:
-      EXPLORER_API_MAINNET_URL: ${{ secrets.EXPLORER_API_MAINNET_URL }}

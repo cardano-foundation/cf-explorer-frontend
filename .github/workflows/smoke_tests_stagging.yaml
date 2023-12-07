@@ -1,13 +1,9 @@
-name: Run Explorer e2e Tests
+name: Run Smoke Tests
 on:
-  push:
-
-  pull_request:
-
   workflow_dispatch:
 
 jobs:
-  test:
+  smoke-test:
     runs-on: ubuntu-latest
     steps:
       - name: ⬇️ Checkout repository
@@ -32,6 +28,13 @@ jobs:
 
       - name: 🧘‍♀️ Download dependencies
         run: npm ci
+
+      - name: Generate test script
+        run: |
+          cd cypress/smoke
+          which pip || ( sudo apt update -qq && sudo apt install -y python3-pip )
+          pip3 install numpy requests
+          python3 CypressDynamicScript.py
 
       - name: 🎳 Run tests
         uses: cypress-io/github-action@v6
