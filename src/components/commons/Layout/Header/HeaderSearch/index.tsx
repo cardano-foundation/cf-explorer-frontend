@@ -880,7 +880,7 @@ export const OptionsSearch = ({
             {(listOptionsTokensAndPools || [])?.map((item, i: number) => {
               return (
                 <Option key={i} onClick={() => item?.cb?.()} data-testid="option-search-epoch">
-                  <Box>{item?.suggestText} </Box>
+                  <Box textAlign={"left"}>{item?.suggestText} </Box>
                   <GoChevronRight />
                 </Option>
               );
@@ -937,7 +937,7 @@ export const OptionsSearch = ({
                 }}
                 data-testid="option-search-epoch"
               >
-                <Box>
+                <Box textAlign={"left"}>
                   {item?.suggestText}
                   {typeof item?.suggestText === "string" && (
                     <ValueOption> {item?.formatter?.(item?.value || value) || item?.value || value}</ValueOption>
@@ -962,7 +962,7 @@ export const OptionsSearch = ({
                 }
               }}
             >
-              <Box>
+              <Box textAlign={"left"}>
                 Search {""} <ValueOption>{value.length > 15 ? getShortHash(value) : value || ""}</ValueOption> in ADA
                 handle
               </Box>
