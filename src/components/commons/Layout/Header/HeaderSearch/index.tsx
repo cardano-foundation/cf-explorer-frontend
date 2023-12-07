@@ -214,8 +214,8 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
 
       if (!adaHanlde.paymentAddress) {
         if (keyDetail) {
-          handleSetSearchValueDefault();
           callback?.();
+          handleSetSearchValueDefault();
           handleRedirectDetail(keyDetail, res?.data);
           setLoading(false);
           setShowOption(false);
@@ -303,17 +303,25 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       setDataSearchTokensAndPools(res?.data && res?.data?.data ? res?.data?.data : undefined);
       if (res?.data && res.data?.totalItems > 0) {
         if (filter === "tokens") {
-          res.data?.totalItems === 1
-            ? history.push(details.token(encodeURIComponent((res?.data?.data[0] as TokensSearch)?.fingerprint)))
-            : history.push(`${routers.TOKEN_LIST}?tokenName=${(search.query || "").toLocaleLowerCase()}`);
-          handleSetSearchValueDefault();
+          if (res.data?.totalItems === 1) {
+            history.push(details.token(encodeURIComponent((res?.data?.data[0] as TokensSearch)?.fingerprint)));
+            callback?.();
+            handleSetSearchValueDefault();
+          } else {
+            history.push(`${routers.TOKEN_LIST}?tokenName=${(search.query || "").toLocaleLowerCase()}`);
+            handleSetSearchValueDefault();
+          }
         } else {
-          res.data?.totalItems === 1
-            ? history.push(details.delegation((res?.data?.data[0] as DelegationPool)?.poolId))
-            : history.push(routers.DELEGATION_POOLS, {
-                tickerNameSearch: (search.search || "").toLocaleLowerCase()
-              });
-          handleSetSearchValueDefault();
+          if (res.data?.totalItems === 1) {
+            history.push(details.delegation((res?.data?.data[0] as DelegationPool)?.poolId));
+            callback?.();
+            handleSetSearchValueDefault();
+          } else {
+            history.push(routers.DELEGATION_POOLS, {
+              tickerNameSearch: (search.search || "").toLocaleLowerCase()
+            });
+            handleSetSearchValueDefault();
+          }
         }
       } else {
         setShowOption(true);
@@ -360,6 +368,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           .get(url)
           .then((res) => res.data)
           .then((data: { nativeScript: boolean; scriptHash: string; smartContract: boolean }) => {
+            callback?.();
             if (data.nativeScript) {
               history.push(details.nativeScriptDetail(data.scriptHash || "", "script"));
               handleSetSearchValueDefault();
