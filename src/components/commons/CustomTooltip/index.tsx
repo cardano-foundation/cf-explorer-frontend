@@ -1,5 +1,4 @@
 import { Tooltip, TooltipProps, useTheme } from "@mui/material";
-import { cloneElement, useState } from "react";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 
@@ -10,13 +9,11 @@ interface Props extends TooltipProps {
 export const CustomTooltip = (props: Props) => {
   const { componentsProps, placement, wOpacity = true, ...otherProps } = props;
 
-  const [open, setOpen] = useState(false);
   const theme = useTheme();
   const { isMobile } = useScreen();
   return (
     <Tooltip
       arrow
-      open={open}
       placement={placement || "top"}
       componentsProps={{
         ...(componentsProps || {}),
@@ -43,13 +40,7 @@ export const CustomTooltip = (props: Props) => {
         }
       }}
       {...otherProps}
-    >
-      {cloneElement(otherProps.children, {
-        onMouseEnter: () => setOpen(true),
-        onMouseLeave: () => setOpen(false),
-        onWheel: () => setOpen(false)
-      })}
-    </Tooltip>
+    />
   );
 };
 
