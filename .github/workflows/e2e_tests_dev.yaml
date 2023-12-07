@@ -2,10 +2,10 @@ name: Run E2E Tests on Development Environment
 on:
   push:
     branches:
-      - [0-9]+.[0-9]+.[0-9]+
+      - "[0-9]+.[0-9]+.[0-9]+"
   pull_request:
     branches:
-      - [0-9]+.[0-9]+.[0-9]+
+      - "[0-9]+.[0-9]+.[0-9]+"
     types: [opened, synchronize]
   workflow_dispatch:
 
