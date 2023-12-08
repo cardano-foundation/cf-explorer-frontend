@@ -130,8 +130,8 @@ const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
     {
       title: t("glossary.value"),
       key: "value",
-      render: (r) =>
-        r.format === "raw bytes" ? (
+      render: (r) => {
+        return r.format === "raw bytes" ? (
           <CustomTooltip title={""}>
             <Typography display="inline-block" fontSize={14}>
               {getShortHash(r.value)}
@@ -139,11 +139,19 @@ const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
           </CustomTooltip>
         ) : (
           <CustomTooltip title={JSON.stringify(r.value)}>
-            <Typography style={{ lineBreak: "anywhere" }} display="inline-block" maxWidth={120} fontSize={14}>
-              {r.value && JSON.stringify(r.value)}
+            <Typography
+              textOverflow="ellipsis"
+              overflow="hidden"
+              whiteSpace="nowrap"
+              display="inline-block"
+              maxWidth={120}
+              fontSize={14}
+            >
+              {typeof r.value === "object" ? JSON.stringify(r.value) : r.value}
             </Typography>
           </CustomTooltip>
-        )
+        );
+      }
     },
     {
       title: t("cip.compliance"),
