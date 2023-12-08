@@ -205,10 +205,10 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
         callback?.();
         setShowOption(false);
         if (adaHanlde?.stakeAddress) {
-          history.push(`${details.stake(search)}?isADAHanlde=true`);
+          history.push(`${details.stake(search)}`);
           return;
         } else {
-          history.push(`${details.address(search)}?isADAHanlde=true`);
+          history.push(`${details.address(search)}`);
         }
       }
 
@@ -418,9 +418,9 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
         handleSetSearchValueDefault();
         callback?.();
         if (dataHanlde.stakeAddress) {
-          history.push(`${details.stake(search)}?isADAHanlde=true`);
+          history.push(`${details.stake(search)}`);
         } else {
-          history.push(`${details.address(search)}?isADAHanlde=true`);
+          history.push(`${details.address(search)}`);
         }
       } else {
         try {
@@ -964,9 +964,9 @@ export const OptionsSearch = ({
                 handleSetSearchValueDefault();
                 callback?.();
                 if (ADAHandleOption?.stakeAddress) {
-                  history.push(`${details.stake(value)}?isADAHanlde=true`);
+                  history.push(`${details.stake(value)}`);
                 } else {
-                  history.push(`${details.address(value)}?isADAHanlde=true`);
+                  history.push(`${details.address(value)}`);
                 }
               }}
             >
