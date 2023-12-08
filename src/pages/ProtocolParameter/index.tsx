@@ -667,7 +667,7 @@ export const ProtocolParameterHistory = () => {
           <></>
         )}
         {columnsTable?.length > 1 && initialized && (
-          <TableStyled maxHeight={"unset"} columns={columnsTable} data={dataTable} loading={loading} />
+          <TableStyled minHeight={"300px"} columns={columnsTable} data={dataTable} loading={loading} />
         )}
       </Card>
       <ExplainerTextModal
