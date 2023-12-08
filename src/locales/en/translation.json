@@ -127,7 +127,7 @@
   "site.resources": "Resources",
   "site.blockchainCourse": "Blockchain Course",
   "site.builderTools": "Builder Tools",
-  "site.gitHub": "GitHub",
+  "site.github": "Github",
   "message.wallet.changeSuccess": "Change wallet successfully!",
   "message.common.somethingWentWrong": "Something went wrong!",
   "message.bookmark.added": "Bookmark has been added",
