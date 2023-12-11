@@ -18,7 +18,7 @@ const CIP25Badge: React.FC<TCIP25BadgeProps> = ({ type, tooltipTitle, onClick })
   const success = type === "success";
   return (
     <CustomTooltip title={tooltipTitle}>
-      <BadgeContainer data-testid="token-metadata-badge" onClick={onClick} success={+success}>
+      <BadgeContainer data-testid="clickable-cip25-badge" onClick={onClick} success={+success}>
         {success ? <CheckedCIPIcon /> : <WarningCIPIcon />}
         <CIPLabel>{t("token.CIP-25")}</CIPLabel>
       </BadgeContainer>
