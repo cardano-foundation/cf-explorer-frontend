@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 
 import { ReactComponent as delegatedIcon } from "src/commons/resources/icons/delegated.svg";
 import { ReactComponent as rewardIcon } from "src/commons/resources/icons/reward.svg";
@@ -18,14 +18,17 @@ import { ButtonModal, StyledFlexValue, StyledLinkTo, TitleCard, TitleNoPool, Tit
 
 interface Props {
   data: IStakeKeyDetail | null;
+  adaHanldeData?: {
+    stakeAddress: string;
+    paymentAddress: string;
+  } | null;
   loading: boolean;
   lastUpdated?: number;
 }
-const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
+const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated, adaHanldeData }) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const { stakeId } = useParams<{ stakeId: string }>();
-
   const poolName = data?.pool?.poolName || "";
   const tickerName = data?.pool?.tickerName || "";
   const poolId = data?.pool?.poolId || "";
@@ -74,7 +77,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
           <Box sx={{ color: "blue" }}>
             <ButtonModal onClick={() => setOpen(true)}>{t("drawer.viewAllAddresses")}</ButtonModal>
           </Box>
-          <ModalAllAddress open={open} onClose={() => setOpen(false)} stake={stakeId} />
+          <ModalAllAddress open={open} onClose={() => setOpen(false)} stake={data?.stakeAddress || ""} />
         </Box>
       )
     },
@@ -112,7 +115,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
     <DetailHeader
       type="STAKE_KEY"
       bookmarkData={data?.stakeAddress || ""}
-      title={t("head.page.stakeAddressDetail")}
+      title={adaHanldeData ? <Box textTransform={"none"}>{stakeId} Details</Box> : t("head.page.stakeAddressDetail")}
       hash={data?.stakeAddress}
       stakeKeyStatus={data?.status}
       listItem={listOverview}

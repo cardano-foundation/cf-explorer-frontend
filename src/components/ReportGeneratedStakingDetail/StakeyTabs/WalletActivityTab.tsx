@@ -75,6 +75,7 @@ const WalletActitityTab = () => {
         total={{ title: t("common.totalEpoch"), count: fetchData.total }}
         pagination={{
           ...pageInfo,
+          page: pageInfo.page,
           total: fetchData.total,
           onChange: (page, size) => history.replace({ search: stringify({ ...pageInfo, page, size }) })
         }}

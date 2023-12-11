@@ -12,6 +12,7 @@ import {
 import { useTranslation } from "react-i18next";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
+import breakpoints from "src/themes/breakpoints";
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DownIcon,
@@ -33,7 +34,6 @@ import {
   TableRowProps,
   TableTopHeaderProps
 } from "src/types/table";
-import breakpoints from "src/themes/breakpoints";
 
 import CustomIcon from "../CustomIcon";
 import Filter from "../Filter";
@@ -173,9 +173,8 @@ const TableRow = <T extends ColumnType>({
 }: TableRowProps<T>) => {
   const colRef = useRef(null);
   const theme = useTheme();
-  const { isMobile } = useScreen();
-
   const rowRef = useRef<HTMLTableRowElement>(null);
+  const { isMobile } = useScreen();
 
   useEffect(() => {
     onCallBackHeight?.(rowRef?.current?.clientHeight || 0);
@@ -397,7 +396,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
 
 const Table: React.FC<TableProps> = ({
   columns,
-  data,
+  data: currentData,
   screen,
   total,
   pagination,
@@ -425,8 +424,7 @@ const Table: React.FC<TableProps> = ({
   isShowingResult,
   isModal,
   height,
-  minHeight,
-  isFullTableHeight = false
+  minHeight
 }) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange
@@ -435,10 +433,11 @@ const Table: React.FC<TableProps> = ({
   const tableRef = useRef<HTMLTableElement>(null);
   const [maxHeightTable, setMaxHeightTable] = useState<number>(0);
   const wrapperRef = useRef<HTMLElement>(null);
+  const data = currentData;
+
   const { width } = useScreen();
-  const scrollHeight = 5;
-  let heightTable = Math.min((tableRef?.current?.clientHeight || 0) + scrollHeight, window.innerHeight * 0.5);
-  const tableFullHeight = (tableRef?.current?.clientHeight || 0) + scrollHeight;
+
+  let heightTable = Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight * 0.5);
 
   if (width >= breakpoints.values.sm && (data || []).length >= 9) {
     const footerHeight = document.getElementById("footer")?.offsetHeight || SPACING_TOP_TABLE;
@@ -450,7 +449,7 @@ const Table: React.FC<TableProps> = ({
   }
 
   const onCallBackHeight = (rowHeight: number) => {
-    if (!maxHeightTable) setMaxHeightTable(rowHeight * 9);
+    if (!maxHeightTable) setMaxHeightTable(rowHeight > 70 ? rowHeight * 5 : rowHeight * 9);
   };
 
   const toggleSelectAll = (isChecked: boolean) => {
@@ -488,7 +487,7 @@ const Table: React.FC<TableProps> = ({
         ref={wrapperRef}
         maxHeight={maxHeight || maxHeightTable}
         minHeight={minHeight ? minHeight : (!data || data.length === 0) && !loading ? 360 : loading ? 400 : 15}
-        height={height || (isFullTableHeight ? tableFullHeight : heightTable)}
+        height={height || heightTable}
         ismodal={+!!isModal}
         className={data && data.length !== 0 ? "table-wrapper" : "hide-scroll"}
         loading={loading ? 1 : 0}
