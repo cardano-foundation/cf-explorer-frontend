@@ -48,7 +48,7 @@ const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, p
     }
   };
   return (
-    <CustomTooltip placement={placement || "top"} title={copied ? "Copied" : "Copy"} enterTouchDelay={0}>
+    <CustomTooltip placement={placement || "top"} title={copied ? "Copied" : "Copy"}>
       <Button {...props} onClick={onCopy}>
         {children ||
           (copied ? (
