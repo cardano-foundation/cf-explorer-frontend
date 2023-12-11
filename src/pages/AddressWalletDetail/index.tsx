@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { styled, Container, CircularProgress, Box } from "@mui/material";
 import { useSelector } from "react-redux";
-import QueryString from "qs";
 
 import AddressTransactionList from "src/components/AddressTransactionList";
 import AddressHeader from "src/components/AddressDetail/AddressHeader";
@@ -15,15 +14,14 @@ import useADAHandle from "src/commons/hooks/useADAHandle";
 const AddressWalletDetail = () => {
   const { address } = useParams<{ address: string }>();
   const [addressWallet, setAddressWallet] = useState("");
-  const { state, search } = useLocation<{ data?: WalletAddress }>();
+  const { state } = useLocation<{ data?: WalletAddress }>();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
-  const queryParams = QueryString.parse(search.slice(1, search.length));
 
   const [{ data: adaHandle, loading: adaHandleLoading, initialized: ADAHandleInitialized }] = useADAHandle(address);
 
   useEffect(() => {
     if (ADAHandleInitialized) {
-      if (adaHandle?.paymentAddress && queryParams?.isADAHanlde) {
+      if (adaHandle?.paymentAddress) {
         setAddressWallet(adaHandle?.paymentAddress);
       } else {
         setAddressWallet(address);

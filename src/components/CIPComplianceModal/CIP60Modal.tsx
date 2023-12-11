@@ -28,7 +28,7 @@ export type TCIP60ComplianceModalProps = {
   version?: Transaction["metadata"][0]["metadataCIP25"];
 };
 
-const DEFAULT_CIP25_REQUIRE = [
+const DEFAULT_CIP60_REQUIRE = [
   {
     format: "text",
     index: "1",
@@ -85,7 +85,7 @@ const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
   const { t } = useTranslation();
   const tokenMaps = useMemo(() => {
     if (isEmpty(data)) {
-      return [{ requireProperties: DEFAULT_CIP25_REQUIRE, tokenName: null, optionalProperties: [] }];
+      return [{ requireProperties: DEFAULT_CIP60_REQUIRE, tokenName: null, optionalProperties: [] }];
     } else {
       return Object.keys(data).map((key) => {
         const inValidVersion =
@@ -93,7 +93,7 @@ const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
           Number(data[key].requireProperties?.[0]["value"]) !== 2;
         if (data[key].requireProperties?.[0]["property"] === "music_metadata_version" && inValidVersion) {
           return {
-            requireProperties: [...DEFAULT_CIP25_REQUIRE, ...data[key].requireProperties],
+            requireProperties: [...DEFAULT_CIP60_REQUIRE, ...data[key].requireProperties],
             tokenName: data[key].tokenName,
             optionalProperties: []
           };
@@ -130,8 +130,8 @@ const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
     {
       title: t("glossary.value"),
       key: "value",
-      render: (r) =>
-        r.format === "raw bytes" ? (
+      render: (r) => {
+        return r.format === "raw bytes" ? (
           <CustomTooltip title={""}>
             <Typography display="inline-block" fontSize={14}>
               {getShortHash(r.value)}
@@ -139,11 +139,19 @@ const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
           </CustomTooltip>
         ) : (
           <CustomTooltip title={JSON.stringify(r.value)}>
-            <Typography style={{ lineBreak: "anywhere" }} display="inline-block" maxWidth={120} fontSize={14}>
+            <Typography
+              textOverflow="ellipsis"
+              overflow="hidden"
+              whiteSpace="nowrap"
+              display="inline-block"
+              maxWidth={120}
+              fontSize={14}
+            >
               {r.value && JSON.stringify(r.value)}
             </Typography>
           </CustomTooltip>
-        )
+        );
+      }
     },
     {
       title: t("cip.compliance"),
