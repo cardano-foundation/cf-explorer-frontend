@@ -4,7 +4,6 @@ import { CIP60WarningIcon, CheckedCIPIcon } from "src/commons/resources";
 
 import { BadgeContainer, CIPLabel } from "./styles";
 import CustomTooltip from "../CustomTooltip";
-import CustomIcon from "../CustomIcon";
 
 export type TCIPType = "success" | "warning";
 
@@ -20,7 +19,7 @@ const CIP60Badge: React.FC<TCIP60BadgeProps> = ({ type, tooltipTitle, onClick })
   return (
     <CustomTooltip title={tooltipTitle}>
       <BadgeContainer data-testid="clickable-cip60-badge" onClick={onClick} success={+success}>
-        {success ? <CheckedCIPIcon /> : <CustomIcon icon={CIP60WarningIcon} height={20} width={20} />}
+        {success ? <CheckedCIPIcon /> : <CIP60WarningIcon height={20} width={20} />}
         <CIPLabel>{t("token.cip60")}</CIPLabel>
       </BadgeContainer>
     </CustomTooltip>
