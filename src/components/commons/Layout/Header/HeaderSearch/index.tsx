@@ -210,6 +210,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           return;
         } else {
           history.push(`${details.address(adaHanldeSearch)}`);
+          return;
         }
       }
 
