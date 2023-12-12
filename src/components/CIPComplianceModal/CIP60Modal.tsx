@@ -1,6 +1,6 @@
-import { Box, Typography } from "@mui/material";
+import { Alert, Box, Typography, useTheme } from "@mui/material";
 import { isEmpty, isNil } from "lodash";
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 import { CIP60WarningIcon, CheckedCIPIcon } from "src/commons/resources";
@@ -83,6 +83,13 @@ const DEFAULT_CIP60_REQUIRE = [
 const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
   const { data, version } = props;
   const { t } = useTranslation();
+  const [showWarningVersion, setShowWarningVersion] = useState(false);
+  const theme = useTheme();
+
+  const versionTooltip = (row: TTCIPProperties) => {
+    if (row.property !== "music_metadata_version") return t("common.needsReview");
+    return (Number(row.value) !== 1 || Number(row.value)) !== 2 ? t("cip.versionCheck") : "";
+  };
   const tokenMaps = useMemo(() => {
     if (isEmpty(data)) {
       return [{ requireProperties: DEFAULT_CIP60_REQUIRE, tokenName: null, optionalProperties: [] }];
@@ -103,11 +110,16 @@ const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
     }
   }, [data]);
 
-  const versionTooltip = (row: TTCIPProperties) => {
-    if (row.property !== "music_metadata_version") return t("common.needsReview");
-    return (Number(row.value) !== 1 || Number(row.value)) !== 2 ? t("cip.versionCheck") : "";
-  };
-
+  useEffect(() => {
+    if (tokenMaps) {
+      tokenMaps.map((token) => {
+        const property = token.requireProperties.find((property) => property.property === "music_metadata_version");
+        if (property.value === 1) {
+          setShowWarningVersion(true);
+        }
+      });
+    }
+  }, [JSON.stringify(tokenMaps)]);
   const columns: Column<TTCIPProperties>[] = [
     {
       title: "#",
@@ -138,7 +150,7 @@ const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
             </Typography>
           </CustomTooltip>
         ) : (
-          <CustomTooltip title={JSON.stringify(r.value)}>
+          <CustomTooltip title={typeof r.value === "object" ? JSON.stringify(r.value) : r.value}>
             <Typography
               textOverflow="ellipsis"
               overflow="hidden"
@@ -147,7 +159,7 @@ const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
               maxWidth={120}
               fontSize={14}
             >
-              {r.value && JSON.stringify(r.value)}
+              {typeof r.value === "object" ? JSON.stringify(r.value) : r.value}
             </Typography>
           </CustomTooltip>
         );
@@ -188,6 +200,21 @@ const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
       <ModalContent>
         {tokenMaps.map((token, index) => (
           <React.Fragment key={index}>
+            {showWarningVersion && (
+              <Alert
+                sx={{
+                  bgcolor: theme.palette.warning[800],
+                  color: theme.palette.warning[100],
+                  mb: 1,
+                  ".MuiAlert-icon": {
+                    color: theme.palette.warning[100]
+                  }
+                }}
+                severity="info"
+              >
+                {t("cip.warningVersion1")}
+              </Alert>
+            )}
             {token.tokenName && (
               <TokenLabel>
                 {t("glossary.Token")}: {token.tokenName}
