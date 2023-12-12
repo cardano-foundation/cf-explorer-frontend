@@ -204,11 +204,12 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
         setLoading(false);
         callback?.();
         setShowOption(false);
+        const adaHanldeSearch = search.startsWith("$") ? search : `$${search}`;
         if (adaHanlde?.stakeAddress) {
-          history.push(`${details.stake(search)}`);
+          history.push(`${details.stake(adaHanldeSearch)}`);
           return;
         } else {
-          history.push(`${details.address(search)}`);
+          history.push(`${details.address(adaHanldeSearch)}`);
         }
       }
 
@@ -415,10 +416,11 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       if (dataHanlde) {
         handleSetSearchValueDefault();
         callback?.();
+        const adaHanldeSearch = search.startsWith("$") ? search : `$${search}`;
         if (dataHanlde.stakeAddress) {
-          history.push(`${details.stake(search)}`);
+          history.push(`${details.stake(adaHanldeSearch)}`);
         } else {
-          history.push(`${details.address(search)}`);
+          history.push(`${details.address(adaHanldeSearch)}`);
         }
       } else {
         try {
@@ -961,10 +963,11 @@ export const OptionsSearch = ({
                 setShowOption(false);
                 handleSetSearchValueDefault();
                 callback?.();
+                const adaHanldeSearch = value.startsWith("$") ? value : `$${value}`;
                 if (ADAHandleOption?.stakeAddress) {
-                  history.push(`${details.stake(value)}`);
+                  history.push(`${details.stake(adaHanldeSearch)}`);
                 } else {
-                  history.push(`${details.address(value)}`);
+                  history.push(`${details.address(adaHanldeSearch)}`);
                 }
               }}
             >
