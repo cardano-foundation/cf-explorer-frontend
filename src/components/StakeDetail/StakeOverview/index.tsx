@@ -115,7 +115,13 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated, adaHanldeD
     <DetailHeader
       type="STAKE_KEY"
       bookmarkData={data?.stakeAddress || ""}
-      title={adaHanldeData ? <Box textTransform={"none"}>{stakeId} Details</Box> : t("head.page.stakeAddressDetail")}
+      title={
+        adaHanldeData ? (
+          <Box textTransform={"none"}>{stakeId.startsWith("$") ? stakeId : `$${stakeId}`}</Box>
+        ) : (
+          t("head.page.stakeAddressDetail")
+        )
+      }
       hash={data?.stakeAddress}
       stakeKeyStatus={data?.status}
       listItem={listOverview}

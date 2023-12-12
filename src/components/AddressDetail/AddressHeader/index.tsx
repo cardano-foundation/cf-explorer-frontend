@@ -127,7 +127,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading, adaHanldeData }) => {
             <TitleText>
               {adaHanldeData ? (
                 <Box sx={{ wordBreak: "break-all" }}>
-                  {address} Details
+                  {address.startsWith("$") ? address : `$${address}`}
                   <Box display={"inline-block"}>
                     <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
                   </Box>
