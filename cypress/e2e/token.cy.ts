@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 describe("token spec", () => {
-  it.skip("should navigate to the token list page", () => {
+  it("should navigate to the token list page", () => {
     cy.visit("/");
     cy.get('[data-testid="menu-button-blockchain"]').click();
     cy.get('[data-testid="submenu-button-native_tokens"]').click();
@@ -17,7 +17,7 @@ describe("token spec", () => {
     cy.get(".css-1dz0v3k > tr > :nth-child(9)").contains("Created At", { matchCase: false });
   });
 
-  it.skip("redirect to correct token detail page", () => {
+  it("redirect to correct token detail page", () => {
     const tokenName = "HOSKY";
     cy.visit("/tokens");
     cy.get("h2").contains("Native Tokens");
@@ -26,7 +26,7 @@ describe("token spec", () => {
     cy.get(":nth-child(1) > :nth-child(2) > .css-1945haz").click();
   });
 
-  it.skip("should navigate to the token detail page", () => {
+  it("should navigate to the token detail page", () => {
     const tokenId = "asset17q7r59zlc3dgw0venc80pdv566q6yguw03f0d9";
     const tokenName = "HOSKY";
     cy.visit("/token/asset17q7r59zlc3dgw0venc80pdv566q6yguw03f0d9/transactions");
