@@ -261,4 +261,4 @@ export const ScriptTypeLabel = {
 };
 
 export const CIP25_DOCS_URL = "https://cips.cardano.org/cips/cip25";
-export const CIP60_DOCS_URL = "https://cips.cardano.org/cips/cip60";
+export const CIP60_DOCS_URL = "https://cips.cardano.org/cip/CIP-0060";
