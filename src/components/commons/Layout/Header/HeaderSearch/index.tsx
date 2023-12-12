@@ -359,7 +359,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     setError("");
     setShowErrorMobile?.(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPath, checkIncludesPath, setError, setShowErrorMobile, setValues]);
+  }, [currentPath, checkIncludesPath, setError, setShowErrorMobile, setValues, history.location.pathname]);
 
   const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
