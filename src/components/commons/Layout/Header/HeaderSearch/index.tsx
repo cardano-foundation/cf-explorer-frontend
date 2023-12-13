@@ -646,7 +646,6 @@ export const OptionsSearch = ({
             case "validTokenName":
               if (data.validTokenName) {
                 if (data.token) {
-                  setShowOption(false);
                   return {
                     suggestText: (
                       <Box>
@@ -676,7 +675,6 @@ export const OptionsSearch = ({
             case "validPoolName":
               if (data?.validPoolName) {
                 if (data.pool) {
-                  setShowOption(false);
                   return {
                     suggestText: (
                       <Box>
@@ -706,7 +704,6 @@ export const OptionsSearch = ({
             case "pool": {
               if (data.validPoolName) return;
               if (data?.pool) {
-                setShowOption(false);
                 return {
                   suggestText: (
                     <Box>
@@ -739,7 +736,6 @@ export const OptionsSearch = ({
             case "token": {
               if (data.validTokenName) return;
               if (data?.token) {
-                setShowOption(false);
                 return {
                   suggestText: (
                     <Box>
