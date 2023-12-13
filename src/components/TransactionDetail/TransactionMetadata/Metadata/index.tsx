@@ -68,7 +68,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
         <MetadataWrapper key={idx}>
           <MetadataHeader mb={2}>
             <MetadataTitle>{t("common.metadatumLabel")}</MetadataTitle>
-            <MetaDataValue>{metadata.label || ""}</MetaDataValue>
+            <MetaDataValue>{metadata.label ?? ""}</MetaDataValue>
             {String(metadata.label) === String(CIPLabel) && (
               <CIPHeader>
                 <CIPHeaderTitle>
