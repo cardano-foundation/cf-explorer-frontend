@@ -117,7 +117,9 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated, adaHanldeD
       bookmarkData={data?.stakeAddress || ""}
       title={
         adaHanldeData ? (
-          <Box textTransform={"none"}>{stakeId.startsWith("$") ? stakeId : `$${stakeId}`}</Box>
+          <CustomTooltip title={t("address.title.ADAHanlde")}>
+            <Box textTransform={"none"}>{stakeId.startsWith("$") ? stakeId : `$${stakeId}`}</Box>
+          </CustomTooltip>
         ) : (
           t("head.page.stakeAddressDetail")
         )
