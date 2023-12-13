@@ -32,7 +32,10 @@ const InfoGraphicModal: React.FC<IInfoGraphicModalProps> = (props) => {
       modalProps={{
         sx: {
           "& > div.MuiBox-root": { padding: "25px" },
-          "& > div.MuiBox-root > div.MuiBox-root": { maxHeight: "90vh" }
+          "& > div.MuiBox-root > div.MuiBox-root": { maxHeight: "90vh" },
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
         }
       }}
     >
