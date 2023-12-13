@@ -882,6 +882,7 @@
   "ViewAddresses": "View Addresses",
   "token.timelock": "Time locked",
   "token.oneTimeMint": "One time mint",
+  "protocol.trxModalSubTitle": "Confirmed by transactions",
   "token.CIP25Compliance": "CIP 25 Compliance",
   "cip25.property": "Property",
   "cip25.format": "Format",
@@ -894,7 +895,6 @@
   "token.cip25otherProperties.desc": "Any metadata that doesn't fall into the \"required\" or \"optional\" categories according to the CIP-25 specification is not verified for compliance and therefore won't be displayed in this view.",
   "common.passed": "Passed",
   "common.needsReview": "Needs Review",
-  "protocol.trxModalSubTitle": "Confirmed by transactions",
   "cip25.viewDocs": "View CIP 25 document",
   "common.severUnknownErrorMsg": "Something went wrong on our side, please try again later or report an issue",
   "token.cip60Title": "CIP 60 Compliance",
@@ -902,7 +902,8 @@
   "cip60.viewDocs": "View CIP 60 document",
   "cip60.notCompliance": "This token is not compliant with CIP 60. See the details",
   "token.cip60otherProperties.desc": "Any metadata that doesn't fall into the \"required\" or \"optional\" categories according to the CIP-60 specification is not verified for compliance and therefore won't be displayed in this view.",
-  "cip.versionCheck": "The metadata version should be 1 or 2 in order to complied with CIP-60",
+  "address.title.ADAHanlde": "Address (ADA Handle)",
+  "cip.versionCheck": "The metadata version should be 1 or 2 in order to comply with CIP-60",
   "outputs.label": "Outputs",
-  "address.title.ADAHanlde": "Address (ADA Handle)"
+  "cip.warningVersion1": "This compliance check is based on the deprecated music token version v1"
 }

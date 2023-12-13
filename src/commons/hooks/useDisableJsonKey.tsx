@@ -11,7 +11,7 @@ const useDisableJsonKey = <T,>(data: T): { trigger: () => void; keyRenderer: Jso
         const visibleElemet = element.parentNode?.parentNode?.querySelector("& > div");
         (visibleElemet as HTMLElement).style.display = "none";
       });
-    }, 50);
+    });
   };
   useEffect(() => {
     const elements = document.querySelectorAll("[data-row-id='json-row']");
@@ -20,12 +20,16 @@ const useDisableJsonKey = <T,>(data: T): { trigger: () => void; keyRenderer: Jso
       (visibleElemet as HTMLElement).style.display = "none";
     });
   }, [data]);
-  const keyRenderer: JsonViewerKeyRenderer = () => {
+  const keyRenderer: JsonViewerKeyRenderer = ({ path }) => {
+    trigger();
+    if (typeof path[path.length - 1] === "string" && isNumber(Number(path[length - 1]))) {
+      return <Box display="inline">"{path[path.length - 1]}"</Box>;
+    }
     return <Box data-row-id="json-row" />;
   };
 
   keyRenderer.when = ({ path }) => {
-    const num = path[path.length - 1];
+    const num = Number(path[path.length - 1]);
     return isNumber(num) && num < MAX_INDEX;
   };
   return { keyRenderer, trigger };

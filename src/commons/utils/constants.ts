@@ -234,10 +234,11 @@ export const HOTJAR_HJID = process.env.REACT_APP_HOTJAR_HJID;
 export const HOTJAR_HJSV = process.env.REACT_APP_HOTJAR_HJSV;
 
 export enum APP_LANGUAGES {
-  ENGLISH = "en"
+  ENGLISH = "en",
+  FRENCH = "fr"
 }
 
-export const SUPPORTED_LANGUAGES = ["en"];
+export const SUPPORTED_LANGUAGES = ["en", "fr"];
 
 export enum OPTIONS_CHART_ANALYTICS {
   ONE_DAY = "ONE_DAY",
@@ -262,5 +263,5 @@ export const ScriptTypeLabel = {
   [SCRIPT_TYPE.PLUTUSV2]: "Plutus v2"
 };
 
-export const CIP25_DOCS_URL = "https://cips.cardano.org/cips/cip25";
-export const CIP60_DOCS_URL = "https://cips.cardano.org/cips/cip60";
+export const CIP25_DOCS_URL = "https://cips.cardano.org/cip/CIP-0025";
+export const CIP60_DOCS_URL = "https://cips.cardano.org/cip/CIP-0060";
