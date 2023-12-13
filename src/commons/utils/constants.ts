@@ -260,4 +260,4 @@ export const ScriptTypeLabel = {
   [SCRIPT_TYPE.PLUTUSV2]: "Plutus v2"
 };
 
-export const CIP25_DOCS_URL = "https://cips.cardano.org/cips/cip25";
+export const CIP25_DOCS_URL = "https://cips.cardano.org/cip/CIP-0025";
