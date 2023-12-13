@@ -26,7 +26,10 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(50);
   const { isMobile, isTablet, isGalaxyFoldSmall } = useScreen();
-  const fetchData = useFetchList<Addresses>(`${API.STAKE.DETAIL}/${stake}/list-address`, { page: page - 1, size });
+  const fetchData = useFetchList<Addresses>(stake ? `${API.STAKE.DETAIL}/${stake}/list-address` : "", {
+    page: page - 1,
+    size
+  });
 
   const columns: Column<Addresses>[] = [
     {
@@ -58,6 +61,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
       handleCloseModal={props.onClose}
       title={t("common.addressList")}
       width={"600px"}
+      height={"auto"}
       contentStyle={{ overflowY: "unset" }}
     >
       <WrapContent>

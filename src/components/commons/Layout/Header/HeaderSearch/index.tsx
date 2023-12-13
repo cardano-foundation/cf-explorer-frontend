@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { RouteComponentProps, useHistory, withRouter } from "react-router-dom";
 import { isNil, isObject, omitBy } from "lodash";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
 
 import { HeaderSearchIconComponent } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
@@ -16,6 +17,7 @@ import { API } from "src/commons/utils/api";
 import defaultAxios from "src/commons/utils/axios";
 import { getShortHash } from "src/commons/utils/helper";
 import CustomIcon from "src/components/commons/CustomIcon";
+import { API_ADA_HANDLE_API } from "src/commons/utils/constants";
 
 import {
   Form,
@@ -97,6 +99,9 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const [dataSearchTokensAndPools, setDataSearchTokensAndPools] = useState<
     TokensSearch[] | DelegationPool[] | undefined
   >();
+  const [ADAHandleOption, setADAHanldeOption] = useState<
+    { stakeAddress: string; paymentAddress: string } | undefined
+  >();
   const [loading, setLoading] = useState<boolean>(false);
   const [totalResult, setTotalResult] = useState<number>(0);
 
@@ -160,10 +165,18 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     {
       value: "policies",
       label: t("filter.scriptHash"),
-      paths: [routers.SMART_CONTRACT, routers.NATIVE_SCRIPT_DETAIL],
+      paths: [routers.SMART_CONTRACT, routers.NATIVE_SCRIPT_DETAIL, routers.NATIVE_SCRIPTS_AND_SC],
       detail: details.policyDetail
     }
   ];
+
+  const adaHandleSearch = async (query: string) => {
+    try {
+      return await axios.get(API_ADA_HANDLE_API + API.ADAHandle(query)).then((data) => data.data);
+    } catch (error) {
+      return error;
+    }
+  };
 
   const showResultNotFound = () => {
     setError(t("message.noResultsFound"));
@@ -176,14 +189,42 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     try {
       setLoading(true);
       const res = await defaultAxios.get(API.SEARCH_ALL(query));
+      const adaHanlde = await adaHandleSearch(search);
+      setADAHanldeOption(adaHanlde);
       setDataSearchAll(res?.data);
       const keyDetail = getKeyIfOnlyOneNonNullResult(res?.data);
-      if (keyDetail) {
-        handleRedirectDetail(keyDetail, res?.data);
+      if (
+        adaHanlde &&
+        (!keyDetail || keyDetail === "address") &&
+        res.data &&
+        !res.data.validPoolName &&
+        !res.data.validTokenName
+      ) {
+        handleSetSearchValueDefault();
         setLoading(false);
+        callback?.();
         setShowOption(false);
-        return;
+        const adaHanldeSearch = search.startsWith("$") ? search : `$${search}`;
+        if (adaHanlde?.stakeAddress) {
+          history.push(`${details.stake(adaHanldeSearch)}`);
+          return;
+        } else {
+          history.push(`${details.address(adaHanldeSearch)}`);
+          return;
+        }
       }
+
+      if (!adaHanlde.paymentAddress) {
+        if (keyDetail) {
+          callback?.();
+          handleSetSearchValueDefault();
+          handleRedirectDetail(keyDetail, res?.data);
+          setLoading(false);
+          setShowOption(false);
+          return;
+        }
+      }
+
       setShowOption(true);
       setLoading(false);
     } catch {
@@ -230,7 +271,9 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   };
 
   const getKeyIfOnlyOneNonNullResult = (data: IResponseSearchAll | undefined) => {
-    if (data?.validTokenName && data?.validPoolName) return "";
+    if (data?.validTokenName && data?.validPoolName) {
+      return "";
+    }
 
     let count = 0;
     let keyName = "";
@@ -249,7 +292,12 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const FetchSearchTokensAndPools = async (query: string, filter: FilterParams) => {
     try {
       setLoading(true);
-      const search: { query?: string; search?: string } = {};
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const entries = urlParams.entries();
+      const params = Object.fromEntries(entries);
+      const search: { query?: string; search?: string; retired?: boolean } = { ...params };
+
       if (filter === "tokens") {
         search.query = query.trim();
       } else {
@@ -264,16 +312,22 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       setDataSearchTokensAndPools(res?.data && res?.data?.data ? res?.data?.data : undefined);
       if (res?.data && res.data?.totalItems > 0) {
         if (filter === "tokens") {
-          res.data?.totalItems === 1
-            ? history.push(details.token(encodeURIComponent((res?.data?.data[0] as TokensSearch)?.fingerprint)))
-            : history.push(`${routers.TOKEN_LIST}?tokenName=${(search.query || "").toLocaleLowerCase()}`);
+          if (res.data?.totalItems === 1) {
+            history.push(details.token(encodeURIComponent((res?.data?.data[0] as TokensSearch)?.fingerprint)));
+          } else {
+            history.push(`${routers.TOKEN_LIST}?tokenName=${(search.query || "").toLocaleLowerCase()}`);
+          }
           handleSetSearchValueDefault();
+          callback?.();
         } else {
-          res.data?.totalItems === 1
-            ? history.push(details.delegation((res?.data?.data[0] as DelegationPool)?.poolId))
-            : history.push(routers.DELEGATION_POOLS, {
-                tickerNameSearch: (search.search || "").toLocaleLowerCase()
-              });
+          if (res.data?.totalItems === 1) {
+            history.push(details.delegation((res?.data?.data[0] as DelegationPool)?.poolId));
+          } else {
+            history.push(routers.DELEGATION_POOLS, {
+              tickerNameSearch: (search.search || "").toLocaleLowerCase()
+            });
+          }
+          callback?.();
           handleSetSearchValueDefault();
         }
       } else {
@@ -307,7 +361,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     setError("");
     setShowErrorMobile?.(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPath, checkIncludesPath, setError, setShowErrorMobile, setValues]);
+  }, [currentPath, checkIncludesPath, setError, setShowErrorMobile, setValues, history.location.pathname]);
 
   const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
@@ -321,6 +375,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           .get(url)
           .then((res) => res.data)
           .then((data: { nativeScript: boolean; scriptHash: string; smartContract: boolean }) => {
+            callback?.();
             if (data.nativeScript) {
               history.push(details.nativeScriptDetail(data.scriptHash || "", "script"));
               handleSetSearchValueDefault();
@@ -341,21 +396,13 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       return;
     }
 
-    if (!["all", "tokens", "delegations/pool-detail-header"].includes(option?.value || "")) {
+    if (!["all", "tokens", "delegations/pool-detail-header", "addresses"].includes(option?.value || "")) {
       setLoading(true);
       let url = "";
 
-      if (option?.value === "addresses") {
-        if (search.trim().startsWith("stake")) {
-          url = URL_FETCH_DETAIL["stake"](search);
-        } else {
-          url = URL_FETCH_DETAIL["addresses"](search);
-        }
-      } else {
-        url = URL_FETCH_DETAIL[option?.value as keyof typeof URL_FETCH_DETAIL]
-          ? URL_FETCH_DETAIL[option?.value as keyof typeof URL_FETCH_DETAIL](search as never)
-          : "";
-      }
+      url = URL_FETCH_DETAIL[option?.value as keyof typeof URL_FETCH_DETAIL]
+        ? URL_FETCH_DETAIL[option?.value as keyof typeof URL_FETCH_DETAIL](search as never)
+        : "";
 
       try {
         await defaultAxios.get(url);
@@ -366,6 +413,46 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       } finally {
         setLoading(false);
       }
+    }
+
+    if (option?.value === "addresses") {
+      setLoading(true);
+      const dataHanlde = await adaHandleSearch(search);
+      if (dataHanlde) {
+        handleSetSearchValueDefault();
+        callback?.();
+        const adaHanldeSearch = search.startsWith("$") ? search : `$${search}`;
+        if (dataHanlde.stakeAddress) {
+          history.push(`${details.stake(adaHanldeSearch)}`);
+        } else {
+          history.push(`${details.address(adaHanldeSearch)}`);
+        }
+      } else {
+        try {
+          if (search.startsWith("stake")) {
+            await defaultAxios.get(URL_FETCH_DETAIL["stake"](search)).then((data) => data.data);
+          } else {
+            await defaultAxios.get(URL_FETCH_DETAIL["addresses"](search)).then((data) => data.data);
+          }
+          callback?.();
+          if (search.startsWith("stake")) {
+            history.push(details.stake(search));
+            handleSetSearchValueDefault();
+            callback?.();
+            return;
+          }
+          history.push(details.address(search));
+          handleSetSearchValueDefault();
+        } catch (error) {
+          showResultNotFound();
+          setShowOption(true);
+          return;
+        } finally {
+          setLoading(false);
+        }
+      }
+      setLoading(false);
+      return;
     }
 
     if (option?.value === "lifecycle") {
@@ -394,17 +481,6 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       return;
     }
 
-    if (option?.value === "addresses") {
-      if (search.startsWith("stake")) {
-        history.push(details.stake(search));
-        handleSetSearchValueDefault();
-        callback?.();
-        return;
-      }
-      handleSetSearchValueDefault();
-      history.push(details.address(search));
-    }
-
     callback?.();
 
     if (option?.value === "blocks") {
@@ -415,13 +491,6 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     }
     if (option?.value === "epochs") {
       history.push(details.epoch(search.trim()));
-      handleSetSearchValueDefault();
-      callback?.();
-      return;
-    }
-
-    if (option?.value === "all" && search.startsWith("stake")) {
-      history.push(details.stake(search));
       handleSetSearchValueDefault();
       callback?.();
       return;
@@ -442,6 +511,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     setValues({ search, filter: e.target.value as Option["value"] });
     setError("");
     setShowErrorMobile?.(false);
+    setADAHanldeOption(undefined);
   };
 
   const handleChangeSearch = (e?: React.ChangeEvent) => {
@@ -450,6 +520,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     setShowErrorMobile?.(false);
     onFocus((e?.target as HTMLInputElement)?.value);
     setDataSearchAll(undefined);
+    setADAHanldeOption(undefined);
   };
   const onFocus = (newValue?: string) => {
     if (!isNaN(+(newValue ?? search)) && (newValue ?? search) && filter === "all") {
@@ -518,6 +589,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       />
       {showOption && (
         <OptionsSearch
+          handleSetSearchValueDefault={handleSetSearchValueDefault}
           showResultNotFound={showResultNotFound}
           error={error}
           home={home}
@@ -528,6 +600,8 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           data={dataSearchAll}
           setShowOption={setShowOption}
           dataSearchTokensAndPools={dataSearchTokensAndPools}
+          ADAHandleOption={ADAHandleOption}
+          callback={callback}
         />
       )}
       {loading && search ? (
@@ -555,13 +629,21 @@ interface OptionProps {
   show: boolean;
   home: boolean;
   value: string;
+  callback?: () => void;
   error: string;
   data?: IResponseSearchAll;
   dataSearchTokensAndPools?: TokensSearch[] | DelegationPool[];
   showResultNotFound: () => void;
   setShowOption: (show: boolean) => void;
+  handleSetSearchValueDefault: () => void;
   filter: FilterParams;
   totalResult: number;
+  ADAHandleOption:
+    | {
+        stakeAddress: string;
+        paymentAddress: string;
+      }
+    | undefined;
 }
 
 export const OptionsSearch = ({
@@ -574,7 +656,10 @@ export const OptionsSearch = ({
   setShowOption,
   filter,
   dataSearchTokensAndPools,
-  totalResult
+  totalResult,
+  ADAHandleOption,
+  handleSetSearchValueDefault,
+  callback
 }: OptionProps) => {
   const history = useHistory();
   const listOptionsTokensAndPools = dataSearchTokensAndPools?.map((i) => {
@@ -636,8 +721,8 @@ export const OptionsSearch = ({
               };
             case "address":
               const addressLink = objValue?.stakeAddress
-                ? details.stake((value || "").trim().toLocaleLowerCase())
-                : details.address((value || "").trim().toLocaleLowerCase());
+                ? `${details.stake((value || "").trim().toLocaleLowerCase())}&isAddress=true`
+                : `${details.address((value || "").trim().toLocaleLowerCase())}&isAddress=true`;
               return {
                 suggestText: "Search for an Address by",
                 cb: () => history.push(addressLink),
@@ -646,7 +731,7 @@ export const OptionsSearch = ({
             case "validTokenName":
               if (data.validTokenName) {
                 if (data.token) {
-                  setShowOption(false);
+                  // setShowOption(false);
                   return {
                     suggestText: (
                       <Box>
@@ -676,7 +761,7 @@ export const OptionsSearch = ({
             case "validPoolName":
               if (data?.validPoolName) {
                 if (data.pool) {
-                  setShowOption(false);
+                  // setShowOption(false);
                   return {
                     suggestText: (
                       <Box>
@@ -706,7 +791,7 @@ export const OptionsSearch = ({
             case "pool": {
               if (data.validPoolName) return;
               if (data?.pool) {
-                setShowOption(false);
+                // setShowOption(false);
                 return {
                   suggestText: (
                     <Box>
@@ -739,7 +824,7 @@ export const OptionsSearch = ({
             case "token": {
               if (data.validTokenName) return;
               if (data?.token) {
-                setShowOption(false);
+                // setShowOption(false);
                 return {
                   suggestText: (
                     <Box>
@@ -783,8 +868,15 @@ export const OptionsSearch = ({
     [];
 
   useEffect(() => {
-    if (listOptions.length === 0 && isObject(data) && Object.keys(data).length > 0 && filter === "all")
+    if (
+      listOptions.length === 0 &&
+      isObject(data) &&
+      Object.keys(data).length > 0 &&
+      filter === "all" &&
+      !ADAHandleOption
+    ) {
       showResultNotFound();
+    }
     if (
       (listOptionsTokensAndPools || []).length === 0 &&
       dataSearchTokensAndPools &&
@@ -801,7 +893,7 @@ export const OptionsSearch = ({
             {(listOptionsTokensAndPools || [])?.map((item, i: number) => {
               return (
                 <Option key={i} onClick={() => item?.cb?.()} data-testid="option-search-epoch">
-                  <Box>{item?.suggestText} </Box>
+                  <Box textAlign={"left"}>{item?.suggestText} </Box>
                   <GoChevronRight />
                 </Option>
               );
@@ -810,6 +902,8 @@ export const OptionsSearch = ({
               <Option
                 onClick={() => {
                   setShowOption(false);
+                  handleSetSearchValueDefault();
+                  callback?.();
                   filter === "tokens"
                     ? history.push(`${routers.TOKEN_LIST}?tokenName=${(value || "").toLocaleLowerCase()}`)
                     : history.push(routers.DELEGATION_POOLS, {
@@ -846,8 +940,17 @@ export const OptionsSearch = ({
         <>
           {listOptions.map((item, i: number) => {
             return (
-              <Option key={i} onClick={() => item?.cb?.()} data-testid="option-search-epoch">
-                <Box>
+              <Option
+                key={i}
+                onClick={() => {
+                  setShowOption(false);
+                  handleSetSearchValueDefault();
+                  item?.cb?.();
+                  callback?.();
+                }}
+                data-testid="option-search-epoch"
+              >
+                <Box textAlign={"left"}>
                   {item?.suggestText}
                   {typeof item?.suggestText === "string" && (
                     <ValueOption> {item?.formatter?.(item?.value || value) || item?.value || value}</ValueOption>
@@ -857,6 +960,29 @@ export const OptionsSearch = ({
               </Option>
             );
           })}
+          {ADAHandleOption && (
+            <Option
+              key="ADAHandleOption"
+              data-testid="option-search-epoch"
+              onClick={() => {
+                setShowOption(false);
+                handleSetSearchValueDefault();
+                callback?.();
+                const adaHanldeSearch = value.startsWith("$") ? value : `$${value}`;
+                if (ADAHandleOption?.stakeAddress) {
+                  history.push(`${details.stake(adaHanldeSearch)}`);
+                } else {
+                  history.push(`${details.address(adaHanldeSearch)}`);
+                }
+              }}
+            >
+              <Box textAlign={"left"}>
+                Search {""} <ValueOption>{value.length > 15 ? getShortHash(value) : value || ""}</ValueOption> in ADA
+                handle
+              </Box>
+              <GoChevronRight />
+            </Option>
+          )}
         </>
       ) : (
         <Box component={Option} color={({ palette }) => palette.error[700]} justifyContent={"center"}>

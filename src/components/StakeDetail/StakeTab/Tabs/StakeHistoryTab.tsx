@@ -1,4 +1,4 @@
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@mui/material";
@@ -18,15 +18,20 @@ import { API } from "src/commons/utils/api";
 
 import { StyledLink } from "../styles";
 
-const StakeHistoryTab = ({ isMobile = false }) => {
+const StakeHistoryTab: React.FC<{ stakeAddress?: string; isMobile?: boolean }> = ({
+  isMobile = false,
+  stakeAddress
+}) => {
   const { t } = useTranslation();
-  const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
   const theme = useTheme();
 
-  const fetchData = useFetchList<StakeHistory>(`${API.STAKE.DETAIL}/${stakeId}/stake-history`, pageInfo);
+  const fetchData = useFetchList<StakeHistory>(
+    stakeAddress ? `${API.STAKE.DETAIL}/${stakeAddress}/stake-history` : "",
+    pageInfo
+  );
 
   const columns: Column<StakeHistory>[] = [
     {

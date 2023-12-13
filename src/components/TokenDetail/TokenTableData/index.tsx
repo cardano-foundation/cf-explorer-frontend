@@ -5,8 +5,8 @@ import { useHistory, useParams } from "react-router-dom";
 
 import { details } from "src/commons/routers";
 import CustomAccordion, { TTab } from "src/components/commons/CustomAccordion";
+import { UnionTokenIcon, PeopleIcon, TransactionIcon, MetadataIcon } from "src/commons/resources";
 
-import { MetadataIcon, PeopleIcon, TransactionIcon, UnionTokenIcon } from "../../../commons/resources";
 import TokenMetaData from "./TokenMetadata";
 import TokenMinting from "./TokenMinting";
 import TokenTopHolder from "./TokenTopHolder";
@@ -19,6 +19,7 @@ interface ITokenTableData {
   setCurrentHolder?: (holders: number) => void;
   loading?: boolean;
   metadataCIP25?: Transaction["metadata"][0]["metadataCIP25"];
+  metadataCIP60?: Transaction["metadata"][0]["metadataCIP25"];
 }
 
 const TokenTableData: React.FC<ITokenTableData> = ({
@@ -27,7 +28,8 @@ const TokenTableData: React.FC<ITokenTableData> = ({
   metadataJson,
   setCurrentHolder,
   loading,
-  metadataCIP25
+  metadataCIP25,
+  metadataCIP60
 }) => {
   const { t } = useTranslation();
   const { tokenId } = useParams<{ tokenId: string }>();
@@ -62,8 +64,10 @@ const TokenTableData: React.FC<ITokenTableData> = ({
     },
     {
       key: "metadata",
-      label: <Box data-testid="token-metadata">{t("glossary.metadata")}</Box>,
-      children: <TokenMetaData metadataJson={metadataJson} metadataCIP25={metadataCIP25} />,
+      label: t("glossary.metadata"),
+      children: (
+        <TokenMetaData metadataJson={metadataJson} metadataCIP25={metadataCIP25} metadataCIP60={metadataCIP60} />
+      ),
       icon: MetadataIcon
     }
   ];
@@ -71,7 +75,6 @@ const TokenTableData: React.FC<ITokenTableData> = ({
   const handleTabChange = (tab: string) => {
     history.replace(details.token(tokenId, tab));
   };
-
   return (
     <Box mt={3}>
       <CustomAccordion tabs={tabs} onTabChange={handleTabChange} loading={loading} />

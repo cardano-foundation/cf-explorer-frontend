@@ -8,6 +8,7 @@ interface Props extends TooltipProps {
 
 export const CustomTooltip = (props: Props) => {
   const { componentsProps, placement, wOpacity = true, ...otherProps } = props;
+
   const theme = useTheme();
   const { isMobile } = useScreen();
   return (

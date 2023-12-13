@@ -101,6 +101,12 @@ export const CLButton = styled("button")`
   }
 `;
 
+export const ContractAddressLabel = styled(Typography)`
+  font-weight: 600;
+  text-align: left;
+  color: ${({ theme }) => theme.palette.secondary.light};
+`;
+
 export const WrapLabel = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
   color: theme.palette.secondary.light,
