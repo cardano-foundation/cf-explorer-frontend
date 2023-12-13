@@ -3,9 +3,6 @@ import { Box, IconButton, styled } from "@mui/material";
 export const ModalContainer = styled(Box)<{ width?: number | string; viewwidth?: string | number; sidebar?: boolean }>(
   ({ theme, width, viewwidth }) => ({
     position: "relative",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
     width: `min(${viewwidth || "70"}vw, ${typeof width === "string" ? width : `${width || 500}px`})`,
     backgroundColor: theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[0],
     borderRadius: 20,

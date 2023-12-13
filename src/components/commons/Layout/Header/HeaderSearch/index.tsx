@@ -165,7 +165,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     {
       value: "policies",
       label: t("filter.scriptHash"),
-      paths: [routers.SMART_CONTRACT, routers.NATIVE_SCRIPT_DETAIL],
+      paths: [routers.SMART_CONTRACT, routers.NATIVE_SCRIPT_DETAIL, routers.NATIVE_SCRIPTS_AND_SC],
       detail: details.policyDetail
     }
   ];

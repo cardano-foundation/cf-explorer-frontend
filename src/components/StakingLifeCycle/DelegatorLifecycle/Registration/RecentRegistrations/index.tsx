@@ -64,6 +64,8 @@ const RecentRegistrations: React.FC<Props> = ({ setShowBackButton }) => {
             onChange={(params) => {
               if (params) {
                 setParams(params);
+              } else {
+                setParams({});
               }
               setPageInfo((pre) => ({ ...pre, page: 0 }));
             }}

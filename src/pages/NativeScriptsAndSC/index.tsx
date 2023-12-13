@@ -1,13 +1,14 @@
-import { DetailContainer } from "./styles";
+import { Container } from "@mui/material";
+
 import ContractHeader from "./ContractHeader";
 import Tabs from "./Tabs";
 
 const NativeScriptsAndSC = () => {
   return (
-    <DetailContainer>
+    <Container>
       <ContractHeader />
       <Tabs />
-    </DetailContainer>
+    </Container>
   );
 };
 

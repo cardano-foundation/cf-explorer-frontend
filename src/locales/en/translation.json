@@ -127,7 +127,7 @@
   "site.resources": "Resources",
   "site.blockchainCourse": "Blockchain Course",
   "site.builderTools": "Builder Tools",
-  "site.gitHub": "GitHub",
+  "site.github": "Github",
   "message.wallet.changeSuccess": "Change wallet successfully!",
   "message.common.somethingWentWrong": "Something went wrong!",
   "message.bookmark.added": "Bookmark has been added",
@@ -902,7 +902,8 @@
   "cip60.viewDocs": "View CIP 60 document",
   "cip60.notCompliance": "This token is not compliant with CIP 60. See the details",
   "token.cip60otherProperties.desc": "Any metadata that doesn't fall into the \"required\" or \"optional\" categories according to the CIP-60 specification is not verified for compliance and therefore won't be displayed in this view.",
-  "cip.versionCheck": "The metadata version should be 1 or 2 in order to complied with CIP-60",
+  "cip.versionCheck": "The metadata version should be 1 or 2 in order to comply with CIP-60",
   "outputs.label": "Outputs",
+  "cip.warningVersion1": "This compliance check is based on the deprecated music token version v1"
   "address.title.ADAHanlde": "Address (ADA Handle)"
 }
