@@ -903,5 +903,6 @@
   "cip60.notCompliance": "This token is not compliant with CIP 60. See the details",
   "token.cip60otherProperties.desc": "Any metadata that doesn't fall into the \"required\" or \"optional\" categories according to the CIP-60 specification is not verified for compliance and therefore won't be displayed in this view.",
   "cip.versionCheck": "The metadata version should be 1 or 2 in order to complied with CIP-60",
-  "outputs.label": "Outputs"
+  "outputs.label": "Outputs",
+  "address.title.ADAHanlde": "Address (ADA Handle)"
 }
