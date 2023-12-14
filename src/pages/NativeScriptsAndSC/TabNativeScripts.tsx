@@ -59,6 +59,7 @@ const TabNativeScripts = () => {
           onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
         }}
         style={{ transform: "translateY(-20px)" }}
+        isCenterLoading={true}
       />
     </Box>
   );

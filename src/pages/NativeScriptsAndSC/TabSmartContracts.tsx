@@ -71,6 +71,7 @@ const TabSmartContracts = () => {
         screen="smartContracts"
         total={{ count: fetchData.total, title: t("common.totalTxs") }}
         rowKey="scriptHash"
+        isCenterLoading={true}
         height="unset"
         maxHeight={400}
         pagination={{
