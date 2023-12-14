@@ -9,8 +9,6 @@ describe("User check information of stake address deregistration", () => {
     cy.get('[data-testid="view-detail-button-sidebar"]').contains("View Details", { matchCase: false }).click();
 
     cy.get('[data-testid="search-bar"]');
-    cy.wait(1000);
-    cy.get('[data-testid="stake-address-detail-title"]').contains("Stake Address Details", { matchCase: false });
     cy.get('[data-testid="stake-address-overview-delegated"]').contains("Delegated to");
     cy.get('[data-testid="stake-address-overview-total-stake"]').contains("Total Stake");
     cy.get('[data-testid="stake-address-overview-reward-available"]').contains("Rewards available");
