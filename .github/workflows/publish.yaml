@@ -48,7 +48,7 @@ jobs:
             echo "BRANCH=$BRANCH" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
 
             # if tag for this is version is already there, skip docker build
-            docker manifest inspect ${{ env.PRIVATE_DOCKER_REGISTRY_URL }}/${{ env.DOCKER_IMAGE_NAME }}:${CURRENT_VERSION} && echo "SKIP_DOCKER_PUSH=true" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
+            docker manifest inspect ${{ env.PRIVATE_DOCKER_REGISTRY_URL }}/${DOCKER_IMAGE_NAME}:${CURRENT_VERSION} && echo "SKIP_DOCKER_PUSH=true" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
 
             if [[ "${BRANCH}" == "develop" ]]
             then
