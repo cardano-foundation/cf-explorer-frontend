@@ -1,7 +1,4 @@
-import { cleanup, fireEvent, screen } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
-
-import { render } from "src/test-utils";
+import { cleanup, fireEvent, screen, render } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
 import { Column } from "src/types/table";
 
@@ -26,9 +23,9 @@ describe("ProtocolParameter page", () => {
 
   it("should be render page", () => {
     render(<ProtocolParameter />);
-    expect(screen.getByText("Updatable Parameters")).toBeInTheDocument();
-    expect(screen.getByText("Global Constants")).toBeInTheDocument();
-    expect(screen.getByText("View update history")).toBeInTheDocument();
+    expect(screen.getByText(/Updatable Parameters/i)).toBeInTheDocument();
+    expect(screen.getByText(/Global Constants/i)).toBeInTheDocument();
+    expect(screen.getByText(/View update activity/i)).toBeInTheDocument();
   });
   it("renders the table with given columns and data", () => {
     const columns: Column<{ test: string }>[] = [

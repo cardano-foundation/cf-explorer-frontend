@@ -126,14 +126,14 @@ const AddressHeader: React.FC<Props> = ({ data, loading, adaHanldeData }) => {
           >
             <TitleText>
               {adaHanldeData ? (
-                <CustomTooltip title={t("address.title.ADAHanlde")}>
-                  <Box sx={{ wordBreak: "break-all" }} textTransform={"lowercase"}>
-                    {address.startsWith("$") ? address : `$${address}`}
-                    <Box display={"inline-block"}>
-                      <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
-                    </Box>
+                <Box sx={{ wordBreak: "break-all" }} textTransform={"lowercase"}>
+                  <CustomTooltip title={t("address.title.ADAHanlde")}>
+                    <Box display={"inline-block"}>{address.startsWith("$") ? address : `$${address}`} </Box>
+                  </CustomTooltip>
+                  <Box display={"inline-block"}>
+                    <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
                   </Box>
-                </CustomTooltip>
+                </Box>
               ) : (
                 <Box>
                   {t("address.title.addressDetail")}

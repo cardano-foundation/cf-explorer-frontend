@@ -8,15 +8,16 @@ const useDisableJsonKey = <T,>(data: T): { trigger: () => void; keyRenderer: Jso
     setTimeout(() => {
       const elements = document.querySelectorAll("[data-row-id='json-row']");
       elements.forEach((element) => {
-        const visibleElemet = element.parentNode?.parentNode?.querySelector("& > div");
+        const visibleElemet = element.parentNode?.parentNode?.querySelector("div:not([data-row-id='json-row'])");
         (visibleElemet as HTMLElement).style.display = "none";
       });
     });
   };
   useEffect(() => {
     const elements = document.querySelectorAll("[data-row-id='json-row']");
+
     elements.forEach((element) => {
-      const visibleElemet = element.parentNode?.parentNode?.querySelector("& > div");
+      const visibleElemet = element.parentNode?.parentNode?.querySelector("div:not([data-row-id='json-row'])");
       (visibleElemet as HTMLElement).style.display = "none";
     });
   }, [data]);
