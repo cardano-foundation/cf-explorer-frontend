@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.5.2](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.5.1...v0.5.2) (2023-12-14)
+
+
+### Bug Fixes
+
+* add switch button on mobile ([9a6832e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/9a6832eda0ce5dfbe8484322eed5cee1ca0d0f01))
+* MET-1843 update border color ([b51ba6e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b51ba6eea8812ed51b49625e60fcbba77db24eb3))
+* MET-1843 update color border switch ([2017214](https://github.com/cardano-foundation/cf-explorer-frontend/commit/2017214b7b1fc1622da858ba3979abe1a10efbb2))
+* MET-1843 update switch mode button mobile ([248a619](https://github.com/cardano-foundation/cf-explorer-frontend/commit/248a619acad6b80d0115c1bab48767fe4b49fa8a))
+* MET-1844 fix search pool and token wrong ([58c2d74](https://github.com/cardano-foundation/cf-explorer-frontend/commit/58c2d743e99c1062568d7e99e09af7964b25e1a6))
+
 ## [0.5.1](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.5.0...v0.5.1) (2023-12-11)
 
 
