@@ -7,13 +7,13 @@ describe("address detail spec", () => {
     cy.get('[data-testid="submenu-button-transactions"]').click();
     cy.get('[data-testid="transactions-card"]').contains("Transactions");
     cy.get(`[data-testid="table-common"] tbody tr:nth-child(1) td:nth-child(8) a`).eq(0).click();
-    cy.get(".css-19nq3tn").contains("Address Details");
+    cy.get('[data-testid="address-detail-title"]').contains("Address Details");
   });
 
   it("should navigate to the address detail page", () => {
     const address = "Ae2tdPwUPEZKnykUqXyYQxqJSnADNkm4ELUnyqZUBHcCrNJVDqozLYCt9Jv";
     cy.visit("/address/Ae2tdPwUPEZKnykUqXyYQxqJSnADNkm4ELUnyqZUBHcCrNJVDqozLYCt9Jv");
-    cy.get(".css-19nq3tn").contains("Address Details");
+    cy.get('[data-testid="address-detail-title"]').contains("Address Details");
     cy.get(".css-12n155v").contains(address);
     cy.get("div").contains("Analytics");
     cy.get("div").contains("Transactions");

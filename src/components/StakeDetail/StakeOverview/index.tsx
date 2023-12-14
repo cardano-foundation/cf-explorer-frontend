@@ -50,7 +50,9 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated, adaHanldeD
       icon: delegatedIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>{t("glossary.delegatedTo")} </TitleCard>
+          <TitleCard mr={1} data-testid="stake-address-overview-delegated">
+            {t("glossary.delegatedTo")}{" "}
+          </TitleCard>
         </Box>
       ),
       value: (
@@ -65,7 +67,9 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated, adaHanldeD
       icon: totalStakeIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>{t("glossary.totalStake")}</TitleCard>
+          <TitleCard mr={1} data-testid="stake-address-overview-total-stake">
+            {t("glossary.totalStake")}
+          </TitleCard>
         </Box>
       ),
       value: (
@@ -85,7 +89,9 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated, adaHanldeD
       icon: rewardIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>{t("glossary.rewardsAvailable")} </TitleCard>
+          <TitleCard mr={1} data-testid="stake-address-overview-reward-available">
+            {t("glossary.rewardsAvailable")}{" "}
+          </TitleCard>
         </Box>
       ),
       value: (
@@ -99,7 +105,10 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated, adaHanldeD
       icon: rewardWithdrawIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> {t("glossary.rewardsWithdrawn")} </TitleCard>
+          <TitleCard mr={1} data-testid="stake-address-overview-reward-withdrawn">
+            {" "}
+            {t("glossary.rewardsWithdrawn")}{" "}
+          </TitleCard>
         </Box>
       ),
       value: (
@@ -121,7 +130,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated, adaHanldeD
             <Box textTransform={"lowercase"}>{stakeId.startsWith("$") ? stakeId : `$${stakeId}`}</Box>
           </CustomTooltip>
         ) : (
-          t("head.page.stakeAddressDetail")
+          <Box data-testid="stake-address-detail-title">{t("head.page.stakeAddressDetail")}</Box>
         )
       }
       hash={data?.stakeAddress}

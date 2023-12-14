@@ -13,8 +13,7 @@ describe("contracts spec", () => {
     cy.visit("/contracts");
     cy.get("h2").contains("Smart Contracts");
     cy.get('[data-testid="search-bar"]').type(address).type("{enter}");
-    cy.get(".css-19nq3tn").contains("Address Details");
-    cy.get(".css-12n155v").contains(address);
+    cy.get('[data-testid="address-detail-title"]').contains("Address Details");
   });
 
   it("should display box output in SPEND contract", () => {

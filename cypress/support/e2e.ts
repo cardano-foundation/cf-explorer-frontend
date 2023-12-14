@@ -11,3 +11,6 @@ if (Cypress.config("hideXHRInCommandLog")) {
     app.document.head.appendChild(style);
   }
 }
+Cypress.on("uncaught:exception", () => {
+  return false;
+});

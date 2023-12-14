@@ -159,7 +159,9 @@ const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) =
   const xAxisProps: XAxisProps = tab === "BALANCE" ? { tickMargin: 5, dx: -15 } : { tickMargin: 5 };
 
   return (
-    <Card title={<TextCardHighlight>{t("common.analytics")}</TextCardHighlight>}>
+    <Card
+      title={<TextCardHighlight data-testid="stake-address-chart-title">{t("common.analytics")}</TextCardHighlight>}
+    >
       <Wrapper container columns={24} spacing="35px">
         <Grid item xs={24} lg={18}>
           <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
@@ -296,7 +298,9 @@ const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) =
               <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <CustomIcon height={30} fill={theme.palette.secondary.light} icon={HighestIconComponent} />
-                  <Title>{tab === "BALANCE" ? t("common.highestBalance") : t("common.highestReward")}</Title>
+                  <Title data-testid="stake-address-chart-highest">
+                    {tab === "BALANCE" ? t("common.highestBalance") : t("common.highestReward")}
+                  </Title>
                   <ValueInfo>
                     {loading || loadingReward ? (
                       <SkeletonUI variant="rectangular" />
@@ -311,7 +315,9 @@ const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) =
               <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <CustomIcon height={30} fill={theme.palette.secondary.light} icon={LowestIconComponent} />
-                  <Title>{tab === "BALANCE" ? t("common.lowestBalance") : t("common.lowestReward")}</Title>
+                  <Title data-testid="stake-address-chart-lowest">
+                    {tab === "BALANCE" ? t("common.lowestBalance") : t("common.lowestReward")}
+                  </Title>
                   <ValueInfo>
                     {loading || loadingReward ? (
                       <SkeletonUI variant="rectangular" />

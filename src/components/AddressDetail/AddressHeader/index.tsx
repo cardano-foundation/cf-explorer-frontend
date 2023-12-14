@@ -135,7 +135,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading, adaHanldeData }) => {
                   </Box>
                 </Box>
               ) : (
-                <Box>
+                <Box data-testid="address-detail-title">
                   {t("address.title.addressDetail")}
                   <Box display={"inline-block"}>
                     <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
