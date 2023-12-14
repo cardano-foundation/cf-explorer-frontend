@@ -60,10 +60,13 @@ const Sidebar: React.FC = () => {
               onClick={() => {
                 setTheme("light");
               }}
-              borderColor={muiTheme.isDark ? muiTheme.palette.primary[100] : muiTheme.palette.primary.main}
               color={muiTheme.isDark ? muiTheme.palette.secondary.light : muiTheme.palette.primary.main}
               bgcolor={muiTheme.isDark ? "transparent" : muiTheme.palette.primary[200]}
+              border={`1px solid ${
+                muiTheme.isDark ? muiTheme.palette.primary[100] : muiTheme.palette.primary.main
+              } !important`}
               fontSize={16}
+              borderRight={"1px"}
             >
               <Box
                 component={LightModeMobile}
@@ -79,9 +82,11 @@ const Sidebar: React.FC = () => {
                 setTheme("dark");
               }}
               fontSize={16}
-              borderColor={muiTheme.isDark ? muiTheme.palette.primary.main : muiTheme.palette.primary[200]}
               color={muiTheme.isDark ? muiTheme.palette.primary.main : muiTheme.palette.secondary.light}
               bgcolor={muiTheme.isDark ? muiTheme.palette.secondary[0] : "transparent"}
+              border={`1px solid ${
+                muiTheme.isDark ? muiTheme.palette.primary.main : muiTheme.palette.primary[200]
+              } !important`}
             >
               <Box
                 component={DarkModeMobile}
