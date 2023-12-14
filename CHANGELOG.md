@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.5.0...v0.5.1) (2023-12-11)
+
+
+### Bug Fixes
+
+* url change on cip25 ([bc09045](https://github.com/cardano-foundation/cf-explorer-frontend/commit/bc090456c87fe75d662a9fed0afd552b245ae93c))
+
 ## [0.5.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.4.29...v0.5.0) (2023-11-30)
 
 
