@@ -99,6 +99,8 @@ const TableHeader = <T extends ColumnType>({
     if (sortQueryString && sortQueryString.length) {
       const [columnKey, sort] = sortQueryString.split(",") as [string, "" | "DESC" | "ASC"];
       setSort({ columnKey, sort });
+    } else {
+      setSort({ columnKey: "", sort: "" });
     }
   }, [search]);
 
