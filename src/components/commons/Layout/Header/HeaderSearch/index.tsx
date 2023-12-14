@@ -167,6 +167,21 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       label: t("filter.scriptHash"),
       paths: [routers.SMART_CONTRACT, routers.NATIVE_SCRIPT_DETAIL, routers.NATIVE_SCRIPTS_AND_SC],
       detail: details.policyDetail
+    },
+    {
+      value: "ADAHanlde",
+      label: t("filter.ADAHanlde"),
+      paths: [
+        routers.ADDRESS_LIST,
+        routers.CONTRACT_LIST,
+        routers.ADDRESS_DETAIL,
+        routers.STAKE_ADDRESS_REGISTRATION,
+        routers.STAKE_ADDRESS_DEREGISTRATION,
+        routers.STAKE_ADDRESS_DELEGATIONS,
+        routers.TOP_DELEGATOR,
+        routers.STAKE_DETAIL
+      ],
+      detail: details.address
     }
   ];
 
@@ -396,6 +411,35 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       return;
     }
 
+    if (option?.value === "ADAHanlde") {
+      setLoading(true);
+      try {
+        const dataHanlde = await adaHandleSearch(search);
+        if (dataHanlde) {
+          handleSetSearchValueDefault();
+          callback?.();
+          const adaHanldeSearch = search.startsWith("$") ? search : `$${search}`;
+          if (dataHanlde.stakeAddress) {
+            history.push(`${details.stake(adaHanldeSearch)}`);
+          } else {
+            history.push(`${details.address(adaHanldeSearch)}`);
+          }
+        } else {
+          showResultNotFound();
+          setShowOption(true);
+          return;
+        }
+      } catch (error) {
+        showResultNotFound();
+        setShowOption(true);
+        return;
+      } finally {
+        setLoading(false);
+      }
+      setLoading(false);
+      return;
+    }
+
     if (!["all", "tokens", "delegations/pool-detail-header", "addresses"].includes(option?.value || "")) {
       setLoading(true);
       let url = "";
@@ -414,44 +458,29 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
         setLoading(false);
       }
     }
-
     if (option?.value === "addresses") {
-      setLoading(true);
-      const dataHanlde = await adaHandleSearch(search);
-      if (dataHanlde) {
-        handleSetSearchValueDefault();
-        callback?.();
-        const adaHanldeSearch = search.startsWith("$") ? search : `$${search}`;
-        if (dataHanlde.stakeAddress) {
-          history.push(`${details.stake(adaHanldeSearch)}`);
+      try {
+        if (search.startsWith("stake")) {
+          await defaultAxios.get(URL_FETCH_DETAIL["stake"](search)).then((data) => data.data);
         } else {
-          history.push(`${details.address(adaHanldeSearch)}`);
+          await defaultAxios.get(URL_FETCH_DETAIL["addresses"](search)).then((data) => data.data);
         }
-      } else {
-        try {
-          if (search.startsWith("stake")) {
-            await defaultAxios.get(URL_FETCH_DETAIL["stake"](search)).then((data) => data.data);
-          } else {
-            await defaultAxios.get(URL_FETCH_DETAIL["addresses"](search)).then((data) => data.data);
-          }
-          callback?.();
-          if (search.startsWith("stake")) {
-            history.push(details.stake(search));
-            handleSetSearchValueDefault();
-            callback?.();
-            return;
-          }
-          history.push(details.address(search));
+        callback?.();
+        if (search.startsWith("stake")) {
+          history.push(details.stake(search));
           handleSetSearchValueDefault();
-        } catch (error) {
-          showResultNotFound();
-          setShowOption(true);
+          callback?.();
           return;
-        } finally {
-          setLoading(false);
         }
+        history.push(details.address(search));
+        handleSetSearchValueDefault();
+      } catch (error) {
+        showResultNotFound();
+        setShowOption(true);
+        return;
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
       return;
     }
 

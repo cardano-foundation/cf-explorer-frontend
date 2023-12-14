@@ -8,6 +8,7 @@
   "filter.tokens": "Tokens",
   "filter.address": "Addresses",
   "filter.pools": "Pools",
+  "filter.ADAHanlde": "ADA Handle",
   "filter.scriptHash": "Script Hash",
   "filter.placeholder.searchAll": "Search transactions, address, blocks, epochs, pools...",
   "filter.placeholder.searchAddressPools": "Search Stake Address, Pools",

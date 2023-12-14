@@ -10,8 +10,8 @@ type FilterParams =
   | "delegations/pool-detail-header"
   | "lifecycle"
   | "policies"
-  | "delegations/pool-list?search=";
-
+  | "delegations/pool-list?search="
+  | "ADAHanlde";
 interface SearchParams {
   filter?: FilterParams;
   search?: string;
