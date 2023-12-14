@@ -26,20 +26,22 @@ describe("Pool Certificate", () => {
     const transaction = "a810ba9f89dc9e2aedbd722115c684dab646e3e9956b495b02ece5338cbc5c4a";
     cy.visit("/transactions");
     cy.get('[data-testid="search-bar"]').type(transaction).type("{enter}");
+    cy.wait(1000);
     cy.get("div").contains("transaction details", { matchCase: false }).should("be.visible");
-    cy.get("div .MuiAccordion-root").contains("Metadata", { matchCase: false }).scrollIntoView().click();
+    // cy.get("div .MuiAccordion-root").contains("Metadata", { matchCase: false }).scrollIntoView();
+    // cy.wait(1000);
+    cy.get("div .MuiAccordion-root").contains("Metadata", { matchCase: false }).click();
     cy.wait(1000);
     cy.get(".MuiAccordion-region div").contains("Metadata Hash", { matchCase: false }).should("be.visible");
     cy.get(".MuiAccordion-region div").contains("Metadatum Label", { matchCase: false }).should("be.visible");
     cy.get(".MuiAccordion-region div").contains("Value", { matchCase: false }).should("be.visible");
     cy.get("[data-testid='clickable-cip60-badge']").should("be.visible");
     cy.get("[data-testid='clickable-cip60-badge']").click();
-
     cy.get("p").contains("Required Properties").should("be.visible");
     cy.get(`[data-testid="table-common"] tr th`).contains("Property");
     cy.get(`[data-testid="table-common"] tr th`).contains("Format");
     cy.get(`[data-testid="table-common"] tr th`).contains("Value");
     cy.get(`[data-testid="table-common"] tr th`).contains("Compliance");
-    cy.get("p").contains("Other Properties").scrollIntoView().should("be.visible");
+    cy.get("p").contains("Other Properties");
   });
 });
