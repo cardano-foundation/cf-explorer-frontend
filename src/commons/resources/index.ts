@@ -126,6 +126,10 @@ import DownRedDarkmode from "./icons/downRedDark.svg";
 import DownRedUtxoDarkmode from "./icons/downUtxoRedDark.svg";
 import ArrowUpIcon from "./icons/arrow-up.svg";
 import ArrowUpDarkIcon from "./icons/arrow-up-dark.svg";
+import DisableArrowUpLightIcon from "./icons/disable-arrow-up-light.svg";
+import DisableArrowDownLightIcon from "./icons/disable-arrow-down-light.svg";
+import DisableArrowUpDarkIcon from "./icons/disable-arrow-up-dark.svg";
+import DisableArrowDownDarkIcon from "./icons/disable-arrow-down-dark.svg";
 import CopyOutlineIcon, { ReactComponent as CopyOutlineIconComponent } from "./icons/copy-outline.svg";
 import { ReactComponent as PoolResgistrationHistory } from "./icons/poolResgistrationHistory.svg";
 import { ReactComponent as PoolResgistrationHistoryDark } from "./icons/poolResgistrationHistoryDark.svg";
@@ -133,6 +137,8 @@ import { ReactComponent as PoolDeresgistrationHistory } from "./icons/poolDeresg
 import { ReactComponent as PoolDeresgistrationHistoryDark } from "./icons/poolDeresgistrationHistoryDark.svg";
 import { ReactComponent as PoolUpdateHistory } from "./icons/poolUpdateHistory.svg";
 import { ReactComponent as PoolUpdateHistoryDark } from "./icons/poolUpdateHistoryDark.svg";
+import { ReactComponent as LightModeMobile } from "./icons/lightModeMobile.svg";
+import { ReactComponent as DarkModeMobile } from "./icons/darkModeMobile.svg";
 import ArrowDownIcon from "./icons/arrow-down-red.svg";
 import ArrowDownDarkIcon from "./icons/arrow-down-red-dark.svg";
 import PolicyDark from "./icons/policy-dark.svg";
@@ -142,10 +148,6 @@ import PoolSizeDarkIcon from "./images/PoolSizeDark.png";
 import PoolSizeLightIcon from "./images/PoolSizeLight.png";
 import DelegatingToDarkIcon from "./images/DelegatingToDark.png";
 import RewardsWithdrawDarkIcon from "./images/RewardsWithdrawDark.png";
-import DisableArrowUpLightIcon from "./icons/disable-arrow-up-light.svg";
-import DisableArrowDownLightIcon from "./icons/disable-arrow-down-light.svg";
-import DisableArrowUpDarkIcon from "./icons/disable-arrow-up-dark.svg";
-import DisableArrowDownDarkIcon from "./icons/disable-arrow-down-dark.svg";
 import DeregistrationDarkIcon from "./icons/deregistration-icon-dark.svg";
 import DeregistrationLightIcon from "./icons/deregistration-icon-light.svg";
 import RegistrationDarkIcon from "./icons/registration-icon-dark.svg";
@@ -337,7 +339,9 @@ export {
   PoolUpdateHistory,
   PoolResgistrationHistoryDark,
   PoolDeresgistrationHistoryDark,
-  PoolUpdateHistoryDark
+  PoolUpdateHistoryDark,
+  LightModeMobile,
+  DarkModeMobile
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
