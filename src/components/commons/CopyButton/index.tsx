@@ -3,6 +3,7 @@ import { IconButton, IconButtonProps, styled, TooltipProps, useTheme } from "@mu
 import { useCopyToClipboard } from "react-use";
 import { BiCheckCircle } from "react-icons/bi";
 
+import { useScreen } from "src/commons/hooks/useScreen";
 import { CopyIconSquare } from "src/commons/resources";
 
 import CustomTooltip from "../CustomTooltip";
@@ -28,12 +29,16 @@ interface CopyButtonProps extends IconButtonProps {
 const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, placement, customIcon, ...props }) => {
   const [, copyToClipboard] = useCopyToClipboard();
   const [copied, setCopied] = useState<boolean>();
+  const [tooltipOpen, setTooltipOpen] = useState<boolean>(false);
   const theme = useTheme();
+  const { isMobile } = useScreen();
 
   useEffect(() => {
     if (copied) {
+      setTooltipOpen(true);
       const timeout = setTimeout(() => {
         setCopied(false);
+        setTooltipOpen(false);
       }, 2000);
       return () => clearTimeout(timeout);
     }
@@ -47,9 +52,28 @@ const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, p
       onClick?.(e);
     }
   };
+
+  const handleCloseToolTip = () => {
+    setTooltipOpen(false);
+  };
+  const handleMouseEnter = () => {
+    setTooltipOpen(true);
+  };
+
   return (
-    <CustomTooltip placement={placement || "top"} title={copied ? "Copied" : "Copy"}>
-      <Button {...props} onClick={onCopy}>
+    <CustomTooltip
+      placement={placement || "top"}
+      title={copied ? "Copied" : "Copy"}
+      open={tooltipOpen}
+      onClose={handleCloseToolTip}
+    >
+      <Button
+        disableRipple={isMobile && tooltipOpen}
+        {...props}
+        onClick={onCopy}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleCloseToolTip}
+      >
         {children ||
           (copied ? (
             <BiCheckCircle
