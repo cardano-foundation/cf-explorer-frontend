@@ -198,6 +198,7 @@ export const MetadataJSONTitle = styled(MetadataTitle)`
 export const MetaDataValue = styled(Box)`
   box-sizing: border-box;
   color: ${({ theme }) => theme.palette.secondary.main};
+  margin-bottom: 6px;
 `;
 
 export const MetaDataJSONValue = styled(MetaDataValue)`

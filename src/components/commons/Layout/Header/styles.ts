@@ -208,10 +208,7 @@ export const SwitchMode = styled(Switch)(({ theme }) => ({
 }));
 
 export const WrapButtonSelect = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.down(355)]: {
-    display: "none"
-  },
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("md")]: {
     display: "none"
   }
 }));

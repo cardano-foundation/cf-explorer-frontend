@@ -59,6 +59,7 @@ const TabNativeScripts = () => {
         }}
         style={{ transform: "translateY(-20px)" }}
         maxHeight={380}
+        isCenterLoading={true}
       />
     </Box>
   );
