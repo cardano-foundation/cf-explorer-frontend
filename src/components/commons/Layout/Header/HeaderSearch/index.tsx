@@ -189,7 +189,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     try {
       return await axios.get(API_ADA_HANDLE_API + API.ADAHandle(query)).then((data) => data.data);
     } catch (error) {
-      return error;
+      return null;
     }
   };
 
@@ -208,35 +208,37 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       setADAHanldeOption(adaHanlde);
       setDataSearchAll(res?.data);
       const keyDetail = getKeyIfOnlyOneNonNullResult(res?.data);
-      if (
-        adaHanlde &&
-        (!keyDetail || keyDetail === "address") &&
-        res.data &&
-        !res.data.validPoolName &&
-        !res.data.validTokenName
-      ) {
-        handleSetSearchValueDefault();
-        setLoading(false);
-        callback?.();
-        setShowOption(false);
-        const adaHanldeSearch = search.startsWith("$") ? search : `$${search}`;
-        if (adaHanlde?.stakeAddress) {
-          history.push(`${details.stake(adaHanldeSearch)}`);
-          return;
-        } else {
-          history.push(`${details.address(adaHanldeSearch)}`);
-          return;
-        }
-      }
-
-      if (!adaHanlde.paymentAddress) {
-        if (keyDetail) {
-          callback?.();
+      if (adaHanlde !== null) {
+        if (
+          adaHanlde &&
+          (!keyDetail || keyDetail === "address") &&
+          res.data &&
+          !res.data.validPoolName &&
+          !res.data.validTokenName
+        ) {
           handleSetSearchValueDefault();
-          handleRedirectDetail(keyDetail, res?.data);
           setLoading(false);
+          callback?.();
           setShowOption(false);
-          return;
+          const adaHanldeSearch = search.startsWith("$") ? search : `$${search}`;
+          if (adaHanlde?.stakeAddress) {
+            history.push(`${details.stake(adaHanldeSearch)}`);
+            return;
+          } else {
+            history.push(`${details.address(adaHanldeSearch)}`);
+            return;
+          }
+        }
+
+        if (!adaHanlde.paymentAddress) {
+          if (keyDetail) {
+            callback?.();
+            handleSetSearchValueDefault();
+            handleRedirectDetail(keyDetail, res?.data);
+            setLoading(false);
+            setShowOption(false);
+            return;
+          }
         }
       }
 
