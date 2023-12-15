@@ -1007,7 +1007,7 @@ export const OptionsSearch = ({
                 }
               }}
             >
-              <Box textAlign={"left"}>
+              <Box textAlign={"left"} data-testid="option-ada-hanlde">
                 Search {""} <ValueOption>{value.length > 15 ? getShortHash(value) : value || ""}</ValueOption> in ADA
                 handle
               </Box>

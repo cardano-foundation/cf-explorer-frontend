@@ -31,7 +31,7 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson, metadataCI
     <MetaDataWraper>
       {isShowCIP25 && (
         <CIPHeader>
-          <CIPHeaderTitle>
+          <CIPHeaderTitle data-testid="token-metadata-des">
             {t("cip25.compliance")} <InfoSolidIcon width="16px" height="16px" />{" "}
           </CIPHeaderTitle>
           {!isNil(metadataCIP25?.valid) && (
