@@ -56,7 +56,7 @@ const DelegationLists: React.FC = () => {
 
   const fetchData = useFetchList<Delegators>(
     API.DELEGATION.POOL_LIST,
-    { ...pageInfo, search: search || tickerNameSearchValue, isShowRetired },
+    { ...pageInfo, search: decodeURIComponent(search || tickerNameSearchValue), isShowRetired },
     false,
     blockKey
   );
@@ -218,7 +218,7 @@ const DelegationLists: React.FC = () => {
           <StyledInput
             placeholder={t("common.searchPools")}
             onChange={(e) => setValue(e.target.value)}
-            value={value}
+            value={decodeURIComponent(value)}
             onKeyUp={(e) => {
               if (e.key === "Enter") {
                 handleSearch();
