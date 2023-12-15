@@ -292,8 +292,10 @@ const HomeStatistic = () => {
                   </Box>
                 </Box>
                 <Box>
-                  <CustomTooltip title={formatADAFull(liveStake)}>
-                    <Title data-testid="live-stake-value">{formatADA(liveStake)}</Title>
+                  <CustomTooltip title={liveStake ? formatADAFull(liveStake) : t("common.notAvailable")}>
+                    <Title data-testid="live-stake-value">
+                      {liveStake ? formatADA(liveStake) : t("common.notAvailable")}
+                    </Title>
                   </CustomTooltip>
                   <Progress>
                     <CustomTooltip title={"Total staked to Circulating supply ratio"}>
@@ -307,7 +309,7 @@ const HomeStatistic = () => {
                     >
                       {isShowOtherStakePercentText && (
                         <Box color={({ palette }) => palette.secondary.main}>
-                          {liveRate.div(-1).plus(100).toFixed(0)}%
+                          {liveStake ? liveRate.div(-1).plus(100).toFixed(0) : 0}%
                         </Box>
                       )}
                     </ProgressPending>
@@ -316,8 +318,10 @@ const HomeStatistic = () => {
                 <Box>
                   <Box color={({ palette }) => palette.secondary.light}>
                     {t("glossary.activeStake")} (<ADAicon width={10} />){": "}
-                    <CustomTooltip title={formatADAFull(activeStake)}>
-                      <span data-testid="active-stake-value">{formatADA(activeStake)}</span>
+                    <CustomTooltip title={activeStake ? formatADAFull(activeStake) : t("common.notAvailable")}>
+                      <span data-testid="active-stake-value">
+                        {activeStake ? formatADA(activeStake) : t("common.notAvailable")}
+                      </span>
                     </CustomTooltip>
                   </Box>
                   <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>

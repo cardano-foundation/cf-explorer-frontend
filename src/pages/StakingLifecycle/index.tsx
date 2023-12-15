@@ -81,6 +81,10 @@ const StakingLifecycle: React.FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+    document.title = `${t("common.savedReports")} | ${t("head.page.dashboard")}`;
+  }, [t]);
+
   const handleChange = (e: React.SyntheticEvent, newValue: LifecycleReportType) => {
     setParams({});
     history.replace(lists.dashboard(newValue));

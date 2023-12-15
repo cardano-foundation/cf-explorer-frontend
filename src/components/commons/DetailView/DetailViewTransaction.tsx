@@ -131,8 +131,8 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
       label: t("glossary.instantaneousRewards"),
       icon: <InstantaneousHistoryComponent />
     },
-    { key: "metadata", label: t("glossary.metadata"), icon: <MetadataIconTx /> },
-    { key: "signersInformation", label: t("tab.signersInformation"), icon: <GitCommitIcon /> }
+    { key: "signersInformation", label: t("tab.signersInformation"), icon: <GitCommitIcon /> },
+    { key: "metadata", label: t("glossary.metadata"), icon: <MetadataIconTx /> }
   ];
 
   const renderContent = () => {

@@ -178,7 +178,13 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
               id={`step-${idx}`}
               key={idx}
               component={renderTabsSPO[step.keyCheckShow] ? "span" : CustomTooltip}
-              title={renderTabsSPO[step.keyCheckShow] ? undefined : t("common.noRecordAtTime")}
+              title={
+                renderTabsSPO[step.keyCheckShow]
+                  ? undefined
+                  : renderTabsSPO[step.keyCheckShow] !== null
+                  ? t("common.noRecordAtTime")
+                  : t("common.notAvailable")
+              }
               onClick={() => handleChangeTab(step, idx)}
               sx={{
                 borderColor: colorProps.background

@@ -63,6 +63,7 @@ import {
   Wrapper
 } from "./styles";
 import { Lowercase } from "../CustomText/styles";
+import NotAvailable from "../NotAvailable";
 
 const SPACING_TOP_TABLE = 300;
 
@@ -73,6 +74,11 @@ type TEmptyRecord = {
 export const EmptyRecord: React.FC<TEmptyRecord> = ({ className, isModal }) => (
   <Empty className={className} ismodal={+(isModal || 0)}>
     <NoRecord p={`${0} !important`} />
+  </Empty>
+);
+export const NotAvailableIcon: React.FC<TEmptyRecord> = ({ className, isModal }) => (
+  <Empty className={className} ismodal={+(isModal || 0)}>
+    <NotAvailable p={`${0} !important`} />
   </Empty>
 );
 
@@ -548,6 +554,7 @@ const Table: React.FC<TableProps> = ({
         {!loading && ((initialized && data?.length === 0) || error) && (
           <EmptyRecord isModal={isModal} className={emptyClassName} />
         )}
+        {!loading && initialized && data === null && <NotAvailableIcon isModal={isModal} className={emptyClassName} />}
       </Wrapper>
       {showPagination && (
         <FooterTable total={total} clearSelection={clearSelection} pagination={pagination} loading={!!loading} />

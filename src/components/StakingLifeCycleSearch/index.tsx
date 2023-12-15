@@ -13,6 +13,7 @@ import { API } from "src/commons/utils/api";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 import dataMainnet from "src/commons/configs/mainnet.json";
+import dataSanchonet from "src/commons/configs/sanchonet.json";
 import defaultAxios from "src/commons/utils/axios";
 
 import {
@@ -40,6 +41,7 @@ enum BROWSE_VALUES {
 import CustomIcon from "../commons/CustomIcon";
 
 const isMainnet = NETWORK === NETWORKS.mainnet;
+const isSanchonet = NETWORK === NETWORKS.sanchonet;
 
 const StakingLifeCycleSearch = () => {
   const { t } = useTranslation();
@@ -127,7 +129,12 @@ const StakingLifeCycleSearch = () => {
 
   const handleSelect = (value: string) => {
     if (value === BROWSE_VALUES.DELEGATOR) {
-      const listStakeAddress = isMainnet ? dataMainnet.stakeAddresses : delegators.map(({ stakeKey }) => stakeKey);
+      const listStakeAddress = isMainnet
+        ? dataMainnet.stakeAddresses
+        : isSanchonet
+        ? dataSanchonet.stakeAddresses
+        : delegators.map(({ stakeKey }) => stakeKey);
+
       const rndIndex = getRandomInt(listStakeAddress.length);
       history.push(details.staking(listStakeAddress[rndIndex]));
     } else {
