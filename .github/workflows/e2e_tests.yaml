@@ -55,7 +55,13 @@ jobs:
         run: npm ci
 
       - name: 🎳 Run tests
-        run: npm test
+        run: |
+          if [ ! -z "${{ github.event.inputs.FRONTEND_MAINNET_URL }}" ]
+          then
+            npm run cypress:run
+          else
+            npm test
+          fi
 
       - name: 📹 Archive test videos
         uses: actions/upload-artifact@v3
