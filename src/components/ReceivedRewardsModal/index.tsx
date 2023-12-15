@@ -129,6 +129,7 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
         setParams({ page: 0, size: 50 });
       }}
       width={600}
+      isCenterWithoutPosition={true}
     >
       <ModalContainer>
         <ModalTitle>

@@ -1,26 +1,32 @@
 import { Box, IconButton, styled } from "@mui/material";
 
-export const ModalContainer = styled(Box)<{ width?: number | string; viewwidth?: string | number; sidebar?: boolean }>(
-  ({ theme, width, viewwidth }) => ({
-    position: "relative",
-    width: `min(${viewwidth || "70"}vw, ${typeof width === "string" ? width : `${width || 500}px`})`,
-    backgroundColor: theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[0],
-    borderRadius: 20,
-    textAlign: "left",
-    outline: "none",
-    [theme.breakpoints.down("sm")]: {
-      padding: "20px 15px",
-      "& > button": {
-        right: "15px",
-        zIndex: 10
-      },
-      width: "90vw",
-      maxHeight: "80vh",
-      display: "flex",
-      flexDirection: "column"
-    }
-  })
-);
+export const ModalContainer = styled(Box)<{
+  width?: number | string;
+  viewwidth?: string | number;
+  sidebar?: boolean;
+  isCenterWithoutPosition?: boolean;
+}>(({ theme, width, viewwidth, isCenterWithoutPosition }) => ({
+  position: "relative",
+  top: isCenterWithoutPosition ? 0 : "50%",
+  left: isCenterWithoutPosition ? 0 : "50%",
+  transform: isCenterWithoutPosition ? "none" : "translate(-50%, -50%)",
+  width: `min(${viewwidth || "70"}vw, ${typeof width === "string" ? width : `${width || 500}px`})`,
+  backgroundColor: theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[0],
+  borderRadius: 20,
+  textAlign: "left",
+  outline: "none",
+  [theme.breakpoints.down("sm")]: {
+    padding: "20px 15px",
+    "& > button": {
+      right: "15px",
+      zIndex: 10
+    },
+    width: "90vw",
+    maxHeight: "80vh",
+    display: "flex",
+    flexDirection: "column"
+  }
+}));
 
 export const CloseButton = styled(IconButton)<{ saving: number }>`
   position: absolute;
