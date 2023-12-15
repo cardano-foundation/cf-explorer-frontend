@@ -13,10 +13,10 @@ on:
         description: 'Enter here the URL for a mainnet deployment to run the e2e tests against to.'
         required: true
         default: 'https://api.dev.cf-explorer-mainnet.eu-west-1.metadata.dev.cf-deployments.org/'
-    branch:
-      description: 'Select the branch whose e2e tests will be used'
-      required: true
-      default: 'main'
+      branch:
+        description: 'Select the branch whose e2e tests will be used'
+        required: true
+        default: 'main'
 
 jobs:
   test:
