@@ -121,7 +121,7 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void 
     }
   ];
   return (
-    <CustomModal {...props} title={t("common.TotalOperatorRewardsReceived")} width={600}>
+    <CustomModal {...props} title={t("common.TotalOperatorRewardsReceived")} width={600} isCenterWithoutPosition={true}>
       <ModalContainer>
         <RewardBalance>
           {theme.isDark ? <WalletIconRewardGreenDark /> : <WalletIconRewardGreen />}
