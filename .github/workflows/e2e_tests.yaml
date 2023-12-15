@@ -5,6 +5,15 @@ on:
   pull_request:
 
   workflow_dispatch:
+    inputs:
+      EXPLORER_API_MAINNET_URL:
+        description: 'Enter here the URL for a mainnet deployment to run the e2e tests against to.'
+        required: true
+        default: 'https://dev.cf-explorer-mainnet.eu-west-1.metadata.dev.cf-deployments.org/'
+    branch:
+      description: 'Select the branch which shall be deployed'
+      required: true
+      default: 'main'
 
 jobs:
   test:
@@ -12,14 +21,21 @@ jobs:
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
+        with:
+          ref: '${{ github.event.inputs.branch }}'
 
       - name: 🦾 Create .env file
         run: |
           echo "PORT=3000" > .env
           echo "REACT_APP_VERSION=$npm_package_version" >> .env
           echo "REACT_APP_API_URL=${EXPLORER_API_MAINNET_URL}" >> .env
-          echo "REACT_APP_MAINNET_APP_URL=${EXPLORER_API_MAINNET_URL}" >> .env
           echo 'REACT_APP_NETWORK_NAMES="{"mainnet":"Mainnet","preprod":"Preprod"}"' >> .env
+          if [ ! -z "${{ github.event.inputs.EXPLORER_API_MAINNET_URL }}" ]
+          then
+            echo "REACT_APP_MAINNET_APP_URL=${{ github.event.inputs.EXPLORER_API_MAINNET_URL }}" >> .env
+          else
+            echo "REACT_APP_MAINNET_APP_URL=${EXPLORER_API_MAINNET_URL}" >> .env
+          fi
 
       - name: 🫡 Setup node
         uses: actions/setup-node@v4
