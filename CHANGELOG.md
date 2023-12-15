@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.3](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.5.2...v0.5.3) (2023-12-15)
+
+
+### Bug Fixes
+
+* border radius to match rest of the inputs ([6d3ef16](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6d3ef16a359dc23152e78597afafd19fff7f8f5a))
+
 ## [0.5.2](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.5.1...v0.5.2) (2023-12-14)
 
 
