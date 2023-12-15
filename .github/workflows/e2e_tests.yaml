@@ -36,7 +36,7 @@ jobs:
           echo "PORT=3000" > .env
           echo "REACT_APP_VERSION=$npm_package_version" >> .env
           echo 'REACT_APP_NETWORK_NAMES="{"mainnet":"Mainnet","preprod":"Preprod"}"' >> .env
-          if [ ! -z "${{ github.event.inputs.FRONTEND_MAINNET_URL }}" ]
+          if [ ! -z "${{ github.event.inputs.MAINNET_FRONTEND_URL }}" ]
           then
             echo "REACT_APP_MAINNET_APP_URL=${{ github.event.inputs.MAINNET_FRONTEND_URL }}" >> .env
             echo "REACT_APP_API_URL=${{ github.event.inputs.MAINNET_API_URL }}" >> .env
@@ -56,7 +56,7 @@ jobs:
 
       - name: 🎳 Run tests
         run: |
-          if [ ! -z "${{ github.event.inputs.FRONTEND_MAINNET_URL }}" ]
+          if [ ! -z "${{ github.event.inputs.MAINNET_FRONTEND_URL }}" ]
           then
             npm run cypress:run
           else
