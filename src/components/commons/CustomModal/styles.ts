@@ -1,10 +1,12 @@
 import { Box, IconButton, styled } from "@mui/material";
 
-export const ModalContainer = styled(Box)(({ theme }) => ({
+export const ModalContainer = styled(Box)<{
+  isCenterWithoutPosition?: boolean;
+}>(({ theme, isCenterWithoutPosition }) => ({
   position: "relative",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -51%)",
+  top: isCenterWithoutPosition ? 0 : "50%",
+  left: isCenterWithoutPosition ? 0 : "50%",
+  transform: isCenterWithoutPosition ? "none" : "translate(-50%, -51%)",
   width: "max-content",
   height: "max-content",
   backgroundColor: theme.mode === "light" ? theme.palette.primary[100] : theme.palette.secondary[0],

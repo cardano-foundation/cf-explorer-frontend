@@ -15,6 +15,7 @@ interface Props extends Omit<BoxProps, "title"> {
   title?: React.ReactNode;
   titleProps?: BoxProps;
   modalContainerProps?: BoxProps;
+  isCenterWithoutPosition?: boolean;
 }
 
 export const CustomModal: React.FC<Props> = forwardRef((props, ref) => {
@@ -29,13 +30,18 @@ export const CustomModal: React.FC<Props> = forwardRef((props, ref) => {
     children,
     modalContainerProps,
     closeIconProps,
+    isCenterWithoutPosition,
     ...contentProps
   } = props;
   const theme = useTheme();
-
+  const centerWithFlex = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  };
   return (
-    <Modal open={open} onClose={onClose} {...modalProps}>
-      <ModalContainer {...modalContainerProps}>
+    <Modal open={open} onClose={onClose} sx={isCenterWithoutPosition ? centerWithFlex : {}} {...modalProps}>
+      <ModalContainer {...modalContainerProps} isCenterWithoutPosition={isCenterWithoutPosition}>
         {closeButton || (
           <CloseButton {...closeButtonProps} onClick={onClose} data-testid="close-modal-button">
             <IoMdClose color={theme.palette.secondary.light} {...closeIconProps} />

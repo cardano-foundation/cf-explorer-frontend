@@ -155,10 +155,9 @@ const warningDarkmode = {
 };
 
 const info = {
-  light: BLUE[100_20],
-  main: BLUE[100],
-  dark: BLUE[100],
-  contrastText: COMMON.white
+  light: "#000",
+  main: "#000",
+  dark: "#000"
 };
 
 const success = {

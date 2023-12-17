@@ -14,6 +14,7 @@ interface IProps extends ModalProps {
   paddingY?: number | string;
   contentStyle?: SxProps;
   modalStyle?: SxProps;
+  isCenterWithoutPosition?: boolean;
 }
 const StyledModal: React.FC<IProps> = ({
   open,
@@ -25,16 +26,23 @@ const StyledModal: React.FC<IProps> = ({
   paddingX,
   paddingY,
   contentStyle = {},
-  modalStyle = {}
+  modalStyle = {},
+  isCenterWithoutPosition
 }) => {
   const { isMobile } = useScreen();
   const theme = useTheme();
+  const centerWithFlex = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  };
   return (
     <Modal
       open={open}
       onClose={handleCloseModal}
       sx={{
-        zIndex: 1305
+        zIndex: 1305,
+        ...(isCenterWithoutPosition ? centerWithFlex : {})
       }}
     >
       <ModalContainer
@@ -44,6 +52,7 @@ const StyledModal: React.FC<IProps> = ({
         paddingY={paddingY || (isMobile ? "20px" : "50px")}
         viewwidth={isMobile ? 92 : 70}
         sx={modalStyle}
+        isCenterWithoutPosition={isCenterWithoutPosition}
       >
         <CloseButton saving={0} onClick={handleCloseModal} data-testid="close-modal-button">
           <IoMdClose color={theme.palette.secondary.light} />

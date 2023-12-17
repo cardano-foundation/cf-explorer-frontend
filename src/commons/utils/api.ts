@@ -6,7 +6,8 @@ export const API = {
     DETAIL: "addresses",
     MIN_MAX_BALANCE: "addresses/min-max-balance",
     TOP_ADDRESS: "addresses/top-addresses",
-    TOKENS: "addresses/:address/tokens"
+    TOKENS: "addresses/:address/tokens",
+    VIEW_ADRRESSES: (txHash: string, scriptHash: string) => `scripts/contract-executions/${txHash}/${scriptHash}`
   },
   BLOCK: {
     DETAIL: "blocks",
@@ -136,7 +137,8 @@ export const API = {
     NATIVE_SCRIPTS: "scripts/native-scripts",
     ASSOCIATED_ADDRESS: (scriptHash: string) => `scripts/contracts/${scriptHash}`,
     SCRIPT_TXS_DETAIL: (scriptHash: string) => `scripts/contracts/${scriptHash}/txs`
-  }
+  },
+  ADAHandle: (name: string) => `addresses/by-ada-handle/${name}`
 };
 
 export const USER_API = {

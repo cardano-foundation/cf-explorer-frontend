@@ -107,11 +107,11 @@ export const ValueText = styled(Box)(({ theme }) => ({
   paddingRight: theme.spacing(1)
 }));
 
-export const MetaDataValue = styled(ValueText)(({ theme }) => ({
-  color: theme.palette.secondary.main,
-  flex: 1,
-  width: "unset"
-}));
+// export const MetaDataValue = styled(ValueText)(({ theme }) => ({
+//   color: theme.palette.secondary.main,
+//   flex: 1,
+//   width: "unset"
+// }));
 
 export const ViewAllImage = styled("img")`
   width: 16px;
@@ -138,15 +138,15 @@ export const StyledButton = styled(Box)`
 
 export const CIPHeader = styled(Box)`
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
   gap: 8px;
-  width: 100%;
+  justify-content: flex-end;
   flex: 1;
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    grid-row: 2/2;
-    grid-column: 1 / spam;
-  }
+  align-items: center;
+`;
+
+export const CIPChips = styled(Box)`
+  display: flex;
+  gap: 8px;
 `;
 
 export const CIPHeaderTitle = styled(Box)`
@@ -156,9 +156,68 @@ export const CIPHeaderTitle = styled(Box)`
   align-items: center;
   gap: 8px;
 `;
+
 export const JSONValue = styled(Value)`
   ${({ theme }) => theme.breakpoints.down("sm")} {
     grid-column: 2 / spam;
     width: unset;
   }
+`;
+
+export const MetadataWrapper = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin: 25px 0px;
+  font-size: 16px;
+`;
+
+export const MetadataHeader = styled(Box)`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+`;
+
+export const MetadataContent = styled(Box)`
+  display: flex;
+`;
+
+export const MetadataTitle = styled(Box)`
+  min-width: 140px;
+  color: ${({ theme }) => theme.palette.secondary.light};
+  margin-bottom: 6px;
+`;
+
+export const MetadataJSONTitle = styled(MetadataTitle)`
+  ${({ theme }) => theme.breakpoints.down(430)} {
+    min-width: unset;
+    margin-right: 14px;
+  }
+`;
+
+export const MetaDataValue = styled(Box)`
+  box-sizing: border-box;
+  color: ${({ theme }) => theme.palette.secondary.main};
+  margin-bottom: 6px;
+`;
+
+export const MetaDataJSONValue = styled(MetaDataValue)`
+  flex: 1;
+  display: inline-block;
+  overflow-wrap: anywhere;
+  padding: 16px 58px 16px 8px;
+  box-sizing: border-box;
+  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100])};
+  border-radius: 6px;
+  position: relative;
+`;
+
+export const MetaDataJSONValueText = styled(MetaDataValue)`
+  position: relative;
+  max-height: 4em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 `;

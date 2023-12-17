@@ -6,17 +6,16 @@ describe("User check information of stake address deregistration", () => {
     cy.get('[data-testid="search-bar"]');
 
     cy.get('[data-testid="table-common"] tbody tr').eq(0).click();
-    cy.get(".css-62ep8s").contains("View Details", { matchCase: false }).click();
+    cy.get('[data-testid="view-detail-button-sidebar"]').contains("View Details", { matchCase: false }).click();
 
     cy.get('[data-testid="search-bar"]');
-    cy.get("div").contains("Stake Address Details", { matchCase: false });
-    cy.get(":nth-child(1) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Delegated to");
-    cy.get(":nth-child(2) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Total Stake");
-    cy.get(":nth-child(3) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Rewards available");
-    cy.get(":nth-child(4) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains(" Rewards withdrawn");
-    cy.get(".css-12euw8y").contains("Analytics");
-    cy.get(".css-z5mtf5 > .css-0 > .css-ovbrb").contains("Highest Balance");
-    cy.get(".css-1u4aebp > .css-0 > .css-ovbrb").contains("Lowest Balance");
+    cy.get('[data-testid="stake-address-overview-delegated"]').contains("Delegated to");
+    cy.get('[data-testid="stake-address-overview-total-stake"]').contains("Total Stake");
+    cy.get('[data-testid="stake-address-overview-reward-available"]').contains("Rewards available");
+    cy.get('[data-testid="stake-address-overview-reward-withdrawn"]').contains(" Rewards withdrawn");
+    cy.get('[data-testid="stake-address-chart-title"]').contains("Analytics");
+    cy.get('[data-testid="stake-address-chart-highest"]').contains("Highest Balance");
+    cy.get('[data-testid="stake-address-chart-lowest"]').contains("Lowest Balance");
     cy.get(".MuiAccordionSummary-content").contains("Delegation History");
     cy.get(".MuiAccordionSummary-content").contains("Stake Address History");
     cy.get(".MuiAccordionSummary-content").contains("Withdrawal History");

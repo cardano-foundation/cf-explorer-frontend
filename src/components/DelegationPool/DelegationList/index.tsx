@@ -8,7 +8,7 @@ import { stringify } from "qs";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { HeaderSearchIconComponent } from "src/commons/resources";
-import { details, routers } from "src/commons/routers";
+import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatADAFull, formatPercent, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
@@ -31,28 +31,36 @@ import {
 const DelegationLists: React.FC = () => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
-  const { tickerNameSearch = "" } = history.location.state || {};
-  const [value, setValue] = useState("");
+
+  const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath; retired?: boolean }>();
+  const tickerNameSearchValue = new URLSearchParams(document.location.search).get("search") || "";
+  const { tickerNameSearch = "", retired = false } = history.location.state || {};
+  const [value, setValue] = useState(tickerNameSearchValue);
   const [search, setSearch] = useState(decodeURIComponent(tickerNameSearch));
   const { pageInfo, setSort } = usePageInfo();
-  const isShowRetired = pageInfo?.retired;
+  const isShowRetired = pageInfo?.retired || retired;
   const tableRef = useRef<HTMLDivElement>(null);
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
+
   useEffect(() => {
-    if (tickerNameSearch !== search) history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
-    if (tickerNameSearch) {
-      setSearch(decodeURIComponent(tickerNameSearch));
+    if (tickerNameSearch !== search) {
+      history.replace({
+        search: stringify({ ...pageInfo, page: 1, search: (value || "").toLocaleLowerCase(), retired: isShowRetired })
+      });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (tickerNameSearch) {
+      setSearch(tickerNameSearch || "");
+      setValue(tickerNameSearch || "");
+    }
   }, [tickerNameSearch]);
 
   const fetchData = useFetchList<Delegators>(
     API.DELEGATION.POOL_LIST,
-    { ...pageInfo, search, isShowRetired },
+    { ...pageInfo, search: decodeURIComponent(search || tickerNameSearchValue), isShowRetired },
     false,
     blockKey
   );
+
   const fromPath = history.location.pathname as SpecialPath;
 
   useEffect(() => {
@@ -170,7 +178,7 @@ const DelegationLists: React.FC = () => {
           {t("glossary.fixedCost")} (<ADAicon />)
         </Box>
       ),
-      key: "pu.fixedCost",
+      key: "fee",
       minWidth: "120px",
       render: (r) => (
         <Box component="span">
@@ -192,6 +200,17 @@ const DelegationLists: React.FC = () => {
       }
     }
   ];
+
+  const handleSearch = () => {
+    setSearch(value);
+    history.replace({
+      search: stringify({
+        ...pageInfo,
+        page: 1,
+        search: (value || "").toLocaleLowerCase()
+      })
+    });
+  };
   return (
     <>
       <TopSearchContainer>
@@ -199,22 +218,14 @@ const DelegationLists: React.FC = () => {
           <StyledInput
             placeholder={t("common.searchPools")}
             onChange={(e) => setValue(e.target.value)}
-            value={value}
+            value={decodeURIComponent(value)}
             onKeyUp={(e) => {
               if (e.key === "Enter") {
-                setSearch(value);
-                history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
+                handleSearch();
               }
             }}
           />
-          <SubmitButton
-            onClick={() => {
-              history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
-              history.push(routers.DELEGATION_POOLS, {
-                tickerNameSearch: (value || "").toLocaleLowerCase()
-              });
-            }}
-          >
+          <SubmitButton onClick={handleSearch}>
             <CustomIcon
               icon={HeaderSearchIconComponent}
               fill={theme.palette.secondary[0]}
@@ -228,9 +239,9 @@ const DelegationLists: React.FC = () => {
           {t("glassary.showRetiredPools")}
           <AntSwitch
             checked={isShowRetired === "true"}
-            onChange={(e) =>
-              history.replace({ search: stringify({ ...pageInfo, page: 0, retired: e.target.checked }) })
-            }
+            onChange={(e) => {
+              history.replace({ search: stringify({ ...pageInfo, page: 0, retired: e.target.checked }) });
+            }}
           />
         </ShowRetiredPools>
       </TopSearchContainer>
