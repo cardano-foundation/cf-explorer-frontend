@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
@@ -24,7 +25,7 @@ import {
   SortTableUpDown,
   StartPage
 } from "src/commons/resources";
-import { handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
+import { getPageInfo, handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
 import {
   ColumnType,
   FooterTableProps,
@@ -93,10 +94,22 @@ const TableHeader = <T extends ColumnType>({
   isModal
 }: TableHeaderProps<T>) => {
   const theme = useTheme();
+  const { search } = useLocation();
   const [{ columnKey, sort }, setSort] = useState<{ columnKey: string; sort: "" | "DESC" | "ASC" }>({
     columnKey: defaultSort ? defaultSort.split(",")[0] : "",
     sort: defaultSort ? (defaultSort.split(",")[1] as "" | "DESC" | "ASC") : ""
   });
+
+  useEffect(() => {
+    const { sort: sortQueryString } = getPageInfo(search);
+    if (sortQueryString && sortQueryString.length) {
+      const [columnKey, sort] = sortQueryString.split(",") as [string, "" | "DESC" | "ASC"];
+      setSort({ columnKey, sort });
+    } else {
+      setSort({ columnKey: "", sort: "" });
+    }
+  }, [search]);
+
   const sortValue = ({ key, sort }: { key: string; sort: "" | "DESC" | "ASC" }) => {
     if (key === columnKey) {
       switch (sort) {
