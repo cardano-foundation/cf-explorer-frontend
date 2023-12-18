@@ -133,6 +133,8 @@ import { ReactComponent as PoolDeresgistrationHistory } from "./icons/poolDeresg
 import { ReactComponent as PoolDeresgistrationHistoryDark } from "./icons/poolDeresgistrationHistoryDark.svg";
 import { ReactComponent as PoolUpdateHistory } from "./icons/poolUpdateHistory.svg";
 import { ReactComponent as PoolUpdateHistoryDark } from "./icons/poolUpdateHistoryDark.svg";
+import { ReactComponent as LightModeMobile } from "./icons/lightModeMobile.svg";
+import { ReactComponent as DarkModeMobile } from "./icons/darkModeMobile.svg";
 import ArrowDownIcon from "./icons/arrow-down-red.svg";
 import ArrowDownDarkIcon from "./icons/arrow-down-red-dark.svg";
 import PolicyDark from "./icons/policy-dark.svg";
@@ -341,7 +343,9 @@ export {
   PoolUpdateHistory,
   PoolResgistrationHistoryDark,
   PoolDeresgistrationHistoryDark,
-  PoolUpdateHistoryDark
+  PoolUpdateHistoryDark,
+  LightModeMobile,
+  DarkModeMobile
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
