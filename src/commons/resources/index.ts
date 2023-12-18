@@ -52,6 +52,7 @@ import DropIcon, { ReactComponent as DropIconComponent } from "./icons/drop.svg"
 import DelegatorIcon, { ReactComponent as DelegatorIconComponent } from "./icons/delegator.svg";
 import LightningIcon, { ReactComponent as LightningIconComponent } from "./icons/lightning.svg";
 import LinkOff, { ReactComponent as LinkOffComponent } from "./icons/link-off.svg";
+import SignOut, { ReactComponent as SignOutComponent } from "./icons/sign-out.svg";
 import User2, { ReactComponent as User2Component } from "./icons/user2.svg";
 import FlintIcon from "./icons/flint.svg";
 import NamiIcon from "./icons/nami.svg";
@@ -213,6 +214,7 @@ export {
   DelegatorIcon,
   LightningIcon,
   LinkOff,
+  SignOut,
   User2,
   PolygonWhiteIconUrl,
   PolygonBlackIconUrl,
@@ -300,6 +302,7 @@ export {
   sunIcon,
   moonIcon,
   LinkOffComponent,
+  SignOutComponent,
   LightningIconComponent,
   MenuIconComponent,
   EmptyDarkIcon,
