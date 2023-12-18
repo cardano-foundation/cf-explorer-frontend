@@ -8,7 +8,6 @@ import useDisableJsonKey from "src/commons/hooks/useDisableJsonKey";
 import { isJson } from "src/commons/utils/helper";
 import CIP60Modal from "src/components/CIPComplianceModal/CIP60Modal";
 import CIP60Badge from "src/components/commons/CIP60Badge";
-import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import CIP25Badge from "src/components/commons/CIP25Badge";
 
 import CIP25Modal from "./CIP25Modal";
@@ -31,9 +30,7 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson, metadataCI
     <MetaDataWraper>
       {isShowCIP25 && (
         <CIPHeader>
-          <CIPHeaderTitle>
-            {t("cip25.compliance")} <InfoSolidIcon width="16px" height="16px" />{" "}
-          </CIPHeaderTitle>
+          <CIPHeaderTitle>{t("token.metadataCheck")}</CIPHeaderTitle>
           {!isNil(metadataCIP25?.valid) && (
             <CIP25Badge
               onClick={() => setOpen(true)}
