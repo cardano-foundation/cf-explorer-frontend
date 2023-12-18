@@ -4,7 +4,7 @@ import { useLocalStorage } from "react-use";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { LinkOffComponent, User2Component } from "src/commons/resources/index";
+import { SignOutComponent, User2Component } from "src/commons/resources/index";
 import { routers } from "src/commons/routers";
 import { removeAuthInfo } from "src/commons/utils/helper";
 import { signOut } from "src/commons/utils/userRequest";
@@ -95,11 +95,11 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
             }}
           >
             <CustomIcon height={22} icon={User2Component} fill={theme.palette.secondary.main} />
-            <Name>Account</Name>
+            <Name>{t("common.account")}</Name>
           </Profile>
           <Disconnect onClick={handleDisconnect}>
-            <CustomIcon height={24} icon={LinkOffComponent} fill={theme.palette.error[700]} />
-            <Name>Sign Out</Name>
+            <CustomIcon height={24} icon={SignOutComponent} fill={theme.palette.error[700]} />
+            <Name>{t("common.signOut")}</Name>
           </Disconnect>
         </Content>
       </WrapContent>
