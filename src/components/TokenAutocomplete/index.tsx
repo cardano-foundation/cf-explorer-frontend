@@ -1,4 +1,5 @@
 import { Autocomplete, Box, Button, StandardTextFieldProps, useTheme } from "@mui/material";
+import { debounce } from "lodash";
 import { useEffect, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { useTranslation } from "react-i18next";
@@ -35,7 +36,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
   const history = useHistory();
   const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
   const [initialized, setInitialized] = useState(false);
-  const { data, total, loading } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
+  const { data, total } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
     page: 0,
     size: 10
   });
@@ -60,11 +61,8 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
         getOptionLabel={(option) =>
           typeof option === "string" ? "" : option.displayName || option.name || option.fingerprint
         }
-        loading={loading}
         noOptionsText={t("common.noRecords")}
-        onInputChange={(e, value) => {
-          setSearch(value);
-        }}
+        onInputChange={debounce((e, value) => setSearch(value), 1000)}
         ListboxProps={{
           sx(theme) {
             return {

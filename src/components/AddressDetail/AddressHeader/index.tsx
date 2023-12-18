@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Grid, Box, useTheme, Button } from "@mui/material";
 import { useSelector } from "react-redux";
 import { HiArrowLongLeft } from "react-icons/hi2";
@@ -26,17 +26,12 @@ import { BackButton, BackText, RedirectButton, StyledBoxCard, TimeDuration, Titl
 interface Props {
   data: WalletAddress | null;
   loading: boolean;
-  adaHanldeData?: {
-    stakeAddress: string;
-    paymentAddress: string;
-  } | null;
 }
-const AddressHeader: React.FC<Props> = ({ data, loading, adaHanldeData }) => {
+const AddressHeader: React.FC<Props> = ({ data, loading }) => {
   const { t } = useTranslation();
   const [stakeKey, setStakeKey] = useState("");
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const adaRate = useSelector(({ system }: RootState) => system.adaRate);
-  const { address } = useParams<{ address: string }>();
 
   const {
     data: dataStake,
@@ -127,34 +122,9 @@ const AddressHeader: React.FC<Props> = ({ data, loading, adaHanldeData }) => {
           <BackText>{t("common.back")}</BackText>
         </BackButton>
         <Box width={"100%"} display={"flex"} flexWrap={"wrap"} alignItems={"center"} justifyContent={"space-between"}>
-          <Box
-            textAlign={"left"}
-            component={"h2"}
-            lineHeight={1}
-            mt={2}
-            display={"flex"}
-            alignItems={"center"}
-            flexWrap={"wrap"}
-          >
-            <TitleText>
-              {adaHanldeData ? (
-                <Box sx={{ wordBreak: "break-all" }} textTransform={"lowercase"}>
-                  <CustomTooltip title={t("address.title.ADAHanlde")}>
-                    <Box display={"inline-block"}>{address.startsWith("$") ? address : `$${address}`} </Box>
-                  </CustomTooltip>
-                  <Box display={"inline-block"}>
-                    <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
-                  </Box>
-                </Box>
-              ) : (
-                <Box data-testid="address-detail-title">
-                  {t("address.title.addressDetail")}
-                  <Box display={"inline-block"}>
-                    <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
-                  </Box>
-                </Box>
-              )}
-            </TitleText>
+          <Box component={"h2"} lineHeight={1} mt={2} display={"flex"} alignItems={"center"}>
+            <TitleText>{t("address.title.addressDetail")}</TitleText>
+            <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
           </Box>
           {(data?.associatedSmartContract || data?.associatedNativeScript) && (
             <RedirectButton

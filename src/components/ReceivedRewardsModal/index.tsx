@@ -56,7 +56,6 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
     stakeId && open ? API.STAKE_LIFECYCLE.RECEIVED_REWARD(stakeId) + (type ? `?type=${type}` : "") : "",
     { ...params, sort }
   );
-  const minHeightTable = 60;
 
   const mappingRewardType = (type: string): string => {
     return type
@@ -129,7 +128,6 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
         setParams({ page: 0, size: 50 });
       }}
       width={600}
-      isCenterWithoutPosition={true}
     >
       <ModalContainer>
         <ModalTitle>
@@ -168,7 +166,6 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
                   setParams({ page: page - 1, size });
                 }
               }}
-              minHeight={minHeightTable}
             />
           </TableContainer>
         </ModalContent>

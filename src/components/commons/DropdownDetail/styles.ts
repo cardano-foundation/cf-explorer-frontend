@@ -17,7 +17,6 @@ export const ListDropdownContainer = styled(Box)`
   transform: translate(-50%, 0);
   width: 100%;
   max-height: 300px;
-  overflow: hidden;
   background: ${(props) => props.theme.palette.secondary[0]};
   z-index: 1;
   box-shadow: ${(props) => props.theme.shadow.card};
@@ -55,7 +54,7 @@ export const DropdownTitle = styled("h4")(({ theme }) => ({
 }));
 
 export const DropdownList = styled(Box)`
-  padding: 0 20px;
-  overflow: auto;
-  max-height: 230px;
+  margin: 20px;
+  overflow: scroll;
+  max-height: 250px;
 `;

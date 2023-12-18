@@ -1,7 +1,6 @@
-import { useTheme, Box } from "@mui/material";
+import { useTheme } from "@mui/material";
 import { useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 
 import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
@@ -10,7 +9,6 @@ import Contract from "src/components/commons/ViewBlocks/Contract";
 import Redeemer from "src/components/commons/ViewBlocks/Redeemer";
 import { Center, MiddleBox, RewardContainer } from "src/components/commons/ViewBlocks/styles";
 import { details } from "src/commons/routers";
-import Outputs from "src/components/commons/ViewBlocks/Outputs";
 
 import RedeemerModal from "../modals/RedeemerModal";
 import CompiledCodeModal from "../modals/CompiledCodeModal";
@@ -22,12 +20,9 @@ interface RewardviewsProps {
 
 const Rewardviews: React.FC<RewardviewsProps> = ({ data, isMobile }) => {
   const { t } = useTranslation();
-  const { trxHash = "" } = useParams<{ trxHash: string }>();
   const theme = useTheme();
   const redeemerRef = useRef(null);
   const middleBoxRef = useRef(null);
-  const outputBoxRef = useRef(null);
-
   const [openRedeemer, setOpenRedeemer] = useState(false);
   const [openCompiledCode, setOpenCompiledCode] = useState(false);
 
@@ -36,22 +31,12 @@ const Rewardviews: React.FC<RewardviewsProps> = ({ data, isMobile }) => {
       {
         start: redeemerRef,
         end: middleBoxRef,
-        startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
-        arrow: { 0: "top", lg: "left" },
-        fold: { 0: "none", lg: "none" },
-        startOffset: { 0: [0, 0], lg: [0, 0] },
-        endOffset: { 0: [0, -10], lg: [0, 0] }
-      },
-      {
-        start: middleBoxRef,
-        end: outputBoxRef,
-        startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
-        arrow: { 0: "top", lg: "left" },
-        fold: { 0: "none", lg: "none" },
-        startOffset: { 0: [0, 0], lg: [0, 0] },
-        endOffset: { 0: [0, -10], lg: [0, 0] }
+        startPosition: { 0: ["center", "bottom"], sm: ["right", "middle"] },
+        endPosition: { 0: ["center", "top"], sm: ["left", "middle"] },
+        arrow: { 0: "top", sm: "left" },
+        fold: { sm: "horizontal", lg: "none" },
+        startOffset: { 0: [0, 0], sm: [0, 0] },
+        endOffset: { 0: [0, -10], sm: [-16, 0] }
       }
     ];
   }, []);
@@ -61,16 +46,6 @@ const Rewardviews: React.FC<RewardviewsProps> = ({ data, isMobile }) => {
       {
         start: redeemerRef,
         end: middleBoxRef,
-        startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
-        arrow: { 0: "top", lg: "left" },
-        fold: { sm: "horizontal", lg: "none" },
-        startOffset: { 0: [0, 0], lg: [0, 0] },
-        endOffset: { 0: [0, -10], lg: [-16, 0] }
-      },
-      {
-        start: middleBoxRef,
-        end: outputBoxRef,
         startPosition: { 0: ["center", "bottom"], sm: ["right", "middle"] },
         endPosition: { 0: ["center", "top"], sm: ["left", "middle"] },
         arrow: { 0: "top", sm: "left" },
@@ -109,13 +84,9 @@ const Rewardviews: React.FC<RewardviewsProps> = ({ data, isMobile }) => {
           <Contract hash={data?.scriptHash} detail={details.smartContract} />
           <CompiledCode onClick={() => setOpenCompiledCode(!openCompiledCode)} />
         </MiddleBox>
-        <Box ref={outputBoxRef}>
-          <Outputs title="View withdrawal tab" link={details.transaction(trxHash, "withdrawals")} />
-        </Box>
       </Center>
-
       <DrawPath
-        paths={isMobile ? mobilePaths : paths}
+        paths={isMobile ? paths : mobilePaths}
         lineStyle={{ stroke: theme.isDark ? theme.palette.secondary[700] : theme.palette.secondary.light }}
         style={{ zIndex: 0 }}
       />

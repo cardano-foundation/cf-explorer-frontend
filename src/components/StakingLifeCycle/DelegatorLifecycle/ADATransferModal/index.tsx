@@ -40,13 +40,7 @@ const ADATransferModal: React.FC<IProps> = ({ open, handleCloseModal }) => {
   };
 
   return (
-    <CustomModal
-      title={t("common.adaTransfers")}
-      open={open}
-      onClose={handleCloseModal}
-      width={1200}
-      isCenterWithoutPosition={true}
-    >
+    <CustomModal title={t("common.adaTransfers")} open={open} onClose={handleCloseModal} width={1200}>
       <TabContext value={activityType}>
         <StyledBox overflow={!isGalaxyFoldSmall ? "auto" : "hidden"}>
           <StyledTabs

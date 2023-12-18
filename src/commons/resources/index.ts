@@ -133,8 +133,6 @@ import { ReactComponent as PoolDeresgistrationHistory } from "./icons/poolDeresg
 import { ReactComponent as PoolDeresgistrationHistoryDark } from "./icons/poolDeresgistrationHistoryDark.svg";
 import { ReactComponent as PoolUpdateHistory } from "./icons/poolUpdateHistory.svg";
 import { ReactComponent as PoolUpdateHistoryDark } from "./icons/poolUpdateHistoryDark.svg";
-import { ReactComponent as LightModeMobile } from "./icons/lightModeMobile.svg";
-import { ReactComponent as DarkModeMobile } from "./icons/darkModeMobile.svg";
 import ArrowDownIcon from "./icons/arrow-down-red.svg";
 import ArrowDownDarkIcon from "./icons/arrow-down-red-dark.svg";
 import PolicyDark from "./icons/policy-dark.svg";
@@ -343,9 +341,7 @@ export {
   PoolUpdateHistory,
   PoolResgistrationHistoryDark,
   PoolDeresgistrationHistoryDark,
-  PoolUpdateHistoryDark,
-  LightModeMobile,
-  DarkModeMobile
+  PoolUpdateHistoryDark
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
@@ -502,4 +498,3 @@ export { ReactComponent as AssociatedIcon } from "./icons/associated.svg";
 export { ReactComponent as WarningCIPIcon } from "./icons/warning-cip25.svg";
 export { ReactComponent as CheckedCIPIcon } from "./icons/complied-cip25.svg";
 export { ReactComponent as SmallInfoIcon } from "./icons/small-info-icon.svg";
-export { ReactComponent as CIP60WarningIcon } from "./icons/cip60-warning.svg";
