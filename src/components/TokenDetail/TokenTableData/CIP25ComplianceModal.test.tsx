@@ -1,6 +1,6 @@
 import { render, screen } from "src/test-utils";
 
-import CIP25Modal from "./CIP25Modal";
+import CIP25ComplianceModal from "./CIP25ComplianceModal";
 
 const data: Transaction["metadata"][0]["metadataCIP25"]["tokenMap"] = {
   spacecoins: {
@@ -82,9 +82,9 @@ const data: Transaction["metadata"][0]["metadataCIP25"]["tokenMap"] = {
   }
 };
 
-describe("CIP25Modal", () => {
+describe("CIP25ComplianceModal", () => {
   it("should component render", () => {
-    render(<CIP25Modal data={data} open={true} onClose={jest.fn()} />);
+    render(<CIP25ComplianceModal data={data} open={true} onClose={jest.fn()} />);
     expect(screen.getByText(/cip 25 compliance/i)).toBeInTheDocument();
     expect(screen.getByText(new RegExp("token: " + data["spacecoins"].tokenName, "i"))).toBeInTheDocument();
     expect(screen.getByText(/required properties/i)).toBeInTheDocument();

@@ -1,30 +1,42 @@
 import { Box } from "@mui/material";
-import { stringify } from "qs";
-import { useTranslation } from "react-i18next";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { stringify } from "qs";
 import { useState } from "react";
 
 import useFetchList from "src/commons/hooks/useFetchList";
-import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import Table from "src/components/commons/Table";
+import { details } from "src/commons/routers";
 import { Column } from "src/types/table";
+import Table from "src/components/commons/Table";
+import CustomModal from "src/components/commons/CustomModal";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
 import { StyledLink } from "../BlockList/styles";
-import { ButtonViewModal } from "./styles";
-import ViewAddressesModal from "./ViewAddressesModal";
+import { ButtonViewModal, ContentModal, StyledAddressModal, SubTitleModal, TitleModal } from "./styles";
 
 const TabTransactions = () => {
   const { search } = useLocation();
   const pageInfo = getPageInfo(search);
-  const [currentHash, setCurrentHash] = useState<string | null>(null);
   const { t } = useTranslation();
   const history = useHistory();
   const { address } = useParams<{ address: string }>();
 
   const fetchData = useFetchList<ScriptContractTransactions>(API.SCRIPTS.SCRIPT_TXS_DETAIL(address), pageInfo);
+  const [open, setOpen] = useState(false);
+  const [associatedAdd, setAssociatedAdd] = useState<string[]>([]);
+
+  const handleCloseModal = () => {
+    setOpen(false);
+    setAssociatedAdd([]);
+  };
+
+  const handleOpenModal = (data: string[]) => {
+    setOpen(true);
+    setAssociatedAdd(data);
+  };
 
   const columns: Column<ScriptContractTransactions>[] = [
     {
@@ -67,9 +79,12 @@ const TabTransactions = () => {
     },
     {
       title: t("glossary.address"),
-      key: "address",
+      key: "slot",
       minWidth: "100px",
-      render: (r) => <ButtonViewModal onClick={() => setCurrentHash(r.hash)}>{t("ViewAddresses")}</ButtonViewModal>
+      render: (r) =>
+        r?.addresses?.length > 0 && (
+          <ButtonViewModal onClick={() => handleOpenModal(r.addresses)}>{t("ViewAddresses")}</ButtonViewModal>
+        )
     },
     {
       title: t("contract.purpose"),
@@ -92,12 +107,19 @@ const TabTransactions = () => {
           onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
         }}
       />
-      <ViewAddressesModal
-        open={!!currentHash}
-        onClose={() => setCurrentHash(null)}
-        scriptHash={address}
-        txHash={currentHash || ""}
-      />
+      <CustomModal open={open} onClose={handleCloseModal} width={600}>
+        <TitleModal>{t("glossary.address")}</TitleModal>
+        <ContentModal>
+          <SubTitleModal>{t("glossary.address")}:</SubTitleModal>
+          <StyledAddressModal>
+            {associatedAdd.map((add: string) => (
+              <StyledLink to={add.startsWith("stake") ? details.stake(add) : details.address(add)} key={add}>
+                <DynamicEllipsisText value={add} isTooltip sxFirstPart={{ maxWidth: "calc(100% - 80px)" }} />
+              </StyledLink>
+            ))}
+          </StyledAddressModal>
+        </ContentModal>
+      </CustomModal>
     </Box>
   );
 };

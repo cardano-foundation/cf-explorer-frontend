@@ -251,30 +251,21 @@ const TableBody = <T extends ColumnType>({
   toggleSelection,
   isSelected,
   isModal,
-  onCallBackHeight,
-  maxHeight,
-  isCenterLoading,
-  headerTableHeight,
-  visibleTableWidth
+  onCallBackHeight
 }: TableProps<T>) => {
   return (
     <TBody>
       {loading && initialized && (
         <LoadingWrapper
-          isCenterLoading={isCenterLoading}
           bgcolor={(theme) => alpha(theme.palette.common.black, 0.05)}
-          width={isCenterLoading ? visibleTableWidth : "100%"}
-          height={
-            isCenterLoading && headerTableHeight
-              ? `${typeof maxHeight === "number" ? maxHeight - headerTableHeight : maxHeight}px`
-              : "100%"
-          }
+          width={"100%"}
+          height={"100%"}
           zIndex={1000}
           display="flex"
           justifyContent="center"
-          alignItems={isCenterLoading ? "center" : "self-start"}
+          alignItems="self-start"
         >
-          <Box pt={isCenterLoading ? "0" : "20%"}>
+          <Box pt={"20%"}>
             <CircularProgress />
           </Box>
         </LoadingWrapper>
@@ -441,8 +432,7 @@ const Table: React.FC<TableProps> = ({
   isModal,
   height,
   minHeight,
-  isFullTableHeight = false,
-  isCenterLoading
+  isFullTableHeight = false
 }) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange
@@ -469,12 +459,6 @@ const Table: React.FC<TableProps> = ({
     if (!maxHeightTable) setMaxHeightTable(rowHeight * 9);
   };
 
-  const tableContainerRef = useRef<HTMLDivElement>(null);
-
-  const headerTableHeight = tableRef?.current?.querySelector("thead")?.clientHeight || 0;
-
-  const visibleTableWidth = tableContainerRef.current?.offsetWidth || 0;
-
   const toggleSelectAll = (isChecked: boolean) => {
     if (data && isChecked) {
       selectAll(data);
@@ -496,7 +480,7 @@ const Table: React.FC<TableProps> = ({
 
   const isSelectAll = useMemo(() => data?.length === selectedItems.length, [data, selectedItems]);
   return (
-    <Box className={className || ""} style={style} data-testid="table-common" ref={tableContainerRef}>
+    <Box className={className || ""} style={style} data-testid="table-common">
       <TableTopHeader
         onFilterChange={onFilterChange}
         renderAction={(items) => renderAction?.(items, clearSelection)}
@@ -544,10 +528,6 @@ const Table: React.FC<TableProps> = ({
             isSelected={isSelected}
             isModal={isModal}
             onCallBackHeight={onCallBackHeight}
-            maxHeight={maxHeight || maxHeightTable}
-            isCenterLoading={isCenterLoading}
-            headerTableHeight={headerTableHeight}
-            visibleTableWidth={visibleTableWidth}
           />
         </TableFullWidth>
         {loading && !initialized && <TableSekeleton />}

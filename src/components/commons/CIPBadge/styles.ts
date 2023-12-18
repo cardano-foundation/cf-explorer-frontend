@@ -2,19 +2,15 @@ import { Box, Typography, styled } from "@mui/material";
 
 export const BadgeContainer = styled(Box)<{ success: number }>`
   border-radius: 10px;
-  background-color: ${({ theme, success }) => (success ? theme.palette.success[100] : theme.palette.primary[100])};
+  background-color: ${({ theme, success }) => (success ? theme.palette.success[100] : theme.palette.warning[100])};
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 24px;
-  border: 1px solid ${({ theme, success }) => (success ? theme.palette.success[800] : theme.palette.secondary[600])};
+  padding: 0.5px 9px 0.5px 0.5px;
+  border: 1px solid ${({ theme, success }) => (success ? theme.palette.success[800] : theme.palette.warning[800])};
   gap: 6px;
-  width: auto;
-  padding-right: 8px;
-  padding-left: ${({ success }) => (success ? 0 : 2)}px;
-  box-sizing: border-box;
-  cursor: pointer;
-  min-width: 78px;
+  width: 100%;
+  max-width: 70px;
 `;
 
 export const CIPLabel = styled(Typography)`

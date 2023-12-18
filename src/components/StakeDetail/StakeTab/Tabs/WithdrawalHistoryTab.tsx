@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
 import { useTranslation } from "react-i18next";
 
@@ -13,8 +13,9 @@ import ADAicon from "src/components/commons/ADAIcon";
 
 import { StyledLink } from "../styles";
 
-const WithdrawalHistoryTab: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) => {
+const WithdrawalHistoryTab = () => {
   const { t } = useTranslation();
+  const { stakeId } = useParams<{ stakeId: string }>();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
@@ -70,10 +71,7 @@ const WithdrawalHistoryTab: React.FC<{ stakeAddress?: string }> = ({ stakeAddres
       )
     }
   ];
-  const fetchData = useFetchList<WithdrawalHistory>(
-    stakeAddress ? `${API.STAKE.DETAIL}/${stakeAddress}/withdrawal-history` : "",
-    pageInfo
-  );
+  const fetchData = useFetchList<WithdrawalHistory>(`${API.STAKE.DETAIL}/${stakeId}/withdrawal-history`, pageInfo);
 
   return (
     <Table

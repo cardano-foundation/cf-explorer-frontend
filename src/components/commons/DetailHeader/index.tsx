@@ -60,7 +60,7 @@ export interface DetailHeaderProps {
   type: Bookmark["type"];
   bookmarkData?: string;
   loading: boolean;
-  title: React.ReactNode;
+  title: number | string;
   lastUpdated?: number;
   hash?: string;
   transactionStatus?: TransactionStatus;
