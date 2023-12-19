@@ -128,9 +128,12 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                 sx={
                   !isMobile
                     ? {
-                        maxWidth: "calc(100% - 160px)"
+                        maxWidth: "calc(100% - 160px)",
+                        overflow: "hidden"
                       }
-                    : {}
+                    : {
+                        overflow: "hidden"
+                      }
                 }
               >
                 {type === "input" && (
