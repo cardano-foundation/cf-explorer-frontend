@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { DeredistrationIcon, OperatorRewardIcon, PoolUpdateIcon, RegistrationIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
-import { ReactComponent as WalletIcon } from "src/commons/resources/icons/WalletOutline.svg";
+import WalletIcon from "src/commons/resources/icons/WalletOutline.svg?react";
 import { IPoolReportList } from "src/types/report";
 import { details } from "src/commons/routers";
 

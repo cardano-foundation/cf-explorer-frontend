@@ -8,8 +8,8 @@ import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { DelegationHistoryMainIcon, FileEditIcon, LightningIconComponent } from "src/commons/resources";
-import { ReactComponent as TransactionIcon } from "src/commons/resources/icons/exchangeArrow.svg";
-import { ReactComponent as StakeKeyHistoryIcon } from "src/commons/resources/icons/stateKeyHistory.svg";
+import TransactionIcon from "src/commons/resources/icons/exchangeArrow.svg?react";
+import StakeKeyHistoryIcon from "src/commons/resources/icons/stateKeyHistory.svg?react";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatADAFull, getShortHash } from "src/commons/utils/helper";
