@@ -608,10 +608,8 @@ const PaginationCustom = ({
   const [inputPage, setInputPage] = useState(page);
   const { t } = useTranslation();
   useEffect(() => {
-    if (pagination?.page) {
-      setInputPage(pagination?.page + 1);
-    }
-  }, [pagination?.page]);
+    setInputPage(page);
+  }, [page]);
 
   const { isGalaxyFoldSmall } = useScreen();
 
