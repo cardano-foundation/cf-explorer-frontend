@@ -3,9 +3,12 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const defaultBaseUrl = `http://localhost:${process.env.PORT || 3000}`;
+const baseUrl = process.env.CYPRESS_BASE_URL || defaultBaseUrl;
+
 export default defineConfig({
   e2e: {
-    baseUrl: `http://localhost:${process.env.PORT || 3000}`,
+    baseUrl: baseUrl,
     supportFile: "cypress/support/e2e.ts",
     hideXHRInCommandLog: true,
     viewportWidth: 1920,
