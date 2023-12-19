@@ -98,7 +98,7 @@ const TableHeader = <T extends ColumnType>({
     const { sort: sortQueryString } = getPageInfo(search);
     if (sortQueryString && sortQueryString.length) {
       const [columnKey, sort] = sortQueryString.split(",") as [string, "" | "DESC" | "ASC"];
-      setSort({ columnKey, sort });
+      setSort({ columnKey: columnKey.startsWith("bk.") ? columnKey.slice(3) : columnKey, sort });
     } else {
       setSort({ columnKey: "", sort: "" });
     }
