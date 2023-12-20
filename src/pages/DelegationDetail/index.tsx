@@ -26,6 +26,7 @@ import { routers } from "src/commons/routers";
 import { getPageInfo } from "src/commons/utils/helper";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
+import { POOL_STATUS } from "src/commons/utils/constants";
 
 import { TimeDuration, TitleTab } from "./styles";
 
@@ -104,10 +105,16 @@ const DelegationDetail: React.FC = () => {
 
   useEffect(() => {
     if (state?.fromPath) return setSpecialPath(state.fromPath);
-    if (status.data?.isDeRegistration) return setSpecialPath(routers.POOL_DEREGISTRATION);
+    if (status.data?.isDeRegistration) {
+      if (data?.poolStatus === POOL_STATUS.RETIRED) {
+        return setSpecialPath(routers.POOL_DEREGISTRATION);
+      } else {
+        return setSpecialPath(routers.POOL_CERTIFICATE);
+      }
+    }
     if (status.data?.isRegistration) return setSpecialPath(routers.POOL_CERTIFICATE);
     if (status.data) setSpecialPath(routers.DELEGATION_POOLS);
-  }, [state, status]);
+  }, [state, status, data?.poolStatus]);
 
   if ((initialized && !data) || error) return <NoRecord />;
 
