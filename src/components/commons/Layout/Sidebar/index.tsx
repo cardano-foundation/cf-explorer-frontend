@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useWindowSize } from "react-use";
 import { Box, Button, ButtonGroup, useTheme } from "@mui/material";
-
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DarkModeMobile,
