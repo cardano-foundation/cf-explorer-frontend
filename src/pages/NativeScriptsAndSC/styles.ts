@@ -1,6 +1,9 @@
 import { AccordionDetails, AccordionSummary, Box, Container, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
+import Card from "src/components/commons/Card";
+import { ThemeType } from "src/types/theme";
+
 export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => ({
   marginLeft: "8px",
   fontWeight: "bold",
@@ -201,3 +204,16 @@ export const StyledTabAssociated = styled(Box)(() => ({
   maxHeight: 400,
   overflowY: "scroll"
 }));
+
+export const Item = styled(Card)<{ smallItem?: boolean; themeMode?: ThemeType }>`
+  height: 100px;
+  width: 100%;
+  background: ${({ theme, themeMode }) =>
+    themeMode === "light" ? theme.palette.secondary[700] : theme.palette.secondary[0]};
+  box-shadow: 2px 2px 10px 0px #43465633;
+  &:hover {
+    box-shadow: ${(props) => props.theme.shadow.cardHover};
+  }
+`;
+
+export const ItemTitle = styled(Box)``;

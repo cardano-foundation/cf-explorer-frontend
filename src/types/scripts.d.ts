@@ -4,6 +4,14 @@ interface NativeScripts {
   numberOfAssetHolders: number;
 }
 
+type NativeScriptsList = {
+  scriptHash: string;
+  numberOfTokens: number;
+  numberOfAssetHolders: number;
+  multiSig: boolean;
+  timeLock: string;
+};
+
 interface ScriptSmartContracts {
   scriptHash: string;
   version: string;
