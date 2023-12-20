@@ -1,20 +1,29 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useWindowSize } from "react-use";
-
-import { LogoDarkmodeFullIcon, LogoDarkmodeShortIcon, LogoFullIcon, LogoIcon } from "src/commons/resources";
+import { Box, Button, ButtonGroup, useTheme } from "@mui/material";
+import { useScreen } from "src/commons/hooks/useScreen";
+import {
+  DarkModeMobile,
+  LightModeMobile,
+  LogoDarkmodeFullIcon,
+  LogoDarkmodeShortIcon,
+  LogoFullIcon,
+  LogoIcon
+} from "src/commons/resources";
 import { setTheme } from "src/stores/theme";
 import { RootState } from "src/stores/types";
 
 import SelectNetwork from "../Header/SelectNetwork";
-import { SwitchMode } from "../Header/styles";
 import SidebarMenu from "./SidebarMenu";
 import { HeaderTop, LogoLink, NavBarLogo, NavbarContainer, NavbarMenuBottom, WrapButtonSelect } from "./styles";
 
 const Sidebar: React.FC = () => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { theme } = useSelector(({ theme }: RootState) => theme);
+  const { isTablet, isMobile } = useScreen();
   const { height } = useWindowSize();
+  const muiTheme = useTheme();
   const getLogo = () => {
     if (theme === "light") {
       if (sidebar) {
@@ -41,17 +50,53 @@ const Sidebar: React.FC = () => {
       <NavbarMenuBottom sidebar={+sidebar}>
         <SelectNetwork />
       </NavbarMenuBottom>
-      <WrapButtonSelect>
-        <SwitchMode
-          sx={{
-            marginLeft: "-8px"
-          }}
-          checked={theme === "dark"}
-          onChange={(e) => {
-            setTheme(e.target.checked ? "dark" : "light");
-          }}
-        />
-      </WrapButtonSelect>
+      {isTablet && (
+        <WrapButtonSelect>
+          <ButtonGroup fullWidth={isMobile} variant="outlined" aria-label="outlined primary button group">
+            <Box
+              component={Button}
+              textTransform={"capitalize"}
+              onClick={() => {
+                setTheme("light");
+              }}
+              color={muiTheme.isDark ? muiTheme.palette.secondary.light : muiTheme.palette.primary.main}
+              bgcolor={muiTheme.isDark ? "transparent" : muiTheme.palette.primary[200]}
+              border={`2px solid ${muiTheme.isDark ? muiTheme.palette.primary[100] : muiTheme.palette.primary.main} `}
+              borderRadius={"8px"}
+              fontSize={16}
+            >
+              <Box
+                component={LightModeMobile}
+                mr={"4px"}
+                fill={muiTheme.isDark ? muiTheme.palette.secondary.light : muiTheme.palette.primary.main}
+              />
+              Light
+            </Box>
+            <Box
+              component={Button}
+              textTransform={"capitalize"}
+              onClick={() => {
+                setTheme("dark");
+              }}
+              fontSize={16}
+              color={muiTheme.isDark ? muiTheme.palette.primary.main : muiTheme.palette.secondary.light}
+              bgcolor={muiTheme.isDark ? muiTheme.palette.secondary[0] : "transparent"}
+              border={`2px solid ${muiTheme.isDark ? muiTheme.palette.primary.main : muiTheme.palette.primary[200]} `}
+              borderRadius={"8px"}
+              borderLeft={`2px solid ${
+                muiTheme.isDark ? muiTheme.palette.primary.main : muiTheme.palette.primary.main
+              } !important`}
+            >
+              <Box
+                component={DarkModeMobile}
+                mr={"4px"}
+                fill={muiTheme.isDark ? muiTheme.palette.primary.main : muiTheme.palette.secondary.light}
+              />
+              Dark
+            </Box>
+          </ButtonGroup>
+        </WrapButtonSelect>
+      )}
     </NavbarContainer>
   );
 };
