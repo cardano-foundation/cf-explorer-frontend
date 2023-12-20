@@ -24,7 +24,9 @@ export const Header = styled(Box)(({ theme }) => ({
 
 export const WrapInfo = styled(Box)(({ theme }) => ({
   display: "flex",
-  width: "100%",
+  justifyContent: "space-between",
+  maxWidth: "calc(100% - 72px)",
+  flex: 1,
   alignItems: "center",
   [theme.breakpoints.down("lg")]: {
     flexDirection: "column"
@@ -80,7 +82,7 @@ export const WrapUTXOs = styled(Box)(({ theme }) => ({
 
 export const ItemContent = styled(Box)(({ theme }) => ({
   display: "flex",
-  overflowX: "auto",
+  overflowX: "hidden",
   overflowY: "hidden",
   justifyContent: "space-between",
   [theme.breakpoints.down(430)]: {

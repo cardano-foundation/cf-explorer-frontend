@@ -893,6 +893,7 @@
   "notice.value.b1": "i. Any new functionality specific to Sanchonet",
   "notice.value.b2": "ii.Rewards data is not available at present, and may impact stake address balances when reward balance is nonzero",
   "notice.value.c": "c. Limited support and maintenance: Any issues including network maintenance (e.g. network restarts) will be dealt with on a best effort basis",
+  "protocol.trxModalSubTitle": "Confirmed by transactions",
   "token.CIP25Compliance": "CIP 25 Compliance",
   "cip25.property": "Property",
   "cip25.format": "Format",
@@ -906,7 +907,6 @@
   "token.cip25otherProperties.desc": "Any metadata that doesn't fall into the \"required\" or \"optional\" categories according to the CIP-25 specification is not verified for compliance and therefore won't be displayed in this view.",
   "common.passed": "Passed",
   "common.needsReview": "Needs Review",
-  "protocol.trxModalSubTitle": "Confirmed by transactions",
   "cip25.viewDocs": "View CIP 25 document",
   "common.severUnknownErrorMsg": "Something went wrong on our side, please try again later or report an issue",
   "token.cip60Title": "CIP 60 Compliance",
@@ -920,5 +920,6 @@
   "cip.versionCheck": "The metadata version should be 1 or 2 in order to comply with CIP-60",
   "outputs.label": "Outputs",
   "cip.warningVersion1": "This compliance check is based on the deprecated music token version v1",
-  "address.title.ADAHanlde": "Address (ADA Handle)"
+  "address.title.ADAHanlde": "Address (ADA Handle)",
+  "token.metadataCheck": "Metadata Check"
 }
