@@ -6,15 +6,7 @@ import Link from "src/components/commons/Link";
 import { AdaValue } from "src/components/commons/ADAValue";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
-import {
-  EllipsisContainer,
-  LeftRowContainer,
-  TextLabel,
-  TextRightValue,
-  TextValue,
-  ValueItem,
-  ValueItemMultiple
-} from "./styles";
+import { EllipsisContainer, LeftRowContainer, TextLabel, TextRightValue, TextValue, ValueItem } from "./styles";
 
 type TProps = {
   data: TPoolCertificated;
@@ -93,9 +85,16 @@ const StakeKeyBox = ({ data }: TProps) => {
                 <Box key={label + value} display="flex" alignItems="center">
                   <TextLabel>{label}: </TextLabel>
                   {isMultipleValue ? (
-                    <Box width={"100%"}>
+                    <ValueItem
+                      className="ValueItem"
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "5px"
+                      }}
+                    >
                       {value.map((item) => (
-                        <ValueItemMultiple key={item}>
+                        <Box className="ValueItem" key={item}>
                           <TextValue>
                             <Link to={details.stake(item || "")}>
                               <EllipsisContainer>
@@ -103,9 +102,9 @@ const StakeKeyBox = ({ data }: TProps) => {
                               </EllipsisContainer>
                             </Link>
                           </TextValue>
-                        </ValueItemMultiple>
+                        </Box>
                       ))}
-                    </Box>
+                    </ValueItem>
                   ) : (
                     <ValueItem className="ValueItem">
                       <TextValue>{isHyperLink && linkTo ? <Link to={linkTo}>{value}</Link> : value}</TextValue>
