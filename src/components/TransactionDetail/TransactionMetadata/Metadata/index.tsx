@@ -11,6 +11,8 @@ import CIP25Modal from "src/components/TokenDetail/TokenTableData/CIP25Modal";
 import { SeeMoreIconHome } from "src/commons/resources";
 import CIP25Badge from "src/components/commons/CIP25Badge";
 import CIP60Badge from "src/components/commons/CIP60Badge";
+import CIP20Badge from "src/components/commons/CIP20Badge";
+import CIP20Modal from "src/components/CIPComplianceModal/CIP20Modal";
 
 import {
   CIPChips,
@@ -35,11 +37,13 @@ interface MetadataProps {
 }
 
 enum CIP {
+  CIP20 = 20,
   CIP25 = 25,
   CIP60 = 60
 }
 
-const CIPLabel = 721;
+const CIPLabel721 = 721;
+const CIPLabel674 = 674;
 
 const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
   const { t } = useTranslation();
@@ -68,7 +72,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
           <MetadataHeader mb={2}>
             <MetadataTitle>{t("common.metadatumLabel")}</MetadataTitle>
             <MetaDataValue>{metadata.label ?? ""}</MetaDataValue>
-            {String(metadata.label) === String(CIPLabel) && (
+            {String(metadata.label) === String(CIPLabel721) && (
               <CIPHeader>
                 <CIPHeaderTitle>{t("token.metadataCheck")}</CIPHeaderTitle>
                 <CIPChips>
@@ -90,6 +94,23 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
                         setCip(CIP.CIP60);
                       }}
                       type={metadata.metadataCIP60.valid ? "success" : "warning"}
+                    />
+                  )}
+                </CIPChips>
+              </CIPHeader>
+            )}
+            {String(metadata.label) === String(CIPLabel674) && (
+              <CIPHeader>
+                <CIPHeaderTitle>{t("token.metadataCheck")}</CIPHeaderTitle>
+                <CIPChips>
+                  {!isNil(metadata?.metadataCIP20?.valid) && (
+                    <CIP20Badge
+                      onClick={() => {
+                        setSelectedIndex(idx);
+                        setCip(CIP.CIP20);
+                      }}
+                      tooltipTitle={metadata?.metadataCIP20?.valid ? t("common.passed") : t("common.needsReview")}
+                      type={metadata?.metadataCIP20?.valid ? "success" : "warning"}
                     />
                   )}
                 </CIPChips>
@@ -126,6 +147,11 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
         data={data?.[selectedIndedx || 0].metadataCIP60.tokenMap}
         open={typeof selectedIndedx === "number" && cip === CIP.CIP60}
         version={data?.[selectedIndedx || 0].metadataCIP60.version}
+        onClose={() => setSelectedIndex(null)}
+      />
+      <CIP20Modal
+        data={data?.[selectedIndedx || 0].metadataCIP20?.requiredProperties}
+        open={typeof selectedIndedx === "number" && cip === CIP.CIP20}
         onClose={() => setSelectedIndex(null)}
       />
     </Box>
