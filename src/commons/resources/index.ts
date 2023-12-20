@@ -143,6 +143,8 @@ import { ReactComponent as DarkModeMobile } from "./icons/darkModeMobile.svg";
 import ArrowDownIcon from "./icons/arrow-down-red.svg";
 import ArrowDownDarkIcon from "./icons/arrow-down-red-dark.svg";
 import PolicyDark from "./icons/policy-dark.svg";
+import NAIcon from "./icons/NAIcon.svg";
+import { ReactComponent as Sanchonet } from "./icons/sanchonet.svg";
 import StatusDarkIcon from "./images/StatusDark.png";
 import StatusLightIcon from "./images/StatusLight.png";
 import PoolSizeDarkIcon from "./images/PoolSizeDark.png";
@@ -331,6 +333,8 @@ export {
   ProtocolUpdateComponent,
   InstantaneousHistoryComponent,
   PolicyDark,
+  Sanchonet,
+  NAIcon,
   StatusDarkIcon,
   StatusLightIcon,
   PoolSizeDarkIcon,
@@ -348,6 +352,7 @@ export {
 };
 
 export { ReactComponent as AIcon } from "./icons/AIcon.svg";
+export { ReactComponent as Notice } from "./icons/notice.svg";
 export { ReactComponent as EyeIcon } from "./icons/eye.svg";
 export { ReactComponent as StartPage } from "./icons/startPagePagination.svg";
 export { ReactComponent as EndPage } from "./icons/endPagePagination.svg";
@@ -501,3 +506,5 @@ export { ReactComponent as WarningCIPIcon } from "./icons/warning-cip25.svg";
 export { ReactComponent as CheckedCIPIcon } from "./icons/complied-cip25.svg";
 export { ReactComponent as SmallInfoIcon } from "./icons/small-info-icon.svg";
 export { ReactComponent as CIP60WarningIcon } from "./icons/cip60-warning.svg";
+export { ReactComponent as ShowMore } from "./icons/showmore.svg";
+export { ReactComponent as ShowLess } from "./icons/showless.svg";

@@ -63,24 +63,29 @@ const TopDelegationPools = () => {
       ),
       key: "poolSize",
       minWidth: "120px",
-      render: (r) => <Box component={"span"}>{formatADAFull(r.poolSize)}</Box>
+      render: (r) => (
+        <Box component={"span"}>{r.poolSize != null ? formatADAFull(r.poolSize) : t("common.notAvailable")}</Box>
+      )
     },
     {
       title: t("glossary.saturation"),
       key: "Saturation",
       minWidth: "200px",
-      render: (r) => (
-        <Box display="flex" alignItems="center" justifyContent={"flex-start"}>
-          <Box component={"span"} mr={1} flexGrow={1} textAlign={"right"} maxWidth={"55px"}>
-            {formatPercent(r.saturation / 100) || `0%`}
+      render: (r) =>
+        r.saturation != null ? (
+          <Box display="flex" alignItems="center" justifyContent={"flex-start"}>
+            <Box component={"span"} mr={1} flexGrow={1} textAlign={"right"} maxWidth={"55px"}>
+              {formatPercent(r.saturation / 100) || `0%`}
+            </Box>
+            <StyledLinearProgress
+              variant="determinate"
+              saturation={r.saturation}
+              value={r.saturation > 100 ? 100 : get(r, "saturation", 0)}
+            />
           </Box>
-          <StyledLinearProgress
-            variant="determinate"
-            saturation={r.saturation}
-            value={r.saturation > 100 ? 100 : get(r, "saturation", 0)}
-          />
-        </Box>
-      )
+        ) : (
+          t("common.notAvailable")
+        )
     },
     {
       title: t("glossary.blocksInCurrentEpoch"),

@@ -2,6 +2,7 @@ import { Grid, Icon, useTheme } from "@mui/material";
 import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { t } from "i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
@@ -39,16 +40,22 @@ import {
 } from "./styles";
 
 type TCardAmount = {
-  amount?: number;
+  amount?: number | null;
 };
 
 const CardAmount = ({ amount }: TCardAmount) => {
   return (
     <CardValue>
-      <CustomTooltip title={formatADAFull(amount)}>
-        <BoxValue>{formatADAFull(amount)}</BoxValue>
-      </CustomTooltip>
-      <StyledAdaLogoIcon />
+      {amount === null ? (
+        t("common.notAvailable")
+      ) : (
+        <>
+          <CustomTooltip title={formatADAFull(amount)}>
+            <BoxValue>{formatADAFull(amount)}</BoxValue>
+          </CustomTooltip>
+          <StyledAdaLogoIcon />
+        </>
+      )}
     </CardValue>
   );
 };
@@ -116,7 +123,7 @@ const TabularOverview: React.FC = () => {
         <GridItem
           title={t("rewardAccount")}
           iconUrl={theme.isDark ? RewardAccountIconDarkUrl : RewardAccountIconUrl}
-          value={<CardAmount amount={Math.max(rewardAvailable || 0, 0)} />}
+          value={<CardAmount amount={rewardAvailable != null ? Math.max(rewardAvailable || 0, 0) : rewardAvailable} />}
         />
       </Grid>
       <Grid item xs={12} sm={6}>

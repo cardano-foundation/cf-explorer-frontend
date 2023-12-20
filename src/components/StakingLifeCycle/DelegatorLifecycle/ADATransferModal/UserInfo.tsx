@@ -22,7 +22,7 @@ const UserInfo = ({
 }: {
   total: number;
   stake: string;
-  reward: number;
+  reward?: number;
   acitve: "wallet" | "reward";
 }) => {
   const { t } = useTranslation();
@@ -61,10 +61,14 @@ const UserInfo = ({
               {acitve === "reward" ? t("glossary.rewardBalance") : t("common.totalBalnceReward")} :
             </Box>
             <Box component={"span"} display={"inline-flex"} alignItems={"center"}>
-              <Box lineHeight={1}>
-                {formatADAFull(reward)}&nbsp;
-                <ADAicon width={11} />
-              </Box>
+              {reward != undefined ? (
+                <Box lineHeight={1}>
+                  {formatADAFull(reward)}&nbsp;
+                  <ADAicon width={11} />
+                </Box>
+              ) : (
+                t("common.notAvailable")
+              )}
             </Box>
           </TextUserInfo>
         </Box>

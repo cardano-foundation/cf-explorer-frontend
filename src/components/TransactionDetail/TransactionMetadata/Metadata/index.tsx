@@ -8,7 +8,7 @@ import CIP60Modal from "src/components/CIPComplianceModal/CIP60Modal";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import ParseScriptModal from "src/components/ParseScriptModal";
 import CIP25Modal from "src/components/TokenDetail/TokenTableData/CIP25Modal";
-import { SeeMoreIconHome } from "src/commons/resources";
+import { SeeMoreIconHome, ShowLess, ShowMore } from "src/commons/resources";
 import CIP25Badge from "src/components/commons/CIP25Badge";
 import CIP60Badge from "src/components/commons/CIP60Badge";
 import CIP20Badge from "src/components/commons/CIP20Badge";
@@ -46,11 +46,58 @@ const CIPLabel721 = 721;
 const CIPLabel674 = 674;
 
 const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
+  const LIMIT_MESSAGE_ROW = 4;
   const { t } = useTranslation();
   const theme = useTheme();
   const [selectedIndedx, setSelectedIndex] = useState<number | null>(null);
+  const [openRawData, setOpenRawData] = useState<boolean>(false);
+  const [limitRow, setLimitRow] = useState<number>(LIMIT_MESSAGE_ROW);
   const [cip, setCip] = useState<CIP>(CIP.CIP25);
   const [selectedText, setSelectedText] = useState<{ label: number; value: string } | null>(null);
+
+  const renderMessage = (requireValue: Transaction["metadata"][0]["metadataCIP20"]["requiredProperties"]) => {
+    if (requireValue && requireValue[0]) {
+      return (
+        <>
+          {requireValue[0].value.slice(0, limitRow).map((value: string, idx: number) => (
+            <React.Fragment key={idx}>
+              <MetaDataJSONValueText>{value}</MetaDataJSONValueText>
+            </React.Fragment>
+          ))}
+          {requireValue[0].value.length > LIMIT_MESSAGE_ROW ? (
+            requireValue[0].value.length > limitRow ? (
+              <Box
+                onClick={() => setLimitRow(requireValue[0].value.length)}
+                color={theme.palette.primary.main}
+                display={"flex"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                sx={{ textDecoration: "underline", cursor: "pointer", textAlign: "center" }}
+              >
+                <Box mr={"2px"}>{t("CIP20.showMore")}</Box>
+                <ShowMore />
+              </Box>
+            ) : (
+              <Box
+                onClick={() => setLimitRow(LIMIT_MESSAGE_ROW)}
+                color={theme.palette.primary.main}
+                display={"flex"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                sx={{ textDecoration: "underline", cursor: "pointer", textAlign: "center" }}
+              >
+                <Box mr={"2px"}> {t("CIP20.showLess")}</Box>
+                <ShowLess />
+              </Box>
+            )
+          ) : (
+            <> </>
+          )}
+        </>
+      );
+    }
+  };
+
   return (
     <Box>
       <Wrapper>
@@ -119,13 +166,31 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
           </MetadataHeader>
           <MetadataContent>
             <MetadataJSONTitle>{t("common.value")}</MetadataJSONTitle>
-            <MetaDataJSONValue>
-              <MetaDataJSONValueText>{metadata.value || ""}</MetaDataJSONValueText>
-              <StyledButton onClick={() => setSelectedText(metadata)}>
-                <SeeMoreIconHome fill={theme.palette.primary.main} />
-              </StyledButton>
-            </MetaDataJSONValue>
+            {(openRawData || String(metadata.label) !== String(CIPLabel674)) && (
+              <MetaDataJSONValue>
+                <MetaDataJSONValueText>{metadata.value || ""}</MetaDataJSONValueText>
+                <StyledButton onClick={() => setSelectedText(metadata)}>
+                  <SeeMoreIconHome fill={theme.palette.primary.main} />
+                </StyledButton>
+              </MetaDataJSONValue>
+            )}
+
+            {!openRawData && String(metadata.label) === String(CIPLabel674) && (
+              <Box
+                onClick={() => setOpenRawData(true)}
+                color={theme.palette.primary.main}
+                sx={{ textDecoration: "underline", cursor: "pointer" }}
+              >
+                {t("CIP20.viewMessage")}
+              </Box>
+            )}
           </MetadataContent>
+          {String(metadata.label) === String(CIPLabel674) && (
+            <MetadataContent>
+              <MetadataJSONTitle>{t("CIP20.transactionMessage")}</MetadataJSONTitle>
+              <MetaDataJSONValue>{renderMessage(metadata.metadataCIP20.requiredProperties)}</MetaDataJSONValue>
+            </MetadataContent>
+          )}
         </MetadataWrapper>
       ))}
       <ParseScriptModal
