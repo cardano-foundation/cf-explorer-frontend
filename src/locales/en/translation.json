@@ -920,5 +920,9 @@
   "cip.versionCheck": "The metadata version should be 1 or 2 in order to comply with CIP-60",
   "outputs.label": "Outputs",
   "cip.warningVersion1": "This compliance check is based on the deprecated music token version v1",
-  "address.title.ADAHanlde": "Address (ADA Handle)"
+  "address.title.ADAHanlde": "Address (ADA Handle)",
+  "CIP20.transactionMessage": "Transaction Message",
+  "CIP20.viewMessage": "View Raw Metadata",
+  "CIP20.showMore": "Show More",
+  "CIP20.showLess": "Show Less"
 }

@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 export const Wrapper = styled(Box)`
   background: ${(props) => props.theme.palette.secondary[0]};
   padding: 25px;
-  border: 1px solid ${({ theme }) => (theme.isDark ? theme.palette.primary[200] : theme.palette.secondary[700])};
   border-radius: ${({ theme }) => theme.spacing(2)};
   ${({ theme }) => theme.breakpoints.down(355)} {
     padding: 8px;
@@ -168,6 +167,7 @@ export const MetadataWrapper = styled(Box)`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  padding: 0 25px;
   margin: 25px 0px;
   font-size: 16px;
 `;
@@ -178,12 +178,15 @@ export const MetadataHeader = styled(Box)`
   flex-wrap: wrap;
 `;
 
-export const MetadataContent = styled(Box)`
-  display: flex;
-`;
+export const MetadataContent = styled(Box)(({ theme }) => ({
+  display: "flex",
+  marginBottom: theme.spacing(2),
+  [theme.breakpoints.down("md")]: { flexDirection: "column" },
+  ":last-child": { marginBottom: 0 }
+}));
 
 export const MetadataTitle = styled(Box)`
-  min-width: 140px;
+  width: 180px;
   color: ${({ theme }) => theme.palette.secondary.light};
   margin-bottom: 6px;
 `;
