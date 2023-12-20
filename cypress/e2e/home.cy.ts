@@ -37,6 +37,11 @@ describe("Home page should display all elements", () => {
 describe("Home page function should work", () => {
   beforeEach(() => {
     cy.visit("/");
+    // avoids opening new tab when clicking on network links and makes cypress error
+    const stub = cy.stub().as("open");
+    cy.on("window:before:load", (win) => {
+      cy.stub(win, "open").callsFake(stub);
+    });
   });
 
   it("should switch network", () => {
