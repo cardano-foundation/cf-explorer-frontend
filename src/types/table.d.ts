@@ -54,7 +54,7 @@ export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & 
 export interface TableProps<T extends ColumnType = any> {
   isFullTableHeight?: boolean;
   columns: Column<T>[];
-  data?: T[];
+  data?: T[] | null;
   screen?: string;
   className?: string;
   emptyClassName?: string;

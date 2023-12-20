@@ -125,8 +125,10 @@ const OverViews: React.FC = () => {
               <StyledCard.Title>
                 {t("glossary.liveStake")} (<ADAicon />)
               </StyledCard.Title>
-              <CustomTooltip title={formatADAFull(data?.liveStake)}>
-                <StyledCard.Value>{formatADA(data?.liveStake)}</StyledCard.Value>
+              <CustomTooltip title={data?.liveStake ? formatADAFull(data?.liveStake) : t("common.notAvailable")}>
+                <StyledCard.Value>
+                  {data?.liveStake ? formatADA(data?.liveStake) : t("common.notAvailable")}
+                </StyledCard.Value>
               </CustomTooltip>
             </StyledCard.Content>
             <StyledCard.Content style={{}}>

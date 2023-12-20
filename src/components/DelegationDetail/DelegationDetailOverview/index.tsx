@@ -72,9 +72,17 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
                 <Box fontSize="12px" color={({ palette }) => palette.secondary.light}>
                   {t("glossary.actualPledge")}
                 </Box>
-                <Box data-testid="actual-pledge-value" fontSize="14px" color={({ palette }) => palette.secondary.light}>
-                  {formatADAFull(data?.totalBalanceOfPoolOwners)} (<ADAicon />)
-                </Box>
+                {data?.totalBalanceOfPoolOwners === null ? (
+                  <Box color={({ palette }) => palette.secondary.light}>{t("common.notAvailable")}</Box>
+                ) : (
+                  <Box
+                    data-testid="actual-pledge-value"
+                    fontSize="14px"
+                    color={({ palette }) => palette.secondary.light}
+                  >
+                    {formatADAFull(data?.totalBalanceOfPoolOwners)} (<ADAicon />)
+                  </Box>
+                )}
               </Box>
             }
           >

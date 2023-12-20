@@ -11,7 +11,8 @@ export const STORAGE_KEYS = {
 export enum NETWORKS {
   mainnet = "mainnet",
   preprod = "preprod",
-  preview = "preview"
+  preview = "preview",
+  sanchonet = "sanchonet"
 }
 
 export const SUPPORTED_WALLETS: Wallet[] = [
@@ -67,18 +68,21 @@ export const NETWORK_NAMES = JSON.parse(
 export enum NETWORK_TYPES {
   mainnet = "MAIN_NET",
   preprod = "PRE_PROD",
-  preview = "PREVIEW"
+  preview = "PREVIEW",
+  sanchonet = "SANCHONET"
 }
 export const FRONT_END_NETWORK = {
   mainnet: process.env.REACT_APP_MAINNET_APP_URL || get(window, "env.REACT_APP_MAINNET_APP_URL"),
   preprod: process.env.REACT_APP_PREPROD_APP_URL || get(window, "env.REACT_APP_PREPROD_APP_URL"),
-  preview: process.env.REACT_APP_PREVIEW_APP_URL || get(window, "env.REACT_APP_PREVIEW_APP_URL")
+  preview: process.env.REACT_APP_PREVIEW_APP_URL || get(window, "env.REACT_APP_PREVIEW_APP_URL"),
+  sanchonet: process.env.REACT_APP_SANCHONET_APP_URL || get(window, "env.REACT_APP_SANCHONET_APP_URL")
 };
 
 export const NETWORK: NETWORKS =
   (process.env.REACT_APP_NETWORK as NETWORKS) || get(window, "env.REACT_APP_NETWORK") || NETWORKS.mainnet;
 
-export const MAX_SLOT_EPOCH = NETWORK?.toLowerCase() === NETWORKS.preview ? 86400 : 432000;
+export const MAX_SLOT_EPOCH =
+  NETWORK?.toLowerCase() === NETWORKS.preview || NETWORK?.toLowerCase() === NETWORKS.sanchonet ? 86400 : 432000;
 
 export enum TRANSACTION_STATUS {
   FAILED = "FAILED",
@@ -260,4 +264,4 @@ export const ScriptTypeLabel = {
   [SCRIPT_TYPE.PLUTUSV2]: "Plutus v2"
 };
 
-export const CIP25_DOCS_URL = "https://cips.cardano.org/cip/CIP-0025";
+export const CIP25_DOCS_URL = "https://cips.cardano.org/cips/cip25";

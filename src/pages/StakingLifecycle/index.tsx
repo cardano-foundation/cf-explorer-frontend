@@ -4,6 +4,8 @@ import { useHistory, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { TabContext } from "@mui/lab";
 import { useTranslation } from "react-i18next";
+import { stringify } from "qs";
+import { pick } from "lodash";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { lists } from "src/commons/routers";
@@ -42,7 +44,7 @@ const StakingLifecycle: React.FC = () => {
   const history = useHistory();
   const { userData } = useSelector(({ user }: RootState) => user);
   const [{ page, size }, setPagi] = useState<{ page: number; size: number; sort?: string }>(DEFAULT_PAGINING);
-  const [params, setParams] = useState<FilterParams | null>({});
+  const [params, setParams] = useState<FilterParams | null>({ sort: "" });
   const { tab } = useParams<{ tab?: LifecycleReportType }>();
 
   const validTab: LifecycleReportType = tab || "stake-key-reports";
@@ -57,7 +59,31 @@ const StakingLifecycle: React.FC = () => {
     document.title = `${t("common.savedReports")} | ${t("head.page.dashboard")}`;
   }, [t]);
 
-  const handleSort = (sort?: string) => setParams({ ...params, sort });
+  const setSort = (newSort?: string) => {
+    setPagi((prevState) => ({ ...prevState, sort: newSort }));
+    if (newSort === "") {
+      history.replace({ search: stringify(pick({ page, size }, ["page", "size", "retired"])) });
+    } else {
+      history.replace({ search: stringify({ page, size, sort: newSort }) });
+    }
+  };
+
+  const handleSort = (sort?: string) => {
+    setParams({ ...params, sort });
+    sort ? setSort(sort) : setSort("");
+  };
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const urlSort = queryParams.get("sort");
+    if (urlSort) {
+      handleSort(urlSort);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.title = `${t("common.savedReports")} | ${t("head.page.dashboard")}`;
+  }, [t]);
 
   const handleChange = (e: React.SyntheticEvent, newValue: LifecycleReportType) => {
     setParams({});
