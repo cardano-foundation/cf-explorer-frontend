@@ -185,12 +185,14 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
               </Box>
             )}
           </MetadataContent>
-          {String(metadata.label) === String(CIPLabel674) && (
-            <MetadataContent>
-              <MetadataJSONTitle>{t("CIP20.transactionMessage")}</MetadataJSONTitle>
-              <MetaDataJSONValue>{renderMessage(metadata.metadataCIP20.requiredProperties)}</MetaDataJSONValue>
-            </MetadataContent>
-          )}
+          {String(metadata.label) === String(CIPLabel674) &&
+            !isNil(metadata?.metadataCIP20?.valid) &&
+            metadata.metadataCIP20.valid && (
+              <MetadataContent>
+                <MetadataJSONTitle>{t("CIP20.transactionMessage")}</MetadataJSONTitle>
+                <MetaDataJSONValue>{renderMessage(metadata.metadataCIP20.requiredProperties)}</MetaDataJSONValue>
+              </MetadataContent>
+            )}
         </MetadataWrapper>
       ))}
       <ParseScriptModal
