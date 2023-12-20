@@ -899,6 +899,7 @@
   "cip.compliance": "Compliance",
   "cip25.compliance": "CIP Compliance",
   "token.CIP-25": "CIP-25",
+  "token.CIP-20": "CIP-20",
   "token.requiredProperties": "Required Properties",
   "token.optionalProperties": "Optional Properties",
   "token.otherProperties": "Other Properties",

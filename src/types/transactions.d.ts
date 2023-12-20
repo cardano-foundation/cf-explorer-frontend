@@ -254,6 +254,7 @@ interface Transaction {
   metadata: {
     label: number;
     value: string;
+    metadataCIP20?: CIP;
     metadataCIP25: CIP;
     metadataCIP60: CIP;
   }[];
