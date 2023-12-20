@@ -31,7 +31,7 @@ const StakeDetail: React.FC = () => {
         setStakeAddress(stakeId);
       }
     }
-  }, [JSON.stringify(adaHandle), stakeId]);
+  }, [JSON.stringify(adaHandle), stakeId, ADAHandleInitialized]);
 
   const status = useFetch<ListStakeKeyResponse>(
     stakeAddress ? API.STAKE_LIFECYCLE.TABS(stakeAddress) : "",
