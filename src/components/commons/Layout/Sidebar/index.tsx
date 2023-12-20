@@ -62,7 +62,8 @@ const Sidebar: React.FC = () => {
               }}
               color={muiTheme.isDark ? muiTheme.palette.secondary.light : muiTheme.palette.primary.main}
               bgcolor={muiTheme.isDark ? "transparent" : muiTheme.palette.primary[200]}
-              border={`1px solid ${muiTheme.isDark ? muiTheme.palette.primary[100] : muiTheme.palette.primary.main} `}
+              border={`2px solid ${muiTheme.isDark ? muiTheme.palette.primary[100] : muiTheme.palette.primary.main} `}
+              borderRadius={"8px"}
               fontSize={16}
             >
               <Box
@@ -81,8 +82,9 @@ const Sidebar: React.FC = () => {
               fontSize={16}
               color={muiTheme.isDark ? muiTheme.palette.primary.main : muiTheme.palette.secondary.light}
               bgcolor={muiTheme.isDark ? muiTheme.palette.secondary[0] : "transparent"}
-              border={`1px solid ${muiTheme.isDark ? muiTheme.palette.primary.main : muiTheme.palette.primary[200]} `}
-              borderLeft={`1px solid ${
+              border={`2px solid ${muiTheme.isDark ? muiTheme.palette.primary.main : muiTheme.palette.primary[200]} `}
+              borderRadius={"8px"}
+              borderLeft={`2px solid ${
                 muiTheme.isDark ? muiTheme.palette.primary.main : muiTheme.palette.primary.main
               } !important`}
             >

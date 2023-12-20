@@ -29,6 +29,13 @@ jobs:
         with:
           fetch-tags: true
 
+      - name: 🐳 Docker Login
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.PRIVATE_DOCKER_REGISTRY_URL }}
+          username: ${{ env.PRIVATE_DOCKER_REGISTRY_USER }}
+          password: ${{ env.PRIVATE_DOCKER_REGISTRY_PASS }}
+
       - name: Set extra environment and metadata
         id: metadata
         run: |
@@ -48,7 +55,7 @@ jobs:
             echo "BRANCH=$BRANCH" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
 
             # if tag for this is version is already there, skip docker build
-            git tag -l | grep -q "^v${CURRENT_VERSION} " && echo "SKIP_DOCKER_PUSH=true" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
+            docker manifest inspect ${{ env.PRIVATE_DOCKER_REGISTRY_URL }}/${DOCKER_IMAGE_NAME}:${CURRENT_VERSION} && echo "SKIP_DOCKER_PUSH=true" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
 
             if [[ "${BRANCH}" == "develop" ]]
             then
@@ -59,13 +66,6 @@ jobs:
             fi
 
           fi
-
-      - name: 🐳 Docker Login
-        uses: docker/login-action@v2
-        with:
-          registry: ${{ env.PRIVATE_DOCKER_REGISTRY_URL }}
-          username: ${{ env.PRIVATE_DOCKER_REGISTRY_USER }}
-          password: ${{ env.PRIVATE_DOCKER_REGISTRY_PASS }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2

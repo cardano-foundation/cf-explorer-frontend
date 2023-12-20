@@ -1,10 +1,22 @@
 name: Run Explorer e2e Tests
 on:
-  push:
-
   pull_request:
+    types: [ opened, synchronize ]
 
   workflow_dispatch:
+    inputs:
+      MAINNET_FRONTEND_URL:
+        description: 'Enter here the URL for a mainnet deployment to run the e2e tests against to.'
+        required: true
+        default: 'https://dev.cf-explorer-mainnet.eu-west-1.metadata.dev.cf-deployments.org/'
+      MAINNET_API_URL:
+        description: 'Enter here the URL for a mainnet deployment to run the e2e tests against to.'
+        required: true
+        default: 'https://api.dev.cf-explorer-mainnet.eu-west-1.metadata.dev.cf-deployments.org/'
+      branch:
+        description: 'Select the branch whose e2e tests will be used'
+        required: true
+        default: 'main'
 
 jobs:
   test:
@@ -13,13 +25,26 @@ jobs:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
 
+      - name: ⬇️ Checkout repository using specified branch (workflow_dispatch only)
+        uses: actions/checkout@v3
+        if: github.event_name == 'workflow_dispatch'
+        with:
+          ref: '${{ github.event.inputs.branch }}'
+
       - name: 🦾 Create .env file
         run: |
           echo "PORT=3000" > .env
           echo "REACT_APP_VERSION=$npm_package_version" >> .env
-          echo "REACT_APP_API_URL=${EXPLORER_API_MAINNET_URL}" >> .env
-          echo "REACT_APP_MAINNET_APP_URL=${EXPLORER_API_MAINNET_URL}" >> .env
           echo 'REACT_APP_NETWORK_NAMES="{"mainnet":"Mainnet","preprod":"Preprod"}"' >> .env
+          if [ ! -z "${{ github.event.inputs.MAINNET_FRONTEND_URL }}" ]
+          then
+            echo "REACT_APP_MAINNET_APP_URL=${{ github.event.inputs.MAINNET_FRONTEND_URL }}" >> .env
+            echo "REACT_APP_API_URL=${{ github.event.inputs.MAINNET_API_URL }}" >> .env
+            echo "CYPRESS_BASE_URL=${{ github.event.inputs.MAINNET_FRONTEND_URL }}" >> .env
+          else
+            echo "REACT_APP_MAINNET_APP_URL=${EXPLORER_API_MAINNET_URL}" >> .env
+            echo "REACT_APP_API_URL=${EXPLORER_API_MAINNET_URL}" >> .env
+          fi
 
       - name: 🫡 Setup node
         uses: actions/setup-node@v4
@@ -30,7 +55,13 @@ jobs:
         run: npm ci
 
       - name: 🎳 Run tests
-        run: npm test
+        run: |
+          if [ ! -z "${{ github.event.inputs.MAINNET_FRONTEND_URL }}" ]
+          then
+            npm run cypress:run
+          else
+            npm test
+          fi
 
       - name: 📹 Archive test videos
         uses: actions/upload-artifact@v3
