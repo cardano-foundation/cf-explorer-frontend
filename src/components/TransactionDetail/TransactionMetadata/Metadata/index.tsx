@@ -155,9 +155,8 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
         onClose={() => setSelectedIndex(null)}
       />
       <CIP20Modal
-        data={data?.[selectedIndedx || 0].metadataCIP20?.tokenMap}
+        data={data?.[selectedIndedx || 0].metadataCIP20?.requiredProperties}
         open={typeof selectedIndedx === "number" && cip === CIP.CIP20}
-        version={data?.[selectedIndedx || 0].metadataCIP60.version}
         onClose={() => setSelectedIndex(null)}
       />
     </Box>
