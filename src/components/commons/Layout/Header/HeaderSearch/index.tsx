@@ -6,7 +6,7 @@ import { BiChevronDown } from "react-icons/bi";
 import { GoChevronRight } from "react-icons/go";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, useHistory, withRouter } from "react-router-dom";
-import { isNil, isObject, omitBy } from "lodash";
+import { isEmpty, isNil, isObject, omitBy } from "lodash";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 
@@ -102,6 +102,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const [ADAHandleOption, setADAHanldeOption] = useState<
     { stakeAddress: string; paymentAddress: string } | undefined
   >();
+
   const [loading, setLoading] = useState<boolean>(false);
   const [totalResult, setTotalResult] = useState<number>(0);
 
@@ -189,7 +190,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     try {
       return await axios.get(API_ADA_HANDLE_API + API.ADAHandle(query)).then((data) => data.data);
     } catch (error) {
-      return null;
+      return {};
     }
   };
 
@@ -205,10 +206,11 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       setLoading(true);
       const res = await defaultAxios.get(API.SEARCH_ALL(query));
       const adaHanlde = await adaHandleSearch(search);
-      setADAHanldeOption(adaHanlde);
+
+      setADAHanldeOption(isEmpty(adaHanlde) ? undefined : adaHanlde);
       setDataSearchAll(res?.data);
       const keyDetail = getKeyIfOnlyOneNonNullResult(res?.data);
-      if (adaHanlde !== null) {
+      if (adaHanlde && adaHanlde !== null) {
         if (
           adaHanlde &&
           (!keyDetail || keyDetail === "address") &&
@@ -224,7 +226,8 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           if (adaHanlde?.stakeAddress) {
             history.push(`${details.stake(adaHanldeSearch)}`);
             return;
-          } else {
+          }
+          if (adaHanlde?.paymentAddress) {
             history.push(`${details.address(adaHanldeSearch)}`);
             return;
           }
