@@ -26,7 +26,8 @@ describe("Pool Certificate", () => {
     const transaction = "a810ba9f89dc9e2aedbd722115c684dab646e3e9956b495b02ece5338cbc5c4a";
     cy.visit("/transactions");
     cy.get('[data-testid="search-bar"]').type(transaction).type("{enter}");
-    cy.get(".MuiAccordionSummary-root").contains("div", "metadata", { matchCase: false }).click();
+    cy.wait(1000);
+    cy.get('[data-testid="metadata-tab"]').click();
     cy.wait(1000);
     cy.get(".MuiAccordion-region div").contains("Metadata Hash", { matchCase: false }).should("be.visible");
     cy.get(".MuiAccordion-region div").contains("Metadatum Label", { matchCase: false }).should("be.visible");
