@@ -32,8 +32,7 @@ export const TableProtocol = styled(Table)(({ theme }) => ({
 
 export const Wrapper = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
-  borderRadius: theme.spacing(2),
-  overflow: "hidden"
+  borderRadius: theme.spacing(2)
 }));
 
 export const WrapperRowContent = styled(Box)(() => ({
