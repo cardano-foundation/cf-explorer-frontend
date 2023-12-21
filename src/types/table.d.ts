@@ -120,6 +120,7 @@ export interface FooterTableProps {
   pagination: TableProps["pagination"];
   loading: boolean;
   clearSelection?: () => void;
+  optionList?: number[];
 }
 
 export interface TableTopHeaderProps {
