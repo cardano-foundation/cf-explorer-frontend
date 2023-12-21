@@ -917,5 +917,5 @@
   "outputs.label": "Outputs",
   "cip.warningVersion1": "This compliance check is based on the deprecated music token version v1",
   "address.title.ADAHanlde": "Address (ADA Handle)",
-  "token.metadataCheck": "Metadata Check"
+  "token.metadataCheck": "Metadata Check: "
 }
