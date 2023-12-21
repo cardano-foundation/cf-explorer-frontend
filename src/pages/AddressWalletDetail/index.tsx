@@ -27,7 +27,7 @@ const AddressWalletDetail = () => {
         setAddressWallet(address);
       }
     }
-  }, [JSON.stringify(adaHandle), adaHandleLoading, address]);
+  }, [JSON.stringify(adaHandle), adaHandleLoading, address, ADAHandleInitialized]);
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
