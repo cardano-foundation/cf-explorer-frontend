@@ -22,17 +22,17 @@ describe("Pool Certificate", () => {
     cy.get('[data-test-id="CircularProgressbarWithChildren__children"]').should("be.visible");
   });
 
-  it.only("should display CIP-60 in metadata tab", () => {
+  it("should display CIP-60 in metadata tab", () => {
     const transaction = "a810ba9f89dc9e2aedbd722115c684dab646e3e9956b495b02ece5338cbc5c4a";
     cy.visit("/transactions");
     cy.get('[data-testid="search-bar"]').type(transaction).type("{enter}");
-    cy.wait(1000);
-    cy.get("div.MuiAccordion-root").contains("Metadata", { matchCase: false }).click();
+    cy.get(".MuiAccordionSummary-root").contains("div", "metadata", { matchCase: false }).click();
     cy.wait(1000);
     cy.get(".MuiAccordion-region div").contains("Metadata Hash", { matchCase: false }).should("be.visible");
     cy.get(".MuiAccordion-region div").contains("Metadatum Label", { matchCase: false }).should("be.visible");
     cy.get(".MuiAccordion-region div").contains("Value", { matchCase: false }).should("be.visible");
     cy.get("[data-testid='clickable-cip60-badge']").should("be.visible");
+    cy.wait(1000);
     cy.get("[data-testid='clickable-cip60-badge']").click();
     cy.get("p").contains("Required Properties").should("be.visible");
     cy.get(`[data-testid="table-common"] tr th`).contains("Property");

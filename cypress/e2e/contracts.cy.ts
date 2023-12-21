@@ -5,7 +5,7 @@ describe("contracts spec", () => {
     const transactionHash = "4223b55d78e90917c5a6054c8a038124f7b1c0ecefc6751dd8bcd6a5016ae2d1";
     cy.visit(`/transaction/${transactionHash}/contracts`);
     cy.wait(1000);
-    cy.get(".MuiAccordionSummary-content div").contains("contracts", { matchCase: false });
+    cy.get("div.MuiAccordionSummary-root").contains("div", "contracts", { matchCase: false });
   });
 
   it("redirect to correct address detail page", () => {
