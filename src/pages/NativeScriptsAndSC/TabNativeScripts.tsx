@@ -1,40 +1,68 @@
-import { Box, Grid } from "@mui/material";
+import { useHistory, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { stringify } from "qs";
+import { Box } from "@mui/material";
 
-import { NativeScriptCard } from "./Card";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { API } from "src/commons/utils/api";
+import { getPageInfo } from "src/commons/utils/helper";
+import { details } from "src/commons/routers";
+import { Column } from "src/types/table";
+import Table from "src/components/commons/Table";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+
+import { StyledLink } from "./styles";
 
 const TabNativeScripts = () => {
-  // const { search } = useLocation();
-  // const pageInfo = getPageInfo(search);
+  const { search } = useLocation();
+  const pageInfo = getPageInfo(search);
+  const { t } = useTranslation();
+  const history = useHistory();
 
-  // const fetchData = useFetchList<NativeScripts>(API.SCRIPTS.NATIVE_SCRIPTS, pageInfo);
+  const fetchData = useFetchList<NativeScripts>(API.SCRIPTS.NATIVE_SCRIPTS, pageInfo);
+
+  const columns: Column<NativeScripts>[] = [
+    {
+      title: t("ScriptHash"),
+      key: "scriptHash",
+      minWidth: "170px",
+      maxWidth: "30vw",
+      render: (r) => (
+        <StyledLink to={details.nativeScriptDetail(r.scriptHash)}>
+          <DynamicEllipsisText value={r.scriptHash} isTooltip />
+        </StyledLink>
+      )
+    },
+    {
+      title: t("NumberOfTokens"),
+      key: "numberOfTokens"
+    },
+    {
+      title: t("NumberOfAssetHolders"),
+      key: "numberOfAssetHolders"
+    }
+  ];
 
   return (
     <Box data-testid="TabNativeScripts">
-      <Box>filter and paging</Box>
-      <Box component={Grid} container spacing={2} width={"100%"}>
-        <Grid item width={"100%"} lg={3} sm={12}>
-          <NativeScriptCard data={fakeData} />
-        </Grid>
-        <Grid item width={"100%"} lg={3} sm={12}>
-          <NativeScriptCard data={fakeData} />
-        </Grid>
-        <Grid item width={"100%"} lg={3} sm={12}>
-          <NativeScriptCard data={fakeData} />
-        </Grid>
-        <Grid item width={"100%"} lg={3} sm={12}>
-          <NativeScriptCard data={fakeData} />
-        </Grid>
-      </Box>
+      <Table
+        {...fetchData}
+        columns={columns}
+        screen="smartContracts"
+        total={{ count: fetchData.total, title: t("common.totalTxs") }}
+        rowKey="scriptHash"
+        height="unset"
+        maxHeight={380}
+        pagination={{
+          ...pageInfo,
+          total: fetchData.total,
+          onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
+        }}
+        style={{ transform: "translateY(-20px)" }}
+        isCenterLoading={true}
+      />
     </Box>
   );
 };
 
 export default TabNativeScripts;
-
-const fakeData = {
-  scriptHash: "c72d9ea7066384e2b5f243dded5af3042fee16be1f346553bb04e5fa",
-  numberOfTokens: 20,
-  numberOfAssetHolders: 12,
-  multiSig: true,
-  timeLock: "2023/12/19 09:30:43"
-};

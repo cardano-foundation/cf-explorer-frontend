@@ -916,5 +916,14 @@
   "cip.versionCheck": "The metadata version should be 1 or 2 in order to comply with CIP-60",
   "outputs.label": "Outputs",
   "cip.warningVersion1": "This compliance check is based on the deprecated music token version v1",
-  "address.title.ADAHanlde": "Address (ADA Handle)"
+  "address.title.ADAHanlde": "Address (ADA Handle)",
+  "smartContract.totalTrx": "Number of Transactions",
+  "smartContract.trxPurpose": "Transaction Purpose",
+  "smartContract.any": "Any",
+  "smartContract.plutusv1": "Plutus V1",
+  "smartContract.plutusv2": "Plutus V2",
+  "smartContract.spend": "Spend",
+  "smartContract.mint": "Mint(Burn)",
+  "smartContract.reward": "Reward",
+  "smartContract.cert": "Cert"
 }
