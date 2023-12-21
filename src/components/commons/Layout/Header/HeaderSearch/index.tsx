@@ -210,6 +210,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       setADAHanldeOption(isEmpty(adaHanlde) ? undefined : adaHanlde);
       setDataSearchAll(res?.data);
       const keyDetail = getKeyIfOnlyOneNonNullResult(res?.data);
+
       if (adaHanlde && adaHanlde !== null) {
         if (
           adaHanlde &&
@@ -232,16 +233,16 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
             return;
           }
         }
+      }
 
-        if (!adaHanlde.paymentAddress) {
-          if (keyDetail) {
-            callback?.();
-            handleSetSearchValueDefault();
-            handleRedirectDetail(keyDetail, res?.data);
-            setLoading(false);
-            setShowOption(false);
-            return;
-          }
+      if (!adaHanlde.paymentAddress) {
+        if (keyDetail) {
+          callback?.();
+          handleSetSearchValueDefault();
+          handleRedirectDetail(keyDetail, res?.data);
+          setLoading(false);
+          setShowOption(false);
+          return;
         }
       }
 
