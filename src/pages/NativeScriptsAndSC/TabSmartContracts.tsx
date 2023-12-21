@@ -145,6 +145,7 @@ const TabSmartContracts = () => {
             history.replace({ search: stringify({ ...pageInfo, page, size }) });
           }
         }}
+        total={{ count: fetchData.total || 0, title: "" }}
         loading={fetchData.loading}
         optionList={optionList}
       />

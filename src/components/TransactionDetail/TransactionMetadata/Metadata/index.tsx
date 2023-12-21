@@ -11,7 +11,6 @@ import CIP25Modal from "src/components/TokenDetail/TokenTableData/CIP25Modal";
 import { SeeMoreIconHome } from "src/commons/resources";
 import CIP25Badge from "src/components/commons/CIP25Badge";
 import CIP60Badge from "src/components/commons/CIP60Badge";
-import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 
 import {
   CIPChips,
@@ -71,9 +70,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
             <MetaDataValue>{metadata.label ?? ""}</MetaDataValue>
             {String(metadata.label) === String(CIPLabel) && (
               <CIPHeader>
-                <CIPHeaderTitle>
-                  {t("cip25.compliance")} <InfoSolidIcon width="16px" height="16px" />{" "}
-                </CIPHeaderTitle>
+                <CIPHeaderTitle>{t("token.metadataCheck")}</CIPHeaderTitle>
                 <CIPChips>
                   {!isNil(metadata.metadataCIP25.valid) && (
                     <CIP25Badge
