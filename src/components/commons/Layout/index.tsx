@@ -6,6 +6,7 @@ import { t } from "i18next";
 
 import { RootState } from "src/stores/types";
 import { setOnDetailView, setSidebar } from "src/stores/user";
+import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { Notice } from "src/commons/resources";
 
@@ -61,28 +62,30 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
       </Drawer>
       <MainContainer id="main">
         <Main component="main" open={sidebar ? 1 : 0}>
-          <Box
-            alignItems={"center"}
-            justifyContent={"center"}
-            width={"100%"}
-            bgcolor={theme.palette.warning[100]}
-            py={2}
-            display={"flex"}
-            component={Button}
-            onClick={() => setOpenNoticeModal(true)}
-            sx={{
-              ":hover": {
-                bgcolor: theme.palette.warning[100]
-              }
-            }}
-            textTransform={"capitalize"}
-            fontSize={16}
-          >
-            <Notice fill={theme.palette.warning[700]} />
-            <Box ml={1} fontWeight={"bold"} color={theme.palette.warning[800]}>
-              {t("notice")}
+          {NETWORK === NETWORKS.sanchonet && (
+            <Box
+              alignItems={"center"}
+              justifyContent={"center"}
+              width={"100%"}
+              bgcolor={theme.palette.warning[100]}
+              py={2}
+              display={"flex"}
+              component={Button}
+              onClick={() => setOpenNoticeModal(true)}
+              sx={{
+                ":hover": {
+                  bgcolor: theme.palette.warning[100]
+                }
+              }}
+              textTransform={"capitalize"}
+              fontSize={16}
+            >
+              <Notice fill={theme.palette.warning[700]} />
+              <Box ml={1} fontWeight={"bold"} color={theme.palette.warning[800]}>
+                {t("notice")}
+              </Box>
             </Box>
-          </Box>
+          )}
           <Header />
           {children}
         </Main>
