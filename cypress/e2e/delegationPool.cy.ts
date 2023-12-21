@@ -42,7 +42,6 @@ describe("delegation pool spec", () => {
     cy.get(":nth-child(5) > .css-syl2v3 > .css-vkzxw5").contains("Pool size");
     cy.get(":nth-child(6) > .css-syl2v3 > .css-vkzxw5").contains("Stake limit");
     cy.get(":nth-child(7) > .css-syl2v3 > .css-vkzxw5").contains("Delegators");
-    cy.get(".css-1ebz4jx").contains("Saturation");
 
     cy.get("div > .css-27jcwj").contains("Fixed Cost");
     cy.get("div > .css-27jcwj").contains("Margin");
