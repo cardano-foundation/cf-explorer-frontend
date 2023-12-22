@@ -59,6 +59,8 @@ import EternlIcon from "./icons/eternl.svg";
 import YoroiIcon from "./icons/yoroi.svg";
 import TyphonIcon from "./icons/typhon.svg";
 import EmptyIcon from "./icons/noData.svg";
+import QrCodeDarkMode from "./images/qr-code-dark-mode.png";
+import QrCodeLightMode from "./images/qr-code-light-mode.png";
 import EmptyDarkIcon from "./icons/EmptyIconDark.svg";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 import ProtocolIcon from "./icons/menus/Protocol.svg";
@@ -182,6 +184,8 @@ export {
   CurentEpochPoolDark,
   DownRedIcon,
   BlankBlueIcon,
+  QrCodeDarkMode,
+  QrCodeLightMode,
   CalenderPaleIcon,
   MenuIcon,
   BlockChainMenuIcon,
