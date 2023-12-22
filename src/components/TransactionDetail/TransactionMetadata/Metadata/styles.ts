@@ -135,13 +135,18 @@ export const StyledButton = styled(Box)`
   }
 `;
 
-export const CIPHeader = styled(Box)`
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
-  flex: 1;
-  align-items: center;
-`;
+export const CIPHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  gap: 8,
+  justifyContent: "flex-end",
+  flex: 1,
+  alignItems: "center",
+  flexWrap: "wrap",
+  [theme.breakpoints.down("sm")]: {
+    flexWrap: "wrap",
+    justifyContent: "flex-start"
+  }
+}));
 
 export const CIPChips = styled(Box)`
   display: flex;
@@ -172,11 +177,16 @@ export const MetadataWrapper = styled(Box)`
   font-size: 16px;
 `;
 
-export const MetadataHeader = styled(Box)`
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-`;
+export const MetadataHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  flexWrap: "wrap",
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    gap: theme.spacing(1),
+    alignItems: "flex-start"
+  }
+}));
 
 export const MetadataContent = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -188,7 +198,6 @@ export const MetadataContent = styled(Box)(({ theme }) => ({
 export const MetadataTitle = styled(Box)`
   width: 180px;
   color: ${({ theme }) => theme.palette.secondary.light};
-  margin-bottom: 6px;
 `;
 
 export const MetadataJSONTitle = styled(MetadataTitle)`
@@ -201,14 +210,13 @@ export const MetadataJSONTitle = styled(MetadataTitle)`
 export const MetaDataValue = styled(Box)`
   box-sizing: border-box;
   color: ${({ theme }) => theme.palette.secondary.main};
-  margin-bottom: 6px;
 `;
 
 export const MetaDataJSONValue = styled(MetaDataValue)`
   flex: 1;
   display: inline-block;
   overflow-wrap: anywhere;
-  padding: 16px 58px 16px 8px;
+  padding: 16px 8px;
   box-sizing: border-box;
   background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100])};
   border-radius: 6px;

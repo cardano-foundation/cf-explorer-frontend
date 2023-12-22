@@ -8,7 +8,7 @@ import CIP60Modal from "src/components/CIPComplianceModal/CIP60Modal";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import ParseScriptModal from "src/components/ParseScriptModal";
 import CIP25Modal from "src/components/TokenDetail/TokenTableData/CIP25Modal";
-import { SeeMoreIconHome, ShowLess, ShowMore } from "src/commons/resources";
+import { ShowLess, ShowMore } from "src/commons/resources";
 import CIP25Badge from "src/components/commons/CIP25Badge";
 import CIP60Badge from "src/components/commons/CIP60Badge";
 import CIP20Badge from "src/components/commons/CIP20Badge";
@@ -27,7 +27,6 @@ import {
   MetadataJSONTitle,
   MetadataTitle,
   MetadataWrapper,
-  StyledButton,
   Wrapper
 } from "./styles";
 
@@ -50,7 +49,6 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
   const { t } = useTranslation();
   const theme = useTheme();
   const [selectedIndedx, setSelectedIndex] = useState<number | null>(null);
-  const [openRawData, setOpenRawData] = useState<boolean>(false);
   const [limitRow, setLimitRow] = useState<number>(LIMIT_MESSAGE_ROW);
   const [cip, setCip] = useState<CIP>(CIP.CIP25);
   const [selectedText, setSelectedText] = useState<{ label: number; value: string } | null>(null);
@@ -72,10 +70,11 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
                 display={"flex"}
                 justifyContent={"center"}
                 alignItems={"center"}
+                width={"100%"}
                 sx={{ textDecoration: "underline", cursor: "pointer", textAlign: "center" }}
               >
                 <Box mr={"2px"}>{t("CIP20.showMore")}</Box>
-                <ShowMore />
+                <ShowMore fill={theme.palette.primary.main} />
               </Box>
             ) : (
               <Box
@@ -84,10 +83,11 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
                 display={"flex"}
                 justifyContent={"center"}
                 alignItems={"center"}
+                width={"100%"}
                 sx={{ textDecoration: "underline", cursor: "pointer", textAlign: "center" }}
               >
                 <Box mr={"2px"}> {t("CIP20.showLess")}</Box>
-                <ShowLess />
+                <ShowLess fill={theme.palette.primary.main} />
               </Box>
             )
           ) : (
@@ -117,8 +117,10 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
       {(data || [])?.map((metadata, idx) => (
         <MetadataWrapper key={idx}>
           <MetadataHeader mb={2}>
-            <MetadataTitle>{t("common.metadatumLabel")}</MetadataTitle>
-            <MetaDataValue>{metadata.label ?? ""}</MetaDataValue>
+            <Box display={"flex"} alignItems={"center"} flexWrap={"wrap"}>
+              <MetadataTitle>{t("common.metadatumLabel")}</MetadataTitle>
+              <MetaDataValue>{metadata.label ?? ""}</MetaDataValue>
+            </Box>
             {String(metadata.label) === String(CIPLabel721) && (
               <CIPHeader>
                 <CIPHeaderTitle>{t("token.metadataCheck")}</CIPHeaderTitle>
@@ -146,44 +148,35 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
                 </CIPChips>
               </CIPHeader>
             )}
-            {String(metadata.label) === String(CIPLabel674) && (
-              <CIPHeader>
-                <CIPHeaderTitle>{t("token.metadataCheck")}</CIPHeaderTitle>
-                <CIPChips>
-                  {!isNil(metadata?.metadataCIP20?.valid) && (
-                    <CIP20Badge
-                      onClick={() => {
-                        setSelectedIndex(idx);
-                        setCip(CIP.CIP20);
-                      }}
-                      tooltipTitle={metadata?.metadataCIP20?.valid ? t("common.passed") : t("common.needsReview")}
-                      type={metadata?.metadataCIP20?.valid ? "success" : "warning"}
-                    />
-                  )}
-                </CIPChips>
-              </CIPHeader>
-            )}
+            {String(metadata.label) === String(CIPLabel674) &&
+              metadata?.metadataCIP20?.requiredProperties &&
+              metadata.metadataCIP20?.requiredProperties.length > 0 && (
+                <CIPHeader>
+                  <CIPHeaderTitle>{t("token.metadataCheck")}</CIPHeaderTitle>
+                  <CIPChips>
+                    {!isNil(metadata?.metadataCIP20?.valid) && (
+                      <CIP20Badge
+                        onClick={() => {
+                          setSelectedIndex(idx);
+                          setCip(CIP.CIP20);
+                        }}
+                        tooltipTitle={metadata?.metadataCIP20?.valid ? t("common.passed") : t("common.needsReview")}
+                        type={metadata?.metadataCIP20?.valid ? "success" : "warning"}
+                      />
+                    )}
+                  </CIPChips>
+                </CIPHeader>
+              )}
           </MetadataHeader>
           <MetadataContent>
             <MetadataJSONTitle>{t("common.value")}</MetadataJSONTitle>
-            {(openRawData || String(metadata.label) !== String(CIPLabel674)) && (
-              <MetaDataJSONValue>
-                <MetaDataJSONValueText>{metadata.value || ""}</MetaDataJSONValueText>
-                <StyledButton onClick={() => setSelectedText(metadata)}>
-                  <SeeMoreIconHome fill={theme.palette.primary.main} />
-                </StyledButton>
-              </MetaDataJSONValue>
-            )}
-
-            {!openRawData && String(metadata.label) === String(CIPLabel674) && (
-              <Box
-                onClick={() => setOpenRawData(true)}
-                color={theme.palette.primary.main}
-                sx={{ textDecoration: "underline", cursor: "pointer" }}
-              >
-                {t("CIP20.viewMessage")}
-              </Box>
-            )}
+            <Box
+              onClick={() => setSelectedText(metadata)}
+              color={theme.palette.primary.main}
+              sx={{ textDecoration: "underline", cursor: "pointer" }}
+            >
+              {t("CIP20.viewMessage")}
+            </Box>
           </MetadataContent>
           {String(metadata.label) === String(CIPLabel674) &&
             !isNil(metadata?.metadataCIP20?.valid) &&

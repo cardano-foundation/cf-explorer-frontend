@@ -12,7 +12,14 @@ import Table, { Column } from "src/components/commons/Table";
 import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
 
 import CustomIcon from "../commons/CustomIcon";
-import { CIPLabel, CIPModalSubtitle, ModalContent, OtherPropetiesContent, OtherPropetiesDesc } from "./styles";
+import {
+  BoxTooltip,
+  CIPLabel,
+  CIPModalSubtitle,
+  ModalContent,
+  OtherPropetiesContent,
+  OtherPropetiesDesc
+} from "./styles";
 
 export type TCIP20ComplianceModalProps = {
   open: boolean;
@@ -54,7 +61,9 @@ const CIP20Modal: React.FC<TCIP20ComplianceModalProps> = (props) => {
             </Typography>
           </CustomTooltip>
         ) : (
-          <CustomTooltip title={typeof r.value === "object" ? JSON.stringify(r.value) : r.value}>
+          <CustomTooltip
+            title={<BoxTooltip>{typeof r.value === "object" ? JSON.stringify(r.value) : r.value}</BoxTooltip>}
+          >
             <Typography
               textOverflow="ellipsis"
               overflow="hidden"

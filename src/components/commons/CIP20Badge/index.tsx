@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-import { CheckedCIPIcon, WarningCIPIcon } from "src/commons/resources";
+import { CIP60WarningIcon, CheckedCIPIcon } from "src/commons/resources";
 
 import { BadgeContainer, CIPLabel } from "./styles";
 import CustomTooltip from "../CustomTooltip";
@@ -19,7 +19,7 @@ const CIP20Badge: React.FC<TCIP20BadgeProps> = ({ type, tooltipTitle, onClick })
   return (
     <CustomTooltip title={tooltipTitle}>
       <BadgeContainer data-testid="clickable-cip20-badge" onClick={onClick} success={+success}>
-        {success ? <CheckedCIPIcon /> : <WarningCIPIcon />}
+        {success ? <CheckedCIPIcon /> : <CIP60WarningIcon height={20} width={20} />}
         <CIPLabel>{t("token.CIP-20")}</CIPLabel>
       </BadgeContainer>
     </CustomTooltip>
