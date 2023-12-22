@@ -4,10 +4,19 @@ interface NativeScripts {
   numberOfAssetHolders: number;
 }
 
+type NativeScriptsList = {
+  scriptHash: string;
+  numberOfTokens: number;
+  numberOfAssetHolders: number;
+  multiSig: boolean;
+  timeLock: string;
+};
+
 interface ScriptSmartContracts {
   scriptHash: string;
-  version: string;
-  associatedAddress: string[];
+  scriptVersion: "MULTISIG" | "TIMELOCK" | "PLUTUSV2" | "PLUTUSV1";
+  txCount: number;
+  txPurposes: ["SPEND" | "MINT" | "CERT" | " REWARD"];
 }
 
 interface ScriptAssociatedAddress {

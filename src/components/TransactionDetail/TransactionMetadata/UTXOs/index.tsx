@@ -115,7 +115,7 @@ const Card = ({
             <ItemContent>
               <WrapIcon type={type}>{renderIcon(type)}</WrapIcon>
               <WrapInfo>
-                <WrapLeftSide>
+                <WrapLeftSide maxWidth={"fit-content"}>
                   {type === "down" ? (
                     <WrapUTXOs>
                       <Box mr={3} minWidth={200} width={"100%"}>
@@ -159,7 +159,7 @@ const Card = ({
                   ) : (
                     <Box />
                   )}
-                  <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
+                  <Box display={"flex"} justifyContent="space-between" alignItems={"center"} width={"max-content"}>
                     <Box
                       display={"flex"}
                       alignItems="center"
@@ -175,9 +175,9 @@ const Card = ({
                         justifyContent="flex-start"
                         alignItems={"center"}
                         flexWrap="nowrap"
-                        width={"100%"}
+                        width={"max-content"}
                       >
-                        <Link to={details.address(item.address)} style={{ width: "100%" }}>
+                        <Link to={details.address(item.address)} style={{ width: "max-content" }}>
                           <EllipsisContainer isFailed={isFailed} hasToken={item?.tokens?.length >= 1}>
                             <DynamicEllipsisText value={item.address} isCopy isTooltip customTruncateFold={[6, 8]} />
                           </EllipsisContainer>
@@ -188,12 +188,12 @@ const Card = ({
                   {item?.stakeAddress && (
                     <Box
                       justifyContent={"space-between"}
-                      width={"100%"}
                       display="flex"
                       flexDirection={isMobile ? "column" : "row"}
                       paddingTop="5px"
+                      width={"max-content"}
                     >
-                      <Box mr={3} minWidth={180} width={"100%"}>
+                      <Box mr={3} minWidth={180} width={"max-content"}>
                         <Box
                           display={"flex"}
                           flexDirection={isMobile ? "column" : "row"}
@@ -208,8 +208,8 @@ const Card = ({
                           >
                             {t("common.stakeAddress")}:&nbsp;
                           </Box>
-                          <Box style={{ width: "100%" }}>
-                            <Link to={details.stake(item?.stakeAddress)} style={{ width: "100%" }}>
+                          <Box style={{ width: "max-content" }}>
+                            <Link to={details.stake(item?.stakeAddress)} style={{ width: "max-content" }}>
                               <EllipsisContainer isFailed={isFailed} hasToken={item?.tokens?.length >= 1}>
                                 <DynamicEllipsisText
                                   value={item.stakeAddress}

@@ -163,7 +163,7 @@ export const CIPHeader = styled(Box)`
 
 export const CIPHeaderTitle = styled(Box)`
   font-size: 14px;
-  color: ${({ theme }) => theme.palette.secondary[600]};
+  color: ${({ theme }) => theme.palette.secondary.light};
   display: flex;
   align-items: center;
   gap: 8px;

@@ -26,6 +26,7 @@ import { routers } from "src/commons/routers";
 import { getPageInfo } from "src/commons/utils/helper";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
+import { POOL_STATUS } from "src/commons/utils/constants";
 
 import { TimeDuration, TitleTab } from "./styles";
 
@@ -43,12 +44,11 @@ const DelegationDetail: React.FC = () => {
   const { search, state } = useLocation<{ fromPath?: SpecialPath }>();
   const history = useHistory();
   const query = parse(search.split("?")[1]);
-  const tab: TabPoolDetail = TABS.includes(query.tab as TabPoolDetail) ? (query.tab as TabPoolDetail) : "";
+  const tab: TabPoolDetail | "" = TABS.includes(query.tab as TabPoolDetail) ? (query.tab as TabPoolDetail) : "";
   const pageInfo = getPageInfo(search);
   const tableRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
-
   useEffect(() => {
     if (Object.keys(query).length === 0) {
       setQuery({ tab: "epochs", page: 1, size: 50 });
@@ -105,10 +105,16 @@ const DelegationDetail: React.FC = () => {
 
   useEffect(() => {
     if (state?.fromPath) return setSpecialPath(state.fromPath);
-    if (status.data?.isDeRegistration) return setSpecialPath(routers.POOL_DEREGISTRATION);
+    if (status.data?.isDeRegistration) {
+      if (data?.poolStatus === POOL_STATUS.RETIRED) {
+        return setSpecialPath(routers.POOL_DEREGISTRATION);
+      } else {
+        return setSpecialPath(routers.POOL_CERTIFICATE);
+      }
+    }
     if (status.data?.isRegistration) return setSpecialPath(routers.POOL_CERTIFICATE);
     if (status.data) setSpecialPath(routers.DELEGATION_POOLS);
-  }, [state, status]);
+  }, [state, status, data?.poolStatus]);
 
   if ((initialized && !data) || error) return <NoRecord />;
 
@@ -122,7 +128,11 @@ const DelegationDetail: React.FC = () => {
       icon: StakeKeyHistoryIcon,
       label: t("epoch"),
       key: "epochs",
-      component: <DelegationEpochList {...fetchDataEpochs} scrollEffect={scrollEffect} />
+      component: (
+        <div ref={tableRef}>
+          <DelegationEpochList {...fetchDataEpochs} scrollEffect={scrollEffect} />
+        </div>
+      )
     },
     {
       icon: StakingDelegators,
@@ -147,7 +157,6 @@ const DelegationDetail: React.FC = () => {
   ];
 
   const indexExpand = tabs.findIndex((item) => item.key === tab);
-
   const needBorderRadius = (currentKey: string) => {
     if (!tab) return "0";
     const indexCurrent = tabs.findIndex((item) => item.key === currentKey);
@@ -161,7 +170,7 @@ const DelegationDetail: React.FC = () => {
       if (newExpanded) {
         setTimeout(() => {
           tableRef?.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        }, 100);
+        }, 150);
         // Remove the event listener after the scroll
         tableRef?.current?.removeEventListener("transitionend", handleTransitionEnd);
       }

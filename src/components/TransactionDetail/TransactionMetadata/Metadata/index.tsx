@@ -11,7 +11,6 @@ import CIP25Modal from "src/components/TokenDetail/TokenTableData/CIP25Modal";
 import { ShowLess, ShowMore } from "src/commons/resources";
 import CIP25Badge from "src/components/commons/CIP25Badge";
 import CIP60Badge from "src/components/commons/CIP60Badge";
-import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import CIP20Badge from "src/components/commons/CIP20Badge";
 import CIP20Modal from "src/components/CIPComplianceModal/CIP20Modal";
 
@@ -124,9 +123,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
             </Box>
             {String(metadata.label) === String(CIPLabel721) && (
               <CIPHeader>
-                <CIPHeaderTitle>
-                  {t("cip25.compliance")} <InfoSolidIcon width="16px" height="16px" />{" "}
-                </CIPHeaderTitle>
+                <CIPHeaderTitle>{t("token.metadataCheck")}</CIPHeaderTitle>
                 <CIPChips>
                   {!isNil(metadata.metadataCIP25.valid) && (
                     <CIP25Badge
@@ -155,9 +152,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
               metadata?.metadataCIP20?.requiredProperties &&
               metadata.metadataCIP20?.requiredProperties.length > 0 && (
                 <CIPHeader>
-                  <CIPHeaderTitle>
-                    {t("cip25.compliance")} <InfoSolidIcon width="16px" height="16px" />{" "}
-                  </CIPHeaderTitle>
+                  <CIPHeaderTitle>{t("token.metadataCheck")}</CIPHeaderTitle>
                   <CIPChips>
                     {!isNil(metadata?.metadataCIP20?.valid) && (
                       <CIP20Badge

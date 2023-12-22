@@ -52,13 +52,13 @@ const TabNativeScripts = () => {
         total={{ count: fetchData.total, title: t("common.totalTxs") }}
         rowKey="scriptHash"
         height="unset"
+        maxHeight={380}
         pagination={{
           ...pageInfo,
           total: fetchData.total,
           onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
         }}
         style={{ transform: "translateY(-20px)" }}
-        maxHeight={380}
         isCenterLoading={true}
       />
     </Box>
