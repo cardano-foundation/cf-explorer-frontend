@@ -77,3 +77,26 @@ export const CIPLabel = styled(Box)`
   align-items: center;
   gap: 12px;
 `;
+
+export const BoxTooltip = styled(Box)(({ theme }) => ({
+  maxHeight: "200px",
+  overflowY: "auto",
+  "&::-webkit-scrollbar": {
+    height: "3px",
+    width: "5px"
+  },
+  "&::-webkit-scrollbar-track": {
+    background: "transparent"
+  },
+  "&::-webkit-scrollbar-thumb": {
+    background: "transparent"
+  },
+  "&:hover": {
+    "&::-webkit-scrollbar-thumb": {
+      background: theme.palette.secondary.light
+    },
+    "&::-webkit-scrollbar-track": {
+      background: theme.palette.primary[100]
+    }
+  }
+}));
