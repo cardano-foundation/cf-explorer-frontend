@@ -84,7 +84,6 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         const response = await signIn(payload);
         setIsSign(true);
         const data = response.data;
-
         localStorage.setItem("token", data.token);
         localStorage.setItem("username", data.username);
         localStorage.setItem("refreshToken", data.refreshToken);
@@ -157,13 +156,14 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
           <Span>{t("account.connectWallet")}</Span>
         </StyledButton>
       )}
-      {openModal && (
+      {
         <ConnectWalletModal
-          isModal={!!customButton}
+          openModal={openModal}
           connect={connect}
+          modalRegister={modalRegister}
           onTriggerSignMessage={() => setModalSignMessage(true)}
         />
-      )}
+      }
       <SignMessageModal
         open={modalSignMessage}
         handleCloseModal={() => {
