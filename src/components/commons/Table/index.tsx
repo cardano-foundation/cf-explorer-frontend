@@ -336,6 +336,11 @@ export const FooterTable: React.FC<FooterTableProps> = ({
       setPage(1);
     }
   }, [pagination?.page]);
+  useEffect(() => {
+    if (pagination?.size) {
+      setSize(pagination?.size);
+    }
+  }, [pagination?.size]);
 
   useEffect(() => {
     trigger && setOpen(false);
@@ -381,10 +386,6 @@ export const FooterTable: React.FC<FooterTableProps> = ({
                   {item}
                 </StyledMenuItem>
               ))}
-              {/* <StyledMenuItem value={10}>10</StyledMenuItem>
-              <StyledMenuItem value={20}>20</StyledMenuItem>
-              <StyledMenuItem value={50}>50</StyledMenuItem>
-              <StyledMenuItem value={100}>100</StyledMenuItem> */}
             </SelectMui>
             <StyledPerPage>{t("perPage")}</StyledPerPage>
           </Box>
