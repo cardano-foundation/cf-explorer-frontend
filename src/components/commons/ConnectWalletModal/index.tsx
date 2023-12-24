@@ -4,9 +4,10 @@ import { ConnectWalletButton } from "@cardano-foundation/cardano-connect-with-wa
 import { useTheme, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
+import useToast from "src/commons/hooks/useToast";
+import { QrCodeDarkMode, QrCodeLightMode } from "src/commons/resources";
 import { setOpenModal, setWallet } from "src/stores/user";
 import { NETWORK } from "src/commons/utils/constants";
-import useToast from "src/commons/hooks/useToast";
 
 import { WrapContent } from "./style";
 import StyledModal from "../StyledModal";
@@ -43,6 +44,31 @@ const ConnectWalletModal: React.FC<IProps> = ({ openModal, modalRegister, connec
   const subtitle = modalContent?.querySelector("p") as HTMLElement | null;
   const copyButton = modalContent?.querySelector("button") as HTMLElement | null;
   const modalContentInput = modalContent?.querySelector("input") as HTMLElement | null;
+  const qrImage = p2pConnectButton[0]?.querySelector("img");
+  const copiedToast = modalContent?.querySelector("div:last-child") as HTMLElement | null;
+
+  useEffect(() => {
+    function copyToClipboard(text: string) {
+      if (!navigator.clipboard) {
+        return;
+      }
+      navigator.clipboard
+        .writeText(text)
+        .then(function () {
+          toast.success("P2P identifier copied to clipboard!");
+        })
+        .catch(function () {
+          toast.error("Could not copy text to clipboard.");
+        });
+    }
+
+    if (copyButton) {
+      copyButton.addEventListener("click", function () {
+        const textToCopy = "Your text here";
+        copyToClipboard(textToCopy);
+      });
+    }
+  }, [copyButton]);
 
   if (modalContent) {
     modalContent.addEventListener("click", function (event) {
@@ -54,6 +80,10 @@ const ConnectWalletModal: React.FC<IProps> = ({ openModal, modalRegister, connec
     });
   }
 
+  if (qrImage && qrImage instanceof HTMLImageElement) {
+    qrImage.src = theme.isDark ? QrCodeDarkMode : QrCodeLightMode;
+  }
+
   p2pConnectButton[0]?.addEventListener("click", () => {
     setIsP2Pconnect(true);
     if (walletMenu) {
@@ -63,20 +93,31 @@ const ConnectWalletModal: React.FC<IProps> = ({ openModal, modalRegister, connec
       Object.assign(p2pOptionModal.style, {
         position: "static",
         display: "block",
-        backgroundColor: theme.palette.primary[100]
+        backgroundColor: theme.isDark ? theme.palette.secondary[0] : theme.palette.primary[100]
       });
       Object.assign(modalContent.style, {
-        backgroundColor: theme.palette.primary[100],
+        backgroundColor: theme.isDark ? theme.palette.secondary[0] : theme.palette.primary[100],
         margin: " 0 auto",
         width: "-webkit-fill-available",
         border: "none",
-        padding: "0"
+        padding: "0",
+        color: theme.palette.secondary.main
       });
       if (subtitle) {
         subtitle.style.maxWidth = "100%";
       }
       if (modalContentInput) {
-        modalContentInput.style.backgroundColor = theme.palette.primary[100];
+        Object.assign(modalContentInput.style, {
+          backgroundColor: "transparent",
+          color: theme.palette.secondary.main
+        });
+      }
+      if (copiedToast) {
+        Object.assign(copiedToast.style, {
+          // top: "-100px",
+          // height: "fit-content"
+          display: "none"
+        });
       }
     }
   });
@@ -154,9 +195,9 @@ const ConnectWalletModal: React.FC<IProps> = ({ openModal, modalRegister, connec
               padding: 20px;
               margin-bottom: 16px;
               border-radius: 10px;
-              background-color: ${theme.palette.primary[100]};
+              background-color: ${theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100]};
               border: 1px solid ${theme.palette.primary[200]};
-              color: ${theme.palette.secondary.light};
+              color: ${theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light};
               display: flex;
               justify-content: space-between;
               flex-direction: row-reverse;
