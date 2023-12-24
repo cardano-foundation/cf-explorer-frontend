@@ -3,7 +3,7 @@ import { isEmpty, isNil } from "lodash";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { CheckedCIPIcon, WarningCIPIcon } from "src/commons/resources";
+import { CheckNotRequiredCIPIcon, CheckedCIPIcon, WarningCIPIcon } from "src/commons/resources";
 import { CIP25_DOCS_URL } from "src/commons/utils/constants";
 import { getShortHash } from "src/commons/utils/helper";
 import CustomModal from "src/components/commons/CustomModal";
@@ -119,16 +119,41 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
       render: (r) =>
         !isNil(r.valid) && (
           <Box pl={3}>
-            <CustomTooltip title={r.valid ? t("common.passed") : t("common.needsReview")}>
-              <Box display="inline-block">{r.valid ? <CheckedCIPIcon /> : <WarningCIPIcon />}</Box>
+            <CustomTooltip
+              title={
+                r.valid
+                  ? t("common.passed")
+                  : r?.checkNotRequired
+                  ? t("common.checkNotRequired")
+                  : t("common.needsReview")
+              }
+            >
+              <Box display="inline-block">
+                {r.valid ? <CheckedCIPIcon /> : r?.checkNotRequired ? <CheckNotRequiredCIPIcon /> : <WarningCIPIcon />}
+              </Box>
             </CustomTooltip>
           </Box>
         )
     }
   ];
-  const mixedoptionalProperties = (optionalProperties: TTCIPProperties[]) => {
+  const mixedOptionalProperties = (optionalProperties: TTCIPProperties[]) => {
     if (version) return [...optionalProperties, version];
     return optionalProperties;
+  };
+
+  const updateCheckNotRequiredOptionalProperties = (optionalProperties: TTCIPProperties[]) => {
+    const filePropertyIndex = optionalProperties.find((it) => it.property === "files")?.index;
+    if (!filePropertyIndex) return optionalProperties;
+    return optionalProperties.map((it) => {
+      if (it.property === "name" && it.index.startsWith(filePropertyIndex)) {
+        return { ...it, checkNotRequired: true };
+      }
+      return it;
+    });
+  };
+
+  const getOptionalProperties = (optionalProperties: TTCIPProperties[]) => {
+    return mixedOptionalProperties(updateCheckNotRequiredOptionalProperties(optionalProperties));
   };
 
   return (
@@ -169,7 +194,7 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
                   isModal
                   maxHeight="unset"
                   height="auto"
-                  data={mixedoptionalProperties(token.optionalProperties)}
+                  data={getOptionalProperties(token.optionalProperties)}
                   columns={columns}
                 />
               </>

@@ -177,13 +177,15 @@ const mockTransaction = {
       label: 1,
       value: "value-1",
       metadataCIP25: {},
-      metadataCIP60: {}
+      metadataCIP60: {},
+      metadataCIP20: {}
     },
     {
       label: 2,
       value: "value-2",
       metadataCIP25: {},
-      metadataCIP60: {}
+      metadataCIP60: {},
+      metadataCIP20: {}
     }
   ]
 };
