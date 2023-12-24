@@ -934,5 +934,6 @@
   "nativeScript.filter.timelocked.open": "Open",
   "nativeScript.filter.timelocked.locked": "Locked",
   "nativeScript.filter.multiSig.yes": "Yes",
+  "nativeScript.noToken": "No Tokens Found",
   "nativeScript.filter.multiSig.no": "No"
 }

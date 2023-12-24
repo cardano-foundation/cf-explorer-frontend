@@ -67,9 +67,23 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
                 </CustomTooltip>
               );
             })}
-          <Link to={details.nativeScriptDetail(data.scriptHash, "token")}>
-            <Chip>{`+${(data.numberOfTokens || 0) - (data.tokens || []).length} More`}</Chip>
-          </Link>
+          {(data.numberOfTokens || 0) > (data.tokens || []).length && (
+            <Link to={details.nativeScriptDetail(data.scriptHash, "token")}>
+              <Chip>{`+${(data.numberOfTokens || 0) - (data.tokens || []).length} More`}</Chip>
+            </Link>
+          )}
+          {data.tokens && data.tokens.length === 0 && (
+            <Box
+              textAlign={"center"}
+              fontSize={16}
+              lineHeight={"18.75px"}
+              width={"100%"}
+              py={1}
+              color={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]}
+            >
+              {t("nativeScript.noToken")}
+            </Box>
+          )}
         </Row>
       </Box>
     </Item>
