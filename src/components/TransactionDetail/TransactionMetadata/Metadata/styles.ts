@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 export const Wrapper = styled(Box)`
   background: ${(props) => props.theme.palette.secondary[0]};
   padding: 25px;
-  border: 1px solid ${({ theme }) => (theme.isDark ? theme.palette.primary[200] : theme.palette.secondary[700])};
   border-radius: ${({ theme }) => theme.spacing(2)};
   ${({ theme }) => theme.breakpoints.down(355)} {
     padding: 8px;
@@ -136,13 +135,18 @@ export const StyledButton = styled(Box)`
   }
 `;
 
-export const CIPHeader = styled(Box)`
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
-  flex: 1;
-  align-items: center;
-`;
+export const CIPHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  gap: 8,
+  justifyContent: "flex-end",
+  flex: 1,
+  alignItems: "center",
+  flexWrap: "wrap",
+  [theme.breakpoints.down("sm")]: {
+    flexWrap: "wrap",
+    justifyContent: "flex-start"
+  }
+}));
 
 export const CIPChips = styled(Box)`
   display: flex;
@@ -168,24 +172,32 @@ export const MetadataWrapper = styled(Box)`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  padding: 0 25px;
   margin: 25px 0px;
   font-size: 16px;
 `;
 
-export const MetadataHeader = styled(Box)`
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-`;
+export const MetadataHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  flexWrap: "wrap",
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    gap: theme.spacing(1),
+    alignItems: "flex-start"
+  }
+}));
 
-export const MetadataContent = styled(Box)`
-  display: flex;
-`;
+export const MetadataContent = styled(Box)(({ theme }) => ({
+  display: "flex",
+  marginBottom: theme.spacing(2),
+  [theme.breakpoints.down("md")]: { flexDirection: "column" },
+  ":last-child": { marginBottom: 0 }
+}));
 
 export const MetadataTitle = styled(Box)`
-  min-width: 140px;
+  width: 180px;
   color: ${({ theme }) => theme.palette.secondary.light};
-  margin-bottom: 6px;
 `;
 
 export const MetadataJSONTitle = styled(MetadataTitle)`
@@ -198,14 +210,13 @@ export const MetadataJSONTitle = styled(MetadataTitle)`
 export const MetaDataValue = styled(Box)`
   box-sizing: border-box;
   color: ${({ theme }) => theme.palette.secondary.main};
-  margin-bottom: 6px;
 `;
 
 export const MetaDataJSONValue = styled(MetaDataValue)`
   flex: 1;
   display: inline-block;
   overflow-wrap: anywhere;
-  padding: 16px 58px 16px 8px;
+  padding: 16px 8px;
   box-sizing: border-box;
   background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100])};
   border-radius: 6px;

@@ -172,6 +172,7 @@ const mockTransaction = {
     {
       label: 1,
       value: "value-1",
+      metadataCIP20: {},
       metadataCIP25: { tokenMap: undefined },
       metadataCIP60: { tokenMap: undefined }
     }
