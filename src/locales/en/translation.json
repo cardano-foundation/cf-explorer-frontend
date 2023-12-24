@@ -926,5 +926,13 @@
   "smartContract.mint": "Mint(Burn)",
   "smartContract.reward": "Reward",
   "smartContract.cert": "Cert",
-  "token.metadataCheck": "Metadata Check: "
+  "token.metadataCheck": "Metadata Check: ",
+  "nativeScript.timeLock": "Time-Lock",
+  "nativeScript.multiSig": "Multi-Sig",
+  "nativeScript.tokens": "Tokens",
+  "nativeScript.assetHolders": "Asset Holders",
+  "nativeScript.filter.timelocked.open": "Open",
+  "nativeScript.filter.timelocked.locked": "Locked",
+  "nativeScript.filter.multiSig.yes": "Yes",
+  "nativeScript.filter.multiSig.no": "No"
 }

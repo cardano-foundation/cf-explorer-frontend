@@ -504,3 +504,5 @@ export { ReactComponent as CheckedCIPIcon } from "./icons/complied-cip25.svg";
 export { ReactComponent as SmallInfoIcon } from "./icons/small-info-icon.svg";
 export { ReactComponent as CIP60WarningIcon } from "./icons/cip60-warning.svg";
 export { ReactComponent as FilterVersionIcon } from "./icons/filterVersion.svg";
+export { ReactComponent as TimeLock } from "./icons/timeLock.svg";
+export { ReactComponent as MultiSig } from "./icons/multiSig.svg";
