@@ -2,14 +2,79 @@ import { Box, styled, useTheme } from "@mui/material";
 import { t } from "i18next";
 import { Link } from "react-router-dom";
 
+import { TimeLock } from "src/commons/resources";
 import { details } from "src/commons/routers";
+import { formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import Card from "src/components/commons/Card";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
-const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = () => {
-  return <Item></Item>;
+const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
+  const theme = useTheme();
+
+  return (
+    <Item>
+      <Box p={2} height={"100%"}>
+        <Row>
+          <Title>{t("common.scriptHash")}: </Title>
+          <Box
+            width={"calc(100% - 100px)"}
+            component={Link}
+            to={details.nativeScriptDetail(data.scriptHash)}
+            color={`${theme.palette.primary.main} !important`}
+          >
+            <DynamicEllipsisText value={data.scriptHash || ""} isTooltip />
+          </Box>
+        </Row>
+        <Row>
+          <Title>{t("nativeScript.timeLock")}: </Title>
+          <Value>
+            {data.before ? (
+              <Box display={"flex"} alignItems={"center"} gap={1}>
+                <>{formatDateTimeLocal(data.before)}</>
+                <TimeLock fill={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]} />
+              </Box>
+            ) : (
+              ""
+            )}
+          </Value>
+        </Row>
+        <Row>
+          <Title>{t("nativeScript.multiSig")}: </Title>
+          <Value>{data.isMultiSig ? "Yes" : "No"}</Value>
+        </Row>
+
+        <Row>
+          <Title>{t("nativeScript.assetHolders")}: </Title>
+          <Value>{data.numberOfAssetHolders || 0}</Value>
+        </Row>
+
+        <Row>
+          <Title>{t("nativeScript.tokens")}: </Title>
+          <Value>{data.numberOfTokens || 0}</Value>
+        </Row>
+        <Row>
+          {data.tokens &&
+            data.tokens.map((item, index) => {
+              return (
+                <CustomTooltip
+                  key={index}
+                  title={item.displayName || item.name || getShortHash(item.fingerprint) || ""}
+                >
+                  <Link to={details.token(item.fingerprint)}>
+                    <Chip>{item.displayName || item.name || getShortHash(item.fingerprint) || ""}</Chip>
+                  </Link>
+                </CustomTooltip>
+              );
+            })}
+          <Link to={details.nativeScriptDetail(data.scriptHash, "token")}>
+            <Chip>{`+${(data.numberOfTokens || 0) - (data.tokens || []).length} More`}</Chip>
+          </Link>
+        </Row>
+      </Box>
+    </Item>
+  );
 };
-
 const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) => {
   const theme = useTheme();
 
@@ -94,6 +159,10 @@ const Chip = styled(Box)(({ theme }) => {
     background: theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200],
     borderRadius: theme.spacing(2),
     marginRight: theme.spacing(0.5),
-    fontSize: 12
+    fontSize: 12,
+    maxWidth: "120px",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    marginBottom: theme.spacing(1)
   };
 });
