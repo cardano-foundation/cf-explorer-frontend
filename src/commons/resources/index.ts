@@ -69,6 +69,8 @@ import PolygonDarkIconUrl, { ReactComponent as PolygonDarkIcon } from "./icons/p
 import PolygonDarkRedIconUrl, { ReactComponent as PolygonDarkRedIcon } from "./icons/polygon-dark-red.svg";
 import AdaHolderIconUrl from "./images/ada-holder.png";
 import AdaHolderIconDarlUrl from "./images/ada-holder-dark.png";
+import QrCodeDarkMode from "./images/qr-code-dark-mode.png";
+import QrCodeLightMode from "./images/qr-code-light-mode.png";
 import PaymentWalletUrl from "./images/payment-wallet.png";
 import PaymentWalletDarkUrl from "./images/payment-wallet-dark.png";
 import SPOHolderIconUrl from "./images/spo-holder.png";
@@ -277,6 +279,8 @@ export {
   DeregistrationLightIcon,
   RegistrationDarkIcon,
   RegistrationLightIcon,
+  QrCodeDarkMode,
+  QrCodeLightMode,
   // React component
   ExchangeIcon,
   PolygonDarkIcon,

@@ -1,12 +1,12 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { Backdrop, Box } from "@mui/material";
+import { Backdrop, Box, useTheme } from "@mui/material";
 import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { NetworkType } from "@cardano-foundation/cardano-connect-with-wallet-core";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { AxiosError } from "axios";
 
-import { WalletIcon } from "src/commons/resources";
+import { WalletIconComponent } from "src/commons/resources";
 import { RootState } from "src/stores/types";
 import {
   setModalRegister,
@@ -23,7 +23,7 @@ import useToast from "src/commons/hooks/useToast";
 import ConnectedProfileOption from "src/components/commons/ConnectedProfileOption";
 import ConnectWalletModal from "src/components/commons/ConnectWalletModal";
 
-import { Image, Span, Spin, StyledButton } from "./styles";
+import { Span, Spin, StyledButton } from "./styles";
 import RegisterUsernameModal from "../RegisterUsernameModal";
 import SignMessageModal from "../SignMessageModal";
 
@@ -34,6 +34,7 @@ interface Props {
 
 const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { openModal, modalRegister, modalSignMessage, nonce } = useSelector(({ user }: RootState) => user);
   const { isEnabled, stakeAddress, isConnected, connect, signMessage, disconnect, enabledWallet } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
@@ -151,15 +152,26 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
       {customButton ? (
         customButton({ handleClick })
       ) : (
-        <StyledButton type="button" onClick={handleClick}>
-          <Image src={WalletIcon} alt="wallet" />
-          <Span>{t("account.connectWallet")}</Span>
+        <StyledButton
+          sx={{
+            background: theme.isDark ? theme.palette.primary.main : theme.palette.secondary.main
+          }}
+          type="button"
+          onClick={handleClick}
+        >
+          <WalletIconComponent
+            stroke={theme.mode === "light" ? theme.palette.secondary[0] : theme.palette.secondary[100]}
+          />
+          <Span sx={{ color: theme.isDark ? theme.palette.secondary[0] : theme.palette.secondary[700] }}>
+            {t("account.connectWallet")}
+          </Span>
         </StyledButton>
       )}
       {
         <ConnectWalletModal
           openModal={openModal}
           connect={connect}
+          modalRegister={modalRegister}
           onTriggerSignMessage={() => setModalSignMessage(true)}
         />
       }
