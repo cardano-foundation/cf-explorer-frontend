@@ -261,12 +261,14 @@ export const AccordionContainer = styled(Accordion)(({ theme }) => ({
   margin: 0,
   backgroundColor: theme.palette.secondary[0]
 }));
+
 export const AccordionSummary = styled(AccordionSummaryMUI)(() => ({
   padding: "0 8px !important",
   textAlign: "left",
   height: "40px !important",
   minHeight: "40px !important"
 }));
+
 export const AccordionDetailsFilter = styled(AccordionDetails)(({ theme }) => ({
   padding: `0 ${theme.spacing(1)} !important`,
   backgroundColor: theme.palette.primary[100],
@@ -283,5 +285,15 @@ export const ApplyFilterButton = styled(Button)(({ theme }) => ({
   background: theme.palette.primary.main,
   ":hover": {
     background: theme.palette.primary.dark
+  },
+  ":disabled": {
+    background: theme.palette.secondary[600],
+    color: theme.palette.secondary[100]
   }
+}));
+
+export const ButtonSort = styled(Button)(({ theme }) => ({
+  textTransform: "capitalize",
+  color: theme.palette.secondary.main,
+  justifyContent: "left"
 }));

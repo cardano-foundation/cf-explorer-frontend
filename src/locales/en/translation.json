@@ -932,9 +932,18 @@
   "smartContract.mint": "Mint(Burn)",
   "smartContract.reward": "Reward",
   "smartContract.cert": "Cert",
+  "nativeScript.timeLock": "Time-Lock",
+  "nativeScript.multiSig": "Multi-Sig",
+  "nativeScript.tokens": "Tokens",
+  "nativeScript.assetHolders": "Asset Holders",
+  "nativeScript.filter.timelocked.open": "Open",
+  "nativeScript.filter.timelocked.locked": "Locked",
+  "nativeScript.filter.multiSig.yes": "Yes",
+  "nativeScript.filter.multiSig.no": "No",
   "CIP20.transactionMessage": "Transaction Message",
   "CIP20.viewMessage": "View Raw Metadata",
   "CIP20.showMore": "Show More",
   "CIP20.showLess": "Show Less",
-  "token.metadataCheck": "Metadata Check"
+  "token.metadataCheck": "Metadata Check",
+  "nativeScript.noToken": "No Tokens Found"
 }

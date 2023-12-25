@@ -114,8 +114,6 @@ const ConnectWalletModal: React.FC<IProps> = ({ openModal, modalRegister, connec
       }
       if (copiedToast) {
         Object.assign(copiedToast.style, {
-          // top: "-100px",
-          // height: "fit-content"
           display: "none"
         });
       }

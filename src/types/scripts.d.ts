@@ -5,11 +5,25 @@ interface NativeScripts {
 }
 
 type NativeScriptsList = {
-  scriptHash: string;
-  numberOfTokens: number;
+  before: string;
+  isMultiSig: boolean;
   numberOfAssetHolders: number;
-  multiSig: boolean;
-  timeLock: string;
+  numberOfTokens: number;
+  scriptHash: string;
+  tokens: {
+    displayName: string;
+    fingerprint: string;
+    name: string;
+    policy: string;
+    policyIsNativeScript: boolean;
+    metadata: {
+      decimals: number;
+      description: string;
+      logo: string;
+      ticker: string;
+      url: string;
+    };
+  }[];
 };
 
 interface ScriptSmartContracts {

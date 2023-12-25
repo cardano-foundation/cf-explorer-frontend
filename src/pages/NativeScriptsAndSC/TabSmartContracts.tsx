@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Checkbox,
   ClickAwayListener,
   FormControlLabel,
   Grid,
@@ -12,8 +13,9 @@ import {
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { t } from "i18next";
+import { useList } from "react-use";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { omitBy } from "lodash";
 
@@ -32,39 +34,52 @@ import {
   ApplyFilterButton,
   FilterContainer
 } from "./styles";
+import { StyledDropdownItem } from "../ProtocolParameter/styles";
 
 const TabSmartContracts = () => {
-  const { search } = useLocation();
+  const { search, pathname } = useLocation();
   const history = useHistory();
   const theme = useTheme();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [resetFilter, setResetFilter] = useState(false);
-  const [showFilter, setShowFiter] = useState(false);
-  const [searchQuery, setSearchQuery] = useState<{ scriptVersion?: string; txPurpose?: string }>();
-  const [scriptVersion, setScriptVersion] = useState("");
-  const [txPurpose, setTxPurpose] = useState("");
-
   const pageInfo = getPageInfo(search);
   const optionList = [3, 6, 9, 12, 15];
-  const size = optionList.indexOf(pageInfo.size) + 1 ? pageInfo.size : 6;
+  const [filterOption, { push: pushFilterOption, removeAt: removeAtFilterOption, clear }] = useList<string>([]);
+
+  useEffect(() => {
+    window.history.replaceState({}, document.title);
+    document.title = `Native Scripts & Smart Contracts | Cardano Blockchain Explorer`;
+  }, []);
+
+  const [showFilter, setShowFiter] = useState(false);
+  const [searchQuery, setSearchQuery] = useState<{ scriptVersion?: string; txPurpose?: string[] }>();
+  const [scriptVersion, setScriptVersion] = useState("");
+  const [size, setSize] = useState(optionList.indexOf(pageInfo.size) + 1 ? pageInfo.size : 6);
+
+  useEffect(() => {
+    if (optionList.indexOf(pageInfo.size) + 1) {
+      setSize(pageInfo.size);
+    } else {
+      setSize(6);
+    }
+  }, [JSON.stringify(pageInfo), pathname]);
 
   const handleApplyFilter = () => {
     setShowFiter(false);
-    setSearchQuery({ scriptVersion, txPurpose });
+    setSearchQuery({ scriptVersion: scriptVersion === "any" ? "" : scriptVersion, txPurpose: filterOption });
     history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
   };
   const handleResetFilter = () => {
     setShowFiter(false);
     setSearchQuery({});
     setScriptVersion("");
-    setTxPurpose("");
+    clear();
     history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
   };
 
   const fetchData = useFetchList<ScriptSmartContracts>(API.SCRIPTS.SMART_CONTRACTS, {
     ...pageInfo,
     size,
-    ...omitBy(searchQuery, (query) => !query)
+    ...omitBy(searchQuery, (query) => !query),
+    formatArrayComma: true
   });
 
   const renderCard = () => {
@@ -72,7 +87,7 @@ const TabSmartContracts = () => {
       return (
         <Box component={Grid} container spacing={2}>
           {[...new Array(size)]?.map((idx) => (
-            <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} xl={3} key={idx}>
+            <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
               <Box component={Skeleton} variant="rectangular" height={"145px"} borderRadius={2} />
             </Grid>
           ))}
@@ -82,7 +97,7 @@ const TabSmartContracts = () => {
     return (
       <Box component={Grid} container spacing={2}>
         {fetchData.data?.map((item, idx) => (
-          <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} xl={3} key={idx}>
+          <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
             <Box height={"100%"}>
               <SmartContractCard data={item} />
             </Box>
@@ -93,48 +108,53 @@ const TabSmartContracts = () => {
   };
   return (
     <Box data-testid="TabNativeScripts">
-      <Box position={"relative"} mb={2} textAlign={"right"}>
-        <Box
-          component={Button}
-          variant="text"
-          px={2}
-          textTransform={"capitalize"}
-          bgcolor={({ palette, mode }) => (mode === "dark" ? palette.secondary[100] : palette.primary[200])}
-          border={({ palette, mode }) => `1px solid ${mode === "dark" ? "none" : palette.primary[200]}`}
-          onClick={() => setShowFiter(!showFilter)}
-          sx={{
-            ":hover": {
-              bgcolor: theme.mode === "dark" ? theme.palette.secondary[100] : theme.palette.primary[200]
-            }
-          }}
-        >
-          <CustomIcon
-            icon={FilterIcon}
-            fill={theme.mode === "dark" ? theme.palette.primary.main : theme.palette.secondary.light}
-            height={18}
-          />
+      <ClickAwayListener
+        onClickAway={() => {
+          setShowFiter(false);
+        }}
+      >
+        <Box position={"relative"} mb={2} textAlign={"right"}>
           <Box
-            ml={1}
-            whiteSpace={"nowrap"}
-            fontWeight={"bold"}
-            color={({ palette, mode }) => (mode === "dark" ? palette.primary.main : palette.secondary.light)}
+            component={Button}
+            variant="text"
+            px={2}
+            textTransform={"capitalize"}
+            bgcolor={({ palette, mode }) => (mode === "dark" ? palette.secondary[100] : palette.primary[200])}
+            border={({ palette, mode }) => `1px solid ${mode === "dark" ? "none" : palette.primary[200]}`}
+            onClick={() => setShowFiter(!showFilter)}
+            sx={{
+              ":hover": {
+                bgcolor: theme.mode === "dark" ? theme.palette.secondary[100] : theme.palette.primary[200]
+              }
+            }}
           >
-            {t("common.filter")}
+            <CustomIcon
+              icon={FilterIcon}
+              fill={theme.mode === "dark" ? theme.palette.primary.main : theme.palette.secondary.light}
+              height={18}
+            />
+            <Box
+              ml={1}
+              whiteSpace={"nowrap"}
+              fontWeight={"bold"}
+              color={({ palette, mode }) => (mode === "dark" ? palette.primary.main : palette.secondary.light)}
+            >
+              {t("common.filter")}
+            </Box>
           </Box>
+          {showFilter && (
+            <FilterComponent
+              handleApplyFilter={handleApplyFilter}
+              setVersion={setScriptVersion}
+              version={scriptVersion}
+              handleResetFilter={handleResetFilter}
+              filterOption={filterOption}
+              pushFilterOption={pushFilterOption}
+              removeAtFilterOption={removeAtFilterOption}
+            />
+          )}
         </Box>
-        {showFilter && (
-          <FilterComponent
-            setTrxPurpose={setTxPurpose}
-            handleApplyFilter={handleApplyFilter}
-            setVersion={setScriptVersion}
-            version={scriptVersion}
-            trxPurpose={txPurpose}
-            handleResetFilter={handleResetFilter}
-            setShowFiter={setShowFiter}
-          />
-        )}
-      </Box>
-
+      </ClickAwayListener>
       {renderCard()}
       <FooterTable
         pagination={{
@@ -157,32 +177,36 @@ export default TabSmartContracts;
 
 interface FilterComponentProps {
   handleResetFilter: () => void;
-  setShowFiter: (show: boolean) => void;
   setVersion: (version: string) => void;
-  setTrxPurpose: (trxPurpose: string) => void;
   handleApplyFilter: () => void;
-  trxPurpose: string;
   version: string;
+  filterOption: string[];
+  pushFilterOption: (filterOption: string) => void;
+  removeAtFilterOption: (index: number) => void;
 }
 
 const FilterComponent: React.FC<FilterComponentProps> = ({
   handleResetFilter,
-  setShowFiter,
-  setTrxPurpose,
   setVersion,
-  trxPurpose,
   version,
-  handleApplyFilter
+  handleApplyFilter,
+  filterOption,
+  removeAtFilterOption,
+  pushFilterOption
 }) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState<string | false>("");
-
+  const transactionPurpose = ["", "SPEND", "MINT", "CERT", "REWARD"];
+  const transactionPurposeI18n: Record<string, string> = {
+    any: t("smartContract.any"),
+    SPEND: t("smartContract.spend"),
+    MINT: t("smartContract.mint"),
+    REWARD: t("smartContract.reward"),
+    CERT: t("smartContract.cert")
+  };
   const handleChooseVersion = (event: React.ChangeEvent<HTMLInputElement>) => {
     setVersion((event.target as HTMLInputElement).value);
-  };
-  const handleChooseTrxPurpose = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTrxPurpose((event.target as HTMLInputElement).value);
   };
 
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
@@ -190,110 +214,146 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
   };
 
   return (
-    <ClickAwayListener
-      onClickAway={() => {
-        setShowFiter(false);
-      }}
-    >
-      <FilterContainer padding={2}>
-        <Box display={"flex"} flexDirection={"column"}>
-          <AccordionContainer expanded={expanded === "version"} onChange={handleChange("version")}>
-            <AccordionSummary>
-              <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                <Box display={"flex"} alignItems={"center"}>
-                  <FilterVersionIcon fill={theme.palette.secondary.main} />
-                  <Box ml={1} color={({ palette }) => palette.secondary.main}>
-                    {t("common.version")}
-                  </Box>
-                </Box>
-                <Box>
-                  {expanded === "version" ? (
-                    <IoIosArrowDown color={theme.palette.secondary.main} />
-                  ) : (
-                    <IoIosArrowUp color={theme.palette.secondary.main} />
-                  )}
+    <FilterContainer padding={2}>
+      <Box display={"flex"} flexDirection={"column"}>
+        <AccordionContainer expanded={expanded === "version"} onChange={handleChange("version")}>
+          <AccordionSummary>
+            <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+              <Box display={"flex"} alignItems={"center"}>
+                <FilterVersionIcon fill={theme.palette.secondary.main} />
+                <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                  {t("common.version")}
                 </Box>
               </Box>
-            </AccordionSummary>
-            <AccordionDetailsFilter>
-              <RadioGroup
-                aria-labelledby="demo-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                value={version}
-                defaultValue={"Any"}
-                onChange={handleChooseVersion}
-              >
-                <FormControlLabel value="" control={<Radio />} label={t("smartContract.any")} />
-                <FormControlLabel value="PLUTUSV1" control={<Radio />} label={t("smartContract.plutusv1")} />
-                <FormControlLabel value="PLUTUSV2" control={<Radio />} label={t("smartContract.plutusv2")} />
-              </RadioGroup>
-            </AccordionDetailsFilter>
-          </AccordionContainer>
+              <Box>
+                {expanded === "version" ? (
+                  <IoIosArrowDown color={theme.palette.secondary.main} />
+                ) : (
+                  <IoIosArrowUp color={theme.palette.secondary.main} />
+                )}
+              </Box>
+            </Box>
+          </AccordionSummary>
+          <AccordionDetailsFilter>
+            <RadioGroup
+              aria-labelledby="demo-controlled-radio-buttons-group"
+              name="controlled-radio-buttons-group"
+              value={version}
+              onChange={handleChooseVersion}
+            >
+              <FormControlLabel
+                value="any"
+                control={
+                  <Radio
+                    sx={{
+                      color: theme.palette.secondary.light
+                    }}
+                  />
+                }
+                label={t("smartContract.any")}
+              />
+              <FormControlLabel
+                value="PLUTUSV1"
+                control={
+                  <Radio
+                    sx={{
+                      color: theme.palette.secondary.light
+                    }}
+                  />
+                }
+                label={t("smartContract.plutusv1")}
+              />
+              <FormControlLabel
+                value="PLUTUSV2"
+                control={
+                  <Radio
+                    sx={{
+                      color: theme.palette.secondary.light
+                    }}
+                  />
+                }
+                label={t("smartContract.plutusv2")}
+              />
+            </RadioGroup>
+          </AccordionDetailsFilter>
+        </AccordionContainer>
 
-          <AccordionContainer
-            expanded={expanded === "trxPurpose"}
-            onChange={handleChange("trxPurpose")}
-            sx={{
-              "::before": {
-                backgroundColor: "transparent"
-              }
-            }}
-          >
-            <AccordionSummary>
-              <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                <Box display={"flex"} alignItems={"center"}>
-                  <CubeIcon width={20} fill={theme.palette.secondary.main} />
-                  <Box ml={1} color={({ palette }) => palette.secondary.main}>
-                    {t("smartContract.trxPurpose")}
-                  </Box>
-                </Box>
-                <Box>
-                  {expanded === "trxPurpose" ? (
-                    <IoIosArrowDown color={theme.palette.secondary.main} />
-                  ) : (
-                    <IoIosArrowUp color={theme.palette.secondary.main} />
-                  )}
+        <AccordionContainer
+          expanded={expanded === "trxPurpose"}
+          onChange={handleChange("trxPurpose")}
+          sx={{
+            "::before": {
+              backgroundColor: "transparent"
+            }
+          }}
+        >
+          <AccordionSummary>
+            <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+              <Box display={"flex"} alignItems={"center"}>
+                <CubeIcon width={20} fill={theme.palette.secondary.main} />
+                <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                  {t("smartContract.trxPurpose")}
                 </Box>
               </Box>
-            </AccordionSummary>
-            <AccordionDetailsFilter>
-              <RadioGroup
-                aria-labelledby="demo-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                value={trxPurpose}
-                defaultValue={"Any"}
-                onChange={handleChooseTrxPurpose}
-              >
-                <FormControlLabel value="" control={<Radio />} label={t("smartContract.any")} />
-                <FormControlLabel value="SPEND" control={<Radio />} label={t("smartContract.spend")} />
-                <FormControlLabel value="MINT" control={<Radio />} label={t("smartContract.mint")} />
-                <FormControlLabel value="CERT" control={<Radio />} label={t("smartContract.reward")} />
-                <FormControlLabel value="REWARD" control={<Radio />} label={t("smartContract.cert")} />
-              </RadioGroup>
-            </AccordionDetailsFilter>
-          </AccordionContainer>
+              <Box>
+                {expanded === "trxPurpose" ? (
+                  <IoIosArrowDown color={theme.palette.secondary.main} />
+                ) : (
+                  <IoIosArrowUp color={theme.palette.secondary.main} />
+                )}
+              </Box>
+            </Box>
+          </AccordionSummary>
+          <AccordionDetailsFilter>
+            {transactionPurpose.map((purpose: string, idx) => (
+              <Box key={idx}>
+                <Checkbox
+                  id={purpose ? purpose : "any"}
+                  checked={filterOption.includes(purpose)}
+                  onChange={(e) =>
+                    e.target.checked
+                      ? pushFilterOption(purpose)
+                      : removeAtFilterOption(filterOption.findIndex((f) => f === purpose))
+                  }
+                  sx={{
+                    color: theme.palette.secondary.light,
+                    "&.Mui-checked": {
+                      color: `${theme.palette.primary.main} !important`
+                    }
+                  }}
+                />{" "}
+                <StyledDropdownItem htmlFor={purpose ? purpose : "any"} style={{ cursor: "pointer" }}>
+                  {purpose ? transactionPurposeI18n[purpose] : transactionPurposeI18n["any"]}
+                </StyledDropdownItem>
+              </Box>
+            ))}
+          </AccordionDetailsFilter>
+        </AccordionContainer>
 
-          <Box mt={1}>
-            <ApplyFilterButton data-testid="apply-filters" onClick={handleApplyFilter}>
-              {t("common.applyFilters")}
-            </ApplyFilterButton>
-          </Box>
-          <Box
-            component={Button}
-            width={"100%"}
-            textTransform={"capitalize"}
-            onClick={handleResetFilter}
-            display={"flex"}
-            alignItems={"center"}
-            mt={1}
-            fontSize={16}
-            color={({ palette }) => `${palette.primary.main} !important`}
+        <Box mt={1}>
+          <ApplyFilterButton
+            data-testid="apply-filters"
+            onClick={handleApplyFilter}
+            disabled={!version && filterOption.length === 0}
           >
-            <Box mr={1}>{t("common.reset")}</Box>
-            <CustomIcon icon={ResetIcon} height={16} fill={theme.palette.primary.main} />
-          </Box>
+            {t("common.applyFilters")}
+          </ApplyFilterButton>
         </Box>
-      </FilterContainer>
-    </ClickAwayListener>
+        <Box
+          component={Button}
+          width={"100%"}
+          textTransform={"capitalize"}
+          onClick={handleResetFilter}
+          display={"flex"}
+          alignItems={"center"}
+          mt={1}
+          fontSize={16}
+          color={({ palette }) => `${palette.primary.main} !important`}
+        >
+          <Box mr={1}>{t("common.reset")}</Box>
+          <CustomIcon icon={ResetIcon} height={16} fill={theme.palette.primary.main} />
+        </Box>
+      </Box>
+    </FilterContainer>
   );
 };

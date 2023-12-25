@@ -62,6 +62,8 @@ const CIP20Modal: React.FC<TCIP20ComplianceModalProps> = (props) => {
           </CustomTooltip>
         ) : (
           <CustomTooltip
+            enterTouchDelay={0}
+            leaveTouchDelay={50000}
             title={<BoxTooltip>{typeof r.value === "object" ? JSON.stringify(r.value) : r.value}</BoxTooltip>}
           >
             <Typography
