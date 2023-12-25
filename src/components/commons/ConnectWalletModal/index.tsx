@@ -4,10 +4,10 @@ import { ConnectWalletButton } from "@cardano-foundation/cardano-connect-with-wa
 import { useTheme, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
+import useToast from "src/commons/hooks/useToast";
 import { QrCodeDarkMode, QrCodeLightMode } from "src/commons/resources";
 import { setOpenModal, setWallet } from "src/stores/user";
 import { NETWORK } from "src/commons/utils/constants";
-import useToast from "src/commons/hooks/useToast";
 
 import { WrapContent } from "./style";
 import StyledModal from "../StyledModal";
@@ -46,6 +46,30 @@ const ConnectWalletModal: React.FC<IProps> = ({ openModal, modalRegister, connec
   const modalContentInput = modalContent?.querySelector("input") as HTMLElement | null;
   const qrImage = p2pConnectButton[0]?.querySelector("img");
   const copiedToast = modalContent?.querySelector("div:last-child") as HTMLElement | null;
+
+  useEffect(() => {
+    function copyToClipboard(text: string) {
+      if (!navigator.clipboard) {
+        return;
+      }
+      navigator.clipboard
+        .writeText(text)
+        .then(function () {
+          toast.success("P2P identifier copied to clipboard!");
+        })
+        .catch(function () {
+          toast.error("Could not copy text to clipboard.");
+        });
+    }
+
+    if (copyButton) {
+      copyButton.addEventListener("click", function () {
+        const textToCopy = "Your text here";
+        copyToClipboard(textToCopy);
+      });
+    }
+  }, [copyButton]);
+
   if (modalContent) {
     modalContent.addEventListener("click", function (event) {
       if (copyButton && (event.target === copyButton || copyButton.contains(event.target as Node))) {
@@ -90,8 +114,7 @@ const ConnectWalletModal: React.FC<IProps> = ({ openModal, modalRegister, connec
       }
       if (copiedToast) {
         Object.assign(copiedToast.style, {
-          top: "-100px",
-          height: "fit-content"
+          display: "none"
         });
       }
     }
