@@ -269,3 +269,4 @@ export const ScriptTypeLabel = {
 export const CIP20_DOCS_URL = "https://cips.cardano.org/cip/CIP-0020";
 export const CIP25_DOCS_URL = "https://cips.cardano.org/cip/CIP-0025";
 export const CIP60_DOCS_URL = "https://cips.cardano.org/cip/CIP-0060";
+export const CIP83_DOCS_URL = "https://cips.cardano.org/cip/CIP-0083";
