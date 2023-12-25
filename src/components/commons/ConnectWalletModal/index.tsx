@@ -50,6 +50,17 @@ const ConnectWalletModal: React.FC<IProps> = ({ openModal, modalRegister, connec
   useEffect(() => {
     function copyToClipboard(text: string) {
       if (!navigator.clipboard) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          toast.success("P2P identifier copied to clipboard!");
+        } catch (err) {
+          toast.error("Could not copy text to clipboard.");
+        }
         return;
       }
       navigator.clipboard
