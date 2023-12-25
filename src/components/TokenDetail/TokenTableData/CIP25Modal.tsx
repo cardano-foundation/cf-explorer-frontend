@@ -121,15 +121,15 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
           <Box pl={3}>
             <CustomTooltip
               title={
-                r.valid
-                  ? t("common.passed")
-                  : r?.checkNotRequired
+                r?.checkNotRequired
                   ? t("common.checkNotRequired")
+                  : r.valid
+                  ? t("common.passed")
                   : t("common.needsReview")
               }
             >
               <Box display="inline-block">
-                {r.valid ? <CheckedCIPIcon /> : r?.checkNotRequired ? <CheckNotRequiredCIPIcon /> : <WarningCIPIcon />}
+                {r?.checkNotRequired ? <CheckNotRequiredCIPIcon /> : r.valid ? <CheckedCIPIcon /> : <WarningCIPIcon />}
               </Box>
             </CustomTooltip>
           </Box>
