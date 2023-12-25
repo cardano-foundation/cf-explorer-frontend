@@ -77,7 +77,11 @@ const Tokens = () => {
       minWidth: "100px",
       render: (r) => (
         <CustomTooltip title={r.policy}>
-          <AssetName to={details.nativeScriptDetail(r.policy)}>{getShortHash(r.policy)}</AssetName>
+          <AssetName
+            to={r.policyIsNativeScript ? details.nativeScriptDetail(r.policy) : details.smartContract(r.policy)}
+          >
+            {getShortHash(r.policy)}
+          </AssetName>
         </CustomTooltip>
       )
     },
