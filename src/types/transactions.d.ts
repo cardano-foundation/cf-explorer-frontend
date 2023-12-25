@@ -168,6 +168,7 @@ type TTCIPProperties = {
   format: string;
   value: string;
   valid: boolean;
+  checkNotRequired?: boolean;
 };
 
 interface Transaction {

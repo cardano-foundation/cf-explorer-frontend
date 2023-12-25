@@ -32,8 +32,7 @@ export const Disconnect = styled(Box)`
   align-items: center;
   margin-top: 26px;
   h4 {
-    color: ${(props) =>
-      props.theme.mode === "light" ? props.theme.palette.error[700] : props.theme.palette.error[100]};
+    color: ${(props) => props.theme.palette.error[700]};
   }
 `;
 

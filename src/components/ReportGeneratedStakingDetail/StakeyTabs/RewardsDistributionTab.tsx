@@ -53,11 +53,11 @@ const RewardsDistributionTab = () => {
     },
     {
       title: t("createdAt"),
-      key: "time",
+      key: "id",
       minWidth: "120px",
       render: (r) => formatDateTimeLocal(r.time),
-      sort: ({ sortValue }) => {
-        sortValue ? setSort(`id,${sortValue}`) : setSort("");
+      sort: ({ sortValue, columnKey }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
     {

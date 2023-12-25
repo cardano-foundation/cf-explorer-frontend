@@ -1,47 +1,146 @@
-import React, { useState } from "react";
-import { capitalize, isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet-core";
-import { CircularProgress, useTheme } from "@mui/material";
-import { IoMdClose } from "react-icons/io";
-import { MdOutlineFileDownload } from "react-icons/md";
+import React, { useEffect } from "react";
+import { capitalize } from "@cardano-foundation/cardano-connect-with-wallet-core";
+import { ConnectWalletButton } from "@cardano-foundation/cardano-connect-with-wallet";
+import { useTheme, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { setOpenModal, setWallet } from "src/stores/user";
-import { NETWORK, SUPPORTED_WALLETS } from "src/commons/utils/constants";
-import { SupportedWallets, Wallet } from "src/types/user";
 import useToast from "src/commons/hooks/useToast";
+import { QrCodeDarkMode, QrCodeLightMode } from "src/commons/resources";
+import { setOpenModal, setWallet } from "src/stores/user";
+import { NETWORK } from "src/commons/utils/constants";
 
-import {
-  CloseButton,
-  ConnectOption,
-  GroupFlex,
-  InstallButton,
-  Title,
-  WalletIcon,
-  WalletItem,
-  WalletName,
-  WrapContent
-} from "./style";
+import { WrapContent } from "./style";
 import StyledModal from "../StyledModal";
-
 interface IProps {
   connect: (name: string, onSuccess: () => void, onError: (error: Error) => void) => Promise<void>;
   onTriggerSignMessage: () => void;
-  isModal?: boolean;
+  openModal: boolean;
+  modalRegister: boolean;
 }
 
-const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, isModal }) => {
+const ConnectWalletModal: React.FC<IProps> = ({ openModal, modalRegister, connect, onTriggerSignMessage }) => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const [walletConnecting, setWalletConnecting] = useState<SupportedWallets | null>(null);
+
+  const [isP2Pconnect, setIsP2Pconnect] = React.useState(false);
+
   const toast = useToast();
   const handleClose = () => {
     setOpenModal(false);
+    setIsP2Pconnect(false);
   };
   const onSuccess = () => {
-    setWalletConnecting(null);
     setOpenModal(false);
     onTriggerSignMessage();
   };
+
+  const p2pConnectButton = Array.from(document.querySelectorAll("#connect-wallet-menu > span")).filter(
+    (span) => span.textContent === "P2P Wallet"
+  );
+
+  const walletMenu = document.getElementById("connect-wallet-menu") as HTMLElement | null;
+  const p2pOptionModal = document.querySelector("#connect-wallet-dropdown>div:first-child") as HTMLElement | null;
+  const modalContent = document.querySelector('[data-testid="modal-content"]') as HTMLElement | null;
+  const subtitle = modalContent?.querySelector("p") as HTMLElement | null;
+  const copyButton = modalContent?.querySelector("button") as HTMLElement | null;
+  const modalContentInput = modalContent?.querySelector("input") as HTMLElement | null;
+  const qrImage = p2pConnectButton[0]?.querySelector("img");
+  const copiedToast = modalContent?.querySelector("div:last-child") as HTMLElement | null;
+
+  useEffect(() => {
+    function copyToClipboard(text: string) {
+      if (!navigator.clipboard) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          toast.success("P2P identifier copied to clipboard!");
+        } catch (err) {
+          toast.error("Could not copy text to clipboard.");
+        }
+        return;
+      }
+      navigator.clipboard
+        .writeText(text)
+        .then(function () {
+          toast.success("P2P identifier copied to clipboard!");
+        })
+        .catch(function () {
+          toast.error("Could not copy text to clipboard.");
+        });
+    }
+
+    if (copyButton) {
+      copyButton.addEventListener("click", function () {
+        const textToCopy = "Your text here";
+        copyToClipboard(textToCopy);
+      });
+    }
+  }, [copyButton]);
+
+  if (modalContent) {
+    modalContent.addEventListener("click", function (event) {
+      if (copyButton && (event.target === copyButton || copyButton.contains(event.target as Node))) {
+        // Do nothing
+      } else {
+        event.stopPropagation();
+      }
+    });
+  }
+
+  if (qrImage && qrImage instanceof HTMLImageElement) {
+    qrImage.src = theme.isDark ? QrCodeDarkMode : QrCodeLightMode;
+  }
+
+  p2pConnectButton[0]?.addEventListener("click", () => {
+    setIsP2Pconnect(true);
+    if (walletMenu) {
+      walletMenu.style.display = "none";
+    }
+    if (p2pOptionModal && modalContent) {
+      Object.assign(p2pOptionModal.style, {
+        position: "static",
+        display: "block",
+        backgroundColor: theme.isDark ? theme.palette.secondary[0] : theme.palette.primary[100]
+      });
+      Object.assign(modalContent.style, {
+        backgroundColor: theme.isDark ? theme.palette.secondary[0] : theme.palette.primary[100],
+        margin: " 0 auto",
+        width: "-webkit-fill-available",
+        border: "none",
+        padding: "0",
+        color: theme.palette.secondary.main
+      });
+      if (subtitle) {
+        subtitle.style.maxWidth = "100%";
+      }
+      if (modalContentInput) {
+        Object.assign(modalContentInput.style, {
+          backgroundColor: "transparent",
+          color: theme.palette.secondary.main
+        });
+      }
+      if (copiedToast) {
+        Object.assign(copiedToast.style, {
+          display: "none"
+        });
+      }
+    }
+  });
+
+  useEffect(() => {
+    return setIsP2Pconnect(false);
+  }, []);
+
+  useEffect(() => {
+    if (modalRegister) {
+      setOpenModal(false);
+    }
+  }, [modalRegister]);
+
   const onError = (error: Error, walletName: string) => {
     if (error.name === "WrongNetworkTypeError") {
       toast.error(
@@ -59,71 +158,90 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
     } else {
       toast.error(t("message.wallet.created", { walletName }));
     }
-    setWalletConnecting(null);
   };
-  const handleConnect = (walletName: SupportedWallets) => {
-    setWalletConnecting(walletName);
+  const handleConnect = (walletName: string) => {
     setWallet(walletName);
+    setOpenModal(false);
     connect(
       walletName,
       () => onSuccess(),
       (error: Error) => onError(error, walletName)
     );
   };
-  const WrapContainer: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    return isModal ? (
-      <StyledModal
-        open
-        title={t("common.connect2wallet.title")}
-        handleCloseModal={walletConnecting ? () => null : handleClose}
-      >
-        <WrapContent>{children}</WrapContent>
-      </StyledModal>
-    ) : (
-      <ConnectOption>
-        <WrapContent>
-          <Title>{t("common.connect2wallet.title")}</Title>
-          <CloseButton connecting={walletConnecting ? 1 : 0} onClick={walletConnecting ? undefined : handleClose}>
-            <IoMdClose color={theme.palette.secondary.light} />
-          </CloseButton>
-          {children}
-        </WrapContent>
-      </ConnectOption>
-    );
-  };
-  const handleOpenLink = (wallet: Wallet) => {
-    window.open(wallet.link, "_blank");
-  };
+
   return (
-    <WrapContainer>
-      <>
-        {SUPPORTED_WALLETS.filter((wallet) => wallet.networks.includes(NETWORK)).map((wallet) => {
-          const active = walletConnecting === wallet.name;
-          return (
-            <WalletItem
-              key={wallet.name}
-              connecting={walletConnecting ? 1 : 0}
-              onClick={() => !walletConnecting && handleConnect(wallet.name)}
-            >
-              <GroupFlex>
-                <WalletName>{wallet.name}</WalletName>
-                {active ? <CircularProgress size={30} /> : ""}
-              </GroupFlex>
-              <GroupFlex>
-                {!isWalletInstalled(wallet.name.toLocaleLowerCase()) ? (
-                  <InstallButton onClick={() => handleOpenLink(wallet)}>
-                    {t("common.notInstalled")} <MdOutlineFileDownload size={18} />
-                  </InstallButton>
-                ) : (
-                  <i />
-                )}
-                <WalletIcon src={wallet.icon} alt={wallet.name} />
-              </GroupFlex>
-            </WalletItem>
-          );
-        })}
-      </>
-    </WrapContainer>
+    <StyledModal
+      open={openModal}
+      title={isP2Pconnect ? t("account.connectP2PWallet") : t("common.connect2wallet.title")}
+      handleCloseModal={handleClose}
+    >
+      <WrapContent
+        sx={{
+          padding: "0 40px",
+          position: "static"
+        }}
+      >
+        <ConnectWalletButton
+          onConnect={handleConnect}
+          peerConnectEnabled={true}
+          hideActionMenu={true}
+          customCSS={`
+            & > button {
+            display: none;
+            };
+            width: 100%;
+            max-width: 100%;
+            #connect-wallet-menu {
+              display: flex;
+              position:static;
+              flex-direction: column-reverse;
+              font-family:Roboto,sans-serif;
+              font-size: 16px;
+              font-weight: 700;
+              width: 100%;
+              max-width: 100%;
+              & > span {
+              padding: 20px;
+              margin-bottom: 16px;
+              border-radius: 10px;
+              background-color: ${theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100]};
+              border: 1px solid ${theme.palette.primary[200]};
+              color: ${theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light};
+              display: flex;
+              justify-content: space-between;
+              flex-direction: row-reverse;
+            };
+            `}
+        />
+        {isP2Pconnect && (
+          <Button
+            sx={{
+              marginTop: "20px",
+              width: "100%",
+              maxWidth: "100%",
+              backgroundColor: theme.palette.primary[100],
+              color: theme.palette.secondary.light,
+              border: `1px solid ${theme.palette.primary[200]}`,
+              "&:hover": {
+                backgroundColor: theme.palette.primary[100]
+              }
+            }}
+            onClick={() => {
+              setIsP2Pconnect(false);
+              const walletMenu = document.getElementById("connect-wallet-menu") as HTMLElement | null;
+              if (walletMenu) {
+                walletMenu.style.display = "flex";
+              }
+              if (p2pOptionModal) {
+                p2pOptionModal.style.display = "none";
+              }
+            }}
+          >
+            Cancel
+          </Button>
+        )}
+      </WrapContent>
+    </StyledModal>
   );
 };
 
