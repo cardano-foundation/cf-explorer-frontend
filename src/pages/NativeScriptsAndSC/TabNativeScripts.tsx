@@ -1,72 +1,3 @@
-// import { useHistory, useLocation } from "react-router-dom";
-// import { useTranslation } from "react-i18next";
-// import { stringify } from "qs";
-// import { Box } from "@mui/material";
-
-// import useFetchList from "src/commons/hooks/useFetchList";
-// import { API } from "src/commons/utils/api";
-// import { getPageInfo } from "src/commons/utils/helper";
-// import { details } from "src/commons/routers";
-// import { Column } from "src/types/table";
-// import Table from "src/components/commons/Table";
-// import DynamicEllipsisText from "src/components/DynamicEllipsisText";
-
-// import { StyledLink } from "./styles";
-
-// const TabNativeScripts = () => {
-//   const { search } = useLocation();
-//   const pageInfo = getPageInfo(search);
-//   const { t } = useTranslation();
-//   const history = useHistory();
-
-//   const fetchData = useFetchList<NativeScripts>(API.SCRIPTS.NATIVE_SCRIPTS, pageInfo);
-
-//   const columns: Column<NativeScripts>[] = [
-//     {
-//       title: t("ScriptHash"),
-//       key: "scriptHash",
-//       minWidth: "170px",
-//       maxWidth: "30vw",
-//       render: (r) => (
-//         <StyledLink to={details.nativeScriptDetail(r.scriptHash)}>
-//           <DynamicEllipsisText value={r.scriptHash} isTooltip />
-//         </StyledLink>
-//       )
-//     },
-//     {
-//       title: t("NumberOfTokens"),
-//       key: "numberOfTokens"
-//     },
-//     {
-//       title: t("NumberOfAssetHolders"),
-//       key: "numberOfAssetHolders"
-//     }
-//   ];
-
-//   return (
-//     <Box data-testid="TabNativeScripts">
-//       <Table
-//         {...fetchData}
-//         columns={columns}
-//         screen="smartContracts"
-//         total={{ count: fetchData.total, title: t("common.totalTxs") }}
-//         rowKey="scriptHash"
-//         height="unset"
-//         maxHeight={380}
-//         pagination={{
-//           ...pageInfo,
-//           total: fetchData.total,
-//           onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
-//         }}
-//         style={{ transform: "translateY(-20px)" }}
-//         isCenterLoading={true}
-//       />
-//     </Box>
-//   );
-// };
-
-// export default TabNativeScripts;
-
 import {
   Box,
   Button,
@@ -91,7 +22,7 @@ import { getPageInfo } from "src/commons/utils/helper";
 import { API } from "src/commons/utils/api";
 import { FooterTable } from "src/components/commons/Table";
 import CustomIcon from "src/components/commons/CustomIcon";
-import { FilterIcon, MultiSig, ResetIcon, TimeLock } from "src/commons/resources";
+import { FilterIcon, MultiSig, ResetIcon, SortNative, TimeLock } from "src/commons/resources";
 
 import { NativeScriptCard } from "./Card";
 import {
@@ -99,6 +30,7 @@ import {
   AccordionDetailsFilter,
   AccordionSummary,
   ApplyFilterButton,
+  ButtonSort,
   FilterContainer
 } from "./styles";
 
@@ -115,10 +47,11 @@ const TabNativeScripts = () => {
   }, []);
 
   const [showFilter, setShowFiter] = useState(false);
-  const [searchQuery, setSearchQuery] = useState<{ openTimeLocked?: string; isMultiSig?: string }>();
+  const [searchQuery, setSearchQuery] = useState<{ openTimeLocked?: string; isMultiSig?: string; sort?: string }>();
   const [size, setSize] = useState(optionList.indexOf(pageInfo.size) + 1 ? pageInfo.size : 6);
   const [openTimeLocked, setOpenTimeLocked] = useState<string>("");
   const [isMultiSig, setIsMultiSig] = useState<string>("");
+  const [sort, setSort] = useState<string>("");
 
   useEffect(() => {
     if (optionList.indexOf(pageInfo.size) + 1) {
@@ -130,13 +63,17 @@ const TabNativeScripts = () => {
 
   const handleApplyFilter = () => {
     setShowFiter(false);
-    setSearchQuery({ openTimeLocked, isMultiSig });
+    setSearchQuery({
+      openTimeLocked: openTimeLocked === "any" ? "" : openTimeLocked,
+      isMultiSig: isMultiSig === "any" ? "" : isMultiSig,
+      sort
+    });
     history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
   };
   const handleResetFilter = () => {
     setShowFiter(false);
     setSearchQuery({});
-
+    setSort("");
     history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
   };
 
@@ -215,6 +152,8 @@ const TabNativeScripts = () => {
               setOpenTimeLocked={setOpenTimeLocked}
               isMultiSig={isMultiSig}
               setIsMultiSig={setIsMultiSig}
+              setSort={setSort}
+              sort={sort}
             />
           )}
         </Box>
@@ -246,6 +185,8 @@ interface FilterComponentProps {
   setOpenTimeLocked: (value: string) => void;
   isMultiSig: string;
   setIsMultiSig: (value: string) => void;
+  setSort: (value: string) => void;
+  sort: string;
 }
 
 const FilterComponent: React.FC<FilterComponentProps> = ({
@@ -254,7 +195,9 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
   isMultiSig,
   openTimeLocked,
   setIsMultiSig,
-  setOpenTimeLocked
+  setOpenTimeLocked,
+  setSort,
+  sort
 }) => {
   const theme = useTheme();
   const { t } = useTranslation();
@@ -297,11 +240,10 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
               aria-labelledby="demo-controlled-radio-buttons-group"
               name="controlled-radio-buttons-group"
               value={openTimeLocked}
-              defaultValue={"Any"}
               onChange={handleChooseTimeLoked}
             >
               <FormControlLabel
-                value=""
+                value="any"
                 control={
                   <Radio
                     sx={{
@@ -367,11 +309,10 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
               aria-labelledby="demo-controlled-radio-buttons-group"
               name="controlled-radio-buttons-group"
               value={isMultiSig}
-              defaultValue={"Any"}
               onChange={handleChooseMultiSig}
             >
               <FormControlLabel
-                value=""
+                value="any"
                 control={
                   <Radio
                     sx={{
@@ -406,9 +347,25 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
             </RadioGroup>
           </AccordionDetailsFilter>
         </AccordionContainer>
+        <Box component={ButtonSort} onClick={() => setSort("numberOfTokens,DESC")}>
+          <SortNative
+            fill={sort.includes("numberOfTokens") ? theme.palette.success[700] : theme.palette.secondary.main}
+          />
+          <Box ml={1}>{t("NumberOfTokens")}</Box>
+        </Box>
+        <Box component={ButtonSort} onClick={() => setSort("numberOfAssetHolders,DESC")}>
+          <SortNative
+            fill={sort.includes("numberOfAssetHolders") ? theme.palette.success[700] : theme.palette.secondary.main}
+          />
+          <Box ml={1}>{t("NumberOfAssetHolders")}</Box>
+        </Box>
 
         <Box mt={1}>
-          <ApplyFilterButton data-testid="apply-filters" onClick={handleApplyFilter}>
+          <ApplyFilterButton
+            data-testid="apply-filters"
+            onClick={handleApplyFilter}
+            disabled={!isMultiSig && !sort && !openTimeLocked}
+          >
             {t("common.applyFilters")}
           </ApplyFilterButton>
         </Box>

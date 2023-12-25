@@ -64,7 +64,7 @@ const TabSmartContracts = () => {
 
   const handleApplyFilter = () => {
     setShowFiter(false);
-    setSearchQuery({ scriptVersion, txPurpose: filterOption });
+    setSearchQuery({ scriptVersion: scriptVersion === "any" ? "" : scriptVersion, txPurpose: filterOption });
     history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
   };
   const handleResetFilter = () => {
@@ -239,11 +239,10 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
               aria-labelledby="demo-controlled-radio-buttons-group"
               name="controlled-radio-buttons-group"
               value={version}
-              defaultValue={"Any"}
               onChange={handleChooseVersion}
             >
               <FormControlLabel
-                value=""
+                value="any"
                 control={
                   <Radio
                     sx={{
@@ -332,7 +331,11 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
         </AccordionContainer>
 
         <Box mt={1}>
-          <ApplyFilterButton data-testid="apply-filters" onClick={handleApplyFilter}>
+          <ApplyFilterButton
+            data-testid="apply-filters"
+            onClick={handleApplyFilter}
+            disabled={!version && filterOption.length === 0}
+          >
             {t("common.applyFilters")}
           </ApplyFilterButton>
         </Box>

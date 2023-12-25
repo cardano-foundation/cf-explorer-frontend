@@ -16,6 +16,13 @@ type NativeScriptsList = {
     name: string;
     policy: string;
     policyIsNativeScript: boolean;
+    metadata: {
+      decimals: number;
+      description: string;
+      logo: string;
+      ticker: string;
+      url: string;
+    };
   }[];
 };
 
