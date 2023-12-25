@@ -26,7 +26,8 @@ const token: IToken = {
   numberOfHolders: 50,
   tokenType: "ERC20",
   tokenLastActivity: "2023-07-20T10:00:00Z",
-  metadataJson: JSON.stringify(tokenMetadata)
+  metadataJson: JSON.stringify(tokenMetadata),
+  policyIsNativeScript: false
 };
 
 jest.mock("src/commons/hooks/useFetch");
