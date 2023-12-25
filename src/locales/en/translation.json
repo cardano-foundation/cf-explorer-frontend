@@ -924,5 +924,6 @@
   "CIP20.transactionMessage": "Transaction Message",
   "CIP20.viewMessage": "View Raw Metadata",
   "CIP20.showMore": "Show More",
-  "CIP20.showLess": "Show Less"
+  "CIP20.showLess": "Show Less",
+  "token.metadataCheck": "Metadata Check: "
 }

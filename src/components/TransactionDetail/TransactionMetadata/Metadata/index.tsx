@@ -124,9 +124,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
             </Box>
             {String(metadata.label) === String(CIPLabel721) && (
               <CIPHeader>
-                <CIPHeaderTitle>
-                  {t("cip25.compliance")} <InfoSolidIcon width="16px" height="16px" />{" "}
-                </CIPHeaderTitle>
+                <CIPHeaderTitle>{t("token.metadataCheck")}</CIPHeaderTitle>
                 <CIPChips>
                   {!isNil(metadata.metadataCIP25.valid) && (
                     <CIP25Badge
