@@ -1,4 +1,4 @@
-import { alpha, Box, styled } from "@mui/material";
+import { alpha, Box, Button, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const Wrapper = styled(Box)`
@@ -232,3 +232,16 @@ export const MetaDataJSONValueText = styled(MetaDataValue)`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 `;
+
+export const DecryptButton = styled(Button)(({ theme }) => ({
+  textTransform: "capitalize",
+  color: theme.palette.secondary[0],
+  fontWeight: "bold",
+  fontSize: 14,
+  padding: theme.spacing(1, 2),
+  background: theme.palette.primary.main,
+  borderRadius: theme.spacing(1),
+  ":hover": {
+    background: theme.palette.primary.dark
+  }
+}));

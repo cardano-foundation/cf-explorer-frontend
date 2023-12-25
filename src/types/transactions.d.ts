@@ -256,6 +256,7 @@ interface Transaction {
     label: number;
     value: string;
     metadataCIP20: { valid?: boolean; requiredProperties?: TTCIP25Properties[] };
+    metadataCIP83: { valid?: boolean; requiredProperties?: TTCIP25Properties[] };
     metadataCIP25: CIP;
     metadataCIP60: CIP;
   }[];

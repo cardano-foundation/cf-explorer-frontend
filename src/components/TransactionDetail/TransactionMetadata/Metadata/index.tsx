@@ -13,11 +13,15 @@ import CIP25Badge from "src/components/commons/CIP25Badge";
 import CIP60Badge from "src/components/commons/CIP60Badge";
 import CIP20Badge from "src/components/commons/CIP20Badge";
 import CIP20Modal from "src/components/CIPComplianceModal/CIP20Modal";
+import CIP83Badge from "src/components/commons/CIP83Badge";
+import CIP83Modal from "src/components/CIPComplianceModal/CIP83Modal";
+import PassphraseDecryptModal from "src/components/CIPComplianceModal/PassphraseDecryptModal";
 
 import {
   CIPChips,
   CIPHeader,
   CIPHeaderTitle,
+  DecryptButton,
   Header,
   MetaDataJSONValue,
   MetaDataJSONValueText,
@@ -38,7 +42,8 @@ interface MetadataProps {
 enum CIP {
   CIP20 = 20,
   CIP25 = 25,
-  CIP60 = 60
+  CIP60 = 60,
+  CIP83 = 83
 }
 
 const CIPLabel721 = 721;
@@ -51,6 +56,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
   const [selectedIndedx, setSelectedIndex] = useState<number | null>(null);
   const [limitRow, setLimitRow] = useState<number>(LIMIT_MESSAGE_ROW);
   const [cip, setCip] = useState<CIP>(CIP.CIP25);
+  const [openPassphrasseModal, setOpenPassphrasseModal] = useState<boolean>(false);
   const [selectedText, setSelectedText] = useState<{ label: number; value: string } | null>(null);
 
   const renderMessage = (requireValue: Transaction["metadata"][0]["metadataCIP20"]["requiredProperties"]) => {
@@ -149,12 +155,11 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
               </CIPHeader>
             )}
             {String(metadata.label) === String(CIPLabel674) &&
-              metadata?.metadataCIP20?.requiredProperties &&
-              metadata.metadataCIP20?.requiredProperties.length > 0 && (
+              (metadata?.metadataCIP20?.valid || metadata?.metadataCIP83?.valid) && (
                 <CIPHeader>
                   <CIPHeaderTitle>{t("token.metadataCheck")}</CIPHeaderTitle>
                   <CIPChips>
-                    {!isNil(metadata?.metadataCIP20?.valid) && (
+                    {!isNil(metadata?.metadataCIP20?.valid) && !metadata?.metadataCIP83?.valid && (
                       <CIP20Badge
                         onClick={() => {
                           setSelectedIndex(idx);
@@ -162,6 +167,16 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
                         }}
                         tooltipTitle={metadata?.metadataCIP20?.valid ? t("common.passed") : t("common.needsReview")}
                         type={metadata?.metadataCIP20?.valid ? "success" : "warning"}
+                      />
+                    )}
+                    {!isNil(metadata?.metadataCIP83?.valid) && (
+                      <CIP83Badge
+                        onClick={() => {
+                          setSelectedIndex(idx);
+                          setCip(CIP.CIP83);
+                        }}
+                        tooltipTitle={metadata?.metadataCIP83?.valid ? t("common.passed") : t("common.needsReview")}
+                        type={metadata?.metadataCIP83?.valid ? "success" : "warning"}
                       />
                     )}
                   </CIPChips>
@@ -184,6 +199,14 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
               <MetadataContent>
                 <MetadataJSONTitle>{t("CIP20.transactionMessage")}</MetadataJSONTitle>
                 <MetaDataJSONValue>{renderMessage(metadata.metadataCIP20.requiredProperties)}</MetaDataJSONValue>
+              </MetadataContent>
+            )}
+          {String(metadata.label) === String(CIPLabel674) &&
+            !isNil(metadata?.metadataCIP83?.valid) &&
+            metadata?.metadataCIP83.valid && (
+              <MetadataContent>
+                <MetadataJSONTitle> </MetadataJSONTitle>
+                <DecryptButton onClick={() => setOpenPassphrasseModal(true)}>{t("CIP83.decryptMessage")}</DecryptButton>
               </MetadataContent>
             )}
         </MetadataWrapper>
@@ -214,6 +237,12 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
         open={typeof selectedIndedx === "number" && cip === CIP.CIP20}
         onClose={() => setSelectedIndex(null)}
       />
+      <CIP83Modal
+        data={data?.[selectedIndedx || 0].metadataCIP83?.requiredProperties}
+        open={typeof selectedIndedx === "number" && cip === CIP.CIP83}
+        onClose={() => setSelectedIndex(null)}
+      />
+      <PassphraseDecryptModal open={openPassphrasseModal} onClose={() => setOpenPassphrasseModal(false)} />
     </Box>
   );
 };
