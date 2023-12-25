@@ -900,6 +900,7 @@
   "cip25.compliance": "CIP Compliance",
   "token.CIP-25": "CIP-25",
   "token.CIP-20": "CIP-20",
+  "token.CIP-83": "CIP-83",
   "token.requiredProperties": "Required Properties",
   "token.optionalProperties": "Optional Properties",
   "token.otherProperties": "Other Properties",
@@ -915,8 +916,11 @@
   "cip60.notCompliance": "This token is not compliant with CIP 60. See the details",
   "token.cip20Title": "CIP 20 Compliance",
   "cip20.viewDocs": "View CIP 20 document",
+  "token.cip83Title": "CIP 83 Compliance",
+  "cip83.viewDocs": "View CIP 83 document",
   "token.cip60otherProperties.desc": "Any metadata that doesn't fall into the \"required\" or \"optional\" categories according to the CIP-60 specification is not verified for compliance and therefore won't be displayed in this view.",
   "token.cip20otherProperties.desc": "Any metadata that doesn't fall into the \"required\" or \"optional\" categories according to the CIP-20 specification is not verified for compliance and therefore won't be displayed in this view.",
+  "token.cip83otherProperties.desc": "Any metadata that doesn't fall into the \"required\" or \"optional\" categories according to the CIP-83 specification is not verified for compliance and therefore won't be displayed in this view.",
   "cip.versionCheck": "The metadata version should be 1 or 2 in order to comply with CIP-60",
   "outputs.label": "Outputs",
   "cip.warningVersion1": "This compliance check is based on the deprecated music token version v1",
@@ -925,5 +929,7 @@
   "CIP20.viewMessage": "View Raw Metadata",
   "CIP20.showMore": "Show More",
   "CIP20.showLess": "Show Less",
-  "token.metadataCheck": "Metadata Check: "
+  "token.metadataCheck": "Metadata Check: ",
+  "CIP83.decryptMessage": "Decrypt Message",
+  "CIP83.passphrase": "Passphrase"
 }
