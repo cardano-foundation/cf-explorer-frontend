@@ -512,3 +512,4 @@ export { ReactComponent as TimeLock } from "./icons/timeLock.svg";
 export { ReactComponent as MultiSig } from "./icons/multiSig.svg";
 export { ReactComponent as ShowMore } from "./icons/showmore.svg";
 export { ReactComponent as ShowLess } from "./icons/showless.svg";
+export { ReactComponent as SortNative } from "./icons/sortNative.svg";

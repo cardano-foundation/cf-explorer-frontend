@@ -62,14 +62,38 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
                   title={item.displayName || item.name || getShortHash(item.fingerprint) || ""}
                 >
                   <Link to={details.token(item.fingerprint)}>
-                    <Chip>{item.displayName || item.name || getShortHash(item.fingerprint) || ""}</Chip>
+                    <Chip pl={`${item.metadata && item.metadata.logo ? "4px" : 1} !important`}>
+                      <Box display={"flex"} alignItems={"center"} height={"100%"}>
+                        {item.metadata && item.metadata.logo && (
+                          <Box
+                            height={23}
+                            mr={1}
+                            width={23}
+                            borderRadius={"50%"}
+                            sx={{
+                              backgroundImage: `url(${item?.metadata?.logo})`,
+                              backgroundPosition: "center",
+                              backgroundSize: "contain",
+                              backgroundRepeat: "no-repeat"
+                            }}
+                          />
+                        )}
+                        <Box overflow={"hidden"} textOverflow={"ellipsis"}>
+                          {item.displayName || item.name || getShortHash(item.fingerprint) || ""}
+                        </Box>
+                      </Box>
+                    </Chip>
                   </Link>
                 </CustomTooltip>
               );
             })}
           {(data.numberOfTokens || 0) > (data.tokens || []).length && (
             <Link to={details.nativeScriptDetail(data.scriptHash, "token")}>
-              <Chip>{`+${(data.numberOfTokens || 0) - (data.tokens || []).length} More`}</Chip>
+              <Chip>
+                <Box display={"flex"} alignItems={"center"} height={"100%"}>
+                  {`+${(data.numberOfTokens || 0) - (data.tokens || []).length} More`}
+                </Box>
+              </Chip>
             </Link>
           )}
           {data.tokens && data.tokens.length === 0 && (
@@ -177,6 +201,7 @@ const Chip = styled(Box)(({ theme }) => {
     maxWidth: "120px",
     overflow: "hidden",
     textOverflow: "ellipsis",
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
+    height: 20
   };
 });
