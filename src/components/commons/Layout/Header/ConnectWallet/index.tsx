@@ -129,6 +129,11 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
       setSubmitting(false);
     }
   };
+
+  if (isEnabled && stakeAddress && isSign && customButton) {
+    return <>{customButton({ handleClick })}</>;
+  }
+
   if (isEnabled && stakeAddress && isSign) {
     return (
       <>

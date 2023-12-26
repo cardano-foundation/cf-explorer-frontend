@@ -137,6 +137,8 @@
   "message.bookmark.maximum": "Maximum bookmarks is {{value}}!",
   "message.bookmark.removed": "Bookmark has been removed",
   "message.common.tryAgain": "Please try again!",
+  "message.common.copySuccess": "P2P identifier copied to clipboard!",
+  "message.common.copyFailed": "Could not copy text to clipboard.",
   "message.signedOut": "You are now signed out",
   "message.report.generated": "Report generated successfully",
   "message.bookmark.deleted": "Delete bookmark successfully",
