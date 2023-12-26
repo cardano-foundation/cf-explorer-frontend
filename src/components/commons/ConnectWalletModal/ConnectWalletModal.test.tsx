@@ -38,7 +38,13 @@ describe("BookmarkButton component", () => {
   });
   it("should all the wallets render", () => {
     render(
-      <ConnectWalletModal modalRegister={true} connect={jest.fn()} openModal={true} onTriggerSignMessage={jest.fn()} />
+      <ConnectWalletModal
+        modalRegister={true}
+        connect={jest.fn()}
+        modalSignMessage={true}
+        openModal={true}
+        onTriggerSignMessage={jest.fn()}
+      />
     );
     const eternlWallet = screen.getByRole("heading", {
       name: /eternl/i
@@ -58,7 +64,13 @@ describe("BookmarkButton component", () => {
   it("should compoennt connect the wallet", async () => {
     const onConnect = jest.fn();
     render(
-      <ConnectWalletModal connect={onConnect} openModal={true} onTriggerSignMessage={jest.fn()} modalRegister={true} />
+      <ConnectWalletModal
+        connect={onConnect}
+        openModal={true}
+        modalSignMessage={true}
+        onTriggerSignMessage={jest.fn()}
+        modalRegister={true}
+      />
     );
     const ceternWalletButton = screen.getByRole("img", { name: /flint/i });
     await userEvent.click(ceternWalletButton);
