@@ -907,6 +907,7 @@
   "token.cip25otherProperties.desc": "Any metadata that doesn't fall into the \"required\" or \"optional\" categories according to the CIP-25 specification is not verified for compliance and therefore won't be displayed in this view.",
   "common.passed": "Passed",
   "common.needsReview": "Needs Review",
+  "common.checkNotRequired": "Check Not Required",
   "protocol.trxModalSubTitle": "Confirmed by transactions",
   "cip25.viewDocs": "View CIP 25 document",
   "common.severUnknownErrorMsg": "Something went wrong on our side, please try again later or report an issue",
