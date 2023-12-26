@@ -1,5 +1,7 @@
 import { Box, Typography, styled } from "@mui/material";
 
+import Table from "../commons/Table";
+
 export const CIPHeader = styled(Box)`
   display: flex;
   justify-content: flex-start;
@@ -65,7 +67,7 @@ export const OtherPropetiesDesc = styled(Typography)`
   color: ${({ theme }) => (theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600])} !important;
 `;
 
-export const TokenLabel = styled(Typography)`
+export const CIPModalDesc = styled(Typography)`
   font-size: 20px;
   color: ${({ theme }) => theme.palette.secondary.light};
   font-weight: 400;
@@ -99,4 +101,28 @@ export const BoxTooltip = styled(Box)(({ theme }) => ({
       background: theme.palette.primary[100]
     }
   }
+}));
+
+export const CIPPropertyTable = styled(Table)(({ theme }) => ({
+  marginBottom: "30px",
+  "& .table-wrapper": {
+    padding: 0,
+    border: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
+    borderBottom: "0px",
+    boxShadow: theme.shadow.card
+  },
+  "& td, th": {
+    borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
+    paddingTop: "18px",
+    paddingBottom: "18px"
+  },
+
+  "& tr th:nth-child(4), & tr td:nth-child(4)": {
+    borderLeft: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`
+  },
+
+  "& tr th:nth-child(4), & tr th:nth-child(5), & tr th:nth-child(6), & tr td:nth-child(4), & tr td:nth-child(5), & tr td:nth-child(6) ":
+    {
+      backgroundColor: theme.isDark ? theme.palette.secondary[0] : theme.palette.primary[100]
+    }
 }));

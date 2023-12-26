@@ -7,16 +7,15 @@ import { decryptCardanoMessage, isJson } from "src/commons/utils/helper";
 import CIP60Modal from "src/components/CIPComplianceModal/CIP60Modal";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import ParseScriptModal from "src/components/ParseScriptModal";
-import CIP25Modal from "src/components/TokenDetail/TokenTableData/CIP25Modal";
 import { ShowLess, ShowMore, WarningCIPIcon } from "src/commons/resources";
 import CIP25Badge from "src/components/commons/CIP25Badge";
 import CIP60Badge from "src/components/commons/CIP60Badge";
-import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import CIP20Badge from "src/components/commons/CIP20Badge";
 import CIP20Modal from "src/components/CIPComplianceModal/CIP20Modal";
 import CIP83Badge from "src/components/commons/CIP83Badge";
 import CIP83Modal from "src/components/CIPComplianceModal/CIP83Modal";
 import PassphraseDecryptModal from "src/components/CIPComplianceModal/PassphraseDecryptModal";
+import CIP25Modal from "src/components/CIPComplianceModal/CIP25Modal";
 
 import {
   BadgeContainer,
@@ -245,9 +244,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
             {String(metadata.label) === String(CIPLabel674) &&
               (metadata?.metadataCIP20?.valid || metadata?.metadataCIP83?.valid) && (
                 <CIPHeader>
-                  <CIPHeaderTitle>
-                    {t("cip25.compliance")} <InfoSolidIcon width="16px" height="16px" />{" "}
-                  </CIPHeaderTitle>
+                  <CIPHeaderTitle>{t("token.metadataCheck")}</CIPHeaderTitle>
                   <CIPChips>
                     {!isNil(metadata?.metadataCIP20?.valid) && !metadata?.metadataCIP83?.valid && (
                       <CIP20Badge
