@@ -133,6 +133,7 @@
   "site.github": "Github",
   "message.wallet.changeSuccess": "Change wallet successfully!",
   "message.common.somethingWentWrong": "Something went wrong!",
+  "message.common.somethingWentWrongDecrypt": "Unable to decrypt data!",
   "message.bookmark.added": "Bookmark has been added",
   "message.bookmark.maximum": "Maximum bookmarks is {{value}}!",
   "message.bookmark.removed": "Bookmark has been removed",
@@ -959,6 +960,7 @@
   "CIP20.showLess": "Show Less",
   "CIP83.decryptMessage": "Decrypt Message",
   "CIP83.passphrase": "Passphrase",
+  "CIP83.notSupportEnc": "Encryption Method Not Supported",
   "token.metadataCheck": "Metadata Check",
   "nativeScript.noToken": "No Tokens Found"
 }
