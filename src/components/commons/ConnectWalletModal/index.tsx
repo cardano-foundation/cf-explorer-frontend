@@ -50,26 +50,21 @@ const ConnectWalletModal: React.FC<IProps> = ({ openModal, modalRegister, connec
   useEffect(() => {
     function copyToClipboard(text: string) {
       if (!navigator.clipboard) {
-        const textArea = document.createElement("textarea");
-        textArea.value = text;
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
         try {
           document.execCommand("copy");
-          toast.success("P2P identifier copied to clipboard!");
+          toast.success(t("message.common.copySuccess"));
         } catch (err) {
-          toast.error("Could not copy text to clipboard.");
+          toast.error("message.common.copyFailed");
         }
         return;
       }
       navigator.clipboard
         .writeText(text)
         .then(function () {
-          toast.success("P2P identifier copied to clipboard!");
+          toast.success(t("message.common.copySuccess"));
         })
         .catch(function () {
-          toast.error("Could not copy text to clipboard.");
+          toast.error("message.common.copyFailed");
         });
     }
 
@@ -219,12 +214,18 @@ const ConnectWalletModal: React.FC<IProps> = ({ openModal, modalRegister, connec
               marginTop: "20px",
               width: "100%",
               maxWidth: "100%",
-              backgroundColor: theme.palette.primary[100],
-              color: theme.palette.secondary.light,
-              border: `1px solid ${theme.palette.primary[200]}`,
+              background: theme.isDark ? theme.palette.primary.main : theme.palette.secondary.main,
+              padding: "15px 20px",
+              borderRadius: "8px",
+              fontWeight: 700,
+              fontSize: "16px",
+              lineHeight: "19px",
+              textAlign: "center",
+              color: theme.palette.secondary[0],
               "&:hover": {
-                backgroundColor: theme.palette.primary[100]
-              }
+                background: theme.isDark ? theme.palette.primary.dark : theme.palette.secondary.main
+              },
+              textTransform: "none"
             }}
             onClick={() => {
               setIsP2Pconnect(false);
