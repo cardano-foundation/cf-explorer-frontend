@@ -50,7 +50,6 @@ describe("token spec", () => {
   });
 
   it("check metadata tab - CIP 25", () => {
-    const tokenName = "HOSKY";
     cy.visit("/token/asset17q7r59zlc3dgw0venc80pdv566q6yguw03f0d9/transactions");
     cy.wait(1000);
     cy.get("div .MuiAccordion-root").contains("Metadata", { matchCase: false }).click();
@@ -58,15 +57,16 @@ describe("token spec", () => {
     cy.get("div .MuiBox-root").contains("metadata check", { matchCase: false }).should("be.visible");
     cy.get('[data-testid="clickable-cip25-badge"]').trigger("mouseover", "bottom");
     cy.get('[data-testid="clickable-cip25-badge"]').click();
-    cy.get('[data-testid="token-CIP25Compliance"]').contains("CIP 25 Compliance");
-    cy.get('[data-testid="token-CIP25-name"]').contains("Token: " + tokenName);
+    cy.get('[data-testid="cip25-modal-title"]').contains("Cardano Improvement Proposal 25 (CIP-25)");
+    cy.get('[data-testid="cip25-modal-subtitle"]').contains("Media Token Metadata Standard for Native Tokens");
     cy.get("p").contains("Required Properties").should("be.visible");
     cy.get("p").contains("Optional Properties").should("be.visible");
     cy.get("p").contains("Other Properties").should("be.visible");
 
     cy.get(`[data-testid="table-common"] tr th`).contains("Property");
-    cy.get(`[data-testid="table-common"] tr th`).contains("Format");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Expected Format");
     cy.get(`[data-testid="table-common"] tr th`).contains("Value");
-    cy.get(`[data-testid="table-common"] tr th`).contains("Compliance");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Value Format");
+    cy.get(`[data-testid="table-common"] tr th`).contains("Result");
   });
 });
