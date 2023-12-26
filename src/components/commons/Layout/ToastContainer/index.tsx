@@ -89,7 +89,7 @@ const ToastContainer: React.FC = () => {
               }}
               action={
                 <IconButton color="inherit" size="small">
-                  <IoMdClose color={theme.palette.secondary.light} />
+                  <IoMdClose color={getColor(severity)} />
                 </IconButton>
               }
               severity={severity}
@@ -100,7 +100,7 @@ const ToastContainer: React.FC = () => {
               onClick={() => removeToast(id)}
               icon={!title || undefined}
             >
-              {title && <StyledTitle>{title}</StyledTitle>}
+              {title && <StyledTitle color={getColor(severity)}>{title}</StyledTitle>}
               <Box color={getColor(severity)} display={"inline"}>
                 {message}
               </Box>

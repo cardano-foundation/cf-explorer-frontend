@@ -50,6 +50,12 @@ const ConnectWalletModal: React.FC<IProps> = ({ openModal, modalRegister, connec
   useEffect(() => {
     function copyToClipboard(text: string) {
       if (!navigator.clipboard) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.visibility = "hidden";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
         try {
           document.execCommand("copy");
           toast.success(t("message.common.copySuccess"));
