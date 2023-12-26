@@ -19,9 +19,9 @@ import {
   CIPModalSubtitle,
   ModalContent,
   OtherPropetiesContent,
-  OtherPropetiesDesc
+  OtherPropetiesDesc,
+  CIPPropertyTable
 } from "./styles";
-import CIPPropertyTable from "../commons/CIPPropertyTable";
 
 export type TCIP20ComplianceModalProps = {
   open: boolean;
@@ -34,7 +34,6 @@ const CIP20Modal: React.FC<TCIP20ComplianceModalProps> = (props) => {
   const { t } = useTranslation();
   const getValueFormat = (r: TTCIPProperties) => {
     if (!r.value) return null;
-    if (r.valid) return r.format;
     return r.valueFormat;
   };
 
