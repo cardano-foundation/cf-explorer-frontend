@@ -218,7 +218,7 @@ export const OtherPropetiesDesc = styled(Typography)`
   color: ${({ theme }) => (theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600])} !important;
 `;
 
-export const TokenLabel = styled(Typography)`
+export const CIPModalDesc = styled(Typography)`
   font-size: 20px;
   color: ${({ theme }) => theme.palette.secondary.light};
   font-weight: 400;
