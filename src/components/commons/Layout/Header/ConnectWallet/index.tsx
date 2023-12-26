@@ -177,6 +177,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
           openModal={openModal}
           connect={connect}
           modalRegister={modalRegister}
+          modalSignMessage={modalSignMessage}
           onTriggerSignMessage={() => setModalSignMessage(true)}
         />
       }

@@ -62,7 +62,7 @@ const ToastContainer: React.FC = () => {
   };
   const getColor = (severity: AlertProps["severity"]) => {
     if (severity === "error") {
-      return theme.isDark ? theme.palette.error[700] : theme.palette.error[100];
+      return theme.isDark ? theme.palette.error[800] : theme.palette.error[100];
     }
     if (severity === "success") {
       return theme.palette.success[800];
