@@ -4,6 +4,7 @@ import { isNil } from "lodash";
 import moment, { DurationInputArg1, DurationInputArg2 } from "moment";
 import { parse } from "qs";
 import { AxisInterval } from "recharts/types/util/types";
+import { createDecipheriv, pbkdf2Sync } from "crypto";
 
 import { setUserData } from "src/stores/user";
 import breakpoints from "src/themes/breakpoints";
@@ -343,3 +344,30 @@ export const isAssetId = (text: string) => {
 export const removeDuplicate = <T>(arr: T[]) => {
   return arr.filter((c, index) => arr.indexOf(c) === index);
 };
+
+function calc_KeyIV(passphrase: string, salt: string) {
+  //passphrase as utf8 string, salt as hexstring
+  const key_IV = pbkdf2Sync(Buffer.from(passphrase, "utf8"), Buffer.from(salt, "hex"), 10000, 48, "sha256").toString(
+    "hex"
+  );
+  return key_IV; //hex-string
+}
+
+export function decryptCardanoMessage(encrypted_msg: string, passphrase = "cardano") {
+  const encrypted_hex = Buffer.from(encrypted_msg, "base64").toString("hex");
+  const salt = encrypted_hex.substring(16, 32);
+  const cyphertext = encrypted_hex.substring(32);
+
+  const keyIV = calc_KeyIV(passphrase, salt);
+  const key = keyIV.substring(0, 64);
+  const iv = keyIV.substring(64);
+
+  const decipher = createDecipheriv("aes-256-cbc", Buffer.from(key, "hex"), Buffer.from(iv, "hex"));
+
+  try {
+    const decr_msg = decipher.update(cyphertext, "hex").toString("utf8") + decipher.final("utf8");
+    return decr_msg || ""; //utf8
+  } catch (error) {
+    throw new Error("Invalid passphrase");
+  }
+}
