@@ -8,15 +8,21 @@ import CIP60Modal from "src/components/CIPComplianceModal/CIP60Modal";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import ParseScriptModal from "src/components/ParseScriptModal";
 import CIP25Modal from "src/components/TokenDetail/TokenTableData/CIP25Modal";
-import { SeeMoreIconHome } from "src/commons/resources";
+import { ShowLess, ShowMore } from "src/commons/resources";
 import CIP25Badge from "src/components/commons/CIP25Badge";
 import CIP60Badge from "src/components/commons/CIP60Badge";
 import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
+import CIP20Badge from "src/components/commons/CIP20Badge";
+import CIP20Modal from "src/components/CIPComplianceModal/CIP20Modal";
+import CIP83Badge from "src/components/commons/CIP83Badge";
+import CIP83Modal from "src/components/CIPComplianceModal/CIP83Modal";
+import PassphraseDecryptModal from "src/components/CIPComplianceModal/PassphraseDecryptModal";
 
 import {
   CIPChips,
   CIPHeader,
   CIPHeaderTitle,
+  DecryptButton,
   Header,
   MetaDataJSONValue,
   MetaDataJSONValueText,
@@ -26,7 +32,6 @@ import {
   MetadataJSONTitle,
   MetadataTitle,
   MetadataWrapper,
-  StyledButton,
   Wrapper
 } from "./styles";
 
@@ -36,18 +41,70 @@ interface MetadataProps {
 }
 
 enum CIP {
+  CIP20 = 20,
   CIP25 = 25,
-  CIP60 = 60
+  CIP60 = 60,
+  CIP83 = 83
 }
 
-const CIPLabel = 721;
+const CIPLabel721 = 721;
+const CIPLabel674 = 674;
 
 const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
+  const LIMIT_MESSAGE_ROW = 4;
   const { t } = useTranslation();
   const theme = useTheme();
   const [selectedIndedx, setSelectedIndex] = useState<number | null>(null);
+  const [limitRow, setLimitRow] = useState<number>(LIMIT_MESSAGE_ROW);
   const [cip, setCip] = useState<CIP>(CIP.CIP25);
+  const [openPassphrasseModal, setOpenPassphrasseModal] = useState<boolean>(false);
   const [selectedText, setSelectedText] = useState<{ label: number; value: string } | null>(null);
+
+  const renderMessage = (requireValue: Transaction["metadata"][0]["metadataCIP20"]["requiredProperties"]) => {
+    if (requireValue && requireValue[0]) {
+      return (
+        <>
+          {requireValue[0].value.slice(0, limitRow).map((value: string, idx: number) => (
+            <React.Fragment key={idx}>
+              <MetaDataJSONValueText>{value}</MetaDataJSONValueText>
+            </React.Fragment>
+          ))}
+          {requireValue[0].value.length > LIMIT_MESSAGE_ROW ? (
+            requireValue[0].value.length > limitRow ? (
+              <Box
+                onClick={() => setLimitRow(requireValue[0].value.length)}
+                color={theme.palette.primary.main}
+                display={"flex"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                width={"100%"}
+                sx={{ textDecoration: "underline", cursor: "pointer", textAlign: "center" }}
+              >
+                <Box mr={"2px"}>{t("CIP20.showMore")}</Box>
+                <ShowMore fill={theme.palette.primary.main} />
+              </Box>
+            ) : (
+              <Box
+                onClick={() => setLimitRow(LIMIT_MESSAGE_ROW)}
+                color={theme.palette.primary.main}
+                display={"flex"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                width={"100%"}
+                sx={{ textDecoration: "underline", cursor: "pointer", textAlign: "center" }}
+              >
+                <Box mr={"2px"}> {t("CIP20.showLess")}</Box>
+                <ShowLess fill={theme.palette.primary.main} />
+              </Box>
+            )
+          ) : (
+            <> </>
+          )}
+        </>
+      );
+    }
+  };
+
   return (
     <Box>
       <Wrapper>
@@ -67,13 +124,13 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
       {(data || [])?.map((metadata, idx) => (
         <MetadataWrapper key={idx}>
           <MetadataHeader mb={2}>
-            <MetadataTitle>{t("common.metadatumLabel")}</MetadataTitle>
-            <MetaDataValue>{metadata.label ?? ""}</MetaDataValue>
-            {String(metadata.label) === String(CIPLabel) && (
+            <Box display={"flex"} alignItems={"center"} flexWrap={"wrap"}>
+              <MetadataTitle>{t("common.metadatumLabel")}</MetadataTitle>
+              <MetaDataValue>{metadata.label ?? ""}</MetaDataValue>
+            </Box>
+            {String(metadata.label) === String(CIPLabel721) && (
               <CIPHeader>
-                <CIPHeaderTitle>
-                  {t("cip25.compliance")} <InfoSolidIcon width="16px" height="16px" />{" "}
-                </CIPHeaderTitle>
+                <CIPHeaderTitle>{t("token.metadataCheck")}</CIPHeaderTitle>
                 <CIPChips>
                   {!isNil(metadata.metadataCIP25.valid) && (
                     <CIP25Badge
@@ -98,16 +155,63 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
                 </CIPChips>
               </CIPHeader>
             )}
+            {String(metadata.label) === String(CIPLabel674) &&
+              (metadata?.metadataCIP20?.valid || metadata?.metadataCIP83?.valid) && (
+                <CIPHeader>
+                  <CIPHeaderTitle>
+                    {t("cip25.compliance")} <InfoSolidIcon width="16px" height="16px" />{" "}
+                  </CIPHeaderTitle>
+                  <CIPChips>
+                    {!isNil(metadata?.metadataCIP20?.valid) && !metadata?.metadataCIP83?.valid && (
+                      <CIP20Badge
+                        onClick={() => {
+                          setSelectedIndex(idx);
+                          setCip(CIP.CIP20);
+                        }}
+                        tooltipTitle={metadata?.metadataCIP20?.valid ? t("common.passed") : t("common.needsReview")}
+                        type={metadata?.metadataCIP20?.valid ? "success" : "warning"}
+                      />
+                    )}
+                    {!isNil(metadata?.metadataCIP83?.valid) && (
+                      <CIP83Badge
+                        onClick={() => {
+                          setSelectedIndex(idx);
+                          setCip(CIP.CIP83);
+                        }}
+                        tooltipTitle={metadata?.metadataCIP83?.valid ? t("common.passed") : t("common.needsReview")}
+                        type={metadata?.metadataCIP83?.valid ? "success" : "warning"}
+                      />
+                    )}
+                  </CIPChips>
+                </CIPHeader>
+              )}
           </MetadataHeader>
           <MetadataContent>
             <MetadataJSONTitle>{t("common.value")}</MetadataJSONTitle>
-            <MetaDataJSONValue>
-              <MetaDataJSONValueText>{metadata.value || ""}</MetaDataJSONValueText>
-              <StyledButton onClick={() => setSelectedText(metadata)}>
-                <SeeMoreIconHome fill={theme.palette.primary.main} />
-              </StyledButton>
-            </MetaDataJSONValue>
+            <Box
+              onClick={() => setSelectedText(metadata)}
+              color={theme.palette.primary.main}
+              sx={{ textDecoration: "underline", cursor: "pointer" }}
+            >
+              {t("CIP20.viewMessage")}
+            </Box>
           </MetadataContent>
+          {String(metadata.label) === String(CIPLabel674) &&
+            !isNil(metadata?.metadataCIP20?.valid) &&
+            metadata.metadataCIP20.valid && (
+              <MetadataContent>
+                <MetadataJSONTitle>{t("CIP20.transactionMessage")}</MetadataJSONTitle>
+                <MetaDataJSONValue>{renderMessage(metadata.metadataCIP20.requiredProperties)}</MetaDataJSONValue>
+              </MetadataContent>
+            )}
+          {String(metadata.label) === String(CIPLabel674) &&
+            !isNil(metadata?.metadataCIP83?.valid) &&
+            metadata?.metadataCIP83.valid && (
+              <MetadataContent>
+                <MetadataJSONTitle> </MetadataJSONTitle>
+                <DecryptButton onClick={() => setOpenPassphrasseModal(true)}>{t("CIP83.decryptMessage")}</DecryptButton>
+              </MetadataContent>
+            )}
         </MetadataWrapper>
       ))}
       <ParseScriptModal
@@ -131,6 +235,17 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
         version={data?.[selectedIndedx || 0].metadataCIP60.version}
         onClose={() => setSelectedIndex(null)}
       />
+      <CIP20Modal
+        data={data?.[selectedIndedx || 0].metadataCIP20?.requiredProperties}
+        open={typeof selectedIndedx === "number" && cip === CIP.CIP20}
+        onClose={() => setSelectedIndex(null)}
+      />
+      <CIP83Modal
+        data={data?.[selectedIndedx || 0].metadataCIP83?.requiredProperties}
+        open={typeof selectedIndedx === "number" && cip === CIP.CIP83}
+        onClose={() => setSelectedIndex(null)}
+      />
+      <PassphraseDecryptModal open={openPassphrasseModal} onClose={() => setOpenPassphrasseModal(false)} />
     </Box>
   );
 };
