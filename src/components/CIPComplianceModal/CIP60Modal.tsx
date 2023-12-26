@@ -11,7 +11,6 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import { Column } from "src/components/commons/Table";
 import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
 
-import CIPPropertyTable from "../commons/CIPPropertyTable";
 import CustomIcon from "../commons/CustomIcon";
 import {
   CIPLabel,
@@ -19,7 +18,8 @@ import {
   CIPModalSubtitle,
   ModalContent,
   OtherPropetiesContent,
-  OtherPropetiesDesc
+  OtherPropetiesDesc,
+  CIPPropertyTable
 } from "./styles";
 
 export type TCIP60ComplianceModalProps = {
@@ -113,7 +113,6 @@ const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
 
   const getValueFormat = (r: TTCIPProperties) => {
     if (!r.value) return null;
-    if (r.valid) return r.format;
     return r.valueFormat;
   };
 
