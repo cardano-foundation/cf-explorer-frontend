@@ -312,7 +312,13 @@ const TableSekeleton = () => {
   );
 };
 
-export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, clearSelection }) => {
+export const FooterTable: React.FC<FooterTableProps> = ({
+  total,
+  pagination,
+  loading,
+  clearSelection,
+  optionList = [10, 20, 50, 100]
+}) => {
   const { t } = useTranslation();
   const defaultPage = pagination?.page && (pagination?.page === 0 ? 1 : pagination?.page + 1);
   const [page, setPage] = useState(defaultPage || 1);
@@ -330,6 +336,11 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
       setPage(1);
     }
   }, [pagination?.page]);
+  useEffect(() => {
+    if (pagination?.size) {
+      setSize(pagination?.size);
+    }
+  }, [pagination?.size]);
 
   useEffect(() => {
     trigger && setOpen(false);
@@ -370,10 +381,11 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
                 }
               }}
             >
-              <StyledMenuItem value={10}>10</StyledMenuItem>
-              <StyledMenuItem value={20}>20</StyledMenuItem>
-              <StyledMenuItem value={50}>50</StyledMenuItem>
-              <StyledMenuItem value={100}>100</StyledMenuItem>
+              {optionList.map((item, index) => (
+                <StyledMenuItem key={index} value={item}>
+                  {item}
+                </StyledMenuItem>
+              ))}
             </SelectMui>
             <StyledPerPage>{t("perPage")}</StyledPerPage>
           </Box>
