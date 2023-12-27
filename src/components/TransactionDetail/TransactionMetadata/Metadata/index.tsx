@@ -3,25 +3,26 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { isNil } from "lodash";
 
-import { isJson } from "src/commons/utils/helper";
+import { decryptCardanoMessage, isJson } from "src/commons/utils/helper";
 import CIP60Modal from "src/components/CIPComplianceModal/CIP60Modal";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import ParseScriptModal from "src/components/ParseScriptModal";
-import CIP25Modal from "src/components/TokenDetail/TokenTableData/CIP25Modal";
-import { ShowLess, ShowMore } from "src/commons/resources";
+import { ShowLess, ShowMore, WarningCIPIcon } from "src/commons/resources";
 import CIP25Badge from "src/components/commons/CIP25Badge";
 import CIP60Badge from "src/components/commons/CIP60Badge";
-import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import CIP20Badge from "src/components/commons/CIP20Badge";
 import CIP20Modal from "src/components/CIPComplianceModal/CIP20Modal";
 import CIP83Badge from "src/components/commons/CIP83Badge";
 import CIP83Modal from "src/components/CIPComplianceModal/CIP83Modal";
 import PassphraseDecryptModal from "src/components/CIPComplianceModal/PassphraseDecryptModal";
+import CIP25Modal from "src/components/CIPComplianceModal/CIP25Modal";
 
 import {
+  BadgeContainer,
   CIPChips,
   CIPHeader,
   CIPHeaderTitle,
+  CIPLabel,
   DecryptButton,
   Header,
   MetaDataJSONValue,
@@ -54,11 +55,27 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
   const LIMIT_MESSAGE_ROW = 4;
   const { t } = useTranslation();
   const theme = useTheme();
+  const supportEnc = "basic";
   const [selectedIndedx, setSelectedIndex] = useState<number | null>(null);
   const [limitRow, setLimitRow] = useState<number>(LIMIT_MESSAGE_ROW);
   const [cip, setCip] = useState<CIP>(CIP.CIP25);
   const [openPassphrasseModal, setOpenPassphrasseModal] = useState<boolean>(false);
+  const [passphrasse, setPassphrasse] = useState<string>("");
+  const [textRaw, setTextRaw] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const [selectedText, setSelectedText] = useState<{ label: number; value: string } | null>(null);
+
+  const hanldeDecrypt = () => {
+    try {
+      if (data && data.length > 0) {
+        const messageValue = (JSON.parse(data[0].value).msg || []).join("");
+        setTextRaw(decryptCardanoMessage(messageValue, passphrasse));
+        setOpenPassphrasseModal(false);
+      }
+    } catch (error) {
+      setError((error as Error).message);
+    }
+  };
 
   const renderMessage = (requireValue: Transaction["metadata"][0]["metadataCIP20"]["requiredProperties"]) => {
     if (requireValue && requireValue[0]) {
@@ -105,6 +122,75 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
     }
   };
 
+  const renderRawMessage = (message: string[]) => {
+    return (
+      <>
+        {message.slice(0, limitRow).map((value: string, idx: number) => (
+          <React.Fragment key={idx}>
+            <MetaDataJSONValueText>{value}</MetaDataJSONValueText>
+          </React.Fragment>
+        ))}
+        {message.length > LIMIT_MESSAGE_ROW ? (
+          message.length > limitRow ? (
+            <Box
+              onClick={() => setLimitRow(message.length)}
+              color={theme.palette.primary.main}
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              width={"100%"}
+              sx={{ textDecoration: "underline", cursor: "pointer", textAlign: "center" }}
+            >
+              <Box mr={"2px"}>{t("CIP20.showMore")}</Box>
+              <ShowMore fill={theme.palette.primary.main} />
+            </Box>
+          ) : (
+            <Box
+              onClick={() => setLimitRow(LIMIT_MESSAGE_ROW)}
+              color={theme.palette.primary.main}
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              width={"100%"}
+              sx={{ textDecoration: "underline", cursor: "pointer", textAlign: "center" }}
+            >
+              <Box mr={"2px"}> {t("CIP20.showLess")}</Box>
+              <ShowLess fill={theme.palette.primary.main} />
+            </Box>
+          )
+        ) : (
+          <> </>
+        )}
+      </>
+    );
+  };
+
+  const renderButtonDecrypt = (metadata: Transaction["metadata"][0]["metadataCIP83"]["requiredProperties"]) => {
+    if (metadata) {
+      return (
+        <MetadataContent>
+          <MetadataJSONTitle> </MetadataJSONTitle>
+          <Box display={"flex"} alignItems={"center"} gap={1} flexWrap={"wrap"}>
+            <DecryptButton
+              disabled={metadata[0].value !== supportEnc}
+              onClick={() => {
+                setError("");
+                setOpenPassphrasseModal(true);
+              }}
+            >
+              {t("CIP83.decryptMessage")}
+            </DecryptButton>
+            {metadata[0].value !== supportEnc && (
+              <BadgeContainer>
+                <WarningCIPIcon />
+                <CIPLabel>{t("CIP83.notSupportEnc")}</CIPLabel>
+              </BadgeContainer>
+            )}
+          </Box>
+        </MetadataContent>
+      );
+    }
+  };
   return (
     <Box>
       <Wrapper>
@@ -158,9 +244,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
             {String(metadata.label) === String(CIPLabel674) &&
               (metadata?.metadataCIP20?.valid || metadata?.metadataCIP83?.valid) && (
                 <CIPHeader>
-                  <CIPHeaderTitle>
-                    {t("cip25.compliance")} <InfoSolidIcon width="16px" height="16px" />{" "}
-                  </CIPHeaderTitle>
+                  <CIPHeaderTitle>{t("token.metadataCheck")}</CIPHeaderTitle>
                   <CIPChips>
                     {!isNil(metadata?.metadataCIP20?.valid) && !metadata?.metadataCIP83?.valid && (
                       <CIP20Badge
@@ -201,17 +285,17 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
             metadata.metadataCIP20.valid && (
               <MetadataContent>
                 <MetadataJSONTitle>{t("CIP20.transactionMessage")}</MetadataJSONTitle>
-                <MetaDataJSONValue>{renderMessage(metadata.metadataCIP20.requiredProperties)}</MetaDataJSONValue>
+                {!textRaw && (
+                  <MetaDataJSONValue>{renderMessage(metadata.metadataCIP20.requiredProperties)}</MetaDataJSONValue>
+                )}
+                {textRaw && <MetaDataJSONValue>{renderRawMessage(JSON.parse(textRaw))}</MetaDataJSONValue>}
               </MetadataContent>
             )}
           {String(metadata.label) === String(CIPLabel674) &&
             !isNil(metadata?.metadataCIP83?.valid) &&
-            metadata?.metadataCIP83.valid && (
-              <MetadataContent>
-                <MetadataJSONTitle> </MetadataJSONTitle>
-                <DecryptButton onClick={() => setOpenPassphrasseModal(true)}>{t("CIP83.decryptMessage")}</DecryptButton>
-              </MetadataContent>
-            )}
+            metadata?.metadataCIP83.valid &&
+            !textRaw &&
+            renderButtonDecrypt(metadata?.metadataCIP83?.requiredProperties)}
         </MetadataWrapper>
       ))}
       <ParseScriptModal
@@ -224,15 +308,15 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
         subTitle={t("common.value")}
       />
       <CIP25Modal
-        data={data?.[selectedIndedx || 0].metadataCIP25.tokenMap}
+        data={data?.[selectedIndedx || 0].metadataCIP25?.tokenMap}
         open={typeof selectedIndedx === "number" && cip === CIP.CIP25}
-        version={data?.[selectedIndedx || 0].metadataCIP25.version}
+        version={data?.[selectedIndedx || 0].metadataCIP25?.version}
         onClose={() => setSelectedIndex(null)}
       />
       <CIP60Modal
-        data={data?.[selectedIndedx || 0].metadataCIP60.tokenMap}
+        data={data?.[selectedIndedx || 0].metadataCIP60?.tokenMap}
         open={typeof selectedIndedx === "number" && cip === CIP.CIP60}
-        version={data?.[selectedIndedx || 0].metadataCIP60.version}
+        version={data?.[selectedIndedx || 0].metadataCIP60?.version}
         onClose={() => setSelectedIndex(null)}
       />
       <CIP20Modal
@@ -245,7 +329,14 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
         open={typeof selectedIndedx === "number" && cip === CIP.CIP83}
         onClose={() => setSelectedIndex(null)}
       />
-      <PassphraseDecryptModal open={openPassphrasseModal} onClose={() => setOpenPassphrasseModal(false)} />
+      <PassphraseDecryptModal
+        setPassphrasse={setPassphrasse}
+        hanldeDecrypt={hanldeDecrypt}
+        error={error}
+        setError={setError}
+        open={openPassphrasseModal}
+        onClose={() => setOpenPassphrasseModal(false)}
+      />
     </Box>
   );
 };

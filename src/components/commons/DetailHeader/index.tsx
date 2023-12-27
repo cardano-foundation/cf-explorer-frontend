@@ -207,7 +207,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               {hashLabel ? <SlotLeaderTitle>{hashLabel}: </SlotLeaderTitle> : ""}
               <SlotLeaderValue sidebar={sidebar}>
                 <TruncateSubTitleContainer>
-                  <DynamicEllipsisText value={hash} isCopy />
+                  <DynamicEllipsisText value={hash} isCopy isSeparateCopyIcon isTooltip />
                 </TruncateSubTitleContainer>
               </SlotLeaderValue>
             </SlotLeader>
@@ -326,7 +326,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                           }}
                           key={index}
                         >
-                          <CustomTooltip title={item.assetName}>
+                          <CustomTooltip title={item.assetName || item.assetId}>
                             <Box
                               color={({ palette }) => palette.secondary.main}
                               mr={2}

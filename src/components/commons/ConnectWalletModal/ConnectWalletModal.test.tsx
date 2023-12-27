@@ -37,7 +37,16 @@ describe("BookmarkButton component", () => {
     mockUseCardano.mockReturnValueOnce(mockedReturnValue);
   });
   it("should all the wallets render", () => {
-    render(<ConnectWalletModal connect={jest.fn()} isModal={true} onTriggerSignMessage={jest.fn()} />);
+    render(
+      <ConnectWalletModal
+        modalRegister={true}
+        connect={jest.fn()}
+        modalSignMessage={true}
+        openModal={true}
+        onTriggerSignMessage={jest.fn()}
+        handleSignP2P={jest.fn()}
+      />
+    );
     const eternlWallet = screen.getByRole("heading", {
       name: /eternl/i
     });
@@ -55,7 +64,16 @@ describe("BookmarkButton component", () => {
 
   it("should compoennt connect the wallet", async () => {
     const onConnect = jest.fn();
-    render(<ConnectWalletModal connect={onConnect} isModal={true} onTriggerSignMessage={jest.fn()} />);
+    render(
+      <ConnectWalletModal
+        connect={onConnect}
+        openModal={true}
+        modalSignMessage={true}
+        onTriggerSignMessage={jest.fn()}
+        modalRegister={true}
+        handleSignP2P={jest.fn()}
+      />
+    );
     const ceternWalletButton = screen.getByRole("img", { name: /flint/i });
     await userEvent.click(ceternWalletButton);
     expect(onConnect).toBeCalled();
