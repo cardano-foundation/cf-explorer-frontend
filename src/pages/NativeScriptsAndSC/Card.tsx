@@ -29,13 +29,13 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
         <Row>
           <Title>{t("nativeScript.timeLock")}: </Title>
           <Value>
-            {data.before ? (
+            {data.before || data.after ? (
               <Box display={"flex"} alignItems={"center"} gap={1}>
-                <>{formatDateTimeLocal(data.before)}</>
+                <>{formatDateTimeLocal(data.before || data.after)}</>
                 <TimeLock fill={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]} />
               </Box>
             ) : (
-              ""
+              t("common.N/A")
             )}
           </Value>
         </Row>
@@ -142,7 +142,13 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) =
           <Title>{t("smartContract.trxPurpose")}: </Title>
           {data.txPurposes &&
             data.txPurposes.map((item, index) => {
-              return <Chip key={index}>{item}</Chip>;
+              return (
+                <Chip key={index}>
+                  <Box display={"flex"} alignItems={"center"} height={"100%"}>
+                    {item}
+                  </Box>
+                </Chip>
+              );
             })}
         </Row>
       </Box>
