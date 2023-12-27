@@ -56,7 +56,8 @@ export const StyledDarkLoadingButton = styled(LoadingButton)`
   font-weight: var(--font-weight-bold);
   text-transform: unset;
   &:hover {
-    background: ${(props) => props.theme.palette.primary.main};
+    background: ${(props) =>
+      props.theme.isDark ? props.theme.palette.primary.main : props.theme.palette.secondary.main};
   }
   &:disabled {
     color: white;
