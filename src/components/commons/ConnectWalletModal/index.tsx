@@ -42,6 +42,7 @@ const ConnectWalletModal: React.FC<IProps> = ({ connect, onTriggerSignMessage, i
     setOpenModal(false);
     onTriggerSignMessage();
   };
+
   const onError = (error: Error, walletName: string) => {
     if (error.name === "WrongNetworkTypeError") {
       toast.error(
