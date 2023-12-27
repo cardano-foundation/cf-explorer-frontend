@@ -43,6 +43,12 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
   const [signature, setSignature] = React.useState("");
   const [submitting, setSubmitting] = useState(false);
   const [isSign, setIsSign] = useState(isValidToken);
+  const [isSignP2P, setIsSignP2P] = React.useState(false);
+
+  const handleSignP2P = () => {
+    setIsSignP2P(!isSignP2P);
+  };
+
   const toast = useToast();
 
   useEffect(() => {
@@ -179,6 +185,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
           modalRegister={modalRegister}
           modalSignMessage={modalSignMessage}
           onTriggerSignMessage={() => setModalSignMessage(true)}
+          handleSignP2P={handleSignP2P}
         />
       }
       <SignMessageModal
@@ -190,6 +197,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         }}
         onSignMessage={onSignMessage}
         loadingSubmit={submitting}
+        isSignP2P={isSignP2P}
       />
       <RegisterUsernameModal open={modalRegister} nonce={nonce} signature={signature} setIsSign={setIsSign} />
     </Box>
