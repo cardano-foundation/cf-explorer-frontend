@@ -44,6 +44,8 @@ describe("BookmarkButton component", () => {
         modalSignMessage={true}
         openModal={true}
         onTriggerSignMessage={jest.fn()}
+        handleSignP2P={jest.fn()}
+        handleCloseP2P={jest.fn()}
       />
     );
     const eternlWallet = screen.getByRole("heading", {
@@ -70,6 +72,8 @@ describe("BookmarkButton component", () => {
         modalSignMessage={true}
         onTriggerSignMessage={jest.fn()}
         modalRegister={true}
+        handleSignP2P={jest.fn()}
+        handleCloseP2P={jest.fn()}
       />
     );
     const ceternWalletButton = screen.getByRole("img", { name: /flint/i });

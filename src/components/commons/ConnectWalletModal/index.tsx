@@ -17,6 +17,8 @@ interface IProps {
   openModal: boolean;
   modalRegister: boolean;
   modalSignMessage: boolean;
+  handleSignP2P: () => void;
+  handleCloseP2P: () => void;
 }
 
 const ConnectWalletModal: React.FC<IProps> = ({
@@ -24,7 +26,9 @@ const ConnectWalletModal: React.FC<IProps> = ({
   modalRegister,
   connect,
   onTriggerSignMessage,
-  modalSignMessage
+  modalSignMessage,
+  handleSignP2P,
+  handleCloseP2P
 }) => {
   const { t } = useTranslation();
   const theme = useTheme();
@@ -62,6 +66,18 @@ const ConnectWalletModal: React.FC<IProps> = ({
   const copiedToast = modalContent?.querySelector("div:last-child") as HTMLElement | null;
 
   useEffect(() => {
+    if (walletMenu) {
+      handleCloseP2P();
+    }
+  }, [walletMenu]);
+
+  useEffect(() => {
+    if (p2pOptionModal === null && isP2Pconnect) {
+      setOpenModal(false);
+    }
+  }, [p2pOptionModal]);
+
+  useEffect(() => {
     function copyToClipboard(text: string) {
       navigator.clipboard
         .writeText(text)
@@ -97,6 +113,7 @@ const ConnectWalletModal: React.FC<IProps> = ({
 
   p2pConnectButton[0]?.addEventListener("click", () => {
     setIsP2Pconnect(true);
+    handleSignP2P();
     if (walletMenu) {
       walletMenu.style.display = "none";
     }
@@ -132,8 +149,15 @@ const ConnectWalletModal: React.FC<IProps> = ({
   });
 
   useEffect(() => {
+    setIsP2Pconnect(false);
     return setIsP2Pconnect(false);
   }, []);
+
+  useEffect(() => {
+    if (!modalSignMessage) {
+      setIsP2Pconnect(false);
+    }
+  }, [modalSignMessage]);
 
   useEffect(() => {
     if (modalRegister || modalSignMessage) {
@@ -234,6 +258,7 @@ const ConnectWalletModal: React.FC<IProps> = ({
             }}
             onClick={() => {
               setIsP2Pconnect(false);
+              handleSignP2P();
               const walletMenu = document.getElementById("connect-wallet-menu") as HTMLElement | null;
               if (walletMenu) {
                 walletMenu.style.display = "flex";
