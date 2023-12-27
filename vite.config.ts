@@ -35,6 +35,10 @@ export default defineConfig(({ mode }) => {
     server: {
       open: true,
       port: 1102
+    },
+    build: {
+      minify: false,
+      assetsInlineLimit: 0
     }
   };
 });
