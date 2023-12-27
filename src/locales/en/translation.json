@@ -918,6 +918,7 @@
   "common.passed": "Passed",
   "common.needsReview": "Needs Review",
   "common.checkNotRequired": "Check Not Required",
+  "cip25.viewDocs": "View CIP 25 document",
   "cip25.modal.title": "Cardano Improvement Proposal 25 (CIP-25)",
   "cip25.modal.subtitle": "Media Token Metadata Standard for Native Tokens",
   "common.severUnknownErrorMsg": "Something went wrong on our side, please try again later or report an issue",
@@ -955,6 +956,7 @@
   "nativeScript.filter.timelocked.open": "Open",
   "nativeScript.filter.timelocked.locked": "Locked",
   "nativeScript.filter.multiSig.yes": "Yes",
+  "nativeScript.noToken": "No Tokens Found",
   "nativeScript.filter.multiSig.no": "No",
   "CIP20.transactionMessage": "Transaction Message",
   "CIP20.viewMessage": "View Raw Metadata",
@@ -963,6 +965,5 @@
   "CIP83.decryptMessage": "Decrypt Message",
   "CIP83.passphrase": "Passphrase",
   "CIP83.notSupportEnc": "Encryption Method Not Supported",
-  "token.metadataCheck": "Metadata Check",
-  "nativeScript.noToken": "No Tokens Found"
+  "token.metadataCheck": "Metadata Check"
 }

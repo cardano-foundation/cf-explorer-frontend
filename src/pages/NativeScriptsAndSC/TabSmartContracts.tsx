@@ -10,7 +10,7 @@ import {
   Skeleton,
   useTheme
 } from "@mui/material";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
@@ -40,19 +40,21 @@ const TabSmartContracts = () => {
   const { search, pathname } = useLocation();
   const history = useHistory();
   const theme = useTheme();
-  const pageInfo = getPageInfo(search);
+  const pageInfo = getPageInfo<{ scriptVersion?: string; txPurpose?: string }>(search);
+  const { tabActive } = useParams<{ tabActive: string }>();
   const optionList = [3, 6, 9, 12, 15];
-  const [filterOption, { push: pushFilterOption, removeAt: removeAtFilterOption, clear }] = useList<string>([]);
+  const [filterOption, { push: pushFilterOption, removeAt: removeAtFilterOption, clear }] = useList<string>(
+    (pageInfo.txPurpose || "").split(",") || []
+  );
+  const [showFilter, setShowFiter] = useState(false);
+  const [searchQuery, setSearchQuery] = useState<{ scriptVersion?: string; txPurpose?: string[] }>();
+  const [scriptVersion, setScriptVersion] = useState("");
+  const [size, setSize] = useState(optionList.indexOf(pageInfo.size) + 1 ? pageInfo.size : 6);
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `Native Scripts & Smart Contracts | Cardano Blockchain Explorer`;
   }, []);
-
-  const [showFilter, setShowFiter] = useState(false);
-  const [searchQuery, setSearchQuery] = useState<{ scriptVersion?: string; txPurpose?: string[] }>();
-  const [scriptVersion, setScriptVersion] = useState("");
-  const [size, setSize] = useState(optionList.indexOf(pageInfo.size) + 1 ? pageInfo.size : 6);
 
   useEffect(() => {
     if (optionList.indexOf(pageInfo.size) + 1) {
@@ -60,27 +62,33 @@ const TabSmartContracts = () => {
     } else {
       setSize(6);
     }
+    setScriptVersion(pageInfo.scriptVersion || "");
+    clear();
+    pushFilterOption(...(pageInfo.txPurpose || "").split(","));
   }, [JSON.stringify(pageInfo), pathname]);
 
   const handleApplyFilter = () => {
     setShowFiter(false);
-    setSearchQuery({ scriptVersion: scriptVersion === "any" ? "" : scriptVersion, txPurpose: filterOption });
-    history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
+    setSearchQuery({ scriptVersion, txPurpose: filterOption });
+    history.replace({ search: stringify({ ...pageInfo, page: 1, scriptVersion, txPurpose: filterOption.join(",") }) });
   };
   const handleResetFilter = () => {
     setShowFiter(false);
     setSearchQuery({});
     setScriptVersion("");
     clear();
-    history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
+    history.replace({ search: stringify({ size, page: 1 }) });
   };
 
-  const fetchData = useFetchList<ScriptSmartContracts>(API.SCRIPTS.SMART_CONTRACTS, {
-    ...pageInfo,
-    size,
-    ...omitBy(searchQuery, (query) => !query),
-    formatArrayComma: true
-  });
+  const fetchData = useFetchList<ScriptSmartContracts>(
+    tabActive === "smart-contracts" ? API.SCRIPTS.SMART_CONTRACTS : "",
+    {
+      ...pageInfo,
+      size,
+      ...omitBy(searchQuery, (query) => !query),
+      formatArrayComma: true
+    }
+  );
 
   const renderCard = () => {
     if (fetchData.loading) {
@@ -106,6 +114,7 @@ const TabSmartContracts = () => {
       </Box>
     );
   };
+
   return (
     <Box data-testid="TabNativeScripts">
       <ClickAwayListener
@@ -242,7 +251,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
               onChange={handleChooseVersion}
             >
               <FormControlLabel
-                value="any"
+                value=""
                 control={
                   <Radio
                     sx={{
@@ -306,7 +315,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
           </AccordionSummary>
           <AccordionDetailsFilter>
             {transactionPurpose.map((purpose: string, idx) => (
-              <Box key={idx}>
+              <Box key={idx} display={"flex"} alignItems={"center"}>
                 <Checkbox
                   id={purpose ? purpose : "any"}
                   checked={filterOption.includes(purpose)}
