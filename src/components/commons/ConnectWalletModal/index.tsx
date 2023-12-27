@@ -16,14 +16,21 @@ interface IProps {
   onTriggerSignMessage: () => void;
   openModal: boolean;
   modalRegister: boolean;
+  modalSignMessage: boolean;
 }
 
-const ConnectWalletModal: React.FC<IProps> = ({ openModal, modalRegister, connect, onTriggerSignMessage }) => {
+const ConnectWalletModal: React.FC<IProps> = ({
+  openModal,
+  modalRegister,
+  connect,
+  onTriggerSignMessage,
+  modalSignMessage
+}) => {
   const { t } = useTranslation();
   const theme = useTheme();
 
   const [isP2Pconnect, setIsP2Pconnect] = React.useState(false);
-
+  const [p2pConnectButton, setP2pConnectButton] = React.useState<Element[]>([]); // eslint-disable-line @typescript-eslint/no-explicit-any
   const toast = useToast();
   const handleClose = () => {
     setOpenModal(false);
@@ -34,36 +41,28 @@ const ConnectWalletModal: React.FC<IProps> = ({ openModal, modalRegister, connec
     onTriggerSignMessage();
   };
 
-  const p2pConnectButton = Array.from(document.querySelectorAll("#connect-wallet-menu > span")).filter(
-    (span) => span.textContent === "P2P Wallet"
-  );
+  useEffect(() => {
+    setTimeout(() => {
+      if (openModal) {
+        const p2pConnectButton = Array.from(document.querySelectorAll("#connect-wallet-menu > span")).filter(
+          (span) => span.textContent === "P2P Wallet"
+        );
+        setP2pConnectButton(p2pConnectButton);
+      }
+    }, 0);
+  }, [openModal]);
 
   const walletMenu = document.getElementById("connect-wallet-menu") as HTMLElement | null;
   const p2pOptionModal = document.querySelector("#connect-wallet-dropdown>div:first-child") as HTMLElement | null;
   const modalContent = document.querySelector('[data-testid="modal-content"]') as HTMLElement | null;
   const subtitle = modalContent?.querySelector("p") as HTMLElement | null;
   const copyButton = modalContent?.querySelector("button") as HTMLElement | null;
-  const modalContentInput = modalContent?.querySelector("input") as HTMLElement | null;
   const qrImage = p2pConnectButton[0]?.querySelector("img");
+  const modalContentInput = modalContent?.querySelector("input") as HTMLInputElement | null;
   const copiedToast = modalContent?.querySelector("div:last-child") as HTMLElement | null;
 
   useEffect(() => {
     function copyToClipboard(text: string) {
-      if (!navigator.clipboard) {
-        const textArea = document.createElement("textarea");
-        textArea.value = text;
-        textArea.style.visibility = "hidden";
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-        try {
-          document.execCommand("copy");
-          toast.success(t("message.common.copySuccess"));
-        } catch (err) {
-          toast.error("message.common.copyFailed");
-        }
-        return;
-      }
       navigator.clipboard
         .writeText(text)
         .then(function () {
@@ -74,13 +73,13 @@ const ConnectWalletModal: React.FC<IProps> = ({ openModal, modalRegister, connec
         });
     }
 
-    if (copyButton) {
+    if (modalContentInput && copyButton) {
       copyButton.addEventListener("click", function () {
-        const textToCopy = "Your text here";
-        copyToClipboard(textToCopy);
+        const hash = modalContentInput.value;
+        copyToClipboard(hash);
       });
     }
-  }, [copyButton]);
+  }, [modalContentInput, copyButton]);
 
   if (modalContent) {
     modalContent.addEventListener("click", function (event) {
@@ -137,10 +136,10 @@ const ConnectWalletModal: React.FC<IProps> = ({ openModal, modalRegister, connec
   }, []);
 
   useEffect(() => {
-    if (modalRegister) {
+    if (modalRegister || modalSignMessage) {
       setOpenModal(false);
     }
-  }, [modalRegister]);
+  }, [modalRegister, modalSignMessage]);
 
   const onError = (error: Error, walletName: string) => {
     if (error.name === "WrongNetworkTypeError") {
