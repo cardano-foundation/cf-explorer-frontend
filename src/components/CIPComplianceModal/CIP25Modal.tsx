@@ -171,7 +171,8 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
 
   return (
     <CustomModal
-      modalContainerProps={{ style: { maxWidth: 1000 } }}
+      modalContainerProps={{ style: { maxWidth: "min(1000px, 98vw)" } }}
+      maxWidth={920}
       open={props.open}
       style={{ maxHeight: "unset" }}
       onClose={props.onClose}
