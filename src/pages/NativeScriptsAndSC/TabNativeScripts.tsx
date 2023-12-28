@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import { t } from "i18next";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { omitBy } from "lodash";
+import { BsFillCheckCircleFill } from "react-icons/bs";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { getPageInfo } from "src/commons/utils/helper";
@@ -46,7 +47,7 @@ const TabNativeScripts = () => {
   const [size, setSize] = useState(optionList.indexOf(pageInfo.size) + 1 ? pageInfo.size : 6);
   const [openTimeLocked, setOpenTimeLocked] = useState<string>(pageInfo?.openTimeLocked || "");
   const [isMultiSig, setIsMultiSig] = useState<string>(pageInfo?.isMultiSig || "");
-  const [sort, setSort] = useState<string>(pageInfo.sort || "");
+  const [sort, setSort] = useState<string>(pageInfo.sort !== "" ? pageInfo.sort : "numberOfAssetHolders,DESC");
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
@@ -56,7 +57,7 @@ const TabNativeScripts = () => {
   useEffect(() => {
     if (optionList.indexOf(pageInfo.size) + 1) {
       setSize(pageInfo.size);
-      setSort(pageInfo.sort);
+      setSort(pageInfo.sort !== "" ? pageInfo.sort : "numberOfAssetHolders,DESC");
       setIsMultiSig(pageInfo?.isMultiSig || "");
       setOpenTimeLocked(pageInfo?.openTimeLocked || "");
     } else {
@@ -87,8 +88,8 @@ const TabNativeScripts = () => {
     setSearchQuery({});
     setIsMultiSig("");
     setOpenTimeLocked("");
-    setSort("");
-    history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
+    setSort("numberOfAssetHolders,DESC");
+    history.replace({ search: stringify({ size: 6, page: 1 }) });
   };
 
   const fetchData = useFetchList<NativeScriptsList>(tabActive === "native-scripts" ? API.SCRIPTS.NATIVE_SCRIPTS : "", {
@@ -265,7 +266,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={t("smartContract.any")}
+                label={<Box lineHeight={1}>{t("smartContract.any")}</Box>}
               />
               <FormControlLabel
                 value={true}
@@ -276,7 +277,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={t("nativeScript.filter.timelocked.open")}
+                label={<Box lineHeight={1}>{t("nativeScript.filter.timelocked.open")}</Box>}
               />
               <FormControlLabel
                 value={false}
@@ -287,7 +288,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={t("nativeScript.filter.timelocked.locked")}
+                label={<Box lineHeight={1}>{t("nativeScript.filter.timelocked.locked")}</Box>}
               />
             </RadioGroup>
           </AccordionDetailsFilter>
@@ -334,7 +335,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={t("smartContract.any")}
+                label={<Box lineHeight={1}>{t("smartContract.any")}</Box>}
               />
               <FormControlLabel
                 value={true}
@@ -345,7 +346,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={t("nativeScript.filter.multiSig.yes")}
+                label={<Box lineHeight={1}>{t("nativeScript.filter.multiSig.yes")}</Box>}
               />
               <FormControlLabel
                 value={false}
@@ -356,22 +357,26 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={t("nativeScript.filter.multiSig.no")}
+                label={<Box lineHeight={1}>{t("nativeScript.filter.multiSig.no")}</Box>}
               />
             </RadioGroup>
           </AccordionDetailsFilter>
         </AccordionContainer>
         <Box component={ButtonSort} onClick={() => setSort("numberOfTokens,DESC")}>
-          <SortNative
-            fill={sort.includes("numberOfTokens") ? theme.palette.success[700] : theme.palette.secondary.main}
-          />
-          <Box ml={1}>{t("NumberOfTokens")}</Box>
+          <Box display={"flex"} alignItems={"center"}>
+            <SortNative fill={theme.palette.secondary.main} />
+            <Box ml={1}>{t("NumberOfTokens")}</Box>
+          </Box>
+          {sort.includes("numberOfTokens") && <BsFillCheckCircleFill size={14} color={theme.palette.secondary.main} />}
         </Box>
         <Box component={ButtonSort} onClick={() => setSort("numberOfAssetHolders,DESC")}>
-          <SortNative
-            fill={sort.includes("numberOfAssetHolders") ? theme.palette.success[700] : theme.palette.secondary.main}
-          />
-          <Box ml={1}>{t("NumberOfAssetHolders")}</Box>
+          <Box display={"flex"} alignItems={"center"}>
+            <SortNative fill={theme.palette.secondary.main} />
+            <Box ml={1}>{t("NumberOfAssetHolders")}</Box>
+          </Box>
+          {sort.includes("numberOfAssetHolders") && (
+            <BsFillCheckCircleFill size={16} color={theme.palette.secondary.main} />
+          )}
         </Box>
 
         <Box mt={1}>
