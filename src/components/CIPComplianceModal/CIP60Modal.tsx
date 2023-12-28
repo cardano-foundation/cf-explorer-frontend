@@ -19,7 +19,9 @@ import {
   ModalContent,
   OtherPropetiesContent,
   OtherPropetiesDesc,
-  CIPPropertyTable
+  CIPPropertyTable,
+  TokenLabel,
+  StyledDivider
 } from "./styles";
 
 export type TCIP60ComplianceModalProps = {
@@ -213,6 +215,11 @@ const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
         <CIPModalDesc>{t("cip60.modal.subtitle")}</CIPModalDesc>
         {tokenMaps.map((token, index) => (
           <React.Fragment key={index}>
+            {token.tokenName && (
+              <TokenLabel>
+                {t("glossary.Token")}: {token.tokenName}
+              </TokenLabel>
+            )}
             {showWarningVersion && (
               <Alert
                 sx={{
@@ -255,6 +262,7 @@ const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
             <OtherPropetiesContent>
               <OtherPropetiesDesc>{t("token.cip60otherProperties.desc")}</OtherPropetiesDesc>
             </OtherPropetiesContent>
+            {index < tokenMaps.length - 1 && <StyledDivider />}
           </React.Fragment>
         ))}
       </ModalContent>
