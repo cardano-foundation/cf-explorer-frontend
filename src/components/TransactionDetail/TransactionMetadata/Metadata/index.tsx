@@ -242,39 +242,47 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
                 </CIPChips>
               </CIPHeader>
             )}
-            {String(metadata.label) === String(CIPLabel674) &&
-              (metadata?.metadataCIP20?.valid || metadata?.metadataCIP83?.valid) && (
-                <CIPHeader>
-                  <CIPHeaderTitle>
-                    {t("cip25.compliance")} <InfoSolidIcon width="16px" height="16px" />{" "}
-                  </CIPHeaderTitle>
-                  <CIPChips>
-                    {!isNil(metadata?.metadataCIP20?.valid) && !metadata?.metadataCIP83?.valid && (
-                      <CIP20Badge
-                        onClick={() => {
-                          setSelectedIndex(idx);
-                          setCip(CIP.CIP20);
-                        }}
-                        tooltipTitle={metadata?.metadataCIP20?.valid ? t("common.passed") : t("common.needsReview")}
-                        type={metadata?.metadataCIP20?.valid ? "success" : "warning"}
-                      />
-                    )}
-                    {!isNil(metadata?.metadataCIP83?.valid) && (
-                      <CIP83Badge
-                        onClick={() => {
-                          setSelectedIndex(idx);
-                          setCip(CIP.CIP83);
-                        }}
-                        tooltipTitle={metadata?.metadataCIP83?.valid ? t("common.passed") : t("common.needsReview")}
-                        type={metadata?.metadataCIP83?.valid ? "success" : "warning"}
-                      />
-                    )}
-                  </CIPChips>
-                </CIPHeader>
-              )}
+            {String(metadata.label) === String(CIPLabel674) && (
+              <CIPHeader>
+                <CIPHeaderTitle>
+                  {t("cip25.compliance")} <InfoSolidIcon width="16px" height="16px" />{" "}
+                </CIPHeaderTitle>
+                <CIPChips>
+                  {!isNil(metadata?.metadataCIP20?.valid) && !metadata?.metadataCIP83?.valid && (
+                    <CIP20Badge
+                      onClick={() => {
+                        setSelectedIndex(idx);
+                        setCip(CIP.CIP20);
+                      }}
+                      tooltipTitle={metadata?.metadataCIP20?.valid ? t("common.passed") : t("common.needsReview")}
+                      type={metadata?.metadataCIP20?.valid ? "success" : "warning"}
+                    />
+                  )}
+                  {!isNil(metadata?.metadataCIP83?.valid) && metadata?.metadataCIP20?.valid && (
+                    <CIP83Badge
+                      onClick={() => {
+                        setSelectedIndex(idx);
+                        setCip(CIP.CIP83);
+                      }}
+                      tooltipTitle={metadata?.metadataCIP83?.valid ? t("common.passed") : t("common.needsReview")}
+                      type={metadata?.metadataCIP83?.valid ? "success" : "warning"}
+                    />
+                  )}
+                </CIPChips>
+              </CIPHeader>
+            )}
           </MetadataHeader>
-          <MetadataContent>
-            <MetadataJSONTitle>{t("common.value")}</MetadataJSONTitle>
+          <Box display={"flex"} mb={2}>
+            <MetadataJSONTitle
+              sx={{
+                [theme.breakpoints.down("sm")]: {
+                  width: "40px !important",
+                  mr: 2
+                }
+              }}
+            >
+              {t("common.value")}
+            </MetadataJSONTitle>
             <Box
               onClick={() => setSelectedText(metadata)}
               color={theme.palette.primary.main}
@@ -282,7 +290,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
             >
               {t("CIP20.viewMessage")}
             </Box>
-          </MetadataContent>
+          </Box>
           {String(metadata.label) === String(CIPLabel674) &&
             !isNil(metadata?.metadataCIP20?.valid) &&
             metadata.metadataCIP20.valid && (
