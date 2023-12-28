@@ -18,6 +18,7 @@ interface IProps {
   modalRegister: boolean;
   modalSignMessage: boolean;
   handleSignP2P: () => void;
+  handleCloseP2P: () => void;
 }
 
 const ConnectWalletModal: React.FC<IProps> = ({
@@ -26,7 +27,8 @@ const ConnectWalletModal: React.FC<IProps> = ({
   connect,
   onTriggerSignMessage,
   modalSignMessage,
-  handleSignP2P
+  handleSignP2P,
+  handleCloseP2P
 }) => {
   const { t } = useTranslation();
   const theme = useTheme();
@@ -62,6 +64,12 @@ const ConnectWalletModal: React.FC<IProps> = ({
   const qrImage = p2pConnectButton[0]?.querySelector("img");
   const modalContentInput = modalContent?.querySelector("input") as HTMLInputElement | null;
   const copiedToast = modalContent?.querySelector("div:last-child") as HTMLElement | null;
+
+  useEffect(() => {
+    if (walletMenu) {
+      handleCloseP2P();
+    }
+  }, [walletMenu]);
 
   useEffect(() => {
     function copyToClipboard(text: string) {
