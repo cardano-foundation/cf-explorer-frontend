@@ -20,7 +20,8 @@ import {
   OtherPropetiesContent,
   OtherPropetiesDesc,
   CIPPropertyTable,
-  TokenLabel
+  TokenLabel,
+  ButtonContainer
 } from "./styles";
 
 export type TCIP60ComplianceModalProps = {
@@ -206,7 +207,10 @@ const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
       onClose={props.onClose}
       title={
         <CIPLabel>
-          {t("token.cip60Title")} <ViewAllButtonExternal tooltipTitle={t("cip60.viewDocs")} to={CIP60_DOCS_URL} />
+          <span>{t("token.cip60Title")}</span>
+          <ButtonContainer>
+            <ViewAllButtonExternal tooltipTitle={t("cip60.viewDocs")} to={CIP60_DOCS_URL} />
+          </ButtonContainer>
         </CIPLabel>
       }
     >

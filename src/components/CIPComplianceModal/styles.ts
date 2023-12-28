@@ -80,11 +80,14 @@ export const TokenLabel = styled(CIPModalDesc)`
   margin-bottom: 12px;
 `;
 
-export const CIPLabel = styled(Box)`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-`;
+export const CIPLabel = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    width: "90%"
+  },
+  span: {
+    marginRight: "12px"
+  }
+}));
 
 export const BoxTooltip = styled(Box)(({ theme }) => ({
   maxHeight: "200px",
@@ -131,4 +134,11 @@ export const CIPPropertyTable = styled(Table)(({ theme }) => ({
     {
       backgroundColor: theme.isDark ? theme.palette.secondary[0] : theme.palette.primary[100]
     }
+}));
+
+export const ButtonContainer = styled(Box)(({ theme }) => ({
+  display: "inline-block",
+  [theme.breakpoints.down("md")]: {
+    marginTop: "8px"
+  }
 }));

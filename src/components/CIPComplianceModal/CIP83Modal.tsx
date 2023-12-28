@@ -20,7 +20,8 @@ import {
   ModalContent,
   OtherPropetiesContent,
   OtherPropetiesDesc,
-  CIPPropertyTable
+  CIPPropertyTable,
+  ButtonContainer
 } from "./styles";
 
 export type TCIP20ComplianceModalProps = {
@@ -116,7 +117,10 @@ const CIP83Modal: React.FC<TCIP20ComplianceModalProps> = (props) => {
       onClose={props.onClose}
       title={
         <CIPLabel>
-          {t("token.cip83Title")} <ViewAllButtonExternal tooltipTitle={t("cip83.viewDocs")} to={CIP83_DOCS_URL} />
+          <span>{t("token.cip83Title")}</span>
+          <ButtonContainer>
+            <ViewAllButtonExternal tooltipTitle={t("cip83.viewDocs")} to={CIP83_DOCS_URL} />
+          </ButtonContainer>
         </CIPLabel>
       }
     >
