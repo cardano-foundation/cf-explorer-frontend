@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import signMessage from "src/commons/resources/images/sign-message.svg";
 import { StyledDarkLoadingButton } from "src/components/share/styled";
@@ -18,6 +18,12 @@ type TProps = {
 const SignMessageModal: React.FC<TProps> = ({ open, isSignP2P, loadingSubmit, handleCloseModal, onSignMessage }) => {
   const { t } = useTranslation();
   const [p2pAlert, setP2pAlert] = useState(false);
+
+  useEffect(() => {
+    if (!isSignP2P) {
+      setP2pAlert(false);
+    }
+  }, [isSignP2P]);
 
   return (
     <StyledModal open={open} handleCloseModal={handleCloseModal}>

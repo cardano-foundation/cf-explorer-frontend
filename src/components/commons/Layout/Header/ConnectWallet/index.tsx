@@ -49,6 +49,10 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
     setIsSignP2P(!isSignP2P);
   };
 
+  const handleCloseP2P = () => {
+    setIsSignP2P(false);
+  };
+
   const toast = useToast();
 
   useEffect(() => {
@@ -186,6 +190,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
           modalSignMessage={modalSignMessage}
           onTriggerSignMessage={() => setModalSignMessage(true)}
           handleSignP2P={handleSignP2P}
+          handleCloseP2P={handleCloseP2P}
         />
       }
       <SignMessageModal
