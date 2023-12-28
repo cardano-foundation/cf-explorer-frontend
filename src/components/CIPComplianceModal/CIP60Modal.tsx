@@ -20,8 +20,7 @@ import {
   OtherPropetiesContent,
   OtherPropetiesDesc,
   CIPPropertyTable,
-  TokenLabel,
-  StyledDivider
+  TokenLabel
 } from "./styles";
 
 export type TCIP60ComplianceModalProps = {
@@ -262,7 +261,6 @@ const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
             <OtherPropetiesContent>
               <OtherPropetiesDesc>{t("token.cip60otherProperties.desc")}</OtherPropetiesDesc>
             </OtherPropetiesContent>
-            {index < tokenMaps.length - 1 && <StyledDivider />}
           </React.Fragment>
         ))}
       </ModalContent>
