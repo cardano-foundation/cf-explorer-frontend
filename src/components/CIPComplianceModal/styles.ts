@@ -1,4 +1,4 @@
-import { Box, Divider, Typography, styled } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 
 import Table from "../commons/Table";
 
@@ -58,7 +58,10 @@ export const OtherPropetiesContent = styled(Box)`
   font-weight: 700;
   border-radius: 6px;
   margin-top: 14px;
-  margin-bottom: 4px;
+  margin-bottom: 32px;
+  &:last-child {
+    margin-bottom: 4px;
+  }
 `;
 
 export const OtherPropetiesDesc = styled(Typography)`
@@ -129,8 +132,3 @@ export const CIPPropertyTable = styled(Table)(({ theme }) => ({
       backgroundColor: theme.isDark ? theme.palette.secondary[0] : theme.palette.primary[100]
     }
 }));
-
-export const StyledDivider = styled(Divider)`
-  margin: 32px 0;
-  background-color: ${({ theme }) => `${theme.palette.primary[100]}`};
-`;
