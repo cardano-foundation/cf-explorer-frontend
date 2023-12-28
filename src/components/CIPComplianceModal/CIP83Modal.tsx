@@ -110,7 +110,7 @@ const CIP83Modal: React.FC<TCIP20ComplianceModalProps> = (props) => {
 
   return (
     <CustomModal
-      modalContainerProps={{ style: { maxWidth: 1000 } }}
+      modalContainerProps={{ style: { maxWidth: "min(1000px, 98vw)" } }}
       open={props.open}
       style={{ maxHeight: "unset" }}
       onClose={props.onClose}
