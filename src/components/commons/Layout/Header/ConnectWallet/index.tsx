@@ -40,10 +40,11 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
   });
   const isValidToken = validateTokenExpired();
-  const [signature, setSignature] = React.useState("");
+  const [signature, setSignature] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [isSign, setIsSign] = useState(isValidToken);
-  const [isSignP2P, setIsSignP2P] = React.useState(false);
+  const [isSignP2P, setIsSignP2P] = useState(false);
+  const [disableSignButton, setDisableSignButton] = useState(false);
 
   const handleSignP2P = () => {
     setIsSignP2P(!isSignP2P);
@@ -105,6 +106,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         setUserData({ ...userInfo.data, loginType: "connectWallet" });
       } else {
         setAddress(stakeAddress);
+        !isSignP2P && setDisableSignButton(true);
         setModalRegister(true);
       }
       onSuccess?.();
@@ -122,12 +124,14 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
       const nonceValue = await getNonceValue();
       if (nonceValue) {
         setNonce(nonceValue);
+        !isSignP2P && setDisableSignButton(true);
         await signMessage(
           nonceValue.nonce,
           (signature: string) => handleSignIn(signature, nonceValue),
           () => {
             toast.error(t("message.user.rejected"));
             setModalSignMessage(false);
+            setDisableSignButton(false);
             disconnect();
             removeAuthInfo();
           }
@@ -197,12 +201,14 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         open={modalSignMessage}
         handleCloseModal={() => {
           setModalSignMessage(false);
+          setDisableSignButton(false);
           disconnect();
           removeAuthInfo();
         }}
         onSignMessage={onSignMessage}
         loadingSubmit={submitting}
         isSignP2P={isSignP2P}
+        disableSignButton={disableSignButton}
       />
       <RegisterUsernameModal open={modalRegister} nonce={nonce} signature={signature} setIsSign={setIsSign} />
     </Box>

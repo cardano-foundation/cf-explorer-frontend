@@ -72,6 +72,12 @@ const ConnectWalletModal: React.FC<IProps> = ({
   }, [walletMenu]);
 
   useEffect(() => {
+    if (p2pOptionModal == null && isP2Pconnect) {
+      setOpenModal(false);
+    }
+  }, [p2pOptionModal]);
+
+  useEffect(() => {
     function copyToClipboard(text: string) {
       navigator.clipboard
         .writeText(text)

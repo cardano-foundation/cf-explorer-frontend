@@ -6,7 +6,8 @@ const mockProps = {
   open: true,
   loadingSubmit: false,
   handleCloseModal: jest.fn(),
-  onSignMessage: jest.fn()
+  onSignMessage: jest.fn(),
+  disableSignButton: false
 };
 
 describe("SignMessageModal component", () => {

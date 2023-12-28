@@ -63,6 +63,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
       width={"600px"}
       height={"auto"}
       contentStyle={{ overflowY: "unset" }}
+      isCenterWithoutPosition={true}
     >
       <WrapContent>
         <Table

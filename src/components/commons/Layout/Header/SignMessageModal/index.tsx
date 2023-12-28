@@ -14,8 +14,16 @@ type TProps = {
   handleCloseModal: () => void;
   onSignMessage: () => void;
   isSignP2P?: boolean;
+  disableSignButton: boolean;
 };
-const SignMessageModal: React.FC<TProps> = ({ open, isSignP2P, loadingSubmit, handleCloseModal, onSignMessage }) => {
+const SignMessageModal: React.FC<TProps> = ({
+  open,
+  isSignP2P,
+  loadingSubmit,
+  handleCloseModal,
+  onSignMessage,
+  disableSignButton
+}) => {
   const { t } = useTranslation();
   const [p2pAlert, setP2pAlert] = useState(false);
 
@@ -39,6 +47,7 @@ const SignMessageModal: React.FC<TProps> = ({ open, isSignP2P, loadingSubmit, ha
             }}
             loading={loadingSubmit}
             loadingPosition="end"
+            disabled={disableSignButton}
           >
             {t("account.sign")}
           </StyledDarkLoadingButton>
