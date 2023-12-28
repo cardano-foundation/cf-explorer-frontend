@@ -18,7 +18,9 @@ import {
   OtherPropetiesContent,
   OtherPropetiesDesc,
   CIPModalDesc,
-  CIPPropertyTable
+  CIPPropertyTable,
+  TokenLabel,
+  StyledDivider
 } from "./styles";
 
 export type TCIP25ModalProps = {
@@ -184,6 +186,11 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
         <CIPModalDesc>{t("cip25.modal.subtitle")}</CIPModalDesc>
         {tokenMaps.map((token, index) => (
           <React.Fragment key={index}>
+            {token.tokenName && (
+              <TokenLabel data-testid="token-CIP25-name">
+                {t("glossary.Token")}: {token.tokenName}
+              </TokenLabel>
+            )}
             <CIPModalSubtitle>{t("token.requiredProperties")}</CIPModalSubtitle>
             <CIPPropertyTable
               isModal
@@ -213,6 +220,7 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
             <OtherPropetiesContent>
               <OtherPropetiesDesc>{t("token.cip25otherProperties.desc")}</OtherPropetiesDesc>
             </OtherPropetiesContent>
+            {index < tokenMaps.length - 1 && <StyledDivider />}
           </React.Fragment>
         ))}
       </ModalContent>

@@ -1,4 +1,4 @@
-import { Box, Typography, styled } from "@mui/material";
+import { Box, Divider, Typography, styled } from "@mui/material";
 
 import Table from "../commons/Table";
 
@@ -52,15 +52,13 @@ export const CIPModalSubtitle = styled(Typography)`
 
 export const OtherPropetiesContent = styled(Box)`
   background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0])};
+  box-shadow: ${({ theme }) => theme.shadow.card};
   padding: 14px;
   font-size: 14px;
   font-weight: 700;
   border-radius: 6px;
   margin-top: 14px;
-  margin-bottom: 30px;
-  &:last-child {
-    margin-bottom: 0px;
-  }
+  margin-bottom: 4px;
 `;
 
 export const OtherPropetiesDesc = styled(Typography)`
@@ -71,6 +69,11 @@ export const CIPModalDesc = styled(Typography)`
   font-size: 20px;
   color: ${({ theme }) => theme.palette.secondary.light};
   font-weight: 400;
+  margin-bottom: 20px;
+`;
+
+export const TokenLabel = styled(CIPModalDesc)`
+  font-size: 18px;
   margin-bottom: 12px;
 `;
 
@@ -126,3 +129,8 @@ export const CIPPropertyTable = styled(Table)(({ theme }) => ({
       backgroundColor: theme.isDark ? theme.palette.secondary[0] : theme.palette.primary[100]
     }
 }));
+
+export const StyledDivider = styled(Divider)`
+  margin: 32px 0;
+  background-color: ${({ theme }) => `${theme.palette.primary[100]}`};
+`;
