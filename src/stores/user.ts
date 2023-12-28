@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, Store } from "@reduxjs/toolkit";
 
 import breakpoints from "../themes/breakpoints";
-import { SupportedWallets, UserDataType, UserStoreType } from "../types/user";
+import { UserDataType, UserStoreType } from "../types/user";
 
 let userStore: Store | undefined;
 
@@ -35,7 +35,7 @@ const storeWallet = createSlice({
       ...state,
       chainID: action.payload
     }),
-    setWallet: (state, action: PayloadAction<SupportedWallets | null>) => ({
+    setWallet: (state, action: PayloadAction<string | null>) => ({
       ...state,
       wallet: action.payload
     }),
@@ -82,7 +82,7 @@ export const setChainID = (chainID: string | null) => {
   userStore?.dispatch(storeWallet.actions.setChainID(chainID));
 };
 
-export const setWallet = (wallet: SupportedWallets | null) => {
+export const setWallet = (wallet: string | null) => {
   userStore?.dispatch(storeWallet.actions.setWallet(wallet));
 };
 

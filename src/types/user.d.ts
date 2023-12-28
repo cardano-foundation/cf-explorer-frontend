@@ -22,7 +22,7 @@ export declare interface UserDataType {
 
 export declare interface UserStoreType {
   userData: UserDataType | null;
-  wallet: SupportedWallets | null;
+  wallet: string | null;
   address: string | null;
   chainID: string | null;
   openModal: boolean;

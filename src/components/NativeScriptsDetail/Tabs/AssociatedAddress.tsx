@@ -18,6 +18,7 @@ export type TAssociatedAddressProps = {
 
 const AssociatedAddress: React.FC<TAssociatedAddressProps> = () => {
   const { t } = useTranslation();
+
   const { associatedAddress = [], loading } = useNativeScriptDetail();
   const getUrl = (s: string) => {
     if (startsWith(s, "stake")) return details.stake(s);

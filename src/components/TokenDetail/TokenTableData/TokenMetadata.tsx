@@ -9,8 +9,8 @@ import { isJson } from "src/commons/utils/helper";
 import CIP60Modal from "src/components/CIPComplianceModal/CIP60Modal";
 import CIP60Badge from "src/components/commons/CIP60Badge";
 import CIP25Badge from "src/components/commons/CIP25Badge";
+import CIP25Modal from "src/components/CIPComplianceModal/CIP25Modal";
 
-import CIP25Modal from "./CIP25Modal";
 import { CIPHeader, CIPHeaderTitle, MetaDataWraper, ViewJson } from "./styles";
 
 interface ITokenMetadataProps {
