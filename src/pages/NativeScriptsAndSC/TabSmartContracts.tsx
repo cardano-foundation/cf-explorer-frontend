@@ -77,7 +77,7 @@ const TabSmartContracts = () => {
     setSearchQuery({});
     setScriptVersion("");
     clear();
-    history.replace({ search: stringify({ size, page: 1 }) });
+    history.replace({ search: stringify({ size: 6, page: 1 }) });
   };
 
   const fetchData = useFetchList<ScriptSmartContracts>(
@@ -259,7 +259,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={t("smartContract.any")}
+                label={<Box lineHeight={1}>{t("smartContract.any")}</Box>}
               />
               <FormControlLabel
                 value="PLUTUSV1"
@@ -270,7 +270,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={t("smartContract.plutusv1")}
+                label={<Box lineHeight={1}>{t("smartContract.plutusv1")}</Box>}
               />
               <FormControlLabel
                 value="PLUTUSV2"
@@ -281,7 +281,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={t("smartContract.plutusv2")}
+                label={<Box lineHeight={1}>{t("smartContract.plutusv2")}</Box>}
               />
             </RadioGroup>
           </AccordionDetailsFilter>

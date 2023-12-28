@@ -295,5 +295,7 @@ export const ApplyFilterButton = styled(Button)(({ theme }) => ({
 export const ButtonSort = styled(Button)(({ theme }) => ({
   textTransform: "capitalize",
   color: theme.palette.secondary.main,
-  justifyContent: "left"
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between"
 }));

@@ -17,7 +17,7 @@ export type TViewAddressesModalProps = {
 
 const ViewAddressesModal: React.FC<TViewAddressesModalProps> = ({ open, onClose, txHash = "", scriptHash = "" }) => {
   const { t } = useTranslation();
-  const { data = [] } = useFetch<string[]>(API.ADDRESS.VIEW_ADRRESSES(txHash, scriptHash));
+  const { data = [] } = useFetch<string[]>(txHash ? API.ADDRESS.VIEW_ADRRESSES(txHash, scriptHash) : "");
   return (
     <CustomModal open={open} onClose={() => onClose?.()} width={600}>
       <TitleModal>{t("glossary.address")}</TitleModal>

@@ -12,6 +12,32 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
   const theme = useTheme();
 
+  const renderTimeLock = () => {
+    if (data.before && data.after) {
+      return (
+        <Box>
+          <Box display={"flex"} alignContent={"center"} gap={1}>
+            after: {formatDateTimeLocal(data.after)}
+            <TimeLock fill={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]} />
+          </Box>
+          <Box display={"flex"} alignContent={"center"} gap={1}>
+            before: {formatDateTimeLocal(data.before)}
+            <TimeLock fill={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]} />
+          </Box>
+        </Box>
+      );
+    }
+    if (data.before || data.after) {
+      return (
+        <Box display={"flex"} alignItems={"center"} gap={1}>
+          <>{formatDateTimeLocal(data.before || data.after)}</>
+          <TimeLock fill={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]} />
+        </Box>
+      );
+    }
+    return t("common.N/A");
+  };
+
   return (
     <Item>
       <Box p={2} height={"100%"}>
@@ -26,18 +52,9 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
             <DynamicEllipsisText value={data.scriptHash || ""} isTooltip />
           </Box>
         </Row>
-        <Row>
+        <Row alignItems={data.before && data.after ? "flex-start !important" : "center"}>
           <Title>{t("nativeScript.timeLock")}: </Title>
-          <Value>
-            {data.before || data.after ? (
-              <Box display={"flex"} alignItems={"center"} gap={1}>
-                <>{formatDateTimeLocal(data.before || data.after)}</>
-                <TimeLock fill={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]} />
-              </Box>
-            ) : (
-              t("common.N/A")
-            )}
-          </Value>
+          <Value>{renderTimeLock()}</Value>
         </Row>
         <Row>
           <Title>{t("nativeScript.multiSig")}: </Title>
@@ -96,7 +113,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
               </Chip>
             </Link>
           )}
-          {data.tokens && data.tokens.length === 0 && (
+          {!data.tokens && (
             <Box
               textAlign={"center"}
               fontSize={16}
@@ -140,16 +157,17 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) =
         </Row>
         <Row>
           <Title>{t("smartContract.trxPurpose")}: </Title>
-          {data.txPurposes &&
-            data.txPurposes.map((item, index) => {
-              return (
-                <Chip key={index}>
-                  <Box display={"flex"} alignItems={"center"} height={"100%"}>
-                    {item}
-                  </Box>
-                </Chip>
-              );
-            })}
+          {data.txPurposes && data.txPurposes.length > 0
+            ? data.txPurposes.map((item, index) => {
+                return (
+                  <Chip key={index}>
+                    <Box display={"flex"} alignItems={"center"} height={"100%"}>
+                      {item}
+                    </Box>
+                  </Chip>
+                );
+              })
+            : t("common.N/A")}
         </Row>
       </Box>
     </Item>
