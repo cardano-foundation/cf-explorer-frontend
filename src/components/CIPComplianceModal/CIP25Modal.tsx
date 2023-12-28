@@ -19,7 +19,8 @@ import {
   OtherPropetiesDesc,
   CIPModalDesc,
   CIPPropertyTable,
-  TokenLabel
+  TokenLabel,
+  ButtonContainer
 } from "./styles";
 
 export type TCIP25ModalProps = {
@@ -177,7 +178,10 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
       onClose={props.onClose}
       title={
         <CIPLabel data-testid="token-CIP25Compliance">
-          {t("cip25.modal.title")} <ViewAllButtonExternal tooltipTitle={t("cip25.viewDocs")} to={CIP25_DOCS_URL} />
+          <span>{t("cip25.modal.title")}</span>
+          <ButtonContainer>
+            <ViewAllButtonExternal tooltipTitle={t("cip25.viewDocs")} to={CIP25_DOCS_URL} />
+          </ButtonContainer>
         </CIPLabel>
       }
     >
