@@ -30,7 +30,8 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
     if (data.before || data.after) {
       return (
         <Box display={"flex"} alignItems={"center"} gap={1}>
-          <>{formatDateTimeLocal(data.before || data.after)}</>
+          {data.before ? "before: " : " after: "}
+          {formatDateTimeLocal(data.before || data.after)}
           <TimeLock fill={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]} />
         </Box>
       );
@@ -74,10 +75,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
           {data.tokens &&
             data.tokens.map((item, index) => {
               return (
-                <CustomTooltip
-                  key={index}
-                  title={item.displayName || item.name || getShortHash(item.fingerprint) || ""}
-                >
+                <CustomTooltip key={index} title={item.displayName || getShortHash(item.fingerprint) || ""}>
                   <Link to={details.token(item.fingerprint)}>
                     <Chip pl={`${item.metadata && item.metadata.logo ? "4px" : 1} !important`}>
                       <Box display={"flex"} alignItems={"center"} height={"100%"}>
@@ -96,7 +94,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
                           />
                         )}
                         <Box overflow={"hidden"} textOverflow={"ellipsis"}>
-                          {item.displayName || item.name || getShortHash(item.fingerprint) || ""}
+                          {item.displayName || getShortHash(item.fingerprint) || ""}
                         </Box>
                       </Box>
                     </Chip>
