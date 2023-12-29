@@ -1,7 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import { JsonViewer } from "@textea/json-viewer";
 import { isNil } from "lodash";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import useDisableJsonKey from "src/commons/hooks/useDisableJsonKey";
@@ -24,8 +24,23 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson, metadataCI
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [openCIP60, setOpenCIP60] = useState(false);
+  const [showCIP60, setShowCIP60] = useState(false);
   const { keyRenderer } = useDisableJsonKey(metadataJson);
-  const isShowCIP25 = metadataCIP25?.tokenMap && Object.keys(metadataCIP25?.tokenMap).length > 0;
+
+  useMemo(() => {
+    if (metadataCIP60?.tokenMap) {
+      Object.keys(metadataCIP60?.tokenMap).map((key) => {
+        if (metadataCIP60?.tokenMap?.[key].requireProperties) {
+          metadataCIP60?.tokenMap?.[key].requireProperties.map((item) => {
+            if (item.property === "music_metadata_version" && item.value) {
+              setShowCIP60(true);
+            }
+          });
+        }
+      });
+    }
+  }, [metadataCIP60?.tokenMap]);
+
   return (
     <MetaDataWraper>
       {!!metadataJson && (
@@ -38,7 +53,7 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson, metadataCI
               type={metadataCIP25?.valid ? "success" : "warning"}
             />
           )}
-          {isShowCIP25 && !isNil(metadataCIP60?.valid) && (
+          {showCIP60 && !isNil(metadataCIP60?.valid) && (
             <CIP60Badge
               onClick={() => setOpenCIP60(true)}
               type={metadataCIP60?.valid ? "success" : "warning"}
