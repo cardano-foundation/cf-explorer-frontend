@@ -235,6 +235,24 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           setShowOption(false);
           return;
         }
+
+        if (!res?.data?.validPoolName && res?.data?.validTokenName) {
+          history.push(
+            `${routers.TOKEN_LIST}?tokenName=${encodeURIComponent((search || "").trim().toLocaleLowerCase())}`
+          );
+          setShowOption(false);
+          setLoading(false);
+          return;
+        }
+
+        if (res?.data?.validPoolName && !res?.data?.validTokenName) {
+          history.push(routers.DELEGATION_POOLS, {
+            tickerNameSearch: encodeURIComponent((search || "").trim().toLocaleLowerCase())
+          });
+          setShowOption(false);
+          setLoading(false);
+          return;
+        }
       }
 
       setShowOption(true);
