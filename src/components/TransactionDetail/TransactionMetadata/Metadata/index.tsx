@@ -1,7 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { isNil } from "lodash";
+import { isEmpty, isNil } from "lodash";
 
 import { decryptCardanoMessage, isJson } from "src/commons/utils/helper";
 import CIP60Modal from "src/components/CIPComplianceModal/CIP60Modal";
@@ -211,7 +211,16 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
         <MetadataWrapper key={idx}>
           <MetadataHeader mb={2}>
             <Box display={"flex"} alignItems={"center"} flexWrap={"wrap"}>
-              <MetadataTitle>{t("common.metadatumLabel")}</MetadataTitle>
+              <MetadataTitle
+                sx={{
+                  [theme.breakpoints.down("sm")]: {
+                    width: "125px !important",
+                    mr: 2
+                  }
+                }}
+              >
+                {t("common.metadatumLabel")}
+              </MetadataTitle>
               <MetaDataValue>{metadata.label ?? ""}</MetaDataValue>
             </Box>
             {String(metadata.label) === String(CIPLabel721) && (
@@ -228,7 +237,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
                       type={metadata.metadataCIP25.valid ? "success" : "warning"}
                     />
                   )}
-                  {!isNil(metadata.metadataCIP60.valid) && (
+                  {!isNil(metadata.metadataCIP60.valid) && !isEmpty(metadata.metadataCIP60?.tokenMap) && (
                     <CIP60Badge
                       tooltipTitle={metadata.metadataCIP60.valid ? t("common.passed") : t("cip60.notCompliance")}
                       onClick={() => {
