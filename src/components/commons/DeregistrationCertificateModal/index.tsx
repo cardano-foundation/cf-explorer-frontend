@@ -22,20 +22,33 @@ export const DeregistrationCertificateModal = ({
   const { data, loading } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stake}`, undefined, false);
 
   return (
-    <StyledModal {...props} width={550} title={t("common.deregistrationCert")}>
-      <Box>
+    <StyledModal {...props} width={"fit-content"} title={t("common.deregistrationCert")}>
+      <Box
+        sx={{
+          wordBreak: "break-word",
+          maxWidth: "min(90vw, 1200px)"
+        }}
+      >
         {loading && <CommonSkeleton variant="rectangular" width={500} height={90} />}
         {!loading && (
           <StyledContainerModal>
-            <Box fontWeight={"bold"} fontSize={"0.875rem"} color={({ palette }) => palette.secondary.light}>
+            <Box
+              marginBottom={1}
+              fontWeight={"bold"}
+              fontSize={"0.875rem"}
+              color={({ palette }) => palette.secondary.light}
+            >
               {t("common.stakeAddress")}
             </Box>
             {data && (
-              <Box>
-                <Box>
-                  <StakeLink to={details.stake(stake)}>{stake || ""}</StakeLink>
-                  <CopyButton text={stake} />
-                </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center"
+                }}
+              >
+                <StakeLink to={details.stake(stake)}>{stake || ""}</StakeLink>
+                <CopyButton text={stake} />
               </Box>
             )}
           </StyledContainerModal>

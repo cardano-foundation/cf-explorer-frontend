@@ -96,10 +96,10 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       }
     },
     {
-      key: "time",
+      key: "id",
       title: t("common.Date"),
-      sort: ({ sortValue }) => {
-        sortValue ? setSort(`id,${sortValue}`) : setSort("");
+      sort: ({ sortValue, columnKey }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       },
       render(data) {
         return <Box>{formatDateTimeLocal(data.time)}</Box>;

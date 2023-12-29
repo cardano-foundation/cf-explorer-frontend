@@ -38,7 +38,7 @@ interface FormValues {
 interface Option {
   value: FilterParams;
   label: React.ReactNode;
-  paths?: (typeof routers)[keyof typeof routers][];
+  paths?: ((typeof routers)[keyof typeof routers] | "ADA_hanlde")[];
   detail?: (typeof details)[keyof typeof details];
 }
 const intitalValue: FormValues = {
@@ -132,6 +132,12 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       detail: details.transaction
     },
     {
+      value: "ADAHanlde",
+      label: t("filter.ADAHanlde"),
+      paths: ["ADA_hanlde"],
+      detail: details.address
+    },
+    {
       value: "tokens",
       label: t("filter.tokens"),
       paths: [routers.TOKEN_LIST, routers.TOKEN_DETAIL],
@@ -168,21 +174,6 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       label: t("filter.scriptHash"),
       paths: [routers.SMART_CONTRACT, routers.NATIVE_SCRIPT_DETAIL, routers.NATIVE_SCRIPTS_AND_SC],
       detail: details.policyDetail
-    },
-    {
-      value: "ADAHanlde",
-      label: t("filter.ADAHanlde"),
-      paths: [
-        routers.ADDRESS_LIST,
-        routers.CONTRACT_LIST,
-        routers.ADDRESS_DETAIL,
-        routers.STAKE_ADDRESS_REGISTRATION,
-        routers.STAKE_ADDRESS_DEREGISTRATION,
-        routers.STAKE_ADDRESS_DELEGATIONS,
-        routers.TOP_DELEGATOR,
-        routers.STAKE_DETAIL
-      ],
-      detail: details.address
     }
   ];
 
@@ -242,6 +233,24 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           handleRedirectDetail(keyDetail, res?.data);
           setLoading(false);
           setShowOption(false);
+          return;
+        }
+
+        if (!res?.data?.validPoolName && res?.data?.validTokenName) {
+          history.push(
+            `${routers.TOKEN_LIST}?tokenName=${encodeURIComponent((search || "").trim().toLocaleLowerCase())}`
+          );
+          setShowOption(false);
+          setLoading(false);
+          return;
+        }
+
+        if (res?.data?.validPoolName && !res?.data?.validTokenName) {
+          history.push(routers.DELEGATION_POOLS, {
+            tickerNameSearch: encodeURIComponent((search || "").trim().toLocaleLowerCase())
+          });
+          setShowOption(false);
+          setLoading(false);
           return;
         }
       }
@@ -370,9 +379,19 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   }, [search, filter]);
 
   const currentPath = history.location.pathname.split("/")[1];
-
   const checkIncludesPath = useCallback(
-    (paths: Option["paths"]) => paths?.find((path) => path?.split("/")[1] === currentPath),
+    (paths: Option["paths"]) =>
+      paths?.find((path) => {
+        const address = history.location.pathname.split("/")[2] || "";
+        if (
+          (routers.ADDRESS_DETAIL.includes(currentPath) || routers.STAKE_DETAIL.includes(currentPath)) &&
+          address.startsWith("$") &&
+          path === "ADA_hanlde"
+        ) {
+          return true;
+        }
+        return path?.split("/")[1] === currentPath;
+      }),
     [currentPath]
   );
 

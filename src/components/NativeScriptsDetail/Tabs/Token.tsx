@@ -21,12 +21,11 @@ import { Column } from "src/types/table";
 
 const Token = () => {
   const { t } = useTranslation();
-  const { id } = useParams<{ id: string }>();
-
+  const { id, tabActive } = useParams<{ id: string; tabActive?: string }>();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<TokenPolicys>(API.TOKEN.TOKENS_SCRIPTED(id), pageInfo);
+  const fetchData = useFetchList<TokenPolicys>(tabActive === "token" ? API.TOKEN.TOKENS_SCRIPTED(id) : "", pageInfo);
   const columnsToken: Column<TokenPolicys>[] = [
     {
       title: t("common.tokenName"),

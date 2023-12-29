@@ -1,5 +1,7 @@
 import { Box, Typography, styled } from "@mui/material";
 
+import Table from "../commons/Table";
+
 export const CIPHeader = styled(Box)`
   display: flex;
   justify-content: flex-start;
@@ -50,14 +52,15 @@ export const CIPModalSubtitle = styled(Typography)`
 
 export const OtherPropetiesContent = styled(Box)`
   background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0])};
+  box-shadow: ${({ theme }) => theme.shadow.card};
   padding: 14px;
   font-size: 14px;
   font-weight: 700;
   border-radius: 6px;
   margin-top: 14px;
-  margin-bottom: 30px;
+  margin-bottom: 32px;
   &:last-child {
-    margin-bottom: 0px;
+    margin-bottom: 4px;
   }
 `;
 
@@ -65,18 +68,26 @@ export const OtherPropetiesDesc = styled(Typography)`
   color: ${({ theme }) => (theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600])} !important;
 `;
 
-export const TokenLabel = styled(Typography)`
+export const CIPModalDesc = styled(Typography)`
   font-size: 20px;
   color: ${({ theme }) => theme.palette.secondary.light};
   font-weight: 400;
+  margin-bottom: 20px;
+`;
+
+export const TokenLabel = styled(CIPModalDesc)`
+  font-size: 18px;
   margin-bottom: 12px;
 `;
 
-export const CIPLabel = styled(Box)`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-`;
+export const CIPLabel = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    width: "90%"
+  },
+  span: {
+    marginRight: "12px"
+  }
+}));
 
 export const BoxTooltip = styled(Box)(({ theme }) => ({
   maxHeight: "200px",
@@ -98,5 +109,36 @@ export const BoxTooltip = styled(Box)(({ theme }) => ({
     "&::-webkit-scrollbar-track": {
       background: theme.palette.primary[100]
     }
+  }
+}));
+
+export const CIPPropertyTable = styled(Table)(({ theme }) => ({
+  marginBottom: "30px",
+  "& .table-wrapper": {
+    padding: 0,
+    border: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
+    borderBottom: "0px",
+    boxShadow: theme.shadow.card
+  },
+  "& td, th": {
+    borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
+    paddingTop: "18px",
+    paddingBottom: "18px"
+  },
+
+  "& tr th:nth-child(4), & tr td:nth-child(4)": {
+    borderLeft: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`
+  },
+
+  "& tr th:nth-child(4), & tr th:nth-child(5), & tr th:nth-child(6), & tr td:nth-child(4), & tr td:nth-child(5), & tr td:nth-child(6) ":
+    {
+      backgroundColor: theme.isDark ? theme.palette.secondary[0] : theme.palette.primary[100]
+    }
+}));
+
+export const ButtonContainer = styled(Box)(({ theme }) => ({
+  display: "inline-block",
+  [theme.breakpoints.down("md")]: {
+    marginTop: "8px"
   }
 }));

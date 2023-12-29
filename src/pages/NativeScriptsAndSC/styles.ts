@@ -1,4 +1,13 @@
-import { AccordionDetails, AccordionSummary, Box, Container, styled } from "@mui/material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary as AccordionSummaryMUI,
+  Box,
+  Container,
+  IconButton,
+  styled,
+  Button
+} from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => ({
@@ -167,8 +176,8 @@ export const StyledContractTabs = styled(Box)(() => ({
   width: "100%"
 }));
 
-export const StyledAccordionSummary = styled(AccordionSummary)(() => ({
-  padding: "18px 25px 18px 25px"
+export const StyledAccordionSummary = styled(AccordionSummaryMUI)<{ active: number }>(({ active }) => ({
+  padding: `18px 25px ${active ? 0 : "18px"} 25px`
 }));
 
 export const StyledAccordionDetails = styled(AccordionDetails)(({ theme }) => ({
@@ -200,4 +209,93 @@ export const StyledTabName = styled(AccordionDetails)(({ theme }) => ({
 export const StyledTabAssociated = styled(Box)(() => ({
   maxHeight: 400,
   overflowY: "scroll"
+}));
+
+export const FilterContainer = styled(Box)(({ theme }) => ({
+  width: 300,
+  backgroundColor: theme.palette.secondary[0],
+  zIndex: 15,
+  position: "absolute",
+  top: "calc(100% + 10px)",
+  right: 0,
+  borderRadius: theme.spacing(1),
+  boxShadow: "2px 2px 10px 0px #43465633",
+  [theme.breakpoints.down("sm")]: {
+    width: "calc(100% - 30px)"
+  },
+  ":hover": {
+    backgroundColor: theme.palette.secondary[0]
+  },
+  ":after": {
+    content: "''",
+    display: "block",
+    background: theme.palette.secondary[0],
+    zIndex: 9,
+    position: "absolute",
+    top: "-6px",
+    right: "36px",
+    width: "14px",
+    height: "16px",
+    transform: "rotate(45deg)"
+  }
+}));
+
+export const CloseButton = styled(IconButton)<{ saving: number }>`
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid ${(props) => props.theme.palette.grey["A100"]};
+  cursor: ${(props) => (props.saving ? `wait` : `pointer`)};
+  &:hover {
+    ${(props) => (props.saving ? `background: none;` : ``)}
+  }
+`;
+
+export const AccordionContainer = styled(Accordion)(({ theme }) => ({
+  boxShadow: "none",
+  textAlign: "left",
+  width: "100%",
+  margin: 0,
+  backgroundColor: theme.palette.secondary[0]
+}));
+
+export const AccordionSummary = styled(AccordionSummaryMUI)(() => ({
+  padding: "0 8px !important",
+  textAlign: "left",
+  height: "40px !important",
+  minHeight: "40px !important"
+}));
+
+export const AccordionDetailsFilter = styled(AccordionDetails)(({ theme }) => ({
+  padding: `0 ${theme.spacing(1)} !important`,
+  backgroundColor: theme.palette.primary[100],
+  borderRadius: theme.spacing(1),
+  color: theme.palette.secondary.light
+}));
+
+export const ApplyFilterButton = styled(Button)(({ theme }) => ({
+  width: "100%",
+  textTransform: "capitalize",
+  fontWeight: "bold",
+  fontSize: 16,
+  color: theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100],
+  background: theme.palette.primary.main,
+  ":hover": {
+    background: theme.palette.primary.dark
+  },
+  ":disabled": {
+    background: theme.palette.secondary[600],
+    color: theme.palette.secondary[100]
+  }
+}));
+
+export const ButtonSort = styled(Button)(({ theme }) => ({
+  textTransform: "capitalize",
+  color: theme.palette.secondary.main,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between"
 }));

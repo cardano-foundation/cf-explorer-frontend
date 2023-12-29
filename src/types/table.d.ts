@@ -56,6 +56,7 @@ export interface TableProps<T extends ColumnType = any> {
   columns: Column<T>[];
   data?: T[] | null;
   screen?: string;
+  screen?: string;
   className?: string;
   emptyClassName?: string;
   style?: React.CSSProperties;
@@ -119,6 +120,7 @@ export interface FooterTableProps {
   pagination: TableProps["pagination"];
   loading: boolean;
   clearSelection?: () => void;
+  optionList?: number[];
 }
 
 export interface TableTopHeaderProps {
