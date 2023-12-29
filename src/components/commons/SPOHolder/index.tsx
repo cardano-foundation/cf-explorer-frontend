@@ -56,7 +56,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
                 <Box fontSize="1.125rem" color={({ palette }) => palette.secondary.light}>
                   {t("common.poolId")}:
                 </Box>
-                <PoolNamePopup to={details.delegation(poolView)}>{getShortHash(poolView || "")}</PoolNamePopup>
+                <PoolNamePopup to={details.delegation(poolView)}>{getShortHash(poolView || "", 8)}</PoolNamePopup>
                 <CopyButton text={poolView} />
               </Box>
               <Box display={"flex"} alignItems={"center"}>
@@ -97,7 +97,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
                 {rewardAccounts.map((item) => (
                   <StakeKeyItem key={item}>
                     <SPOKey fill={theme.palette.primary.main} />
-                    <PoolNamePopup to={details.stake(item)}>{getShortHash(item)}</PoolNamePopup>
+                    <PoolNamePopup to={details.stake(item)}>{getShortHash(item, 8)}</PoolNamePopup>
                     <CopyButton text={item} />
                   </StakeKeyItem>
                 ))}
