@@ -19,9 +19,11 @@ export const alphaNumeric = /[^0-9a-zA-Z]/;
 // eslint-disable-next-line no-useless-escape
 export const regexEmail = /^[\w\.\+\-]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-export const getShortHash = (address = "") => {
+export const getShortHash = (address = "", firstpart?: number, lastPart?: number) => {
   if (address?.length <= 18) return address;
-  return address ? `${address.slice(0, 10)}...${address.slice(-8)}` : "";
+  return address
+    ? `${address.slice(0, firstpart ? firstpart : 10)}...${address.slice(-(lastPart ? lastPart : 8))}`
+    : "";
 };
 
 export const LARGE_NUMBER_ABBREVIATIONS = ["", "K", "M", "B", "T", "q", "Q", "s", "S"];
