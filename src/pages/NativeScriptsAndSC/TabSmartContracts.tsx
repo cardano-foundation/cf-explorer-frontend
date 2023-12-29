@@ -155,6 +155,7 @@ const TabSmartContracts = () => {
             <FilterComponent
               handleApplyFilter={handleApplyFilter}
               setVersion={setScriptVersion}
+              clear={clear}
               version={scriptVersion}
               handleResetFilter={handleResetFilter}
               filterOption={filterOption}
@@ -192,6 +193,7 @@ interface FilterComponentProps {
   filterOption: string[];
   pushFilterOption: (filterOption: string) => void;
   removeAtFilterOption: (index: number) => void;
+  clear: () => void;
 }
 
 const FilterComponent: React.FC<FilterComponentProps> = ({
@@ -201,6 +203,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
   handleApplyFilter,
   filterOption,
   removeAtFilterOption,
+  clear,
   pushFilterOption
 }) => {
   const theme = useTheme();
@@ -319,11 +322,26 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                 <Checkbox
                   id={purpose ? purpose : "any"}
                   checked={filterOption.includes(purpose)}
-                  onChange={(e) =>
-                    e.target.checked
-                      ? pushFilterOption(purpose)
-                      : removeAtFilterOption(filterOption.findIndex((f) => f === purpose))
-                  }
+                  onChange={(e) => {
+                    if (e.target.checked && !filterOption.includes(purpose)) {
+                      pushFilterOption(purpose);
+                      if (filterOption.length === transactionPurpose.length - 2 && !filterOption.includes("")) {
+                        clear();
+                        pushFilterOption("");
+                        return;
+                      }
+                      if (filterOption.includes("")) {
+                        removeAtFilterOption(filterOption.findIndex((f) => f === ""));
+                        return;
+                      }
+                      if (purpose === "") {
+                        clear();
+                        pushFilterOption("");
+                      }
+                    } else if (!e.target.checked && filterOption.includes(purpose)) {
+                      removeAtFilterOption(filterOption.findIndex((f) => f === purpose));
+                    }
+                  }}
                   sx={{
                     color: theme.palette.secondary.light,
                     "&.Mui-checked": {
