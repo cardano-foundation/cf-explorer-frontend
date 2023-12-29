@@ -44,8 +44,12 @@ const TabSmartContracts = () => {
   const { tabActive } = useParams<{ tabActive: string }>();
   const optionList = [3, 6, 9, 12, 15];
   const [filterOption, { push: pushFilterOption, removeAt: removeAtFilterOption, clear }] = useList<string>(
-    (pageInfo.txPurpose || "").split(",") || []
+    (pageInfo.txPurpose || "").split(",").length === 0 ||
+      ((pageInfo.txPurpose || "").split(",").length === 1 && (pageInfo.txPurpose || "").split(",")[0] === "")
+      ? ["SPEND", "MINT", "CERT", "REWARD"]
+      : (pageInfo.txPurpose || "").split(",")
   );
+
   const [showFilter, setShowFiter] = useState(false);
   const [searchQuery, setSearchQuery] = useState<{ scriptVersion?: string; txPurpose?: string[] }>();
   const [scriptVersion, setScriptVersion] = useState("");
@@ -64,7 +68,12 @@ const TabSmartContracts = () => {
     }
     setScriptVersion(pageInfo.scriptVersion || "");
     clear();
-    pushFilterOption(...(pageInfo.txPurpose || "").split(","));
+    pushFilterOption(
+      ...((pageInfo.txPurpose || "").split(",").length === 0 ||
+      ((pageInfo.txPurpose || "").split(",").length === 1 && (pageInfo.txPurpose || "").split(",")[0] === "")
+        ? ["SPEND", "MINT", "CERT", "REWARD"]
+        : (pageInfo.txPurpose || "").split(","))
+    );
   }, [JSON.stringify(pageInfo), pathname]);
 
   const handleApplyFilter = () => {
@@ -209,7 +218,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
   const theme = useTheme();
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState<string | false>("");
-  const transactionPurpose = ["", "SPEND", "MINT", "CERT", "REWARD"];
+  const transactionPurpose = ["SPEND", "MINT", "CERT", "REWARD"];
   const transactionPurposeI18n: Record<string, string> = {
     any: t("smartContract.any"),
     SPEND: t("smartContract.spend"),
@@ -317,27 +326,40 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
             </Box>
           </AccordionSummary>
           <AccordionDetailsFilter>
+            <Box display={"flex"} alignItems={"center"}>
+              <Checkbox
+                id={"any"}
+                checked={filterOption.length === transactionPurpose.length}
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    transactionPurpose.forEach((purpose) => {
+                      if (!filterOption.includes(purpose)) {
+                        pushFilterOption(purpose);
+                      }
+                    });
+                  } else {
+                    clear();
+                  }
+                }}
+                sx={{
+                  color: theme.palette.secondary.light,
+                  "&.Mui-checked": {
+                    color: `${theme.palette.primary.main} !important`
+                  }
+                }}
+              />
+              <StyledDropdownItem htmlFor={"any"} style={{ cursor: "pointer" }}>
+                {transactionPurposeI18n["any"]}
+              </StyledDropdownItem>
+            </Box>
             {transactionPurpose.map((purpose: string, idx) => (
               <Box key={idx} display={"flex"} alignItems={"center"}>
                 <Checkbox
-                  id={purpose ? purpose : "any"}
+                  id={purpose}
                   checked={filterOption.includes(purpose)}
                   onChange={(e) => {
                     if (e.target.checked && !filterOption.includes(purpose)) {
                       pushFilterOption(purpose);
-                      if (filterOption.length === transactionPurpose.length - 2 && !filterOption.includes("")) {
-                        clear();
-                        pushFilterOption("");
-                        return;
-                      }
-                      if (filterOption.includes("")) {
-                        removeAtFilterOption(filterOption.findIndex((f) => f === ""));
-                        return;
-                      }
-                      if (purpose === "") {
-                        clear();
-                        pushFilterOption("");
-                      }
                     } else if (!e.target.checked && filterOption.includes(purpose)) {
                       removeAtFilterOption(filterOption.findIndex((f) => f === purpose));
                     }
@@ -350,7 +372,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                   }}
                 />{" "}
                 <StyledDropdownItem htmlFor={purpose ? purpose : "any"} style={{ cursor: "pointer" }}>
-                  {purpose ? transactionPurposeI18n[purpose] : transactionPurposeI18n["any"]}
+                  {transactionPurposeI18n[purpose]}
                 </StyledDropdownItem>
               </Box>
             ))}
