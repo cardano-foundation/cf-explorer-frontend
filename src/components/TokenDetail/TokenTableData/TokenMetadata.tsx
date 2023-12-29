@@ -28,7 +28,7 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson, metadataCI
   const isShowCIP25 = metadataCIP25?.tokenMap && Object.keys(metadataCIP25?.tokenMap).length > 0;
   return (
     <MetaDataWraper>
-      {isShowCIP25 && (
+      {!!metadataJson && (
         <CIPHeader>
           <CIPHeaderTitle>{t("token.metadataCheck")}</CIPHeaderTitle>
           {!isNil(metadataCIP25?.valid) && (
@@ -38,7 +38,7 @@ const TokenMetadata: React.FC<ITokenMetadataProps> = ({ metadataJson, metadataCI
               type={metadataCIP25?.valid ? "success" : "warning"}
             />
           )}
-          {!isNil(metadataCIP60?.valid) && (
+          {isShowCIP25 && !isNil(metadataCIP60?.valid) && (
             <CIP60Badge
               onClick={() => setOpenCIP60(true)}
               type={metadataCIP60?.valid ? "success" : "warning"}
