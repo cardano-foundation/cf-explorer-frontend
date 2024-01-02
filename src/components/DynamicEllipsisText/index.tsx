@@ -47,7 +47,7 @@ const StyledAfterElm = styled(Box)`
 `;
 
 // The number of pixels required to display the shortened address in one row
-const MIN_PIXEL = 180;
+const MIN_PIXEL = 120;
 
 const DynamicEllipsisText = ({
   value,
