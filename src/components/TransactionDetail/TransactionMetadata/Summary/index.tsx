@@ -100,10 +100,16 @@ const SummaryItems = ({
         sx={{
           display: "flex",
           alignItems: "center",
-          height: "fit-content"
+          height: "fit-content",
+          width: "100%"
         }}
       >
-        <WrapItemsInfo paddingX={2}>
+        <WrapItemsInfo
+          paddingX={2}
+          sx={{
+            width: "-webkit-fill-available"
+          }}
+        >
           <Icon
             src={
               item.value > 0
@@ -165,7 +171,12 @@ const SummaryItems = ({
           height: "fit-content"
         }}
       >
-        <WrapTokensInfo paddingX={2}>
+        <WrapTokensInfo
+          paddingX={2}
+          sx={{
+            width: "-webkit-fill-available"
+          }}
+        >
           <Box display={"flex"}>
             <Icon
               src={
@@ -196,6 +207,7 @@ const SummaryItems = ({
               <Box
                 display="flex"
                 alignItems="center"
+                width={"100%"}
                 sx={{
                   height: tokensSent.length > 0 ? `${height}px` : "0px"
                 }}
@@ -250,7 +262,12 @@ const SummaryItems = ({
           height: "fit-content"
         }}
       >
-        <WrapTokensInfo paddingX={2}>
+        <WrapTokensInfo
+          paddingX={2}
+          sx={{
+            width: "-webkit-fill-available"
+          }}
+        >
           <Box display={"flex"}>
             <Icon
               src={
