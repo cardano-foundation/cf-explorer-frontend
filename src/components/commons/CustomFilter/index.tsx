@@ -1,7 +1,8 @@
-import { Box, Button, ClickAwayListener, IconButton, MenuList, useTheme } from "@mui/material";
+import { Box, Button, ClickAwayListener, MenuList, useTheme } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { BsFillCheckCircleFill } from "react-icons/bs";
 
 import {
   ArrowFromBottomIcon,
@@ -23,7 +24,7 @@ import {
   FilterMenuItem
 } from "../Filter/styles";
 import DateRangeModal, { DATETIME_PARTTEN } from "./DateRangeModal";
-import { AdditionContainer, StyledInput, StyledListItemIcon } from "./styles";
+import { AdditionContainer, ApplyFilterButton, StyledInput, StyledListItemIcon } from "./styles";
 
 export interface FilterParams {
   sort?: string;
@@ -34,7 +35,9 @@ export interface FilterParams {
 
 export interface Props {
   onChange?: (params: FilterParams | null) => void;
+  onSubmit?: (params: FilterParams) => void;
   filterValue?: FilterParams | null;
+  filter?: FilterParams | null;
   sortKey?: string;
   excludes?: string[];
   searchLabel: string;
@@ -42,36 +45,63 @@ export interface Props {
 
 const CustomFilter: React.FC<Props> = (props) => {
   const { t } = useTranslation();
-  const { onChange, filterValue, sortKey = "time", excludes = [], searchLabel } = props;
+  const { onSubmit, filterValue, sortKey = "time", excludes = [], searchLabel } = props;
+
   const [open, setOpen] = useState(false);
   const [openDateRange, setOpenDateRange] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
   const [search, setSearch] = useState("");
+  const [params, setParams] = useState<FilterParams | null>(filterValue || {});
   const inputRef = useRef<HTMLInputElement | null>(null);
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const theme = useTheme();
 
   const options: Option[] = [
     {
-      label: t("filter.latestFirst"),
+      label: (
+        <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+          {t("filter.latestFirst")}
+          {params?.sort && params.sort.includes(`${sortKey},DESC`) && (
+            <BsFillCheckCircleFill size={16} color={theme.palette.secondary.main} />
+          )}{" "}
+        </Box>
+      ),
+
       icon: <CustomIcon icon={ArrowFromTopIcon} fill={theme.palette.secondary.light} width={20} />,
       value: "latest",
       active: filterValue?.sort === `${sortKey},DESC`
     },
     {
-      label: t("filter.firstLatest"),
+      label: (
+        <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+          {t("filter.firstLatest")}
+          {params?.sort && params.sort.includes(`${sortKey},ASC`) && (
+            <BsFillCheckCircleFill size={16} color={theme.palette.secondary.main} />
+          )}
+        </Box>
+      ),
       icon: <CustomIcon icon={ArrowFromBottomIcon} fill={theme.palette.secondary.light} width={20} />,
       value: "first",
       active: filterValue?.sort === `${sortKey},ASC`
     },
     {
-      label: t("filter.daterange"),
+      label: (
+        <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+          {t("filter.daterange")}
+          {params?.fromDate && <BsFillCheckCircleFill size={16} color={theme.palette.secondary.main} />}
+        </Box>
+      ),
       icon: <CustomIcon icon={CalenderIcon} fill={theme.palette.secondary.light} width={20} />,
       value: "dateRange",
       active: !!(filterValue?.toDate && filterValue?.fromDate)
     },
     {
-      label: searchLabel,
+      label: (
+        <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+          {searchLabel}
+          {params?.search && <BsFillCheckCircleFill size={16} color={theme.palette.secondary.main} />}
+        </Box>
+      ),
       icon: (
         <CustomIcon
           icon={HeaderSearchIconComponent}
@@ -88,13 +118,11 @@ const CustomFilter: React.FC<Props> = (props) => {
   const onSelect = (value: string) => {
     switch (value) {
       case "latest": {
-        onChange?.({ ...filterValue, sort: `${sortKey},DESC` });
-        setOpen(false);
+        setParams?.({ ...filterValue, sort: `${sortKey},DESC` });
         break;
       }
       case "first": {
-        onChange?.({ ...filterValue, sort: `${sortKey},ASC` });
-        setOpen(false);
+        setParams?.({ ...filterValue, sort: `${sortKey},ASC` });
         break;
       }
       case "dateRange": {
@@ -119,6 +147,7 @@ const CustomFilter: React.FC<Props> = (props) => {
   }, []);
 
   useEffect(() => {
+    setParams?.(filterValue || null);
     if (!open && filterValue?.search !== search) {
       setOpenSearch(false);
       setSearch(filterValue?.search || "");
@@ -127,7 +156,10 @@ const CustomFilter: React.FC<Props> = (props) => {
   }, [open]);
 
   const handleReset = () => {
-    onChange?.(null);
+    setParams?.(null);
+    if (onSubmit) {
+      onSubmit?.({});
+    }
     setOpen(false);
     setSearch("");
   };
@@ -165,23 +197,7 @@ const CustomFilter: React.FC<Props> = (props) => {
               {openSearch && (
                 <StyledInput
                   inputRef={inputRef}
-                  endAdornment={
-                    <IconButton
-                      onClick={() => {
-                        onChange?.({ ...filterValue, search: search });
-                        setOpenSearch(false);
-                        setOpen(false);
-                      }}
-                      sx={{ marginLeft: "5px" }}
-                    >
-                      <CustomIcon
-                        icon={HeaderSearchIconComponent}
-                        stroke={theme.palette.secondary.light}
-                        fill={theme.palette.secondary[0]}
-                        height={22}
-                      />
-                    </IconButton>
-                  }
+                  placeholder={searchLabel}
                   value={search}
                   onChange={({ target: { value } }) => setSearch(value)}
                 />
@@ -191,16 +207,29 @@ const CustomFilter: React.FC<Props> = (props) => {
                 open={openDateRange}
                 value={{ fromDate: filterValue?.fromDate, toDate: filterValue?.toDate }}
                 onDateRangeChange={({ fromDate, toDate }) => {
-                  onChange?.({
+                  setParams?.({
                     ...filterValue,
                     fromDate: moment(fromDate, DATETIME_PARTTEN).startOf("d").utc().format(DATETIME_PARTTEN),
                     toDate: moment(toDate, DATETIME_PARTTEN).endOf("d").utc().format(DATETIME_PARTTEN)
                   });
-                  setOpen(false);
                 }}
                 onClose={() => setOpenDateRange(false)}
               />
             </AdditionContainer>
+            <Box my={1}>
+              <ApplyFilterButton
+                data-testid="apply-filters"
+                onClick={() => {
+                  if (onSubmit) {
+                    onSubmit?.({ ...params, search: search });
+                    setOpenSearch(false);
+                    setOpen(false);
+                  }
+                }}
+              >
+                {t("common.applyFilters")}
+              </ApplyFilterButton>
+            </Box>
             <Box
               component={Button}
               width={"100%"}
