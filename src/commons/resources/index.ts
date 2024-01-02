@@ -6,6 +6,7 @@ import WalletIcon from "./icons/wallet.svg";
 import HeaderSearchIcon, { ReactComponent as HeaderSearchIconComponent } from "./icons/header-search.svg";
 import CopyIcon from "./icons/copy.svg";
 import CloseIcon from "./icons/closeIcon.svg";
+import closeIconDarkMode from "./icons/closeIconDarkMode.svg";
 import NotFoundIcon from "./images/icon-404.png";
 import AdaPriceIcon from "./icons/ada-price.svg";
 import AdaPriceDarkIcon from "./icons/ada-price-dark.svg";
@@ -169,6 +170,7 @@ export {
   HeaderSearchIcon,
   CopyIcon,
   CloseIcon,
+  closeIconDarkMode,
   NotFoundIcon,
   AdaPriceIcon,
   AdaPriceDarkIcon,

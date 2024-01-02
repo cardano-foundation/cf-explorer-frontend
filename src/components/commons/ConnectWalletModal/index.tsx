@@ -5,7 +5,7 @@ import { useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import useToast from "src/commons/hooks/useToast";
-import { QrCodeDarkMode, QrCodeLightMode, CloseIcon } from "src/commons/resources";
+import { QrCodeDarkMode, QrCodeLightMode, CloseIcon, closeIconDarkMode } from "src/commons/resources";
 import { setOpenModal, setWallet } from "src/stores/user";
 import { NETWORK } from "src/commons/utils/constants";
 
@@ -59,7 +59,7 @@ const ConnectWalletModal: React.FC<IProps> = ({
   const p2pOptionModal = document.querySelector("#connect-wallet-dropdown>div:first-child") as HTMLElement | null;
   const walletMenuModal = document.getElementById("modal-content-connect-wallet") as HTMLElement | null;
   const modalContent = document.querySelector('[data-testid="modal-content"]') as HTMLElement | null;
-
+  const subtitle = modalContent?.querySelector("p") as HTMLElement | null;
   const copyButton = modalContent?.querySelector("button") as HTMLElement | null;
   const qrImage = p2pConnectButton[0]?.querySelector("img");
   const modalContentInput = modalContent?.querySelector("input") as HTMLInputElement | null;
@@ -143,7 +143,7 @@ const ConnectWalletModal: React.FC<IProps> = ({
         width: "100%",
         maxWidth: "100%",
         border: "none",
-        background: theme.isDark ? theme.palette.secondary[0] : theme.palette.secondary.main,
+        background: theme.isDark ? theme.palette.primary.main : theme.palette.secondary.main,
         padding: "15px 20px",
         borderRadius: "8px",
         fontWeight: 700,
@@ -151,7 +151,7 @@ const ConnectWalletModal: React.FC<IProps> = ({
         lineHeight: "19px",
         cursor: "pointer",
         textAlign: "center",
-        color: theme.isDark ? theme.palette.secondary.contrastText : theme.palette.secondary[0],
+        color: theme.palette.secondary[0],
         textTransform: "none"
       });
 
@@ -170,14 +170,16 @@ const ConnectWalletModal: React.FC<IProps> = ({
       });
 
       closeButtonElenment.id = "close-button-p2p-modal";
-      closeButtonElenment.src = `${CloseIcon}`;
+      closeButtonElenment.src = theme.isDark ? closeIconDarkMode : CloseIcon;
       Object.assign(closeButtonElenment.style, {
         width: "30px",
         height: "30px",
         cursor: "pointer",
         position: "absolute",
         top: "15px",
-        right: "15px"
+        right: "15px",
+        color: "#fff",
+        stroke: "#fff"
       });
       closeButtonElenment.alt = "Close";
       closeButtonElenment.className = "close-button";
@@ -197,7 +199,7 @@ const ConnectWalletModal: React.FC<IProps> = ({
         position: "absolute",
         top: "40px",
         left: "40px",
-        color: theme.isDark ? theme.palette.secondary[0] : theme.palette.secondary.main
+        color: theme.palette.secondary.main
       });
 
       !cancelButton && modalContent.appendChild(cancelButtonElement);
@@ -208,7 +210,19 @@ const ConnectWalletModal: React.FC<IProps> = ({
       Object.assign(modalContent.style, {
         padding: "100px 80px 50px 80px",
         visibility: "visible",
-        position: "relative"
+        position: "relative",
+        backgroundColor: theme.isDark ? theme.palette.secondary[0] : theme.palette.primary[100],
+        border: "none"
+      });
+    }
+    if (subtitle) {
+      subtitle.style.maxWidth = "100%";
+      subtitle.style.color = theme.palette.secondary.main;
+    }
+    if (modalContentInput) {
+      Object.assign(modalContentInput.style, {
+        backgroundColor: "transparent",
+        color: theme.palette.secondary.main
       });
     }
 
