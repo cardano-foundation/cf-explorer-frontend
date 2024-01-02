@@ -50,7 +50,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
             to={details.nativeScriptDetail(data.scriptHash)}
             color={`${theme.palette.primary.main} !important`}
           >
-            <DynamicEllipsisText value={data.scriptHash || ""} isTooltip />
+            <DynamicEllipsisText customTruncateFold={[4, 4]} value={data.scriptHash || ""} isTooltip />
           </Box>
         </Row>
         <Row alignItems={data.before && data.after ? "flex-start !important" : "center"}>
@@ -142,7 +142,7 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) =
             to={details.smartContract(data.scriptHash)}
             color={`${theme.palette.primary.main} !important`}
           >
-            <DynamicEllipsisText value={data.scriptHash || ""} isTooltip />
+            <DynamicEllipsisText customTruncateFold={[4, 4]} value={data.scriptHash || ""} isTooltip />
           </Box>
         </Row>
         <Row>
