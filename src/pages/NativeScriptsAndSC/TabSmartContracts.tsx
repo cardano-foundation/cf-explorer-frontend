@@ -46,7 +46,7 @@ const TabSmartContracts = () => {
   const [filterOption, { push: pushFilterOption, removeAt: removeAtFilterOption, clear }] = useList<string>(
     (pageInfo.txPurpose || "").split(",").length === 0 ||
       ((pageInfo.txPurpose || "").split(",").length === 1 && (pageInfo.txPurpose || "").split(",")[0] === "")
-      ? ["SPEND", "MINT", "CERT", "REWARD"]
+      ? ["SPEND", "MINT", "CERT", "REWARD", "NO_TX_PURPOSE"]
       : (pageInfo.txPurpose || "").split(",")
   );
 
@@ -71,7 +71,7 @@ const TabSmartContracts = () => {
     pushFilterOption(
       ...((pageInfo.txPurpose || "").split(",").length === 0 ||
       ((pageInfo.txPurpose || "").split(",").length === 1 && (pageInfo.txPurpose || "").split(",")[0] === "")
-        ? ["SPEND", "MINT", "CERT", "REWARD"]
+        ? ["SPEND", "MINT", "CERT", "REWARD", "NO_TX_PURPOSE"]
         : (pageInfo.txPurpose || "").split(","))
     );
   }, [JSON.stringify(pageInfo), pathname]);
@@ -218,13 +218,14 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
   const theme = useTheme();
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState<string | false>("");
-  const transactionPurpose = ["SPEND", "MINT", "CERT", "REWARD"];
+  const transactionPurpose = ["SPEND", "MINT", "CERT", "REWARD", "NO_TX_PURPOSE"];
   const transactionPurposeI18n: Record<string, string> = {
-    any: t("smartContract.any"),
+    ANY: t("smartContract.any"),
     SPEND: t("smartContract.spend"),
     MINT: t("smartContract.mint"),
     REWARD: t("smartContract.reward"),
-    CERT: t("smartContract.cert")
+    CERT: t("smartContract.cert"),
+    NO_TX_PURPOSE: t("smartContract.noTransactionPurpose")
   };
   const handleChooseVersion = (event: React.ChangeEvent<HTMLInputElement>) => {
     setVersion((event.target as HTMLInputElement).value);
@@ -328,7 +329,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
           <AccordionDetailsFilter>
             <Box display={"flex"} alignItems={"center"}>
               <Checkbox
-                id={"any"}
+                id={"ANY"}
                 checked={filterOption.length === transactionPurpose.length}
                 onChange={(e) => {
                   if (e.target.checked) {
@@ -348,8 +349,8 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                   }
                 }}
               />
-              <StyledDropdownItem htmlFor={"any"} style={{ cursor: "pointer" }}>
-                {transactionPurposeI18n["any"]}
+              <StyledDropdownItem htmlFor={"ANY"} style={{ cursor: "pointer" }}>
+                {transactionPurposeI18n["ANY"]}
               </StyledDropdownItem>
             </Box>
             {transactionPurpose.map((purpose: string, idx) => (
