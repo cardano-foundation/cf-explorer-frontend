@@ -172,7 +172,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
           <MetadataJSONTitle> </MetadataJSONTitle>
           <Box display={"flex"} alignItems={"center"} gap={1} flexWrap={"wrap"}>
             <DecryptButton
-              disabled={metadata[0].value !== supportEnc}
+              disabled={metadata[1].value !== supportEnc}
               onClick={() => {
                 setError("");
                 setOpenPassphrasseModal(true);
@@ -180,7 +180,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
             >
               {t("CIP83.decryptMessage")}
             </DecryptButton>
-            {metadata[0].value !== supportEnc && (
+            {metadata[1].value !== supportEnc && (
               <BadgeContainer>
                 <WarningCIPIcon />
                 <CIPLabel>{t("CIP83.notSupportEnc")}</CIPLabel>
