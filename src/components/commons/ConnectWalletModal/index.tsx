@@ -1,16 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { capitalize } from "@cardano-foundation/cardano-connect-with-wallet-core";
 import { ConnectWalletButton } from "@cardano-foundation/cardano-connect-with-wallet";
-import { useTheme, Button } from "@mui/material";
+import { useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import useToast from "src/commons/hooks/useToast";
-import { QrCodeDarkMode, QrCodeLightMode } from "src/commons/resources";
+import { QrCodeDarkMode, QrCodeLightMode, CloseIcon } from "src/commons/resources";
 import { setOpenModal, setWallet } from "src/stores/user";
 import { NETWORK } from "src/commons/utils/constants";
 
 import { WrapContent } from "./style";
 import StyledModal from "../StyledModal";
+
 interface IProps {
   connect: (name: string, onSuccess: () => void, onError: (error: Error) => void) => Promise<void>;
   onTriggerSignMessage: () => void;
@@ -33,12 +34,11 @@ const ConnectWalletModal: React.FC<IProps> = ({
   const { t } = useTranslation();
   const theme = useTheme();
 
-  const [isP2Pconnect, setIsP2Pconnect] = React.useState(false);
-  const [p2pConnectButton, setP2pConnectButton] = React.useState<Element[]>([]); // eslint-disable-line @typescript-eslint/no-explicit-any
+  const [p2pConnectButton, setP2pConnectButton] = useState<Element[]>([]); // eslint-disable-line @typescript-eslint/no-explicit-any
   const toast = useToast();
+
   const handleClose = () => {
     setOpenModal(false);
-    setIsP2Pconnect(false);
   };
   const onSuccess = () => {
     setOpenModal(false);
@@ -55,11 +55,11 @@ const ConnectWalletModal: React.FC<IProps> = ({
       }
     }, 0);
   }, [openModal]);
-
   const walletMenu = document.getElementById("connect-wallet-menu") as HTMLElement | null;
   const p2pOptionModal = document.querySelector("#connect-wallet-dropdown>div:first-child") as HTMLElement | null;
+  const walletMenuModal = document.getElementById("modal-content-connect-wallet") as HTMLElement | null;
   const modalContent = document.querySelector('[data-testid="modal-content"]') as HTMLElement | null;
-  const subtitle = modalContent?.querySelector("p") as HTMLElement | null;
+
   const copyButton = modalContent?.querySelector("button") as HTMLElement | null;
   const qrImage = p2pConnectButton[0]?.querySelector("img");
   const modalContentInput = modalContent?.querySelector("input") as HTMLInputElement | null;
@@ -70,12 +70,6 @@ const ConnectWalletModal: React.FC<IProps> = ({
       handleCloseP2P();
     }
   }, [walletMenu]);
-
-  useEffect(() => {
-    if (p2pOptionModal == null && isP2Pconnect) {
-      setOpenModal(false);
-    }
-  }, [p2pOptionModal]);
 
   useEffect(() => {
     function copyToClipboard(text: string) {
@@ -98,8 +92,12 @@ const ConnectWalletModal: React.FC<IProps> = ({
   }, [modalContentInput, copyButton]);
 
   if (modalContent) {
+    const cancelButton = document.getElementById("cancel-button-p2p-modal") as HTMLElement | null;
     modalContent.addEventListener("click", function (event) {
-      if (copyButton && (event.target === copyButton || copyButton.contains(event.target as Node))) {
+      if (
+        (copyButton && (event.target === copyButton || copyButton.contains(event.target as Node))) ||
+        (cancelButton && (event.target === cancelButton || cancelButton.contains(event.target as Node)))
+      ) {
         // Do nothing
       } else {
         event.stopPropagation();
@@ -112,34 +110,113 @@ const ConnectWalletModal: React.FC<IProps> = ({
   }
 
   p2pConnectButton[0]?.addEventListener("click", () => {
-    setIsP2Pconnect(true);
     handleSignP2P();
-    if (walletMenu) {
-      walletMenu.style.display = "none";
+    if (walletMenuModal) {
+      walletMenuModal.style.visibility = "hidden";
     }
+
+    if (modalContent) {
+      //cancel button
+      const closeButton = document.getElementById("close-button-p2p-modal") as HTMLElement | null;
+      const cancelButton = document.getElementById("cancel-button-p2p-modal") as HTMLElement | null;
+      const titleModal = document.getElementById("p2p-modal-title") as HTMLElement | null;
+
+      const cancelButtonElement = document.createElement("button");
+      cancelButtonElement.innerHTML = "Cancel";
+      cancelButtonElement.id = "cancel-button-p2p-modal";
+
+      cancelButtonElement.addEventListener("click", () => {
+        if (p2pOptionModal) {
+          p2pOptionModal.style.display = "none";
+        }
+        if (walletMenuModal) {
+          walletMenuModal.style.visibility = "visible";
+        }
+        Object.assign(modalContent.style, {
+          visibility: "hidden",
+          padding: 0
+        });
+      });
+
+      Object.assign(cancelButtonElement.style, {
+        marginTop: "20px",
+        width: "100%",
+        maxWidth: "100%",
+        border: "none",
+        background: theme.isDark ? theme.palette.secondary[0] : theme.palette.secondary.main,
+        padding: "15px 20px",
+        borderRadius: "8px",
+        fontWeight: 700,
+        fontSize: "16px",
+        lineHeight: "19px",
+        cursor: "pointer",
+        textAlign: "center",
+        color: theme.isDark ? theme.palette.secondary.contrastText : theme.palette.secondary[0],
+        textTransform: "none"
+      });
+
+      // close button
+      const closeButtonElenment = document.createElement("img");
+
+      closeButtonElenment.addEventListener("click", () => {
+        setOpenModal(false);
+        if (p2pOptionModal) {
+          p2pOptionModal.style.display = "none";
+        }
+        Object.assign(modalContent.style, {
+          visibility: "hidden",
+          padding: 0
+        });
+      });
+
+      closeButtonElenment.id = "close-button-p2p-modal";
+      closeButtonElenment.src = `${CloseIcon}`;
+      Object.assign(closeButtonElenment.style, {
+        width: "30px",
+        height: "30px",
+        cursor: "pointer",
+        position: "absolute",
+        top: "15px",
+        right: "15px"
+      });
+      closeButtonElenment.alt = "Close";
+      closeButtonElenment.className = "close-button";
+
+      //title modal
+
+      const titleModalElement = document.createElement("h2");
+      titleModalElement.innerHTML = t("account.connectP2PWallet");
+      titleModalElement.id = "p2p-modal-title";
+      !titleModal && modalContent.appendChild(titleModalElement);
+
+      Object.assign(titleModalElement.style, {
+        margin: "0 0 20px 0",
+        fontWeight: 700,
+        fontSize: "24px",
+        lineHeight: "29px",
+        position: "absolute",
+        top: "40px",
+        left: "40px",
+        color: theme.isDark ? theme.palette.secondary[0] : theme.palette.secondary.main
+      });
+
+      !cancelButton && modalContent.appendChild(cancelButtonElement);
+      !closeButton && modalContent.appendChild(closeButtonElenment);
+    }
+
+    if (modalContent) {
+      Object.assign(modalContent.style, {
+        padding: "100px 80px 50px 80px",
+        visibility: "visible",
+        position: "relative"
+      });
+    }
+
     if (p2pOptionModal && modalContent) {
       Object.assign(p2pOptionModal.style, {
-        position: "static",
-        display: "block",
-        backgroundColor: theme.isDark ? theme.palette.secondary[0] : theme.palette.primary[100]
+        display: "block"
       });
-      Object.assign(modalContent.style, {
-        backgroundColor: theme.isDark ? theme.palette.secondary[0] : theme.palette.primary[100],
-        margin: " 0 auto",
-        width: "-webkit-fill-available",
-        border: "none",
-        padding: "0",
-        color: theme.palette.secondary.main
-      });
-      if (subtitle) {
-        subtitle.style.maxWidth = "100%";
-      }
-      if (modalContentInput) {
-        Object.assign(modalContentInput.style, {
-          backgroundColor: "transparent",
-          color: theme.palette.secondary.main
-        });
-      }
+
       if (copiedToast) {
         Object.assign(copiedToast.style, {
           display: "none"
@@ -147,17 +224,6 @@ const ConnectWalletModal: React.FC<IProps> = ({
       }
     }
   });
-
-  useEffect(() => {
-    setIsP2Pconnect(false);
-    return setIsP2Pconnect(false);
-  }, []);
-
-  useEffect(() => {
-    if (!modalSignMessage) {
-      setIsP2Pconnect(false);
-    }
-  }, [modalSignMessage]);
 
   useEffect(() => {
     if (modalRegister || modalSignMessage) {
@@ -194,11 +260,7 @@ const ConnectWalletModal: React.FC<IProps> = ({
   };
 
   return (
-    <StyledModal
-      open={openModal}
-      title={isP2Pconnect ? t("account.connectP2PWallet") : t("common.connect2wallet.title")}
-      handleCloseModal={handleClose}
-    >
+    <StyledModal open={openModal} title={t("common.connect2wallet.title")} handleCloseModal={handleClose}>
       <WrapContent
         sx={{
           padding: "0 40px",
@@ -237,40 +299,6 @@ const ConnectWalletModal: React.FC<IProps> = ({
             };
             `}
         />
-        {isP2Pconnect && (
-          <Button
-            sx={{
-              marginTop: "20px",
-              width: "100%",
-              maxWidth: "100%",
-              background: theme.isDark ? theme.palette.primary.main : theme.palette.secondary.main,
-              padding: "15px 20px",
-              borderRadius: "8px",
-              fontWeight: 700,
-              fontSize: "16px",
-              lineHeight: "19px",
-              textAlign: "center",
-              color: theme.palette.secondary[0],
-              "&:hover": {
-                background: theme.isDark ? theme.palette.primary.dark : theme.palette.secondary.main
-              },
-              textTransform: "none"
-            }}
-            onClick={() => {
-              setIsP2Pconnect(false);
-              handleSignP2P();
-              const walletMenu = document.getElementById("connect-wallet-menu") as HTMLElement | null;
-              if (walletMenu) {
-                walletMenu.style.display = "flex";
-              }
-              if (p2pOptionModal) {
-                p2pOptionModal.style.display = "none";
-              }
-            }}
-          >
-            Cancel
-          </Button>
-        )}
       </WrapContent>
     </StyledModal>
   );
