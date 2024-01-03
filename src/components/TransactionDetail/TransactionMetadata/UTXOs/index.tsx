@@ -68,7 +68,7 @@ const Card = ({
       return prv + +item.value;
     }, 0);
 
-  const { isMobile } = useScreen();
+  const { isMobile, width } = useScreen();
   const theme = useTheme();
   const ADAIconAmount = () => (
     <ADAicon sx={{ color: isFailed ? theme.palette.secondary[600] : theme.palette.secondary.main }} />
@@ -112,9 +112,21 @@ const Card = ({
       <Box fontSize={14}>
         {items?.map((item, index) => (
           <Item key={index}>
-            <ItemContent>
+            <ItemContent
+              sx={{
+                overflow: "unset!important"
+              }}
+            >
               <WrapIcon type={type}>{renderIcon(type)}</WrapIcon>
-              <WrapInfo>
+              <WrapInfo
+                sx={
+                  width < 400
+                    ? {
+                        width: "calc(100% - 38px)"
+                      }
+                    : {}
+                }
+              >
                 <WrapLeftSide>
                   {type === "down" ? (
                     <WrapUTXOs>
