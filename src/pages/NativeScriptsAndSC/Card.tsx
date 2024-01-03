@@ -77,7 +77,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
               return (
                 <CustomTooltip key={index} title={item.displayName || getShortHash(item.fingerprint) || ""}>
                   <Link to={details.token(item.fingerprint)}>
-                    <Chip pl={`${item.metadata && item.metadata.logo ? "4px" : 1} !important`}>
+                    <Chip pl={`${item.metadata && item.metadata.logo ? "4px" : 1} !important`} mb={1}>
                       <Box display={"flex"} alignItems={"center"} height={"100%"}>
                         {item.metadata && item.metadata.logo && (
                           <Box
@@ -104,7 +104,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
             })}
           {(data.numberOfTokens || 0) > (data.tokens || []).length && (
             <Link to={details.nativeScriptDetail(data.scriptHash, "token")}>
-              <Chip>
+              <Chip mb={1}>
                 <Box display={"flex"} alignItems={"center"} height={"100%"}>
                   {`+${(data.numberOfTokens || 0) - (data.tokens || []).length} More`}
                 </Box>
@@ -223,7 +223,7 @@ const Chip = styled(Box)(({ theme }) => {
     maxWidth: "120px",
     overflow: "hidden",
     textOverflow: "ellipsis",
-    marginBottom: theme.spacing(1),
+    // marginBottom: theme.spacing(1),
     height: 20
   };
 });
