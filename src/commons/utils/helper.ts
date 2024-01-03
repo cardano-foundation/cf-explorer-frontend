@@ -5,6 +5,7 @@ import moment, { DurationInputArg1, DurationInputArg2 } from "moment";
 import { parse } from "qs";
 import { AxisInterval } from "recharts/types/util/types";
 import { createDecipheriv, pbkdf2Sync } from "crypto";
+import { ParsedUrlQuery } from "querystring";
 
 import { setUserData } from "src/stores/user";
 import breakpoints from "src/themes/breakpoints";
@@ -18,9 +19,11 @@ export const alphaNumeric = /[^0-9a-zA-Z]/;
 // eslint-disable-next-line no-useless-escape
 export const regexEmail = /^[\w\.\+\-]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-export const getShortHash = (address = "") => {
+export const getShortHash = (address = "", firstpart?: number, lastPart?: number) => {
   if (address?.length <= 18) return address;
-  return address ? `${address.slice(0, 10)}...${address.slice(-8)}` : "";
+  return address
+    ? `${address.slice(0, firstpart ? firstpart : 10)}...${address.slice(-(lastPart ? lastPart : 8))}`
+    : "";
 };
 
 export const LARGE_NUMBER_ABBREVIATIONS = ["", "K", "M", "B", "T", "q", "Q", "s", "S"];
@@ -120,14 +123,16 @@ export const isExternalLink = (href?: string) => {
 
 export const formatPercent = (percent?: number) => `${Math.round((percent || 0) * 100 * 100) / 100}%`;
 
-export const getPageInfo = (search: string): { page: number; size: number; sort: string; retired: string } => {
+export function getPageInfo<T = ParsedUrlQuery>(
+  search: string
+): T & { page: number; size: number; sort: string; retired: string } {
   const query = parse(search.split("?")[1]);
   const page = Number(query.page) > 0 ? Number(query.page) - 1 : 0;
   const size = Number(query.size) > 0 ? Number(query.size) : 50;
   const sort = (query.sort || "") as string;
   const retired = query.retired as string;
-  return { ...query, retired, page, size, sort };
-};
+  return { ...query, retired, page, size, sort } as T & { page: number; size: number; sort: string; retired: string };
+}
 
 export const removeAuthInfo = () => {
   localStorage.removeItem("token");

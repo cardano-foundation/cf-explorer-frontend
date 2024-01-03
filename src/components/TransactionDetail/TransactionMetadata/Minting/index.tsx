@@ -93,7 +93,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       border={({ palette, isDark }) => `1px solid ${isDark ? palette.secondary[700] : palette.primary[200]}`}
       borderRadius={2}
     >
-      <TableMinting columns={columns} data={data || []} />
+      <TableMinting columns={columns} data={data || []} showPagination={false} />
       <ScriptModal open={open} policy={selectedItem || ""} onClose={() => setOpen(false)} />
     </Box>
   );

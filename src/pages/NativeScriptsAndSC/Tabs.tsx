@@ -77,6 +77,7 @@ const Tabs = () => {
             onChange={handleChangeTab(key)}
           >
             <StyledAccordionSummary
+              active={+(tabActive === key)}
               expandIcon={
                 <IoIosArrowDown
                   style={{
