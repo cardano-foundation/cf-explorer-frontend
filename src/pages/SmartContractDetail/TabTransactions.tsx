@@ -22,9 +22,12 @@ const TabTransactions = () => {
   const [currentHash, setCurrentHash] = useState<string | null>(null);
   const { t } = useTranslation();
   const history = useHistory();
-  const { address } = useParams<{ address: string }>();
+  const { address, tabActive } = useParams<{ address: string; tabActive?: string }>();
 
-  const fetchData = useFetchList<ScriptContractTransactions>(API.SCRIPTS.SCRIPT_TXS_DETAIL(address), pageInfo);
+  const fetchData = useFetchList<ScriptContractTransactions>(
+    tabActive === "transactions" ? API.SCRIPTS.SCRIPT_TXS_DETAIL(address) : "",
+    pageInfo
+  );
 
   const columns: Column<ScriptContractTransactions>[] = [
     {

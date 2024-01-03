@@ -10,7 +10,7 @@ import {
   Skeleton,
   useTheme
 } from "@mui/material";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
@@ -40,14 +40,15 @@ const TabSmartContracts = () => {
   const { search, pathname } = useLocation();
   const history = useHistory();
   const theme = useTheme();
-  const pageInfo = getPageInfo(search);
+  const pageInfo = getPageInfo<{ scriptVersion?: string; txPurpose?: string }>(search);
+  const { tabActive } = useParams<{ tabActive: string }>();
   const optionList = [3, 6, 9, 12, 15];
-  const [filterOption, { push: pushFilterOption, removeAt: removeAtFilterOption, clear }] = useList<string>([]);
-
-  useEffect(() => {
-    window.history.replaceState({}, document.title);
-    document.title = `Native Scripts & Smart Contracts | Cardano Blockchain Explorer`;
-  }, []);
+  const [filterOption, { push: pushFilterOption, removeAt: removeAtFilterOption, clear }] = useList<string>(
+    (pageInfo.txPurpose || "").split(",").length === 0 ||
+      ((pageInfo.txPurpose || "").split(",").length === 1 && (pageInfo.txPurpose || "").split(",")[0] === "")
+      ? ["SPEND", "MINT", "CERT", "REWARD", "NO_TX_PURPOSE"]
+      : (pageInfo.txPurpose || "").split(",")
+  );
 
   const [showFilter, setShowFiter] = useState(false);
   const [searchQuery, setSearchQuery] = useState<{ scriptVersion?: string; txPurpose?: string[] }>();
@@ -55,32 +56,48 @@ const TabSmartContracts = () => {
   const [size, setSize] = useState(optionList.indexOf(pageInfo.size) + 1 ? pageInfo.size : 6);
 
   useEffect(() => {
+    window.history.replaceState({}, document.title);
+    document.title = `Native Scripts & Smart Contracts | Cardano Blockchain Explorer`;
+  }, []);
+
+  useEffect(() => {
     if (optionList.indexOf(pageInfo.size) + 1) {
       setSize(pageInfo.size);
     } else {
       setSize(6);
     }
+    setScriptVersion(pageInfo.scriptVersion || "");
+    clear();
+    pushFilterOption(
+      ...((pageInfo.txPurpose || "").split(",").length === 0 ||
+      ((pageInfo.txPurpose || "").split(",").length === 1 && (pageInfo.txPurpose || "").split(",")[0] === "")
+        ? ["SPEND", "MINT", "CERT", "REWARD", "NO_TX_PURPOSE"]
+        : (pageInfo.txPurpose || "").split(","))
+    );
   }, [JSON.stringify(pageInfo), pathname]);
 
   const handleApplyFilter = () => {
     setShowFiter(false);
-    setSearchQuery({ scriptVersion: scriptVersion === "any" ? "" : scriptVersion, txPurpose: filterOption });
-    history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
+    setSearchQuery({ scriptVersion, txPurpose: filterOption });
+    history.replace({ search: stringify({ ...pageInfo, page: 1, scriptVersion, txPurpose: filterOption.join(",") }) });
   };
   const handleResetFilter = () => {
     setShowFiter(false);
     setSearchQuery({});
     setScriptVersion("");
     clear();
-    history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
+    history.replace({ search: stringify({ size: 6, page: 1 }) });
   };
 
-  const fetchData = useFetchList<ScriptSmartContracts>(API.SCRIPTS.SMART_CONTRACTS, {
-    ...pageInfo,
-    size,
-    ...omitBy(searchQuery, (query) => !query),
-    formatArrayComma: true
-  });
+  const fetchData = useFetchList<ScriptSmartContracts>(
+    tabActive === "smart-contracts" ? API.SCRIPTS.SMART_CONTRACTS : "",
+    {
+      ...pageInfo,
+      size,
+      ...omitBy(searchQuery, (query) => !query),
+      formatArrayComma: true
+    }
+  );
 
   const renderCard = () => {
     if (fetchData.loading) {
@@ -106,6 +123,7 @@ const TabSmartContracts = () => {
       </Box>
     );
   };
+
   return (
     <Box data-testid="TabNativeScripts">
       <ClickAwayListener
@@ -146,6 +164,7 @@ const TabSmartContracts = () => {
             <FilterComponent
               handleApplyFilter={handleApplyFilter}
               setVersion={setScriptVersion}
+              clear={clear}
               version={scriptVersion}
               handleResetFilter={handleResetFilter}
               filterOption={filterOption}
@@ -183,6 +202,7 @@ interface FilterComponentProps {
   filterOption: string[];
   pushFilterOption: (filterOption: string) => void;
   removeAtFilterOption: (index: number) => void;
+  clear: () => void;
 }
 
 const FilterComponent: React.FC<FilterComponentProps> = ({
@@ -192,18 +212,20 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
   handleApplyFilter,
   filterOption,
   removeAtFilterOption,
+  clear,
   pushFilterOption
 }) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState<string | false>("");
-  const transactionPurpose = ["", "SPEND", "MINT", "CERT", "REWARD"];
+  const transactionPurpose = ["SPEND", "MINT", "CERT", "REWARD", "NO_TX_PURPOSE"];
   const transactionPurposeI18n: Record<string, string> = {
-    any: t("smartContract.any"),
+    ANY: t("smartContract.any"),
     SPEND: t("smartContract.spend"),
     MINT: t("smartContract.mint"),
     REWARD: t("smartContract.reward"),
-    CERT: t("smartContract.cert")
+    CERT: t("smartContract.cert"),
+    NO_TX_PURPOSE: t("smartContract.noTransactionPurpose")
   };
   const handleChooseVersion = (event: React.ChangeEvent<HTMLInputElement>) => {
     setVersion((event.target as HTMLInputElement).value);
@@ -242,7 +264,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
               onChange={handleChooseVersion}
             >
               <FormControlLabel
-                value="any"
+                value=""
                 control={
                   <Radio
                     sx={{
@@ -250,7 +272,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={t("smartContract.any")}
+                label={<Box lineHeight={1}>{t("smartContract.any")}</Box>}
               />
               <FormControlLabel
                 value="PLUTUSV1"
@@ -261,7 +283,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={t("smartContract.plutusv1")}
+                label={<Box lineHeight={1}>{t("smartContract.plutusv1")}</Box>}
               />
               <FormControlLabel
                 value="PLUTUSV2"
@@ -272,7 +294,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={t("smartContract.plutusv2")}
+                label={<Box lineHeight={1}>{t("smartContract.plutusv2")}</Box>}
               />
             </RadioGroup>
           </AccordionDetailsFilter>
@@ -305,16 +327,44 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
             </Box>
           </AccordionSummary>
           <AccordionDetailsFilter>
-            {transactionPurpose.map((purpose: string, idx) => (
-              <Box key={idx}>
-                <Checkbox
-                  id={purpose ? purpose : "any"}
-                  checked={filterOption.includes(purpose)}
-                  onChange={(e) =>
-                    e.target.checked
-                      ? pushFilterOption(purpose)
-                      : removeAtFilterOption(filterOption.findIndex((f) => f === purpose))
+            <Box display={"flex"} alignItems={"center"}>
+              <Checkbox
+                id={"ANY"}
+                checked={filterOption.length === transactionPurpose.length}
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    transactionPurpose.forEach((purpose) => {
+                      if (!filterOption.includes(purpose)) {
+                        pushFilterOption(purpose);
+                      }
+                    });
+                  } else {
+                    clear();
                   }
+                }}
+                sx={{
+                  color: theme.palette.secondary.light,
+                  "&.Mui-checked": {
+                    color: `${theme.palette.primary.main} !important`
+                  }
+                }}
+              />
+              <StyledDropdownItem htmlFor={"ANY"} style={{ cursor: "pointer" }}>
+                {transactionPurposeI18n["ANY"]}
+              </StyledDropdownItem>
+            </Box>
+            {transactionPurpose.map((purpose: string, idx) => (
+              <Box key={idx} display={"flex"} alignItems={"center"}>
+                <Checkbox
+                  id={purpose}
+                  checked={filterOption.includes(purpose)}
+                  onChange={(e) => {
+                    if (e.target.checked && !filterOption.includes(purpose)) {
+                      pushFilterOption(purpose);
+                    } else if (!e.target.checked && filterOption.includes(purpose)) {
+                      removeAtFilterOption(filterOption.findIndex((f) => f === purpose));
+                    }
+                  }}
                   sx={{
                     color: theme.palette.secondary.light,
                     "&.Mui-checked": {
@@ -323,7 +373,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                   }}
                 />{" "}
                 <StyledDropdownItem htmlFor={purpose ? purpose : "any"} style={{ cursor: "pointer" }}>
-                  {purpose ? transactionPurposeI18n[purpose] : transactionPurposeI18n["any"]}
+                  {transactionPurposeI18n[purpose]}
                 </StyledDropdownItem>
               </Box>
             ))}
