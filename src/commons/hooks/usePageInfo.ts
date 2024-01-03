@@ -12,9 +12,9 @@ const usePageInfo = () => {
 
   const setSort = (sort: string) => {
     if (sort === "") {
-      history.replace({ search: stringify(pick(pageInfo, ["page", "size", "retired"])) });
+      history.replace({ search: stringify({ ...pick(pageInfo, ["page", "size", "retired"]), page: 1 }) });
     } else {
-      history.replace({ search: stringify({ ...pageInfo, sort }) });
+      history.replace({ search: stringify({ ...pageInfo, page: 1, sort }) });
     }
   };
 
