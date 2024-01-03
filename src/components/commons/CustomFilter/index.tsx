@@ -118,11 +118,11 @@ const CustomFilter: React.FC<Props> = (props) => {
   const onSelect = (value: string) => {
     switch (value) {
       case "latest": {
-        setParams?.({ ...filterValue, sort: `${sortKey},DESC` });
+        setParams?.({ ...params, sort: `${sortKey},DESC` });
         break;
       }
       case "first": {
-        setParams?.({ ...filterValue, sort: `${sortKey},ASC` });
+        setParams?.({ ...params, sort: `${sortKey},ASC` });
         break;
       }
       case "dateRange": {
@@ -208,7 +208,7 @@ const CustomFilter: React.FC<Props> = (props) => {
                 value={{ fromDate: filterValue?.fromDate, toDate: filterValue?.toDate }}
                 onDateRangeChange={({ fromDate, toDate }) => {
                   setParams?.({
-                    ...filterValue,
+                    ...params,
                     fromDate: moment(fromDate, DATETIME_PARTTEN).startOf("d").utc().format(DATETIME_PARTTEN),
                     toDate: moment(toDate, DATETIME_PARTTEN).endOf("d").utc().format(DATETIME_PARTTEN)
                   });
