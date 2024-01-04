@@ -13,7 +13,8 @@ export const FilterButton = styled(Button)`
   font-size: 14px;
   font-weight: 700;
   &::hover {
-    background: ${({ theme }) => theme.palette.secondary[0]};
+    background-color: ${({ theme }) =>
+      theme.mode === "dark" ? theme.palette.secondary[0] : theme.palette.primary[200]};
   }
 `;
 
@@ -22,9 +23,9 @@ export const FilterContent = styled(Box)`
   right: 0px;
   top: calc(100% + 11px);
   background-color: ${({ theme }) => theme.palette.secondary[0]};
-  min-width: 200px;
+  min-width: 250px;
   border-radius: 6px;
-  padding: 6px 0px;
+  padding: ${({ theme }) => theme.spacing(1)};
   z-index: 10;
   box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 20%);
   &::before {

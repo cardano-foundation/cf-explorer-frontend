@@ -9,13 +9,14 @@ import {
   Skeleton,
   useTheme
 } from "@mui/material";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "qs";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { t } from "i18next";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { omitBy } from "lodash";
+import { BsFillCheckCircleFill } from "react-icons/bs";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { getPageInfo } from "src/commons/utils/helper";
@@ -36,26 +37,29 @@ import {
 
 const TabNativeScripts = () => {
   const { search, pathname } = useLocation();
+  const { tabActive } = useParams<{ tabActive: string }>();
   const history = useHistory();
   const theme = useTheme();
-  const pageInfo = getPageInfo(search);
+  const pageInfo = getPageInfo<{ isMultiSig?: string; openTimeLocked?: string }>(search);
   const optionList = [3, 6, 9, 12, 15];
+  const [showFilter, setShowFiter] = useState(false);
+  const [searchQuery, setSearchQuery] = useState<{ openTimeLocked?: string; isMultiSig?: string; sort?: string }>();
+  const [size, setSize] = useState(optionList.indexOf(pageInfo.size) + 1 ? pageInfo.size : 6);
+  const [openTimeLocked, setOpenTimeLocked] = useState<string>(pageInfo?.openTimeLocked || "");
+  const [isMultiSig, setIsMultiSig] = useState<string>(pageInfo?.isMultiSig || "");
+  const [sort, setSort] = useState<string>(pageInfo.sort !== "" ? pageInfo.sort : "numberOfAssetHolders,DESC");
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `Native Scripts & Smart Contracts | Cardano Blockchain Explorer`;
   }, []);
 
-  const [showFilter, setShowFiter] = useState(false);
-  const [searchQuery, setSearchQuery] = useState<{ openTimeLocked?: string; isMultiSig?: string; sort?: string }>();
-  const [size, setSize] = useState(optionList.indexOf(pageInfo.size) + 1 ? pageInfo.size : 6);
-  const [openTimeLocked, setOpenTimeLocked] = useState<string>("");
-  const [isMultiSig, setIsMultiSig] = useState<string>("");
-  const [sort, setSort] = useState<string>("");
-
   useEffect(() => {
     if (optionList.indexOf(pageInfo.size) + 1) {
       setSize(pageInfo.size);
+      setSort(pageInfo.sort !== "" ? pageInfo.sort : "numberOfAssetHolders,DESC");
+      setIsMultiSig(pageInfo?.isMultiSig || "");
+      setOpenTimeLocked(pageInfo?.openTimeLocked || "");
     } else {
       setSize(6);
     }
@@ -64,20 +68,31 @@ const TabNativeScripts = () => {
   const handleApplyFilter = () => {
     setShowFiter(false);
     setSearchQuery({
-      openTimeLocked: openTimeLocked === "any" ? "" : openTimeLocked,
-      isMultiSig: isMultiSig === "any" ? "" : isMultiSig,
+      openTimeLocked,
+      isMultiSig,
       sort
     });
-    history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
+    history.replace({
+      search: stringify({
+        ...pageInfo,
+        page: 1,
+        sort,
+        openTimeLocked,
+        isMultiSig
+      })
+    });
   };
+
   const handleResetFilter = () => {
     setShowFiter(false);
     setSearchQuery({});
-    setSort("");
-    history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
+    setIsMultiSig("");
+    setOpenTimeLocked("");
+    setSort("numberOfAssetHolders,DESC");
+    history.replace({ search: stringify({ size: 6, page: 1 }) });
   };
 
-  const fetchData = useFetchList<NativeScriptsList>(API.SCRIPTS.NATIVE_SCRIPTS, {
+  const fetchData = useFetchList<NativeScriptsList>(tabActive === "native-scripts" ? API.SCRIPTS.NATIVE_SCRIPTS : "", {
     ...pageInfo,
     size,
     ...omitBy(searchQuery, (query) => !query),
@@ -243,7 +258,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
               onChange={handleChooseTimeLoked}
             >
               <FormControlLabel
-                value="any"
+                value=""
                 control={
                   <Radio
                     sx={{
@@ -251,7 +266,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={t("smartContract.any")}
+                label={<Box lineHeight={1}>{t("smartContract.any")}</Box>}
               />
               <FormControlLabel
                 value={true}
@@ -262,7 +277,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={t("nativeScript.filter.timelocked.open")}
+                label={<Box lineHeight={1}>{t("nativeScript.filter.timelocked.open")}</Box>}
               />
               <FormControlLabel
                 value={false}
@@ -273,7 +288,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={t("nativeScript.filter.timelocked.locked")}
+                label={<Box lineHeight={1}>{t("nativeScript.filter.timelocked.locked")}</Box>}
               />
             </RadioGroup>
           </AccordionDetailsFilter>
@@ -312,7 +327,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
               onChange={handleChooseMultiSig}
             >
               <FormControlLabel
-                value="any"
+                value=""
                 control={
                   <Radio
                     sx={{
@@ -320,7 +335,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={t("smartContract.any")}
+                label={<Box lineHeight={1}>{t("smartContract.any")}</Box>}
               />
               <FormControlLabel
                 value={true}
@@ -331,7 +346,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={t("nativeScript.filter.multiSig.yes")}
+                label={<Box lineHeight={1}>{t("nativeScript.filter.multiSig.yes")}</Box>}
               />
               <FormControlLabel
                 value={false}
@@ -342,22 +357,26 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={t("nativeScript.filter.multiSig.no")}
+                label={<Box lineHeight={1}>{t("nativeScript.filter.multiSig.no")}</Box>}
               />
             </RadioGroup>
           </AccordionDetailsFilter>
         </AccordionContainer>
         <Box component={ButtonSort} onClick={() => setSort("numberOfTokens,DESC")}>
-          <SortNative
-            fill={sort.includes("numberOfTokens") ? theme.palette.success[700] : theme.palette.secondary.main}
-          />
-          <Box ml={1}>{t("NumberOfTokens")}</Box>
+          <Box display={"flex"} alignItems={"center"}>
+            <SortNative fill={theme.palette.secondary.main} />
+            <Box ml={1}>{t("NumberOfTokens")}</Box>
+          </Box>
+          {sort.includes("numberOfTokens") && <BsFillCheckCircleFill size={14} color={theme.palette.secondary.main} />}
         </Box>
         <Box component={ButtonSort} onClick={() => setSort("numberOfAssetHolders,DESC")}>
-          <SortNative
-            fill={sort.includes("numberOfAssetHolders") ? theme.palette.success[700] : theme.palette.secondary.main}
-          />
-          <Box ml={1}>{t("NumberOfAssetHolders")}</Box>
+          <Box display={"flex"} alignItems={"center"}>
+            <SortNative fill={theme.palette.secondary.main} />
+            <Box ml={1}>{t("NumberOfAssetHolders")}</Box>
+          </Box>
+          {sort.includes("numberOfAssetHolders") && (
+            <BsFillCheckCircleFill size={16} color={theme.palette.secondary.main} />
+          )}
         </Box>
 
         <Box mt={1}>

@@ -12,6 +12,33 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
   const theme = useTheme();
 
+  const renderTimeLock = () => {
+    if (data.before && data.after) {
+      return (
+        <Box>
+          <Box display={"flex"} alignContent={"center"} gap={1}>
+            after: {formatDateTimeLocal(data.after)}
+            <TimeLock fill={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]} />
+          </Box>
+          <Box display={"flex"} alignContent={"center"} gap={1}>
+            before: {formatDateTimeLocal(data.before)}
+            <TimeLock fill={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]} />
+          </Box>
+        </Box>
+      );
+    }
+    if (data.before || data.after) {
+      return (
+        <Box display={"flex"} alignItems={"center"} gap={1}>
+          {data.before ? "before: " : " after: "}
+          {formatDateTimeLocal(data.before || data.after)}
+          <TimeLock fill={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]} />
+        </Box>
+      );
+    }
+    return t("common.N/A");
+  };
+
   return (
     <Item>
       <Box p={2} height={"100%"}>
@@ -23,21 +50,12 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
             to={details.nativeScriptDetail(data.scriptHash)}
             color={`${theme.palette.primary.main} !important`}
           >
-            <DynamicEllipsisText value={data.scriptHash || ""} isTooltip />
+            <DynamicEllipsisText customTruncateFold={[4, 4]} value={data.scriptHash || ""} isTooltip />
           </Box>
         </Row>
-        <Row>
+        <Row alignItems={data.before && data.after ? "flex-start !important" : "center"}>
           <Title>{t("nativeScript.timeLock")}: </Title>
-          <Value>
-            {data.before ? (
-              <Box display={"flex"} alignItems={"center"} gap={1}>
-                <>{formatDateTimeLocal(data.before)}</>
-                <TimeLock fill={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]} />
-              </Box>
-            ) : (
-              ""
-            )}
-          </Value>
+          <Value>{renderTimeLock()}</Value>
         </Row>
         <Row>
           <Title>{t("nativeScript.multiSig")}: </Title>
@@ -57,12 +75,9 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
           {data.tokens &&
             data.tokens.map((item, index) => {
               return (
-                <CustomTooltip
-                  key={index}
-                  title={item.displayName || item.name || getShortHash(item.fingerprint) || ""}
-                >
+                <CustomTooltip key={index} title={item.displayName || getShortHash(item.fingerprint) || ""}>
                   <Link to={details.token(item.fingerprint)}>
-                    <Chip pl={`${item.metadata && item.metadata.logo ? "4px" : 1} !important`}>
+                    <Chip pl={`${item.metadata && item.metadata.logo ? "4px" : 1} !important`} mb={1}>
                       <Box display={"flex"} alignItems={"center"} height={"100%"}>
                         {item.metadata && item.metadata.logo && (
                           <Box
@@ -79,7 +94,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
                           />
                         )}
                         <Box overflow={"hidden"} textOverflow={"ellipsis"}>
-                          {item.displayName || item.name || getShortHash(item.fingerprint) || ""}
+                          {item.displayName || getShortHash(item.fingerprint) || ""}
                         </Box>
                       </Box>
                     </Chip>
@@ -89,14 +104,14 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
             })}
           {(data.numberOfTokens || 0) > (data.tokens || []).length && (
             <Link to={details.nativeScriptDetail(data.scriptHash, "token")}>
-              <Chip>
+              <Chip mb={1}>
                 <Box display={"flex"} alignItems={"center"} height={"100%"}>
                   {`+${(data.numberOfTokens || 0) - (data.tokens || []).length} More`}
                 </Box>
               </Chip>
             </Link>
           )}
-          {data.tokens && data.tokens.length === 0 && (
+          {!data.tokens && (
             <Box
               textAlign={"center"}
               fontSize={16}
@@ -127,7 +142,7 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) =
             to={details.smartContract(data.scriptHash)}
             color={`${theme.palette.primary.main} !important`}
           >
-            <DynamicEllipsisText value={data.scriptHash || ""} isTooltip />
+            <DynamicEllipsisText customTruncateFold={[4, 4]} value={data.scriptHash || ""} isTooltip />
           </Box>
         </Row>
         <Row>
@@ -140,10 +155,17 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) =
         </Row>
         <Row>
           <Title>{t("smartContract.trxPurpose")}: </Title>
-          {data.txPurposes &&
-            data.txPurposes.map((item, index) => {
-              return <Chip key={index}>{item}</Chip>;
-            })}
+          {data.txPurposes && data.txPurposes.length > 0
+            ? data.txPurposes.map((item, index) => {
+                return (
+                  <Chip key={index}>
+                    <Box display={"flex"} alignItems={"center"} height={"100%"}>
+                      {item}
+                    </Box>
+                  </Chip>
+                );
+              })
+            : t("common.N/A")}
         </Row>
       </Box>
     </Item>
@@ -201,7 +223,7 @@ const Chip = styled(Box)(({ theme }) => {
     maxWidth: "120px",
     overflow: "hidden",
     textOverflow: "ellipsis",
-    marginBottom: theme.spacing(1),
+    // marginBottom: theme.spacing(1),
     height: 20
   };
 });

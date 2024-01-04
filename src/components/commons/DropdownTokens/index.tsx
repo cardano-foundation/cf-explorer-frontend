@@ -111,7 +111,6 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({
         const isNegative = token.assetQuantity <= 0;
         const tokenName = token.assetName || token.assetId;
         const shortTokenName = getShortHash(tokenName, tokenName.length > 20 ? 16 : 10);
-        const isTokenNameLong = tokenName.length > 20;
         return (
           <OptionSelect
             key={idx}
@@ -129,13 +128,9 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({
             }
           >
             <Box color={({ palette }) => palette.secondary.main}>
-              {isTokenNameLong ? (
-                <CustomTooltip title={tokenName} placement="top">
-                  <Box>{shortTokenName}</Box>
-                </CustomTooltip>
-              ) : (
-                tokenName
-              )}
+              <CustomTooltip title={tokenName} placement="top">
+                <Box>{shortTokenName || tokenName}</Box>
+              </CustomTooltip>
             </Box>
             <Box
               fontWeight={"bold"}
