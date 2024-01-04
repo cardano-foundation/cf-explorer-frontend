@@ -5,6 +5,7 @@ import { useTheme } from "@mui/material";
 import { details } from "src/commons/routers";
 import { StyledLink } from "src/components/share/styled";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import { ButtonClose, DropdownList, DropdownTitle, InfoValue, ListDropdownContainer } from "./styles";
 
@@ -19,6 +20,8 @@ interface IDropdownDetailProps {
 const DropdownDetail: React.FC<IDropdownDetailProps> = ({ title, value, close, minWidth, isStakeDetail = false }) => {
   const ref = useOutsideClick(close);
   const theme = useTheme();
+  const { isMobile } = useScreen();
+
   return (
     <ListDropdownContainer minWidth={minWidth} ref={ref}>
       <ButtonClose onClick={close}>
@@ -29,7 +32,7 @@ const DropdownDetail: React.FC<IDropdownDetailProps> = ({ title, value, close, m
         {value.map((item, index) => (
           <InfoValue key={index}>
             <StyledLink to={isStakeDetail ? details.stake(item) : details.address(item)}>
-              <DynamicEllipsisText value={item} isCopy isTooltip />
+              <DynamicEllipsisText value={item} isCopy isTooltip postfix={isMobile ? 7 : 8} />
             </StyledLink>
           </InfoValue>
         ))}
