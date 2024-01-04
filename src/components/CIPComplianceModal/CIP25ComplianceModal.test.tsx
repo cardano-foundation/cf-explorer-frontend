@@ -85,7 +85,7 @@ const data: Transaction["metadata"][0]["metadataCIP25"]["tokenMap"] = {
 describe("CIP25Modal", () => {
   it("should component render", () => {
     render(<CIP25Modal data={data} open={true} onClose={jest.fn()} />);
-    expect(screen.getByText(/cip 25 compliance/i)).toBeInTheDocument();
+    expect(screen.getByText("Cardano Improvement Proposal 25 (CIP-25)")).toBeInTheDocument();
     expect(screen.getByText(new RegExp("token: " + data["spacecoins"].tokenName, "i"))).toBeInTheDocument();
     expect(screen.getByText(/required properties/i)).toBeInTheDocument();
     expect(screen.getByText(/other properties/i)).toBeInTheDocument();
