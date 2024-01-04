@@ -69,6 +69,7 @@ const Card = ({
     }, 0);
 
   const { isMobile } = useScreen();
+
   const theme = useTheme();
   const ADAIconAmount = () => (
     <ADAicon sx={{ color: isFailed ? theme.palette.secondary[600] : theme.palette.secondary.main }} />

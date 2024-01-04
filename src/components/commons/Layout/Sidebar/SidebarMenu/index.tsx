@@ -70,7 +70,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     setActive(sidebar ? active || currentActive : null);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sidebar, specialPath]);
+  }, [sidebar, specialPath, pathname]);
 
   useEffect(() => {
     if (pathname === "/") setActive(null);

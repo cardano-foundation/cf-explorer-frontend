@@ -77,12 +77,12 @@ const PoolLifecycle: React.FC<IPoolLifecycleProps> = ({ onSort, fetchData, pagin
   const columns: Column<IPoolReportList>[] = [
     {
       title: t("createdAt"),
-      key: "createdAt",
+      key: "id",
       render(data) {
         return formatDateTimeLocal(data.createdAt);
       },
-      sort({ sortValue }) {
-        onSort?.(sortValue ? `id,${sortValue}` : "");
+      sort({ sortValue, columnKey }) {
+        onSort?.(sortValue ? `${columnKey},${sortValue}` : "");
       }
     },
     {

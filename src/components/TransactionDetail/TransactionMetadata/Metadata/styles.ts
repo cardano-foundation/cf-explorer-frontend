@@ -1,4 +1,4 @@
-import { alpha, Box, Button, styled } from "@mui/material";
+import { alpha, Box, Button, styled, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const Wrapper = styled(Box)`
@@ -243,5 +243,29 @@ export const DecryptButton = styled(Button)(({ theme }) => ({
   borderRadius: theme.spacing(1),
   ":hover": {
     background: theme.palette.primary.dark
+  },
+  ":disabled": {
+    background: theme.palette.secondary[600],
+    color: theme.palette.secondary[0]
   }
 }));
+
+export const BadgeContainer = styled(Box)`
+  border-radius: 13px;
+  background-color: ${({ theme }) => theme.palette.warning[100]};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 26px;
+  border: 1px solid ${({ theme }) => theme.palette.warning[700]};
+  gap: 6px;
+  padding-right: 8px;
+  box-sizing: border-box;
+  min-width: 78px;
+  cursor: pointer;
+`;
+
+export const CIPLabel = styled(Typography)`
+  font-size: 12px;
+  color: ${({ theme }) => theme.palette.secondary.light};
+`;

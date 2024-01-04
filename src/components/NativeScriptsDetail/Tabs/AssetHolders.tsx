@@ -15,11 +15,14 @@ import { API } from "src/commons/utils/api";
 
 const AssetHolders = () => {
   const { t } = useTranslation();
-  const { id } = useParams<{ id: string }>();
+  const { id, tabActive } = useParams<{ id: string; tabActive?: string }>();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<TokenPolicys>(API.TOKEN.TOKEN_HOLDERS(id), pageInfo);
+  const fetchData = useFetchList<TokenPolicys>(
+    tabActive === "assetHolders" ? API.TOKEN.TOKEN_HOLDERS(id) : "",
+    pageInfo
+  );
   const columnsAssetHolders: Column<PolicyHolder>[] = [
     {
       title: t("common.address"),
