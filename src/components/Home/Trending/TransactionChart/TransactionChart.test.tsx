@@ -16,17 +16,6 @@ jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),
   useSelector: jest.fn()
 }));
-jest.mock("recharts", () => {
-  const OriginalModule = jest.requireActual("recharts");
-  return {
-    ...OriginalModule,
-    ResponsiveContainer: ({ children }: { children: React.ReactNode }) => (
-      <OriginalModule.ResponsiveContainer width={800} height={800}>
-        {children}
-      </OriginalModule.ResponsiveContainer>
-    )
-  };
-});
 
 const mockItemDay: TransactionChartIF = {
   date: "2023-06-02 00:00",
@@ -81,6 +70,11 @@ describe("TransactionChart", () => {
 
   afterEach(() => {
     cleanup();
+  });
+
+  it("Test", () => {
+    render(<TransactionChart />);
+    expect(screen.getByText(/Transactions in the last 24 hours/i)).toBeInTheDocument();
   });
 
   it("renders Transaction Chart", async () => {
