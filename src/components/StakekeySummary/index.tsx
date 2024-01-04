@@ -79,9 +79,9 @@ const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort, p
   const columns: Column<IReportStaking>[] = [
     {
       title: t("createdAt"),
-      key: "createdAt",
-      sort({ sortValue }) {
-        onSort?.(sortValue ? `id,${sortValue}` : "");
+      key: "id",
+      sort({ columnKey, sortValue }) {
+        onSort?.(sortValue ? `${columnKey},${sortValue}` : "");
       },
       render(data) {
         return formatDateTimeLocal(data.createdAt);

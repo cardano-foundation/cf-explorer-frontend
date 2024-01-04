@@ -52,6 +52,7 @@ import DropIcon, { ReactComponent as DropIconComponent } from "./icons/drop.svg"
 import DelegatorIcon, { ReactComponent as DelegatorIconComponent } from "./icons/delegator.svg";
 import LightningIcon, { ReactComponent as LightningIconComponent } from "./icons/lightning.svg";
 import LinkOff, { ReactComponent as LinkOffComponent } from "./icons/link-off.svg";
+import SignOut, { ReactComponent as SignOutComponent } from "./icons/sign-out.svg";
 import User2, { ReactComponent as User2Component } from "./icons/user2.svg";
 import FlintIcon from "./icons/flint.svg";
 import NamiIcon from "./icons/nami.svg";
@@ -215,6 +216,7 @@ export {
   DelegatorIcon,
   LightningIcon,
   LinkOff,
+  SignOut,
   User2,
   PolygonWhiteIconUrl,
   PolygonBlackIconUrl,
@@ -302,6 +304,7 @@ export {
   sunIcon,
   moonIcon,
   LinkOffComponent,
+  SignOutComponent,
   LightningIconComponent,
   MenuIconComponent,
   EmptyDarkIcon,
@@ -504,5 +507,9 @@ export { ReactComponent as CheckedCIPIcon } from "./icons/complied-cip25.svg";
 export { ReactComponent as SmallInfoIcon } from "./icons/small-info-icon.svg";
 export { ReactComponent as CheckNotRequiredCIPIcon } from "./icons/check-not-required.svg";
 export { ReactComponent as CIP60WarningIcon } from "./icons/cip60-warning.svg";
+export { ReactComponent as FilterVersionIcon } from "./icons/filterVersion.svg";
+export { ReactComponent as TimeLock } from "./icons/timeLock.svg";
+export { ReactComponent as MultiSig } from "./icons/multiSig.svg";
+export { ReactComponent as SortNative } from "./icons/sortNative.svg";
 export { ReactComponent as ShowMore } from "./icons/showmore.svg";
 export { ReactComponent as ShowLess } from "./icons/showless.svg";

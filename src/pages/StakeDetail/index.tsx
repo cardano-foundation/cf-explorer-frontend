@@ -54,10 +54,16 @@ const StakeDetail: React.FC = () => {
   useEffect(() => {
     if (state?.fromPath) return setSpecialPath(state.fromPath);
 
-    if (status.data?.hasDeRegistration) return setSpecialPath(routers.STAKE_ADDRESS_DEREGISTRATION);
+    if (status.data?.hasDeRegistration) {
+      if (data?.status === "DEACTIVATED") {
+        return setSpecialPath(routers.STAKE_ADDRESS_DEREGISTRATION);
+      } else {
+        return setSpecialPath(routers.STAKE_ADDRESS_REGISTRATION);
+      }
+    }
     if (status.data?.hasDelegation) return setSpecialPath(routers.STAKE_ADDRESS_DELEGATIONS);
     if (status.data?.hasRegistration) return setSpecialPath(routers.STAKE_ADDRESS_REGISTRATION);
-  }, [state, status]);
+  }, [state, status, data?.status]);
 
   if (adaHandleLoading) {
     return (

@@ -8,8 +8,18 @@ import CustomModal from "../commons/CustomModal";
 export type PassphraseDecryptModalProps = {
   open: boolean;
   onClose: () => void;
+  error: string;
+  setError: (error: string) => void;
+  hanldeDecrypt: () => void;
+  setPassphrasse: (pass: string) => void;
 };
-const PassphraseDecryptModal: React.FC<PassphraseDecryptModalProps> = ({ ...props }) => {
+const PassphraseDecryptModal: React.FC<PassphraseDecryptModalProps> = ({
+  error,
+  setError,
+  hanldeDecrypt,
+  setPassphrasse,
+  ...props
+}) => {
   const [showPassword, setShowPassword] = useState(false);
   const theme = useTheme();
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -31,11 +41,15 @@ const PassphraseDecryptModal: React.FC<PassphraseDecryptModalProps> = ({ ...prop
         </Box>
         <FilledInput
           hiddenLabel
+          onChange={(e) => {
+            setPassphrasse(e.target.value);
+            setError("");
+          }}
           sx={{
             width: "100%",
             maxWidth: 600,
-            border: "1px solid #E0E0E0",
-            marginY: 2,
+            border: `1px solid ${error ? theme.palette.error[800] : "#E0E0E0"}`,
+            marginTop: 2,
             color: theme.palette.secondary.light,
             borderRadius: 2,
             bgcolor: theme.palette.secondary[0],
@@ -65,7 +79,14 @@ const PassphraseDecryptModal: React.FC<PassphraseDecryptModalProps> = ({ ...prop
             </InputAdornment>
           }
         />
-        <Box component={DecryptButton} display={"block"}>
+
+        {!!error && (
+          <Box mt={1} fontSize={12} color={theme.palette.error[800]}>
+            Incorrect passphrase. Try again.
+          </Box>
+        )}
+
+        <Box component={DecryptButton} mt={2} display={"block"} onClick={hanldeDecrypt}>
           {t("CIP83.decryptMessage")}
         </Box>
       </ModalContent>
