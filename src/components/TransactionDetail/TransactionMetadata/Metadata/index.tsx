@@ -11,7 +11,6 @@ import { ShowLess, ShowMore, WarningCIPIcon } from "src/commons/resources";
 import CIP25Badge from "src/components/commons/CIP25Badge";
 import CIP25Modal from "src/components/CIPComplianceModal/CIP25Modal";
 import CIP60Badge from "src/components/commons/CIP60Badge";
-import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import CIP20Badge from "src/components/commons/CIP20Badge";
 import CIP20Modal from "src/components/CIPComplianceModal/CIP20Modal";
 import CIP83Badge from "src/components/commons/CIP83Badge";
@@ -208,118 +207,114 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
           <DynamicEllipsisText value={hash || ""} isCopy />
         </Box>
       </Wrapper>
-      {(data || [])?.map((metadata, idx) => {
-        return (
-          <MetadataWrapper key={idx}>
-            <MetadataHeader mb={2}>
-              <Box display={"flex"} alignItems={"center"} flexWrap={"wrap"}>
-                <MetadataTitle
-                  sx={{
-                    [theme.breakpoints.down("sm")]: {
-                      width: "125px !important",
-                      mr: 2
-                    }
-                  }}
-                >
-                  {t("common.metadatumLabel")}
-                </MetadataTitle>
-                <MetaDataValue>{metadata.label ?? ""}</MetaDataValue>
-              </Box>
-              {String(metadata.label) === String(CIPLabel721) && (
-                <CIPHeader>
-                  <CIPHeaderTitle>{t("token.metadataCheck")}</CIPHeaderTitle>
-                  <CIPChips>
-                    {!isNil(metadata.metadataCIP25.valid) && (
-                      <CIP25Badge
-                        onClick={() => {
-                          setSelectedIndex(idx);
-                          setCip(CIP.CIP25);
-                        }}
-                        tooltipTitle={metadata.metadataCIP25.valid ? t("common.passed") : t("common.needsReview")}
-                        type={metadata.metadataCIP25.valid ? "success" : "warning"}
-                      />
-                    )}
-                    {!isNil(metadata.metadataCIP60.valid) && !isEmpty(metadata.metadataCIP60?.tokenMap) && (
-                      <CIP60Badge
-                        tooltipTitle={metadata.metadataCIP60.valid ? t("common.passed") : t("cip60.notCompliance")}
-                        onClick={() => {
-                          setSelectedIndex(idx);
-                          setCip(CIP.CIP60);
-                        }}
-                        type={metadata.metadataCIP60.valid ? "success" : "warning"}
-                      />
-                    )}
-                  </CIPChips>
-                </CIPHeader>
-              )}
-              {String(metadata.label) === String(CIPLabel674) && (
-                <CIPHeader>
-                  <CIPHeaderTitle>
-                    {t("cip25.compliance")} <InfoSolidIcon width="16px" height="16px" />{" "}
-                  </CIPHeaderTitle>
-                  <CIPChips>
-                    {!isNil(metadata?.metadataCIP20?.valid) && !metadata?.metadataCIP83?.valid && (
-                      <CIP20Badge
-                        onClick={() => {
-                          setSelectedIndex(idx);
-                          setCip(CIP.CIP20);
-                        }}
-                        tooltipTitle={metadata?.metadataCIP20?.valid ? t("common.passed") : t("common.needsReview")}
-                        type={metadata?.metadataCIP20?.valid ? "success" : "warning"}
-                      />
-                    )}
-                    {!isNil(metadata?.metadataCIP83?.valid) && metadata?.metadataCIP20?.valid && (
-                      <CIP83Badge
-                        onClick={() => {
-                          setSelectedIndex(idx);
-                          setCip(CIP.CIP83);
-                        }}
-                        tooltipTitle={metadata?.metadataCIP83?.valid ? t("common.passed") : t("common.needsReview")}
-                        type={metadata?.metadataCIP83?.valid ? "success" : "warning"}
-                      />
-                    )}
-                  </CIPChips>
-                </CIPHeader>
-              )}
-            </MetadataHeader>
-            <Box display={"flex"} mb={2}>
-              <MetadataJSONTitle
+      {(data || [])?.map((metadata, idx) => (
+        <MetadataWrapper key={idx}>
+          <MetadataHeader mb={2}>
+            <Box display={"flex"} alignItems={"center"} flexWrap={"wrap"}>
+              <MetadataTitle
                 sx={{
                   [theme.breakpoints.down("sm")]: {
-                    width: "40px !important",
+                    width: "125px !important",
                     mr: 2
                   }
                 }}
               >
-                {t("common.value")}
-              </MetadataJSONTitle>
-              <Box
-                onClick={() => setSelectedText(metadata)}
-                color={theme.palette.primary.main}
-                sx={{ textDecoration: "underline", cursor: "pointer" }}
-              >
-                {t("CIP20.viewMessage")}
-              </Box>
+                {t("common.metadatumLabel")}
+              </MetadataTitle>
+              <MetaDataValue>{metadata.label ?? ""}</MetaDataValue>
             </Box>
-            {String(metadata.label) === String(CIPLabel674) &&
-              !isNil(metadata?.metadataCIP20?.valid) &&
-              metadata.metadataCIP20.valid && (
-                <MetadataContent>
-                  <MetadataJSONTitle>{t("CIP20.transactionMessage")}</MetadataJSONTitle>
-                  {!textRaw && (
-                    <MetaDataJSONValue>{renderMessage(metadata.metadataCIP20.requiredProperties)}</MetaDataJSONValue>
+            {String(metadata.label) === String(CIPLabel721) && (
+              <CIPHeader>
+                <CIPHeaderTitle>{t("token.metadataCheck")}</CIPHeaderTitle>
+                <CIPChips>
+                  {!isNil(metadata.metadataCIP25.valid) && (
+                    <CIP25Badge
+                      onClick={() => {
+                        setSelectedIndex(idx);
+                        setCip(CIP.CIP25);
+                      }}
+                      tooltipTitle={metadata.metadataCIP25.valid ? t("common.passed") : t("common.needsReview")}
+                      type={metadata.metadataCIP25.valid ? "success" : "warning"}
+                    />
                   )}
-                  {textRaw && <MetaDataJSONValue>{renderRawMessage(JSON.parse(textRaw))}</MetaDataJSONValue>}
-                </MetadataContent>
-              )}
-            {String(metadata.label) === String(CIPLabel674) &&
-              !isNil(metadata?.metadataCIP83?.valid) &&
-              metadata?.metadataCIP83.valid &&
-              !textRaw &&
-              renderButtonDecrypt(metadata?.metadataCIP83?.requiredProperties)}
-          </MetadataWrapper>
-        );
-      })}
+                  {!isNil(metadata.metadataCIP60.valid) && !isEmpty(metadata.metadataCIP60?.tokenMap) && (
+                    <CIP60Badge
+                      tooltipTitle={metadata.metadataCIP60.valid ? t("common.passed") : t("cip60.notCompliance")}
+                      onClick={() => {
+                        setSelectedIndex(idx);
+                        setCip(CIP.CIP60);
+                      }}
+                      type={metadata.metadataCIP60.valid ? "success" : "warning"}
+                    />
+                  )}
+                </CIPChips>
+              </CIPHeader>
+            )}
+            {String(metadata.label) === String(CIPLabel674) && (
+              <CIPHeader>
+                <CIPHeaderTitle>{t("token.metadataCheck")}</CIPHeaderTitle>
+                <CIPChips>
+                  {!isNil(metadata?.metadataCIP20?.valid) && !metadata?.metadataCIP83?.valid && (
+                    <CIP20Badge
+                      onClick={() => {
+                        setSelectedIndex(idx);
+                        setCip(CIP.CIP20);
+                      }}
+                      tooltipTitle={metadata?.metadataCIP20?.valid ? t("common.passed") : t("common.needsReview")}
+                      type={metadata?.metadataCIP20?.valid ? "success" : "warning"}
+                    />
+                  )}
+                  {!isNil(metadata?.metadataCIP83?.valid) && metadata?.metadataCIP20?.valid && (
+                    <CIP83Badge
+                      onClick={() => {
+                        setSelectedIndex(idx);
+                        setCip(CIP.CIP83);
+                      }}
+                      tooltipTitle={metadata?.metadataCIP83?.valid ? t("common.passed") : t("common.needsReview")}
+                      type={metadata?.metadataCIP83?.valid ? "success" : "warning"}
+                    />
+                  )}
+                </CIPChips>
+              </CIPHeader>
+            )}
+          </MetadataHeader>
+          <Box display={"flex"} mb={2}>
+            <MetadataJSONTitle
+              sx={{
+                [theme.breakpoints.down("sm")]: {
+                  width: "40px !important",
+                  mr: 2
+                }
+              }}
+            >
+              {t("common.value")}
+            </MetadataJSONTitle>
+            <Box
+              onClick={() => setSelectedText(metadata)}
+              color={theme.palette.primary.main}
+              sx={{ textDecoration: "underline", cursor: "pointer" }}
+            >
+              {t("CIP20.viewMessage")}
+            </Box>
+          </Box>
+          {String(metadata.label) === String(CIPLabel674) &&
+            !isNil(metadata?.metadataCIP20?.valid) &&
+            metadata.metadataCIP20.valid && (
+              <MetadataContent>
+                <MetadataJSONTitle>{t("CIP20.transactionMessage")}</MetadataJSONTitle>
+                {!textRaw && (
+                  <MetaDataJSONValue>{renderMessage(metadata.metadataCIP20.requiredProperties)}</MetaDataJSONValue>
+                )}
+                {textRaw && <MetaDataJSONValue>{renderRawMessage(JSON.parse(textRaw))}</MetaDataJSONValue>}
+              </MetadataContent>
+            )}
+          {String(metadata.label) === String(CIPLabel674) &&
+            !isNil(metadata?.metadataCIP83?.valid) &&
+            metadata?.metadataCIP83.valid &&
+            !textRaw &&
+            renderButtonDecrypt(metadata?.metadataCIP83?.requiredProperties)}
+        </MetadataWrapper>
+      ))}
       <ParseScriptModal
         open={!!selectedText}
         onClose={() => setSelectedText(null)}

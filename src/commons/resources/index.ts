@@ -6,6 +6,7 @@ import WalletIcon from "./icons/wallet.svg";
 import HeaderSearchIcon, { ReactComponent as HeaderSearchIconComponent } from "./icons/header-search.svg";
 import CopyIcon from "./icons/copy.svg";
 import CloseIcon from "./icons/closeIcon.svg";
+import closeIconDarkMode from "./icons/closeIconDarkMode.svg";
 import NotFoundIcon from "./images/icon-404.png";
 import AdaPriceIcon from "./icons/ada-price.svg";
 import AdaPriceDarkIcon from "./icons/ada-price-dark.svg";
@@ -69,6 +70,8 @@ import PolygonDarkIconUrl, { ReactComponent as PolygonDarkIcon } from "./icons/p
 import PolygonDarkRedIconUrl, { ReactComponent as PolygonDarkRedIcon } from "./icons/polygon-dark-red.svg";
 import AdaHolderIconUrl from "./images/ada-holder.png";
 import AdaHolderIconDarlUrl from "./images/ada-holder-dark.png";
+import QrCodeDarkMode from "./images/qr-code-dark-mode.png";
+import QrCodeLightMode from "./images/qr-code-light-mode.png";
 import PaymentWalletUrl from "./images/payment-wallet.png";
 import PaymentWalletDarkUrl from "./images/payment-wallet-dark.png";
 import SPOHolderIconUrl from "./images/spo-holder.png";
@@ -127,6 +130,10 @@ import DownRedDarkmode from "./icons/downRedDark.svg";
 import DownRedUtxoDarkmode from "./icons/downUtxoRedDark.svg";
 import ArrowUpIcon from "./icons/arrow-up.svg";
 import ArrowUpDarkIcon from "./icons/arrow-up-dark.svg";
+import DisableArrowUpLightIcon from "./icons/disable-arrow-up-light.svg";
+import DisableArrowDownLightIcon from "./icons/disable-arrow-down-light.svg";
+import DisableArrowUpDarkIcon from "./icons/disable-arrow-up-dark.svg";
+import DisableArrowDownDarkIcon from "./icons/disable-arrow-down-dark.svg";
 import CopyOutlineIcon, { ReactComponent as CopyOutlineIconComponent } from "./icons/copy-outline.svg";
 import { ReactComponent as PoolResgistrationHistory } from "./icons/poolResgistrationHistory.svg";
 import { ReactComponent as PoolResgistrationHistoryDark } from "./icons/poolResgistrationHistoryDark.svg";
@@ -147,10 +154,6 @@ import PoolSizeDarkIcon from "./images/PoolSizeDark.png";
 import PoolSizeLightIcon from "./images/PoolSizeLight.png";
 import DelegatingToDarkIcon from "./images/DelegatingToDark.png";
 import RewardsWithdrawDarkIcon from "./images/RewardsWithdrawDark.png";
-import DisableArrowUpLightIcon from "./icons/disable-arrow-up-light.svg";
-import DisableArrowDownLightIcon from "./icons/disable-arrow-down-light.svg";
-import DisableArrowUpDarkIcon from "./icons/disable-arrow-up-dark.svg";
-import DisableArrowDownDarkIcon from "./icons/disable-arrow-down-dark.svg";
 import DeregistrationDarkIcon from "./icons/deregistration-icon-dark.svg";
 import DeregistrationLightIcon from "./icons/deregistration-icon-light.svg";
 import RegistrationDarkIcon from "./icons/registration-icon-dark.svg";
@@ -167,6 +170,7 @@ export {
   HeaderSearchIcon,
   CopyIcon,
   CloseIcon,
+  closeIconDarkMode,
   NotFoundIcon,
   AdaPriceIcon,
   AdaPriceDarkIcon,
@@ -277,6 +281,8 @@ export {
   DeregistrationLightIcon,
   RegistrationDarkIcon,
   RegistrationLightIcon,
+  QrCodeDarkMode,
+  QrCodeLightMode,
   // React component
   ExchangeIcon,
   PolygonDarkIcon,
