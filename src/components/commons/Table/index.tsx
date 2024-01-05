@@ -101,7 +101,7 @@ const TableHeader = <T extends ColumnType>({
   });
 
   useEffect(() => {
-    const { sort: sortQueryString } = getPageInfo(search);
+    const sortQueryString = getPageInfo(search)?.sort;
     if (sortQueryString && sortQueryString.length) {
       const [columnKey, sort] = sortQueryString.split(",") as [string, "" | "DESC" | "ASC"];
       setSort({ columnKey: columnKey.startsWith("bk.") ? columnKey.slice(3) : columnKey, sort });

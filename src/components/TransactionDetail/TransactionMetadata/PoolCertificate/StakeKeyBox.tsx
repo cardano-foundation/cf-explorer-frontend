@@ -82,7 +82,7 @@ const StakeKeyBox = ({ data }: TProps) => {
           <LeftRowContainer>
             {(leftRow || []).map(({ label, value, isHyperLink, linkTo, isMultipleValue }) => {
               return (
-                <Box key={label + value} display="flex" alignItems="center">
+                <Box key={label + value} display="flex" alignItems="center" width={"100%"}>
                   <TextLabel>{label}: </TextLabel>
                   {isMultipleValue ? (
                     <ValueItem
@@ -97,8 +97,16 @@ const StakeKeyBox = ({ data }: TProps) => {
                         <Box className="ValueItem" key={item}>
                           <TextValue>
                             <Link to={details.stake(item || "")}>
-                              <EllipsisContainer>
-                                <DynamicEllipsisText value={item} isTooltip isCopy customTruncateFold={[5, 6]} />
+                              <EllipsisContainer width={"100%"}>
+                                <DynamicEllipsisText
+                                  sx={{
+                                    width: "100%"
+                                  }}
+                                  value={item}
+                                  isTooltip
+                                  isCopy
+                                  customTruncateFold={[7, 8]}
+                                />
                               </EllipsisContainer>
                             </Link>
                           </TextValue>

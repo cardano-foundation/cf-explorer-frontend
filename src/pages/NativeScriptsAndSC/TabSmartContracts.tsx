@@ -125,7 +125,7 @@ const TabSmartContracts = () => {
   };
 
   return (
-    <Box data-testid="TabNativeScripts">
+    <Box data-testid="TabSmartContracts">
       <ClickAwayListener
         onClickAway={() => {
           setShowFiter(false);

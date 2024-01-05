@@ -9,13 +9,13 @@ import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import ParseScriptModal from "src/components/ParseScriptModal";
 import { ShowLess, ShowMore, WarningCIPIcon } from "src/commons/resources";
 import CIP25Badge from "src/components/commons/CIP25Badge";
+import CIP25Modal from "src/components/CIPComplianceModal/CIP25Modal";
 import CIP60Badge from "src/components/commons/CIP60Badge";
 import CIP20Badge from "src/components/commons/CIP20Badge";
 import CIP20Modal from "src/components/CIPComplianceModal/CIP20Modal";
 import CIP83Badge from "src/components/commons/CIP83Badge";
 import CIP83Modal from "src/components/CIPComplianceModal/CIP83Modal";
 import PassphraseDecryptModal from "src/components/CIPComplianceModal/PassphraseDecryptModal";
-import CIP25Modal from "src/components/CIPComplianceModal/CIP25Modal";
 
 import {
   BadgeContainer,

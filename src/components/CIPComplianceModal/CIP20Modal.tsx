@@ -131,7 +131,20 @@ const CIP20Modal: React.FC<TCIP20ComplianceModalProps> = (props) => {
           isModal
           height="auto"
           isFullTableHeight={true}
-          data={data}
+          data={
+            data && data.length > 0
+              ? data
+              : [
+                  {
+                    format: "Array<String>",
+                    index: "1",
+                    property: "msg",
+                    valid: false,
+                    value: "",
+                    valueFormat: ""
+                  }
+                ]
+          }
           columns={columns}
           showPagination={false}
         />

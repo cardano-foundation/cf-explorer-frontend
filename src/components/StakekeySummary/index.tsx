@@ -80,7 +80,7 @@ const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort, p
     {
       title: t("createdAt"),
       key: "id",
-      sort({ sortValue, columnKey }) {
+      sort({ columnKey, sortValue }) {
         onSort?.(sortValue ? `${columnKey},${sortValue}` : "");
       },
       render(data) {

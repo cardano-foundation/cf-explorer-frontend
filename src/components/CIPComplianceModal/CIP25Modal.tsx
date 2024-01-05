@@ -9,10 +9,8 @@ import { getShortHash } from "src/commons/utils/helper";
 import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { Column } from "src/components/commons/Table";
-import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
 
 import {
-  CIPLabel,
   CIPModalSubtitle,
   ModalContent,
   OtherPropetiesContent,
@@ -20,8 +18,10 @@ import {
   CIPModalDesc,
   CIPPropertyTable,
   TokenLabel,
-  ButtonContainer
+  ButtonContainer,
+  CIPLabel
 } from "./styles";
+import ViewAllButtonExternal from "../commons/ViewAllButtonExternal";
 
 export type TCIP25ModalProps = {
   open: boolean;

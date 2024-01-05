@@ -3,6 +3,7 @@ describe("User check information of latest Transaction", () => {
     cy.visit("/");
     cy.get('[data-testid="menu-button-blockchain"]').click();
     cy.get('[data-testid="submenu-button-transactions"]').click();
+    cy.wait(1000);
     cy.get('[data-testid="search-bar"]').should("be.visible");
     cy.get('[data-testid="table-common"]').should("be.visible");
     cy.get('[aria-label="pagination navigation"]').should("be.visible");

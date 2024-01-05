@@ -113,6 +113,7 @@ const DelegationDetail: React.FC = () => {
       }
     }
     if (status.data?.isRegistration) return setSpecialPath(routers.POOL_CERTIFICATE);
+
     if (status.data) setSpecialPath(routers.DELEGATION_POOLS);
   }, [state, status, data?.poolStatus]);
 

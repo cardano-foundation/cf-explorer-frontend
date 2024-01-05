@@ -4,8 +4,8 @@ import { isNil } from "lodash";
 import moment, { DurationInputArg1, DurationInputArg2 } from "moment";
 import { parse } from "qs";
 import { AxisInterval } from "recharts/types/util/types";
-import { ParsedUrlQuery } from "querystring";
 import { createDecipheriv, pbkdf2Sync } from "crypto";
+import { ParsedUrlQuery } from "querystring";
 
 import { setUserData } from "src/stores/user";
 import breakpoints from "src/themes/breakpoints";
