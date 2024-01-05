@@ -8,17 +8,20 @@ import { CIP25_DOCS_URL } from "src/commons/utils/constants";
 import { getShortHash } from "src/commons/utils/helper";
 import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import Table, { Column } from "src/components/commons/Table";
-import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
+import { Column } from "src/components/commons/Table";
 
 import {
-  CIPLabel,
   CIPModalSubtitle,
   ModalContent,
   OtherPropetiesContent,
   OtherPropetiesDesc,
-  TokenLabel
+  CIPModalDesc,
+  CIPPropertyTable,
+  TokenLabel,
+  ButtonContainer,
+  CIPLabel
 } from "./styles";
+import ViewAllButtonExternal from "../commons/ViewAllButtonExternal";
 
 export type TCIP25ModalProps = {
   open: boolean;
@@ -67,11 +70,16 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
     return tokens;
   }, [data]);
 
+  const getValueFormat = (r: TTCIPProperties) => {
+    if (!r.value) return null;
+    return r.valueFormat;
+  };
+
   const columns: Column<TTCIPProperties>[] = [
     {
       title: "#",
       key: "index",
-      minWidth: 60,
+      minWidth: 30,
       render: (r) => r.index
     },
     {
@@ -81,9 +89,9 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
       render: (r) => r.property
     },
     {
-      title: t("cip25.format"),
+      title: t("cip.expectedFormat"),
       key: "format",
-      minWidth: 160,
+      minWidth: 130,
       render: (r) => r.format
     },
     {
@@ -114,11 +122,17 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
         )
     },
     {
-      title: t("cip.compliance"),
+      title: t("cip.valueFormat"),
+      key: "expectedFormat",
+      minWidth: 130,
+      render: (r) => getValueFormat(r)
+    },
+    {
+      title: <Box textAlign={"center"}>{t("cip.result")}</Box>,
       key: "compliance",
       render: (r) =>
         !isNil(r.valid) && (
-          <Box pl={3}>
+          <Box textAlign={"center"}>
             <CustomTooltip
               title={
                 r?.checkNotRequired
@@ -158,17 +172,23 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
 
   return (
     <CustomModal
-      modalContainerProps={{ style: { maxWidth: 920 } }}
+      modalContainerProps={{ style: { maxWidth: "min(1000px, 98vw)" } }}
+      maxWidth={920}
       open={props.open}
       style={{ maxHeight: "unset" }}
       onClose={props.onClose}
       title={
-        <CIPLabel data-testid="token-CIP25Compliance">
-          {t("token.CIP25Compliance")} <ViewAllButtonExternal tooltipTitle={t("cip25.viewDocs")} to={CIP25_DOCS_URL} />
+        <CIPLabel data-testid="cip25-modal-title">
+          <span>{t("cip25.modal.title")}</span>
+          <ButtonContainer>
+            <ViewAllButtonExternal tooltipTitle={t("cip25.viewDocs")} to={CIP25_DOCS_URL} />
+          </ButtonContainer>
         </CIPLabel>
       }
     >
       <ModalContent>
+        <CIPModalDesc data-testid="cip25-modal-subtitle">{t("cip25.modal.subtitle")}</CIPModalDesc>
+
         {tokenMaps.map((token, index) => (
           <React.Fragment key={index}>
             {token.tokenName && (
@@ -177,25 +197,27 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
               </TokenLabel>
             )}
             <CIPModalSubtitle>{t("token.requiredProperties")}</CIPModalSubtitle>
-            <Table
+            <CIPPropertyTable
               isModal
               maxHeight="unset"
               height="auto"
               isFullTableHeight={true}
               data={token.requireProperties}
               columns={columns}
+              showPagination={false}
             />
             {token.optionalProperties.length > 0 && (
               <>
                 <CIPModalSubtitle data-testid="token-CIP25-optional-properties">
                   {t("token.optionalProperties")}
                 </CIPModalSubtitle>
-                <Table
+                <CIPPropertyTable
                   isModal
                   maxHeight="unset"
                   height="auto"
                   data={getOptionalProperties(token.optionalProperties)}
                   columns={columns}
+                  showPagination={false}
                 />
               </>
             )}
