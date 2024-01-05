@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { capitalize } from "@cardano-foundation/cardano-connect-with-wallet-core";
+import { capitalize, NetworkType } from "@cardano-foundation/cardano-connect-with-wallet-core";
 import { ConnectWalletButton } from "@cardano-foundation/cardano-connect-with-wallet";
 import { useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
+import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 import useToast from "src/commons/hooks/useToast";
 import { QrCodeDarkMode, QrCodeLightMode, CloseIcon, closeIconDarkMode } from "src/commons/resources";
 import { setOpenModal, setWallet } from "src/stores/user";
-import { NETWORK } from "src/commons/utils/constants";
 
 import { WrapContent } from "./style";
 import StyledModal from "../StyledModal";
@@ -282,6 +282,7 @@ const ConnectWalletModal: React.FC<IProps> = ({
         }}
       >
         <ConnectWalletButton
+          limitNetwork={NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET}
           onConnect={handleConnect}
           peerConnectEnabled={true}
           hideActionMenu={true}
