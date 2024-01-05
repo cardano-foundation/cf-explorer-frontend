@@ -2,7 +2,7 @@ import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import viteTsconfigPaths from "vite-tsconfig-paths";
 import svgr from "vite-plugin-svgr";
-import path from "path";
+// import path from "path";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "REACT_");
@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
       "process.env.REACT_APP_SANCHONET_APP_URL": JSON.stringify(env.REACT_APP_SANCHONET_APP_URL)
     },
     base: "",
-    resolve: { alias: { src: path.resolve(__dirname, "./src") } },
+    resolve: { alias: { "src/": new URL("./src/", import.meta.url).pathname } },
     plugins: [
       react({
         jsxImportSource: "@emotion/react",
@@ -29,7 +29,8 @@ export default defineConfig(({ mode }) => {
       svgr({
         svgrOptions: {
           ref: true
-        }
+        },
+        include: "**/*.svg?react"
       })
     ],
     server: {
