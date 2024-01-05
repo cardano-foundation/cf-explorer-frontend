@@ -284,6 +284,9 @@ const ConnectWalletModal: React.FC<IProps> = ({
         <ConnectWalletButton
           limitNetwork={NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET}
           onConnect={handleConnect}
+          onConnectError={(wallet, error) => {
+            alert(error);
+          }}
           peerConnectEnabled={true}
           hideActionMenu={true}
           customCSS={`
