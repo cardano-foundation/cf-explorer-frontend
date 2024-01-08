@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Box, Button, useTheme } from "@mui/material";
+import { Box, Button, useTheme, List } from "@mui/material";
 import { t } from "i18next";
 
 import { RootState } from "src/stores/types";
@@ -100,20 +100,54 @@ const NoticeModal = ({ ...props }: { open: boolean; handleCloseModal: () => void
   return (
     <StyledModal {...props} title={t("notice.title")}>
       <Box
-        p={2}
         bgcolor={theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0]}
         color={theme.palette.secondary.main}
         borderRadius={3}
       >
-        <Box my={1}>{t("notice.value.a")}</Box>
-        <Box my={1}>{t("notice.value.b")}</Box>
-        <Box my={1} ml={2}>
-          {t("notice.value.b1")}
-        </Box>
-        <Box my={1} ml={2}>
-          {t("notice.value.b2")}
-        </Box>
-        <Box my={1}>{t("notice.value.c")}</Box>
+        <List
+          sx={{
+            padding: "16px 40px"
+          }}
+        >
+          <li
+            style={{
+              listStyle: "disc"
+            }}
+          >
+            {t("notice.value.a")}
+          </li>
+          <li
+            style={{
+              listStyle: "disc",
+              margin: "16px 0"
+            }}
+          >
+            {t("notice.value.b")}
+          </li>
+          <li
+            style={{
+              listStyle: "circle",
+              margin: "0px 0 0px 20px"
+            }}
+          >
+            {t("notice.value.b1")}
+          </li>
+          <li
+            style={{
+              listStyle: "circle",
+              margin: "16px 0 16px 20px"
+            }}
+          >
+            {t("notice.value.b2")}
+          </li>
+          <li
+            style={{
+              listStyle: "disc"
+            }}
+          >
+            {t("notice.value.c")}
+          </li>
+        </List>
       </Box>
     </StyledModal>
   );
