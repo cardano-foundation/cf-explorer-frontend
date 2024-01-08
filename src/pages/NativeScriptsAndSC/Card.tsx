@@ -16,7 +16,8 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
     const date2 = new Date();
     const differenceInTime = date2.getTime() - date1.getTime();
     const differenceInYears = differenceInTime / (1000 * 3600 * 24 * 365);
-    return Math.abs(differenceInYears) > 10;
+    if (isNaN(differenceInYears) || Math.abs(differenceInYears) > 10) return true;
+    return false;
   };
 
   const renderTimeLock = () => {
