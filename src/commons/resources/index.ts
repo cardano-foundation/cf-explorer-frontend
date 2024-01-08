@@ -1,4 +1,8 @@
+/* eslint-disable import/order */
 /* eslint-disable import/no-duplicates */
+
+// import WalletOutlineIconComponent from "src/commons/resources/icons/WalletOutline.svg?react";
+
 import LogoFullIcon from "./icons/explorer-logo.svg";
 import LogoDarkmodeFullIcon from "./icons/logo-darkmode.svg";
 import LogoDarkmodeShortIcon from "./icons/short-logo-darkmode.svg";
@@ -141,6 +145,7 @@ import User2 from "./icons/user2.svg";
 import WhiteSearchIcon from "./icons/white-search-icon.svg";
 import CopyOutlineIcon from "./icons/copy-outline.svg";
 //only component
+
 import PoolResgistrationHistory from "./icons/poolResgistrationHistory.svg?react";
 import PoolResgistrationHistoryDark from "./icons/poolResgistrationHistoryDark.svg?react";
 import PoolDeresgistrationHistory from "./icons/poolDeresgistrationHistory.svg?react";
@@ -209,6 +214,7 @@ export {
   MarketCapIcon,
   MarketCapDarkIcon,
   CurentEpochIcon,
+  // WalletOutlineIconComponent,
   LiveStakeIcon,
   LiveStakeDarkIcon,
   LiveStakePoolIcon,
@@ -540,9 +546,29 @@ import WarningCIPIcon from "./icons/warning-cip25.svg?react";
 import CheckedCIPIcon from "./icons/complied-cip25.svg?react";
 import SmallInfoIcon from "./icons/small-info-icon.svg?react";
 import CIP60WarningIcon from "./icons/cip60-warning.svg?react";
+import TransactionIconComponent from "./icons/exchangeArrow.svg?react";
+import ReportDiscord from "./icons/reportDiscord.svg?react";
+import ReportMail from "./icons/reportMail.svg?react";
+import WalletOutlineIconComponent from "./icons/WalletOutline.svg?react";
+import DeleteBookmark from "./icons/deleteBookmark.svg?react";
+import QuestionConfirm from "./icons/questionConfirm.svg?react";
+import delegatedIcon from "./icons/delegated.svg?react";
+import rewardIcon from "./icons/reward.svg?react";
+import rewardWithdrawIcon from "./icons/rewardWithdraw.svg?react";
+import totalStakeIcon from "./icons/totalStake.svg?react";
 
 export {
   AIcon,
+  delegatedIcon,
+  rewardIcon,
+  rewardWithdrawIcon,
+  totalStakeIcon,
+  TransactionIconComponent,
+  WalletOutlineIconComponent,
+  DeleteBookmark,
+  QuestionConfirm,
+  ReportDiscord,
+  ReportMail,
   Notice,
   EyeIcon,
   StartPage,

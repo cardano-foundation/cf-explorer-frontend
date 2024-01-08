@@ -7,18 +7,18 @@ module.exports = {
     "^src/(.*)$": "<rootDir>/src/$1",
     // src: "<rootDir>/src/$1",
     "@/cardano-foundation": "<rootDir>/cardano-foundation-libs",
-    // "\\.(svg|png)$": "<rootDir>/__tests__/fileMock.ts",
     // "\\.(jpg|jpeg|png|gif|webp|svg)?react$": "jest-transform-stub",
-    // "\\.(jpg|jpeg|png|gif|webp|svg)$": "jest-transform-stub",
-    // "\\.svg\\?react$": "<rootDir>/__mocks__/svgReactComponentMock.js",
-    "\\.(css|less|scss|sass)$": "identity-obj-proxy",
-    "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/__mocks__/fileMock.js",
+    "\\.(jpg|jpeg|png|gif|webp|svg)$": "jest-transform-stub",
+    "\\.svg\\?react$": "<rootDir>/__mocks__/svgReactComponentMock.js",
+    "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+    // "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/__mocks__/fileMock.js",
     // "\\.svg\\?react$": "identity-obj-proxy",
     // axios: "axios/dist/node/axios.cjs",
-    "\\.(css|less)$": "identity-obj-proxy"
+    // "\\.(css|less)$": "identity-obj-proxy"
   },
   transform: {
-    "^.+\\.tsx?$": "ts-jest"
+    "^.+\\.tsx?$": "ts-jest",
+    "^.+\\.(jpg|jpeg|png|gif|webp|svg)$": "jest-transform-stub"
   },
   globals: {
     "ts-jest": {

@@ -3,11 +3,8 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
-import delegatedIcon from "src/commons/resources/icons/delegated.svg?react";
-import rewardIcon from "src/commons/resources/icons/reward.svg?react";
-import rewardWithdrawIcon from "src/commons/resources/icons/rewardWithdraw.svg?react";
-import totalStakeIcon from "src/commons/resources/icons/totalStake.svg?react";
 import { details } from "src/commons/routers";
+import { delegatedIcon, rewardIcon, rewardWithdrawIcon, totalStakeIcon } from "src/commons/resources";
 import { formatADAFull, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";

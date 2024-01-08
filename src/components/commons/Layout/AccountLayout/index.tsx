@@ -5,8 +5,7 @@ import { MdChevronRight } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
-import ReportDiscord from "src/commons/resources/icons/reportDiscord.svg?react";
-import ReportMail from "src/commons/resources/icons/reportMail.svg?react";
+import { ReportDiscord, ReportMail } from "src/commons/resources";
 import { routers } from "src/commons/routers";
 import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
 import { getShortHash } from "src/commons/utils/helper";
