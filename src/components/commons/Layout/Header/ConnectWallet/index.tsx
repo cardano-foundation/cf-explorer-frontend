@@ -1,12 +1,12 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { Backdrop, Box } from "@mui/material";
+import { Backdrop, Box, useTheme } from "@mui/material";
 import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { NetworkType } from "@cardano-foundation/cardano-connect-with-wallet-core";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { AxiosError } from "axios";
 
-import { WalletIcon } from "src/commons/resources";
+import { WalletIconComponent } from "src/commons/resources";
 import { RootState } from "src/stores/types";
 import {
   setModalRegister,
@@ -23,7 +23,7 @@ import useToast from "src/commons/hooks/useToast";
 import ConnectedProfileOption from "src/components/commons/ConnectedProfileOption";
 import ConnectWalletModal from "src/components/commons/ConnectWalletModal";
 
-import { Image, Span, Spin, StyledButton } from "./styles";
+import { Span, Spin, StyledButton } from "./styles";
 import RegisterUsernameModal from "../RegisterUsernameModal";
 import SignMessageModal from "../SignMessageModal";
 
@@ -34,14 +34,26 @@ interface Props {
 
 const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { openModal, modalRegister, modalSignMessage, nonce } = useSelector(({ user }: RootState) => user);
   const { isEnabled, stakeAddress, isConnected, connect, signMessage, disconnect, enabledWallet } = useCardano({
     limitNetwork: NETWORK === NETWORKS.mainnet ? NetworkType.MAINNET : NetworkType.TESTNET
   });
   const isValidToken = validateTokenExpired();
-  const [signature, setSignature] = React.useState("");
+  const [signature, setSignature] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [isSign, setIsSign] = useState(isValidToken);
+  const [isSignP2P, setIsSignP2P] = useState(false);
+  const [disableSignButton, setDisableSignButton] = useState(false);
+
+  const handleSignP2P = () => {
+    setIsSignP2P(!isSignP2P);
+  };
+
+  const handleCloseP2P = () => {
+    setIsSignP2P(false);
+  };
+
   const toast = useToast();
 
   useEffect(() => {
@@ -84,7 +96,6 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         const response = await signIn(payload);
         setIsSign(true);
         const data = response.data;
-
         localStorage.setItem("token", data.token);
         localStorage.setItem("username", data.username);
         localStorage.setItem("refreshToken", data.refreshToken);
@@ -95,6 +106,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         setUserData({ ...userInfo.data, loginType: "connectWallet" });
       } else {
         setAddress(stakeAddress);
+        !isSignP2P && setDisableSignButton(true);
         setModalRegister(true);
       }
       onSuccess?.();
@@ -112,12 +124,16 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
       const nonceValue = await getNonceValue();
       if (nonceValue) {
         setNonce(nonceValue);
+        !isSignP2P && setDisableSignButton(true);
         await signMessage(
           nonceValue.nonce,
-          (signature: string) => handleSignIn(signature, nonceValue),
+          (signature: string) => {
+            handleSignIn(signature, nonceValue);
+          },
           () => {
             toast.error(t("message.user.rejected"));
             setModalSignMessage(false);
+            setDisableSignButton(false);
             disconnect();
             removeAuthInfo();
           }
@@ -129,6 +145,11 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
       setSubmitting(false);
     }
   };
+
+  if (isEnabled && stakeAddress && isSign && customButton) {
+    return <>{customButton({ handleClick })}</>;
+  }
+
   if (isEnabled && stakeAddress && isSign) {
     return (
       <>
@@ -152,27 +173,44 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
       {customButton ? (
         customButton({ handleClick })
       ) : (
-        <StyledButton type="button" onClick={handleClick}>
-          <Image src={WalletIcon} alt="wallet" />
-          <Span>{t("account.connectWallet")}</Span>
+        <StyledButton
+          sx={{
+            background: theme.isDark ? theme.palette.primary.main : theme.palette.secondary.main
+          }}
+          type="button"
+          onClick={handleClick}
+        >
+          <WalletIconComponent
+            stroke={theme.mode === "light" ? theme.palette.secondary[0] : theme.palette.secondary[100]}
+          />
+          <Span sx={{ color: theme.isDark ? theme.palette.secondary[0] : theme.palette.secondary[700] }}>
+            {t("account.connectWallet")}
+          </Span>
         </StyledButton>
       )}
-      {openModal && (
+      {
         <ConnectWalletModal
-          isModal={!!customButton}
+          openModal={openModal}
           connect={connect}
+          modalRegister={modalRegister}
+          modalSignMessage={modalSignMessage}
           onTriggerSignMessage={() => setModalSignMessage(true)}
+          handleSignP2P={handleSignP2P}
+          handleCloseP2P={handleCloseP2P}
         />
-      )}
+      }
       <SignMessageModal
         open={modalSignMessage}
         handleCloseModal={() => {
           setModalSignMessage(false);
+          setDisableSignButton(false);
           disconnect();
           removeAuthInfo();
         }}
         onSignMessage={onSignMessage}
         loadingSubmit={submitting}
+        isSignP2P={isSignP2P}
+        disableSignButton={disableSignButton}
       />
       <RegisterUsernameModal open={modalRegister} nonce={nonce} signature={signature} setIsSign={setIsSign} />
     </Box>

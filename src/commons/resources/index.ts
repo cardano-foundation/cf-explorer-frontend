@@ -6,6 +6,7 @@ import WalletIcon from "./icons/wallet.svg";
 import HeaderSearchIcon, { ReactComponent as HeaderSearchIconComponent } from "./icons/header-search.svg";
 import CopyIcon from "./icons/copy.svg";
 import CloseIcon from "./icons/closeIcon.svg";
+import closeIconDarkMode from "./icons/closeIconDarkMode.svg";
 import NotFoundIcon from "./images/icon-404.png";
 import AdaPriceIcon from "./icons/ada-price.svg";
 import AdaPriceDarkIcon from "./icons/ada-price-dark.svg";
@@ -60,6 +61,8 @@ import EternlIcon from "./icons/eternl.svg";
 import YoroiIcon from "./icons/yoroi.svg";
 import TyphonIcon from "./icons/typhon.svg";
 import EmptyIcon from "./icons/noData.svg";
+import QrCodeDarkMode from "./images/qr-code-dark-mode.png";
+import QrCodeLightMode from "./images/qr-code-light-mode.png";
 import EmptyDarkIcon from "./icons/EmptyIconDark.svg";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 import ProtocolIcon from "./icons/menus/Protocol.svg";
@@ -167,6 +170,7 @@ export {
   HeaderSearchIcon,
   CopyIcon,
   CloseIcon,
+  closeIconDarkMode,
   NotFoundIcon,
   AdaPriceIcon,
   AdaPriceDarkIcon,
@@ -183,6 +187,8 @@ export {
   CurentEpochPoolDark,
   DownRedIcon,
   BlankBlueIcon,
+  QrCodeDarkMode,
+  QrCodeLightMode,
   CalenderPaleIcon,
   MenuIcon,
   BlockChainMenuIcon,

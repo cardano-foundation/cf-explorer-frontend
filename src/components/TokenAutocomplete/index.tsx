@@ -255,7 +255,13 @@ const ModalToken = ({
   };
 
   return (
-    <CustomModal title={t("glossary.tokenList")} open={open} onClose={handleClose} width={"min(80vw, 600px)"}>
+    <CustomModal
+      title={t("glossary.tokenList")}
+      open={open}
+      onClose={handleClose}
+      width={"min(80vw, 600px)"}
+      isCenterWithoutPosition={true}
+    >
       <>
         <SearchContainer mt={2} mb={1}>
           <StyledInput
