@@ -109,7 +109,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
             <ADAicon />
           </Box>
         ) : (
-          t("common.notAvailable")
+          t("common.N/A")
         )
     }
   ];

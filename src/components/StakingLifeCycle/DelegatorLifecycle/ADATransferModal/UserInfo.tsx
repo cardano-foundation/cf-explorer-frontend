@@ -67,7 +67,7 @@ const UserInfo = ({
                   <ADAicon width={11} />
                 </Box>
               ) : (
-                t("common.notAvailable")
+                t("common.N/A")
               )}
             </Box>
           </TextUserInfo>

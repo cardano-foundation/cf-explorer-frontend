@@ -102,7 +102,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
               <ADAicon />
             </>
           ) : (
-            t("common.notAvailable")
+            t("common.N/A")
           )}
         </StyledFlexValue>
       )
@@ -122,7 +122,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
               <ADAicon />
             </>
           ) : (
-            t("common.notAvailable")
+            t("common.N/A")
           )}
         </StyledFlexValue>
       )
