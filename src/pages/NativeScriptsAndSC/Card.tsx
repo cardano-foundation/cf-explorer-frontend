@@ -11,7 +11,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 
 const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
   const theme = useTheme();
-
+  // console.log(data.tokens);
   const renderTimeLock = () => {
     if (data.before && data.after) {
       return (
@@ -93,8 +93,14 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
                             }}
                           />
                         )}
-                        <Box overflow={"hidden"} textOverflow={"ellipsis"}>
-                          {item.displayName || getShortHash(item.fingerprint) || ""}
+                        <Box
+                          overflow={"hidden"}
+                          textOverflow={"ellipsis"}
+                          sx={{
+                            textWrap: "nowrap"
+                          }}
+                        >
+                          {item.displayName || getShortHash(item.fingerprint, 10, 6) || ""}
                         </Box>
                       </Box>
                     </Chip>
