@@ -888,6 +888,7 @@
   "AssociatedAddresses": "Associated Addresses",
   "SmartContractDetails": "Smart Contract Details",
   "Version": "Version",
+  "moreThan10Years": "> 10 years",
   "ViewAddresses": "View Addresses",
   "token.timelock": "Time locked",
   "token.oneTimeMint": "One time mint",
