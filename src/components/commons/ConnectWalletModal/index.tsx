@@ -55,6 +55,7 @@ const ConnectWalletModal: React.FC<IProps> = ({
       }
     }, 0);
   }, [openModal]);
+
   const walletMenu = document.getElementById("connect-wallet-menu") as HTMLElement | null;
   const p2pOptionModal = document.querySelector("#connect-wallet-dropdown>div:first-child") as HTMLElement | null;
   const walletMenuModal = document.getElementById("modal-content-connect-wallet") as HTMLElement | null;
@@ -212,7 +213,8 @@ const ConnectWalletModal: React.FC<IProps> = ({
         visibility: "visible",
         position: "relative",
         backgroundColor: theme.isDark ? theme.palette.secondary[0] : theme.palette.primary[100],
-        border: "none"
+        border: "none",
+        margin: "0"
       });
     }
     if (subtitle) {
@@ -228,7 +230,11 @@ const ConnectWalletModal: React.FC<IProps> = ({
 
     if (p2pOptionModal && modalContent) {
       Object.assign(p2pOptionModal.style, {
-        display: "block"
+        display: "block",
+        height: "auto",
+        top: "50%",
+        transform: "translate(-50%, -50%)",
+        left: "50%"
       });
 
       if (copiedToast) {
