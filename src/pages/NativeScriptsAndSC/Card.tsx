@@ -24,11 +24,11 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
       return (
         <Box>
           <Box display={"flex"} alignContent={"center"} gap={1}>
-            after: {isMoreThan10years(data.after) ? ">10 years" : formatDateTimeLocal(data.after)}
+            after: {isMoreThan10years(data.after) ? t("moreThan10Years") : formatDateTimeLocal(data.after)}
             <TimeLock fill={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]} />
           </Box>
           <Box display={"flex"} alignContent={"center"} gap={1}>
-            before: {isMoreThan10years(data.before) ? ">10 years" : formatDateTimeLocal(data.before)}
+            before: {isMoreThan10years(data.before) ? t("moreThan10Years") : formatDateTimeLocal(data.before)}
             <TimeLock fill={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]} />
           </Box>
         </Box>
@@ -38,7 +38,9 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
       return (
         <Box display={"flex"} alignItems={"center"} gap={1}>
           {data.before ? "before: " : " after: "}
-          {isMoreThan10years(data.before || data.after) ? ">10 years" : formatDateTimeLocal(data.before || data.after)}
+          {isMoreThan10years(data.before || data.after)
+            ? t("moreThan10Years")
+            : formatDateTimeLocal(data.before || data.after)}
           <TimeLock fill={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]} />
         </Box>
       );
