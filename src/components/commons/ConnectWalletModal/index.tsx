@@ -4,6 +4,7 @@ import { ConnectWalletButton } from "@cardano-foundation/cardano-connect-with-wa
 import { useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
+import { useScreen } from "src/commons/hooks/useScreen";
 import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 import useToast from "src/commons/hooks/useToast";
 import { QrCodeDarkMode, QrCodeLightMode, CloseIcon, closeIconDarkMode } from "src/commons/resources";
@@ -33,6 +34,7 @@ const ConnectWalletModal: React.FC<IProps> = ({
 }) => {
   const { t } = useTranslation();
   const theme = useTheme();
+  const { isMobile } = useScreen();
 
   const [p2pConnectButton, setP2pConnectButton] = useState<Element[]>([]); // eslint-disable-line @typescript-eslint/no-explicit-any
   const toast = useToast();
@@ -209,7 +211,7 @@ const ConnectWalletModal: React.FC<IProps> = ({
 
     if (modalContent) {
       Object.assign(modalContent.style, {
-        padding: "100px 80px 50px 80px",
+        padding: isMobile ? "100px 20px 50px 20px" : "100px 80px 50px 80px",
         visibility: "visible",
         position: "relative",
         backgroundColor: theme.isDark ? theme.palette.secondary[0] : theme.palette.primary[100],
@@ -220,6 +222,7 @@ const ConnectWalletModal: React.FC<IProps> = ({
     if (subtitle) {
       subtitle.style.maxWidth = "100%";
       subtitle.style.color = theme.palette.secondary.main;
+      subtitle.style.textAlign = "justify";
     }
     if (modalContentInput) {
       Object.assign(modalContentInput.style, {
