@@ -7,14 +7,17 @@ import { useScreen } from "src/commons/hooks/useScreen";
 
 import CustomTooltip from "../commons/CustomTooltip";
 
-const Container = styled(Box)`
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 100%;
-  text-align: left;
-  transform: translateY(2px);
-`;
+const Container = styled(Box)(({ theme }) => ({
+  display: "inline-block",
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  width: "100%",
+  textAlign: "left",
+  transform: "translateY(2px)",
+  [theme.breakpoints.down("sm")]: {
+    whiteSpace: "normal"
+  }
+}));
 
 const SubPart = styled("span")`
   display: inline-block;
