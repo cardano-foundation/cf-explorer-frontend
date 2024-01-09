@@ -94,7 +94,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
                   setOpenListInput(!openListInput);
                 }}
               >
-                <BiShowAlt color={openListInput ? theme.palette.common.black : theme.palette.text.hint} />
+                <BiShowAlt color={openListInput ? theme.palette.secondary.light : theme.palette.secondary[600]} />
               </IconButton>
             )}
           </TitleCard>
@@ -139,7 +139,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
                   setOpenListInput(false);
                 }}
               >
-                <BiShowAlt color={openListOutput ? theme.palette.common.black : theme.palette.text.hint} />
+                <BiShowAlt color={openListOutput ? theme.palette.secondary.light : theme.palette.secondary[600]} />
               </IconButton>
             )}
           </TitleCard>
