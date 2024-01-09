@@ -275,7 +275,9 @@ const ConnectWalletModal: React.FC<IProps> = ({
     connect(
       walletName,
       () => onSuccess(),
-      (error: Error) => onError(error, walletName)
+      (error: Error) => {
+        onError(error, walletName);
+      }
     );
   };
 
@@ -294,7 +296,7 @@ const ConnectWalletModal: React.FC<IProps> = ({
             alert(error);
           }}
           peerConnectEnabled={true}
-          hideActionMenu={true}
+          hideActionMenu={false}
           customCSS={`
             & > button {
             display: none;

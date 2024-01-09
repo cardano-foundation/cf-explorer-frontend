@@ -61,6 +61,8 @@ import EternlIcon from "./icons/eternl.svg";
 import YoroiIcon from "./icons/yoroi.svg";
 import TyphonIcon from "./icons/typhon.svg";
 import EmptyIcon from "./icons/noData.svg";
+import QrCodeDarkMode from "./images/qr-code-dark-mode.png";
+import QrCodeLightMode from "./images/qr-code-light-mode.png";
 import EmptyDarkIcon from "./icons/EmptyIconDark.svg";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 import ProtocolIcon from "./icons/menus/Protocol.svg";
@@ -70,8 +72,6 @@ import PolygonDarkIconUrl, { ReactComponent as PolygonDarkIcon } from "./icons/p
 import PolygonDarkRedIconUrl, { ReactComponent as PolygonDarkRedIcon } from "./icons/polygon-dark-red.svg";
 import AdaHolderIconUrl from "./images/ada-holder.png";
 import AdaHolderIconDarlUrl from "./images/ada-holder-dark.png";
-import QrCodeDarkMode from "./images/qr-code-dark-mode.png";
-import QrCodeLightMode from "./images/qr-code-light-mode.png";
 import PaymentWalletUrl from "./images/payment-wallet.png";
 import PaymentWalletDarkUrl from "./images/payment-wallet-dark.png";
 import SPOHolderIconUrl from "./images/spo-holder.png";
@@ -187,6 +187,8 @@ export {
   CurentEpochPoolDark,
   DownRedIcon,
   BlankBlueIcon,
+  QrCodeDarkMode,
+  QrCodeLightMode,
   CalenderPaleIcon,
   MenuIcon,
   BlockChainMenuIcon,
@@ -281,8 +283,7 @@ export {
   DeregistrationLightIcon,
   RegistrationDarkIcon,
   RegistrationLightIcon,
-  QrCodeDarkMode,
-  QrCodeLightMode,
+
   // React component
   ExchangeIcon,
   PolygonDarkIcon,

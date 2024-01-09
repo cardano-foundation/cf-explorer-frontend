@@ -127,7 +127,9 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         !isSignP2P && setDisableSignButton(true);
         await signMessage(
           nonceValue.nonce,
-          (signature: string) => handleSignIn(signature, nonceValue),
+          (signature: string) => {
+            handleSignIn(signature, nonceValue);
+          },
           () => {
             toast.error(t("message.user.rejected"));
             setModalSignMessage(false);
