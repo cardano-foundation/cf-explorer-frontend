@@ -904,6 +904,7 @@
   "cip25.property": "Property",
   "cip25.format": "Format",
   "cip.compliance": "Compliance",
+  "protocol.trxModalSubTitle": "Confirmed by transactions",
   "cip.result": "Result",
   "cip.expectedFormat": "Expected Format",
   "cip.valueFormat": "Value Format",
