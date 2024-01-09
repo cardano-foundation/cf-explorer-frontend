@@ -223,7 +223,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                       style={{ fontFamily: "var(--font-family-text)" }}
                       color={(theme) => `${theme.palette.primary.main} !important`}
                     >
-                      <DynamicEllipsisText value={data?.rewardAccounts[0] || ""} isCopy isTooltip />
+                      <DynamicEllipsisText value={data?.rewardAccounts[0] || ""} isCopy isTooltip whiteSpace="normal" />
                     </Box>
                   </>
                 ) : (
@@ -264,7 +264,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                       to={details.stake(data?.ownerAccounts[0] || "")}
                       style={{ fontFamily: "var(--font-family-text)" }}
                     >
-                      <DynamicEllipsisText value={data?.ownerAccounts[0] || ""} isCopy isTooltip />
+                      <DynamicEllipsisText value={data?.ownerAccounts[0] || ""} isCopy isTooltip whiteSpace="normal" />
                     </Box>
                   ) : (
                     ""

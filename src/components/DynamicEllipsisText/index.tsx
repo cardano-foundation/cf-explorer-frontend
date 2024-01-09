@@ -7,7 +7,7 @@ import { useScreen } from "src/commons/hooks/useScreen";
 
 import CustomTooltip from "../commons/CustomTooltip";
 
-const Container = styled(Box)(({ theme }) => ({
+const Container = styled(Box)(({ theme, whiteSpace }) => ({
   display: "inline-block",
   whiteSpace: "nowrap",
   overflow: "hidden",
@@ -15,7 +15,7 @@ const Container = styled(Box)(({ theme }) => ({
   textAlign: "left",
   transform: "translateY(2px)",
   [theme.breakpoints.down("sm")]: {
-    whiteSpace: "normal"
+    whiteSpace: whiteSpace
   }
 }));
 
@@ -63,7 +63,8 @@ const DynamicEllipsisText = ({
   sx,
   customTruncateFold,
   isNoLimitPixel,
-  isSeparateCopyIcon
+  isSeparateCopyIcon,
+  whiteSpace
 }: {
   value: string;
   postfix?: number;
@@ -76,6 +77,7 @@ const DynamicEllipsisText = ({
   customTruncateFold?: [number, number];
   isNoLimitPixel?: boolean;
   isSeparateCopyIcon?: boolean;
+  whiteSpace?: "nowrap" | "normal";
 }) => {
   const randomIdRef = useRef(`ELIPSIS_${useId()}`);
 
@@ -144,7 +146,7 @@ const DynamicEllipsisText = ({
   }
 
   return (
-    <Container id={randomIdRef.current} sx={sx}>
+    <Container id={randomIdRef.current} sx={sx} whiteSpace={whiteSpace}>
       <CustomTooltip title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}>
         <Box component={"span"} data-testid="ellipsis-text">
           <FirstPart sx={sxFirstPart}>{firstPart}</FirstPart>
