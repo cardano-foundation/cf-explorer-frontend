@@ -11,17 +11,25 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 
 const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
   const theme = useTheme();
+  const isMoreThan10years = (date: string) => {
+    const date1 = new Date(date);
+    const date2 = new Date();
+    const differenceInTime = date2.getTime() - date1.getTime();
+    const differenceInYears = differenceInTime / (1000 * 3600 * 24 * 365);
+    if (isNaN(differenceInYears) || Math.abs(differenceInYears) > 10) return true;
+    return false;
+  };
 
   const renderTimeLock = () => {
     if (data.before && data.after) {
       return (
         <Box>
           <Box display={"flex"} alignContent={"center"} gap={1}>
-            after: {formatDateTimeLocal(data.after)}
+            after: {isMoreThan10years(data.after) ? t("moreThan10Years") : formatDateTimeLocal(data.after)}
             <TimeLock fill={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]} />
           </Box>
           <Box display={"flex"} alignContent={"center"} gap={1}>
-            before: {formatDateTimeLocal(data.before)}
+            before: {isMoreThan10years(data.before) ? t("moreThan10Years") : formatDateTimeLocal(data.before)}
             <TimeLock fill={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]} />
           </Box>
         </Box>
@@ -31,7 +39,9 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
       return (
         <Box display={"flex"} alignItems={"center"} gap={1}>
           {data.before ? "before: " : " after: "}
-          {formatDateTimeLocal(data.before || data.after)}
+          {isMoreThan10years(data.before || data.after)
+            ? t("moreThan10Years")
+            : formatDateTimeLocal(data.before || data.after)}
           <TimeLock fill={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]} />
         </Box>
       );
@@ -93,8 +103,14 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
                             }}
                           />
                         )}
-                        <Box overflow={"hidden"} textOverflow={"ellipsis"}>
-                          {item.displayName || getShortHash(item.fingerprint) || ""}
+                        <Box
+                          overflow={"hidden"}
+                          textOverflow={"ellipsis"}
+                          sx={{
+                            textWrap: "nowrap"
+                          }}
+                        >
+                          {item.displayName || getShortHash(item.fingerprint, 10, 6) || ""}
                         </Box>
                       </Box>
                     </Chip>
