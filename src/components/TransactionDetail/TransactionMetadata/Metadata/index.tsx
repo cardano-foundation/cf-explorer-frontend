@@ -1,5 +1,5 @@
 import { Box, useTheme } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { isEmpty, isNil } from "lodash";
 
@@ -60,10 +60,14 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
   const [limitRow, setLimitRow] = useState<number>(LIMIT_MESSAGE_ROW);
   const [cip, setCip] = useState<CIP>(CIP.CIP25);
   const [openPassphrasseModal, setOpenPassphrasseModal] = useState<boolean>(false);
-  const [passphrasse, setPassphrasse] = useState<string>("");
+  const [passphrasse, setPassphrasse] = useState<string>("cardano");
   const [textRaw, setTextRaw] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [selectedText, setSelectedText] = useState<{ label: number; value: string } | null>(null);
+
+  useEffect(() => {
+    hanldeDecrypt();
+  }, []);
 
   const hanldeDecrypt = () => {
     try {
