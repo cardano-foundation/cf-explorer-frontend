@@ -298,7 +298,12 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             )}
           </Item>
           <Item item xs={6} md={3}>
-            <CustomIcon fill={theme.palette.secondary.light} height={22} icon={DropIconComponent} />
+            <CustomIcon
+              fill={theme.palette.secondary.light}
+              height={24}
+              icon={DropIconComponent}
+              style={{ marginTop: "5px" }}
+            />
             <InfoTitle>
               <StyledTitle>{t("glossary.poolSize")}</StyledTitle>
             </InfoTitle>
@@ -344,8 +349,8 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 flexDirection={isGalaxyFoldSmall ? "column" : "row"}
                 justifyContent="space-between"
                 alignItems={isGalaxyFoldSmall ? "flex-start" : "center"}
-                marginTop="9px"
-                mt={1}
+                marginTop="17px"
+                gap={"4px"}
               >
                 <Box
                   component={"span"}

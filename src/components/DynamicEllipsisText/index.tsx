@@ -7,14 +7,17 @@ import { useScreen } from "src/commons/hooks/useScreen";
 
 import CustomTooltip from "../commons/CustomTooltip";
 
-const Container = styled(Box)`
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 100%;
-  text-align: left;
-  transform: translateY(2px);
-`;
+const Container = styled(Box)(({ theme }) => ({
+  display: "inline-block",
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  width: "100%",
+  textAlign: "left",
+  transform: "translateY(2px)",
+  [theme.breakpoints.down("sm")]: {
+    whiteSpace: "normal"
+  }
+}));
 
 const SubPart = styled("span")`
   display: inline-block;
@@ -59,7 +62,8 @@ const DynamicEllipsisText = ({
   sxLastPart,
   sx,
   customTruncateFold,
-  isNoLimitPixel
+  isNoLimitPixel,
+  isSeparateCopyIcon
 }: {
   value: string;
   postfix?: number;
@@ -71,6 +75,7 @@ const DynamicEllipsisText = ({
   sx?: SxProps<Theme>;
   customTruncateFold?: [number, number];
   isNoLimitPixel?: boolean;
+  isSeparateCopyIcon?: boolean;
 }) => {
   const randomIdRef = useRef(`ELIPSIS_${useId()}`);
 
@@ -103,6 +108,28 @@ const DynamicEllipsisText = ({
   const lastPart = value?.slice(-postfix);
 
   if (isMin && !isNoLimitPixel) {
+    if (isSeparateCopyIcon) {
+      return (
+        <Box>
+          <CustomTooltip title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}>
+            <ContainerShortHand
+              id={randomIdRef.current}
+              data-testid="ellipsis-text"
+              sx={{
+                display: "inline",
+                ...sx
+              }}
+            >
+              {customTruncateFold?.length === 2 && isGalaxyFoldSmall
+                ? truncateCustom(value, customTruncateFold[0], customTruncateFold[1])
+                : getShortHash(value)}
+              {afterElm && <StyledAfterElm>{afterElm}</StyledAfterElm>}
+            </ContainerShortHand>
+          </CustomTooltip>
+          {isCopy && <CopyButton text={value} />}
+        </Box>
+      );
+    }
     return (
       <CustomTooltip title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}>
         <ContainerShortHand id={randomIdRef.current} data-testid="ellipsis-text" sx={sx}>
