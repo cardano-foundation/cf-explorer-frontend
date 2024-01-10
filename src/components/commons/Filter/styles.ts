@@ -18,9 +18,10 @@ export const FilterButton = styled(Button)`
   }
 `;
 
-export const FilterContent = styled(Box)`
+export const FilterContent = styled(Box)<{ isMobile?: boolean }>`
   position: absolute;
-  right: 0px;
+  right: ${({ isMobile }) => (isMobile ? "65%" : 0)};
+  transform: ${({ isMobile }) => (isMobile ? "translateX(45%)" : "none")};
   top: calc(100% + 11px);
   background-color: ${({ theme }) => theme.palette.secondary[0]};
   min-width: 250px;
@@ -35,7 +36,7 @@ export const FilterContent = styled(Box)`
     z-index: 9;
     position: absolute;
     top: -6px;
-    right: 32px;
+    right: ${({ isMobile }) => (isMobile ? "40%" : "32px")};
     width: 14px;
     height: 16px;
     transform: rotate(45deg);
