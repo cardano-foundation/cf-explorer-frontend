@@ -100,7 +100,8 @@ const SummaryItems = ({
         sx={{
           display: "flex",
           alignItems: "center",
-          height: "fit-content"
+          height: "fit-content",
+          width: "100%"
         }}
       >
         <WrapItemsInfo
@@ -206,6 +207,7 @@ const SummaryItems = ({
               <Box
                 display="flex"
                 alignItems="center"
+                width={"100%"}
                 sx={{
                   height: tokensSent.length > 0 ? `${height}px` : "0px"
                 }}
@@ -314,7 +316,7 @@ const SummaryItems = ({
             </Box>
           </Box>
           {tokensReceived && tokensReceived.length === 1 && (
-            <Box display={"flex"} alignItems={"center"} mt={1}>
+            <Box display={"flex"} alignItems={"center"} mt={1} className="CONTAINERRR">
               <TokenLink
                 token={tokensReceived[0]}
                 isSummary={true}

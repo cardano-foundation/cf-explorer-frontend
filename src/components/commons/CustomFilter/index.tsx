@@ -12,6 +12,7 @@ import {
   HeaderSearchIconComponent,
   ResetIcon
 } from "src/commons/resources";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import CustomIcon from "../CustomIcon";
 import { Option } from "../Filter";
@@ -55,6 +56,7 @@ const CustomFilter: React.FC<Props> = (props) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const theme = useTheme();
+  const { isMobile } = useScreen();
 
   const options: Option[] = [
     {
@@ -184,7 +186,7 @@ const CustomFilter: React.FC<Props> = (props) => {
           {t("common.filter")}
         </FilterButton>
         {open && (
-          <FilterContent>
+          <FilterContent isMobile={isMobile}>
             <MenuList>
               {filterOptions.map((option) => (
                 <FilterMenuItem active={+!!option.active} key={option.value} onClick={() => onSelect(option.value)}>
