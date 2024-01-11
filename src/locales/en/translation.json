@@ -943,7 +943,7 @@
   "address.title.ADAHanlde": "Address (ADA Handle)",
   "smartContract.totalTrx": "Number of Transactions",
   "smartContract.trxPurpose": "Transaction Purpose",
-  "smartContract.any": "Any",
+  "smartContract.any": "Sellect All",
   "smartContract.plutusv1": "Plutus V1",
   "smartContract.plutusv2": "Plutus V2",
   "smartContract.spend": "Spend",
