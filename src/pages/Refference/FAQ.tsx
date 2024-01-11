@@ -233,9 +233,9 @@ const FAQ = () => {
 
         <TextReffer>
           <TitleSection> Where can I learn more about SanchoNet?</TitleSection>
-          You can learn more about SanchoNet and how to participate at{" "}
+          You can find out more about SanchoNet and learn how to participate{" "}
           <LinkTo target="_blank" rel="noopener noreferrer" href="https://sancho.network/">
-            SanchoNet
+            here
           </LinkTo>
         </TextReffer>
 
