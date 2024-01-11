@@ -760,7 +760,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                   {t("filter.latestFirst")}
                 </Box>
               </Box>
-              {sort === "LastFirst" && <BsFillCheckCircleFill size={16} color={theme.palette.secondary.main} />}
+              {sort === "LastFirst" && <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />}
             </Box>
           </ButtonFilter>
           <ButtonFilter onClick={() => setSort("FirstLast")}>
@@ -771,7 +771,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                   {t("filter.firstLatest")}
                 </Box>
               </Box>
-              {sort === "FirstLast" && <BsFillCheckCircleFill size={16} color={theme.palette.secondary.main} />}
+              {sort === "FirstLast" && <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />}
             </Box>
           </ButtonFilter>
           <ButtonFilter onClick={() => setShowDaterange(true)}>
@@ -783,7 +783,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                   {t("filter.daterange")}
                 </Box>
               </Box>
-              {!isEmpty(dateRange) && <BsFillCheckCircleFill size={16} color={theme.palette.secondary.main} />}
+              {!isEmpty(dateRange) && <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />}
             </Box>
           </ButtonFilter>
 
