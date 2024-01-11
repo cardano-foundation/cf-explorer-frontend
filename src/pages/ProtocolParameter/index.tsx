@@ -777,7 +777,12 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           <ButtonFilter onClick={() => setShowDaterange(true)}>
             <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
               <Box display={"flex"} alignItems={"center"}>
-                <CustomIcon icon={DateRangeIcon} fill={theme.palette.secondary.main} height={18} />
+                <CustomIcon
+                  data-testid="date-range"
+                  icon={DateRangeIcon}
+                  fill={theme.palette.secondary.main}
+                  height={18}
+                />
                 <Box ml={1} color={({ palette }) => palette.secondary.main}>
                   {" "}
                   {t("filter.daterange")}

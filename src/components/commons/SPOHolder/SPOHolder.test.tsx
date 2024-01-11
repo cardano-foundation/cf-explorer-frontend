@@ -13,6 +13,6 @@ describe("SPOHolder component", () => {
     render(<SPOHolder data={mockProps} />);
     expect(screen.getByRole("img", { name: /spo image/i })).toBeInTheDocument();
     expect(screen.getByText(/sample pool/i)).toBeInTheDocument();
-    expect(screen.getByText(/spoinfo\.svg/i)).toBeInTheDocument();
+    expect(screen.getByTestId("spo-info")).toBeInTheDocument();
   });
 });

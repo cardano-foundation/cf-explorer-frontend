@@ -81,7 +81,7 @@ const DeregistrationTab = () => {
       minWidth: "120px",
       render: () => (
         <IconButton onClick={() => setOpenModal(true)}>
-          <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
+          <CustomIcon data-testid="eye-icon" icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
         </IconButton>
       )
     }

@@ -1,8 +1,6 @@
 /* eslint-disable import/order */
 /* eslint-disable import/no-duplicates */
 
-// import WalletOutlineIconComponent from "src/commons/resources/icons/WalletOutline.svg?react";
-
 import LogoFullIcon from "./icons/explorer-logo.svg";
 import LogoDarkmodeFullIcon from "./icons/logo-darkmode.svg";
 import LogoDarkmodeShortIcon from "./icons/short-logo-darkmode.svg";

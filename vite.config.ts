@@ -28,7 +28,8 @@ export default defineConfig(({ mode }) => {
       viteTsconfigPaths(),
       svgr({
         svgrOptions: {
-          ref: true
+          ref: true,
+          icon: true
         },
         include: "**/*.svg?react"
       })

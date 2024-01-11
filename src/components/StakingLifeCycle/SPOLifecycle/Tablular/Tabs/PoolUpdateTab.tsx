@@ -64,7 +64,7 @@ const PoolUpdateTab = () => {
       render(data) {
         return (
           <ClickAbleLink onClick={() => setSelectedValue(data)}>
-            <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
+            <CustomIcon data-testid="eye-icon" icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
           </ClickAbleLink>
         );
       }

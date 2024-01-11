@@ -227,6 +227,7 @@ const DelegationLists: React.FC = () => {
           />
           <SubmitButton onClick={handleSearch}>
             <CustomIcon
+              data-testid="search-icon"
               icon={HeaderSearchIconComponent}
               fill={theme.palette.secondary[0]}
               stroke={theme.palette.secondary.light}
