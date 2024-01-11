@@ -220,7 +220,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
   const [expanded, setExpanded] = useState<string | false>("");
   const transactionPurpose = ["SPEND", "MINT", "CERT", "REWARD", "NO_TX_PURPOSE"];
   const transactionPurposeI18n: Record<string, string> = {
-    ANY: t("smartContract.any"),
+    ANY: t("smartContract.sellectAll"),
     SPEND: t("smartContract.spend"),
     MINT: t("smartContract.mint"),
     REWARD: t("smartContract.reward"),

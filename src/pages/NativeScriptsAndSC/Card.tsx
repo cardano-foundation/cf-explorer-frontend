@@ -157,7 +157,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
               to={details.nativeScriptDetail(data.scriptHash, "token")}
               color={`${theme.palette.primary.main} !important`}
             >
-              {`+${(data.numberOfTokens || 0) - (data.tokens || []).length} More`}
+              {`+More`}
             </Box>
           )}
           {!data.tokens && (
