@@ -30,5 +30,3 @@ cypress/screenshots
 cypress/screenshots
 cypress/e2e/Dynamic
 *__pycache__*
-
-dist/*

@@ -4,15 +4,10 @@ import { Box, styled, useTheme } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
 
-import {
-  DeredistrationIcon,
-  OperatorRewardIcon,
-  PoolUpdateIcon,
-  RegistrationIcon,
-  WalletOutlineIconComponent
-} from "src/commons/resources";
+import { DeredistrationIcon, OperatorRewardIcon, PoolUpdateIcon, RegistrationIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
+import { ReactComponent as WalletIcon } from "src/commons/resources/icons/WalletOutline.svg";
 import { IPoolReportList } from "src/types/report";
 import { details } from "src/commons/routers";
 
@@ -85,7 +80,7 @@ const ReportGeneratedPoolDetailTabs = () => {
     const tabs = [
       ...poolTabs,
       {
-        icon: WalletOutlineIconComponent,
+        icon: WalletIcon,
         label: t("common.poolSize"),
         key: "poolSize",
         mappingKey: "poolSize",

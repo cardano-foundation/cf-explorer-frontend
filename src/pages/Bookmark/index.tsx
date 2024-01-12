@@ -7,10 +7,11 @@ import { Link, useHistory } from "react-router-dom";
 import { useLocalStorage } from "react-use";
 import { IoMdClose } from "react-icons/io";
 
-import { QuestionConfirm, DeleteBookmark } from "src/commons/resources";
 import useAuth from "src/commons/hooks/useAuth";
 import useFetchList from "src/commons/hooks/useFetchList";
 import useToast from "src/commons/hooks/useToast";
+import { ReactComponent as DeleteBookmark } from "src/commons/resources/icons/deleteBookmark.svg";
+import { ReactComponent as QuestionConfirm } from "src/commons/resources/icons/questionConfirm.svg";
 import { details, routers } from "src/commons/routers";
 import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
 import { formatBlockHashById, getShortHash } from "src/commons/utils/helper";

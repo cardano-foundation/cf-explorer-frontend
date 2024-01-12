@@ -83,7 +83,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
 
   const stepper: StepperProps[] = [
     {
-      icon: <RegistrationIcon data-testid="registration" width={"25px"} height={"25px"} />,
+      icon: <RegistrationIcon width={"25px"} height={"25px"} />,
       title: t("common.registration"),
       component: <Registration />,
       description: (

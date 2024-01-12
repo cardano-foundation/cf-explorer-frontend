@@ -98,9 +98,9 @@ describe("Address Transaction List test", () => {
       expect(screen.getByRole("link", { name: "7972764" })).toBeInTheDocument();
     });
 
-    // it("should fetch data", () => {
-    //   expect(mockUseFetchList).toHaveBeenCalledTimes(1);
-    // });
+    it("should fetch data", () => {
+      expect(mockUseFetchList).toHaveBeenCalledTimes(1);
+    });
   });
 
   it("should component go to detail pages", () => {

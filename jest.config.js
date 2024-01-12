@@ -1,32 +1,17 @@
-module.exports = {
-  preset: "ts-jest/presets/js-with-ts",
-  testEnvironment: "jsdom",
-  testMatch: ["**/*.test.ts", "**/*.test.tsx"],
+export default {
+  preset: "ts-jest",
+  testEnvironment: "node",
+  testMatch: ["**/*.test.ts"],
   moduleNameMapper: {
-    // "^@/(.*)$": "<rootDir>/src/$1",
-    "^src/(.*)$": "<rootDir>/src/$1",
-    // src: "<rootDir>/src/$1",
-    "@/cardano-foundation": "<rootDir>/cardano-foundation-libs",
-    // "\\.(jpg|jpeg|png|gif|webp|svg)?react$": "jest-transform-stub",
-    "\\.(jpg|jpeg|png|gif|webp|svg)$": "jest-transform-stub",
-    "\\.svg\\?react$": "<rootDir>/__mocks__/svgReactComponentMock.js",
-    "\\.(css|less|scss|sass)$": "identity-obj-proxy"
-    // "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/__mocks__/fileMock.js",
-    // "\\.svg\\?react$": "identity-obj-proxy",
-    // axios: "axios/dist/node/axios.cjs",
-    // "\\.(css|less)$": "identity-obj-proxy"
+    "^@/(.*)$": "<rootDir>/src/$1"
   },
   transform: {
-    "^.+\\.tsx?$": "ts-jest",
-    "^.+\\.(jpg|jpeg|png|gif|webp|svg)$": "jest-transform-stub"
+    "^.+\\.tsx?$": "ts-jest"
   },
   globals: {
     "ts-jest": {
-      tsconfig: "./tsconfig.json",
+      tsconfig: "path/to/tsconfig.json",
       isolatedModules: true
     }
-  },
-  roots: ["<rootDir>/src"],
-  transformIgnorePatterns: ["/node_modules/(?!react-dnd|dnd-core|@react-dnd)"],
-  setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"]
+  }
 };

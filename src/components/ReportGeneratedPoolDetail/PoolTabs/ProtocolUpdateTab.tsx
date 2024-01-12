@@ -66,7 +66,7 @@ const ProtocolUpdateTab = () => {
       render(data) {
         return (
           <ClickAbleLink onClick={() => setSelectedValue(data)}>
-            <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} data-testid="eye-icon" />
+            <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
           </ClickAbleLink>
         );
       }

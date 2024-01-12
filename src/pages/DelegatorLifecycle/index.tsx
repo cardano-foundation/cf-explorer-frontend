@@ -151,7 +151,6 @@ const DelegatorLifecycle = () => {
                 </ButtonSwitch>
                 <ButtonSwitch active={+(validMode === "tabular")} onClick={() => changeMode("tabular")}>
                   <ChartMode
-                    data-testid="chartmode"
                     fill={validMode === "tabular" ? theme.palette.secondary[0] : theme.palette.secondary.light}
                   />
                 </ButtonSwitch>

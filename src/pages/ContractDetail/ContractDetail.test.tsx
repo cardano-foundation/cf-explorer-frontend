@@ -58,8 +58,8 @@ describe("ContractDetail page", () => {
     expect(screen.getByRole("button", { name: /view address detail/i })).toBeInTheDocument();
     expect(screen.getByText(walletAddress.address)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: walletAddress.stakeAddress })).toBeInTheDocument();
-    expect(screen.getByRole("tab", { name: /transaction/i })).toBeInTheDocument();
-    expect(screen.getByRole("tab", { name: /script/i })).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: /utxoicon\.svg transaction/i })).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: /u_book\.svg script/i })).toBeInTheDocument();
   });
 
   it("should user goto the stakekey detail", () => {

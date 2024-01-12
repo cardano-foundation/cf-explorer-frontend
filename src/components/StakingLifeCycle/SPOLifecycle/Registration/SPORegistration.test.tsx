@@ -31,7 +31,7 @@ describe("RegistrationDraw component", () => {
     render(<Registration />);
     expect(screen.getByText(/registration list/i)).toBeInTheDocument();
     const filterIC = screen.getByRole("button", {
-      name: /filter/i
+      name: /filter-ic.svg filter/i
     });
     expect(filterIC).toBeInTheDocument();
   });
