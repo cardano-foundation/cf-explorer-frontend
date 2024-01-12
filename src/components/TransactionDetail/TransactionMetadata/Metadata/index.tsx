@@ -259,26 +259,30 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
                 <CIPHeader>
                   <CIPHeaderTitle>{t("token.metadataCheck")}</CIPHeaderTitle>
                   <CIPChips>
-                    {!isNil(metadata?.metadataCIP20?.valid) && !metadata?.metadataCIP83?.valid && (
-                      <CIP20Badge
-                        onClick={() => {
-                          setSelectedIndex(idx);
-                          setCip(CIP.CIP20);
-                        }}
-                        tooltipTitle={metadata?.metadataCIP20?.valid ? t("common.passed") : t("common.needsReview")}
-                        type={metadata?.metadataCIP20?.valid ? "success" : "warning"}
-                      />
-                    )}
-                    {!isNil(metadata?.metadataCIP83?.valid) && metadata?.metadataCIP20?.valid && (
-                      <CIP83Badge
-                        onClick={() => {
-                          setSelectedIndex(idx);
-                          setCip(CIP.CIP83);
-                        }}
-                        tooltipTitle={metadata?.metadataCIP83?.valid ? t("common.passed") : t("common.needsReview")}
-                        type={metadata?.metadataCIP83?.valid ? "success" : "warning"}
-                      />
-                    )}
+                    {!isNil(metadata?.metadataCIP20?.valid) &&
+                      metadata?.metadataCIP83?.requiredProperties &&
+                      !metadata?.metadataCIP83?.requiredProperties[1]?.value && (
+                        <CIP20Badge
+                          onClick={() => {
+                            setSelectedIndex(idx);
+                            setCip(CIP.CIP20);
+                          }}
+                          tooltipTitle={metadata?.metadataCIP20?.valid ? t("common.passed") : t("common.needsReview")}
+                          type={metadata?.metadataCIP20?.valid ? "success" : "warning"}
+                        />
+                      )}
+                    {!isNil(metadata?.metadataCIP83?.valid) &&
+                      metadata?.metadataCIP83?.requiredProperties &&
+                      metadata?.metadataCIP83?.requiredProperties[1]?.value && (
+                        <CIP83Badge
+                          onClick={() => {
+                            setSelectedIndex(idx);
+                            setCip(CIP.CIP83);
+                          }}
+                          tooltipTitle={metadata?.metadataCIP83?.valid ? t("common.passed") : t("common.needsReview")}
+                          type={metadata?.metadataCIP83?.valid ? "success" : "warning"}
+                        />
+                      )}
                   </CIPChips>
                 </CIPHeader>
               )}
