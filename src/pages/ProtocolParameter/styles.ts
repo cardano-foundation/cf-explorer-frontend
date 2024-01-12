@@ -1,4 +1,4 @@
-import { styled, Box, Button, Accordion, AccordionSummary as AccordionSummaryMUI, alpha } from "@mui/material";
+import { styled, Box, Button, Accordion, AccordionSummary as AccordionSummaryMUI } from "@mui/material";
 
 export const BackButton = styled(Box)`
   display: inline-flex;
@@ -91,14 +91,15 @@ export const ApplyFilterButton = styled(Button)(({ theme }) => ({
   width: "100%",
   textTransform: "capitalize",
   fontWeight: "bold",
-  color: theme.palette.secondary[0],
-  background: theme.palette.secondary.main,
+  fontSize: 16,
+  color: theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100],
+  background: theme.palette.primary.main,
   ":hover": {
-    background: alpha(theme.palette.secondary.main, 0.8)
+    background: theme.palette.primary.dark
   },
   ":disabled": {
-    color: theme.palette.common.white,
-    background: alpha(theme.palette.secondary.main, 0.3)
+    background: theme.palette.secondary[600],
+    color: theme.palette.secondary[100]
   }
 }));
 

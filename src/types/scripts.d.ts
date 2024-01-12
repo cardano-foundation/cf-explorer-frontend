@@ -29,7 +29,7 @@ type NativeScriptsList = {
 
 interface ScriptSmartContracts {
   scriptHash: string;
-  scriptVersion: "MULTISIG" | "TIMELOCK" | "PLUTUSV2" | "PLUTUSV1";
+  scriptVersion: "PLUTUSV2" | "PLUTUSV1";
   txCount: number;
   txPurposes: ["SPEND" | "MINT" | "CERT" | " REWARD"];
 }

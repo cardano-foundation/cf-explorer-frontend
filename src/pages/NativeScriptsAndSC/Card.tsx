@@ -1,16 +1,37 @@
-import { Box, styled, useTheme } from "@mui/material";
+import { Box, Button, styled, useTheme } from "@mui/material";
 import { t } from "i18next";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { TimeLock } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 
-const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
+import DesPlutusVersion from "./DesPlutusVersion";
+
+const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: boolean }> = ({
+  data,
+  hasBeforeAndAfter
+}) => {
   const theme = useTheme();
+
+  const cardRef = useRef<HTMLDivElement | null>();
+  const [cardWidth, setCardWidth] = useState(0);
+
+  useEffect(() => {
+    const updateCardWidth = () => {
+      if (cardRef.current) {
+        setCardWidth(cardRef.current.clientWidth);
+      }
+    };
+    updateCardWidth();
+    window.addEventListener("resize", updateCardWidth);
+    return () => window.removeEventListener("resize", updateCardWidth);
+  }, []);
+
   const isMoreThan10years = (date: string) => {
     const date1 = new Date(date);
     const date2 = new Date();
@@ -25,33 +46,43 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
       return (
         <Box>
           <Box display={"flex"} alignContent={"center"} gap={1}>
-            after: {isMoreThan10years(data.after) ? t("moreThan10Years") : formatDateTimeLocal(data.after)}
-            <TimeLock fill={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]} />
+            until: {isMoreThan10years(data.after) ? t("moreThan10Years") : formatDateTimeLocal(data.after)}
           </Box>
           <Box display={"flex"} alignContent={"center"} gap={1}>
-            before: {isMoreThan10years(data.before) ? t("moreThan10Years") : formatDateTimeLocal(data.before)}
-            <TimeLock fill={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]} />
+            as of: {isMoreThan10years(data.before) ? t("moreThan10Years") : formatDateTimeLocal(data.before)}
           </Box>
         </Box>
       );
     }
     if (data.before || data.after) {
       return (
-        <Box display={"flex"} alignItems={"center"} gap={1}>
-          {data.before ? "before: " : " after: "}
+        <Box
+          display={"flex"}
+          alignItems={cardWidth < 350 ? "baseline" : "center"}
+          gap={1}
+          height={hasBeforeAndAfter ? 38 : "unset"}
+        >
+          {data.before ? "as of: " : " until: "}
           {isMoreThan10years(data.before || data.after)
             ? t("moreThan10Years")
             : formatDateTimeLocal(data.before || data.after)}
-          <TimeLock fill={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]} />
         </Box>
       );
     }
-    return t("common.N/A");
+    return (
+      <Box
+        height={hasBeforeAndAfter ? 38 : "unset"}
+        display={"flex"}
+        alignItems={cardWidth < 350 ? "baseline" : "center"}
+      >
+        {t("common.N/A")}
+      </Box>
+    );
   };
 
   return (
     <Item>
-      <Box p={2} height={"100%"}>
+      <Box p={2} height={"100%"} ref={cardRef}>
         <Row>
           <Title>{t("common.scriptHash")}: </Title>
           <Box
@@ -63,9 +94,9 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
             <DynamicEllipsisText customTruncateFold={[4, 4]} value={data.scriptHash || ""} isTooltip />
           </Box>
         </Row>
-        <Row alignItems={data.before && data.after ? "flex-start !important" : "center"}>
+        <Row alignItems={"center"}>
           <Title>{t("nativeScript.timeLock")}: </Title>
-          <Value>{renderTimeLock()}</Value>
+          <Value width={cardWidth < 350 ? "100%" : "unset"}>{renderTimeLock()}</Value>
         </Row>
         <Row>
           <Title>{t("nativeScript.multiSig")}: </Title>
@@ -119,13 +150,18 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
               );
             })}
           {(data.numberOfTokens || 0) > (data.tokens || []).length && (
-            <Link to={details.nativeScriptDetail(data.scriptHash, "token")}>
-              <Chip mb={1}>
-                <Box display={"flex"} alignItems={"center"} height={"100%"}>
-                  {`+${(data.numberOfTokens || 0) - (data.tokens || []).length} More`}
-                </Box>
-              </Chip>
-            </Link>
+            <Box
+              display={"block"}
+              height={"100%"}
+              component={Link}
+              p={1}
+              mb={1}
+              fontSize={14}
+              to={details.nativeScriptDetail(data.scriptHash, "token")}
+              color={`${theme.palette.primary.main} !important`}
+            >
+              {`+More`}
+            </Box>
           )}
           {!data.tokens && (
             <Box
@@ -144,8 +180,14 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList }> = ({ data }) => {
     </Item>
   );
 };
+
 const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) => {
   const theme = useTheme();
+  const [openDesPlutusVersion, setOpenDesPlutusVersion] = useState(false);
+  const version = {
+    PLUTUSV1: "Plutus V1",
+    PLUTUSV2: "Plutus V2"
+  };
 
   return (
     <Item>
@@ -163,7 +205,21 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) =
         </Row>
         <Row>
           <Title>{t("Version")}: </Title>
-          <Value>{data.scriptVersion || ""}</Value>
+          <Value>
+            {data.scriptVersion ? version[data.scriptVersion] : ""}
+            <Box
+              component={Button}
+              m={0}
+              p={0}
+              width={24}
+              minWidth={24}
+              ml={1}
+              borderRadius={"50%"}
+              onClick={() => setOpenDesPlutusVersion(true)}
+            >
+              <InfoSolidIcon />
+            </Box>
+          </Value>
         </Row>
         <Row>
           <Title>{t("smartContract.totalTrx")}: </Title>
@@ -184,6 +240,8 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) =
             : t("common.N/A")}
         </Row>
       </Box>
+
+      <DesPlutusVersion open={openDesPlutusVersion} onClose={() => setOpenDesPlutusVersion(false)} />
     </Item>
   );
 };
