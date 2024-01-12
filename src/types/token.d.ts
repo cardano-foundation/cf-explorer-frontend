@@ -13,6 +13,7 @@ interface ITokenOverview {
   tokenType?: string;
   tokenLastActivity?: string;
   metadataJson?: string;
+  policyIsNativeScript: boolean;
 }
 
 interface ITokenMetadata {

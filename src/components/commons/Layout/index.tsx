@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Box, Button, useTheme } from "@mui/material";
+import { Box, Button, useTheme, List } from "@mui/material";
 import { t } from "i18next";
 
 import { RootState } from "src/stores/types";
 import { setOnDetailView, setSidebar } from "src/stores/user";
+import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { Notice } from "src/commons/resources";
 
@@ -61,28 +62,30 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
       </Drawer>
       <MainContainer id="main">
         <Main component="main" open={sidebar ? 1 : 0}>
-          <Box
-            alignItems={"center"}
-            justifyContent={"center"}
-            width={"100%"}
-            bgcolor={theme.palette.warning[100]}
-            py={2}
-            display={"flex"}
-            component={Button}
-            onClick={() => setOpenNoticeModal(true)}
-            sx={{
-              ":hover": {
-                bgcolor: theme.palette.warning[100]
-              }
-            }}
-            textTransform={"capitalize"}
-            fontSize={16}
-          >
-            <Notice fill={theme.palette.warning[700]} />
-            <Box ml={1} fontWeight={"bold"} color={theme.palette.warning[800]}>
-              {t("notice")}
+          {NETWORK === NETWORKS.sanchonet && (
+            <Box
+              alignItems={"center"}
+              justifyContent={"center"}
+              width={"100%"}
+              bgcolor={theme.palette.warning[100]}
+              py={2}
+              display={"flex"}
+              component={Button}
+              onClick={() => setOpenNoticeModal(true)}
+              sx={{
+                ":hover": {
+                  bgcolor: theme.palette.warning[100]
+                }
+              }}
+              textTransform={"capitalize"}
+              fontSize={16}
+            >
+              <Notice fill={theme.palette.warning[700]} />
+              <Box ml={1} fontWeight={"bold"} color={theme.palette.warning[800]}>
+                {t("notice")}
+              </Box>
             </Box>
-          </Box>
+          )}
           <Header />
           {children}
         </Main>
@@ -100,20 +103,54 @@ const NoticeModal = ({ ...props }: { open: boolean; handleCloseModal: () => void
   return (
     <StyledModal {...props} title={t("notice.title")}>
       <Box
-        p={2}
         bgcolor={theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0]}
         color={theme.palette.secondary.main}
         borderRadius={3}
       >
-        <Box my={1}>{t("notice.value.a")}</Box>
-        <Box my={1}>{t("notice.value.b")}</Box>
-        <Box my={1} ml={2}>
-          {t("notice.value.b1")}
-        </Box>
-        <Box my={1} ml={2}>
-          {t("notice.value.b2")}
-        </Box>
-        <Box my={1}>{t("notice.value.c")}</Box>
+        <List
+          sx={{
+            padding: "16px 40px"
+          }}
+        >
+          <li
+            style={{
+              listStyle: "disc"
+            }}
+          >
+            {t("notice.value.a")}
+          </li>
+          <li
+            style={{
+              listStyle: "disc",
+              margin: "16px 0"
+            }}
+          >
+            {t("notice.value.b")}
+          </li>
+          <li
+            style={{
+              listStyle: "circle",
+              margin: "0px 0 0px 20px"
+            }}
+          >
+            {t("notice.value.b1")}
+          </li>
+          <li
+            style={{
+              listStyle: "circle",
+              margin: "16px 0 16px 20px"
+            }}
+          >
+            {t("notice.value.b2")}
+          </li>
+          <li
+            style={{
+              listStyle: "disc"
+            }}
+          >
+            {t("notice.value.c")}
+          </li>
+        </List>
       </Box>
     </StyledModal>
   );

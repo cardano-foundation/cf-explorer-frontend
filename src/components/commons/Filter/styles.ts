@@ -13,18 +13,20 @@ export const FilterButton = styled(Button)`
   font-size: 14px;
   font-weight: 700;
   &::hover {
-    background: ${({ theme }) => theme.palette.secondary[0]};
+    background-color: ${({ theme }) =>
+      theme.mode === "dark" ? theme.palette.secondary[0] : theme.palette.primary[200]};
   }
 `;
 
-export const FilterContent = styled(Box)`
+export const FilterContent = styled(Box)<{ isMobile?: boolean }>`
   position: absolute;
-  right: 0px;
+  right: ${({ isMobile }) => (isMobile ? "65%" : 0)};
+  transform: ${({ isMobile }) => (isMobile ? "translateX(45%)" : "none")};
   top: calc(100% + 11px);
   background-color: ${({ theme }) => theme.palette.secondary[0]};
-  min-width: 200px;
+  min-width: 250px;
   border-radius: 6px;
-  padding: 6px 0px;
+  padding: ${({ theme }) => theme.spacing(1)};
   z-index: 10;
   box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 20%);
   &::before {
@@ -34,7 +36,7 @@ export const FilterContent = styled(Box)`
     z-index: 9;
     position: absolute;
     top: -6px;
-    right: 32px;
+    right: ${({ isMobile }) => (isMobile ? "40%" : "32px")};
     width: 14px;
     height: 16px;
     transform: rotate(45deg);

@@ -11,7 +11,9 @@ import {
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 
+import breakpoints from "src/themes/breakpoints";
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DownIcon,
@@ -24,7 +26,7 @@ import {
   SortTableUpDown,
   StartPage
 } from "src/commons/resources";
-import { handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
+import { getPageInfo, handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
 import {
   ColumnType,
   FooterTableProps,
@@ -33,7 +35,6 @@ import {
   TableRowProps,
   TableTopHeaderProps
 } from "src/types/table";
-import breakpoints from "src/themes/breakpoints";
 
 import CustomIcon from "../CustomIcon";
 import Filter from "../Filter";
@@ -93,10 +94,22 @@ const TableHeader = <T extends ColumnType>({
   isModal
 }: TableHeaderProps<T>) => {
   const theme = useTheme();
+  const { search } = useLocation();
   const [{ columnKey, sort }, setSort] = useState<{ columnKey: string; sort: "" | "DESC" | "ASC" }>({
     columnKey: defaultSort ? defaultSort.split(",")[0] : "",
     sort: defaultSort ? (defaultSort.split(",")[1] as "" | "DESC" | "ASC") : ""
   });
+
+  useEffect(() => {
+    const sortQueryString = getPageInfo(search)?.sort;
+    if (sortQueryString && sortQueryString.length) {
+      const [columnKey, sort] = sortQueryString.split(",") as [string, "" | "DESC" | "ASC"];
+      setSort({ columnKey: columnKey.startsWith("bk.") ? columnKey.slice(3) : columnKey, sort });
+    } else {
+      setSort({ columnKey: "", sort: "" });
+    }
+  }, [search]);
+
   const sortValue = ({ key, sort }: { key: string; sort: "" | "DESC" | "ASC" }) => {
     if (key === columnKey) {
       switch (sort) {
@@ -179,9 +192,8 @@ const TableRow = <T extends ColumnType>({
 }: TableRowProps<T>) => {
   const colRef = useRef(null);
   const theme = useTheme();
-  const { isMobile } = useScreen();
-
   const rowRef = useRef<HTMLTableRowElement>(null);
+  const { isMobile } = useScreen();
 
   useEffect(() => {
     onCallBackHeight?.(rowRef?.current?.clientHeight || 0);
@@ -313,7 +325,13 @@ const TableSekeleton = () => {
   );
 };
 
-export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, clearSelection }) => {
+export const FooterTable: React.FC<FooterTableProps> = ({
+  total,
+  pagination,
+  loading,
+  clearSelection,
+  optionList = [10, 20, 50, 100]
+}) => {
   const { t } = useTranslation();
   const defaultPage = pagination?.page && (pagination?.page === 0 ? 1 : pagination?.page + 1);
   const [page, setPage] = useState(defaultPage || 1);
@@ -331,6 +349,11 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
       setPage(1);
     }
   }, [pagination?.page]);
+  useEffect(() => {
+    if (pagination?.size) {
+      setSize(pagination?.size);
+    }
+  }, [pagination?.size]);
 
   useEffect(() => {
     trigger && setOpen(false);
@@ -371,10 +394,11 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
                 }
               }}
             >
-              <StyledMenuItem value={10}>10</StyledMenuItem>
-              <StyledMenuItem value={20}>20</StyledMenuItem>
-              <StyledMenuItem value={50}>50</StyledMenuItem>
-              <StyledMenuItem value={100}>100</StyledMenuItem>
+              {optionList.map((item, index) => (
+                <StyledMenuItem key={index} value={item}>
+                  {item}
+                </StyledMenuItem>
+              ))}
             </SelectMui>
             <StyledPerPage>{t("perPage")}</StyledPerPage>
           </Box>
@@ -413,7 +437,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
 
 const Table: React.FC<TableProps> = ({
   columns,
-  data,
+  data: currentData,
   screen,
   total,
   pagination,
@@ -442,7 +466,6 @@ const Table: React.FC<TableProps> = ({
   isModal,
   height,
   minHeight,
-  isFullTableHeight = false,
   isCenterLoading
 }) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
@@ -452,10 +475,11 @@ const Table: React.FC<TableProps> = ({
   const tableRef = useRef<HTMLTableElement>(null);
   const [maxHeightTable, setMaxHeightTable] = useState<number>(0);
   const wrapperRef = useRef<HTMLElement>(null);
+  const data = currentData;
+
   const { width } = useScreen();
-  const scrollHeight = 5;
-  let heightTable = Math.min((tableRef?.current?.clientHeight || 0) + scrollHeight, window.innerHeight * 0.5);
-  const tableFullHeight = (tableRef?.current?.clientHeight || 0) + scrollHeight;
+
+  let heightTable = Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight * 0.5);
 
   if (width >= breakpoints.values.sm && (data || []).length >= 9) {
     const footerHeight = document.getElementById("footer")?.offsetHeight || SPACING_TOP_TABLE;
@@ -467,7 +491,7 @@ const Table: React.FC<TableProps> = ({
   }
 
   const onCallBackHeight = (rowHeight: number) => {
-    if (!maxHeightTable) setMaxHeightTable(rowHeight * 9);
+    if (!maxHeightTable) setMaxHeightTable(rowHeight > 70 ? rowHeight * 5 : rowHeight * 9);
   };
 
   const tableContainerRef = useRef<HTMLDivElement>(null);
@@ -511,7 +535,7 @@ const Table: React.FC<TableProps> = ({
         ref={wrapperRef}
         maxHeight={maxHeight || maxHeightTable}
         minHeight={minHeight ? minHeight : (!data || data.length === 0) && !loading ? 360 : loading ? 400 : 15}
-        height={height || (isFullTableHeight ? tableFullHeight : heightTable)}
+        height={height || heightTable}
         ismodal={+!!isModal}
         className={data && data.length !== 0 ? "table-wrapper" : "hide-scroll"}
         loading={loading ? 1 : 0}
@@ -604,10 +628,8 @@ const PaginationCustom = ({
   const [inputPage, setInputPage] = useState(page);
   const { t } = useTranslation();
   useEffect(() => {
-    if (pagination?.page) {
-      setInputPage(pagination?.page + 1);
-    }
-  }, [pagination?.page]);
+    setInputPage(page);
+  }, [page]);
 
   const { isGalaxyFoldSmall } = useScreen();
 

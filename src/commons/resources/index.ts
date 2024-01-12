@@ -8,6 +8,7 @@ import LogoIcon from "./icons/logo.svg";
 import WalletIcon from "./icons/wallet.svg";
 import CopyIcon from "./icons/copy.svg";
 import CloseIcon from "./icons/closeIcon.svg";
+import closeIconDarkMode from "./icons/closeIconDarkMode.svg";
 import NotFoundIcon from "./images/icon-404.png";
 import AdaPriceIcon from "./icons/ada-price.svg";
 import AdaPriceDarkIcon from "./icons/ada-price-dark.svg";
@@ -45,6 +46,8 @@ import EternlIcon from "./icons/eternl.svg";
 import YoroiIcon from "./icons/yoroi.svg";
 import TyphonIcon from "./icons/typhon.svg";
 import EmptyIcon from "./icons/noData.svg";
+import QrCodeDarkMode from "./images/qr-code-dark-mode.png";
+import QrCodeLightMode from "./images/qr-code-light-mode.png";
 import EmptyDarkIcon from "./icons/EmptyIconDark.svg";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 import ProtocolIcon from "./icons/menus/Protocol.svg";
@@ -84,6 +87,10 @@ import DownRedDarkmode from "./icons/downRedDark.svg";
 import DownRedUtxoDarkmode from "./icons/downUtxoRedDark.svg";
 import ArrowUpIcon from "./icons/arrow-up.svg";
 import ArrowUpDarkIcon from "./icons/arrow-up-dark.svg";
+import DisableArrowUpLightIcon from "./icons/disable-arrow-up-light.svg";
+import DisableArrowDownLightIcon from "./icons/disable-arrow-down-light.svg";
+import DisableArrowUpDarkIcon from "./icons/disable-arrow-up-dark.svg";
+import DisableArrowDownDarkIcon from "./icons/disable-arrow-down-dark.svg";
 import ArrowDownIcon from "./icons/arrow-down-red.svg";
 import ArrowDownDarkIcon from "./icons/arrow-down-red-dark.svg";
 import PolicyDark from "./icons/policy-dark.svg";
@@ -94,10 +101,6 @@ import PoolSizeDarkIcon from "./images/PoolSizeDark.png";
 import PoolSizeLightIcon from "./images/PoolSizeLight.png";
 import DelegatingToDarkIcon from "./images/DelegatingToDark.png";
 import RewardsWithdrawDarkIcon from "./images/RewardsWithdrawDark.png";
-import DisableArrowUpLightIcon from "./icons/disable-arrow-up-light.svg";
-import DisableArrowDownLightIcon from "./icons/disable-arrow-down-light.svg";
-import DisableArrowUpDarkIcon from "./icons/disable-arrow-up-dark.svg";
-import DisableArrowDownDarkIcon from "./icons/disable-arrow-down-dark.svg";
 import DeregistrationDarkIcon from "./icons/deregistration-icon-dark.svg";
 import DeregistrationLightIcon from "./icons/deregistration-icon-light.svg";
 import RegistrationDarkIcon from "./icons/registration-icon-dark.svg";
@@ -142,6 +145,7 @@ import LinkOff from "./icons/link-off.svg";
 import User2 from "./icons/user2.svg";
 import WhiteSearchIcon from "./icons/white-search-icon.svg";
 import CopyOutlineIcon from "./icons/copy-outline.svg";
+import SignOut from "./icons/sign-out.svg";
 //only component
 
 import PoolResgistrationHistory from "./icons/poolResgistrationHistory.svg?react";
@@ -192,6 +196,7 @@ import TxConfirm from "./icons/txConfirm.svg?react";
 import SlotIcon from "./icons/slot.svg?react";
 import TxInputIcon from "./icons/txInput.svg?react";
 import TxOutputIcon from "./icons/txOutput.svg?react";
+import SignOutComponent from "./icons/sign-out.svg?react";
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
 export {
@@ -206,6 +211,7 @@ export {
   HeaderSearchIcon,
   CopyIcon,
   CloseIcon,
+  closeIconDarkMode,
   NotFoundIcon,
   AdaPriceIcon,
   AdaPriceDarkIcon,
@@ -223,6 +229,8 @@ export {
   CurentEpochPoolDark,
   DownRedIcon,
   BlankBlueIcon,
+  QrCodeDarkMode,
+  QrCodeLightMode,
   CalenderPaleIcon,
   MenuIcon,
   BlockChainMenuIcon,
@@ -256,6 +264,7 @@ export {
   DelegatorIcon,
   LightningIcon,
   LinkOff,
+  SignOut,
   User2,
   PolygonWhiteIconUrl,
   PolygonBlackIconUrl,
@@ -316,6 +325,7 @@ export {
   DeregistrationLightIcon,
   RegistrationDarkIcon,
   RegistrationLightIcon,
+
   // React component
   ExchangeIcon,
   PolygonDarkIcon,
@@ -343,6 +353,7 @@ export {
   sunIcon,
   moonIcon,
   LinkOffComponent,
+  SignOutComponent,
   LightningIconComponent,
   MenuIconComponent,
   EmptyDarkIcon,
@@ -554,8 +565,22 @@ import delegatedIcon from "./icons/delegated.svg?react";
 import rewardIcon from "./icons/reward.svg?react";
 import rewardWithdrawIcon from "./icons/rewardWithdraw.svg?react";
 import totalStakeIcon from "./icons/totalStake.svg?react";
+import CheckNotRequiredCIPIcon from "./icons/check-not-required.svg?react";
+import FilterVersionIcon from "./icons/filterVersion.svg?react";
+import TimeLock from "./icons/timeLock.svg?react";
+import MultiSig from "./icons/multiSig.svg?react";
+import SortNative from "./icons/sortNative.svg?react";
+import ShowMore from "./icons/showmore.svg?react";
+import ShowLess from "./icons/showless.svg?react";
 
 export {
+  CheckNotRequiredCIPIcon,
+  FilterVersionIcon,
+  TimeLock,
+  MultiSig,
+  SortNative,
+  ShowMore,
+  ShowLess,
   AIcon,
   delegatedIcon,
   rewardIcon,

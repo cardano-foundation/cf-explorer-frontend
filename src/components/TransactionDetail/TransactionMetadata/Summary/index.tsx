@@ -1,5 +1,5 @@
 import { Box, Grid, useTheme } from "@mui/material";
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -36,6 +36,15 @@ const SummaryItems = ({
   const theme = useTheme();
   const tokensSent = item.tokens?.filter((token) => token.assetQuantity <= 0);
   const tokensReceived = item.tokens?.filter((token) => token.assetQuantity > 0);
+  const walletAddressRef = React.useRef<HTMLElement>(null);
+  const iconRef = React.useRef<HTMLElement>(null);
+  const [height, setHeight] = React.useState(0);
+  const [heightImg, setHeightImg] = React.useState(0);
+
+  useLayoutEffect(() => {
+    walletAddressRef.current && setHeight(walletAddressRef.current.clientHeight);
+    iconRef.current && setHeightImg(iconRef.current.clientHeight);
+  }, []);
 
   return (
     <WrapContainerGrid
@@ -54,9 +63,9 @@ const SummaryItems = ({
       <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
         <GridItem>
           <Icon src={theme.isDark ? SummaryWalletDark : WalletRoundedIcon} alt="wallet icon" />
-          <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} width={"100%"}>
+          <Box ref={iconRef} display={"flex"} flexDirection={"column"} justifyContent={"center"} width={"100%"}>
             <TitleText>{t("common.wallet")}</TitleText>
-            <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
+            <Box ref={walletAddressRef} display={"flex"} justifyContent="flex-start" alignItems={"center"}>
               <Box
                 display={"flex"}
                 justifyContent="flex-start"
@@ -82,8 +91,25 @@ const SummaryItems = ({
           </Box>
         </GridItem>
       </Grid>
-      <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
-        <WrapItemsInfo paddingX={2}>
+      <Grid
+        xs={12}
+        sm={6}
+        md={4}
+        lg={3}
+        xl={3}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          height: "fit-content",
+          width: "100%"
+        }}
+      >
+        <WrapItemsInfo
+          paddingX={2}
+          sx={{
+            width: "-webkit-fill-available"
+          }}
+        >
           <Icon
             src={
               item.value > 0
@@ -98,6 +124,7 @@ const SummaryItems = ({
                 ? DisableArrowUpDarkIcon
                 : DisableArrowUpLightIcon
             }
+            height={heightImg}
             alt="send icon"
           />
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
@@ -113,7 +140,13 @@ const SummaryItems = ({
             >
               {type === "down" ? `${t("tab.adaSent")}` : `${t("tab.adaReceived")}`}
             </TitleText>
-            <Box display="flex" alignItems="center">
+            <Box
+              display="flex"
+              alignItems="center"
+              sx={{
+                height: item.value ? `${height}px` : "0px"
+              }}
+            >
               <ValueText>
                 {item.value
                   ? type === "down"
@@ -126,8 +159,24 @@ const SummaryItems = ({
           </Box>
         </WrapItemsInfo>
       </Grid>
-      <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
-        <WrapTokensInfo paddingX={2}>
+      <Grid
+        xs={12}
+        sm={6}
+        md={4}
+        lg={3}
+        xl={3}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          height: "fit-content"
+        }}
+      >
+        <WrapTokensInfo
+          paddingX={2}
+          sx={{
+            width: "-webkit-fill-available"
+          }}
+        >
           <Box display={"flex"}>
             <Icon
               src={
@@ -139,6 +188,7 @@ const SummaryItems = ({
                   ? DisableArrowDownLightIcon
                   : ArrowDownIcon
               }
+              height={heightImg}
               alt="send icon"
             />
             <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
@@ -154,16 +204,25 @@ const SummaryItems = ({
               >
                 {t("tab.tokensSent")}
               </TitleText>
-              <ValueText alignSelf={"flex-start"}>
-                {tokensSent.length === 0
-                  ? ""
-                  : tokensSent.length === 1
-                  ? formatNumberDivByDecimals(
-                      tokensSent[0]?.assetQuantity || 0,
-                      tokensSent[0]?.metadata?.decimals || 0
-                    ).replace("-", "")
-                  : t("tab.multiple")}
-              </ValueText>
+              <Box
+                display="flex"
+                alignItems="center"
+                width={"100%"}
+                sx={{
+                  height: tokensSent.length > 0 ? `${height}px` : "0px"
+                }}
+              >
+                <ValueText alignSelf={"flex-start"}>
+                  {tokensSent.length === 0
+                    ? ""
+                    : tokensSent.length === 1
+                    ? formatNumberDivByDecimals(
+                        tokensSent[0]?.assetQuantity || 0,
+                        tokensSent[0]?.metadata?.decimals || 0
+                      ).replace("-", "")
+                    : t("tab.multiple")}
+                </ValueText>
+              </Box>
             </Box>
           </Box>
           {tokensSent && tokensSent.length === 1 && (
@@ -191,8 +250,24 @@ const SummaryItems = ({
           )}
         </WrapTokensInfo>
       </Grid>
-      <Grid xs={12} sm={6} md={4} lg={3} xl={3}>
-        <WrapTokensInfo paddingX={2}>
+      <Grid
+        xs={12}
+        sm={6}
+        md={4}
+        lg={3}
+        xl={3}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          height: "fit-content"
+        }}
+      >
+        <WrapTokensInfo
+          paddingX={2}
+          sx={{
+            width: "-webkit-fill-available"
+          }}
+        >
           <Box display={"flex"}>
             <Icon
               src={
@@ -204,6 +279,7 @@ const SummaryItems = ({
                   ? DisableArrowUpLightIcon
                   : ArrowUpIcon
               }
+              height={heightImg}
               alt="send icon"
             />
             <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
@@ -219,20 +295,28 @@ const SummaryItems = ({
               >
                 {t("tab.tokensReceived")}
               </TitleText>
-              <ValueText alignSelf={"flex-start"}>
-                {tokensReceived.length === 0
-                  ? ""
-                  : tokensReceived.length === 1
-                  ? `+${formatNumberDivByDecimals(
-                      tokensReceived[0]?.assetQuantity || 0,
-                      tokensReceived[0]?.metadata?.decimals || 0
-                    )}`
-                  : t("tab.multiple")}
-              </ValueText>
+              <Box
+                display="flex"
+                alignItems="center"
+                sx={{
+                  height: tokensReceived.length > 0 ? `${height}px` : "0px"
+                }}
+              >
+                <ValueText alignSelf={"flex-start"}>
+                  {tokensReceived.length === 0
+                    ? ""
+                    : tokensReceived.length === 1
+                    ? `+${formatNumberDivByDecimals(
+                        tokensReceived[0]?.assetQuantity || 0,
+                        tokensReceived[0]?.metadata?.decimals || 0
+                      )}`
+                    : t("tab.multiple")}
+                </ValueText>
+              </Box>
             </Box>
           </Box>
           {tokensReceived && tokensReceived.length === 1 && (
-            <Box display={"flex"} alignItems={"center"} mt={1}>
+            <Box display={"flex"} alignItems={"center"} mt={1} className="CONTAINERRR">
               <TokenLink
                 token={tokensReceived[0]}
                 isSummary={true}

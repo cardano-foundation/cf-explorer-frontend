@@ -3,22 +3,25 @@ import { isEmpty, isNil } from "lodash";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { CheckedCIPIcon, WarningCIPIcon } from "src/commons/resources";
+import { CheckNotRequiredCIPIcon, CheckedCIPIcon, WarningCIPIcon } from "src/commons/resources";
 import { CIP25_DOCS_URL } from "src/commons/utils/constants";
 import { getShortHash } from "src/commons/utils/helper";
 import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import Table, { Column } from "src/components/commons/Table";
-import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
+import { Column } from "src/components/commons/Table";
 
 import {
-  CIPLabel,
   CIPModalSubtitle,
   ModalContent,
   OtherPropetiesContent,
   OtherPropetiesDesc,
-  TokenLabel
+  CIPModalDesc,
+  CIPPropertyTable,
+  TokenLabel,
+  ButtonContainer,
+  CIPLabel
 } from "./styles";
+import ViewAllButtonExternal from "../commons/ViewAllButtonExternal";
 
 export type TCIP25ModalProps = {
   open: boolean;
@@ -29,28 +32,28 @@ export type TCIP25ModalProps = {
 
 const DEFAULT_CIP25_REQUIRE = [
   {
-    format: "text",
+    format: "",
     index: "1",
     property: "policy_ID",
     valid: null,
     value: ""
   },
   {
-    format: "utf-8",
+    format: "",
     index: "2",
     property: "asset_name",
     valid: null,
     value: ""
   },
   {
-    format: "string",
+    format: "",
     index: "3",
     property: "name",
     valid: null,
     value: ""
   },
   {
-    format: "uri | array",
+    format: "",
     index: "4",
     property: "image",
     valid: null,
@@ -67,11 +70,16 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
     return tokens;
   }, [data]);
 
+  const getValueFormat = (r: TTCIPProperties) => {
+    if (!r.value) return null;
+    return r.valueFormat;
+  };
+
   const columns: Column<TTCIPProperties>[] = [
     {
       title: "#",
       key: "index",
-      minWidth: 60,
+      minWidth: 30,
       render: (r) => r.index
     },
     {
@@ -81,9 +89,9 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
       render: (r) => r.property
     },
     {
-      title: t("cip25.format"),
+      title: t("cip.expectedFormat"),
       key: "format",
-      minWidth: 160,
+      minWidth: 130,
       render: (r) => r.format
     },
     {
@@ -114,36 +122,71 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
         )
     },
     {
-      title: t("cip.compliance"),
+      title: t("cip.valueFormat"),
+      key: "expectedFormat",
+      minWidth: 130,
+      render: (r) => getValueFormat(r)
+    },
+    {
+      title: <Box textAlign={"center"}>{t("cip.result")}</Box>,
       key: "compliance",
       render: (r) =>
         !isNil(r.valid) && (
-          <Box pl={3}>
-            <CustomTooltip title={r.valid ? t("common.passed") : t("common.needsReview")}>
-              <Box display="inline-block">{r.valid ? <CheckedCIPIcon /> : <WarningCIPIcon />}</Box>
+          <Box textAlign={"center"}>
+            <CustomTooltip
+              title={
+                r?.checkNotRequired
+                  ? t("common.checkNotRequired")
+                  : r.valid
+                  ? t("common.passed")
+                  : t("common.needsReview")
+              }
+            >
+              <Box display="inline-block">
+                {r?.checkNotRequired ? <CheckNotRequiredCIPIcon /> : r.valid ? <CheckedCIPIcon /> : <WarningCIPIcon />}
+              </Box>
             </CustomTooltip>
           </Box>
         )
     }
   ];
-  const mixedoptionalProperties = (optionalProperties: TTCIPProperties[]) => {
+  const mixedOptionalProperties = (optionalProperties: TTCIPProperties[]) => {
     if (version) return [...optionalProperties, version];
     return optionalProperties;
   };
 
+  const updateCheckNotRequiredOptionalProperties = (optionalProperties: TTCIPProperties[]) => {
+    const filePropertyIndex = optionalProperties.find((it) => it.property === "files")?.index;
+    if (!filePropertyIndex) return optionalProperties;
+    return optionalProperties.map((it) => {
+      if (it.property === "name" && it.index.startsWith(filePropertyIndex)) {
+        return { ...it, checkNotRequired: true };
+      }
+      return it;
+    });
+  };
+
+  const getOptionalProperties = (optionalProperties: TTCIPProperties[]) => {
+    return mixedOptionalProperties(updateCheckNotRequiredOptionalProperties(optionalProperties));
+  };
+
   return (
     <CustomModal
-      modalContainerProps={{ style: { maxWidth: 920 } }}
+      modalContainerProps={{ style: { maxWidth: "min(1000px, 98vw)" } }}
       open={props.open}
       style={{ maxHeight: "unset" }}
       onClose={props.onClose}
       title={
         <CIPLabel data-testid="token-CIP25Compliance">
-          {t("token.CIP25Compliance")} <ViewAllButtonExternal tooltipTitle={t("cip25.viewDocs")} to={CIP25_DOCS_URL} />
+          <span>{t("cip25.modal.title")}</span>
+          <ButtonContainer>
+            <ViewAllButtonExternal tooltipTitle={t("cip25.viewDocs")} to={CIP25_DOCS_URL} />
+          </ButtonContainer>
         </CIPLabel>
       }
     >
       <ModalContent>
+        <CIPModalDesc>{t("cip25.modal.subtitle")}</CIPModalDesc>
         {tokenMaps.map((token, index) => (
           <React.Fragment key={index}>
             {token.tokenName && (
@@ -152,25 +195,27 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
               </TokenLabel>
             )}
             <CIPModalSubtitle>{t("token.requiredProperties")}</CIPModalSubtitle>
-            <Table
+            <CIPPropertyTable
               isModal
               maxHeight="unset"
               height="auto"
               isFullTableHeight={true}
               data={token.requireProperties}
               columns={columns}
+              showPagination={false}
             />
             {token.optionalProperties.length > 0 && (
               <>
                 <CIPModalSubtitle data-testid="token-CIP25-optional-properties">
                   {t("token.optionalProperties")}
                 </CIPModalSubtitle>
-                <Table
+                <CIPPropertyTable
                   isModal
                   maxHeight="unset"
                   height="auto"
-                  data={mixedoptionalProperties(token.optionalProperties)}
+                  data={getOptionalProperties(token.optionalProperties)}
                   columns={columns}
+                  showPagination={false}
                 />
               </>
             )}
