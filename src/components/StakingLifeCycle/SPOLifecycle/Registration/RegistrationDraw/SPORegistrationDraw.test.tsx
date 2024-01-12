@@ -42,7 +42,7 @@ describe("RegistrationDraw component", () => {
     render(
       <RegistrationDraw data={mockData} selected={mockRegistration} showBackButton={true} toggleModal={onToggleModal} />
     );
-    const button = screen.getByText(/cardano-system.svg/i);
+    const button = screen.getByTestId("cardano-system");
     expect(button).toBeInTheDocument();
   });
 });

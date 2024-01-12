@@ -117,6 +117,7 @@ export const HoldBox = forwardRef<HTMLElement, Props>((props, feeRef) => {
             over={+isOverText}
           >
             <CustomIcon
+              data-testid="holdbox-buttonlist-icon"
               icon={ButtonListIcon}
               fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.main}
               height={24}

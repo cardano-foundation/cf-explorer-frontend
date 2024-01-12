@@ -8,7 +8,7 @@ describe("HoldBox component", () => {
   it("should component render", () => {
     render(<HoldBox txHash={mockHash} value={100000000} />);
     expect(screen.getByText(/100/i)).toBeInTheDocument();
-    expect(screen.getByText(/buttonlist\.svg/i)).toBeInTheDocument();
+    expect(screen.getByTestId("holdbox-buttonlist-icon")).toBeInTheDocument();
     expect(screen.getByTestId("holdbox-ada-icon")).toBeInTheDocument();
   });
 });

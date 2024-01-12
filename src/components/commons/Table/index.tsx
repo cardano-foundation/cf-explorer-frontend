@@ -235,6 +235,7 @@ const TableRow = <T extends ColumnType>({
           <Box display="flex" alignItems="center" height="1rem">
             {!selected && (
               <CustomIcon
+                data-testid="eye-icon"
                 icon={EyeIcon}
                 stroke={theme.palette.secondary.light}
                 originWidth={31}
