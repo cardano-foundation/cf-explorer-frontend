@@ -56,7 +56,7 @@ const ReferenceInputModal: React.FC<ReferenceInputModal> = ({ data, ...props }) 
 export default ReferenceInputModal;
 
 const DatumData = ({ data }: { data: string }) => {
-  if (!data) return <ValueReference>{t("common.notAvailable")}</ValueReference>;
+  if (!data) return <ValueReference>{t("common.N/A")}</ValueReference>;
 
   return <ValueReference>{data.length > 20 ? <DynamicEllipsisText value={data} isTooltip /> : data}</ValueReference>;
 };

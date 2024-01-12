@@ -94,9 +94,7 @@ const DelegationLists: React.FC = () => {
       ),
       key: "poolSize",
       minWidth: "120px",
-      render: (r) => (
-        <Box component={"span"}>{r.poolSize != null ? formatADAFull(r.poolSize) : t("common.notAvailable")}</Box>
-      ),
+      render: (r) => <Box component={"span"}>{r.poolSize != null ? formatADAFull(r.poolSize) : t("common.N/A")}</Box>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
@@ -131,7 +129,7 @@ const DelegationLists: React.FC = () => {
             />
           </Box>
         ) : (
-          t("common.notAvailable")
+          t("common.N/A")
         ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");

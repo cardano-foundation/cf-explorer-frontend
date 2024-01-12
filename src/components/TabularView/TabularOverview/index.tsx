@@ -47,7 +47,7 @@ const CardAmount = ({ amount }: TCardAmount) => {
   return (
     <CardValue>
       {amount === null ? (
-        t("common.notAvailable")
+        t("common.N/A")
       ) : (
         <>
           <CustomTooltip title={formatADAFull(amount)}>

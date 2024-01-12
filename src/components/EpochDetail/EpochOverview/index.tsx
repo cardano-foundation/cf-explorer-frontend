@@ -119,7 +119,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
               <ADAicon />
             </Output>
           ) : (
-            t("common.notAvailable")
+            t("common.N/A")
           )}
         </>
       )
