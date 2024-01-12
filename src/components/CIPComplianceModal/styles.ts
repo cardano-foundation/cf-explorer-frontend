@@ -69,10 +69,10 @@ export const OtherPropetiesDesc = styled(Typography)`
 `;
 
 export const CIPModalDesc = styled(Typography)`
-  font-size: 20px;
+  font-size: 24px;
   color: ${({ theme }) => theme.palette.secondary.light};
   font-weight: 400;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 `;
 
 export const TokenLabel = styled(CIPModalDesc)`
@@ -85,7 +85,8 @@ export const CIPLabel = styled(Box)(({ theme }) => ({
     width: "90%"
   },
   span: {
-    marginRight: "12px"
+    marginRight: "12px",
+    fontSize: "32px"
   }
 }));
 

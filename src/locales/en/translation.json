@@ -130,7 +130,7 @@
   "site.cardanoDocs": "Cardano Docs",
   "site.newsAndBlog": "News and Blog",
   "site.resources": "Resources",
-  "site.blockchainCourse": "Blockchain Course",
+  "site.cardanoAcademy": "Cardano Academy",
   "site.builderTools": "Builder Tools",
   "site.github": "Github",
   "message.wallet.changeSuccess": "Change wallet successfully!",
@@ -972,5 +972,6 @@
   "smartContract.plutusDes.title": "What Are Plutus Scripts?",
   "smartContract.plutusDes.desc1": "Plutus is the native smart contract language for Cardano.",
   "smartContract.plutusDes.desc2": "is the initial version of Plutus, introduced in the Alonzo hard fork",
-  "smartContract.plutusDes.desc3": "was introduced with the Vasil hard fork with flexibility, scalability and efficiency improvements to further enhance smart contract development"
+  "smartContract.plutusDes.desc3": "was introduced with the Vasil hard fork with flexibility, scalability and efficiency improvements to further enhance smart contract development",
+  "CIP83.noticeAutoDecrypt": "If the default passphrase “cardano” is used, the message will be decrypted automatically"
 }
