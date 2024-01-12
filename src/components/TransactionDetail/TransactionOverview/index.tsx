@@ -94,7 +94,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
                   setOpenListInput(!openListInput);
                 }}
               >
-                <BiShowAlt color={openListInput ? theme.palette.common.black : theme.palette.text.hint} />
+                <BiShowAlt color={openListInput ? theme.palette.secondary.light : theme.palette.secondary[600]} />
               </IconButton>
             )}
           </TitleCard>
@@ -103,7 +103,12 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       value: data?.utxOs && data?.utxOs?.inputs?.length > 0 && (
         <Box position={"relative"}>
           <StyledLink to={details.address(data?.utxOs?.inputs[0]?.address || "")}>
-            <DynamicEllipsisText value={data?.utxOs?.inputs[0]?.address || ""} isCopy isTooltip />
+            <DynamicEllipsisText
+              value={data?.utxOs?.inputs[0]?.address || ""}
+              isCopy
+              isTooltip
+              postfix={isMobile ? 6 : 8}
+            />
           </StyledLink>
           {openListInput && (
             <DropdownDetail
@@ -134,7 +139,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
                   setOpenListInput(false);
                 }}
               >
-                <BiShowAlt color={openListOutput ? theme.palette.common.black : theme.palette.text.hint} />
+                <BiShowAlt color={openListOutput ? theme.palette.secondary.light : theme.palette.secondary[600]} />
               </IconButton>
             )}
           </TitleCard>
@@ -143,7 +148,12 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       value: data?.utxOs && data?.utxOs?.outputs?.length > 0 && (
         <Box position={"relative"}>
           <StyledLink to={details.address(data?.utxOs?.outputs[0]?.address || "")}>
-            <DynamicEllipsisText value={data?.utxOs?.outputs[0]?.address || ""} isCopy isTooltip />
+            <DynamicEllipsisText
+              value={data?.utxOs?.outputs[0]?.address || ""}
+              isCopy
+              isTooltip
+              postfix={isMobile ? 6 : 8}
+            />
           </StyledLink>
           {openListOutput && (
             <DropdownDetail

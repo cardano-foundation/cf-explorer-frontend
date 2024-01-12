@@ -3,14 +3,16 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useLocalStorage } from "react-use";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "@emotion/react";
 
-import { LinkOff, User2 } from "src/commons/resources/index";
 import { routers } from "src/commons/routers";
+import { User2Component, SignOutComponent } from "src/commons/resources";
 import { getShortHash, removeAuthInfo } from "src/commons/utils/helper";
 import { signOut } from "src/commons/utils/userRequest";
 import { setOnDetailView } from "src/stores/user";
 
-import { Content, Disconnect, Icon, Name, Profile, Span, StyledButton, WrapContent } from "./style";
+import CustomIcon from "../CustomIcon";
+import { Content, Disconnect, Name, Profile, Span, StyledButton, WrapContent } from "./style";
 
 interface IProps {
   isConnected: boolean;
@@ -19,6 +21,7 @@ interface IProps {
 }
 const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, stakeAddress }) => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [, setBookmark] = useLocalStorage<string[]>("bookmark", []);
   const [, setUsername] = useLocalStorage<string>("username", "");
@@ -53,7 +56,6 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
       removeAuthInfo();
       setBookmark([]);
       setUsername("");
-      localStorage.clear();
       // setUser({ ...user, userData: {} });
       if (window.location.pathname.includes("report-generated")) {
         history.push(routers.STAKING_LIFECYCLE);
@@ -91,11 +93,11 @@ const ConnectedProfileOption: React.FC<IProps> = ({ isConnected, disconnect, sta
               history.push(routers.ACCOUNT);
             }}
           >
-            <Icon src={User2} />
+            <CustomIcon height={22} icon={User2Component} fill={theme.palette.secondary.main} marginRight={"10px"} />
             <Name>{t("common.account")}</Name>
           </Profile>
           <Disconnect onClick={handleDisconnect}>
-            <Icon src={LinkOff} />
+            <CustomIcon height={24} icon={SignOutComponent} fill={theme.palette.error[700]} marginRight={"10px"} />
             <Name>{t("common.signOut")}</Name>
           </Disconnect>
         </Content>

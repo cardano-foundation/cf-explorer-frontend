@@ -12,6 +12,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import CopyButton from "src/components/commons/CopyButton";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { FlexCenter } from "src/components/share/styled";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import {
   BoxHeaderBottom,
@@ -89,6 +90,7 @@ export default Collaterals;
 const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "input" | "output" }) => {
   const { t } = useTranslation();
   const theme = useTheme();
+  const { isMobile } = useScreen();
   return (
     <Box>
       {data?.map((item) => (
@@ -110,15 +112,35 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                 />
               </Box>
             </Box>
-            <StyledContainerInfo>
-              <WrapContent flexGrow={1}>
+            <StyledContainerInfo
+              sx={
+                !isMobile
+                  ? {
+                      display: "flex",
+                      justifyContent: "space-between",
+                      maxWidth: "calc(100% - 50px)"
+                    }
+                  : {}
+              }
+            >
+              <WrapContent
+                flexGrow={1}
+                sx={
+                  !isMobile
+                    ? {
+                        maxWidth: "calc(100% - 160px)",
+                        overflow: "hidden"
+                      }
+                    : {
+                        overflow: "hidden"
+                      }
+                }
+              >
                 {type === "input" && (
                   <WrapUTXOs>
                     <Box mr={3} minWidth={200} width={"100%"}>
                       <RowItemContent>
-                        <Box color={(theme) => theme.palette.secondary.light} pr={1}>
-                          {t("tab.utxo")}:
-                        </Box>
+                        <Box color={(theme) => theme.palette.secondary.light}>{t("tab.utxo")}:&nbsp;</Box>
                         <Link to={details.transaction(item.txHash)} style={{ width: "100%" }}>
                           <Box
                             component={"span"}
@@ -130,15 +152,35 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                               <DynamicEllipsisText
                                 value={item.txHash}
                                 afterElm={
-                                  <FlexCenter>
+                                  <FlexCenter
+                                    sx={{
+                                      alignItems: "flex-end"
+                                    }}
+                                  >
                                     <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
                                       #{item?.index}
                                     </Box>
-                                    <CopyButton text={item.txHash} />
+                                    <CopyButton
+                                      sx={{
+                                        transform: "translateY(3px)"
+                                      }}
+                                      text={item.txHash}
+                                    />
                                   </FlexCenter>
                                 }
                                 isTooltip
                                 customTruncateFold={[4, 8]}
+                                sx={{
+                                  display: "block",
+                                  transform: "translateY(-1px)"
+                                }}
+                                sxFirstPart={
+                                  !isMobile
+                                    ? {
+                                        maxWidth: "calc(100% - 150px)"
+                                      }
+                                    : {}
+                                }
                               />
                             </EllipsisContainer>
                           </Box>
@@ -167,7 +209,16 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                           width={"100%"}
                         >
                           <EllipsisContainer>
-                            <DynamicEllipsisText value={item.address} isCopy isTooltip customTruncateFold={[8, 8]} />
+                            <DynamicEllipsisText
+                              value={item.address}
+                              isCopy
+                              isTooltip
+                              customTruncateFold={[8, 8]}
+                              sx={{
+                                display: "block",
+                                transform: "translateY(0px)"
+                              }}
+                            />
                           </EllipsisContainer>
                         </Box>
                       </Link>

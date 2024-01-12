@@ -44,6 +44,7 @@ const ParseScriptModal: React.FC<ParseScriptModalProps> = ({ script, subTitle, .
           rootName={false}
           theme={theme.isDark ? "dark" : "light"}
           keyRenderer={keyRenderer}
+          style={{ wordBreak: "break-word", width: "98%" }}
         />
       </ViewJson>
     </StyledCustomModal>

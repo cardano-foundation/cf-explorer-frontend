@@ -8,6 +8,7 @@ import LogoIcon from "./icons/logo.svg";
 import WalletIcon from "./icons/wallet.svg";
 import CopyIcon from "./icons/copy.svg";
 import CloseIcon from "./icons/closeIcon.svg";
+import closeIconDarkMode from "./icons/closeIconDarkMode.svg";
 import NotFoundIcon from "./images/icon-404.png";
 import AdaPriceIcon from "./icons/ada-price.svg";
 import AdaPriceDarkIcon from "./icons/ada-price-dark.svg";
@@ -39,12 +40,15 @@ import MediumIcon from "./icons/medium.svg";
 import RocketBackground from "./icons/rocket-bg.svg";
 import USDIcon from "./icons/usd.svg";
 import SeeMoreIcon from "./icons/seemore.svg";
+import SignOut from "./icons/sign-out.svg";
 import FlintIcon from "./icons/flint.svg";
 import NamiIcon from "./icons/nami.svg";
 import EternlIcon from "./icons/eternl.svg";
 import YoroiIcon from "./icons/yoroi.svg";
 import TyphonIcon from "./icons/typhon.svg";
 import EmptyIcon from "./icons/noData.svg";
+import QrCodeDarkMode from "./images/qr-code-dark-mode.png";
+import QrCodeLightMode from "./images/qr-code-light-mode.png";
 import EmptyDarkIcon from "./icons/EmptyIconDark.svg";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 import ProtocolIcon from "./icons/menus/Protocol.svg";
@@ -144,6 +148,7 @@ import WhiteSearchIcon from "./icons/white-search-icon.svg";
 import CopyOutlineIcon from "./icons/copy-outline.svg";
 //only component
 
+import SignOutComponent from "./icons/sign-out.svg?react";
 import PoolResgistrationHistory from "./icons/poolResgistrationHistory.svg?react";
 import PoolResgistrationHistoryDark from "./icons/poolResgistrationHistoryDark.svg?react";
 import PoolDeresgistrationHistory from "./icons/poolDeresgistrationHistory.svg?react";
@@ -206,6 +211,7 @@ export {
   HeaderSearchIcon,
   CopyIcon,
   CloseIcon,
+  closeIconDarkMode,
   NotFoundIcon,
   AdaPriceIcon,
   AdaPriceDarkIcon,
@@ -223,6 +229,8 @@ export {
   CurentEpochPoolDark,
   DownRedIcon,
   BlankBlueIcon,
+  QrCodeDarkMode,
+  QrCodeLightMode,
   CalenderPaleIcon,
   MenuIcon,
   BlockChainMenuIcon,
@@ -256,6 +264,7 @@ export {
   DelegatorIcon,
   LightningIcon,
   LinkOff,
+  SignOut,
   User2,
   PolygonWhiteIconUrl,
   PolygonBlackIconUrl,
@@ -343,6 +352,7 @@ export {
   sunIcon,
   moonIcon,
   LinkOffComponent,
+  SignOutComponent,
   LightningIconComponent,
   MenuIconComponent,
   EmptyDarkIcon,
@@ -554,9 +564,23 @@ import delegatedIcon from "./icons/delegated.svg?react";
 import rewardIcon from "./icons/reward.svg?react";
 import rewardWithdrawIcon from "./icons/rewardWithdraw.svg?react";
 import totalStakeIcon from "./icons/totalStake.svg?react";
+import CheckNotRequiredCIPIcon from "./icons/check-not-required.svg?react";
+import FilterVersionIcon from "./icons/filterVersion.svg?react";
+import TimeLock from "./icons/timeLock.svg?react";
+import MultiSig from "./icons/multiSig.svg?react";
+import SortNative from "./icons/sortNative.svg?react";
+import ShowMore from "./icons/showmore.svg?react";
+import ShowLess from "./icons/showless.svg?react";
 
 export {
   AIcon,
+  CheckNotRequiredCIPIcon,
+  FilterVersionIcon,
+  TimeLock,
+  MultiSig,
+  SortNative,
+  ShowMore,
+  ShowLess,
   delegatedIcon,
   rewardIcon,
   rewardWithdrawIcon,

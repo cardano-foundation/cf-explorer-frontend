@@ -163,7 +163,7 @@ export const CIPHeader = styled(Box)`
 
 export const CIPHeaderTitle = styled(Box)`
   font-size: 14px;
-  color: ${({ theme }) => theme.palette.secondary[600]};
+  color: ${({ theme }) => theme.palette.secondary.light};
   display: flex;
   align-items: center;
   gap: 8px;
@@ -195,12 +195,6 @@ export const ModalContent = styled(Box)`
   }
 `;
 
-export const CIPModalSubtitle = styled(Typography)`
-  font-size: 18px;
-  font-weight: 700;
-  color: ${({ theme }) => theme.palette.secondary.main};
-`;
-
 export const OtherPropetiesContent = styled(Box)`
   background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0])};
   padding: 14px;
@@ -216,17 +210,4 @@ export const OtherPropetiesContent = styled(Box)`
 
 export const OtherPropetiesDesc = styled(Typography)`
   color: ${({ theme }) => (theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600])} !important;
-`;
-
-export const TokenLabel = styled(Typography)`
-  font-size: 20px;
-  color: ${({ theme }) => theme.palette.secondary.light};
-  font-weight: 400;
-  margin-bottom: 12px;
-`;
-
-export const CIPLabel = styled(Box)`
-  display: flex;
-  align-items: center;
-  gap: 12px;
 `;
