@@ -42,6 +42,7 @@ const TabNativeScripts = () => {
   const theme = useTheme();
   const pageInfo = getPageInfo<{ isMultiSig?: string; openTimeLocked?: string }>(search);
   const optionList = [3, 6, 9, 12, 15];
+  const [hasBeforeAndAfter, setHasBeforeAndAfter] = useState(false);
   const [showFilter, setShowFiter] = useState(false);
   const [searchQuery, setSearchQuery] = useState<{ openTimeLocked?: string; isMultiSig?: string; sort?: string }>();
   const [size, setSize] = useState(optionList.indexOf(pageInfo.size) + 1 ? pageInfo.size : 6);
@@ -49,10 +50,26 @@ const TabNativeScripts = () => {
   const [isMultiSig, setIsMultiSig] = useState<string>(pageInfo?.isMultiSig || "");
   const [sort, setSort] = useState<string>(pageInfo.sort !== "" ? pageInfo.sort : "numberOfAssetHolders,DESC");
 
+  const { data, ...fetchData } = useFetchList<NativeScriptsList>(
+    tabActive === "native-scripts" ? API.SCRIPTS.NATIVE_SCRIPTS : "",
+    {
+      ...pageInfo,
+      size,
+      ...omitBy(searchQuery, (query) => !query),
+      formatArrayComma: true
+    }
+  );
+
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `Native Scripts & Smart Contracts | Cardano Blockchain Explorer`;
   }, []);
+
+  useEffect(() => {
+    if (data) {
+      setHasBeforeAndAfter(data?.some((item) => item.before && item.after));
+    }
+  }, [JSON.stringify(data)]);
 
   useEffect(() => {
     if (optionList.indexOf(pageInfo.size) + 1) {
@@ -92,20 +109,13 @@ const TabNativeScripts = () => {
     history.replace({ search: stringify({ size: 6, page: 1 }) });
   };
 
-  const fetchData = useFetchList<NativeScriptsList>(tabActive === "native-scripts" ? API.SCRIPTS.NATIVE_SCRIPTS : "", {
-    ...pageInfo,
-    size,
-    ...omitBy(searchQuery, (query) => !query),
-    formatArrayComma: true
-  });
-
   const renderCard = () => {
     if (fetchData.loading) {
       return (
         <Box component={Grid} container spacing={2}>
           {[...new Array(size)]?.map((idx) => (
             <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
-              <Box component={Skeleton} variant="rectangular" height={"145px"} borderRadius={2} />
+              <Box component={Skeleton} variant="rectangular" height={"280px"} borderRadius={2} />
             </Grid>
           ))}
         </Box>
@@ -113,10 +123,10 @@ const TabNativeScripts = () => {
     }
     return (
       <Box component={Grid} container spacing={2}>
-        {fetchData.data?.map((item, idx) => (
+        {data?.map((item, idx) => (
           <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
             <Box height={"100%"}>
-              <NativeScriptCard data={item} />
+              <NativeScriptCard data={item} hasBeforeAndAfter={hasBeforeAndAfter} />
             </Box>
           </Grid>
         ))}
@@ -367,7 +377,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
             <SortNative fill={theme.palette.secondary.main} />
             <Box ml={1}>{t("NumberOfTokens")}</Box>
           </Box>
-          {sort.includes("numberOfTokens") && <BsFillCheckCircleFill size={14} color={theme.palette.secondary.main} />}
+          {sort.includes("numberOfTokens") && <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />}
         </Box>
         <Box component={ButtonSort} onClick={() => setSort("numberOfAssetHolders,DESC")}>
           <Box display={"flex"} alignItems={"center"}>
@@ -375,7 +385,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
             <Box ml={1}>{t("NumberOfAssetHolders")}</Box>
           </Box>
           {sort.includes("numberOfAssetHolders") && (
-            <BsFillCheckCircleFill size={16} color={theme.palette.secondary.main} />
+            <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />
           )}
         </Box>
 

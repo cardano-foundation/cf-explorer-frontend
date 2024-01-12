@@ -64,7 +64,7 @@ const CustomFilter: React.FC<Props> = (props) => {
         <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
           {t("filter.latestFirst")}
           {params?.sort && params.sort.includes(`${sortKey},DESC`) && (
-            <BsFillCheckCircleFill size={16} color={theme.palette.secondary.main} />
+            <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />
           )}{" "}
         </Box>
       ),
@@ -78,7 +78,7 @@ const CustomFilter: React.FC<Props> = (props) => {
         <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
           {t("filter.firstLatest")}
           {params?.sort && params.sort.includes(`${sortKey},ASC`) && (
-            <BsFillCheckCircleFill size={16} color={theme.palette.secondary.main} />
+            <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />
           )}
         </Box>
       ),
@@ -90,7 +90,7 @@ const CustomFilter: React.FC<Props> = (props) => {
       label: (
         <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
           {t("filter.daterange")}
-          {params?.fromDate && <BsFillCheckCircleFill size={16} color={theme.palette.secondary.main} />}
+          {params?.fromDate && <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />}
         </Box>
       ),
       icon: <CustomIcon icon={CalenderIcon} fill={theme.palette.secondary.light} width={20} />,
@@ -101,7 +101,7 @@ const CustomFilter: React.FC<Props> = (props) => {
       label: (
         <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
           {searchLabel}
-          {params?.search && <BsFillCheckCircleFill size={16} color={theme.palette.secondary.main} />}
+          {params?.search && <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />}
         </Box>
       ),
       icon: (
