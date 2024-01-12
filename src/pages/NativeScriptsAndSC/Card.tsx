@@ -1,4 +1,4 @@
-import { Box, styled, useTheme } from "@mui/material";
+import { Box, Button, styled, useTheme } from "@mui/material";
 import { t } from "i18next";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
@@ -8,6 +8,9 @@ import { formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
+
+import DesPlutusVersion from "./DesPlutusVersion";
 
 const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: boolean }> = ({
   data,
@@ -180,6 +183,11 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
 
 const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) => {
   const theme = useTheme();
+  const [openDesPlutusVersion, setOpenDesPlutusVersion] = useState(false);
+  const version = {
+    PLUTUSV1: "Plutus V1",
+    PLUTUSV2: "Plutus V2"
+  };
 
   return (
     <Item>
@@ -197,7 +205,21 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) =
         </Row>
         <Row>
           <Title>{t("Version")}: </Title>
-          <Value>{data.scriptVersion || ""}</Value>
+          <Value>
+            {data.scriptVersion ? version[data.scriptVersion] : ""}
+            <Box
+              component={Button}
+              m={0}
+              p={0}
+              width={24}
+              minWidth={24}
+              ml={1}
+              borderRadius={"50%"}
+              onClick={() => setOpenDesPlutusVersion(true)}
+            >
+              <InfoSolidIcon />
+            </Box>
+          </Value>
         </Row>
         <Row>
           <Title>{t("smartContract.totalTrx")}: </Title>
@@ -218,6 +240,8 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) =
             : t("common.N/A")}
         </Row>
       </Box>
+
+      <DesPlutusVersion open={openDesPlutusVersion} onClose={() => setOpenDesPlutusVersion(false)} />
     </Item>
   );
 };

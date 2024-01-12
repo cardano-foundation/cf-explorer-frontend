@@ -968,5 +968,9 @@
   "token.metadataCheck": "Metadata Check: ",
   "CIP83.decryptMessage": "Decrypt Message",
   "CIP83.passphrase": "Passphrase",
-  "CIP83.notSupportEnc": "Encryption Method Not Supported"
+  "CIP83.notSupportEnc": "Encryption Method Not Supported",
+  "smartContract.plutusDes.title": "What Are Plutus Scripts?",
+  "smartContract.plutusDes.desc1": "Plutus is the native smart contract language for Cardano.",
+  "smartContract.plutusDes.desc2": "is the initial version of Plutus, introduced in the Alonzo hard fork",
+  "smartContract.plutusDes.desc3": "was introduced with the Vasil hard fork with flexibility, scalability and efficiency improvements to further enhance smart contract development"
 }
