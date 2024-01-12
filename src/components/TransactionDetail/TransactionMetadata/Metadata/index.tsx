@@ -16,6 +16,8 @@ import CIP20Modal from "src/components/CIPComplianceModal/CIP20Modal";
 import CIP83Badge from "src/components/commons/CIP83Badge";
 import CIP83Modal from "src/components/CIPComplianceModal/CIP83Modal";
 import PassphraseDecryptModal from "src/components/CIPComplianceModal/PassphraseDecryptModal";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import {
   BadgeContainer,
@@ -310,7 +312,36 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
               !isNil(metadata?.metadataCIP20?.valid) &&
               metadata.metadataCIP20.valid && (
                 <MetadataContent>
-                  <MetadataJSONTitle>{t("CIP20.transactionMessage")}</MetadataJSONTitle>
+                  <MetadataJSONTitle
+                    display={"flex"}
+                    gap={2}
+                    sx={{
+                      [theme.breakpoints.down("md")]: {
+                        width: "100% !important"
+                      }
+                    }}
+                  >
+                    <Box
+                      width={"min-content"}
+                      sx={{
+                        [theme.breakpoints.down("md")]: {
+                          width: "fit-content !important",
+                          marginBottom: 1
+                        }
+                      }}
+                    >
+                      {t("CIP20.transactionMessage")}{" "}
+                    </Box>
+                    {String(metadata.label) === String(CIPLabel674) &&
+                      !isNil(metadata?.metadataCIP83?.valid) &&
+                      metadata?.metadataCIP83.valid && (
+                        <CustomTooltip title={t("CIP83.noticeAutoDecrypt")}>
+                          <Box display={"inline-block"}>
+                            <InfoSolidIcon />
+                          </Box>
+                        </CustomTooltip>
+                      )}
+                  </MetadataJSONTitle>
                   {!textRaw && (
                     <MetaDataJSONValue>{renderMessage(metadata.metadataCIP20.requiredProperties)}</MetaDataJSONValue>
                   )}
