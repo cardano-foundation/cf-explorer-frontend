@@ -25,7 +25,7 @@ export const HeaderBox = styled(Container)<{ home: number }>`
 `;
 
 export const HeaderTop = styled("div")(({ theme }) => ({
-  zIndex: 1300,
+  zIndex: 99,
   display: "flex",
   justifyContent: "flex-end",
   alignItems: "center",

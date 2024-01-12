@@ -28,7 +28,8 @@ const mockToken: IToken = {
   numberOfHolders: 100,
   tokenType: "ERC-20",
   tokenLastActivity: "2022-01-01",
-  metadataJson: "{}"
+  metadataJson: "{}",
+  policyIsNativeScript: false
 };
 
 const mockTokenOverview = {

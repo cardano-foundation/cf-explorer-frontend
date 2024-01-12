@@ -6,7 +6,7 @@ import { BiChevronDown } from "react-icons/bi";
 import { GoChevronRight } from "react-icons/go";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, useHistory, withRouter } from "react-router-dom";
-import { isNil, isObject, omitBy } from "lodash";
+import { isEmpty, isNil, isObject, omitBy } from "lodash";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 
@@ -38,7 +38,7 @@ interface FormValues {
 interface Option {
   value: FilterParams;
   label: React.ReactNode;
-  paths?: (typeof routers)[keyof typeof routers][];
+  paths?: ((typeof routers)[keyof typeof routers] | "ADA_hanlde")[];
   detail?: (typeof details)[keyof typeof details];
 }
 const intitalValue: FormValues = {
@@ -102,6 +102,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const [ADAHandleOption, setADAHanldeOption] = useState<
     { stakeAddress: string; paymentAddress: string } | undefined
   >();
+
   const [loading, setLoading] = useState<boolean>(false);
   const [totalResult, setTotalResult] = useState<number>(0);
 
@@ -129,6 +130,12 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       label: t("filter.transactions"),
       paths: [routers.TRANSACTION_LIST, routers.TRANSACTION_DETAIL],
       detail: details.transaction
+    },
+    {
+      value: "ADAHanlde",
+      label: t("filter.ADAHanlde"),
+      paths: ["ADA_hanlde"],
+      detail: details.address
     },
     {
       value: "tokens",
@@ -167,21 +174,6 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       label: t("filter.scriptHash"),
       paths: [routers.SMART_CONTRACT, routers.NATIVE_SCRIPT_DETAIL, routers.NATIVE_SCRIPTS_AND_SC],
       detail: details.policyDetail
-    },
-    {
-      value: "ADAHanlde",
-      label: t("filter.ADAHanlde"),
-      paths: [
-        routers.ADDRESS_LIST,
-        routers.CONTRACT_LIST,
-        routers.ADDRESS_DETAIL,
-        routers.STAKE_ADDRESS_REGISTRATION,
-        routers.STAKE_ADDRESS_DEREGISTRATION,
-        routers.STAKE_ADDRESS_DELEGATIONS,
-        routers.TOP_DELEGATOR,
-        routers.STAKE_DETAIL
-      ],
-      detail: details.address
     }
   ];
 
@@ -189,7 +181,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     try {
       return await axios.get(API_ADA_HANDLE_API + API.ADAHandle(query)).then((data) => data.data);
     } catch (error) {
-      return null;
+      return {};
     }
   };
 
@@ -205,10 +197,12 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       setLoading(true);
       const res = await defaultAxios.get(API.SEARCH_ALL(query));
       const adaHanlde = await adaHandleSearch(search);
-      setADAHanldeOption(adaHanlde);
+
+      setADAHanldeOption(isEmpty(adaHanlde) ? undefined : adaHanlde);
       setDataSearchAll(res?.data);
       const keyDetail = getKeyIfOnlyOneNonNullResult(res?.data);
-      if (adaHanlde !== null) {
+
+      if (adaHanlde && adaHanlde !== null) {
         if (
           adaHanlde &&
           (!keyDetail || keyDetail === "address") &&
@@ -224,21 +218,40 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           if (adaHanlde?.stakeAddress) {
             history.push(`${details.stake(adaHanldeSearch)}`);
             return;
-          } else {
+          }
+          if (adaHanlde?.paymentAddress) {
             history.push(`${details.address(adaHanldeSearch)}`);
             return;
           }
         }
+      }
 
-        if (!adaHanlde.paymentAddress) {
-          if (keyDetail) {
-            callback?.();
-            handleSetSearchValueDefault();
-            handleRedirectDetail(keyDetail, res?.data);
-            setLoading(false);
-            setShowOption(false);
-            return;
-          }
+      if (!adaHanlde.paymentAddress) {
+        if (keyDetail) {
+          callback?.();
+          handleSetSearchValueDefault();
+          handleRedirectDetail(keyDetail, res?.data);
+          setLoading(false);
+          setShowOption(false);
+          return;
+        }
+
+        if (!res?.data?.validPoolName && res?.data?.validTokenName) {
+          history.push(
+            `${routers.TOKEN_LIST}?tokenName=${encodeURIComponent((search || "").trim().toLocaleLowerCase())}`
+          );
+          setShowOption(false);
+          setLoading(false);
+          return;
+        }
+
+        if (res?.data?.validPoolName && !res?.data?.validTokenName) {
+          history.push(routers.DELEGATION_POOLS, {
+            tickerNameSearch: encodeURIComponent((search || "").trim().toLocaleLowerCase())
+          });
+          setShowOption(false);
+          setLoading(false);
+          return;
         }
       }
 
@@ -366,9 +379,19 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   }, [search, filter]);
 
   const currentPath = history.location.pathname.split("/")[1];
-
   const checkIncludesPath = useCallback(
-    (paths: Option["paths"]) => paths?.find((path) => path?.split("/")[1] === currentPath),
+    (paths: Option["paths"]) =>
+      paths?.find((path) => {
+        const address = history.location.pathname.split("/")[2] || "";
+        if (
+          (routers.ADDRESS_DETAIL.includes(currentPath) || routers.STAKE_DETAIL.includes(currentPath)) &&
+          address.startsWith("$") &&
+          path === "ADA_hanlde"
+        ) {
+          return true;
+        }
+        return path?.split("/")[1] === currentPath;
+      }),
     [currentPath]
   );
 

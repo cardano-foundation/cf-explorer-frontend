@@ -55,14 +55,6 @@ jest.mock("react-redux", () => {
   };
 });
 
-jest.mock("src/components/Account/OverviewTab/OverviewTab.test.tsx", () => {
-  const originalModule = jest.requireActual("index.tsx");
-  return {
-    ...originalModule,
-    ConnectWalletModal: () => <button />
-  };
-});
-
 jest.mock("@mui/material", () => ({
   ...jest.requireActual("@mui/material"),
   useTheme: jest.fn()

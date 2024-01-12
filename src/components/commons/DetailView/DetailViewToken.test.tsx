@@ -29,7 +29,8 @@ const mockToken: IToken = {
   numberOfHolders: 50,
   tokenType: "Token Type",
   tokenLastActivity: "2023-07-03T12:34:56Z",
-  metadataJson: "Token Metadata JSON"
+  metadataJson: "Token Metadata JSON",
+  policyIsNativeScript: false
 };
 
 const mockTokenId = "1123KCCTSFD";

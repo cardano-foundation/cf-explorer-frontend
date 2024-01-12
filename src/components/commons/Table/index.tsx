@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
@@ -24,7 +25,7 @@ import {
   SortTableUpDown,
   StartPage
 } from "src/commons/resources";
-import { handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
+import { getPageInfo, handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
 import {
   ColumnType,
   FooterTableProps,
@@ -93,10 +94,22 @@ const TableHeader = <T extends ColumnType>({
   isModal
 }: TableHeaderProps<T>) => {
   const theme = useTheme();
+  const { search } = useLocation();
   const [{ columnKey, sort }, setSort] = useState<{ columnKey: string; sort: "" | "DESC" | "ASC" }>({
     columnKey: defaultSort ? defaultSort.split(",")[0] : "",
     sort: defaultSort ? (defaultSort.split(",")[1] as "" | "DESC" | "ASC") : ""
   });
+
+  useEffect(() => {
+    const sortQueryString = getPageInfo(search)?.sort;
+    if (sortQueryString && sortQueryString.length) {
+      const [columnKey, sort] = sortQueryString.split(",") as [string, "" | "DESC" | "ASC"];
+      setSort({ columnKey: columnKey.startsWith("bk.") ? columnKey.slice(3) : columnKey, sort });
+    } else {
+      setSort({ columnKey: "", sort: "" });
+    }
+  }, [search]);
+
   const sortValue = ({ key, sort }: { key: string; sort: "" | "DESC" | "ASC" }) => {
     if (key === columnKey) {
       switch (sort) {
@@ -313,7 +326,13 @@ const TableSekeleton = () => {
   );
 };
 
-export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loading, clearSelection }) => {
+export const FooterTable: React.FC<FooterTableProps> = ({
+  total,
+  pagination,
+  loading,
+  clearSelection,
+  optionList = [10, 20, 50, 100]
+}) => {
   const { t } = useTranslation();
   const defaultPage = pagination?.page && (pagination?.page === 0 ? 1 : pagination?.page + 1);
   const [page, setPage] = useState(defaultPage || 1);
@@ -331,6 +350,11 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
       setPage(1);
     }
   }, [pagination?.page]);
+  useEffect(() => {
+    if (pagination?.size) {
+      setSize(pagination?.size);
+    }
+  }, [pagination?.size]);
 
   useEffect(() => {
     trigger && setOpen(false);
@@ -371,10 +395,11 @@ export const FooterTable: React.FC<FooterTableProps> = ({ total, pagination, loa
                 }
               }}
             >
-              <StyledMenuItem value={10}>10</StyledMenuItem>
-              <StyledMenuItem value={20}>20</StyledMenuItem>
-              <StyledMenuItem value={50}>50</StyledMenuItem>
-              <StyledMenuItem value={100}>100</StyledMenuItem>
+              {optionList.map((item, index) => (
+                <StyledMenuItem key={index} value={item}>
+                  {item}
+                </StyledMenuItem>
+              ))}
             </SelectMui>
             <StyledPerPage>{t("perPage")}</StyledPerPage>
           </Box>
@@ -604,10 +629,8 @@ const PaginationCustom = ({
   const [inputPage, setInputPage] = useState(page);
   const { t } = useTranslation();
   useEffect(() => {
-    if (pagination?.page) {
-      setInputPage(pagination?.page + 1);
-    }
-  }, [pagination?.page]);
+    setInputPage(page);
+  }, [page]);
 
   const { isGalaxyFoldSmall } = useScreen();
 

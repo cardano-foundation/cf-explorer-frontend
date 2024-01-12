@@ -326,7 +326,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                           }}
                           key={index}
                         >
-                          <CustomTooltip title={item.assetName}>
+                          <CustomTooltip title={item.assetName || item.assetId}>
                             <Box
                               color={({ palette }) => palette.secondary.main}
                               mr={2}
