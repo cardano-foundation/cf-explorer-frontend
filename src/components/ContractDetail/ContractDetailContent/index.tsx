@@ -4,8 +4,9 @@ import { useHistory, useParams } from "react-router-dom";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
+import { ReactComponent as UtxoIcon } from "src/commons/resources/images/utxoIcon.svg";
 import { details } from "src/commons/routers";
-import { ScriptIcon, UtxoIcon } from "src/commons/resources";
+import { ScriptIcon } from "src/commons/resources";
 import CustomIcon from "src/components/commons/CustomIcon";
 
 import ScriptTab from "./ScriptTab";

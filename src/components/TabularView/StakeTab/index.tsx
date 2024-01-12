@@ -83,7 +83,6 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, tabActive, onChangeTab, tabsR
               }}
             >
               <Icon
-                data-testid={key}
                 fill={key === "poolSize" ? "none" : colorActive}
                 stroke={key === "poolSize" ? colorActive : "none"}
               />

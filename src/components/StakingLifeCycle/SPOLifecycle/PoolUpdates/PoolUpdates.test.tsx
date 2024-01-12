@@ -12,7 +12,7 @@ describe("PoolUpdates component", () => {
   it("should component render", () => {
     render(<PoollUpdates />);
     const filterIC = screen.getByRole("button", {
-      name: /filter/i
+      name: /filter-ic.svg filter/i
     });
     expect(screen.getByText(/recent updates/i)).toBeInTheDocument();
     expect(filterIC).toBeInTheDocument();

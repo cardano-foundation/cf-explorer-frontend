@@ -171,7 +171,7 @@ const CustomDatePicker = (props: ICustomDatePicker) => {
       />
       {!startDate && (
         <DateIconContainer>
-          <DateIcon data-testid="date-range" />
+          <DateIcon />
         </DateIconContainer>
       )}
     </DatePickerContainer>

@@ -76,7 +76,7 @@ const PoolRegistrationTab = () => {
       title: t("common.certificate"),
       render: (data) => (
         <IconButton onClick={() => setSelected(data?.poolUpdateId || 0)}>
-          <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} data-testid="eye-icon" />
+          <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
         </IconButton>
       )
     }

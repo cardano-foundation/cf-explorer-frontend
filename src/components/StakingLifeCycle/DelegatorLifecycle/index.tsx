@@ -98,7 +98,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
 
   const stepper: StepperProps[] = [
     {
-      icon: <RegistrationIcon data-testid="registration" width={"25px"} height={"25px"} />,
+      icon: <RegistrationIcon width={"25px"} height={"25px"} />,
       title: t("slc.registrationCertificate"),
       component: <Registration />,
       description: (
@@ -137,7 +137,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       keyCheckShow: "hashRewards"
     },
     {
-      icon: <RewardsWithdrawalIcon data-testid="withdrawal-icon" width={"25px"} height={"25px"} />,
+      icon: <RewardsWithdrawalIcon width={"25px"} height={"25px"} />,
       title: t("slc.rewardsWithdrawal"),
       component: <RewardsWithdrawal />,
       description: (

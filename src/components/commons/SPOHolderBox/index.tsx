@@ -78,7 +78,7 @@ const SPOHolderBox: React.FC<ISPOProps> = React.forwardRef(({ data, ...props }, 
             }
           >
             <ButtonSPO ref={SPOInfoRef} component={IconButton} onClick={onViewPoolDetail}>
-              <SPOInfo fill={theme.palette.primary.main} data-testid="spo-info" />
+              <SPOInfo fill={theme.palette.primary.main} />
             </ButtonSPO>
           </CustomTooltip>
           <CustomTooltip
