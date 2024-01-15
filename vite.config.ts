@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => {
       "process.env.REACT_APP_MAINNET_APP_URL": JSON.stringify(env.REACT_APP_MAINNET_APP_URL),
       "process.env.REACT_APP_SANCHONET_APP_URL": JSON.stringify(env.REACT_APP_SANCHONET_APP_URL)
     },
-    base: "",
+    base: "/en/",
     resolve: { alias: { "src/": resolve(__dirname, "./src/$1"), crypto: "crypto-browserify" } },
     plugins: [
       react({

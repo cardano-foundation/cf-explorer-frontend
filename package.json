@@ -65,7 +65,7 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "vite build",
+    "build": "vite build --base=/en/",
     "preview": "vite preview",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
