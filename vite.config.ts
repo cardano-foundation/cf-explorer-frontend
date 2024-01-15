@@ -31,7 +31,7 @@ export default defineConfig(({ mode }) => {
         ]
       }
     },
-    base: "/en/",
+    // base: "/en/",
     resolve: {
       alias: { "src/": resolve(__dirname, "./src/$1"), crypto: "crypto-browserify", stream: "stream-browserify" }
     },
