@@ -197,6 +197,7 @@ import TxConfirm from "./icons/txConfirm.svg?react";
 import SlotIcon from "./icons/slot.svg?react";
 import TxInputIcon from "./icons/txInput.svg?react";
 import TxOutputIcon from "./icons/txOutput.svg?react";
+import StakingLifecycleComponent from "./icons/menus/stakingLifecycle.svg?react";
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
 export {
@@ -574,6 +575,7 @@ import ShowMore from "./icons/showmore.svg?react";
 import ShowLess from "./icons/showless.svg?react";
 
 export {
+  StakingLifecycleComponent,
   AIcon,
   CheckNotRequiredCIPIcon,
   FilterVersionIcon,

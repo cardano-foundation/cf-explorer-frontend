@@ -12,6 +12,7 @@ import {
   formatAmount,
   formatDateTimeLocal,
   formatNumberDivByDecimals,
+  formatNumberTotalSupply,
   getPageInfo,
   getShortHash
 } from "src/commons/utils/helper";
@@ -81,7 +82,7 @@ const PolicyTable = () => {
       minWidth: "150px",
       render: (r) => {
         const decimalToken = r?.metadata?.decimals || 0;
-        return <Box component={"span"}>{formatNumberDivByDecimals(r?.supply, decimalToken)}</Box>;
+        return <Box component={"span"}>{formatNumberTotalSupply(r?.supply, decimalToken)}</Box>;
       }
     },
     {
