@@ -8,6 +8,7 @@ import { details } from "src/commons/routers";
 import {
   formatDateTimeLocal,
   formatNumberDivByDecimals,
+  formatNumberTotalSupply,
   getShortHash,
   numberWithCommas
 } from "src/commons/utils/helper";
@@ -118,7 +119,7 @@ const Tokens = () => {
       minWidth: "150px",
       render: (r) => {
         const decimalToken = r?.decimals || r?.metadata?.decimals || 0;
-        return formatNumberDivByDecimals(r?.supply, decimalToken);
+        return formatNumberTotalSupply(r?.supply, decimalToken);
       },
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
