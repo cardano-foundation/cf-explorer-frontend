@@ -52,6 +52,7 @@ import {
   StyledTitle,
   TimeDuration
 } from "./styles";
+import ToStakeLifCycleButton from "../../StakingLifeCycle/ToStakeLifeCycleButton";
 
 export interface IDelegationDetailInfo {
   data: DelegationOverview | null;
@@ -100,12 +101,15 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
   const HeaderBookmark: React.FC<HeaderBookmarkProps> = ({ justifyStyle }) => {
     return (
       <Box display="flex" alignItems="center" justifyContent={justifyStyle} flex="1">
-        <Box display="flex" alignItems="center">
+        <Box display="flex" alignItems="center" width={"100%"}>
           <Box marginLeft={isPoolName ? 0 : 3}>
             <BookmarkButton keyword={poolId} type="POOL" />
           </Box>
           <Box marginLeft={width < 400 ? 0 : 1}>
             <HeaderStatus status={data?.poolStatus}>{data?.poolStatus}</HeaderStatus>
+          </Box>
+          <Box marginLeft={"auto"}>
+            <ToStakeLifCycleButton address={poolId} from={"poolDetail"} />
           </Box>
         </Box>
         {data?.logoUrl && !isErrorImage && (
