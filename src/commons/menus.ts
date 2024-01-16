@@ -134,7 +134,7 @@ export const footerMenus: Menu[] = [
     key: "site.resources",
     icon: ResourcesIcon,
     children: [
-      { href: "https://education.cardanofoundation.org/", title: "Blockchain Course", key: "site.blockchainCourse" },
+      { href: "https://education.cardanofoundation.org/", title: "Cardano Academy", key: "site.cardanoAcademy" },
       { href: "https://developers.cardano.org/tools/", title: "Builder Tools", key: "site.builderTools" },
       { href: "https://github.com/cardano-foundation/cf-explorer", title: "GitHub", key: "site.github" }
     ]

@@ -173,7 +173,7 @@ const ConnectWalletModal: React.FC<IProps> = ({
       });
 
       closeButtonElenment.id = "close-button-p2p-modal";
-      closeButtonElenment.src = theme.isDark ? closeIconDarkMode : CloseIcon;
+      closeButtonElenment.src = theme.isDark ? `${closeIconDarkMode}` : `${CloseIcon}`;
       Object.assign(closeButtonElenment.style, {
         width: "30px",
         height: "30px",

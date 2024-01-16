@@ -148,6 +148,7 @@ import CopyOutlineIcon from "./icons/copy-outline.svg";
 import SignOut from "./icons/sign-out.svg";
 //only component
 
+import SignOutComponent from "./icons/sign-out.svg?react";
 import PoolResgistrationHistory from "./icons/poolResgistrationHistory.svg?react";
 import PoolResgistrationHistoryDark from "./icons/poolResgistrationHistoryDark.svg?react";
 import PoolDeresgistrationHistory from "./icons/poolDeresgistrationHistory.svg?react";
@@ -196,7 +197,6 @@ import TxConfirm from "./icons/txConfirm.svg?react";
 import SlotIcon from "./icons/slot.svg?react";
 import TxInputIcon from "./icons/txInput.svg?react";
 import TxOutputIcon from "./icons/txOutput.svg?react";
-import SignOutComponent from "./icons/sign-out.svg?react";
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
 export {
@@ -574,6 +574,7 @@ import ShowMore from "./icons/showmore.svg?react";
 import ShowLess from "./icons/showless.svg?react";
 
 export {
+  AIcon,
   CheckNotRequiredCIPIcon,
   FilterVersionIcon,
   TimeLock,
@@ -581,7 +582,6 @@ export {
   SortNative,
   ShowMore,
   ShowLess,
-  AIcon,
   delegatedIcon,
   rewardIcon,
   rewardWithdrawIcon,

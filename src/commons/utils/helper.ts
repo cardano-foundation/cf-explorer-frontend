@@ -366,9 +366,8 @@ export function decryptCardanoMessage(encrypted_msg: string, passphrase = "carda
   const key = keyIV.substring(0, 64);
   const iv = keyIV.substring(64);
 
-  const decipher = createDecipheriv("aes-256-cbc", Buffer.from(key, "hex"), Buffer.from(iv, "hex"));
-
   try {
+    const decipher = createDecipheriv("aes-256-cbc", Buffer.from(key, "hex"), Buffer.from(iv, "hex"));
     const decr_msg = decipher.update(cyphertext, "hex").toString("utf8") + decipher.final("utf8");
     return decr_msg || ""; //utf8
   } catch (error) {
