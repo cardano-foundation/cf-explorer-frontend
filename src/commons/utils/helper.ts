@@ -241,7 +241,6 @@ export function validateTokenExpired() {
     return now.isBefore(exp);
   } catch (e) {
     removeAuthInfo();
-    return false;
   }
 }
 
