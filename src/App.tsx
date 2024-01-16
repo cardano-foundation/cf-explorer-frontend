@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
+import { Buffer } from "buffer";
 
 import AppContainer from "./AppContainer";
 import Routers from "./Routers";
@@ -11,6 +12,8 @@ import store from "./stores";
 import { SUPPORTED_LANGUAGES } from "./commons/utils/constants";
 
 const App: React.FC = () => {
+  window.Buffer = Buffer;
+
   let basename = "/";
   const pattern = /^\/([a-z]{2})\//;
   const currentLanguage = window.location.pathname.match(pattern)?.[1];

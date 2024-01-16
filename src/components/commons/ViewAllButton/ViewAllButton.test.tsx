@@ -5,6 +5,10 @@ import { fireEvent, render, screen } from "src/test-utils";
 
 import ViewAllButton from ".";
 
+jest.mock("src/commons/resources", () => {
+  const SeeMoreIconHome = () => <div data-testid="view-all-button">link</div>;
+  return { SeeMoreIconHome };
+});
 describe("ViewMoreButton component", () => {
   it("should component render", () => {
     render(<ViewAllButton to={"/example"} />);

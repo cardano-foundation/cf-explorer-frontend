@@ -176,6 +176,7 @@ const CustomFilter: React.FC<Props> = (props) => {
           startIcon={
             <FilterIconContainer>
               <CustomIcon
+                data-testid="filter-icon"
                 icon={FilterIC}
                 width={18}
                 fill={theme.mode === "dark" ? theme.palette.primary.main : theme.palette.secondary.light}
