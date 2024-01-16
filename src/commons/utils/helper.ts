@@ -63,10 +63,7 @@ export const formatNumberTotalSupply = (value?: number | string, decimal = 6) =>
   const [integerPart, decimalPart] = bnValue.toFixed(decimal, BigNumber.ROUND_DOWN).split(".");
   const formattedIntegerPart = integerPart.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   if (decimalPart) {
-    // const formattedDecimalPart = decimalPart.replace(/0+$/, "");
-    // if (formattedDecimalPart !== "") {
     return `${formattedIntegerPart}.${decimalPart}`;
-    // }
   }
   return formattedIntegerPart;
 };
