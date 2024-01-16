@@ -1,13 +1,13 @@
-// import { changeLanguage } from "i18next";
-// import React, { useEffect } from "react";
-import { Redirect, Route, RouteProps, Switch } from "react-router-dom";
+import { changeLanguage } from "i18next";
+import React, { useEffect } from "react";
+import { Redirect, Route, RouteProps, Switch, useHistory } from "react-router-dom";
 
 import useAuth from "./commons/hooks/useAuth";
 import { routers } from "./commons/routers";
-// import { APP_LANGUAGES, SUPPORTED_LANGUAGES } from "./commons/utils/constants";
-// import { handleChangeLanguage } from "./commons/utils/helper";
+import { APP_LANGUAGES, SUPPORTED_LANGUAGES } from "./commons/utils/constants";
+import { handleChangeLanguage } from "./commons/utils/helper";
 import AccountLayout from "./components/commons/Layout/AccountLayout";
-// import i18n from "./i18n";
+import i18n from "./i18n";
 import AddressWalletDetail from "./pages/AddressWalletDetail";
 import BlockDetail from "./pages/BlockDetail";
 import BlockList from "./pages/BlockList";
@@ -59,18 +59,18 @@ const PoolsCertificate = () => <RegistrationPools poolType={POOL_TYPE.REGISTRATI
 const PoolsDeregistration = () => <RegistrationPools poolType={POOL_TYPE.DEREREGISTRATION} />;
 
 const Routes: React.FC = () => {
-  // const history = useHistory();
+  const history = useHistory();
 
-  // useEffect(() => {
-  //   const pattern = /^\/([a-z]{2})\//;
-  //   const currentLanguage = window.location.pathname.match(pattern)?.[1];
-  //   if (!currentLanguage || !SUPPORTED_LANGUAGES.includes(currentLanguage)) {
-  //     changeLanguage(APP_LANGUAGES.ENGLISH);
-  //     handleChangeLanguage(APP_LANGUAGES.ENGLISH, currentLanguage as APP_LANGUAGES);
-  //   } else if (SUPPORTED_LANGUAGES.includes(currentLanguage) && i18n.language !== currentLanguage) {
-  //     changeLanguage(currentLanguage);
-  //   }
-  // }, [history]);
+  useEffect(() => {
+    const pattern = /^\/([a-z]{2})\//;
+    const currentLanguage = window.location.pathname.match(pattern)?.[1];
+    if (!currentLanguage || !SUPPORTED_LANGUAGES.includes(currentLanguage)) {
+      changeLanguage(APP_LANGUAGES.ENGLISH);
+      handleChangeLanguage(APP_LANGUAGES.ENGLISH, currentLanguage as APP_LANGUAGES);
+    } else if (SUPPORTED_LANGUAGES.includes(currentLanguage) && i18n.language !== currentLanguage) {
+      changeLanguage(currentLanguage);
+    }
+  }, [history]);
 
   return (
     <Switch>
