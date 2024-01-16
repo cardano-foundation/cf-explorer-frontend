@@ -13,13 +13,13 @@ describe("CIP60Badge", () => {
   it("should component with success element render", () => {
     render(<CIP60Badge {...props} />);
     expect(screen.getByText("CIP-60")).toBeInTheDocument();
-    expect(screen.getByText(new RegExp("complied-cip25.svg", "i"))).toBeInTheDocument();
+    expect(screen.getByTestId("check-CIP60")).toBeInTheDocument();
   });
 
   it("should component with warning element render", () => {
     render(<CIP60Badge {...props} type="warning" />);
     expect(screen.getByText("CIP-60")).toBeInTheDocument();
-    expect(screen.getByText(new RegExp("cip60-warning.svg", "i"))).toBeInTheDocument();
+    expect(screen.getByTestId("warning-CIP60")).toBeInTheDocument();
   });
 
   it("should component with faalse element render", () => {

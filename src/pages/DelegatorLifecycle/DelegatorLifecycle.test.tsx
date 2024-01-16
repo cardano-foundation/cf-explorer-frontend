@@ -42,6 +42,6 @@ describe("BlockDetail page", () => {
     render(<DelegatorLifecycle />);
     expect(screen.getByRole("heading", { name: /staking delegation lifecycle/i })).toBeInTheDocument();
     expect(screen.getByText(/switch to tabular view/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /chartmode\.svg/i })).toBeInTheDocument();
+    expect(screen.getByTestId("chartmode")).toBeInTheDocument();
   });
 });

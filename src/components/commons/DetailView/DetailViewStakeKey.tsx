@@ -7,9 +7,13 @@ import { Link, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
-import { DelegationHistoryMainIcon, FileEditIcon, LightningIconComponent } from "src/commons/resources";
-import { ReactComponent as TransactionIcon } from "src/commons/resources/icons/exchangeArrow.svg";
-import { ReactComponent as StakeKeyHistoryIcon } from "src/commons/resources/icons/stateKeyHistory.svg";
+import {
+  DelegationHistoryMainIcon,
+  FileEditIcon,
+  LightningIconComponent,
+  TransactionIconComponent,
+  StakeKeyHistoryIcon
+} from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatADAFull, getShortHash } from "src/commons/utils/helper";
@@ -99,7 +103,7 @@ const DetailViewStakeKey: React.FC<DetailViewStakeKeyProps> = (props) => {
     {
       key: "transactions",
       label: t("drawer.transactions"),
-      icon: <TransactionIcon width={"20px"} height={"20px"} style={{ padding: "2px" }} display={"block"} />
+      icon: <TransactionIconComponent width={"20px"} height={"20px"} style={{ padding: "2px" }} display={"block"} />
     }
   ];
 
