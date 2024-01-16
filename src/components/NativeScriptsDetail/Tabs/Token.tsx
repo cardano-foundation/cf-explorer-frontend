@@ -3,6 +3,7 @@ import { stringify } from "qs";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import { Column } from "src/types/table";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -10,14 +11,13 @@ import { API } from "src/commons/utils/api";
 import {
   formatAmount,
   formatDateTimeLocal,
-  formatNumberDivByDecimals,
+  formatNumberTotalSupply,
   getPageInfo,
   getShortHash
 } from "src/commons/utils/helper";
 import { LinkComponent } from "src/components/PolicyDetail/PolicyTable/styles";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table from "src/components/commons/Table";
-import { Column } from "src/types/table";
 
 const Token = () => {
   const { t } = useTranslation();
@@ -55,7 +55,7 @@ const Token = () => {
       minWidth: "150px",
       render: (r) => {
         const decimalToken = r?.metadata?.decimals || 0;
-        return <Box component={"span"}>{formatNumberDivByDecimals(r?.supply, decimalToken)}</Box>;
+        return <Box component={"span"}>{formatNumberTotalSupply(r?.supply, decimalToken)}</Box>;
       }
     },
     {

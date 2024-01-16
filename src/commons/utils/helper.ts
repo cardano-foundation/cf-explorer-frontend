@@ -45,6 +45,7 @@ export const numberWithCommas = (value?: number | string, decimal = 6) => {
   if (!value) return "0";
   const bnValue = new BigNumber(value);
   const [integerPart, decimalPart] = bnValue.toFixed(decimal, BigNumber.ROUND_DOWN).split(".");
+
   const formattedIntegerPart = integerPart.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 
   if (decimalPart) {
@@ -52,6 +53,20 @@ export const numberWithCommas = (value?: number | string, decimal = 6) => {
     if (formattedDecimalPart !== "") {
       return `${formattedIntegerPart}.${formattedDecimalPart}`;
     }
+  }
+  return formattedIntegerPart;
+};
+
+export const formatNumberTotalSupply = (value?: number | string, decimal = 6) => {
+  if (!value) return "0";
+  const bnValue = new BigNumber(value);
+  const [integerPart, decimalPart] = bnValue.toFixed(decimal, BigNumber.ROUND_DOWN).split(".");
+  const formattedIntegerPart = integerPart.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  if (decimalPart) {
+    // const formattedDecimalPart = decimalPart.replace(/0+$/, "");
+    // if (formattedDecimalPart !== "") {
+    return `${formattedIntegerPart}.${decimalPart}`;
+    // }
   }
   return formattedIntegerPart;
 };
