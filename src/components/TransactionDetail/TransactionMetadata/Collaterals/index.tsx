@@ -147,6 +147,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                             fontWeight="bold"
                             fontFamily={"var(--font-family-text)"}
                             color={(theme) => theme.palette.primary.main}
+                            width={"100%"}
                           >
                             <EllipsisContainer>
                               <DynamicEllipsisText
