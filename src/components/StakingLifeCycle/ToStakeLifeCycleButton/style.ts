@@ -4,7 +4,6 @@ export const LinkButtonStaking = styled(Button)`
   display: flex;
   color: ${(props) => (props.theme.isDark ? props.theme.palette.secondary[100] : props.theme.palette.secondary[0])};
   background: ${(props) => props.theme.palette.primary.main};
-  width: 100%;
   border-radius: 8px;
   justify-content: center;
   align-items: center;
