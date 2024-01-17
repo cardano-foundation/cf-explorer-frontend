@@ -36,6 +36,10 @@ export const CustomTooltip = (props: Props) => {
       ref={tooltipRef}
       arrow
       placement={placement || "top"}
+      leaveDelay={300}
+      leaveTouchDelay={300}
+      enterDelay={0}
+      enterTouchDelay={0}
       componentsProps={{
         ...(componentsProps || {}),
         arrow: {
