@@ -57,17 +57,6 @@ export const numberWithCommas = (value?: number | string, decimal = 6) => {
   return formattedIntegerPart;
 };
 
-export const formatNumberTotalSupply = (value?: number | string, decimal = 6) => {
-  if (!value) return "0";
-  const bnValue = new BigNumber(value);
-  const [integerPart, decimalPart] = bnValue.toFixed(decimal, BigNumber.ROUND_DOWN).split(".");
-  const formattedIntegerPart = integerPart.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  if (decimalPart) {
-    return `${formattedIntegerPart}.${decimalPart}`;
-  }
-  return formattedIntegerPart;
-};
-
 export const formatADA = (
   value?: string | number,
   abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS,
