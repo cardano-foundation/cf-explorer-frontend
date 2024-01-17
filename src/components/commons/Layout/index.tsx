@@ -13,7 +13,7 @@ import { Notice } from "src/commons/resources";
 import Footer from "./Footer";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import { Drawer, Layout, Main, BackDrop, MainContainer } from "./styles";
+import { BackDrop, Drawer, Layout, Main, MainContainer } from "./styles";
 import ToggleSidebar from "./ToggleSidebar";
 import StyledModal from "../StyledModal";
 
