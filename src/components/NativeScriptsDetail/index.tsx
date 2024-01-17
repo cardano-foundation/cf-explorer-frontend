@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useHistory, useParams } from "react-router-dom";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Box, useTheme } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 
@@ -32,6 +32,11 @@ const NativeScriptsDetail = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    containerRef?.current?.scrollTo(0, 0);
+  }, []);
 
   const smartcontractTabs: TTab[] = [
     {
@@ -79,7 +84,7 @@ const NativeScriptsDetail = () => {
   };
 
   return (
-    <StyledContainer>
+    <StyledContainer ref={containerRef}>
       <Box display="flex" justifyContent="flex-start">
         <BackButton onClick={history.goBack}>
           <HiArrowLongLeft color={theme.palette.secondary.light} />
