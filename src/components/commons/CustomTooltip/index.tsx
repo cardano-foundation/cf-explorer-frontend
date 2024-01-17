@@ -7,13 +7,17 @@ interface Props extends TooltipProps {
 }
 
 export const CustomTooltip = (props: Props) => {
-  const { componentsProps, placement, wOpacity = true, ...otherProps } = props;
+  const { componentsProps, placement, wOpacity = true, children, ...otherProps } = props;
   const theme = useTheme();
   const { isMobile } = useScreen();
   return (
     <Tooltip
       arrow
       placement={placement || "top"}
+      leaveDelay={300}
+      leaveTouchDelay={300}
+      enterDelay={0}
+      enterTouchDelay={0}
       componentsProps={{
         ...(componentsProps || {}),
         arrow: {
@@ -39,7 +43,9 @@ export const CustomTooltip = (props: Props) => {
         }
       }}
       {...otherProps}
-    />
+    >
+      {children}
+    </Tooltip>
   );
 };
 
