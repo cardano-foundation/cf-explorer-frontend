@@ -19,7 +19,11 @@ const CIP60Badge: React.FC<TCIP60BadgeProps> = ({ type, tooltipTitle, onClick })
   return (
     <CustomTooltip title={tooltipTitle}>
       <BadgeContainer data-testid="clickable-cip60-badge" onClick={onClick} success={+success}>
-        {success ? <CheckedCIPIcon /> : <CIP60WarningIcon height={20} width={20} />}
+        {success ? (
+          <CheckedCIPIcon data-testid="check-CIP60" />
+        ) : (
+          <CIP60WarningIcon height={20} width={20} data-testid="warning-CIP60" />
+        )}
         <CIPLabel>{t("token.cip60")}</CIPLabel>
       </BadgeContainer>
     </CustomTooltip>

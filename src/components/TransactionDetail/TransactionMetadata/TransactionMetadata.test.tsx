@@ -183,9 +183,9 @@ const mockTransaction = {
 describe("TransactionMetadata component", () => {
   it("should component render", () => {
     render(<TransactionMetadata data={mockTransaction} loading={false} />);
-    expect(screen.getByRole("button", { name: /summaryicon\.svg summary/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /utxoicon\.svg utxos/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /contracticon\.svg contracts/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /noteicon\.svg notes/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /summary/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /utxos/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /contracts/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /notes/i })).toBeInTheDocument();
   });
 });

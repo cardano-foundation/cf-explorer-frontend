@@ -52,7 +52,7 @@ describe("WithdrawnDraw", () => {
 
   test("renders component and displays transaction details", () => {
     render(<WithdrawnDraw setSelected={jest.fn()} selected={mockWithdrawItem} showBackButton={true} />);
-    expect(screen.getByText(/backicon\.svg/i)).toBeInTheDocument();
+    expect(screen.getByTestId("back-icon")).toBeInTheDocument();
     expect(screen.getByText(/0\.00009/i)).toBeInTheDocument();
     expect(screen.getByText(/0\.00001/i)).toBeInTheDocument();
     expect(
@@ -68,7 +68,7 @@ describe("WithdrawnDraw", () => {
     mockedUseHistory.mockReturnValue({ goBack });
 
     render(<WithdrawnDraw setSelected={jest.fn()} selected={mockWithdrawItem} showBackButton={true} />);
-    const backButton = screen.getByText(/backicon\.svg/i);
+    const backButton = screen.getByTestId("back-button");
     userEvent.click(backButton);
 
     expect(goBack).toHaveBeenCalled();

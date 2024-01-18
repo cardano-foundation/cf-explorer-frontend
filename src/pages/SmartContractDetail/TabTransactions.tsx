@@ -2,15 +2,15 @@ import { Box } from "@mui/material";
 import { stringify } from "qs";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
+import { Column } from "src/types/table";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table from "src/components/commons/Table";
-import { Column } from "src/types/table";
 
 import { StyledLink } from "../BlockList/styles";
 import { ButtonViewModal } from "./styles";
@@ -23,11 +23,19 @@ const TabTransactions = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const { address, tabActive } = useParams<{ address: string; tabActive?: string }>();
+  const scrollToTop = useRef(false);
 
   const fetchData = useFetchList<ScriptContractTransactions>(
     tabActive === "transactions" ? API.SCRIPTS.SCRIPT_TXS_DETAIL(address) : "",
     pageInfo
   );
+
+  useEffect(() => {
+    if (!scrollToTop.current && fetchData) {
+      window.scroll(0, 0);
+      scrollToTop.current = true;
+    }
+  }, [fetchData]);
 
   const columns: Column<ScriptContractTransactions>[] = [
     {

@@ -76,7 +76,7 @@ const DelegationTab = () => {
       minWidth: "120px",
       render: (r) => (
         <IconButton onClick={() => setSelected(r.txHash)}>
-          <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
+          <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} data-testid="eye-icon" />
         </IconButton>
       )
     }

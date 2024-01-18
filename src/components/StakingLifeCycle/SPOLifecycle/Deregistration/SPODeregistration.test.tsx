@@ -25,7 +25,7 @@ describe("Deregistration component", () => {
   it("should component render", () => {
     render(<Deregistration />);
     expect(screen.getByText(/recent deregistration/i)).toBeInTheDocument();
-    expect(screen.getByText(/filter-ic.svg/i)).toBeInTheDocument();
+    expect(screen.getByTestId("filter-icon")).toBeInTheDocument();
   });
 });
 

@@ -45,6 +45,7 @@ export const numberWithCommas = (value?: number | string, decimal = 6) => {
   if (!value) return "0";
   const bnValue = new BigNumber(value);
   const [integerPart, decimalPart] = bnValue.toFixed(decimal, BigNumber.ROUND_DOWN).split(".");
+
   const formattedIntegerPart = integerPart.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 
   if (decimalPart) {
@@ -89,6 +90,18 @@ export const formatADAFull = (value?: string | number, limit = 6): string => {
 export const formatNumberDivByDecimals = (value?: string | number | BigNumber, decimals = 6) => {
   if (!value) return `0`;
   return numberWithCommas(new BigNumber(value).div(new BigNumber(10).exponentiatedBy(decimals)).toString(), decimals);
+};
+
+export const formatNumberTotalSupply = (value?: number | string, decimals = 6) => {
+  if (!value) return "0";
+  const bnValue = new BigNumber(value).div(new BigNumber(10).exponentiatedBy(decimals));
+  const [integerPart, decimalPart] = bnValue.toFixed(decimals, BigNumber.ROUND_DOWN).split(".");
+
+  const formattedIntegerPart = integerPart.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  if (decimalPart) {
+    return `${formattedIntegerPart}.${decimalPart}`;
+  }
+  return formattedIntegerPart;
 };
 
 export const exchangeADAToUSD = (value: number | string, rate: number, isFull?: boolean) => {
@@ -366,9 +379,8 @@ export function decryptCardanoMessage(encrypted_msg: string, passphrase = "carda
   const key = keyIV.substring(0, 64);
   const iv = keyIV.substring(64);
 
-  const decipher = createDecipheriv("aes-256-cbc", Buffer.from(key, "hex"), Buffer.from(iv, "hex"));
-
   try {
+    const decipher = createDecipheriv("aes-256-cbc", Buffer.from(key, "hex"), Buffer.from(iv, "hex"));
     const decr_msg = decipher.update(cyphertext, "hex").toString("utf8") + decipher.final("utf8");
     return decr_msg || ""; //utf8
   } catch (error) {

@@ -51,7 +51,6 @@ describe("DeregistrationTab component", () => {
     deposit: 100,
     time: "2023/07/13 10:00:00"
   };
-
   beforeEach(() => {
     (useFetchList as jest.Mock).mockReturnValue({ data: [mockData], total: 1, totalPage: 1, loading: false });
   });
@@ -60,12 +59,11 @@ describe("DeregistrationTab component", () => {
     render(<DeregistrationTab />);
     expect(screen.getByRole("link", { name: /0x456789abcdef123/i })).toBeInTheDocument();
     expect(screen.getByText(formatDateTimeLocal(mockData.time))).toBeInTheDocument();
-    expect(screen.getByText(/eye\.svg/i)).toBeInTheDocument();
+    expect(screen.getByTestId("eye-icon")).toBeInTheDocument();
   });
-
   it("should DeregistrationCertificateModal open", () => {
     render(<DeregistrationTab />);
-    fireEvent.click(screen.getByText(/eye\.svg/i));
+    fireEvent.click(screen.getByTestId("eye-icon"));
     expect(screen.getByText(/deregistration certificate/i)).toBeInTheDocument();
     expect(screen.getByRole("button")).toBeInTheDocument();
   });
@@ -117,12 +115,12 @@ describe("StakingRegistrationTab component", () => {
     render(<StakingRegistrationTab />);
     expect(screen.getByRole("link", { name: mockData.txHash }));
     expect(screen.getByText(formatDateTimeLocal(mockData.time))).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /eye\.svg/i })).toBeInTheDocument();
+    expect(screen.getByTestId("eye-icon")).toBeInTheDocument();
   });
 
   it("should RegistrationCertificateModal open", () => {
     render(<StakingRegistrationTab />);
-    fireEvent.click(screen.getByRole("button", { name: /eye\.svg/i }));
+    fireEvent.click(screen.getByTestId("eye-icon"));
     expect(screen.getByText(/registration certificate/i)).toBeInTheDocument();
   });
 

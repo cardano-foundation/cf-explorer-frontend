@@ -1,13 +1,10 @@
 import { Box } from "@mui/material";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
-import { ReactComponent as delegatedIcon } from "src/commons/resources/icons/delegated.svg";
-import { ReactComponent as rewardIcon } from "src/commons/resources/icons/reward.svg";
-import { ReactComponent as rewardWithdrawIcon } from "src/commons/resources/icons/rewardWithdraw.svg";
-import { ReactComponent as totalStakeIcon } from "src/commons/resources/icons/totalStake.svg";
 import { details } from "src/commons/routers";
+import { delegatedIcon, rewardIcon, rewardWithdrawIcon, totalStakeIcon } from "src/commons/resources";
 import { formatADAFull, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -17,6 +14,7 @@ import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 
 import ModalAllAddress from "../ModalAllAddress";
 import { ButtonModal, StyledFlexValue, StyledLinkTo, TitleCard, TitleNoPool, TitleValue } from "./styles";
+import ToStakeLifCycleButton from "../../StakingLifeCycle/ToStakeLifeCycleButton";
 
 interface Props {
   data: IStakeKeyDetail | null;
@@ -27,6 +25,7 @@ interface Props {
   loading: boolean;
   lastUpdated?: number;
 }
+
 const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated, adaHanldeData }) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -145,6 +144,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated, adaHanldeD
     <DetailHeader
       type="STAKE_KEY"
       bookmarkData={data?.stakeAddress || ""}
+      redirectAction={<ToStakeLifCycleButton address={data?.stakeAddress} />}
       title={
         adaHanldeData ? (
           <CustomTooltip title={t("address.title.ADAHanlde")}>

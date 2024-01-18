@@ -153,7 +153,9 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
     <Box>
       <StepInfo>
         {showBackButton ? (
-          <IconButtonBack onClick={handleBack}>{theme.isDark ? <BackDarkIcon /> : <BackIcon />}</IconButtonBack>
+          <IconButtonBack data-testid="back-button" onClick={handleBack}>
+            {theme.isDark ? <BackDarkIcon data-testid="back-icon" /> : <BackIcon data-testid="back-icon" />}
+          </IconButtonBack>
         ) : (
           <Box />
         )}

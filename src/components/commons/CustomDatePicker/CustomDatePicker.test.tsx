@@ -14,7 +14,7 @@ describe("CustomDatePicker component", () => {
   it("should component render placeholder", () => {
     render(<CustomDatePicker {...mockProps} dateRange={[null, null]} />);
     expect(screen.getByText("MM/DD/YYYY - MM/DD/YYYY")).toBeInTheDocument();
-    expect(screen.getByText(/daterange\.svg/i)).toBeInTheDocument();
+    expect(screen.getByTestId("date-range")).toBeInTheDocument();
   });
 
   it("should component render", () => {
