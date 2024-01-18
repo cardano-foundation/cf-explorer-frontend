@@ -154,8 +154,9 @@ export const TokenLink: React.FC<{
   isSuccess?: boolean;
   isSummary?: boolean;
   sx?: SxProps<Theme>;
+  sxBox?: SxProps<Theme>;
   hideValue?: boolean;
-}> = ({ token, isSuccess, sx, hideValue, isSummary }) => {
+}> = ({ token, isSuccess, sx, hideValue, isSummary, sxBox = {} }) => {
   const theme = useTheme();
 
   const renderTokenName = (token: Token) => {
@@ -186,6 +187,7 @@ export const TokenLink: React.FC<{
         width={"100%"}
         height={38}
         flex={1}
+        sx={sxBox}
       >
         <Box
           mr={1}

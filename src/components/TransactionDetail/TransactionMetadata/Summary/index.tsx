@@ -229,7 +229,13 @@ const SummaryItems = ({
                 token={tokensSent[0]}
                 isSummary={true}
                 isSuccess={!isFailed}
-                sx={{ minWidth: "100%", background: (theme) => theme.palette.primary[100] }}
+                sxBox={{
+                  flexWrap: "nowrap"
+                }}
+                sx={{
+                  minWidth: "100%",
+                  background: (theme) => theme.palette.primary[100]
+                }}
                 hideValue
               />
             </Box>
@@ -319,6 +325,9 @@ const SummaryItems = ({
                 token={tokensReceived[0]}
                 isSummary={true}
                 isSuccess={!isFailed}
+                sxBox={{
+                  flexWrap: "nowrap"
+                }}
                 sx={{ minWidth: "100%", background: (theme) => theme.palette.primary[100] }}
                 hideValue
               />
