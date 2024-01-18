@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { decodeFlatUplc } from "@cardano-foundation/cf-flat-decoder-ts";
 
 import { UPLCProgram } from "src/types/uplc";
 
-import { UPLCTree } from "./UPLCTree";
+import UPLCTree from "./UPLCTree";
 import { DataCardBox, DataTitle, DataValue, SwitchLabel, ViewSwitcher } from "./styles";
 
 export interface DataCardProps {
@@ -52,15 +51,63 @@ const mockData: UPLCProgram = {
   ]
 };
 
+// const generateUPLCData = (): UPLCProgram => {
+//   const tmp: UPLCData = {
+//     text: "lam i_0",
+//     data: []
+//   };
+//   let i;
+//   for (i = 1; i < 1000; i++) {
+//     const _data: UPLCData = { text: `lam i_${i}`, data: [] };
+//     let j = i;
+//     for (j = 1; j < 5; j++) {
+//       _data.data?.push({ text: `lam i_${i}.${j}` });
+//     }
+//     tmp.data?.push(_data);
+//   }
+//   return {
+//     version: {
+//       major: 2,
+//       minor: 0,
+//       patch: 0
+//     },
+//     data: [[tmp], { text: "i_5 i_5" }]
+//   };
+// };
+
+// const generateUPLCData2 = (): UPLCProgram => {
+//   const tmp: UPLCData = {
+//     text: "lam i_0",
+//     data: []
+//   };
+//   let i;
+//   const data = { text: `lam i_1`, data: [] };
+//   let ptr: UPLCData[] = data.data;
+//   for (i = 2; i < 200; i++) {
+//     const _data: UPLCData = { text: `lam i_${i}`, data: [] };
+//     ptr.push(_data);
+//     ptr = ptr[0].data as UPLCData[];
+//   }
+//   const data2 = { text: `lam i_201`, data: [] };
+//   ptr = data2.data;
+//   for (i = 202; i < 500; i++) {
+//     const _data: UPLCData = { text: `lam i_${i}`, data: [] };
+//     ptr.push(_data);
+//     ptr = ptr[0].data as UPLCData[];
+//   }
+//   return {
+//     version: {
+//       major: 2,
+//       minor: 0,
+//       patch: 0
+//     },
+//     data: [[{ ...tmp, data: [data, data2] }], { text: "i_5 i_5" }]
+//   };
+// };
+
 const DataCard: React.FC<DataCardProps> = ({ value, title }) => {
   const { t } = useTranslation();
   const [checked, setChecked] = useState(true);
-  const [, setUplc] = useState("");
-
-  useEffect(() => {
-    if (!value) return;
-    setUplc(decodeFlatUplc(value.toString()));
-  }, [value]);
 
   return (
     <DataCardBox>

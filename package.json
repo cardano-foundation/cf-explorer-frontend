@@ -5,7 +5,6 @@
   "dependencies": {
     "@cardano-foundation/cardano-connect-with-wallet": "^0.2.5",
     "@cardano-foundation/cardano-connect-with-wallet-core": "^0.2.3",
-    "@cardano-foundation/cf-flat-decoder-ts": "^0.1.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/lab": "^5.0.0-alpha.111",
