@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { stringify } from "qs";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Column } from "src/types/table";
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -23,7 +23,6 @@ const TabTransactions = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const { address, tabActive } = useParams<{ address: string; tabActive?: string }>();
-  const scrollToTop = useRef(false);
 
   const fetchData = useFetchList<ScriptContractTransactions>(
     tabActive === "transactions" ? API.SCRIPTS.SCRIPT_TXS_DETAIL(address) : "",
@@ -31,10 +30,7 @@ const TabTransactions = () => {
   );
 
   useEffect(() => {
-    if (!scrollToTop.current && fetchData) {
-      window.scroll(0, 0);
-      scrollToTop.current = true;
-    }
+    window.scroll(0, 0);
   }, [fetchData]);
 
   const columns: Column<ScriptContractTransactions>[] = [
