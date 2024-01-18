@@ -65,8 +65,11 @@ export const ViewJson = styled(Box)(({ theme }) => ({
     "@media screen and (max-height: 700px)": {
       maxHeight: "40vh"
     },
+    "@media screen and (max-height: 600px)": {
+      maxHeight: "30vh"
+    },
     "@media screen and (max-height: 500px)": {
-      maxHeight: "28vh"
+      maxHeight: "20vh"
     }
   }
 }));
