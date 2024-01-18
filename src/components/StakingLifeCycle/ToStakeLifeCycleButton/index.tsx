@@ -30,14 +30,7 @@ const ToStakeLifCycleButton = ({ address, from = "stakingDetail" }: Props) => {
   };
 
   return (
-    <CustomTooltip
-      enterDelay={0}
-      enterTouchDelay={0}
-      leaveDelay={0}
-      leaveTouchDelay={0}
-      placement={"top-end"}
-      title={t("ViewStakingLifecycle")}
-    >
+    <CustomTooltip placement={"top-end"} title={t("ViewStakingLifecycle")}>
       <LinkButtonStaking onClick={onClick}>
         <CustomIcon icon={StakingLifecycleComponent} height={24} width={24} fill={theme.palette.secondary[0]} />
       </LinkButtonStaking>
