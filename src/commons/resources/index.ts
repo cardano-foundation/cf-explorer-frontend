@@ -520,3 +520,6 @@ export { ReactComponent as MultiSig } from "./icons/multiSig.svg";
 export { ReactComponent as SortNative } from "./icons/sortNative.svg";
 export { ReactComponent as ShowMore } from "./icons/showmore.svg";
 export { ReactComponent as ShowLess } from "./icons/showless.svg";
+export { ReactComponent as PlusSquareIcon } from "./icons/plus-square.svg";
+export { ReactComponent as MinusSquareIcon } from "./icons/minus-square.svg";
+export { ReactComponent as CloseSquareIcon } from "./icons/close-square.svg";

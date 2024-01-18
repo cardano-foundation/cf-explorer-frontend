@@ -5,11 +5,13 @@
   "dependencies": {
     "@cardano-foundation/cardano-connect-with-wallet": "^0.2.5",
     "@cardano-foundation/cardano-connect-with-wallet-core": "^0.2.3",
+    "@cardano-foundation/cf-flat-decoder-ts": "^0.1.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/lab": "^5.0.0-alpha.111",
     "@mui/material": "^5.10.16",
     "@mui/styled-engine-sc": "^5.10.16",
+    "@mui/x-tree-view": "^6.17.0",
     "@reduxjs/toolkit": "^1.9.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

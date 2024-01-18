@@ -1,4 +1,4 @@
-import { Grid, Box } from "@mui/material";
+import { Grid, Box, Stack } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -27,7 +27,12 @@ const CompiledCodeModal: React.FC<CompiledCodeModalProps> = ({ open = false, onC
       modalContainerProps={{ px: "20px" }}
     >
       <ModalContent>
-        <ExplanDropdown title={t("explain.compiledCode")}>{t("explain.compiledCode.desc")}</ExplanDropdown>
+        <ExplanDropdown title={t("explain.compiledCode")}>
+          <Stack direction={"column"} gap={2}>
+            <Box>{t("explain.compiledCode.desc")}</Box>
+            <Box>{t("explain.compiledCode.desc2")}</Box>
+          </Stack>
+        </ExplanDropdown>
         <Box flex={1}>
           <Grid container spacing={2}>
             {data &&
