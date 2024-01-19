@@ -8,7 +8,7 @@ export const routers = {
   BLOCK_LIST: "/blocks",
   BLOCK_DETAIL: "/block/:blockId",
   TRANSACTION_LIST: "/transactions",
-  TRANSACTION_DETAIL: "/transaction/:trxHash/:tabActive?",
+  TRANSACTION_DETAIL: "/transaction/:trxHash/:tabActive?/:wineryId?",
   EPOCH_LIST: "/epochs",
   EPOCH_DETAIL: "/epoch/:epochId",
   DELEGATION_POOLS: "/pools",
@@ -59,8 +59,10 @@ export const lists = {
 
 export const details = {
   block: (blockId?: number | string) => routers.BLOCK_DETAIL.replace(":blockId", `${blockId ?? ""}`),
-  transaction: (trxHash?: string, tab = "summary") =>
-    routers.TRANSACTION_DETAIL.replace(":trxHash", trxHash ?? "").replace(":tabActive?", tab),
+  transaction: (trxHash?: string, tab = "summary", wineryId = "") =>
+    routers.TRANSACTION_DETAIL.replace(":trxHash", trxHash ?? "")
+      .replace(":tabActive?", tab)
+      .replace(":wineryId?", wineryId),
   epoch: (epochId?: number | string) => routers.EPOCH_DETAIL.replace(":epochId", `${epochId ?? ""}`),
   delegation: (poolId?: number | string) => routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${poolId}` ?? ""),
   story: (storyId?: string) => routers.STORY_DETAIL.replace(":storyId", storyId ?? ""),
@@ -73,10 +75,10 @@ export const details = {
   policyDetail: (policyId?: string) => routers.POLICY_DETAIL.replace(":policyId", policyId ?? ""),
   contract: (address?: string, tab = "transaction") =>
     routers.CONTRACT_DETAIL.replace(":address", address ?? "").replace(":tabActive?", tab),
-  smartContract: (address?: string, tab = "associated") =>
+  smartContract: (address?: string, tab = "transactions") =>
     routers.SMART_CONTRACT.replace(":address", address ?? "").replace(":tabActive?", tab),
   nativeScriptsAndSC: (tab = "native-scripts") => routers.NATIVE_SCRIPTS_AND_SC.replace(":tabActive?", tab),
-  nativeScriptDetail: (id?: string, tabActive = "associatedAddresses") =>
+  nativeScriptDetail: (id?: string, tabActive = "mintingBurningPolicy") =>
     routers.NATIVE_SCRIPT_DETAIL.replace(":id", id ?? "").replace(":tabActive", tabActive),
   staking: (stakeId: string, mode: ViewMode = "timeline", tab: DelegationStep = "registration", txHash?: string) =>
     routers.DELEGATOR_LIFECYCLE.replace(":stakeId", stakeId)

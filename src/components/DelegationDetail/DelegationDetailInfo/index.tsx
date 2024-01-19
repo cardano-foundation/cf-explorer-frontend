@@ -27,7 +27,6 @@ import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
 
 import {
-  HeaderStatus,
   BackButton,
   BackText,
   ButtonViewAll,
@@ -35,6 +34,7 @@ import {
   FlexGap10,
   HeaderContainer,
   HeaderDetailContainer,
+  HeaderStatus,
   HeaderTitle,
   HeaderTitleSkeleton,
   InfoTitle,
@@ -314,7 +314,11 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <InfoValue sx={{ wordBreak: "break-word" }}>
               <FlexGap10>
                 {data?.poolSize != null ? formatADAFull(data?.poolSize) : t("common.notAvailable")}
-                {data?.poolSize != null ? <ADAicon /> : ""}
+                {data?.poolSize != null ? (
+                  <Box width={16}>
+                    <ADAicon />
+                  </Box>
+                ) : null}
               </FlexGap10>
             </InfoValue>
           </Item>
@@ -327,7 +331,9 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               {data?.stakeLimit != null ? (
                 <FlexGap10>
                   {formatADAFull(data?.stakeLimit)}
-                  <ADAicon />
+                  <Box width={16}>
+                    <ADAicon />
+                  </Box>
                 </FlexGap10>
               ) : (
                 <FlexGap10>{t("common.notAvailable")}</FlexGap10>
