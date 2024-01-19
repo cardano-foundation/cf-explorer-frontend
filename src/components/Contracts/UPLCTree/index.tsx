@@ -1,4 +1,5 @@
 import React, { memo, useMemo } from "react";
+import { useTheme } from "@emotion/react";
 
 import { CloseSquareIcon, MinusSquareIcon, PlusSquareIcon } from "src/commons/resources";
 import { UPLCData, UPLCProgram } from "src/types/uplc";
@@ -11,7 +12,7 @@ export interface UPLCTreeProps {
 
 export const UPLCTree: React.FC<UPLCTreeProps> = ({ uplc }) => {
   const label = useMemo(() => `program ${uplc.version.major}.${uplc.version.minor}.${uplc.version.patch}`, [uplc]);
-
+  const theme = useTheme();
   const getExpandedNodeIds = () => {
     if (!uplc) return [];
     const nodeIds = ["root", ""];
@@ -41,9 +42,9 @@ export const UPLCTree: React.FC<UPLCTreeProps> = ({ uplc }) => {
 
   return (
     <TreeContainer
-      defaultCollapseIcon={<MinusSquareIcon />}
-      defaultExpandIcon={<PlusSquareIcon />}
-      defaultEndIcon={<CloseSquareIcon />}
+      defaultCollapseIcon={<MinusSquareIcon fill={theme.isDark ? theme.palette.secondary.light : "none"} />}
+      defaultExpandIcon={<PlusSquareIcon fill={theme.isDark ? theme.palette.secondary.light : "none"} />}
+      defaultEndIcon={<CloseSquareIcon fill={theme.isDark ? theme.palette.secondary.light : "none"} />}
       defaultExpanded={getExpandedNodeIds()}
     >
       <StyledTreeItem label={label} nodeId={"root"}>
