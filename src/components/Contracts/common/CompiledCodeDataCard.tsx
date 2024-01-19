@@ -113,7 +113,7 @@ const mockData: UPLCProgram = {
 
 const CompiledCodeDataCard: React.FC<CompiledCodeDataCardProps> = ({ value, title }) => {
   const { t } = useTranslation();
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(false);
 
   return (
     <DataCardBox>
