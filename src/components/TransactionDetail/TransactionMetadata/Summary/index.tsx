@@ -1,4 +1,4 @@
-import { Box, Grid, useTheme } from "@mui/material";
+import { Box, Grid, useTheme, useMediaQuery } from "@mui/material";
 import React, { useLayoutEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -40,6 +40,7 @@ const SummaryItems = ({
   const iconRef = React.useRef<HTMLElement>(null);
   const [height, setHeight] = React.useState(0);
   const [heightImg, setHeightImg] = React.useState(0);
+  const matches = useMediaQuery("(max-width: 1000px) and (min-width: 901px)");
 
   useLayoutEffect(() => {
     walletAddressRef.current && setHeight(walletAddressRef.current.clientHeight);
@@ -228,14 +229,15 @@ const SummaryItems = ({
               <TokenLink
                 token={tokensSent[0]}
                 isSummary={true}
+                truncateAddress={matches ? { firstPart: 8, lastPart: 6 } : undefined}
                 isSuccess={!isFailed}
                 sxBox={{
                   flexWrap: "nowrap",
-                  minWidth: "220px"
+                  minWidth: matches ? "160px" : "220px"
                 }}
-                sxTokenName={{ minWidth: "165px" }}
+                sxTokenName={{ minWidth: matches ? "100px" : "165px" }}
                 sx={{
-                  minWidth: "220px",
+                  minWidth: matches ? "160px" : "220px",
                   background: (theme) => theme.palette.primary[100]
                 }}
                 hideValue
@@ -327,12 +329,13 @@ const SummaryItems = ({
                 token={tokensReceived[0]}
                 isSummary={true}
                 isSuccess={!isFailed}
+                truncateAddress={matches ? { firstPart: 8, lastPart: 6 } : undefined}
                 sxBox={{
                   flexWrap: "nowrap",
-                  minWidth: "220px"
+                  minWidth: matches ? "160px" : "220px"
                 }}
-                sxTokenName={{ minWidth: "165px" }}
-                sx={{ minWidth: "220px", background: (theme) => theme.palette.primary[100] }}
+                sxTokenName={{ minWidth: matches ? "100px" : "165px" }}
+                sx={{ minWidth: matches ? "160px" : "220px", background: (theme) => theme.palette.primary[100] }}
                 hideValue
               />
             </Box>
