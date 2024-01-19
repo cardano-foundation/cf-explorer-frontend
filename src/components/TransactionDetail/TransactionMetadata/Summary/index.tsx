@@ -232,10 +232,12 @@ const SummaryItems = ({
                 isSummary={true}
                 isSuccess={!isFailed}
                 sxBox={{
-                  flexWrap: "nowrap"
+                  flexWrap: "nowrap",
+                  minWidth: "220px"
                 }}
+                sxTokenName={{ minWidth: "165px" }}
                 sx={{
-                  minWidth: "100%",
+                  minWidth: "220px",
                   background: (theme) => theme.palette.primary[100]
                 }}
                 hideValue
@@ -328,9 +330,11 @@ const SummaryItems = ({
                 isSummary={true}
                 isSuccess={!isFailed}
                 sxBox={{
-                  flexWrap: "nowrap"
+                  flexWrap: "nowrap",
+                  minWidth: "220px"
                 }}
-                sx={{ minWidth: "100%", background: (theme) => theme.palette.primary[100] }}
+                sxTokenName={{ minWidth: "165px" }}
+                sx={{ minWidth: "220px", background: (theme) => theme.palette.primary[100] }}
                 hideValue
               />
             </Box>
