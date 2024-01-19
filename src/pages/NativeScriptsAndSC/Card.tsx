@@ -248,7 +248,7 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) =
 
 export { SmartContractCard, NativeScriptCard };
 
-const Item = styled(Card)<{ smallItem?: boolean }>`
+const Item = styled(Card)`
   width: 100%;
   height: 100%;
   background: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[700])};
