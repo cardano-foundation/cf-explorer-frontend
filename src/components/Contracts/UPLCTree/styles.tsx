@@ -27,20 +27,16 @@ export const TreeContainer = styled(TreeView)`
 `;
 
 export const StyledTreeItem = styled(TreeItem)(({ theme }) => ({
-  [`& .${treeItemClasses.iconContainer}`]: {
-    "& .close": {
-      opacity: 0.3
-    }
-  },
   [`& .${treeItemClasses.content}`]: {
     padding: "2px 8px"
   },
   [`& .${treeItemClasses.label}`]: {
+    color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light,
     whiteSpace: "nowrap"
   },
   [`& .${treeItemClasses.group}`]: {
     marginLeft: 15,
     paddingLeft: 18,
-    borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`
+    borderLeft: `1px dashed ${theme.isDark ? alpha(theme.palette.grey[200], 0.8) : alpha(theme.palette.grey[400], 0.5)}`
   }
 }));
