@@ -155,8 +155,9 @@ export const TokenLink: React.FC<{
   isSummary?: boolean;
   sx?: SxProps<Theme>;
   sxBox?: SxProps<Theme>;
+  sxTokenName?: SxProps<Theme>;
   hideValue?: boolean;
-}> = ({ token, isSuccess, sx, hideValue, isSummary, sxBox = {} }) => {
+}> = ({ token, isSuccess, sx, hideValue, isSummary, sxBox = {}, sxTokenName = {} }) => {
   const theme = useTheme();
 
   const renderTokenName = (token: Token) => {
@@ -192,7 +193,7 @@ export const TokenLink: React.FC<{
         <Box
           mr={1}
           color={({ palette }) => palette.secondary.main}
-          sx={{ overflow: "hidden", textOverflow: "ellipsis", maxWidth: "90%" }}
+          sx={{ overflow: "hidden", textOverflow: "ellipsis", maxWidth: "90%", ...sxTokenName }}
         >
           <CustomTooltip title={token?.assetName || token?.assetId}>
             <Box color={({ palette }) => palette.secondary.main}>{renderTokenName(token)}</Box>
