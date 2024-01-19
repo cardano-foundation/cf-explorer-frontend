@@ -573,6 +573,9 @@ import MultiSig from "./icons/multiSig.svg?react";
 import SortNative from "./icons/sortNative.svg?react";
 import ShowMore from "./icons/showmore.svg?react";
 import ShowLess from "./icons/showless.svg?react";
+import PlusSquareIcon from "./icons/plus-square.svg?react";
+import MinusSquareIcon from "./icons/minus-square.svg?react";
+import CloseSquareIcon from "./icons/close-square.svg?react";
 
 export {
   StakingLifecycleComponent,
@@ -747,5 +750,8 @@ export {
   WarningCIPIcon,
   CheckedCIPIcon,
   SmallInfoIcon,
-  CIP60WarningIcon
+  CIP60WarningIcon,
+  PlusSquareIcon,
+  CloseSquareIcon,
+  MinusSquareIcon
 };
