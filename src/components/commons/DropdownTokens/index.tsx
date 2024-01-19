@@ -154,8 +154,10 @@ export const TokenLink: React.FC<{
   isSuccess?: boolean;
   isSummary?: boolean;
   sx?: SxProps<Theme>;
+  sxBox?: SxProps<Theme>;
+  sxTokenName?: SxProps<Theme>;
   hideValue?: boolean;
-}> = ({ token, isSuccess, sx, hideValue, isSummary }) => {
+}> = ({ token, isSuccess, sx, hideValue, isSummary, sxBox = {}, sxTokenName = {} }) => {
   const theme = useTheme();
 
   const renderTokenName = (token: Token) => {
@@ -186,17 +188,18 @@ export const TokenLink: React.FC<{
         width={"100%"}
         height={38}
         flex={1}
+        sx={sxBox}
       >
         <Box
           mr={1}
           color={({ palette }) => palette.secondary.main}
-          sx={{ overflow: "hidden", textOverflow: "ellipsis", maxWidth: "90%" }}
+          sx={{ overflow: "hidden", textOverflow: "ellipsis", maxWidth: "90%", ...sxTokenName }}
         >
           <CustomTooltip title={token?.assetName || token?.assetId}>
             <Box color={({ palette }) => palette.secondary.main}>{renderTokenName(token)}</Box>
           </CustomTooltip>
         </Box>
-        <Box display={"flex"} alignItems={"center"}>
+        <Box display={"flex"} alignItems={"center"} className="BBB">
           {!hideValue ? (
             <Box
               fontWeight={"bold"}
@@ -206,7 +209,7 @@ export const TokenLink: React.FC<{
               {formatNumberDivByDecimals(token?.assetQuantity || 0, token?.metadata?.decimals || 0)}
             </Box>
           ) : null}
-          <Box mr={1} mt={"2px"}>
+          <Box mr={1} mt={"2px"} className="CCC">
             <RiArrowRightSLine color={theme.palette.secondary.main} />
           </Box>
         </Box>

@@ -27,7 +27,6 @@ import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
 
 import {
-  HeaderStatus,
   BackButton,
   BackText,
   ButtonViewAll,
@@ -35,6 +34,7 @@ import {
   FlexGap10,
   HeaderContainer,
   HeaderDetailContainer,
+  HeaderStatus,
   HeaderTitle,
   HeaderTitleSkeleton,
   InfoTitle,
@@ -52,6 +52,7 @@ import {
   StyledTitle,
   TimeDuration
 } from "./styles";
+import ToStakeLifCycleButton from "../../StakingLifeCycle/ToStakeLifeCycleButton";
 
 export interface IDelegationDetailInfo {
   data: DelegationOverview | null;
@@ -100,12 +101,15 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
   const HeaderBookmark: React.FC<HeaderBookmarkProps> = ({ justifyStyle }) => {
     return (
       <Box display="flex" alignItems="center" justifyContent={justifyStyle} flex="1">
-        <Box display="flex" alignItems="center">
+        <Box display="flex" alignItems="center" width={"100%"}>
           <Box marginLeft={isPoolName ? 0 : 3}>
             <BookmarkButton keyword={poolId} type="POOL" />
           </Box>
           <Box marginLeft={width < 400 ? 0 : 1}>
             <HeaderStatus status={data?.poolStatus}>{data?.poolStatus}</HeaderStatus>
+          </Box>
+          <Box marginLeft={"auto"}>
+            <ToStakeLifCycleButton address={poolId} from={"poolDetail"} />
           </Box>
         </Box>
         {data?.logoUrl && !isErrorImage && (
@@ -310,7 +314,11 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <InfoValue sx={{ wordBreak: "break-word" }}>
               <FlexGap10>
                 {data?.poolSize != null ? formatADAFull(data?.poolSize) : t("common.notAvailable")}
-                {data?.poolSize != null ? <ADAicon /> : ""}
+                {data?.poolSize != null ? (
+                  <Box width={16}>
+                    <ADAicon />
+                  </Box>
+                ) : null}
               </FlexGap10>
             </InfoValue>
           </Item>
@@ -323,7 +331,9 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               {data?.stakeLimit != null ? (
                 <FlexGap10>
                   {formatADAFull(data?.stakeLimit)}
-                  <ADAicon />
+                  <Box width={16}>
+                    <ADAicon />
+                  </Box>
                 </FlexGap10>
               ) : (
                 <FlexGap10>{t("common.notAvailable")}</FlexGap10>

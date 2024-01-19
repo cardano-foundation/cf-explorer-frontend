@@ -61,7 +61,7 @@ const TabSmartContracts = () => {
   }, []);
 
   useEffect(() => {
-    if (optionList.indexOf(pageInfo.size) + 1) {
+    if (optionList.indexOf(pageInfo.size) + 1 && tabActive === "smart-contracts") {
       setSize(pageInfo.size);
     } else {
       setSize(6);
