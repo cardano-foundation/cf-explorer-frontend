@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { UPLCProgram } from "src/types/uplc";
+import { UPLCData, UPLCProgram } from "src/types/uplc";
 
 import UPLCTree from "../UPLCTree";
 import { DataCardBox, DataTitle, DataValue, SwitchLabel, ViewSwitcher } from "./styles";
@@ -12,44 +12,44 @@ export interface CompiledCodeDataCardProps {
   title: string;
 }
 
-const mockData: UPLCProgram = {
-  version: {
-    major: 2,
-    minor: 0,
-    patch: 0
-  },
-  data: [
-    [
-      {
-        text: "lam i_0",
-        data: [
-          {
-            text: "lam i_1",
-            data: [
-              {
-                text: "lam i_2",
-                data: [
-                  {
-                    text: "lam i_3 i_0"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        text: "delay",
-        data: [
-          {
-            text: "lam i_4 i_4"
-          }
-        ]
-      }
-    ],
-    { text: "i_5 i_5" }
-  ]
-};
+// const mockData: UPLCProgram = {
+//   version: {
+//     major: 2,
+//     minor: 0,
+//     patch: 0
+//   },
+//   data: [
+//     [
+//       {
+//         text: "lam i_0",
+//         data: [
+//           {
+//             text: "lam i_1",
+//             data: [
+//               {
+//                 text: "lam i_2",
+//                 data: [
+//                   {
+//                     text: "lam i_3 i_0"
+//                   }
+//                 ]
+//               }
+//             ]
+//           }
+//         ]
+//       },
+//       {
+//         text: "delay",
+//         data: [
+//           {
+//             text: "lam i_4 i_4"
+//           }
+//         ]
+//       }
+//     ],
+//     { text: "i_5 i_5" }
+//   ]
+// };
 
 /*
   UPLC data generator with long list data 
@@ -81,35 +81,35 @@ const mockData: UPLCProgram = {
 /*
   UPLC data generator with long hierarchy 
 */
-// const generateUPLCData2 = (): UPLCProgram => {
-//   const tmp: UPLCData = {
-//     text: "lam i_0",
-//     data: []
-//   };
-//   let i;
-//   const data = { text: `lam i_1`, data: [] };
-//   let ptr: UPLCData[] = data.data;
-//   for (i = 2; i < 200; i++) {
-//     const _data: UPLCData = { text: `lam i_${i}`, data: [] };
-//     ptr.push(_data);
-//     ptr = ptr[0].data as UPLCData[];
-//   }
-//   const data2 = { text: `lam i_201`, data: [] };
-//   ptr = data2.data;
-//   for (i = 202; i < 500; i++) {
-//     const _data: UPLCData = { text: `lam i_${i}`, data: [] };
-//     ptr.push(_data);
-//     ptr = ptr[0].data as UPLCData[];
-//   }
-//   return {
-//     version: {
-//       major: 2,
-//       minor: 0,
-//       patch: 0
-//     },
-//     data: [[{ ...tmp, data: [data, data2] }], { text: "i_5 i_5" }]
-//   };
-// };
+const generateUPLCData2 = (): UPLCProgram => {
+  const tmp: UPLCData = {
+    text: "lam i_0",
+    data: []
+  };
+  let i;
+  const data = { text: `lam i_1`, data: [] };
+  let ptr: UPLCData[] = data.data;
+  for (i = 2; i < 200; i++) {
+    const _data: UPLCData = { text: `lam i_${i}`, data: [] };
+    ptr.push(_data);
+    ptr = ptr[0].data as UPLCData[];
+  }
+  const data2 = { text: `lam i_201`, data: [] };
+  ptr = data2.data;
+  for (i = 202; i < 500; i++) {
+    const _data: UPLCData = { text: `lam i_${i}`, data: [] };
+    ptr.push(_data);
+    ptr = ptr[0].data as UPLCData[];
+  }
+  return {
+    version: {
+      major: 2,
+      minor: 0,
+      patch: 0
+    },
+    data: [[{ ...tmp, data: [data, data2] }], { text: "i_5 i_5" }]
+  };
+};
 
 const CompiledCodeDataCard: React.FC<CompiledCodeDataCardProps> = ({ value, title }) => {
   const { t } = useTranslation();
@@ -127,7 +127,7 @@ const CompiledCodeDataCard: React.FC<CompiledCodeDataCardProps> = ({ value, titl
       {checked ? (
         <DataValue data-testid="binary-compiled-code">{value}</DataValue>
       ) : (
-        <UPLCTree data-testid="uplc-compiled-code" uplc={mockData} />
+        <UPLCTree data-testid="uplc-compiled-code" uplc={generateUPLCData2()} />
       )}
     </DataCardBox>
   );
