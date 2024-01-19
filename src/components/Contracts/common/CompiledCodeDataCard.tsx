@@ -89,14 +89,14 @@ const generateUPLCData2 = (): UPLCProgram => {
   let i;
   const data = { text: `lam i_1`, data: [] };
   let ptr: UPLCData[] = data.data;
-  for (i = 2; i < 200; i++) {
+  for (i = 2; i < 13; i++) {
     const _data: UPLCData = { text: `lam i_${i}`, data: [] };
     ptr.push(_data);
     ptr = ptr[0].data as UPLCData[];
   }
   const data2 = { text: `lam i_201`, data: [] };
   ptr = data2.data;
-  for (i = 202; i < 500; i++) {
+  for (i = 13; i < 20; i++) {
     const _data: UPLCData = { text: `lam i_${i}`, data: [] };
     ptr.push(_data);
     ptr = ptr[0].data as UPLCData[];
