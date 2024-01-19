@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Typography, styled } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Switch, Typography, styled } from "@mui/material";
 
 export const UnderlineText = styled(Typography)`
   text-decoration-line: underline;
@@ -25,6 +25,11 @@ export const DataCardBox = styled(Box)`
 export const DataTitle = styled(Typography)`
   font-weight: 600;
   color: ${({ theme }) => theme.palette.secondary.light};
+`;
+
+export const SwitchLabel = styled(Typography)`
+  color: ${({ theme }) => (theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light)};
+  font-weight: 400;
 `;
 
 export const DataValue = styled(Typography)`
@@ -158,3 +163,51 @@ export const StyledAccordionDetails = styled(AccordionDetails)`
   padding-right: 0;
   color: ${({ theme }) => theme.palette.secondary.light};
 `;
+
+const SWITCHER_HEIGHT = 32;
+const SWITCHER_WIDTH = 56;
+const SWITCHER_THUMB = 24;
+const SWITCHER_THUMB_MARGIN = 4;
+export const ViewSwitcher = styled(Switch)(({ theme }) => ({
+  width: SWITCHER_WIDTH,
+  height: SWITCHER_HEIGHT,
+  boxSizing: "border-box",
+  padding: 0,
+  "& .MuiSwitch-switchBase": {
+    padding: 0,
+    margin: SWITCHER_THUMB_MARGIN,
+    transitionDuration: "300ms",
+    color: theme.palette.secondary[600],
+    "&.Mui-checked": {
+      transform: `translateX(${SWITCHER_WIDTH - SWITCHER_THUMB - 2 * SWITCHER_THUMB_MARGIN}px)`,
+      color: theme.isDark ? theme.palette.secondary["main"] : theme.palette.primary[100],
+      "& + .MuiSwitch-track": {
+        backgroundColor: theme.palette.primary["main"],
+        opacity: 1,
+        border: 0
+      },
+      "&.Mui-disabled + .MuiSwitch-track": {
+        opacity: 0.5
+      }
+    },
+    "&.Mui-disabled .MuiSwitch-thumb": {
+      color: theme.isDark ? theme.palette.grey[600] : theme.palette.grey[500]
+    },
+    "&.Mui-disabled + .MuiSwitch-track": {
+      opacity: theme.isDark ? 0.3 : 0.7
+    }
+  },
+  "& .MuiSwitch-thumb": {
+    width: 24,
+    height: 24
+  },
+  "& .MuiSwitch-track": {
+    backgroundColor: theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white,
+    transition: theme.transitions.create(["background-color"], {
+      duration: 500
+    }),
+    borderRadius: SWITCHER_HEIGHT / 2,
+    border: `1px solid ${theme.palette.grey["A100"]}`,
+    boxSizing: "border-box"
+  }
+}));
