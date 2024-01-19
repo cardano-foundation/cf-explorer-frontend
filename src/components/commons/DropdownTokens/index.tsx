@@ -157,7 +157,8 @@ export const TokenLink: React.FC<{
   sxBox?: SxProps<Theme>;
   sxTokenName?: SxProps<Theme>;
   hideValue?: boolean;
-}> = ({ token, isSuccess, sx, hideValue, isSummary, sxBox = {}, sxTokenName = {} }) => {
+  truncateAddress?: { firstPart: number; lastPart: number };
+}> = ({ token, isSuccess, sx, hideValue, isSummary, sxBox = {}, sxTokenName = {}, truncateAddress }) => {
   const theme = useTheme();
 
   const renderTokenName = (token: Token) => {
@@ -165,7 +166,9 @@ export const TokenLink: React.FC<{
     let elm: React.ReactElement | string;
     if (tokenName) {
       if (tokenName.length > 20) {
-        elm = getShortHash(tokenName);
+        if (truncateAddress) {
+          elm = getShortHash(tokenName, truncateAddress.firstPart, truncateAddress.lastPart);
+        } else elm = getShortHash(tokenName);
       } else {
         elm = tokenName;
       }
