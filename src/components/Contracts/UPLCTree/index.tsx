@@ -12,10 +12,13 @@ export interface UPLCTreeProps {
 export const UPLCTree: React.FC<UPLCTreeProps> = ({ uplc }) => {
   const label = useMemo(() => `program ${uplc.version.major}.${uplc.version.minor}.${uplc.version.patch}`, [uplc]);
 
-  const getNodeIds = () => {
+  const getExpandedNodeIds = () => {
     if (!uplc) return [];
     const nodeIds = ["root", ""];
     let currentLevel = 1;
+    const maxLevel = 3;
+
+    // Get nodeIds with bread first search
     const queue: UPLCData[] = [];
     uplc.data.forEach((it) => {
       if (Array.isArray(it)) queue.push(...it);
@@ -23,13 +26,13 @@ export const UPLCTree: React.FC<UPLCTreeProps> = ({ uplc }) => {
     });
     while (queue.length > 0) {
       currentLevel++;
-      if (currentLevel >= 3) break;
+      if (currentLevel >= maxLevel) break;
       const size = queue.length;
       for (let i = 0; i < size; i++) {
         const tmp = queue.shift();
-        if (tmp) {
+        if (tmp && tmp.data) {
           nodeIds.push(tmp.text);
-          if (tmp.data) queue.push(...tmp.data);
+          queue.push(...tmp.data);
         }
       }
     }
@@ -41,7 +44,7 @@ export const UPLCTree: React.FC<UPLCTreeProps> = ({ uplc }) => {
       defaultCollapseIcon={<MinusSquareIcon />}
       defaultExpandIcon={<PlusSquareIcon />}
       defaultEndIcon={<CloseSquareIcon />}
-      defaultExpanded={getNodeIds()}
+      defaultExpanded={getExpandedNodeIds()}
     >
       <StyledTreeItem label={label} nodeId={"root"}>
         {uplc.data.map((it, idx) =>

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import CustomModal from "src/components/commons/CustomModal";
 
 import ExplanDropdown from "../common/ExplanDropdown";
-import DataCard from "../common/DataCard";
+import CompiledCodeDataCard from "../common/CompiledCodeDataCard";
 import { ModalContent } from "./styles";
 
 type Data = { title: string; value?: string };
@@ -39,7 +39,7 @@ const CompiledCodeModal: React.FC<CompiledCodeModalProps> = ({ open = false, onC
               data.length > 0 &&
               data.map((item) => (
                 <Grid item xs={12} key={item.title}>
-                  <DataCard title={item.title} value={item.value} />
+                  <CompiledCodeDataCard title={item.title} value={item.value} />
                 </Grid>
               ))}
           </Grid>
