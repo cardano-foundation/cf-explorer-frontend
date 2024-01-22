@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, CircularProgress, Typography, alpha, styled, useTheme } from "@mui/material";
+import { Box, Button, CircularProgress, IconButton, Typography, alpha, styled, useTheme } from "@mui/material";
 import converter from "number-to-words";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { t } from "i18next";
+import { IoMdClose } from "react-icons/io";
 
-import { BolsiniAddress, DrawerClose, SeeMoreIconHome, VerifiedIcon } from "src/commons/resources";
+import { BolsiniAddress, SeeMoreIconHome, VerifiedIcon } from "src/commons/resources";
 import bolnisiImageDefault from "src/commons/resources/icons/bolsiniImageDefault.png";
 import { details } from "src/commons/routers";
 import useFetch from "src/commons/hooks/useFetch";
@@ -23,6 +24,7 @@ const BolnisiWineDrawer = () => {
   const { wineryId, trxHash } = useParams<{ wineryId: string; trxHash: string }>();
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   const [selectedWine, setSelectedWine] = useState<BolnisiWineLots | null>(null);
+  const [selectedIndexWine, setSelectedIndexWine] = useState<number>(0);
   const { hash } = useLocation();
   const { data, loading } = useFetch<WineryData>(
     wineryId && trxHash ? API.TRANSACTION.WINERY_DETAIL(trxHash, wineryId) : ""
@@ -54,15 +56,15 @@ const BolnisiWineDrawer = () => {
       }}
     >
       <Box height={"100vh"} px={2} py={5} position={"relative"} bgcolor={theme.palette.secondary[0]}>
-        <Box
-          component={CloseButton}
+        <CloseButton
           onClick={() => {
             setOpenDrawer(false);
             history.push(details.transaction(trxHash, "metadata"));
           }}
+          data-testid="close-modal-button"
         >
-          <DrawerClose fill={theme.palette.primary[100]} />
-        </Box>
+          <IoMdClose color={theme.palette.secondary.light} />
+        </CloseButton>
 
         {loading && renderLoading()}
 
@@ -101,12 +103,7 @@ const BolnisiWineDrawer = () => {
             </Header>
             <Content
               sx={{
-                [theme.breakpoints.up("md")]: {
-                  maxHeight: "70vh"
-                },
-                [theme.breakpoints.down("md")]: {
-                  maxHeight: "60vh"
-                }
+                maxHeight: "calc(100vh - 300px)"
               }}
               overflow={"auto"}
               mt={4}
@@ -141,7 +138,10 @@ const BolnisiWineDrawer = () => {
                             minWidth={0}
                             m={0}
                             mx={"auto"}
-                            onClick={() => setSelectedWine(item)}
+                            onClick={() => {
+                              setSelectedWine(item);
+                              setSelectedIndexWine(index);
+                            }}
                           >
                             <SeeMoreIconHome fill={theme.palette.primary.main} />
                           </StyledLink>
@@ -152,7 +152,12 @@ const BolnisiWineDrawer = () => {
                 </TBody>
               </TableFullWidth>
             </Content>
-            <WineDetailModal open={!!selectedWine} onClose={() => setSelectedWine(null)} wineData={selectedWine} />
+            <WineDetailModal
+              open={!!selectedWine}
+              onClose={() => setSelectedWine(null)}
+              wineData={selectedWine}
+              indexWine={selectedIndexWine}
+            />
           </Box>
         )}
       </Box>
@@ -162,22 +167,20 @@ const BolnisiWineDrawer = () => {
 
 export default BolnisiWineDrawer;
 
-const CloseButton = styled(Button)(({ theme }) => ({
-  width: 32,
-  height: 32,
-  borderRadius: "50%",
-  backgroundColor: theme.palette.secondary.main,
-  padding: 0,
-  margin: 0,
-  minWidth: 0,
+const CloseButton = styled(IconButton)(({ theme }) => ({
   position: "absolute",
-  top: 16,
-  right: 16,
-  ":hover": {
-    backgroundColor: theme.palette.secondary.main
+  top: 10,
+  right: 10,
+  width: 30,
+  height: 30,
+  padding: 0,
+  border: `1px solid ${theme.mode === "light" ? theme.palette.primary[200] : theme.palette.secondary[600]}`,
+  cursor: "pointer",
+  [theme.breakpoints.down("sm")]: {
+    right: 15,
+    zIndex: 10
   }
 }));
-
 const Header = styled(Box)(() => ({
   textAlign: "center"
 }));
@@ -219,11 +222,11 @@ const StyledLink = styled(Box)`
 interface WineDetailModalProps {
   open: boolean;
   wineData: BolnisiWineLots | null;
+  indexWine: number;
   onClose: () => void;
 }
 
-const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, ...props }) => {
-  const { hash } = useLocation();
+const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, indexWine, ...props }) => {
   if (!wineData) return null;
 
   const { offChainData } = wineData;
@@ -272,9 +275,7 @@ const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, ...props })
     >
       <Box>
         <CIPModalDesc display={"flex"} gap={2} alignItems={"center"} flexWrap={"wrap"}>
-          <Box textTransform={"capitalize"}>
-            Wine Lot ID: Wine Lot ID {converter.toWords(+(hash.split("#")[1] || 0) + 1)}
-          </Box>
+          <Box textTransform={"capitalize"}>Wine Lot ID: Wine Lot ID {converter.toWords(+(indexWine || 0) + 1)}</Box>
           <VerifyBadge status={wineData.signatureVerified} />
         </CIPModalDesc>
 
