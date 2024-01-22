@@ -1,5 +1,5 @@
 import { Tooltip, TooltipProps, useTheme } from "@mui/material";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 
@@ -8,17 +8,28 @@ interface Props extends TooltipProps {
 }
 
 export const CustomTooltip = (props: Props) => {
-  const { componentsProps, placement, wOpacity = true, open, onClose, children, ...otherProps } = props;
+  const { componentsProps, placement, wOpacity = true, open, onClose, children, onOpen, ...otherProps } = props;
+
+  const [openTooltip, setOpenTooltip] = useState(false);
 
   const theme = useTheme();
   const { isMobile } = useScreen();
   const tooltipRef = useRef<HTMLDivElement>(null);
+
+  const handleOpenTooltip = () => {
+    setOpenTooltip(true);
+  };
+
+  const handleCloseTooltip = () => {
+    setOpenTooltip(false);
+  };
 
   useEffect(() => {
     if (open && isMobile) {
       const handleTouchOutside = (event: globalThis.TouchEvent) => {
         if (tooltipRef.current && !tooltipRef.current.contains(event.target as Node)) {
           onClose?.(event);
+          setOpenTooltip(false);
         }
       };
 
@@ -31,15 +42,12 @@ export const CustomTooltip = (props: Props) => {
 
   return (
     <Tooltip
-      open={open}
-      onClose={onClose}
+      open={open || openTooltip}
+      onClose={onClose || handleCloseTooltip}
+      onOpen={onOpen || handleOpenTooltip}
       ref={tooltipRef}
       arrow
       placement={placement || "top"}
-      leaveDelay={400}
-      leaveTouchDelay={400}
-      enterDelay={0}
-      enterTouchDelay={0}
       componentsProps={{
         ...(componentsProps || {}),
         arrow: {

@@ -81,6 +81,7 @@ const DynamicEllipsisText = ({
 
   const [isMin, setIsMin] = useState<boolean>(false);
   const { isGalaxyFoldSmall } = useScreen();
+  const [openTooltip, setOpenTooltip] = useState(false);
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
@@ -104,6 +105,14 @@ const DynamicEllipsisText = ({
     };
   }, [isMin]);
 
+  const handleClose = () => {
+    setOpenTooltip(false);
+  };
+
+  const handleOpen = () => {
+    setOpenTooltip(true);
+  };
+
   const firstPart = value?.slice(0, value?.length - postfix);
   const lastPart = value?.slice(-postfix);
 
@@ -123,7 +132,12 @@ const DynamicEllipsisText = ({
 
   return (
     <Container id={randomIdRef.current} sx={sx} whiteSpace={whiteSpace}>
-      <CustomTooltip title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}>
+      <CustomTooltip
+        open={openTooltip}
+        onClose={handleClose}
+        onOpen={handleOpen}
+        title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}
+      >
         <Box component={"span"} data-testid="ellipsis-text">
           <FirstPart sx={sxFirstPart}>{firstPart}</FirstPart>
           <Lastpart sx={sxLastPart}>{lastPart}</Lastpart>
