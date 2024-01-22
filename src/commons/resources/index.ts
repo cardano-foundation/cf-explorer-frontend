@@ -32,7 +32,6 @@ import DelegatePoolMenuIcon from "./icons/menus/delegate.svg";
 import OperationalIcon from "./icons/menus/Operational.svg";
 import ProtocolParameterIcon from "./icons/protocolParameter.svg";
 import BrowseIcon from "./icons/menus/browser.svg";
-import ResourcesIcon from "./icons/menus/resources.svg";
 import RocketPoolIcon from "./icons/rocket-pool.svg";
 import RocketPoolDarkIcon from "./icons/rocket-pool-dark.svg";
 import TokenADA from "./icons/tokenADA.svg";
@@ -253,7 +252,6 @@ export {
   LowestIcon,
   BrowseIcon,
   StakingLifecycleIcon,
-  ResourcesIcon,
   SeeMoreIcon,
   TickerIcon,
   TickerIconComponent,
