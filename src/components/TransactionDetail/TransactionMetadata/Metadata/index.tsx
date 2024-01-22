@@ -245,27 +245,29 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
               }
             }}
           >
-            <ContentIdentifiers pr={1}>{data.cid}</ContentIdentifiers>
+            {data.cid && <ContentIdentifiers pr={1}>{data.cid}</ContentIdentifiers>}
             {data.externalApiAvailable && (
               <Box>
                 <VerifyBadge status={data.cidVerified} />
               </Box>
             )}
             {!data.externalApiAvailable && (
-              <BadgeContainerVerify type="Warning" width={"max-content !important"}>
-                <Box
-                  width={23}
-                  height={23}
-                  display={"flex"}
-                  alignItems={"center"}
-                  justifyContent={"center"}
-                  bgcolor={theme.palette.warning[700]}
-                  borderRadius={"50%"}
-                >
-                  <InvalidIcon fill={theme.palette.secondary.main} />
-                </Box>
-                {t("bolnisi.verifyError")}
-              </BadgeContainerVerify>
+              <CustomTooltip title={t("bolnisi.verifyErrorTooltip")}>
+                <BadgeContainerVerify type="Warning" width={`${data.cid ? "190px" : "170px"} !important`}>
+                  <Box
+                    width={23}
+                    height={23}
+                    display={"flex"}
+                    alignItems={"center"}
+                    justifyContent={"center"}
+                    bgcolor={theme.palette.warning[700]}
+                    borderRadius={"50%"}
+                  >
+                    <InvalidIcon fill={theme.palette.secondary.main} />
+                  </Box>
+                  {t("bolnisi.verifyError")}
+                </BadgeContainerVerify>
+              </CustomTooltip>
             )}
           </MetaDataValue>
         </MetadataContent>
