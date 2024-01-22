@@ -27,7 +27,6 @@ import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
 
 import {
-  HeaderStatus,
   BackButton,
   BackText,
   ButtonViewAll,
@@ -35,6 +34,7 @@ import {
   FlexGap10,
   HeaderContainer,
   HeaderDetailContainer,
+  HeaderStatus,
   HeaderTitle,
   HeaderTitleSkeleton,
   InfoTitle,
