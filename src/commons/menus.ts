@@ -1,4 +1,4 @@
-import { FaLinkedinIn, FaTelegramPlane, FaYoutube } from "react-icons/fa";
+import { FaLinkedinIn, FaTelegramPlane, FaYoutube, FaGithub } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
 
 import {
@@ -114,7 +114,8 @@ export const socials: Social[] = [
   { href: "https://www.linkedin.com/company/cardano-foundation/", title: "LinkedIn", icon: FaLinkedinIn },
   { href: "https://t.me/CardanoAnnouncements", title: "Telegram", icon: FaTelegramPlane },
   { href: "https://twitter.com/Cardano_CF", title: "Twitter", icon: TwitterX as IconType },
-  { href: "https://www.youtube.com/c/cardanofoundation", title: "Youtube", icon: FaYoutube }
+  { href: "https://www.youtube.com/c/cardanofoundation", title: "Youtube", icon: FaYoutube },
+  { href: "https://github.com/cardano-foundation/cf-explorer", title: "GitHub", icon: FaGithub }
 ];
 
 export const footerMenus: Menu[] = [
@@ -127,8 +128,7 @@ export const footerMenus: Menu[] = [
       { href: "https://docs.cardano.org/en/latest/", title: "Cardano Docs", key: "site.cardanoDocs" },
       { href: "https://education.cardanofoundation.org/", title: "Cardano Academy", key: "site.cardanoAcademy" },
       { href: "https://developers.cardano.org/", title: "Developer Portal", key: "site.developerPortal" },
-      { href: "https://cardanofoundation.org/en/news", title: "News and Blog", key: "site.newsAndBlog" },
-      { href: "https://github.com/cardano-foundation/cf-explorer", title: "GitHub", key: "site.github" }
+      { href: "https://cardanofoundation.org/en/news", title: "News and Blog", key: "site.newsAndBlog" }
     ]
   }
 ];
