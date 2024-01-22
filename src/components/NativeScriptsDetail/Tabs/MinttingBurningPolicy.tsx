@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, useTheme } from "@mui/material";
 import { t } from "i18next";
 
@@ -17,7 +17,9 @@ const MinttingBurningPolicy = () => {
   const { before, after, keyHashes, isOneTimeMint } = useNativeScriptDetail();
   const [signers, setSigners] = useState<string[] | null>(null);
   const theme = useTheme();
-
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, [before]);
   const isMoreThan10years = (date?: string) => {
     if (date) {
       const date1 = new Date(date);
