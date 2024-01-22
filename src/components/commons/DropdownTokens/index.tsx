@@ -202,7 +202,7 @@ export const TokenLink: React.FC<{
             <Box color={({ palette }) => palette.secondary.main}>{renderTokenName(token)}</Box>
           </CustomTooltip>
         </Box>
-        <Box display={"flex"} alignItems={"center"}>
+        <Box display={"flex"} alignItems={"center"} className="BBB">
           {!hideValue ? (
             <Box
               fontWeight={"bold"}
@@ -212,7 +212,7 @@ export const TokenLink: React.FC<{
               {formatNumberDivByDecimals(token?.assetQuantity || 0, token?.metadata?.decimals || 0)}
             </Box>
           ) : null}
-          <Box mr={1} mt={"2px"}>
+          <Box mr={1} mt={"2px"} className="CCC">
             <RiArrowRightSLine color={theme.palette.secondary.main} />
           </Box>
         </Box>
