@@ -126,7 +126,7 @@ const TabNativeScripts = () => {
         {data?.map((item, idx) => (
           <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
             <Box height={"100%"}>
-              <NativeScriptCard data={item} hasBeforeAndAfter={hasBeforeAndAfter} />
+              <NativeScriptCard key={idx} data={item} hasBeforeAndAfter={hasBeforeAndAfter} />
             </Box>
           </Grid>
         ))}

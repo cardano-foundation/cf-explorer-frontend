@@ -572,6 +572,14 @@ import MultiSig from "./icons/multiSig.svg?react";
 import SortNative from "./icons/sortNative.svg?react";
 import ShowMore from "./icons/showmore.svg?react";
 import ShowLess from "./icons/showless.svg?react";
+import OpenTimeLock from "./icons/openTimeLock.svg?react";
+import LockedTimelock from "./icons/lockedTimelock.svg?react";
+import SigNative from "./icons/sigNative.svg?react";
+import NativeSig from "./icons/NativeSig.svg?react";
+import NativeStatus from "./icons/NativeStatus.svg?react";
+import NativeTimelock from "./icons/NativeTimelock.svg?react";
+import NativeType from "./icons/NativeType.svg?react";
+import NativeOneMint from "./icons/NativeOneMint.svg?react";
 
 export {
   StakingLifecycleComponent,
@@ -746,5 +754,13 @@ export {
   WarningCIPIcon,
   CheckedCIPIcon,
   SmallInfoIcon,
-  CIP60WarningIcon
+  CIP60WarningIcon,
+  OpenTimeLock,
+  LockedTimelock,
+  SigNative,
+  NativeSig,
+  NativeStatus,
+  NativeTimelock,
+  NativeType,
+  NativeOneMint
 };
