@@ -993,7 +993,8 @@
   "bolnisi.wineColor": "Wine Color",
   "bolnisi.harvestDate": "Harvest Date",
   "bolnisi.titleModal": "Georgian Wine",
-  "bolnisi.verifyError": "Verification Unavailable",
   "CIP83.noticeAutoDecrypt": "If the default passphrase “cardano” is used, the message will be decrypted automatically",
-  "token.metadataCheck": "Metadata Check"
+  "token.metadataCheck": "Metadata Check",
+  "bolnisi.verifyErrorTooltip": "A connection to the verification service could not be established. Please, refresh the page to try again.",
+  "bolnisi.verifyError": "Verification Unavailable"
 }

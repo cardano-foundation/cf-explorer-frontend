@@ -309,7 +309,6 @@ export const BadgeContainerVerify = styled(Box)<{ type: "Verified" | "Invalid" |
 `;
 
 export const ItemBolnisi = styled(Card)`
-  width: 100%;
   padding: ${({ theme }) => theme.spacing(2)};
   position: relative;
   background: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[700])};
