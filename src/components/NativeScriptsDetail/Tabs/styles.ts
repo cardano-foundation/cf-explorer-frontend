@@ -1,4 +1,4 @@
-import { Box, Typography, styled } from "@mui/material";
+import { Box, Button, Card, Grid, Typography, alpha, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import { TruncateSubTitleContainer } from "src/components/share/styled";
@@ -10,6 +10,31 @@ export const Container = styled(Box)`
   padding: 0px 12px 25px 12px;
   flex: 1;
 `;
+
+export const ContainerMint = styled(Grid)(() => ({}));
+
+export const ItemMint = styled(Grid)(({ theme }) => ({
+  ":last-child >div": {
+    border: "none !important"
+  },
+  [theme.breakpoints.down("lg")]: {
+    ":nth-child(2n) >div": {
+      border: "none !important"
+    },
+    ":nth-child(-n+2) >div": {
+      borderBottom: `1px solid ${alpha(theme.palette.secondary.main, 0.07)} !important`
+    }
+  },
+  [theme.breakpoints.down("sm")]: {
+    ":nth-child(-n+4) >div": {
+      border: "none !important",
+      borderBottom: `1px solid ${alpha(theme.palette.secondary.main, 0.07)} !important`
+    },
+    ":last-child >div": {
+      border: "none !important"
+    }
+  }
+}));
 
 export const AssociatedAddressTitle = styled(Typography)`
   font-size: 16px;
@@ -128,4 +153,41 @@ export const AssociatedValue = styled(Typography)`
 export const StyledTruncateSubTitleContainer = styled(TruncateSubTitleContainer)`
   width: 100%;
   max-width: unset !important;
+`;
+export const MintCard = styled(Box)(({ theme }) => ({
+  borderRight: `1px solid ${alpha(theme.palette.secondary.main, 0.07)} !important`,
+  padding: theme.spacing(2),
+  minHeight: 150
+}));
+
+export const MintIcon = styled(Box)(({ theme }) => ({
+  padding: `${theme.spacing(1)} 0`
+}));
+
+export const MintTitle = styled(Box)(({ theme }) => ({
+  padding: `${theme.spacing(1)} 0`,
+  fontSize: 14,
+  color: theme.palette.secondary.light
+}));
+
+export const ViewSigner = styled(Button)(({ theme }) => ({
+  padding: `${theme.spacing(1)} 0`,
+  fontSize: 16,
+  color: theme.palette.secondary.main,
+  textTransform: "capitalize",
+  width: "100%",
+  border: `2px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
+  borderRadius: theme.spacing(1)
+}));
+
+export const CardSign = styled(Card)`
+  padding: ${({ theme }) => theme.spacing(2)};
+  border-radius: ${({ theme }) => theme.spacing(1)};
+  height: 100%;
+  background: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[700])};
+  box-shadow: 2px 2px 10px 0px #43465633;
+  &:hover {
+    box-shadow: ${({ theme }) =>
+      theme.isDark ? ` 2px 2px 10px 0px ${theme.palette.secondary[100]}` : theme.shadow.cardHover};
+  }
 `;

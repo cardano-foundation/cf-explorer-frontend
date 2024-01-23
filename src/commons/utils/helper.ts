@@ -254,7 +254,6 @@ export function validateTokenExpired() {
     return now.isBefore(exp);
   } catch (e) {
     removeAuthInfo();
-    return false;
   }
 }
 
@@ -388,3 +387,33 @@ export function decryptCardanoMessage(encrypted_msg: string, passphrase = "carda
     throw new Error("Invalid passphrase");
   }
 }
+
+export const checkTimeLockOpen = ({ after, before }: { before?: string; after?: string }) => {
+  const now = moment();
+  if (after && before) {
+    try {
+      const afterMoment = moment(after);
+      const beforeMoment = moment(before);
+      return now.isBetween(beforeMoment, afterMoment);
+    } catch (error) {
+      return null;
+    }
+  }
+  if (after) {
+    try {
+      const afterMoment = moment(after);
+      return afterMoment.isBefore(now);
+    } catch (error) {
+      return null;
+    }
+  }
+  if (before) {
+    try {
+      const beforeMoment = moment(before);
+      return beforeMoment.isAfter(now);
+    } catch (error) {
+      return null;
+    }
+  }
+  return null;
+};

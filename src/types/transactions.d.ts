@@ -170,6 +170,7 @@ type TTCIPProperties = {
   valid: boolean;
   valueFormat?: string;
   checkNotRequired?: boolean;
+  valueFormat?: string;
 };
 
 interface Transaction {
@@ -260,7 +261,46 @@ interface Transaction {
     metadataCIP83: { valid?: boolean; requiredProperties?: TTCIP25Properties[] };
     metadataCIP25: CIP;
     metadataCIP60: CIP;
+    metadataBolnisi: {
+      cid: string;
+      cidVerified: boolean;
+      externalApiAvailable: boolean;
+      wineryData: WineryData[];
+    };
   }[];
+}
+
+interface WineryData {
+  pkeyVerified: boolean;
+  wineryId: string;
+  lots: BolnisiWineLots[];
+}
+interface BolnisiWineLots {
+  offChainData: {
+    bottling_date: string;
+    bottling_location: string;
+    country_of_origin: string;
+    fermentation_duration: string;
+    fermentation_vessel: string;
+    harvest_date: string;
+    harvest_location: string;
+    lot_number: string;
+    number_of_bottles: number;
+    origin: string;
+    pressing_date: string;
+    processing_location: string;
+    produced_by: string;
+    producer_address: string;
+    producer_latitude: number;
+    producer_longitude: number;
+    storage_vessel: string;
+    varietal_name: string;
+    vintage_year: number;
+    wine_color: string;
+    wine_name: string;
+    wine_type: string;
+  };
+  signatureVerified: boolean;
 }
 
 interface CIP {

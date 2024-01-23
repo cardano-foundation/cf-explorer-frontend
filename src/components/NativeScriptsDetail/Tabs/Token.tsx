@@ -3,8 +3,8 @@ import { stringify } from "qs";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import { Column } from "src/types/table";
 
+import { Column } from "src/types/table";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
