@@ -7,7 +7,6 @@ import { ChipContainer, MultiSigChip, TimeLockChip } from "src/pages/NativeScrip
 import { checkTimeLockOpen, formatDateTimeLocal } from "src/commons/utils/helper";
 import CustomModal from "src/components/commons/CustomModal";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import { CardSign, ContainerMint, ItemMint, MintCard, MintIcon, MintTitle, ViewSigner } from "./styles";
 
@@ -112,11 +111,9 @@ const MinttingBurningPolicy = () => {
           </MintIcon>
           <MintTitle>{t("nativeScript.mint.signerKeys")}</MintTitle>
           {keyHashes && (keyHashes || []).length === 1 && (
-            <CustomTooltip title={keyHashes[0]}>
-              <Box fontWeight={"bold"} color={({ palette }) => palette.primary.main}>
-                <DynamicEllipsisText value={keyHashes[0]} isTooltip />
-              </Box>
-            </CustomTooltip>
+            <Box fontWeight={"bold"} color={({ palette }) => palette.primary.main}>
+              <DynamicEllipsisText value={keyHashes[0]} isTooltip />
+            </Box>
           )}
           {(keyHashes || []).length > 1 && (
             <Box component={ViewSigner} onClick={() => setSigners(keyHashes || [])}>
