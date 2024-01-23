@@ -1,4 +1,4 @@
-import { Box, Button, List, useTheme } from "@mui/material";
+import { Box, Button, useTheme, useMediaQuery, List } from "@mui/material";
 import { t } from "i18next";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
@@ -28,6 +28,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
   const { isTablet } = useScreen();
   const theme = useTheme();
   const mainRef = useRef<HTMLDivElement | null>(null);
+  const matchesBreakpoint = useMediaQuery(theme.breakpoints.down("md"));
 
   useEffect(() => {
     const unlisten = history.listen(() => {
@@ -90,9 +91,9 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
             </Box>
           )}
           {children}
-          <Footer />
+          {matchesBreakpoint && <Footer />}
         </Main>
-
+        {!matchesBreakpoint && <Footer />}
         <NoticeModal open={openNoticeModal} handleCloseModal={() => setOpenNoticeModal(false)} />
       </MainContainer>
     </Layout>
