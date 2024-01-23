@@ -4,7 +4,7 @@ import { t } from "i18next";
 
 import { NativeOneMint, NativeSig, NativeStatus, NativeTimelock, NativeType } from "src/commons/resources";
 import { ChipContainer, MultiSigChip, TimeLockChip } from "src/pages/NativeScriptsAndSC/Card";
-import { checkTimeLockOpen, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
+import { checkTimeLockOpen, formatDateTimeLocal } from "src/commons/utils/helper";
 import CustomModal from "src/components/commons/CustomModal";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -114,7 +114,7 @@ const MinttingBurningPolicy = () => {
           {keyHashes && (keyHashes || []).length === 1 && (
             <CustomTooltip title={keyHashes[0]}>
               <Box fontWeight={"bold"} color={({ palette }) => palette.primary.main}>
-                {getShortHash(keyHashes[0])}
+                <DynamicEllipsisText value={keyHashes[0]} isTooltip />
               </Box>
             </CustomTooltip>
           )}
@@ -140,7 +140,7 @@ interface ViewSignerModalProps {
 const ViewSignerModal: React.FC<ViewSignerModalProps> = ({ data, ...props }) => {
   return (
     <CustomModal
-      modalContainerProps={{ style: { maxWidth: 920 } }}
+      modalContainerProps={{ style: { maxWidth: 680 } }}
       open={props.open}
       style={{ maxHeight: "unset", overflow: "unset" }}
       onClose={props.onClose}
@@ -157,6 +157,7 @@ const ViewSignerModal: React.FC<ViewSignerModalProps> = ({ data, ...props }) => 
             fontWeight={"bold"}
             color={({ palette }) => palette.primary.main}
             display={"inline-block"}
+            width={"100%"}
           >
             <DynamicEllipsisText value={sig} isTooltip />
           </Box>
