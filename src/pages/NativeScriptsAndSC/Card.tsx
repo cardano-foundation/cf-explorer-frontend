@@ -1,108 +1,45 @@
 import { Box, Button, styled, useTheme } from "@mui/material";
 import { t } from "i18next";
-import { useEffect, useRef, useState } from "react";
+import { FunctionComponent, SVGProps, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { details } from "src/commons/routers";
-import { formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
+import { checkTimeLockOpen, getShortHash } from "src/commons/utils/helper";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
+import { LockedTimelock, OpenTimeLock, SigNative } from "src/commons/resources";
 
 import DesPlutusVersion from "./DesPlutusVersion";
 
-const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: boolean }> = ({
-  data,
-  hasBeforeAndAfter
-}) => {
+const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: boolean }> = ({ data }) => {
   const theme = useTheme();
-
-  const cardRef = useRef<HTMLDivElement | null>();
-  const [cardWidth, setCardWidth] = useState(0);
-
-  useEffect(() => {
-    const updateCardWidth = () => {
-      if (cardRef.current) {
-        setCardWidth(cardRef.current.clientWidth);
-      }
-    };
-    updateCardWidth();
-    window.addEventListener("resize", updateCardWidth);
-    return () => window.removeEventListener("resize", updateCardWidth);
-  }, []);
-
-  const isMoreThan10years = (date: string) => {
-    const date1 = new Date(date);
-    const date2 = new Date();
-    const differenceInTime = date2.getTime() - date1.getTime();
-    const differenceInYears = differenceInTime / (1000 * 3600 * 24 * 365);
-    if (isNaN(differenceInYears) || Math.abs(differenceInYears) > 10) return true;
-    return false;
-  };
-
-  const renderTimeLock = () => {
-    if (data.before && data.after) {
-      return (
-        <Box>
-          <Box display={"flex"} alignContent={"center"} gap={1}>
-            until: {isMoreThan10years(data.after) ? t("moreThan10Years") : formatDateTimeLocal(data.after)}
-          </Box>
-          <Box display={"flex"} alignContent={"center"} gap={1}>
-            as of: {isMoreThan10years(data.before) ? t("moreThan10Years") : formatDateTimeLocal(data.before)}
-          </Box>
-        </Box>
-      );
-    }
-    if (data.before || data.after) {
-      return (
-        <Box
-          display={"flex"}
-          alignItems={cardWidth < 350 ? "baseline" : "center"}
-          gap={1}
-          height={hasBeforeAndAfter ? 38 : "unset"}
-        >
-          {data.before ? "as of: " : " until: "}
-          {isMoreThan10years(data.before || data.after)
-            ? t("moreThan10Years")
-            : formatDateTimeLocal(data.before || data.after)}
-        </Box>
-      );
-    }
-    return (
-      <Box
-        height={hasBeforeAndAfter ? 38 : "unset"}
-        display={"flex"}
-        alignItems={cardWidth < 350 ? "baseline" : "center"}
-      >
-        {t("common.N/A")}
-      </Box>
-    );
-  };
 
   return (
     <Item>
-      <Box p={2} height={"100%"} ref={cardRef}>
+      <Box p={2} height={"100%"} display={"block"} component={Link} to={details.nativeScriptDetail(data.scriptHash)}>
         <Row>
           <Title>{t("common.scriptHash")}: </Title>
-          <Box
-            width={"calc(100% - 100px)"}
-            component={Link}
-            to={details.nativeScriptDetail(data.scriptHash)}
-            color={`${theme.palette.primary.main} !important`}
-          >
+          <Box width={"calc(100% - 100px)"} color={`${theme.palette.primary.main} !important`}>
             <DynamicEllipsisText customTruncateFold={[4, 4]} value={data.scriptHash || ""} isTooltip />
           </Box>
         </Row>
-        <Row alignItems={"center"}>
-          <Title>{t("nativeScript.timeLock")}: </Title>
-          <Value width={cardWidth < 350 ? "100%" : "unset"}>{renderTimeLock()}</Value>
-        </Row>
         <Row>
-          <Title>{t("nativeScript.multiSig")}: </Title>
-          <Value>{data.isMultiSig ? "Yes" : "No"}</Value>
+          <Title width={"100%"}>{t("nativeScript.policy")}: </Title>
+          <Value>
+            <Box mt={1} display={"flex"} flexWrap={"wrap"}>
+              <TimeLockChip
+                isOpen={
+                  checkTimeLockOpen({ before: data.before, after: data.after }) !== null
+                    ? checkTimeLockOpen({ before: data.before, after: data.after })
+                    : true
+                }
+              />
+              <MultiSigChip isMultiSig={data.isMultiSig} />
+            </Box>
+          </Value>
         </Row>
-
         <Row>
           <Title>{t("nativeScript.assetHolders")}: </Title>
           <Value>{data.numberOfAssetHolders || 0}</Value>
@@ -191,15 +128,10 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) =
 
   return (
     <Item>
-      <Box p={2} height={"100%"}>
+      <Box p={2} height={"100%"} display={"block"} component={Link} to={details.smartContract(data.scriptHash)}>
         <Row>
           <Title>{t("common.scriptHash")}: </Title>
-          <Box
-            width={"calc(100% - 100px)"}
-            component={Link}
-            to={details.smartContract(data.scriptHash)}
-            color={`${theme.palette.primary.main} !important`}
-          >
+          <Box width={"calc(100% - 100px)"} color={`${theme.palette.primary.main} !important`}>
             <DynamicEllipsisText customTruncateFold={[4, 4]} value={data.scriptHash || ""} isTooltip />
           </Box>
         </Row>
@@ -215,7 +147,11 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) =
               minWidth={24}
               ml={1}
               borderRadius={"50%"}
-              onClick={() => setOpenDesPlutusVersion(true)}
+              onClick={(event) => {
+                setOpenDesPlutusVersion(true);
+                event.stopPropagation();
+                event.preventDefault();
+              }}
             >
               <InfoSolidIcon />
             </Box>
@@ -297,7 +233,96 @@ const Chip = styled(Box)(({ theme }) => {
     maxWidth: "120px",
     overflow: "hidden",
     textOverflow: "ellipsis",
-    // marginBottom: theme.spacing(1),
     height: 20
   };
 });
+
+export const TimeLockChip: React.FC<{ isOpen: boolean | null }> = ({ isOpen }) => {
+  if (isOpen) {
+    return <ChipContainer Icon={OpenTimeLock} message="Open" variant="success" titleTooltip="Current status: Open" />;
+  }
+  return (
+    <ChipContainer Icon={LockedTimelock} message="Locked" variant="warning" titleTooltip="Current status: Locked" />
+  );
+};
+
+export const MultiSigChip: React.FC<{ isMultiSig: boolean }> = ({ isMultiSig }) => {
+  if (isMultiSig) {
+    return <ChipContainer Icon={SigNative} message="Multi-Sig" variant="info" titleTooltip="Multi-sig" />;
+  }
+  return <ChipContainer Icon={SigNative} message="Single-Sig" variant="info" titleTooltip="Single-Sig" />;
+};
+
+export const ChipContainer: React.FC<{
+  Icon?: FunctionComponent<SVGProps<SVGSVGElement>>;
+  message?: string;
+  titleTooltip?: string;
+  variant?: "success" | "warning" | "info";
+  messageColor?: string;
+}> = ({ Icon, message, variant, titleTooltip, messageColor }) => {
+  const theme = useTheme();
+
+  const color = (variant?: "success" | "warning" | "info") => {
+    switch (variant) {
+      case "success":
+        return theme.palette.success[700];
+      case "info":
+        return theme.isDark ? theme.palette.primary[500] : theme.palette.secondary[600];
+      case "warning":
+        return theme.palette.warning[700];
+      default:
+        return theme.palette.success[700];
+    }
+  };
+
+  const backgroundColor = (variant?: "success" | "warning" | "info") => {
+    switch (variant) {
+      case "success":
+        return theme.palette.success[100];
+      case "info":
+        return theme.palette.primary[100];
+      case "warning":
+        return theme.palette.warning[100];
+      default:
+        return theme.palette.success[100];
+    }
+  };
+
+  return (
+    <CustomTooltip title={titleTooltip || ""}>
+      <Chip
+        pl={`${Icon ? "4px" : 1} !important`}
+        mb={1}
+        bgcolor={`${backgroundColor(variant)} !important`}
+        borderColor={`${color(variant)} !important`}
+      >
+        <Box display={"flex"} alignItems={"center"} height={"100%"}>
+          {Icon && (
+            <Box
+              height={23}
+              mr={1}
+              width={23}
+              borderRadius={"50%"}
+              bgcolor={`${color(variant)} !important`}
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"center"}
+            >
+              <Icon />
+            </Box>
+          )}
+          <Box
+            overflow={"hidden"}
+            textOverflow={"ellipsis"}
+            color={({ palette }) => messageColor || palette.secondary.light}
+            sx={{
+              textWrap: "nowrap"
+            }}
+          >
+            {message}
+          </Box>
+        </Box>
+      </Chip>
+    </CustomTooltip>
+  );
+};

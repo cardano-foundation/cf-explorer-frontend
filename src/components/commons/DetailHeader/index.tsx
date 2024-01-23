@@ -21,31 +21,31 @@ import Bookmark from "../BookmarkIcon";
 import CustomTooltip from "../CustomTooltip";
 import FormNowMessage from "../FormNowMessage";
 import {
+  AllowSearchButton,
   BackButton,
   BackText,
+  CardItem,
+  DetailLabelSkeleton,
+  DetailsInfo,
+  DetailValueSkeleton,
+  EpochDetail,
   EpochNumber,
   EpochText,
   HeaderContainer,
+  HeaderDetailContainer,
   HeaderStatus,
   HeaderTitle,
-  HeaderDetailContainer,
-  DetailsInfo,
-  SlotLeader,
-  SlotLeaderValue,
   HeaderTitleSkeleton,
-  DetailLabelSkeleton,
-  DetailValueSkeleton,
   IconSkeleton,
+  SlotLeader,
   SlotLeaderTitle,
-  ValueCard,
-  CardItem,
+  SlotLeaderValue,
   StakeKeyStatus,
-  AllowSearchButton,
-  StyledSelect,
   StyledMenuItem,
-  WrapHeader,
-  EpochDetail,
-  TimeDuration
+  StyledSelect,
+  TimeDuration,
+  ValueCard,
+  WrapHeader
 } from "./styles";
 import NoRecord from "../NoRecord";
 import CustomIcon from "../CustomIcon";
@@ -56,6 +56,7 @@ interface TokenInfo {
   assetQuantity?: number;
   metadata?: { decimals?: number };
 }
+
 export interface DetailHeaderProps {
   type: Bookmark["type"];
   bookmarkData?: string;
@@ -79,6 +80,7 @@ export interface DetailHeaderProps {
   }[];
   isHideButtonBack?: boolean;
   isClickAble?: boolean;
+  redirectAction?: React.ReactNode;
 }
 
 const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
@@ -95,7 +97,8 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     stakeKeyStatus,
     isHideButtonBack,
     lastUpdated,
-    isClickAble
+    isClickAble,
+    redirectAction
   } = props;
 
   const history = useHistory();
@@ -201,13 +204,14 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                 {stakeKeyStatus === "ACTIVE" ? t("status.active") : t("status.deActivated")}
               </StakeKeyStatus>
             )}
+            {redirectAction && <Box marginLeft={"auto"}>{redirectAction}</Box>}
           </HeaderContainer>
           {hash && (
             <SlotLeader>
               {hashLabel ? <SlotLeaderTitle>{hashLabel}: </SlotLeaderTitle> : ""}
               <SlotLeaderValue sidebar={sidebar}>
                 <TruncateSubTitleContainer>
-                  <DynamicEllipsisText value={hash} isCopy />
+                  <DynamicEllipsisText value={hash} isCopy isSeparateCopyIcon isTooltip />
                 </TruncateSubTitleContainer>
               </SlotLeaderValue>
             </SlotLeader>
@@ -367,6 +371,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     </HeaderDetailContainer>
   );
 };
+
 interface BufferListProps {
   numberOfItems: number;
   wide: number;

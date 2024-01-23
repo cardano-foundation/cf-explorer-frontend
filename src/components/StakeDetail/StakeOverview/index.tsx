@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
@@ -14,6 +14,7 @@ import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 
 import ModalAllAddress from "../ModalAllAddress";
 import { ButtonModal, StyledFlexValue, StyledLinkTo, TitleCard, TitleNoPool, TitleValue } from "./styles";
+import ToStakeLifCycleButton from "../../StakingLifeCycle/ToStakeLifeCycleButton";
 
 interface Props {
   data: IStakeKeyDetail | null;
@@ -24,6 +25,7 @@ interface Props {
   loading: boolean;
   lastUpdated?: number;
 }
+
 const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated, adaHanldeData }) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -142,6 +144,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated, adaHanldeD
     <DetailHeader
       type="STAKE_KEY"
       bookmarkData={data?.stakeAddress || ""}
+      redirectAction={<ToStakeLifCycleButton address={data?.stakeAddress} />}
       title={
         adaHanldeData ? (
           <CustomTooltip title={t("address.title.ADAHanlde")}>
