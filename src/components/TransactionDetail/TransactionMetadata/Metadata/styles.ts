@@ -170,14 +170,17 @@ export const JSONValue = styled(Value)`
   }
 `;
 
-export const MetadataWrapper = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  padding: 0 25px;
-  margin: 25px 0px;
-  font-size: 16px;
-`;
+export const MetadataWrapper = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  boxSizing: "border-box",
+  padding: "0 25px",
+  margin: "25px 0px",
+  fontSize: "16px",
+  [theme.breakpoints.down("sm")]: {
+    padding: `0 ${theme.spacing(1)}`
+  }
+}));
 
 export const MetadataHeader = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -337,7 +340,7 @@ export const ViewWineButton = styled(Button)(({ theme }) => ({
 
 export const ContentIdentifiers = styled(Box)`
   width: 100%;
-  max-width: 480px;
+  max-width: 500px;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
