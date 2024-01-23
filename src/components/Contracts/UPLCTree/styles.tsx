@@ -24,11 +24,22 @@ export const TreeContainer = styled(TreeView)`
       background: ${({ theme }) => theme.palette.primary[100]};
     }
   }
+  "@media screen and (max-height: 700px)": {
+    maxHeight: "45vh"
+  },
 `;
 
 export const StyledTreeItem = styled(TreeItem)(({ theme }) => ({
   [`& .${treeItemClasses.content}`]: {
-    padding: "2px 8px"
+    transition: "0.15s ease-out",
+    width: "fit-content",
+    padding: "2px 8px",
+    "&:hover": {
+      backgroundColor: alpha(theme.palette.primary["main"], 0.2)
+    }
+  },
+  [`& .${treeItemClasses.selected}`]: {
+    backgroundColor: "transparent"
   },
   [`& .${treeItemClasses.label}`]: {
     color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light,

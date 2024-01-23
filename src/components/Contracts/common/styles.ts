@@ -170,6 +170,27 @@ export const StyledAccordionDetails = styled(AccordionDetails)`
   color: ${({ theme }) => theme.palette.secondary.light};
 `;
 
+export const SwitchContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+  [theme.breakpoints.down("sm")]: {
+    justifyContent: "space-between",
+    width: "100%"
+  }
+}));
+
+export const DataCardHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  marginBottom: "4px",
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    alignItems: "flex-start"
+  }
+}));
+
 const SWITCHER_HEIGHT = 32;
 const SWITCHER_WIDTH = 56;
 const SWITCHER_THUMB = 24;
