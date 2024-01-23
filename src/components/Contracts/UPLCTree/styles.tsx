@@ -24,9 +24,9 @@ export const TreeContainer = styled(TreeView)`
       background: ${({ theme }) => theme.palette.primary[100]};
     }
   }
-  "@media screen and (max-height: 700px)": {
-    maxHeight: "45vh"
-  },
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.values.sm}px) {
+    max-height: 45vh;
+  }
 `;
 
 export const StyledTreeItem = styled(TreeItem)(({ theme }) => ({
