@@ -1,13 +1,15 @@
-import { Box, useTheme } from "@mui/material";
+import { Box, Grid, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { isEmpty, isNil } from "lodash";
+import { t } from "i18next";
+import { useHistory, useParams } from "react-router-dom";
 
 import { decryptCardanoMessage, isJson } from "src/commons/utils/helper";
 import CIP60Modal from "src/components/CIPComplianceModal/CIP60Modal";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import ParseScriptModal from "src/components/ParseScriptModal";
-import { ShowLess, ShowMore, WarningCIPIcon } from "src/commons/resources";
+import { BolsiniAddress, InvalidIcon, ShowLess, ShowMore, VerifiedIcon, WarningCIPIcon } from "src/commons/resources";
 import CIP25Badge from "src/components/commons/CIP25Badge";
 import CIP25Modal from "src/components/CIPComplianceModal/CIP25Modal";
 import CIP60Badge from "src/components/commons/CIP60Badge";
@@ -18,15 +20,21 @@ import CIP83Modal from "src/components/CIPComplianceModal/CIP83Modal";
 import PassphraseDecryptModal from "src/components/CIPComplianceModal/PassphraseDecryptModal";
 import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import { CustomNumberBadge } from "src/components/commons/CustomNumberBadge";
+import { details } from "src/commons/routers";
+import bolnisiImageDefault from "src/commons/resources/icons/bolsiniImageDefault.png";
 
 import {
   BadgeContainer,
+  BadgeContainerVerify,
   CIPChips,
   CIPHeader,
   CIPHeaderTitle,
   CIPLabel,
+  ContentIdentifiers,
   DecryptButton,
   Header,
+  ItemBolnisi,
   MetaDataJSONValue,
   MetaDataJSONValueText,
   MetaDataValue,
@@ -35,8 +43,10 @@ import {
   MetadataJSONTitle,
   MetadataTitle,
   MetadataWrapper,
+  ViewWineButton,
   Wrapper
 } from "./styles";
+import BolnisiWineDrawer from "./BolnisiWineDrawer";
 
 interface MetadataProps {
   data?: Transaction["metadata"];
@@ -52,6 +62,7 @@ enum CIP {
 
 const CIPLabel721 = 721;
 const CIPLabel674 = 674;
+const CIPLabel1904 = 1904;
 
 const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
   const LIMIT_MESSAGE_ROW = 4;
@@ -197,6 +208,75 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
       );
     }
   };
+
+  // Bolnisi Metadata
+  const renderBolnisi = (data?: Transaction["metadata"][number]["metadataBolnisi"]) => {
+    if (!data) return <Box>data not found</Box>;
+    return (
+      <Box>
+        <MetadataContent
+          alignItems={"center"}
+          flexWrap={"wrap"}
+          sx={{
+            [theme.breakpoints.down("md")]: {
+              alignItems: "baseline"
+            }
+          }}
+        >
+          <MetadataJSONTitle
+            display={"flex"}
+            minWidth={180}
+            gap={2}
+            sx={{
+              [theme.breakpoints.down("md")]: {
+                width: "100% !important"
+              }
+            }}
+          >
+            {t("bolsini.contentIdentifiers")}
+          </MetadataJSONTitle>
+          <MetaDataValue
+            display={"flex"}
+            alignItems={"center"}
+            sx={{
+              [theme.breakpoints.down("md")]: {
+                mt: 1,
+                width: "100%"
+              }
+            }}
+          >
+            {data.cid && <ContentIdentifiers pr={1}>{data.cid}</ContentIdentifiers>}
+            {data.externalApiAvailable && (
+              <Box>
+                <VerifyBadge status={data.cidVerified} />
+              </Box>
+            )}
+            {!data.externalApiAvailable && (
+              <CustomTooltip title={t("bolnisi.verifyErrorTooltip")}>
+                <BadgeContainerVerify type="Warning" width={`${data.cid ? "190px" : "170px"} !important`}>
+                  <Box
+                    width={23}
+                    height={23}
+                    display={"flex"}
+                    alignItems={"center"}
+                    justifyContent={"center"}
+                    bgcolor={theme.palette.warning[700]}
+                    borderRadius={"50%"}
+                  >
+                    <InvalidIcon fill={theme.palette.secondary.main} />
+                  </Box>
+                  {t("bolnisi.verifyError")}
+                </BadgeContainerVerify>
+              </CustomTooltip>
+            )}
+          </MetaDataValue>
+        </MetadataContent>
+
+        {data.cidVerified && <Wineries wineryData={data.wineryData} />}
+      </Box>
+    );
+  };
+
   return (
     <Box>
       <Wrapper>
@@ -353,6 +433,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
               metadata?.metadataCIP83.valid &&
               !textRaw &&
               renderButtonDecrypt(metadata?.metadataCIP83?.requiredProperties)}
+            {String(metadata.label) === String(CIPLabel1904) && renderBolnisi(metadata?.metadataBolnisi)}
           </MetadataWrapper>
         );
       })}
@@ -400,3 +481,125 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
 };
 
 export default Metadata;
+
+export const VerifyBadge = ({ status }: { status: boolean }) => {
+  const theme = useTheme();
+  if (!status) {
+    return (
+      <BadgeContainerVerify type="Invalid">
+        <Box
+          width={23}
+          height={23}
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          bgcolor={theme.palette.error[800]}
+          borderRadius={"50%"}
+        >
+          <InvalidIcon fill={theme.palette.error[100]} />
+        </Box>
+        {t("bolsini.invalid")}
+      </BadgeContainerVerify>
+    );
+  }
+  return (
+    <BadgeContainerVerify type="Verified">
+      <Box
+        width={23}
+        height={23}
+        display={"flex"}
+        alignItems={"center"}
+        justifyContent={"center"}
+        bgcolor={theme.palette.success[700]}
+        borderRadius={"50%"}
+      >
+        <VerifiedIcon />
+      </Box>
+      {t("bolsini.verified")}
+    </BadgeContainerVerify>
+  );
+};
+
+const Wineries: React.FC<{ wineryData?: Transaction["metadata"][number]["metadataBolnisi"]["wineryData"] }> = ({
+  wineryData
+}) => {
+  const theme = useTheme();
+  const history = useHistory();
+  const { trxHash } = useParams<{ trxHash: string }>();
+  if (!wineryData) return null;
+
+  return (
+    <Box>
+      <MetadataContent alignItems={"center"}>
+        <MetadataJSONTitle
+          display={"flex"}
+          gap={2}
+          sx={{
+            [theme.breakpoints.down("md")]: {
+              width: "100% !important"
+            }
+          }}
+        >
+          {t("bolsini.wineries")}
+        </MetadataJSONTitle>
+        <MetaDataValue display={"flex"} alignItems={"center"}>
+          <CustomNumberBadge ml="0px" value={wineryData?.length} />
+        </MetaDataValue>
+      </MetadataContent>
+      <Box component={Grid} container spacing={2}>
+        {wineryData?.map((winery, idx) => {
+          return (
+            <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
+              <Box height={"100%"}>
+                <ItemBolnisi>
+                  <Box display={"flex"} alignItems={"center"}>
+                    <Box
+                      component={"img"}
+                      src={bolnisiImageDefault}
+                      width={60}
+                      height={60}
+                      borderRadius={"50%"}
+                      pr={2}
+                    />
+                    <Box>
+                      <Box fontWeight={"bold"} mb={1} color={theme.palette.secondary.main}>
+                        Georgian Wine
+                      </Box>
+                      <Box display={"flex"} alignItems={"center"}>
+                        <BolsiniAddress fill={theme.palette.secondary.light} />
+                        <Box
+                          component={"span"}
+                          pl={0.5}
+                          fontSize={14}
+                          color={theme.palette.secondary.light}
+                          lineHeight={1}
+                        >
+                          Sulkhan-Saba Orbeliani 79, Bolnisi
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Box>
+                  <Box position={"absolute"} top={"12px"} right={"12px"}>
+                    <VerifyBadge status={winery.pkeyVerified} />
+                  </Box>
+                  <Box
+                    component={ViewWineButton}
+                    width={"100%"}
+                    mt={2}
+                    onClick={() => {
+                      history.push(details.transaction(trxHash, "metadata", winery.wineryId));
+                    }}
+                    disabled={!winery.pkeyVerified}
+                  >
+                    {t("bolsini.viewWineLots")}
+                  </Box>
+                </ItemBolnisi>
+              </Box>
+            </Grid>
+          );
+        })}
+      </Box>
+      <BolnisiWineDrawer />
+    </Box>
+  );
+};
