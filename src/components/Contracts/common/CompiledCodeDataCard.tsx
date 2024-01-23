@@ -1,11 +1,18 @@
 import React, { useState } from "react";
-import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import { UPLCProgram } from "src/types/uplc";
 
 import UPLCTree from "../UPLCTree";
-import { DataCardBox, DataTitle, DataValue, SwitchLabel, ViewSwitcher } from "./styles";
+import {
+  DataCardBox,
+  DataCardHeader,
+  DataTitle,
+  DataValue,
+  SwitchContainer,
+  SwitchLabel,
+  ViewSwitcher
+} from "./styles";
 
 export interface CompiledCodeDataCardProps {
   value?: string | number;
@@ -89,14 +96,14 @@ const mockData: UPLCProgram = {
 //   let i;
 //   const data = { text: `lam i_1`, data: [] };
 //   let ptr: UPLCData[] = data.data;
-//   for (i = 2; i < 200; i++) {
+//   for (i = 2; i < 13; i++) {
 //     const _data: UPLCData = { text: `lam i_${i}`, data: [] };
 //     ptr.push(_data);
 //     ptr = ptr[0].data as UPLCData[];
 //   }
 //   const data2 = { text: `lam i_201`, data: [] };
 //   ptr = data2.data;
-//   for (i = 202; i < 500; i++) {
+//   for (i = 13; i < 20; i++) {
 //     const _data: UPLCData = { text: `lam i_${i}`, data: [] };
 //     ptr.push(_data);
 //     ptr = ptr[0].data as UPLCData[];
@@ -117,13 +124,19 @@ const CompiledCodeDataCard: React.FC<CompiledCodeDataCardProps> = ({ value, titl
 
   return (
     <DataCardBox>
-      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} marginBottom={1}>
+      <DataCardHeader
+        display={"flex"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        marginBottom={1}
+        flexWrap={"wrap"}
+      >
         <DataTitle>{title}:</DataTitle>
-        <Box display={"flex"} alignItems={"center"} gap={1}>
+        <SwitchContainer>
           <SwitchLabel>{t("contract.compiledCode.viewInBinary")}</SwitchLabel>
           <ViewSwitcher data-testid="compiled-code-switcher" checked={checked} onChange={() => setChecked(!checked)} />
-        </Box>
-      </Box>
+        </SwitchContainer>
+      </DataCardHeader>
       {checked ? (
         <DataValue data-testid="binary-compiled-code">{value}</DataValue>
       ) : (
