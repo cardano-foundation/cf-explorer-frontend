@@ -974,10 +974,11 @@
   "smartContract.plutusDes.desc1": "Plutus is the native smart contract language for Cardano.",
   "smartContract.plutusDes.desc2": "is the initial version of Plutus, introduced in the Alonzo hard fork",
   "smartContract.plutusDes.desc3": "was introduced with the Vasil hard fork with flexibility, scalability and efficiency improvements to further enhance smart contract development",
-  "bolsini.contentIdentifiers": "Content Identifiers",
+  "bolsini.contentIdentifiers": "Content Identifier",
   "bolsini.verified": "Verified",
   "bolsini.invalid": "Invalid",
   "bolsini.wineries": "Wineries",
+  "bolsini.winery": "Winery",
   "bolsini.viewWineLots": "View Wine Lots",
   "bolnisi.wineName": "Wine Name",
   "bolnisi.origin": "Origin",
@@ -992,6 +993,7 @@
   "bolnisi.wineColor": "Wine Color",
   "bolnisi.harvestDate": "Harvest Date",
   "bolnisi.titleModal": "Georgian Wine",
-  "bolnisi.verifyErrorTooltip": "A connection to the verification service could not be established. Please, refresh the page to try again.",
+  "bolnisi.verifyErrorTooltip": "A connection to the verification service could not be established.",
+  "bolnisi.verifyErrorTooltipTryAgain": "Please, refresh the page to try again.",
   "bolnisi.verifyError": "Verification Unavailable"
 }

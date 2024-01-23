@@ -1,4 +1,4 @@
-import { Box, Container, styled } from "@mui/material";
+import { Box, CircularProgress, Container, styled } from "@mui/material";
 import React, { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
@@ -6,8 +6,6 @@ import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import TransactionMetadata from "src/components/TransactionDetail/TransactionMetadata";
 import TransactionOverview from "src/components/TransactionDetail/TransactionOverview";
-import Card from "src/components/commons/Card";
-import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import NoRecord from "src/components/commons/NoRecord";
 
 const StyledContainer = styled(Container)`
@@ -31,23 +29,20 @@ const TransactionDetail: React.FC = () => {
     document.title = `Transaction ${trxHash} | Cardano Blockchain Explorer`;
   }, [trxHash]);
 
-  if (!initialized) {
-    return null;
-  }
   if ((initialized && !data) || error) return <NoRecord />;
 
+  if (loading) {
+    return (
+      <Box>
+        <CircularProgress />
+      </Box>
+    );
+  }
   return (
     <StyledContainer>
       <TransactionOverview data={data} loading={loading} />
       <Box>
-        {!initialized ? (
-          <Card>
-            <CommonSkeleton variant="rectangular" style={{ borderRadius: 10, height: 50, marginBottom: 10 }} />
-            <CommonSkeleton variant="rectangular" style={{ borderRadius: 10, minHeight: 350 }} />
-          </Card>
-        ) : (
-          <TransactionMetadata data={data} loading={!initialized} />
-        )}
+        <TransactionMetadata data={data} loading={!initialized} />
       </Box>
     </StyledContainer>
   );

@@ -265,7 +265,9 @@ const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, indexWine, 
   return (
     <CustomModal
       {...props}
-      modalContainerProps={{ style: { maxWidth: "min(1000px, 98vw)", width: "min(700px, 98vw)" } }}
+      modalContainerProps={{
+        style: { maxWidth: "min(1000px, 98vw)", width: "min(700px, 98vw)", boxSizing: "content-box" }
+      }}
       style={{ maxHeight: "unset" }}
       title={
         <CIPLabel>

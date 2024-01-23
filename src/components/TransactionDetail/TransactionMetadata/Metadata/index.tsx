@@ -252,8 +252,16 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
               </Box>
             )}
             {!data.externalApiAvailable && (
-              <CustomTooltip title={t("bolnisi.verifyErrorTooltip")}>
-                <BadgeContainerVerify type="Warning" width={`${data.cid ? "190px" : "170px"} !important`}>
+              <CustomTooltip
+                title={
+                  <Box width={"max-content"}>
+                    {t("bolnisi.verifyErrorTooltip")}
+                    <br />
+                    {t("bolnisi.verifyErrorTooltipTryAgain")}
+                  </Box>
+                }
+              >
+                <BadgeContainerVerify type="Warning" fontWeight={500}>
                   <Box
                     width={23}
                     height={23}
@@ -265,7 +273,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
                   >
                     <InvalidIcon fill={theme.palette.secondary.main} />
                   </Box>
-                  {t("bolnisi.verifyError")}
+                  <Box width={"max-content"}>{t("bolnisi.verifyError")}</Box>
                 </BadgeContainerVerify>
               </CustomTooltip>
             )}
@@ -530,37 +538,30 @@ const Wineries: React.FC<{ wineryData?: Transaction["metadata"][number]["metadat
 
   return (
     <Box>
-      <MetadataContent alignItems={"center"}>
+      <Box alignItems={"center"} display={"flex"} mb={2}>
         <MetadataJSONTitle
           display={"flex"}
           gap={2}
           sx={{
-            [theme.breakpoints.down("md")]: {
-              width: "100% !important"
+            [theme.breakpoints.down("sm")]: {
+              width: "unset"
             }
           }}
         >
-          {t("bolsini.wineries")}
+          {wineryData?.length === 1 ? t("bolsini.winery") : t("bolsini.wineries")}
         </MetadataJSONTitle>
         <MetaDataValue display={"flex"} alignItems={"center"}>
           <CustomNumberBadge ml="0px" value={wineryData?.length} />
         </MetaDataValue>
-      </MetadataContent>
+      </Box>
       <Box component={Grid} container spacing={2}>
         {wineryData?.map((winery, idx) => {
           return (
             <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
               <Box height={"100%"}>
                 <ItemBolnisi>
-                  <Box display={"flex"} alignItems={"center"}>
-                    <Box
-                      component={"img"}
-                      src={bolnisiImageDefault}
-                      width={60}
-                      height={60}
-                      borderRadius={"50%"}
-                      pr={2}
-                    />
+                  <Box display={"flex"} alignItems={"center"} flexWrap={"wrap"} gap={2}>
+                    <Box component={"img"} src={bolnisiImageDefault} width={60} height={60} borderRadius={"50%"} />
                     <Box>
                       <Box fontWeight={"bold"} mb={1} color={theme.palette.secondary.main}>
                         Georgian Wine
