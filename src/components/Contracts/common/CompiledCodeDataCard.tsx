@@ -1,11 +1,18 @@
 import React, { useState } from "react";
-import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import { UPLCData, UPLCProgram } from "src/types/uplc";
 
 import UPLCTree from "../UPLCTree";
-import { DataCardBox, DataTitle, DataValue, SwitchLabel, ViewSwitcher } from "./styles";
+import {
+  DataCardBox,
+  DataCardHeader,
+  DataTitle,
+  DataValue,
+  SwitchContainer,
+  SwitchLabel,
+  ViewSwitcher
+} from "./styles";
 
 export interface CompiledCodeDataCardProps {
   value?: string | number;
@@ -117,13 +124,19 @@ const CompiledCodeDataCard: React.FC<CompiledCodeDataCardProps> = ({ value, titl
 
   return (
     <DataCardBox>
-      <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} marginBottom={1}>
+      <DataCardHeader
+        display={"flex"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        marginBottom={1}
+        flexWrap={"wrap"}
+      >
         <DataTitle>{title}:</DataTitle>
-        <Box display={"flex"} alignItems={"center"} gap={1}>
+        <SwitchContainer>
           <SwitchLabel>{t("contract.compiledCode.viewInBinary")}</SwitchLabel>
           <ViewSwitcher data-testid="compiled-code-switcher" checked={checked} onChange={() => setChecked(!checked)} />
-        </Box>
-      </Box>
+        </SwitchContainer>
+      </DataCardHeader>
       {checked ? (
         <DataValue data-testid="binary-compiled-code">{value}</DataValue>
       ) : (

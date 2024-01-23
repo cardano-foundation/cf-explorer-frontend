@@ -170,22 +170,39 @@ export const StyledAccordionDetails = styled(AccordionDetails)`
   color: ${({ theme }) => theme.palette.secondary.light};
 `;
 
-const SWITCHER_HEIGHT = 32;
-const SWITCHER_WIDTH = 56;
-const SWITCHER_THUMB = 24;
-const SWITCHER_THUMB_MARGIN = 4;
+export const SwitchContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+  [theme.breakpoints.down("sm")]: {
+    justifyContent: "space-between",
+    width: "100%"
+  }
+}));
+
+export const DataCardHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  marginBottom: "4px",
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    alignItems: "flex-start"
+  }
+}));
+
 export const ViewSwitcher = styled(Switch)(({ theme }) => ({
-  width: SWITCHER_WIDTH,
-  height: SWITCHER_HEIGHT,
+  width: theme.spacing(7),
+  height: theme.spacing(4),
   boxSizing: "border-box",
   padding: 0,
   "& .MuiSwitch-switchBase": {
     padding: 0,
-    margin: SWITCHER_THUMB_MARGIN,
+    margin: 4,
     transitionDuration: "300ms",
     color: theme.palette.secondary[600],
     "&.Mui-checked": {
-      transform: `translateX(${SWITCHER_WIDTH - SWITCHER_THUMB - 2 * SWITCHER_THUMB_MARGIN}px)`,
+      transform: `translateX(${theme.spacing(3)})`,
       color: theme.isDark ? theme.palette.secondary["main"] : theme.palette.primary[100],
       "& + .MuiSwitch-track": {
         backgroundColor: theme.palette.primary["main"],
@@ -212,7 +229,7 @@ export const ViewSwitcher = styled(Switch)(({ theme }) => ({
     transition: theme.transitions.create(["background-color"], {
       duration: 500
     }),
-    borderRadius: SWITCHER_HEIGHT / 2,
+    borderRadius: theme.spacing(2),
     border: `1px solid ${theme.palette.grey["A100"]}`,
     boxSizing: "border-box"
   }
