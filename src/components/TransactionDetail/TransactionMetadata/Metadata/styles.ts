@@ -177,7 +177,7 @@ export const MetadataWrapper = styled(Box)(({ theme }) => ({
   padding: "0 25px",
   margin: "25px 0px",
   fontSize: "16px",
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down(355)]: {
     padding: `0 ${theme.spacing(1)}`
   }
 }));
