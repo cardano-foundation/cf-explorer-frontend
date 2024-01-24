@@ -266,30 +266,33 @@ const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, indexWine, 
     <CustomModal
       {...props}
       modalContainerProps={{
-        style: { maxWidth: "min(1000px, 98vw)", width: "min(700px, 98vw)", boxSizing: "content-box" }
+        style: { maxWidth: "min(1000px, 98vw)", width: "min(700px, 98vw)" }
       }}
-      style={{ maxHeight: "unset" }}
       title={
         <CIPLabel>
           <span>{t("bolnisi.titleModal")}</span>
         </CIPLabel>
       }
     >
-      <Box>
-        <CIPModalDesc display={"flex"} gap={2} alignItems={"center"} flexWrap={"wrap"}>
-          <Box textTransform={"capitalize"}>Wine Lot ID: Wine Lot ID {converter.toWords(+(indexWine || 0) + 1)}</Box>
-          <VerifyBadge status={wineData.signatureVerified} />
+      <ContentContainer>
+        <CIPModalDesc>
+          <Box textTransform={"capitalize"} display={"inline-block"}>
+            Wine Lot ID: Wine Lot ID {converter.toWords(+(indexWine || 0) + 1)}
+            <Box display={"inline-block"} ml={2}>
+              <Box component={VerifyBadge} status={wineData.signatureVerified} />
+            </Box>
+          </Box>
         </CIPModalDesc>
 
         <WineTable
           showPagination={false}
           isModal
-          height="auto"
+          height="max-content"
           isFullTableHeight={true}
           data={dataTable || []}
           columns={columns}
         />
-      </Box>
+      </ContentContainer>
     </CustomModal>
   );
 };
@@ -310,9 +313,10 @@ const mappingNameWineProperties = {
 };
 
 export const WineTable = styled(Table)(({ theme }) => ({
-  marginBottom: "30px",
   "& .table-wrapper": {
     padding: `0 ${theme.spacing(2)}`,
+    maxHeight: "unset",
+    border: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
     borderBottom: "0px",
     boxShadow: theme.shadow.card
   },
@@ -341,6 +345,7 @@ export const CIPLabel = styled(Box)(({ theme }) => ({
     fontSize: "32px"
   }
 }));
+
 export const CIPModalDesc = styled(Typography)`
   font-size: 24px;
   color: ${({ theme }) => theme.palette.secondary.light};
@@ -383,3 +388,26 @@ const TRow = styled("tr")<{ selected?: number }>`
     }
   }
 `;
+
+const ContentContainer = styled(Box)(({ theme }) => ({
+  overflow: "auto",
+  height: "70vh",
+  "&::-webkit-scrollbar": {
+    width: "5px",
+    height: "5px"
+  },
+  "&::-webkit-scrollbar-track": {
+    background: "transparent"
+  },
+  "&::-webkit-scrollbar-thumb": {
+    background: "transparent"
+  },
+  "&:hover": {
+    "&::-webkit-scrollbar-thumb": {
+      background: theme.palette.secondary.light
+    },
+    "&::-webkit-scrollbar-track": {
+      background: theme.palette.primary[100]
+    }
+  }
+}));

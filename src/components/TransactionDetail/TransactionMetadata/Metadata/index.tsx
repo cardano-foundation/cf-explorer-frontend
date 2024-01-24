@@ -245,7 +245,14 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
               }
             }}
           >
-            {data.cid && <ContentIdentifiers pr={1}>{data.cid}</ContentIdentifiers>}
+            {
+              data.cid && (
+                <ContentIdentifiers>
+                  <DynamicEllipsisText value={data.cid || ""} isTooltip />
+                </ContentIdentifiers>
+              )
+              // <ContentIdentifiers pr={1}>{data.cid}</ContentIdentifiers>
+            }
             {data.externalApiAvailable && (
               <Box>
                 <VerifyBadge status={data.cidVerified} />
