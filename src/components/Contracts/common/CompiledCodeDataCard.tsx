@@ -59,7 +59,7 @@ const mockData: UPLCProgram = {
 };
 
 /*
-  UPLC data generator with long list data 
+  UPLC data generator with long list data
 */
 // const generateUPLCData = (): UPLCProgram => {
 //   const tmp: UPLCData = {
@@ -86,7 +86,7 @@ const mockData: UPLCProgram = {
 // };
 
 /*
-  UPLC data generator with long hierarchy 
+  UPLC data generator with long hierarchy
 */
 // const generateUPLCData2 = (): UPLCProgram => {
 //   const tmp: UPLCData = {

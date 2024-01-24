@@ -40,6 +40,7 @@ export const DataValue = styled(Typography)`
   line-break: anywhere;
   max-height: 40vh;
   overflow: auto;
+  padding-right: 10px;
   &::-webkit-scrollbar {
     width: 5px;
   }
