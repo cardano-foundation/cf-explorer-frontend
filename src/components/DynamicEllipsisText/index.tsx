@@ -139,15 +139,17 @@ const DynamicEllipsisText = ({
       );
     }
     return (
-      <CustomTooltip title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}>
-        <ContainerShortHand id={randomIdRef.current} data-testid="ellipsis-text" sx={sx}>
-          {customTruncateFold?.length === 2 && isGalaxyFoldSmall
-            ? truncateCustom(value, customTruncateFold[0], customTruncateFold[1])
-            : getShortHash(value)}
-          {isCopy && <CopyButton text={value} />}
-          {afterElm && <StyledAfterElm>{afterElm}</StyledAfterElm>}
-        </ContainerShortHand>
-      </CustomTooltip>
+      <ContainerShortHand>
+        <CustomTooltip title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}>
+          <ContainerShortHand id={randomIdRef.current} data-testid="ellipsis-text" sx={sx}>
+            {customTruncateFold?.length === 2 && isGalaxyFoldSmall
+              ? truncateCustom(value, customTruncateFold[0], customTruncateFold[1])
+              : getShortHash(value)}
+          </ContainerShortHand>
+        </CustomTooltip>
+        {isCopy && <CopyButton text={value} />}
+        {afterElm && <StyledAfterElm>{afterElm}</StyledAfterElm>}
+      </ContainerShortHand>
     );
   }
 
