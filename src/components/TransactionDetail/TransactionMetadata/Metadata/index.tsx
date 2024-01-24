@@ -238,6 +238,8 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
           <MetaDataValue
             display={"flex"}
             alignItems={"center"}
+            gap={1}
+            flexWrap={"wrap"}
             sx={{
               [theme.breakpoints.down("md")]: {
                 mt: 1,
@@ -245,14 +247,18 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
               }
             }}
           >
-            {
-              data.cid && (
-                <ContentIdentifiers>
-                  <DynamicEllipsisText value={data.cid || ""} isTooltip />
-                </ContentIdentifiers>
-              )
-              // <ContentIdentifiers pr={1}>{data.cid}</ContentIdentifiers>
-            }
+            {data.cid && (
+              <ContentIdentifiers>
+                <DynamicEllipsisText
+                  value={data.cid || ""}
+                  isTooltip
+                  sxFirstPart={{
+                    [theme.breakpoints.up("sm")]: { maxWidth: "calc(100% - 60px)" },
+                    [theme.breakpoints.down("sm")]: { maxWidth: "calc(100% - 75px)" }
+                  }}
+                />
+              </ContentIdentifiers>
+            )}
             {data.externalApiAvailable && (
               <Box>
                 <VerifyBadge status={data.cidVerified} />
@@ -551,7 +557,8 @@ const Wineries: React.FC<{ wineryData?: Transaction["metadata"][number]["metadat
           gap={2}
           sx={{
             [theme.breakpoints.down("sm")]: {
-              width: "unset"
+              width: "unset",
+              mr: 2
             }
           }}
         >

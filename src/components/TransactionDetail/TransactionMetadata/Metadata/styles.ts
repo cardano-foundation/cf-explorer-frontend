@@ -339,8 +339,6 @@ export const ViewWineButton = styled(Button)(({ theme }) => ({
 }));
 
 export const ContentIdentifiers = styled(Box)`
-  width: 100%;
-  max-width: 500px;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
