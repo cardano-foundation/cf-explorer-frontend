@@ -1,6 +1,8 @@
 import { alpha, Box, Button, styled, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
+import Card from "src/components/commons/Card";
+
 export const Wrapper = styled(Box)`
   background: ${(props) => props.theme.palette.secondary[0]};
   padding: 25px;
@@ -168,14 +170,17 @@ export const JSONValue = styled(Value)`
   }
 `;
 
-export const MetadataWrapper = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  padding: 0 25px;
-  margin: 25px 0px;
-  font-size: 16px;
-`;
+export const MetadataWrapper = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  boxSizing: "border-box",
+  padding: "0 25px",
+  margin: "25px 0px",
+  fontSize: "16px",
+  [theme.breakpoints.down("sm")]: {
+    padding: `0 ${theme.spacing(1)}`
+  }
+}));
 
 export const MetadataHeader = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -268,4 +273,74 @@ export const BadgeContainer = styled(Box)`
 export const CIPLabel = styled(Typography)`
   font-size: 12px;
   color: ${({ theme }) => theme.palette.secondary.light};
+`;
+export const BadgeContainerVerify = styled(Box)<{ type: "Verified" | "Invalid" | "Warning" }>`
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 31px;
+  width: min-content;
+  gap: 6px;
+  padding-left: 3px;
+  padding-right: 8px;
+  font-size: 12px;
+  box-sizing: border-box;
+  color: ${({ theme }) => theme.palette.secondary.light};
+  cursor: pointer;
+  background-color: ${({ theme, type }) => {
+    switch (type) {
+      case "Verified":
+        return theme.palette.success[100];
+      case "Warning":
+        return theme.palette.warning[100];
+      default:
+        return theme.palette.error[100];
+    }
+  }};
+  border: 1px solid
+    ${({ theme, type }) => {
+      switch (type) {
+        case "Verified":
+          return theme.palette.success[800];
+        case "Warning":
+          return theme.palette.warning[700];
+        default:
+          return theme.palette.error[800];
+      }
+    }};
+`;
+
+export const ItemBolnisi = styled(Card)`
+  padding: ${({ theme }) => theme.spacing(2)};
+  position: relative;
+  background: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[700])};
+  box-shadow: 2px 2px 10px 0px #43465633;
+  &:hover {
+    box-shadow: ${({ theme }) =>
+      theme.isDark ? ` 2px 2px 10px 0px ${theme.palette.secondary[100]}` : theme.shadow.cardHover};
+  }
+`;
+
+export const ViewWineButton = styled(Button)(({ theme }) => ({
+  width: "100%",
+  textTransform: "capitalize",
+  fontWeight: "bold",
+  fontSize: 16,
+  color: theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100],
+  background: theme.palette.primary.main,
+  ":hover": {
+    background: theme.palette.primary.dark
+  },
+  ":disabled": {
+    background: theme.palette.secondary[600],
+    color: theme.palette.secondary[100]
+  }
+}));
+
+export const ContentIdentifiers = styled(Box)`
+  width: 100%;
+  max-width: 500px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;

@@ -93,7 +93,9 @@ const NativeScriptsDetail = () => {
         }}
       />
       <HeaderOverview data={{ scriptHash: id }} />
-      <CustomAccordion loading={loading} tabs={smartcontractTabs} hiddenKeys={hiddenKeys} onTabChange={onTabChange} />
+      <Box sx={{ [theme.breakpoints.down("sm")]: { px: 2 } }}>
+        <CustomAccordion loading={loading} tabs={smartcontractTabs} hiddenKeys={hiddenKeys} onTabChange={onTabChange} />
+      </Box>
     </StyledContainer>
   );
 };
