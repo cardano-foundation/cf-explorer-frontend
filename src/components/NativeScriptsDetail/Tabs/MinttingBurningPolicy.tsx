@@ -112,7 +112,13 @@ const MinttingBurningPolicy = () => {
           <MintTitle>{t("nativeScript.mint.signerKeys")}</MintTitle>
           {keyHashes && (keyHashes || []).length === 1 && (
             <Box fontWeight={"bold"} color={({ palette }) => palette.primary.main}>
-              <DynamicEllipsisText value={keyHashes[0]} isTooltip />
+              <DynamicEllipsisText
+                value={keyHashes[0]}
+                isTooltip
+                sx={{ lineHeight: 1, transform: "none" }}
+                sxFirstPart={{ fontSize: 18, lineHeight: 1 }}
+                sxLastPart={{ fontSize: 18, lineHeight: 1 }}
+              />
             </Box>
           )}
           {(keyHashes || []).length > 1 && (
