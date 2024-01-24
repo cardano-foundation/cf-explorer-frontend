@@ -11,26 +11,9 @@ export const CustomTooltip = (props: Props) => {
 
   const theme = useTheme();
   const { isMobile } = useScreen();
-  // const tooltipRef = useRef<HTMLDivElement>(null);
-
-  // useEffect(() => {
-  //   if (open && isMobile) {
-  //     const handleTouchOutside = (event: globalThis.TouchEvent) => {
-  //       if (tooltipRef.current && !tooltipRef.current.contains(event.target as Node)) {
-  //         onClose?.(event);
-  //       }
-  //     };
-
-  //     document.addEventListener("touchstart", handleTouchOutside);
-  //     return () => {
-  //       document.removeEventListener("touchstart", handleTouchOutside);
-  //     };
-  //   }
-  // }, [open, isMobile, onClose]);
 
   return (
     <Tooltip
-      // ref={tooltipRef}
       leaveDelay={0}
       leaveTouchDelay={0}
       enterNextDelay={0}
