@@ -55,7 +55,14 @@ const BolnisiWineDrawer = () => {
         history.push(details.transaction(trxHash, "metadata"));
       }}
     >
-      <Box height={"100%"} px={2} py={5} position={"relative"} bgcolor={theme.palette.secondary[0]}>
+      <Box
+        height={"100%"}
+        px={2}
+        pt={5}
+        pb={`50px !important`}
+        position={"relative"}
+        bgcolor={theme.palette.secondary[0]}
+      >
         <CloseButton
           onClick={() => {
             setOpenDrawer(false);
@@ -103,7 +110,10 @@ const BolnisiWineDrawer = () => {
             </Header>
             <Content
               sx={{
-                maxHeight: "calc(100vh - 300px)"
+                maxHeight: "calc(100vh - 300px)",
+                [theme.breakpoints.down("md")]: {
+                  maxHeight: "calc(100vh - 400px)"
+                }
               }}
               overflow={"auto"}
               mt={4}
