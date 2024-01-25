@@ -1,12 +1,12 @@
+import { IconButton, IconButtonProps, TooltipProps, styled, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { IconButton, IconButtonProps, styled, TooltipProps, useTheme } from "@mui/material";
-import { useCopyToClipboard } from "react-use";
 import { BiCheckCircle } from "react-icons/bi";
+import { useCopyToClipboard } from "react-use";
 
 import { CopyIconSquare } from "src/commons/resources";
 
-import CustomTooltip from "../CustomTooltip";
 import CustomIcon from "../CustomIcon";
+import CustomTooltip from "../CustomTooltip";
 
 const Button = styled(IconButton)`
   color: ${(props) => props.theme.palette.text.primary};
@@ -28,8 +28,8 @@ interface CopyButtonProps extends IconButtonProps {
 const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, placement, customIcon, ...props }) => {
   const [, copyToClipboard] = useCopyToClipboard();
   const [copied, setCopied] = useState<boolean>();
+  const [open, setOpen] = useState<boolean>(false);
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (copied) {
@@ -49,6 +49,7 @@ const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, p
       onClick?.(e);
     }
   };
+
   return (
     <CustomTooltip
       open={open}
