@@ -69,7 +69,7 @@ const useFetchList = <T>(
         const lastURL = url.split("?")[1];
         const res = await service.get(`${baseURL}?${lastURL ? `${lastURL}&` : ""}${qs.stringify(params)}`);
         setQuery(cleanObject(params));
-        setData((res?.data?.data || []) as T[]);
+        setData(res?.data?.data as T[]);
         setError(null);
         setIsDataOverSize(res?.data?.isDataOverSize ?? null);
         setCurrentPage(res.data.currentPage);

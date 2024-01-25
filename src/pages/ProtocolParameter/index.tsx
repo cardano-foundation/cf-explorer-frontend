@@ -37,7 +37,6 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import NoRecord from "src/components/commons/NoRecord";
 import Table from "src/components/commons/Table";
 import { ProtocolFixed, ProtocolHistory, ProtocolTypeKey, TProtocolItem, TProtocolParam } from "src/types/protocol";
-import { InfoIcon } from "src/components/commons/DetailHeader/styles";
 import { Column } from "src/types/table";
 
 import { ExplainerTextModal } from "./ExplainerTextModal";
@@ -557,9 +556,9 @@ export const ProtocolParameterHistory = () => {
                 </Box>
               }
             >
-              <Box display={"inline-block"}>
-                <InfoIcon style={{ cursor: "pointer" }} />
-              </Box>
+              <span>
+                <InfoSolidIcon />
+              </span>
             </CustomTooltip>
           </Box>
         }

@@ -257,7 +257,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
                       <ADAicon />
                     </Box>
                   ) : (
-                    t("common.notAvailable")
+                    t("common.N/A")
                   )}
                 </DetailValue>
               </DetailsInfoItem>

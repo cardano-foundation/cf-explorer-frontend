@@ -304,8 +304,8 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             </InfoTitle>
             <InfoValue sx={{ wordBreak: "break-word" }}>
               <FlexGap10>
-                {formatADAFull(data?.poolSize)}
-                <ADAicon />
+                {data?.poolSize != null ? formatADAFull(data?.poolSize) : t("common.N/A")}
+                {data?.poolSize != null ? <ADAicon /> : ""}
               </FlexGap10>
             </InfoValue>
           </Item>
@@ -315,10 +315,14 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               <StyledTitle>{t("stakeLimit")}</StyledTitle>
             </InfoTitle>
             <InfoValue>
-              <FlexGap10>
-                {formatADAFull(data?.stakeLimit)}
-                <ADAicon />
-              </FlexGap10>
+              {data?.stakeLimit != null ? (
+                <FlexGap10>
+                  {formatADAFull(data?.stakeLimit)}
+                  <ADAicon />
+                </FlexGap10>
+              ) : (
+                <FlexGap10>{t("common.N/A")}</FlexGap10>
+              )}
             </InfoValue>
           </Item>
           <Item item xs={6} md={3}>
@@ -339,18 +343,22 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 display="flex"
                 flexDirection={isGalaxyFoldSmall ? "column" : "row"}
                 justifyContent="space-between"
-                alignItems={isGalaxyFoldSmall ? "flex-start" : "flex-end"}
+                alignItems={isGalaxyFoldSmall ? "flex-start" : "center"}
                 marginTop="9px"
+                mt={1}
               >
                 <Box
                   component={"span"}
-                  mt={1}
                   color={({ palette }) => palette.secondary.light}
                   style={{ fontSize: "14px", fontWeight: "400" }}
                 >
                   {t("saturation")}
                 </Box>
-                <Box fontSize={16}>{formatPercent(data?.saturation ? data?.saturation / 100 : 0)}</Box>
+                {data?.saturation != null ? (
+                  <Box fontSize={16}>{formatPercent(data?.saturation ? data?.saturation / 100 : 0)}</Box>
+                ) : (
+                  <FlexGap10> {t("common.N/A")}</FlexGap10>
+                )}
               </Box>
             </InfoValue>
           </Item>

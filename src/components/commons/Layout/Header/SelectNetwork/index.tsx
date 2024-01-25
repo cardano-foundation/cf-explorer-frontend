@@ -1,9 +1,11 @@
-import { MenuItem, Select, SelectChangeEvent, styled } from "@mui/material";
+import { Box, MenuItem, Select, SelectChangeEvent, styled, useTheme } from "@mui/material";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { BiChevronDown } from "react-icons/bi";
 
+import { Sanchonet } from "src/commons/resources";
 import { FRONT_END_NETWORK, NETWORK, NETWORKS, NETWORK_NAMES, STORAGE_KEYS } from "src/commons/utils/constants";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 import { setOnDetailView } from "src/stores/user";
 
 export const StyledSelect = styled(Select)(({ theme }) => ({
@@ -40,6 +42,7 @@ const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
 
 const SelectNetwork: React.FC = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const handleChange = async (e?: SelectChangeEvent<unknown>) => {
     if (e) {
       if (FRONT_END_NETWORK[e.target.value as NETWORKS]) {
@@ -59,7 +62,6 @@ const SelectNetwork: React.FC = () => {
   const handleOpen = () => {
     setOnDetailView(false);
   };
-
   return (
     <StyledSelect
       data-testid="header-network"
@@ -81,11 +83,31 @@ const SelectNetwork: React.FC = () => {
       }}
       onOpen={handleOpen}
     >
-      {Object.entries(NETWORK_NAMES).map(([key, value]) => (
-        <StyledMenuItem data-testid="network-options" key={key} value={key}>
-          {t(`network.${String(value).toLowerCase()}`)}
-        </StyledMenuItem>
-      ))}
+      {Object.entries(NETWORK_NAMES).map(([key, value]) => {
+        if (key === NETWORKS.sanchonet) {
+          return (
+            <StyledMenuItem data-testid="network-options" key={key} value={key}>
+              <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} width={"100%"}>
+                <Box mr={1}>{t(`network.${String(value).toLowerCase()}`)}</Box>
+                <Box
+                  display={"block"}
+                  component={NETWORK === NETWORKS.sanchonet ? CustomTooltip : Box}
+                  placement="top"
+                  key={key}
+                  title={NETWORK === NETWORKS.sanchonet ? "testnet under development " : undefined}
+                >
+                  <Sanchonet fill={theme.palette.secondary.main} />
+                </Box>
+              </Box>
+            </StyledMenuItem>
+          );
+        }
+        return (
+          <StyledMenuItem data-testid="network-options" key={key} value={key}>
+            {t(`network.${String(value).toLowerCase()}`)}
+          </StyledMenuItem>
+        );
+      })}
     </StyledSelect>
   );
 };

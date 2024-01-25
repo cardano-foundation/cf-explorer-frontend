@@ -12,6 +12,8 @@ import { formatADAFull, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DetailHeader from "src/components/commons/DetailHeader";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
+import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 
 import ModalAllAddress from "../ModalAllAddress";
 import { ButtonModal, StyledFlexValue, StyledLinkTo, TitleCard, TitleNoPool, TitleValue } from "./styles";
@@ -70,6 +72,13 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
           <StyledFlexValue>
             <Box component={"span"}>{formatADAFull(data?.totalStake)}</Box>
             <ADAicon />
+            {NETWORK === NETWORKS.sanchonet && (
+              <CustomTooltip title={t("sanchonet.toltipTotalStake")}>
+                <Box display={"inline-block"}>
+                  <InfoSolidIcon />
+                </Box>
+              </CustomTooltip>
+            )}
           </StyledFlexValue>
           <Box sx={{ color: "blue" }}>
             <ButtonModal onClick={() => setOpen(true)}>{t("drawer.viewAllAddresses")}</ButtonModal>
@@ -87,8 +96,14 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
       ),
       value: (
         <StyledFlexValue>
-          <Box component={"span"}>{formatADAFull(data?.rewardAvailable)}</Box>
-          <ADAicon />
+          {data?.rewardAvailable != null ? (
+            <>
+              <Box component={"span"}>{formatADAFull(data?.rewardAvailable)}</Box>
+              <ADAicon />
+            </>
+          ) : (
+            t("common.N/A")
+          )}
         </StyledFlexValue>
       )
     },
@@ -101,8 +116,14 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
       ),
       value: (
         <StyledFlexValue>
-          {formatADAFull(data?.rewardWithdrawn)}
-          <ADAicon />
+          {data?.rewardWithdrawn != null ? (
+            <>
+              {formatADAFull(data?.rewardWithdrawn)}
+              <ADAicon />
+            </>
+          ) : (
+            t("common.N/A")
+          )}
         </StyledFlexValue>
       )
     }

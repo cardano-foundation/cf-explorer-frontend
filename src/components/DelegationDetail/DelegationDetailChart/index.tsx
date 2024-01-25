@@ -12,6 +12,7 @@ import { formatADAFull, formatPrice, numberWithCommas } from "src/commons/utils/
 import CustomIcon from "src/components/commons/CustomIcon";
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import { TooltipBody } from "src/components/commons/Layout/styles";
+import NotAvailable from "src/components/commons/NotAvailable";
 
 import {
   AnalyticsTitle,
@@ -74,6 +75,77 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
     );
   };
 
+  const renderData = () => {
+    if (loading) {
+      return <SkeletonUI variant="rectangular" style={{ height: "400px" }} />;
+    }
+    if (!loading && data?.delegatorChart === null) {
+      return (
+        <Box style={{ height: "400px" }}>
+          <NotAvailable />
+        </Box>
+      );
+    }
+    if ((!loading && data?.epochChart === null) || data === null) {
+      return (
+        <Box style={{ height: "400px" }}>
+          <NotAvailable />
+        </Box>
+      );
+    }
+    return (
+      <ResponsiveContainer width="100%" height={400}>
+        <AreaChart
+          width={900}
+          height={400}
+          data={data[selected]?.dataByDays || []}
+          margin={{ top: 5, right: 10, bottom: 10 }}
+        >
+          <defs>
+            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={theme.isDark ? 0.6 : 0.2} />
+              <stop offset="100%" stopColor={theme.palette.primary.main} stopOpacity={theme.isDark ? 0.6 : 0.2} />
+            </linearGradient>
+          </defs>
+          <XAxis
+            dataKey="epochNo"
+            tickMargin={5}
+            dx={-5}
+            tick={{
+              fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+            }}
+            tickLine={{
+              stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+            }}
+            color={theme.palette.secondary.light}
+          />
+          <YAxis
+            dataKey={selected === "epochChart" ? "totalStake" : "numberDelegator"}
+            color={theme.palette.secondary.light}
+            tickFormatter={formatValue}
+            tick={{
+              fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+            }}
+            tickLine={{
+              stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+            }}
+          />
+          <Tooltip content={renderTooltip} cursor={false} />
+          <CartesianGrid vertical={false} strokeWidth={0.33} />
+          <Area
+            stackId="1"
+            type="monotone"
+            dataKey={selected === "epochChart" ? "totalStake" : "numberDelegator"}
+            stroke={theme.palette.primary.main}
+            strokeWidth={4}
+            fill="url(#colorUv)"
+            activeDot={{ r: 6 }}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    );
+  };
+
   return (
     <StyledContainer>
       <AnalyticsTitle>{t("common.analytics")}</AnalyticsTitle>
@@ -92,65 +164,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
               {t("delegator")}
             </Button>
           </Box>
-          <ChartContainer>
-            {loading || !data ? (
-              <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
-            ) : (
-              <ResponsiveContainer width="100%" height={400}>
-                <AreaChart
-                  width={900}
-                  height={400}
-                  data={data[selected]?.dataByDays || []}
-                  margin={{ top: 5, right: 10, bottom: 10 }}
-                >
-                  <defs>
-                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor={theme.palette.primary.main} stopOpacity={theme.isDark ? 0.6 : 0.2} />
-                      <stop
-                        offset="100%"
-                        stopColor={theme.palette.primary.main}
-                        stopOpacity={theme.isDark ? 0.6 : 0.2}
-                      />
-                    </linearGradient>
-                  </defs>
-                  <XAxis
-                    dataKey="epochNo"
-                    tickMargin={5}
-                    dx={-5}
-                    tick={{
-                      fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
-                    }}
-                    tickLine={{
-                      stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
-                    }}
-                    color={theme.palette.secondary.light}
-                  />
-                  <YAxis
-                    dataKey={selected === "epochChart" ? "totalStake" : "numberDelegator"}
-                    color={theme.palette.secondary.light}
-                    tickFormatter={formatValue}
-                    tick={{
-                      fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
-                    }}
-                    tickLine={{
-                      stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
-                    }}
-                  />
-                  <Tooltip content={renderTooltip} cursor={false} />
-                  <CartesianGrid vertical={false} strokeWidth={0.33} />
-                  <Area
-                    stackId="1"
-                    type="monotone"
-                    dataKey={selected === "epochChart" ? "totalStake" : "numberDelegator"}
-                    stroke={theme.palette.primary.main}
-                    strokeWidth={4}
-                    fill="url(#colorUv)"
-                    activeDot={{ r: 6 }}
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            )}
-          </ChartContainer>
+          <ChartContainer>{renderData()}</ChartContainer>
         </Grid>
         <Grid item xs={24} lg={6}>
           <BoxInfo height={"100%"} space={data?.[selected]?.dataByDays?.length ? 36 : 16}>
@@ -160,8 +174,10 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                   <CustomIcon height={30} fill={theme.palette.secondary.light} icon={HighestIconComponent} />
                   <Title>{selected === "epochChart" ? t("highestStake") : t("highestNumberOfDelegators")}</Title>
                   <Value>
-                    {loading || !data?.[selected] ? (
+                    {loading ? (
                       <SkeletonUI variant="rectangular" />
+                    ) : !data?.[selected] ? (
+                      t("common.N/A")
                     ) : selected === "epochChart" ? (
                       formatADAFull(maxTotalStake)
                     ) : (
@@ -177,8 +193,10 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                   <CustomIcon height={30} fill={theme.palette.secondary.light} icon={LowestIconComponent} />
                   <Title>{selected === "epochChart" ? t("lowestStake") : t("lowestNumberOfDelegators")}</Title>
                   <Value>
-                    {loading || !data?.[selected] ? (
+                    {loading ? (
                       <SkeletonUI variant="rectangular" />
+                    ) : !data?.[selected] ? (
+                      t("common.N/A")
                     ) : selected === "epochChart" ? (
                       formatADAFull(minTotalStake)
                     ) : (

@@ -6,6 +6,7 @@ import { HiArrowLongLeft } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
 
 import { exchangeADAToUSD, formatADAFull, getShortHash } from "src/commons/utils/helper";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import Card from "src/components/commons/Card";
 import useFetch from "src/commons/hooks/useFetch";
 import CardAddress from "src/components/share/CardAddress";
@@ -18,6 +19,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import { useScreen } from "src/commons/hooks/useScreen";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 
 import { BackButton, BackText, RedirectButton, StyledBoxCard, TimeDuration, TitleText, WrapHeader } from "./styles";
 
@@ -66,9 +68,16 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     {
       title: t("drawer.totalStake"),
       value: (
-        <Box>
-          {formatADAFull(dataStake?.totalStake)}&nbsp;
+        <Box display={"flex"} alignItems={"center"} gap={"5px"}>
+          {formatADAFull(dataStake?.totalStake)}
           <ADAicon />
+          {NETWORK === NETWORKS.sanchonet && (
+            <CustomTooltip placement="top-start" title={t("sanchonet.toltipTotalStake")}>
+              <Box display={"inline-block"}>
+                <InfoSolidIcon />
+              </Box>
+            </CustomTooltip>
+          )}
         </Box>
       )
     },
@@ -93,12 +102,15 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     },
     {
       title: t("glossary.rewardBalance"),
-      value: (
-        <Box>
-          {formatADAFull(dataStake?.rewardAvailable)}&nbsp;
-          <ADAicon />
-        </Box>
-      )
+      value:
+        dataStake?.rewardAvailable != null ? (
+          <Box>
+            {formatADAFull(dataStake?.rewardAvailable)}&nbsp;
+            <ADAicon />
+          </Box>
+        ) : (
+          t("common.N/A")
+        )
     }
   ];
 

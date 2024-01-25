@@ -103,7 +103,7 @@ const Epoch: React.FC = () => {
               <ADAicon />
             </Output>
           ) : (
-            t("common.notAvailable")
+            t("common.N/A")
           )}
         </>
       )

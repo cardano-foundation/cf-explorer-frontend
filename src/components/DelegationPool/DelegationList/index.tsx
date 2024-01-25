@@ -94,7 +94,7 @@ const DelegationLists: React.FC = () => {
       ),
       key: "poolSize",
       minWidth: "120px",
-      render: (r) => <Box component={"span"}>{formatADAFull(r.poolSize)}</Box>,
+      render: (r) => <Box component={"span"}>{r.poolSize != null ? formatADAFull(r.poolSize) : t("common.N/A")}</Box>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
@@ -116,18 +116,21 @@ const DelegationLists: React.FC = () => {
       title: t("glossary.saturation"),
       minWidth: "200px",
       key: "saturation",
-      render: (r) => (
-        <Box display="flex" alignItems="center" justifyContent={"end"}>
-          <Box component={"span"} mr={1}>
-            {formatPercent(r.saturation / 100) || `0%`}
+      render: (r) =>
+        r.saturation != null ? (
+          <Box display="flex" alignItems="center" justifyContent={"end"}>
+            <Box component={"span"} mr={1}>
+              {formatPercent(r.saturation / 100) || `0%`}
+            </Box>
+            <StyledLinearProgress
+              variant="determinate"
+              saturation={r.saturation}
+              value={r.saturation > 100 ? 100 : get(r, "saturation", 0)}
+            />
           </Box>
-          <StyledLinearProgress
-            variant="determinate"
-            saturation={r.saturation}
-            value={r.saturation > 100 ? 100 : get(r, "saturation", 0)}
-          />
-        </Box>
-      ),
+        ) : (
+          t("common.N/A")
+        ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }

@@ -85,7 +85,7 @@ const DelegationEpochList = ({
       minWidth: "120px",
       render: (data) => (
         <Box component={"span"}>
-          {typeof data.delegators === "number" ? formatADAFull(data.delegators) : t("common.notAvailable")}
+          {typeof data.delegators === "number" ? formatADAFull(data.delegators) : t("common.N/A")}
         </Box>
       )
     },
@@ -98,9 +98,7 @@ const DelegationEpochList = ({
       key: "fees",
       minWidth: "120px",
       render: (data) => (
-        <Box component={"span"}>
-          {typeof data.fee === "number" ? formatADAFull(data.fee) : t("common.notAvailable")}
-        </Box>
+        <Box component={"span"}>{typeof data.fee === "number" ? formatADAFull(data.fee) : t("common.N/A")}</Box>
       )
     }
   ];
@@ -108,7 +106,7 @@ const DelegationEpochList = ({
   return (
     <Table
       columns={columns}
-      data={data || []}
+      data={data}
       total={{ count: total, title: t("glossary.totalTokenList") }}
       loading={loading}
       initialized={initialized}
@@ -170,7 +168,9 @@ const DelegationStakingDelegatorsList = ({
       ),
       key: "value",
       minWidth: "120px",
-      render: (data) => <Box component={"span"}>{formatADAFull(data.totalStake)}</Box>
+      render: (data) => (
+        <Box component={"span"}>{data.totalStake != null ? formatADAFull(data.totalStake) : t("common.N/A")}</Box>
+      )
     },
     {
       title: t("stakedTime"),

@@ -77,7 +77,6 @@ const GridItem = ({ title, action, value, mainIcon }: TGridItem) => {
 
 const TabularOverview: React.FC = () => {
   const { t } = useTranslation();
-
   const data = useContext(PoolDetailContext);
   const { stakeKeys, poolSize, epochNo, status, rewardAvailable } = data ?? {};
   const [open, setOpen] = useState(false);
@@ -110,8 +109,10 @@ const TabularOverview: React.FC = () => {
           }
           value={
             <Box display="flex" alignItems="center">
-              <CardValue>{formatADAFull(poolSize)} </CardValue>
-              <ADAicon width={isMobile ? 10 : 15} height={isMobile ? 11 : 20} style={{ overflow: "inherit" }} />
+              <CardValue>{poolSize !== null ? formatADAFull(poolSize) : t("common.N/A")} </CardValue>
+              {rewardAvailable != null && (
+                <ADAicon width={isMobile ? 10 : 15} height={isMobile ? 11 : 20} style={{ overflow: "inherit" }} />
+              )}
             </Box>
           }
         />
@@ -151,8 +152,10 @@ const TabularOverview: React.FC = () => {
           }
           value={
             <Box display="flex" alignItems="center">
-              <CardValue>{formatADAFull(rewardAvailable)} </CardValue>
-              <ADAicon width={isMobile ? 10 : 15} height={isMobile ? 11 : 20} style={{ overflow: "inherit" }} />
+              <CardValue>{rewardAvailable != null ? formatADAFull(rewardAvailable) : t("common.N/A")} </CardValue>
+              {rewardAvailable != null && (
+                <ADAicon width={isMobile ? 10 : 15} height={isMobile ? 11 : 20} style={{ overflow: "inherit" }} />
+              )}
             </Box>
           }
         />
