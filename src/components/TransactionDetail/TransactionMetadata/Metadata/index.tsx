@@ -599,7 +599,7 @@ const Wineries: React.FC<{ wineryData?: Transaction["metadata"][number]["metadat
                 <Box height={"100%"}>
                   <ItemBolnisi>
                     <Box display={"flex"} alignItems={"center"} flexWrap={"wrap"} gap={2}>
-                      <Box component={DefaultImageWine} name={getWineName(winery.wineryId) || ""} />
+                      <Box component={DefaultImageWine} name={"Luka's Marani" || ""} />
                       <Box>
                         <Box fontWeight={"bold"} mb={1} color={theme.palette.secondary.main}>
                           {getWineName(winery.wineryId)}

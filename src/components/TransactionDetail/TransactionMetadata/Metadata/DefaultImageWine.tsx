@@ -1,5 +1,6 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
+import { useTheme } from "@mui/material";
 
 function stringToColor(string: string) {
   let hash = 0;
@@ -7,7 +8,7 @@ function stringToColor(string: string) {
 
   /* eslint-disable no-bitwise */
   for (i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
+    hash = (string.charCodeAt(i) << 5) - hash;
   }
 
   let color = "#";
@@ -43,7 +44,18 @@ const DefaultImageWine = ({
   height?: string;
   fontSize?: string;
 }) => {
-  return <Avatar {...stringAvatar(name)} sx={{ width: width || 60, height: height || 60, fontSize: fontSize || 24 }} />;
+  const theme = useTheme();
+  return (
+    <Avatar
+      {...stringAvatar(name)}
+      sx={{
+        width: width || 60,
+        height: height || 60,
+        fontSize: fontSize || 24,
+        border: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`
+      }}
+    />
+  );
 };
 
 export default DefaultImageWine;
