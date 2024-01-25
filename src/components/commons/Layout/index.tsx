@@ -1,21 +1,21 @@
+import { Box, Button, useTheme, useMediaQuery, List } from "@mui/material";
+import { t } from "i18next";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Box, Button, useTheme } from "@mui/material";
-import { t } from "i18next";
 
-import { RootState } from "src/stores/types";
-import { setOnDetailView, setSidebar } from "src/stores/user";
-import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { Notice } from "src/commons/resources";
+import { NETWORK, NETWORKS } from "src/commons/utils/constants";
+import { RootState } from "src/stores/types";
+import { setOnDetailView, setSidebar } from "src/stores/user";
 
+import StyledModal from "../StyledModal";
 import Footer from "./Footer";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import { Drawer, Layout, Main, BackDrop, MainContainer } from "./styles";
 import ToggleSidebar from "./ToggleSidebar";
-import StyledModal from "../StyledModal";
+import { BackDrop, Drawer, Layout, Main, MainContainer } from "./styles";
 
 interface Props {
   children: React.ReactNode;
@@ -27,11 +27,14 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
   const lastPath = useRef<string>(history.location.pathname);
   const { isTablet } = useScreen();
   const theme = useTheme();
+  const mainRef = useRef<HTMLDivElement | null>(null);
+  const matchesBreakpoint = useMediaQuery(theme.breakpoints.down("md"));
 
   useEffect(() => {
     const unlisten = history.listen(() => {
       lastPath.current = history.location.pathname;
       setOnDetailView(false);
+      mainRef.current?.scrollTo(0, 0);
     });
     return () => {
       unlisten();
@@ -61,7 +64,8 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
         <Sidebar />
       </Drawer>
       <MainContainer id="main">
-        <Main component="main" open={sidebar ? 1 : 0}>
+        <Main ref={mainRef} component="main" open={sidebar ? 1 : 0}>
+          <Header />
           {NETWORK === NETWORKS.sanchonet && (
             <Box
               alignItems={"center"}
@@ -86,10 +90,10 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
               </Box>
             </Box>
           )}
-          <Header />
           {children}
+          {matchesBreakpoint && <Footer />}
         </Main>
-        <Footer />
+        {!matchesBreakpoint && <Footer />}
         <NoticeModal open={openNoticeModal} handleCloseModal={() => setOpenNoticeModal(false)} />
       </MainContainer>
     </Layout>
@@ -103,20 +107,54 @@ const NoticeModal = ({ ...props }: { open: boolean; handleCloseModal: () => void
   return (
     <StyledModal {...props} title={t("notice.title")}>
       <Box
-        p={2}
         bgcolor={theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0]}
         color={theme.palette.secondary.main}
         borderRadius={3}
       >
-        <Box my={1}>{t("notice.value.a")}</Box>
-        <Box my={1}>{t("notice.value.b")}</Box>
-        <Box my={1} ml={2}>
-          {t("notice.value.b1")}
-        </Box>
-        <Box my={1} ml={2}>
-          {t("notice.value.b2")}
-        </Box>
-        <Box my={1}>{t("notice.value.c")}</Box>
+        <List
+          sx={{
+            padding: "16px 40px"
+          }}
+        >
+          <li
+            style={{
+              listStyle: "disc"
+            }}
+          >
+            {t("notice.value.a")}
+          </li>
+          <li
+            style={{
+              listStyle: "disc",
+              margin: "16px 0"
+            }}
+          >
+            {t("notice.value.b")}
+          </li>
+          <li
+            style={{
+              listStyle: "circle",
+              margin: "0px 0 0px 20px"
+            }}
+          >
+            {t("notice.value.b1")}
+          </li>
+          <li
+            style={{
+              listStyle: "circle",
+              margin: "16px 0 16px 20px"
+            }}
+          >
+            {t("notice.value.b2")}
+          </li>
+          <li
+            style={{
+              listStyle: "disc"
+            }}
+          >
+            {t("notice.value.c")}
+          </li>
+        </List>
       </Box>
     </StyledModal>
   );
