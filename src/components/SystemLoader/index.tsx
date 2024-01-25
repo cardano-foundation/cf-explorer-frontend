@@ -1,16 +1,26 @@
+import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useLocalStorage } from "react-use";
 
 import useAuth from "src/commons/hooks/useAuth";
 import useFetch from "src/commons/hooks/useFetch";
 import { API, USER_API } from "src/commons/utils/api";
-import { EVENT_TYPES, MAX_SLOT_EPOCH, NETWORK, NETWORK_TYPES, WS_URL } from "src/commons/utils/constants";
+import {
+  BOLNISI_NAME_API,
+  EVENT_TYPES,
+  MAX_SLOT_EPOCH,
+  NETWORK,
+  NETWORK_TYPES,
+  WS_URL
+} from "src/commons/utils/constants";
 import {
   setBlockKey,
   setBlockNo,
   setBtcMarket,
   setCurrentEpoch as setStoreCurrentEpoch,
-  setUsdMarket
+  setUsdMarket,
+  setWineryName,
+  setWineryNameLoading
 } from "src/stores/system";
 
 export const SystemLoader = () => {
@@ -27,7 +37,23 @@ export const SystemLoader = () => {
     undefined,
     true
   );
+
+  const fetchWineName = () => {
+    if (BOLNISI_NAME_API) {
+      setWineryNameLoading(true);
+      axios
+        .get(BOLNISI_NAME_API)
+        .then((response) => response.data)
+        .then((data) => setWineryName(data))
+        .finally(() => setWineryNameLoading(false));
+    }
+  };
+
   const currentTime = useRef(Date.now());
+
+  useEffect(() => {
+    fetchWineName();
+  }, []);
 
   useEffect(() => {
     if (currentEpoch) {

@@ -26,6 +26,7 @@ jobs:
           echo "REACT_APP_AUTH_API_URL=${{ secrets.DEV_EXPLORER_AUTH_API_URL }}" >> .env
           echo "REACT_APP_NETWORK=mainnet" >> .env
           echo "REACT_APP_JSD_WIDGET_KEY=${{ secrets.EXPLORER_JSD_WIDGET_KEY }}" >> .env
+          echo "REACT_APP_BOLNISI_NAME_API=${{ secrets.REACT_APP_BOLNISI_NAME_API }}" >> .env
 
       - name: 🫡 Setup node
         uses: actions/setup-node@v4

@@ -34,6 +34,11 @@ export const CustomTooltip = (props: Props) => {
       }}
     >
       <Tooltip
+        leaveDelay={0}
+        leaveTouchDelay={0}
+        enterNextDelay={0}
+        enterTouchDelay={0}
+        enterDelay={0}
         open={open || openTooltip}
         onClose={onClose || handleCloseTooltip}
         onOpen={onOpen || handleOpenTooltip}

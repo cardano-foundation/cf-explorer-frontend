@@ -7,17 +7,14 @@ import { useScreen } from "src/commons/hooks/useScreen";
 
 import CustomTooltip from "../commons/CustomTooltip";
 
-const Container = styled(Box)(({ theme, whiteSpace }) => ({
-  display: "inline-block",
-  whiteSpace: "nowrap",
-  overflow: "hidden",
-  width: "100%",
-  textAlign: "left",
-  transform: "translateY(2px)",
-  [theme.breakpoints.down("sm")]: {
-    whiteSpace: whiteSpace
-  }
-}));
+const Container = styled(Box)<{ whiteSpace?: "nowrap" | "normal" }>`
+  display: inline-block;
+  white-space: ${({ whiteSpace }) => whiteSpace ?? "nowrap"};
+  overflow: hidden;
+  width: 100%;
+  text-align: left;
+  transform: translateY(2px);
+`;
 
 const SubPart = styled("span")`
   display: inline-block;
@@ -118,15 +115,17 @@ const DynamicEllipsisText = ({
 
   if (isMin && !isNoLimitPixel) {
     return (
-      <CustomTooltip title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}>
-        <ContainerShortHand id={randomIdRef.current} data-testid="ellipsis-text" sx={sx}>
-          {customTruncateFold?.length === 2 && isGalaxyFoldSmall
-            ? truncateCustom(value, customTruncateFold[0], customTruncateFold[1])
-            : getShortHash(value)}
-          {isCopy && <CopyButton text={value} />}
-          {afterElm && <StyledAfterElm>{afterElm}</StyledAfterElm>}
-        </ContainerShortHand>
-      </CustomTooltip>
+      <ContainerShortHand>
+        <CustomTooltip title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}>
+          <ContainerShortHand id={randomIdRef.current} data-testid="ellipsis-text" sx={sx}>
+            {customTruncateFold?.length === 2 && isGalaxyFoldSmall
+              ? truncateCustom(value, customTruncateFold[0], customTruncateFold[1])
+              : getShortHash(value)}
+          </ContainerShortHand>
+        </CustomTooltip>
+        {isCopy && <CopyButton text={value} />}
+        {afterElm && <StyledAfterElm>{afterElm}</StyledAfterElm>}
+      </ContainerShortHand>
     );
   }
 

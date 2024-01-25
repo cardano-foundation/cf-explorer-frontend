@@ -35,12 +35,6 @@ const NativeScriptsDetail = () => {
 
   const smartcontractTabs: TTab[] = [
     {
-      key: "associatedAddresses",
-      icon: AssociatedAddressesIcon,
-      children: <AssociatedAddress />,
-      label: <Box data-testid="ns.AssociatedAddresses">{t("common.associatedAddresses")}</Box>
-    },
-    {
       key: "mintingBurningPolicy",
       icon: MintingBurningPolicyIcon,
       children: <MinttingBurningPolicy />,
@@ -63,12 +57,17 @@ const NativeScriptsDetail = () => {
       icon: AssetHoldersIcon,
       children: <AssetHolders />,
       label: <Box data-testid="ns.assetHolders"> Asset Holders</Box>
+    },
+    {
+      key: "associatedAddresses",
+      icon: AssociatedAddressesIcon,
+      children: <AssociatedAddress />,
+      label: <Box data-testid="ns.AssociatedAddresses">{t("common.associatedAddresses")}</Box>
     }
   ];
 
   const hiddenKeys = useMemo(() => {
     const keys: string[] = [];
-    // if (!associatedAddress?.length) keys.push("associatedAddresses");
     if (!keyHashes?.length) keys.push("mintingBurningPolicy");
     return keys;
   }, [associatedAddress, keyHashes]);
@@ -94,7 +93,9 @@ const NativeScriptsDetail = () => {
         }}
       />
       <HeaderOverview data={{ scriptHash: id }} />
-      <CustomAccordion loading={loading} tabs={smartcontractTabs} hiddenKeys={hiddenKeys} onTabChange={onTabChange} />
+      <Box sx={{ [theme.breakpoints.down("sm")]: { px: 2 } }}>
+        <CustomAccordion loading={loading} tabs={smartcontractTabs} hiddenKeys={hiddenKeys} onTabChange={onTabChange} />
+      </Box>
     </StyledContainer>
   );
 };

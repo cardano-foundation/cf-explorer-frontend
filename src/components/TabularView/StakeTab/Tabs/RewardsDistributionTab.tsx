@@ -77,7 +77,9 @@ const RewardsDistributionTab = () => {
             sortKey="id"
             filterValue={omit(pageInfo, ["page", "size"])}
             onSubmit={(params) =>
-              history.replace({ search: params ? stringify({ ...pageInfo, page: 0, ...params }) : "" })
+              history.replace({
+                search: Object.keys(params).length ? stringify({ ...pageInfo, page: 0, ...params }) : ""
+              })
             }
           />
         </Box>
