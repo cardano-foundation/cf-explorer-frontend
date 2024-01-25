@@ -196,6 +196,8 @@ import TxConfirm from "./icons/txConfirm.svg?react";
 import SlotIcon from "./icons/slot.svg?react";
 import TxInputIcon from "./icons/txInput.svg?react";
 import TxOutputIcon from "./icons/txOutput.svg?react";
+import VerifiedIcon from "./icons/verified.svg?react";
+import InvalidIcon from "./icons/invalid.svg?react";
 import StakingLifecycleComponent from "./icons/menus/stakingLifecycle.svg?react";
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
@@ -395,7 +397,9 @@ export {
   PoolDeresgistrationHistoryDark,
   PoolUpdateHistoryDark,
   LightModeMobile,
-  DarkModeMobile
+  DarkModeMobile,
+  VerifiedIcon,
+  InvalidIcon
 };
 
 import AIcon from "./icons/AIcon.svg?react";
@@ -570,6 +574,8 @@ import MultiSig from "./icons/multiSig.svg?react";
 import SortNative from "./icons/sortNative.svg?react";
 import ShowMore from "./icons/showmore.svg?react";
 import ShowLess from "./icons/showless.svg?react";
+import BolsiniAddress from "./icons/bolsiniAddress.svg?react";
+import DrawerClose from "./icons/drawerClose.svg?react";
 
 export {
   StakingLifecycleComponent,
@@ -744,5 +750,7 @@ export {
   WarningCIPIcon,
   CheckedCIPIcon,
   SmallInfoIcon,
-  CIP60WarningIcon
+  CIP60WarningIcon,
+  BolsiniAddress,
+  DrawerClose
 };
