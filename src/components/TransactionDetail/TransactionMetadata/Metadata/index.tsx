@@ -1,8 +1,9 @@
-import { Box, Grid, useTheme } from "@mui/material";
+import { Box, Grid, Skeleton, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { isEmpty, isNil } from "lodash";
 import { t } from "i18next";
+import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
 import { decryptCardanoMessage, isJson } from "src/commons/utils/helper";
@@ -22,7 +23,6 @@ import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { CustomNumberBadge } from "src/components/commons/CustomNumberBadge";
 import { details } from "src/commons/routers";
-import bolnisiImageDefault from "src/commons/resources/icons/bolsiniImageDefault.png";
 
 import {
   BadgeContainer,
@@ -47,6 +47,7 @@ import {
   Wrapper
 } from "./styles";
 import BolnisiWineDrawer from "./BolnisiWineDrawer";
+import DefaultImageWine from "./DefaultImageWine";
 
 interface MetadataProps {
   data?: Transaction["metadata"];
@@ -547,6 +548,9 @@ const Wineries: React.FC<{ wineryData?: Transaction["metadata"][number]["metadat
   const theme = useTheme();
   const history = useHistory();
   const { trxHash } = useParams<{ trxHash: string }>();
+
+  const { wineryName, wineryNameLoading } = useSelector(({ system }: RootState) => system);
+
   if (!wineryData) return null;
 
   return (
@@ -568,52 +572,73 @@ const Wineries: React.FC<{ wineryData?: Transaction["metadata"][number]["metadat
           <CustomNumberBadge ml="0px" value={wineryData?.length} />
         </MetaDataValue>
       </Box>
-      <Box component={Grid} container spacing={2}>
-        {wineryData?.map((winery, idx) => {
-          return (
-            <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
-              <Box height={"100%"}>
-                <ItemBolnisi>
-                  <Box display={"flex"} alignItems={"center"} flexWrap={"wrap"} gap={2}>
-                    <Box component={"img"} src={bolnisiImageDefault} width={60} height={60} borderRadius={"50%"} />
-                    <Box>
-                      <Box fontWeight={"bold"} mb={1} color={theme.palette.secondary.main}>
-                        Georgian Wine
-                      </Box>
-                      <Box display={"flex"} alignItems={"center"}>
-                        <BolsiniAddress fill={theme.palette.secondary.light} />
-                        <Box
-                          component={"span"}
-                          pl={0.5}
-                          fontSize={14}
-                          color={theme.palette.secondary.light}
-                          lineHeight={1}
-                        >
-                          Sulkhan-Saba Orbeliani 79, Bolnisi
+      {wineryNameLoading && (
+        <Box component={Grid} container spacing={2}>
+          {new Array(3).fill(0).map((_, idx) => {
+            return (
+              <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
+                <Box component={Skeleton} variant="rectangular" borderRadius={"10px"} height={150} />
+              </Grid>
+            );
+          })}
+        </Box>
+      )}
+
+      {!wineryNameLoading && (
+        <Box component={Grid} container spacing={2}>
+          {wineryData?.map((winery, idx) => {
+            const getWineName = (wineryId: string) => {
+              if (wineryName && wineryName[`${wineryId}`]) {
+                return wineryName[`${wineryId}`].name;
+              }
+              return "";
+            };
+
+            return (
+              <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
+                <Box height={"100%"}>
+                  <ItemBolnisi>
+                    <Box display={"flex"} alignItems={"center"} flexWrap={"wrap"} gap={2}>
+                      <Box component={DefaultImageWine} name={getWineName(winery.wineryId) || ""} />
+                      <Box>
+                        <Box fontWeight={"bold"} mb={1} color={theme.palette.secondary.main}>
+                          {getWineName(winery.wineryId)}
+                        </Box>
+                        <Box display={"flex"} alignItems={"center"}>
+                          <BolsiniAddress fill={theme.palette.secondary.light} />
+                          <Box
+                            component={"span"}
+                            pl={0.5}
+                            fontSize={14}
+                            color={theme.palette.secondary.light}
+                            lineHeight={1}
+                          >
+                            Sulkhan-Saba Orbeliani 79, Bolnisi
+                          </Box>
                         </Box>
                       </Box>
                     </Box>
-                  </Box>
-                  <Box position={"absolute"} top={"12px"} right={"12px"}>
-                    <VerifyBadge status={winery.pkeyVerified} />
-                  </Box>
-                  <Box
-                    component={ViewWineButton}
-                    width={"100%"}
-                    mt={2}
-                    onClick={() => {
-                      history.push(details.transaction(trxHash, "metadata", winery.wineryId));
-                    }}
-                    disabled={!winery.pkeyVerified}
-                  >
-                    {t("bolsini.viewWineLots")}
-                  </Box>
-                </ItemBolnisi>
-              </Box>
-            </Grid>
-          );
-        })}
-      </Box>
+                    <Box position={"absolute"} top={"12px"} right={"12px"}>
+                      <VerifyBadge status={winery.pkeyVerified} />
+                    </Box>
+                    <Box
+                      component={ViewWineButton}
+                      width={"100%"}
+                      mt={2}
+                      onClick={() => {
+                        history.push(details.transaction(trxHash, "metadata", winery.wineryId));
+                      }}
+                      disabled={!winery.pkeyVerified}
+                    >
+                      {t("bolsini.viewWineLots")}
+                    </Box>
+                  </ItemBolnisi>
+                </Box>
+              </Grid>
+            );
+          })}
+        </Box>
+      )}
       <BolnisiWineDrawer />
     </Box>
   );

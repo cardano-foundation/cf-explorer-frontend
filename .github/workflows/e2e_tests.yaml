@@ -40,9 +40,11 @@ jobs:
           then
             echo "REACT_APP_MAINNET_APP_URL=${{ github.event.inputs.MAINNET_FRONTEND_URL }}" >> .env
             echo "REACT_APP_API_URL=${{ github.event.inputs.MAINNET_API_URL }}" >> .env
+            echo "REACT_APP_BOLNISI_NAME_API=${{ github.event.inputs.REACT_APP_BOLNISI_NAME_API }}" >> .env
             echo "CYPRESS_BASE_URL=${{ github.event.inputs.MAINNET_FRONTEND_URL }}" >> .env
           else
             echo "REACT_APP_MAINNET_APP_URL=${EXPLORER_API_MAINNET_URL}" >> .env
+            echo "REACT_APP_BOLNISI_NAME_API=${{ github.event.inputs.REACT_APP_BOLNISI_NAME_API }}" >> .env
             echo "REACT_APP_API_URL=${EXPLORER_API_MAINNET_URL}" >> .env
           fi
 
