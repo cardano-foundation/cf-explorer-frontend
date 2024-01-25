@@ -72,7 +72,7 @@ const TabNativeScripts = () => {
   }, [JSON.stringify(data)]);
 
   useEffect(() => {
-    if (optionList.indexOf(pageInfo.size) + 1) {
+    if (optionList.indexOf(pageInfo.size) + 1 && tabActive === "native-scripts") {
       setSize(pageInfo.size);
       setSort(pageInfo.sort !== "" ? pageInfo.sort : "numberOfAssetHolders,DESC");
       setIsMultiSig(pageInfo?.isMultiSig || "");

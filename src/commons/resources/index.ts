@@ -32,7 +32,6 @@ import DelegatePoolMenuIcon from "./icons/menus/delegate.svg";
 import OperationalIcon from "./icons/menus/Operational.svg";
 import ProtocolParameterIcon from "./icons/protocolParameter.svg";
 import BrowseIcon from "./icons/menus/browser.svg";
-import ResourcesIcon from "./icons/menus/resources.svg";
 import RocketPoolIcon from "./icons/rocket-pool.svg";
 import RocketPoolDarkIcon from "./icons/rocket-pool-dark.svg";
 import TokenADA from "./icons/tokenADA.svg";
@@ -199,6 +198,7 @@ import TxInputIcon from "./icons/txInput.svg?react";
 import TxOutputIcon from "./icons/txOutput.svg?react";
 import VerifiedIcon from "./icons/verified.svg?react";
 import InvalidIcon from "./icons/invalid.svg?react";
+import StakingLifecycleComponent from "./icons/menus/stakingLifecycle.svg?react";
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
 export {
@@ -254,7 +254,6 @@ export {
   LowestIcon,
   BrowseIcon,
   StakingLifecycleIcon,
-  ResourcesIcon,
   SeeMoreIcon,
   TickerIcon,
   TickerIconComponent,
@@ -579,6 +578,7 @@ import BolsiniAddress from "./icons/bolsiniAddress.svg?react";
 import DrawerClose from "./icons/drawerClose.svg?react";
 
 export {
+  StakingLifecycleComponent,
   AIcon,
   CheckNotRequiredCIPIcon,
   FilterVersionIcon,

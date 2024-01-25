@@ -2,15 +2,15 @@ import { Box } from "@mui/material";
 import { stringify } from "qs";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import { Column } from "src/types/table";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table from "src/components/commons/Table";
-import { Column } from "src/types/table";
 
 import { StyledLink } from "../BlockList/styles";
 import { ButtonViewModal } from "./styles";
@@ -28,6 +28,10 @@ const TabTransactions = () => {
     tabActive === "transactions" ? API.SCRIPTS.SCRIPT_TXS_DETAIL(address) : "",
     pageInfo
   );
+
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, [fetchData]);
 
   const columns: Column<ScriptContractTransactions>[] = [
     {

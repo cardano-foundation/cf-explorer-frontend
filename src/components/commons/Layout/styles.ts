@@ -167,6 +167,7 @@ export const Main = styled(Box)<{ open: number }>(({ theme, open }) => ({
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen
   }),
+
   ...(open && {
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.easeOut,
@@ -174,11 +175,12 @@ export const Main = styled(Box)<{ open: number }>(({ theme, open }) => ({
     }),
     width: `calc(100vw - ${drawerWidth}px)`
   }),
+
   [theme.breakpoints.down("md")]: {
     paddingTop: 80,
     width: "100vw",
-    minHeight: "calc(100vh - 136px)",
-    height: "auto"
+    minHeight: "calc(100vh - 100px)",
+    height: "100vh"
   },
   [theme.breakpoints.down("sm")]: {
     minHeight: "calc(100vh - 263px)"

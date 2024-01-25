@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
 
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
@@ -12,6 +13,10 @@ import { useNativeScriptDetail } from ".";
 const MinttingBurningPolicy = () => {
   const { t } = useTranslation();
   const { before, after, keyHashes, isOneTimeMint } = useNativeScriptDetail();
+
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, [before]);
 
   const getType = () => {
     const types: string[] = [];

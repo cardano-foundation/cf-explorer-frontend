@@ -82,15 +82,17 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
 
   return (
     <Item>
-      <Box p={2} height={"100%"} ref={cardRef}>
+      <Box
+        p={2}
+        height={"100%"}
+        display={"block"}
+        component={Link}
+        to={details.nativeScriptDetail(data.scriptHash)}
+        ref={cardRef}
+      >
         <Row>
           <Title>{t("common.scriptHash")}: </Title>
-          <Box
-            width={"calc(100% - 100px)"}
-            component={Link}
-            to={details.nativeScriptDetail(data.scriptHash)}
-            color={`${theme.palette.primary.main} !important`}
-          >
+          <Box width={"calc(100% - 100px)"} color={`${theme.palette.primary.main} !important`}>
             <DynamicEllipsisText customTruncateFold={[4, 4]} value={data.scriptHash || ""} isTooltip />
           </Box>
         </Row>
@@ -191,15 +193,10 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) =
 
   return (
     <Item>
-      <Box p={2} height={"100%"}>
+      <Box p={2} height={"100%"} display={"block"} component={Link} to={details.smartContract(data.scriptHash)}>
         <Row>
           <Title>{t("common.scriptHash")}: </Title>
-          <Box
-            width={"calc(100% - 100px)"}
-            component={Link}
-            to={details.smartContract(data.scriptHash)}
-            color={`${theme.palette.primary.main} !important`}
-          >
+          <Box width={"calc(100% - 100px)"} color={`${theme.palette.primary.main} !important`}>
             <DynamicEllipsisText customTruncateFold={[4, 4]} value={data.scriptHash || ""} isTooltip />
           </Box>
         </Row>
@@ -215,7 +212,11 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) =
               minWidth={24}
               ml={1}
               borderRadius={"50%"}
-              onClick={() => setOpenDesPlutusVersion(true)}
+              onClick={(event) => {
+                setOpenDesPlutusVersion(true);
+                event.stopPropagation();
+                event.preventDefault();
+              }}
             >
               <InfoSolidIcon />
             </Box>
