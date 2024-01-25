@@ -32,7 +32,6 @@ import DelegatePoolMenuIcon from "./icons/menus/delegate.svg";
 import OperationalIcon from "./icons/menus/Operational.svg";
 import ProtocolParameterIcon from "./icons/protocolParameter.svg";
 import BrowseIcon from "./icons/menus/browser.svg";
-import ResourcesIcon from "./icons/menus/resources.svg";
 import RocketPoolIcon from "./icons/rocket-pool.svg";
 import RocketPoolDarkIcon from "./icons/rocket-pool-dark.svg";
 import TokenADA from "./icons/tokenADA.svg";
@@ -197,6 +196,8 @@ import TxConfirm from "./icons/txConfirm.svg?react";
 import SlotIcon from "./icons/slot.svg?react";
 import TxInputIcon from "./icons/txInput.svg?react";
 import TxOutputIcon from "./icons/txOutput.svg?react";
+import VerifiedIcon from "./icons/verified.svg?react";
+import InvalidIcon from "./icons/invalid.svg?react";
 import StakingLifecycleComponent from "./icons/menus/stakingLifecycle.svg?react";
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
@@ -253,7 +254,6 @@ export {
   LowestIcon,
   BrowseIcon,
   StakingLifecycleIcon,
-  ResourcesIcon,
   SeeMoreIcon,
   TickerIcon,
   TickerIconComponent,
@@ -397,7 +397,9 @@ export {
   PoolDeresgistrationHistoryDark,
   PoolUpdateHistoryDark,
   LightModeMobile,
-  DarkModeMobile
+  DarkModeMobile,
+  VerifiedIcon,
+  InvalidIcon
 };
 
 import AIcon from "./icons/AIcon.svg?react";
@@ -575,6 +577,16 @@ import ShowLess from "./icons/showless.svg?react";
 import PlusSquareIcon from "./icons/plus-square.svg?react";
 import MinusSquareIcon from "./icons/minus-square.svg?react";
 import CloseSquareIcon from "./icons/close-square.svg?react";
+import OpenTimeLock from "./icons/openTimeLock.svg?react";
+import LockedTimelock from "./icons/lockedTimelock.svg?react";
+import SigNative from "./icons/sigNative.svg?react";
+import NativeSig from "./icons/NativeSig.svg?react";
+import NativeStatus from "./icons/NativeStatus.svg?react";
+import NativeTimelock from "./icons/NativeTimelock.svg?react";
+import NativeType from "./icons/NativeType.svg?react";
+import NativeOneMint from "./icons/NativeOneMint.svg?react";
+import BolsiniAddress from "./icons/bolsiniAddress.svg?react";
+import DrawerClose from "./icons/drawerClose.svg?react";
 
 export {
   StakingLifecycleComponent,
@@ -752,5 +764,15 @@ export {
   CIP60WarningIcon,
   PlusSquareIcon,
   CloseSquareIcon,
-  MinusSquareIcon
+  MinusSquareIcon,
+  OpenTimeLock,
+  LockedTimelock,
+  SigNative,
+  NativeSig,
+  NativeStatus,
+  NativeTimelock,
+  NativeType,
+  NativeOneMint,
+  BolsiniAddress,
+  DrawerClose
 };

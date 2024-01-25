@@ -178,7 +178,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
     },
     {
       title: t("glossary.Token"),
-      minWidth: 120,
+      minWidth: 250,
       key: "totalOutput",
       render: (transaction) => {
         const type = transaction?.balance >= 0 ? "up" : "down";
@@ -191,7 +191,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
           }));
         }
         return (
-          <Box display={"flex"} alignItems={"center"}>
+          <Box display={"flex"} alignItems={"center"} maxWidth={{ xs: "200px", md: "250px" }} flexWrap="wrap">
             {transaction.tokens && transaction.tokens.length === 1 && <TokenLink isSuccess={true} token={tokens[0]} />}
             {transaction.tokens && transaction.tokens.length > 1 && (
               <DropdownTokens isSuccess={true} tokens={tokens} type={type} hideInputLabel hideMathChar />
