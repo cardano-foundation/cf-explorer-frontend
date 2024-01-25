@@ -81,7 +81,6 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void 
   const [sort, setSort] = useState<string>("time,DESC");
   const [{ page, size }, setPagination] = useState<{ page: number; size: number }>({ page: 0, size: 50 });
   const fetchData = useFetchList<SPO_REWARD>(API.SPO_LIFECYCLE.REWARD(poolId), { page, size, sort });
-  const minHeightTable = 60;
 
   const columns: Column<SPO_REWARD>[] = [
     {
@@ -121,7 +120,7 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void 
     }
   ];
   return (
-    <CustomModal {...props} title={t("common.TotalOperatorRewardsReceived")} width={600} isCenterWithoutPosition={true}>
+    <CustomModal {...props} title={t("common.TotalOperatorRewardsReceived")} width={600}>
       <ModalContainer>
         <RewardBalance>
           {theme.isDark ? <WalletIconRewardGreenDark /> : <WalletIconRewardGreen />}
@@ -148,7 +147,6 @@ const OperatorRewardModal = ({ ...props }: { open: boolean; onClose: () => void 
             onChange: (page, size) => setPagination({ page: page - 1, size })
           }}
           isModal
-          minHeight={minHeightTable}
         />
       </ModalContainer>
     </CustomModal>

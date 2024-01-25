@@ -1,7 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import { stringify } from "qs";
 import { useTranslation } from "react-i18next";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { MouseEvent } from "react";
 
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -19,8 +19,10 @@ import Table, { Column } from "src/components/commons/Table";
 
 import { Img, StyledContainer, StyledLink } from "./styles";
 
-const TransactionTab: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) => {
-  return <TransactionListFull url={`${API.STAKE.DETAIL}/${stakeAddress}/txs`} showTitle={false} />;
+const TransactionTab = () => {
+  const { stakeId } = useParams<{ stakeId: string }>();
+
+  return <TransactionListFull url={`${API.STAKE.DETAIL}/${stakeId}/txs`} showTitle={false} />;
 };
 
 interface TransactionListFullProps {

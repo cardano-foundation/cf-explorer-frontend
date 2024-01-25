@@ -177,7 +177,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                     {loading ? (
                       <SkeletonUI variant="rectangular" />
                     ) : !data?.[selected] ? (
-                      t("common.notAvailable")
+                      t("common.N/A")
                     ) : selected === "epochChart" ? (
                       formatADAFull(maxTotalStake)
                     ) : (
@@ -196,7 +196,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
                     {loading ? (
                       <SkeletonUI variant="rectangular" />
                     ) : !data?.[selected] ? (
-                      t("common.notAvailable")
+                      t("common.N/A")
                     ) : selected === "epochChart" ? (
                       formatADAFull(minTotalStake)
                     ) : (

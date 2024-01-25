@@ -162,14 +162,13 @@ interface DMetadata {
   decimals: number;
 }
 
-type TTCIPProperties = {
+type TTCIP25Properties = {
   index: string;
   property: string;
   format: string;
   value: string;
   valid: boolean;
 };
-
 interface Transaction {
   tx: {
     hash: string;
@@ -254,15 +253,12 @@ interface Transaction {
   metadata: {
     label: number;
     value: string;
-    metadataCIP25: CIP;
-    metadataCIP60: CIP;
+    metadataCIP25: {
+      tokenMap?: TokenMap;
+      valid?: boolean;
+      version?: TTCIP25Properties;
+    };
   }[];
-}
-
-interface CIP {
-  tokenMap?: TokenMap;
-  valid?: boolean;
-  version?: TTCIP25Properties;
 }
 
 interface TokenMap

@@ -1,5 +1,9 @@
-name: Run Explorer e2e against URL
+
+name: Run Explorer e2e Tests
 on:
+  pull_request:
+    types: [ opened, synchronize ]
+
   workflow_dispatch:
     inputs:
       MAINNET_FRONTEND_URL:

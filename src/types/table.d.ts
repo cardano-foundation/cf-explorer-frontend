@@ -109,9 +109,6 @@ export interface TableProps<T extends ColumnType = any> {
   tableWrapperProps?: BoxProps;
   isModal?: boolean;
   onCallBackHeight?: (height: number) => void;
-  isCenterLoading?: boolean;
-  headerTableHeight?: number;
-  visibleTableWidth?: number;
 }
 
 export interface FooterTableProps {
