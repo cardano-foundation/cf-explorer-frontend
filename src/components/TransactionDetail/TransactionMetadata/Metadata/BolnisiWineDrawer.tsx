@@ -248,6 +248,15 @@ interface WineDetailModalProps {
 }
 
 const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, indexWine, ...props }) => {
+  const { wineryId } = useParams<{ wineryId: string; trxHash: string }>();
+  const { wineryName } = useSelector(({ system }: RootState) => system);
+  const getWineName = (wineryId: string) => {
+    if (wineryName && wineryName[`${wineryId}`]) {
+      return wineryName[`${wineryId}`].name;
+    }
+    return "";
+  };
+
   if (!wineData) return null;
 
   const { offChainData } = wineData;
@@ -291,7 +300,7 @@ const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, indexWine, 
       }}
       title={
         <CIPLabel>
-          <span>{t("bolnisi.titleModal")}</span>
+          <span>{getWineName(wineryId)}</span>
         </CIPLabel>
       }
     >
