@@ -94,7 +94,7 @@ const StakeKeyBox = ({ data }: TProps) => {
                       }}
                     >
                       {value.map((item) => (
-                        <Box key={item}>
+                        <Box className="ValueItem" key={item}>
                           <TextValue>
                             <Link to={details.stake(item || "")}>
                               <EllipsisContainer width={"100%"}>

@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 
 import CustomModal from "src/components/commons/CustomModal";
 
-import CompiledCodeDataCard from "../common/CompiledCodeDataCard";
 import ExplanDropdown from "../common/ExplanDropdown";
+import CompiledCodeDataCard from "../common/CompiledCodeDataCard";
 import { ModalContent } from "./styles";
 
 type Data = { title: string; value?: string };
