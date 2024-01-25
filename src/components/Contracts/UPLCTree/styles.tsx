@@ -39,7 +39,7 @@ export const StyledTreeItem = styled(TreeItem)(({ theme }) => ({
     }
   },
   [`& .${treeItemClasses.selected}`]: {
-    backgroundColor: "transparent !important"
+    backgroundColor: "transparent"
   },
   [`& .${treeItemClasses.label}`]: {
     color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light,
