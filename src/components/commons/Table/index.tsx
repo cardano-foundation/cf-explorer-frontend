@@ -9,11 +9,10 @@ import {
   useScrollTrigger,
   useTheme
 } from "@mui/material";
-import { useTranslation } from "react-i18next";
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 
-import breakpoints from "src/themes/breakpoints";
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
   DownIcon,
@@ -27,6 +26,7 @@ import {
   StartPage
 } from "src/commons/resources";
 import { getPageInfo, handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
+import breakpoints from "src/themes/breakpoints";
 import {
   ColumnType,
   FooterTableProps,
@@ -37,8 +37,10 @@ import {
 } from "src/types/table";
 
 import CustomIcon from "../CustomIcon";
+import { Lowercase } from "../CustomText/styles";
 import Filter from "../Filter";
 import NoRecord from "../NoRecord";
+import NotAvailable from "../NotAvailable";
 import {
   Empty,
   InputNumber,
@@ -63,8 +65,6 @@ import {
   TotalNumber,
   Wrapper
 } from "./styles";
-import { Lowercase } from "../CustomText/styles";
-import NotAvailable from "../NotAvailable";
 
 const SPACING_TOP_TABLE = 300;
 
@@ -192,8 +192,9 @@ const TableRow = <T extends ColumnType>({
 }: TableRowProps<T>) => {
   const colRef = useRef(null);
   const theme = useTheme();
-  const rowRef = useRef<HTMLTableRowElement>(null);
   const { isMobile } = useScreen();
+
+  const rowRef = useRef<HTMLTableRowElement>(null);
 
   useEffect(() => {
     onCallBackHeight?.(rowRef?.current?.clientHeight || 0);
@@ -437,7 +438,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({
 
 const Table: React.FC<TableProps> = ({
   columns,
-  data: currentData,
+  data,
   screen,
   total,
   pagination,
@@ -466,6 +467,7 @@ const Table: React.FC<TableProps> = ({
   isModal,
   height,
   minHeight,
+  isFullTableHeight = false,
   isCenterLoading
 }) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
@@ -475,23 +477,30 @@ const Table: React.FC<TableProps> = ({
   const tableRef = useRef<HTMLTableElement>(null);
   const [maxHeightTable, setMaxHeightTable] = useState<number>(0);
   const wrapperRef = useRef<HTMLElement>(null);
-  const data = currentData;
-
   const { width } = useScreen();
+  const scrollHeight = 5;
 
-  let heightTable = Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight * 0.5);
+  const tableFullHeight = useMemo(
+    () => (tableRef?.current?.clientHeight || 0) + scrollHeight,
+    [tableRef?.current?.clientHeight]
+  );
 
-  if (width >= breakpoints.values.sm && (data || []).length >= 9) {
-    const footerHeight = document.getElementById("footer")?.offsetHeight || SPACING_TOP_TABLE;
-    const spaceTop =
-      Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight) - (footerHeight + SPACING_TOP_TABLE) < 200
-        ? 0
-        : SPACING_TOP_TABLE;
-    heightTable = window.innerHeight - (footerHeight + spaceTop);
-  }
+  const heightTable = useMemo(() => {
+    let heightTable = Math.min((tableRef?.current?.clientHeight || 0) + scrollHeight, window.innerHeight * 0.5);
+
+    if (width >= breakpoints.values.sm && (data || []).length >= 9) {
+      const footerHeight = document.getElementById("footer")?.offsetHeight || SPACING_TOP_TABLE;
+      const spaceTop =
+        Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight) - (footerHeight + SPACING_TOP_TABLE) < 200
+          ? 0
+          : SPACING_TOP_TABLE;
+      heightTable = window.innerHeight - (footerHeight + spaceTop);
+    }
+    return heightTable;
+  }, [tableRef?.current?.clientHeight]);
 
   const onCallBackHeight = (rowHeight: number) => {
-    if (!maxHeightTable) setMaxHeightTable(rowHeight > 70 ? rowHeight * 5 : rowHeight * 9);
+    if (!maxHeightTable) setMaxHeightTable(rowHeight * 9);
   };
 
   const tableContainerRef = useRef<HTMLDivElement>(null);
@@ -535,7 +544,7 @@ const Table: React.FC<TableProps> = ({
         ref={wrapperRef}
         maxHeight={maxHeight || maxHeightTable}
         minHeight={minHeight ? minHeight : (!data || data.length === 0) && !loading ? 360 : loading ? 400 : 15}
-        height={height || heightTable}
+        height={height || (isFullTableHeight ? tableFullHeight : heightTable)}
         ismodal={+!!isModal}
         className={data && data.length !== 0 ? "table-wrapper" : "hide-scroll"}
         loading={loading ? 1 : 0}
