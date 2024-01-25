@@ -75,6 +75,9 @@ In the terminal run command: `cp .env.example .env`
 - Configure supported network names (`mainnet`, `preprod` or `preview`)
   > Example: `REACT_APP_NETWORK_NAMES="{"mainnet":"Mainnet","preprod":"Preprod", ...}"`
 
+- Update link takes the name of Bolnisi wine
+  > Example: `REACT_APP_BOLNISI_NAME_API="https://minio.pro.cf-bolnisi-mainnet.eu-west-1.bnwa.metadata.dev.cf-deployments.org/georgian-wine/public/winerymapping.json"`
+
 **Step 4** Run on localhost
 
 Runs the app in the development mode.

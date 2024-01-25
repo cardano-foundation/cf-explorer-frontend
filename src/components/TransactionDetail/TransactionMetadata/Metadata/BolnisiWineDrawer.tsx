@@ -4,9 +4,9 @@ import converter from "number-to-words";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { t } from "i18next";
 import { IoMdClose } from "react-icons/io";
+import { useSelector } from "react-redux";
 
 import { BolsiniAddress, SeeMoreIconHome, VerifiedIcon } from "src/commons/resources";
-import bolnisiImageDefault from "src/commons/resources/icons/bolsiniImageDefault.png";
 import { details } from "src/commons/routers";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -15,6 +15,8 @@ import { Column } from "src/types/table";
 import Table from "src/components/commons/Table";
 import { ViewDetailDrawer } from "src/components/commons/DetailView/styles";
 import { TBody, TCol, THead, THeader, TableFullWidth } from "src/components/commons/Table/styles";
+
+import DefaultImageWine from "./DefaultImageWine";
 
 import { VerifyBadge } from ".";
 
@@ -29,6 +31,15 @@ const BolnisiWineDrawer = () => {
   const { data, loading } = useFetch<WineryData>(
     wineryId && trxHash ? API.TRANSACTION.WINERY_DETAIL(trxHash, wineryId) : ""
   );
+
+  const { wineryName, wineryNameLoading } = useSelector(({ system }: RootState) => system);
+
+  const getWineName = (wineryId: string) => {
+    if (wineryName && wineryName[`${wineryId}`]) {
+      return wineryName[`${wineryId}`].name;
+    }
+    return "";
+  };
 
   useEffect(() => {
     if (wineryId) {
@@ -73,13 +84,13 @@ const BolnisiWineDrawer = () => {
           <IoMdClose color={theme.palette.secondary.light} />
         </CloseButton>
 
-        {loading && renderLoading()}
+        {loading && wineryNameLoading && renderLoading()}
 
-        {!loading && (
+        {!loading && !wineryNameLoading && (
           <Box>
             <Header>
               <Box width={100} height={100} borderRadius={"50%"} mx={"auto"} position={"relative"}>
-                <Box component={"img"} src={bolnisiImageDefault} width={100} height={100} borderRadius={"50%"} />
+                <DefaultImageWine width={"100px"} height={"100px"} fontSize="36px" name={getWineName(wineryId) || ""} />
                 <Box
                   position={"absolute"}
                   width={32}
@@ -98,7 +109,7 @@ const BolnisiWineDrawer = () => {
 
               <Box mt={2}>
                 <Box fontWeight={"bold"} mb={1} fontSize={20} color={theme.palette.secondary.main}>
-                  Georgian Wine
+                  {getWineName(wineryId)}
                 </Box>
                 <Box display={"flex"} alignItems={"center"} justifyContent={"center"}>
                   <BolsiniAddress fill={theme.palette.secondary.light} />
