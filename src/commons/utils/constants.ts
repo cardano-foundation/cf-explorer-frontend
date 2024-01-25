@@ -127,6 +127,7 @@ export const CARDANO_NEWS_URL = process.env.REACT_APP_CARDANO_NEWS_URL || get(wi
 export const APP_VERSION = process.env.REACT_APP_VERSION || get(window, "env.REACT_APP_VERSION");
 export const EXT_ADA_PRICE_URL =
   process.env.REACT_APP_EXT_ADA_PRICE_URL || get(window, "env.REACT_APP_EXT_ADA_PRICE_URL");
+export const BOLNISI_NAME_API = process.env.REACT_APP_BOLNISI_NAME_API || get(window, "env.REACT_APP_BOLNISI_NAME_API");
 
 export enum ACCOUNT_ERROR {
   UNKNOWN_ERROR = "CC_1",

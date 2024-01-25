@@ -4,6 +4,7 @@
 <img alt="Tests" src="https://github.com/cardano-foundation/cf-explorer-frontend/actions/workflows/tests.yaml/badge.svg" />
 <img alt="Release" src="https://github.com/cardano-foundation/cf-explorer-frontend/actions/workflows/release.yaml/badge.svg" />
 <img alt="Publish" src="https://github.com/cardano-foundation/cf-explorer-frontend/actions/workflows/publish.yaml/badge.svg" />
+<a href="https://app.fossa.com/reports/537ced0e-85fe-4d78-843b-f2ff2dd4faac"><img alt="FOSSA Status" src="https://app.fossa.com/api/projects/custom%2B41588%2Fgit%40github.com%3Acardano-foundation%2Fcf-explorer-frontend.git.svg?type=small"/></a>
 <a href="https://conventionalcommits.org"><img alt="conventionalcommits" src="https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits" /></a>
 </p>
 
@@ -73,6 +74,9 @@ In the terminal run command: `cp .env.example .env`
 
 - Configure supported network names (`mainnet`, `preprod` or `preview`)
   > Example: `REACT_APP_NETWORK_NAMES="{"mainnet":"Mainnet","preprod":"Preprod", ...}"`
+
+- Update link takes the name of Bolnisi wine
+  > Example: `REACT_APP_BOLNISI_NAME_API="https://minio.pro.cf-bolnisi-mainnet.eu-west-1.bnwa.metadata.dev.cf-deployments.org/georgian-wine/public/winerymapping.json"`
 
 **Step 4** Run on localhost
 

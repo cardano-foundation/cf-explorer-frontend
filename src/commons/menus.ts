@@ -1,4 +1,4 @@
-import { FaLinkedinIn, FaTelegramPlane, FaYoutube } from "react-icons/fa";
+import { FaLinkedinIn, FaTelegramPlane, FaYoutube, FaGithub } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
 
 import {
@@ -7,7 +7,6 @@ import {
   DashboardIcon,
   OperationalIcon,
   ProtocolIcon,
-  ResourcesIcon,
   StakingLifecycleIcon,
   TwitterX
 } from "./resources";
@@ -18,7 +17,7 @@ interface Menu {
   key?: string;
   href?: string;
   children?: Menu[];
-  icon?: string;
+  icon?: string | React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   tooltip?: string;
   isSpecialPath?: boolean;
 }
@@ -115,28 +114,21 @@ export const socials: Social[] = [
   { href: "https://www.linkedin.com/company/cardano-foundation/", title: "LinkedIn", icon: FaLinkedinIn },
   { href: "https://t.me/CardanoAnnouncements", title: "Telegram", icon: FaTelegramPlane },
   { href: "https://twitter.com/Cardano_CF", title: "Twitter", icon: TwitterX as IconType },
-  { href: "https://www.youtube.com/c/cardanofoundation", title: "Youtube", icon: FaYoutube }
+  { href: "https://www.youtube.com/c/cardanofoundation", title: "Youtube", icon: FaYoutube },
+  { href: "https://github.com/cardano-foundation/cf-explorer", title: "GitHub", icon: FaGithub }
 ];
 
 export const footerMenus: Menu[] = [
   {
-    title: "Browse",
-    key: "glossary.browse",
+    title: "Discover Cardano",
+    key: "glossary.discoverCardano",
     icon: BrowseIcon,
     children: [
-      { href: "https://cardanofoundation.org/en/about-us/", title: "About CF", key: "site.aboutCF" },
+      { href: "https://cardanofoundation.org/en/about-us/", title: "Cardano Foundation", key: "site.CF" },
       { href: "https://docs.cardano.org/en/latest/", title: "Cardano Docs", key: "site.cardanoDocs" },
-      { href: "https://cardanofoundation.org/en/news", title: "News and Blog", key: "site.newsAndBlog" }
-    ]
-  },
-  {
-    title: "Resources",
-    key: "site.resources",
-    icon: ResourcesIcon,
-    children: [
       { href: "https://education.cardanofoundation.org/", title: "Cardano Academy", key: "site.cardanoAcademy" },
-      { href: "https://developers.cardano.org/tools/", title: "Builder Tools", key: "site.builderTools" },
-      { href: "https://github.com/cardano-foundation/cf-explorer", title: "GitHub", key: "site.github" }
+      { href: "https://developers.cardano.org/", title: "Developer Portal", key: "site.developerPortal" },
+      { href: "https://cardanofoundation.org/en/news", title: "News and Blog", key: "site.newsAndBlog" }
     ]
   }
 ];

@@ -53,10 +53,6 @@ html {
     text-align: center;
     color: var(--text-color);
 
-    @media (max-width: 800px) {
-      overflow-y: hidden;
-    }
-
     & > iframe {
       pointer-events: none;
 
