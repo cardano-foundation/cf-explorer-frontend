@@ -574,6 +574,14 @@ import MultiSig from "./icons/multiSig.svg?react";
 import SortNative from "./icons/sortNative.svg?react";
 import ShowMore from "./icons/showmore.svg?react";
 import ShowLess from "./icons/showless.svg?react";
+import OpenTimeLock from "./icons/openTimeLock.svg?react";
+import LockedTimelock from "./icons/lockedTimelock.svg?react";
+import SigNative from "./icons/sigNative.svg?react";
+import NativeSig from "./icons/NativeSig.svg?react";
+import NativeStatus from "./icons/NativeStatus.svg?react";
+import NativeTimelock from "./icons/NativeTimelock.svg?react";
+import NativeType from "./icons/NativeType.svg?react";
+import NativeOneMint from "./icons/NativeOneMint.svg?react";
 import BolsiniAddress from "./icons/bolsiniAddress.svg?react";
 import DrawerClose from "./icons/drawerClose.svg?react";
 
@@ -751,6 +759,14 @@ export {
   CheckedCIPIcon,
   SmallInfoIcon,
   CIP60WarningIcon,
+  OpenTimeLock,
+  LockedTimelock,
+  SigNative,
+  NativeSig,
+  NativeStatus,
+  NativeTimelock,
+  NativeType,
+  NativeOneMint,
   BolsiniAddress,
   DrawerClose
 };
