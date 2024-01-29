@@ -63,9 +63,7 @@ const TopDelegationPools = () => {
       ),
       key: "poolSize",
       minWidth: "120px",
-      render: (r) => (
-        <Box component={"span"}>{r.poolSize != null ? formatADAFull(r.poolSize) : t("common.notAvailable")}</Box>
-      )
+      render: (r) => <Box component={"span"}>{r.poolSize != null ? formatADAFull(r.poolSize) : t("common.N/A")}</Box>
     },
     {
       title: t("glossary.saturation"),
@@ -84,7 +82,7 @@ const TopDelegationPools = () => {
             />
           </Box>
         ) : (
-          t("common.notAvailable")
+          t("common.N/A")
         )
     },
     {

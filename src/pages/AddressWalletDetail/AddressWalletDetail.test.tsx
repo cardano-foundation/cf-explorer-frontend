@@ -1,6 +1,5 @@
-import { render, screen } from "src/test-utils";
+import { render, screen, within } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
-import useADAHandle from "src/commons/hooks/useADAHandle";
 
 import AddressWalletDetail from ".";
 
@@ -13,16 +12,16 @@ const tokenMetadata: ITokenMetadata = {
   url: "http://example.com/token_info"
 };
 
-// const dataChart = [
-//   {
-//     date: "2023/08/02 02:00:00",
-//     value: 877854256653468
-//   },
-//   {
-//     date: "2023/08/02 04:00:00",
-//     value: 877854256653468
-//   }
-// ];
+const dataChart = [
+  {
+    date: "2023/08/02 02:00:00",
+    value: 877854256653468
+  },
+  {
+    date: "2023/08/02 04:00:00",
+    value: 877854256653468
+  }
+];
 
 // Mock data for the WalletAddress interface
 const walletAddress: WalletAddress = {
@@ -44,18 +43,24 @@ const walletAddress: WalletAddress = {
   verifiedContract: true
 };
 
-jest.mock("src/commons/hooks/useADAHandle");
 jest.mock("src/commons/hooks/useFetch");
 
 describe("AddressWalletDetail page", () => {
   beforeEach(() => {
-    (useADAHandle as jest.Mock).mockReturnValue([{ data: null, loading: false, initialized: true, error: false }]);
-    (useFetch as jest.Mock).mockReturnValue({ data: walletAddress, loading: false, initialized: true, error: false });
-    render(<AddressWalletDetail />);
+    (useFetch as jest.Mock).mockImplementation((url: string) => {
+      return {
+        data: url.includes("/addresses") ? walletAddress : dataChart,
+        loading: false,
+        initialized: true,
+        error: false
+      };
+    });
   });
   it("should component render", () => {
+    render(<AddressWalletDetail />);
+    const heading = screen.getByRole("heading", { name: /transactions/i });
     expect(screen.getByText(/analytics/i)).toBeInTheDocument();
     expect(screen.getByText(/address details/i)).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /Transactions/i })).toBeInTheDocument();
+    expect(within(heading).getByText(/transactions/i)).toBeInTheDocument();
   });
 });

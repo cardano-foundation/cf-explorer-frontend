@@ -309,7 +309,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             </InfoTitle>
             <InfoValue sx={{ wordBreak: "break-word" }}>
               <FlexGap10>
-                {data?.poolSize != null ? formatADAFull(data?.poolSize) : t("common.notAvailable")}
+                {data?.poolSize != null ? formatADAFull(data?.poolSize) : t("common.N/A")}
                 {data?.poolSize != null ? <ADAicon /> : ""}
               </FlexGap10>
             </InfoValue>
@@ -326,7 +326,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                   <ADAicon />
                 </FlexGap10>
               ) : (
-                <FlexGap10>{t("common.notAvailable")}</FlexGap10>
+                <FlexGap10>{t("common.N/A")}</FlexGap10>
               )}
             </InfoValue>
           </Item>
@@ -362,7 +362,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 {data?.saturation != null ? (
                   <Box fontSize={16}>{formatPercent(data?.saturation ? data?.saturation / 100 : 0)}</Box>
                 ) : (
-                  <FlexGap10> {t("common.notAvailable")}</FlexGap10>
+                  <FlexGap10> {t("common.N/A")}</FlexGap10>
                 )}
               </Box>
             </InfoValue>
