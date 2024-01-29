@@ -15,15 +15,14 @@ export const UPLCTree: React.FC<UPLCTreeProps> = ({ uplc }) => {
   const theme = useTheme();
   const getExpandedNodeIds = () => {
     if (!uplc) return [];
-    const nodeIds = ["root", ""];
+    const nodeIds = ["root"];
     let currentLevel = 1;
     const maxLevel = 3;
 
     // Get nodeIds with bread first search
     const queue: UPLCData[] = [];
-    uplc.data.forEach((it) => {
-      if (Array.isArray(it)) queue.push(...it);
-      else queue.push(it);
+    uplc.program.data.forEach((it) => {
+      queue.push(it);
     });
     while (queue.length > 0) {
       currentLevel++;
@@ -32,7 +31,7 @@ export const UPLCTree: React.FC<UPLCTreeProps> = ({ uplc }) => {
       for (let i = 0; i < size; i++) {
         const tmp = queue.shift();
         if (tmp && tmp.data) {
-          nodeIds.push(tmp.text);
+          nodeIds.push(String(tmp.id));
           queue.push(...tmp.data);
         }
       }
@@ -48,28 +47,25 @@ export const UPLCTree: React.FC<UPLCTreeProps> = ({ uplc }) => {
       defaultExpanded={getExpandedNodeIds()}
     >
       <StyledTreeItem label={label} nodeId={"root"}>
-        {uplc.data.map((it, idx) =>
-          Array.isArray(it) ? (
-            <UPLCTreeItem label={""} data={it} key={"tree-item-" + idx} />
-          ) : (
-            <UPLCTreeItem label={it.text} data={it.data} key={"tree-item-" + label + idx} />
-          )
-        )}
+        {uplc.program?.data?.map((it, idx) => (
+          <UPLCTreeItem label={it.text} data={it.data} key={"tree-item-" + label + idx} id={String(it.id)} />
+        ))}
       </StyledTreeItem>
     </TreeContainer>
   );
 };
 
 interface UPLCTreeItemProps {
-  label: string;
+  label?: string;
   data?: UPLCData[];
+  id: string;
 }
 
-const UPLCTreeItem: React.FC<UPLCTreeItemProps> = ({ label, data }) => {
+const UPLCTreeItem: React.FC<UPLCTreeItemProps> = ({ label, data, id }) => {
   return (
-    <StyledTreeItem label={label} nodeId={label}>
+    <StyledTreeItem label={label} nodeId={id}>
       {data?.map((it, idx) => (
-        <UPLCTreeItem label={it.text} data={it.data} key={"tree-item-" + label + idx} />
+        <UPLCTreeItem label={it?.text} data={it.data} key={"tree-item-" + label + idx} id={String(it.id)} />
       ))}
     </StyledTreeItem>
   );

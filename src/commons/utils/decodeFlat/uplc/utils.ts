@@ -1,3 +1,5 @@
+import { UPLCData } from "src/types/uplc";
+
 import { ByteString, DefaultUni, Integer, String, Unit, Bool, ProtoPair, Data, ProtoList } from "./instances";
 
 export enum ApplyType {
@@ -183,19 +185,14 @@ const convertSquareBracketsToParentheses = (str: string): string => {
   });
 };
 
-export interface TreeNode {
-  text?: string;
-  data?: TreeNode[];
-}
-
-export const parseNestedParenthesesToObject = (str: string): TreeNode[] => {
+export const parseNestedParenthesesToObject = (str: string): UPLCData[] => {
   str = removeSpacesBetweenParentheses(convertSquareBracketsToParentheses(str));
-  const stack: TreeNode[] = [];
-  let current: TreeNode | undefined;
-
+  const stack: UPLCData[] = [];
+  let current: UPLCData | undefined;
+  let autoInc = 0;
   for (const char of str) {
     if (char === "(") {
-      const newNode: TreeNode = {};
+      const newNode: UPLCData = { id: autoInc++ };
       if (current) {
         if (!current.data) {
           current.data = [];
@@ -220,5 +217,5 @@ export const parseNestedParenthesesToObject = (str: string): TreeNode[] => {
     }
   }
 
-  return (current as TreeNode[]) || {};
+  return (current as UPLCData[]) || {};
 };
