@@ -38,7 +38,7 @@ const NativeScriptsDetail = () => {
       key: "mintingBurningPolicy",
       icon: MintingBurningPolicyIcon,
       children: <MinttingBurningPolicy />,
-      label: <Box data-testid="ns.mintBurnPolicy">Minting/ Burning Policy</Box>
+      label: <Box data-testid="ns.mintBurnPolicy">Minting / Burning Policy</Box>
     },
     {
       key: "script",

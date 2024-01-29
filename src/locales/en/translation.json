@@ -956,7 +956,7 @@
   "smartContract.noTransactionPurpose": "No Transaction Purpose",
   "nativeScript.timeLock": "Time-Lock",
   "nativeScript.multiSig": "Multi-Sig",
-  "nativeScript.policy": "Minting/ Burning Policy",
+  "nativeScript.policy": "Minting / Burning Policy",
   "nativeScript.signModal": "Signer Public Keys",
   "nativeScript.viewSigner": "View Signer Public Keys",
   "nativeScript.mint.type": "Type",
