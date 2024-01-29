@@ -35,7 +35,6 @@ const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, p
     if (copied) {
       const timeout = setTimeout(() => {
         setCopied(false);
-        setOpen(true);
       }, 2000);
       return () => clearTimeout(timeout);
     }
