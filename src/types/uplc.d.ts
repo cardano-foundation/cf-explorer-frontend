@@ -4,10 +4,11 @@ export interface UPLCProgram {
     minor: string | number;
     patch: string | number;
   };
-  data: (UPLCData | UPLCData[])[];
+  program: { data: UPLCData[] };
 }
 
 export interface UPLCData {
-  text: string;
+  id?: number;
+  text?: string;
   data?: UPLCData[];
 }
