@@ -72,6 +72,11 @@ const BolnisiWineDrawer = () => {
         pt={5}
         pb={`50px !important`}
         position={"relative"}
+        sx={{
+          [theme.breakpoints.up("md")]: {
+            minWidth: 420
+          }
+        }}
         bgcolor={theme.palette.secondary[0]}
       >
         <CloseButton
