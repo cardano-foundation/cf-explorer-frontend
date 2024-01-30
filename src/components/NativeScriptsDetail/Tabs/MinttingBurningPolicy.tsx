@@ -111,7 +111,7 @@ const MinttingBurningPolicy = () => {
           </MintIcon>
           <MintTitle>{t("nativeScript.mint.signerKeys")}</MintTitle>
           {keyHashes && (keyHashes || []).length === 1 && (
-            <Box fontWeight={"bold"} color={({ palette }) => palette.primary.main}>
+            <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
               <DynamicEllipsisText
                 value={keyHashes[0]}
                 isTooltip
@@ -151,7 +151,7 @@ const ViewSignerModal: React.FC<ViewSignerModalProps> = ({ data, ...props }) => 
     >
       <CardSign>
         <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.light}>
-          Signer Public Keys
+          {t("nativeScript.signModal")}
         </Box>
         {(data || []).map((sig, idx) => (
           <Box
