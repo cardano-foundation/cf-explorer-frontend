@@ -328,7 +328,7 @@ const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) =
                     {loading || loadingReward ? (
                       <SkeletonUI variant="rectangular" />
                     ) : maxReward === null && tab === "REWARD" ? (
-                      t("common.notAvailable")
+                      t("common.N/A")
                     ) : (
                       formatADAFull(tab === "BALANCE" ? maxBalance : maxReward || 0)
                     )}
@@ -347,7 +347,7 @@ const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) =
                     {loading || loadingReward ? (
                       <SkeletonUI variant="rectangular" />
                     ) : minReward === null && tab === "REWARD" ? (
-                      t("common.notAvailable")
+                      t("common.N/A")
                     ) : (
                       formatADAFull(tab === "BALANCE" ? minBalance : minReward || 0)
                     )}

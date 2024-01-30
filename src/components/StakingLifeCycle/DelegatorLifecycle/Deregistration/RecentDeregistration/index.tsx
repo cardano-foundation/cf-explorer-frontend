@@ -65,8 +65,6 @@ const RecentDeregistrations: React.FC<Props> = ({ setShowBackButton }) => {
             onSubmit={(params) => {
               if (params) {
                 setParams(params);
-              } else {
-                setParams({});
               }
               setPageInfo((pre) => ({ ...pre, page: 0 }));
             }}

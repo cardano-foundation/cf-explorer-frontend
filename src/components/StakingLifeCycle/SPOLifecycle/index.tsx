@@ -183,7 +183,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
                   ? undefined
                   : renderTabsSPO[step.keyCheckShow] !== null
                   ? t("common.noRecordAtTime")
-                  : t("common.notAvailable")
+                  : t("common.N/A")
               }
               onClick={() => handleChangeTab(step, idx)}
               sx={{

@@ -82,7 +82,7 @@ const data: Transaction["metadata"][0]["metadataCIP25"]["tokenMap"] = {
   }
 };
 
-describe("CIP25Modal", () => {
+describe("CIP25ComplianceModal", () => {
   it("should component render", () => {
     render(<CIP25Modal data={data} open={true} onClose={jest.fn()} />);
     expect(screen.getByText("Cardano Improvement Proposal 25 (CIP-25)")).toBeInTheDocument();

@@ -73,7 +73,7 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
                   {t("glossary.actualPledge")}
                 </Box>
                 {data?.totalBalanceOfPoolOwners === null ? (
-                  <Box color={({ palette }) => palette.secondary.light}>{t("common.notAvailable")}</Box>
+                  <Box color={({ palette }) => palette.secondary.light}>{t("common.N/A")}</Box>
                 ) : (
                   <Box
                     data-testid="actual-pledge-value"

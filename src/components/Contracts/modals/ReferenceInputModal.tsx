@@ -38,7 +38,7 @@ const ReferenceInputModal: React.FC<ReferenceInputModal> = ({ data, ...props }) 
       <ModalContent>
         <ExplanDropdown title={t("explain.referenceInput")}>
           {t("explain.referenceInput.desc")}
-          <ExternalLink href="https://cips.cardano.org/cip/CIP-0031" target="_blank" rel="noreferrer">
+          <ExternalLink href="https://cips.cardano.org/cips/cip31/" target="_blank" rel="noreferrer">
             Cardano Improvement Proposal 31 (CIP 31).
           </ExternalLink>
         </ExplanDropdown>
@@ -56,7 +56,7 @@ const ReferenceInputModal: React.FC<ReferenceInputModal> = ({ data, ...props }) 
 export default ReferenceInputModal;
 
 const DatumData = ({ data }: { data: string }) => {
-  if (!data) return <ValueReference>{t("common.notAvailable")}</ValueReference>;
+  if (!data) return <ValueReference>{t("common.N/A")}</ValueReference>;
 
   return <ValueReference>{data.length > 20 ? <DynamicEllipsisText value={data} isTooltip /> : data}</ValueReference>;
 };
