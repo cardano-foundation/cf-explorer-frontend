@@ -17,7 +17,8 @@ export default defineConfig(({ mode }) => {
       "process.env.REACT_APP_JSD_WIDGET_KEY": JSON.stringify(env.REACT_APP_JSD_WIDGET_KEY),
       "process.env.REACT_APP_NETWORK": JSON.stringify(env.REACT_APP_NETWORK),
       "process.env.REACT_APP_MAINNET_APP_URL": JSON.stringify(env.REACT_APP_MAINNET_APP_URL),
-      "process.env.REACT_APP_SANCHONET_APP_URL": JSON.stringify(env.REACT_APP_SANCHONET_APP_URL)
+      "process.env.REACT_APP_SANCHONET_APP_URL": JSON.stringify(env.REACT_APP_SANCHONET_APP_URL),
+      "process.env.REACT_APP_ADA_HANDLE_API": JSON.stringify(env.REACT_APP_ADA_HANDLE_API)
     },
     optimizeDeps: {
       esbuildOptions: {

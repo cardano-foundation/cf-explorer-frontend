@@ -27,6 +27,7 @@ interface ITokenMetadata {
 
 interface IToken extends ITokenOverview, ITokenMetadata {
   metadataCIP25?: Transaction["metadata"][0]["metadataCIP25"];
+  metadataCIP60?: Transaction["metadata"][0]["metadataCIP25"];
 }
 
 interface ITokenTopHolderTable {
