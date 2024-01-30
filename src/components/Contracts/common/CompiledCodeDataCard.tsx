@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { decodeFlatUplcToObject } from "@cardano-foundation/cf-flat-decoder-ts";
 
 import { UPLCProgram } from "src/types/uplc";
-import { decodeFlatUplcToObject } from "src/commons/utils/decodeFlat";
 
 import UPLCTree from "../UPLCTree";
 import {
