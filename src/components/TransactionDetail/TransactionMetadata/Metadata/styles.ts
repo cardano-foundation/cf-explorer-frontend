@@ -286,8 +286,8 @@ export const BadgeContainerVerify = styled(Box)<{ type: "Verified" | "Invalid" |
   padding-right: 8px;
   font-size: 12px;
   box-sizing: border-box;
+  user-select: none;
   color: ${({ theme }) => theme.palette.secondary.light};
-  cursor: pointer;
   background-color: ${({ theme, type }) => {
     switch (type) {
       case "Verified":
