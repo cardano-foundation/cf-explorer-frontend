@@ -195,12 +195,16 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const handleSearchAll = async (query: string) => {
     try {
       setLoading(true);
-      const res = await defaultAxios.get(API.SEARCH_ALL(query));
-      const adaHanlde = await adaHandleSearch(search);
+      const res = await defaultAxios.get(API.SEARCH_ALL(query?.trim()));
+      const adaHanlde = await adaHandleSearch(search?.trim());
 
       setADAHanldeOption(isEmpty(adaHanlde) ? undefined : adaHanlde);
       setDataSearchAll(res?.data);
       const keyDetail = getKeyIfOnlyOneNonNullResult(res?.data);
+
+      if (!res?.data?.validPoolName && !res?.data?.validTokenName && keyDetail === "") {
+        throw new Error();
+      }
 
       if (adaHanlde && adaHanlde !== null) {
         if (
