@@ -23,7 +23,6 @@ import {
 import AssetsModal from "../modals/AssetsModal";
 import CompiledCodeModal from "../modals/CompiledCodeModal";
 import RedeemerModal from "../modals/RedeemerModal";
-import { EmptyBox } from "../styles";
 
 export interface MintviewsProps {
   isBurned?: boolean;
@@ -60,19 +59,15 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
         end: rightBoxRef,
         startPosition: {
           0: ["center", "bottom"],
-          sm: ["center", "bottom"],
-          lg: ["right", "middle"]
+          sm: ["right", "middle"]
         },
         endPosition: {
           0: ["center", "top"],
-          sm: ["right", "top"],
-          lg: ["left", "middle"]
+          sm: ["left", "middle"]
         },
-        arrow: { 0: "top", sm: "top", lg: "left" },
-        fold: { sm: "none" },
-        startOffset: { 0: [0], sm: [0, 0] },
-        endOffset: { 0: [0, -16], sm: [0, -10], lg: [-12, 0] },
-        autoAlign: { 0: "none", sm: "start-vertical", lg: "none" }
+        arrow: { 0: "top", sm: "left" },
+        startOffset: { 0: [0] },
+        endOffset: { 0: [0, -16], sm: [-12, 0] }
       }
     ];
   }, []);
@@ -128,6 +123,39 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
   const isMint = data?.mintingTokens && data.mintingTokens?.length > 0;
   return (
     <MintContainer isMobile={+!!isMobile}>
+      <Redeemer ref={redeemerRef} onClick={() => setOpenRedeemer(!openRedeemer)} />
+      <MiddleBox ref={middleBoxRef}>
+        <Contract hash={data?.scriptHash} detail={details.smartContract} />
+        <CompiledCode onClick={() => setOpenCompiledCode(!openCompiledCode)} />
+      </MiddleBox>
+
+      {isBurned ? (
+        <RightBox ref={rightBoxRef}>
+          {isMint ? (
+            <MintBlueBox isBurned={isBurned}>
+              <MintRrounded>
+                <Assets
+                  onClick={() => setOpenAssets(!openAssets)}
+                  total={data?.mintingTokens?.length}
+                  isBurned={isBurned}
+                />
+                <Burn total={data?.burningTokens?.length} onClick={() => setOpenBurnedAssets(!openBurnedAssets)} />
+              </MintRrounded>
+            </MintBlueBox>
+          ) : (
+            <Burn total={data?.burningTokens?.length} onClick={() => setOpenBurnedAssets(!openBurnedAssets)} />
+          )}
+        </RightBox>
+      ) : (
+        <RightBox ref={rightBoxRef}>
+          <Assets onClick={() => setOpenAssets(!openAssets)} total={data?.mintingTokens?.length} />
+        </RightBox>
+      )}
+      <DrawPath
+        paths={isMobile ? mobilePaths : paths}
+        lineStyle={{ stroke: theme.isDark ? theme.palette.secondary[700] : theme.palette.secondary.light }}
+        style={{ zIndex: 0 }}
+      />
       <AssetsModal
         isBurnType={true}
         open={openAssets}
@@ -160,43 +188,6 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
         ]}
         open={openCompiledCode}
         onClose={() => setOpenCompiledCode(false)}
-      />
-      <Redeemer ref={redeemerRef} onClick={() => setOpenRedeemer(!openRedeemer)} />
-      <MiddleBox ref={middleBoxRef}>
-        <Contract hash={data?.scriptHash} detail={details.smartContract} />
-        <CompiledCode onClick={() => setOpenCompiledCode(!openCompiledCode)} />
-      </MiddleBox>
-
-      {isBurned ? (
-        <RightBox ref={rightBoxRef}>
-          {isMint ? (
-            <MintBlueBox isBurned={isBurned}>
-              <MintRrounded>
-                <Assets
-                  onClick={() => setOpenAssets(!openAssets)}
-                  total={data?.mintingTokens?.length}
-                  isBurned={isBurned}
-                />
-                <Burn total={data?.burningTokens?.length} onClick={() => setOpenBurnedAssets(!openBurnedAssets)} />
-              </MintRrounded>
-            </MintBlueBox>
-          ) : (
-            <>
-              <EmptyBox />
-              <Burn total={data?.burningTokens?.length} onClick={() => setOpenBurnedAssets(!openBurnedAssets)} />
-            </>
-          )}
-        </RightBox>
-      ) : (
-        <RightBox ref={rightBoxRef}>
-          <EmptyBox />
-          <Assets onClick={() => setOpenAssets(!openAssets)} total={data?.mintingTokens?.length} />
-        </RightBox>
-      )}
-      <DrawPath
-        paths={isMobile ? mobilePaths : paths}
-        lineStyle={{ stroke: theme.isDark ? theme.palette.secondary[700] : theme.palette.secondary.light }}
-        style={{ zIndex: 0 }}
       />
     </MintContainer>
   );
