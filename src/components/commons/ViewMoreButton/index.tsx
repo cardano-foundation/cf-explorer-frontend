@@ -19,11 +19,7 @@ const StyledLink = styled(Link)`
 
 const ViewMoreButton: React.FC<LinkProps> = ({ children, ...props }) => {
   const { t } = useTranslation();
-  return (
-    <StyledLink {...props} data-testid="view-detail-button-sidebar">
-      {children || t("common.viewDetails")}
-    </StyledLink>
-  );
+  return <StyledLink {...props}>{children || t("common.viewDetails")}</StyledLink>;
 };
 
 export default ViewMoreButton;

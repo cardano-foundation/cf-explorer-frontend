@@ -24,6 +24,7 @@ import { API } from "src/commons/utils/api";
 import { FooterTable } from "src/components/commons/Table";
 import CustomIcon from "src/components/commons/CustomIcon";
 import { FilterIcon, MultiSig, ResetIcon, SortNative, TimeLock } from "src/commons/resources";
+import NoRecord from "src/components/commons/NoRecord";
 
 import { NativeScriptCard } from "./Card";
 import {
@@ -123,6 +124,7 @@ const TabNativeScripts = () => {
     }
     return (
       <Box component={Grid} container spacing={2}>
+        {data && data.length === 0 && fetchData.initialized && <NoRecord padding={`0 !important`} />}
         {data?.map((item, idx) => (
           <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
             <Box height={"100%"}>

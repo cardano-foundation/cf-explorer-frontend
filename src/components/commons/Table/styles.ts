@@ -92,13 +92,11 @@ export const TCol = styled("td")<{
 export const TBody = styled("tbody")`
   position: relative;
 `;
-export const LoadingWrapper = styled(Box)<{
-  isCenterLoading?: boolean;
-}>`
+export const LoadingWrapper = styled(Box)`
   position: absolute;
-  left: ${(props) => (props.isCenterLoading ? "0%" : "50%")};
-  top: ${(props) => (props.isCenterLoading ? "0%" : "50%")};
-  transform: ${(props) => (props.isCenterLoading ? "none" : "translate(-50%, -50%)")};
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 export const TFooter = styled(Box)(({ theme }) => ({

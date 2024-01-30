@@ -25,6 +25,7 @@ import { API } from "src/commons/utils/api";
 import { FooterTable } from "src/components/commons/Table";
 import CustomIcon from "src/components/commons/CustomIcon";
 import { CubeIcon, FilterIcon, FilterVersionIcon, ResetIcon } from "src/commons/resources";
+import NoRecord from "src/components/commons/NoRecord";
 
 import { SmartContractCard } from "./Card";
 import {
@@ -113,6 +114,9 @@ const TabSmartContracts = () => {
     }
     return (
       <Box component={Grid} container spacing={2}>
+        {fetchData.data && fetchData.data.length === 0 && fetchData.initialized && (
+          <NoRecord padding={`0 !important`} />
+        )}
         {fetchData.data?.map((item, idx) => (
           <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
             <Box height={"100%"}>
