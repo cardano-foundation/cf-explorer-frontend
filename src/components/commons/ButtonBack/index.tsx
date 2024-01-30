@@ -12,7 +12,7 @@ const ButtonBack = ({ sx }: { sx?: SxProps }) => {
   const theme = useTheme();
 
   return (
-    <BackButton onClick={history.goBack} sx={sx} data-testid="back-button">
+    <BackButton onClick={history.goBack} sx={sx}>
       <HiArrowLongLeft color={theme.palette.secondary.light} />
       <BackText>{t("common.back")}</BackText>
     </BackButton>

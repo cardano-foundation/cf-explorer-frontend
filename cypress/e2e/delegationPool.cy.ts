@@ -67,7 +67,6 @@ describe("delegation pool spec", () => {
         if (isNaN(num)) return;
         totalPools = num;
         cy.get("div").contains("Show Retired Pools").find(`input[type="checkbox"]`).click({ force: true });
-        cy.wait(1000);
         cy.get("div")
           .contains("Results")
           .find("span")
@@ -77,7 +76,7 @@ describe("delegation pool spec", () => {
             if (isNaN(num)) return;
             retiredPools = num;
             cy.log(`results: ${totalPools} - ${retiredPools}`);
-            cy.wrap(totalPools).should("be.lte", retiredPools);
+            cy.wrap(retiredPools).should("be.lte", totalPools);
           });
       });
   });

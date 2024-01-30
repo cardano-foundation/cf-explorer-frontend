@@ -11,7 +11,7 @@ export const CustomNumberBadge: React.FC<Props> = ({ value, ml }: Props) => {
   const theme = useTheme();
   if (!value) return null;
   return (
-    <Box display={"inline-block"} marginLeft={0.5} data-testid="badge-number">
+    <Box display={"inline-block"} marginLeft={0.5}>
       <CustomBadge
         bgColor={theme.isDark ? theme.palette.primary.main : ""}
         color={theme.isDark ? theme.palette.secondary[100] : ""}

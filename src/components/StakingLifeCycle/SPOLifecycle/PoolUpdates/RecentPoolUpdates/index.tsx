@@ -71,8 +71,6 @@ const RecentPoolUpdates = ({ onSelect, setShowBackButton }: Props) => {
             onSubmit={(params) => {
               if (params) {
                 setParams(params);
-              } else {
-                setParams({});
               }
               setPageInfo((pre) => ({ ...pre, page: 0 }));
             }}

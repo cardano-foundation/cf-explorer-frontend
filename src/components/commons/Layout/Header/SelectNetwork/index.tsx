@@ -87,13 +87,14 @@ const SelectNetwork: React.FC = () => {
         if (key === NETWORKS.sanchonet) {
           return (
             <StyledMenuItem data-testid="network-options" key={key} value={key}>
-              <Box display={"flex"} alignItems={"center"}>
+              <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"} width={"100%"}>
                 <Box mr={1}>{t(`network.${String(value).toLowerCase()}`)}</Box>
                 <Box
+                  display={"block"}
                   component={NETWORK === NETWORKS.sanchonet ? CustomTooltip : Box}
                   placement="top"
                   key={key}
-                  title={NETWORK === NETWORKS.sanchonet ? "Testnet under development " : undefined}
+                  title={NETWORK === NETWORKS.sanchonet ? "testnet under development " : undefined}
                 >
                   <Sanchonet fill={theme.palette.secondary.main} />
                 </Box>
