@@ -145,9 +145,7 @@ export const MintContainer = styled(Box)<{ isMobile?: number }>`
   max-width: 920px;
   flex-direction: ${({ isMobile }) => (isMobile ? "column" : "row")};
   ${(props) => props.theme.breakpoints.down("lg")} {
-    width: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
+    max-width: unset;
     gap: 60px;
   }
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -166,7 +164,6 @@ export const MiddleBox = styled(Box)`
 
 export const RightBox = styled(Box)`
   ${({ theme }) => theme.breakpoints.down("lg")} {
-    width: 100%;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
