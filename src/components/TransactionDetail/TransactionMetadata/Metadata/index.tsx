@@ -402,14 +402,17 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
               >
                 {t("common.value")}
               </MetadataJSONTitle>
-              <MetaDataJSONValue>{metadata.value || ""}</MetaDataJSONValue>
-              {/* <Box
-                onClick={() => setSelectedText(metadata)}
-                color={theme.palette.primary.main}
-                sx={{ textDecoration: "underline", cursor: "pointer" }}
-              >
-                {t("CIP20.viewMessage")}
-              </Box> */}
+              {metadata.label === CIPLabel1904 || metadata.label === CIPLabel674 ? (
+                <Box
+                  onClick={() => setSelectedText(metadata)}
+                  color={theme.palette.primary.main}
+                  sx={{ textDecoration: "underline", cursor: "pointer" }}
+                >
+                  {t("CIP20.viewMessage")}
+                </Box>
+              ) : (
+                <MetaDataJSONValue>{metadata.value || ""}</MetaDataJSONValue>
+              )}
             </Box>
             {String(metadata.label) === String(CIPLabel674) &&
               !isNil(metadata?.metadataCIP20?.valid) &&
