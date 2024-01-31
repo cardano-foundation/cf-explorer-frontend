@@ -1,5 +1,4 @@
 import { Autocomplete, Box, Button, StandardTextFieldProps, useTheme } from "@mui/material";
-import { debounce } from "lodash";
 import { useEffect, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { useTranslation } from "react-i18next";
@@ -32,11 +31,13 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
   const { t } = useTranslation();
   const [openModalToken, setOpenModalToken] = useState(false);
   const [search, setSearch] = useState("");
+  const [searchProps, setSearchProps] = useState("");
   const theme = useTheme();
   const history = useHistory();
   const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
   const [initialized, setInitialized] = useState(false);
-  const { data, total } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
+  const [totalOption, setTotalOption] = useState(0);
+  const { data, total, loading } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
     page: 0,
     size: 10
   });
@@ -45,6 +46,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
     if (data.length) {
       setInitialized(true);
     }
+    setTotalOption(total);
   }, [data]);
 
   const handleClickItem = (link: string) => {
@@ -56,13 +58,16 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
   return (
     <Box>
       <Autocomplete
-        options={total > 10 ? [...data, "more"] : data}
+        options={data || []}
         componentsProps={{ paper: { elevation: 2 } }}
         getOptionLabel={(option) =>
           typeof option === "string" ? "" : option.displayName || option.name || option.fingerprint
         }
+        loading={loading}
         noOptionsText={t("common.noRecords")}
-        onInputChange={debounce((e, value) => setSearch(value), 1000)}
+        onInputChange={(e, value) => {
+          setSearch(value);
+        }}
         ListboxProps={{
           sx(theme) {
             return {
@@ -87,8 +92,8 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
             };
           }
         }}
-        renderOption={(propss, option: WalletAddress["tokens"][number] | string) => {
-          if (typeof option === "string") {
+        renderOption={(propss, option: WalletAddress["tokens"][number], state) => {
+          if (state.index === data.length - 1 && totalOption > 10) {
             return (
               <Option key={"more"} {...propss} onClick={() => null}>
                 <Box
@@ -106,6 +111,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
                     width="100%"
                     textTransform={"inherit"}
                     onClick={() => {
+                      setSearchProps(search);
                       setOpenModalToken(true);
                     }}
                   >
@@ -167,25 +173,45 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
         }}
         popupIcon={<BiChevronDown color={theme.palette.secondary.main} />}
       />
-      <ModalToken address={address} open={openModalToken} onClose={() => setOpenModalToken(false)} />
+      <ModalToken
+        searchProps={searchProps}
+        address={address}
+        open={openModalToken}
+        onClose={() => setOpenModalToken(false)}
+      />
     </Box>
   );
 };
 
 export default TokenAutocomplete;
 
-const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => void; address: string }) => {
+const ModalToken = ({
+  open,
+  onClose,
+  address,
+  searchProps
+}: {
+  open: boolean;
+  onClose: () => void;
+  address: string;
+  searchProps: string;
+}) => {
   const { t } = useTranslation();
   const theme = useTheme();
   const [{ page, size }, setPagination] = useState({ page: 0, size: 50 });
   const [value, setValue] = useState("");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(searchProps);
   const urlFetch = `${API.ADDRESS.TOKENS}?displayName=${search}`.replace(":address", address);
   const { data, ...fetchData } = useFetchList<WalletAddress["tokens"][number]>(address && urlFetch, {
     page,
     size
   });
   const { isTablet } = useScreen();
+
+  useEffect(() => {
+    setSearch(searchProps);
+    setValue(searchProps);
+  }, [searchProps]);
 
   const columns: Column<WalletAddress["tokens"][number]>[] = [
     {
@@ -229,7 +255,13 @@ const ModalToken = ({ open, onClose, address }: { open: boolean; onClose: () => 
   };
 
   return (
-    <CustomModal title={t("glossary.tokenList")} open={open} onClose={handleClose} width={"min(80vw, 600px)"}>
+    <CustomModal
+      title={t("glossary.tokenList")}
+      open={open}
+      onClose={handleClose}
+      width={"min(80vw, 600px)"}
+      isCenterWithoutPosition={true}
+    >
       <>
         <SearchContainer mt={2} mb={1}>
           <StyledInput

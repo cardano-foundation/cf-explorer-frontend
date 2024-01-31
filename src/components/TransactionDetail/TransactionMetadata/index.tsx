@@ -112,7 +112,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
       key: "contracts",
       icon: ContractIcon,
       label: (
-        <Box display={"flex"} alignItems={"center"}>
+        <Box display={"flex"} alignItems={"center"} data-testid="contract-tab">
           {t("glossary.contracts")}
           <CustomNumberBadge value={data?.contracts?.length} />
         </Box>
@@ -224,7 +224,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
     {
       key: "metadata",
       icon: MetadataIconTx,
-      label: t("glossary.metadata"),
+      label: <Box data-testid="metadata-tab">{t("glossary.metadata")}</Box>,
       children: <Metadata data={data?.metadata} hash={data?.metadataHash} />
     }
   ];

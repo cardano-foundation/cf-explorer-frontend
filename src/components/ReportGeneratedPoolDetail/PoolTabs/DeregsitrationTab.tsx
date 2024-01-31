@@ -68,7 +68,7 @@ const DeregsitrationTab = () => {
       title: t("common.certificate"),
       render: (data) => (
         <IconButton onClick={() => setSelected(data)}>
-          <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
+          <CustomIcon data-testid="eye-icon" icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
         </IconButton>
       )
     }

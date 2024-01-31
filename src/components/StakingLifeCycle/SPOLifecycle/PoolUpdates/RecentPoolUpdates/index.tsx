@@ -68,7 +68,7 @@ const RecentPoolUpdates = ({ onSelect, setShowBackButton }: Props) => {
           </WrapFilterDescription>
           <CustomFilter
             filterValue={params}
-            onChange={(params) => {
+            onSubmit={(params) => {
               if (params) {
                 setParams(params);
               }

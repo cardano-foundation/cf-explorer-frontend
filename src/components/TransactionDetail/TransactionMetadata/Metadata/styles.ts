@@ -1,10 +1,9 @@
-import { alpha, Box, styled } from "@mui/material";
+import { alpha, Box, Button, styled, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const Wrapper = styled(Box)`
   background: ${(props) => props.theme.palette.secondary[0]};
   padding: 25px;
-  border: 1px solid ${({ theme }) => (theme.isDark ? theme.palette.primary[200] : theme.palette.secondary[700])};
   border-radius: ${({ theme }) => theme.spacing(2)};
   ${({ theme }) => theme.breakpoints.down(355)} {
     padding: 8px;
@@ -107,11 +106,11 @@ export const ValueText = styled(Box)(({ theme }) => ({
   paddingRight: theme.spacing(1)
 }));
 
-export const MetaDataValue = styled(ValueText)(({ theme }) => ({
-  color: theme.palette.secondary.main,
-  flex: 1,
-  width: "unset"
-}));
+// export const MetaDataValue = styled(ValueText)(({ theme }) => ({
+//   color: theme.palette.secondary.main,
+//   flex: 1,
+//   width: "unset"
+// }));
 
 export const ViewAllImage = styled("img")`
   width: 16px;
@@ -136,29 +135,137 @@ export const StyledButton = styled(Box)`
   }
 `;
 
-export const CIPHeader = styled(Box)`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  flex: 1;
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    grid-row: 2/2;
-    grid-column: 1 / spam;
+export const CIPHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  gap: 8,
+  justifyContent: "flex-end",
+  flex: 1,
+  alignItems: "center",
+  flexWrap: "wrap",
+  [theme.breakpoints.down("sm")]: {
+    flexWrap: "wrap",
+    justifyContent: "flex-start"
   }
+}));
+
+export const CIPChips = styled(Box)`
+  display: flex;
+  gap: 8px;
 `;
 
 export const CIPHeaderTitle = styled(Box)`
   font-size: 14px;
-  color: ${({ theme }) => theme.palette.secondary[600]};
+  color: ${({ theme }) => theme.palette.secondary.light};
   display: flex;
   align-items: center;
   gap: 8px;
 `;
+
 export const JSONValue = styled(Value)`
   ${({ theme }) => theme.breakpoints.down("sm")} {
     grid-column: 2 / spam;
     width: unset;
   }
+`;
+
+export const MetadataWrapper = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 0 25px;
+  margin: 25px 0px;
+  font-size: 16px;
+`;
+
+export const MetadataHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  flexWrap: "wrap",
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    gap: theme.spacing(1),
+    alignItems: "flex-start"
+  }
+}));
+
+export const MetadataContent = styled(Box)(({ theme }) => ({
+  display: "flex",
+  marginBottom: theme.spacing(2),
+  [theme.breakpoints.down("md")]: { flexDirection: "column" },
+  ":last-child": { marginBottom: 0 }
+}));
+
+export const MetadataTitle = styled(Box)`
+  width: 180px;
+  color: ${({ theme }) => theme.palette.secondary.light};
+`;
+
+export const MetadataJSONTitle = styled(MetadataTitle)`
+  ${({ theme }) => theme.breakpoints.down(430)} {
+    min-width: unset;
+    margin-right: 14px;
+  }
+`;
+
+export const MetaDataValue = styled(Box)`
+  box-sizing: border-box;
+  color: ${({ theme }) => theme.palette.secondary.main};
+`;
+
+export const MetaDataJSONValue = styled(MetaDataValue)`
+  flex: 1;
+  display: inline-block;
+  overflow-wrap: anywhere;
+  padding: 16px 8px;
+  box-sizing: border-box;
+  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100])};
+  border-radius: 6px;
+  position: relative;
+`;
+
+export const MetaDataJSONValueText = styled(MetaDataValue)`
+  position: relative;
+  max-height: 4em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+`;
+
+export const DecryptButton = styled(Button)(({ theme }) => ({
+  textTransform: "capitalize",
+  color: theme.palette.secondary[0],
+  fontWeight: "bold",
+  fontSize: 14,
+  padding: theme.spacing(1, 2),
+  background: theme.palette.primary.main,
+  borderRadius: theme.spacing(1),
+  ":hover": {
+    background: theme.palette.primary.dark
+  },
+  ":disabled": {
+    background: theme.palette.secondary[600],
+    color: theme.palette.secondary[0]
+  }
+}));
+
+export const BadgeContainer = styled(Box)`
+  border-radius: 13px;
+  background-color: ${({ theme }) => theme.palette.warning[100]};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 26px;
+  border: 1px solid ${({ theme }) => theme.palette.warning[700]};
+  gap: 6px;
+  padding-right: 8px;
+  box-sizing: border-box;
+  min-width: 78px;
+  cursor: pointer;
+`;
+
+export const CIPLabel = styled(Typography)`
+  font-size: 12px;
+  color: ${({ theme }) => theme.palette.secondary.light};
 `;

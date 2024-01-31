@@ -61,7 +61,7 @@ const RecentRegistrations: React.FC<Props> = ({ setShowBackButton }) => {
           </WrapFilterDescription>
           <CustomFilter
             filterValue={params}
-            onChange={(params) => {
+            onSubmit={(params) => {
               if (params) {
                 setParams(params);
               }

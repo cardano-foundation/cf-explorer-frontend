@@ -60,7 +60,7 @@ export interface DetailHeaderProps {
   type: Bookmark["type"];
   bookmarkData?: string;
   loading: boolean;
-  title: number | string;
+  title: React.ReactNode;
   lastUpdated?: number;
   hash?: string;
   transactionStatus?: TransactionStatus;
@@ -326,7 +326,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                           }}
                           key={index}
                         >
-                          <CustomTooltip title={item.assetName}>
+                          <CustomTooltip title={item.assetName || item.assetId}>
                             <Box
                               color={({ palette }) => palette.secondary.main}
                               mr={2}

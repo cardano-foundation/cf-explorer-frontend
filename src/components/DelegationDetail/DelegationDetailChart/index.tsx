@@ -98,7 +98,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
         <AreaChart
           width={900}
           height={400}
-          data={data[selected]?.dataByDays || []}
+          data={data?.[selected]?.dataByDays || []}
           margin={{ top: 5, right: 10, bottom: 10 }}
         >
           <defs>

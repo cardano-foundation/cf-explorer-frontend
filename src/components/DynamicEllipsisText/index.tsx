@@ -7,14 +7,17 @@ import { useScreen } from "src/commons/hooks/useScreen";
 
 import CustomTooltip from "../commons/CustomTooltip";
 
-const Container = styled(Box)`
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 100%;
-  text-align: left;
-  transform: translateY(2px);
-`;
+const Container = styled(Box)(({ theme, whiteSpace }) => ({
+  display: "inline-block",
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  width: "100%",
+  textAlign: "left",
+  transform: "translateY(2px)",
+  [theme.breakpoints.down("sm")]: {
+    whiteSpace: whiteSpace
+  }
+}));
 
 const SubPart = styled("span")`
   display: inline-block;
@@ -47,7 +50,7 @@ const StyledAfterElm = styled(Box)`
 `;
 
 // The number of pixels required to display the shortened address in one row
-const MIN_PIXEL = 180;
+const MIN_PIXEL = 120;
 
 const DynamicEllipsisText = ({
   value,
@@ -59,7 +62,8 @@ const DynamicEllipsisText = ({
   sxLastPart,
   sx,
   customTruncateFold,
-  isNoLimitPixel
+  isNoLimitPixel,
+  whiteSpace
 }: {
   value: string;
   postfix?: number;
@@ -71,6 +75,7 @@ const DynamicEllipsisText = ({
   sx?: SxProps<Theme>;
   customTruncateFold?: [number, number];
   isNoLimitPixel?: boolean;
+  whiteSpace?: "nowrap" | "normal";
 }) => {
   const randomIdRef = useRef(`ELIPSIS_${useId()}`);
 
@@ -117,7 +122,7 @@ const DynamicEllipsisText = ({
   }
 
   return (
-    <Container id={randomIdRef.current} sx={sx}>
+    <Container id={randomIdRef.current} sx={sx} whiteSpace={whiteSpace}>
       <CustomTooltip title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}>
         <Box component={"span"} data-testid="ellipsis-text">
           <FirstPart sx={sxFirstPart}>{firstPart}</FirstPart>

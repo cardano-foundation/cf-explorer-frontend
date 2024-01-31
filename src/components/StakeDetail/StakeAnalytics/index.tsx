@@ -1,7 +1,6 @@
 import { BigNumber } from "bignumber.js";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 import React, { useMemo, useState } from "react";
 import { Box, Grid, alpha, useTheme } from "@mui/material";
 import {
@@ -50,22 +49,21 @@ import {
   Wrapper
 } from "./styles";
 
-const StakeAnalytics: React.FC = () => {
+const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) => {
   const { t } = useTranslation();
   const [rangeTime, setRangeTime] = useState<OPTIONS_CHART_ANALYTICS>(OPTIONS_CHART_ANALYTICS.ONE_DAY);
   const [tab, setTab] = useState<"BALANCE" | "REWARD">("BALANCE");
-  const { stakeId } = useParams<{ stakeId: string }>();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const theme = useTheme();
   const { isMobile } = useScreen();
   const { data, loading } = useFetch<StakeAnalyticsBalance>(
-    `${API.STAKE.ANALYTICS_BALANCE}/${stakeId}/${rangeTime}`,
+    stakeAddress ? `${API.STAKE.ANALYTICS_BALANCE}/${stakeAddress}/${rangeTime}` : "",
     undefined,
     false,
     blockKey
   );
   const { data: dataReward, loading: loadingReward } = useFetch<AnalyticsReward[]>(
-    `${API.STAKE.ANALYTICS_REWARD}/${stakeId}`,
+    stakeAddress ? `${API.STAKE.ANALYTICS_REWARD}/${stakeAddress}` : "",
     undefined,
     false,
     blockKey
@@ -268,7 +266,9 @@ const StakeAnalytics: React.FC = () => {
   };
 
   return (
-    <Card title={<TextCardHighlight>{t("common.analytics")}</TextCardHighlight>}>
+    <Card
+      title={<TextCardHighlight data-testid="stake-address-chart-title">{t("common.analytics")}</TextCardHighlight>}
+    >
       <Wrapper container columns={24} spacing="35px">
         <Grid item xs={24} lg={18}>
           <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
@@ -319,7 +319,9 @@ const StakeAnalytics: React.FC = () => {
               <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <CustomIcon height={30} fill={theme.palette.secondary.light} icon={HighestIconComponent} />
-                  <Title>{tab === "BALANCE" ? t("common.highestBalance") : t("common.highestReward")}</Title>
+                  <Title data-testid="stake-address-chart-highest">
+                    {tab === "BALANCE" ? t("common.highestBalance") : t("common.highestReward")}
+                  </Title>
                   <ValueInfo>
                     {loading || loadingReward ? (
                       <SkeletonUI variant="rectangular" />
@@ -336,7 +338,9 @@ const StakeAnalytics: React.FC = () => {
               <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <CustomIcon height={30} fill={theme.palette.secondary.light} icon={LowestIconComponent} />
-                  <Title>{tab === "BALANCE" ? t("common.lowestBalance") : t("common.lowestReward")}</Title>
+                  <Title data-testid="stake-address-chart-lowest">
+                    {tab === "BALANCE" ? t("common.lowestBalance") : t("common.lowestReward")}
+                  </Title>
                   <ValueInfo>
                     {loading || loadingReward ? (
                       <SkeletonUI variant="rectangular" />

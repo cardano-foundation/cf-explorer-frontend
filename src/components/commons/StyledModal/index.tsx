@@ -38,6 +38,7 @@ const StyledModal: React.FC<IProps> = ({
       }}
     >
       <ModalContainer
+        id="modal-content-connect-wallet"
         width={width}
         height={height}
         paddingX={paddingX || (isMobile ? "10px" : "40px")}

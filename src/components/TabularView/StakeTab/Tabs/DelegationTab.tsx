@@ -78,7 +78,7 @@ const DelegationTab = () => {
       minWidth: "120px",
       render: (r) => (
         <IconButton onClick={() => setSelected(r.txHash)}>
-          <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
+          <CustomIcon data-testid="eye-icon" icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
         </IconButton>
       )
     }
@@ -103,7 +103,7 @@ const DelegationTab = () => {
           </WrapFilterDescription>
           <CustomFilter
             filterValue={omit(pageInfo, ["page", "size"])}
-            onChange={(params) => {
+            onSubmit={(params) => {
               const newParams = omit({ ...params, txHash: params?.search }, ["search"]);
               history.replace({ search: stringify({ page: 1, ...newParams }) });
             }}

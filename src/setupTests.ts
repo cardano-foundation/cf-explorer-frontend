@@ -23,6 +23,8 @@ jest.mock("@cardano-foundation/cardano-connect-with-wallet", () => ({
   }
 }));
 
+jest.mock("*.svg?react", () => "SvgMock");
+
 jest.mock("@cardano-foundation/cardano-connect-with-wallet-core", () => ({
   NetworkType: {
     MAINNET: "mainnet",

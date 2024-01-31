@@ -4,10 +4,34 @@ interface NativeScripts {
   numberOfAssetHolders: number;
 }
 
+type NativeScriptsList = {
+  before: string;
+  after: string;
+  isMultiSig: boolean;
+  numberOfAssetHolders: number;
+  numberOfTokens: number;
+  scriptHash: string;
+  tokens: {
+    displayName: string;
+    fingerprint: string;
+    name: string;
+    policy: string;
+    policyIsNativeScript: boolean;
+    metadata: {
+      decimals: number;
+      description: string;
+      logo: string;
+      ticker: string;
+      url: string;
+    };
+  }[];
+};
+
 interface ScriptSmartContracts {
   scriptHash: string;
-  version: string;
-  associatedAddress: string[];
+  scriptVersion: "PLUTUSV2" | "PLUTUSV1";
+  txCount: number;
+  txPurposes: ["SPEND" | "MINT" | "CERT" | " REWARD"];
 }
 
 interface ScriptAssociatedAddress {

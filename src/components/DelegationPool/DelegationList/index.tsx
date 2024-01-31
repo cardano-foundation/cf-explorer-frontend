@@ -214,6 +214,7 @@ const DelegationLists: React.FC = () => {
             }}
           >
             <CustomIcon
+              data-testid="search-icon"
               icon={HeaderSearchIconComponent}
               fill={theme.palette.secondary[0]}
               stroke={theme.palette.secondary.light}

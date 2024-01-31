@@ -172,7 +172,10 @@ const mockTransaction = {
     {
       label: 1,
       value: "value-1",
-      metadataCIP25: { tokenMap: undefined }
+      metadataCIP20: {},
+      metadataCIP83: {},
+      metadataCIP25: { tokenMap: undefined },
+      metadataCIP60: { tokenMap: undefined }
     }
   ]
 } as Transaction;
@@ -180,9 +183,9 @@ const mockTransaction = {
 describe("TransactionMetadata component", () => {
   it("should component render", () => {
     render(<TransactionMetadata data={mockTransaction} loading={false} />);
-    expect(screen.getByRole("button", { name: /summaryicon\.svg summary/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /utxoicon\.svg utxos/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /contracticon\.svg contracts\(1\)/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /noteicon\.svg notes\(2\)/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /summary/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /utxos/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /contracts/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /notes/i })).toBeInTheDocument();
   });
 });

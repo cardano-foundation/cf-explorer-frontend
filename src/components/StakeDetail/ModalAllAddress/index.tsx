@@ -59,6 +59,7 @@ const ModalAllAddress: React.FC<ModalAllAddressProps> = ({ stake, ...props }) =>
       title={t("common.addressList")}
       width={"600px"}
       contentStyle={{ overflowY: "unset" }}
+      isCenterWithoutPosition={true}
     >
       <WrapContent>
         <Table

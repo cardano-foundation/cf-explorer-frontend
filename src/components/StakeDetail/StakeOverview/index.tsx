@@ -1,13 +1,10 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 
-import { ReactComponent as delegatedIcon } from "src/commons/resources/icons/delegated.svg";
-import { ReactComponent as rewardIcon } from "src/commons/resources/icons/reward.svg";
-import { ReactComponent as rewardWithdrawIcon } from "src/commons/resources/icons/rewardWithdraw.svg";
-import { ReactComponent as totalStakeIcon } from "src/commons/resources/icons/totalStake.svg";
 import { details } from "src/commons/routers";
+import { delegatedIcon, rewardIcon, rewardWithdrawIcon, totalStakeIcon } from "src/commons/resources";
 import { formatADAFull, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -20,14 +17,17 @@ import { ButtonModal, StyledFlexValue, StyledLinkTo, TitleCard, TitleNoPool, Tit
 
 interface Props {
   data: IStakeKeyDetail | null;
+  adaHanldeData?: {
+    stakeAddress: string;
+    paymentAddress: string;
+  } | null;
   loading: boolean;
   lastUpdated?: number;
 }
-const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
+const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated, adaHanldeData }) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const { stakeId } = useParams<{ stakeId: string }>();
-
   const poolName = data?.pool?.poolName || "";
   const tickerName = data?.pool?.tickerName || "";
   const poolId = data?.pool?.poolId || "";
@@ -49,7 +49,9 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
       icon: delegatedIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>{t("glossary.delegatedTo")} </TitleCard>
+          <TitleCard mr={1} data-testid="stake-address-overview-delegated">
+            {t("glossary.delegatedTo")}{" "}
+          </TitleCard>
         </Box>
       ),
       value: (
@@ -64,7 +66,9 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
       icon: totalStakeIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>{t("glossary.totalStake")}</TitleCard>
+          <TitleCard mr={1} data-testid="stake-address-overview-total-stake">
+            {t("glossary.totalStake")}
+          </TitleCard>
         </Box>
       ),
       value: (
@@ -83,7 +87,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
           <Box sx={{ color: "blue" }}>
             <ButtonModal onClick={() => setOpen(true)}>{t("drawer.viewAllAddresses")}</ButtonModal>
           </Box>
-          <ModalAllAddress open={open} onClose={() => setOpen(false)} stake={stakeId} />
+          <ModalAllAddress open={open} onClose={() => setOpen(false)} stake={data?.stakeAddress || ""} />
         </Box>
       )
     },
@@ -91,7 +95,9 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
       icon: rewardIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>{t("glossary.rewardsAvailable")} </TitleCard>
+          <TitleCard mr={1} data-testid="stake-address-overview-reward-available">
+            {t("glossary.rewardsAvailable")}{" "}
+          </TitleCard>
         </Box>
       ),
       value: (
@@ -102,7 +108,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
               <ADAicon />
             </>
           ) : (
-            t("common.N/A")
+            t("common.notAvailable")
           )}
         </StyledFlexValue>
       )
@@ -111,7 +117,10 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
       icon: rewardWithdrawIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> {t("glossary.rewardsWithdrawn")} </TitleCard>
+          <TitleCard mr={1} data-testid="stake-address-overview-reward-withdrawn">
+            {" "}
+            {t("glossary.rewardsWithdrawn")}{" "}
+          </TitleCard>
         </Box>
       ),
       value: (
@@ -122,7 +131,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
               <ADAicon />
             </>
           ) : (
-            t("common.N/A")
+            t("common.notAvailable")
           )}
         </StyledFlexValue>
       )
@@ -133,7 +142,17 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
     <DetailHeader
       type="STAKE_KEY"
       bookmarkData={data?.stakeAddress || ""}
-      title={t("head.page.stakeAddressDetail")}
+      title={
+        adaHanldeData ? (
+          <CustomTooltip title={t("address.title.ADAHanlde")}>
+            <Box textTransform={"lowercase"} data-testid="stake-address-detail-title-ada-hanlde">
+              {stakeId.startsWith("$") ? stakeId : `$${stakeId}`}
+            </Box>
+          </CustomTooltip>
+        ) : (
+          <Box data-testid="stake-address-detail-title">{t("head.page.stakeAddressDetail")}</Box>
+        )
+      }
       hash={data?.stakeAddress}
       stakeKeyStatus={data?.status}
       listItem={listOverview}

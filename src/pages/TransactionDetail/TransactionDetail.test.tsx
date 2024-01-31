@@ -177,12 +177,18 @@ const transaction = {
     {
       label: 1,
       value: "value-1",
-      metadataCIP25: {}
+      metadataCIP25: {},
+      metadataCIP60: {},
+      metadataCIP20: {},
+      metadataCIP83: {}
     },
     {
       label: 2,
       value: "value-2",
-      metadataCIP25: {}
+      metadataCIP25: {},
+      metadataCIP60: {},
+      metadataCIP20: {},
+      metadataCIP83: {}
     }
   ]
 } as Transaction;

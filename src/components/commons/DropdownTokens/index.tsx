@@ -36,6 +36,9 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({
   const history = useHistory();
   const isSend = tokens[0].assetQuantity < 0;
   const theme = useTheme();
+  const hasLongTokenName = tokens.some(
+    (token) => token.assetName?.length > 20 || (!token.assetName && token.assetId.length > 20)
+  );
   const handleClickItem = (link: string) => {
     history.push(link);
   };
@@ -107,18 +110,27 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({
       {tokens.map((token, idx) => {
         const isNegative = token.assetQuantity <= 0;
         const tokenName = token.assetName || token.assetId;
-        const shortTokenName = getShortHash(tokenName);
-        const isTokenNameLong = tokenName.length > 20;
+        const shortTokenName = getShortHash(tokenName, tokenName.length > 20 ? 16 : 10);
         return (
-          <OptionSelect key={idx} onClick={() => handleClickItem(details.token(token?.assetId))}>
+          <OptionSelect
+            key={idx}
+            onClick={() => handleClickItem(details.token(token?.assetId))}
+            sx={
+              hasLongTokenName
+                ? {
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    minHeight: "unset",
+                    height: "auto"
+                  }
+                : {}
+            }
+          >
             <Box color={({ palette }) => palette.secondary.main}>
-              {isTokenNameLong ? (
-                <CustomTooltip title={tokenName} placement="top">
-                  <Box>{shortTokenName}</Box>
-                </CustomTooltip>
-              ) : (
-                tokenName
-              )}
+              <CustomTooltip title={tokenName} placement="top">
+                <Box>{shortTokenName || tokenName}</Box>
+              </CustomTooltip>
             </Box>
             <Box
               fontWeight={"bold"}
