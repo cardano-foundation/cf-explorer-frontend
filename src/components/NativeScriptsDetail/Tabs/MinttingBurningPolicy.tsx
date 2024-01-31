@@ -158,7 +158,7 @@ const ViewSignerModal: React.FC<ViewSignerModalProps> = ({ data, ...props }) => 
             key={idx}
             mt={1}
             fontWeight={"bold"}
-            color={({ palette }) => palette.primary.main}
+            color={({ palette }) => palette.secondary.main}
             display={"inline-block"}
             width={"100%"}
           >
