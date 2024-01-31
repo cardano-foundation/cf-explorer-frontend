@@ -94,6 +94,7 @@ import ArrowDownIcon from "./icons/arrow-down-red.svg";
 import ArrowDownDarkIcon from "./icons/arrow-down-red-dark.svg";
 import PolicyDark from "./icons/policy-dark.svg";
 import NAIcon from "./icons/NAIcon.svg";
+import NADarkIcon from "./icons/NA-dark-icon.svg";
 import StatusDarkIcon from "./images/StatusDark.png";
 import StatusLightIcon from "./images/StatusLight.png";
 import PoolSizeDarkIcon from "./images/PoolSizeDark.png";
@@ -385,6 +386,7 @@ export {
   PolicyDark,
   Sanchonet,
   NAIcon,
+  NADarkIcon,
   StatusDarkIcon,
   StatusLightIcon,
   PoolSizeDarkIcon,

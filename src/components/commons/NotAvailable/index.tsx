@@ -1,7 +1,7 @@
 import React from "react";
-import { Box, BoxProps, Container, styled } from "@mui/material";
+import { Box, BoxProps, Container, styled, useTheme } from "@mui/material";
 
-import { NAIcon } from "src/commons/resources";
+import { NADarkIcon, NAIcon } from "src/commons/resources";
 
 const NoRecordContainer = styled(Box)`
   display: flex;
@@ -17,9 +17,10 @@ const Image = styled("img")`
 `;
 
 const NotAvailable: React.FC<BoxProps> = React.forwardRef((props, ref) => {
+  const theme = useTheme();
   return (
     <NoRecordContainer component={Container} className="no-record" ref={ref} {...props}>
-      <Image src={NAIcon} alt="not avaialble icon" />
+      <Image src={theme.isDark ? NADarkIcon : NAIcon} alt="not avaialble icon" />
     </NoRecordContainer>
   );
 });
