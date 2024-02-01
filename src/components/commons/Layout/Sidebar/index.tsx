@@ -1,7 +1,7 @@
+import { Box, Button, ButtonGroup, useTheme } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useWindowSize } from "react-use";
-import { Box, Button, ButtonGroup, useTheme } from "@mui/material";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
@@ -22,8 +22,8 @@ import { HeaderTop, LogoLink, NavBarLogo, NavbarContainer, NavbarMenuBottom, Wra
 const Sidebar: React.FC = () => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { theme } = useSelector(({ theme }: RootState) => theme);
-  const { isTablet, isMobile } = useScreen();
   const { height } = useWindowSize();
+  const { isTablet, isMobile } = useScreen();
   const muiTheme = useTheme();
   const getLogo = () => {
     if (theme === "light") {

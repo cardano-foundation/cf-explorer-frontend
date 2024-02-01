@@ -71,8 +71,6 @@ const RecentWithdraws: React.FC<Props> = ({ onSelect, setShowBackButton }) => {
             onSubmit={(params) => {
               if (params) {
                 setParams(params);
-              } else {
-                setParams({});
               }
               setPageInfo((pre) => ({ ...pre, page: 0 }));
             }}

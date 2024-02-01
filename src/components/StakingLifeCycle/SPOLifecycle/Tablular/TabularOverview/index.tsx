@@ -109,7 +109,7 @@ const TabularOverview: React.FC = () => {
           }
           value={
             <Box display="flex" alignItems="center">
-              <CardValue>{poolSize !== null ? formatADAFull(poolSize) : t("common.notAvailable")} </CardValue>
+              <CardValue>{poolSize !== null ? formatADAFull(poolSize) : t("common.N/A")} </CardValue>
               {rewardAvailable != null && (
                 <ADAicon width={isMobile ? 10 : 15} height={isMobile ? 11 : 20} style={{ overflow: "inherit" }} />
               )}
@@ -152,9 +152,7 @@ const TabularOverview: React.FC = () => {
           }
           value={
             <Box display="flex" alignItems="center">
-              <CardValue>
-                {rewardAvailable != null ? formatADAFull(rewardAvailable) : t("common.notAvailable")}{" "}
-              </CardValue>
+              <CardValue>{rewardAvailable != null ? formatADAFull(rewardAvailable) : t("common.N/A")} </CardValue>
               {rewardAvailable != null && (
                 <ADAicon width={isMobile ? 10 : 15} height={isMobile ? 11 : 20} style={{ overflow: "inherit" }} />
               )}

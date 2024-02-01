@@ -214,7 +214,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
                   ? undefined
                   : tabsRenderConfig[step.keyCheckShow] != null
                   ? t("common.noRecordAtTime")
-                  : t("common.notAvailable")
+                  : t("common.N/A")
               }
               onClick={() => handleChangeTab(step, idx)}
               sx={{

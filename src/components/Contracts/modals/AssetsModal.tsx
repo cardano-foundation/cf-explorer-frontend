@@ -1,5 +1,5 @@
 import { ListItemText, Typography, useTheme } from "@mui/material";
-import React from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import CustomModal from "src/components/commons/CustomModal";
@@ -35,7 +35,7 @@ const AssetsModal: React.FC<AssetsModalProps> = ({ open = false, onClose, data, 
   const theme = useTheme();
   const handleCloseModal = () => onClose?.();
 
-  const renderContent = () => {
+  const renderContent = useMemo(() => {
     if (isMobile && data) {
       return (
         data.length > 0 &&
@@ -87,7 +87,7 @@ const AssetsModal: React.FC<AssetsModalProps> = ({ open = false, onClose, data, 
           ))}
       </StyledList>
     );
-  };
+  }, [isMobile, data]);
 
   return (
     <CustomModal
@@ -127,7 +127,7 @@ const AssetsModal: React.FC<AssetsModalProps> = ({ open = false, onClose, data, 
         style: isGalaxyFoldSmall ? { width: "unset", padding: "20px 8px" } : {}
       }}
     >
-      <ModalContent>{renderContent()}</ModalContent>
+      <ModalContent>{renderContent}</ModalContent>
     </CustomModal>
   );
 };
