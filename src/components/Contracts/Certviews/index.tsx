@@ -110,7 +110,7 @@ const Certviews: React.FC<CertviewsProps> = ({ data, isMobile }) => {
         open={openCompiledCode}
         onClose={() => setOpenCompiledCode(false)}
       />
-      <Center isMoble={+!!isMobile}>
+      <Center isMobile={+!!isMobile}>
         <CertRrounded ref={certRef}>
           <CertificateType redeemerCertType={data?.redeemerCertType} />
           <LongButton onClick={() => setOpenRedeemer(!openRedeemer)}>
