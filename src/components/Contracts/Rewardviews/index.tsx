@@ -8,7 +8,7 @@ import { LineArrowItem } from "src/components/commons/LineArrow";
 import CompiledCode from "src/components/commons/ViewBlocks/CompiledCode";
 import Contract from "src/components/commons/ViewBlocks/Contract";
 import Redeemer from "src/components/commons/ViewBlocks/Redeemer";
-import { Center, MiddleBox, RewardContainer } from "src/components/commons/ViewBlocks/styles";
+import { MiddleBox, RewardContainer, RewardViewContainer } from "src/components/commons/ViewBlocks/styles";
 import { details } from "src/commons/routers";
 import Outputs from "src/components/commons/ViewBlocks/Outputs";
 
@@ -103,7 +103,7 @@ const Rewardviews: React.FC<RewardviewsProps> = ({ data, isMobile }) => {
         open={openCompiledCode}
         onClose={() => setOpenCompiledCode(false)}
       />
-      <Center>
+      <RewardViewContainer>
         <Redeemer ref={redeemerRef} onClick={() => setOpenRedeemer(!openRedeemer)} />
         <MiddleBox ref={middleBoxRef}>
           <Contract hash={data?.scriptHash} detail={details.smartContract} />
@@ -112,7 +112,7 @@ const Rewardviews: React.FC<RewardviewsProps> = ({ data, isMobile }) => {
         <Box ref={outputBoxRef}>
           <Outputs title="View withdrawal tab" link={details.transaction(trxHash, "withdrawals")} />
         </Box>
-      </Center>
+      </RewardViewContainer>
 
       <DrawPath
         paths={isMobile ? mobilePaths : paths}
