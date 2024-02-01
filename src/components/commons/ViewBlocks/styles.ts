@@ -259,21 +259,23 @@ export const RewardContainer = styled(MintContainer)`
   justify-content: center;
   align-items: center;
 `;
-export const Center = styled(Box)<{ isMoble?: number }>`
-  max-width: 900px;
-  width: 100%;
+export const Center = styled(Box)<{ isMobile?: number }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-direction: ${({ isMoble }) => (isMoble ? "column" : "row")};
-  gap: ${({ isMoble }) => (isMoble ? "60px" : "unset")};
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    flex-direction: column;
+  justify-content: space-between;
+  height: max-content;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 920px;
+  flex-direction: ${({ isMobile }) => (isMobile ? "column" : "row")};
+  ${(props) => props.theme.breakpoints.down("lg")} {
+    max-width: unset;
     gap: 60px;
   }
-  ${({ theme }) => theme.breakpoints.down("lg")} {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     flex-direction: column;
-    gap: 60px;
   }
 `;
 
