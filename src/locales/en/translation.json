@@ -947,7 +947,7 @@
   "smartContract.totalTrx": "Number of Transactions",
   "smartContract.trxPurpose": "Transaction Purpose",
   "smartContract.any": "Any",
-  "smartContract.sellectAll": "Sellect All",
+  "smartContract.selectAll": "Select All",
   "smartContract.plutusv1": "Plutus V1",
   "smartContract.plutusv2": "Plutus V2",
   "smartContract.spend": "Spend",
