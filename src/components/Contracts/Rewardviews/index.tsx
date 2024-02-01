@@ -36,22 +36,22 @@ const Rewardviews: React.FC<RewardviewsProps> = ({ data, isMobile }) => {
       {
         start: redeemerRef,
         end: middleBoxRef,
-        startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
-        arrow: { 0: "top", lg: "left" },
-        fold: { 0: "none", lg: "none" },
-        startOffset: { 0: [0, 0], lg: [0, 0] },
-        endOffset: { 0: [0, -10], lg: [0, 0] }
+        startPosition: { 0: ["center", "bottom"], sm: ["right", "middle"] },
+        endPosition: { 0: ["center", "top"], sm: ["left", "middle"] },
+        arrow: { 0: "top", sm: "left" },
+        fold: { sm: "horizontal", lg: "none" },
+        startOffset: { 0: [0, 0], sm: [0, 0] },
+        endOffset: { 0: [0, -16], sm: [0, 0] }
       },
       {
         start: middleBoxRef,
         end: outputBoxRef,
-        startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
-        arrow: { 0: "top", lg: "left" },
-        fold: { 0: "none", lg: "none" },
-        startOffset: { 0: [0, 0], lg: [0, 0] },
-        endOffset: { 0: [0, -10], lg: [0, 0] }
+        startPosition: { 0: ["center", "bottom"], sm: ["right", "middle"] },
+        endPosition: { 0: ["center", "top"], sm: ["left", "middle"] },
+        arrow: { 0: "top", sm: "left" },
+        fold: { 0: "none", sm: "none" },
+        startOffset: { 0: [0, 0] },
+        endOffset: { 0: [0, -10], sm: [-12, 0] }
       }
     ];
   }, []);
