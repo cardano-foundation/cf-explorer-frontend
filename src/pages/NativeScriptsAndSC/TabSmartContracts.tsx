@@ -224,7 +224,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
   const [expanded, setExpanded] = useState<string | false>("");
   const transactionPurpose = ["SPEND", "MINT", "CERT", "REWARD", "NO_TX_PURPOSE"];
   const transactionPurposeI18n: Record<string, string> = {
-    ANY: t("smartContract.sellectAll"),
+    ANY: t("smartContract.selectAll"),
     SPEND: t("smartContract.spend"),
     MINT: t("smartContract.mint"),
     REWARD: t("smartContract.reward"),
@@ -253,9 +253,9 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
               </Box>
               <Box>
                 {expanded === "version" ? (
-                  <IoIosArrowDown color={theme.palette.secondary.main} />
-                ) : (
                   <IoIosArrowUp color={theme.palette.secondary.main} />
+                ) : (
+                  <IoIosArrowDown color={theme.palette.secondary.main} />
                 )}
               </Box>
             </Box>
@@ -323,9 +323,9 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
               </Box>
               <Box>
                 {expanded === "trxPurpose" ? (
-                  <IoIosArrowDown color={theme.palette.secondary.main} />
-                ) : (
                   <IoIosArrowUp color={theme.palette.secondary.main} />
+                ) : (
+                  <IoIosArrowDown color={theme.palette.secondary.main} />
                 )}
               </Box>
             </Box>
