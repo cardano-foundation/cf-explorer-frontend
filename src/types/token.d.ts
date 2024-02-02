@@ -69,4 +69,5 @@ interface INativeScriptDetail {
   script?: string;
   numberOfTokens?: number;
   isOneTimeMint?: boolean;
+  isOpen?: boolean;
 }

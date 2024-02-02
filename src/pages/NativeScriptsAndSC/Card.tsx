@@ -4,7 +4,7 @@ import { FunctionComponent, SVGProps, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { details } from "src/commons/routers";
-import { checkTimeLockOpen, getShortHash } from "src/commons/utils/helper";
+import { getShortHash } from "src/commons/utils/helper";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -29,13 +29,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
           <Title width={"100%"}>{t("nativeScript.policy")}: </Title>
           <Value>
             <Box mt={1} display={"flex"} flexWrap={"wrap"}>
-              <TimeLockChip
-                isOpen={
-                  checkTimeLockOpen({ before: data.before, after: data.after }) !== null
-                    ? checkTimeLockOpen({ before: data.before, after: data.after })
-                    : true
-                }
-              />
+              <TimeLockChip isOpen={data.isOpen} />
               <MultiSigChip isMultiSig={data.isMultiSig} />
             </Box>
           </Value>
