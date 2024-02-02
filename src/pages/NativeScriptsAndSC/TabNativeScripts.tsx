@@ -250,14 +250,14 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
               <Box display={"flex"} alignItems={"center"}>
                 <TimeLock fill={theme.palette.secondary.main} />
                 <Box ml={1} color={({ palette }) => palette.secondary.main}>
-                  Time-Locked
+                  {t("nativeScript.timeLocked")}
                 </Box>
               </Box>
               <Box>
                 {expanded === "time-locked" ? (
-                  <IoIosArrowDown color={theme.palette.secondary.main} />
-                ) : (
                   <IoIosArrowUp color={theme.palette.secondary.main} />
+                ) : (
+                  <IoIosArrowDown color={theme.palette.secondary.main} />
                 )}
               </Box>
             </Box>
@@ -324,9 +324,9 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
               </Box>
               <Box>
                 {expanded === "multi-sig" ? (
-                  <IoIosArrowDown color={theme.palette.secondary.main} />
-                ) : (
                   <IoIosArrowUp color={theme.palette.secondary.main} />
+                ) : (
+                  <IoIosArrowDown color={theme.palette.secondary.main} />
                 )}
               </Box>
             </Box>
