@@ -8,7 +8,7 @@ import { LineArrowItem } from "src/components/commons/LineArrow";
 import CompiledCode from "src/components/commons/ViewBlocks/CompiledCode";
 import Contract from "src/components/commons/ViewBlocks/Contract";
 import Redeemer from "src/components/commons/ViewBlocks/Redeemer";
-import { Center, MiddleBox, RewardContainer } from "src/components/commons/ViewBlocks/styles";
+import { MiddleBox, RewardContainer, RewardViewContainer } from "src/components/commons/ViewBlocks/styles";
 import { details } from "src/commons/routers";
 import Outputs from "src/components/commons/ViewBlocks/Outputs";
 
@@ -36,22 +36,22 @@ const Rewardviews: React.FC<RewardviewsProps> = ({ data, isMobile }) => {
       {
         start: redeemerRef,
         end: middleBoxRef,
-        startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
-        arrow: { 0: "top", lg: "left" },
-        fold: { 0: "none", lg: "none" },
-        startOffset: { 0: [0, 0], lg: [0, 0] },
-        endOffset: { 0: [0, -10], lg: [0, 0] }
+        startPosition: { 0: ["center", "bottom"], sm: ["right", "middle"] },
+        endPosition: { 0: ["center", "top"], sm: ["left", "middle"] },
+        arrow: { 0: "top", sm: "left" },
+        fold: { sm: "horizontal", lg: "none" },
+        startOffset: { 0: [0, 0], sm: [0, 0] },
+        endOffset: { 0: [0, -16], sm: [0, 0] }
       },
       {
         start: middleBoxRef,
         end: outputBoxRef,
-        startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
-        endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
-        arrow: { 0: "top", lg: "left" },
-        fold: { 0: "none", lg: "none" },
-        startOffset: { 0: [0, 0], lg: [0, 0] },
-        endOffset: { 0: [0, -10], lg: [0, 0] }
+        startPosition: { 0: ["center", "bottom"], sm: ["right", "middle"] },
+        endPosition: { 0: ["center", "top"], sm: ["left", "middle"] },
+        arrow: { 0: "top", sm: "left" },
+        fold: { 0: "none", sm: "none" },
+        startOffset: { 0: [0, 0] },
+        endOffset: { 0: [0, -10], sm: [-12, 0] }
       }
     ];
   }, []);
@@ -103,7 +103,7 @@ const Rewardviews: React.FC<RewardviewsProps> = ({ data, isMobile }) => {
         open={openCompiledCode}
         onClose={() => setOpenCompiledCode(false)}
       />
-      <Center>
+      <RewardViewContainer>
         <Redeemer ref={redeemerRef} onClick={() => setOpenRedeemer(!openRedeemer)} />
         <MiddleBox ref={middleBoxRef}>
           <Contract hash={data?.scriptHash} detail={details.smartContract} />
@@ -112,7 +112,7 @@ const Rewardviews: React.FC<RewardviewsProps> = ({ data, isMobile }) => {
         <Box ref={outputBoxRef}>
           <Outputs title="View withdrawal tab" link={details.transaction(trxHash, "withdrawals")} />
         </Box>
-      </Center>
+      </RewardViewContainer>
 
       <DrawPath
         paths={isMobile ? mobilePaths : paths}
