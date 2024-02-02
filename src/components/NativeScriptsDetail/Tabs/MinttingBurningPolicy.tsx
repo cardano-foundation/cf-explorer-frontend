@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { Box, useTheme } from "@mui/material";
 import { t } from "i18next";
 
-import { NativeOneMint, NativeSig, NativeStatus, NativeTimelock, NativeType } from "src/commons/resources";
+import { NativeOneMint, NativeSig, NativeTimelock, NativeType } from "src/commons/resources";
 import { ChipContainer, MultiSigChip, TimeLockChip } from "src/pages/NativeScriptsAndSC/Card";
-import { checkTimeLockOpen, formatDateTimeLocal } from "src/commons/utils/helper";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
 import CustomModal from "src/components/commons/CustomModal";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
@@ -13,7 +13,7 @@ import { CardSign, ContainerMint, ItemMint, MintCard, MintIcon, MintTitle, ViewS
 import { useNativeScriptDetail } from ".";
 
 const MinttingBurningPolicy = () => {
-  const { before, after, keyHashes, isOneTimeMint } = useNativeScriptDetail();
+  const { before, after, keyHashes, isOneTimeMint, isOpen } = useNativeScriptDetail();
   const [signers, setSigners] = useState<string[] | null>(null);
   const theme = useTheme();
   useEffect(() => {
@@ -59,16 +59,14 @@ const MinttingBurningPolicy = () => {
 
   return (
     <ContainerMint container>
-      <ItemMint item width={"100%"} lg={after || before ? 3 : 4} md={6} sm={6} xs={12}>
+      <ItemMint item width={"100%"} lg={after || before ? 4 : 6} md={6} sm={6} xs={12}>
         <MintCard>
           <MintIcon>
             <NativeType fill={theme.isDark ? theme.palette.secondary[800] : theme.palette.secondary[600]} />
           </MintIcon>
           <MintTitle>{t("nativeScript.mint.type")}</MintTitle>
           <Box display={"flex"} flexWrap={"wrap"}>
-            <TimeLockChip
-              isOpen={checkTimeLockOpen({ before, after }) !== null ? checkTimeLockOpen({ before, after }) : true}
-            />
+            <TimeLockChip isOpen={isOpen} />
             <MultiSigChip isMultiSig={(keyHashes || []).length > 1} />
             {isOneTimeMint && (
               <ChipContainer Icon={NativeOneMint} message="One Time Mint" variant="info" titleTooltip="One Time Mint" />
@@ -76,23 +74,8 @@ const MinttingBurningPolicy = () => {
           </Box>
         </MintCard>
       </ItemMint>
-      <ItemMint item width={"100%"} lg={after || before ? 3 : 4} md={6} sm={6} xs={12}>
-        <MintCard>
-          <MintIcon>
-            <NativeStatus fill={theme.isDark ? theme.palette.secondary[800] : theme.palette.secondary[600]} />
-          </MintIcon>
-          <MintTitle>{t("nativeScript.mint.status")}</MintTitle>
-          <Box fontWeight={"bold"} lineHeight={1} fontSize={18} color={({ palette }) => palette.secondary.main}>
-            {checkTimeLockOpen({ before, after }) !== null
-              ? checkTimeLockOpen({ before, after })
-                ? "Open"
-                : "Locked"
-              : "Open"}
-          </Box>
-        </MintCard>
-      </ItemMint>
       {(after || before) && (
-        <ItemMint item width={"100%"} lg={after || before ? 3 : 4} md={6} sm={6} xs={12}>
+        <ItemMint item width={"100%"} lg={after || before ? 4 : 6} md={6} sm={6} xs={12}>
           <MintCard>
             <MintIcon>
               <NativeTimelock fill={theme.isDark ? theme.palette.secondary[800] : theme.palette.secondary[600]} />
@@ -104,7 +87,7 @@ const MinttingBurningPolicy = () => {
           </MintCard>
         </ItemMint>
       )}
-      <ItemMint item width={"100%"} lg={after || before ? 3 : 4} md={6} sm={6} xs={12}>
+      <ItemMint item width={"100%"} lg={after || before ? 4 : 6} md={6} sm={6} xs={12}>
         <MintCard>
           <MintIcon>
             <NativeSig fill={theme.isDark ? theme.palette.secondary[800] : theme.palette.secondary[600]} />

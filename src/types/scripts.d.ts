@@ -11,6 +11,7 @@ type NativeScriptsList = {
   numberOfAssetHolders: number;
   numberOfTokens: number;
   scriptHash: string;
+  isOpen: boolean;
   tokens: {
     displayName: string;
     fingerprint: string;
