@@ -958,6 +958,8 @@
   "nativeScript.timeLock": "Time-Lock",
   "nativeScript.multiSig": "Multi-Sig",
   "nativeScript.policy": "Minting / Burning Policy",
+  "nativeScript.script": "Script",
+  "nativeScript.token": "Token",
   "nativeScript.signModal": "Signer Public Keys",
   "nativeScript.viewSigner": "View Signer Public Keys",
   "nativeScript.mint.type": "Type",
