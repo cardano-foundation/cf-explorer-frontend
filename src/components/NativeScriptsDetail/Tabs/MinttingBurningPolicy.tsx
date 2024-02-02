@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { Box, useTheme } from "@mui/material";
 import { t } from "i18next";
 
-import { NativeOneMint, NativeSig, NativeType } from "src/commons/resources";
+import { NativeOneMint, NativeSig, NativeTimelock, NativeType } from "src/commons/resources";
 import { ChipContainer, MultiSigChip, TimeLockChip } from "src/pages/NativeScriptsAndSC/Card";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
 import CustomModal from "src/components/commons/CustomModal";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
@@ -12,16 +13,54 @@ import { CardSign, ContainerMint, ItemMint, MintCard, MintIcon, MintTitle, ViewS
 import { useNativeScriptDetail } from ".";
 
 const MinttingBurningPolicy = () => {
-  const { before, keyHashes, isOneTimeMint, isOpen } = useNativeScriptDetail();
+  const { before, after, keyHashes, isOneTimeMint, isOpen } = useNativeScriptDetail();
+  const canShowTimeBlockInformation = !isOpen && (after || before);
   const [signers, setSigners] = useState<string[] | null>(null);
   const theme = useTheme();
   useEffect(() => {
     window.scroll(0, 0);
   }, [before]);
+  const isMoreThan10years = (date?: string) => {
+    if (date) {
+      const date1 = new Date(date);
+      const date2 = new Date();
+      const differenceInTime = date2.getTime() - date1.getTime();
+      const differenceInYears = differenceInTime / (1000 * 3600 * 24 * 365);
+      if (isNaN(differenceInYears) || Math.abs(differenceInYears) > 10) return true;
+      return false;
+    }
+    return false;
+  };
+
+  const renderTimeLock = ({ after, before }: { after?: string; before?: string }) => {
+    if (before && after) {
+      return (
+        <Box>
+          <Box display={"flex"} alignContent={"center"} gap={1}>
+            until: {isMoreThan10years(after) ? t("moreThan10Years") : formatDateTimeLocal(after)}
+          </Box>
+          <Box display={"flex"} alignContent={"center"} gap={1}>
+            as of: {isMoreThan10years(before) ? t("moreThan10Years") : formatDateTimeLocal(before)}
+          </Box>
+        </Box>
+      );
+    }
+    if (before || after) {
+      return (
+        <Box display={"flex"} gap={1}>
+          {before ? "as of: " : " until: "}
+          {isMoreThan10years(before ? before : after)
+            ? t("moreThan10Years")
+            : formatDateTimeLocal(before ? before : (after as string))}
+        </Box>
+      );
+    }
+    return <Box display={"flex"}>{t("common.N/A")}</Box>;
+  };
 
   return (
     <ContainerMint container>
-      <ItemMint item width={"100%"} sm={6} xs={12}>
+      <ItemMint item width={"100%"} lg={canShowTimeBlockInformation ? 4 : 6} md={6} sm={6} xs={12}>
         <MintCard>
           <MintIcon>
             <NativeType fill={theme.isDark ? theme.palette.secondary[800] : theme.palette.secondary[600]} />
@@ -36,7 +75,20 @@ const MinttingBurningPolicy = () => {
           </Box>
         </MintCard>
       </ItemMint>
-      <ItemMint item width={"100%"} sm={6} xs={12}>
+      {canShowTimeBlockInformation && (
+        <ItemMint item width={"100%"} lg={canShowTimeBlockInformation ? 4 : 6} md={6} sm={6} xs={12}>
+          <MintCard>
+            <MintIcon>
+              <NativeTimelock fill={theme.isDark ? theme.palette.secondary[800] : theme.palette.secondary[600]} />
+            </MintIcon>
+            <MintTitle>{t("nativeScript.mint.timeLockInfo")}</MintTitle>
+            <Box lineHeight={1} fontWeight={"bold"} fontSize={18} color={({ palette }) => palette.secondary.main}>
+              {renderTimeLock({ after, before })}
+            </Box>
+          </MintCard>
+        </ItemMint>
+      )}
+      <ItemMint item width={"100%"} lg={canShowTimeBlockInformation ? 4 : 6} md={6} sm={6} xs={12}>
         <MintCard>
           <MintIcon>
             <NativeSig fill={theme.isDark ? theme.palette.secondary[800] : theme.palette.secondary[600]} />
