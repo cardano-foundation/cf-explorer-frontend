@@ -570,7 +570,7 @@ const Wineries: React.FC<{ wineryData?: Transaction["metadata"][number]["metadat
             }
           }}
         >
-          {wineryData?.length === 1 ? t("bolsini.winery") : t("bolsini.wineries")}
+          {t("bolsini.wineries")}
         </MetadataJSONTitle>
         <MetaDataValue display={"flex"} alignItems={"center"}>
           <CustomNumberBadge ml="0px" value={wineryData?.length} />
