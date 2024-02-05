@@ -1,3 +1,4 @@
+import React from "react";
 import { Box, useTheme } from "@mui/material";
 import QueryString, { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
@@ -265,7 +266,9 @@ const DelegationCertificatesHistory = ({
       render: (data) =>
         data.txHash && (
           <CustomTooltip title={data.txHash || ""}>
-            <StyledLink to={details.transaction(data.txHash)}>{getShortHash(data.txHash || "")}</StyledLink>
+            <StyledLink to={details.transaction(data.txHash, "poolCertificates")}>
+              {getShortHash(data.txHash || "")}
+            </StyledLink>
           </CustomTooltip>
         )
     },
@@ -285,7 +288,7 @@ const DelegationCertificatesHistory = ({
       title: t("epoch"),
       key: "value",
       minWidth: "80px",
-      render: (data) => <StyledLink to={details.block(data.epochNo)}>{data.epochNo}</StyledLink>
+      render: (data) => <StyledLink to={details.epoch(data.epochNo)}>{data.epochNo}</StyledLink>
     },
     {
       title: t("common.slot"),
@@ -306,7 +309,10 @@ const DelegationCertificatesHistory = ({
       render: (data) => {
         return (
           <Box display={"flex"} gap={2}>
-            {data.actions && removeDuplicate(data.actions).map((action: POOL_ACTION_TYPE) => renderAction(action))}
+            {data.actions &&
+              removeDuplicate(data.actions).map((action: POOL_ACTION_TYPE, idx) => (
+                <React.Fragment key={"poolAction" + data.txHash + idx}>{renderAction(action)}</React.Fragment>
+              ))}
           </Box>
         );
       }
