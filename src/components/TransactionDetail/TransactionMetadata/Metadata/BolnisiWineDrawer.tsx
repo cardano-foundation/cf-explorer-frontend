@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, CircularProgress, IconButton, Typography, alpha, styled, useTheme } from "@mui/material";
-import converter from "number-to-words";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { t } from "i18next";
 import { IoMdClose } from "react-icons/io";
@@ -26,7 +25,6 @@ const BolnisiWineDrawer = () => {
   const { wineryId, trxHash } = useParams<{ wineryId: string; trxHash: string }>();
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   const [selectedWine, setSelectedWine] = useState<BolnisiWineLots | null>(null);
-  const [selectedIndexWine, setSelectedIndexWine] = useState<number>(0);
   const { hash } = useLocation();
   const { data, loading } = useFetch<WineryData>(
     wineryId && trxHash ? API.TRANSACTION.WINERY_DETAIL(trxHash, wineryId) : ""
@@ -136,7 +134,7 @@ const BolnisiWineDrawer = () => {
             >
               <TableFullWidth>
                 <Box component={THead} textAlign={"left"}>
-                  <THeader>Wine Lot ID</THeader>
+                  <THeader>Lot Number</THeader>
                   <THeader>Verification</THeader>
                   <Box component={THeader} textAlign={"center"}>
                     View Data
@@ -152,7 +150,7 @@ const BolnisiWineDrawer = () => {
                         selected={hash.split("#") ? +(+hash.split("#")[1] === index) : 0}
                       >
                         <Box component={TCol} textTransform={"capitalize"} py={1}>
-                          Wine Lot ID {converter.toWords(index + 1)}
+                          {item?.offChainData?.lot_number || ""}
                         </Box>
                         <Box component={TCol} py={1}>
                           <VerifyBadge status={item.signatureVerified} />
@@ -166,7 +164,6 @@ const BolnisiWineDrawer = () => {
                             mx={"auto"}
                             onClick={() => {
                               setSelectedWine(item);
-                              setSelectedIndexWine(index);
                             }}
                           >
                             <SeeMoreIconHome fill={theme.palette.primary.main} />
@@ -178,12 +175,7 @@ const BolnisiWineDrawer = () => {
                 </TBody>
               </TableFullWidth>
             </Content>
-            <WineDetailModal
-              open={!!selectedWine}
-              onClose={() => setSelectedWine(null)}
-              wineData={selectedWine}
-              indexWine={selectedIndexWine}
-            />
+            <WineDetailModal open={!!selectedWine} onClose={() => setSelectedWine(null)} wineData={selectedWine} />
           </Box>
         )}
       </Box>
@@ -248,11 +240,10 @@ const StyledLink = styled(Box)`
 interface WineDetailModalProps {
   open: boolean;
   wineData: BolnisiWineLots | null;
-  indexWine: number;
   onClose: () => void;
 }
 
-const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, indexWine, ...props }) => {
+const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, ...props }) => {
   const { wineryId } = useParams<{ wineryId: string; trxHash: string }>();
   const { wineryName } = useSelector(({ system }: RootState) => system);
   const getWineName = (wineryId: string) => {
@@ -312,7 +303,7 @@ const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, indexWine, 
       <ContentContainer>
         <CIPModalDesc>
           <Box textTransform={"capitalize"} display={"inline-block"}>
-            Wine Lot ID: Wine Lot ID {converter.toWords(+(indexWine || 0) + 1)}
+            Lot Number: {wineData?.offChainData?.lot_number || ""}
             <Box display={"inline-block"} ml={2}>
               <Box component={VerifyBadge} status={wineData.signatureVerified} />
             </Box>
