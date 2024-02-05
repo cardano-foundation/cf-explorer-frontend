@@ -1,6 +1,6 @@
 import { BoxProps, Typography, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { forwardRef } from "react";
+import { memo } from "react";
 
 import { OutlineEye, Polygon, PolygonDarkRedIcon } from "src/commons/resources";
 
@@ -12,7 +12,7 @@ interface BurnProps extends BoxProps {
   onClick: () => void;
 }
 
-const Burn: React.FC<BurnProps> = forwardRef(({ total, onClick }) => {
+const Burn: React.FC<BurnProps> = memo(({ total, onClick }) => {
   const { t } = useTranslation();
   const theme = useTheme();
   return (
