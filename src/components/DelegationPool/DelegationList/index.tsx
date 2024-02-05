@@ -208,6 +208,7 @@ const DelegationLists: React.FC = () => {
           />
           <SubmitButton
             onClick={() => {
+              setSearch(value);
               history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
               history.push(routers.DELEGATION_POOLS, {
                 tickerNameSearch: (value || "").toLocaleLowerCase()
