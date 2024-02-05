@@ -4,7 +4,7 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import { useSelector } from "react-redux";
 
-import { BolsiniAddress, SeeMoreIconHome, VerifiedIcon } from "src/commons/resources";
+import { BolsiniAddress, InvalidIcon, SeeMoreIconHome, VerifiedIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -13,8 +13,11 @@ import { Column } from "src/types/table";
 import Table from "src/components/commons/Table";
 import { ViewDetailDrawer } from "src/components/commons/DetailView/styles";
 import { TBody, TCol, THead, THeader, TableFullWidth } from "src/components/commons/Table/styles";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import DefaultImageWine from "./DefaultImageWine";
+import { BadgeContainerVerify } from "./styles";
 
 import { VerifyBadge } from ".";
 
@@ -152,7 +155,33 @@ const BolnisiWineDrawer = () => {
                           {item?.offChainData?.lot_number || ""}
                         </Box>
                         <Box component={TCol} py={1}>
-                          <VerifyBadge status={item.signatureVerified} />
+                          {data?.externalApiAvailable && <VerifyBadge status={item.signatureVerified} />}
+                          {!data?.externalApiAvailable && (
+                            <CustomTooltip
+                              title={
+                                <Box width={"max-content"} maxWidth={"75vw"}>
+                                  {t("bolnisi.verifyErrorTooltip")}
+                                  <br />
+                                  {t("bolnisi.verifyErrorTooltipTryAgain")}
+                                </Box>
+                              }
+                            >
+                              <BadgeContainerVerify type="Warning" fontWeight={500}>
+                                <Box
+                                  width={23}
+                                  height={23}
+                                  display={"flex"}
+                                  alignItems={"center"}
+                                  justifyContent={"center"}
+                                  bgcolor={theme.palette.warning[700]}
+                                  borderRadius={"50%"}
+                                >
+                                  <InvalidIcon fill={theme.palette.secondary.main} />
+                                </Box>
+                                <Box width={"max-content"}>{t("bolnisi.verifyError")}</Box>
+                              </BadgeContainerVerify>
+                            </CustomTooltip>
+                          )}
                         </Box>
                         <Box component={TCol} py={1} textAlign={"center"}>
                           <StyledLink
@@ -174,7 +203,12 @@ const BolnisiWineDrawer = () => {
                 </TBody>
               </TableFullWidth>
             </Content>
-            <WineDetailModal open={!!selectedWine} onClose={() => setSelectedWine(null)} wineData={selectedWine} />
+            <WineDetailModal
+              externalApiAvailable={data?.externalApiAvailable}
+              open={!!selectedWine}
+              onClose={() => setSelectedWine(null)}
+              wineData={selectedWine}
+            />
           </Box>
         )}
       </Box>
@@ -238,13 +272,16 @@ const StyledLink = styled(Box)`
 
 interface WineDetailModalProps {
   open: boolean;
+  externalApiAvailable: boolean;
   wineData: BolnisiWineLots | null;
   onClose: () => void;
 }
 
-const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, ...props }) => {
+const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, externalApiAvailable, ...props }) => {
   const { wineryId } = useParams<{ wineryId: string; trxHash: string }>();
   const { wineryName } = useSelector(({ system }: RootState) => system);
+  const theme = useTheme();
+  const { isMobile } = useScreen();
   const getWineName = (wineryId: string) => {
     if (wineryName && wineryName[`${wineryId}`]) {
       return wineryName[`${wineryId}`].name;
@@ -301,10 +338,36 @@ const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, ...props })
     >
       <ContentContainer>
         <CIPModalDesc>
-          <Box textTransform={"capitalize"} display={"inline-block"}>
+          <Box textTransform={"capitalize"} display={isMobile ? "block" : "flex"} alignItems={"center"}>
             Lot Number: {wineData?.offChainData?.lot_number || ""}
-            <Box display={"inline-block"} ml={2}>
-              <Box component={VerifyBadge} status={wineData.signatureVerified} />
+            <Box display={isMobile ? "block" : "inline-block"} ml={isMobile ? 0 : 2}>
+              {externalApiAvailable && <Box component={VerifyBadge} status={wineData.signatureVerified} />}
+              {!externalApiAvailable && (
+                <CustomTooltip
+                  title={
+                    <Box width={"max-content"} maxWidth={"75vw"}>
+                      {t("bolnisi.verifyErrorTooltip")}
+                      <br />
+                      {t("bolnisi.verifyErrorTooltipTryAgain")}
+                    </Box>
+                  }
+                >
+                  <BadgeContainerVerify type="Warning" fontWeight={500}>
+                    <Box
+                      width={23}
+                      height={23}
+                      display={"flex"}
+                      alignItems={"center"}
+                      justifyContent={"center"}
+                      bgcolor={theme.palette.warning[700]}
+                      borderRadius={"50%"}
+                    >
+                      <InvalidIcon fill={theme.palette.secondary.main} />
+                    </Box>
+                    <Box width={"max-content"}>{t("bolnisi.verifyError")}</Box>
+                  </BadgeContainerVerify>
+                </CustomTooltip>
+              )}
             </Box>
           </Box>
         </CIPModalDesc>
