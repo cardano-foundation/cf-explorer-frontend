@@ -94,8 +94,8 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
           title={
             rewardAccounts.length > 0 && (
               <StakeKeyItemList>
-                {rewardAccounts.map((item) => (
-                  <StakeKeyItem key={item}>
+                {rewardAccounts.map((item, idx) => (
+                  <StakeKeyItem key={"stakeyItem" + idx}>
                     <SPOKey fill={theme.palette.primary.main} />
                     <PoolNamePopup to={details.stake(item)}>{getShortHash(item, 8)}</PoolNamePopup>
                     <CopyButton text={item} />

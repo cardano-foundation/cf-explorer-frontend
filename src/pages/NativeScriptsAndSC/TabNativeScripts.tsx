@@ -114,7 +114,7 @@ const TabNativeScripts = () => {
     if (fetchData.loading) {
       return (
         <Box component={Grid} container spacing={2}>
-          {[...new Array(size)]?.map((idx) => (
+          {[...new Array(size).fill(0)].map((_, idx) => (
             <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
               <Box component={Skeleton} variant="rectangular" height={"280px"} borderRadius={2} />
             </Grid>

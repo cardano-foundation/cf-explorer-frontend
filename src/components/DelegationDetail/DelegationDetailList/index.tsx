@@ -1,3 +1,4 @@
+import React from "react";
 import { Box, useTheme } from "@mui/material";
 import QueryString, { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
@@ -308,7 +309,10 @@ const DelegationCertificatesHistory = ({
       render: (data) => {
         return (
           <Box display={"flex"} gap={2}>
-            {data.actions && removeDuplicate(data.actions).map((action: POOL_ACTION_TYPE) => renderAction(action))}
+            {data.actions &&
+              removeDuplicate(data.actions).map((action: POOL_ACTION_TYPE, idx) => (
+                <React.Fragment key={"poolAction" + data.txHash + idx}>{renderAction(action)}</React.Fragment>
+              ))}
           </Box>
         );
       }
