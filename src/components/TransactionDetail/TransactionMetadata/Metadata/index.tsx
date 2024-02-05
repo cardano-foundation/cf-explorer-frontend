@@ -255,7 +255,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
                   isTooltip
                   sxFirstPart={{
                     [theme.breakpoints.up("sm")]: { maxWidth: "calc(100% - 60px)" },
-                    [theme.breakpoints.down("sm")]: { maxWidth: "calc(100% - 75px)" }
+                    [theme.breakpoints.down("sm")]: { maxWidth: "calc(100% - 100px)" }
                   }}
                 />
               </ContentIdentifiers>
