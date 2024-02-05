@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Button, CircularProgress, IconButton, Typography, alpha, styled, useTheme } from "@mui/material";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
+import { t } from "i18next";
 import { useSelector } from "react-redux";
 
 import { BolsiniAddress, InvalidIcon, SeeMoreIconHome, VerifiedIcon } from "src/commons/resources";
