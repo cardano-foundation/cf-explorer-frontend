@@ -4,7 +4,7 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import { useSelector } from "react-redux";
 
-import { BolsiniAddress, SeeMoreIconHome, VerifiedIcon } from "src/commons/resources";
+import { BolsiniAddress, InvalidIcon, SeeMoreIconHome, VerifiedIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -13,8 +13,10 @@ import { Column } from "src/types/table";
 import Table from "src/components/commons/Table";
 import { ViewDetailDrawer } from "src/components/commons/DetailView/styles";
 import { TBody, TCol, THead, THeader, TableFullWidth } from "src/components/commons/Table/styles";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import DefaultImageWine from "./DefaultImageWine";
+import { BadgeContainerVerify } from "./styles";
 
 import { VerifyBadge } from ".";
 
@@ -152,7 +154,33 @@ const BolnisiWineDrawer = () => {
                           {item?.offChainData?.lot_number || ""}
                         </Box>
                         <Box component={TCol} py={1}>
-                          <VerifyBadge status={item.signatureVerified} />
+                          {data?.externalApiAvailable && <VerifyBadge status={item.signatureVerified} />}
+                          {!data?.externalApiAvailable && (
+                            <CustomTooltip
+                              title={
+                                <Box width={"max-content"}>
+                                  {t("bolnisi.verifyErrorTooltip")}
+                                  <br />
+                                  {t("bolnisi.verifyErrorTooltipTryAgain")}
+                                </Box>
+                              }
+                            >
+                              <BadgeContainerVerify type="Warning" fontWeight={500}>
+                                <Box
+                                  width={23}
+                                  height={23}
+                                  display={"flex"}
+                                  alignItems={"center"}
+                                  justifyContent={"center"}
+                                  bgcolor={theme.palette.warning[700]}
+                                  borderRadius={"50%"}
+                                >
+                                  <InvalidIcon fill={theme.palette.secondary.main} />
+                                </Box>
+                                <Box width={"max-content"}>{t("bolnisi.verifyError")}</Box>
+                              </BadgeContainerVerify>
+                            </CustomTooltip>
+                          )}
                         </Box>
                         <Box component={TCol} py={1} textAlign={"center"}>
                           <StyledLink

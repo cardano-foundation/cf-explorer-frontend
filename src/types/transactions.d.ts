@@ -274,6 +274,7 @@ interface WineryData {
   pkeyVerified: boolean;
   wineryId: string;
   lots: BolnisiWineLots[];
+  externalApiAvailable: boolean;
 }
 interface BolnisiWineLots {
   offChainData: {
@@ -300,6 +301,7 @@ interface BolnisiWineLots {
     wine_name: string;
     wine_type: string;
   };
+  signatureVerified: boolean;
   signatureVerified: boolean;
 }
 
