@@ -268,7 +268,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
             {!data.externalApiAvailable && (
               <CustomTooltip
                 title={
-                  <Box width={"max-content"}>
+                  <Box width={"max-content"} maxWidth={"75vw"}>
                     {t("bolnisi.verifyErrorTooltip")}
                     <br />
                     {t("bolnisi.verifyErrorTooltipTryAgain")}
@@ -607,7 +607,7 @@ const Wineries: React.FC<{ wineryData?: Transaction["metadata"][number]["metadat
                       {!winery.externalApiAvailable && (
                         <CustomTooltip
                           title={
-                            <Box width={"max-content"}>
+                            <Box width={"max-content"} maxWidth={"75vw"}>
                               {t("bolnisi.verifyErrorTooltip")}
                               <br />
                               {t("bolnisi.verifyErrorTooltipTryAgain")}
