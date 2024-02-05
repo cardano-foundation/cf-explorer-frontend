@@ -15,6 +15,7 @@ import Table from "src/components/commons/Table";
 import { ViewDetailDrawer } from "src/components/commons/DetailView/styles";
 import { TBody, TCol, THead, THeader, TableFullWidth } from "src/components/commons/Table/styles";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import DefaultImageWine from "./DefaultImageWine";
 import { BadgeContainerVerify } from "./styles";
@@ -281,6 +282,7 @@ const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, externalApi
   const { wineryId } = useParams<{ wineryId: string; trxHash: string }>();
   const { wineryName } = useSelector(({ system }: RootState) => system);
   const theme = useTheme();
+  const { isMobile } = useScreen();
   const getWineName = (wineryId: string) => {
     if (wineryName && wineryName[`${wineryId}`]) {
       return wineryName[`${wineryId}`].name;
@@ -337,9 +339,9 @@ const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, externalApi
     >
       <ContentContainer>
         <CIPModalDesc>
-          <Box textTransform={"capitalize"} display={"flex"} alignItems={"center"}>
+          <Box textTransform={"capitalize"} display={isMobile ? "block" : "flex"} alignItems={"center"}>
             Lot Number: {wineData?.offChainData?.lot_number || ""}
-            <Box display={"inline-block"} ml={2}>
+            <Box display={isMobile ? "block" : "inline-block"} ml={isMobile ? 0 : 2}>
               {externalApiAvailable && <Box component={VerifyBadge} status={wineData.signatureVerified} />}
               {!externalApiAvailable && (
                 <CustomTooltip
