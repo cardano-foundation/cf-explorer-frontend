@@ -602,9 +602,38 @@ const Wineries: React.FC<{ wineryData?: Transaction["metadata"][number]["metadat
               <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
                 <Box height={"100%"}>
                   <ItemBolnisi>
+                    <Box display={"flex"} width={"100%"} justifyContent={"flex-end"} mb={1}>
+                      {winery.externalApiAvailable && <VerifyBadge status={winery.pkeyVerified} />}
+                      {!winery.externalApiAvailable && (
+                        <CustomTooltip
+                          title={
+                            <Box width={"max-content"}>
+                              {t("bolnisi.verifyErrorTooltip")}
+                              <br />
+                              {t("bolnisi.verifyErrorTooltipTryAgain")}
+                            </Box>
+                          }
+                        >
+                          <BadgeContainerVerify type="Warning" fontWeight={500}>
+                            <Box
+                              width={23}
+                              height={23}
+                              display={"flex"}
+                              alignItems={"center"}
+                              justifyContent={"center"}
+                              bgcolor={theme.palette.warning[700]}
+                              borderRadius={"50%"}
+                            >
+                              <InvalidIcon fill={theme.palette.secondary.main} />
+                            </Box>
+                            <Box width={"max-content"}>{t("bolnisi.verifyError")}</Box>
+                          </BadgeContainerVerify>
+                        </CustomTooltip>
+                      )}
+                    </Box>
                     <Box display={"flex"} alignItems={"center"} flexWrap={"wrap"} gap={2}>
                       <Box component={DefaultImageWine} name={getWineName(winery.wineryId) || ""} />
-                      <Box>
+                      <Box mt={1}>
                         <Box fontWeight={"bold"} mb={1} color={theme.palette.secondary.main}>
                           {getWineName(winery.wineryId)}
                         </Box>
@@ -622,9 +651,7 @@ const Wineries: React.FC<{ wineryData?: Transaction["metadata"][number]["metadat
                         </Box>
                       </Box>
                     </Box>
-                    <Box position={"absolute"} top={"12px"} right={"12px"}>
-                      <VerifyBadge status={winery.pkeyVerified} />
-                    </Box>
+
                     <Box
                       component={ViewWineButton}
                       width={"100%"}
@@ -632,7 +659,7 @@ const Wineries: React.FC<{ wineryData?: Transaction["metadata"][number]["metadat
                       onClick={() => {
                         history.push(details.transaction(trxHash, "metadata", winery.wineryId));
                       }}
-                      disabled={!winery.pkeyVerified}
+                      disabled={!winery.pkeyVerified && winery.externalApiAvailable}
                     >
                       {t("bolsini.viewWineLots")}
                     </Box>
