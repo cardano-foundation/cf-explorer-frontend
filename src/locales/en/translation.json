@@ -831,7 +831,7 @@
   "explain.datum": "What is the datum?",
   "explain.datum.desc": "UTXO is an object that describes a quantity of assets (value), a condition for spending and/or delegating those assets (address). A data payload (datum) can be added to a UTXO. Datum is a piece of information that can be associated with a UTXO and is used to carry script state information such as its owner or the timing details which define when the UTXO can be spent. When a script is executed in a spending scenario, it receives not only the transaction as context but also the datum associated with the output being spent. ",
   "explain.compiledCode.desc": "On the Cardano blockchain, the compiled code of smart contracts is stored on, and distributed across the decentralised network. It is not possible to modify the rules of an existing smart contract and it is also not possible to decompile the stored smart contract code back into the original source code.",
-  "explain.compiledCode.desc2": "The compiled can be viewed in Untyped Plutus Core (UPLC) or binary encoded formats. UPLC is the format whereby code gets executed on-chain. UPLC is encoded into binary format when submitted on-chain.",
+  "explain.compiledCode.desc2": "The compiled code can be viewed in Untyped Plutus Core (UPLC) or its binary encoded format. UPLC is the format whereby code gets executed on-chain and it is encoded into binary format when submitted on-chain.",
   "contract.purpose": "Purpose",
   "contract.data": "Data",
   "contract.mem": "Mem",
