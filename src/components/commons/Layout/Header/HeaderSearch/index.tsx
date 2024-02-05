@@ -1,23 +1,23 @@
 /* eslint-disable no-case-declarations */
-import React, { FormEvent, useState, useEffect, useCallback } from "react";
-import { Backdrop, Box, SelectChangeEvent, CircularProgress, useTheme } from "@mui/material";
+import { Backdrop, Box, CircularProgress, SelectChangeEvent, useTheme } from "@mui/material";
+import axios from "axios";
+import { isEmpty, isNil, isObject, omitBy } from "lodash";
 import { stringify } from "qs";
+import React, { FormEvent, useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { BiChevronDown } from "react-icons/bi";
 import { GoChevronRight } from "react-icons/go";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, useHistory, withRouter } from "react-router-dom";
-import { isEmpty, isNil, isObject, omitBy } from "lodash";
-import { useTranslation } from "react-i18next";
-import axios from "axios";
 
+import { useScreen } from "src/commons/hooks/useScreen";
 import { HeaderSearchIconComponent } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
-import { useScreen } from "src/commons/hooks/useScreen";
 import { API } from "src/commons/utils/api";
 import defaultAxios from "src/commons/utils/axios";
+import { API_ADA_HANDLE_API } from "src/commons/utils/constants";
 import { getShortHash } from "src/commons/utils/helper";
 import CustomIcon from "src/components/commons/CustomIcon";
-import { API_ADA_HANDLE_API } from "src/commons/utils/constants";
 
 import {
   Form,
@@ -444,6 +444,9 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       setLoading(true);
       try {
         const dataHanlde = await adaHandleSearch(search);
+        if (Object.keys(dataHanlde)?.length === 0) {
+          throw new Error();
+        }
         if (dataHanlde) {
           handleSetSearchValueDefault();
           callback?.();
