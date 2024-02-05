@@ -38,25 +38,25 @@ const NativeScriptsDetail = () => {
       key: "mintingBurningPolicy",
       icon: MintingBurningPolicyIcon,
       children: <MinttingBurningPolicy />,
-      label: <Box data-testid="ns.mintBurnPolicy">Minting / Burning Policy</Box>
+      label: <Box data-testid="ns.mintBurnPolicy">{t("nativeScript.policy")}</Box>
     },
     {
       key: "script",
       icon: ScriptTabIcon,
       children: <Script onVerifyScriptOpen={() => setOpen(true)} />,
-      label: <Box data-testid="ns.script"> Script</Box>
+      label: <Box data-testid="ns.script">{t("nativeScript.script")}</Box>
     },
     {
       key: "token",
       icon: TokenTabIcon,
       children: <Token />,
-      label: <Box data-testid="ns.token"> Token</Box>
+      label: <Box data-testid="ns.token">{t("nativeScript.token")}</Box>
     },
     {
       key: "assetHolders",
       icon: AssetHoldersIcon,
       children: <AssetHolders />,
-      label: <Box data-testid="ns.assetHolders"> Asset Holders</Box>
+      label: <Box data-testid="ns.assetHolders">{t("nativeScript.assetHolders")}</Box>
     },
     {
       key: "associatedAddresses",
