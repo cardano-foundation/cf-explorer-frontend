@@ -202,7 +202,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       setDataSearchAll(res?.data);
       const keyDetail = getKeyIfOnlyOneNonNullResult(res?.data);
 
-      if (!res?.data?.validPoolName && !res?.data?.validTokenName && keyDetail === "") {
+      if (!res?.data?.validPoolName && !res?.data?.validTokenName && keyDetail === "" && !adaHanlde) {
         throw new Error();
       }
 
