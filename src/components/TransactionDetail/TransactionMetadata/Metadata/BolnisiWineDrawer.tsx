@@ -160,7 +160,7 @@ const BolnisiWineDrawer = () => {
                           {!data?.externalApiAvailable && (
                             <CustomTooltip
                               title={
-                                <Box width={"max-content"}>
+                                <Box width={"max-content"} maxWidth={"75vw"}>
                                   {t("bolnisi.verifyErrorTooltip")}
                                   <br />
                                   {t("bolnisi.verifyErrorTooltipTryAgain")}
@@ -346,7 +346,7 @@ const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, externalApi
               {!externalApiAvailable && (
                 <CustomTooltip
                   title={
-                    <Box width={"max-content"}>
+                    <Box width={"max-content"} maxWidth={"75vw"}>
                       {t("bolnisi.verifyErrorTooltip")}
                       <br />
                       {t("bolnisi.verifyErrorTooltipTryAgain")}
