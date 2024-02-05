@@ -301,7 +301,6 @@ interface BolnisiWineLots {
     wine_type: string;
   };
   signatureVerified: boolean;
-  signatureVerified: boolean;
 }
 
 interface CIP {
