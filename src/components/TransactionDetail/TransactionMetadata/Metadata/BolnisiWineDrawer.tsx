@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, CircularProgress, IconButton, Typography, alpha, styled, useTheme } from "@mui/material";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import { t } from "i18next";
 import { IoMdClose } from "react-icons/io";
 import { useSelector } from "react-redux";
 
@@ -256,12 +255,12 @@ const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, ...props })
   if (!wineData) return null;
 
   const { offChainData } = wineData;
-  const keyData = Object.keys(mappingNameWineProperties);
+  const keyData = Object.keys(offChainData);
   const dataTable: { index: number; property: string; value: string | number }[] = [];
   keyData.forEach((key, index) => {
     dataTable.push({
       index: index,
-      property: mappingNameWineProperties[key as keyof typeof mappingNameWineProperties],
+      property: key.replaceAll("_", " ") || "",
       value: offChainData[key as keyof typeof offChainData]
     });
   });
@@ -278,7 +277,7 @@ const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, ...props })
       title: "Property",
       minWidth: 150,
       key: "property",
-      render: (r) => r.property
+      render: (r) => <Box textTransform={"capitalize"}>{r.property}</Box>
     },
     {
       title: "Value",
@@ -321,21 +320,6 @@ const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, ...props })
       </ContentContainer>
     </CustomModal>
   );
-};
-
-const mappingNameWineProperties = {
-  wine_name: t("bolnisi.wineName"),
-  origin: t("bolnisi.origin"),
-  country_of_origin: t("bolnisi.countryOfOrigin"),
-  produced_by: t("bolnisi.producedBy"),
-  producer_address: t("bolnisi.producerAddress"),
-  producer_latitude: t("bolnisi.producerLatitude"),
-  producer_longitude: t("bolnisi.producerLongitude"),
-  varietal_name: t("bolnisi.varietalName"),
-  vintage_year: t("bolnisi.vintageYear"),
-  wine_type: t("bolnisi.wineType"),
-  wine_color: t("bolnisi.wineColor"),
-  harvest_date: t("bolnisi.harvestDate")
 };
 
 export const WineTable = styled(Table)(({ theme }) => ({
