@@ -421,12 +421,10 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
                 </Box>
               ) : (
                 <MetaDataJSONValue>
-                  <Box>{metadata.value || ""}</Box>
-                  <CustomTooltip placement="top" title={t("common.viewAll")}>
-                    <ViewAllButton onClick={() => setSelectedText(metadata)}>
-                      <SeeMoreIconHome fill={theme.palette.primary.main} />
-                    </ViewAllButton>
-                  </CustomTooltip>
+                  <MetaDataJSONValueText>{metadata.value || ""}</MetaDataJSONValueText>
+                  <ViewAllButton onClick={() => setSelectedText(metadata)}>
+                    <SeeMoreIconHome fill={theme.palette.primary.main} />
+                  </ViewAllButton>
                 </MetaDataJSONValue>
               )}
             </Box>
