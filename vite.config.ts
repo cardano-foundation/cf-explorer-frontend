@@ -19,7 +19,8 @@ export default defineConfig(({ mode }) => {
       "process.env.REACT_APP_MAINNET_APP_URL": JSON.stringify(env.REACT_APP_MAINNET_APP_URL),
       "process.env.REACT_APP_SANCHONET_APP_URL": JSON.stringify(env.REACT_APP_SANCHONET_APP_URL),
       "process.env.REACT_APP_BOLNISI_NAME_API": JSON.stringify(env.REACT_APP_BOLNISI_NAME_API),
-      "process.env.REACT_APP_ADA_HANDLE_API": JSON.stringify(env.REACT_APP_ADA_HANDLE_API)
+      "process.env.REACT_APP_ADA_HANDLE_API": JSON.stringify(env.REACT_APP_ADA_HANDLE_API),
+      "process.env.REACT_APP_API_URL_COIN_GECKKO": JSON.stringify(env.REACT_APP_API_URL_COIN_GECKKO)
     },
     optimizeDeps: {
       esbuildOptions: {
