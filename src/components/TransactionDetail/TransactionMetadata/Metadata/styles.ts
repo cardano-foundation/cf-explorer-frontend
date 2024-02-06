@@ -217,18 +217,18 @@ export const MetaDataValue = styled(Box)`
   color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
-export const MetaDataJSONValue = styled(MetaDataValue)`
-  flex: 1;
-  display: inline-flex;
-  justify-content: space-between;
-  overflow-wrap: anywhere;
-  padding: 16px;
-  box-sizing: border-box;
-  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100])};
-  border-radius: 6px;
-  position: relative;
-  gap: 12px;
-`;
+export const MetaDataJSONValue = styled(MetaDataValue)<{ hasViewButton?: boolean }>(({ theme, hasViewButton }) => ({
+  flex: 1,
+  display: hasViewButton ? "inline-flex" : "inline-block",
+  justifyContent: "space-between",
+  overflowWrap: "anywhere",
+  padding: "16px",
+  boxSizing: "border-box",
+  backgroundColor: theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100],
+  borderRadius: "6px",
+  position: "relative",
+  gap: hasViewButton ? "12px" : "0px"
+}));
 
 export const MetaDataJSONValueText = styled(MetaDataValue)`
   position: relative;
