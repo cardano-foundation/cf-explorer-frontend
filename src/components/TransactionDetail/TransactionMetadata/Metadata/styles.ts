@@ -217,16 +217,18 @@ export const MetaDataValue = styled(Box)`
   color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
-export const MetaDataJSONValue = styled(MetaDataValue)`
-  flex: 1;
-  display: inline-block;
-  overflow-wrap: anywhere;
-  padding: 16px 8px;
-  box-sizing: border-box;
-  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100])};
-  border-radius: 6px;
-  position: relative;
-`;
+export const MetaDataJSONValue = styled(MetaDataValue)<{ hasViewButton?: boolean }>(({ theme, hasViewButton }) => ({
+  flex: 1,
+  display: hasViewButton ? "inline-flex" : "inline-block",
+  justifyContent: "space-between",
+  overflowWrap: "anywhere",
+  padding: "16px",
+  boxSizing: "border-box",
+  backgroundColor: theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100],
+  borderRadius: "6px",
+  position: "relative",
+  gap: hasViewButton ? "12px" : "0px"
+}));
 
 export const MetaDataJSONValueText = styled(MetaDataValue)`
   position: relative;
@@ -341,4 +343,19 @@ export const ViewWineButton = styled(Button)(({ theme }) => ({
 export const ContentIdentifiers = styled(Box)`
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+export const ViewAllButton = styled(Box)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  min-width: 35px;
+  height: 35px;
+  border-radius: 5px;
+  cursor: pointer;
+  background: ${(props) => alpha(props.theme.palette.primary.main, 0.1)};
+  &:hover {
+    background: ${(props) => alpha(props.theme.palette.primary.main, 0.3)};
+  }
 `;

@@ -10,7 +10,15 @@ import { decryptCardanoMessage, isJson } from "src/commons/utils/helper";
 import CIP60Modal from "src/components/CIPComplianceModal/CIP60Modal";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import ParseScriptModal from "src/components/ParseScriptModal";
-import { BolsiniAddress, InvalidIcon, ShowLess, ShowMore, VerifiedIcon, WarningCIPIcon } from "src/commons/resources";
+import {
+  BolsiniAddress,
+  InvalidIcon,
+  SeeMoreIconHome,
+  ShowLess,
+  ShowMore,
+  VerifiedIcon,
+  WarningCIPIcon
+} from "src/commons/resources";
 import CIP25Badge from "src/components/commons/CIP25Badge";
 import CIP25Modal from "src/components/CIPComplianceModal/CIP25Modal";
 import CIP60Badge from "src/components/commons/CIP60Badge";
@@ -43,6 +51,7 @@ import {
   MetadataJSONTitle,
   MetadataTitle,
   MetadataWrapper,
+  ViewAllButton,
   ViewWineButton,
   Wrapper
 } from "./styles";
@@ -411,7 +420,12 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
                   {t("CIP20.viewMessage")}
                 </Box>
               ) : (
-                <MetaDataJSONValue>{metadata.value || ""}</MetaDataJSONValue>
+                <MetaDataJSONValue hasViewButton>
+                  <MetaDataJSONValueText>{metadata.value || ""}</MetaDataJSONValueText>
+                  <ViewAllButton onClick={() => setSelectedText(metadata)}>
+                    <SeeMoreIconHome fill={theme.palette.primary.main} />
+                  </ViewAllButton>
+                </MetaDataJSONValue>
               )}
             </Box>
             {String(metadata.label) === String(CIPLabel674) &&
