@@ -420,7 +420,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
                   {t("CIP20.viewMessage")}
                 </Box>
               ) : (
-                <MetaDataJSONValue>
+                <MetaDataJSONValue hasViewButton>
                   <MetaDataJSONValueText>{metadata.value || ""}</MetaDataJSONValueText>
                   <ViewAllButton onClick={() => setSelectedText(metadata)}>
                     <SeeMoreIconHome fill={theme.palette.primary.main} />
