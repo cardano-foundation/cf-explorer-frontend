@@ -62,7 +62,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
                 <Box
                   component={isOverflowing ? CustomTooltip : Box}
                   key={index}
-                  title={item.displayName || getShortHash(item.fingerprint) || ""}
+                  title={isOverflowing ? item.displayName || getShortHash(item.fingerprint) || "" : null}
                 >
                   <Link to={details.token(item.fingerprint)}>
                     <Chip
