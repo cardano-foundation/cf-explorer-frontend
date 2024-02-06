@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import BigNumber from "bignumber.js";
 import moment from "moment";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link as LinkDom } from "react-router-dom";
@@ -93,8 +93,12 @@ const HomeStatistic = () => {
   const isShowLiveStakePercentText = liveRate.toNumber() >= MIN_PERCENT_SHOW_FIRST_BAR;
   const isShowOtherStakePercentText = liveRate.toNumber() <= MAX_PERCENT_SHOW_LAST_BAR;
 
-  const { data: btcData } = useFetchInterval<dataFromCoinGecko>(`${API_GECKO}?ids=cardano&vs_currency=btc`);
-  const { data: usdData } = useFetchInterval<dataFromCoinGecko>(`${API_GECKO}?ids=cardano&vs_currency=usd`);
+  const { data: btcData, lastUpdated: lastUpdatedBtcData } = useFetchInterval<dataFromCoinGecko>(
+    `${API_GECKO}?ids=cardano&vs_currency=btc`
+  );
+  const { data: usdData, lastUpdated: lastUpdatedUsd } = useFetchInterval<dataFromCoinGecko>(
+    `${API_GECKO}?ids=cardano&vs_currency=usd`
+  );
 
   const btcMarket = useMemo(() => {
     if (btcData?.length === 0) return null;
@@ -121,35 +125,6 @@ const HomeStatistic = () => {
 
   const { isGalaxyFoldSmall } = useScreen();
   const sign = Math.sign(BigNumber(usdMarket?.price_change_percentage_24h || 0).toNumber());
-
-  const [marketCap, setMarketCap] = useState<{ last_updated: string; market_cap: number }>({
-    last_updated: "",
-    market_cap: 0
-  });
-  // const priceBTC = useRef<number>(0);
-  const [usdLatestUpdated, setUsdLastUpdated] = useState<string>("");
-
-  useEffect(() => {
-    setUsdLastUpdated(usdMarket?.last_updated || "");
-  }, [usdMarket?.last_updated]);
-
-  useEffect(() => {
-    // if (Number(usdDataItem?.market_cap) !== Number(marketcap.current.market_cap)) {
-    setMarketCap({
-      market_cap: usdMarket?.market_cap || 0,
-      last_updated: usdMarket?.last_updated || ""
-    });
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [usdMarket?.market_cap]);
-
-  useEffect(() => {
-    // if (Number(btcMarket?.current_price) !== priceBTC.current) {
-    // priceBTC.current = Number(btcMarket?.current_price);
-    setUsdLastUpdated(btcMarket?.last_updated || "");
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [btcMarket?.current_price, marketCap]);
 
   return (
     <StatisticContainer
@@ -194,7 +169,7 @@ const HomeStatistic = () => {
                 </Content>
                 <Content>
                   <TimeDuration data-testid="last-update-ada-price">
-                    <FormNowMessage time={usdLatestUpdated} />
+                    <FormNowMessage time={lastUpdatedUsd} />
                   </TimeDuration>
                 </Content>
               </WrapCardContent>
@@ -220,7 +195,7 @@ const HomeStatistic = () => {
                 <Title data-testid="market-cap-value">${numberWithCommas(usdMarket.market_cap)}</Title>
                 <Content>
                   <TimeDuration data-testid="last-update-market-cap">
-                    <FormNowMessage time={marketCap.last_updated} />
+                    <FormNowMessage time={lastUpdatedBtcData} />
                   </TimeDuration>
                 </Content>
               </WrapCardContent>
