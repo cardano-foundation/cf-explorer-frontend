@@ -1,6 +1,6 @@
 import { Box, Button, styled, useTheme } from "@mui/material";
 import { t } from "i18next";
-import { FunctionComponent, SVGProps, useState } from "react";
+import { FunctionComponent, SVGProps, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { details } from "src/commons/routers";
@@ -15,6 +15,18 @@ import DesPlutusVersion from "./DesPlutusVersion";
 
 const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: boolean }> = ({ data }) => {
   const theme = useTheme();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isOverflowing, setIsOverflowing] = useState(false);
+
+  useEffect(() => {
+    const container = containerRef.current;
+
+    if (container) {
+      const isOverflowingHorizontally = container?.scrollWidth > container?.clientWidth;
+
+      setIsOverflowing(isOverflowingHorizontally);
+    }
+  }, [isOverflowing]);
 
   return (
     <Item>
@@ -47,9 +59,17 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
           {data.tokens &&
             data.tokens.map((item, index) => {
               return (
-                <CustomTooltip key={index} title={item.displayName || getShortHash(item.fingerprint) || ""}>
+                <Box
+                  component={isOverflowing ? CustomTooltip : Box}
+                  key={index}
+                  title={isOverflowing ? item.displayName || getShortHash(item.fingerprint) || "" : null}
+                >
                   <Link to={details.token(item.fingerprint)}>
-                    <Chip pl={`${item.metadata && item.metadata.logo ? "4px" : 1} !important`} mb={1}>
+                    <Chip
+                      pl={`${item.metadata && item.metadata.logo ? "4px" : 1} !important`}
+                      mb={1}
+                      maxWidth={"130px !important"}
+                    >
                       <Box display={"flex"} alignItems={"center"} height={"100%"}>
                         {item.metadata && item.metadata.logo && (
                           <Box
@@ -68,6 +88,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
                         <Box
                           overflow={"hidden"}
                           textOverflow={"ellipsis"}
+                          ref={containerRef}
                           sx={{
                             textWrap: "nowrap"
                           }}
@@ -77,7 +98,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
                       </Box>
                     </Chip>
                   </Link>
-                </CustomTooltip>
+                </Box>
               );
             })}
           {(data.numberOfTokens || 0) > (data.tokens || []).length && (
