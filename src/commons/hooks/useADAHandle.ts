@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 import { API } from "../utils/api";
 import { API_ADA_HANDLE_API } from "../utils/constants";
@@ -8,14 +8,20 @@ const useADAHandle = (name: string) => {
   const [data, setData] = useState<{ stakeAddress: string; paymentAddress: string } | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [initialized, setInitialized] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<AxiosError | null>(null);
 
-  const mution = async () => {
+  const mution = () => {
     setLoading(true);
-    await axios
+    axios
       .get(API_ADA_HANDLE_API + API.ADAHandle(name))
-      .then((data) => setData(data.data))
-      .catch((error) => setError(error))
+      .then((res) => {
+        setData(() => res.data);
+        setError(null);
+      })
+      .catch((error: AxiosError) => {
+        setError(error);
+        setData(null);
+      })
       .finally(() => {
         setLoading(false);
         setInitialized(true);
