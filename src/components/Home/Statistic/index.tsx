@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import BigNumber from "bignumber.js";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link as LinkDom } from "react-router-dom";
@@ -23,7 +23,7 @@ import {
 } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { EXT_ADA_PRICE_URL, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import { API_GECKO, EXT_ADA_PRICE_URL, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import {
   formatADA,
   formatADAFull,
@@ -36,6 +36,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import RateWithIcon from "src/components/commons/RateWithIcon";
 import { RootState } from "src/stores/types";
+import useFetchInterval from "src/commons/hooks/useFetchInterval";
 
 import {
   AdaPrice,
@@ -76,16 +77,14 @@ const MIN_PERCENT_SHOW_FIRST_BAR = 9;
 
 const HomeStatistic = () => {
   const { t } = useTranslation();
-  const { currentEpoch, usdMarket, btcMarket, blockNo } = useSelector(({ system }: RootState) => system);
+  const { currentEpoch, blockNo } = useSelector(({ system }: RootState) => system);
 
   const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS, undefined, false, blockNo);
   const { theme: themeMode } = useSelector(({ theme }: RootState) => theme);
-  const { total_supply: total = 1 } = usdMarket || {};
   const { liveStake = 0, activeStake = 1 } = data || {};
   const supply = BigNumber(currentEpoch?.circulatingSupply || 0).div(10 ** 6);
   const liveRate = new BigNumber(liveStake).div(MILION).div(supply).multipliedBy(100);
   const circulatingSupply = new BigNumber(supply).multipliedBy(MILION);
-  const circulatingRate = circulatingSupply.div(total).div(MILION).multipliedBy(100);
   const progress = moment(currentEpoch?.endTime).isAfter(moment())
     ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
     : 100;
@@ -93,6 +92,23 @@ const HomeStatistic = () => {
   const isShowProgressActiveText = +progress > MIN_PERCENT_SHOW_FIRST_BAR;
   const isShowLiveStakePercentText = liveRate.toNumber() >= MIN_PERCENT_SHOW_FIRST_BAR;
   const isShowOtherStakePercentText = liveRate.toNumber() <= MAX_PERCENT_SHOW_LAST_BAR;
+
+  const { data: btcData } = useFetchInterval<dataFromCoinGecko>(`${API_GECKO}?ids=cardano&vs_currency=btc`);
+  const { data: usdData } = useFetchInterval<dataFromCoinGecko>(`${API_GECKO}?ids=cardano&vs_currency=usd`);
+
+  const btcMarket = useMemo(() => {
+    if (btcData?.length === 0) return null;
+    return btcData?.[0] || null;
+  }, [btcData]);
+
+  const usdMarket = useMemo(() => {
+    if (usdData?.length === 0) return null;
+    return usdData?.[0] || null;
+  }, [usdData]);
+
+  const { total_supply: total = 1 } = usdMarket || {};
+
+  const circulatingRate = circulatingSupply.div(total).div(MILION).multipliedBy(100);
 
   const slot = (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH;
   const countdown = MAX_SLOT_EPOCH - slot;
@@ -118,7 +134,7 @@ const HomeStatistic = () => {
   }, [usdMarket?.last_updated]);
 
   useEffect(() => {
-    // if (Number(usdMarket?.market_cap) !== Number(marketcap.current.market_cap)) {
+    // if (Number(usdDataItem?.market_cap) !== Number(marketcap.current.market_cap)) {
     setMarketCap({
       market_cap: usdMarket?.market_cap || 0,
       last_updated: usdMarket?.last_updated || ""
