@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
 import BigNumber from "bignumber.js";
 import moment from "moment";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link as LinkDom } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import { useEffect, useRef, useState } from "react";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -31,11 +31,11 @@ import {
   getDurationUnits,
   numberWithCommas
 } from "src/commons/utils/helper";
+import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 import RateWithIcon from "src/components/commons/RateWithIcon";
 import { RootState } from "src/stores/types";
-import ADAicon from "src/components/commons/ADAIcon";
-import FormNowMessage from "src/components/commons/FormNowMessage";
 
 import {
   AdaPrice,
@@ -106,11 +106,11 @@ const HomeStatistic = () => {
   const { isGalaxyFoldSmall } = useScreen();
   const sign = Math.sign(BigNumber(usdMarket?.price_change_percentage_24h || 0).toNumber());
 
-  const marketcap = useRef<{ last_updated: string; market_cap: number }>({
+  const [marketCap, setMarketCap] = useState<{ last_updated: string; market_cap: number }>({
     last_updated: "",
     market_cap: 0
   });
-  const priceBTC = useRef<number>(0);
+  // const priceBTC = useRef<number>(0);
   const [usdLatestUpdated, setUsdLastUpdated] = useState<string>("");
 
   useEffect(() => {
@@ -118,22 +118,22 @@ const HomeStatistic = () => {
   }, [usdMarket?.last_updated]);
 
   useEffect(() => {
-    if (Number(usdMarket?.market_cap) !== Number(marketcap.current.market_cap)) {
-      marketcap.current = {
-        market_cap: usdMarket?.market_cap || 0,
-        last_updated: usdMarket?.last_updated || ""
-      };
-    }
+    // if (Number(usdMarket?.market_cap) !== Number(marketcap.current.market_cap)) {
+    setMarketCap({
+      market_cap: usdMarket?.market_cap || 0,
+      last_updated: usdMarket?.last_updated || ""
+    });
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usdMarket?.market_cap]);
 
   useEffect(() => {
-    if (Number(btcMarket?.current_price) !== priceBTC.current) {
-      priceBTC.current = Number(btcMarket?.current_price);
-      setUsdLastUpdated(btcMarket?.last_updated || "");
-    }
+    // if (Number(btcMarket?.current_price) !== priceBTC.current) {
+    // priceBTC.current = Number(btcMarket?.current_price);
+    setUsdLastUpdated(btcMarket?.last_updated || "");
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [btcMarket?.current_price, marketcap.current]);
+  }, [btcMarket?.current_price, marketCap]);
 
   return (
     <StatisticContainer
@@ -204,7 +204,7 @@ const HomeStatistic = () => {
                 <Title data-testid="market-cap-value">${numberWithCommas(usdMarket.market_cap)}</Title>
                 <Content>
                   <TimeDuration data-testid="last-update-market-cap">
-                    <FormNowMessage time={marketcap.current.last_updated} />
+                    <FormNowMessage time={marketCap.last_updated} />
                   </TimeDuration>
                 </Content>
               </WrapCardContent>
