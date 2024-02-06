@@ -861,7 +861,7 @@
   "glassary.showRetiredPools": "Show Retired Pools",
   "trx.desSignatories": "This transaction was signed by the following signer keys",
   "trx.tooltipSignatories": "Genesis delegate key",
-  "trx.signerPublicKeyHas": "Signer Public Key Hash",
+  "trx.signerPublicKeyHas": "Signer Public Key",
   "contract.referenceInput": "Reference Inputs",
   "trx.referenceInput": "Reference Inputs Available",
   "explain.referenceInput": "What are reference inputs",
