@@ -547,7 +547,7 @@
   "common.totalBalnceReward": "Total balance including reward",
   "common.amouintADA": "Amount ADA",
   "status.success": "Success",
-  "status.fail": "Fail",
+  "status.failed": "Fail",
   "common.rewardWithdrawn": "Reward withdrawn",
   "common.rewardReceived": "Reward received",
   "report.composer": "Report Composer",
