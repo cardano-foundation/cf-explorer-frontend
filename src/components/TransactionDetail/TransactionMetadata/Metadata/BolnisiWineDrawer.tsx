@@ -3,6 +3,7 @@ import { Box, Button, CircularProgress, IconButton, Typography, alpha, styled, u
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import { useSelector } from "react-redux";
+import { t } from "i18next";
 
 import { BolsiniAddress, InvalidIcon, SeeMoreIconHome, VerifiedIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
@@ -204,7 +205,7 @@ const BolnisiWineDrawer = () => {
               </TableFullWidth>
             </Content>
             <WineDetailModal
-              externalApiAvailable={data?.externalApiAvailable}
+              externalApiAvailable={data?.externalApiAvailable || false}
               open={!!selectedWine}
               onClose={() => setSelectedWine(null)}
               wineData={selectedWine}
