@@ -989,7 +989,7 @@
   "smartContract.plutusDes.desc3": "was introduced with the Vasil hard fork with flexibility, scalability and efficiency improvements to further enhance smart contract development",
   "bolsini.contentIdentifiers": "Content Identifier",
   "bolsini.verified": "Verified",
-  "bolsini.invalid": "Verification Unavailable",
+  "bolsini.invalid": "Invalid",
   "bolsini.wineries": "Wineries",
   "bolsini.winery": "Winery",
   "bolsini.viewWineLots": "View Wine Lots",
