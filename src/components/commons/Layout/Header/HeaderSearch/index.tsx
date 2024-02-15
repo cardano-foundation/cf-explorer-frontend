@@ -928,7 +928,7 @@ export const OptionsSearch = ({
     if (
       listOptions.length === 0 &&
       isObject(data) &&
-      Object.keys(data).length > 0 &&
+      Object.keys(data || {})?.length > 0 &&
       filter === "all" &&
       !ADAHandleOption
     ) {
