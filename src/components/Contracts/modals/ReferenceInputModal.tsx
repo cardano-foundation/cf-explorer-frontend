@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { t } from "i18next";
 import React from "react";
 
@@ -18,6 +18,7 @@ interface ReferenceInputModal {
   open: boolean;
   onClose: () => void;
 }
+
 const ReferenceInputModal: React.FC<ReferenceInputModal> = ({ data, ...props }) => {
   if (!data) {
     return <Box></Box>;
@@ -37,10 +38,18 @@ const ReferenceInputModal: React.FC<ReferenceInputModal> = ({ data, ...props }) 
     >
       <ModalContent>
         <ExplanDropdown title={t("explain.referenceInput")}>
-          {t("explain.referenceInput.desc")}
-          <ExternalLink href="https://cips.cardano.org/cips/cip31/" target="_blank" rel="noreferrer">
-            Cardano Improvement Proposal 31 (CIP 31).
-          </ExternalLink>
+          <Typography component="p" mb={2}>
+            {t("explain.referenceInput.desc")}
+          </Typography>
+          <Typography>
+            <Box sx={{ marginRight: "5px" }} component={"span"}>
+              {t("explain.referenceInput.link")}
+            </Box>
+            <ExternalLink href="https://cips.cardano.org/cips/cip31/" target="_blank" rel="noreferrer">
+              Cardano Improvement Proposal 31 (CIP 31)
+            </ExternalLink>
+            .
+          </Typography>
         </ExplanDropdown>
         <DataReferenceValue>
           {(referenceInputs || []).map((referenceInputs, index) => {
